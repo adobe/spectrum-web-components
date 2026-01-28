@@ -1,0 +1,25 @@
+import"./swc.B0703qYP.js";import"./swc.BDJs84Z9.js";import"./swc.B_xD_7W8.js";import{i as s}from"./swc.Bk_7Sut8.js";import{i as t}from"./swc.DmutCB-N.js";import{f as i}from"./swc.D0Be8Aa5.js";import{a as e}from"./swc.D3Xn_5N_.js";import{C as o,x as n,E as r}from"./swc.CPRo5HoP.js";import{n as a}from"./swc.BtPhaoGy.js";import{o as l}from"./swc.Cxa0JK8L.js";import"./swc.B-5G03yA.js";import"./swc.C0BGAK1o.js";import"./swc.DeJGzahI.js";import"./swc.rlzKnk9d.js";import"./swc.ofmiI1fb.js";import"./swc.6ya3jt_W.js";import"./swc.VFmzkSC_.js";import"./swc.Cj2DIJMh.js";import"./swc.Bm-Stzmd.js";import"./swc.C04s-JJS.js";import"./swc.VqjXqM5h.js";import"./swc.CIw_Gjml.js";import"./swc.DhtcN3Mc.js";import"./swc.DTrRBp2w.js";import"./swc.DUvDxict.js";import"./swc.CFZAOGdq.js";import"./swc.BOJgI39p.js";import"./swc.Chuw36y7.js";import"./swc.x86Wm3h_.js";import"./swc.B6Ji04pc.js";import"./swc.Byki1UKV.js";import"./swc.eXSZGEDa.js";import"./swc.B9jzRhMv.js";import"./swc.CjPt0-_4.js";import"./swc.1CglYmuO.js";const p=s`
+    :host{box-sizing:border-box;visibility:hidden;pointer-events:none;z-index:1;block-size:stretch;inline-size:100vw;transition:visibility 0s linear var(--mod-modal-transition-animation-duration,var(--spectrum-animation-duration-100));justify-content:center;align-items:center;display:flex;position:fixed;inset-block-start:0;inset-inline-start:0}:host([open]){visibility:visible}@media only screen and (device-height<=350px),only screen and (device-width<=400px){:host([responsive]){border-radius:0;block-size:100%;max-block-size:100%;inline-size:100%;max-inline-size:100%;margin-block-start:0}}
+`;var d=Object.defineProperty,c=(s,t,i,e)=>{for(var o,n=void 0,r=s.length-1;r>=0;r--)(o=s[r])&&(n=o(t,i,n)||n);return n&&d(t,i,n),n};class h extends(e(o)){constructor(){super(...arguments),this.dismissable=!1,this.open=!1,this.responsive=!1,this.transitionPromise=Promise.resolve(),this.resolveTransitionPromise=()=>{},this.underlay=!1,this.animating=!1}static get styles(){return[p,t]}get dialog(){return this.shadowRoot.querySelector("slot").assignedElements()[0]||this}async focus(){if(this.shadowRoot){const s=i(this.dialog);s?(s.updateComplete&&await s.updateComplete,s.focus()):this.dialog.focus()}else super.focus()}overlayWillCloseCallback(){return this.open?(this.close(),!0):this.animating}dismiss(){this.dismissable&&this.close()}handleClose(s){s.stopPropagation(),this.close()}close(){this.open=!1}dispatchClosed(){this.dispatchEvent(new Event("close",{bubbles:!0}))}handleTransitionEvent(s){this.dispatchEvent(new TransitionEvent(s.type,{bubbles:!0,composed:!0,propertyName:s.propertyName}))}handleUnderlayTransitionend(s){!this.open&&"visibility"===s.propertyName&&this.resolveTransitionPromise(),this.handleTransitionEvent(s)}handleModalTransitionend(s){(this.open||!this.underlay)&&this.resolveTransitionPromise(),this.handleTransitionEvent(s)}get hasTransitionDuration(){const s=this.shadowRoot.querySelector(".modal"),t=window.getComputedStyle(s).transitionDuration;for(const s of t.split(","))if(parseFloat(s)>0)return!0;const i=this.shadowRoot.querySelector("sp-underlay");if(i){const s=window.getComputedStyle(i).transitionDuration;for(const t of s.split(","))if(parseFloat(t)>0)return!0}return!1}update(s){if(s.has("open")&&void 0!==s.get("open")){const s=this.hasTransitionDuration;this.animating=!0,this.transitionPromise=new Promise(t=>{this.resolveTransitionPromise=()=>{this.animating=!1,!this.open&&s&&this.dispatchClosed(),t()}}),!this.open&&!s&&this.dispatchClosed()}super.update(s)}renderDialog(){return n`
+            <slot></slot>
+        `}render(){return n`
+            ${this.underlay?n`
+                      <sp-underlay
+                          ?open=${this.open}
+                          @close=${this.dismiss}
+                          @transitionrun=${this.handleTransitionEvent}
+                          @transitionend=${this.handleUnderlayTransitionend}
+                          @transitioncancel=${this.handleTransitionEvent}
+                      ></sp-underlay>
+                  `:r}
+            <div
+                class="modal ${this.mode}"
+                @transitionrun=${this.handleTransitionEvent}
+                @transitionend=${this.handleModalTransitionend}
+                @transitioncancel=${this.handleTransitionEvent}
+                @close=${this.handleClose}
+            >
+                ${this.renderDialog()}
+            </div>
+        `}updated(s){s.has("open")&&this.open&&"updateComplete"in this.dialog&&"shouldManageTabOrderForScrolling"in this.dialog&&this.dialog.updateComplete.then(()=>{this.dialog.shouldManageTabOrderForScrolling()})}async getUpdateComplete(){const s=await super.getUpdateComplete();return await this.transitionPromise,s}}c([a({type:Boolean,reflect:!0})],h.prototype,"dismissable"),c([a({type:Boolean,reflect:!0})],h.prototype,"open"),c([a({type:String,reflect:!0})],h.prototype,"mode"),c([a({type:Boolean})],h.prototype,"responsive"),c([a({type:Boolean})],h.prototype,"underlay"),l("sp-dialog-base",h);
+//# sourceMappingURL=swc.CfjQOacB.js.map
