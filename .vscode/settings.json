@@ -1,7 +1,10 @@
 {
     "[mdx]": {
         "editor.wordWrapColumn": 120,
-        "editor.wordWrap": "bounded"
+        "editor.wordWrap": "bounded",
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "never"
+        }
     },
     "[markdown]": {
         "editor.wordWrapColumn": 120,
@@ -45,10 +48,5 @@
         "coachmark",
         "effectful",
         "valuetext"
-    ],
-    "[mdx]": {
-        "editor.codeActionsOnSave": {
-            "source.organizeImports": "never"
-        }
-    }
+    ]
 }
