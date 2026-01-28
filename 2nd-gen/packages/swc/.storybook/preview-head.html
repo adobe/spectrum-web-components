@@ -1,9 +1,160 @@
-<link rel="preconnect" href="https://use.typekit.net" />
+<!-- Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#5258e4" />
+
+<title>Adobe | Spectrum Web Components</title>
+
+<meta property="og:site_name" content="Adobe | Spectrum Web Components" />
+<meta property="og:type" content="website" />
+
+<!-- This preconnect opens the connection for typekit to more quickly load fonts -->
+<link rel="preconnect" href="https://use.typekit.net" crossorigin />
 <link rel="dns-prefetch" href="https://use.typekit.net" />
+
 <!-- For Adobe Clean font support -->
 <link rel="stylesheet" href="https://use.typekit.net/evk7lzt.css" />
+<script src="https://use.typekit.net/evk7lzt.js"></script>
+<script>
+    try {
+        Typekit.load({
+            async: true,
+            events: {
+                active: function () {
+                    document.dispatchEvent(new Event('typekit-loaded'));
+                },
+            },
+        });
+    } catch (e) {
+        console.error('Typekit failed to load:', e);
+    }
+</script>
 
 <style>
+    /* Force Adobe Clean font on all Storybook elements */
+    body,
+    html,
+    #storybook-root,
+    #storybook-docs,
+    #stories,
+    .sb-show-main,
+    .sbdocs,
+    .sbdocs-wrapper,
+    .sbdocs-content,
+    .sbdocs-title,
+    .sbdocs-toc--custom,
+    .docs-story,
+    button,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    li,
+    ul,
+    ol,
+    table,
+    input,
+    select,
+    textarea,
+    nav {
+        font-family: var(--swc-sans-font-family-stack) !important;
+    }
+
+    html,
+    p,
+    li,
+    ul,
+    ol {
+        font-size: 1rem !important;
+    }
+
+    table,
+    input,
+    select,
+    textarea,
+    nav,
+    sp-table *,
+    .toc-list-item {
+        font-size: 0.875rem !important;
+    }
+
+    h1 {
+        font-size: var(--swc-heading-size-xxl) !important;
+    }
+
+    h2:not(.sbdocs-subtitle) {
+        font-size: var(--swc-heading-size-l) !important;
+    }
+
+    h3 {
+        font-size: var(--swc-heading-size-m) !important;
+    }
+
+    h4 {
+        font-size: var(--swc-heading-size-s) !important;
+    }
+
+    #stories,
+    .sbdocs-content h2:not(.sbdocs-subtitle) {
+        font-size: var(--swc-heading-size-l) !important;
+        margin: 1.25rem 0px 2rem;
+        -webkit-font-smoothing: antialiased;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        padding: 0px 0px 4px;
+        cursor: text;
+        position: relative;
+        color: rgb(46, 52, 56);
+        border-bottom: 1px solid rgba(38, 85, 115, 0.15);
+        letter-spacing: unset;
+        line-height: unset;
+    }
+
+    .sbdocs-toc--custom {
+        width: 20rem !important;
+        nav {
+            width: auto;
+            max-width: 15rem !important;
+            font-size: 0.75rem !important;
+        }
+    }
+
+    .toc-list-item.is-active-li > a {
+        color: rgb(2, 101, 220) !important;
+    }
+
+    .sbdocs-wrapper {
+        justify-content: space-between !important;
+    }
+
+    .sbdocs-content {
+        max-width: 80ch !important;
+        margin: auto !important;
+    }
+
+    .docs-image {
+        background-size: 100% 100%;
+        border-radius: 1rem;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        max-height: 13rem;
+    }
+
+    .docs-accordion {
+        sp-accordion-item:first-child {
+            border-block-start: none !important;
+        }
+
+        sp-accordion-item {
+            border-block-end: 1px solid rgba(38, 85, 115, 0.15) !important;
+        }
+    }
+
     /* Fix for Storybook's zoom wrapper interfering with forced-colors mode */
     @media (forced-colors: active) {
         .innerZoomElementWrapper.innerZoomElementWrapper.innerZoomElementWrapper

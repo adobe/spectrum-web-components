@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -37,112 +37,220 @@ argTypes['static-color'] = {
 };
 
 /**
- * Dividers bring clarity to a layout by grouping and dividing content that exists in close proximity. It can also be used to establish rhythm and hierarchy.
+ * A divider is a visual separator that brings clarity to a layout by grouping and dividing
+ * content in close proximity. Dividers help establish rhythm and hierarchy, making it easier
+ * for users to scan and understand content structure.
  */
 const meta: Meta = {
     title: 'Divider',
     component: 'swc-divider',
     args,
     argTypes,
-    render: (args) => template(args),
+    render: (args) => html` ${template({ ...args })} `,
     parameters: {
         actions: {
             handles: events,
         },
+        docs: {
+            subtitle: `Visual separator for grouping and dividing content`,
+        },
+        design: {
+            type: 'figma',
+            url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=13642-334',
+        },
+        stackblitz: {
+            url: 'https://stackblitz.com/edit/vitejs-vite-rqfjtpgz?file=package.json',
+        },
+        flexLayout: 'row-nowrap',
     },
     tags: ['migrated'],
 };
 
 export default meta;
 
-// ───────────────
-//    STORIES
-// ───────────────
+// ────────────────────
+//    AUTODOCS STORY
+// ────────────────────
 
-type DividerSize = typeof Divider.prototype.size;
+export const Playground: Story = {
+    tags: ['autodocs', 'dev'],
+};
+
+// ──────────────────────────
+//    OVERVIEW STORY
+// ──────────────────────────
+
+export const Overview: Story = {
+    render: (args) => html`
+        <h3>Content above the divider</h3>
+        ${template({ ...args, size: 'm' })}
+        <p>Content below the divider</p>
+    `,
+    parameters: {
+        flexLayout: 'column-stretch',
+    },
+    tags: ['overview'],
+};
+
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
 
 /**
- * By default, dividers are horizontal and should be used for separating content vertically. The medium divider is the default size.
+ * A divider consists of:
+ *
+ * 1. **Line** - The visual separator element that creates visual separation between content
  */
-export const Default: Story = {
-    args: {
-        size: 'm',
+export const Anatomy: Story = {
+    render: (args) => html`
+        <h4>Content above the divider</h4>
+        ${template({ ...args, size: 'm' })}
+        <p>Content below the divider</p>
+    `,
+    tags: ['anatomy'],
+    parameters: {
+        flexLayout: 'column-stretch',
     },
 };
 
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
 /**
- * The small divider is used to divide similar components such as table rows, action button groups, and components within a panel.
+ * Dividers come in three sizes to fit various contexts:
  *
- * The medium divider is used for dividing subsections on a page, or to separate different groupings of components such as panels, rails, etc.
- *
- * The large divider should only be used for page titles or section titles.
+ * - **Small (`s`)**: Used to divide similar components such as table rows, action button groups, and components within a panel
+ * - **Medium (`m`)**: Used for dividing subsections on a page, or to separate different groupings of components such as panels, rails, etc.
+ * - **Large (`l`)**: Should only be used for page titles or section titles
  */
 export const Sizes: Story = {
-    render: () => html`
-        <div style="display: flex; flex-direction: row; gap: 16px;">
-            ${Divider.VALID_SIZES.map(
-                (size) => html`
-                    <div>
-                        <h3>
-                            ${size === 's'
-                                ? 'Small'
-                                : size === 'l'
-                                  ? 'Large'
-                                  : 'Medium'}
-                        </h3>
-                        ${template({ size: size as DividerSize })}
-                    </div>
-                `
-            )}
+    render: (args) => html`
+        <div>
+            <h3>Small</h3>
+            ${template({ ...args, size: 's' })}
+            <p>Content below the small divider.</p>
+        </div>
+        <div>
+            <h3>Medium</h3>
+            ${template({ ...args, size: 'm' })}
+            <p>Content below the medium divider.</p>
+        </div>
+        <div>
+            <h3>Large</h3>
+            ${template({ ...args, size: 'l' })}
+            <p>Content below the large divider.</p>
         </div>
     `,
-    tags: ['!dev'],
+    parameters: {
+        'section-order': 1,
+    },
+    tags: ['options'],
 };
 
 /**
- * Vertical dividers are used to separate content horizontally.
+ * The default horizontal divider is used to separate content stacked vertically. To separate
+ * horizontal content, use the `vertical` attribute.
  */
 export const Vertical: Story = {
+    render: (args) => html`
+        <h4>Small</h4>
+        ${template({
+            ...args,
+            size: 's',
+        })}
+        <p>Content next to the small divider.</p>
+        <h4>Medium</h4>
+        ${template({
+            ...args,
+            size: 'm',
+        })}
+        <p>Content next to the medium divider.</p>
+        <h4>Large</h4>
+        ${template({
+            ...args,
+            size: 'l',
+        })}
+        <p>Content next to the large divider.</p>
+    `,
+    parameters: {
+        'section-order': 2,
+    },
+    tags: ['options'],
     args: {
         vertical: true,
     },
-    render: (args: Record<string, unknown>) => html`
-        <div style="display: flex; flex-direction: row; gap: 48px;">
-            ${Divider.VALID_SIZES.map((size) =>
-                template({ ...args, size: size as DividerSize })
-            )}
-        </div>
-    `,
-    tags: ['!dev'],
 };
 
 /**
- * Use the static color options when a divider needs to be placed on top of a color background or visual. Static color dividers are available in black or white regardless of color theme.
+ * Use the `static-color` attribute when displaying over images or colored backgrounds:
+ *
+ * - **white**: Use on dark or colored backgrounds for better contrast
+ * - **black**: Use on light backgrounds for better contrast
  */
-export const StaticBlack: Story = {
-    args: {
-        'static-color': 'black',
-    },
-    render: (args: Record<string, unknown>) => html`
-        <div style="display: flex; gap: 24px; align-items: center;">
-            ${Divider.VALID_SIZES.map((size) =>
-                template({ ...args, size: size as DividerSize })
-            )}
-        </div>
+export const StaticColors: Story = {
+    render: (args) => html`
+        ${['white', 'black'].map(
+            (color) =>
+                html` <div>
+                    <h4>Dashboard settings</h4>
+                    ${template({ ...args, 'static-color': color })}
+                    <p>
+                        Configure your dashboard preferences and layout options.
+                    </p>
+                </div>`
+        )}
     `,
-    tags: ['!dev'],
+    args: {
+        size: 'm',
+    },
+    parameters: {
+        staticColorsDemo: true,
+        'section-order': 3,
+    },
+    tags: ['options'],
 };
+StaticColors.storyName = 'Static colors';
 
-export const StaticWhite: Story = {
-    args: {
-        'static-color': 'white',
-    },
-    render: (args: Record<string, unknown>) => html`
-        <div style="display: flex; gap: 24px; align-items: center;">
-            ${Divider.VALID_SIZES.map((size) =>
-                template({ ...args, size: size as DividerSize })
-            )}
-        </div>
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+/**
+ * ### Features
+ *
+ * The `<swc-divider>` element implements several accessibility features:
+ *
+ * #### ARIA implementation
+ *
+ * 1. **ARIA role**: Automatically sets `role="separator"` to ensure proper semantic meaning for assistive technologies
+ * 2. **Orientation support**: When `vertical` is true, automatically sets `aria-orientation="vertical"` to indicate the divider's orientation
+ *
+ * #### Visual accessibility
+ *
+ * - Dividers use sufficient thickness and color contrast to be perceivable
+ * - Static color variants ensure contrast on different backgrounds
+ * - High contrast mode is supported with appropriate color overrides
+ *
+ * ### Best practices
+ *
+ * - Place medium or large dividers below header text to visually create a section or page title
+ * - Use dividers to create meaningful visual separation, not just decorative lines
+ * - Use dividers sparingly; excessive use can diminish their visual impact
+ * - Ensure sufficient color contrast when using `static-color` variants on colored backgrounds
+ * - Consider using headings or other semantic elements for screen reader users when dividers mark major content transitions
+ */
+export const Accessibility: Story = {
+    render: (args) => html`
+        <h4>Project overview</h4>
+        ${template({ ...args, size: 'l' })}
+        <p>
+            Review the project timeline, milestones, and deliverables for the
+            current sprint.
+        </p>
     `,
-    tags: ['!dev'],
+    parameters: {
+        flexLayout: 'column-stretch',
+    },
+    tags: ['a11y'],
 };
