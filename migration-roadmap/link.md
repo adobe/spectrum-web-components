@@ -68,25 +68,28 @@ None found for this component.
 - `variant` - Values: `secondary`
 - `static-color` - Values: `black`, `white`
 - `quiet` - Boolean attribute
-- `download` - String attribute (from LikeAnchor mixin)
-- `label` - String attribute (from LikeAnchor mixin, aria-label)
-- `href` - String attribute (from LikeAnchor mixin)
-- `target` - Values: `_blank`, `_parent`, `_self`, `_top` (from LikeAnchor mixin)
-- `referrerpolicy` - Values: `no-referrer`, `no-referrer-when-downgrade`, `origin`, `origin-when-cross-origin`, `same-origin`, `strict-origin`, `strict-origin-when-cross-origin`, `unsafe-url` (from LikeAnchor mixin)
-- `rel` - String attribute (from LikeAnchor mixin)
 
-**Inherited from Focusable:**
+**From LikeAnchor mixin:**
 
-- `autofocus` - When this control is rendered, focus it automatically
-- `disabled` - Disable this control. It will not receive focus or events
-- `tabIndex` - The tab index to apply to this control
+- `download` - String attribute
+- `label` - String attribute (aria-label)
+- `href` - String attribute
+- `target` - Values: `_blank`, `_parent`, `_self`, `_top`
+- `referrerpolicy` - Values: `no-referrer`, `no-referrer-when-downgrade`, `origin`, `origin-when-cross-origin`, `same-origin`, `strict-origin`, `strict-origin-when-cross-origin`, `unsafe-url`
+- `rel` - String attribute
+
+**From Focusable mixin:**
+
+- `autofocus` - Boolean attribute
+- `disabled` - Boolean attribute
+- `tabIndex` - Number attribute
 
 </details>
 
 <details>
 <summary>Slots</summary>
 
-- Default slot (no name) - Link text content
+- Default slot - Link text content
 
 </details>
 
@@ -162,22 +165,22 @@ None found for this component.
 <details>
 <summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
-```diff
- <a
-   class="spectrum-Link
-          spectrum-Link--quiet
-+         spectrum-Link--inline
-          spectrum-Link--[variant]
-          spectrum-Link--static[StaticColor]
-          is-hover
-          is-active
-          is-focus-visible
-          is-visited"
-   id="[id]"
-   href="[url]"
- >
-   [text]
- </a>
+```html
+<a
+    class="spectrum-Link
+         spectrum-Link--quiet
+         spectrum-Link--inline
+         spectrum-Link--[variant]
+         spectrum-Link--static[StaticColor]
+         is-hover
+         is-active
+         is-focus-visible
+         is-visited"
+    id="[id]"
+    href="[url]"
+>
+    [text]
+</a>
 ```
 
 **Key changes:**

@@ -7,8 +7,12 @@
 <details>
 <summary>CSS selectors</summary>
 
+**Base component:**
+
 - `.spectrum-Tooltip`
-- `.spectrum-Tooltip p`
+
+**Variants:**
+
 - `.spectrum-Tooltip--bottom`
 - `.spectrum-Tooltip--bottom .spectrum-Tooltip-tip`
 - `.spectrum-Tooltip--bottom-end`
@@ -104,10 +108,12 @@
 - `.spectrum-Tooltip-label`
 - `.spectrum-Tooltip-tip`
 - `.spectrum-Tooltip.is-open`
-- `.spectrum-Tooltip:lang(ja)`, `.spectrum-Tooltip:lang(ko)`, `.spectrum-Tooltip:lang(zh)`
-- `.u-tooltip-showOnHover`
-- `.u-tooltip-showOnHover .spectrum-Tooltip`
-- (Additional `.u-tooltip-showOnHover` descendant selectors for all placement and state combinations)
+
+**Language-specific:**
+
+- `.spectrum-Tooltip:lang(ja)`
+- `.spectrum-Tooltip:lang(ko)`
+- `.spectrum-Tooltip:lang(zh)`
 
 </details>
 
@@ -155,12 +161,13 @@ None found for this component.
 
 - `delayed` - Boolean attribute for warm-up/cooldown behavior
 - `disabled` - Boolean attribute to prevent self-managed tooltip from responding to user input
+- `no-tip` - Boolean attribute to hide the tooltip arrow/tip
 - `self-managed` - Boolean attribute to automatically bind to parent element
 - `offset` - Number attribute for positioning offset
 - `open` - Boolean attribute reflecting open state
 - `placement` - Values: `top`, `top-start`, `top-end`, `right`, `right-start`, `right-end`, `bottom`, `bottom-start`, `bottom-end`, `left`, `left-start`, `left-end`
 - `tip-padding` - Number attribute for tip padding
-- `variant` - Values: `info`, `positive`, `negative`
+- `variant` - Values: `info`, `positive` (deprecated in Spectrum 2), `negative`
 
 </details>
 
@@ -181,11 +188,11 @@ None found for this component.
 
 ```html
 <!-- When self-managed=false (default) -->
-<sp-tooltip-openable id="tooltip" placement="[placement]">
+<sp-tooltip id="tooltip" placement="[placement]">
     <slot name="icon"></slot>
     <span id="label"><slot></slot></span>
     <span id="tip" aria-hidden="true"></span>
-</sp-tooltip-openable>
+</sp-tooltip>
 
 <!-- When self-managed=true -->
 <sp-overlay
@@ -197,11 +204,11 @@ None found for this component.
     type="hint"
     triggerInteraction="hover"
 >
-    <sp-tooltip-openable id="tooltip" placement="[placement]">
+    <sp-tooltip id="tooltip" placement="[placement]">
         <slot name="icon"></slot>
         <span id="label"><slot></slot></span>
         <span id="tip" aria-hidden="true"></span>
-    </sp-tooltip-openable>
+    </sp-tooltip>
 </sp-overlay>
 ```
 
@@ -213,17 +220,16 @@ None found for this component.
 ```html
 <span
     class="spectrum-Tooltip
-         spectrum-Tooltip--[variant] (if variant !== 'neutral')
-         spectrum-Tooltip--[placement] (if placement)
-         is-open (if isOpen)
-         is-focused (if isFocused)"
-    style="[customStyles]"
+         spectrum-Tooltip--[variant]
+         spectrum-Tooltip--[placement]
+         is-open
+         is-focused"
 >
-    <span class="spectrum-Tooltip-typeIcon">
-        <!-- Icon component if variant -->
-        <!-- Workflow icon based on variant (Info, CheckmarkCircle, or Alert) -->
-    </span>
-    <span class="spectrum-Tooltip-label"> [label] </span>
+    <!-- Icon component rendered for info/positive/negative variants -->
+    <svg class="spectrum-Tooltip-typeIcon">
+        <!-- Workflow icon: Info, CheckmarkCircle, or Alert -->
+    </svg>
+    <span class="spectrum-Tooltip-label">[label]</span>
     <span class="spectrum-Tooltip-tip"></span>
 </span>
 ```
@@ -236,16 +242,12 @@ None found for this component.
 ```html
 <span
     class="spectrum-Tooltip
-         spectrum-Tooltip--[variant] (if variant !== 'neutral')
-         spectrum-Tooltip--[placement] (if placement)
-         is-open (if isOpen)
-         is-focused (if isFocused)"
-    style="[customStyles]"
+         spectrum-Tooltip--[variant]
+         spectrum-Tooltip--[placement]
+         is-open
+         is-focused"
 >
-    <span class="spectrum-Tooltip-label">
-        <!-- No icon in Spectrum 2 -->
-        [label]
-    </span>
+    <span class="spectrum-Tooltip-label">[label]</span>
     <span class="spectrum-Tooltip-tip"></span>
 </span>
 ```
@@ -255,33 +257,39 @@ None found for this component.
 <details>
 <summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
-```diff
- <span
-   class="spectrum-Tooltip
-          spectrum-Tooltip--[variant] (if variant !== 'neutral')
-          spectrum-Tooltip--[placement] (if placement)
-          is-open (if isOpen)
-          is-focused (if isFocused)"
-   style="[customStyles]"
- >
--  <!-- Icon component rendered for info/positive/negative variants in main -->
--  <span class="spectrum-Tooltip-typeIcon">
--    <!-- Workflow icon: Info, CheckmarkCircle, or Alert -->
--  </span>
-   <span class="spectrum-Tooltip-label">
-     [label]
-   </span>
-   <span class="spectrum-Tooltip-tip"></span>
- </span>
+**Removed elements:**
+
+- `.spectrum-Tooltip-typeIcon` wrapper element and all icon rendering logic
+- Icon imports and icon component instantiation for `info`, `positive`, and `negative` variants
+
+**HTML structure comparison:**
+
+```html
+<!-- LEGACY (main branch) -->
+<span class="spectrum-Tooltip">
+    <svg class="spectrum-Tooltip-typeIcon">
+        <!-- Icon component for info/positive/negative variants -->
+    </svg>
+    <span class="spectrum-Tooltip-label">[label]</span>
+    <span class="spectrum-Tooltip-tip"></span>
+</span>
+
+<!-- SPECTRUM 2 (spectrum-two branch) -->
+<span class="spectrum-Tooltip">
+    <span class="spectrum-Tooltip-label">[label]</span>
+    <span class="spectrum-Tooltip-tip"></span>
+</span>
 ```
 
-**Key changes:**
+**Template JavaScript changes:**
 
-- Icon component removed: Spectrum 2 no longer renders icons for `info` and `negative` variants
-- The `.spectrum-Tooltip-typeIcon` element and all icon rendering logic were removed
-- `positive` variant was removed from the available variants list
-- Theme imports (`../themes/spectrum.css`, `../themes/express.css`) were removed
-- Context parameter removed from template function signature
+- **Removed**: `variantIcon` variable and conditional logic for determining icon based on variant
+- **Removed**: Icon component rendering within the template
+- **Removed**: `positive` variant from variants array
+
+**Key impact:**
+
+The most significant change is the complete removal of the `.spectrum-Tooltip-typeIcon` element and all associated icon rendering. Legacy tooltips displayed icons (Info, CheckmarkCircle, or Alert) for semantic variants, but Spectrum 2 tooltips no longer include these icons in the template structure.
 
 </details>
 
@@ -306,6 +314,9 @@ None found for this component.
 | `.spectrum-Tooltip--left`                                                                | `placement="left"`                      | Implemented      |
 | `.spectrum-Tooltip--left-start`                                                          | `placement="left-start"`                | Implemented      |
 | `.spectrum-Tooltip--left-end`                                                            | `placement="left-end"`                  | Implemented      |
+| `.spectrum-Tooltip.is-open`                                                              | `open` attribute                        | Implemented      |
+| `.spectrum-Tooltip:lang(ja)`, `.spectrum-Tooltip:lang(ko)`, `.spectrum-Tooltip:lang(zh)` | Language-specific styling               | Implemented      |
+| `.spectrum-Tooltip p`                                                                    | Paragraph styling within tooltip        | Implemented      |
 | `.spectrum-Tooltip--bottom-left`                                                         |                                         | Missing from WC  |
 | `.spectrum-Tooltip--bottom-right`                                                        |                                         | Missing from WC  |
 | `.spectrum-Tooltip--top-left`                                                            |                                         | Missing from WC  |
@@ -320,17 +331,14 @@ None found for this component.
 | `.spectrum-Tooltip--end`                                                                 |                                         | Missing from WC  |
 | `.spectrum-Tooltip--end-top`                                                             |                                         | Missing from WC  |
 | `.spectrum-Tooltip--end-bottom`                                                          |                                         | Missing from WC  |
-| `.spectrum-Tooltip.is-open`                                                              | `open` attribute                        | Implemented      |
-| `.spectrum-Tooltip:lang(ja)`, `.spectrum-Tooltip:lang(ko)`, `.spectrum-Tooltip:lang(zh)` | Language-specific styling               | Implemented      |
-| `.spectrum-Tooltip p`                                                                    | Paragraph styling within tooltip        | Implemented      |
-| `.u-tooltip-showOnHover`                                                                 | Utility class                           | Missing from WC  |
 | `.spectrum-Tooltip--positive`                                                            |                                         | Deprecated       |
-| `icon` slot                                                                              | Icon slot                               | Implemented      |
-| `delayed`                                                                                |                                         | Missing from CSS |
-| `disabled`                                                                               |                                         | Missing from CSS |
-| `self-managed`                                                                           |                                         | Missing from CSS |
-| `offset`                                                                                 |                                         | Missing from CSS |
-| `tip-padding`                                                                            |                                         | Missing from CSS |
+|                                                                                          | `icon` slot                             | Missing from CSS |
+|                                                                                          | `delayed` attribute                     | Missing from CSS |
+|                                                                                          | `disabled` attribute                    | Missing from CSS |
+|                                                                                          | `no-tip` attribute                      | Missing from CSS |
+|                                                                                          | `self-managed` attribute                | Missing from CSS |
+|                                                                                          | `offset` attribute                      | Missing from CSS |
+|                                                                                          | `tip-padding` attribute                 | Missing from CSS |
 
 ## Summary of changes
 
@@ -340,12 +348,13 @@ None found for this component.
 
 - Legacy placement values: `bottom-left`, `bottom-right`, `top-left`, `top-right`, `left-bottom`, `left-top`, `right-bottom`, `right-top`
 - Logical placement values: `start`, `start-top`, `start-bottom`, `end`, `end-top`, `end-bottom`
-- Utility class `.u-tooltip-showOnHover` for hover-triggered tooltips
 
 **Missing from CSS:**
 
+- `icon` slot for custom icon rendering
 - `delayed` attribute for warm-up/cooldown behavior
 - `disabled` attribute for self-managed tooltips
+- `no-tip` attribute to hide the tooltip arrow/tip
 - `self-managed` attribute for automatic parent binding
 - `offset` attribute for custom positioning
 - `tip-padding` attribute for tip padding control
@@ -371,16 +380,6 @@ The missing placement values in WC use legacy naming conventions. Spectrum 2 sta
 - Only `neutral`, `info`, and `negative` variants remain in Spectrum 2
 - CSS classes for the positive variant (`.spectrum-Tooltip--positive`) are no longer supported
 
-**Theme file removal:**
-
-- Theme-specific CSS imports (`../themes/spectrum.css`, `../themes/express.css`) were removed
-- Spectrum 2 uses a unified theming approach
-
-**Context parameter:**
-
-- The `context` parameter was removed from the function signature in Spectrum 2
-- This simplifies the template API
-
 **No structural HTML changes:**
 
 - The base `<span>` wrapper structure remains identical
@@ -389,6 +388,6 @@ The missing placement values in WC use legacy naming conventions. Spectrum 2 sta
 
 ## Resources
 
-- [CSS migration]()
-- [Spectrum 2 preview]()
-- [React]()
+- [CSS migration](https://github.com/adobe/spectrum-css/pull/2743)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-tooltip--docs)
+- [React](https://react-spectrum.adobe.com/Tooltip)
