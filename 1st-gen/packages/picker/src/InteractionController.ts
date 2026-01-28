@@ -50,24 +50,11 @@ export class InteractionController implements ReactiveController {
         if (this._open === open) return;
         this._open = open;
 
-        if (this.overlay) {
-            this.host.open = open;
-            return;
-        }
+        this.host.open = open;
 
-        // When there is no Overlay and `open` is moving to `true`, lazily import/create
-        // an Overlay and apply that state to it.
-        customElements
-            .whenDefined('sp-overlay')
-            .then(async (): Promise<void> => {
-                const { Overlay } = await import(
-                    '@spectrum-web-components/overlay/src/Overlay.js'
-                );
-                this.overlay = new Overlay();
-                this.host.open = true;
-                this.host.requestUpdate();
-            });
-        import('@spectrum-web-components/overlay/sp-overlay.js');
+        if (!this.overlay && this.host.overlayElement) {
+            this.overlay = this.host.overlayElement;
+        }
     }
 
     private _overlay!: AbstractOverlay;
@@ -110,8 +97,6 @@ export class InteractionController implements ReactiveController {
             if (this.preventNextToggle === 'no') {
                 this.open = false;
             } else if (!this.pointerdownState) {
-                // Prevent browser driven closure while opening the Picker
-                // and the expected event series has not completed.
                 this.overlay?.manuallyKeepOpen();
             }
         }
@@ -195,13 +180,12 @@ export class InteractionController implements ReactiveController {
     }
 
     public hostUpdated(): void {
-        if (
-            this.overlay &&
-            this.host.dependencyManager.loaded &&
-            this.host.open !== this.overlay.open
-        ) {
+        if (!this.overlay && this.host.overlayElement) {
+            this.overlay = this.host.overlayElement;
+        }
+
+        if (this.overlay && this.host.dependencyManager.loaded) {
             this.overlay.willPreventClose = this.preventNextToggle !== 'no';
-            this.overlay.open = this.host.open;
         }
     }
 }

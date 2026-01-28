@@ -1,5 +1,21 @@
 # Change Log
 
+## 1.11.0
+
+### Patch Changes
+
+- [#5965](https://github.com/adobe/spectrum-web-components/pull/5965) [`b95e254`](https://github.com/adobe/spectrum-web-components/commit/b95e25413830825a506b7d4025d6b4d982691771) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Fixed**: Arrow key events now stop propagation when handled by the slider, preventing them from bubbling up to parent elements.
+
+    Previously, arrow key events (`ArrowUp`, `ArrowDown`, `ArrowLeft`, `ArrowRight`) would propagate to ancestor containers even when the slider was actively handling value adjustments. This could cause unintended side effects in layouts or applications that also listen for arrow key events.
+
+- Updated dependencies [[`7af5e8f`](https://github.com/adobe/spectrum-web-components/commit/7af5e8fa8cb4142b7e4038e8ffe6e8ea547a397e), [`b95e254`](https://github.com/adobe/spectrum-web-components/commit/b95e25413830825a506b7d4025d6b4d982691771), [`f8bdeec`](https://github.com/adobe/spectrum-web-components/commit/f8bdeecf8a230822122a990fb977d3654649f891), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
+    - @spectrum-web-components/field-label@1.11.0
+    - @spectrum-web-components/reactive-controllers@1.11.0
+    - @spectrum-web-components/shared@1.11.0
+    - @spectrum-web-components/base@1.11.0
+    - @spectrum-web-components/number-field@1.11.0
+    - @spectrum-web-components/theme@1.11.0
+
 ## 1.10.0
 
 ### Patch Changes
