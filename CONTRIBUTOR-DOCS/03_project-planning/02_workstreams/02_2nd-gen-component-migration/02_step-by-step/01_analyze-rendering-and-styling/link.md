@@ -125,11 +125,7 @@ None found for this component.
     class="spectrum-Link
          spectrum-Link--quiet
          spectrum-Link--[variant]
-         spectrum-Link--static[StaticColor]
-         is-hover
-         is-active
-         is-focus-visible
-         is-visited"
+         spectrum-Link--static[StaticColor]"
     id="[id]"
     href="[url]"
 >
@@ -148,11 +144,7 @@ None found for this component.
          spectrum-Link--quiet
          spectrum-Link--inline
          spectrum-Link--[variant]
-         spectrum-Link--static[StaticColor]
-         is-hover
-         is-active
-         is-focus-visible
-         is-visited"
+         spectrum-Link--static[StaticColor]"
     id="[id]"
     href="[url]"
 >
@@ -191,20 +183,20 @@ None found for this component.
 
 ### CSS => SWC mapping
 
-| CSS selector                                                                    | Attribute or slot         | Status          |
-| ------------------------------------------------------------------------------- | ------------------------- | --------------- |
-| `.spectrum-Link`                                                                | `:host`                   | Implemented     |
-| `.spectrum-Link--inline`                                                        |                           | Missing from WC |
-| `.spectrum-Link--quiet`                                                         | `quiet`                   | Implemented     |
-| `.spectrum-Link--secondary`                                                     | `variant="secondary"`     | Implemented     |
-| `.spectrum-Link--staticBlack`                                                   | `static-color="black"`    | Implemented     |
-| `.spectrum-Link--staticWhite`                                                   | `static-color="white"`    | Implemented     |
-| `.spectrum-Link:hover`                                                          | CSS `:hover`              | Implemented     |
-| `.spectrum-Link:active`                                                         | CSS `:active`             | Implemented     |
-| `.spectrum-Link:focus-visible`                                                  | CSS `:focus`              | Implemented     |
-| `.spectrum-Link--quiet:hover`                                                   | CSS `:hover`              | Implemented     |
-| `.spectrum-Link:lang(ja)`, `.spectrum-Link:lang(ko)`, `.spectrum-Link:lang(zh)` | Language-specific styling | Implemented     |
-| (text content)                                                                  | Default slot              | Implemented     |
+| CSS selector                                                                    | Attribute or slot         | Status              |
+| ------------------------------------------------------------------------------- | ------------------------- | ------------------- |
+| `.spectrum-Link`                                                                | `:host`                   | Implemented         |
+| `.spectrum-Link--inline`                                                        |                           | Missing from WC     |
+| `.spectrum-Link--quiet`                                                         | `quiet`                   | Implemented         |
+| `.spectrum-Link--secondary`                                                     | `variant="secondary"`     | Implemented         |
+| `.spectrum-Link--staticBlack`                                                   | `static-color="black"`    | Implemented         |
+| `.spectrum-Link--staticWhite`                                                   | `static-color="white"`    | Implemented         |
+| `.spectrum-Link:hover`                                                          | CSS `:hover`              | Implemented via CSS |
+| `.spectrum-Link:active`                                                         | CSS `:active`             | Implemented via CSS |
+| `.spectrum-Link:focus-visible`                                                  | CSS `:focus`              | Implemented via CSS |
+| `.spectrum-Link--quiet:hover`                                                   | CSS `:hover`              | Implemented via CSS |
+| `.spectrum-Link:lang(ja)`, `.spectrum-Link:lang(ko)`, `.spectrum-Link:lang(zh)` | Language-specific styling | Implemented         |
+| (text content)                                                                  | Default slot              | Implemented         |
 
 ## Summary of changes
 

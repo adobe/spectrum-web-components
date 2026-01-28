@@ -300,53 +300,52 @@
 
 ### CSS => SWC mapping
 
-| CSS selector                                                                         | Attribute or slot                       | Status           |
-| ------------------------------------------------------------------------------------ | --------------------------------------- | ---------------- |
-| `.spectrum-Tag`                                                                      | Base component                          | Implemented      |
-| `.spectrum-Tag--sizeM`                                                               | `size="m"`                              | Implemented      |
-| `.spectrum-Tag--sizeL`                                                               | `size="l"`                              | Implemented      |
-| `.spectrum-Tag-itemLabel`                                                            | Default slot (wrapped in `.label` span) | Implemented      |
-| `.spectrum-Tag-itemIcon`                                                             | `icon` slot                             | Implemented      |
-| `.spectrum-Tag .spectrum-Avatar`                                                     | `avatar` slot                           | Implemented      |
-| `.spectrum-Tag .spectrum-Thumbnail`                                                  |                                         | Missing from WC  |
-| `.spectrum-Tag-clearButton`                                                          | Clear button (when `deletable`)         | Implemented      |
-| `.spectrum-Tag.is-disabled`                                                          | `disabled`                              | Implemented      |
-| `.spectrum-Tag.is-disabled .spectrum-Avatar`                                         | Disabled state styling for avatar       | Implemented      |
-| `.spectrum-Tag.is-disabled .spectrum-Thumbnail`                                      |                                         | Missing from WC  |
-| `.spectrum-Tag.spectrum-Tag--emphasized`                                             |                                         | Missing from WC  |
-| `.spectrum-Tag.spectrum-Tag--emphasized.is-selected:not(.is-disabled, .is-readOnly)` |                                         | Missing from WC  |
-| `.spectrum-Tag.is-selected`                                                          |                                         | Missing from WC  |
-| `.spectrum-Tag.is-selected:not(.is-disabled, .is-readOnly)`                          |                                         | Missing from WC  |
-| `.spectrum-Tag:lang(ja), .spectrum-Tag:lang(ko), .spectrum-Tag:lang(zh)`             | Language-specific styling               | Implemented      |
-| `.spectrum-Tag:not(.is-disabled, .is-readOnly):hover`                                | Hover state (automatic)                 | Implemented      |
-| `.spectrum-Tag:not(.is-disabled, .is-readOnly):active`                               | Active state (automatic)                | Implemented      |
-| `.spectrum-Tag:not(.is-disabled, .is-readOnly):focus-visible`                        | Focus visible state (automatic)         | Implemented      |
-| `.spectrum-Tag:not(.is-disabled, .is-readOnly):focus-visible:after`                  | Focus ring styling                      | Implemented      |
-| `.spectrum-Tag.spectrum-Tag.is-disabled`                                             | Disabled state (duplicate selector)     | Implemented      |
-|                                                                                      | `readonly`                              | Missing from CSS |
-|                                                                                      | `deletable`                             | Missing from CSS |
-|                                                                                      | `size="s"`                              | Missing from CSS |
+| CSS selector                                                                         | Attribute or slot                       | S2 Status     |
+| ------------------------------------------------------------------------------------ | --------------------------------------- | ------------- |
+| `.spectrum-Tag`                                                                      | Base component                          | Implemented   |
+| `.spectrum-Tag--sizeM`                                                               | `size="m"`                              | Implemented   |
+| `.spectrum-Tag--sizeL`                                                               | `size="l"`                              | Implemented   |
+| `.spectrum-Tag-itemLabel`                                                            | Default slot (wrapped in `.label` span) | Implemented   |
+| `.spectrum-Tag-itemIcon`                                                             | `icon` slot                             | Implemented   |
+| `.spectrum-Tag .spectrum-Avatar`                                                     | `avatar` slot                           | Implemented   |
+| `.spectrum-Tag .spectrum-Thumbnail`                                                  | `thumbnail` slot (needs implementation) | Needed for S2 |
+| `.spectrum-Tag-clearButton`                                                          | Clear button (when `deletable`)         | Implemented   |
+| `.spectrum-Tag.is-disabled`                                                          | `disabled`                              | Implemented   |
+| `.spectrum-Tag.is-disabled .spectrum-Avatar`                                         | Disabled state styling for avatar       | Implemented   |
+| `.spectrum-Tag.is-disabled .spectrum-Thumbnail`                                      | Disabled thumbnail styling              | Needed for S2 |
+| `.spectrum-Tag.spectrum-Tag--emphasized`                                             | `emphasized` attribute (needs impl.)    | Needed for S2 |
+| `.spectrum-Tag.spectrum-Tag--emphasized.is-selected:not(.is-disabled, .is-readOnly)` | `emphasized` + `selected` states        | Needed for S2 |
+| `.spectrum-Tag.is-selected`                                                          | `selected` attribute (needs impl.)      | Needed for S2 |
+| `.spectrum-Tag.is-selected:not(.is-disabled, .is-readOnly)`                          | `selected` state styling                | Needed for S2 |
+| `.spectrum-Tag:lang(ja), .spectrum-Tag:lang(ko), .spectrum-Tag:lang(zh)`             | Language-specific styling               | Implemented   |
+| `.spectrum-Tag:not(.is-disabled, .is-readOnly):hover`                                | Hover state (automatic)                 | Implemented   |
+| `.spectrum-Tag:not(.is-disabled, .is-readOnly):active`                               | Active state (automatic)                | Implemented   |
+| `.spectrum-Tag:not(.is-disabled, .is-readOnly):focus-visible`                        | Focus visible state (automatic)         | Implemented   |
+| `.spectrum-Tag:not(.is-disabled, .is-readOnly):focus-visible:after`                  | Focus ring styling                      | Implemented   |
+| `.spectrum-Tag.spectrum-Tag.is-disabled`                                             | Disabled state (duplicate selector)     | Implemented   |
 
 ## Summary of changes
 
-### CSS => SWC implementation gaps
+### Spectrum 2 features needed in SWC
 
-**Missing from WC:**
+To fully support Spectrum 2, the following CSS features need to be implemented in the web component:
+
+**Thumbnail support:**
 
 - `.spectrum-Thumbnail` - Spectrum 2 adds support for thumbnail images in tags
 - `.is-disabled .spectrum-Thumbnail` - Disabled state styling for thumbnails
-- `is-emphasized` state - For emphasized styling of tags
-- `is-selected` state - For selected state styling in selectable tag groups
+- Add a `thumbnail` slot to display thumbnail images within tags
 
-These states and elements are critical for interactive tag groups where tags can be selected, emphasized, or display thumbnails.
+**Interactive states:**
 
-**Missing from CSS:**
+- `is-emphasized` state - For emphasized styling of tags (requires new `emphasized` attribute)
+- `is-selected` state - For selected state styling in selectable tag groups (requires new `selected` attribute)
 
-- `readonly` attribute - Prevents deletion even when `deletable` is true
-- `deletable` attribute - The CSS uses `hasClearButton` (main) or `isRemovable` (spectrum-two) parameter instead
-- `size="s"` - Small size variant is not present in Spectrum 2 metadata
+These features are critical for interactive tag groups where tags can be selected, emphasized, or display thumbnails. The web component currently has the basic tag functionality but lacks these Spectrum 2 enhancements.
 
-The Web Components implementation uses `deletable` to control the clear button visibility, while CSS templates use `hasClearButton` (main) or `isRemovable` (spectrum-two). The `readonly` attribute provides additional control not present in CSS.
+**Note on existing WC attributes:**
+
+The web component includes some attributes not present in CSS metadata (`readonly`, `deletable`, `size="s"`). These are implementation-specific and should be evaluated for retention or deprecation during the S2 migration based on user needs and design specifications.
 
 ### CSS Spectrum 2 changes
 
