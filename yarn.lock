@@ -223,12 +223,15 @@ __metadata:
     "@vitest/coverage-v8": "npm:3.2.4"
     "@vitest/ui": "npm:3.2.4"
     "@wc-toolkit/storybook-helpers": "npm:10.0.0"
+    aria-query: "npm:5.3.0"
     autoprefixer: "npm:10.4.21"
+    dom-accessibility-api: "npm:0.7.0"
     glob: "npm:11.0.3"
     lit: "npm:^2.5.0 || ^3.1.3"
     playwright: "npm:1.53.1"
     postcss: "npm:8.5.6"
     postcss-preset-env: "npm:10.4.0"
+    query-selector-shadow-dom: "npm:1.0.0"
     react: "npm:19.1.1"
     react-dom: "npm:19.1.1"
     rimraf: "npm:6.0.1"
@@ -14993,6 +14996,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"dom-accessibility-api@npm:0.7.0":
+  version: 0.7.0
+  resolution: "dom-accessibility-api@npm:0.7.0"
+  checksum: 10c0/51d3fe283b0b4882442ba7cd7c76d27aa96b57e1854f0373be62c0abfaa95e89f4c1a1b883712814dc52b0a0853147f6de681fae20467a29d3a485df9b7329d8
+  languageName: node
+  linkType: hard
+
 "dom-accessibility-api@npm:^0.5.9":
   version: 0.5.16
   resolution: "dom-accessibility-api@npm:0.5.16"
@@ -27495,6 +27505,13 @@ __metadata:
   version: 0.2.11
   resolution: "quansync@npm:0.2.11"
   checksum: 10c0/cb9a1f8ebce074069f2f6a78578873ffedd9de9f6aa212039b44c0870955c04a71c3b1311b5d97f8ac2f2ec476de202d0a5c01160cb12bc0a11b7ef36d22ef56
+  languageName: node
+  linkType: hard
+
+"query-selector-shadow-dom@npm:1.0.0":
+  version: 1.0.0
+  resolution: "query-selector-shadow-dom@npm:1.0.0"
+  checksum: 10c0/55269fe6510288d0c3480413b8487f4f560d3b3d09e6d0785a4d52ac9bc855e74cf0d306222790fa1188717244e5b266da9c5256af89c7ad29192cdd69cfe977
   languageName: node
   linkType: hard
 

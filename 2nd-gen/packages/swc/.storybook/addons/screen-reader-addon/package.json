@@ -1,0 +1,45 @@
+{
+    "author": "Adobe",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "dependencies": {
+        "aria-query": "^5.3.0",
+        "dom-accessibility-api": "^0.7.0",
+        "query-selector-shadow-dom": "^1.0.0"
+    },
+    "description": "A Screen Reader Storybook addon for accessibility testing",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+    "keywords": [
+        "storybook",
+        "storybook-addons",
+        "addons",
+        "accessibility",
+        "a11y",
+        "screen-reader",
+        "wcag"
+    ],
+    "license": "Apache-2.0",
+    "main": "manager.js",
+    "name": "@spectrum-web-components/screen-reader-addon",
+    "peerDependencies": {
+        "@lit/react": ">=1.0.0",
+        "@spectrum-web-components/field-label": ">=1.0.0",
+        "@spectrum-web-components/help-text": ">=1.0.0",
+        "@spectrum-web-components/switch": ">=1.0.0",
+        "@spectrum-web-components/textfield": ">=1.0.0",
+        "@spectrum-web-components/theme": ">=1.0.0",
+        "@storybook/components": ">=8.0.0",
+        "@storybook/core-events": ">=8.0.0",
+        "@storybook/manager-api": ">=8.0.0",
+        "lit": "^2.5.0 || ^3.1.3",
+        "react": ">=18.0.0"
+    },
+    "private": true,
+    "repository": {
+        "directory": "2nd-gen/packages/swc/.storybook/addons/screen-reader-addon",
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git"
+    },
+    "version": "1.0.0"
+}
