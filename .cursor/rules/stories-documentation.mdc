@@ -144,7 +144,6 @@ export const Overview: Story = {
 
 - **All slots** with descriptions
 - **Content-rendering properties** (label, icon, src, value, etc.)
-- **CSS custom properties** (key design tokens)
 - Visual examples showing structure
 
 **Consolidation rule**: Combine all slotted content combinations into a **single Anatomy story**.
@@ -178,22 +177,6 @@ export const Overview: Story = {
  * - **src**: Image source URL
  * - **value**: Displayed value content
  *
- * #### CSS parts
- *
- * Exposed shadow DOM parts for styling:
- *
- * - **base**: The component's base wrapper
- * - **track**: Progress track element
- * - **fill**: Progress fill element
- *
- * #### CSS custom properties
- *
- * Key design tokens that control appearance:
- *
- * - **--spectrum-component-size**: Overall size of the component
- * - **--spectrum-component-background-color**: Background color
- * - **--spectrum-component-border-radius**: Corner rounding
- *
  * All variations shown below for comparison.
  */
 export const Anatomy: Story = {
@@ -215,8 +198,6 @@ export const Anatomy: Story = {
 - Follow with technical structure (developer-focused)
 - Document all slots with clear descriptions
 - List content-rendering properties (label, icon, src, value, etc.)
-- Include CSS parts if exposed for styling customization
-- Document key CSS custom properties (design tokens)
 - Show all meaningful combinations in one story
 
 ### Options
@@ -671,24 +652,18 @@ After creating or updating documentation:
    - Confirm valid values (enums, arrays defined in types file)
    - Check if properties exist in both base and subclass
 
-4. **Verify CSS custom properties:**
-   - Search CSS file for custom properties (e.g., `--spectrum-component-*`)
-   - Confirm properties are actually used in the styles
-   - Check if properties vary by size/variant
-
-5. **Verify ARIA implementation:**
+4. **Verify ARIA implementation:**
    - Search for `aria-*` attributes in component code
    - Check for `role` assignments
    - Verify attribute behavior (when added/removed)
    - **Don't claim attributes that aren't implemented**
 
-6. **Verify behavior:**
+5. **Verify behavior:**
    - Check for methods in component class (public methods only)
    - Look for event dispatching (`dispatchEvent`, custom events)
    - Verify automatic behaviors in lifecycle methods
-   - Check CSS for animations, transitions, media queries
 
-7. **Verify constraints:**
+6. **Verify constraints:**
    - Look for validation logic (e.g., outline only with semantic variants)
    - Check for console warnings about invalid combinations
    - Verify size/variant/option restrictions
@@ -723,20 +698,6 @@ After creating or updating documentation:
 - Sets `aria-valuenow` with the current progress value
 ```
 
-❌ **Documenting non-existent CSS properties:**
-
-```typescript
-// WRONG: Inventing custom properties
-- **--spectrum-badge-animation-duration**: Animation timing
-```
-
-✅ **Search CSS file for actual properties:**
-
-```typescript
-// CORRECT: Only document properties that exist in CSS
-- **--spectrum-badge-background-color-default**: Background color
-```
-
 ❌ **Claiming methods that don't exist:**
 
 ```typescript
@@ -764,9 +725,6 @@ grep -n "@slot" 2nd-gen/packages/core/components/component-name/Component.base.t
 
 # Search for ARIA attributes
 grep -n "aria-" 2nd-gen/packages/swc/components/component-name/Component.ts
-
-# Search for CSS custom properties
-grep -n "--spectrum-component-" 2nd-gen/packages/swc/components/component-name/component.css
 
 # Search for events
 grep -n "dispatchEvent\|new CustomEvent" 2nd-gen/packages/swc/components/component-name/Component.ts
@@ -852,8 +810,6 @@ When creating or updating documentation:
 - [ ] Anatomy with both visual and technical structure
 - [ ] All slots documented with descriptions
 - [ ] All content-rendering properties listed
-- [ ] CSS parts documented (if exposed)
-- [ ] CSS custom properties (design tokens) documented
 - [ ] All configuration options documented
 - [ ] All states documented
 - [ ] Methods documented (if applicable)
@@ -870,6 +826,5 @@ When creating or updating documentation:
 - [ ] **Verified against component implementation** (no hallucinations)
 - [ ] All slots verified in component source
 - [ ] All properties verified with `@property` decorators
-- [ ] All CSS custom properties verified in stylesheet
 - [ ] ARIA attributes verified in component code
 - [ ] Methods and events verified in implementation
