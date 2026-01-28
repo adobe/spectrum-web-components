@@ -30,4 +30,4 @@ import{t as e,s as l}from"./swc.Chuw36y7.js";import{I as i}from"./swc.DhtcN3Mc.j
       d="M18 2a16 16 0 1 0 16 16A16 16 0 0 0 18 2Zm10.666 9.08L16.018 27.341a1.208 1.208 0 0 1-.875.461c-.024.002-.05.002-.073.002a1.2 1.2 0 0 1-.85-.351l-7.784-7.795a1.2 1.2 0 0 1 0-1.698l1.326-1.325a1.201 1.201 0 0 1 1.695 0l5.346 5.347L25.314 8.473A1.203 1.203 0 0 1 27 8.263l1.455 1.133a1.205 1.205 0 0 1 .211 1.684Z"
     />
   </svg>`)({hidden:!this.label,title:this.label})}});
-//# sourceMappingURL=swc.l6E8Aqg0.js.map
+//# sourceMappingURL=swc.C0Co17Ue.js.map

@@ -26,4 +26,4 @@ import{t as e,s as l}from"./swc.Chuw36y7.js";import{I as t}from"./swc.DhtcN3Mc.j
       d="M30 14V9a1 1 0 0 0-1-1l-12.332.008-3.3-3.4A2 2 0 0 0 11.929 4H4a2 2 0 0 0-2 2v23a1 1 0 0 0 1 1h26.307a1 1 0 0 0 .936-.649l5.25-14A1 1 0 0 0 34.557 14ZM4 6h7.929l3.305 3.4.59.607h.845L28 10v4H8.693a1 1 0 0 0-.936.649L4 24.667Z"
     />
   </svg>`)({hidden:!this.label,title:this.label})}});
-//# sourceMappingURL=swc.DKZnsGzK.js.map
+//# sourceMappingURL=swc.CwWP5VQ1.js.map

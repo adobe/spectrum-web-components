@@ -20,4 +20,4 @@ import"./swc.BDJs84Z9.js";import{f as t}from"./swc.D0Be8Aa5.js";import{M as r}fr
                 ${!this.hasKeyboardDismissButton&&this.needsDismissHelper?this.dismissHelper:o}
             </div>
         `}async getUpdateComplete(){const t=await super.getUpdateComplete();return await this.transitionPromise,t}}u([n({type:Boolean,reflect:!0})],y.prototype,"open"),u([c(".tray")],y.prototype,"tray"),u([c("slot")],y.prototype,"contentSlot"),u([n({type:Boolean,attribute:"has-keyboard-dismiss"})],y.prototype,"hasKeyboardDismissButton"),u([d()],y.prototype,"needsDismissHelper"),m("sp-tray",y);
-//# sourceMappingURL=swc.bmhmUzyT.js.map
+//# sourceMappingURL=swc.ClRQm5a0.js.map

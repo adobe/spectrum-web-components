@@ -37,4 +37,4 @@ import{t as e,s as t}from"./swc.CIw_Gjml.js";import{I as i}from"./swc.DhtcN3Mc.j
       d="m7.482 4.406-.001-.001L3.86.783a.84.84 0 0 0-1.188 1.188L5.702 5l-3.03 3.03A.84.84 0 0 0 3.86 9.216l3.621-3.622h.001a.84.84 0 0 0 0-1.19z"
     />
   </svg>`)({hidden:!this.label,title:this.label})}});
-//# sourceMappingURL=swc.CvZcSJBk.js.map
+//# sourceMappingURL=swc.CkF8vQWN.js.map
