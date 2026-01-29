@@ -44,20 +44,18 @@
                 loading: function () {
                     window.FontsLoading = true;
                 },
-                events: {
-                    active: function () {
-                        window.FontsLoading = false;
-                        window.currentKitId = this.kitId;
-                        console.log(`Font loaded [id: ${this.kitId}]`);
-    
-                        // Fire a custom event to indicate the Adobe Fonts have loaded
-                        document.dispatchEvent(
-                            new CustomEvent('typekit-loaded', {
-                                detail: { kitId: this.kitId },
-                            })
-                        );
-                    },
-                }
+                active: function () {
+                    window.FontsLoading = false;
+                    window.currentKitId = this.kitId;
+                    console.log(`Font loaded [id: ${this.kitId}]`);
+
+                    // Fire a custom event to indicate the Adobe Fonts have loaded
+                    document.dispatchEvent(
+                        new CustomEvent('typekit-loaded', {
+                            detail: { kitId: this.kitId },
+                        })
+                    );
+                },
             });
         } catch (e) {
             console.log('Typekit failed to load:', e);
