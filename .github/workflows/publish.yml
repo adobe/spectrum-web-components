@@ -1,4 +1,4 @@
-name: Publish 1st-gen
+name: Publish Packages
 
 on:
     workflow_dispatch:
@@ -14,9 +14,9 @@ on:
 jobs:
     publish:
         runs-on: ubuntu-latest
-        environment: npm-publish # Requires approval from authorized users
+        environment: npm-publish
         permissions:
-            id-token: write # Required for OIDC trusted publishing
+            id-token: write # Required for OIDC trusted publishing (1st-gen)
             contents: write # Required for git push
         env:
             YARN_ENABLE_IMMUTABLE_INSTALLS: false
@@ -65,43 +65,31 @@ jobs:
                   echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
                   echo "Using npm tag: $WORKFLOW_TAG"
 
-            - name: Filter changesets for 1st-gen
+            - name: Check for changesets
               id: check-changesets
               run: |
-                  # Create backup directory
-                  mkdir -p .changeset-backup
-
-                  # Count total changesets
-                  TOTAL=$(ls -1 .changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
-
-                  # Move 2nd-gen related changesets to backup
-                  MOVED=0
-                  for file in .changeset/*.md; do
-                    if [ -f "$file" ] && [ "$(basename "$file")" != "README.md" ]; then
-                      # Only back up changesets that mention 2nd-gen packages (@adobe/spectrum-wc)
-                      # @spectrum-web-components/core is part of 1st-gen, so don't back it up
-                      if grep -q "@adobe/spectrum-wc\|2nd-gen" "$file"; then
-                        mv "$file" .changeset-backup/
-                        echo "Backed up: $(basename "$file")"
-                        MOVED=$((MOVED + 1))
-                      fi
-                    fi
-                  done
-
-                  REMAINING=$((TOTAL - MOVED))
-                  echo "Total changesets: $TOTAL"
-                  echo "Backed up 2nd-gen: $MOVED"
-                  echo "Remaining for 1st-gen: $REMAINING"
-
-                  if [ "$REMAINING" -eq 0 ]; then
+                  if [ -z "$(ls -A .changeset/*.md 2>/dev/null | grep -v README)" ]; then
                     echo "has_changesets=false" >> $GITHUB_OUTPUT
+                    echo "No changesets found - skipping publish"
                   else
                     echo "has_changesets=true" >> $GITHUB_OUTPUT
+                    CHANGESET_COUNT=$(ls -1 .changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
+                    echo "Found $CHANGESET_COUNT changesets"
                   fi
 
-            - name: Build packages
+            - name: Verify OIDC token availability
               if: steps.check-changesets.outputs.has_changesets == 'true'
-              run: yarn build:1st-gen
+              run: |
+                  if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
+                    echo "✓ OIDC token is available for 1st-gen trusted publishing"
+                  else
+                    echo "✗ OIDC token NOT available - trusted publishing will fail"
+                    exit 1
+                  fi
+
+            - name: Build all packages
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              run: yarn build
 
             - name: Generate custom elements manifests
               if: steps.check-changesets.outputs.has_changesets == 'true'
@@ -128,22 +116,24 @@ jobs:
               if: steps.check-changesets.outputs.has_changesets == 'true'
               run: |
                   yarn install --refresh-lockfile
-                  yarn build:1st-gen
+                  yarn build
 
-            - name: Verify OIDC token availability
+            - name: Configure NPM authentication for 2nd-gen (Adobe namespace)
               if: steps.check-changesets.outputs.has_changesets == 'true'
               run: |
-                  if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
-                    echo "✓ OIDC token is available"
-                  else
-                    echo "✗ OIDC token NOT available - trusted publishing will fail"
-                    exit 1
-                  fi
+                  echo "//registry.npmjs.org/:_authToken=${{ secrets.ADOBE_BOT_NPM_TOKEN }}" > ~/.npmrc
 
-            - name: Publish to npm
+            - name: Publish all packages
               if: steps.check-changesets.outputs.has_changesets == 'true'
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
               run: |
                   TAG="${{ steps.extract-tag.outputs.tag }}"
+
+                  # Changeset publishes all packages (1st-gen, core, and 2nd-gen)
+                  # npm CLI automatically uses:
+                  # - OIDC trusted publishing for 1st-gen packages (configured on npmjs.com)
+                  # - Token authentication for 2nd-gen (from .npmrc)
                   if [ "$TAG" == "latest" ]; then
                     yarn changeset publish --no-git-tag
                   else
@@ -168,20 +158,11 @@ jobs:
                     (cd "$dir" && $PUBLISH_CMD) || exit 1
                   done
 
-            - name: Restore backed up changesets
-              if: always()
-              run: |
-                  if [ -d ".changeset-backup" ]; then
-                    mv .changeset-backup/*.md .changeset/ 2>/dev/null || true
-                    rmdir .changeset-backup 2>/dev/null || true
-                    echo "Restored backed up changesets"
-                  fi
-
             - name: Commit and push changes
               if: steps.check-changesets.outputs.has_changesets == 'true' && steps.extract-tag.outputs.tag == 'latest'
               run: |
                   git add .
-                  git commit -m "chore: release 1st-gen packages #publish" || echo "No changes to commit"
+                  git commit -m "chore: release packages #publish" || echo "No changes to commit"
                   git push
 
             - name: Create git tag
