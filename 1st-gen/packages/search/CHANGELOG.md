@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.11.0
+
+### Patch Changes
+
+- Updated dependencies [[`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
+    - @spectrum-web-components/base@1.11.0
+    - @spectrum-web-components/textfield@1.11.0
+    - @spectrum-web-components/button@1.11.0
+    - @spectrum-web-components/icon@1.11.0
+    - @spectrum-web-components/icons-workflow@1.11.0
+
 ## 1.10.0
 
 ### Patch Changes
