@@ -70,7 +70,7 @@ The docs are organized into three main sections to help you find the information
 
 **[Style Guide](./02_style-guide/README.md)** - Comprehensive style guide covering project-wide conventions and area-specific rules. This section is useful for human reference and for AI-assisted work, documenting our approaches to linting, JSDoc conventions, component structure, and other coding standards.
 
-**[Accessbility Guide](./04_accessbility_guides/README.md)** - Accessibility guide covering essential accessibility knowledge and practices for customers and contributors to Spectrum Web Components.
+**[Accessibility Guide](./04_accessibility_guides/README.md)** - Accessibility guide covering essential accessibility knowledge and practices for customers and contributors to Spectrum Web Components.
 
 **[Project Planning](./03_project-planning/README.md)** - Strategic planning documentation including objectives, workstreams, component roadmaps, and milestones. This section contains:
 
