@@ -1,4 +1,6 @@
 import { Meta } from '@storybook/addon-docs/blocks';
+import safariSettings from './assets/images/safari-keyboard-settings.jpg';
+import macOsSettings from './assets/images/mac-keyboard-settings.jpg';
 
 <Meta title="Accessibility guides/Keyboard testing" />
 
@@ -49,6 +51,8 @@ To enable keyboard navigation system-wide on MacOS:
 
 This setting allows you to use <kbd>Tab</kbd> to navigate to all controls, not just text fields and lists.
 
+<img src={macOsSettings} alt="MacOS System Settings, Keyboard Navigation" />
+
 ### Safari browser settings
 
 Safari requires an additional setting to enable full keyboard navigation:
@@ -56,6 +60,11 @@ Safari requires an additional setting to enable full keyboard navigation:
 1. Open **Safari** and go to **Settings** (or Preferences)
 2. Navigate to the **Advanced** tab
 3. Under **Accessibility**, check **"Press Tab to highlight each item on a webpage"**
+
+<img
+    src={safariSettings}
+    alt="Safari Settings, Advanced Tab, Press Tab to highlight"
+/>
 
 ### Other browsers
 
@@ -102,16 +111,16 @@ Different component types have specific keyboard conventions based on [W3C ARIA 
 
 Use this checklist when testing keyboard accessibility:
 
-[ ] **All interactive elements are focusable**: Can you reach every button, link, form control, and custom widget using <kbd>Tab</kbd>?
-[ ] **Focus is visible**: Can you always see where focus is on the page?
-[ ] **No keyboard traps**: Can you navigate away from every element and section?
-[ ] **Logical focus order**: Does focus move in a predictable order matching visual layout (generally left-to-right, top-to-bottom)?
-[ ] **Skip links work**: Can you skip past navigation to main content?
-[ ] **All actions are keyboard-operable**: Can you perform every action that's possible with a mouse?
-[ ] **Escape closes overlays**: Do modals, menus, and popovers close with <kbd>Escape</kbd>?
-[ ] **Focus returns appropriately**: After closing a modal, does focus return to the element that opened it?
-[ ] **Arrow key patterns work**: Do tabs, menus, and other compound widgets respond to arrow keys correctly?
-[ ] **Disabled elements are handled correctly**: Disabled elements should either be skipped by tab or clearly indicate their disabled state
+- [ ] **All interactive elements are focusable**: Can you reach every button, link, form control, and custom widget using <kbd>Tab</kbd>?
+- [ ] **Focus is visible**: Can you always see where focus is on the page?
+- [ ] **No keyboard traps**: Can you navigate away from every element and section?
+- [ ] **Logical focus order**: Does focus move in a predictable order matching visual layout (generally left-to-right, top-to-bottom)?
+- [ ] **Skip links work**: Can you skip past navigation to main content?
+- [ ] **All actions are keyboard-operable**: Can you perform every action that's possible with a mouse?
+- [ ] **Escape closes overlays**: Do modals, menus, and popovers close with <kbd>Escape</kbd>?
+- [ ] **Focus returns appropriately**: After closing a modal, does focus return to the element that opened it?
+- [ ] **Arrow key patterns work**: Do tabs, menus, and other compound widgets respond to arrow keys correctly?
+- [ ] **Disabled elements are handled correctly**: Disabled elements should either be skipped by tab or clearly indicate their disabled state
 
 ## Interactive examples
 
