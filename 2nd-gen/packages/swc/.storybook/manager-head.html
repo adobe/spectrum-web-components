@@ -1,0 +1,35 @@
+<link rel="preconnect" href="https://use.typekit.net" />
+<link rel="dns-prefetch" href="https://use.typekit.net" />
+<!-- For Adobe Clean font support in Storybook manager UI -->
+<link rel="stylesheet" href="https://use.typekit.net/evk7lzt.css" />
+<script src="https://use.typekit.net/evk7lzt.js"></script>
+<script>
+    try {
+        Typekit.load({
+            async: true,
+            events: {
+                active: function () {
+                    document.dispatchEvent(new Event('typekit-loaded'));
+                },
+            },
+        });
+    } catch (e) {
+        console.error('Typekit failed to load:', e);
+    }
+</script>
+
+<style>
+    /* Force Adobe Clean font on all Storybook manager elements */
+    body,
+    #storybook-root,
+    .sidebar-container,
+    .sidebar-header,
+    .sidebar-item,
+    button,
+    input,
+    select,
+    textarea,
+    * {
+        font-family: var(--swc-sans-font-family-stack) !important;
+    }
+</style>

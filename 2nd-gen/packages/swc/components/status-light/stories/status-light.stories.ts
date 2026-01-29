@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,12 +9,17 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { html, TemplateResult } from 'lit';
-import { styleMap } from 'lit/directives/style-map.js';
+import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { StatusLight } from '@adobe/spectrum-wc/status-light';
+import {
+    STATUSLIGHT_VARIANTS_COLOR_S2,
+    STATUSLIGHT_VARIANTS_SEMANTIC_S2,
+    StatusLightColorVariantS2,
+    StatusLightSemanticVariantS2,
+} from '@spectrum-web-components/core/components/status-light';
 
 import '@adobe/spectrum-wc/status-light';
 
@@ -36,149 +41,277 @@ argTypes.size = {
     options: StatusLight.VALID_SIZES,
 };
 
-args['default-slot'] = 'Status light';
-args.size = 'm';
-
+/**
+ * Status lights describe the condition of an entity. Much like [badges](../?path=/docs/components-badge--readme), they can be used to convey semantic meaning, such as statuses and categories.
+ */
 const meta: Meta = {
     title: 'Status light',
     component: 'swc-status-light',
-    argTypes,
-    parameters: {},
+    parameters: {
+        docs: {
+            subtitle: `Status lights convey semantic meaning through colored dots accompanied by descriptive text.`,
+        },
+        design: {
+            type: 'figma',
+            url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=36797-954',
+        },
+        stackblitz: {
+            url: 'https://stackblitz.com/edit/vitejs-vite-y2kz1rkx?file=package.json',
+        },
+        flexLayout: 'row-wrap',
+    },
     args,
+    argTypes,
     render: (args) => template(args),
     tags: ['migrated'],
 };
 
 export default meta;
 
-// ───────────────
-//    STORIES
-// ───────────────
+// ────────────────────
+//    HELPERS
+// ────────────────────
 
-type StatusLightVariant = typeof StatusLight.prototype.variant;
-type StatusLightSize = typeof StatusLight.prototype.size;
+const semanticLabels = {
+    info: 'Active',
+    neutral: 'Archived',
+    positive: 'Approved',
+    notice: 'Pending approval',
+    negative: 'Rejected',
+} as const satisfies Record<StatusLightSemanticVariantS2, string>;
 
-/**
- * Status lights should always include a label with text that clearly communicates the kind of status being shown. Color
- * alone is not enough to communicate the status. Do not change the text color to match the dot.
- */
-export const Default: Story = {};
+const nonSemanticLabels = {
+    yellow: 'Operations',
+    chartreuse: 'Quality',
+    celery: 'Documentation',
+    seafoam: 'Support',
+    cyan: 'Analytics',
+    indigo: 'Engineering',
+    purple: 'Product',
+    fuchsia: 'Marketing',
+    magenta: 'Design',
+    pink: 'Creative',
+    turquoise: 'Training',
+    brown: 'Facilities',
+    cinnamon: 'Compliance',
+    silver: 'Version 1.2.10',
+} as const satisfies Record<StatusLightColorVariantS2, string>;
 
-/** When the text is too long for the horizontal space available, it wraps to form another line. */
-export const TextWrapping: Story = {
-    render: () =>
-        html` <swc-status-light style="max-inline-size: 200px">
-            This is a very long status light label that wraps when it reaches
-            its max inline size
-        </swc-status-light>`,
-    tags: ['!dev'],
+// ────────────────────
+//    AUTODOCS STORY
+// ────────────────────
+
+export const Playground: Story = {
+    tags: ['autodocs', 'dev'],
+    args: {
+        size: 'm',
+        variant: 'info',
+        'default-slot': 'Active',
+    },
 };
-TextWrapping.storyName = 'Text wrapping';
+
+// ────────────────────
+//    OVERVIEW STORY
+// ────────────────────
+
+export const Overview: Story = {
+    tags: ['overview'],
+    args: {
+        size: 'm',
+        variant: 'info',
+        'default-slot': 'Active',
+    },
+};
+
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
 
 /**
- * When status lights have a semantic meaning, they use semantic colors. Use these variants for the following statuses:
- * - Informative (active, in use, live, published)
- * - Neutral (archived, deleted, paused, draft, not started, ended)
- * - Positive (approved, complete, success, new, purchased, licensed)
- * - Notice (needs approval, pending, scheduled, syncing, indexing, processing)
- * - Negative (error, alert, rejected, failed)
+ * A status light consists of:
  *
- * Semantic status lights should never be used for color coding categories or labels, and vice versa.
+ * 1. **Colored dot indicator** - Visual representation of status or category
+ * 2. **Text label** - Descriptive text providing context
+ *
+ * ### Content
+ *
+ * - **Default slot**: Text content describing the status or category (required for accessibility)
  */
-export const SemanticVariants: Story = {
-    render: () =>
-        CONTAINER(
-            StatusLight.VARIANTS_SEMANTIC.map(
-                (variant: StatusLightVariant) => html`
-                    <swc-status-light variant="${variant as StatusLightVariant}"
-                        >${capitalize(variant)}</swc-status-light
-                    >
-                `
-            )
-        ),
-    tags: ['!dev'],
+export const Anatomy: Story = {
+    render: (args) => html`
+        ${template({
+            ...args,
+            variant: 'positive',
+            'default-slot': 'Approved',
+        })}
+    `,
+    tags: ['anatomy'],
+    args: {
+        size: 'm',
+    },
 };
-SemanticVariants.storyName = 'Semantic variants';
+
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
 
 /**
- * When status lights are used to color code categories and labels that are commonly found in data visualization,
- * they use label colors. The ideal usage for these is when there are 8 or fewer categories or labels being color coded.
- */
-export const NonsemanticVariants: Story = {
-    render: () =>
-        CONTAINER(
-            StatusLight.VARIANTS_COLOR.map(
-                (variant: StatusLightVariant) => html`
-                    <swc-status-light variant="${variant as StatusLightVariant}"
-                        >${capitalize(variant)}</swc-status-light
-                    >
-                `
-            )
-        ),
-    tags: ['!dev'],
-};
-NonsemanticVariants.storyName = 'Non-semantic variants';
-
-/**
- * Status lights come in four different sizes: small, medium, large, and extra-large. The medium size is the
- * default and most frequently used option. Use the other sizes sparingly; they should be used to create a
- * hierarchy of importance within the page.
+ * Status lights come in four sizes to fit various contexts:
+ *
+ * - **Small (`s`)**: Used for inline indicators or space-constrained areas
+ * - **Medium (`m`)**: Default size, used for typical use cases
+ * - **Large (`l`)**: Used for prominent displays or primary content areas
+ * - **Extra-large (`xl`)**: Maximum visibility for high-priority statuses
+ *
+ * All sizes shown below for comparison.
  */
 export const Sizes: Story = {
-    render: () =>
-        CONTAINER(
-            StatusLight.VALID_SIZES.map(
-                (size: StatusLightSize) => html`
-                    <swc-status-light size="${size}"
-                        >${sizeMap(size)}</swc-status-light
-                    >
-                `
-            )
-        ),
-    tags: ['!dev'],
+    render: (args) => html`
+        ${template({ ...args, size: 's', 'default-slot': 'Small' })}
+        ${template({ ...args, size: 'm', 'default-slot': 'Medium' })}
+        ${template({ ...args, size: 'l', 'default-slot': 'Large' })}
+        ${template({ ...args, size: 'xl', 'default-slot': 'Extra-large' })}
+    `,
+    parameters: { 'section-order': 1 },
+    tags: ['options'],
+};
+/**
+ * Semantic variants provide meaning through color:
+ *
+ * - **`info`**: Active, in use, live, published
+ * - **`neutral`**: Archived, deleted, paused, draft, not started, ended
+ * - **`positive`**: Approved, complete, success, new, purchased, licensed
+ * - **`notice`**: Needs approval, pending, scheduled, syncing, indexing, processing
+ * - **`negative`**: Error, alert, rejected, failed
+ */
+export const SemanticVariants: Story = {
+    render: (args) => html`
+        ${STATUSLIGHT_VARIANTS_SEMANTIC_S2.map(
+            (variant: StatusLightSemanticVariantS2) =>
+                template({
+                    ...args,
+                    variant,
+                    'default-slot': semanticLabels[variant],
+                })
+        )}
+    `,
+    parameters: { 'section-order': 2 },
+    tags: ['options'],
 };
 
-// ────────────────────────
-//    HELPER FUNCTIONS
-// ────────────────────────
+/**
+ * Non-semantic variants use color-coded categories, ideal for data visualization and labeling.
+ * Best used when there are **8 or fewer** categories being color coded.
+ *
+ * **Note**: The `pink`, `turquoise`, `brown`, `cinnamon`, and `silver` variants are new in 2nd-gen and not available in 1st-gen.
+ */
+export const NonSemanticVariants: Story = {
+    render: (args) => html`
+        ${STATUSLIGHT_VARIANTS_COLOR_S2.map(
+            (variant: StatusLightColorVariantS2) =>
+                template({
+                    ...args,
+                    variant,
+                    'default-slot': nonSemanticLabels[variant],
+                })
+        )}
+    `,
+    parameters: { 'section-order': 3 },
+    tags: ['options'],
+};
+NonSemanticVariants.storyName = 'Non-semantic variants';
 
-/* @todo Pull this up into a utility function for all components to leverage */
-function capitalize(str?: string): string {
-    if (typeof str !== 'string') {
-        return '';
-    }
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
 
-/* @todo Pull this up into a utility function for more components to leverage. Are all sizes accounted for? */
-function sizeMap(str?: StatusLightSize): string {
-    const sizeLabels = {
-        labels: {
-            xxs: 'Extra-extra-small',
-            xs: 'Extra-small',
-            s: 'Small',
-            m: 'Medium',
-            l: 'Large',
-            xl: 'Extra-large',
-            xxl: 'Extra-extra-large',
-        },
-    };
-
-    return str ? sizeLabels.labels[str] : '';
-}
-
-/* @todo Pull this up into a decorator for all stories to leverage */
-function CONTAINER(content: TemplateResult<1>[]): TemplateResult {
-    return html`<div
-        style=${styleMap({
-            display: 'flex',
-            gap: 'var(--swc-spacing-200)',
-            'flex-wrap': 'wrap',
-            'justify-content': 'center',
-            // Used 80ch because that's generally considered the maximum readable width for text in a web page.
-            'max-inline-size': '80ch',
+/**
+ * When the text is too long for the horizontal space available, it wraps to form another line.
+ * You can control the wrapping behavior by setting a `max-inline-size` style on the component.
+ */
+export const TextWrapping: Story = {
+    render: (args) => html`
+        ${template({
+            ...args,
+            variant: 'positive',
+            'default-slot':
+                'Document processing in progress - please wait while we validate your submission',
+            style: 'max-inline-size: 200px',
         })}
-    >
-        ${content}
-    </div>`;
-}
+    `,
+    tags: ['behaviors'],
+};
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+/**
+ * ### Features
+ *
+ * The `<swc-status-light>` element implements several accessibility features:
+ *
+ * #### Visual accessibility
+ *
+ * - Status information is conveyed through both color and text labels, not relying on color alone
+ * - High contrast mode is supported with appropriate color overrides
+ * - Sufficient color contrast is maintained between the status dot and background
+ *
+ * #### Semantic meaning
+ *
+ * - Semantic variants provide consistent color associations for common statuses
+ * - Text labels provide clear context for all users
+ *
+ * ### Best practices
+ *
+ * - Always provide a descriptive text label that explains the status
+ * - Use semantic variants (`info`, `positive`, `negative`, `notice`, `neutral`) when the status has specific meaning
+ * - Use meaningful, specific labels (e.g., "Approved" instead of "Green")
+ * - Ensure sufficient color contrast between the status light and its background
+ * - For non-semantic variants, ensure the text label provides complete context
+ */
+export const Accessibility: Story = {
+    render: (args) => html`
+        ${template({
+            ...args,
+            variant: 'positive',
+            'default-slot': semanticLabels['positive'],
+        })}
+        ${template({
+            ...args,
+            variant: 'negative',
+            'default-slot': semanticLabels['negative'],
+        })}
+        ${template({
+            ...args,
+            variant: 'notice',
+            'default-slot': semanticLabels['notice'],
+        })}
+        ${template({
+            ...args,
+            variant: 'info',
+            'default-slot': semanticLabels['info'],
+        })}
+        ${template({
+            ...args,
+            variant: 'neutral',
+            'default-slot': semanticLabels['neutral'],
+        })}
+        ${template({
+            ...args,
+            variant: 'celery',
+            'default-slot': nonSemanticLabels['celery'],
+        })}
+        ${template({
+            ...args,
+            variant: 'yellow',
+            'default-slot': nonSemanticLabels['yellow'],
+        })}
+        ${template({
+            ...args,
+            variant: 'silver',
+            'default-slot': nonSemanticLabels['silver'],
+        })}
+    `,
+    tags: ['a11y'],
+};

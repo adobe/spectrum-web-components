@@ -13,7 +13,12 @@
     },
     "exclude": ["node_modules", "dist"],
     "extends": "../../tsconfig.json",
-    "include": ["**/*.ts", "vite-env.d.ts"],
+    "include": [
+        "**/*.ts",
+        "**/*.d.ts",
+        "vite-env.d.ts",
+        ".storybook/storybook-env.d.ts"
+    ],
     "references": [
         {
             "path": "../core"
