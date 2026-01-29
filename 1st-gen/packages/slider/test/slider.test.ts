@@ -2067,7 +2067,7 @@ describe('Slider', () => {
             const tooltips = el.shadowRoot.querySelectorAll('.value-tooltip');
             expect(tooltips[0].textContent?.trim()).to.equal('40');
         });
-        it('value tooltips have proper aria attributes for accessibility', async () => {
+        it('value tooltips are hidden from screen readers', async () => {
             const el = await fixture<Slider>(html`
                 <sp-slider min="0" max="100" label-visibility="none">
                     <sp-slider-handle
@@ -2088,10 +2088,40 @@ describe('Slider', () => {
             await elementUpdated(el);
 
             const tooltips = el.shadowRoot.querySelectorAll('.value-tooltip');
-            expect(tooltips[0].getAttribute('role')).to.equal('status');
-            expect(tooltips[0].getAttribute('aria-live')).to.equal('polite');
-            expect(tooltips[1].getAttribute('role')).to.equal('status');
-            expect(tooltips[1].getAttribute('aria-live')).to.equal('polite');
+            // Tooltips should be hidden from screen readers since aria-valuetext
+            // on the input already provides the value to assistive technology
+            expect(tooltips[0].getAttribute('aria-hidden')).to.equal('true');
+            expect(tooltips[1].getAttribute('aria-hidden')).to.equal('true');
+        });
+        it('shows formatted value in tooltip when formatOptions is set', async () => {
+            const el = await fixture<Slider>(html`
+                <sp-slider
+                    min="0"
+                    max="1"
+                    label-visibility="none"
+                    .formatOptions=${{ style: 'percent' }}
+                >
+                    <sp-slider-handle
+                        slot="handle"
+                        name="min"
+                        label="Minimum"
+                        value="0.25"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        slot="handle"
+                        name="max"
+                        label="Maximum"
+                        value="0.75"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `);
+
+            await elementUpdated(el);
+
+            const tooltips = el.shadowRoot.querySelectorAll('.value-tooltip');
+            // Formatted values should include the percent symbol
+            expect(tooltips[0].textContent?.trim()).to.include('%');
+            expect(tooltips[1].textContent?.trim()).to.include('%');
         });
     });
 });

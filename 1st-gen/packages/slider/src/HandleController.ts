@@ -64,6 +64,7 @@ export class HandleController {
     private handleOrder: string[] = [];
     private draggingHandle?: SliderHandle;
     private handleRefMap?: WeakMap<SliderHandle, HandleReference>;
+    private _hasWarnedAboutMissingLabels = false;
 
     constructor(host: Slider) {
         this.host = host;
@@ -587,11 +588,7 @@ export class HandleController {
                 />
                 ${showValueTooltip
                     ? html`
-                          <span
-                              class="value-tooltip"
-                              role="status"
-                              aria-live="polite"
-                          >
+                          <span class="value-tooltip" aria-hidden="true">
                               ${formattedValue}
                           </span>
                       `
@@ -736,11 +733,16 @@ export class HandleController {
         });
 
         // Warn if multi-handle slider has handles without labels (accessibility requirement)
-        if (window.__swc?.DEBUG && isMultiHandle) {
+        if (
+            window.__swc?.DEBUG &&
+            isMultiHandle &&
+            !this._hasWarnedAboutMissingLabels
+        ) {
             const handlesWithoutLabels = handles.filter(
                 (handle) => handle !== this.host && !handle.label?.length
             );
             if (handlesWithoutLabels.length > 0) {
+                this._hasWarnedAboutMissingLabels = true;
                 window.__swc.warn(
                     this.host,
                     `Multi-handle sliders require a \`label\` attribute on each <sp-slider-handle> for accessibility. ${handlesWithoutLabels.length} handle(s) are missing labels.`,

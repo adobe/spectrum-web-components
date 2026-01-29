@@ -529,8 +529,13 @@ Multi-handle sliders must always have visible labels to ensure their purpose is 
 When using `label-visibility="none"` or `label-visibility="text"` with multi-handle sliders (hiding the value labels), value tooltips will automatically appear on hover and focus to show each handle's current value. This ensures users can still identify individual handle values even when the combined value label is hidden.
 
 ```html
-<sp-slider step="1" min="0" max="255" label-visibility="none">
-    Output Levels
+<sp-slider
+    label="Output Levels"
+    step="1"
+    min="0"
+    max="255"
+    label-visibility="none"
+>
     <sp-slider-handle
         slot="handle"
         name="min"

@@ -160,7 +160,7 @@
 .value-tooltip {
     position: absolute;
     bottom: calc(100% + 8px);
-    left: 50%;
+    inset-inline-start: 50%;
     transform: translateX(-50%);
     padding: var(--spectrum-global-dimension-size-50, 4px) var(--spectrum-global-dimension-size-100, 8px);
     background-color: var(--spectrum-tooltip-background-color, var(--spectrum-global-color-gray-900));
@@ -175,19 +175,28 @@
         opacity var(--spectrum-animation-duration-100, 130ms) ease-in-out,
         visibility var(--spectrum-animation-duration-100, 130ms) ease-in-out;
     pointer-events: none;
-    z-index: 1;
+    z-index: 10;
 }
+
+:host([dir="rtl"]) .value-tooltip {
+    transform: translateX(50%);
+}
+
 
 /* Tooltip arrow/tip */
 .value-tooltip:after {
     content: "";
     position: absolute;
     top: 100%;
-    left: 50%;
+    inset-inline-start: 50%;
     transform: translateX(-50%);
     border-width: 4px;
     border-style: solid;
     border-color: var(--spectrum-tooltip-background-color, var(--spectrum-global-color-gray-900)) transparent transparent;
+}
+
+:host([dir="rtl"]) .value-tooltip:after {
+    transform: translateX(50%);
 }
 
 /* Show tooltip on hover and focus within handle */
@@ -210,4 +219,14 @@
     .value-tooltip:after {
         border-color: CanvasText transparent transparent;
     }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .value-tooltip {
+        transition: none;
+    }
+}
+
+:host([disabled]) .value-tooltip {
+    display: none;
 }
