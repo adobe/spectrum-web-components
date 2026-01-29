@@ -519,6 +519,42 @@ Every slider should have a label. A slider without a label is ambiguous and not 
 
 In rare cases where context is sufficient and a label doesn't require visibility, make sure to have the design reviewed and approved by an accessibility expert. Use [`label-visibility`](#label-visibility) to set which labels should remain visible, and non-visible labels will still be read by assistive technology.
 
+#### Multi-handle slider labels
+
+Multi-handle sliders must always have visible labels to ensure their purpose is clear to all users. Each handle in a multi-handle slider should have:
+
+1. A descriptive `label` attribute that explains what the handle represents (e.g., "Minimum", "Maximum")
+2. A visible value indicator so users can see the current value of each handle
+
+When using `label-visibility="none"` or `label-visibility="text"` with multi-handle sliders (hiding the value labels), value tooltips will automatically appear on hover and focus to show each handle's current value. This ensures users can still identify individual handle values even when the combined value label is hidden.
+
+```html
+<sp-slider step="1" min="0" max="255" label-visibility="none">
+    Output Levels
+    <sp-slider-handle
+        slot="handle"
+        name="min"
+        label="Minimum"
+        value="5"
+    ></sp-slider-handle>
+    <sp-slider-handle
+        slot="handle"
+        name="max"
+        label="Maximum"
+        value="250"
+    ></sp-slider-handle>
+</sp-slider>
+```
+
+For optimal accessibility:
+
+- Always provide a `label` attribute on each `<sp-slider-handle>` to describe its purpose
+- The slider's value label displays all handle values (e.g., "5 - 250" for a range slider)
+- Screen readers announce the `aria-valuetext` for each handle, which includes the formatted value
+- When value labels are hidden, tooltips appear on hover/focus to display individual handle values
+
+See the [WAI-ARIA Slider Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/slider/) and [Deque University Slider](https://dequeuniversity.com/library/aria/slider) for additional guidance.
+
 #### Keyboard navigation
 
 The <kbd>Tab</kbd> and <kbd>Shift+Tab</kbd> keys are used to navigate to and set focus on the slider control. The <kbd>Arrow Up (&uarr;)</kbd> and <kbd>Arrow Down (&darr;)</kbd> keys are used to increment the slider value, respectively.

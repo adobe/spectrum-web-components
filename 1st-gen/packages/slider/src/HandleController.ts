@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
 import {
     classMap,
     ifDefined,
@@ -528,10 +528,21 @@ export class HandleController {
         zIndex: number,
         isMultiHandle: boolean
     ): TemplateResult {
+        const formattedValue = this.formattedValueForHandle(model);
+
+        // Show value tooltip for multi-handle sliders when value label is not visible
+        // This ensures users can always see the current value of each handle on hover/focus
+        // Per WCAG 3.3.2: Multi-handle sliders must have visible labels
+        const showValueTooltip =
+            isMultiHandle &&
+            (this.host.labelVisibility === 'none' ||
+                this.host.labelVisibility === 'text');
+
         const classes = {
             handle: true,
             dragging: this.draggingHandle?.handleName === model.name,
             'handle-highlight': model.highlight,
+            'show-value-tooltip': showValueTooltip,
         };
         const style = {
             [this.host.isLTR ? 'left' : 'right']: `${
@@ -544,6 +555,7 @@ export class HandleController {
             }),
         };
         const ariaLabelledBy = isMultiHandle ? `label input-${index}` : 'label';
+
         return html`
             <div
                 class=${classMap(classes)}
@@ -565,7 +577,7 @@ export class HandleController {
                     tabindex=${ifDefined(this.host.editable ? -1 : undefined)}
                     aria-label=${ifDefined(model.ariaLabel)}
                     aria-labelledby=${ariaLabelledBy}
-                    aria-valuetext=${this.formattedValueForHandle(model)}
+                    aria-valuetext=${formattedValue}
                     aria-describedby="slider-description"
                     @change=${this.onInputChange}
                     @focus=${this.onInputFocus}
@@ -573,6 +585,17 @@ export class HandleController {
                     @keydown=${this.onInputKeydown}
                     .model=${model}
                 />
+                ${showValueTooltip
+                    ? html`
+                          <span
+                              class="value-tooltip"
+                              role="status"
+                              aria-live="polite"
+                          >
+                              ${formattedValue}
+                          </span>
+                      `
+                    : nothing}
                 <span id="slider-description">
                     Press escape or double click to reset the slider to its
                     default value.
@@ -681,6 +704,8 @@ export class HandleController {
             return result;
         };
 
+        const isMultiHandle = handles.length > 1;
+
         const modelValues = handles.map((handle, index) => {
             const rangeAndClamp = getRangeAndClamp(index);
             const { toNormalized } = handle.normalization;
@@ -709,6 +734,21 @@ export class HandleController {
             };
             return model;
         });
+
+        // Warn if multi-handle slider has handles without labels (accessibility requirement)
+        if (window.__swc?.DEBUG && isMultiHandle) {
+            const handlesWithoutLabels = handles.filter(
+                (handle) => handle !== this.host && !handle.label?.length
+            );
+            if (handlesWithoutLabels.length > 0) {
+                window.__swc.warn(
+                    this.host,
+                    `Multi-handle sliders require a \`label\` attribute on each <sp-slider-handle> for accessibility. ${handlesWithoutLabels.length} handle(s) are missing labels.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/slider/#multi-handle-slider-labels',
+                    { level: 'low' }
+                );
+            }
+        }
 
         this.model = modelValues;
     }
