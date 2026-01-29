@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -19,20 +19,7 @@ import { Badge } from '@adobe/swc/badge';
 
 import '@adobe/swc/badge';
 
-import {
-    testBadgeDefaults,
-    testDefaultSlotContent,
-    testFixedProperty,
-    testFixedPropertySetViaAttribute,
-    testIconSlot,
-    testOutlinePropertyReflection,
-    testOutlinePropertySetViaAttribute,
-    testSizeProperty,
-    testSizePropertySetViaAttribute,
-    testSubtlePropertyReflection,
-    testSubtlePropertySetViaAttribute,
-    testVariantPropertyReflection,
-} from '../test/badge.test.js';
+import { applyStoryTests } from '../../../utils/storybook-tests.js';
 
 // ────────────────
 //    METADATA
@@ -94,12 +81,6 @@ export const Default: Story = {
     args: {
         size: 'm',
     },
-    play: async ({ canvasElement }) => {
-        const badge = canvasElement.querySelector('swc-badge') as Badge;
-
-        await testBadgeDefaults(badge);
-        await testDefaultSlotContent(badge);
-    },
 };
 
 /**
@@ -108,11 +89,6 @@ export const Default: Story = {
 export const WithIcon: Story = {
     args: {
         ['icon-slot']: '✓',
-    },
-    play: async ({ canvasElement }) => {
-        const badge = canvasElement.querySelector('swc-badge') as Badge;
-
-        await testIconSlot(badge);
     },
     tags: ['!dev'],
 };
@@ -123,11 +99,6 @@ export const WithIcon: Story = {
 export const SemanticVariants: Story = {
     args: {
         variant: 'positive',
-    },
-    play: async ({ canvasElement }) => {
-        const badge = canvasElement.querySelector('swc-badge') as Badge;
-
-        await testVariantPropertyReflection(badge);
     },
     tags: ['!dev'],
 };
@@ -144,12 +115,6 @@ export const Outline: Story = {
     },
     args: {
         outline: true,
-    },
-    play: async ({ canvasElement }) => {
-        const badge = canvasElement.querySelector('swc-badge') as Badge;
-
-        await testOutlinePropertyReflection(badge);
-        await testOutlinePropertySetViaAttribute(badge);
     },
     tags: ['!dev'],
 };
@@ -175,12 +140,6 @@ export const Sizes: Story = {
     args: {
         size: 'l',
     },
-    play: async ({ canvasElement }) => {
-        const badge = canvasElement.querySelector('swc-badge') as Badge;
-
-        await testSizeProperty(badge);
-        await testSizePropertySetViaAttribute(badge);
-    },
     tags: ['!dev'],
 };
 
@@ -191,12 +150,6 @@ export const Subtle: Story = {
     args: {
         subtle: true,
     },
-    play: async ({ canvasElement }) => {
-        const badge = canvasElement.querySelector('swc-badge') as Badge;
-
-        await testSubtlePropertyReflection(badge);
-        await testSubtlePropertySetViaAttribute(badge);
-    },
     tags: ['!dev'],
 };
 
@@ -206,12 +159,6 @@ export const Subtle: Story = {
 export const Fixed: Story = {
     args: {
         fixed: 'inline-start',
-    },
-    play: async ({ canvasElement }) => {
-        const badge = canvasElement.querySelector('swc-badge') as Badge;
-
-        await testFixedProperty(badge);
-        await testFixedPropertySetViaAttribute(badge);
     },
     tags: ['!dev'],
 };
@@ -243,3 +190,14 @@ function CONTAINER(content: TemplateResult<1>[]): TemplateResult {
         ${content}
     </div>`;
 }
+
+applyStoryTests(import.meta.url, {
+    Default,
+    WithIcon,
+    SemanticVariants,
+    Outline,
+    ColorVariants,
+    Sizes,
+    Subtle,
+    Fixed,
+});

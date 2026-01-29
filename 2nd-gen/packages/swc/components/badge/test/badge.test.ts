@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -13,6 +13,10 @@
 import { expect } from '@storybook/test';
 
 import type { Badge } from '@adobe/swc/badge';
+
+type StoryTestContext = {
+    canvasElement: HTMLElement;
+};
 
 import '@adobe/swc/badge';
 
@@ -144,17 +148,42 @@ const testIconSlot = async (badge: Badge) => {
     await expect(slottedIcon?.textContent?.trim()).toBeTruthy();
 };
 
-export {
-    testBadgeDefaults,
-    testVariantPropertyReflection,
-    testSubtlePropertyReflection,
-    testSubtlePropertySetViaAttribute,
-    testOutlinePropertyReflection,
-    testOutlinePropertySetViaAttribute,
-    testFixedProperty,
-    testFixedPropertySetViaAttribute,
-    testSizeProperty,
-    testSizePropertySetViaAttribute,
-    testDefaultSlotContent,
-    testIconSlot,
+const getBadge = (context: StoryTestContext): Badge => {
+    return context.canvasElement.querySelector('swc-badge') as Badge;
+};
+
+export const storyTests = {
+    Default: async (context: StoryTestContext) => {
+        const badge = getBadge(context);
+        await testBadgeDefaults(badge);
+        await testDefaultSlotContent(badge);
+    },
+    WithIcon: async (context: StoryTestContext) => {
+        const badge = getBadge(context);
+        await testIconSlot(badge);
+    },
+    SemanticVariants: async (context: StoryTestContext) => {
+        const badge = getBadge(context);
+        await testVariantPropertyReflection(badge);
+    },
+    Outline: async (context: StoryTestContext) => {
+        const badge = getBadge(context);
+        await testOutlinePropertyReflection(badge);
+        await testOutlinePropertySetViaAttribute(badge);
+    },
+    Sizes: async (context: StoryTestContext) => {
+        const badge = getBadge(context);
+        await testSizeProperty(badge);
+        await testSizePropertySetViaAttribute(badge);
+    },
+    Subtle: async (context: StoryTestContext) => {
+        const badge = getBadge(context);
+        await testSubtlePropertyReflection(badge);
+        await testSubtlePropertySetViaAttribute(badge);
+    },
+    Fixed: async (context: StoryTestContext) => {
+        const badge = getBadge(context);
+        await testFixedProperty(badge);
+        await testFixedPropertySetViaAttribute(badge);
+    },
 };

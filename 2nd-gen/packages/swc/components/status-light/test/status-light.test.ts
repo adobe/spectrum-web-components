@@ -18,6 +18,10 @@ import '@adobe/swc/status-light';
 
 import { getSwcTestGlobals } from '../../../utils/test-utils.js';
 
+type StoryTestContext = {
+    canvasElement: HTMLElement;
+};
+
 const testStatusLightDefaults = async (
     statusLight: StatusLight
 ): Promise<void> => {
@@ -198,6 +202,35 @@ const testDisabledAttributeWarning = async (
     swcGlobals.warn = originalWarn;
     swcGlobals.DEBUG = originalDebug;
     swcGlobals.issuedWarnings = originalIssuedWarnings;
+};
+
+const getStatusLight = (context: StoryTestContext): StatusLight => {
+    return context.canvasElement.querySelector(
+        'swc-status-light'
+    ) as StatusLight;
+};
+
+export const storyTests = {
+    Default: async (context: StoryTestContext) => {
+        const statusLight = getStatusLight(context);
+        await testStatusLightDefaults(statusLight);
+        await testDefaultSlotContent(statusLight);
+        await testVariantPropertyReflection(statusLight);
+        await testVariantPropertySetViaAttribute(statusLight);
+        await testSizeProperty(statusLight);
+        await testSizePropertySetViaAttribute(statusLight);
+        await testUnsupportedVariantWarning(statusLight);
+        await testDisabledAttributeWarning(statusLight);
+    },
+    SemanticVariants: async (context: StoryTestContext) => {
+        await testSemanticVariants(context.canvasElement);
+    },
+    NonsemanticVariants: async (context: StoryTestContext) => {
+        await testColorVariants(context.canvasElement);
+    },
+    Sizes: async (context: StoryTestContext) => {
+        await testSizeVariants(context.canvasElement);
+    },
 };
 
 export {
