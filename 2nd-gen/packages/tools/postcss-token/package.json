@@ -19,11 +19,11 @@
     },
     "type": "module",
     "main": "index.js",
-    "types": "index.d.ts",
     "scripts": {
         "test": "vitest --run",
         "test:watch": "vitest --watch"
     },
+    "types": "index.d.ts",
     "dependencies": {
         "@adobe/swc-tokens": "workspace:*"
     },
