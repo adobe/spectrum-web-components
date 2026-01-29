@@ -41,6 +41,7 @@
         "1st-gen",
         "1st-gen/packages/*",
         "1st-gen/tools/*",
+        "1st-gen/projects/*",
         "1st-gen/linters/*",
         "2nd-gen",
         "2nd-gen/packages/*",
