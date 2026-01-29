@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/coachmark",
-    "version": "1.10.0",
+    "version": "1.11.0",
     "publishConfig": {
         "access": "public"
     },
@@ -78,15 +78,15 @@
         "css"
     ],
     "dependencies": {
-        "@spectrum-web-components/asset": "1.10.0",
-        "@spectrum-web-components/base": "1.10.0",
-        "@spectrum-web-components/button": "1.10.0",
-        "@spectrum-web-components/button-group": "1.10.0",
-        "@spectrum-web-components/icon": "1.10.0",
-        "@spectrum-web-components/icons-ui": "1.10.0",
-        "@spectrum-web-components/popover": "1.10.0",
-        "@spectrum-web-components/reactive-controllers": "1.10.0",
-        "@spectrum-web-components/shared": "1.10.0"
+        "@spectrum-web-components/asset": "1.11.0",
+        "@spectrum-web-components/base": "1.11.0",
+        "@spectrum-web-components/button": "1.11.0",
+        "@spectrum-web-components/button-group": "1.11.0",
+        "@spectrum-web-components/icon": "1.11.0",
+        "@spectrum-web-components/icons-ui": "1.11.0",
+        "@spectrum-web-components/popover": "1.11.0",
+        "@spectrum-web-components/reactive-controllers": "1.11.0",
+        "@spectrum-web-components/shared": "1.11.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
