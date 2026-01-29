@@ -19,7 +19,7 @@
         "rootDir": "./",
         "skipLibCheck": true,
         "strict": true,
-        "target": "ES2022",
+        "target": "ES2018",
         "useDefineForClassFields": false
     },
     "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.stories.ts"],
