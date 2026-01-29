@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/clear-button",
-    "version": "1.10.0",
+    "version": "1.11.0",
     "publishConfig": {
         "access": "public"
     },
@@ -49,7 +49,7 @@
         "css"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "1.10.0"
+        "@spectrum-web-components/base": "1.11.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

@@ -1,0 +1,51 @@
+/* stylelint-disable header/header */
+body {
+    margin: 0;
+    font-family: var(--swc-sans-font-family-stack);
+    font-size: var(--swc-body-font-size);
+    font-style: var(--swc-default-font-style);
+    color: var(--swc-neutral-content-color-default, rgb(34 34 34));
+    background-color: var(--swc-background-base-color, rgb(230 230 230));
+}
+
+.swc {
+    /* Gradient that changes with the color theme. */
+    --swc-examples-gradient: linear-gradient(
+        45deg,
+        var(--swc-magenta-1500),
+        var(--swc-blue-1500)
+    );
+
+    /* Gradients that do not change with the color theme, for use in static color backgrounds. */
+    --swc-examples-gradient-static-black: linear-gradient(
+        45deg,
+        rgb(255 241 246),
+        rgb(238 245 255)
+    );
+    --swc-examples-gradient-static-white: linear-gradient(
+        45deg,
+        rgb(64 0 22),
+        rgb(14 24 67)
+    );
+
+    color: var(--swc-neutral-content-color-default);
+    background-color: var(--swc-background-base-color);
+    -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
+}
+
+.swc .swc-examples-static-black {
+    background: var(--swc-examples-gradient-static-black);
+}
+
+.swc .swc-examples-static-white {
+    background: var(--swc-examples-gradient-static-white);
+}
+
+/* --- DOCS STYLES --- */
+
+/* Force the modal wrapper to be contained by the frame not the viewport */
+#root-inner {
+    .swc-Modal-wrapper {
+        inline-size: 100% !important;
+    }
+}

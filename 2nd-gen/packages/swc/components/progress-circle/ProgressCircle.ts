@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -19,18 +19,12 @@ import {
     ProgressCircleBase,
     type ProgressCircleStaticColorS2,
 } from '@spectrum-web-components/core/components/progress-circle';
+import { capitalize } from '@spectrum-web-components/core/shared/utilities';
 
 import progressCircleStyles from './progress-circle.css';
-
-function capitalize(str?: string): string {
-    if (typeof str !== 'string') {
-        return '';
-    }
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
 /**
- * A progress circle component that visually represents the completion progress of a task.
- * Can be used in both determinate (with specific progress value) and indeterminate (loading) states.
+ * Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way.
+ * They can represent determinate (with a specific progress value) or indeterminate (loading) progress.
  *
  * @element swc-progress-circle
  *
