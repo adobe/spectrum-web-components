@@ -10,7 +10,8 @@ This guide provides comprehensive instructions for testing keyboard accessibilit
 
 Whether you're a contributor testing your component implementation or a consumer validating your application's accessibility, this guide will help you ensure that all users can navigate and interact with your interface using only a keyboard.
 
-> **Did you know?** Approximately **[15% of all digital accessibility issues](https://www.deque.com/blog/how-keyboard-testing-improves-digital-accessibility/)** relate to keyboard support gaps, and manual keyboard testing catches issues that automated tools cannot detect.
+> **Did you know?**<br/>
+> Approximately **[15% of all digital accessibility issues](https://www.deque.com/blog/how-keyboard-testing-improves-digital-accessibility/)** relate to keyboard support gaps, and manual keyboard testing catches issues that automated tools cannot detect.
 
 ## Why keyboard accessibility matters
 
@@ -88,8 +89,10 @@ The following table summarizes the core keyboard interactions that all accessibl
 | <kbd>Home</kbd>                      | Move to first item in a list or beginning of text               |
 | <kbd>End</kbd>                       | Move to last item in a list or end of text                      |
 
+<br />
 > ⚠️ **Important for Link Navigation**
-> While buttons use both <kbd>Enter</kbd> and <kbd>Space</kbd> to activate, **links only use <kbd>Enter</kbd> to activate.**
+<br />> While buttons use both <kbd>Enter</kbd> and <kbd>Space</kbd> to
+activate, **links only use <kbd>Enter</kbd> to activate.**
 
 ### Component-specific patterns
 
@@ -107,111 +110,25 @@ Different component types have specific keyboard conventions based on [W3C ARIA 
 | **Radio group**    | <kbd>Tab</kbd> to group, <kbd>Arrow keys</kbd> between options (selection follows focus)                                                                   |
 | **Checkbox group** | <kbd>Tab</kbd> between checkboxes, <kbd>Space</kbd> to toggle                                                                                              |
 
+<br />
+> 💡 **Interactive demonstration**
+<br />> To experience how keyboard interaction should word, try out this
+[demontration site](https://rha11y-tests.netlify.app/keyboard.html). |
+
 ## Testing checklist
 
 Use this checklist when testing keyboard accessibility:
 
-- [ ] **All interactive elements are focusable**: Can you reach every button, link, form control, and custom widget using <kbd>Tab</kbd>?
-- [ ] **Focus is visible**: Can you always see where focus is on the page?
-- [ ] **No keyboard traps**: Can you navigate away from every element and section?
-- [ ] **Logical focus order**: Does focus move in a predictable order matching visual layout (generally left-to-right, top-to-bottom)?
-- [ ] **Skip links work**: Can you skip past navigation to main content?
-- [ ] **All actions are keyboard-operable**: Can you perform every action that's possible with a mouse?
-- [ ] **Escape closes overlays**: Do modals, menus, and popovers close with <kbd>Escape</kbd>?
-- [ ] **Focus returns appropriately**: After closing a modal, does focus return to the element that opened it?
-- [ ] **Arrow key patterns work**: Do tabs, menus, and other compound widgets respond to arrow keys correctly?
-- [ ] **Disabled elements are handled correctly**: Disabled elements should either be skipped by tab or clearly indicate their disabled state
-
-## Interactive examples
-
-The following examples let you practice keyboard testing techniques. Try navigating through each example using only your keyboard.
-
-### Skip links
-
-Skip links allow keyboard users to bypass repetitive navigation and jump directly to main content. Press <kbd>Tab</kbd> once after page load—a skip link should appear.
-
-**What to test:**
-
-1. Press <kbd>Tab</kbd> immediately after loading—the skip link should become visible
-2. Press <kbd>Enter</kbd> to activate the skip link
-3. Focus should move to the main content area
-
-### Visible focus indicators
-
-Focus indicators show which element currently has keyboard focus. They must be clearly visible with sufficient contrast.
-
-**What to test:**
-
-1. Tab through each button and verify focus is clearly visible
-2. Focus indicators should have sufficient contrast (at least 3:1 against adjacent colors)
-3. Disabled button should be skipped or clearly indicate disabled state
-
-### Logical focus order
-
-Focus should follow a logical, predictable order that matches the visual layout.
-
-**What to test:**
-
-1. Tab through the form fields in order
-2. Focus should move: First name → Last name → Email → Submit button
-3. Order should match the visual reading order (left-to-right, top-to-bottom)
-
-### Button vs. link behavior
-
-Buttons and links have different purposes and keyboard behaviors. Understanding the difference is critical for proper implementation.
-
-**What to test:**
-
-1. Focus on the link and press <kbd>Enter</kbd>—it should navigate (or show navigation intent)
-2. Focus on the link and press <kbd>Space</kbd>—it should scroll the page, NOT activate the link
-3. Focus on the button and press <kbd>Enter</kbd>—it should activate
-4. Focus on the button and press <kbd>Space</kbd>—it should also activate
-
-### Modal dialog
-
-Modal dialogs must trap focus within the dialog and return focus when closed.
-
-**What to test:**
-
-1. Press <kbd>Enter</kbd> on "Open modal dialog" button
-2. Focus should move into the modal
-3. Press <kbd>Tab</kbd> repeatedly—focus should cycle within the modal (focus trap)
-4. Press <kbd>Escape</kbd>—the modal should close
-5. Focus should return to the "Open modal dialog" button
-
-### Tabs pattern
-
-Tab interfaces allow keyboard navigation between tab panels using arrow keys.
-
-**What to test:**
-
-1. Press <kbd>Tab</kbd> to focus the tab list
-2. Press <kbd>Arrow Right</kbd>—focus and selection should move to the next tab
-3. Press <kbd>Arrow Left</kbd>—focus and selection should move to the previous tab
-4. Press <kbd>Home</kbd>—focus should move to the first tab
-5. Press <kbd>End</kbd>—focus should move to the last tab
-6. Tab panel content should update as tabs are selected
-
-### Form controls
-
-Different form controls have different keyboard behaviors.
-
-**What to test:**
-
-1. **Radio buttons**: <kbd>Tab</kbd> to the radio group, then use <kbd>Arrow keys</kbd> to move between options (selection follows focus)
-2. **Checkboxes**: <kbd>Tab</kbd> between each checkbox, <kbd>Space</kbd> to toggle
-3. **Select dropdown**: <kbd>Tab</kbd> to focus, <kbd>Space</kbd> or <kbd>Arrow Down</kbd> to open, <kbd>Arrow keys</kbd> to navigate, <kbd>Enter</kbd> to select
-
-### Tooltip
-
-Tooltips should be keyboard-accessible when they provide essential information.
-
-**What to test:**
-
-1. Press <kbd>Tab</kbd> to focus the button
-2. The tooltip should appear when the button receives focus
-3. The tooltip should be readable and not block other content
-4. Press <kbd>Tab</kbd> again—focus should move away and tooltip should hide
+- **All interactive elements are focusable**: Can you reach every button, link, form control, and custom widget using <kbd>Tab</kbd>?
+- **Focus is visible**: Can you always see where focus is on the page?
+- **No keyboard traps**: Can you navigate away from every element and section?
+- **Logical focus order**: Does focus move in a predictable order matching visual layout (generally left-to-right, top-to-bottom)?
+- **Skip links work**: Can you skip past navigation to main content?
+- **All actions are keyboard-operable**: Can you perform every action that's possible with a mouse?
+- **Escape closes overlays**: Do modals, menus, and popovers close with <kbd>Escape</kbd>?
+- **Focus returns appropriately**: After closing a modal, does focus return to the element that opened it?
+- **Arrow key patterns work**: Do tabs, menus, and other compound widgets respond to arrow keys correctly?
+- **Disabled elements are handled correctly**: Disabled elements should either be skipped by tab or clearly indicate their disabled state
 
 ## Common issues and how to fix them
 
