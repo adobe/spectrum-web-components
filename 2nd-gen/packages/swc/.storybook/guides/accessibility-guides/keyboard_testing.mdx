@@ -1,5 +1,153 @@
 import { Meta } from '@storybook/addon-docs/blocks';
+import safariSettings from './assets/images/safari-keyboard-settings.jpg';
+import macOsSettings from './assets/images/mac-keyboard-settings.jpg';
 
 <Meta title="Accessibility guides/Keyboard testing" />
 
-# Keyboard testing
+## Overview
+
+This guide provides comprehensive instructions for testing keyboard accessibility in Spectrum Web Components. Keyboard testing is a critical part of accessibility validation.
+
+Whether you're a contributor testing your component implementation or a consumer validating your application's accessibility, this guide will help you ensure that all users can navigate and interact with your interface using only a keyboard.
+
+> **Did you know?**<br/>
+> Approximately **[15% of all digital accessibility issues](https://www.deque.com/blog/how-keyboard-testing-improves-digital-accessibility/)** relate to keyboard support gaps, and manual keyboard testing catches issues that automated tools cannot detect.
+
+## Why keyboard accessibility matters
+
+Keyboard accessibility ensures that users who cannot or prefer not to use a mouse can still fully interact with web content. This is not just about supporting a specific disability—it's about making interfaces work for everyone.
+
+### Who benefits from keyboard accessibility
+
+- **Users with motor disabilities**: People with limited fine motor control, tremors, paralysis, or repetitive stress injuries who cannot operate a mouse
+- **Screen reader users**: People who are blind or have low vision navigate entirely via keyboard
+- **Voice control users**: Software like Dragon NaturallySpeaking sends keyboard commands to the browser
+- **Power users**: Many sighted users prefer keyboard navigation for speed and efficiency
+- **Situational limitations**: Anyone temporarily unable to use a mouse (broken arm, holding a baby, using a trackpad-less device)
+
+### Common accessibility barriers
+
+Without proper keyboard support, users may encounter:
+
+- **Inaccessible interactive elements**: Custom components that only respond to mouse clicks
+- **Invisible focus**: Users cannot see where they are on the page
+- **Keyboard traps**: Users get stuck in a section and cannot navigate away
+- **Illogical tab order**: Focus jumps randomly instead of following visual flow
+- **Missing skip links**: Users must tab through repetitive content on every page
+
+## Platform setup instructions
+
+> ⚠️ **Important for MacOS and Safari users**
+>
+> By default, MacOS and Safari do not enable full keyboard navigation. You must manually enable these settings before testing keyboard accessibility. **This is the most commonly overlooked setup step.**
+
+### MacOS keyboard navigation
+
+To enable keyboard navigation system-wide on MacOS:
+
+1. Open **System Settings** (or System Preferences on older versions)
+2. Navigate to **Keyboard**
+3. Enable **"Keyboard navigation"** toggle
+    - On older MacOS versions, go to **Shortcuts** tab and select **"All controls"** under "Full Keyboard Access"
+
+This setting allows you to use <kbd>Tab</kbd> to navigate to all controls, not just text fields and lists.
+
+<img src={macOsSettings} alt="MacOS System Settings, Keyboard Navigation" />
+
+### Safari browser settings
+
+Safari requires an additional setting to enable full keyboard navigation:
+
+1. Open **Safari** and go to **Settings** (or Preferences)
+2. Navigate to the **Advanced** tab
+3. Under **Accessibility**, check **"Press Tab to highlight each item on a webpage"**
+
+<img
+    src={safariSettings}
+    alt="Safari Settings, Advanced Tab, Press Tab to highlight"
+/>
+
+### Other browsers
+
+- **Chrome/Edge**: Full keyboard navigation is enabled by default
+- **Firefox**: Full keyboard navigation is enabled by default. For additional options, see `about:preferences#general` under "Browsing"
+
+## Keyboard navigation basics
+
+### Essential keyboard interactions
+
+The following table summarizes the core keyboard interactions that all accessible web content must support:
+
+| Key                                  | Action                                                          |
+| ------------------------------------ | --------------------------------------------------------------- |
+| <kbd>Tab</kbd>                       | Move focus forward to the next interactive element              |
+| <kbd>Shift</kbd> + <kbd>Tab</kbd>    | Move focus backward to the previous interactive element         |
+| <kbd>Enter</kbd> / <kbd>Return</kbd> | Activate links, buttons, and form submission                    |
+| <kbd>Space</kbd>                     | Activate buttons, toggle checkboxes/switches, expand dropdowns  |
+| <kbd>Arrow keys</kbd>                | Navigate within components (menus, tabs, sliders, radio groups) |
+| <kbd>Escape</kbd>                    | Close modals, overlays, menus, and popovers                     |
+| <kbd>Home</kbd>                      | Move to first item in a list or beginning of text               |
+| <kbd>End</kbd>                       | Move to last item in a list or end of text                      |
+
+<br />
+> ⚠️ **Important for Link Navigation**
+<br />> While buttons use both <kbd>Enter</kbd> and <kbd>Space</kbd> to
+activate, **links only use <kbd>Enter</kbd> to activate.**
+
+### Component-specific patterns
+
+Different component types have specific keyboard conventions based on [W3C ARIA Authoring Practices](https://www.w3.org/WAI/ARIA/apg/):
+
+| Component type     | Keyboard pattern                                                                                                                                           |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Tabs**           | <kbd>Tab</kbd> to tab list, <kbd>Arrow keys</kbd> between tabs, <kbd>Enter</kbd>/<kbd>Space</kbd> to select                                                |
+| **Menu/Dropdown**  | <kbd>Enter</kbd>/<kbd>Space</kbd>/<kbd>Arrow Down</kbd> to open, <kbd>Arrow keys</kbd> to navigate, <kbd>Enter</kbd> to select, <kbd>Escape</kbd> to close |
+| **Modal dialog**   | <kbd>Tab</kbd> cycles within modal (focus trap), <kbd>Escape</kbd> closes                                                                                  |
+| **Accordion**      | <kbd>Tab</kbd> to headers, <kbd>Enter</kbd>/<kbd>Space</kbd> to expand/collapse                                                                            |
+| **Slider**         | <kbd>Arrow keys</kbd> to adjust value, <kbd>Home</kbd>/<kbd>End</kbd> for min/max                                                                          |
+| **Tree view**      | <kbd>Arrow Up</kbd>/<kbd>Down</kbd> between items, <kbd>Arrow Right</kbd>/<kbd>Left</kbd> to expand/collapse                                               |
+| **Combobox**       | <kbd>Arrow Down</kbd> to open, <kbd>Arrow keys</kbd> to navigate, <kbd>Enter</kbd> to select, <kbd>Escape</kbd> to close                                   |
+| **Radio group**    | <kbd>Tab</kbd> to group, <kbd>Arrow keys</kbd> between options (selection follows focus)                                                                   |
+| **Checkbox group** | <kbd>Tab</kbd> between checkboxes, <kbd>Space</kbd> to toggle                                                                                              |
+
+<br />
+> 💡 **Interactive demonstration**
+<br />> To experience how keyboard interaction should word, try out this
+[demontration site](https://rha11y-tests.netlify.app/keyboard.html). |
+
+## Testing checklist
+
+Use this checklist when testing keyboard accessibility:
+
+- **All interactive elements are focusable**: Can you reach every button, link, form control, and custom widget using <kbd>Tab</kbd>?
+- **Focus is visible**: Can you always see where focus is on the page?
+- **No keyboard traps**: Can you navigate away from every element and section?
+- **Logical focus order**: Does focus move in a predictable order matching visual layout (generally left-to-right, top-to-bottom)?
+- **Skip links work**: Can you skip past navigation to main content?
+- **All actions are keyboard-operable**: Can you perform every action that's possible with a mouse?
+- **Escape closes overlays**: Do modals, menus, and popovers close with <kbd>Escape</kbd>?
+- **Focus returns appropriately**: After closing a modal, does focus return to the element that opened it?
+- **Arrow key patterns work**: Do tabs, menus, and other compound widgets respond to arrow keys correctly?
+- **Disabled elements are handled correctly**: Disabled elements should either be skipped by tab or clearly indicate their disabled state
+
+## Common issues and how to fix them
+
+| Issue                        | Problem                                             | Solution                                                                                       |
+| ---------------------------- | --------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Focus outline removed**    | CSS like `outline: none` makes focus invisible      | Replace with visible custom focus styles: `outline: 2px solid blue; outline-offset: 2px;`      |
+| **Positive tabindex**        | `tabindex="1"` or higher disrupts natural tab order | Use `tabindex="0"` for focusable, `tabindex="-1"` for programmatic focus only                  |
+| **Click-only handlers**      | `onclick` without keyboard support                  | Add `onkeydown` handlers for <kbd>Enter</kbd> and <kbd>Space</kbd>, or use `<button>` elements |
+| **Mouse-only hover**         | Information only shown on `:hover`                  | Add `:focus` styles alongside `:hover`                                                         |
+| **Non-semantic elements**    | `<div>` or `<span>` used for buttons/links          | Use native `<button>` or `<a>` elements                                                        |
+| **Missing focus management** | Modal closes but focus is lost                      | Trap focus within modals; return focus on close                                                |
+| **Focus not visible**        | Low contrast focus indicators                       | Ensure focus indicators have at least 3:1 contrast ratio                                       |
+
+## Resources
+
+For more information on keyboard accessibility, consult these authoritative sources:
+
+- [W3C ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/) - Design patterns and keyboard behaviors for common components
+- [WebAIM Keyboard Accessibility](https://webaim.org/techniques/keyboard) - Practical guide to keyboard testing
+- [WCAG 2.1 Keyboard Success Criteria](https://www.w3.org/WAI/WCAG21/quickref/?showtechniques=211#keyboard-accessible) - The official accessibility guidelines for keyboard access
+- [Deque University - How Keyboard Testing Improves Accessibility](https://www.deque.com/blog/how-keyboard-testing-improves-digital-accessibility/) - Why keyboard testing matters
+- [web.dev Learn Accessibility](https://web.dev/learn/accessibility) - Google's comprehensive accessibility course

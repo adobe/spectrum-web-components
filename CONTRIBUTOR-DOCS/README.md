@@ -40,6 +40,7 @@
     - [Screen reader testing](04_accessibility_guides/04_screen_reader_testing.md)
     - [Wave toolbar testing](04_accessibility_guides/05_wave_toolbar_testing.md)
     - [Accessibility resources](04_accessibility_guides/06_accessibility_resources.md)
+    - Assets
 
 </details>
 
