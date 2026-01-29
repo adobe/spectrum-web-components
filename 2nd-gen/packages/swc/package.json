@@ -23,12 +23,12 @@
             "types": "./dist/components/*/index.d.ts",
             "import": "./dist/components/*/index.js"
         },
+        "./stylesheets/*.css": {
+            "default": "./stylesheets/*.css"
+        },
         "./utils/*": {
             "types": "./dist/utils/*.d.ts",
             "import": "./dist/utils/*.js"
-        },
-        "./stylesheets/*.css": {
-            "default": "./stylesheets/*.css"
         }
     },
     "files": [
@@ -99,9 +99,9 @@
         "css"
     ],
     "customElements": ".storybook/custom-elements.json",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
     "publishConfig": {
         "access": "public"
-    },
-    "main": "./dist/index.js",
-    "module": "./dist/index.js"
+    }
 }
