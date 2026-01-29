@@ -1,3 +1,5 @@
+/* stylelint-disable header/header */
+
 /**
  * Copyright 2025 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -101,4 +103,374 @@ sp-progress-circle {
     background-color: var(--highcontrast-button-background-color-default, var(--mod-button-background-color-default, var(--spectrum-button-background-color-default)));
     border-color: var(--highcontrast-button-border-color-default, var(--mod-button-border-color-default, var(--spectrum-button-border-color-default)));
     color: var(--highcontrast-button-content-color-default, var(--mod-button-content-color-default, var(--spectrum-button-content-color-default)));
+}
+
+/* Aether button styles */
+:host([variant="aether"]),
+:host([variant="aetherSimple"]),
+:host([variant="aetherInitial"]) {
+    inline-size: 64px;
+    block-size: 64px;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+}
+
+/* Disable default hover styles for aether */
+:host([variant="aether"]),
+:host([variant="aetherSimple"]),
+:host([variant="aetherInitial"]) {
+    --mod-button-background-color-hover: transparent;
+    --mod-button-border-color-hover: transparent;
+    --mod-button-content-color-hover: inherit;
+}
+
+@media (hover: hover) {
+    :host([variant="aether"]):hover,
+    :host([variant="aetherSimple"]):hover,
+    :host([variant="aetherInitial"]):hover {
+        background-color: transparent;
+        border-color: transparent;
+        color: inherit;
+        box-shadow: none;
+    }
+}
+
+:host([variant="aether"]) .aether-wrapper,
+:host([variant="aetherSimple"]) .aether-wrapper,
+:host([variant="aetherInitial"]) .aether-wrapper {
+    display: flex;
+    border-radius: 99999px;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    inset: -1px;
+    box-sizing: border-box;
+    overflow: visible;
+
+    /* border: 1px solid blue; */
+}
+
+/* shadow */
+:host([variant="aether"]) .aether-outerShadow {
+    /* border: 1px solid red; */
+    border-radius: inherit;
+    position: absolute;
+    inset: 0;
+    mix-blend-mode: normal;
+    box-shadow: 0 1px 2px 1px #00000005;
+    backdrop-filter: blur(2px);
+
+    /* background: 
+        linear-gradient(#0000, #00000005),
+        linear-gradient(113deg, #fff0, #fff),
+        linear-gradient(-113deg, #fff0, #fff5),
+        linear-gradient(-67deg, #fff0, #fff),
+        linear-gradient(-54deg, #fff0, #fff5),
+        linear-gradient(-46deg, #fff0, #d9d9d901); */
+}
+
+:host([variant="aether"]) .aether-gradientStroke {
+    position: absolute;
+    inset: -1px;
+    overflow: visible;
+    mix-blend-mode: lighten;
+    border-radius: inherit;
+
+    /* Mask should force the "stroke" to the edge */
+
+    /* mask: radial-gradient(circle at 50% 50%, transparent 50%, #0000 calc(50% - 1px), black calc(50% - 1px), transparent 50%); */
+}
+
+:host([variant="aether"]) .aether-gradientSurface {
+    position: absolute;
+    inset: -1px;
+    border-radius: 99999px;
+    background: linear-gradient(to bottom, #e1e4eb25, #d3dae450), linear-gradient(38deg, #d9e8ff40, #e5eeff40);
+}
+
+:host([variant="aether"]) .aether-gradientSurfaceOverlay {
+    position: absolute;
+    inset: -1px;
+    border-radius: 99999px;
+    background: linear-gradient(to bottom, #f9fbff50, #f7fcff25), linear-gradient(to bottom, #808fa810, transparent), #ffffff01;
+    box-shadow: inset -5px -6px 20px 0 #ffffff10;
+}
+
+:host([variant="aether"]) .aether-innerPurple {
+    position: absolute;
+    inset: -1px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    border-radius: 99999px;
+    background: linear-gradient(transparent 50%, #c1a8fd40);
+
+    /* box-shadow: inset 0 2px 14px 0 #ffffff60; */
+}
+
+:host([variant="aether"]) .aether-innerPurpleBlur {
+    position: absolute;
+    inline-size: 56px;
+    block-size: 56px;
+    border-radius: inherit;
+    mix-blend-mode: screen;
+    background: linear-gradient(#fff, #bd9afd);
+    filter: blur(3px);
+    z-index: 2;
+}
+
+:host([variant="aether"]) .aether-innerPurpleBlur2 {
+    position: absolute;
+    inline-size: 48px;
+    block-size: 48px;
+    border-radius: inherit;
+    mix-blend-mode: lighten;
+    background: linear-gradient(transparent 50%, #ffffff15), linear-gradient(#bd9afd, #fff);
+    filter: blur(1px);
+    z-index: 3;
+}
+
+:host([variant="aether"]) .aether-reflection {
+    position: absolute;
+    inset: -1px;
+    overflow: hidden;
+    border-radius: 99999px;
+    z-index: 4;
+
+    /* Base reflective border - always visible */
+    box-shadow:
+        inset 0 1px 4px 0 rgb(0 0 6 / 5%),
+        inset 0 0 2px 1px rgb(0 0 6 / 5%);
+}
+
+/* Dynamic arc highlight as a separate pseudo-element */
+:host([variant="aether"]) .aether-reflection:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 99999px;
+
+    /* Thin arc highlight using conic gradient */
+    background: conic-gradient(from calc(var(--hotspot-angle, 0deg) - 15deg) at 50% 50%, transparent 0deg, rgb(255 255 255 / calc(var(--hotspot-opacity, 0) * 0.9)) 15deg, rgb(255 255 255 / calc(var(--hotspot-opacity, 0) * 0.5)) 20deg, transparent 30deg);
+
+    /* Mask to constrain to edge only - very thin ring */
+    mask: radial-gradient(circle at 50% 50%, transparent calc(74% - 2px), black calc(74% - 1.5px), black calc(74% - 0.5px), transparent 50%);
+    transition: opacity 0.3s ease-out;
+    pointer-events: none;
+}
+
+:host([variant="aether"]) .button,
+:host([variant="aetherSimple"]) .button,
+:host([variant="aetherInitial"]) .button {
+    z-index: 3;
+    inline-size: 100%;
+    block-size: 100%;
+    border-radius: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+}
+
+:host([variant="aetherSimple"]) {
+    box-shadow: 0 8px 14px -4px #a5a5a560;
+}
+
+:host([variant="aetherSimple"]) .aether-wrapper {
+    border-radius: 99999px;
+    z-index: 0;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(16px);
+}
+
+:host([variant="aetherSimple"]) .aether-gradientStroke {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    block-size: 62px;
+    inline-size: 62px;
+    position: relative;
+    box-sizing: border-box;
+    border-width: 1px;
+    background: linear-gradient(to bottom, #f9f3ff80, #bab6d880);
+    border-radius: 9999px;
+}
+
+:host([variant="aetherSimple"]) .aether-gradientStroke:before {
+    position: absolute;
+    content: "";
+    z-index: -1;
+    border-radius: inherit;
+    background: linear-gradient(to bottom, #f7f8fa16 0%, #e8e3f216 49%, #40099816 100%);
+    block-size: 64px;
+    inline-size: 64px;
+    box-sizing: border-box;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: -1px;
+}
+
+:host([variant="aetherSimple"]) .aether-purpleBlur {
+    inline-size: 48px;
+    block-size: 48px;
+    border-radius: inherit;
+    position: absolute;
+    inset-block-end: 0;
+    background: linear-gradient(to bottom, #fff 0%, #ffe2fe30 49%, #dec2ff60 100%);
+    filter: blur(8px);
+}
+
+/* Dynamic arc highlight as a separate pseudo-element */
+:host([variant="aetherSimple"]) .aether-reflection:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 99999px;
+
+    /* Thin arc highlight using conic gradient */
+    background: conic-gradient(from calc(var(--hotspot-angle, 0deg) - 15deg) at 50% 50%, transparent 0deg, rgb(255 255 255 / calc(var(--hotspot-opacity, 0) * 0.9)) 15deg, rgb(255 255 255 / calc(var(--hotspot-opacity, 0) * 0.5)) 20deg, transparent 30deg);
+
+    /* Mask to constrain to edge only - very thin ring */
+    mask: radial-gradient(circle at 50% 50%, transparent calc(74% - 2px), black calc(74% - 1.5px), black calc(74% - 0.5px), transparent 50%);
+    transition: opacity 0.3s ease-out;
+    pointer-events: none;
+}
+
+/* Disable focus ring and focus styles for aether */
+
+/* :host([variant="aether"]):focus-visible,
+:host([variant="aether"][focused]) {
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    outline: none;
+}
+
+:host([variant="aether"]):focus-visible:after,
+:host([variant="aether"][focused]):after {
+    box-shadow: none;
+} */
+
+/* Disable active/down styles for aether */
+
+:host([variant="aether"]):active,
+:host([variant="aether"][active]) {
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    transform: translateY(1px);
+}
+
+:host([variant="aetherInitial"]) {
+    position: relative;
+    background: transparent;
+    border-color: transparent;
+    border-radius: 99999px;
+}
+
+:host([variant="aetherInitial"]) .aether {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 99999px;
+    backdrop-filter: blur(4px);
+    block-size: 64px;
+    inline-size: 64px;
+    position: absolute;
+}
+
+:host([variant="aetherInitial"]) .aether-wrapper {
+    inline-size: 64px;
+    block-size: 64px;
+
+    /* Subtle rainbow/prismatic shadow */
+    box-shadow:
+        0 2px 4px rgb(255 0 150 / 8%),
+        0 4px 8px rgb(150 0 255 / 8%),
+        0 6px 12px rgb(0 150 255 / 8%),
+        0 8px 16px rgb(0 255 150 / 8%);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
+}
+
+:host([variant="aetherInitial"]) .aether-blur {
+    position: absolute;
+    z-index: 1;
+    border-radius: 99999px;
+    backdrop-filter: blur(6px);
+    inline-size: 100%;
+    block-size: 100%;
+    background-color: #ffffff05;
+}
+
+:host([variant="aetherInitial"]) .aether-gradient {
+    z-index: 1;
+    position: absolute;
+    inset: 0;
+    border-radius: 99999px;
+    background: linear-gradient(135deg, rgb(255 88 249 / 15%) 0%, rgb(255 255 180 / 30%) 100%);
+}
+
+:host([variant="aetherInitial"]) .aether-reflection {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    overflow: hidden;
+    border-radius: 99999px;
+
+    /* Base reflective border - always visible */
+    box-shadow:
+        inset 1px 1px 2px 0 rgb(255 255 249 / 25%),
+        inset 0 0 2px 1px rgb(255 255 249 / 40%);
+}
+
+/* Dynamic arc highlight as a separate pseudo-element */
+
+:host([variant="aetherInitial"]) .aether-reflection:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 99999px;
+
+    /* Thin arc highlight using conic gradient */
+    background: conic-gradient(from calc(var(--hotspot-angle, 0deg) - 15deg) at 50% 50%, transparent 0deg, rgb(255 255 255 / calc(var(--hotspot-opacity, 0) * 0.9)) 15deg, rgb(255 255 255 / calc(var(--hotspot-opacity, 0) * 0.5)) 20deg, transparent 30deg);
+
+    /* Mask to constrain to edge only - very thin ring */
+    mask: radial-gradient(circle at 50% 50%, transparent calc(74% - 2px), black calc(74% - 1.5px), black calc(74% - 0.5px), transparent 50%);
+    transition: opacity 0.3s ease-out;
+    pointer-events: none;
+}
+
+:host([variant="aetherInitial"]:hover) .aether-wrapper {
+    /* Enhanced rainbow shadow on hover */
+    box-shadow:
+        0 4px 8px rgb(255 0 150 / 12%),
+        0 6px 12px rgb(150 0 255 / 12%),
+        0 8px 16px rgb(0 150 255 / 12%),
+        0 10px 20px rgb(0 255 150 / 12%);
+}
+
+:host([variant="aetherInitial"]:active) .aether-wrapper {
+    /* Subtle rainbow shadow on active */
+    box-shadow:
+        0 1px 2px rgb(255 0 150 / 10%),
+        0 2px 4px rgb(150 0 255 / 10%),
+        0 3px 6px rgb(0 150 255 / 10%),
+        0 4px 8px rgb(0 255 150 / 10%);
+}
+
+:host([variant="aetherInitial"]) .button {
+    color: unset;
+}
+
+.test {
+    block-size: 200px;
+    inline-size: 40px;
+    background: url("./images/dropzone-illustration.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: center;
 }
