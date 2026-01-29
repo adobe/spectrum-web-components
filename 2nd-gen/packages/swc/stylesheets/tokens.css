@@ -2004,10 +2004,12 @@
         adobe-clean-han-japanese, Adobe Clean Han, sans-serif;
     --swc-code-font-family-stack: 'Source Code Pro', Monaco, monospace;
     --swc-font-family: var(--swc-sans-font-family-stack);
-    --swc-font-family-ar: 'myriad-hebrew, adobe-clean, ' Source Sans Pro
+    --swc-font-family-ar: 'adobe-clean-arabic, ' Adobe Clean Arabic
+        ', myriad-arabic,  ' Source Sans Pro
         ', -apple-system, BlinkMacSystemFont, ' Segoe UI ', Roboto, Ubuntu, '
         Trebuchet MS ', ' Lucida Grande ', sans-serif';
-    --swc-font-family-he: 'myriad-arabic, adobe-clean, ' Source Sans Pro
+    --swc-font-family-he: 'adobe-clean-hebrew, ' Adobe Clean Hebrew
+        ', myriad-arabic, ' Source Sans Pro
         ', -apple-system, BlinkMacSystemFont, ' Segoe UI ', Roboto, Ubuntu, '
         Trebuchet MS ', ' Lucida Grande ', sans-serif';
     --swc-font-style: normal;
