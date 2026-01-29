@@ -40,6 +40,10 @@
     inset: 0;
 }
 
+sp-popover {
+    margin-block-start: var(--system-submenu-offset-block, -5px);
+}
+
 :host([dir="ltr"]) [icon-only]::slotted(:last-of-type) {
     margin-right: auto;
 }

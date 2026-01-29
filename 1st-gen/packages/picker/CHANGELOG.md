@@ -1,5 +1,38 @@
 # Change Log
 
+## 1.11.0
+
+### Patch Changes
+
+- [#5901](https://github.com/adobe/spectrum-web-components/pull/5901) [`ae61361`](https://github.com/adobe/spectrum-web-components/commit/ae61361da6701449200970b705d381b3c9d6fe19) Thanks [@iuliauta](https://github.com/iuliauta)! - **Fixed**: click events are now dispatched from menu-items on touch devices
+    - All touch devices (including iPads with screen widths >743px) now correctly use click events instead of drag-and-select behavior
+
+- [#5965](https://github.com/adobe/spectrum-web-components/pull/5965) [`b95e254`](https://github.com/adobe/spectrum-web-components/commit/b95e25413830825a506b7d4025d6b4d982691771) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Fixed**: Arrow key events now stop propagation when handled by the picker, preventing them from bubbling up to parent elements.
+
+    Previously, arrow key events (`ArrowUp`, `ArrowDown`, `ArrowLeft`, `ArrowRight`) would propagate to ancestor containers even when the picker was actively handling them. This could cause unintended side effects in layouts or applications that also listen for arrow key events.
+
+- [#5868](https://github.com/adobe/spectrum-web-components/pull/5868) [`f07344f`](https://github.com/adobe/spectrum-web-components/commit/f07344f400f64c12f15762e3fedcdab2629e781b) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed** issue where picker menus inside overlays could not scroll to the bottom after selecting an item and reopening. The problem was caused by the overlay's placement calculation happening before the menu fully rendered, resulting in incorrect height measurements.
+
+    This fix ensures picker menus maintain proper scrollable height when reopened, regardless of the selected item's position.
+
+- [#5983](https://github.com/adobe/spectrum-web-components/pull/5983) [`2732aad`](https://github.com/adobe/spectrum-web-components/commit/2732aada6e69372a47537a0c139b8f52db811e93) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Fixed**: Safari + VoiceOver crash when opening Picker and ActionMenu. The issue was caused by an imperative `render()` call that mutated the DOM during the render cycle, causing Safari to crash while VoiceOver scanned the accessibility tree.
+
+- Updated dependencies [[`7af5e8f`](https://github.com/adobe/spectrum-web-components/commit/7af5e8fa8cb4142b7e4038e8ffe6e8ea547a397e), [`eac97a2`](https://github.com/adobe/spectrum-web-components/commit/eac97a2a4206d1ece946d9bec0e7f462624ced27), [`b95e254`](https://github.com/adobe/spectrum-web-components/commit/b95e25413830825a506b7d4025d6b4d982691771), [`02b2d7d`](https://github.com/adobe/spectrum-web-components/commit/02b2d7d2c7d204d7f0f6501ec075e923f58244c9), [`6b887f2`](https://github.com/adobe/spectrum-web-components/commit/6b887f21b59971f6ef71dc6ccddd31e6284b829e), [`f07344f`](https://github.com/adobe/spectrum-web-components/commit/f07344f400f64c12f15762e3fedcdab2629e781b), [`1d76b70`](https://github.com/adobe/spectrum-web-components/commit/1d76b7093d8ff5f9b26f07a69086488341a02650), [`f8bdeec`](https://github.com/adobe/spectrum-web-components/commit/f8bdeecf8a230822122a990fb977d3654649f891), [`b95e254`](https://github.com/adobe/spectrum-web-components/commit/b95e25413830825a506b7d4025d6b4d982691771), [`cadc39e`](https://github.com/adobe/spectrum-web-components/commit/cadc39ea419f572a79451fc886cd45c8d8821cde), [`e780f82`](https://github.com/adobe/spectrum-web-components/commit/e780f82a7802365185ada213c8a9e210f8813c3a), [`4cb0b7b`](https://github.com/adobe/spectrum-web-components/commit/4cb0b7b86ebfaad89f1866916415b8578aa6dbea), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
+    - @spectrum-web-components/field-label@1.11.0
+    - @spectrum-web-components/menu@1.11.0
+    - @spectrum-web-components/reactive-controllers@1.11.0
+    - @spectrum-web-components/overlay@1.11.0
+    - @spectrum-web-components/tray@1.11.0
+    - @spectrum-web-components/shared@1.11.0
+    - @spectrum-web-components/tooltip@1.11.0
+    - @spectrum-web-components/base@1.11.0
+    - @spectrum-web-components/button@1.11.0
+    - @spectrum-web-components/icon@1.11.0
+    - @spectrum-web-components/popover@1.11.0
+    - @spectrum-web-components/progress-circle@1.11.0
+    - @spectrum-web-components/icons-ui@1.11.0
+    - @spectrum-web-components/icons-workflow@1.11.0
+
 ## 1.10.0
 
 ### Patch Changes

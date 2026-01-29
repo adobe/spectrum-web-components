@@ -1,0 +1,60 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import headerImage from '../assets/images/banner_introduction_S2_desktop_2x_1689964089087.png';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
+import '@spectrum-web-components/accordion/sp-accordion.js';
+import '@spectrum-web-components/accordion/sp-accordion-item.js';
+
+<Meta title="1st-gen vs 2nd-gen" />
+
+<img src={headerImage} alt="1st-gen vs 2nd-gen" class="docs-image" />
+
+# 1st-gen vs 2nd-gen
+
+SWC 2nd-gen is the next version of Spectrum Web Components. It updates the design, improves the architecture, and aligns the components with Spectrum 2. This page explains how 2nd-gen is different from 1st-gen so teams know what to expect when adopting or migrating.
+
+## Key differences
+
+| Area              | 1st-gen SWC                                 | 2nd-gen SWC                                           |
+| ----------------- | ------------------------------------------- | ----------------------------------------------------- |
+| Design            | Matches Spectrum 1                          | Updated for Spectrum 2 design                         |
+| Architecture      | Earlier component patterns; less consistent | More consistent structure and APIs across the library |
+| Tokens and scales | Based on Spectrum 1 tokens                  | Updated tokens, scales, and interaction patterns      |
+| Styling system    | Older styling approach                      | Modernized styling aligned with Spectrum 2            |
+| Accessibility     | Basic support                               | Improved and more complete accessibility coverage     |
+| Performance       | Larger packages and more overhead           | Smaller packages and better runtime performance       |
+| Long-term support | Maintained for existing products            | Recommended for all new work                          |
+
+## What this means for teams
+
+<sp-theme system="spectrum" scale="medium" color="light">
+    <sp-accordion allow-multiple size="m" class="docs-accordion">
+        <sp-accordion-item label="If you are starting a new project">
+            Use 2nd-gen SWC. It matches the current Spectrum guidelines and
+            offers better performance and consistency.
+        </sp-accordion-item>
+        <sp-accordion-item label="If your project already uses 1st-gen SWC">
+            You can continue using it, but you may want to plan a migration.
+            Some components and APIs have changed in 2nd-gen, so updates may
+            require code changes or testing.
+        </sp-accordion-item>
+        <sp-accordion-item label="If you maintain a large 1st-gen codebase">
+            Migration will take more time. Review your components, compare APIs,
+            and update your patterns gradually. Not everything must move at
+            once.
+        </sp-accordion-item>
+    </sp-accordion>
+</sp-theme>
+
+## Why 2nd-gen is recommended
+
+- It aligns with Spectrum 2, which is the standard for new Adobe work.
+- Components follow more consistent design and code patterns.
+- Accessibility is stronger and more complete.
+- Smaller packages help improve performance.
+- It better supports future updates to Spectrum.
+
+## Where to learn more
+
+You can find detailed guidance in the component documentation, including updated APIs, usage examples, and patterns for Spectrum 2.
+If you are planning a migration, check each component’s notes for differences between 1st-gen and 2nd-gen.

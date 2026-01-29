@@ -1,5 +1,22 @@
 # Change Log
 
+## 1.11.0
+
+### Patch Changes
+
+- [#5900](https://github.com/adobe/spectrum-web-components/pull/5900) [`283f0fe`](https://github.com/adobe/spectrum-web-components/commit/283f0fe07533c464e9fe1a3e7edebecb9128e11f) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Added missing dependencies to the package.json files of several components to align with their usage in source code.
+
+- [#5983](https://github.com/adobe/spectrum-web-components/pull/5983) [`2732aad`](https://github.com/adobe/spectrum-web-components/commit/2732aada6e69372a47537a0c139b8f52db811e93) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Fixed**: Safari + VoiceOver crash when opening Picker and ActionMenu. The issue was caused by an imperative `render()` call that mutated the DOM during the render cycle, causing Safari to crash while VoiceOver scanned the accessibility tree.
+
+- Updated dependencies [[`ae61361`](https://github.com/adobe/spectrum-web-components/commit/ae61361da6701449200970b705d381b3c9d6fe19), [`02b2d7d`](https://github.com/adobe/spectrum-web-components/commit/02b2d7d2c7d204d7f0f6501ec075e923f58244c9), [`b95e254`](https://github.com/adobe/spectrum-web-components/commit/b95e25413830825a506b7d4025d6b4d982691771), [`f07344f`](https://github.com/adobe/spectrum-web-components/commit/f07344f400f64c12f15762e3fedcdab2629e781b), [`2732aad`](https://github.com/adobe/spectrum-web-components/commit/2732aada6e69372a47537a0c139b8f52db811e93), [`1d76b70`](https://github.com/adobe/spectrum-web-components/commit/1d76b7093d8ff5f9b26f07a69086488341a02650), [`f8bdeec`](https://github.com/adobe/spectrum-web-components/commit/f8bdeecf8a230822122a990fb977d3654649f891), [`cadc39e`](https://github.com/adobe/spectrum-web-components/commit/cadc39ea419f572a79451fc886cd45c8d8821cde), [`4cb0b7b`](https://github.com/adobe/spectrum-web-components/commit/4cb0b7b86ebfaad89f1866916415b8578aa6dbea), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
+    - @spectrum-web-components/picker@1.11.0
+    - @spectrum-web-components/overlay@1.11.0
+    - @spectrum-web-components/shared@1.11.0
+    - @spectrum-web-components/base@1.11.0
+    - @spectrum-web-components/icon@1.11.0
+    - @spectrum-web-components/action-button@1.11.0
+    - @spectrum-web-components/icons-workflow@1.11.0
+
 ## 1.10.0
 
 ### Patch Changes
