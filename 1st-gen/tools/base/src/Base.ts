@@ -10,4 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-export * from '@spectrum-web-components/core/shared/base/Base.js';
+export {
+    SpectrumElement,
+    SpectrumMixin,
+} from '@spectrum-web-components/core/shared/base/Base.js';
+export type { SpectrumInterface } from '@spectrum-web-components/core/shared/base/Base.js';

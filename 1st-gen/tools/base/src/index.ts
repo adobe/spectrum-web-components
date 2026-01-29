@@ -10,7 +10,13 @@
  * governing permissions and limitations under the License.
  */
 
-export * from './Base.js';
-export * from './sizedMixin.js';
-export * from './constants.js';
+export { SpectrumElement, SpectrumMixin } from './Base.js';
+export type { SpectrumInterface } from './Base.js';
+export { ElementSizes, SizedMixin } from './sizedMixin.js';
+export type {
+    DefaultElementSize,
+    ElementSize,
+    SizedElementInterface,
+} from './sizedMixin.js';
+export { INPUT_COMPONENT_TAGS, INPUT_COMPONENT_PATTERN } from './constants.js';
 export * from 'lit';

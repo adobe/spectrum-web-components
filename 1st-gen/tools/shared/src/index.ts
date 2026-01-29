@@ -10,15 +10,33 @@
  * governing permissions and limitations under the License.
  */
 
-export * from './first-focusable-in.js';
-export * from './focus-visible.js';
-export * from './focusable.js';
-export * from './focusable-selectors.js';
-export * from './get-active-element.js';
-export * from './like-anchor.js';
-export * from './observe-slot-presence.js';
-export * from './observe-slot-text.js';
-export * from './platform.js';
-export * from './reparent-children.js';
-export * from './get-label-from-slot.js';
-export * from './random-id.js';
+export {
+    firstFocusableIn,
+    firstFocusableSlottedIn,
+} from './first-focusable-in.js';
+export { FocusVisiblePolyfillMixin } from './focus-visible.js';
+export { Focusable } from './focusable.js';
+export { userFocusableSelector, focusableSelector } from './focusable-selectors.js';
+export { getActiveElement } from './get-active-element.js';
+export { getDeepElementFromPoint } from './get-deep-element-from-point.js';
+export { getLabelFromSlot } from './get-label-from-slot.js';
+export { LikeAnchor } from './like-anchor.js';
+export type { LikeAnchorInterface } from './like-anchor.js';
+export { ObserveSlotPresence } from './observe-slot-presence.js';
+export type { SlotPresenceObservingInterface } from './observe-slot-presence.js';
+export { ObserveSlotText } from './observe-slot-text.js';
+export type { SlotTextObservingInterface } from './observe-slot-text.js';
+export {
+    isMac,
+    isIPhone,
+    isIPad,
+    isIOS,
+    isAppleDevice,
+    isWebKit,
+    isChrome,
+    isFirefox,
+    isSeamonkey,
+    isAndroid,
+} from './platform.js';
+export { reparentChildren } from './reparent-children.js';
+export { randomID } from './random-id.js';

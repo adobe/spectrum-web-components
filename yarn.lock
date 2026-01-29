@@ -6468,6 +6468,7 @@ __metadata:
   dependencies:
     "@lit-labs/observers": "npm:2.0.2"
     "@spectrum-web-components/base": "npm:1.11.0"
+    "@spectrum-web-components/core": "npm:0.0.2"
     focus-visible: "npm:5.2.1"
   languageName: unknown
   linkType: soft

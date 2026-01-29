@@ -9,4 +9,4 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from '@spectrum-web-components/core/shared/get-label-from-slot.js';
+export { getLabelFromSlot } from '@spectrum-web-components/core/shared/get-label-from-slot.js';
