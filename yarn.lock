@@ -189,22 +189,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adobe/swc-tokens@workspace:*, @adobe/swc-tokens@workspace:2nd-gen/packages/tools/swc-tokens":
+"@adobe/spectrum-wc@workspace:2nd-gen/packages/swc":
   version: 0.0.0-use.local
-  resolution: "@adobe/swc-tokens@workspace:2nd-gen/packages/tools/swc-tokens"
-  dependencies:
-    "@adobe/spectrum-tokens": "npm:^14.0.0"
-    prettier: "npm:^3.7.4"
-    vitest: "npm:4.0.15"
-    yargs: "npm:^18.0.0"
-  bin:
-    swc-tokens: index.js
-  languageName: unknown
-  linkType: soft
-
-"@adobe/swc@workspace:2nd-gen/packages/swc":
-  version: 0.0.0-use.local
-  resolution: "@adobe/swc@workspace:2nd-gen/packages/swc"
+  resolution: "@adobe/spectrum-wc@workspace:2nd-gen/packages/swc"
   dependencies:
     "@adobe/postcss-token": "workspace:*"
     "@adobe/swc-tokens": "workspace:*"
@@ -240,6 +227,19 @@ __metadata:
     vite-plugin-dts: "npm:4.5.4"
     vite-plugin-lit-css: "npm:2.2.1"
     vitest: "npm:4.0.15"
+  languageName: unknown
+  linkType: soft
+
+"@adobe/swc-tokens@workspace:*, @adobe/swc-tokens@workspace:2nd-gen/packages/tools/swc-tokens":
+  version: 0.0.0-use.local
+  resolution: "@adobe/swc-tokens@workspace:2nd-gen/packages/tools/swc-tokens"
+  dependencies:
+    "@adobe/spectrum-tokens": "npm:^14.0.0"
+    prettier: "npm:^3.7.4"
+    vitest: "npm:4.0.15"
+    yargs: "npm:^18.0.0"
+  bin:
+    swc-tokens: index.js
   languageName: unknown
   linkType: soft
 

@@ -7,10 +7,10 @@ runs:
           shell: bash
           run: corepack enable
 
-        - name: Setup Node 20
+        - name: Setup Node from .nvmrc
           uses: actions/setup-node@v4
           with:
-              node-version: '20'
+              node-version-file: '.nvmrc'
               cache: 'yarn'
               registry-url: 'https://registry.npmjs.org'
 

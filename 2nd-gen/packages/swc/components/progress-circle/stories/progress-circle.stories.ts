@@ -14,9 +14,9 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { ProgressCircle } from '@adobe/swc/progress-circle';
+import { ProgressCircle } from '@adobe/spectrum-wc/progress-circle';
 
-import '@adobe/swc/progress-circle';
+import '@adobe/spectrum-wc/progress-circle';
 
 // ────────────────
 //    METADATA

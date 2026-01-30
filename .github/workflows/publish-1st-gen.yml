@@ -1,0 +1,170 @@
+name: Publish Packages
+
+on:
+    workflow_dispatch:
+        inputs:
+            tag:
+                description: 'NPM dist-tag (e.g., latest, beta, snapshot)'
+                required: false
+                default: 'snapshot-test'
+    push:
+        branches:
+            - SWC-1405
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        environment: npm-publish
+        permissions:
+            id-token: write # Required for OIDC trusted publishing (1st-gen)
+            contents: write # Required for git push
+        env:
+            YARN_ENABLE_IMMUTABLE_INSTALLS: false
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Setup job and install dependencies
+              uses: ./.github/actions/setup-job
+
+            - name: Verify npm CLI version for trusted publishing
+              run: |
+                  npm --version
+                  NPM_VERSION=$(npm --version | cut -d. -f1)
+                  if [ "$NPM_VERSION" -lt 11 ]; then
+                    echo "Upgrading npm for trusted publishing support (requires 11.5.1+)"
+                    npm install -g npm@latest
+                    npm --version
+                  fi
+
+            - name: Set Git identity
+              run: |
+                  git config --global user.email "support+actions@github.com"
+                  git config --global user.name "github-actions-bot"
+
+            - name: Extract tag from commit message or use default
+              id: extract-tag
+              run: |
+                  # Get tag from workflow_dispatch input (if manually triggered)
+                  WORKFLOW_TAG="${{ github.event.inputs.tag }}"
+
+                  # If not manually triggered, try to extract from commit message
+                  if [ -z "$WORKFLOW_TAG" ]; then
+                    COMMIT_MSG="${{ github.event.head_commit.message }}"
+                    # Look for [tag:xxx] pattern in commit message
+                    if echo "$COMMIT_MSG" | grep -qE '\[tag:([a-zA-Z0-9-]+)\]'; then
+                      WORKFLOW_TAG=$(echo "$COMMIT_MSG" | grep -oE '\[tag:([a-zA-Z0-9-]+)\]' | sed 's/\[tag://;s/\]//')
+                    else
+                      # Default to snapshot-test if no tag specified
+                      WORKFLOW_TAG="snapshot-test"
+                    fi
+                  fi
+
+                  echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
+                  echo "Using npm tag: $WORKFLOW_TAG"
+
+            - name: Check for changesets
+              id: check-changesets
+              run: |
+                  if [ -z "$(ls -A .changeset/*.md 2>/dev/null | grep -v README)" ]; then
+                    echo "has_changesets=false" >> $GITHUB_OUTPUT
+                    echo "No changesets found - skipping publish"
+                  else
+                    echo "has_changesets=true" >> $GITHUB_OUTPUT
+                    CHANGESET_COUNT=$(ls -1 .changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
+                    echo "Found $CHANGESET_COUNT changesets"
+                  fi
+
+            - name: Verify OIDC token availability
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              run: |
+                  if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
+                    echo "✓ OIDC token is available for 1st-gen trusted publishing"
+                  else
+                    echo "✗ OIDC token NOT available - trusted publishing will fail"
+                    exit 1
+                  fi
+
+            - name: Build all packages
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              run: yarn build
+
+            - name: Generate custom elements manifests
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              run: yarn workspace @spectrum-web-components/1st-gen custom-element-json
+
+            - name: Confirm build artifacts
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              run: yarn workspace @spectrum-web-components/1st-gen build:confirm
+
+            - name: Version packages
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  TAG="${{ steps.extract-tag.outputs.tag }}"
+                  if [ "$TAG" == "latest" ]; then
+                    yarn workspace @spectrum-web-components/1st-gen changelog:global
+                    yarn changeset version
+                  else
+                    yarn changeset version --snapshot $TAG
+                  fi
+
+            - name: Refresh lockfile and rebuild
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              run: |
+                  yarn install --refresh-lockfile
+                  yarn build
+
+            - name: Configure NPM authentication for 2nd-gen (Adobe namespace)
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              run: |
+                  echo "//registry.npmjs.org/:_authToken=${{ secrets.ADOBE_BOT_NPM_TOKEN }}" > ~/.npmrc
+
+            - name: Publish all packages
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+              run: |
+                  TAG="${{ steps.extract-tag.outputs.tag }}"
+
+                  # Changeset publishes all packages (1st-gen, core, and 2nd-gen)
+                  # npm CLI automatically uses:
+                  # - OIDC trusted publishing for 1st-gen packages (configured on npmjs.com)
+                  # - Token authentication for 2nd-gen (from .npmrc)
+                  if [ "$TAG" == "latest" ]; then
+                    yarn changeset publish --no-git-tag
+                  else
+                    yarn changeset publish --no-git-tag --tag $TAG
+                  fi
+
+            - name: Build React wrappers
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              run: yarn workspace @spectrum-web-components/1st-gen build:react
+
+            - name: Publish React wrappers
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              run: |
+                  TAG="${{ steps.extract-tag.outputs.tag }}"
+                  if [ "$TAG" == "latest" ]; then
+                    PUBLISH_CMD="npm publish --access public"
+                  else
+                    PUBLISH_CMD="npm publish --tag $TAG --access public"
+                  fi
+                  cd 1st-gen/react
+                  for dir in */; do
+                    (cd "$dir" && $PUBLISH_CMD) || exit 1
+                  done
+
+            - name: Commit and push changes
+              if: steps.check-changesets.outputs.has_changesets == 'true' && steps.extract-tag.outputs.tag == 'latest'
+              run: |
+                  git add .
+                  git commit -m "chore: release packages #publish" || echo "No changes to commit"
+                  git push
+
+            - name: Create git tag
+              if: steps.check-changesets.outputs.has_changesets == 'true' && steps.extract-tag.outputs.tag == 'latest'
+              run: node ./1st-gen/scripts/create-git-tag.js

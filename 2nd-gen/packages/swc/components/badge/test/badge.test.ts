@@ -13,9 +13,9 @@
 import { html } from 'lit';
 import { beforeEach, describe, expect, test } from 'vitest';
 
-import type { Badge } from '@adobe/swc/badge';
+import type { Badge } from '@adobe/spectrum-wc/badge';
 
-import '@adobe/swc/badge';
+import '@adobe/spectrum-wc/badge';
 
 import { fixture } from '../../../utils/test-utils.js';
 

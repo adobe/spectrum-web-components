@@ -13,7 +13,7 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { StatusLight } from '@adobe/swc/status-light';
+import { StatusLight } from '@adobe/spectrum-wc/status-light';
 import {
     STATUSLIGHT_VARIANTS_COLOR_S2,
     STATUSLIGHT_VARIANTS_SEMANTIC_S2,
@@ -21,7 +21,7 @@ import {
     StatusLightSemanticVariantS2,
 } from '@spectrum-web-components/core/components/status-light';
 
-import '@adobe/swc/status-light';
+import '@adobe/spectrum-wc/status-light';
 
 // ────────────────
 //    METADATA

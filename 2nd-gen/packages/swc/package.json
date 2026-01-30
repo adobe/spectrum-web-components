@@ -1,7 +1,6 @@
 {
-    "name": "@adobe/swc",
+    "name": "@adobe/spectrum-wc",
     "version": "0.0.2",
-    "private": true,
     "description": "Spectrum Web Components 2nd generation - rendering implementations",
     "license": "Apache-2.0",
     "author": "Adobe",
@@ -16,10 +15,6 @@
     },
     "type": "module",
     "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "import": "./dist/index.js"
-        },
         "./*": {
             "types": "./dist/components/*/index.d.ts",
             "import": "./dist/components/*/index.js"
@@ -27,12 +22,18 @@
         "./components/*": {
             "types": "./dist/components/*/index.d.ts",
             "import": "./dist/components/*/index.js"
+        },
+        "./stylesheets/*.css": {
+            "default": "./stylesheets/*.css"
+        },
+        "./utils/*": {
+            "types": "./dist/utils/*.d.ts",
+            "import": "./dist/utils/*.js"
         }
     },
-    "main": "./dist/index.js",
-    "module": "./dist/index.js",
     "files": [
-        "dist/"
+        "dist/",
+        "stylesheets/"
     ],
     "scripts": {
         "analyze": "cem analyze --config cem.config.js",
@@ -49,7 +50,6 @@
         "test:ui": "vitest --ui",
         "test:watch": "run-p dev:core vitest"
     },
-    "types": "./dist/index.d.ts",
     "dependencies": {
         "@spectrum-web-components/core": "0.0.2",
         "lit": "^2.5.0 || ^3.1.3"
@@ -101,6 +101,8 @@
         "css"
     ],
     "customElements": ".storybook/custom-elements.json",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
     "publishConfig": {
         "access": "public"
     }

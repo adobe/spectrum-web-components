@@ -15,7 +15,7 @@
             "!@spectrum-web-components/2nd-gen"
         ]
     ],
-    "linked": [["@adobe/swc", "@spectrum-web-components/core"]],
+    "linked": [["@adobe/spectrum-wc", "@spectrum-web-components/core"]],
     "access": "public",
     "baseBranch": "main",
     "updateInternalDependencies": "patch",
