@@ -70,11 +70,35 @@ jobs:
               run: |
                   if [ -z "$(ls -A .changeset/*.md 2>/dev/null | grep -v README)" ]; then
                     echo "has_changesets=false" >> $GITHUB_OUTPUT
+                    echo "has_1st_gen_changesets=false" >> $GITHUB_OUTPUT
                     echo "No changesets found - skipping publish"
                   else
                     echo "has_changesets=true" >> $GITHUB_OUTPUT
                     CHANGESET_COUNT=$(ls -1 .changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
                     echo "Found $CHANGESET_COUNT changesets"
+
+                    # Check if any changeset mentions 1st-gen packages
+                    # 1st-gen packages are @spectrum-web-components/* except core
+                    HAS_1ST_GEN=false
+                    for file in .changeset/*.md; do
+                      if [ "$(basename "$file")" != "README.md" ]; then
+                        # Check for @spectrum-web-components packages that are NOT core
+                        if grep -q "@spectrum-web-components/" "$file" && ! grep -q "^'@spectrum-web-components/core'" "$file"; then
+                          # Verify it's not ONLY core by checking for other packages
+                          if grep "@spectrum-web-components/" "$file" | grep -qv "@spectrum-web-components/core"; then
+                            HAS_1ST_GEN=true
+                            break
+                          fi
+                        fi
+                      fi
+                    done
+
+                    echo "has_1st_gen_changesets=$HAS_1ST_GEN" >> $GITHUB_OUTPUT
+                    if [ "$HAS_1ST_GEN" = "true" ]; then
+                      echo "Found 1st-gen changesets - React wrappers will be built and published"
+                    else
+                      echo "No 1st-gen changesets found - React wrappers will be skipped"
+                    fi
                   fi
 
             - name: Verify OIDC token availability
@@ -141,11 +165,11 @@ jobs:
                   fi
 
             - name: Build React wrappers
-              if: steps.check-changesets.outputs.has_changesets == 'true'
+              if: steps.check-changesets.outputs.has_1st_gen_changesets == 'true'
               run: yarn workspace @spectrum-web-components/1st-gen build:react
 
             - name: Publish React wrappers
-              if: steps.check-changesets.outputs.has_changesets == 'true'
+              if: steps.check-changesets.outputs.has_1st_gen_changesets == 'true'
               run: |
                   TAG="${{ steps.extract-tag.outputs.tag }}"
                   if [ "$TAG" == "latest" ]; then
