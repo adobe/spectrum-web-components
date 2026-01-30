@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/contextual-help",
-    "version": "1.10.0",
+    "version": "1.11.0",
     "description": "Web component implementation of a Spectrum design ContextualHelp",
     "license": "Apache-2.0",
     "author": "Adobe",
@@ -55,13 +55,13 @@
     ],
     "types": "./src/index.d.ts",
     "dependencies": {
-        "@spectrum-web-components/action-button": "1.10.0",
-        "@spectrum-web-components/base": "1.10.0",
-        "@spectrum-web-components/dialog": "1.10.0",
-        "@spectrum-web-components/icons-workflow": "1.10.0",
-        "@spectrum-web-components/overlay": "1.10.0",
-        "@spectrum-web-components/popover": "1.10.0",
-        "@spectrum-web-components/reactive-controllers": "1.10.0"
+        "@spectrum-web-components/action-button": "1.11.0",
+        "@spectrum-web-components/base": "1.11.0",
+        "@spectrum-web-components/dialog": "1.11.0",
+        "@spectrum-web-components/icons-workflow": "1.11.0",
+        "@spectrum-web-components/overlay": "1.11.0",
+        "@spectrum-web-components/popover": "1.11.0",
+        "@spectrum-web-components/reactive-controllers": "1.11.0"
     },
     "keywords": [
         "design-system",

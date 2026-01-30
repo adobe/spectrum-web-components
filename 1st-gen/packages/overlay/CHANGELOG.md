@@ -1,5 +1,32 @@
 # Change Log
 
+## 1.11.0
+
+### Patch Changes
+
+- [#5873](https://github.com/adobe/spectrum-web-components/pull/5873) [`02b2d7d`](https://github.com/adobe/spectrum-web-components/commit/02b2d7d2c7d204d7f0f6501ec075e923f58244c9) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Fixes overlay trigger directive behavior when used with Lit's `cache()` directive. When the trigger element is disconnected and reconnected (as happens with `cache()`), the directive now properly cleans up and recreates the overlay state. On disconnect, the overlay is closed, removed from the DOM, and its reference is cleared from the strategy. This ensures that when the trigger reconnects, a fresh overlay will be created on the next open, preventing stale state and console errors.
+
+- [#5868](https://github.com/adobe/spectrum-web-components/pull/5868) [`f07344f`](https://github.com/adobe/spectrum-web-components/commit/f07344f400f64c12f15762e3fedcdab2629e781b) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed** issue where picker menus inside overlays could not scroll to the bottom after selecting an item and reopening. The problem was caused by the overlay's placement calculation happening before the menu fully rendered, resulting in incorrect height measurements.
+
+    This fix ensures picker menus maintain proper scrollable height when reopened, regardless of the selected item's position.
+
+- [#5893](https://github.com/adobe/spectrum-web-components/pull/5893) [`1d76b70`](https://github.com/adobe/spectrum-web-components/commit/1d76b7093d8ff5f9b26f07a69086488341a02650) Thanks [@majornista](https://github.com/majornista)! - hover overlays should close with the Esc key when trigger is not focused
+
+- [#5907](https://github.com/adobe/spectrum-web-components/pull/5907) [`cadc39e`](https://github.com/adobe/spectrum-web-components/commit/cadc39ea419f572a79451fc886cd45c8d8821cde) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed**: Modal overlays now properly close when clicking the backdrop, while page overlays correctly remain blocking.
+
+    The `modal-backdrop` click handler now correctly distinguishes between overlay types:
+    - Modal overlays close on backdrop click (light dismiss behavior)
+    - Page overlays remain blocking and do not close on backdrop click
+
+- [#5964](https://github.com/adobe/spectrum-web-components/pull/5964) [`4cb0b7b`](https://github.com/adobe/spectrum-web-components/commit/4cb0b7b86ebfaad89f1866916415b8578aa6dbea) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Fixed**: Third-level submenus now open correctly on Safari.
+  Simplified the WebKit layout timing fix in `computePlacement()` to ensure consistent overlay positioning for deeply nested menus.
+- Updated dependencies [[`b95e254`](https://github.com/adobe/spectrum-web-components/commit/b95e25413830825a506b7d4025d6b4d982691771), [`f8bdeec`](https://github.com/adobe/spectrum-web-components/commit/f8bdeecf8a230822122a990fb977d3654649f891), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
+    - @spectrum-web-components/reactive-controllers@1.11.0
+    - @spectrum-web-components/shared@1.11.0
+    - @spectrum-web-components/base@1.11.0
+    - @spectrum-web-components/theme@1.11.0
+    - @spectrum-web-components/action-button@1.11.0
+
 ## 1.10.0
 
 ### Patch Changes

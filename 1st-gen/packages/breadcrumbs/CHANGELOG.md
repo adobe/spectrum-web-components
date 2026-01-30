@@ -1,5 +1,21 @@
 # Change Log
 
+## 1.11.0
+
+### Patch Changes
+
+- [#5900](https://github.com/adobe/spectrum-web-components/pull/5900) [`283f0fe`](https://github.com/adobe/spectrum-web-components/commit/283f0fe07533c464e9fe1a3e7edebecb9128e11f) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Added missing dependencies to the package.json files of several components to align with their usage in source code.
+
+- Updated dependencies [[`eac97a2`](https://github.com/adobe/spectrum-web-components/commit/eac97a2a4206d1ece946d9bec0e7f462624ced27), [`283f0fe`](https://github.com/adobe/spectrum-web-components/commit/283f0fe07533c464e9fe1a3e7edebecb9128e11f), [`2732aad`](https://github.com/adobe/spectrum-web-components/commit/2732aada6e69372a47537a0c139b8f52db811e93), [`f8bdeec`](https://github.com/adobe/spectrum-web-components/commit/f8bdeecf8a230822122a990fb977d3654649f891), [`b95e254`](https://github.com/adobe/spectrum-web-components/commit/b95e25413830825a506b7d4025d6b4d982691771), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
+    - @spectrum-web-components/menu@1.11.0
+    - @spectrum-web-components/action-menu@1.11.0
+    - @spectrum-web-components/shared@1.11.0
+    - @spectrum-web-components/base@1.11.0
+    - @spectrum-web-components/icon@1.11.0
+    - @spectrum-web-components/link@1.11.0
+    - @spectrum-web-components/icons-ui@1.11.0
+    - @spectrum-web-components/icons-workflow@1.11.0
+
 ## 1.10.0
 
 ### Patch Changes

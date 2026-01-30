@@ -1,5 +1,24 @@
 # Change Log
 
+## 1.11.0
+
+### Patch Changes
+
+- [#5960](https://github.com/adobe/spectrum-web-components/pull/5960) [`e66cdb2`](https://github.com/adobe/spectrum-web-components/commit/e66cdb2ea99f263f923480b70fc2b41be103b589) Thanks [@blunteshwar](https://github.com/blunteshwar)! - ## Changeset
+
+    **Fix: Contextual Help popover inaccessible to screen readers**
+
+    Adds required ARIA attributes to associate the trigger button with popover content, enabling screen readers to announce the heading and body text when the popover opens.
+
+- Updated dependencies [[`b95e254`](https://github.com/adobe/spectrum-web-components/commit/b95e25413830825a506b7d4025d6b4d982691771), [`02b2d7d`](https://github.com/adobe/spectrum-web-components/commit/02b2d7d2c7d204d7f0f6501ec075e923f58244c9), [`f07344f`](https://github.com/adobe/spectrum-web-components/commit/f07344f400f64c12f15762e3fedcdab2629e781b), [`1d76b70`](https://github.com/adobe/spectrum-web-components/commit/1d76b7093d8ff5f9b26f07a69086488341a02650), [`cadc39e`](https://github.com/adobe/spectrum-web-components/commit/cadc39ea419f572a79451fc886cd45c8d8821cde), [`4cb0b7b`](https://github.com/adobe/spectrum-web-components/commit/4cb0b7b86ebfaad89f1866916415b8578aa6dbea), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
+    - @spectrum-web-components/reactive-controllers@1.11.0
+    - @spectrum-web-components/overlay@1.11.0
+    - @spectrum-web-components/base@1.11.0
+    - @spectrum-web-components/popover@1.11.0
+    - @spectrum-web-components/action-button@1.11.0
+    - @spectrum-web-components/dialog@1.11.0
+    - @spectrum-web-components/icons-workflow@1.11.0
+
 ## 1.10.0
 
 ### Patch Changes

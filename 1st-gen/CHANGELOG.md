@@ -3,6 +3,189 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0](https://github.com/adobe/spectrum-web-components/compare/v1.10.0...v1.11.0) (2026-01-27)
+
+## Minor Changes
+
+**sp-reactive-controllers**: **Added**: `FocusGroupController` now supports a `stopKeyEventPropagation` config option. When set to `true`, arrow key events will stop propagation after being handled, preventing them from bubbling up to parent elements.
+
+**sp-tray**: **Added**: Automatic dismiss button detection and visually-hidden helpers for screen reader accessibility
+
+- **Added**: `<sp-tray>` now automatically detects keyboard-accessible dismiss buttons (like `<sp-button>`, `<sp-close-button>`, or HTML `<button>` elements) in slotted content
+- **Added**: When no dismiss buttons are detected, the tray automatically renders visually-hidden dismiss buttons before and after its content to support mobile screen readers (particularly VoiceOver on iOS)
+- **Added**: New `has-keyboard-dismiss` boolean attribute to manually override auto-detection when slotted content has custom dismiss functionality that cannot be automatically detected
+- **Added**: Auto-detection recognizes `<sp-dialog dismissable>` and `<sp-dialog-wrapper dismissable>` components with built-in dismiss functionality in shadow DOM
+- **Enhanced**: Improved mobile screen reader accessibility by ensuring dismissal options are always available when appropriate
+
+**sp-close-button**: Added visually hidden default slot rendering to sp-close-button so text content is accessible to screen readers while remaining invisible to sighted users.
+
+**sp-styles**: Manually adds the s2 static color values from [Spectrum Tokens](https://github.com/adobe/spectrum-tokens/blob/04cf6eb95ece7f3320e0e2babd6a51db8edfc950/packages/tokens/src/color-palette.json#L6491)
+
+### Added
+
+- `--spectrum-static-blue-900-rgb: 59 99 251;`
+- `--spectrum-static-blue-900: rgb(var(--spectrum-static-blue-900-rgb));`
+- `--spectrum-static-blue-1000-rgb: 39 77 234;`
+- `--spectrum-static-blue-1000: rgb(var(--spectrum-static-blue-1000-rgb));`
+- `--spectrum-static-fuchsia-400-rgb: 247 181 255;`
+- `--spectrum-static-fuchsia-400: rgb(var(--spectrum-static-fuchsia-400-rgb));`
+- `--spectrum-static-fuchsia-600-rgb: 236 105 255;`
+- `--spectrum-static-fuchsia-600: rgb(var(--spectrum-static-fuchsia-600-rgb));`
+- `--spectrum-static-fuchsia-800-rgb: 200 68 220;`
+- `--spectrum-static-fuchsia-800: rgb(var(--spectrum-static-fuchsia-800-rgb));`
+- `--spectrum-static-fuchsia-900-rgb: 181 57 200;`
+- `--spectrum-static-fuchsia-900: rgb(var(--spectrum-static-fuchsia-900-rgb));`
+- `--spectrum-static-fuchsia-1000-rgb: 156 40 175;`
+- `--spectrum-static-fuchsia-1000: rgb(var(--spectrum-static-fuchsia-1000-rgb));`
+- `--spectrum-static-indigo-400-rgb: 192 201 255;`
+- `--spectrum-static-indigo-400: rgb(var(--spectrum-static-indigo-400-rgb));`
+- `--spectrum-static-indigo-600-rgb: 145 151 254;`
+- `--spectrum-static-indigo-600: rgb(var(--spectrum-static-indigo-600-rgb));`
+- `--spectrum-static-indigo-800-rgb: 122 106 253;`
+- `--spectrum-static-indigo-800: rgb(var(--spectrum-static-indigo-800-rgb));`
+- `--spectrum-static-indigo-900-rgb: 113 85 250;`
+- `--spectrum-static-indigo-900: rgb(var(--spectrum-static-indigo-900-rgb));`
+- `--spectrum-static-indigo-1000-rgb: 99 56 238;`
+- `--spectrum-static-indigo-1000: rgb(var(--spectrum-static-indigo-1000-rgb));`
+- `--spectrum-static-magenta-400-rgb: 255 185 208;`
+- `--spectrum-static-magenta-400: rgb(var(--spectrum-static-magenta-400-rgb));`
+- `--spectrum-static-magenta-600-rgb: 255 112 159;`
+- `--spectrum-static-magenta-600: rgb(var(--spectrum-static-magenta-600-rgb));`
+- `--spectrum-static-magenta-800-rgb: 240 45 110;`
+- `--spectrum-static-magenta-800: rgb(var(--spectrum-static-magenta-800-rgb));`
+- `--spectrum-static-magenta-900-rgb: 217 35 97;`
+- `--spectrum-static-magenta-900: rgb(var(--spectrum-static-magenta-900-rgb));`
+- `--spectrum-static-magenta-1000-rgb: 186 22 80;`
+- `--spectrum-static-magenta-1000: rgb(var(--spectrum-static-magenta-1000-rgb));`
+- `--spectrum-static-red-400-rgb: 255 188 180;`
+- `--spectrum-static-red-400: rgb(var(--spectrum-static-red-400-rgb));`
+- `--spectrum-static-red-600-rgb: 255 118 101;`
+- `--spectrum-static-red-600: rgb(var(--spectrum-static-red-600-rgb));`
+- `--spectrum-static-red-800-rgb: 240 56 35;`
+- `--spectrum-static-red-800: rgb(var(--spectrum-static-red-800-rgb));`
+- `--spectrum-static-red-900-rgb: 215 50 32;`
+- `--spectrum-static-red-900: rgb(var(--spectrum-static-red-900-rgb));`
+- `--spectrum-static-red-1000-rgb: 183 40 24;`
+- `--spectrum-static-red-1000: rgb(var(--spectrum-static-red-1000-rgb));`
+- `--spectrum-static-cyan-400-rgb: 138 213 255;`
+- `--spectrum-static-cyan-400: rgb(var(--spectrum-static-cyan-400-rgb));`
+- `--spectrum-static-cyan-600-rgb: 48 167 254;`
+- `--spectrum-static-cyan-600: rgb(var(--spectrum-static-cyan-600-rgb));`
+- `--spectrum-static-cyan-800-rgb: 18 134 205;`
+- `--spectrum-static-cyan-800: rgb(var(--spectrum-static-cyan-800-rgb));`
+- `--spectrum-static-chartreuse-400-rgb: 182 219 0;`
+- `--spectrum-static-chartreuse-400: rgb(var(--spectrum-static-chartreuse-400-rgb));`
+- `--spectrum-static-chartreuse-600-rgb: 143 172 0;`
+- `--spectrum-static-chartreuse-600: rgb(var(--spectrum-static-chartreuse-600-rgb));`
+- `--spectrum-static-chartreuse-800-rgb: 114 137 0;`
+- `--spectrum-static-chartreuse-800: rgb(var(--spectrum-static-chartreuse-800-rgb));`
+- `--spectrum-static-green-400-rgb: 107 227 162;`
+- `--spectrum-static-green-400: rgb(var(--spectrum-static-green-400-rgb));`
+- `--spectrum-static-green-600-rgb: 18 184 103;`
+- `--spectrum-static-green-600: rgb(var(--spectrum-static-green-600-rgb));`
+- `--spectrum-static-green-800-rgb: 7 147 85;`
+- `--spectrum-static-green-800: rgb(var(--spectrum-static-green-800-rgb));`
+- `--spectrum-static-orange-400-rgb: 255 193 94;`
+- `--spectrum-static-orange-400: rgb(var(--spectrum-static-orange-400-rgb));`
+- `--spectrum-static-orange-600-rgb: 252 125 0;`
+- `--spectrum-static-orange-600: rgb(var(--spectrum-static-orange-600-rgb));`
+- `--spectrum-static-orange-800-rgb: 212 91 0;`
+- `--spectrum-static-orange-800: rgb(var(--spectrum-static-orange-800-rgb));`
+- `--spectrum-static-purple-400-rgb: 221 193 246;`
+- `--spectrum-static-purple-400: rgb(var(--spectrum-static-purple-400-rgb));`
+- `--spectrum-static-purple-600-rgb: 191 138 238;`
+- `--spectrum-static-purple-600: rgb(var(--spectrum-static-purple-600-rgb));`
+- `--spectrum-static-purple-800-rgb: 166 92 231;`
+- `--spectrum-static-purple-800: rgb(var(--spectrum-static-purple-800-rgb));`
+- `--spectrum-static-turquoise-400-rgb: 111 221 228;`
+- `--spectrum-static-turquoise-400: rgb(var(--spectrum-static-turquoise-400-rgb));`
+- `--spectrum-static-turquoise-600-rgb: 15 177 192;`
+- `--spectrum-static-turquoise-600: rgb(var(--spectrum-static-turquoise-600-rgb));`
+- `--spectrum-static-turquoise-800-rgb: 10 141 153;`
+- `--spectrum-static-turquoise-800: rgb(var(--spectrum-static-turquoise-800-rgb));`
+
+## Patch Changes
+
+**sp-avatar**: **Added**: `is-decorative` attribute to `<sp-avatar>` to allow developers to explicitly mark avatars as decorative. When set, the avatar is hidden from screen readers with `alt=""` and `aria-hidden="true"`.
+
+**Fixed**: Fixed accessibility violation where `<sp-avatar>` rendered an underlying `img` without any `alt` attribute when no `label` was provided. The component now defaults to `alt=""` when neither `label` nor `is-decorative` is provided, and logs a dev mode warning to help developers catch missing accessibility attributes.
+
+**sp-field-label**: Fix missing CSS custom property overrides for field-label and help-text components
+
+Previously, these components had empty override files despite having corresponding `--system-*` tokens defined in the system theme bridge. This caused the components to not properly apply size-specific spacing tokens for top and bottom text positioning. The fix adds the missing CSS custom property mappings to ensure proper theming across all component sizes (s, m, l, xl).
+
+**sp-help-text**: Fix missing CSS custom property overrides for field-label and help-text components
+
+Previously, these components had empty override files despite having corresponding `--system-*` tokens defined in the system theme bridge. This caused the components to not properly apply size-specific spacing tokens for top and bottom text positioning. The fix adds the missing CSS custom property mappings to ensure proper theming across all component sizes (s, m, l, xl).
+
+**sp-picker**: **Fixed**: click events are now dispatched from menu-items on touch devices
+
+- All touch devices (including iPads with screen widths >743px) now correctly use click events instead of drag-and-select behavior
+
+**sp-menu**: **Fixed**: Improved touch interaction handling for submenus to prevent unintended submenu closures.
+
+**sp-overlay**: Fixes overlay trigger directive behavior when used with Lit's `cache()` directive. When the trigger element is disconnected and reconnected (as happens with `cache()`), the directive now properly cleans up and recreates the overlay state. On disconnect, the overlay is closed, removed from the DOM, and its reference is cleared from the strategy. This ensures that when the trigger reconnects, a fresh overlay will be created on the next open, preventing stale state and console errors.
+
+**sp-picker**: **Fixed**: Arrow key events now stop propagation when handled by the picker, preventing them from bubbling up to parent elements.
+
+Previously, arrow key events (`ArrowUp`, `ArrowDown`, `ArrowLeft`, `ArrowRight`) would propagate to ancestor containers even when the picker was actively handling them. This could cause unintended side effects in layouts or applications that also listen for arrow key events.
+
+**sp-action-menu**: Added missing dependencies to the package.json files of several components to align with their usage in source code.
+
+**sp-breadcrumbs**: Added missing dependencies to the package.json files of several components to align with their usage in source code.
+
+**sp-action-bar**: Added missing dependencies to the package.json files of several components to align with their usage in source code.
+
+**sp-coachmark**: Added missing dependencies to the package.json files of several components to align with their usage in source code.
+
+**sp-core**: Added missing dependencies to the package.json files of several components to align with their usage in source code.
+
+**sp-overlay**: **Fixed** issue where picker menus inside overlays could not scroll to the bottom after selecting an item and reopening. The problem was caused by the overlay's placement calculation happening before the menu fully rendered, resulting in incorrect height measurements.
+
+This fix ensures picker menus maintain proper scrollable height when reopened, regardless of the selected item's position.
+
+**sp-picker**: **Fixed** issue where picker menus inside overlays could not scroll to the bottom after selecting an item and reopening. The problem was caused by the overlay's placement calculation happening before the menu fully rendered, resulting in incorrect height measurements.
+
+This fix ensures picker menus maintain proper scrollable height when reopened, regardless of the selected item's position.
+
+**sp-picker**: **Fixed**: Safari + VoiceOver crash when opening Picker and ActionMenu. The issue was caused by an imperative `render()` call that mutated the DOM during the render cycle, causing Safari to crash while VoiceOver scanned the accessibility tree.
+
+**sp-action-menu**: **Fixed**: Safari + VoiceOver crash when opening Picker and ActionMenu. The issue was caused by an imperative `render()` call that mutated the DOM during the render cycle, causing Safari to crash while VoiceOver scanned the accessibility tree.
+
+**sp-overlay**: hover overlays should close with the Esc key when trigger is not focused
+
+**sp-core**: hover overlays should close with the Esc key when trigger is not focused
+
+**sp-shared**: Improve reliability when composing components and mixins that observe slot presence.
+
+**sp-menu**: **Fixed**: `sp-menu` now stops propagation of arrow key events when navigating between menu items. This prevents unintended side effects in layouts or applications that also listen for arrow key events.
+
+**sp-overlay**: **Fixed**: Modal overlays now properly close when clicking the backdrop, while page overlays correctly remain blocking.
+
+The `modal-backdrop` click handler now correctly distinguishes between overlay types:
+
+- Modal overlays close on backdrop click (light dismiss behavior)
+- Page overlays remain blocking and do not close on backdrop click
+
+**sp-tooltip**: **Fixed**: Fixed an issue with text overflow in `sp-tooltip`: long, unbroken words were not wrapping and overflowed the container.
+
+**sp-slider**: **Fixed**: Arrow key events now stop propagation when handled by the slider, preventing them from bubbling up to parent elements.
+
+Previously, arrow key events (`ArrowUp`, `ArrowDown`, `ArrowLeft`, `ArrowRight`) would propagate to ancestor containers even when the slider was actively handling value adjustments. This could cause unintended side effects in layouts or applications that also listen for arrow key events.
+
+**sp-overlay**: **Fixed**: Third-level submenus now open correctly on Safari.
+Simplified the WebKit layout timing fix in `computePlacement()` to ensure consistent overlay positioning for deeply nested menus.
+
+**sp-core**: - **Fixed**: Added `typesVersions` to `@spectrum-web-components/core` to improve TypeScript module resolution for users with `moduleResolution: "node"`. This provides a fallback mechanism when the `exports` field resolution encounters issues, ensuring type declarations are properly resolved across different TypeScript configurations.
+
+**sp-base**: - **Fixed**: Added `typesVersions` to `@spectrum-web-components/core` to improve TypeScript module resolution for users with `moduleResolution: "node"`. This provides a fallback mechanism when the `exports` field resolution encounters issues, ensuring type declarations are properly resolved across different TypeScript configurations.
+
+**sp-contextual-help**: ## Changeset
+
+**Fix: Contextual Help popover inaccessible to screen readers**
+
+Adds required ARIA attributes to associate the trigger button with popover content, enabling screen readers to announce the heading and body text when the popover opens.
+
 # [1.10.0](https://github.com/adobe/spectrum-web-components/compare/v1.9.1...v1.10.0) (2025-11-05)
 
 ## Minor Changes

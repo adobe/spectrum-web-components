@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.11.0
+
+### Minor Changes
+
+- [#5965](https://github.com/adobe/spectrum-web-components/pull/5965) [`b95e254`](https://github.com/adobe/spectrum-web-components/commit/b95e25413830825a506b7d4025d6b4d982691771) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Added**: `FocusGroupController` now supports a `stopKeyEventPropagation` config option. When set to `true`, arrow key events will stop propagation after being handled, preventing them from bubbling up to parent elements.
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/progress-circle@1.11.0
+
 ## 1.10.0
 
 ### Patch Changes

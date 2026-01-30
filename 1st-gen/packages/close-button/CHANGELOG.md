@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.11.0
+
+### Minor Changes
+
+- [#5881](https://github.com/adobe/spectrum-web-components/pull/5881) [`50ad026`](https://github.com/adobe/spectrum-web-components/commit/50ad0268f0de4ce077903a6e8e076aa42d067962) Thanks [@cdransf](https://github.com/cdransf)! - Added visually hidden default slot rendering to sp-close-button so text content is accessible to screen readers while remaining invisible to sighted users.
+
+### Patch Changes
+
+- Updated dependencies [[`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
+    - @spectrum-web-components/base@1.11.0
+
 ## 1.10.0
 
 ### Patch Changes

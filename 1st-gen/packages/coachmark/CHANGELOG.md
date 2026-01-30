@@ -1,5 +1,22 @@
 # Change Log
 
+## 1.11.0
+
+### Patch Changes
+
+- [#5900](https://github.com/adobe/spectrum-web-components/pull/5900) [`283f0fe`](https://github.com/adobe/spectrum-web-components/commit/283f0fe07533c464e9fe1a3e7edebecb9128e11f) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Added missing dependencies to the package.json files of several components to align with their usage in source code.
+
+- Updated dependencies [[`b95e254`](https://github.com/adobe/spectrum-web-components/commit/b95e25413830825a506b7d4025d6b4d982691771), [`f8bdeec`](https://github.com/adobe/spectrum-web-components/commit/f8bdeecf8a230822122a990fb977d3654649f891), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
+    - @spectrum-web-components/reactive-controllers@1.11.0
+    - @spectrum-web-components/shared@1.11.0
+    - @spectrum-web-components/base@1.11.0
+    - @spectrum-web-components/button@1.11.0
+    - @spectrum-web-components/icon@1.11.0
+    - @spectrum-web-components/popover@1.11.0
+    - @spectrum-web-components/asset@1.11.0
+    - @spectrum-web-components/button-group@1.11.0
+    - @spectrum-web-components/icons-ui@1.11.0
+
 ## 1.10.0
 
 ### Patch Changes

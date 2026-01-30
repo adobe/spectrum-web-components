@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -16,6 +16,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';
 
 import {
+    BADGE_VALID_SIZES,
     BADGE_VARIANTS_COLOR_S2,
     BADGE_VARIANTS_S2,
     BadgeBase,
@@ -27,6 +28,7 @@ import styles from './badge.css';
 /**
  * A badge component that displays short, descriptive information about an element.
  * Badges are typically used to indicate status, categories, or provide supplementary information.
+ *
  *
  * @element swc-badge
  *
@@ -53,6 +55,11 @@ export class Badge extends BadgeBase {
      * @internal
      */
     static override readonly VARIANTS = BADGE_VARIANTS_S2;
+
+    /**
+     * @internal
+     */
+    static override readonly VALID_SIZES = BADGE_VALID_SIZES;
 
     /**
      * The variant of the badge.
