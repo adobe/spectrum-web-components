@@ -180,6 +180,13 @@ The `invalid` attribute indicates that the checkbox's value is invalid. When set
 
 When a checkbox is in an invalid state, provide help text to explain the error and guide the user toward a solution. Wrap the checkbox in an [`<sp-field-group>`](../field-group) to associate the help text with the checkbox. (See [help text](#help-text) for more information.)
 
+**Important:** Both the `<sp-field-group>` and its child `<sp-checkbox>` elements must be marked as `invalid` for the complete invalid state to display correctly:
+
+- The `invalid` attribute on `<sp-field-group>` controls help text visibility (showing the `negative-help-text` slot).
+- The `invalid` attribute on each `<sp-checkbox>` controls the visual invalid styling on the checkbox itself.
+
+Setting only one creates a sync hazard where either the help text won't display or the checkboxes won't show invalid styling.
+
 ```html
 <sp-field-group vertical label="Terms and conditions" invalid>
     <sp-checkbox invalid>I accept the terms and conditions</sp-checkbox>
