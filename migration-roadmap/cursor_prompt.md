@@ -98,8 +98,16 @@ git checkout spectrum-two
 - **IMPORTANT**: Check both the import statements AND the template logic, as components may be removed from imports between sources
 - **Line-by-line comparison required**: Don't assume templates are identical - carefully check imports, component usage, and structure
 - Document class application differences
-- **Verification steps**: After each git checkout, confirm you're viewing the correct branch's files. After documenting each DOM structure, verify the accuracy by re-reading the actual template files to ensure the HTML matches exactly what's in the source code for that branch.
-- **Final accuracy check**: Before completing the documentation, re-read each template file one more time to verify the DOM structures are 100% accurate. Any discrepancies between documented HTML and actual template code will require correction.
+
+**Branch verification protocol (required)**:
+
+Before documenting each CSS DOM structure, you MUST provide proof of correct branch:
+
+1. Run `git branch --show-current` and confirm the output matches the expected branch
+2. Quote the first 2-3 import statements from the template.js file you are reading
+3. If imports are identical between branches, identify a distinguishing parameter name or feature (e.g., `hasClearButton` vs `isRemovable`, presence/absence of a variant) that proves you are on the correct branch
+
+This verification prevents accidentally documenting the same branch twice, which produces incorrect "no changes" conclusions.
 
 **Output Format**:
 
