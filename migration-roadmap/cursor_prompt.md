@@ -219,6 +219,22 @@ Create a markdown table with these exact column headers:
 - "Missing from CSS" - Web component feature exists but no CSS support
 - "Deprecated" - Being removed in Spectrum 2
 
+**Deprecation detection**:
+
+Mark features as "Deprecated" (not "Missing from CSS") when:
+
+1. Feature exists in SWC AND was intentionally removed in Spectrum 2 CSS
+2. Variant exists in CSS main branch but not in spectrum-two branch
+3. Import or component was removed between CSS branches
+
+Examples requiring "Deprecated" status:
+
+- SWC has `variant="positive"` but spectrum-two removed `.spectrum-Tooltip--positive` → Deprecated
+- SWC has `icon` slot but spectrum-two removed icon rendering → Deprecated
+- CSS main has `is-invalid` state but spectrum-two removed it → Deprecated
+
+The key question: "Was this intentionally removed as part of Spectrum 2?" If yes → Deprecated.
+
 **Mapping Logic:**
 
 - **Variants to Attributes**: CSS selectors with variants (noted after double dash `--`) likely map to component attributes
