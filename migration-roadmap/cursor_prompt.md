@@ -303,6 +303,8 @@ Analyze the differences between CSS `main` and CSS `spectrum-two` branches surfa
 - Conditional logic changes (e.g., `isInvalid` removed)
 - Import differences that affect rendered output
 
+**Note**: Changes to `--mod-*` custom properties between branches can signal new or deprecated features. If --mod changes reveal something not already captured above, include it.
+
 ### 4. Resources section
 
 Create a Level 2 Heading: `## Resources`
