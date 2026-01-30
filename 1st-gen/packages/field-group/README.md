@@ -127,6 +127,13 @@ Help text can be accessibly associated with an `<sp-field-group>` element by usi
 
 When a group of checkboxes fails validation, use the `invalid` attribute on the field group along with `negative-help-text` to explain the error. Set the `invalid` attribute on individual checkboxes as well to apply the appropriate visual styling.
 
+**Important:** Both the `<sp-field-group>` and its child elements must be marked as `invalid` for the complete invalid state to display correctly:
+
+- The `invalid` attribute on `<sp-field-group>` controls help text visibility (showing the `negative-help-text` slot).
+- The `invalid` attribute on each child element (e.g., `<sp-checkbox>`) controls the visual invalid styling on that element.
+
+Setting only one creates a sync hazard where either the help text won't display or the child elements won't show invalid styling.
+
 ```html
 <sp-field-group vertical label="Required selections" invalid>
     <sp-checkbox invalid>Option A</sp-checkbox>
