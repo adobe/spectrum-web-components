@@ -21,6 +21,7 @@
     - [AI agent instructions](07_authoring-contributor-docs/01_ai-agent-instructions.md)
 - [Patching dependencies](08_patching-dependencies.md)
 - [Accessibility testing](09_accessibility-testing.md)
+- [TypeScript configuration](10_typescript-configuration.md)
 
 </details>
 
