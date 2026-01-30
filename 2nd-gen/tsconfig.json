@@ -6,7 +6,7 @@
         "experimentalDecorators": true,
         "forceConsistentCasingInFileNames": true,
         "isolatedModules": true,
-        "lib": ["ES2022", "DOM", "DOM.Iterable"],
+        "lib": ["ES2018", "DOM", "DOM.Iterable"],
         "module": "ESNext",
         "moduleResolution": "bundler",
         "noEmit": true,
@@ -19,7 +19,7 @@
         "rootDir": "./",
         "skipLibCheck": true,
         "strict": true,
-        "target": "ES2022",
+        "target": "ES2018",
         "useDefineForClassFields": false
     },
     "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.stories.ts"],

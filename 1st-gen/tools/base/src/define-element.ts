@@ -10,4 +10,4 @@
  * governing permissions and limitations under the License.
  */
 
-export * from '@spectrum-web-components/core/shared/base/define-element.js';
+export { defineElement } from '@spectrum-web-components/core/shared/base/define-element.js';

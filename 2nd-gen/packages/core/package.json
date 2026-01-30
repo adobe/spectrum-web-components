@@ -15,29 +15,71 @@
     },
     "type": "module",
     "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "import": "./dist/index.js"
+        "./components/asset": {
+            "types": "./dist/components/asset/index.d.ts",
+            "import": "./dist/components/asset/index.js"
         },
-        "./components/*": {
-            "types": "./dist/components/*/index.d.ts",
-            "import": "./dist/components/*/index.js"
+        "./components/badge": {
+            "types": "./dist/components/badge/index.d.ts",
+            "import": "./dist/components/badge/index.js"
         },
-        "./shared/*": {
-            "types": "./dist/shared/*/index.d.ts",
-            "import": "./dist/shared/*/index.js"
+        "./components/divider": {
+            "types": "./dist/components/divider/index.d.ts",
+            "import": "./dist/components/divider/index.js"
         },
-        "./shared/*.js": {
-            "types": "./dist/shared/*.d.ts",
-            "import": "./dist/shared/*.js"
+        "./components/progress-circle": {
+            "types": "./dist/components/progress-circle/index.d.ts",
+            "import": "./dist/components/progress-circle/index.js"
         },
-        "./shared/base/*.js": {
-            "types": "./dist/shared/base/*.d.ts",
-            "import": "./dist/shared/base/*.js"
+        "./components/status-light": {
+            "types": "./dist/components/status-light/index.d.ts",
+            "import": "./dist/components/status-light/index.js"
+        },
+        "./shared/base": {
+            "types": "./dist/shared/base/index.d.ts",
+            "import": "./dist/shared/base/index.js"
+        },
+        "./shared/base/index.js": {
+            "types": "./dist/shared/base/index.d.ts",
+            "import": "./dist/shared/base/index.js"
+        },
+        "./shared/base/Base.js": {
+            "types": "./dist/shared/base/Base.d.ts",
+            "import": "./dist/shared/base/Base.js"
+        },
+        "./shared/base/define-element.js": {
+            "types": "./dist/shared/base/define-element.d.ts",
+            "import": "./dist/shared/base/define-element.js"
+        },
+        "./shared/base/sizedMixin.js": {
+            "types": "./dist/shared/base/sizedMixin.d.ts",
+            "import": "./dist/shared/base/sizedMixin.js"
+        },
+        "./shared/base/version.js": {
+            "types": "./dist/shared/base/version.d.ts",
+            "import": "./dist/shared/base/version.js"
+        },
+        "./shared/utilities": {
+            "types": "./dist/shared/utilities/index.d.ts",
+            "import": "./dist/shared/utilities/index.js"
+        },
+        "./shared/utilities/index.js": {
+            "types": "./dist/shared/utilities/index.d.ts",
+            "import": "./dist/shared/utilities/index.js"
+        },
+        "./shared/get-label-from-slot.js": {
+            "types": "./dist/shared/get-label-from-slot.d.ts",
+            "import": "./dist/shared/get-label-from-slot.js"
+        },
+        "./shared/observe-slot-presence.js": {
+            "types": "./dist/shared/observe-slot-presence.d.ts",
+            "import": "./dist/shared/observe-slot-presence.js"
+        },
+        "./shared/observe-slot-text.js": {
+            "types": "./dist/shared/observe-slot-text.d.ts",
+            "import": "./dist/shared/observe-slot-text.js"
         }
     },
-    "main": "./dist/index.js",
-    "module": "./dist/index.js",
     "files": [
         "dist/"
     ],
@@ -47,21 +89,60 @@
         "dev": "vite build --watch",
         "prepublishOnly": "yarn build"
     },
-    "types": "./dist/index.d.ts",
     "typesVersions": {
         "*": {
-            "components/*": [
-                "dist/components/*"
+            "components/asset": [
+                "dist/components/asset/index.d.ts"
             ],
-            "shared/*": [
-                "dist/shared/*"
+            "components/badge": [
+                "dist/components/badge/index.d.ts"
             ],
-            "shared/base/*": [
-                "dist/shared/base/*"
+            "components/divider": [
+                "dist/components/divider/index.d.ts"
+            ],
+            "components/progress-circle": [
+                "dist/components/progress-circle/index.d.ts"
+            ],
+            "components/status-light": [
+                "dist/components/status-light/index.d.ts"
+            ],
+            "shared/base": [
+                "dist/shared/base/index.d.ts"
+            ],
+            "shared/base/index.js": [
+                "dist/shared/base/index.d.ts"
+            ],
+            "shared/base/Base.js": [
+                "dist/shared/base/Base.d.ts"
+            ],
+            "shared/base/define-element.js": [
+                "dist/shared/base/define-element.d.ts"
+            ],
+            "shared/base/sizedMixin.js": [
+                "dist/shared/base/sizedMixin.d.ts"
+            ],
+            "shared/base/version.js": [
+                "dist/shared/base/version.d.ts"
+            ],
+            "shared/utilities": [
+                "dist/shared/utilities/index.d.ts"
+            ],
+            "shared/utilities/index.js": [
+                "dist/shared/utilities/index.d.ts"
+            ],
+            "shared/get-label-from-slot.js": [
+                "dist/shared/get-label-from-slot.d.ts"
+            ],
+            "shared/observe-slot-presence.js": [
+                "dist/shared/observe-slot-presence.d.ts"
+            ],
+            "shared/observe-slot-text.js": [
+                "dist/shared/observe-slot-text.d.ts"
             ]
         }
     },
     "dependencies": {
+        "@lit-labs/observers": "2.0.2",
         "lit": "^2.5.0 || ^3.1.3"
     },
     "devDependencies": {

@@ -99,6 +99,7 @@ export default defineConfig({
                     id === 'lit' ||
                     id.startsWith('lit/') ||
                     id.startsWith('@lit/') ||
+                    id.startsWith('@lit-labs/') ||
                     id.startsWith('@spectrum-web-components/core/')
                 );
             },
@@ -109,12 +110,12 @@ export default defineConfig({
                 chunkFileNames: '[name].js',
             },
         },
-        target: 'es2022',
+        target: 'es2018',
         sourcemap: true,
         emptyOutDir: true,
         outDir: 'dist',
     },
     esbuild: {
-        target: 'es2022',
+        target: 'es2018',
     },
 });

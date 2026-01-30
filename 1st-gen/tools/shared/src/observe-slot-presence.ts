@@ -9,4 +9,5 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from '@spectrum-web-components/core/shared/observe-slot-presence.js';
+export { ObserveSlotPresence } from '@spectrum-web-components/core/shared/observe-slot-presence.js';
+export type { SlotPresenceObservingInterface } from '@spectrum-web-components/core/shared/observe-slot-presence.js';
