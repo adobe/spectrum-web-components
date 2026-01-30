@@ -5605,7 +5605,6 @@ __metadata:
     fast-glob: "npm:3.3.3"
     fs-extra: "npm:11.3.2"
     geckodriver: "npm:4.4.0"
-    genversion: "npm:3.2.0"
     gh-pages: "npm:6.3.0"
     gunzip-maybe: "npm:1.4.2"
     husky: "npm:9.1.7"
@@ -14233,7 +14232,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ejs@npm:^3.1.6, ejs@npm:^3.1.9":
+"ejs@npm:^3.1.6":
   version: 3.1.10
   resolution: "ejs@npm:3.1.10"
   dependencies:
@@ -16171,15 +16170,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"find-package@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "find-package@npm:1.0.0"
-  dependencies:
-    parents: "npm:^1.0.1"
-  checksum: 10c0/193d7f18bee4cb0810ce195c4ff6b5c8acac203a6f64c6d37a12dec5096e219290f0a6375271ea3f0996bb0542ec6cb79934fc603498d1ce7308b6a53885488d
-  languageName: node
-  linkType: hard
-
 "find-pkg@npm:^0.1.2":
   version: 0.1.2
   resolution: "find-pkg@npm:0.1.2"
@@ -16721,19 +16711,6 @@ __metadata:
   version: 1.0.0-beta.2
   resolution: "gensync@npm:1.0.0-beta.2"
   checksum: 10c0/782aba6cba65b1bb5af3b095d96249d20edbe8df32dbf4696fd49be2583faf676173bf4809386588828e4dd76a3354fcbeb577bab1c833ccd9fc4577f26103f8
-  languageName: node
-  linkType: hard
-
-"genversion@npm:3.2.0":
-  version: 3.2.0
-  resolution: "genversion@npm:3.2.0"
-  dependencies:
-    commander: "npm:^7.2.0"
-    ejs: "npm:^3.1.9"
-    find-package: "npm:^1.0.0"
-  bin:
-    genversion: bin/genversion.js
-  checksum: 10c0/5edc98d717b2e80a516854411d844d9b43b889ad41bfd64a31674a8577419a81ba607a5db80cc9b259c359e6e0788646cf3cd1a658377ad45ce132ca0390e017
   languageName: node
   linkType: hard
 
@@ -24448,15 +24425,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"parents@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "parents@npm:1.0.1"
-  dependencies:
-    path-platform: "npm:~0.11.15"
-  checksum: 10c0/b80a55a5bba155949d8eaea8b5a8f1c5de0f31b339c37ab47b31f535a66c929310e606828453902be31b2a0cf210e96d266c1f449b2dd977a86145f6e4367ee2
-  languageName: node
-  linkType: hard
-
 "parse-english@npm:^5.0.0":
   version: 5.0.0
   resolution: "parse-english@npm:5.0.0"
@@ -24721,13 +24689,6 @@ __metadata:
   version: 1.0.7
   resolution: "path-parse@npm:1.0.7"
   checksum: 10c0/11ce261f9d294cc7a58d6a574b7f1b935842355ec66fba3c3fd79e0f036462eaf07d0aa95bb74ff432f9afef97ce1926c720988c6a7451d8a584930ae7de86e1
-  languageName: node
-  linkType: hard
-
-"path-platform@npm:~0.11.15":
-  version: 0.11.15
-  resolution: "path-platform@npm:0.11.15"
-  checksum: 10c0/5f03fee91c3b4c7abd0bf4044692b14c5a58d38b2791e4608c59bcd91953ac2873f6bee0e4fddf3c9159b929b692cbf87229fd7aa7c5eda77005c837b6e82936
   languageName: node
   linkType: hard
 
@@ -27984,7 +27945,6 @@ __metadata:
     "@commitlint/cli": "npm:19.8.1"
     "@commitlint/config-conventional": "npm:19.8.1"
     "@playwright/test": "npm:1.53.1"
-    genversion: "npm:3.2.0"
     husky: "npm:9.1.7"
     lint-staged: "npm:16.2.6"
     npm-run-all2: "npm:8.0.4"

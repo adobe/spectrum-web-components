@@ -12,7 +12,7 @@
 
 import { LitElement, ReactiveElement } from 'lit';
 
-import { version } from './version.js';
+import { coreVersion, version } from './version.js';
 type ThemeRoot = HTMLElement & {
     startManagingContentDirection: (el: HTMLElement) => void;
     stopManagingContentDirection: (el: HTMLElement) => void;
@@ -190,6 +190,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
 
 export class SpectrumElement extends SpectrumMixin(LitElement) {
     static VERSION = version;
+    static CORE_VERSION = coreVersion;
 }
 
 if (process.env.NODE_ENV === 'development') {
