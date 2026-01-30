@@ -358,3 +358,14 @@ Under this heading, add a placeholder section for resources with a bulleted list
 - Perform line-by-line comparisons - don't assume files are similar
 - Ask clarifying questions for uncertain mappings instead of guessing
 - Use exact file paths specified in this prompt
+
+## Quality gates (self-check before completion)
+
+Before finalizing documentation, verify:
+
+- [ ] All three DOM structures are documented and visually distinct from each other
+- [ ] Diff section shows actual code differences (or explicitly states "no differences")
+- [ ] No features are marked "Missing" that exist under a different name
+- [ ] Summary sections contain only changes, not structure descriptions
+- [ ] CSS selectors are categorized by type (base, variants, states, etc.)
+- [ ] Deprecated features are correctly identified based on spectrum-two removal
