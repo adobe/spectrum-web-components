@@ -109,6 +109,16 @@ Before documenting each CSS DOM structure, you MUST provide proof of correct bra
 
 This verification prevents accidentally documenting the same branch twice, which produces incorrect "no changes" conclusions.
 
+**Mandatory diff generation**:
+
+After documenting both CSS structures, generate an actual diff to verify your comparison:
+
+```bash
+git diff main:components/[component-name]/stories/template.js spectrum-two:components/[component-name]/stories/template.js
+```
+
+Review this diff output to ensure your documented structures accurately reflect the differences. Do NOT rely solely on manual comparison.
+
 **Output Format**:
 
 Create a three-way HTML comparison using markdown code blocks. Use collapsible sections using `<details>` and `<summary>` under `### DOM Structure changes` for each category:
@@ -145,15 +155,24 @@ Create a three-way HTML comparison using markdown code blocks. Use collapsible s
 <summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
 ```diff
---- a/components/[component-name]/stories/template.js (main branch)
-+++ b/components/[component-name]/stories/template.js (spectrum-two branch)
-@@ -1,3 +1,3 @@
--// removed line
-+// added line
- // unchanged line
+--- Legacy DOM structure (main branch)
++++ Spectrum 2 DOM structure (spectrum-two branch)
+@@ -1,8 +1,10 @@
+-<div class="spectrum-Component spectrum-Component--sizeM is-invalid">
++<div class="spectrum-Component spectrum-Component--sizeM is-hover">
+   <label class="spectrum-FieldLabel">
+-    <div class="spectrum-FieldLabel-text">Label</div>
+-  </label>
++    Label
++  </label>
++  <div class="spectrum-Component-newElement">
++    <!-- New in Spectrum 2 -->
++  </div>
+   <span class="spectrum-Component-content">Content</span>
+ </div>
 ```
 
-**Note**: Only include this diff section if there are actual differences between the main and spectrum-two branches. If the templates are identical, omit this section entirely.
+**Required**: This diff section MUST be included. If no structural differences exist between branches, explicitly state: "No structural differences found between main and spectrum-two branches." Do not omit this section.
 
 </details>
 ````
