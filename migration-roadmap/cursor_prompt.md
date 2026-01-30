@@ -4,6 +4,19 @@ For the **[COMPONENT_NAME]** component(s), create comprehensive migration docume
 
 **IMPORTANT**: All files must be created on the original spectrum-web-components branch where the session started.
 
+## Documentation goal
+
+The purpose of this documentation is to help SWC engineers understand:
+
+1. **What API changes are needed** to migrate to Spectrum 2
+2. **What features are new** and need implementation
+3. **What features are deprecated** and should be removed or flagged
+4. **What structural changes** affect render methods
+
+Write for an engineer who will scan this document to estimate migration work. Every section should answer: "What do I need to change in the web component?"
+
+For additional context on goals and common pitfalls, reference `migration-roadmap/README.md`.
+
 ## File Organization
 
 - **One markdown file per component**
