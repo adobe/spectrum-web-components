@@ -226,21 +226,39 @@ Entries with status indicating that they appear in CSS but not WC are often an i
 
 #### CSS Spectrum 2 changes
 
-Analyze the differences between CSS `main` and CSS `spectrum-two` branches surfaced in the DOM structure comparison and document them in this section:
+Analyze the differences between CSS `main` and CSS `spectrum-two` branches surfaced in the DOM structure comparison and document them in this section.
 
-- **Required**: Compare the HTML structures from main vs spectrum-two templates line by line
-- **Document**: Any elements that are added, removed, or modified between branches
-- **Include**: Changes in element attributes, class names, or structural differences
-- **Note**: Even subtle differences like conditional elements or missing components must be documented
-- **Focus on changes in Spectrum CSS**, not changes between spectrum web components and CSS.
+**Summary writing guidelines**:
 
-Be sure to note:
+- **One bullet per change**: Each bullet should describe a specific change (group similar changes together)
+- **Change-focused**: Only document what CHANGED between branches, not what exists
+- **Action-oriented**: Frame changes in terms of migration impact for SWC engineers
 
-- Elements present in main but missing in spectrum-two
-- Elements present in spectrum-two but missing in main
+**Do NOT include**:
+
+- General component structure descriptions (these belong in the DOM structure section)
+- Lists of features that remained unchanged
+- Explanations of what the component does
+
+**Good example**:
+
+> - **Icon removal**: Variant icons (Info, Alert) no longer render; icon slot may need deprecation
+> - **Structural wrapper added**: Tags now wrapped in `.spectrum-TagGroup-tags` container
+
+**Bad example**:
+
+> **Component structure:**
+>
+> - Wrapper element with `spectrum-TagGroup` class
+> - Optional `spectrum-TagGroup-label` for field labels
+> - [describing what exists, not what changed...]
+
+**Types of changes to document**:
+
+- Elements added or removed between branches
 - Changes in element attributes or class names
 - Structural changes (different nesting, wrapper elements)
-- Conditional elements that differ between branches
+- Conditional logic changes (e.g., `isInvalid` removed)
 - Import differences that affect rendered output
 
 ### 4. Resources section
