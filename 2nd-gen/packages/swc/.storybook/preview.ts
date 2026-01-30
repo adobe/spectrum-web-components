@@ -7,8 +7,6 @@ import {
     type Options,
 } from '@wc-toolkit/storybook-helpers';
 import customElements from './custom-elements.json';
-import { withContext } from './decorators/contexts';
-import { withStaticColorBackground } from './decorators/static-color-background';
 
 const options: Options = {
     categoryOrder: [
@@ -59,7 +57,6 @@ const preview = {
         theme: 'light',
         scale: 'medium',
     },
-    decorators: [withContext, withStaticColorBackground],
     parameters: {
         options: {
             storySort: {

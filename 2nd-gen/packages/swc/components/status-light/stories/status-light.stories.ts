@@ -18,8 +18,6 @@ import { StatusLight } from '@adobe/swc/status-light';
 
 import '@adobe/swc/status-light';
 
-import { applyStoryTests } from '../../../utils/storybook-tests.js';
-
 // ────────────────
 //    METADATA
 // ────────────────
@@ -41,7 +39,7 @@ argTypes.size = {
 args['default-slot'] = 'Status light';
 args.size = 'm';
 
-const meta: Meta = {
+export const meta: Meta = {
     title: 'Status light',
     component: 'swc-status-light',
     argTypes,
@@ -51,7 +49,11 @@ const meta: Meta = {
     tags: ['migrated'],
 };
 
-export default meta;
+export default {
+    ...meta,
+    title: 'Status light',
+    excludeStories: ['meta'],
+} as Meta;
 
 // ───────────────
 //    STORIES
@@ -151,7 +153,6 @@ function capitalize(str?: string): string {
     }
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
-
 /* @todo Pull this up into a utility function for more components to leverage. Are all sizes accounted for? */
 function sizeMap(str?: StatusLightSize): string {
     const sizeLabels = {
@@ -168,7 +169,6 @@ function sizeMap(str?: StatusLightSize): string {
 
     return str ? sizeLabels.labels[str] : '';
 }
-
 /* @todo Pull this up into a decorator for all stories to leverage */
 function CONTAINER(content: TemplateResult<1>[]): TemplateResult {
     return html`<div
@@ -184,11 +184,3 @@ function CONTAINER(content: TemplateResult<1>[]): TemplateResult {
         ${content}
     </div>`;
 }
-
-applyStoryTests(import.meta.url, {
-    Default,
-    TextWrapping,
-    SemanticVariants,
-    NonsemanticVariants,
-    Sizes,
-});

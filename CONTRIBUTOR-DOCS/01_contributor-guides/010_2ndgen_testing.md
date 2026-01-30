@@ -1,90 +1,47 @@
 ## 2nd gen Storybook testing
 
-This document describes how the 2nd gen components use Storybook play functions as the primary test layer. Tests live in each component folder and are imported into stories so the same rendered markup is used for both docs and tests.
+This document describes how 2nd gen components use Storybook play functions as the primary test layer. Tests live in dedicated test story files so docs stories remain clean and test stories only appear in development Storybook.
 
 ## Where to put tests
 
-- Create helper tests in `2nd-gen/packages/swc/components/<component>/test/<component>.test.ts`.
-- Import those helpers into `2nd-gen/packages/swc/components/<component>/stories/<component>.stories.ts`.
-- Call the helpers from each story’s `play` function.
+- Keep docs stories in `2nd-gen/packages/swc/components/<component>/stories/<component>.stories.ts`.
+- Add test stories in `2nd-gen/packages/swc/components/<component>/test/<component>.test.stories.ts`.
+- Reuse the base stories and metadata from the main stories file.
+- Test stories run in development Storybook only and are excluded from `storybook:build`.
 
-## Base test helper structure
 
-Use `@storybook/test` for assertions and keep each helper focused on a single behavior.
+## Test story structure
+
+Write tests directly inside each test story’s `play` function. These stories reuse the base render/args from the main stories file.
 
 ```ts
 import { expect } from '@storybook/test';
-import type { Badge } from '@adobe/swc/badge';
-import '@adobe/swc/badge';
+import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { meta as baseMeta, Default as BaseDefault } from '../stories/badge.stories.js';
 
-const testBadgeDefaults = async (badge: Badge): Promise<void> => {
-    await expect(badge.variant).toBe('informative');
-    await expect(badge.subtle).toBe(false);
-};
+export default {
+    ...baseMeta,
+    title: 'Badge/Tests',
+    parameters: { ...baseMeta.parameters, docs: { disable: true, page: null } },
+    tags: ['!autodocs'],
+} as Meta;
 
-export { testBadgeDefaults };
-```
-
-## Story play usage
-
-Import the helpers and call them from a `play` function with the rendered element.
-
-```ts
-import type { StoryObj as Story } from '@storybook/web-components';
-import { Badge } from '@adobe/swc/badge';
-import {
-    testBadgeDefaults,
-} from '../test/badge.test.js';
-
-export const Default: Story = {
+export const DefaultTest: Story = {
+    ...BaseDefault,
     play: async ({ canvasElement }) => {
         const badge = canvasElement.querySelector('swc-badge') as Badge;
-        await testBadgeDefaults(badge);
+        expect(badge.variant).toBe('informative');
     },
 };
 ```
 
 ## Attribute and property checks
 
-Prefer small helpers that assert a single behavior, similar to the badge tests.
-
-```ts
-import { expect } from '@storybook/test';
-import type { StatusLight } from '@adobe/swc/status-light';
-import '@adobe/swc/status-light';
-
-const testVariantPropertySetViaAttribute = async (
-    statusLight: StatusLight
-): Promise<void> => {
-    statusLight.setAttribute('variant', 'negative');
-    await statusLight.updateComplete;
-    await expect(statusLight.variant).toBe('negative');
-    await expect(statusLight.getAttribute('variant')).toBe('negative');
-};
-
-export { testVariantPropertySetViaAttribute };
-```
+Prefer focused assertions inside each play function. Use `await <element>.updateComplete` when you expect a render update.
 
 ## Testing variant collections
 
-When a story renders a list (semantic variants, color variants, sizes), use a helper that loops through the rendered elements.
-
-```ts
-import { expect } from '@storybook/test';
-import { StatusLight } from '@adobe/swc/status-light';
-import '@adobe/swc/status-light';
-
-const testSemanticVariants = async (root: ParentNode): Promise<void> => {
-    for (const variant of StatusLight.VARIANTS_SEMANTIC) {
-        const statusLight = root.querySelector(
-            `swc-status-light[variant="${variant}"]`
-        ) as StatusLight | null;
-        await expect(statusLight).toBeTruthy();
-    }
-};
-
-export { testSemanticVariants };
-```
+When a story renders a list (semantic variants, color variants, sizes), loop over the rendered elements inside `play`.
 
 ## A11y checks with aXe
 
@@ -143,8 +100,8 @@ const testUnsupportedVariantWarning = async (
 
 ## Guidelines
 
-- Keep each helper focused on one behavior.
+- Keep each test story focused on one behavior.
 - Use `await <element>.updateComplete` when you expect a render update.
 - Use `canvasElement` inside story `play` to scope selectors.
-- Keep helpers in the component’s `test` folder and import them from stories.
+- Keep test stories in the component’s `test` folder and reuse base stories.
 

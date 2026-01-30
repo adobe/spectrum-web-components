@@ -3,21 +3,32 @@ import { mergeConfig } from 'vite';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const includeTestStories = process.env.NODE_ENV !== 'production';
+
+const stories = [
+    {
+        directory: 'guides',
+        files: '**/*.@(md|mdx)',
+        titlePrefix: 'Guides',
+    },
+    {
+        directory: '../components',
+        files: '*/stories/*.stories.ts',
+        titlePrefix: 'Components',
+    },
+];
+
+if (includeTestStories) {
+    stories.push({
+        directory: '../components',
+        files: '**/*.test.stories.ts',
+        titlePrefix: 'Components',
+    });
+}
 
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
 const config = {
-    stories: [
-        {
-            directory: 'guides',
-            files: '**/*.@(md|mdx)',
-            titlePrefix: 'Guides',
-        },
-        {
-            directory: '../components',
-            files: '*/stories/*.stories.ts',
-            titlePrefix: 'Components',
-        },
-    ],
+    stories,
     framework: '@storybook/web-components-vite',
     core: {
         disableTelemetry: true,

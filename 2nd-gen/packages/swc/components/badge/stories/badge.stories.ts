@@ -19,8 +19,6 @@ import { Badge } from '@adobe/swc/badge';
 
 import '@adobe/swc/badge';
 
-import { applyStoryTests } from '../../../utils/storybook-tests.js';
-
 // ────────────────
 //    METADATA
 // ────────────────
@@ -52,7 +50,7 @@ args['default-slot'] = 'Badge';
  *
  * Because outline and subtle fill styles draw a similar level of attention, choose only one to use consistently within a single product. Bold fill can be paired with either style, and is reserved for high-attention badging only.
  */
-const meta: Meta = {
+export const meta: Meta = {
     title: 'Badge',
     component: 'swc-badge',
     args,
@@ -66,7 +64,11 @@ const meta: Meta = {
     tags: ['migrated'],
 };
 
-export default meta;
+export default {
+    ...meta,
+    title: 'Badge',
+    excludeStories: ['meta'],
+} as Meta;
 
 // ───────────────
 //    STORIES
@@ -190,14 +192,3 @@ function CONTAINER(content: TemplateResult<1>[]): TemplateResult {
         ${content}
     </div>`;
 }
-
-applyStoryTests(import.meta.url, {
-    Default,
-    WithIcon,
-    SemanticVariants,
-    Outline,
-    ColorVariants,
-    Sizes,
-    Subtle,
-    Fixed,
-});
