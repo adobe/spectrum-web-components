@@ -11,7 +11,9 @@
  */
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/field-group/sp-field-group.js';
+import '@spectrum-web-components/help-text/sp-help-text.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import type { Checkbox } from '@spectrum-web-components/checkbox';
 
 export default {
     component: 'sp-checkbox',
@@ -164,6 +166,59 @@ export const verticalTabIndexExample = (): TemplateResult => {
             <sp-checkbox tabindex="4">Checkbox 4</sp-checkbox>
             <sp-checkbox tabindex="2" autofocus>Checkbox 2</sp-checkbox>
             <sp-checkbox tabindex="1">Checkbox 1</sp-checkbox>
+        </sp-field-group>
+    `;
+};
+
+export const invalidWithHelpText = (): TemplateResult => {
+    return html`
+        <sp-field-group vertical label="Required selections" invalid>
+            <sp-checkbox invalid>Option A</sp-checkbox>
+            <sp-checkbox invalid>Option B</sp-checkbox>
+            <sp-checkbox invalid>Option C</sp-checkbox>
+            <sp-help-text slot="negative-help-text" icon>
+                Select at least one option to continue.
+            </sp-help-text>
+        </sp-field-group>
+    `;
+};
+
+export const invalidSingleCheckboxWithHelpText = (): TemplateResult => {
+    return html`
+        <sp-field-group vertical label="Agreement" invalid>
+            <sp-checkbox invalid>
+                I have read and accept the terms of service
+            </sp-checkbox>
+            <sp-help-text slot="negative-help-text" icon>
+                You must accept the terms of service to continue.
+            </sp-help-text>
+        </sp-field-group>
+    `;
+};
+
+export const helpTextSelfManaged = (): TemplateResult => {
+    return html`
+        <sp-field-group
+            vertical
+            label="Notification preferences"
+            @change=${(event: Event) => {
+                const fieldGroup = event.currentTarget as HTMLElement;
+                const checkboxes = fieldGroup.querySelectorAll('sp-checkbox');
+                const noneChecked = ![...checkboxes].some(
+                    (cb) => (cb as Checkbox).checked
+                );
+                fieldGroup.toggleAttribute('invalid', noneChecked);
+            }}
+        >
+            <sp-checkbox value="email">Email notifications</sp-checkbox>
+            <sp-checkbox value="sms">SMS notifications</sp-checkbox>
+            <sp-checkbox value="push" checked>Push notifications</sp-checkbox>
+            <sp-help-text slot="help-text">
+                Choose how you'd like to be notified.
+            </sp-help-text>
+            <sp-help-text slot="negative-help-text" icon>
+                Select at least one notification method.
+            </sp-help-text>
         </sp-field-group>
     `;
 };
