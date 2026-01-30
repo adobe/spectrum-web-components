@@ -155,3 +155,78 @@
 :host([label-visibility="none"]) #label-container + #track {
     margin-block-start: 0;
 }
+
+/* Value tooltip for multi-handle sliders when value label is not visible */
+.value-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+    padding: var(--spectrum-global-dimension-size-50, 4px) var(--spectrum-global-dimension-size-100, 8px);
+    background-color: var(--spectrum-tooltip-background-color, var(--spectrum-global-color-gray-900));
+    color: var(--spectrum-tooltip-text-color, var(--spectrum-global-color-gray-50));
+    font-size: var(--spectrum-global-dimension-font-size-75, 12px);
+    line-height: var(--spectrum-line-height-100, 1.3);
+    border-radius: var(--spectrum-global-dimension-size-50, 4px);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity var(--spectrum-animation-duration-100, 130ms) ease-in-out,
+        visibility var(--spectrum-animation-duration-100, 130ms) ease-in-out;
+    pointer-events: none;
+    z-index: 10;
+}
+
+:host([dir="rtl"]) .value-tooltip {
+    transform: translateX(50%);
+}
+
+
+/* Tooltip arrow/tip */
+.value-tooltip:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+    border-width: 4px;
+    border-style: solid;
+    border-color: var(--spectrum-tooltip-background-color, var(--spectrum-global-color-gray-900)) transparent transparent;
+}
+
+:host([dir="rtl"]) .value-tooltip:after {
+    transform: translateX(50%);
+}
+
+/* Show tooltip on hover and focus within handle */
+.handle.show-value-tooltip:hover .value-tooltip,
+.handle.show-value-tooltip:focus-within .value-tooltip,
+.handle.show-value-tooltip.handle-highlight .value-tooltip,
+.handle.show-value-tooltip.dragging .value-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* High contrast mode support for value tooltip */
+@media (forced-colors: active) {
+    .value-tooltip {
+        background-color: Canvas;
+        color: CanvasText;
+        border: 1px solid CanvasText;
+    }
+
+    .value-tooltip:after {
+        border-color: CanvasText transparent transparent;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .value-tooltip {
+        transition: none;
+    }
+}
+
+:host([disabled]) .value-tooltip {
+    display: none;
+}
