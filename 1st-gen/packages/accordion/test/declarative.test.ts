@@ -91,4 +91,71 @@ describe('Accordion Item - declarative', () => {
 
         expect(toggleSpy.callCount).to.equal(1);
     });
+    it('uses the correct heading level from parent accordion', async () => {
+        const el = await fixture<Accordion>(html`
+            <sp-accordion>
+                <sp-accordion-item label="Test Item">
+                    <div>Item content</div>
+                </sp-accordion-item>
+            </sp-accordion>
+        `);
+
+        await elementUpdated(el);
+
+        const item = el.querySelector('sp-accordion-item') as AccordionItem;
+        const root = item.shadowRoot as ShadowRoot;
+
+        // Default should be h3
+        let heading = root.querySelector('#heading') as HTMLElement;
+        expect(heading.tagName.toLowerCase()).to.equal('h3');
+
+        el.level = 2;
+        await elementUpdated(el);
+        await elementUpdated(item);
+        heading = root.querySelector('#heading') as HTMLElement;
+        expect(heading.tagName.toLowerCase()).to.equal('h2');
+
+        el.level = 3;
+        await elementUpdated(el);
+        await elementUpdated(item);
+        heading = root.querySelector('#heading') as HTMLElement;
+        expect(heading.tagName.toLowerCase()).to.equal('h3');
+
+        el.level = 4;
+        await elementUpdated(el);
+        await elementUpdated(item);
+        heading = root.querySelector('#heading') as HTMLElement;
+        expect(heading.tagName.toLowerCase()).to.equal('h4');
+
+        el.level = 5;
+        await elementUpdated(el);
+        await elementUpdated(item);
+        heading = root.querySelector('#heading') as HTMLElement;
+        expect(heading.tagName.toLowerCase()).to.equal('h5');
+
+        el.level = 6;
+        await elementUpdated(el);
+        await elementUpdated(item);
+        heading = root.querySelector('#heading') as HTMLElement;
+        expect(heading.tagName.toLowerCase()).to.equal('h6');
+
+        // Test invalid levels are clamped to valid range (2-6)
+        el.level = 0;
+        await elementUpdated(el);
+        await elementUpdated(item);
+        heading = root.querySelector('#heading') as HTMLElement;
+        expect(heading.tagName.toLowerCase()).to.equal('h2');
+
+        el.level = 1;
+        await elementUpdated(el);
+        await elementUpdated(item);
+        heading = root.querySelector('#heading') as HTMLElement;
+        expect(heading.tagName.toLowerCase()).to.equal('h2');
+
+        el.level = 10;
+        await elementUpdated(el);
+        await elementUpdated(item);
+        heading = root.querySelector('#heading') as HTMLElement;
+        expect(heading.tagName.toLowerCase()).to.equal('h6');
+    });
 });

@@ -81,6 +81,14 @@ export class AccordionItem extends SizedMixin(Focusable, {
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
 
+    /**
+     * The heading level (2-6) to use for the accordion item title.
+     * This property is set by the parent sp-accordion element.
+     * Defaults to 3.
+     */
+    @property({ type: Number, reflect: true })
+    public level: number = 3;
+
     public override get focusElement(): HTMLElement {
         return this.shadowRoot.querySelector('#header') as HTMLElement;
     }
@@ -111,20 +119,53 @@ export class AccordionItem extends SizedMixin(Focusable, {
         return chevronIcon[this.size || 'm']();
     };
 
+    private getHeadingLevel(): number {
+        const level = this.level ?? 3;
+        return Math.max(2, Math.min(6, level));
+    }
+
+    private renderHeading(): TemplateResult {
+        const level = this.getHeadingLevel();
+        const headingContent = html`
+            ${when(this.size, this.renderChevronIcon)}
+            <button
+                id="header"
+                @click=${this.onClick}
+                aria-expanded=${this.open}
+                aria-controls="content"
+                ?disabled=${this.disabled}
+            >
+                ${this.label}
+            </button>
+        `;
+
+        switch (level) {
+            case 2:
+                return html`
+                    <h2 id="heading">${headingContent}</h2>
+                `;
+            case 4:
+                return html`
+                    <h4 id="heading">${headingContent}</h4>
+                `;
+            case 5:
+                return html`
+                    <h5 id="heading">${headingContent}</h5>
+                `;
+            case 6:
+                return html`
+                    <h6 id="heading">${headingContent}</h6>
+                `;
+            default:
+                return html`
+                    <h3 id="heading">${headingContent}</h3>
+                `;
+        }
+    }
+
     protected override render(): TemplateResult {
         return html`
-            <h3 id="heading">
-                ${when(this.size, this.renderChevronIcon)}
-                <button
-                    id="header"
-                    @click=${this.onClick}
-                    aria-expanded=${this.open}
-                    aria-controls="content"
-                    ?disabled=${this.disabled}
-                >
-                    ${this.label}
-                </button>
-            </h3>
+            ${this.renderHeading()}
             <div id="content" role="region" aria-labelledby="header">
                 <slot></slot>
             </div>

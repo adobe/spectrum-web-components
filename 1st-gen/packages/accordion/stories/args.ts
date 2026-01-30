@@ -69,4 +69,20 @@ export const argTypes = {
             type: 'select',
         },
     },
+    level: {
+        name: 'level',
+        type: { name: 'number', required: false },
+        description:
+            'The heading level (2-6) to use for all accordion item titles.',
+        table: {
+            type: { summary: 'number' },
+            defaultValue: { summary: 3 },
+        },
+        control: {
+            type: 'number',
+            min: 2,
+            max: 6,
+            step: 1,
+        },
+    },
 };

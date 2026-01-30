@@ -64,6 +64,10 @@ Individual accordion items can be disabled using the `disabled` attribute. Disab
 </sp-accordion>
 ```
 
+#### Heading level
+
+The heading level for accordion items is controlled by the parent [`<sp-accordion>`](../accordion/) element's `level` attribute (2-6). This ensures all items within the same accordion use consistent semantic heading levels. See the [accordion documentation](../accordion/#heading-level) for more details and examples.
+
 ### Behaviors
 
 #### Events
@@ -79,6 +83,7 @@ The accordion component provides proper ARIA attributes and keyboard navigation:
 - The content region has `role="region"` and `aria-labelledby` pointing to the header
 - Disabled items have `aria-disabled="true"` applied
 - The accordion supports keyboard navigation with <kbd>Enter</kbd>/<kbd>Space</kbd> for activation
+- The heading level for all items is controlled by the parent accordion's `level` attribute (2-6) to maintain proper document structure and assistive technology navigation
 
 #### Include descriptive labels
 
