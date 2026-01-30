@@ -1,0 +1,26 @@
+diff --git a/dist/_browser-chunks/chunk-RW5PKMWM.js b/dist/_browser-chunks/chunk-RW5PKMWM.js
+index e28e28e782ab9e0f1e56453fb302936b1af50260..27a63772eac1af4c05130a99ca901f3e8c44f47f 100644
+--- a/dist/_browser-chunks/chunk-RW5PKMWM.js
++++ b/dist/_browser-chunks/chunk-RW5PKMWM.js
+@@ -2462,7 +2462,7 @@ var _StoryRender = class _StoryRender {
+           unhandledErrors.add(event.reason);
+         }
+       }, "onUnhandledRejection");
+-      if (this.renderOptions.autoplay && forceRemount && playFunction && this.phase !== "errored") {
++      if (this.renderOptions.autoplay && (initial ? this.story?.parameters?.autoplay ?? false : true) && forceRemount && playFunction && this.phase !== "errored") {
+         window?.addEventListener?.("error", onError);
+         window?.addEventListener?.("unhandledrejection", onUnhandledRejection);
+         this.disableKeyListeners = true;
+diff --git a/dist/preview/runtime.js b/dist/preview/runtime.js
+index 8ffb516ce3c3148161bdbb840e31cdb4d6a113b2..171125f55ef40436db29bc83f1766bb6330b7334 100644
+--- a/dist/preview/runtime.js
++++ b/dist/preview/runtime.js
+@@ -44766,7 +44766,7 @@ var _StoryRender = class _StoryRender {
+           unhandledErrors.add(event.reason);
+         }
+       }, "onUnhandledRejection");
+-      if (this.renderOptions.autoplay && forceRemount && playFunction && this.phase !== "errored") {
++      if (this.renderOptions.autoplay && (initial ? this.story?.parameters?.autoplay ?? false : true) && forceRemount && playFunction && this.phase !== "errored") {
+         window?.addEventListener?.("error", onError);
+         window?.addEventListener?.("unhandledrejection", onUnhandledRejection);
+         this.disableKeyListeners = true;

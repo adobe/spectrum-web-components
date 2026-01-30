@@ -233,7 +233,7 @@ __metadata:
     react: "npm:19.1.1"
     react-dom: "npm:19.1.1"
     rimraf: "npm:6.0.1"
-    storybook: "npm:10.0.3"
+    storybook: "patch:storybook@npm%3A10.0.3#~/.yarn/patches/storybook-npm-10.0.3-587a80ed6c.patch"
     typescript: "npm:5.9.2"
     vite: "npm:7.1.7"
     vite-plugin-dts: "npm:4.5.4"
@@ -29880,6 +29880,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"storybook@patch:storybook@npm%3A10.0.3#~/.yarn/patches/storybook-npm-10.0.3-587a80ed6c.patch":
+  version: 10.0.3
+  resolution: "storybook@patch:storybook@npm%3A10.0.3#~/.yarn/patches/storybook-npm-10.0.3-587a80ed6c.patch::version=10.0.3&hash=5e7bbd"
+  dependencies:
+    "@storybook/global": "npm:^5.0.0"
+    "@storybook/icons": "npm:^1.6.0"
+    "@testing-library/jest-dom": "npm:^6.6.3"
+    "@testing-library/user-event": "npm:^14.6.1"
+    "@vitest/expect": "npm:3.2.4"
+    "@vitest/mocker": "npm:3.2.4"
+    "@vitest/spy": "npm:3.2.4"
+    esbuild: "npm:^0.18.0 || ^0.19.0 || ^0.20.0 || ^0.21.0 || ^0.22.0 || ^0.23.0 || ^0.24.0 || ^0.25.0"
+    recast: "npm:^0.23.5"
+    semver: "npm:^7.6.2"
+    ws: "npm:^8.18.0"
+  peerDependencies:
+    prettier: ^2 || ^3
+  peerDependenciesMeta:
+    prettier:
+      optional: true
+  bin:
+    storybook: ./dist/bin/dispatcher.js
+  checksum: 10c0/1eace3ada863e72cdd023206c2df5ad306bed2aa02a4e2e888d3cede3bc7e547c22d83ea55d03c05459059a0c87c5da79b8fda304484c98852f3065374c06900
+  languageName: node
+  linkType: hard
+
 "stream-combiner@npm:~0.0.4":
   version: 0.0.4
   resolution: "stream-combiner@npm:0.0.4"
@@ -33571,7 +33597,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:^8.18.0, ws@npm:^8.18.1, ws@npm:^8.18.3, ws@npm:^8.2.3":
+"ws@npm:^8.18.0, ws@npm:^8.18.1, ws@npm:^8.18.3":
   version: 8.18.3
   resolution: "ws@npm:8.18.3"
   peerDependencies:
@@ -33583,6 +33609,21 @@ __metadata:
     utf-8-validate:
       optional: true
   checksum: 10c0/eac918213de265ef7cb3d4ca348b891a51a520d839aa51cdb8ca93d4fa7ff9f6ccb339ccee89e4075324097f0a55157c89fa3f7147bde9d8d7e90335dc087b53
+  languageName: node
+  linkType: hard
+
+"ws@npm:^8.2.3":
+  version: 8.19.0
+  resolution: "ws@npm:8.19.0"
+  peerDependencies:
+    bufferutil: ^4.0.1
+    utf-8-validate: ">=5.0.2"
+  peerDependenciesMeta:
+    bufferutil:
+      optional: true
+    utf-8-validate:
+      optional: true
+  checksum: 10c0/4741d9b9bc3f9c791880882414f96e36b8b254e34d4b503279d6400d9a4b87a033834856dbdd94ee4b637944df17ea8afc4bce0ff4a1560d2166be8855da5b04
   languageName: node
   linkType: hard
 
