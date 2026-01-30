@@ -4,6 +4,19 @@ For the **[COMPONENT_NAME]** component(s), create comprehensive migration docume
 
 **IMPORTANT**: All files must be created on the original spectrum-web-components branch where the session started.
 
+## Documentation goal
+
+The purpose of this documentation is to help SWC engineers understand:
+
+1. **What API changes are needed** to migrate to Spectrum 2
+2. **What features are new** and need implementation
+3. **What features are deprecated** and should be removed or flagged
+4. **What structural changes** affect render methods
+
+Write for an engineer who will scan this document to estimate migration work. Every section should answer: "What do I need to change in the web component?"
+
+For additional context on goals and common pitfalls, reference `migration-roadmap/README.md`.
+
 ## File Organization
 
 - **One markdown file per component**
@@ -34,6 +47,33 @@ Create collapsible sections using `<details>` and `<summary>` under `### CSS` fo
 
 - Title: "CSS selectors"
 - Extract all selectors from metadata.json
+- Organize selectors into logical groups with bold headers for scannability:
+
+**Base component:**
+
+- The root selector (e.g., `.spectrum-Component`)
+
+**Subcomponents:**
+
+- Child element selectors (e.g., `.spectrum-Component-label`, `.spectrum-Component-icon`)
+
+**Variants:**
+
+- Selectors with `--` modifier notation (e.g., `.spectrum-Component--quiet`, `.spectrum-Component--sizeL`)
+
+**States:**
+
+- Interactive state selectors (e.g., `.is-disabled`, `.is-selected`, `:hover`, `:focus-visible`)
+
+**Language-specific:**
+
+- Internationalization selectors (e.g., `:lang(ja)`, `:lang(ko)`, `:lang(zh)`)
+
+**Compound selectors:**
+
+- Complex selectors combining multiple conditions (group these last)
+
+Not all components will have selectors in every category. Omit empty categories.
 
 **Passthroughs Section:**
 
@@ -98,8 +138,26 @@ git checkout spectrum-two
 - **IMPORTANT**: Check both the import statements AND the template logic, as components may be removed from imports between sources
 - **Line-by-line comparison required**: Don't assume templates are identical - carefully check imports, component usage, and structure
 - Document class application differences
-- **Verification steps**: After each git checkout, confirm you're viewing the correct branch's files. After documenting each DOM structure, verify the accuracy by re-reading the actual template files to ensure the HTML matches exactly what's in the source code for that branch.
-- **Final accuracy check**: Before completing the documentation, re-read each template file one more time to verify the DOM structures are 100% accurate. Any discrepancies between documented HTML and actual template code will require correction.
+
+**Branch verification protocol (required)**:
+
+Before documenting each CSS DOM structure, you MUST provide proof of correct branch:
+
+1. Run `git branch --show-current` and confirm the output matches the expected branch
+2. Quote the first 2-3 import statements from the template.js file you are reading
+3. If imports are identical between branches, identify a distinguishing parameter name or feature (e.g., `hasClearButton` vs `isRemovable`, presence/absence of a variant) that proves you are on the correct branch
+
+This verification prevents accidentally documenting the same branch twice, which produces incorrect "no changes" conclusions.
+
+**Mandatory diff generation**:
+
+After documenting both CSS structures, generate an actual diff to verify your comparison:
+
+```bash
+git diff main:components/[component-name]/stories/template.js spectrum-two:components/[component-name]/stories/template.js
+```
+
+Review this diff output to ensure your documented structures accurately reflect the differences. Do NOT rely solely on manual comparison.
 
 **Output Format**:
 
@@ -137,15 +195,24 @@ Create a three-way HTML comparison using markdown code blocks. Use collapsible s
 <summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
 ```diff
---- a/components/[component-name]/stories/template.js (main branch)
-+++ b/components/[component-name]/stories/template.js (spectrum-two branch)
-@@ -1,3 +1,3 @@
--// removed line
-+// added line
- // unchanged line
+--- Legacy DOM structure (main branch)
++++ Spectrum 2 DOM structure (spectrum-two branch)
+@@ -1,8 +1,10 @@
+-<div class="spectrum-Component spectrum-Component--sizeM is-invalid">
++<div class="spectrum-Component spectrum-Component--sizeM is-hover">
+   <label class="spectrum-FieldLabel">
+-    <div class="spectrum-FieldLabel-text">Label</div>
+-  </label>
++    Label
++  </label>
++  <div class="spectrum-Component-newElement">
++    <!-- New in Spectrum 2 -->
++  </div>
+   <span class="spectrum-Component-content">Content</span>
+ </div>
 ```
 
-**Note**: Only include this diff section if there are actual differences between the main and spectrum-two branches. If the templates are identical, omit this section entirely.
+**Required**: This diff section MUST be included. If no structural differences exist between branches, explicitly state: "No structural differences found between main and spectrum-two branches." Do not omit this section.
 
 </details>
 ````
@@ -165,11 +232,42 @@ Create a markdown table with these exact column headers:
 - "Missing from CSS" - Web component feature exists but no CSS support
 - "Deprecated" - Being removed in Spectrum 2
 
+**Deprecation detection**:
+
+Mark features as "Deprecated" (not "Missing from CSS") when:
+
+1. Feature exists in SWC AND was intentionally removed in Spectrum 2 CSS
+2. Variant exists in CSS main branch but not in spectrum-two branch
+3. Import or component was removed between CSS branches
+
+Examples requiring "Deprecated" status:
+
+- SWC has `variant="positive"` but spectrum-two removed `.spectrum-Tooltip--positive` → Deprecated
+- SWC has `icon` slot but spectrum-two removed icon rendering → Deprecated
+- CSS main has `is-invalid` state but spectrum-two removed it → Deprecated
+
+The key question: "Was this intentionally removed as part of Spectrum 2?" If yes → Deprecated.
+
 **Mapping Logic:**
 
 - **Variants to Attributes**: CSS selectors with variants (noted after double dash `--`) likely map to component attributes
 - **Base Elements to Slots**: Selectors with base class + single dash `-` (e.g., `.spectrum-button-label`) likely map to slots
 - **Language Selectors**: Group all selectors containing :lang together on a single row, comma-separated, as they serve the same internationalization purpose and are typically implemented as a block
+
+**Name equivalence mapping**:
+
+CSS and SWC often use different names for the same concept. When mapping:
+
+1. **Look for functional equivalence**, not just naming similarity:
+    - CSS `hasClearButton` / `isRemovable` → SWC `deletable`
+    - CSS `is-invalid` state → SWC `invalid` attribute
+    - CSS `-clearButton` subcomponent → SWC `deletable` attribute triggers its render
+
+2. **Document name differences** in the mapping table:
+    - If a CSS selector maps to a differently-named SWC feature, note the relationship
+    - Example: `.spectrum-Tag-clearButton` | `deletable` (renders clear button) | Implemented
+
+3. **Do not mark as "Missing"** if the feature exists under a different name. A feature is only "Missing from WC" if no equivalent functionality exists.
 
 **Language Selector Formatting example:**
 
@@ -199,22 +297,42 @@ Entries with status indicating that they appear in CSS but not WC are often an i
 
 #### CSS Spectrum 2 changes
 
-Analyze the differences between CSS `main` and CSS `spectrum-two` branches surfaced in the DOM structure comparison and document them in this section:
+Analyze the differences between CSS `main` and CSS `spectrum-two` branches surfaced in the DOM structure comparison and document them in this section.
 
-- **Required**: Compare the HTML structures from main vs spectrum-two templates line by line
-- **Document**: Any elements that are added, removed, or modified between branches
-- **Include**: Changes in element attributes, class names, or structural differences
-- **Note**: Even subtle differences like conditional elements or missing components must be documented
-- **Focus on changes in Spectrum CSS**, not changes between spectrum web components and CSS.
+**Summary writing guidelines**:
 
-Be sure to note:
+- **One bullet per change**: Each bullet should describe a specific change (group similar changes together)
+- **Change-focused**: Only document what CHANGED between branches, not what exists
+- **Action-oriented**: Frame changes in terms of migration impact for SWC engineers
 
-- Elements present in main but missing in spectrum-two
-- Elements present in spectrum-two but missing in main
+**Do NOT include**:
+
+- General component structure descriptions (these belong in the DOM structure section)
+- Lists of features that remained unchanged
+- Explanations of what the component does
+
+**Good example**:
+
+> - **Icon removal**: Variant icons (Info, Alert) no longer render; icon slot may need deprecation
+> - **Structural wrapper added**: Tags now wrapped in `.spectrum-TagGroup-tags` container
+
+**Bad example**:
+
+> **Component structure:**
+>
+> - Wrapper element with `spectrum-TagGroup` class
+> - Optional `spectrum-TagGroup-label` for field labels
+> - [describing what exists, not what changed...]
+
+**Types of changes to document**:
+
+- Elements added or removed between branches
 - Changes in element attributes or class names
 - Structural changes (different nesting, wrapper elements)
-- Conditional elements that differ between branches
+- Conditional logic changes (e.g., `isInvalid` removed)
 - Import differences that affect rendered output
+
+**Note**: Changes to `--mod-*` custom properties between branches can signal new or deprecated features. If --mod changes reveal something not already captured above, include it.
 
 ### 4. Resources section
 
@@ -240,3 +358,14 @@ Under this heading, add a placeholder section for resources with a bulleted list
 - Perform line-by-line comparisons - don't assume files are similar
 - Ask clarifying questions for uncertain mappings instead of guessing
 - Use exact file paths specified in this prompt
+
+## Quality gates (self-check before completion)
+
+Before finalizing documentation, verify:
+
+- [ ] All three DOM structures are documented and visually distinct from each other
+- [ ] Diff section shows actual code differences (or explicitly states "no differences")
+- [ ] No features are marked "Missing" that exist under a different name
+- [ ] Summary sections contain only changes, not structure descriptions
+- [ ] CSS selectors are categorized by type (base, variants, states, etc.)
+- [ ] Deprecated features are correctly identified based on spectrum-two removal
