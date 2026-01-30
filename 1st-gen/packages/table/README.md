@@ -93,6 +93,34 @@ A table consists of the following parts:
 
 The `selects` attribute enables row selection functionality. When `selects="single"`, users can select one row at a time. When `selects="multiple"`, users can select multiple rows and a checkbox column is automatically added to the table header for select all functionality.
 
+#### Accessible checkbox labels
+
+When using selection, checkboxes are automatically given accessible labels for screen readers:
+
+- **Header row checkbox**: Uses the `select-all-label` attribute (defaults to "Select All")
+- **Body row checkboxes**: Uses the text content of the first `<sp-table-cell>` in each row
+
+You can customize the header checkbox label using the `select-all-label` attribute:
+
+```html demo
+<sp-table selects="multiple" select-all-label="Select all files">
+    <sp-table-head>
+        <sp-table-head-cell>File name</sp-table-head-cell>
+        <sp-table-head-cell>Type</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row value="row1">
+            <sp-table-cell>Budget</sp-table-cell>
+            <sp-table-cell>PDF</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row2">
+            <sp-table-cell>Onboarding</sp-table-cell>
+            <sp-table-cell>XLS</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+```
+
 ```html demo
 <sp-table selects="multiple" selected='["row1", "row2"]'>
     <sp-table-head>
@@ -474,6 +502,14 @@ Please note that there is a bug when attempting to select all virtualised elemen
 
 By default the `selected` property will surface an array of item indexes that are currently selected. However, when making a selection on a virtualized table, it can be useful to track selection as something other than indexes. To do so, set a custom method for the `itemValue` property. The `itemValue` method accepts an item and its index as arguments and should return the value you would like to track in the `selected` property.
 
+##### Accessible labels for virtualized tables
+
+For accessibility, each checkbox in a virtualized table needs an accessible label. By default, the label is "Select row N" where N is the row number. You can customize this using the `itemLabel` property to provide more meaningful labels based on your item data:
+
+```javascript
+table.itemLabel = (item, index) => item.name || `Select row ${index + 1}`;
+```
+
 ```html-live
 <sp-table
     id="table-item-value-demo"
@@ -829,7 +865,31 @@ When using row selection:
 
 - `aria-selected` is applied to selectable rows
 - Selection state is announced to screen readers
-- Checkboxes in selection cells are properly labeled
+- Checkboxes in selection cells are properly labelled for screen readers
+
+##### Checkbox labeling
+
+All selection checkboxes have accessible labels to comply with WCAG 4.1.2 (Name, Role, Value). The labels are applied via `aria-label` on the checkbox's internal input element.
+
+| Checkbox location           | Default label             | Customization                    |
+| --------------------------- | ------------------------- | -------------------------------- |
+| Header (select all)         | "Select All"              | Use `select-all-label` attribute |
+| Body rows (non-virtualized) | First cell's text content | Automatic                        |
+| Body rows (virtualized)     | "Select row N"            | Use `itemLabel` property         |
+
+Example of customizing labels:
+
+```html
+<!-- Custom header checkbox label -->
+<sp-table selects="multiple" select-all-label="Select all documents">
+    ...
+</sp-table>
+```
+
+```javascript
+// Custom labels for virtualized tables
+table.itemLabel = (item, index) => `Select ${item.fileName}`;
+```
 
 #### Keyboard navigation
 
