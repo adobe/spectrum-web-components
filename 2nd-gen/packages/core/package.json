@@ -15,9 +15,25 @@
     },
     "type": "module",
     "exports": {
-        "./components/*": {
-            "types": "./dist/components/*/index.d.ts",
-            "import": "./dist/components/*/index.js"
+        "./components/asset": {
+            "types": "./dist/components/asset/index.d.ts",
+            "import": "./dist/components/asset/index.js"
+        },
+        "./components/badge": {
+            "types": "./dist/components/badge/index.d.ts",
+            "import": "./dist/components/badge/index.js"
+        },
+        "./components/divider": {
+            "types": "./dist/components/divider/index.d.ts",
+            "import": "./dist/components/divider/index.js"
+        },
+        "./components/progress-circle": {
+            "types": "./dist/components/progress-circle/index.d.ts",
+            "import": "./dist/components/progress-circle/index.js"
+        },
+        "./components/status-light": {
+            "types": "./dist/components/status-light/index.d.ts",
+            "import": "./dist/components/status-light/index.js"
         },
         "./shared/base": {
             "types": "./dist/shared/base/index.d.ts",
@@ -75,8 +91,20 @@
     },
     "typesVersions": {
         "*": {
-            "components/*": [
-                "dist/components/*"
+            "components/asset": [
+                "dist/components/asset/index.d.ts"
+            ],
+            "components/badge": [
+                "dist/components/badge/index.d.ts"
+            ],
+            "components/divider": [
+                "dist/components/divider/index.d.ts"
+            ],
+            "components/progress-circle": [
+                "dist/components/progress-circle/index.d.ts"
+            ],
+            "components/status-light": [
+                "dist/components/status-light/index.d.ts"
             ],
             "shared/base": [
                 "dist/shared/base/index.d.ts"
@@ -114,7 +142,7 @@
         }
     },
     "dependencies": {
-        "@lit-labs/observers": "2.1.0",
+        "@lit-labs/observers": "2.0.2",
         "lit": "^2.5.0 || ^3.1.3"
     },
     "devDependencies": {
