@@ -913,8 +913,16 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             selectedItem.selected = !!this.selects;
             this.selectedItem = selectedItem;
         } else {
-            this.value = '';
-            this.selectedItem = undefined;
+            // Only clear value when items exist with real values but none match.
+            // Preserve value if items are pending (lazy loaded, async render, incomplete upgrade).
+            const hasItemsWithValues = this.menuItems.some(
+                (item) =>
+                    item.value != null || item.getAttribute?.('value') != null
+            );
+            if (this.menuItems.length > 0 && hasItemsWithValues) {
+                this.value = '';
+                this.selectedItem = undefined;
+            }
         }
         if (this.open) {
             await this.optionsMenu.updateComplete;
