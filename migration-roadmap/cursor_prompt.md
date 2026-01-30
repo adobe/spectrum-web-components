@@ -34,6 +34,33 @@ Create collapsible sections using `<details>` and `<summary>` under `### CSS` fo
 
 - Title: "CSS selectors"
 - Extract all selectors from metadata.json
+- Organize selectors into logical groups with bold headers for scannability:
+
+**Base component:**
+
+- The root selector (e.g., `.spectrum-Component`)
+
+**Subcomponents:**
+
+- Child element selectors (e.g., `.spectrum-Component-label`, `.spectrum-Component-icon`)
+
+**Variants:**
+
+- Selectors with `--` modifier notation (e.g., `.spectrum-Component--quiet`, `.spectrum-Component--sizeL`)
+
+**States:**
+
+- Interactive state selectors (e.g., `.is-disabled`, `.is-selected`, `:hover`, `:focus-visible`)
+
+**Language-specific:**
+
+- Internationalization selectors (e.g., `:lang(ja)`, `:lang(ko)`, `:lang(zh)`)
+
+**Compound selectors:**
+
+- Complex selectors combining multiple conditions (group these last)
+
+Not all components will have selectors in every category. Omit empty categories.
 
 **Passthroughs Section:**
 
