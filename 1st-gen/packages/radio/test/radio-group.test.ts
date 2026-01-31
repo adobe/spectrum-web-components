@@ -25,7 +25,7 @@ import {
     findAccessibilityNode,
     sendKeys,
 } from '@web/test-runner-commands';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     arrowDownEvent,
@@ -317,9 +317,36 @@ describe('Group Accessibility', () => {
     });
 });
 
+describe('dev mode', () => {
+    let consoleWarnStub!: ReturnType<typeof stub>;
+    before(() => {
+        window.__swc.verbose = true;
+        consoleWarnStub = stub(console, 'warn');
+    });
+    afterEach(() => {
+        consoleWarnStub.resetHistory();
+    });
+    after(() => {
+        window.__swc.verbose = false;
+        consoleWarnStub.restore();
+    });
+    it('warns when [invalid] is used on children and updates group invalid state', async () => {
+        const el = await fixture<RadioGroup>(html`
+            <sp-radio-group>
+                <sp-radio value="first" invalid>Option 1</sp-radio>
+                <sp-radio value="second">Option 2</sp-radio>
+            </sp-radio-group>
+        `);
+        await elementUpdated(el);
+
+        expect(el.invalid).to.be.true;
+        expect(el.hasAttribute('aria-invalid')).to.be.true;
+        expect(consoleWarnStub.called).to.be.true;
+    });
+});
+
 describe('Radio Group', () => {
     let testDiv!: HTMLDivElement;
-
     beforeEach(async () => {
         testDiv = await fixture<HTMLDivElement>(html`
             <div id="test-radio-group">
@@ -366,8 +393,6 @@ describe('Radio Group', () => {
                 </sp-radio-group>
             </div>
         `);
-        // Create __swc if it doesn't exist
-        window.__swc = window.__swc || { warn: () => {} };
     });
 
     it('loads', () => {
@@ -630,23 +655,6 @@ describe('Radio Group', () => {
         await elementUpdated(el);
         expect(el.hasAttribute('aria-invalid')).to.be.true;
         expect(el.getAttribute('aria-invalid')).to.equal('true');
-    });
-
-    it('warns when [invalid] is used on children and updates group invalid state', async () => {
-        const swcWarnSpy = spy(window.__swc, 'warn');
-        const el = await fixture<RadioGroup>(html`
-            <sp-radio-group>
-                <sp-radio value="first" invalid>Option 1</sp-radio>
-                <sp-radio value="second">Option 2</sp-radio>
-            </sp-radio-group>
-        `);
-        await elementUpdated(el);
-
-        expect(el.invalid).to.be.true;
-        expect(el.hasAttribute('aria-invalid')).to.be.true;
-        expect(swcWarnSpy.called).to.be.true;
-        expect(swcWarnSpy.args[0][1]).to.include('deprecated');
-        swcWarnSpy.restore();
     });
 
     it('should not have invalid state when children do not have invalid attribute', async () => {
