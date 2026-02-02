@@ -557,6 +557,7 @@ export const sideAligned = (args: StoryArgs = {}): TemplateResult => html`
             valid
         >
             Valid textfield
+            <sp-help-text slot="help-text">Valid help text</sp-help-text>
         </sp-number-field>
     </div>
     <div>
@@ -567,6 +568,9 @@ export const sideAligned = (args: StoryArgs = {}): TemplateResult => html`
             invalid
         >
             Invalid textfield
+            <sp-help-text variant="negative" slot="negative-help-text">
+                Invalid help text
+            </sp-help-text>
         </sp-number-field>
     </div>
 `;
