@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.11.1
+
+### Patch Changes
+
+- [#5976](https://github.com/adobe/spectrum-web-components/pull/5976) [`cdf6a24`](https://github.com/adobe/spectrum-web-components/commit/cdf6a24024d243447d054871ba632cefd333f525) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed**: Fixed accessibility violation (WCAG 4.1.2) where table checkbox inputs were missing accessible labels. The axe DevTools "Form elements must have labels" error is now resolved. The fix sets `aria-label` directly on the checkbox's internal input element.
+
+- Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
+    - @spectrum-web-components/base@1.11.1
+    - @spectrum-web-components/checkbox@1.11.1
+    - @spectrum-web-components/icon@1.11.1
+    - @spectrum-web-components/icons-ui@1.11.1
+
 ## 1.11.0
 
 ### Patch Changes
