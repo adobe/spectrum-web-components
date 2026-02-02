@@ -19,7 +19,7 @@ import '@adobe/swc/status-light';
 
 import { meta as baseMeta } from '../stories/status-light.stories.js';
 import {
-    Default as BaseDefault,
+    Overview as BaseOverview,
     Sizes as BaseSizes,
 } from '../stories/status-light.stories.js';
 
@@ -31,7 +31,7 @@ export default {
         ...baseMeta.parameters,
         docs: { disable: true, page: null },
     },
-    tags: ['!autodocs'],
+    tags: ['!autodocs', 'dev'],
 } as Meta;
 
 // Reuse the same element lookup for all play functions.
@@ -41,7 +41,7 @@ const getStatusLight = (canvasElement: HTMLElement): StatusLight => {
 
 // Test: default properties and slot content.
 export const DefaultTest: Story = {
-    ...BaseDefault,
+    ...BaseOverview,
     play: async ({ canvasElement }) => {
         const statusLight = getStatusLight(canvasElement);
         expect(statusLight.variant).toBe('info');
