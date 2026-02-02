@@ -405,6 +405,7 @@ export const TextWrapping: Story = {
     `,
     tags: ['behaviors'],
     args: {
+        variant: 'informative',
         size: 'm',
     },
 };
