@@ -448,28 +448,19 @@ readOnly.args = {
 
 export const validationIcons = (args: StoryArgs): TemplateResult => {
     return html`
-        <div>
-            <sp-number-field
-                invalid
-                ...=${spreadProps(args)}
-                style="--mod-stepper-container-width: 100%;"
-            >
-                Invalid Number Field without Stepper
-            </sp-number-field>
-        </div>
-        <div>
-            <sp-number-field valid style="--mod-stepper-container-width: 100%;">
-                Valid Number Field with Stepper
-            </sp-number-field>
-        </div>
-        <div>
-            <sp-number-field
-                invalid
-                style="--mod-stepper-container-width: 100%;"
-            >
-                Invalid Number Field with Stepper
-            </sp-number-field>
-        </div>
+        <sp-number-field
+            invalid
+            ...=${spreadProps(args)}
+            style="--mod-stepper-container-width: 100%;"
+        >
+            Invalid Number Field without Stepper
+        </sp-number-field>
+        <sp-number-field valid style="--mod-stepper-container-width: 100%;">
+            Valid Number Field with Stepper
+        </sp-number-field>
+        <sp-number-field invalid style="--mod-stepper-container-width: 100%;">
+            Invalid Number Field with Stepper
+        </sp-number-field>
     `;
 };
 validationIcons.args = {
