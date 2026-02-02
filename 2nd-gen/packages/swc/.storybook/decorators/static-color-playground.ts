@@ -26,9 +26,9 @@ const staticColorSettings = {
  * Decorator that applies background colors based on static-color arg.
  * Wraps the story in a div with the appropriate background when static-color is set.
  */
-export const withStaticColorBackground: DecoratorFunction = makeDecorator({
-    name: 'withStaticColorBackground',
-    parameterName: 'staticColorBackground',
+export const withStaticColorPlayground: DecoratorFunction = makeDecorator({
+    name: 'withStaticColorPlayground',
+    parameterName: 'staticColorPlayground',
     wrapper: (StoryFn, context) => {
         const { args } = context;
         const staticColor = args?.[

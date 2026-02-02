@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -55,7 +55,7 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
         }
 
         /**
-         *  @private
+         *  @internal
          */
         public get slotContentIsPresent(): boolean {
             if (lightDomSelectors.length === 1) {
@@ -71,6 +71,9 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
         }
         private [slotContentIsPresent]: Map<string, boolean> = new Map();
 
+        /**
+         * @internal
+         */
         public getSlotContentPresence(selector: string): boolean {
             if (this[slotContentIsPresent].has(selector)) {
                 return this[slotContentIsPresent].get(selector) || false;
@@ -80,7 +83,10 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
             );
         }
 
-        public managePresenceObservedSlot(): void {
+        /**
+         * @internal
+         */
+        public managePresenceObservedSlot = (): void => {
             let changes = false;
             lightDomSelectors.forEach((selector) => {
                 const nextValue = !!this.querySelector(`:scope > ${selector}`);
@@ -97,7 +103,7 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
                     this.requestUpdate();
                 });
             }
-        }
+        };
     }
     return SlotPresenceObservingElement;
 }

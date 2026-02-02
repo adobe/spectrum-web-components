@@ -1,20 +1,26 @@
-import { resolve, dirname } from 'path';
-import { mergeConfig } from 'vite';
+import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
+import { mergeConfig } from 'vite';
+import remarkGfm from 'remark-gfm';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const includeTestStories = process.env.NODE_ENV !== 'production';
 
 const stories = [
     {
-        directory: 'guides',
-        files: '**/*.@(md|mdx)',
-        titlePrefix: 'Guides',
+        directory: '../components',
+        files: '**/*.stories.ts',
+        titlePrefix: 'Components',
     },
     {
-        directory: '../components',
-        files: '*/stories/*.stories.ts',
-        titlePrefix: 'Components',
+        directory: 'learn-about-swc',
+        files: '*.mdx',
+        titlePrefix: 'Learn about SWC',
+    },
+    {
+        directory: 'guides',
+        files: '**/!(*documentation).mdx',
+        titlePrefix: 'Guides',
     },
 ];
 
@@ -29,12 +35,25 @@ if (includeTestStories) {
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
 const config = {
     stories,
+    docs: {
+        defaultName: 'README',
+    },
     framework: '@storybook/web-components-vite',
     core: {
         disableTelemetry: true,
     },
     addons: [
-        '@storybook/addon-docs',
+        {
+            name: '@storybook/addon-docs',
+            options: {
+                transcludeMarkdown: true,
+                mdxPluginOptions: {
+                    mdxCompileOptions: {
+                        remarkPlugins: [remarkGfm],
+                    },
+                },
+            },
+        },
         '@storybook/addon-a11y',
         '@storybook/addon-designs',
         '@storybook/addon-vitest',

@@ -1,38 +1,6 @@
-<!-- Generated breadcrumbs - DO NOT EDIT -->
+import { Meta } from '@storybook/addon-docs/blocks';
 
-[CONTRIBUTOR-DOCS](../README.md) / [Accessibility Guide](README.md) / Screen reader testing
-
-<!-- Document title (editable) -->
-
-# Screen reader testing
-
-<!-- Generated TOC - DO NOT EDIT -->
-
-<details open>
-<summary><strong>In this doc</strong></summary>
-
-- [Screen reader testing](#screen-reader-testing)
-  - [Overview](#overview)
-  - [Why test with screen readers](#why-test-with-screen-readers)
-    - [Goals of screen reader testing](#goals-of-screen-reader-testing)
-    - [Relationship to keyboard accessibility](#relationship-to-keyboard-accessibility)
-  - [Common screen reader and browser pairings](#common-screen-reader-and-browser-pairings)
-    - [Desktop pairings](#desktop-pairings)
-    - [Mobile pairings](#mobile-pairings)
-  - [Screen reader modes](#screen-reader-modes)
-    - [Browse mode (document/scan mode)](#browse-mode-documentscan-mode)
-    - [Focus mode (forms/application/input mode)](#focus-mode-formsapplicationinput-mode)
-    - [Table mode](#table-mode)
-  - [Keyboard shortcuts](#keyboard-shortcuts)
-    - [VoiceOver (macOS)](#voiceover-macos)
-    - [NVDA (Windows)](#nvda-windows)
-    - [JAWS (Windows)](#jaws-windows)
-    - [Additional resources](#additional-resources)
-  - [Testing workflow](#testing-workflow)
-
-</details>
-
-<!-- Document content (editable) -->
+<Meta title="Accessibility guides/Screen reader testing" />
 
 ## Overview
 
@@ -58,7 +26,7 @@ When testing components with screen readers, focus on these key outcomes:
 
 ### Relationship to keyboard accessibility
 
-Screen reader testing builds on [keyboard testing](03_keyboard_testing.md). Before testing with a screen reader:
+Screen reader testing builds on [keyboard testing](./keyboard_testing.mdx). Before testing with a screen reader:
 
 1. Verify all interactive elements are keyboard accessible
 2. Confirm focus order is logical
@@ -73,7 +41,7 @@ Screen readers work best with specific browsers. Use these recommended pairings 
 ### Desktop pairings
 
 | Platform | Screen reader | Browser | Notes                                             |
-|----------|---------------|---------|---------------------------------------------------|
+| -------- | ------------- | ------- | ------------------------------------------------- |
 | macOS    | VoiceOver     | Safari  | Built-in; best compatibility with Safari          |
 | Windows  | NVDA          | Firefox | Free and open-source; excellent standards support |
 | Windows  | NVDA          | Chrome  | Good alternative pairing                          |
@@ -85,7 +53,7 @@ Screen readers work best with specific browsers. Use these recommended pairings 
 ### Mobile pairings
 
 | Platform | Screen reader | Browser | Notes                                          |
-|----------|---------------|---------|------------------------------------------------|
+| -------- | ------------- | ------- | ---------------------------------------------- |
 | iOS      | VoiceOver     | Safari  | Built-in; only supported browser engine on iOS |
 | Android  | TalkBack      | Chrome  | Built-in; best compatibility with Chrome       |
 
@@ -109,7 +77,7 @@ Browse mode (called "Scan mode" in Narrator, "Document mode" in some screen read
 **Common navigation shortcuts in browse mode:**
 
 | Action           | VoiceOver                                                            | NVDA                            | JAWS                            |
-|------------------|----------------------------------------------------------------------|---------------------------------|---------------------------------|
+| ---------------- | -------------------------------------------------------------------- | ------------------------------- | ------------------------------- |
 | Next heading     | <kbd>VO</kbd> + <kbd>Command</kbd> + <kbd>H</kbd>                    | <kbd>H</kbd>                    | <kbd>H</kbd>                    |
 | Previous heading | <kbd>VO</kbd> + <kbd>Command</kbd> + <kbd>Shift</kbd> + <kbd>H</kbd> | <kbd>Shift</kbd> + <kbd>H</kbd> | <kbd>Shift</kbd> + <kbd>H</kbd> |
 | Next link        | <kbd>VO</kbd> + <kbd>Command</kbd> + <kbd>L</kbd>                    | <kbd>K</kbd>                    | <kbd>Tab</kbd>                  |
@@ -132,10 +100,10 @@ Focus mode is for interacting with form controls and custom widgets. In this mod
 
 **Entering and exiting focus mode:**
 
-| Action           | NVDA                                                    | JAWS                                      |
-|------------------|---------------------------------------------------------|-------------------------------------------|
-| Enter focus mode | <kbd>NVDA</kbd> + <kbd>Space</kbd> or automatic         | <kbd>Enter</kbd> on control or automatic  |
-| Exit focus mode  | <kbd>Escape</kbd> or <kbd>NVDA</kbd> + <kbd>Space</kbd> | <kbd>Numpad +</kbd> or <kbd>Escape</kbd>  |
+| Action           | NVDA                                                    | JAWS                                     |
+| ---------------- | ------------------------------------------------------- | ---------------------------------------- |
+| Enter focus mode | <kbd>NVDA</kbd> + <kbd>Space</kbd> or automatic         | <kbd>Enter</kbd> on control or automatic |
+| Exit focus mode  | <kbd>Escape</kbd> or <kbd>NVDA</kbd> + <kbd>Space</kbd> | <kbd>Numpad +</kbd> or <kbd>Escape</kbd> |
 
 **Note:** VoiceOver does not use the browse/focus mode paradigm. Instead, it uses **Quick Nav** (toggled with <kbd>Left Arrow</kbd> + <kbd>Right Arrow</kbd> pressed simultaneously) to enable single-key navigation, and the **Interact model** (<kbd>VO</kbd> + <kbd>Shift</kbd> + <kbd>Down Arrow</kbd> to drill into elements, <kbd>VO</kbd> + <kbd>Shift</kbd> + <kbd>Up Arrow</kbd> to move back up). VoiceOver handles form controls more seamlessly without requiring an explicit mode switch.
 
@@ -163,7 +131,7 @@ Table mode provides specialized navigation within data tables.
 **Common table navigation shortcuts:**
 
 | Action             | VoiceOver                              | NVDA                                                      | JAWS                                                      |
-|--------------------|----------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------|
+| ------------------ | -------------------------------------- | --------------------------------------------------------- | --------------------------------------------------------- |
 | Next cell right    | <kbd>VO</kbd> + <kbd>Right Arrow</kbd> | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Right Arrow</kbd> | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Right Arrow</kbd> |
 | Next cell down     | <kbd>VO</kbd> + <kbd>Down Arrow</kbd>  | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Down Arrow</kbd>  | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Down Arrow</kbd>  |
 | Previous cell left | <kbd>VO</kbd> + <kbd>Left Arrow</kbd>  | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Left Arrow</kbd>  | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Left Arrow</kbd>  |
@@ -178,35 +146,35 @@ Each screen reader has its own set of keyboard shortcuts. Below are essential sh
 **Starting and stopping:**
 
 | Action                  | Shortcut                               |
-|-------------------------|----------------------------------------|
+| ----------------------- | -------------------------------------- |
 | Turn VoiceOver on/off   | <kbd>Command</kbd> + <kbd>F5</kbd>     |
 | VoiceOver modifier (VO) | <kbd>Control</kbd> + <kbd>Option</kbd> |
 
 **Navigation:**
 
-| Action                | Shortcut                                                   |
-|-----------------------|------------------------------------------------------------|
-| Read next item        | <kbd>VO</kbd> + <kbd>Right Arrow</kbd>                     |
-| Read previous item    | <kbd>VO</kbd> + <kbd>Left Arrow</kbd>                      |
-| Interact with element | <kbd>VO</kbd> + <kbd>Shift</kbd> + <kbd>Down Arrow</kbd>   |
-| Stop interacting      | <kbd>VO</kbd> + <kbd>Shift</kbd> + <kbd>Up Arrow</kbd>     |
-| Activate element      | <kbd>VO</kbd> + <kbd>Space</kbd>                           |
-| Open rotor            | <kbd>VO</kbd> + <kbd>U</kbd>                               |
+| Action                | Shortcut                                                 |
+| --------------------- | -------------------------------------------------------- |
+| Read next item        | <kbd>VO</kbd> + <kbd>Right Arrow</kbd>                   |
+| Read previous item    | <kbd>VO</kbd> + <kbd>Left Arrow</kbd>                    |
+| Interact with element | <kbd>VO</kbd> + <kbd>Shift</kbd> + <kbd>Down Arrow</kbd> |
+| Stop interacting      | <kbd>VO</kbd> + <kbd>Shift</kbd> + <kbd>Up Arrow</kbd>   |
+| Activate element      | <kbd>VO</kbd> + <kbd>Space</kbd>                         |
+| Open rotor            | <kbd>VO</kbd> + <kbd>U</kbd>                             |
 
 ### NVDA (Windows)
 
 **Starting and stopping:**
 
-| Action        | Shortcut                                                 |
-|---------------|----------------------------------------------------------|
-| Start NVDA    | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>N</kbd>          |
-| Stop NVDA     | <kbd>NVDA</kbd> + <kbd>Q</kbd>                           |
+| Action                         | Shortcut                                                 |
+| ------------------------------ | -------------------------------------------------------- |
+| Start NVDA                     | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>N</kbd>          |
+| Stop NVDA                      | <kbd>NVDA</kbd> + <kbd>Q</kbd>                           |
 | NVDA modifier(Insert/CapsLock) | <kbd>Insert</kbd> or <kbd>Caps Lock</kbd> (configurable) |
 
 **Navigation:**
 
 | Action                   | Shortcut                                |
-|--------------------------|-----------------------------------------|
+| ------------------------ | --------------------------------------- |
 | Read next item           | <kbd>Down Arrow</kbd> (browse mode)     |
 | Read previous item       | <kbd>Up Arrow</kbd> (browse mode)       |
 | Toggle browse/focus mode | <kbd>NVDA</kbd> + <kbd>Space</kbd>      |
@@ -218,16 +186,16 @@ Each screen reader has its own set of keyboard shortcuts. Below are essential sh
 
 **Starting and stopping:**
 
-| Action        | Shortcut                           |
-|---------------|------------------------------------|
-| Start JAWS    | Launch from Start menu             |
-| Quit JAWS     | <kbd>Insert</kbd> + <kbd>F4</kbd>  |
-| JAWS modifier | <kbd>Insert</kbd>                  |
+| Action        | Shortcut                          |
+| ------------- | --------------------------------- |
+| Start JAWS    | Launch from Start menu            |
+| Quit JAWS     | <kbd>Insert</kbd> + <kbd>F4</kbd> |
+| JAWS modifier | <kbd>Insert</kbd>                 |
 
 **Navigation:**
 
 | Action                | Shortcut                                  |
-|-----------------------|-------------------------------------------|
+| --------------------- | ----------------------------------------- |
 | Read next item        | <kbd>Down Arrow</kbd> (browse mode)       |
 | Read previous item    | <kbd>Up Arrow</kbd> (browse mode)         |
 | Toggle virtual cursor | <kbd>Insert</kbd> + <kbd>Z</kbd>          |
@@ -258,4 +226,4 @@ Follow this workflow when testing components with screen readers:
 7. **Complete user tasks**: Verify entire workflows are achievable
 8. **Document issues**: Note any missing announcements, confusing order, or blocked interactions
 
-For more testing resources and tools, see [Accessibility resources](06_accessibility_resources.md).
+For more testing resources and tools, see [Accessibility resources](./accessibility-resources.mdx).
