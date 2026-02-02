@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.1](https://github.com/adobe/spectrum-web-components/compare/v1.11.0...v1.11.1) (2026-02-02)
+
+## Patch Changes
+
+**sp-core**: - **Fixed**: Replaced wildcard exports from `@spectrum-web-components/core` with explicit named exports for better bundler compatibility
+
+- **Fixed**: Changed build target from ES2022 to ES2018 to support Vitest and other consumer environments
+- **Fixed**: Added `@spectrum-web-components/core` as direct dependency to `@spectrum-web-components/shared` to resolve module resolution issues in strict dependency environments
+- **Fixed**: Added `@lit-labs/observers` as dependency and externalized it in Vite build config
+
+**sp-shared**: - **Fixed**: Replaced wildcard exports from `@spectrum-web-components/core` with explicit named exports for better bundler compatibility
+
+- **Fixed**: Changed build target from ES2022 to ES2018 to support Vitest and other consumer environments
+- **Fixed**: Added `@spectrum-web-components/core` as direct dependency to `@spectrum-web-components/shared` to resolve module resolution issues in strict dependency environments
+- **Fixed**: Added `@lit-labs/observers` as dependency and externalized it in Vite build config
+
+**sp-base**: - **Fixed**: Replaced wildcard exports from `@spectrum-web-components/core` with explicit named exports for better bundler compatibility
+
+- **Fixed**: Changed build target from ES2022 to ES2018 to support Vitest and other consumer environments
+- **Fixed**: Added `@spectrum-web-components/core` as direct dependency to `@spectrum-web-components/shared` to resolve module resolution issues in strict dependency environments
+- **Fixed**: Added `@lit-labs/observers` as dependency and externalized it in Vite build config
+
+**sp-table**: **Fixed**: Fixed accessibility violation (WCAG 4.1.2) where table checkbox inputs were missing accessible labels. The axe DevTools "Form elements must have labels" error is now resolved. The fix sets `aria-label` directly on the checkbox's internal input element.
+
 # [1.11.0](https://github.com/adobe/spectrum-web-components/compare/v1.10.0...v1.11.0) (2026-01-27)
 
 ## Minor Changes

@@ -12,6 +12,7 @@
 import {
     CSSResultArray,
     html,
+    PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -59,8 +60,42 @@ export class TableCheckboxCell extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
 
+    /**
+     * The accessible label for the checkbox. For header rows, this defaults to 'Select All'.
+     * For body rows, this should be set to the text content of the first cell in the row.
+     */
+    @property({ type: String })
+    public label = '';
+
     public override click(): void {
         this.checkbox.click();
+    }
+
+    /**
+     * Updates the aria-label on the checkbox's internal input element.
+     */
+    private updateInputAriaLabel(): void {
+        if (this.checkbox?.inputElement && this.label) {
+            this.checkbox.inputElement.setAttribute('aria-label', this.label);
+        }
+    }
+
+    protected override async updated(changed: PropertyValues): Promise<void> {
+        super.updated(changed);
+        if (changed.has('label')) {
+            // Wait for the checkbox to render before updating aria-label.
+            await this.checkbox?.updateComplete;
+            this.updateInputAriaLabel();
+        }
+    }
+
+    protected override async firstUpdated(
+        changed: PropertyValues
+    ): Promise<void> {
+        super.firstUpdated(changed);
+        // Wait for the checkbox to render before updating aria-label.
+        await this.checkbox?.updateComplete;
+        this.updateInputAriaLabel();
     }
 
     protected override render(): TemplateResult {
@@ -70,7 +105,7 @@ export class TableCheckboxCell extends SpectrumElement {
                 ?indeterminate=${this.indeterminate}
                 ?disabled=${this.disabled}
                 ?emphasized=${this.emphasized}
-                aria-hidden=${ifDefined(this.selectsSingle)}
+                aria-hidden=${ifDefined(this.selectsSingle ? true : undefined)}
                 class="checkbox"
             ></sp-checkbox>
         `;
