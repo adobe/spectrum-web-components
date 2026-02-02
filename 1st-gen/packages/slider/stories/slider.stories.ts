@@ -976,13 +976,6 @@ TwoHandlesWithValueTooltips.args = {
     variant: 'range',
     tickStep: 10,
 };
-TwoHandlesWithValueTooltips.parameters = {
-    docs: {
-        description: {
-            story: 'When using `label-visibility="none"` or `label-visibility="text"` with multi-handle sliders, value tooltips appear on hover and focus to show each handle\'s current value. This ensures accessibility compliance per WCAG 3.3.2 (Labels or Instructions).',
-        },
-    },
-};
 
 export const TwoHandlesPt = (args: StoryArgs = {}): TemplateResult => {
     return html`
