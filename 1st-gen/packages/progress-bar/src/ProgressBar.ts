@@ -147,6 +147,7 @@ export class ProgressBar extends SizedMixin(
                 this.removeAttribute('aria-valuemin');
                 this.removeAttribute('aria-valuemax');
                 this.removeAttribute('aria-valuenow');
+                this.removeAttribute('aria-valuetext');
             } else {
                 this.setAttribute('aria-valuemin', '0');
                 this.setAttribute('aria-valuemax', '100');
@@ -154,6 +155,13 @@ export class ProgressBar extends SizedMixin(
         }
         if (!this.indeterminate && changes.has('progress')) {
             this.setAttribute('aria-valuenow', '' + this.progress);
+            this.setAttribute(
+                'aria-valuetext',
+                new Intl.NumberFormat(this.languageResolver.language, {
+                    style: 'percent',
+                    unitDisplay: 'narrow',
+                }).format(this.progress / 100)
+            );
         }
         if (changes.has('label')) {
             if (this.label.length) {

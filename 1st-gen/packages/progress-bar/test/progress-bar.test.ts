@@ -90,6 +90,8 @@ describe('ProgressBar', () => {
 
         expect(el.hasAttribute('aria-valuenow')).to.be.true;
         expect(el.getAttribute('aria-valuenow')).to.equal('0');
+        expect(el.hasAttribute('aria-valuetext')).to.be.true;
+        expect(el.getAttribute('aria-valuetext')).to.equal('0%');
 
         el.progress = 50;
 
@@ -97,6 +99,8 @@ describe('ProgressBar', () => {
 
         expect(el.hasAttribute('aria-valuenow')).to.be.true;
         expect(el.getAttribute('aria-valuenow')).to.equal('50');
+        expect(el.hasAttribute('aria-valuetext')).to.be.true;
+        expect(el.getAttribute('aria-valuetext')).to.equal('50%');
 
         el.progress = 100;
 
@@ -104,6 +108,8 @@ describe('ProgressBar', () => {
 
         expect(el.hasAttribute('aria-valuenow')).to.be.true;
         expect(el.getAttribute('aria-valuenow')).to.equal('100');
+        expect(el.hasAttribute('aria-valuetext')).to.be.true;
+        expect(el.getAttribute('aria-valuetext')).to.equal('100%');
     });
     it('loads - [indeterminate]', async () => {
         const el = await fixture<ProgressBar>(html`
@@ -139,12 +145,15 @@ describe('ProgressBar', () => {
 
         expect(el.hasAttribute('aria-valuenow')).to.be.true;
         expect(el.getAttribute('aria-valuenow')).to.equal('50');
+        expect(el.hasAttribute('aria-valuetext')).to.be.true;
+        expect(el.getAttribute('aria-valuetext')).to.equal('50%');
 
         el.indeterminate = true;
 
         await elementUpdated(el);
 
         expect(el.hasAttribute('aria-valuenow')).to.be.false;
+        expect(el.hasAttribute('aria-valuetext')).to.be.false;
     });
 
     describe('dev mode', () => {
