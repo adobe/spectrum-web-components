@@ -106,13 +106,7 @@ export class ProgressBar extends SizedMixin(
                                     size=${this.size}
                                     class="percentage"
                                 >
-                                    ${new Intl.NumberFormat(
-                                        this.languageResolver.language,
-                                        {
-                                            style: 'percent',
-                                            unitDisplay: 'narrow',
-                                        }
-                                    ).format(this.progress / 100)}
+                                    ${this.formatProgress()}
                                 </sp-field-label>
                             `}
                   `
@@ -140,6 +134,13 @@ export class ProgressBar extends SizedMixin(
         }
     }
 
+    private formatProgress(): string {
+        return new Intl.NumberFormat(this.languageResolver.language, {
+            style: 'percent',
+            unitDisplay: 'narrow',
+        }).format(this.progress / 100);
+    }
+
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         if (changes.has('indeterminate')) {
@@ -155,13 +156,7 @@ export class ProgressBar extends SizedMixin(
         }
         if (!this.indeterminate && changes.has('progress')) {
             this.setAttribute('aria-valuenow', '' + this.progress);
-            this.setAttribute(
-                'aria-valuetext',
-                new Intl.NumberFormat(this.languageResolver.language, {
-                    style: 'percent',
-                    unitDisplay: 'narrow',
-                }).format(this.progress / 100)
-            );
+            this.setAttribute('aria-valuetext', this.formatProgress());
         }
         if (changes.has('label')) {
             if (this.label.length) {
