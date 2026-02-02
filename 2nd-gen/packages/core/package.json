@@ -15,6 +15,10 @@
     },
     "type": "module",
     "exports": {
+        "./components/alert-banner": {
+            "types": "./dist/components/alert-banner/index.d.ts",
+            "import": "./dist/components/alert-banner/index.js"
+        },
         "./components/asset": {
             "types": "./dist/components/asset/index.d.ts",
             "import": "./dist/components/asset/index.js"
@@ -91,6 +95,9 @@
     },
     "typesVersions": {
         "*": {
+            "components/alert-banner": [
+                "dist/components/alert-banner/index.d.ts"
+            ],
             "components/asset": [
                 "dist/components/asset/index.d.ts"
             ],
