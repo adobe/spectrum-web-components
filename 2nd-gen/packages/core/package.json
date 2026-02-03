@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/core",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "Abstract base classes for Spectrum Web Components",
     "license": "Apache-2.0",
     "author": "Adobe",
@@ -95,6 +95,9 @@
     },
     "typesVersions": {
         "*": {
+            "components/alert-banner": [
+                "dist/components/alert-banner/index.d.ts"
+            ],
             "components/asset": [
                 "dist/components/asset/index.d.ts"
             ],
