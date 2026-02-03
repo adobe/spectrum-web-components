@@ -44,25 +44,11 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     static VERSION = version;
 
     static get observedAttributes(): string[] {
-        return ['color', 'scale', 'lang', 'dir', 'system'];
-    }
-
-    /**
-     * Reading direction of the content scoped to this `sp-theme` element.
-     * @type {CSSStyleDeclaration['direction']}
-     * @attr
-     */
-    override get dir(): CSSStyleDeclaration['direction'] {
-        return getComputedStyle(this).direction ?? 'ltr';
-    }
-
-    override set dir(dir: CSSStyleDeclaration['direction']) {
-        if (dir === this.dir) return;
-        this.setAttribute('dir', dir);
+        return ['color', 'scale', 'lang', 'system'];
     }
 
     protected attributeChangedCallback(
-        attrName: SettableFragmentTypes | 'lang' | 'dir',
+        attrName: SettableFragmentTypes | 'lang',
         old: string | null,
         value: string | null
     ): void {
@@ -79,8 +65,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         } else if (attrName === 'system') {
             this.system = value as SystemVariant;
             this._provideSystemContext();
-        } else if (attrName === 'dir') {
-            this.dir = value as CSSStyleDeclaration['direction'];
         }
     }
     private requestUpdate(): void {
@@ -315,38 +299,12 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
 
         // Add `this` to the instances array.
         Theme.instances.add(this);
-        if (!this.hasAttribute('dir')) {
-            let dirParent = ((this as HTMLElement).assignedSlot ||
-                this.parentNode) as HTMLElement | DocumentFragment | ShadowRoot;
-            while (
-                dirParent !== document.documentElement &&
-                !(dirParent instanceof Theme)
-            ) {
-                dirParent = ((dirParent as HTMLElement).assignedSlot || // step into the shadow DOM of the parent of a slotted node
-                    dirParent.parentNode || // DOM Element detected
-                    (dirParent as ShadowRoot).host) as
-                    | HTMLElement
-                    | DocumentFragment
-                    | ShadowRoot;
-            }
-            this.dir = dirParent.dir === 'rtl' ? dirParent.dir : 'ltr';
-        }
     }
 
     protected disconnectedCallback(): void {
         // Remove `this` to the instances array.
         Theme.instances.delete(this);
     }
-
-    public startManagingContentDirection(el: HTMLElement): void {
-        this.trackedChildren.add(el);
-    }
-
-    public stopManagingContentDirection(el: HTMLElement): void {
-        this.trackedChildren.delete(el);
-    }
-
-    private trackedChildren: Set<HTMLElement> = new Set();
 
     private _updateRequested = false;
 

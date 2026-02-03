@@ -278,7 +278,6 @@ export class IconsDemo extends SpectrumElement {
                     <bdo
                         class="icon"
                         part="icon"
-                        dir="ltr"
                         class="icon"
                         @click=${() => this.shouldCopy(icon.tag)}
                         @keydown=${(event: KeyboardEvent) =>
@@ -300,7 +299,7 @@ export class IconsDemo extends SpectrumElement {
                   `}
             ${this.iconset.map(
                 (icon) => html`
-                    <bdo class="icon" dir="ltr">
+                    <bdo class="icon">
                         <sp-icon
                             size="xl"
                             name=${`${this.name}:${icon}`}

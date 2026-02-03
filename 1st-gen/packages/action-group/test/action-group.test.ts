@@ -1482,11 +1482,7 @@ describe('ActionGroup', () => {
     });
     it('accepts keybord input when in left-to-right direction', async () => {
         const el = await fixture<ActionGroup>(html`
-            <sp-action-group
-                label="Selects Single Group"
-                selects="single"
-                dir="ltr"
-            >
+            <sp-action-group label="Selects Single Group" selects="single">
                 <sp-action-button>First</sp-action-button>
                 <sp-action-button disabled>Second</sp-action-button>
                 <sp-action-button class="third">Third</sp-action-button>
