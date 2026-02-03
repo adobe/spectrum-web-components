@@ -1,6 +1,6 @@
 {
     "name": "documentation",
-    "version": "1.2.8",
+    "version": "1.2.9",
     "private": true,
     "description": "The documentation site for Spectrum Web Components",
     "license": "Apache-2.0",

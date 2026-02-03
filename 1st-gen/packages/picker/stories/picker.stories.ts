@@ -10,7 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import {
+    html,
+    LitElement,
+    TemplateResult,
+} from '@spectrum-web-components/base';
+import { when } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
@@ -1219,6 +1224,128 @@ PickerIniPadSafari.parameters = {
 };
 
 PickerIniPadSafari.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
+/**
+ * Custom element that demonstrates the issue where a Picker with a value set
+ * before menu-items are rendered doesn't show the label when menu-items are added later.
+ */
+class PickerWithDelayedMenuItems extends LitElement {
+    private hasContent = false;
+
+    private handleButtonClick(): void {
+        this.hasContent = true;
+        this.requestUpdate();
+    }
+
+    protected override render(): TemplateResult {
+        return html`
+            <div style="padding: 20px;">
+                <h3>Picker with delayed menu-items</h3>
+                <p>
+                    This story demonstrates a fix for an issue where a Picker
+                    with a value set before menu-items are rendered doesn't show
+                    the label when menu-items are added later.
+                </p>
+                <div style="margin-bottom: 20px;">
+                    <strong>Picker 1</strong>
+                    (menu-items rendered immediately):
+                    <br />
+                    <sp-picker
+                        value="item-2"
+                        id="picker-1"
+                        style="margin-top: 8px;"
+                    >
+                        <sp-menu-item value="item-1">Save</sp-menu-item>
+                        <sp-menu-item value="item-2">Finish</sp-menu-item>
+                        <sp-menu-item value="item-3">Review</sp-menu-item>
+                    </sp-picker>
+                    <p style="font-size: 12px; color: #666; margin-top: 4px;">
+                        Expected: Shows "Finish" label ✓
+                    </p>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <strong>Picker 2</strong>
+                    (menu-items rendered conditionally):
+                    <br />
+                    <sp-picker
+                        value="item-2"
+                        id="picker-2"
+                        style="margin-top: 8px;"
+                    >
+                        ${when(
+                            this.hasContent,
+                            () => html`
+                                <sp-menu-item value="item-1">Save</sp-menu-item>
+                                <sp-menu-item value="item-2">
+                                    Finish
+                                </sp-menu-item>
+                                <sp-menu-item value="item-3">
+                                    Review
+                                </sp-menu-item>
+                            `
+                        )}
+                    </sp-picker>
+                    <p style="font-size: 12px; color: #666; margin-top: 4px;">
+                        Expected: Shows "Finish" label after clicking button
+                        below ✓
+                    </p>
+                </div>
+                <sp-button
+                    @click=${this.handleButtonClick}
+                    variant="primary"
+                    style="margin-top: 8px;"
+                >
+                    Render menu content of Picker 2
+                </sp-button>
+                ${this.hasContent
+                    ? html`
+                          <p
+                              style="
+                                  font-size: 12px;
+                                  color: green;
+                                  margin-top: 8px;
+                              "
+                          >
+                              ✓ Menu-items rendered! Picker 2 should now show
+                              "Finish" label.
+                          </p>
+                      `
+                    : html`
+                          <p
+                              style="
+                                  font-size: 12px;
+                                  color: #666;
+                                  margin-top: 8px;
+                              "
+                          >
+                              Click the button above to render menu-items for
+                              Picker 2.
+                          </p>
+                      `}
+            </div>
+        `;
+    }
+}
+
+customElements.define(
+    'picker-with-delayed-menu-items',
+    PickerWithDelayedMenuItems
+);
+
+export const delayedMenuItems = (): TemplateResult => {
+    return html`
+        <picker-with-delayed-menu-items></picker-with-delayed-menu-items>
+    `;
+};
+
+delayedMenuItems.swc_vrt = {
+    skip: true,
+};
+
+delayedMenuItems.parameters = {
     // Disables Chromatic's snapshotting on a global level
     chromatic: { disableSnapshot: true },
 };

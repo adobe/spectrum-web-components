@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.11.1
+
+### Patch Changes
+
+- Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
+    - @spectrum-web-components/shared@1.11.1
+    - @spectrum-web-components/base@1.11.1
+    - @spectrum-web-components/progress-circle@1.11.1
+    - @spectrum-web-components/clear-button@1.11.1
+    - @spectrum-web-components/close-button@1.11.1
+    - @spectrum-web-components/icon@1.11.1
+    - @spectrum-web-components/icons-ui@1.11.1
+    - @spectrum-web-components/reactive-controllers@1.11.1
+
 ## 1.11.0
 
 ### Patch Changes
