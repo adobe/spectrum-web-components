@@ -90,7 +90,7 @@ export default defineConfig({
                 chunkFileNames: '[name].js',
             },
         },
-        target: 'es2020',
+        target: 'es2018',
         sourcemap: true,
         emptyOutDir: true,
         outDir: 'dist',
@@ -108,6 +108,6 @@ export default defineConfig({
         },
     },
     esbuild: {
-        target: 'es2020',
+        target: 'es2018',
     },
 });
