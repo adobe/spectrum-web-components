@@ -14,7 +14,9 @@ import { defineConfig } from 'eslint/config';
 import js from '@eslint/js';
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsparser from '@typescript-eslint/parser';
+import lit from 'eslint-plugin-lit';
 import litA11y from 'eslint-plugin-lit-a11y';
+import wc from 'eslint-plugin-wc';
 import importPlugin from 'eslint-plugin-import';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import jsonc from 'eslint-plugin-jsonc';
@@ -203,7 +205,9 @@ export default defineConfig([
         files: ['**/*.ts', '**/*.js', '**/*.mjs', '**/*.cjs'],
         plugins: {
             '@typescript-eslint': tseslint,
+            lit: lit,
             'lit-a11y': litA11y,
+            wc: wc,
             import: importPlugin,
             'simple-import-sort': simpleImportSort,
             notice: notice,
@@ -214,6 +218,86 @@ export default defineConfig([
             parserOptions: {
                 ecmaVersion: 'latest',
                 sourceType: 'module',
+            },
+            // Browser globals for web component code.
+            // Web components run exclusively in browsers and need access to DOM APIs.
+            // Without these declarations, ESLint would flag browser APIs as undefined.
+            // All are 'readonly' to prevent accidental reassignment (e.g., window = {}).
+            globals: {
+                // Core DOM - fundamental browser objects for DOM manipulation
+                document: 'readonly',
+                window: 'readonly',
+                HTMLElement: 'readonly',
+                Element: 'readonly',
+                Node: 'readonly',
+
+                // Web Components API - required for custom element registration
+                customElements: 'readonly',
+                ShadowRoot: 'readonly',
+                DocumentFragment: 'readonly',
+
+                // Events - used for dispatching and handling user interactions
+                CustomEvent: 'readonly',
+                Event: 'readonly',
+                KeyboardEvent: 'readonly',
+                MouseEvent: 'readonly',
+                FocusEvent: 'readonly',
+                PointerEvent: 'readonly',
+                TouchEvent: 'readonly',
+
+                // Timing - animations, debouncing, scheduling
+                requestAnimationFrame: 'readonly',
+                cancelAnimationFrame: 'readonly',
+                setTimeout: 'readonly',
+                clearTimeout: 'readonly',
+                setInterval: 'readonly',
+                clearInterval: 'readonly',
+                queueMicrotask: 'readonly',
+
+                // Browser APIs - environment detection, navigation, storage
+                console: 'readonly',
+                navigator: 'readonly',
+                location: 'readonly',
+                history: 'readonly',
+                localStorage: 'readonly',
+                sessionStorage: 'readonly',
+
+                // Network - data fetching and request handling
+                fetch: 'readonly',
+                URL: 'readonly',
+                URLSearchParams: 'readonly',
+                Headers: 'readonly',
+                Request: 'readonly',
+                Response: 'readonly',
+                AbortController: 'readonly',
+                AbortSignal: 'readonly',
+
+                // Observers - reactive DOM monitoring for resize, mutation, visibility
+                MutationObserver: 'readonly',
+                ResizeObserver: 'readonly',
+                IntersectionObserver: 'readonly',
+
+                // CSS APIs - style computation and media queries
+                getComputedStyle: 'readonly',
+                matchMedia: 'readonly',
+                CSS: 'readonly',
+                CSSStyleSheet: 'readonly',
+
+                // DOM utilities - text selection, parsing, serialization
+                Range: 'readonly',
+                Selection: 'readonly',
+                DOMParser: 'readonly',
+                XMLSerializer: 'readonly',
+
+                // File/Blob APIs - file handling for uploads, downloads
+                Blob: 'readonly',
+                File: 'readonly',
+                FileReader: 'readonly',
+                FormData: 'readonly',
+
+                // Performance - timing measurements and profiling
+                performance: 'readonly',
+                PerformanceObserver: 'readonly',
             },
         },
         rules: {
@@ -285,6 +369,34 @@ export default defineConfig([
                 { allowList: clickEventsAllowList },
             ],
 
+            // Lit plugin rules (recommended)
+            'lit/attribute-value-entities': 'error',
+            'lit/binding-positions': 'error',
+            'lit/no-duplicate-template-bindings': 'error',
+            'lit/no-invalid-escape-sequences': 'error',
+            'lit/no-invalid-html': 'error',
+            'lit/no-legacy-imports': 'error',
+            'lit/no-legacy-template-syntax': 'error',
+            'lit/no-private-properties': 'error',
+            'lit/no-property-change-update': 'error',
+            'lit/no-template-arrow': 'warn',
+            'lit/no-template-bind': 'warn',
+            'lit/no-useless-template-literals': 'error',
+            'lit/no-value-attribute': 'error',
+            'lit/prefer-nothing': 'warn',
+            'lit/quoted-expressions': ['error', 'never'],
+
+            // Web Components plugin rules (recommended)
+            'wc/attach-shadow-constructor': 'error',
+            'wc/guard-super-call': 'error',
+            'wc/no-closed-shadow-root': 'error',
+            'wc/no-constructor-attributes': 'error',
+            'wc/no-constructor-params': 'error',
+            'wc/no-invalid-element-name': 'error',
+            'wc/no-self-class': 'error',
+            'wc/no-typos': 'error',
+            'wc/require-listener-teardown': 'error',
+
             // Sort imports (member sorting only, declaration sort handled by simple-import-sort)
             'sort-imports': [
                 'error',
@@ -333,6 +445,8 @@ export default defineConfig([
 
     // ────────────────────────────────────────────────────────────────────────────
     // Test and story files: relaxed rules
+    // Browser globals are inherited from the main TypeScript config above.
+    // These overrides disable rules that are too strict for test/story contexts.
     // ────────────────────────────────────────────────────────────────────────────
     {
         files: [
