@@ -5,6 +5,7 @@
 - Use `ESLint` 9 with flat config (`eslint.config.js`) at the repo root, plus `@typescript-eslint`, `eslint-plugin-lit`, `eslint-plugin-lit-a11y`, `eslint-plugin-wc`, `eslint-plugin-import`, `eslint-plugin-jsdoc`, and `eslint-plugin-simple-import-sort`.
 - Use `Stylelint` with `stylelint-config-standard`, `stylelint-order`, and the existing header rule, plus optional token enforcement via `stylelint-declaration-strict-value` for new code only.
 - Use `Prettier` as the formatter and remove `eslint-plugin-prettier` from lint runs to keep ESLint fast; keep `eslint-config-prettier` to avoid rule conflicts.
+- Use `eslint-plugin-mdx` for markdown (`.md`) and MDX (`.mdx`) file linting, with relaxed rules for code blocks in documentation.
 - Keep import sorting in ESLint via `simple-import-sort` to provide stable autofixes and deterministic diffs.
 - Gate performance by avoiding type-aware rules by default; enable type-aware linting only in targeted packages or CI.
 - Centralize all linting at the repo root and remove package-level configs except for narrow, verified overrides that prevent backwards-compatibility breaks.
@@ -120,6 +121,22 @@
 | --- | --- | --- | --- |
 | `plugin:prettier/recommended` | Easy integration, auto-disables conflicting rules. | Runs Prettier inside ESLint, slower lint runs. | Replace with `eslint-config-prettier` only. |
 | Prettier as separate formatter | Faster ESLint, clearer responsibility split. | Requires formatting step in CI and editor. | Preferred for speed and tool separation. |
+
+### Markdown and MDX linting
+
+| Option | Pros | Cons | Recommendation |
+| --- | --- | --- | --- |
+| `eslint-plugin-mdx` | Integrates with ESLint, supports both `.md` and `.mdx`, can lint code blocks. | Requires ESLint 9 flat config setup. | Recommended for unified linting experience. |
+| `markdownlint-cli2` | Popular, fast, dedicated markdown linting. | Separate tool, no MDX support, requires additional config. | Use only if ESLint integration is problematic. |
+| `remark-lint` | Flexible, pluggable, used by `eslint-plugin-mdx` internally. | More complex setup, requires `remark` ecosystem knowledge. | Use via `eslint-plugin-mdx` for simplicity. |
+
+**Recommended configuration**:
+
+- Use `eslint-plugin-mdx` with flat config (`mdx.flat`).
+- Disable code block linting (`lintCodeBlocks: false`) because documentation frequently contains partial code snippets (e.g., method implementations without class wrappers) that cannot be parsed as complete files.
+- Disable `no-unused-vars` for MDX files since imports are used in the template, not JavaScript.
+- Disable `no-irregular-whitespace` since markdown content may use special whitespace characters.
+- Apply to all `.md` and `.mdx` files across the repository.
 
 ## Proposed configuration approach
 
@@ -259,9 +276,10 @@ Use a single root flat config with targeted overrides for 1st-gen exceptions, ma
 3. Move shared rules to the root and delete package-level ESLint configs, preserving required overrides.
 4. Introduce `eslint-plugin-wc` and `eslint-plugin-lit` with recommended configs.
 5. Add `eslint-plugin-jsdoc` with minimal rule set and limit to public API files first.
-6. Add `stylelint-order` as warnings, then flip to errors after clean-up.
-7. Optionally add `stylelint-declaration-strict-value` for tokens in new files only.
-8. Document allow-lists for `lit-a11y` per component as needed.
+6. Add `eslint-plugin-mdx` with flat config for markdown and MDX files, including code block linting.
+7. Add `stylelint-order` as warnings, then flip to errors after clean-up.
+8. Optionally add `stylelint-declaration-strict-value` for tokens in new files only.
+9. Document allow-lists for `lit-a11y` per component as needed.
 
 ## Estimated effort
 
