@@ -1,7 +1,10 @@
 {
     "[mdx]": {
         "editor.wordWrapColumn": 120,
-        "editor.wordWrap": "bounded"
+        "editor.wordWrap": "bounded",
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "never"
+        }
     },
     "[markdown]": {
         "editor.wordWrapColumn": 120,
@@ -39,5 +42,11 @@
     },
     "typescript.tsdk": "node_modules/typescript/lib",
     "lit-plugin.strict": true,
-    "cSpell.words": ["activedescendant", "coachmark", "valuetext"]
+    "cSpell.words": [
+        "activedescendant",
+        "AUTODOCS",
+        "coachmark",
+        "effectful",
+        "valuetext"
+    ]
 }

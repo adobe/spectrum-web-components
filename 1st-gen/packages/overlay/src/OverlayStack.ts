@@ -163,23 +163,22 @@ class OverlayStack {
      * @param event {PointerEvent}
      */
     handlePointerdown = (event: Event): void => {
+        if (!this.stack.length) return;
+
         const pointerPath = event.composedPath();
 
         // For page overlays only: block clicks outside (no light dismiss)
         // Modal overlays have light dismiss handled by handlePointerup
-        if (this.stack.length) {
-            const pageOverlays = this.stack.filter(
-                (o) => o.open && o.type === 'page'
-            );
-            if (
-                pageOverlays.length > 0 &&
-                !this.isEventInsideModal(pointerPath, pageOverlays)
-            ) {
-                event.preventDefault();
-                event.stopPropagation();
-                event.stopImmediatePropagation();
-                return;
-            }
+        const pageOverlays = this.stack.filter(
+            (o) => o.open && o.type === 'page'
+        );
+        if (
+            pageOverlays.length > 0 &&
+            !this.isEventInsideModal(pointerPath, pageOverlays)
+        ) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            return;
         }
 
         this.pointerdownPath = pointerPath;
@@ -210,7 +209,6 @@ class OverlayStack {
             // If click is outside all page overlays, prevent it from reaching the target
             // This replicates the behavior that showModal() provided automatically
             event.stopImmediatePropagation();
-            event.stopPropagation();
             event.preventDefault();
         }
     };
@@ -232,19 +230,30 @@ class OverlayStack {
         this.lastOverlay = undefined;
 
         const lastIndex = this.stack.length - 1;
-        const clickedBackdrop = composedPath.some(
-            (el) =>
-                el instanceof HTMLElement &&
-                el.classList.contains('modal-backdrop')
+
+        // Avoid the cost of event.composedPath() unless we actually have a modal/page
+        // overlay open. composedPath() walks and allocates the full event path and can
+        // be surprisingly expensive in hot paths.
+        const hasModalOrPageOverlay = this.stack.some(
+            (overlay) =>
+                overlay.open &&
+                (overlay.type === 'modal' || overlay.type === 'page')
         );
-        if (clickedBackdrop) {
-            const topOverlay = this.stack[this.stack.length - 1];
-            // Only modal overlays close on backdrop click.
-            // Page overlays are blocking and should not be light-dismissable.
-            if (topOverlay?.type === 'modal') {
-                this.closeOverlay(topOverlay);
+        if (hasModalOrPageOverlay) {
+            const clickedBackdrop = composedPath.some(
+                (el) =>
+                    el instanceof HTMLDivElement &&
+                    el.classList.contains('modal-backdrop')
+            );
+            if (clickedBackdrop) {
+                const topOverlay = this.stack[this.stack.length - 1];
+                // Only modal overlays close on backdrop click.
+                // Page overlays are blocking and should not be light-dismissable.
+                if (topOverlay?.type === 'modal') {
+                    this.closeOverlay(topOverlay);
+                }
+                return;
             }
-            return;
         }
         const nonAncestorOverlays = this.stack.filter((overlay, i) => {
             const inStack = composedPath.find(
