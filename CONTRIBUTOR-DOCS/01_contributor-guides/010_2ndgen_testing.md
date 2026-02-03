@@ -1,3 +1,31 @@
+<!-- Generated breadcrumbs - DO NOT EDIT -->
+
+[CONTRIBUTOR-DOCS](../README.md) / [Contributor guides](README.md) / 2ndgen_testing
+
+<!-- Document title (editable) -->
+
+# 2ndgen_testing
+
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
+
+- [2nd gen Storybook testing](#2nd-gen-storybook-testing)
+- [Where to put tests](#where-to-put-tests)
+- [Test story structure](#test-story-structure)
+- [Attribute and property checks](#attribute-and-property-checks)
+- [Testing variant collections](#testing-variant-collections)
+- [A11y checks with aXe](#a11y-checks-with-axe)
+- [Coverage for Storybook tests](#coverage-for-storybook-tests)
+- [Testing command reference](#testing-command-reference)
+- [Testing warnings and debug messages](#testing-warnings-and-debug-messages)
+- [Guidelines](#guidelines)
+
+</details>
+
+<!-- Document content (editable) -->
+
 ## 2nd gen Storybook testing
 
 This document describes how 2nd gen components use Storybook play functions as the primary test layer. Tests live in dedicated test story files so docs stories remain clean and test stories only appear in development Storybook.
@@ -5,7 +33,7 @@ This document describes how 2nd gen components use Storybook play functions as t
 ## Where to put tests
 
 - Keep docs stories in `2nd-gen/packages/swc/components/<component>/stories/<component>.stories.ts`.
-- Add test stories in `2nd-gen/packages/swc/components/<component>/test/<component>.test.stories.ts`.
+- Add test stories in `2nd-gen/packages/swc/components/<component>/test/<component>.test.ts`.
 - Reuse the base stories and metadata from the main stories file.
 - Test stories run in development Storybook only and are excluded from `storybook:build`.
 
@@ -17,17 +45,17 @@ Write tests directly inside each test story’s `play` function. These stories r
 ```ts
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
-import { meta as baseMeta, Default as BaseDefault } from '../stories/badge.stories.js';
+import { meta, Default } from '../stories/badge.stories.js';
 
 export default {
-    ...baseMeta,
+    ...meta,
     title: 'Badge/Tests',
-    parameters: { ...baseMeta.parameters, docs: { disable: true, page: null } },
+    parameters: { ...meta.parameters, docs: { disable: true, page: null } },
     tags: ['!autodocs'],
 } as Meta;
 
 export const DefaultTest: Story = {
-    ...BaseDefault,
+    ...Default,
     play: async ({ canvasElement }) => {
         const badge = canvasElement.querySelector('swc-badge') as Badge;
         expect(badge.variant).toBe('informative');
@@ -72,29 +100,23 @@ yarn workspace @adobe/swc test:coverage
 
 ## Testing warnings and debug messages
 
-Use `getSwcTestGlobals()` from `2nd-gen/packages/swc/utils/test-utils.ts` to access and override the `__swc` warning channel in a safe, typed way.
+Use `setupSwcWarningSpy()` from `2nd-gen/packages/swc/utils/test-utils.ts` to access and override the `__swc` warning channel in a safe, typed way.
 
 ```ts
 import { expect } from '@storybook/test';
 import type { StatusLight } from '@adobe/swc/status-light';
-import { getSwcTestGlobals } from '../../utils/test-utils.js';
+import { setupSwcWarningSpy } from '../../utils/test-utils.js';
 
 const testUnsupportedVariantWarning = async (
     statusLight: StatusLight
 ): Promise<void> => {
-    const swcGlobals = getSwcTestGlobals();
-    const originalWarn = swcGlobals.warn;
-    const warnings: unknown[][] = [];
-
-    swcGlobals.warn = (...args: unknown[]) => warnings.push(args);
-    swcGlobals.DEBUG = true;
-    swcGlobals.issuedWarnings = new Set();
+    const { warnCalls, restore } = setupSwcWarningSpy();
 
     statusLight.setAttribute('variant', 'accent');
     await statusLight.updateComplete;
 
-    await expect(warnings.length).toBeGreaterThan(0);
-    swcGlobals.warn = originalWarn;
+    await expect(warnCalls.length).toBeGreaterThan(0);
+    restore();
 };
 ```
 
