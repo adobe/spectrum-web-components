@@ -17,6 +17,7 @@ import tsparser from '@typescript-eslint/parser';
 import lit from 'eslint-plugin-lit';
 import litA11y from 'eslint-plugin-lit-a11y';
 import wc from 'eslint-plugin-wc';
+import jsdoc from 'eslint-plugin-jsdoc';
 import importPlugin from 'eslint-plugin-import';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import jsonc from 'eslint-plugin-jsonc';
@@ -208,6 +209,7 @@ export default defineConfig([
             lit: lit,
             'lit-a11y': litA11y,
             wc: wc,
+            jsdoc: jsdoc,
             import: importPlugin,
             'simple-import-sort': simpleImportSort,
             notice: notice,
@@ -228,13 +230,23 @@ export default defineConfig([
                 document: 'readonly',
                 window: 'readonly',
                 HTMLElement: 'readonly',
+                HTMLSlotElement: 'readonly',
+                HTMLInputElement: 'readonly',
+                HTMLButtonElement: 'readonly',
+                HTMLAnchorElement: 'readonly',
+                HTMLFormElement: 'readonly',
+                HTMLSelectElement: 'readonly',
+                HTMLTextAreaElement: 'readonly',
                 Element: 'readonly',
                 Node: 'readonly',
+                NodeList: 'readonly',
+                Text: 'readonly',
 
                 // Web Components API - required for custom element registration
                 customElements: 'readonly',
                 ShadowRoot: 'readonly',
                 DocumentFragment: 'readonly',
+                HTMLTemplateElement: 'readonly',
 
                 // Events - used for dispatching and handling user interactions
                 CustomEvent: 'readonly',
@@ -396,6 +408,33 @@ export default defineConfig([
             'wc/no-self-class': 'error',
             'wc/no-typos': 'error',
             'wc/require-listener-teardown': 'error',
+
+            // JSDoc plugin rules (minimal set for consistency)
+            // Focus on formatting and accuracy, not requiring docs everywhere.
+            'jsdoc/check-alignment': 'error', // Consistent asterisk alignment
+            'jsdoc/check-indentation': 'warn', // Consistent indentation in descriptions
+            'jsdoc/check-param-names': 'error', // Param names match function signature
+            'jsdoc/check-tag-names': [
+                'error',
+                {
+                    // Custom tags used by Custom Elements Manifest (CEM)
+                    definedTags: [
+                        'element', // Custom element tag name
+                        'slot', // Slot documentation
+                        'csspart', // CSS part documentation
+                        'cssproperty', // CSS custom property documentation
+                        'fires', // Event documentation
+                        'attr', // Attribute shorthand
+                        'attribute', // Attribute documentation
+                        'internal', // Internal member marker
+                    ],
+                },
+            ],
+            'jsdoc/check-types': 'warn', // Valid type syntax in JSDoc (prefer lowercase primitives)
+            'jsdoc/no-undefined-types': 'off', // Disabled: TS handles type checking, JSDoc types are often custom
+            'jsdoc/require-param-description': 'warn', // Params should have descriptions
+            'jsdoc/require-returns-description': 'warn', // Returns should have descriptions
+            'jsdoc/valid-types': 'warn', // Type expressions are valid (warn for @internal usage)
 
             // Sort imports (member sorting only, declaration sort handled by simple-import-sort)
             'sort-imports': [

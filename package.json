@@ -63,6 +63,7 @@
         "eslint": "9.39.2",
         "eslint-config-prettier": "10.1.8",
         "eslint-plugin-import": "2.32.0",
+        "eslint-plugin-jsdoc": "62.5.0",
         "eslint-plugin-jsonc": "2.21.0",
         "eslint-plugin-lit": "2.1.1",
         "eslint-plugin-lit-a11y": "4.1.4",
