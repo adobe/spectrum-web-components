@@ -23,24 +23,24 @@ import {
     BADGE_VARIANTS_SEMANTIC,
     FIXED_VALUES,
 } from '../../../../core/components/badge/Badge.types.js';
-import { meta as baseMeta } from '../stories/badge.stories.js';
+import { meta } from '../stories/badge.stories.js';
 import {
-    Anatomy as BaseAnatomy,
-    Fixed as BaseFixed,
-    NonSemanticVariants as BaseNonSemanticVariants,
-    Outline as BaseOutline,
-    Overview as BaseOverview,
-    SemanticVariants as BaseSemanticVariants,
-    Sizes as BaseSizes,
-    Subtle as BaseSubtle,
+    Anatomy,
+    Fixed,
+    NonSemanticVariants,
+    Outline,
+    Overview,
+    SemanticVariants,
+    Sizes,
+    Subtle,
 } from '../stories/badge.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
-    ...baseMeta,
+    ...meta,
     title: 'Badge/Tests',
     parameters: {
-        ...baseMeta.parameters,
+        ...meta.parameters,
         docs: { disable: true, page: null },
     },
     tags: ['!autodocs', 'dev'],
@@ -53,7 +53,7 @@ const getBadge = (canvasElement: HTMLElement): Badge => {
 
 // Test: overview args render expected values and slot content.
 export const OverviewTest: Story = {
-    ...BaseOverview,
+    ...Overview,
     play: async ({ canvasElement }) => {
         const badge = getBadge(canvasElement);
         await badge.updateComplete;
@@ -65,7 +65,7 @@ export const OverviewTest: Story = {
 
 // Test: anatomy includes icon slot content.
 export const AnatomyTest: Story = {
-    ...BaseAnatomy,
+    ...Anatomy,
     play: async ({ canvasElement }) => {
         const badges = Array.from(canvasElement.querySelectorAll('swc-badge'));
         const badgeWithIcon = badges.find((item) =>
@@ -80,7 +80,7 @@ export const AnatomyTest: Story = {
 
 // Test: semantic variant reflects to attribute and class.
 export const SemanticVariantsTest: Story = {
-    ...BaseSemanticVariants,
+    ...SemanticVariants,
     play: async ({ canvasElement }) => {
         BADGE_VARIANTS_SEMANTIC.forEach((variant) => {
             const badge = canvasElement.querySelector(
@@ -96,7 +96,7 @@ export const SemanticVariantsTest: Story = {
 
 // Test: outline reflects to attribute and can be toggled.
 export const OutlineTest: Story = {
-    ...BaseOutline,
+    ...Outline,
     play: async ({ canvasElement }) => {
         BADGE_VARIANTS_SEMANTIC.forEach((variant) => {
             const badge = canvasElement.querySelector(
@@ -112,7 +112,7 @@ export const OutlineTest: Story = {
 
 // Test: size reflects to attribute and can be changed.
 export const SizesTest: Story = {
-    ...BaseSizes,
+    ...Sizes,
     play: async ({ canvasElement }) => {
         BADGE_VALID_SIZES.forEach((size) => {
             const badge = canvasElement.querySelector(
@@ -126,7 +126,7 @@ export const SizesTest: Story = {
 
 // Test: subtle reflects to attribute and can be toggled.
 export const SubtleTest: Story = {
-    ...BaseSubtle,
+    ...Subtle,
     play: async ({ canvasElement }) => {
         BADGE_VARIANTS_S2.forEach((variant) => {
             const badge = canvasElement.querySelector(
@@ -142,7 +142,7 @@ export const SubtleTest: Story = {
 
 // Test: fixed reflects to attribute and can be changed.
 export const FixedTest: Story = {
-    ...BaseFixed,
+    ...Fixed,
     play: async ({ canvasElement }) => {
         FIXED_VALUES.forEach((value) => {
             const badge = canvasElement.querySelector(
@@ -158,7 +158,7 @@ export const FixedTest: Story = {
 
 // Test: color variants reflect to attribute and class.
 export const NonSemanticVariantsTest: Story = {
-    ...BaseNonSemanticVariants,
+    ...NonSemanticVariants,
     play: async ({ canvasElement }) => {
         BADGE_VARIANTS_COLOR_S2.forEach(async (variant) => {
             const badge = canvasElement.querySelector(
