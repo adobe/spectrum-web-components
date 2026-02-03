@@ -35,6 +35,78 @@
             "types": "./dist/components/status-light/index.d.ts",
             "import": "./dist/components/status-light/index.js"
         },
+        "./base": {
+            "types": "./dist/base/index.d.ts",
+            "import": "./dist/base/index.js"
+        },
+        "./base/index.js": {
+            "types": "./dist/base/index.d.ts",
+            "import": "./dist/base/index.js"
+        },
+        "./base/define-element.js": {
+            "types": "./dist/base/define-element.d.ts",
+            "import": "./dist/base/define-element.js"
+        },
+        "./base/spectrum-element.js": {
+            "types": "./dist/base/spectrum-element.d.ts",
+            "import": "./dist/base/spectrum-element.js"
+        },
+        "./base/version.js": {
+            "types": "./dist/base/version.d.ts",
+            "import": "./dist/base/version.js"
+        },
+        "./mixins": {
+            "types": "./dist/mixins/index.d.ts",
+            "import": "./dist/mixins/index.js"
+        },
+        "./mixins/index.js": {
+            "types": "./dist/mixins/index.d.ts",
+            "import": "./dist/mixins/index.js"
+        },
+        "./mixins/sized-mixin.js": {
+            "types": "./dist/mixins/sized-mixin.d.ts",
+            "import": "./dist/mixins/sized-mixin.js"
+        },
+        "./controllers": {
+            "types": "./dist/controllers/index.d.ts",
+            "import": "./dist/controllers/index.js"
+        },
+        "./controllers/index.js": {
+            "types": "./dist/controllers/index.d.ts",
+            "import": "./dist/controllers/index.js"
+        },
+        "./utils": {
+            "types": "./dist/utils/index.d.ts",
+            "import": "./dist/utils/index.js"
+        },
+        "./utils/index.js": {
+            "types": "./dist/utils/index.d.ts",
+            "import": "./dist/utils/index.js"
+        },
+        "./utils/capitalize.js": {
+            "types": "./dist/utils/capitalize.d.ts",
+            "import": "./dist/utils/capitalize.js"
+        },
+        "./utils/get-label-from-slot.js": {
+            "types": "./dist/utils/get-label-from-slot.d.ts",
+            "import": "./dist/utils/get-label-from-slot.js"
+        },
+        "./utils/observe-slot-presence.js": {
+            "types": "./dist/utils/observe-slot-presence.d.ts",
+            "import": "./dist/utils/observe-slot-presence.js"
+        },
+        "./utils/observe-slot-text.js": {
+            "types": "./dist/utils/observe-slot-text.d.ts",
+            "import": "./dist/utils/observe-slot-text.js"
+        },
+        "./types": {
+            "types": "./dist/types/index.d.ts",
+            "import": "./dist/types/index.js"
+        },
+        "./types/index.js": {
+            "types": "./dist/types/index.d.ts",
+            "import": "./dist/types/index.js"
+        },
         "./shared/base": {
             "types": "./dist/shared/base/index.d.ts",
             "import": "./dist/shared/base/index.js"
@@ -105,6 +177,60 @@
             ],
             "components/status-light": [
                 "dist/components/status-light/index.d.ts"
+            ],
+            "base": [
+                "dist/base/index.d.ts"
+            ],
+            "base/index.js": [
+                "dist/base/index.d.ts"
+            ],
+            "base/define-element.js": [
+                "dist/base/define-element.d.ts"
+            ],
+            "base/spectrum-element.js": [
+                "dist/base/spectrum-element.d.ts"
+            ],
+            "base/version.js": [
+                "dist/base/version.d.ts"
+            ],
+            "mixins": [
+                "dist/mixins/index.d.ts"
+            ],
+            "mixins/index.js": [
+                "dist/mixins/index.d.ts"
+            ],
+            "mixins/sized-mixin.js": [
+                "dist/mixins/sized-mixin.d.ts"
+            ],
+            "controllers": [
+                "dist/controllers/index.d.ts"
+            ],
+            "controllers/index.js": [
+                "dist/controllers/index.d.ts"
+            ],
+            "utils": [
+                "dist/utils/index.d.ts"
+            ],
+            "utils/index.js": [
+                "dist/utils/index.d.ts"
+            ],
+            "utils/capitalize.js": [
+                "dist/utils/capitalize.d.ts"
+            ],
+            "utils/get-label-from-slot.js": [
+                "dist/utils/get-label-from-slot.d.ts"
+            ],
+            "utils/observe-slot-presence.js": [
+                "dist/utils/observe-slot-presence.d.ts"
+            ],
+            "utils/observe-slot-text.js": [
+                "dist/utils/observe-slot-text.d.ts"
+            ],
+            "types": [
+                "dist/types/index.d.ts"
+            ],
+            "types/index.js": [
+                "dist/types/index.d.ts"
             ],
             "shared/base": [
                 "dist/shared/base/index.d.ts"
