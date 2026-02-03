@@ -17,22 +17,22 @@ import { ProgressCircle } from '@adobe/swc/progress-circle';
 
 import '@adobe/swc/progress-circle';
 
-import { getSwcTestGlobals } from '../../../utils/test-utils.js';
-import baseMeta from '../stories/progress-circle.stories.js';
+import { setupSwcWarningSpy } from '../../../utils/test-utils.js';
+import meta from '../stories/progress-circle.stories.js';
 import {
-    Indeterminate as BaseIndeterminate,
-    Overview as BaseOverview,
-    ProgressValues as BaseProgressValues,
-    Sizes as BaseSizes,
-    StaticColors as BaseStaticColors,
+    Indeterminate,
+    Overview,
+    ProgressValues,
+    Sizes,
+    StaticColors,
 } from '../stories/progress-circle.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
-    ...baseMeta,
+    ...meta,
     title: 'Progress circle/Tests',
     parameters: {
-        ...baseMeta.parameters,
+        ...meta.parameters,
         docs: { disable: true, page: null },
     },
     tags: ['!autodocs', 'dev'],
@@ -44,7 +44,7 @@ const getProgressCircle = (canvasElement: HTMLElement): ProgressCircle => {
 
 // Test: overview renders determinate progress with an accessible label.
 export const OverviewTest: Story = {
-    ...BaseOverview,
+    ...Overview,
     play: async ({ canvasElement }) => {
         const progressCircle = getProgressCircle(canvasElement);
         await progressCircle.updateComplete;
@@ -60,7 +60,7 @@ export const OverviewTest: Story = {
 
 // Test: sizes render the proper size class.
 export const SizesTest: Story = {
-    ...BaseSizes,
+    ...Sizes,
     play: async ({ canvasElement }) => {
         const circles = Array.from(
             canvasElement.querySelectorAll('swc-progress-circle')
@@ -79,7 +79,7 @@ export const SizesTest: Story = {
 
 // Test: static colors reflect to class.
 export const StaticColorsTest: Story = {
-    ...BaseStaticColors,
+    ...StaticColors,
     play: async ({ canvasElement }) => {
         const circles = Array.from(
             canvasElement.querySelectorAll('swc-progress-circle[static-color]')
@@ -100,7 +100,7 @@ export const StaticColorsTest: Story = {
 
 // Test: progress values reflect to aria-valuenow.
 export const ProgressValuesTest: Story = {
-    ...BaseProgressValues,
+    ...ProgressValues,
     play: async ({ canvasElement }) => {
         const circles = Array.from(
             canvasElement.querySelectorAll('swc-progress-circle')
@@ -114,7 +114,7 @@ export const ProgressValuesTest: Story = {
 
 // Test: indeterminate removes aria-valuenow and sets class.
 export const IndeterminateTest: Story = {
-    ...BaseIndeterminate,
+    ...Indeterminate,
     play: async ({ canvasElement }) => {
         const progressCircle = getProgressCircle(canvasElement);
         await progressCircle.updateComplete;
@@ -161,24 +161,80 @@ export const AccessibilityWarningTest: Story = {
     render: () => html` <swc-progress-circle></swc-progress-circle> `,
     play: async ({ canvasElement }) => {
         const progressCircle = getProgressCircle(canvasElement);
-        const swcGlobals = getSwcTestGlobals();
-        const originalWarn = swcGlobals.warn;
-        const originalDebug = swcGlobals.DEBUG;
-        const originalWarnings = swcGlobals.issuedWarnings;
-        const warnings: unknown[][] = [];
+        const { warnCalls, restore } = setupSwcWarningSpy();
 
-        swcGlobals.warn = (...args: unknown[]) => warnings.push(args);
-        swcGlobals.DEBUG = true;
-        swcGlobals.issuedWarnings = new Set();
+        try {
+            progressCircle.progress = 10;
+            await progressCircle.updateComplete;
 
-        progressCircle.progress = 10;
+            expect(warnCalls.length).toBeGreaterThan(0);
+            expect(String(warnCalls[0]?.[1] || '')).toContain('accessible');
+        } finally {
+            restore();
+        }
+    },
+};
+
+// Test: aria-label is accepted directly.
+export const AriaLabelTest: Story = {
+    render: () => html`
+        <swc-progress-circle aria-label="Loading"></swc-progress-circle>
+    `,
+    play: async ({ canvasElement }) => {
+        const progressCircle = getProgressCircle(canvasElement);
+        await progressCircle.updateComplete;
+        expect(progressCircle.hasAttribute('aria-label')).toBe(true);
+        expect(progressCircle.getAttribute('aria-label')).toBe('Loading');
+    },
+};
+
+// Test: label sets the aria-label value.
+export const LabelSetsAriaLabelTest: Story = {
+    render: () => html`
+        <swc-progress-circle label="Loading"></swc-progress-circle>
+    `,
+    play: async ({ canvasElement }) => {
+        const progressCircle = getProgressCircle(canvasElement);
+        await progressCircle.updateComplete;
+        expect(progressCircle.hasAttribute('aria-label')).toBe(true);
+        expect(progressCircle.getAttribute('aria-label')).toBe('Loading');
+    },
+};
+
+// Test: aria-label is preserved when label is empty.
+export const PreserveAriaLabelTest: Story = {
+    render: () => html`
+        <swc-progress-circle
+            label=""
+            aria-label="Loading"
+        ></swc-progress-circle>
+    `,
+    play: async ({ canvasElement }) => {
+        const progressCircle = getProgressCircle(canvasElement);
+        await progressCircle.updateComplete;
+        expect(progressCircle.hasAttribute('aria-label')).toBe(true);
+        expect(progressCircle.getAttribute('aria-label')).toBe('Loading');
+    },
+};
+
+// Test: determinate can return to indeterminate and clears aria-valuenow.
+export const ReturnToIndeterminateTest: Story = {
+    render: () => html`
+        <swc-progress-circle
+            progress="50"
+            label="Processing"
+        ></swc-progress-circle>
+    `,
+    play: async ({ canvasElement }) => {
+        const progressCircle = getProgressCircle(canvasElement);
         await progressCircle.updateComplete;
 
-        expect(warnings.length).toBeGreaterThan(0);
-        expect(String(warnings[0]?.[1] || '')).toContain('accessible');
+        expect(progressCircle.hasAttribute('aria-valuenow')).toBe(true);
+        expect(progressCircle.getAttribute('aria-valuenow')).toBe('50');
 
-        swcGlobals.warn = originalWarn;
-        swcGlobals.DEBUG = originalDebug;
-        swcGlobals.issuedWarnings = originalWarnings;
+        progressCircle.indeterminate = true;
+        await progressCircle.updateComplete;
+
+        expect(progressCircle.hasAttribute('aria-valuenow')).toBe(false);
     },
 };

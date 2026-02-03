@@ -9,6 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
@@ -16,20 +17,20 @@ import { Divider } from '@adobe/swc/divider';
 
 import '@adobe/swc/divider';
 
-import baseMeta from '../stories/divider.stories.js';
+import meta from '../stories/divider.stories.js';
 import {
-    Overview as BaseOverview,
-    Sizes as BaseSizes,
-    StaticColors as BaseStaticColors,
-    Vertical as BaseVertical,
+    Overview,
+    Sizes,
+    StaticColors,
+    Vertical,
 } from '../stories/divider.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
-    ...baseMeta,
+    ...meta,
     title: 'Divider/Tests',
     parameters: {
-        ...baseMeta.parameters,
+        ...meta.parameters,
         docs: { disable: true, page: null },
     },
     tags: ['!autodocs', 'dev'],
@@ -41,7 +42,7 @@ const getDivider = (canvasElement: HTMLElement): Divider => {
 
 // Test: overview renders a separator with a size class.
 export const OverviewTest: Story = {
-    ...BaseOverview,
+    ...Overview,
     play: async ({ canvasElement }) => {
         const divider = getDivider(canvasElement);
         await divider.updateComplete;
@@ -55,7 +56,7 @@ export const OverviewTest: Story = {
 
 // Test: each size renders the expected size class.
 export const SizesTest: Story = {
-    ...BaseSizes,
+    ...Sizes,
     play: async ({ canvasElement }) => {
         Divider.VALID_SIZES.forEach((size) => {
             const divider = canvasElement.querySelector(
@@ -76,7 +77,7 @@ export const SizesTest: Story = {
 
 // Test: vertical dividers reflect orientation and class.
 export const VerticalTest: Story = {
-    ...BaseVertical,
+    ...Vertical,
     play: async ({ canvasElement }) => {
         const dividers = Array.from(
             canvasElement.querySelectorAll('swc-divider')
@@ -93,7 +94,7 @@ export const VerticalTest: Story = {
 
 // Test: static colors reflect to attribute and class.
 export const StaticColorsTest: Story = {
-    ...BaseStaticColors,
+    ...StaticColors,
     play: async ({ canvasElement }) => {
         const dividers = Array.from(
             canvasElement.querySelectorAll('swc-divider[static-color]')
@@ -109,5 +110,21 @@ export const StaticColorsTest: Story = {
                 divider.shadowRoot?.querySelector(`.${className}`)
             ).toBeTruthy();
         });
+    },
+};
+
+// Test: static-color can be removed and clears attributes.
+export const StaticColorToggleTest: Story = {
+    render: () => html` <swc-divider static-color="black"></swc-divider> `,
+    play: async ({ canvasElement }) => {
+        const divider = getDivider(canvasElement);
+        await divider.updateComplete;
+        expect(divider.getAttribute('static-color')).toBe('black');
+
+        divider.removeAttribute('static-color');
+        divider.requestUpdate();
+        await divider.updateComplete;
+        expect(divider.getAttribute('static-color')).toBeNull();
+        expect(divider.hasAttribute('static-color')).toBe(false);
     },
 };

@@ -17,20 +17,16 @@ import { Asset } from '@adobe/swc/asset';
 
 import '@adobe/swc/asset';
 
-import { getSwcTestGlobals } from '../../../utils/test-utils.js';
-import baseMeta from '../stories/asset.stories.js';
-import {
-    Accessibility as BaseAccessibility,
-    Overview as BaseOverview,
-    Variants as BaseVariants,
-} from '../stories/asset.stories.js';
+import { setupSwcWarningSpy } from '../../../utils/test-utils.js';
+import meta from '../stories/asset.stories.js';
+import { Accessibility, Overview, Variants } from '../stories/asset.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
-    ...baseMeta,
+    ...meta,
     title: 'Asset/Tests',
     parameters: {
-        ...baseMeta.parameters,
+        ...meta.parameters,
         docs: { disable: true, page: null },
     },
     tags: ['!autodocs', 'dev'],
@@ -42,7 +38,7 @@ const getAsset = (canvasElement: HTMLElement): Asset => {
 
 // Test: overview renders slotted content when no variant is set.
 export const OverviewTest: Story = {
-    ...BaseOverview,
+    ...Overview,
     play: async ({ canvasElement }) => {
         const asset = getAsset(canvasElement);
         await asset.updateComplete;
@@ -55,7 +51,7 @@ export const OverviewTest: Story = {
 
 // Test: variant stories render file and folder icons with labels.
 export const VariantsTest: Story = {
-    ...BaseVariants,
+    ...Variants,
     play: async ({ canvasElement }) => {
         const assets = Array.from(canvasElement.querySelectorAll('swc-asset'));
         const fileAsset = assets.find(
@@ -82,7 +78,7 @@ export const VariantsTest: Story = {
 
 // Test: accessibility story provides labels for file and folder icons.
 export const AccessibilityTest: Story = {
-    ...BaseAccessibility,
+    ...Accessibility,
     play: async ({ canvasElement }) => {
         const assets = Array.from(canvasElement.querySelectorAll('swc-asset'));
         const fileAsset = assets.find(
@@ -114,24 +110,16 @@ export const InvalidVariantWarningTest: Story = {
     render: () => html` <swc-asset></swc-asset> `,
     play: async ({ canvasElement }) => {
         const asset = getAsset(canvasElement);
-        const swcGlobals = getSwcTestGlobals();
-        const originalWarn = swcGlobals.warn;
-        const originalDebug = swcGlobals.DEBUG;
-        const originalWarnings = swcGlobals.issuedWarnings;
-        const warnings: unknown[][] = [];
+        const { warnCalls, restore } = setupSwcWarningSpy();
 
-        swcGlobals.warn = (...args: unknown[]) => warnings.push(args);
-        swcGlobals.DEBUG = true;
-        swcGlobals.issuedWarnings = new Set();
+        try {
+            asset.variant = 'not-a-variant' as Asset['variant'];
+            await asset.updateComplete;
 
-        asset.variant = 'not-a-variant' as Asset['variant'];
-        await asset.updateComplete;
-
-        expect(warnings.length).toBeGreaterThan(0);
-        expect(String(warnings[0]?.[1] || '')).toContain('variant');
-
-        swcGlobals.warn = originalWarn;
-        swcGlobals.DEBUG = originalDebug;
-        swcGlobals.issuedWarnings = originalWarnings;
+            expect(warnCalls.length).toBeGreaterThan(0);
+            expect(String(warnCalls[0]?.[1] || '')).toContain('variant');
+        } finally {
+            restore();
+        }
     },
 };
