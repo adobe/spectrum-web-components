@@ -1,44 +1,43 @@
 {
-    "[mdx]": {
-        "editor.wordWrapColumn": 120,
-        "editor.wordWrap": "bounded",
-        "editor.codeActionsOnSave": {
-            "source.organizeImports": "never"
-        }
-    },
-    "[markdown]": {
-        "editor.wordWrapColumn": 120,
-        "editor.wordWrap": "bounded"
-    },
+    // ────────────────────────────────────────────────────────────
+    // PROJECT FORMATTERS & CODE ACTIONS
+    // ────────────────────────────────────────────────────────────
     "[typescript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
             "source.fixAll.eslint": "explicit"
         }
     },
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
             "source.fixAll.eslint": "explicit"
         }
     },
     "[css]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
             "source.fixAll.stylelint": "explicit"
         }
     },
     "[json]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.formatOnSave": true
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "[jsonc]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.formatOnSave": true
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
+    "[mdx]": {
+        "editor.wordWrapColumn": 120,
+        "editor.wordWrap": "bounded"
+    },
+    "[markdown]": {
+        "editor.wordWrapColumn": 120,
+        "editor.wordWrap": "bounded"
+    },
+
+    // ────────────────────────────────────────────────────────────
+    // FILE EXCLUSIONS (Generated files)
+    // ────────────────────────────────────────────────────────────
     "files.exclude": {
         "**/*.css.ts": {
             "when": "$(basename)"
@@ -69,12 +68,19 @@
         "test/**": true,
         "packages/**": true
     },
+
+    // ────────────────────────────────────────────────────────────
+    // PROJECT-SPECIFIC TOOLING
+    // ────────────────────────────────────────────────────────────
     "typescript.tsdk": "node_modules/typescript/lib",
     "lit-plugin.strict": true,
     "eslint.validate": ["javascript", "typescript"],
     "stylelint.validate": ["css"],
     "prettier.requireConfig": true,
-    "editor.formatOnSaveMode": "file",
+
+    // ────────────────────────────────────────────────────────────
+    // PROJECT DICTIONARY
+    // ────────────────────────────────────────────────────────────
     "cSpell.words": [
         "activedescendant",
         "AUTODOCS",
