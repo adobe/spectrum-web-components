@@ -1,5 +1,14 @@
 # Change Log
 
+## 1.11.2
+
+### Patch Changes
+
+- Updated dependencies [[`6f5419a`](https://github.com/adobe/spectrum-web-components/commit/6f5419a4de29a1ee440a36c1a57d8c2e1476e2f6)]:
+    - @spectrum-web-components/core@0.0.4
+    - @spectrum-web-components/base@1.11.2
+    - @spectrum-web-components/shared@1.11.2
+
 ## 1.11.1
 
 ### Patch Changes

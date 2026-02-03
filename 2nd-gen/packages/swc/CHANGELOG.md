@@ -1,5 +1,14 @@
 # @adobe/swc
 
+## 0.0.4
+
+### Patch Changes
+
+- [#5998](https://github.com/adobe/spectrum-web-components/pull/5998) [`6f5419a`](https://github.com/adobe/spectrum-web-components/commit/6f5419a4de29a1ee440a36c1a57d8c2e1476e2f6) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Fixed** missing export for `alert-banner` from `@spectrum-web-components/core`, which could cause build failures in certain environments.
+
+- Updated dependencies [[`6f5419a`](https://github.com/adobe/spectrum-web-components/commit/6f5419a4de29a1ee440a36c1a57d8c2e1476e2f6)]:
+    - @spectrum-web-components/core@0.0.4
+
 ## 0.0.3
 
 ### Patch Changes
