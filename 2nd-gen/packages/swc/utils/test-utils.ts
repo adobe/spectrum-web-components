@@ -18,6 +18,7 @@ type SwcTestGlobals = {
     issuedWarnings?: Set<string>;
 };
 
+// Returns the shared SWC test globals, creating defaults when needed.
 export const getSwcTestGlobals = (): SwcTestGlobals => {
     const swcWindow = window as Window & { __swc?: SwcTestGlobals };
 
@@ -26,6 +27,31 @@ export const getSwcTestGlobals = (): SwcTestGlobals => {
     }
 
     return swcWindow.__swc;
+};
+
+// Enables debug warnings and captures warn calls for assertions.
+export const setupSwcWarningSpy = () => {
+    const swcGlobals = getSwcTestGlobals();
+    const originalWarn = swcGlobals.warn;
+    const originalDebug = swcGlobals.DEBUG ?? false;
+    const originalIssuedWarnings = swcGlobals.issuedWarnings;
+    const warnCalls: unknown[][] = [];
+
+    swcGlobals.warn = (...args: unknown[]) => {
+        warnCalls.push(args);
+    };
+    swcGlobals.issuedWarnings = new Set();
+    swcGlobals.DEBUG = true;
+
+    return {
+        swcGlobals,
+        warnCalls,
+        restore: () => {
+            swcGlobals.warn = originalWarn;
+            swcGlobals.DEBUG = originalDebug;
+            swcGlobals.issuedWarnings = originalIssuedWarnings;
+        },
+    };
 };
 
 /**

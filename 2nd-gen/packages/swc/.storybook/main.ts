@@ -36,11 +36,6 @@ const stories = [
 if (includeTestStories) {
     stories.push({
         directory: '../components',
-        files: '**/*.test.stories.ts',
-        titlePrefix: 'Components',
-    });
-    stories.push({
-        directory: '../components',
         files: '**/*.test.ts',
         titlePrefix: 'Components',
     });

@@ -21,6 +21,7 @@ import { StatusLight } from '@adobe/swc/status-light';
 
 import '@adobe/swc/status-light';
 
+import { setupSwcWarningSpy } from '../../../utils/test-utils.js';
 import { meta } from '../stories/status-light.stories.js';
 import {
     Overview,
@@ -43,7 +44,6 @@ export default {
 const getStatusLight = (canvasElement: HTMLElement): StatusLight => {
     return canvasElement.querySelector('swc-status-light') as StatusLight;
 };
-
 // Test: default properties and slot content.
 export const DefaultTest: Story = {
     ...Overview,
@@ -93,5 +93,52 @@ export const ComposedComponentTest: Story = {
         expect(statusLight.variant).toBe('positive');
         expect(statusLight.size).toBe('m');
         expect(statusLight.textContent?.trim()).toBeTruthy();
+    },
+};
+
+// Test: unsupported variants warn in debug mode.
+export const UnsupportedVariantWarningTest: Story = {
+    render: () => html`
+        <swc-status-light variant="info">Active</swc-status-light>
+    `,
+    play: async ({ canvasElement }) => {
+        const { warnCalls, restore } = setupSwcWarningSpy();
+        try {
+            const statusLight = getStatusLight(canvasElement);
+            statusLight.setAttribute('variant', 'accent');
+            await statusLight.updateComplete;
+
+            expect(warnCalls.length).toBeGreaterThan(0);
+            expect(warnCalls[0][0]).toBe(statusLight);
+            expect(warnCalls[0][1]).toBe(
+                `<${statusLight.localName}> element expects the "variant" attribute to be one of the following:`
+            );
+        } finally {
+            restore();
+        }
+    },
+};
+
+// Test: disabled attribute warns in debug mode.
+export const DisabledAttributeWarningTest: Story = {
+    render: () => html`
+        <swc-status-light variant="positive">Positive</swc-status-light>
+    `,
+    play: async ({ canvasElement }) => {
+        const { warnCalls, restore } = setupSwcWarningSpy();
+        try {
+            const statusLight = getStatusLight(canvasElement);
+            statusLight.setAttribute('disabled', '');
+            statusLight.requestUpdate();
+            await statusLight.updateComplete;
+
+            expect(warnCalls.length).toBeGreaterThan(0);
+            expect(warnCalls[0][0]).toBe(statusLight);
+            expect(warnCalls[0][1]).toContain(
+                'does not support the disabled state'
+            );
+        } finally {
+            restore();
+        }
     },
 };

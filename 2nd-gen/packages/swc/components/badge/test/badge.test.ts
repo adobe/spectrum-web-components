@@ -87,9 +87,10 @@ export const SemanticVariantsTest: Story = {
                 `swc-badge[variant="${variant}"]`
             ) as Badge | null;
             expect(badge).toBeTruthy();
-            badge?.shadowRoot
+            const semanticClass = badge?.shadowRoot
                 ?.querySelector(`.swc-Badge--${variant}`)
                 ?.classList.contains(`swc-Badge--${variant}`);
+            expect(semanticClass).toBe(true);
         });
     },
 };
