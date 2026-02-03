@@ -1,5 +1,12 @@
 # @adobe/swc
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
+    - @spectrum-web-components/core@0.0.3
+
 ## 0.0.2
 
 ### Patch Changes
