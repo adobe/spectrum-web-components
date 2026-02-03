@@ -5,8 +5,6 @@
         "emitDeclarationOnly": true,
         "importHelpers": true,
         "inlineSources": true,
-        // 1st-gen specific: Classic Node resolution for tsc builds
-        "moduleResolution": "node",
 
         // Cross-generation import mapping
         "paths": {

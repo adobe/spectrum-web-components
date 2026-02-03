@@ -10,6 +10,35 @@
         "editor.wordWrapColumn": 120,
         "editor.wordWrap": "bounded"
     },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": "explicit"
+        }
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": "explicit"
+        }
+    },
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.stylelint": "explicit"
+        }
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
     "files.exclude": {
         "**/*.css.ts": {
             "when": "$(basename)"
@@ -42,6 +71,10 @@
     },
     "typescript.tsdk": "node_modules/typescript/lib",
     "lit-plugin.strict": true,
+    "eslint.validate": ["javascript", "typescript"],
+    "stylelint.validate": ["css"],
+    "prettier.requireConfig": true,
+    "editor.formatOnSaveMode": "file",
     "cSpell.words": [
         "activedescendant",
         "AUTODOCS",

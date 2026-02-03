@@ -1,8 +1,6 @@
 {
     "compilerOptions": {
         "allowImportingTsExtensions": true,
-        // 2nd-gen specific: Modern bundler resolution for Vite
-        "moduleResolution": "bundler",
 
         // 2nd-gen specific: Build configuration
         "noEmit": true,
