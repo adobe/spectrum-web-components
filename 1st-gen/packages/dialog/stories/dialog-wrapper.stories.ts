@@ -218,6 +218,8 @@ export const form = (
                         row-gap: calc(var(--swc-scale-factor) * 12px);
                         --mod-textfield-width: 240px;
                         --mod-textfield-container-width: 100%;
+                        --mod-textfield-grid-template-columns-side-label: auto
+                            auto;
                     }
                     .form-item {
                         padding-inline-end: calc(
