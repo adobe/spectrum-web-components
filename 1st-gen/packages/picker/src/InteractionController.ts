@@ -16,7 +16,7 @@ import {
 } from '@spectrum-web-components/base';
 import { AbstractOverlay } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
 import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
-import { PickerBase } from './Picker.js';
+import { InteractionHost } from './Picker.js';
 
 /**
  * Enum representing the interaction strategy types.
@@ -30,7 +30,7 @@ export enum InteractionTypes {
 export const SAFARI_FOCUS_RING_CLASS = 'remove-focus-ring-safari-hack';
 
 /**
- * Base controller class for managing picker interactions.
+ * Base controller class for managing host element interactions.
  * Handles overlay state, toggle prevention, and focus management.
  * Extended by DesktopController and MobileController for device-specific behavior.
  */
@@ -56,7 +56,7 @@ export class InteractionController implements ReactiveController {
     public container!: TemplateResult;
 
     /**
-     * Indicates whether the picker is actively in the process of opening.
+     * Indicates whether the host element is actively in the process of opening.
      * Always returns false in the base class; may be overridden in subclasses.
      */
     get activelyOpening(): boolean {
@@ -66,14 +66,14 @@ export class InteractionController implements ReactiveController {
     private _open = false;
 
     /**
-     * Whether the picker overlay is currently open.
+     * Whether the host element overlay is currently open.
      */
     public get open(): boolean {
         return this._open;
     }
 
     /**
-     * Sets the open state and synchronizes with the host picker.
+     * Sets the open state and synchronizes with the host element.
      * Also initializes the overlay reference if not already set.
      */
     public set open(open: boolean) {
@@ -90,7 +90,7 @@ export class InteractionController implements ReactiveController {
     private _overlay!: AbstractOverlay;
 
     /**
-     * Reference to the overlay element managing the picker's dropdown.
+     * Reference to the overlay element managing the host element's dropdown.
      */
     public get overlay(): AbstractOverlay {
         return this._overlay;
@@ -110,13 +110,13 @@ export class InteractionController implements ReactiveController {
     type!: InteractionTypes;
 
     /**
-     * Creates an interaction controller for the given picker.
+     * Creates an interaction controller for the given host element.
      * @param target - The trigger button element
-     * @param host - The picker component this controller manages
+     * @param host - The host element this controller manages
      */
     constructor(
         public target: HTMLElement,
-        public host: PickerBase
+        public host: InteractionHost
     ) {
         this.target = target;
         this.host = host;
@@ -180,9 +180,9 @@ export class InteractionController implements ReactiveController {
                 this.host.isMobile.matches && !this.host.forcePopover
                     ? undefined
                     : this.host.placement;
-            // We should not be applying open is set programmatically via the picker's open.property.
+            // We should not be applying open is set programmatically via the host element's open.property.
             // Focus should only be applied if a user action causes the menu to open. Otherwise,
-            // we could be pulling focus from a user when an picker with an open menu loads.
+            // we could be pulling focus from a user when an host element with an open menu loads.
             this.overlay.receivesFocus = 'false';
             this.overlay.willPreventClose =
                 this.preventNextToggle !== 'no' && this.open;

@@ -16,6 +16,7 @@ import {
     html,
     nothing,
     PropertyValues,
+    ReactiveController,
     SizedMixin,
     SpectrumElement,
     TemplateResult,
@@ -65,6 +66,21 @@ const chevronClass = {
 };
 
 export const DESCRIPTION_ID = 'option-picker';
+
+export interface InteractionHost extends SpectrumElement {
+    addController: (reactiveController: ReactiveController) => void;
+    button: HTMLButtonElement;
+    close: () => void;
+    open: () => void;
+    dependencyManager: DependencyManagerController;
+    forcePopover: boolean;
+    handleSlottableRequest: (event: SlottableRequestEvent) => void;
+    isMobile: MatchMediaController;
+    isTouchDevice: MatchMediaController;
+    optionsMenu: Menu;
+    overlayElement: Overlay;
+    placement: Placement;
+}
 
 /**
  * @element sp-picker
