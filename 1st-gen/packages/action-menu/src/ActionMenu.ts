@@ -28,6 +28,10 @@ import actionMenuStyles from './action-menu.css.js';
 import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 
 /**
+ * An `<sp-action-menu>` is an action button with an attached menu of options.
+ * Unlike a standard picker, it does not maintain a selection by default and
+ * displays a "more" icon instead of a chevron.
+ *
  * @element sp-action-menu
  *
  * @slot - menu items to be listed in the Action Menu
@@ -47,29 +51,60 @@ export class ActionMenu extends ObserveSlotPresence(
         return [actionMenuStyles];
     }
 
+    /**
+     * The selection mode for the action menu.
+     * Unlike Picker, defaults to `undefined` (no selection management).
+     * Set to `'single'` to maintain a selected item.
+     */
     @property({ type: String })
     public override selects: undefined | 'single' = undefined;
 
+    /**
+     * Applies static color styling for use on colored backgrounds.
+     * - `'white'`: Use on dark backgrounds
+     * - `'black'`: Use on light backgrounds
+     */
     @property({ reflect: true, attribute: 'static-color' })
     public staticColor?: 'white' | 'black';
 
+    /** The ARIA role for the menu list element. Uses 'menu' for action menus. */
     protected override listRole: 'listbox' | 'menu' = 'menu';
+
+    /** The ARIA role for individual menu items. Uses 'menuitem' for action menus. */
     protected override itemRole = 'menuitem';
+
+    /**
+     * Whether the label slot has content.
+     * Used to determine button layout and icon visibility.
+     */
     private get hasLabel(): boolean {
         return this.slotHasContent;
     }
 
+    /**
+     * Whether the label-only slot is being used.
+     * When true, no icon space is reserved.
+     */
     @state()
     private get labelOnly(): boolean {
         return this.slotContentIsPresent;
     }
 
+    /**
+     * Handles slottable request events by re-dispatching them.
+     * Allows parent components to intercept overlay content requests.
+     * @param event - The slottable request event
+     */
     public override handleSlottableRequest = (
         event: SlottableRequestEvent
     ): void => {
         this.dispatchEvent(new SlottableRequestEvent(event.name, event.data));
     };
 
+    /**
+     * Returns the content to render inside the action button.
+     * Includes the icon slot (with "more" icon default), label slot, and label-only slot.
+     */
     protected override get buttonContent(): TemplateResult[] {
         return [
             html`
@@ -94,6 +129,10 @@ export class ActionMenu extends ObserveSlotPresence(
         ];
     }
 
+    /**
+     * Renders the action menu component.
+     * Uses an action button as the trigger instead of a standard button.
+     */
     protected override render(): TemplateResult {
         if (this.tooltipEl) {
             this.tooltipEl.disabled = this.open;
@@ -129,6 +168,12 @@ export class ActionMenu extends ObserveSlotPresence(
         `;
     }
 
+    /**
+     * Handles property updates.
+     * Forces the invalid property to always be false since action menus
+     * don't support validation states.
+     * @param changedProperties - Map of changed property names to previous values
+     */
     protected override update(changedProperties: PropertyValues<this>): void {
         if (changedProperties.has('invalid')) {
             this.invalid = false;
@@ -136,6 +181,11 @@ export class ActionMenu extends ObserveSlotPresence(
         super.update(changedProperties);
     }
 
+    /**
+     * Checks whether the action menu has an accessible label.
+     * Extends base check to include label slot content and label-only slot.
+     * @returns True if an accessible label is present
+     */
     protected override hasAccessibleLabel(): boolean {
         return (
             !!this.label ||
@@ -147,6 +197,10 @@ export class ActionMenu extends ObserveSlotPresence(
         );
     }
 
+    /**
+     * Logs a warning in debug mode when the action menu lacks an accessible label.
+     * Provides guidance specific to action menu labeling options.
+     */
     protected override warnNoLabel(): void {
         if (window.__swc?.DEBUG) {
             window.__swc.warn(
