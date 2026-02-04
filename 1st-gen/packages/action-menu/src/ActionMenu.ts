@@ -67,6 +67,9 @@ export class ActionMenu extends ObserveSlotPresence(
     ),
     '[slot="label-only"]'
 ) {
+    /**
+     * Returns the component's styles including action menu specific styles.
+     */
     public static override get styles(): CSSResultArray {
         return [actionMenuStyles];
     }
@@ -94,6 +97,10 @@ export class ActionMenu extends ObserveSlotPresence(
     @state()
     appliedLabel?: string;
 
+    /**
+     * @deprecated Reference to a legacy `<sp-menu>` child element.
+     * Used for backwards compatibility with older usage patterns.
+     */
     private deprecatedMenu: Menu | null = null;
 
     /**
@@ -404,6 +411,7 @@ export class ActionMenu extends ObserveSlotPresence(
         this.requestUpdate('selectedItemContent', oldContent);
     }
 
+    /** Private backing field for selectedItemContent getter/setter. */
     _selectedItemContent?: MenuItemChildren;
 
     /**
@@ -667,6 +675,11 @@ export class ActionMenu extends ObserveSlotPresence(
         `;
     }
 
+    /**
+     * Lifecycle callback before the component updates.
+     * Transfers tabIndex from the host element to the internal button.
+     * @param changes - Map of changed property names to previous values
+     */
     protected override willUpdate(changes: PropertyValues<this>): void {
         super.willUpdate(changes);
         if (changes.has('tabIndex') && !!this.tabIndex) {
@@ -740,6 +753,11 @@ export class ActionMenu extends ObserveSlotPresence(
         this.button.addEventListener('keydown', this.handleKeydown);
     }
 
+    /**
+     * Lifecycle callback after the component has updated.
+     * Ensures the strategy has a reference to the overlay element when opened.
+     * @param changes - Map of changed property names to previous values
+     */
     protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
         if (
@@ -751,6 +769,11 @@ export class ActionMenu extends ObserveSlotPresence(
         }
     }
 
+    /**
+     * Lifecycle callback after the component's first update.
+     * Binds keyboard listeners and initializes the interaction strategy.
+     * @param changes - Map of changed property names to previous values
+     */
     protected override async firstUpdated(
         changes: PropertyValues<this>
     ): Promise<void> {
@@ -960,15 +983,26 @@ export class ActionMenu extends ObserveSlotPresence(
         this.willManageSelection = false;
     }
 
+    /** Promise that resolves when selection management is complete. */
     private selectionPromise = Promise.resolve();
+
+    /** Resolver function for the selectionPromise. */
     private selectionResolver!: () => void;
 
+    /**
+     * Returns a promise that resolves when the component update is complete,
+     * including any pending selection management.
+     */
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
         await this.selectionPromise;
         return complete;
     }
 
+    /**
+     * Tracks whether the component was recently connected to the DOM.
+     * Used to handle timing differences in Safari and Firefox.
+     */
     private recentlyConnected = false;
 
     /** Tracks the target of an active Enter keydown to prevent double-activation. */
@@ -1007,6 +1041,10 @@ export class ActionMenu extends ObserveSlotPresence(
         );
     };
 
+    /**
+     * Lifecycle callback when the element is connected to the DOM.
+     * Sets up tooltip trigger elements and focus event listeners.
+     */
     public override connectedCallback(): void {
         super.connectedCallback();
         this.updateComplete.then(() => {
@@ -1023,6 +1061,10 @@ export class ActionMenu extends ObserveSlotPresence(
         this.addEventListener('focus', this.handleFocus);
     }
 
+    /**
+     * Sets the currently selected menu item and updates the displayed content.
+     * @param selectedItem - The menu item to select, or undefined to clear selection
+     */
     public set selectedItem(selectedItem: MenuItem | undefined) {
         this.selectedItemContent = selectedItem
             ? selectedItem.itemChildren
@@ -1034,6 +1076,7 @@ export class ActionMenu extends ObserveSlotPresence(
         this.requestUpdate('selectedItem', oldSelectedItem);
     }
 
+    /** Private backing field for selectedItem getter/setter. */
     _selectedItem?: MenuItem;
 
     /**
