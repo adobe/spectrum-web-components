@@ -69,6 +69,14 @@ export class Button extends ButtonBase {
     @property({ type: String, reflect: true })
     public override variant: ButtonVariant = 'accent';
 
+    // ──────────────────────
+    //     CONSTRUCTOR
+    // ──────────────────────
+
+    constructor() {
+        super();
+    }
+
     // ──────────────────────────────
     //     RENDERING & STYLING
     // ──────────────────────────────
@@ -85,7 +93,7 @@ export class Button extends ButtonBase {
 
     private renderAsButton(): TemplateResult {
         return html`
-            <button
+            <div
                 class=${classMap({
                     ['swc-Button']: true,
                     [`swc-Button--${this.variant}`]:
@@ -103,12 +111,15 @@ export class Button extends ButtonBase {
                             : ''
                     }`]: typeof this.staticColor !== 'undefined',
                 })}
-                ?disabled=${this.disabled}
-                type=${this.type}
-                aria-label=${this.label || this.pendingLabel}
             >
+                <button
+                    ?disabled=${this.disabled}
+                    type=${this.type}
+                    aria-label=${this.label || this.pendingLabel}
+                >
                 ${this.renderButtonContent()}
-            </button>
+                </button>
+            </div>
         `;
     }
 

@@ -11,6 +11,9 @@
  */
 import { defineElement } from '@spectrum-web-components/core/shared/base';
 
+// Import progress-circle for pending state support
+import '@adobe/swc/progress-circle';
+
 import { Button } from './Button.js';
 
 export * from './Button.js';

@@ -18,6 +18,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 import { Button } from '@adobe/swc/button';
 
 import '@adobe/swc/button';
+import '@adobe/swc/progress-circle';
 
 // ────────────────
 //    METADATA
@@ -86,6 +87,12 @@ export default meta;
 // ───────────────
 
 type ButtonSize = typeof Button.prototype.size;
+
+export const Default: Story = {
+    args: {
+        size: 'm',
+    },
+};
 
 /**
  * Buttons come in four different sizes: small, medium, large, and extra large. The medium size is the default and most frequently used option. Use the other sizes sparingly; they should be used to create a hierarchy of importance within the page.
@@ -827,31 +834,20 @@ export const AsLink: Story = {
 };
 AsLink.storyName = 'As link';
 
-/**
- * The default story with all controls enabled for interactive testing.
- */
-export const Default: Story = {
-    args: {
-        size: 'm',
-    },
-};
-
 // ────────────────────────
 //    HELPER FUNCTIONS
 // ────────────────────────
 
 /* @todo Pull this up into a utility function for more components to leverage. Are all sizes accounted for? */
 function sizeMap(str?: ButtonSize): string {
-    const sizeLabels = {
-        labels: {
-            s: 'Small',
-            m: 'Medium',
-            l: 'Large',
-            xl: 'Extra-large',
-        },
+    const sizeLabels: Record<string, string> = {
+        s: 'Small',
+        m: 'Medium',
+        l: 'Large',
+        xl: 'Extra-large',
     };
 
-    return str ? sizeLabels.labels[str] : '';
+    return str ? sizeLabels[str] || '' : '';
 }
 
 /* @todo Pull this up into a decorator for all stories to leverage */

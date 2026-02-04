@@ -14,9 +14,6 @@
 :host {
     display: inline-block;
     vertical-align: middle;
-}
-
-* {
     box-sizing: border-box;
 }
 
@@ -49,14 +46,14 @@
             var(--swc-button-border-width, var(--_swc-button-border-width))
     );
     --_swc-button-padding-label-to-icon: token('text-to-visual-100');
-    --_swc-button-top-to-text: token('button-top-to-text-medium');
-    --_swc-button-bottom-to-text: token('button-bottom-to-text-medium');
+    --_swc-button-top-to-text: token('component-top-to-text-100');
+    --_swc-button-bottom-to-text: token('component-bottom-to-text-100');
     --_swc-button-top-to-icon: token('component-top-to-workflow-icon-100');
     --_swc-button-intended-icon-size: token('workflow-icon-size-100');
-    --_swc-button-downstate-perspective: max(
+    /* --_swc-button-downstate-perspective: max(
         token('downstate-height'),
         token('downstate-width') * token('component-size-width-ratio-down')
-    );
+    ); */
 
     &.swc-Button--iconOnly {
         --_swc-button-border-radius: token('corner-radius-full');
@@ -82,8 +79,8 @@
             var(--swc-button-border-width, var(--_swc-button-border-width))
     );
     --_swc-button-padding-label-to-icon: token('text-to-visual-75');
-    --_swc-button-top-to-text: token('button-top-to-text-small');
-    --_swc-button-bottom-to-text: token('button-bottom-to-text-small');
+    --_swc-button-top-to-text: token('component-top-to-text-75');
+    --_swc-button-bottom-to-text: token('component-bottom-to-text-75');
     --_swc-button-top-to-icon: token('component-top-to-workflow-icon-75');
     --_swc-button-intended-icon-size: token('workflow-icon-size-75');
 
@@ -113,8 +110,8 @@
             var(--swc-button-border-width, var(--_swc-button-border-width))
     );
     --_swc-button-padding-label-to-icon: token('text-to-visual-200');
-    --_swc-button-top-to-text: token('button-top-to-text-large');
-    --_swc-button-bottom-to-text: token('button-bottom-to-text-large');
+    --_swc-button-top-to-text: token('component-top-to-text-200');
+    --_swc-button-bottom-to-text: token('component-bottom-to-text-200');
     --_swc-button-top-to-icon: token('component-top-to-workflow-icon-200');
     --_swc-button-intended-icon-size: token('workflow-icon-size-200');
 }
@@ -138,8 +135,8 @@
             var(--swc-button-border-width, var(--_swc-button-border-width))
     );
     --_swc-button-padding-label-to-icon: token('text-to-visual-300');
-    --_swc-button-top-to-text: token('button-top-to-text-extra-large');
-    --_swc-button-bottom-to-text: token('button-bottom-to-text-extra-large');
+    --_swc-button-top-to-text: token('component-top-to-text-300');
+    --_swc-button-bottom-to-text: token('component-bottom-to-text-300');
     --_swc-button-top-to-icon: token('component-top-to-workflow-icon-300');
     --_swc-button-intended-icon-size: token('workflow-icon-size-300');
 }
@@ -750,8 +747,8 @@
                 var(--_swc-button-content-color-down)
             )
         );
-        transform: perspective(var(--_swc-button-downstate-perspective))
-            translateZ(token('component-size-difference-down'));
+        /* transform: perspective(var(--_swc-button-downstate-perspective))
+            translateZ(token('component-size-difference-down')); */
     }
 
     &:disabled,
