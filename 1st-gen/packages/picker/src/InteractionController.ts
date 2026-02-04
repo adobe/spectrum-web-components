@@ -18,33 +18,63 @@ import { AbstractOverlay } from '@spectrum-web-components/overlay/src/AbstractOv
 import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import { PickerBase } from './Picker.js';
 
+/**
+ * Enum representing the interaction strategy types.
+ */
 export enum InteractionTypes {
     'desktop',
     'mobile',
 }
+
+/** CSS class applied to Safari to manage focus ring visibility. */
 export const SAFARI_FOCUS_RING_CLASS = 'remove-focus-ring-safari-hack';
 
+/**
+ * Base controller class for managing picker interactions.
+ * Handles overlay state, toggle prevention, and focus management.
+ * Extended by DesktopController and MobileController for device-specific behavior.
+ */
 export class InteractionController implements ReactiveController {
+    /** AbortController for cleaning up event listeners. */
     abortController!: AbortController;
 
+    /**
+     * Controls whether the next toggle action should be prevented.
+     * - `'no'`: Allow toggle
+     * - `'maybe'`: May prevent based on additional conditions
+     * - `'yes'`: Prevent the next toggle
+     */
     public preventNextToggle: 'no' | 'maybe' | 'yes' = 'no';
+
+    /** Tracks the open state at the time of pointerdown for toggle logic. */
     public pointerdownState = false;
+
+    /** Tracks the target of an active Enter keydown to prevent double-activation. */
     public enterKeydownOn: EventTarget | null = null;
 
+    /** The rendered overlay container template. */
     public container!: TemplateResult;
 
+    /**
+     * Indicates whether the picker is actively in the process of opening.
+     * Always returns false in the base class; may be overridden in subclasses.
+     */
     get activelyOpening(): boolean {
         return false;
     }
 
     private _open = false;
 
+    /**
+     * Whether the picker overlay is currently open.
+     */
     public get open(): boolean {
         return this._open;
     }
 
     /**
-     * Set `open`
+     * Sets the open state and synchronizes with the host picker.
+     * Also initializes the overlay reference if not already set.
      */
     public set open(open: boolean) {
         if (this._open === open) return;
@@ -59,10 +89,16 @@ export class InteractionController implements ReactiveController {
 
     private _overlay!: AbstractOverlay;
 
+    /**
+     * Reference to the overlay element managing the picker's dropdown.
+     */
     public get overlay(): AbstractOverlay {
         return this._overlay;
     }
 
+    /**
+     * Sets the overlay reference and initializes overlay configuration.
+     */
     public set overlay(overlay: AbstractOverlay | undefined) {
         if (!overlay) return;
         if (this.overlay === overlay) return;
@@ -70,8 +106,14 @@ export class InteractionController implements ReactiveController {
         this.initOverlay();
     }
 
+    /** The interaction type (desktop or mobile) for this controller. */
     type!: InteractionTypes;
 
+    /**
+     * Creates an interaction controller for the given picker.
+     * @param target - The trigger button element
+     * @param host - The picker component this controller manages
+     */
     constructor(
         public target: HTMLElement,
         public host: PickerBase
@@ -82,8 +124,17 @@ export class InteractionController implements ReactiveController {
         this.init();
     }
 
+    /**
+     * Releases any description resources.
+     * Override in subclasses if cleanup is needed.
+     */
     releaseDescription(): void {}
 
+    /**
+     * Handles the overlay's beforetoggle event.
+     * Manages overlay state and prevents unwanted closures during interaction.
+     * @param event - The beforetoggle event with the new state
+     */
     protected handleBeforetoggle(
         event: Event & {
             target: Overlay;
@@ -106,6 +157,10 @@ export class InteractionController implements ReactiveController {
         }
     }
 
+    /**
+     * Initializes the overlay with appropriate configuration.
+     * Sets up event listeners, type, placement, and focus behavior.
+     */
     initOverlay(): void {
         if (this.overlay) {
             this.overlay.addEventListener('beforetoggle', (event: Event) => {
@@ -138,8 +193,18 @@ export class InteractionController implements ReactiveController {
         }
     }
 
+    /**
+     * Handles pointerdown events on the trigger button.
+     * Override in subclasses for device-specific behavior.
+     * @param _event - The pointer event
+     */
     public handlePointerdown(_event: PointerEvent): void {}
 
+    /**
+     * Handles focus events on the trigger button.
+     * Prevents reopening the menu when focus returns from the menu itself.
+     * @param event - The focus event
+     */
     public handleButtonFocus(event: FocusEvent): void {
         // When focus comes from a pointer event, and the related target is the Menu,
         // we don't want to reopen the Menu.
@@ -152,16 +217,32 @@ export class InteractionController implements ReactiveController {
         if (this.preventNextToggle === 'no') this.host.close();
     }
 
+    /**
+     * Handles activation events (click, Enter, Space) on the trigger.
+     * Override in subclasses for device-specific behavior.
+     * @param _event - The activation event
+     */
     public handleActivate(_event: Event): void {}
 
+    /**
+     * Initializes event listeners for the controller.
+     * Override in subclasses to bind device-specific events.
+     */
     /* c8 ignore next 3 */
     init(): void {}
 
+    /**
+     * Cleans up the controller by releasing resources and aborting event listeners.
+     */
     abort(): void {
         this.releaseDescription();
         this.abortController?.abort();
     }
 
+    /**
+     * Lifecycle callback when the host element is connected to the DOM.
+     * Initializes event listeners and sets up close handler to return focus.
+     */
     hostConnected(): void {
         this.init();
         this.host.addEventListener('sp-closed', () => {
@@ -175,10 +256,18 @@ export class InteractionController implements ReactiveController {
         });
     }
 
+    /**
+     * Lifecycle callback when the host element is disconnected from the DOM.
+     * Cleans up event listeners.
+     */
     hostDisconnected(): void {
         this.abortController?.abort();
     }
 
+    /**
+     * Lifecycle callback after the host element updates.
+     * Ensures overlay reference is set and updates willPreventClose state.
+     */
     public hostUpdated(): void {
         if (!this.overlay && this.host.overlayElement) {
             this.overlay = this.host.overlayElement;
