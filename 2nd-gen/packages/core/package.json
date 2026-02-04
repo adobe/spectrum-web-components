@@ -82,6 +82,10 @@
         "./shared/observe-slot-text.js": {
             "types": "./dist/shared/observe-slot-text.d.ts",
             "import": "./dist/shared/observe-slot-text.js"
+        },
+        "./shared/reactive-controllers/LanguageResolution.js": {
+            "types": "./dist/shared/reactive-controllers/LanguageResolution.d.ts",
+            "import": "./dist/shared/reactive-controllers/LanguageResolution.js"
         }
     },
     "files": [
@@ -145,6 +149,9 @@
             ],
             "shared/observe-slot-text.js": [
                 "dist/shared/observe-slot-text.d.ts"
+            ],
+            "shared/reactive-controllers/LanguageResolution.js": [
+                "dist/shared/reactive-controllers/LanguageResolution.d.ts"
             ]
         }
     },
