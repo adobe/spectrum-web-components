@@ -18,10 +18,7 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import {
-    property,
-    queryAsync,
-} from '@spectrum-web-components/base/src/decorators.js';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { DARK_MODE } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
@@ -179,18 +176,7 @@ export class StoryDecorator extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public screenshot = screenshot;
 
-    @queryAsync('sp-theme')
-    private themeRoot!: Theme;
-
     public ready = false;
-
-    public async startManagingContentDirection(el: HTMLElement): Promise<void> {
-        (await this.themeRoot).startManagingContentDirection(el);
-    }
-
-    public async stopManagingContentDirection(el: HTMLElement): Promise<void> {
-        (await this.themeRoot).stopManagingContentDirection(el);
-    }
 
     private updateTheme({ target }: Event & { target: Picker | Switch }): void {
         const { id } = target;
