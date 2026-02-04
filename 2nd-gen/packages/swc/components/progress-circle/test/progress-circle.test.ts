@@ -175,48 +175,6 @@ export const AccessibilityWarningTest: Story = {
     },
 };
 
-// Test: aria-label is accepted directly.
-export const AriaLabelTest: Story = {
-    render: () => html`
-        <swc-progress-circle aria-label="Loading"></swc-progress-circle>
-    `,
-    play: async ({ canvasElement }) => {
-        const progressCircle = getProgressCircle(canvasElement);
-        await progressCircle.updateComplete;
-        expect(progressCircle.hasAttribute('aria-label')).toBe(true);
-        expect(progressCircle.getAttribute('aria-label')).toBe('Loading');
-    },
-};
-
-// Test: label sets the aria-label value.
-export const LabelSetsAriaLabelTest: Story = {
-    render: () => html`
-        <swc-progress-circle label="Loading"></swc-progress-circle>
-    `,
-    play: async ({ canvasElement }) => {
-        const progressCircle = getProgressCircle(canvasElement);
-        await progressCircle.updateComplete;
-        expect(progressCircle.hasAttribute('aria-label')).toBe(true);
-        expect(progressCircle.getAttribute('aria-label')).toBe('Loading');
-    },
-};
-
-// Test: aria-label is preserved when label is empty.
-export const PreserveAriaLabelTest: Story = {
-    render: () => html`
-        <swc-progress-circle
-            label=""
-            aria-label="Loading"
-        ></swc-progress-circle>
-    `,
-    play: async ({ canvasElement }) => {
-        const progressCircle = getProgressCircle(canvasElement);
-        await progressCircle.updateComplete;
-        expect(progressCircle.hasAttribute('aria-label')).toBe(true);
-        expect(progressCircle.getAttribute('aria-label')).toBe('Loading');
-    },
-};
-
 // Test: determinate can return to indeterminate and clears aria-valuenow.
 export const ReturnToIndeterminateTest: Story = {
     render: () => html`

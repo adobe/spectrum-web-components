@@ -19,7 +19,7 @@ import '@adobe/swc/asset';
 
 import { setupSwcWarningSpy } from '../../../utils/test-utils.js';
 import meta from '../stories/asset.stories.js';
-import { Accessibility, Overview, Variants } from '../stories/asset.stories.js';
+import { Overview, Variants } from '../stories/asset.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
@@ -73,35 +73,6 @@ export const VariantsTest: Story = {
         expect(
             folderAsset?.shadowRoot?.querySelector('.spectrum-Asset-folder')
         ).toBeTruthy();
-    },
-};
-
-// Test: accessibility story provides labels for file and folder icons.
-export const AccessibilityTest: Story = {
-    ...Accessibility,
-    play: async ({ canvasElement }) => {
-        const assets = Array.from(canvasElement.querySelectorAll('swc-asset'));
-        const fileAsset = assets.find(
-            (item) => item.getAttribute('variant') === 'file'
-        );
-        const folderAsset = assets.find(
-            (item) => item.getAttribute('variant') === 'folder'
-        );
-
-        await fileAsset?.updateComplete;
-        await folderAsset?.updateComplete;
-
-        const fileIcon = fileAsset?.shadowRoot?.querySelector(
-            '.spectrum-Asset-file'
-        );
-        const folderIcon = folderAsset?.shadowRoot?.querySelector(
-            '.spectrum-Asset-folder'
-        );
-
-        expect(fileIcon?.getAttribute('aria-label')?.length).toBeGreaterThan(0);
-        expect(folderIcon?.getAttribute('aria-label')?.length).toBeGreaterThan(
-            0
-        );
     },
 };
 

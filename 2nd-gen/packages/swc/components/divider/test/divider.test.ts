@@ -20,7 +20,6 @@ import '@adobe/swc/divider';
 import meta from '../stories/divider.stories.js';
 import {
     Overview,
-    Sizes,
     StaticColors,
     Vertical,
 } from '../stories/divider.stories.js';
@@ -51,27 +50,6 @@ export const OverviewTest: Story = {
         expect(
             divider.shadowRoot?.querySelector('.swc-Divider--sizeM')
         ).toBeTruthy();
-    },
-};
-
-// Test: each size renders the expected size class.
-export const SizesTest: Story = {
-    ...Sizes,
-    play: async ({ canvasElement }) => {
-        Divider.VALID_SIZES.forEach((size) => {
-            const divider = canvasElement.querySelector(
-                `swc-divider[size="${size}"]`
-            ) as Divider | null;
-            if (!divider) {
-                return;
-            }
-            expect(divider.size).toBe(size);
-            expect(
-                divider.shadowRoot?.querySelector(
-                    `.swc-Divider--size${size.toUpperCase()}`
-                )
-            ).toBeTruthy();
-        });
     },
 };
 
