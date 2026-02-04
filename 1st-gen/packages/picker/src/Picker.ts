@@ -66,7 +66,19 @@ const chevronClass = {
 
 export const DESCRIPTION_ID = 'option-picker';
 
+/**
+ * Base class for expandable picker-like components with overlay functionality.
+ * Provides common properties and methods for managing an overlay menu,
+ * device-specific interaction strategies, and focus management.
+ *
+ * Extended by Picker, ActionMenu, and other components that display
+ * a menu overlay triggered by a button.
+ */
 export class ExpandableElement extends SpectrumElement {
+    /**
+     * Shadow root configuration with delegatesFocus enabled.
+     * Allows focus to be delegated to focusable children within the shadow root.
+     */
     static override shadowRootOptions = {
         ...SpectrumElement.shadowRootOptions,
         delegatesFocus: true,
@@ -207,6 +219,10 @@ export class ExpandableElement extends SpectrumElement {
         }
     }
 
+    /**
+     * Lifecycle callback when the element is disconnected from the DOM.
+     * Closes the overlay and releases strategy resources.
+     */
     public override disconnectedCallback(): void {
         this.close();
         this.strategy?.releaseDescription();
