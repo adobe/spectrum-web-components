@@ -28,12 +28,12 @@ import {
 import {
     BUTTON_STATIC_COLORS,
     BUTTON_TREATMENTS,
-    BUTTON_VARIANTS,
+    BUTTON_VARIANTS_DEPRECATED,
     type ButtonStaticColor,
     type ButtonTreatment,
     type ButtonType,
     type ButtonVariant,
-    type DeprecatedButtonVariant,
+    type ButtonVariantS2,
 } from './Button.types.js';
 
 /**
@@ -65,10 +65,18 @@ export abstract class ButtonBase
      * This is an actual internal property, intended not for customer use
      * but for use in internal validation logic, stories, tests, etc.
      *
-     * Because S1 and S2 might support different variants, the value of this
-     * property can be overridden in each subclass.
+     * Because S1 and S2 support different variants, the value of this
+     * property must be overridden in each subclass.
      */
-    static readonly VARIANTS: readonly string[] = BUTTON_VARIANTS;
+    static readonly VARIANTS: readonly string[];
+
+    /**
+     * @internal
+     *
+     * A readonly array of deprecated button variants (S1 only).
+     */
+    static readonly VARIANTS_DEPRECATED: readonly string[] =
+        BUTTON_VARIANTS_DEPRECATED;
 
     /**
      * @internal
@@ -345,8 +353,8 @@ export abstract class ButtonBase
      * Handle deprecated variant values.
      */
     protected handleDeprecatedVariant(
-        variant: ButtonVariant | DeprecatedButtonVariant
-    ): ButtonVariant | undefined {
+        variant: ButtonVariant
+    ): ButtonVariantS2 | undefined {
         switch (variant) {
             case 'cta':
                 if (window.__swc?.DEBUG) {
@@ -393,7 +401,7 @@ export abstract class ButtonBase
                 this.staticColor = 'black';
                 return undefined; // Clear variant
             default:
-                return variant as ButtonVariant;
+                return variant as ButtonVariantS2;
         }
     }
 
