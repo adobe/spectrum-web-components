@@ -16,7 +16,7 @@ jobs:
         runs-on: ubuntu-latest
         environment: npm-publish
         permissions:
-            id-token: write # Required for OIDC trusted publishing (1st-gen)
+            id-token: write # Required for OIDC trusted publishing (1st-gen )
             contents: write # Required for git push
         env:
             YARN_ENABLE_IMMUTABLE_INSTALLS: false
