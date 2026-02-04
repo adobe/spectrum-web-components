@@ -15,7 +15,15 @@ import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/shared/base/index.js';
 
-import { ASSET_VARIANTS, type AssetVariant } from './Asset.types.js';
+import {
+    ASSET_VARIANTS,
+    type AssetVariant,
+    type CrossOrigin,
+    type DecodingType,
+    type LoadingType,
+    type ObjectFit,
+    type ReferrerPolicy,
+} from './Asset.types.js';
 
 export abstract class AssetBase extends SpectrumElement {
     // ─────────────────────────
@@ -36,16 +44,107 @@ export abstract class AssetBase extends SpectrumElement {
     // ─────────────────
 
     /**
-     * The variant of the asset. When not provided, slot content is rendered (e.g., an image).
+     * The variant of the asset. When not provided and no src is set, slot content is rendered (e.g., an image).
      */
     @property({ type: String, reflect: true })
     public variant: AssetVariant | undefined;
 
     /**
-     * Accessible label for the asset’s file or folder variant.
+     * Accessible label for the asset's file or folder variant.
      */
     @property()
     public label = '';
+
+    // ─────────────────────────────
+    //     IMAGE PROPERTIES
+    // ─────────────────────────────
+
+    /**
+     * The image source URL. When provided, renders an <img> element directly.
+     */
+    @property({ type: String })
+    public src?: string;
+
+    /**
+     * Alternative text for the image. Required for accessibility when using src.
+     */
+    @property({ type: String })
+    public alt?: string;
+
+    /**
+     * Loading behavior for the image.
+     * - 'lazy': Defers loading until the image is near the viewport
+     * - 'eager': Loads immediately
+     */
+    @property({ type: String })
+    public loading?: LoadingType;
+
+    /**
+     * How the image should be resized to fit its container.
+     * - 'contain': Scale to fit while maintaining aspect ratio
+     * - 'cover': Scale to fill container while maintaining aspect ratio
+     * - 'fill': Stretch to fill container
+     * - 'none': Do not resize
+     * - 'scale-down': Use whichever is smaller: none or contain
+     */
+    @property({ type: String, attribute: 'object-fit' })
+    public objectFit?: ObjectFit;
+
+    /**
+     * Position of the image within its container when using object-fit.
+     * Accepts standard CSS object-position values (e.g., 'center', 'top left', '50% 50%').
+     */
+    @property({ type: String, attribute: 'object-position' })
+    public objectPosition?: string;
+
+    /**
+     * Responsive image sources. A comma-separated list of image URLs with optional width/pixel density descriptors.
+     * Example: "image-320w.jpg 320w, image-480w.jpg 480w, image-800w.jpg 800w"
+     */
+    @property({ type: String })
+    public srcset?: string;
+
+    /**
+     * Sizes for responsive images. Defines image display size for different viewport widths.
+     * Example: "(max-width: 600px) 480px, 800px"
+     */
+    @property({ type: String })
+    public sizes?: string;
+
+    /**
+     * Image decoding hint for the browser.
+     * - 'sync': Decode synchronously for atomic presentation
+     * - 'async': Decode asynchronously to avoid delaying other content
+     * - 'auto': Let the browser decide (default)
+     */
+    @property({ type: String })
+    public decoding?: DecodingType;
+
+    /**
+     * CORS setting for cross-origin images.
+     * - 'anonymous': Request without credentials
+     * - 'use-credentials': Request with credentials
+     */
+    @property({ type: String })
+    public crossorigin?: CrossOrigin;
+
+    /**
+     * Referrer policy for image requests.
+     */
+    @property({ type: String })
+    public referrerpolicy?: ReferrerPolicy;
+
+    /**
+     * Width of the image in pixels. Used for aspect ratio calculation and layout hints.
+     */
+    @property({ type: Number })
+    public width?: number;
+
+    /**
+     * Height of the image in pixels. Used for aspect ratio calculation and layout hints.
+     */
+    @property({ type: Number })
+    public height?: number;
 
     // ──────────────────────
     //     IMPLEMENTATION
@@ -65,6 +164,18 @@ export abstract class AssetBase extends SpectrumElement {
                     'https://opensource.adobe.com/spectrum-web-components/components/asset/',
                     {
                         issues: [...constructor.VARIANTS],
+                    }
+                );
+            }
+
+            // Warn if src is provided but alt is missing
+            if (this.src && !this.alt) {
+                window.__swc.warn(
+                    this,
+                    `<${this.localName}> element with "src" should include an "alt" attribute for accessibility.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/asset/',
+                    {
+                        issues: ['Missing alt text'],
                     }
                 );
             }

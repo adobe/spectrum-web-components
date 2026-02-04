@@ -12,6 +12,8 @@
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import { styleMap } from 'lit/directives/style-map.js';
 
 import { AssetBase } from '@spectrum-web-components/core/components/asset';
 
@@ -55,18 +57,23 @@ const folder = (label: string): TemplateResult => html`
 
 /**
  * @element swc-asset
- * @slot - content to be displayed when no `variant` is set (typically an `<img>` element)
+ * @slot - content to be displayed when no `variant` or `src` is set (typically an `<img>` element)
  *
- * @example
+ * @example Using variant
+ * <swc-asset variant="file" label="README.md"></swc-asset>
+ *
+ * @example Using src (direct image)
+ * <swc-asset
+ *   src="photo.jpg"
+ *   alt="Mountain landscape"
+ *   loading="lazy"
+ *   object-fit="cover"
+ * ></swc-asset>
+ *
+ * @example Using slot (legacy)
  * <swc-asset>
  *   <img class="spectrum-Asset-image" src="example.png" alt="Example image" />
  * </swc-asset>
- *
- * @example
- * <swc-asset variant="file"></swc-asset>
- *
- * @example
- * <swc-asset variant="folder"></swc-asset>
  */
 export class Asset extends AssetBase {
     // ──────────────────────────────
@@ -78,17 +85,69 @@ export class Asset extends AssetBase {
     }
 
     protected override render(): TemplateResult {
+        // Priority 1: Built-in variants (file/folder)
+        if (this.variant === 'file') {
+            return html`
+                <div
+                    class=${classMap({
+                        ['spectrum-Asset']: true,
+                    })}
+                >
+                    ${file(this.label)}
+                </div>
+            `;
+        }
+
+        if (this.variant === 'folder') {
+            return html`
+                <div
+                    class=${classMap({
+                        ['spectrum-Asset']: true,
+                    })}
+                >
+                    ${folder(this.label)}
+                </div>
+            `;
+        }
+
+        // Priority 2: Direct image rendering when src is provided
+        if (this.src) {
+            const imageStyles: Record<string, string> = {};
+
+            if (this.objectFit) {
+                imageStyles['object-fit'] = this.objectFit;
+            }
+
+            if (this.objectPosition) {
+                imageStyles['object-position'] = this.objectPosition;
+            }
+
+            return html`
+                <img
+                    class="spectrum-Asset-image"
+                    src=${this.src}
+                    alt=${this.alt || ''}
+                    loading=${ifDefined(this.loading)}
+                    decoding=${ifDefined(this.decoding)}
+                    srcset=${ifDefined(this.srcset)}
+                    sizes=${ifDefined(this.sizes)}
+                    crossorigin=${ifDefined(this.crossorigin)}
+                    referrerpolicy=${ifDefined(this.referrerpolicy)}
+                    width=${ifDefined(this.width)}
+                    height=${ifDefined(this.height)}
+                    style=${styleMap(imageStyles)}
+                />
+            `;
+        }
+
+        // Priority 3: Fallback to slot (backwards compatible)
         return html`
             <div
                 class=${classMap({
                     ['spectrum-Asset']: true,
                 })}
             >
-                ${this.variant === 'file'
-                    ? file(this.label)
-                    : this.variant === 'folder'
-                      ? folder(this.label)
-                      : html` <slot></slot> `}
+                <slot></slot>
             </div>
         `;
     }
