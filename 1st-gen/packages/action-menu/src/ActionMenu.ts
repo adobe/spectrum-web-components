@@ -21,6 +21,7 @@ import { state } from '@spectrum-web-components/base/src/decorators.js';
 import {
     ifDefined,
     StyleInfo,
+    styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import {
@@ -564,7 +565,7 @@ export class ActionMenu extends ObserveSlotPresence(
      * Logs a warning in debug mode when the action menu lacks an accessible label.
      * Provides guidance specific to action menu labeling options.
      */
-    protected override warnNoLabel(): void {
+    protected warnNoLabel(): void {
         if (window.__swc?.DEBUG) {
             window.__swc.warn(
                 this,
