@@ -16,7 +16,7 @@ export default {
         'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
     ],
     '*.ts': [
-        'eslint --fix --format pretty --cache --no-error-on-unmatched-pattern --quiet',
+        'eslint --fix --cache --no-error-on-unmatched-pattern --quiet',
         'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
     ],
     '1st-gen/{packages,tools}/*/src/**/!(*.css).ts': [
