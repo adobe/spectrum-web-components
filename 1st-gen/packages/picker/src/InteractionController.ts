@@ -16,7 +16,7 @@ import {
 } from '@spectrum-web-components/base';
 import { AbstractOverlay } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
 import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
-import { InteractionHost } from './Picker.js';
+import { ExpandableElement } from './Picker.js';
 
 /**
  * Enum representing the interaction strategy types.
@@ -116,7 +116,7 @@ export class InteractionController implements ReactiveController {
      */
     constructor(
         public target: HTMLElement,
-        public host: InteractionHost
+        public host: ExpandableElement
     ) {
         this.target = target;
         this.host = host;

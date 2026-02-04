@@ -16,7 +16,6 @@ import {
     html,
     nothing,
     PropertyValues,
-    ReactiveController,
     SizedMixin,
     SpectrumElement,
     TemplateResult,
@@ -67,33 +66,7 @@ const chevronClass = {
 
 export const DESCRIPTION_ID = 'option-picker';
 
-export interface InteractionHost extends SpectrumElement {
-    addController: (reactiveController: ReactiveController) => void;
-    button: HTMLButtonElement;
-    close: () => void;
-    open: () => void;
-    dependencyManager: DependencyManagerController;
-    forcePopover: boolean;
-    handleSlottableRequest: (event: SlottableRequestEvent) => void;
-    isMobile: MatchMediaController;
-    isTouchDevice: MatchMediaController;
-    optionsMenu: Menu;
-    overlayElement: Overlay;
-    placement: Placement;
-}
-
-/**
- * @element sp-picker
- * @slot label - The placeholder content for the Picker
- * @slot description - The description content for the Picker
- * @slot tooltip - Tooltip to to be applied to the the Picker Button
- * @slot - menu items to be listed in the Picker
- * @fires change - Announces that the `value` of the element has changed
- * @fires sp-opened - Announces that the overlay has been opened
- */
-export class PickerBase extends SizedMixin(SpectrumElement, {
-    noDefaultSize: true,
-}) {
+export class ExpandableElement extends SpectrumElement {
     static override shadowRootOptions = {
         ...SpectrumElement.shadowRootOptions,
         delegatesFocus: true,
@@ -108,26 +81,161 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     /** The interaction strategy controller (desktop or mobile) managing pointer and keyboard events. */
     public strategy!: DesktopController | MobileController;
 
-    /** The label applied to the picker, typically from an associated field label. */
-    @state()
-    appliedLabel?: string;
-
-    /** Reference to the picker's trigger button element. */
+    /** Reference to the component's trigger button element. */
     @query('#button')
     public button!: HTMLButtonElement;
 
     /** Controller that manages lazy-loading of overlay dependencies. */
     public dependencyManager = new DependencyManagerController(this);
 
-    private deprecatedMenu: Menu | null = null;
-
-    /** Whether the picker is disabled. When disabled, the picker cannot be interacted with. */
+    /** Whether the component is disabled. When disabled, the component cannot be interacted with. */
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 
-    /** Whether the picker currently has visible focus. */
+    /** Whether the component currently has visible focus. */
     @property({ type: Boolean, reflect: true })
     public focused = false;
+
+    /** Whether the component is read-only. When read-only, the component displays its value but cannot be changed. */
+    @property({ type: Boolean, reflect: true })
+    public readonly = false;
+
+    /** Whether the items are currently loading. */
+    @property({ type: Boolean, reflect: true })
+    public pending = false;
+
+    /**
+     * Forces the component to render as a popover on mobile instead of a tray.
+     */
+    @property({ type: Boolean, reflect: true, attribute: 'force-popover' })
+    public forcePopover = false;
+
+    /** Whether the component's menu overlay is currently open. */
+    @property({ type: Boolean, reflect: true })
+    public open = false;
+
+    /** Reference to the component's internal menu element. */
+    @query('sp-menu')
+    public optionsMenu!: Menu;
+
+    /** Reference to the component's overlay element. */
+    @query('sp-overlay')
+    public overlayElement!: Overlay;
+
+    /**
+     * The preferred placement of the component's overlay relative to the trigger button.
+     * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
+     * @attr
+     */
+
+    @property()
+    public placement: Placement = 'bottom-start';
+
+    /**
+     * Returns the element that should receive focus.
+     * When open, returns the options menu; otherwise returns the trigger button.
+     */
+    public get focusElement(): HTMLElement {
+        if (this.open) {
+            return this.optionsMenu;
+        }
+        return this.button;
+    }
+
+    /**
+     * Focuses the appropriate element (button or menu) based on the picker's state.
+     * @param options - Standard focus options
+     */
+    public override focus(options?: FocusOptions): void {
+        this.focusElement?.focus(options);
+    }
+
+    /**
+     * Closes the component's overlay.
+     * Has no effect when the component is readonly.
+     */
+    public close(): void {
+        if (this.readonly) {
+            return;
+        }
+        if (this.strategy) {
+            this.open = false;
+            this.strategy.open = false;
+        }
+    }
+
+    /**
+     * Toggles the component's open state.
+     * Has no effect when the component is readonly, pending, or disabled.
+     * @param target - Optional explicit open state. If not provided, toggles the current state.
+     */
+    public toggle(target?: boolean): void {
+        if (this.readonly || this.pending || this.disabled) {
+            return;
+        }
+        const open = typeof target !== 'undefined' ? target : !this.open;
+
+        this.open = open;
+        if (this.strategy) {
+            this.strategy.open = this.open;
+        }
+    }
+
+    /**
+     * Handles slottable request events from the overlay.
+     * Override in subclasses to customize slottable behavior.
+     * @param _event - The slottable request event
+     */
+    public handleSlottableRequest = (_event: SlottableRequestEvent): void => {};
+
+    /**
+     * Binds the appropriate interaction strategy (desktop or mobile) based on device type.
+     * Aborts any existing strategy before creating a new one.
+     */
+    public bindEvents(): void {
+        this.strategy?.abort();
+        if (this.isMobile.matches) {
+            this.strategy = new strategies['mobile'](
+                this.button,
+                this as ExpandableElement
+            );
+        } else {
+            this.strategy = new strategies['desktop'](
+                this.button,
+                this as ExpandableElement
+            );
+        }
+    }
+
+    public override disconnectedCallback(): void {
+        this.close();
+        this.strategy?.releaseDescription();
+        super.disconnectedCallback();
+    }
+}
+
+/**
+ * @element sp-picker
+ * @slot label - The placeholder content for the Picker
+ * @slot description - The description content for the Picker
+ * @slot tooltip - Tooltip to to be applied to the the Picker Button
+ * @slot - menu items to be listed in the Picker
+ * @fires change - Announces that the `value` of the element has changed
+ * @fires sp-opened - Announces that the overlay has been opened
+ */
+export class PickerBase extends SizedMixin(ExpandableElement, {
+    noDefaultSize: true,
+}) {
+    static override shadowRootOptions = {
+        ...SpectrumElement.shadowRootOptions,
+        delegatesFocus: true,
+    };
+
+    /** The label applied to the picker, typically from an associated field label. */
+    @state()
+    appliedLabel?: string;
+
+    private deprecatedMenu: Menu | null = null;
 
     /**
      * Controls how icons are displayed in the picker button.
@@ -141,18 +249,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     @property({ type: Boolean, reflect: true })
     public invalid = false;
 
-    /**
-     * Forces the Picker to render as a popover on mobile instead of a tray.
-     *
-     * @memberof PickerBase
-     */
-    @property({ type: Boolean, reflect: true, attribute: 'force-popover' })
-    public forcePopover = false;
-
-    /** Whether the items are currently loading. */
-    @property({ type: Boolean, reflect: true })
-    public pending = false;
-
     /** Defines a string value that labels the Picker while it is in pending state. */
     @property({ type: String, attribute: 'pending-label' })
     public pendingLabel = 'Pending';
@@ -160,14 +256,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     /** The placeholder label displayed when no item is selected. */
     @property()
     public label?: string;
-
-    /** Whether the picker's menu overlay is currently open. */
-    @property({ type: Boolean, reflect: true })
-    public open = false;
-
-    /** Whether the picker is read-only. When read-only, the picker displays its value but cannot be changed. */
-    @property({ type: Boolean, reflect: true })
-    public readonly = false;
 
     /**
      * The selection mode for the picker's menu.
@@ -186,10 +274,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         return this.optionsMenu.childItems;
     }
 
-    /** Reference to the picker's internal menu element. */
-    @query('sp-menu')
-    public optionsMenu!: Menu;
-
     /**
      * @deprecated This property always returns true and will be removed in a future version.
      */
@@ -197,21 +281,8 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         return true;
     }
 
-    /** Reference to the picker's overlay element. */
-    @query('sp-overlay')
-    public overlayElement!: Overlay;
-
     /** Reference to the tooltip element, if one is slotted. */
     protected tooltipEl?: Tooltip;
-
-    /**
-     * The preferred placement of the picker's overlay relative to the trigger button.
-     * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
-     * @attr
-     */
-
-    @property()
-    public placement: Placement = 'bottom-start';
 
     /** Whether to render the picker in quiet mode with minimal visual styling. */
     @property({ type: Boolean, reflect: true })
@@ -247,17 +318,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 
     /** The ARIA role for individual menu items. */
     protected itemRole = 'option';
-
-    /**
-     * Returns the element that should receive focus.
-     * When open, returns the options menu; otherwise returns the trigger button.
-     */
-    public get focusElement(): HTMLElement {
-        if (this.open) {
-            return this.optionsMenu;
-        }
-        return this.button;
-    }
 
     /**
      * Programmatically applies visible focus styling to the picker.
@@ -298,13 +358,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         this.focused = false;
     }
 
-    /**
-     * Focuses the appropriate element (button or menu) based on the picker's state.
-     * @param options - Standard focus options
-     */
-    public override focus(options?: FocusOptions): void {
-        this.focusElement?.focus(options);
-    }
     /**
      * @deprecated Use `focus()` instead.
      * Focuses the picker button and applies focus styling.
@@ -481,37 +534,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     }
 
     /**
-     * Toggles the picker's open state.
-     * Has no effect when the picker is readonly, pending, or disabled.
-     * @param target - Optional explicit open state. If not provided, toggles the current state.
-     */
-    public toggle(target?: boolean): void {
-        if (this.readonly || this.pending || this.disabled) {
-            return;
-        }
-        const open = typeof target !== 'undefined' ? target : !this.open;
-
-        this.open = open;
-        if (this.strategy) {
-            this.strategy.open = this.open;
-        }
-    }
-
-    /**
-     * Closes the picker's overlay.
-     * Has no effect when the picker is readonly.
-     */
-    public close(): void {
-        if (this.readonly) {
-            return;
-        }
-        if (this.strategy) {
-            this.open = false;
-            this.strategy.open = false;
-        }
-    }
-
-    /**
      * Returns inline styles for the overlay container.
      * On mobile, sets full width; on desktop, returns empty styles.
      */
@@ -569,14 +591,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             });
         }
     }
-
-    /**
-     * Handles slottable request events from the overlay.
-     * Override in subclasses to customize slottable behavior.
-     * @param _event - The slottable request event
-     */
-    public handleSlottableRequest = (_event: SlottableRequestEvent): void => {};
-
     /**
      * Handles the beforetoggle event from the overlay.
      * Manages overlay state and prevents unwanted closures during interaction.
@@ -1194,19 +1208,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         );
     };
 
-    /**
-     * Binds the appropriate interaction strategy (desktop or mobile) based on device type.
-     * Aborts any existing strategy before creating a new one.
-     */
-    public bindEvents(): void {
-        this.strategy?.abort();
-        if (this.isMobile.matches) {
-            this.strategy = new strategies['mobile'](this.button, this);
-        } else {
-            this.strategy = new strategies['desktop'](this.button, this);
-        }
-    }
-
     public override connectedCallback(): void {
         super.connectedCallback();
         this.updateComplete.then(() => {
@@ -1221,12 +1222,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 
         this.recentlyConnected = this.hasUpdated;
         this.addEventListener('focus', this.handleFocus);
-    }
-
-    public override disconnectedCallback(): void {
-        this.close();
-        this.strategy?.releaseDescription();
-        super.disconnectedCallback();
     }
 }
 
@@ -1246,7 +1241,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
  * a single option from a list of menu items. It supports keyboard navigation,
  * including arrow keys to cycle through options without opening the menu.
  */
-export class Picker extends SizedMixin(SpectrumElement, {
+export class Picker extends SizedMixin(ExpandableElement, {
     noDefaultSize: true,
 }) {
     static override shadowRootOptions = {
@@ -1258,35 +1253,10 @@ export class Picker extends SizedMixin(SpectrumElement, {
         return [pickerStyles, chevronStyles];
     }
 
-    /** Controller that tracks whether the device is mobile. */
-    public isMobile = new MatchMediaController(this, IS_MOBILE);
-
-    /** Controller that tracks whether the device supports touch input. */
-    public isTouchDevice = new MatchMediaController(this, IS_TOUCH_DEVICE);
-
-    /** The interaction strategy controller (desktop or mobile) managing pointer and keyboard events. */
-    public strategy!: DesktopController | MobileController;
-
     /** The label applied to the picker, typically from an associated field label. */
     @state()
     appliedLabel?: string;
-
-    /** Reference to the picker's trigger button element. */
-    @query('#button')
-    public button!: HTMLButtonElement;
-
-    /** Controller that manages lazy-loading of overlay dependencies. */
-    public dependencyManager = new DependencyManagerController(this);
-
     private deprecatedMenu: Menu | null = null;
-
-    /** Whether the picker is disabled. When disabled, the picker cannot be interacted with. */
-    @property({ type: Boolean, reflect: true })
-    public disabled = false;
-
-    /** Whether the picker currently has visible focus. */
-    @property({ type: Boolean, reflect: true })
-    public focused = false;
 
     /**
      * Controls how icons are displayed in the picker button.
@@ -1300,18 +1270,6 @@ export class Picker extends SizedMixin(SpectrumElement, {
     @property({ type: Boolean, reflect: true })
     public invalid = false;
 
-    /**
-     * Forces the Picker to render as a popover on mobile instead of a tray.
-     *
-     * @memberof PickerBase
-     */
-    @property({ type: Boolean, reflect: true, attribute: 'force-popover' })
-    public forcePopover = false;
-
-    /** Whether the items are currently loading. */
-    @property({ type: Boolean, reflect: true })
-    public pending = false;
-
     /** Defines a string value that labels the Picker while it is in pending state. */
     @property({ type: String, attribute: 'pending-label' })
     public pendingLabel = 'Pending';
@@ -1319,14 +1277,6 @@ export class Picker extends SizedMixin(SpectrumElement, {
     /** The placeholder label displayed when no item is selected. */
     @property()
     public label?: string;
-
-    /** Whether the picker's menu overlay is currently open. */
-    @property({ type: Boolean, reflect: true })
-    public open = false;
-
-    /** Whether the picker is read-only. When read-only, the picker displays its value but cannot be changed. */
-    @property({ type: Boolean, reflect: true })
-    public readonly = false;
 
     /**
      * The selection mode for the picker's menu.
@@ -1345,10 +1295,6 @@ export class Picker extends SizedMixin(SpectrumElement, {
         return this.optionsMenu.childItems;
     }
 
-    /** Reference to the picker's internal menu element. */
-    @query('sp-menu')
-    public optionsMenu!: Menu;
-
     /**
      * @deprecated This property always returns true and will be removed in a future version.
      */
@@ -1356,21 +1302,8 @@ export class Picker extends SizedMixin(SpectrumElement, {
         return true;
     }
 
-    /** Reference to the picker's overlay element. */
-    @query('sp-overlay')
-    public overlayElement!: Overlay;
-
     /** Reference to the tooltip element, if one is slotted. */
     protected tooltipEl?: Tooltip;
-
-    /**
-     * The preferred placement of the picker's overlay relative to the trigger button.
-     * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
-     * @attr
-     */
-
-    @property()
-    public placement: Placement = 'bottom-start';
 
     /** Whether to render the picker in quiet mode with minimal visual styling. */
     @property({ type: Boolean, reflect: true })
@@ -1406,17 +1339,6 @@ export class Picker extends SizedMixin(SpectrumElement, {
 
     /** The ARIA role for individual menu items. */
     protected itemRole = 'option';
-
-    /**
-     * Returns the element that should receive focus.
-     * When open, returns the options menu; otherwise returns the trigger button.
-     */
-    public get focusElement(): HTMLElement {
-        if (this.open) {
-            return this.optionsMenu;
-        }
-        return this.button;
-    }
 
     /**
      * Programmatically applies visible focus styling to the picker.
@@ -1455,14 +1377,6 @@ export class Picker extends SizedMixin(SpectrumElement, {
      */
     public handleButtonBlur(): void {
         this.focused = false;
-    }
-
-    /**
-     * Focuses the appropriate element (button or menu) based on the picker's state.
-     * @param options - Standard focus options
-     */
-    public override focus(options?: FocusOptions): void {
-        this.focusElement?.focus(options);
     }
     /**
      * @deprecated Use `focus()` instead.
@@ -1668,37 +1582,6 @@ export class Picker extends SizedMixin(SpectrumElement, {
     }
 
     /**
-     * Toggles the picker's open state.
-     * Has no effect when the picker is readonly, pending, or disabled.
-     * @param target - Optional explicit open state. If not provided, toggles the current state.
-     */
-    public toggle(target?: boolean): void {
-        if (this.readonly || this.pending || this.disabled) {
-            return;
-        }
-        const open = typeof target !== 'undefined' ? target : !this.open;
-
-        this.open = open;
-        if (this.strategy) {
-            this.strategy.open = this.open;
-        }
-    }
-
-    /**
-     * Closes the picker's overlay.
-     * Has no effect when the picker is readonly.
-     */
-    public close(): void {
-        if (this.readonly) {
-            return;
-        }
-        if (this.strategy) {
-            this.open = false;
-            this.strategy.open = false;
-        }
-    }
-
-    /**
      * Returns inline styles for the overlay container.
      * On mobile, sets full width; on desktop, returns empty styles.
      */
@@ -1758,13 +1641,6 @@ export class Picker extends SizedMixin(SpectrumElement, {
             });
         }
     }
-
-    /**
-     * Handles slottable request events from the overlay.
-     * Override in subclasses to customize slottable behavior.
-     * @param _event - The slottable request event
-     */
-    public handleSlottableRequest = (_event: SlottableRequestEvent): void => {};
 
     /**
      * Handles the beforetoggle event from the overlay.
@@ -2383,19 +2259,6 @@ export class Picker extends SizedMixin(SpectrumElement, {
         );
     };
 
-    /**
-     * Binds the appropriate interaction strategy (desktop or mobile) based on device type.
-     * Aborts any existing strategy before creating a new one.
-     */
-    public bindEvents(): void {
-        this.strategy?.abort();
-        if (this.isMobile.matches) {
-            this.strategy = new strategies['mobile'](this.button, this);
-        } else {
-            this.strategy = new strategies['desktop'](this.button, this);
-        }
-    }
-
     public override connectedCallback(): void {
         super.connectedCallback();
         this.updateComplete.then(() => {
@@ -2410,11 +2273,5 @@ export class Picker extends SizedMixin(SpectrumElement, {
 
         this.recentlyConnected = this.hasUpdated;
         this.addEventListener('focus', this.handleFocus);
-    }
-
-    public override disconnectedCallback(): void {
-        this.close();
-        this.strategy?.releaseDescription();
-        super.disconnectedCallback();
     }
 }
