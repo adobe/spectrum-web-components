@@ -1,14 +1,3 @@
-/*!
- * Copyright 2025 Adobe. All rights reserved. This file is licensed to you under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License./
- * 
- *  Override divider background color when used inside alert-dialog/
- * .divider {
- *     --spectrum-divider-background-color: var(--system-alert-dialog-divider-background-color);
- *     --spectrum-divider-background-color-static-white: var(--spectrum-alert-dialog-divider-background-color-static-white);
- *     --spectrum-divider-background-color-static-black: var(--spectrum-alert-dialog-divider-background-color-static-black);
- * }
- */
-
 /**
  * Copyright 2025 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -24,8 +13,10 @@
 :host {
     --spectrum-textfield-input-line-height: var(--spectrum-textfield-height);
     --spectrum-texfield-animation-duration: var(--spectrum-animation-duration-100);
+    --spectrum-textfield-height: var(--spectrum-component-height-100);
     --spectrum-textfield-width: 240px;
-    --spectrum-textfield-min-width: var(--spectrum-text-field-minimum-width-multiplier);
+    --spectrum-textfield-container-width: var(--spectrum-textfield-width);
+    --spectrum-textfield-min-width: calc(var(--spectrum-text-field-minimum-width-multiplier) * var(--spectrum-textfield-height));
     --spectrum-textfield-spacing-inline-quiet: var(--spectrum-field-edge-to-text-quiet);
     --spectrum-textfield-spacing-block-quiet: var(--spectrum-field-edge-to-border-quiet);
     --spectrum-textfield-label-spacing-block: var(--spectrum-field-label-to-component);
@@ -59,7 +50,6 @@
     --spectrum-textfield-focus-indicator-color: var(--spectrum-focus-indicator-color);
     --spectrum-text-area-min-inline-size: var(--spectrum-text-area-minimum-width);
     --spectrum-text-area-min-block-size: var(--spectrum-text-area-minimum-height);
-    --spectrum-textfield-height: var(--spectrum-component-height-100);
     --spectrum-textfield-label-spacing-block-quiet: var(--spectrum-field-label-to-component-quiet-medium);
     --spectrum-textfield-label-spacing-inline-side-label: var(--spectrum-spacing-200);
     --spectrum-textfield-placeholder-font-size: var(--spectrum-font-size-100);
@@ -138,28 +128,17 @@
     --spectrum-text-area-min-block-size-quiet: var(--spectrum-component-height-300);
 }
 
-#textfield {
-    text-overflow: ellipsis;
-    inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
-    grid-template-rows: auto auto auto;
-    grid-template-columns: auto auto;
-    margin: 0;
-    display: inline-grid;
-    position: relative;
-    overflow: visible;
-}
-
 :host([invalid]) #textfield .icon,
 :host([valid]) #textfield .icon {
     pointer-events: all;
-    grid-area: 2 / 2;
     margin-inline-start: auto;
     position: absolute;
     inset-block-start: 0;
 }
 
-#textfield.spectrum-Textfield--sideLabel .icon {
-    grid-area: 1 / 2 / span 1 / span 1;
+:host([multiline][grows][invalid]) #textfield .icon,
+:host([multiline][grows][valid]) #textfield .icon {
+    grid-area: 2 / 2;
 }
 
 :host([valid]) #textfield .icon {
@@ -195,8 +174,7 @@
     inset-inline-end: var(--mod-textfield-icon-spacing-inline-end-quiet-invalid, var(--spectrum-textfield-icon-spacing-inline-end-quiet-invalid));
 }
 
-#textfield .spectrum-FieldLabel {
-    grid-area: 1 / 1 / auto / span 1;
+label {
     margin-block-end: var(--mod-textfield-label-spacing-block, var(--spectrum-textfield-label-spacing-block));
 }
 
@@ -204,20 +182,24 @@
     margin-block-end: var(--mod-textfield-label-spacing-block-quiet, var(--spectrum-textfield-label-spacing-block-quiet));
 }
 
-:host([disabled]) #textfield .spectrum-FieldLabel {
-    color: var(--spectrum-textfield-text-color-disabled);
+/* TODO: is there a different way around this */
+div[aria-live="assertive"] {
+    display: contents; /* Makes the helptext div transparent to the grid */
 }
 
-#textfield .spectrum-HelpText {
+::slotted(sp-help-text) {
     grid-area: 3 / 1 / auto / span 2;
     margin-block-start: var(--mod-textfield-helptext-spacing-block, var(--spectrum-textfield-helptext-spacing-block));
 }
 
+/* not implemented */
 .spectrum-Textfield-characterCount {
     inline-size: auto;
     font-size: var(--mod-textfield-character-count-font-size, var(--spectrum-textfield-character-count-font-size));
     font-family: var(--mod-textfield-character-count-font-family, var(--spectrum-textfield-character-count-font-family));
     font-weight: var(--mod-textfield-character-count-font-weight, var(--spectrum-textfield-character-count-font-weight));
+
+    /* our grid system in :host would need to be adjusted to support this */
     grid-area: 1 / 2 / auto / span 1;
     justify-content: flex-end;
     align-items: flex-end;
@@ -255,8 +237,11 @@
     text-overflow: ellipsis;
     appearance: none;
     outline: none;
-    grid-area: 2 / 1 / auto / span 2;
     margin: 0;
+}
+
+:host([multiline]) #textfield .input {
+    grid-column: 1 / span 2;
 }
 
 :host([type="number"]) .input {
@@ -480,13 +465,10 @@
     margin-inline-start: var(--mod-textfield-character-count-spacing-inline-side, var(--spectrum-textfield-character-count-spacing-inline-side));
 }
 
-.spectrum-Textfield--sideLabel .spectrum-HelpText {
+:host([side-aligned="start"]) ::slotted(sp-help-text),
+:host([side-aligned="end"]) ::slotted(sp-help-text) {
     grid-area: 2 / 2 / auto / span 1;
-}
-
-.spectrum-Textfield--sideLabel .input,
-.spectrum-Textfield--sideLabel .icon {
-    grid-area: 1 / 2 / span 1 / span 1;
+    inline-size: var(--mod-textfield-width, auto);
 }
 
 :host([multiline]) {
