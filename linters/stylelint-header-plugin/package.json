@@ -1,0 +1,31 @@
+{
+    "private": true,
+    "name": "@spectrum-web-components/stylelint-header-plugin",
+    "version": "1.0.0",
+    "description": "Stylelint plugin for validating copyright header comments in CSS files",
+    "license": "Apache-2.0",
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "linters/stylelint-header-plugin"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "type": "module",
+    "main": "index.js",
+    "exports": "./index.js",
+    "peerDependencies": {
+        "stylelint": ">=16"
+    },
+    "keywords": [
+        "stylelint",
+        "stylelint-plugin",
+        "header",
+        "copyright",
+        "adobe",
+        "spectrum"
+    ]
+}

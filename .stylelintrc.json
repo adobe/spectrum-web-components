@@ -1,13 +1,23 @@
 {
-    "plugins": ["stylelint-header"],
+    "plugins": [
+        "./linters/stylelint-header-plugin/index.js",
+        "stylelint-order"
+    ],
     "extends": [],
-    "rules": {},
+    "rules": {
+        "order/properties-alphabetical-order": [
+            true,
+            {
+                "severity": "warning"
+            }
+        ]
+    },
     "overrides": [
         {
             "files": ["**/*.css"],
             "extends": ["stylelint-config-standard"],
             "rules": {
-                "header/header": ["./HEADER", {}],
+                "swc/header": "./config/HEADER.js",
                 "length-zero-no-unit": [
                     true,
                     { "ignore": "custom-properties" }

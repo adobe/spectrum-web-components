@@ -78,6 +78,9 @@
         "lint-staged": "16.2.6",
         "npm-run-all2": "8.0.4",
         "replace-in-file": "8.3.0",
+        "stylelint": "17.1.1",
+        "stylelint-config-standard": "40.0.0",
+        "stylelint-order": "7.0.1",
         "typescript-eslint": "8.54.0",
         "yargs": "17.7.2"
     },
