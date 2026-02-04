@@ -5757,6 +5757,7 @@ __metadata:
   dependencies:
     "@spectrum-web-components/base": "npm:1.10.0"
     "@spectrum-web-components/color-handle": "npm:1.10.0"
+    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
     "@spectrum-web-components/textfield": "npm:1.10.0"
   languageName: unknown
   linkType: soft

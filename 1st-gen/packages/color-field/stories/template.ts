@@ -11,8 +11,10 @@
  */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/color-field/sp-color-field.js';
+import '@spectrum-web-components/help-text/sp-help-text.js';
 
 export interface Properties {
     quiet?: boolean;
@@ -26,23 +28,38 @@ export interface Properties {
 
 export const ColorFieldMarkup = ({
     label = 'Color Field',
+    slottedLabel = '',
     quiet = false,
     size = 'm',
     readonly = false,
     disabled = false,
     viewColor = false,
     value = '',
+    helpText = '',
+    sideAligned = '',
 } = {}): TemplateResult => {
     return html`
         <sp-color-field
             label=${label}
             size=${size}
             value=${value}
+            side-aligned=${ifDefined(
+                sideAligned === 'start' || sideAligned === 'end'
+                    ? sideAligned
+                    : undefined
+            )}
             ?view-color=${viewColor}
             ?quiet=${quiet}
             ?readonly=${readonly}
             ?disabled=${disabled}
-        ></sp-color-field>
+        >
+            ${slottedLabel}
+            ${helpText === ''
+                ? html``
+                : html`
+                      <sp-help-text slot="help-text">${helpText}</sp-help-text>
+                  `}
+        </sp-color-field>
     `;
 };
 
