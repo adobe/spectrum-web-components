@@ -161,15 +161,17 @@ export const FixedTest: Story = {
 export const NonSemanticVariantsTest: Story = {
     ...NonSemanticVariants,
     play: async ({ canvasElement }) => {
-        BADGE_VARIANTS_COLOR_S2.forEach(async (variant) => {
-            const badge = canvasElement.querySelector(
-                `swc-badge[variant="${variant}"]`
-            ) as Badge;
-            await badge.updateComplete;
-            expect(badge.getAttribute('variant')).toBe(variant);
-            expect(
-                badge.shadowRoot?.querySelector(`.swc-Badge--${variant}`)
-            ).toBeTruthy();
-        });
+        await Promise.all(
+            BADGE_VARIANTS_COLOR_S2.map(async (variant) => {
+                const badge = canvasElement.querySelector(
+                    `swc-badge[variant="${variant}"]`
+                ) as Badge;
+                await badge.updateComplete;
+                expect(badge.getAttribute('variant')).toBe(variant);
+                expect(
+                    badge.shadowRoot?.querySelector(`.swc-Badge--${variant}`)
+                ).toBeTruthy();
+            })
+        );
     },
 };
