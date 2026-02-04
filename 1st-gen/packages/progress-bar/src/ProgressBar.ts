@@ -26,7 +26,10 @@ import {
 
 import { getLabelFromSlot } from '@spectrum-web-components/shared/src/get-label-from-slot.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
+import {
+    LanguageResolutionController,
+    languageResolverUpdatedSymbol,
+} from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import styles from './progress-bar.css.js';
 
@@ -106,13 +109,7 @@ export class ProgressBar extends SizedMixin(
                                     size=${this.size}
                                     class="percentage"
                                 >
-                                    ${new Intl.NumberFormat(
-                                        this.languageResolver.language,
-                                        {
-                                            style: 'percent',
-                                            unitDisplay: 'narrow',
-                                        }
-                                    ).format(this.progress / 100)}
+                                    ${this.formatProgress()}
                                 </sp-field-label>
                             `}
                   `
@@ -140,6 +137,13 @@ export class ProgressBar extends SizedMixin(
         }
     }
 
+    private formatProgress(): string {
+        return new Intl.NumberFormat(this.languageResolver.language, {
+            style: 'percent',
+            unitDisplay: 'narrow',
+        }).format(this.progress / 100);
+    }
+
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         if (changes.has('indeterminate')) {
@@ -147,13 +151,20 @@ export class ProgressBar extends SizedMixin(
                 this.removeAttribute('aria-valuemin');
                 this.removeAttribute('aria-valuemax');
                 this.removeAttribute('aria-valuenow');
+                this.removeAttribute('aria-valuetext');
             } else {
                 this.setAttribute('aria-valuemin', '0');
                 this.setAttribute('aria-valuemax', '100');
+                this.setAttribute('aria-valuenow', '' + this.progress);
+                this.setAttribute('aria-valuetext', this.formatProgress());
             }
         }
         if (!this.indeterminate && changes.has('progress')) {
             this.setAttribute('aria-valuenow', '' + this.progress);
+            this.setAttribute('aria-valuetext', this.formatProgress());
+        }
+        if (!this.indeterminate && changes.has(languageResolverUpdatedSymbol)) {
+            this.setAttribute('aria-valuetext', this.formatProgress());
         }
         if (changes.has('label')) {
             if (this.label.length) {
