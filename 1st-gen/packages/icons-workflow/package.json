@@ -49,8 +49,7 @@
         "@adobe/spectrum-css-workflow-icons-s2": "npm:@adobe/spectrum-css-workflow-icons@5.0.0",
         "case": "1.6.3",
         "cheerio": "1.1.2",
-        "fast-glob": "3.3.3",
-        "prettier": "3.6.2"
+        "fast-glob": "3.3.3"
     },
     "keywords": [
         "design-system",
