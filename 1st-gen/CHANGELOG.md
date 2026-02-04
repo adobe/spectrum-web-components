@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.2](https://github.com/adobe/spectrum-web-components/compare/v1.11.1...v1.11.2) (2026-02-03)
+
+## Patch Changes
+
+**sp-alert-banner**: **Fixed** missing export for `alert-banner` from `@spectrum-web-components/core`, which could cause build failures in certain environments.
+
+**sp-core**: **Fixed** missing export for `alert-banner` from `@spectrum-web-components/core`, which could cause build failures in certain environments.
+
+**sp-picker**: **Fixed** issue where Picker component doesn't show label when value is set before menu-items are rendered. When menu-items are added later (e.g., conditionally rendered with Lit's `when()` directive or lazy loaded), the Picker now preserves the value and correctly displays the label once menu-items become available.
+
+This fix ensures the value is preserved when `manageSelection()` runs before menu-items exist or when items exist but don't have values yet (e.g., during async custom element upgrade). The value is only cleared when menu-items with meaningful values exist but none match the picker's value.
+
 # [1.11.1](https://github.com/adobe/spectrum-web-components/compare/v1.11.0...v1.11.1) (2026-02-02)
 
 ## Patch Changes

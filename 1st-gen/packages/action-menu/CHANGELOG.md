@@ -1,5 +1,18 @@
 # Change Log
 
+## 1.11.2
+
+### Patch Changes
+
+- Updated dependencies [[`3783d87`](https://github.com/adobe/spectrum-web-components/commit/3783d87c388c88e3ae57f54d0396556a1dea728c)]:
+    - @spectrum-web-components/picker@1.11.2
+    - @spectrum-web-components/base@1.11.2
+    - @spectrum-web-components/shared@1.11.2
+    - @spectrum-web-components/action-button@1.11.2
+    - @spectrum-web-components/icon@1.11.2
+    - @spectrum-web-components/icons-workflow@1.11.2
+    - @spectrum-web-components/overlay@1.11.2
+
 ## 1.11.1
 
 ### Patch Changes
