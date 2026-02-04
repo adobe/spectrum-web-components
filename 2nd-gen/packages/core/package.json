@@ -83,9 +83,13 @@
             "types": "./dist/shared/observe-slot-text.d.ts",
             "import": "./dist/shared/observe-slot-text.js"
         },
-        "./shared/reactive-controllers/LanguageResolution.js": {
-            "types": "./dist/shared/reactive-controllers/LanguageResolution.d.ts",
-            "import": "./dist/shared/reactive-controllers/LanguageResolution.js"
+        "./shared/reactive-controllers": {
+            "types": "./dist/shared/reactive-controllers/index.d.ts",
+            "import": "./dist/shared/reactive-controllers/index.js"
+        },
+        "./shared/reactive-controllers/index.js": {
+            "types": "./dist/shared/reactive-controllers/index.d.ts",
+            "import": "./dist/shared/reactive-controllers/index.js"
         }
     },
     "files": [
@@ -150,8 +154,11 @@
             "shared/observe-slot-text.js": [
                 "dist/shared/observe-slot-text.d.ts"
             ],
-            "shared/reactive-controllers/LanguageResolution.js": [
-                "dist/shared/reactive-controllers/LanguageResolution.d.ts"
+            "shared/reactive-controllers": [
+                "dist/shared/reactive-controllers/index.d.ts"
+            ],
+            "shared/reactive-controllers/index.js": [
+                "dist/shared/reactive-controllers/index.d.ts"
             ]
         }
     },
