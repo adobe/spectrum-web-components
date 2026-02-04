@@ -345,7 +345,7 @@ These features are critical for interactive tag groups where tags can be selecte
 
 **Note on existing WC attributes:**
 
-The web component includes some attributes not present in CSS metadata (`readonly`, `deletable`, `size="s"`). These are implementation-specific and should be evaluated for retention or deprecation during the S2 migration based on user needs and design specifications.
+The web component includes some attributes not present in CSS metadata (`readonly`, `size="s"`). These are implementation-specific and should be evaluated for retention or deprecation during the S2 migration based on user needs and design specifications.
 
 ### CSS Spectrum 2 changes
 

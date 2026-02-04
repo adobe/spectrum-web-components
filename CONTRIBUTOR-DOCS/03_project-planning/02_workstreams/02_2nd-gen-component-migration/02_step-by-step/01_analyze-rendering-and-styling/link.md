@@ -152,32 +152,9 @@ None found for this component.
 </a>
 ```
 
-</details>
-
-<details>
-<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
-
-```html
-<a
-    class="spectrum-Link
-         spectrum-Link--quiet
-         spectrum-Link--inline
-         spectrum-Link--[variant]
-         spectrum-Link--static[StaticColor]
-         is-hover
-         is-active
-         is-focus-visible
-         is-visited"
-    id="[id]"
-    href="[url]"
->
-    [text]
-</a>
-```
-
 **Key changes:**
 
-- New modifier: `spectrum-Link--inline` class added for inline link styling
+- New variant: `spectrum-Link--inline` class added for inline link styling
 
 </details>
 
@@ -213,7 +190,7 @@ The `inline` modifier was added in Spectrum 2 to support inline links within par
 **No structural changes to core Link component:**
 
 - The base `<a>` element structure remains identical between main and spectrum-two branches
-- All existing CSS classes and modifiers from main branch are preserved in spectrum-two
+- All existing CSS classes and most modifiers from main branch are preserved in spectrum-two except for `--mod-link-text-color-primary-*`. The primary variant now shares `--mod-link-text-color-*`.
 
 ## Resources
 
