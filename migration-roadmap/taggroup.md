@@ -93,24 +93,26 @@ None found for `<sp-tags>`.
 <summary>Legacy (CSS main branch):</summary>
 
 ```html
-<div class="spectrum-TagGroup spectrum-TagGroup--sizeM">
-    <!-- Optional label -->
-    <label class="spectrum-FieldLabel spectrum-TagGroup-label">Label</label>
-
+<div role="list" class="spectrum-TagGroup" style="" aria-label="Tags">
     <!-- Tags container with role="list" -->
-    <div class="spectrum-TagGroup-tags" role="list" aria-label="Tags">
-        <div class="spectrum-Tag spectrum-TagGroup-tag">...</div>
-        <div class="spectrum-Tag spectrum-TagGroup-tag">...</div>
-        <div class="spectrum-Tag spectrum-TagGroup-tag">...</div>
+    <div
+        class="spectrum-Tag spectrum-Tag--sizeM spectrum-TagGroup-item"
+        tabindex="0"
+    >
+        <span class="spectrum-Tag-label">2025</span>
     </div>
-
-    <!-- Optional action button -->
-    <button class="spectrum-ActionButton spectrum-TagGroup-actionButton">
-        Show all
-    </button>
-
-    <!-- Optional help text -->
-    <div class="spectrum-HelpText spectrum-TagGroup-helpText">Help text</div>
+    <div
+        class="spectrum-Tag spectrum-Tag--sizeM spectrum-TagGroup-item"
+        tabindex="0"
+    >
+        <span class="spectrum-Tag-label">Outdoors</span>
+    </div>
+    <div
+        class="spectrum-Tag spectrum-Tag--sizeM spectrum-TagGroup-item"
+        tabindex="0"
+    >
+        <span class="spectrum-Tag-label">Blue</span>
+    </div>
 </div>
 ```
 
@@ -146,18 +148,28 @@ None found for `<sp-tags>`.
 <details>
 <summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
-**No changes:**
+**Structural changes:**
 
-The TagGroup component is identical between main and spectrum-two branches. This includes:
+Legacy (main branch):
 
-- CSS styles (`index.css`) - No changes
-- Component structure and templates - No changes
-- Class names and selectors - No changes
-- Modifiers and custom properties - No changes
+- `role="list"` applied to the root `.spectrum-TagGroup` element
+- Tags use `.spectrum-TagGroup-item` class
 
-**Version changes only:**
+Spectrum 2 (spectrum-two branch):
 
-The only differences are package version bumps and dependency updates to align with Spectrum 2 token versions. No functional or visual changes were made to the TagGroup component itself.
+- Separate `.spectrum-TagGroup-tags` container with `role="list"`
+- Tags use `.spectrum-TagGroup-tag` class (changed from `-item`)
+- Optional `.spectrum-TagGroup-label` for field labels
+- Optional `.spectrum-TagGroup-actionButton` for actions
+- Optional `.spectrum-TagGroup-helpText` for help text
+- Support for side label variant via `--sideLabel` modifier
+
+**Key differences:**
+
+1. **Class naming**: `.spectrum-TagGroup-item` → `.spectrum-TagGroup-tag`
+2. **Role placement**: `role="list"` moved from root element to child `.spectrum-TagGroup-tags` container
+3. **Component composition**: Evolved from a simple wrapper to a complete form field component with label, help text, and action button support
+4. **Layout variants**: Added `--sideLabel` modifier for horizontal label positioning
 
 </details>
 
@@ -211,28 +223,36 @@ The only differences are package version bumps and dependency updates to align w
 
 ### CSS Spectrum 2 changes
 
-**No changes in Spectrum 2:**
+**Structural changes in Spectrum 2:**
 
-- The TagGroup component structure is identical between main and spectrum-two branches
-- All CSS classes remain the same
-- No new features or modifications were introduced
+1. **Class naming change**: `.spectrum-TagGroup-item` → `.spectrum-TagGroup-tag`
+2. **DOM structure enhancement**: Added dedicated `.spectrum-TagGroup-tags` container element
+3. **Role placement change**: `role="list"` moved from root `.spectrum-TagGroup` element to child `.spectrum-TagGroup-tags` container
+4. **Component composition**: Evolved from simple wrapper to complete form field with optional label, action button, and help text
 
-**Component structure:**
+**New features in Spectrum 2:**
 
-- Wrapper element with `spectrum-TagGroup` class and size modifiers (`--sizeS`, `--sizeM`, `--sizeL`)
-- Optional `spectrum-TagGroup-label` for field labels (top or side positioning via `--sideLabel` modifier)
-- `spectrum-TagGroup-tags` container with `role="list"` and `aria-label` for semantic grouping
-- Individual tags receive `spectrum-TagGroup-tag` class for consistent styling
-- Optional `spectrum-TagGroup-actionButton` for actions related to the tag group
-- Optional `spectrum-TagGroup-helpText` for additional context or validation messages
+- `.spectrum-TagGroup-label` - Optional field label support with top or side positioning (`--sideLabel` modifier)
+- `.spectrum-TagGroup-actionButton` - Optional action button for tag-related actions
+- `.spectrum-TagGroup-helpText` - Optional help text for additional context or validation messages
+- Side label layout variant via `--sideLabel` modifier for horizontal label positioning
 
-**Key features:**
+**Maintained features:**
 
-- Flexible layout supporting both top and side label positioning
-- Semantic HTML structure with proper ARIA roles for accessibility
-- Support for custom styles and modifiers for spacing
-- Integration with FieldLabel, ActionButton, and HelpText components
+- Size variants (`--sizeS`, `--sizeM`, `--sizeL`)
+- Language-specific styling (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`)
 - Tag wrapping behavior when horizontal space is limited
+- Custom styles and spacing modifiers support
+- Semantic HTML structure with proper ARIA roles for accessibility
+
+**Migration impact:**
+
+Migrating from Legacy to Spectrum 2 requires:
+
+- Updating class names from `.spectrum-TagGroup-item` to `.spectrum-TagGroup-tag`
+- Wrapping tags in a `.spectrum-TagGroup-tags` container
+- Moving `role="list"` from root element to the tags container
+- Optionally adding label, action button, or help text elements for enhanced functionality
 
 ## Resources
 
