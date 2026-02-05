@@ -145,7 +145,11 @@ export class InteractionController implements ReactiveController {
             return;
         }
         if (event.newState === 'closed') {
-            if (this.preventNextToggle === 'no') {
+            // If the picker has already set open to false (e.g., via setValueFromItem
+            // from a programmatic click), respect that decision and don't interfere.
+            if (!this.open) {
+                // Already closed, nothing to do.
+            } else if (this.preventNextToggle === 'no') {
                 this.open = false;
             } else if (!this.pointerdownState) {
                 this.overlay?.manuallyKeepOpen();

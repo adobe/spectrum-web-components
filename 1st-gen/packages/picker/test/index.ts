@@ -973,7 +973,7 @@ export function runPickerTests(): void {
             expect(secondItem.selected).to.be.false;
 
             const closed = oneEvent(el, 'sp-closed');
-            await mouseClickOn(secondItem);
+            secondItem.click();
             await closed;
 
             await waitUntil(() => document.activeElement === el, 'focused', {

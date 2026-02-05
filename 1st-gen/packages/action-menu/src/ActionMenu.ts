@@ -41,7 +41,6 @@ import {
     MenuItemChildren,
     MenuItemKeydownEvent,
 } from '@spectrum-web-components/menu';
-import { Overlay } from '@spectrum-web-components/overlay';
 import { FieldLabel } from '@spectrum-web-components/field-label';
 
 /**
@@ -436,34 +435,6 @@ export class ActionMenu extends ObserveSlotPresence(
             });
         }
     }
-    /**
-     * Handles the beforetoggle event from the overlay.
-     * Manages overlay state and prevents unwanted closures during interaction.
-     * @param event - The beforetoggle event with newState indicating the intended state
-     */
-    protected handleBeforetoggle = (
-        event: Event & {
-            target: Overlay;
-            newState: 'open' | 'closed';
-        }
-    ): void => {
-        if (event.composedPath()[0] !== event.target) {
-            return;
-        }
-        if (event.newState === 'closed') {
-            if (this.strategy?.preventNextToggle === 'no') {
-                this.open = false;
-            } else if (!this.strategy?.pointerdownState) {
-                // Prevent browser driven closure while opening the Picker
-                // and the expected event series has not completed.
-                this.overlayElement?.manuallyKeepOpen();
-            }
-        }
-        if (!this.open) {
-            this.optionsMenu.updateSelectedItemIndex();
-            this.optionsMenu.closeDescendentOverlays();
-        }
-    };
 
     /**
      * Renders the label content for the picker button.
@@ -605,7 +576,6 @@ export class ActionMenu extends ObserveSlotPresence(
         return html`
             <sp-overlay
                 @slottable-request=${this.handleSlottableRequest}
-                @beforetoggle=${this.handleBeforetoggle}
                 .triggerElement=${this as HTMLElement}
                 .offset=${0}
                 ?open=${this.open && this.dependencyManager.loaded}
