@@ -10,8 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, TemplateResult } from 'lit';
-import { styleMap } from 'lit/directives/style-map.js';
+import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -19,6 +18,15 @@ import { Button } from '@adobe/swc/button';
 
 import '@adobe/swc/button';
 import '@adobe/swc/progress-circle';
+
+import {
+    BUTTON_STATIC_COLORS,
+    BUTTON_TREATMENTS,
+    BUTTON_VARIANTS_S2,
+    type ButtonStaticColor,
+    type ButtonTreatment,
+    type ButtonVariantS2,
+} from '../../../../core/components/button/Button.types.js';
 
 // ────────────────
 //    METADATA
@@ -30,41 +38,67 @@ argTypes.variant = {
     ...argTypes.variant,
     control: { type: 'select' },
     options: Button.VARIANTS,
+    table: {
+        category: 'attributes',
+        defaultValue: {
+            summary: 'accent',
+        },
+    },
 };
 
 argTypes.treatment = {
     ...argTypes.treatment,
     control: { type: 'inline-radio' },
     options: Button.TREATMENTS,
+    table: {
+        category: 'attributes',
+        defaultValue: {
+            summary: 'fill',
+        },
+    },
 };
 
 argTypes.staticColor = {
     ...argTypes['static-color'],
     control: { type: 'select' },
     options: [undefined, ...Button.STATIC_COLORS],
+    table: {
+        category: 'attributes',
+    },
 };
 
 argTypes.size = {
     ...argTypes.size,
     control: { type: 'select' },
     options: Button.VALID_SIZES,
+    table: {
+        category: 'attributes',
+        defaultValue: {
+            summary: 'm',
+        },
+    },
 };
 
 argTypes.type = {
     ...argTypes.type,
     control: { type: 'select' },
     options: ['button', 'submit', 'reset'],
+    table: {
+        category: 'attributes',
+        defaultValue: {
+            summary: 'button',
+        },
+    },
 };
 
-args['default-slot'] = 'Edit';
-args.size = 'm';
-args.variant = 'accent';
-args.treatment = 'fill';
-
 /**
- * Buttons allow users to perform an action or to navigate to another page. They have multiple styles for various needs, and are ideal for calling attention to where a user needs to do something in order to move forward in a flow.
+ * Buttons allow users to perform an action or to navigate to another page.
+ * They have multiple styles for various needs, and are ideal for calling
+ * attention to where a user needs to do something in order to move forward in a flow.
  *
- * There are four available variants that are used for different levels of emphasis and different types of actions. By default, a button uses the fill style with a solid background. The primary and secondary variants also have an outline option.
+ * There are four available variants used for different levels of emphasis and
+ * types of actions. By default, a button uses the fill style with a solid background.
+ * The primary and secondary variants also have an outline option.
  */
 const meta: Meta = {
     title: 'Button',
@@ -76,792 +110,378 @@ const meta: Meta = {
         actions: {
             handles: events,
         },
+        docs: {
+            subtitle: `Trigger an action or navigate to another page.`,
+        },
+        flexLayout: 'row-wrap',
     },
     tags: ['migrated'],
 };
 
 export default meta;
 
-// ───────────────
-//    STORIES
-// ───────────────
+// ────────────────────
+//    HELPERS
+// ────────────────────
 
-type ButtonSize = typeof Button.prototype.size;
+const sizeLabels: Record<string, string> = {
+    s: 'Small',
+    m: 'Medium',
+    l: 'Large',
+    xl: 'Extra-large',
+};
 
-export const Default: Story = {
+const variantLabels = {
+    accent: 'Edit',
+    primary: 'Save',
+    secondary: 'Cancel',
+    negative: 'Delete',
+} as const satisfies Record<ButtonVariantS2, string>;
+
+const treatmentLabels = {
+    fill: 'Fill',
+    outline: 'Outline',
+} as const satisfies Record<ButtonTreatment, string>;
+
+const staticColorLabels = {
+    white: 'Static white',
+    black: 'Static black',
+} as const satisfies Record<ButtonStaticColor, string>;
+
+// ────────────────────
+//    AUTODOCS STORY
+// ────────────────────
+
+export const Playground: Story = {
+    render: (args) => template(args),
+    args: {
+        size: 'm',
+        variant: 'accent',
+        treatment: 'fill',
+        'default-slot': 'Edit',
+    },
+    tags: ['autodocs', 'dev'],
+};
+
+// ──────────────────────────────
+//    OVERVIEW STORIES
+// ──────────────────────────────
+
+export const Overview: Story = {
+    render: (args) => html` ${template(args)} `,
+    tags: ['overview'],
+    args: {
+        size: 'm',
+        variant: 'accent',
+        treatment: 'fill',
+        'default-slot': 'Edit',
+    },
+};
+
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
+
+/**
+ * A button consists of:
+ *
+ * 1. **Label** - Text content describing the action (required for accessibility when visible)
+ * 2. **Icon** (optional) - Visual indicator positioned before or instead of the label
+ * 3. **Container** - Styled pill with variant and treatment
+ *
+ * ### Content
+ *
+ * - **Default slot**: Text content describing the action (required when label is visible)
+ * - **icon slot**: (optional) - Icon element positioned before the label
+ * - **label** attribute: Accessible name (required for icon-only buttons)
+ */
+export const Anatomy: Story = {
+    render: (args) => html`
+        ${template({ ...args, 'default-slot': 'Label only' })}
+        ${template({
+            ...args,
+            'default-slot': 'Edit',
+            label: 'Edit',
+            'icon-slot': '✓',
+        })}
+        ${template({
+            ...args,
+            label: 'Edit',
+            'icon-slot': '✓',
+        })}
+    `,
+    tags: ['anatomy'],
+    args: {
+        variant: 'accent',
+        size: 'm',
+        treatment: 'fill',
+    },
+};
+
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+/**
+ * Buttons come in four sizes to fit various contexts:
+ *
+ * - **Small (`s`)**: Compact spaces or inline with text
+ * - **Medium (`m`)**: Default size for most common usage scenarios
+ * - **Large (`l`)**: Increased emphasis in primary content areas
+ * - **Extra-large (`xl`)**: Maximum visibility for critical actions
+ *
+ * The `m` size is the default and most frequently used option.
+ * Use other sizes sparingly to create a hierarchy of importance on a page.
+ */
+export const Sizes: Story = {
+    render: (args) => html`
+        ${Button.VALID_SIZES.map((size) =>
+            template({
+                ...args,
+                size,
+                'default-slot': sizeLabels[size] ?? size,
+            })
+        )}
+    `,
+    parameters: { 'section-order': 1 },
+    tags: ['options'],
+    args: {
+        variant: 'accent',
+        treatment: 'fill',
+    },
+};
+
+/**
+ * Semantic variants provide meaning through color and emphasis level:
+ *
+ * - **accent**: Strong emphasis, reserved for the most important action on the page
+ * - **primary**: Medium emphasis, for primary actions that need less prominence than accent
+ * - **secondary**: Low emphasis, paired with other button types for less prominent actions
+ * - **negative**: Destructive or negative consequences (e.g., delete, remove)
+ */
+export const SemanticVariants: Story = {
+    render: (args) => html`
+        ${BUTTON_VARIANTS_S2.map((variant) =>
+            template({
+                ...args,
+                variant,
+                'default-slot': variantLabels[variant],
+            })
+        )}
+    `,
+    parameters: { 'section-order': 2 },
+    tags: ['options'],
+};
+SemanticVariants.storyName = 'Semantic variants';
+
+/**
+ * The `treatment` attribute controls the visual style of the button:
+ *
+ * - **fill**: Solid background (default) for primary emphasis
+ * - **outline**: Bordered appearance with transparent background for reduced visual weight
+ *
+ * Outline is available for primary and secondary variants only.
+ */
+export const Treatments: Story = {
+    render: (args) => html`
+        ${BUTTON_TREATMENTS.map((treatment) =>
+            template({
+                ...args,
+                treatment,
+                'default-slot': treatmentLabels[treatment],
+            })
+        )}
+    `,
+    parameters: { 'section-order': 3 },
+    tags: ['options'],
+    args: {
+        variant: 'primary',
+        size: 'm',
+    },
+};
+
+/**
+ * Use the `static-color` attribute when placing buttons over dark or light backgrounds
+ * (e.g., images or colored panels). Static color buttons do not change with theme.
+ *
+ * - **white**: For use on dark backgrounds
+ * - **black**: For use on light backgrounds
+ */
+export const StaticColors: Story = {
+    render: (args) => html`
+        ${BUTTON_STATIC_COLORS.map((staticColor) =>
+            template({
+                ...args,
+                'static-color': staticColor,
+                'default-slot': staticColorLabels[staticColor],
+            })
+        )}
+    `,
+    parameters: { 'section-order': 4, staticColorsDemo: true },
+    tags: ['options', '!test'],
+    args: {
+        variant: 'primary',
+        treatment: 'fill',
+        size: 'm',
+    },
+};
+
+/**
+ * A button in a disabled state shows that an action exists but is not available.
+ * Use this to maintain layout continuity and communicate that an action may become available later.
+ */
+export const Disabled: Story = {
+    render: (args) => html`
+        ${template({ ...args, 'default-slot': 'Fill', disabled: true })}
+        ${template({
+            ...args,
+            treatment: 'outline',
+            'default-slot': 'Outline',
+            disabled: true,
+        })}
+    `,
+    parameters: { 'section-order': 5 },
+    tags: ['options'],
+    args: {
+        variant: 'accent',
+        size: 'm',
+    },
+};
+
+/**
+ * The pending state indicates that an action is in progress.
+ * The button label is replaced by a progress indicator until the action completes.
+ */
+export const Pending: Story = {
+    render: (args) => html`
+        ${template({ ...args, 'default-slot': 'Loading', pending: true })}
+        ${template({
+            ...args,
+            treatment: 'outline',
+            'default-slot': 'Loading',
+            pending: true,
+        })}
+    `,
+    parameters: { 'section-order': 6 },
+    tags: ['options'],
+    args: {
+        variant: 'accent',
+        size: 'm',
+    },
+};
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+/**
+ * When a button's label is too long for the available horizontal space, it wraps to multiple lines.
+ * When an icon is present, the text aligns to the start and the icon stays at the top.
+ */
+export const TextWrapping: Story = {
+    render: (args) => html`
+        ${template({
+            ...args,
+            variant: 'primary',
+            'default-slot':
+                'This is a very long button label that wraps to multiple lines',
+            style: 'max-inline-size: 200px',
+        })}
+    `,
+    tags: ['behaviors'],
     args: {
         size: 'm',
     },
 };
 
 /**
- * Buttons come in four different sizes: small, medium, large, and extra large. The medium size is the default and most frequently used option. Use the other sizes sparingly; they should be used to create a hierarchy of importance within the page.
+ * The `no-wrap` attribute prevents the button label from wrapping.
+ * When space is constrained, overflowing text truncates with an ellipsis.
+ * Use sparingly; consider overflow and readability.
  */
-export const Sizing: Story = {
-    render: () =>
-        CONTAINER([
-            ...Button.VALID_SIZES.map(
-                (size) => html`
-                    <swc-button size=${size as ButtonSize}>
-                        ${sizeMap(size)}
-                    </swc-button>
-                `
-            ),
-            html`<div style="width: 100%; height: 16px;"></div>`,
-            ...Button.VALID_SIZES.map(
-                (size) => html`
-                    <swc-button size=${size as ButtonSize}>
-                        <svg
-                            slot="icon"
-                            viewBox="0 0 36 36"
-                            style="width: 18px; height: 18px;"
-                        >
-                            <path
-                                d="M33.567 8.2L13.678 28.1l-11.3-11.3a1.935 1.935 0 0 0-2.739 2.739l12.695 12.7a1.935 1.935 0 0 0 2.738 0L36.306 10.936A1.935 1.935 0 0 0 33.567 8.2z"
-                            ></path>
-                        </svg>
-                        ${sizeMap(size)}
-                    </swc-button>
-                `
-            ),
-        ]),
-    tags: ['!dev'],
-};
-
-/**
- * The accent button communicates strong emphasis and is reserved for encouraging critical actions. In general, only use the emphasized option for the most important action on the page.
- */
-export const Accent: Story = {
-    render: () =>
-        CONTAINER([
-            html`<swc-button variant="accent">Edit</swc-button>`,
-            html`<swc-button variant="accent" disabled>Edit</swc-button>`,
-            html`<swc-button variant="accent">
-                <svg
-                    slot="icon"
-                    viewBox="0 0 36 36"
-                    style="width: 18px; height: 18px;"
-                >
-                    <path
-                        d="M33.567 8.2L13.678 28.1l-11.3-11.3a1.935 1.935 0 0 0-2.739 2.739l12.695 12.7a1.935 1.935 0 0 0 2.738 0L36.306 10.936A1.935 1.935 0 0 0 33.567 8.2z"
-                    ></path>
-                </svg>
-                Edit
-            </swc-button>`,
-            html`<swc-button variant="accent">
-                <svg
-                    slot="icon"
-                    viewBox="0 0 36 36"
-                    style="width: 18px; height: 18px;"
-                >
-                    <path
-                        d="M33.567 8.2L13.678 28.1l-11.3-11.3a1.935 1.935 0 0 0-2.739 2.739l12.695 12.7a1.935 1.935 0 0 0 2.738 0L36.306 10.936A1.935 1.935 0 0 0 33.567 8.2z"
-                    ></path>
-                </svg>
-            </swc-button>`,
-        ]),
-    tags: ['!dev'],
-};
-
-/**
- * The primary button is for medium emphasis. Use it in place of an accent button when the action requires less prominence, or if there are multiple primary actions of the same importance in the same view. Both the fill (default) and outline styles are demonstrated in this example.
- */
-export const Primary: Story = {
-    render: () => html`
-        <div
-            style=${styleMap({
-                display: 'flex',
-                'flex-direction': 'column',
-                gap: 'var(--swc-spacing-400)',
-                'align-items': 'center',
-            })}
-        >
-            <div
-                style=${styleMap({
-                    display: 'flex',
-                    gap: 'var(--swc-spacing-200)',
-                })}
-            >
-                <swc-button variant="primary" treatment="fill">
-                    Fill
-                </swc-button>
-                <swc-button variant="primary" treatment="fill" disabled>
-                    Fill
-                </swc-button>
-            </div>
-            <div
-                style=${styleMap({
-                    display: 'flex',
-                    gap: 'var(--swc-spacing-200)',
-                })}
-            >
-                <swc-button variant="primary" treatment="outline">
-                    Outline
-                </swc-button>
-                <swc-button variant="primary" treatment="outline" disabled>
-                    Outline
-                </swc-button>
-            </div>
-        </div>
-    `,
-    tags: ['!dev'],
-};
-
-/**
- * The secondary button is for low emphasis. It's paired with other button types to surface less prominent actions, and should never be the only button in a group. Both the fill (default) and outline styles are demonstrated in this example.
- */
-export const Secondary: Story = {
-    render: () => html`
-        <div
-            style=${styleMap({
-                display: 'flex',
-                'flex-direction': 'column',
-                gap: 'var(--swc-spacing-400)',
-                'align-items': 'center',
-            })}
-        >
-            <div
-                style=${styleMap({
-                    display: 'flex',
-                    gap: 'var(--swc-spacing-200)',
-                })}
-            >
-                <swc-button variant="secondary" treatment="fill">
-                    Fill
-                </swc-button>
-                <swc-button variant="secondary" treatment="fill" disabled>
-                    Fill
-                </swc-button>
-            </div>
-            <div
-                style=${styleMap({
-                    display: 'flex',
-                    gap: 'var(--swc-spacing-200)',
-                })}
-            >
-                <swc-button variant="secondary" treatment="outline">
-                    Outline
-                </swc-button>
-                <swc-button variant="secondary" treatment="outline" disabled>
-                    Outline
-                </swc-button>
-            </div>
-        </div>
-    `,
-    tags: ['!dev'],
-};
-
-/**
- * The negative button is for emphasizing actions that can be destructive or have negative consequences if taken. Use it sparingly.
- */
-export const Negative: Story = {
-    render: () =>
-        CONTAINER([
-            html`<swc-button variant="negative">Delete</swc-button>`,
-            html`<swc-button variant="negative" disabled>Delete</swc-button>`,
-            html`<swc-button variant="negative">
-                <svg
-                    slot="icon"
-                    viewBox="0 0 36 36"
-                    style="width: 18px; height: 18px;"
-                >
-                    <path
-                        d="M33.567 8.2L13.678 28.1l-11.3-11.3a1.935 1.935 0 0 0-2.739 2.739l12.695 12.7a1.935 1.935 0 0 0 2.738 0L36.306 10.936A1.935 1.935 0 0 0 33.567 8.2z"
-                    ></path>
-                </svg>
-                Delete
-            </swc-button>`,
-            html`<swc-button variant="negative">
-                <svg
-                    slot="icon"
-                    viewBox="0 0 36 36"
-                    style="width: 18px; height: 18px;"
-                >
-                    <path
-                        d="M33.567 8.2L13.678 28.1l-11.3-11.3a1.935 1.935 0 0 0-2.739 2.739l12.695 12.7a1.935 1.935 0 0 0 2.738 0L36.306 10.936A1.935 1.935 0 0 0 33.567 8.2z"
-                    ></path>
-                </svg>
-            </swc-button>`,
-        ]),
-    tags: ['!dev'],
-};
-
-/**
- * When a button needs to be placed on top of a dark color background or a visual, use the static white options. Static color buttons do not change shades or values depending upon the color theme.
- */
-export const StaticWhitePrimary: Story = {
-    render: () => html`
-        <div
-            style=${styleMap({
-                display: 'flex',
-                'flex-direction': 'column',
-                gap: 'var(--swc-spacing-400)',
-                'align-items': 'center',
-                'background-color': 'var(--swc-gray-900)',
-                padding: 'var(--swc-spacing-400)',
-                'border-radius': 'var(--swc-spacing-200)',
-            })}
-        >
-            <div
-                style=${styleMap({
-                    display: 'flex',
-                    gap: 'var(--swc-spacing-200)',
-                })}
-            >
-                <swc-button
-                    variant="primary"
-                    treatment="fill"
-                    static-color="white"
-                >
-                    Fill
-                </swc-button>
-                <swc-button
-                    variant="primary"
-                    treatment="fill"
-                    static-color="white"
-                    disabled
-                >
-                    Fill
-                </swc-button>
-            </div>
-            <div
-                style=${styleMap({
-                    display: 'flex',
-                    gap: 'var(--swc-spacing-200)',
-                })}
-            >
-                <swc-button
-                    variant="primary"
-                    treatment="outline"
-                    static-color="white"
-                >
-                    Outline
-                </swc-button>
-                <swc-button
-                    variant="primary"
-                    treatment="outline"
-                    static-color="white"
-                    disabled
-                >
-                    Outline
-                </swc-button>
-            </div>
-        </div>
-    `,
-    tags: ['!dev'],
-};
-StaticWhitePrimary.storyName = 'Static white - primary';
-
-/**
- * When a button needs to be placed on top of a dark color background or a visual, use the static white options with secondary variant.
- */
-export const StaticWhiteSecondary: Story = {
-    render: () => html`
-        <div
-            style=${styleMap({
-                display: 'flex',
-                'flex-direction': 'column',
-                gap: 'var(--swc-spacing-400)',
-                'align-items': 'center',
-                'background-color': 'var(--swc-gray-900)',
-                padding: 'var(--swc-spacing-400)',
-                'border-radius': 'var(--swc-spacing-200)',
-            })}
-        >
-            <div
-                style=${styleMap({
-                    display: 'flex',
-                    gap: 'var(--swc-spacing-200)',
-                })}
-            >
-                <swc-button
-                    variant="secondary"
-                    treatment="fill"
-                    static-color="white"
-                >
-                    Fill
-                </swc-button>
-                <swc-button
-                    variant="secondary"
-                    treatment="fill"
-                    static-color="white"
-                    disabled
-                >
-                    Fill
-                </swc-button>
-            </div>
-            <div
-                style=${styleMap({
-                    display: 'flex',
-                    gap: 'var(--swc-spacing-200)',
-                })}
-            >
-                <swc-button
-                    variant="secondary"
-                    treatment="outline"
-                    static-color="white"
-                >
-                    Outline
-                </swc-button>
-                <swc-button
-                    variant="secondary"
-                    treatment="outline"
-                    static-color="white"
-                    disabled
-                >
-                    Outline
-                </swc-button>
-            </div>
-        </div>
-    `,
-    tags: ['!dev'],
-};
-StaticWhiteSecondary.storyName = 'Static white - secondary';
-
-/**
- * When a button needs to be placed on top of a light color background or a visual, use the static black options. Static color buttons do not change shades or values depending upon the color theme.
- */
-export const StaticBlackPrimary: Story = {
-    render: () => html`
-        <div
-            style=${styleMap({
-                display: 'flex',
-                'flex-direction': 'column',
-                gap: 'var(--swc-spacing-400)',
-                'align-items': 'center',
-                'background-color': 'var(--swc-gray-200)',
-                padding: 'var(--swc-spacing-400)',
-                'border-radius': 'var(--swc-spacing-200)',
-            })}
-        >
-            <div
-                style=${styleMap({
-                    display: 'flex',
-                    gap: 'var(--swc-spacing-200)',
-                })}
-            >
-                <swc-button
-                    variant="primary"
-                    treatment="fill"
-                    static-color="black"
-                >
-                    Fill
-                </swc-button>
-                <swc-button
-                    variant="primary"
-                    treatment="fill"
-                    static-color="black"
-                    disabled
-                >
-                    Fill
-                </swc-button>
-            </div>
-            <div
-                style=${styleMap({
-                    display: 'flex',
-                    gap: 'var(--swc-spacing-200)',
-                })}
-            >
-                <swc-button
-                    variant="primary"
-                    treatment="outline"
-                    static-color="black"
-                >
-                    Outline
-                </swc-button>
-                <swc-button
-                    variant="primary"
-                    treatment="outline"
-                    static-color="black"
-                    disabled
-                >
-                    Outline
-                </swc-button>
-            </div>
-        </div>
-    `,
-    tags: ['!dev'],
-};
-StaticBlackPrimary.storyName = 'Static black - primary';
-
-/**
- * When a button needs to be placed on top of a light color background or a visual, use the static black options with secondary variant.
- */
-export const StaticBlackSecondary: Story = {
-    render: () => html`
-        <div
-            style=${styleMap({
-                display: 'flex',
-                'flex-direction': 'column',
-                gap: 'var(--swc-spacing-400)',
-                'align-items': 'center',
-                'background-color': 'var(--swc-gray-200)',
-                padding: 'var(--swc-spacing-400)',
-                'border-radius': 'var(--swc-spacing-200)',
-            })}
-        >
-            <div
-                style=${styleMap({
-                    display: 'flex',
-                    gap: 'var(--swc-spacing-200)',
-                })}
-            >
-                <swc-button
-                    variant="secondary"
-                    treatment="fill"
-                    static-color="black"
-                >
-                    Fill
-                </swc-button>
-                <swc-button
-                    variant="secondary"
-                    treatment="fill"
-                    static-color="black"
-                    disabled
-                >
-                    Fill
-                </swc-button>
-            </div>
-            <div
-                style=${styleMap({
-                    display: 'flex',
-                    gap: 'var(--swc-spacing-200)',
-                })}
-            >
-                <swc-button
-                    variant="secondary"
-                    treatment="outline"
-                    static-color="black"
-                >
-                    Outline
-                </swc-button>
-                <swc-button
-                    variant="secondary"
-                    treatment="outline"
-                    static-color="black"
-                    disabled
-                >
-                    Outline
-                </swc-button>
-            </div>
-        </div>
-    `,
-    tags: ['!dev'],
-};
-StaticBlackSecondary.storyName = 'Static black - secondary';
-
-/**
- * The pending button is for indicating that a quick progress action is taking place. In this case, the label and optional icon disappear and a progress circle appears. The progress circle always shows an indeterminate progress.
- */
-export const Pending: Story = {
-    render: () => html`
-        <div
-            style=${styleMap({
-                display: 'flex',
-                'flex-direction': 'column',
-                gap: 'var(--swc-spacing-400)',
-                'align-items': 'center',
-            })}
-        >
-            <div
-                style=${styleMap({
-                    display: 'flex',
-                    gap: 'var(--swc-spacing-200)',
-                })}
-            >
-                <swc-button variant="accent" treatment="fill" pending>
-                    Fill
-                </swc-button>
-                <swc-button variant="accent" treatment="outline" pending>
-                    Outline
-                </swc-button>
-            </div>
-        </div>
-    `,
-    tags: ['!dev'],
-};
-
-/**
- * A button in a disabled state shows that an action exists, but is not available in that circumstance. This state can be used to maintain layout continuity and to communicate that an action may become available later.
- */
-export const Disabled: Story = {
-    render: () => html`
-        <div
-            style=${styleMap({
-                display: 'flex',
-                'flex-direction': 'column',
-                gap: 'var(--swc-spacing-400)',
-                'align-items': 'center',
-            })}
-        >
-            <div
-                style=${styleMap({
-                    display: 'flex',
-                    gap: 'var(--swc-spacing-200)',
-                })}
-            >
-                <swc-button variant="accent" treatment="fill" disabled>
-                    Fill
-                </swc-button>
-                <swc-button variant="accent" treatment="outline" disabled>
-                    Outline
-                </swc-button>
-            </div>
-        </div>
-    `,
-    tags: ['!dev'],
-};
-
-/**
- * When the button text is too long for the horizontal space available, it wraps to form another line. When there is no icon present, the text is aligned center. When there is an icon present, the text is aligned start (left with a writing direction of left-to-right) and the icon remains vertically aligned at the top.
- */
-export const WithWrapping: Story = {
-    render: () => html`
-        <div
-            style=${styleMap({
-                display: 'flex',
-                'flex-direction': 'column',
-                gap: 'var(--swc-spacing-400)',
-                'max-inline-size': '200px',
-            })}
-        >
-            <swc-button variant="primary">
-                This is a very long button label that wraps
-            </swc-button>
-            <swc-button variant="primary">
-                <svg
-                    slot="icon"
-                    viewBox="0 0 36 36"
-                    style="width: 18px; height: 18px;"
-                >
-                    <path
-                        d="M33.567 8.2L13.678 28.1l-11.3-11.3a1.935 1.935 0 0 0-2.739 2.739l12.695 12.7a1.935 1.935 0 0 0 2.738 0L36.306 10.936A1.935 1.935 0 0 0 33.567 8.2z"
-                    ></path>
-                </svg>
-                This is a very long button label with an icon that wraps
-            </swc-button>
-        </div>
-    `,
-    tags: ['!dev'],
-};
-WithWrapping.storyName = 'Text overflow';
-
-/**
- * The normal behavior for lengthy text in the given horizontal space available is that it will wrap to form another line. By using the `no-wrap` attribute, the lengthy button text will not cause a line break and the width of the button will expand until it reaches its maximum width.
- *
- * Please note: this can cause undesired overflow experiences and to help prevent this, the overflowing text will attempt to hide by showing an ellipsis (...). This is demonstrated in the last two examples below, by constraining the maximum width of the button.
- *
- * This option is not part of the design spec, so please use carefully, with consideration of the overflow behavior and the readability of the button's content.
- */
-export const DisableWrapping: Story = {
-    render: () => html`
-        <div
-            style=${styleMap({
-                display: 'flex',
-                'flex-direction': 'column',
-                gap: 'var(--swc-spacing-400)',
-                'align-items': 'flex-start',
-            })}
-        >
-            <swc-button variant="primary" no-wrap>
-                Be a premium member
-            </swc-button>
-            <swc-button
-                variant="primary"
-                no-wrap
-                style="max-inline-size: 100px;"
-            >
-                Be a premium member
-            </swc-button>
-            <swc-button
-                variant="primary"
-                no-wrap
-                style="max-inline-size: 200px;"
-            >
-                <svg
-                    slot="icon"
-                    viewBox="0 0 36 36"
-                    style="width: 18px; height: 18px;"
-                >
-                    <path
-                        d="M33.567 8.2L13.678 28.1l-11.3-11.3a1.935 1.935 0 0 0-2.739 2.739l12.695 12.7a1.935 1.935 0 0 0 2.738 0L36.306 10.936A1.935 1.935 0 0 0 33.567 8.2z"
-                    ></path>
-                </svg>
-                Be a premium member
-            </swc-button>
-            <swc-button
-                variant="primary"
-                no-wrap
-                style="max-inline-size: 120px;"
-            >
-                <svg
-                    slot="icon"
-                    viewBox="0 0 36 36"
-                    style="width: 18px; height: 18px;"
-                >
-                    <path
-                        d="M33.567 8.2L13.678 28.1l-11.3-11.3a1.935 1.935 0 0 0-2.739 2.739l12.695 12.7a1.935 1.935 0 0 0 2.738 0L36.306 10.936A1.935 1.935 0 0 0 33.567 8.2z"
-                    ></path>
-                </svg>
-                Be a premium member
-            </swc-button>
-        </div>
-    `,
-    tags: ['!dev'],
-};
-DisableWrapping.storyName = 'Text overflow - disabled text wrap';
-
-/**
- * Buttons can contain icons in addition to text labels. Icons should be placed in the icon slot.
- */
-export const WithIcon: Story = {
-    render: () =>
-        CONTAINER([
-            html`<swc-button variant="accent">
-                <svg
-                    slot="icon"
-                    viewBox="0 0 36 36"
-                    style="width: 18px; height: 18px;"
-                >
-                    <path
-                        d="M33.567 8.2L13.678 28.1l-11.3-11.3a1.935 1.935 0 0 0-2.739 2.739l12.695 12.7a1.935 1.935 0 0 0 2.738 0L36.306 10.936A1.935 1.935 0 0 0 33.567 8.2z"
-                    ></path>
-                </svg>
-                Edit
-            </swc-button>`,
-            html`<swc-button variant="primary">
-                <svg
-                    slot="icon"
-                    viewBox="0 0 36 36"
-                    style="width: 18px; height: 18px;"
-                >
-                    <path
-                        d="M33.567 8.2L13.678 28.1l-11.3-11.3a1.935 1.935 0 0 0-2.739 2.739l12.695 12.7a1.935 1.935 0 0 0 2.738 0L36.306 10.936A1.935 1.935 0 0 0 33.567 8.2z"
-                    ></path>
-                </svg>
-                Save
-            </swc-button>`,
-            html`<swc-button variant="secondary">
-                <svg
-                    slot="icon"
-                    viewBox="0 0 36 36"
-                    style="width: 18px; height: 18px;"
-                >
-                    <path
-                        d="M33.567 8.2L13.678 28.1l-11.3-11.3a1.935 1.935 0 0 0-2.739 2.739l12.695 12.7a1.935 1.935 0 0 0 2.738 0L36.306 10.936A1.935 1.935 0 0 0 33.567 8.2z"
-                    ></path>
-                </svg>
-                Cancel
-            </swc-button>`,
-        ]),
-    tags: ['!dev'],
-};
-WithIcon.storyName = 'With icon';
-
-/**
- * Buttons can contain only an icon without a visible text label. In this case, an accessible label should be provided using the `label` attribute.
- */
-export const IconOnly: Story = {
-    render: () =>
-        CONTAINER([
-            html`<swc-button variant="accent" label="Edit">
-                <svg
-                    slot="icon"
-                    viewBox="0 0 36 36"
-                    style="width: 18px; height: 18px;"
-                >
-                    <path
-                        d="M33.567 8.2L13.678 28.1l-11.3-11.3a1.935 1.935 0 0 0-2.739 2.739l12.695 12.7a1.935 1.935 0 0 0 2.738 0L36.306 10.936A1.935 1.935 0 0 0 33.567 8.2z"
-                    ></path>
-                </svg>
-            </swc-button>`,
-            html`<swc-button variant="primary" label="Save">
-                <svg
-                    slot="icon"
-                    viewBox="0 0 36 36"
-                    style="width: 18px; height: 18px;"
-                >
-                    <path
-                        d="M33.567 8.2L13.678 28.1l-11.3-11.3a1.935 1.935 0 0 0-2.739 2.739l12.695 12.7a1.935 1.935 0 0 0 2.738 0L36.306 10.936A1.935 1.935 0 0 0 33.567 8.2z"
-                    ></path>
-                </svg>
-            </swc-button>`,
-            html`<swc-button variant="secondary" label="Cancel">
-                <svg
-                    slot="icon"
-                    viewBox="0 0 36 36"
-                    style="width: 18px; height: 18px;"
-                >
-                    <path
-                        d="M33.567 8.2L13.678 28.1l-11.3-11.3a1.935 1.935 0 0 0-2.739 2.739l12.695 12.7a1.935 1.935 0 0 0 2.738 0L36.306 10.936A1.935 1.935 0 0 0 33.567 8.2z"
-                    ></path>
-                </svg>
-            </swc-button>`,
-            html`<swc-button variant="negative" label="Delete">
-                <svg
-                    slot="icon"
-                    viewBox="0 0 36 36"
-                    style="width: 18px; height: 18px;"
-                >
-                    <path
-                        d="M33.567 8.2L13.678 28.1l-11.3-11.3a1.935 1.935 0 0 0-2.739 2.739l12.695 12.7a1.935 1.935 0 0 0 2.738 0L36.306 10.936A1.935 1.935 0 0 0 33.567 8.2z"
-                    ></path>
-                </svg>
-            </swc-button>`,
-        ]),
-    tags: ['!dev'],
-};
-IconOnly.storyName = 'Icon only';
-
-/**
- * Buttons can function as links by providing an `href` attribute. The button will render as an anchor element with button styling.
- */
-export const AsLink: Story = {
-    render: () =>
-        CONTAINER([
-            html`<swc-button variant="accent" href="https://adobe.com">
-                Visit Adobe
-            </swc-button>`,
-            html`<swc-button
-                variant="primary"
-                href="https://adobe.com"
-                target="_blank"
-            >
-                Open in new tab
-            </swc-button>`,
-        ]),
-    tags: ['!dev'],
-};
-AsLink.storyName = 'As link';
-
-// ────────────────────────
-//    HELPER FUNCTIONS
-// ────────────────────────
-
-/* @todo Pull this up into a utility function for more components to leverage. Are all sizes accounted for? */
-function sizeMap(str?: ButtonSize): string {
-    const sizeLabels: Record<string, string> = {
-        s: 'Small',
-        m: 'Medium',
-        l: 'Large',
-        xl: 'Extra-large',
-    };
-
-    return str ? sizeLabels[str] || '' : '';
-}
-
-/* @todo Pull this up into a decorator for all stories to leverage */
-function CONTAINER(content: TemplateResult<1>[]): TemplateResult {
-    return html`<div
-        style=${styleMap({
-            display: 'flex',
-            gap: 'var(--swc-spacing-200)',
-            'flex-wrap': 'wrap',
-            'justify-content': 'center',
-            // Used 80ch because that's generally considered the maximum readable width for text in a web page.
-            'max-inline-size': '80ch',
+export const NoWrap: Story = {
+    render: (args) => html`
+        ${template({
+            ...args,
+            variant: 'primary',
+            'default-slot': 'Be a premium member',
+            noWrap: true,
+            style: 'max-inline-size: 120px',
         })}
-    >
-        ${content}
-    </div>`;
-}
+    `,
+    tags: ['behaviors'],
+    args: {
+        size: 'm',
+    },
+};
+NoWrap.storyName = 'No wrap';
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+/**
+ * ### Features
+ *
+ * The `<swc-button>` element implements several accessibility features:
+ *
+ * #### Keyboard navigation
+ *
+ * - <kbd>Tab</kbd>: Moves focus to/from the button
+ * - <kbd>Space</kbd> or <kbd>Enter</kbd>: Activates the button
+ * - <kbd>Escape</kbd>: Cancels pending state (when applicable)
+ *
+ * #### ARIA implementation
+ *
+ * - **ARIA role**: Uses native `<button>` or `<a>` for correct semantics
+ * - **Labeling**: Uses `label` attribute for `aria-label` (required for icon-only buttons)
+ * - **States**: Sets `aria-disabled="true"` when disabled, `aria-busy="true"` when pending
+ *
+ * #### Visual accessibility
+ *
+ * - Focus indicator is visible and meets contrast requirements
+ * - High contrast mode is supported
+ * - Static color variants ensure sufficient contrast on colored backgrounds
+ *
+ * ### Best practices
+ *
+ * - Always provide visible text or a descriptive `label` for icon-only buttons
+ * - Use semantic variants to convey action type (e.g., negative for destructive actions)
+ * - Ensure sufficient color contrast between the button and its background
+ * - For link-style buttons, use `href` so the component renders as an anchor for correct semantics
+ * - Test with keyboard-only navigation and screen readers
+ */
+export const Accessibility: Story = {
+    render: (args) => html`
+        ${template({
+            ...args,
+            variant: 'accent',
+            'default-slot': 'Edit',
+        })}
+        ${template({
+            ...args,
+            variant: 'primary',
+            'default-slot': 'Save',
+        })}
+        ${template({
+            ...args,
+            variant: 'secondary',
+            'default-slot': 'Cancel',
+        })}
+        ${template({
+            ...args,
+            variant: 'negative',
+            'default-slot': 'Delete',
+        })}
+        ${template({
+            ...args,
+            variant: 'accent',
+            label: 'Edit',
+            'icon-slot': '✓',
+        })}
+    `,
+    tags: ['a11y'],
+    args: {
+        size: 'm',
+    },
+};

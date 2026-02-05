@@ -111,15 +111,38 @@ export class Button extends ButtonBase {
                             : ''
                     }`]: typeof this.staticColor !== 'undefined',
                 })}
+                role="button"
+                ?disabled=${this.disabled}
+                type=${this.type}
+                aria-label=${this.label || this.pendingLabel}
             >
-                <button
-                    ?disabled=${this.disabled}
-                    type=${this.type}
-                    aria-label=${this.label || this.pendingLabel}
-                >
                 ${this.renderButtonContent()}
-                </button>
+            
             </div>
+            <!-- <button
+                class=${classMap({
+                    ['swc-Button']: true,
+                    [`swc-Button--${this.variant}`]:
+                        typeof this.variant !== 'undefined',
+                    [`swc-Button--${this.treatment}`]:
+                        typeof this.treatment !== 'undefined',
+                    [`swc-Button--size${this.size?.toUpperCase()}`]:
+                        this.size != null,
+                    ['swc-Button--iconOnly']: this.hasIcon && !this.hasLabel,
+                    ['swc-Button--noWrap']: this.noWrap,
+                    [`swc-Button--static${
+                        this.staticColor
+                            ? this.staticColor.charAt(0).toUpperCase() +
+                              this.staticColor.slice(1)
+                            : ''
+                    }`]: typeof this.staticColor !== 'undefined',
+                })}
+                ?disabled=${this.disabled}
+                type=${this.type}
+                aria-label=${this.label || this.pendingLabel}
+            >
+                ${this.renderButtonContent()}
+            </button> -->
         `;
     }
 
@@ -151,7 +174,7 @@ export class Button extends ButtonBase {
             <span class="swc-Button-label">
                 <slot></slot>
             </span>
-            ${this.pendingStateController.renderPendingState()}
+            ${this.pendingStateController?.renderPendingState?.() ?? html``}
         `;
     }
 }
