@@ -173,6 +173,34 @@ In 2nd-gen CSS files, use design tokens (CSS custom properties) instead of hardc
 
 This is enforced as a warning by `stylelint-declaration-strict-value`.
 
+### Accessibility (lit-a11y)
+
+The `eslint-plugin-lit-a11y` plugin enforces accessibility best practices in Lit templates. Some rules have allow-lists for components that handle accessibility internally.
+
+#### Click events allow-list
+
+The `lit-a11y/click-events-have-key-events` rule requires keyboard event handlers alongside click handlers. The following components are exempt because they handle keyboard events internally:
+
+| Component          | Reason                                      |
+| ------------------ | ------------------------------------------- |
+| `sp-button`        | Built-in keyboard support                   |
+| `sp-action-button` | Built-in keyboard support                   |
+| `sp-checkbox`      | Built-in keyboard support                   |
+| `sp-radio`         | Built-in keyboard support                   |
+| `sp-switch`        | Built-in keyboard support                   |
+| `sp-menu-item`     | Built-in keyboard support                   |
+| `sp-clear-button`  | Built-in keyboard support                   |
+| `sp-underlay`      | Overlay dismiss handling                    |
+
+If you need to add a component to this list, update the `clickEventsAllowList` in `eslint.config.js`.
+
+#### Rules disabled in tests and stories
+
+The following lit-a11y rules are disabled in test and story files:
+
+- `lit-a11y/no-autofocus` — Tests may need to set autofocus for testing
+- `lit-a11y/tabindex-no-positive` — Tests may need positive tabindex for testing
+
 ## Disabling rules
 
 ### ESLint
