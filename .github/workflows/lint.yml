@@ -102,6 +102,9 @@ jobs:
               shell: bash
               run: yarn install --immutable
 
+            - name: Build stylelint plugin
+              run: yarn workspace @spectrum-web-components/stylelint-header-plugin build
+
             - name: Lint styles
               # if: ${{ needs.changed_files.outputs.styles_added_files != '' || needs.changed_files.outputs.styles_modified_files != '' }}
               uses: reviewdog/action-stylelint@v1.30.2
@@ -112,7 +115,7 @@ jobs:
                   reporter: github-pr-review
                   stylelint_input: '${{ needs.changed_files.outputs.styles_added_files }} ${{ needs.changed_files.outputs.styles_modified_files }} --allow-empty-input'
                   stylelint_config: '${{ github.workspace }}/.stylelintrc.json'
-                  packages: 'stylelint-header stylelint-config-standard'
+                  packages: 'stylelint-config-standard'
 
             - name: ESLint
               uses: reviewdog/action-eslint@v1.33.2
