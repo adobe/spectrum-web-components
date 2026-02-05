@@ -972,7 +972,10 @@ export function runPickerTests(): void {
             expect(el.value).to.equal('');
             expect(secondItem.selected).to.be.false;
 
-            secondItem.click();
+            const closed = oneEvent(el, 'sp-closed');
+            await mouseClickOn(secondItem);
+            await closed;
+
             await waitUntil(() => document.activeElement === el, 'focused', {
                 timeout: 300,
             });
