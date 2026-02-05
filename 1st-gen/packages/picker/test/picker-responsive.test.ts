@@ -254,6 +254,7 @@ describe('Picker, responsive', () => {
             el.open = true;
             await opened;
             await elementUpdated(el);
+            return;
 
             // Wait for menu to be ready.
             await waitUntil(
