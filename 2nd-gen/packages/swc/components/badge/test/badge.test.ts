@@ -63,11 +63,32 @@ export const OverviewTest: Story = {
     },
 };
 
+// Test: individual property mutations update reflectors.
+export const PropertyMutationTest: Story = {
+    ...Overview,
+    play: async ({ canvasElement }) => {
+        const badge = getBadge(canvasElement);
+        badge.variant = 'positive';
+        await badge.updateComplete;
+        expect(badge.getAttribute('variant')).toBe('positive');
+        badge.variant = 'notice';
+        await badge.updateComplete;
+        expect(badge.getAttribute('variant')).toBe('notice');
+        badge.subtle = true;
+        await badge.updateComplete;
+        expect(badge.hasAttribute('subtle')).toBe(true);
+        badge.outline = true;
+        await badge.updateComplete;
+        expect(badge.hasAttribute('outline')).toBe(true);
+    },
+};
+
 // Test: anatomy includes icon slot content.
 export const AnatomyTest: Story = {
     ...Anatomy,
     play: async ({ canvasElement }) => {
         const badges = Array.from(canvasElement.querySelectorAll('swc-badge'));
+        await Promise.all(badges.map((badge) => badge.updateComplete));
         const badgeWithIcon = badges.find((item) =>
             item.querySelector('[slot="icon"]')
         );
@@ -82,16 +103,17 @@ export const AnatomyTest: Story = {
 export const SemanticVariantsTest: Story = {
     ...SemanticVariants,
     play: async ({ canvasElement }) => {
-        BADGE_VARIANTS_SEMANTIC.forEach((variant) => {
+        for (const variant of BADGE_VARIANTS_SEMANTIC) {
             const badge = canvasElement.querySelector(
                 `swc-badge[variant="${variant}"]`
             ) as Badge | null;
+            await badge?.updateComplete;
             expect(badge).toBeTruthy();
             const semanticClass = badge?.shadowRoot
                 ?.querySelector(`.swc-Badge--${variant}`)
                 ?.classList.contains(`swc-Badge--${variant}`);
             expect(semanticClass).toBe(true);
-        });
+        }
     },
 };
 
@@ -99,15 +121,16 @@ export const SemanticVariantsTest: Story = {
 export const OutlineTest: Story = {
     ...Outline,
     play: async ({ canvasElement }) => {
-        BADGE_VARIANTS_SEMANTIC.forEach((variant) => {
+        for (const variant of BADGE_VARIANTS_SEMANTIC) {
             const badge = canvasElement.querySelector(
                 `swc-badge[variant="${variant}"]`
             ) as Badge | null;
+            await badge?.updateComplete;
             expect(badge?.hasAttribute('outline')).toBe(true);
             expect(
                 badge?.shadowRoot?.querySelector('.swc-Badge--outline')
             ).toBeTruthy();
-        });
+        }
     },
 };
 
@@ -115,13 +138,14 @@ export const OutlineTest: Story = {
 export const SizesTest: Story = {
     ...Sizes,
     play: async ({ canvasElement }) => {
-        BADGE_VALID_SIZES.forEach((size) => {
+        for (const size of BADGE_VALID_SIZES) {
             const badge = canvasElement.querySelector(
                 `swc-badge[size="${size}"]`
             ) as Badge | null;
+            await badge?.updateComplete;
             expect(badge).toBeTruthy();
             expect(badge?.size).toBe(size);
-        });
+        }
     },
 };
 
@@ -129,15 +153,16 @@ export const SizesTest: Story = {
 export const SubtleTest: Story = {
     ...Subtle,
     play: async ({ canvasElement }) => {
-        BADGE_VARIANTS_S2.forEach((variant) => {
+        for (const variant of BADGE_VARIANTS_S2) {
             const badge = canvasElement.querySelector(
                 `swc-badge[variant="${variant}"]`
             ) as Badge | null;
+            await badge?.updateComplete;
             expect(badge?.hasAttribute('subtle')).toBe(true);
             expect(
                 badge?.shadowRoot?.querySelector('.swc-Badge--subtle')
             ).toBeTruthy();
-        });
+        }
     },
 };
 
@@ -145,15 +170,16 @@ export const SubtleTest: Story = {
 export const FixedTest: Story = {
     ...Fixed,
     play: async ({ canvasElement }) => {
-        FIXED_VALUES.forEach((value) => {
+        for (const value of FIXED_VALUES) {
             const badge = canvasElement.querySelector(
                 `swc-badge[fixed="${value}"]`
             ) as Badge | null;
+            await badge?.updateComplete;
             expect(badge).toBeTruthy();
             expect(
                 badge?.shadowRoot?.querySelector(`.swc-Badge--fixed-${value}`)
             ).toBeTruthy();
-        });
+        }
     },
 };
 
