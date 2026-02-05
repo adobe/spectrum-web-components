@@ -118,12 +118,51 @@ describe('ProgressCircle', () => {
 
         expect(el.hasAttribute('aria-valuenow')).to.be.true;
         expect(el.getAttribute('aria-valuenow')).to.equal('50');
+        expect(el.hasAttribute('aria-valuetext')).to.be.true;
+        expect(el.getAttribute('aria-valuetext')).to.equal('50%');
+        expect(el.hasAttribute('aria-valuemin')).to.be.true;
+        expect(el.getAttribute('aria-valuemin')).to.equal('0');
+        expect(el.hasAttribute('aria-valuemax')).to.be.true;
+        expect(el.getAttribute('aria-valuemax')).to.equal('100');
 
         el.indeterminate = true;
 
         await elementUpdated(el);
 
         expect(el.hasAttribute('aria-valuenow')).to.be.false;
+        expect(el.hasAttribute('aria-valuetext')).to.be.false;
+        expect(el.hasAttribute('aria-valuemin')).to.be.false;
+        expect(el.hasAttribute('aria-valuemax')).to.be.false;
+    });
+    it('accepts a changing progress', async () => {
+        const el = await fixture<ProgressCircle>(html`
+            <sp-progress-circle label="Changing value"></sp-progress-circle>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-valuenow')).to.be.true;
+        expect(el.getAttribute('aria-valuenow')).to.equal('0');
+        expect(el.hasAttribute('aria-valuetext')).to.be.true;
+        expect(el.getAttribute('aria-valuetext')).to.equal('0%');
+
+        el.progress = 50;
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-valuenow')).to.be.true;
+        expect(el.getAttribute('aria-valuenow')).to.equal('50');
+        expect(el.hasAttribute('aria-valuetext')).to.be.true;
+        expect(el.getAttribute('aria-valuetext')).to.equal('50%');
+
+        el.progress = 100;
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-valuenow')).to.be.true;
+        expect(el.getAttribute('aria-valuenow')).to.equal('100');
+        expect(el.hasAttribute('aria-valuetext')).to.be.true;
+        expect(el.getAttribute('aria-valuetext')).to.equal('100%');
     });
     it('accepts `aria-label`', async () => {
         const el = await fixture<ProgressCircle>(html`
