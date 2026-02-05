@@ -49,29 +49,42 @@ Pre-commit hooks via `lint-staged` run linting and formatting on staged files au
 
 ## Running linters
 
+### Available commands
+
+| Command             | Description                        |
+| ------------------- | ---------------------------------- |
+| `yarn lint`         | Check all (ESLint, Stylelint, Prettier) |
+| `yarn lint:eslint`  | Check JavaScript/TypeScript only   |
+| `yarn lint:styles`  | Check CSS only                     |
+| `yarn lint:prettier`| Check formatting only              |
+| `yarn format`       | Fix all (ESLint, Stylelint, Prettier)   |
+| `yarn format:eslint`| Fix JavaScript/TypeScript only     |
+| `yarn format:styles`| Fix CSS only                       |
+| `yarn format:prettier`| Fix formatting only              |
+
 ### From the command line
 
 ```bash
-# Lint JavaScript/TypeScript
+# Check all files (runs in parallel)
 yarn lint
 
-# Lint with autofix
-yarn lint --fix
+# Fix all files (runs in parallel)
+yarn format
 
-# Lint specific files
+# Check specific tool only
+yarn lint:eslint
+yarn lint:styles
+yarn lint:prettier
+
+# Fix with specific tool only
+yarn format:eslint
+yarn format:styles
+yarn format:prettier
+
+# Lint specific files directly
 yarn eslint path/to/file.ts
-
-# Lint CSS
-yarn stylelint "**/*.css"
-
-# Lint CSS with autofix
-yarn stylelint "**/*.css" --fix
-
-# Format with Prettier
-yarn prettier --write .
-
-# Check formatting without changes
-yarn prettier --check .
+yarn stylelint "path/to/*.css"
+yarn prettier --check path/to/file.ts
 ```
 
 ### Pre-commit hooks
@@ -133,11 +146,11 @@ All source files must include the Adobe copyright header. This is enforced by:
 - **ESLint** — `eslint-plugin-notice` for `.ts`, `.js` files
 - **Stylelint** — Custom `swc/header` plugin for `.css` files
 
-The header is automatically added when you run linting with `--fix`.
+The header is automatically added when you run `yarn format`.
 
 ### Import sorting
 
-Imports are automatically sorted by `eslint-plugin-simple-import-sort`. Run `yarn lint --fix` to sort imports.
+Imports are automatically sorted by `eslint-plugin-simple-import-sort`. Run `yarn format:eslint` to sort imports.
 
 Import groups are ordered as:
 
@@ -148,7 +161,7 @@ Import groups are ordered as:
 
 ### CSS property ordering
 
-CSS properties are sorted alphabetically by `stylelint-order`. Run `yarn stylelint --fix` to sort properties.
+CSS properties are sorted alphabetically by `stylelint-order`. Run `yarn format:styles` to sort properties.
 
 ### Design tokens (2nd-gen only)
 
@@ -199,8 +212,8 @@ const x = something();
 
 ## Performance tips
 
-- Use `--cache` flag for faster subsequent runs: `yarn eslint --cache .`
-- Run linting only on changed files during development
+- All lint commands use `--cache` by default for faster subsequent runs
+- Use specific commands (`yarn lint:eslint`) instead of `yarn lint` during development
 - Let `lint-staged` handle pre-commit linting automatically
 - Full linting runs in CI as the final gate
 

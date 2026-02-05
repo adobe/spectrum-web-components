@@ -126,3 +126,6 @@ jobs:
                   reporter: github-pr-review
                   filter_mode: diff_context
                   eslint_flags: '${{ needs.changed_files.outputs.eslint_added_files }} ${{ needs.changed_files.outputs.eslint_modified_files }}'
+
+            - name: Prettier
+              run: yarn prettier --check .
