@@ -17,6 +17,10 @@ import {
     SpectrumElement,
 } from '@spectrum-web-components/core/shared/base/index.js';
 import { getLabelFromSlot } from '@spectrum-web-components/core/shared/get-label-from-slot.js';
+import {
+    LanguageResolutionController,
+    languageResolverUpdatedSymbol,
+} from '@spectrum-web-components/core/shared/reactive-controllers/LanguageResolution.js';
 
 import {
     PROGRESS_CIRCLE_VALID_SIZES,
@@ -99,6 +103,8 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
     @property({ type: Number })
     public progress = 0;
 
+    private languageResolver = new LanguageResolutionController(this);
+
     // ──────────────────────
     //     IMPLEMENTATION
     // ──────────────────────
@@ -129,12 +135,34 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
         }
     }
 
+    private formatProgress(): string {
+        return new Intl.NumberFormat(this.languageResolver.language, {
+            style: 'percent',
+            unitDisplay: 'narrow',
+        }).format(this.progress / 100);
+    }
+
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+        if (changes.has('indeterminate')) {
+            if (this.indeterminate) {
+                this.removeAttribute('aria-valuemin');
+                this.removeAttribute('aria-valuemax');
+                this.removeAttribute('aria-valuenow');
+                this.removeAttribute('aria-valuetext');
+            } else {
+                this.setAttribute('aria-valuemin', '0');
+                this.setAttribute('aria-valuemax', '100');
+                this.setAttribute('aria-valuenow', '' + this.progress);
+                this.setAttribute('aria-valuetext', this.formatProgress());
+            }
+        }
         if (!this.indeterminate && changes.has('progress')) {
             this.setAttribute('aria-valuenow', '' + this.progress);
-        } else if (this.hasAttribute('aria-valuenow')) {
-            this.removeAttribute('aria-valuenow');
+            this.setAttribute('aria-valuetext', this.formatProgress());
+        }
+        if (!this.indeterminate && changes.has(languageResolverUpdatedSymbol)) {
+            this.setAttribute('aria-valuetext', this.formatProgress());
         }
         if (changes.has('label')) {
             if (this.label.length) {
