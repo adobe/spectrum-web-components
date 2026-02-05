@@ -26,7 +26,9 @@
         token('component-height-100') * token('button-minimum-width-multiplier')
     );
     --_swc-button-height: token('component-height-100');
-    --_swc-button-border-radius: calc(var(--_swc-button-height) / 2);
+    --_swc-button-border-radius: calc(
+        var(--swc-button-height, var(--_swc-button-height)) / 2
+    );
     --_swc-button-border-width: token('border-width-200');
 
     /* @todo set line-height using font size specific line-height tokens when they are finalized along with the new variable font. */
@@ -50,99 +52,13 @@
     --_swc-button-bottom-to-text: token('component-bottom-to-text-100');
     --_swc-button-top-to-icon: token('component-top-to-workflow-icon-100');
     --_swc-button-intended-icon-size: token('workflow-icon-size-100');
+
     /* --_swc-button-downstate-perspective: max(
         token('downstate-height'),
         token('downstate-width') * token('component-size-width-ratio-down')
     ); */
 
-    &.swc-Button--iconOnly {
-        --_swc-button-border-radius: token('corner-radius-full');
-    }
-}
-
-.swc-Button--sizeS {
-    --_swc-button-min-width: calc(
-        token('component-height-75') * token('button-minimum-width-multiplier')
-    );
-    --_swc-button-height: token('component-height-75');
-    --_swc-button-font-size: token('font-size-75');
-    --_swc-button-edge-to-visual: calc(
-        token('component-pill-edge-to-visual-75') -
-            var(--swc-button-border-width, var(--_swc-button-border-width))
-    );
-    --_swc-button-edge-to-visual-only: calc(
-        token('component-pill-edge-to-visual-only-75') -
-            var(--swc-button-border-width, var(--_swc-button-border-width))
-    );
-    --_swc-button-edge-to-text: calc(
-        token('component-pill-edge-to-text-75') -
-            var(--swc-button-border-width, var(--_swc-button-border-width))
-    );
-    --_swc-button-padding-label-to-icon: token('text-to-visual-75');
-    --_swc-button-top-to-text: token('component-top-to-text-75');
-    --_swc-button-bottom-to-text: token('component-bottom-to-text-75');
-    --_swc-button-top-to-icon: token('component-top-to-workflow-icon-75');
-    --_swc-button-intended-icon-size: token('workflow-icon-size-75');
-
-    &.swc-Button--iconOnly {
-        --_swc-button-downstate-perspective: token(
-            'component-size-minimum-perspective-down'
-        );
-    }
-}
-
-.swc-Button--sizeL {
-    --_swc-button-min-width: calc(
-        token('component-height-200') * token('button-minimum-width-multiplier')
-    );
-    --_swc-button-height: token('component-height-200');
-    --_swc-button-font-size: token('font-size-200');
-    --_swc-button-edge-to-visual: calc(
-        token('component-pill-edge-to-visual-200') -
-            var(--swc-button-border-width, var(--_swc-button-border-width))
-    );
-    --_swc-button-edge-to-visual-only: calc(
-        token('component-pill-edge-to-visual-only-200') -
-            var(--swc-button-border-width, var(--_swc-button-border-width))
-    );
-    --_swc-button-edge-to-text: calc(
-        token('component-pill-edge-to-text-200') -
-            var(--swc-button-border-width, var(--_swc-button-border-width))
-    );
-    --_swc-button-padding-label-to-icon: token('text-to-visual-200');
-    --_swc-button-top-to-text: token('component-top-to-text-200');
-    --_swc-button-bottom-to-text: token('component-bottom-to-text-200');
-    --_swc-button-top-to-icon: token('component-top-to-workflow-icon-200');
-    --_swc-button-intended-icon-size: token('workflow-icon-size-200');
-}
-
-.swc-Button--sizeXL {
-    --_swc-button-min-width: calc(
-        token('component-height-300') * token('button-minimum-width-multiplier')
-    );
-    --_swc-button-height: token('component-height-300');
-    --_swc-button-font-size: token('font-size-300');
-    --_swc-button-edge-to-visual: calc(
-        token('component-pill-edge-to-visual-300') -
-            var(--swc-button-border-width, var(--_swc-button-border-width))
-    );
-    --_swc-button-edge-to-visual-only: calc(
-        token('component-pill-edge-to-visual-only-300') -
-            var(--swc-button-border-width, var(--_swc-button-border-width))
-    );
-    --_swc-button-edge-to-text: calc(
-        token('component-pill-edge-to-text-300') -
-            var(--swc-button-border-width, var(--_swc-button-border-width))
-    );
-    --_swc-button-padding-label-to-icon: token('text-to-visual-300');
-    --_swc-button-top-to-text: token('component-top-to-text-300');
-    --_swc-button-bottom-to-text: token('component-bottom-to-text-300');
-    --_swc-button-top-to-icon: token('component-top-to-workflow-icon-300');
-    --_swc-button-intended-icon-size: token('workflow-icon-size-300');
-}
-
-/* Variants and colors */
-.swc-Button {
+    /* Variants and colors */
     --_swc-button-border-color-default: transparent;
     --_swc-button-border-color-hover: transparent;
     --_swc-button-border-color-down: transparent;
@@ -155,307 +71,6 @@
     --_swc-button-border-color-disabled: transparent;
     --_swc-button-content-color-disabled: token('disabled-content-color');
 
-    &.swc-Button--outline {
-        --_swc-button-background-color-disabled: transparent;
-        --_swc-button-border-color-disabled: token('disabled-border-color');
-        --_swc-button-content-color-disabled: token('disabled-content-color');
-    }
-
-    /* ---- Accent ---- */
-
-    /* Also shows as the default when a variant class is not used. */
-    &,
-    &.swc-Button--accent {
-        --_swc-button-background-color-default: token(
-            'accent-background-color-default'
-        );
-        --_swc-button-background-color-hover: token(
-            'accent-background-color-hover'
-        );
-        --_swc-button-background-color-down: token(
-            'accent-background-color-down'
-        );
-        --_swc-button-background-color-focus: token(
-            'accent-background-color-key-focus'
-        );
-    }
-
-    /* ---- Negative ---- */
-    &.swc-Button--negative {
-        --_swc-button-background-color-default: token(
-            'negative-background-color-default'
-        );
-        --_swc-button-background-color-hover: token(
-            'negative-background-color-hover'
-        );
-        --_swc-button-background-color-down: token(
-            'negative-background-color-down'
-        );
-        --_swc-button-background-color-focus: token(
-            'negative-background-color-key-focus'
-        );
-    }
-
-    /* ---- Primary ---- */
-    &.swc-Button--primary {
-        --_swc-button-content-color-default: token('gray-25');
-        --_swc-button-content-color-hover: token('gray-25');
-        --_swc-button-content-color-down: token('gray-25');
-        --_swc-button-content-color-focus: token('gray-25');
-        --_swc-button-background-color-default: token(
-            'neutral-background-color-default'
-        );
-        --_swc-button-background-color-hover: token(
-            'neutral-background-color-hover'
-        );
-        --_swc-button-background-color-down: token(
-            'neutral-background-color-down'
-        );
-        --_swc-button-background-color-focus: token(
-            'neutral-background-color-key-focus'
-        );
-
-        &.swc-Button--outline {
-            --_swc-button-background-color-default: transparent;
-            --_swc-button-background-color-hover: token('gray-100');
-            --_swc-button-background-color-down: token('gray-100');
-            --_swc-button-background-color-focus: token('gray-100');
-            --_swc-button-border-color-default: token('gray-800');
-            --_swc-button-border-color-hover: token('gray-900');
-            --_swc-button-border-color-down: token('gray-900');
-            --_swc-button-border-color-focus: token('gray-900');
-            --_swc-button-content-color-default: token(
-                'neutral-content-color-default'
-            );
-            --_swc-button-content-color-hover: token(
-                'neutral-content-color-hover'
-            );
-            --_swc-button-content-color-down: token(
-                'neutral-content-color-down'
-            );
-            --_swc-button-content-color-focus: token(
-                'neutral-content-color-key-focus'
-            );
-        }
-    }
-
-    /* ---- Secondary ---- */
-    &.swc-Button--secondary {
-        --_swc-button-background-color-default: token('gray-100');
-        --_swc-button-background-color-hover: token('gray-200');
-        --_swc-button-background-color-down: token('gray-200');
-        --_swc-button-background-color-focus: token('gray-200');
-        --_swc-button-content-color-default: token(
-            'neutral-content-color-default'
-        );
-        --_swc-button-content-color-hover: token('neutral-content-color-hover');
-        --_swc-button-content-color-down: token('neutral-content-color-down');
-        --_swc-button-content-color-focus: token(
-            'neutral-content-color-key-focus'
-        );
-
-        &.swc-Button--outline {
-            --_swc-button-background-color-default: transparent;
-            --_swc-button-background-color-hover: token('gray-100');
-            --_swc-button-background-color-down: token('gray-100');
-            --_swc-button-background-color-focus: token('gray-100');
-            --_swc-button-border-color-default: token('gray-300');
-            --_swc-button-border-color-hover: token('gray-400');
-            --_swc-button-border-color-down: token('gray-400');
-            --_swc-button-border-color-focus: token('gray-400');
-        }
-    }
-
-    /* ---- Static White ---- */
-    &.swc-Button--staticWhite {
-        --_swc-button-background-color-default: token('transparent-white-800');
-        --_swc-button-background-color-hover: token('transparent-white-900');
-        --_swc-button-background-color-down: token('transparent-white-900');
-        --_swc-button-background-color-focus: token('transparent-white-900');
-        --_swc-button-content-color-default: token('black');
-        --_swc-button-content-color-hover: token('black');
-        --_swc-button-content-color-down: token('black');
-        --_swc-button-content-color-focus: token('black');
-        --_swc-button-focus-indicator-color: token(
-            'static-white-focus-indicator-color'
-        );
-        --_swc-button-background-color-disabled: token(
-            'disabled-static-white-background-color'
-        );
-        --_swc-button-border-color-disabled: transparent;
-        --_swc-button-content-color-disabled: token(
-            'disabled-static-white-content-color'
-        );
-
-        &.swc-Button--outline {
-            --_swc-button-background-color-default: token(
-                'transparent-white-25'
-            );
-            --_swc-button-background-color-hover: token(
-                'transparent-white-100'
-            );
-            --_swc-button-background-color-down: token('transparent-white-100');
-            --_swc-button-background-color-focus: token(
-                'transparent-white-100'
-            );
-            --_swc-button-border-color-default: token('transparent-white-800');
-            --_swc-button-border-color-hover: token('transparent-white-900');
-            --_swc-button-border-color-down: token('transparent-white-900');
-            --_swc-button-border-color-focus: token('transparent-white-900');
-            --_swc-button-content-color-default: token('transparent-white-800');
-            --_swc-button-content-color-hover: token('transparent-white-900');
-            --_swc-button-content-color-down: token('transparent-white-900');
-            --_swc-button-content-color-focus: token('transparent-white-900');
-            --_swc-button-background-color-disabled: token(
-                'transparent-white-25'
-            );
-            --_swc-button-border-color-disabled: token(
-                'disabled-static-white-border-color'
-            );
-            --_swc-button-content-color-disabled: token(
-                'disabled-static-white-content-color'
-            );
-        }
-
-        &.swc-Button--secondary {
-            --_swc-button-background-color-default: token(
-                'transparent-white-100'
-            );
-            --_swc-button-background-color-hover: token(
-                'transparent-white-200'
-            );
-            --_swc-button-background-color-down: token('transparent-white-200');
-            --_swc-button-background-color-focus: token(
-                'transparent-white-200'
-            );
-            --_swc-button-content-color-default: token('transparent-white-800');
-            --_swc-button-content-color-hover: token('transparent-white-900');
-            --_swc-button-content-color-down: token('transparent-white-900');
-            --_swc-button-content-color-focus: token('transparent-white-900');
-
-            &.swc-Button--outline {
-                --_swc-button-background-color-default: token(
-                    'transparent-white-25'
-                );
-                --_swc-button-background-color-hover: token(
-                    'transparent-white-100'
-                );
-                --_swc-button-background-color-down: token(
-                    'transparent-white-100'
-                );
-                --_swc-button-background-color-focus: token(
-                    'transparent-white-100'
-                );
-                --_swc-button-border-color-default: token(
-                    'transparent-white-300'
-                );
-                --_swc-button-border-color-hover: token(
-                    'transparent-white-400'
-                );
-                --_swc-button-border-color-down: token('transparent-white-400');
-                --_swc-button-border-color-focus: token(
-                    'transparent-white-400'
-                );
-            }
-        }
-    }
-
-    /* ---- Static Black ---- */
-    &.swc-Button--staticBlack {
-        --_swc-button-background-color-default: token('transparent-black-800');
-        --_swc-button-background-color-hover: token('transparent-black-900');
-        --_swc-button-background-color-down: token('transparent-black-900');
-        --_swc-button-background-color-focus: token('transparent-black-900');
-        --_swc-button-content-color-default: token('white');
-        --_swc-button-content-color-hover: token('white');
-        --_swc-button-content-color-down: token('white');
-        --_swc-button-content-color-focus: token('white');
-        --_swc-button-focus-indicator-color: token(
-            'static-black-focus-indicator-color'
-        );
-        --_swc-button-background-color-disabled: token(
-            'disabled-static-black-background-color'
-        );
-        --_swc-button-border-color-disabled: transparent;
-        --_swc-button-content-color-disabled: token(
-            'disabled-static-black-content-color'
-        );
-
-        &.swc-Button--outline {
-            --_swc-button-background-color-default: token(
-                'transparent-black-25'
-            );
-            --_swc-button-background-color-hover: token(
-                'transparent-black-100'
-            );
-            --_swc-button-background-color-down: token('transparent-black-100');
-            --_swc-button-background-color-focus: token(
-                'transparent-black-100'
-            );
-            --_swc-button-border-color-default: token('transparent-black-800');
-            --_swc-button-border-color-hover: token('transparent-black-900');
-            --_swc-button-border-color-down: token('transparent-black-900');
-            --_swc-button-border-color-focus: token('transparent-black-900');
-            --_swc-button-content-color-default: token('transparent-black-800');
-            --_swc-button-content-color-hover: token('transparent-black-900');
-            --_swc-button-content-color-down: token('transparent-black-900');
-            --_swc-button-content-color-focus: token('transparent-black-900');
-            --_swc-button-background-color-disabled: token(
-                'transparent-black-25'
-            );
-            --_swc-button-border-color-disabled: token(
-                'disabled-static-black-border-color'
-            );
-            --_swc-button-content-color-disabled: token(
-                'disabled-static-black-content-color'
-            );
-        }
-
-        &.swc-Button--secondary {
-            --_swc-button-background-color-default: token(
-                'transparent-black-100'
-            );
-            --_swc-button-background-color-hover: token(
-                'transparent-black-200'
-            );
-            --_swc-button-background-color-down: token('transparent-black-200');
-            --_swc-button-background-color-focus: token(
-                'transparent-black-200'
-            );
-            --_swc-button-content-color-default: token('transparent-black-800');
-            --_swc-button-content-color-hover: token('transparent-black-900');
-            --_swc-button-content-color-down: token('transparent-black-900');
-            --_swc-button-content-color-focus: token('transparent-black-900');
-
-            &.swc-Button--outline {
-                --_swc-button-background-color-default: token(
-                    'transparent-black-25'
-                );
-                --_swc-button-background-color-hover: token(
-                    'transparent-black-100'
-                );
-                --_swc-button-background-color-down: token(
-                    'transparent-black-100'
-                );
-                --_swc-button-background-color-focus: token(
-                    'transparent-black-100'
-                );
-                --_swc-button-border-color-default: token(
-                    'transparent-black-300'
-                );
-                --_swc-button-border-color-hover: token(
-                    'transparent-black-400'
-                );
-                --_swc-button-border-color-down: token('transparent-black-400');
-                --_swc-button-border-color-focus: token(
-                    'transparent-black-400'
-                );
-            }
-        }
-    }
-}
-
-.swc-Button {
     cursor: pointer;
     user-select: none;
 
@@ -747,6 +362,7 @@
                 var(--_swc-button-content-color-down)
             )
         );
+
         /* transform: perspective(var(--_swc-button-downstate-perspective))
             translateZ(token('component-size-difference-down')); */
     }
@@ -842,6 +458,317 @@
     }
 }
 
+.swc-Button.swc-Button--iconOnly {
+    --_swc-button-border-radius: token('corner-radius-full');
+}
+
+:host([size='s']) {
+    --swc-button-min-width: calc(
+        token('component-height-75') * token('button-minimum-width-multiplier')
+    );
+    --swc-button-height: token('component-height-75');
+    --swc-button-font-size: token('font-size-75');
+    --swc-button-edge-to-visual: calc(
+        token('component-pill-edge-to-visual-75') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --swc-button-edge-to-visual-only: calc(
+        token('component-pill-edge-to-visual-only-75') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --swc-button-edge-to-text: calc(
+        token('component-pill-edge-to-text-75') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --swc-button-padding-label-to-icon: token('text-to-visual-75');
+    --swc-button-top-to-text: token('component-top-to-text-75');
+    --swc-button-bottom-to-text: token('component-bottom-to-text-75');
+    --swc-button-top-to-icon: token('component-top-to-workflow-icon-75');
+    --swc-button-intended-icon-size: token('workflow-icon-size-75');
+}
+
+:host([size='s']).swc-Button--iconOnly {
+    --swc-button-downstate-perspective: token(
+        'component-size-minimum-perspective-down'
+    );
+}
+
+:host([size='l']) {
+    --swc-button-min-width: calc(
+        token('component-height-200') * token('button-minimum-width-multiplier')
+    );
+    --swc-button-height: token('component-height-200');
+    --swc-button-font-size: token('font-size-200');
+    --swc-button-edge-to-visual: calc(
+        token('component-pill-edge-to-visual-200') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --swc-button-edge-to-visual-only: calc(
+        token('component-pill-edge-to-visual-only-200') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --swc-button-edge-to-text: calc(
+        token('component-pill-edge-to-text-200') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --swc-button-padding-label-to-icon: token('text-to-visual-200');
+    --swc-button-top-to-text: token('component-top-to-text-200');
+    --swc-button-bottom-to-text: token('component-bottom-to-text-200');
+    --swc-button-top-to-icon: token('component-top-to-workflow-icon-200');
+    --swc-button-intended-icon-size: token('workflow-icon-size-200');
+}
+
+:host([size='xl']) {
+    --swc-button-min-width: calc(
+        token('component-height-300') * token('button-minimum-width-multiplier')
+    );
+    --swc-button-height: token('component-height-300');
+    --swc-button-font-size: token('font-size-300');
+    --swc-button-edge-to-visual: calc(
+        token('component-pill-edge-to-visual-300') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --swc-button-edge-to-visual-only: calc(
+        token('component-pill-edge-to-visual-only-300') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --swc-button-edge-to-text: calc(
+        token('component-pill-edge-to-text-300') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --swc-button-padding-label-to-icon: token('text-to-visual-300');
+    --swc-button-top-to-text: token('component-top-to-text-300');
+    --swc-button-bottom-to-text: token('component-bottom-to-text-300');
+    --swc-button-top-to-icon: token('component-top-to-workflow-icon-300');
+    --swc-button-intended-icon-size: token('workflow-icon-size-300');
+}
+
+/* Variants and colors */
+:host([treatment='outline']) {
+    --swc-button-background-color-disabled: transparent;
+    --swc-button-border-color-disabled: token('disabled-border-color');
+    --swc-button-content-color-disabled: token('disabled-content-color');
+}
+
+/* ---- Accent ---- */
+
+/* Also shows as the default when a variant class is not used. */
+:host,
+:host([variant='accent']) {
+    --swc-button-background-color-default: token(
+        'accent-background-color-default'
+    );
+    --swc-button-background-color-hover: token('accent-background-color-hover');
+    --swc-button-background-color-down: token('accent-background-color-down');
+    --swc-button-background-color-focus: token(
+        'accent-background-color-key-focus'
+    );
+}
+
+/* ---- Negative ---- */
+:host([variant='negative']) {
+    --swc-button-background-color-default: token(
+        'negative-background-color-default'
+    );
+    --swc-button-background-color-hover: token(
+        'negative-background-color-hover'
+    );
+    --swc-button-background-color-down: token('negative-background-color-down');
+    --swc-button-background-color-focus: token(
+        'negative-background-color-key-focus'
+    );
+}
+
+/* ---- Primary ---- */
+:host([variant='primary']) {
+    --swc-button-content-color-default: token('gray-25');
+    --swc-button-content-color-hover: token('gray-25');
+    --swc-button-content-color-down: token('gray-25');
+    --swc-button-content-color-focus: token('gray-25');
+    --swc-button-background-color-default: token(
+        'neutral-background-color-default'
+    );
+    --swc-button-background-color-hover: token(
+        'neutral-background-color-hover'
+    );
+    --swc-button-background-color-down: token('neutral-background-color-down');
+    --swc-button-background-color-focus: token(
+        'neutral-background-color-key-focus'
+    );
+}
+
+:host([variant='primary'][treatment='outline']) {
+    --swc-button-background-color-default: transparent;
+    --swc-button-background-color-hover: token('gray-100');
+    --swc-button-background-color-down: token('gray-100');
+    --swc-button-background-color-focus: token('gray-100');
+    --swc-button-border-color-default: token('gray-800');
+    --swc-button-border-color-hover: token('gray-900');
+    --swc-button-border-color-down: token('gray-900');
+    --swc-button-border-color-focus: token('gray-900');
+    --swc-button-content-color-default: token('neutral-content-color-default');
+    --swc-button-content-color-hover: token('neutral-content-color-hover');
+    --swc-button-content-color-down: token('neutral-content-color-down');
+    --swc-button-content-color-focus: token('neutral-content-color-key-focus');
+}
+
+/* ---- Secondary ---- */
+:host([variant='secondary']) {
+    --swc-button-background-color-default: token('gray-100');
+    --swc-button-background-color-hover: token('gray-200');
+    --swc-button-background-color-down: token('gray-200');
+    --swc-button-background-color-focus: token('gray-200');
+    --swc-button-content-color-default: token('neutral-content-color-default');
+    --swc-button-content-color-hover: token('neutral-content-color-hover');
+    --swc-button-content-color-down: token('neutral-content-color-down');
+    --swc-button-content-color-focus: token('neutral-content-color-key-focus');
+}
+
+:host([variant='secondary'][treatment='outline']) {
+    --swc-button-background-color-default: transparent;
+    --swc-button-background-color-hover: token('gray-100');
+    --swc-button-background-color-down: token('gray-100');
+    --swc-button-background-color-focus: token('gray-100');
+    --swc-button-border-color-default: token('gray-300');
+    --swc-button-border-color-hover: token('gray-400');
+    --swc-button-border-color-down: token('gray-400');
+    --swc-button-border-color-focus: token('gray-400');
+}
+
+/* ---- Static White (primary)---- */
+:host([static-color='white']) {
+    --swc-button-background-color-default: token('transparent-white-800');
+    --swc-button-background-color-hover: token('transparent-white-900');
+    --swc-button-background-color-down: token('transparent-white-900');
+    --swc-button-background-color-focus: token('transparent-white-900');
+    --swc-button-content-color-default: token('black');
+    --swc-button-content-color-hover: token('black');
+    --swc-button-content-color-down: token('black');
+    --swc-button-content-color-focus: token('black');
+    --swc-button-focus-indicator-color: token(
+        'static-white-focus-indicator-color'
+    );
+    --swc-button-background-color-disabled: token(
+        'disabled-static-white-background-color'
+    );
+    --swc-button-border-color-disabled: transparent;
+    --swc-button-content-color-disabled: token(
+        'disabled-static-white-content-color'
+    );
+}
+
+:host([static-color='white'][treatment='outline']) {
+    --swc-button-background-color-default: token('transparent-white-25');
+    --swc-button-background-color-hover: token('transparent-white-100');
+    --swc-button-background-color-down: token('transparent-white-100');
+    --swc-button-background-color-focus: token('transparent-white-100');
+    --swc-button-border-color-default: token('transparent-white-800');
+    --swc-button-border-color-hover: token('transparent-white-900');
+    --swc-button-border-color-down: token('transparent-white-900');
+    --swc-button-border-color-focus: token('transparent-white-900');
+    --swc-button-content-color-default: token('transparent-white-800');
+    --swc-button-content-color-hover: token('transparent-white-900');
+    --swc-button-content-color-down: token('transparent-white-900');
+    --swc-button-content-color-focus: token('transparent-white-900');
+    --swc-button-background-color-disabled: token('transparent-white-25');
+    --swc-button-border-color-disabled: token(
+        'disabled-static-white-border-color'
+    );
+    --swc-button-content-color-disabled: token(
+        'disabled-static-white-content-color'
+    );
+}
+
+/* ---- Static White (secondary)---- */
+:host([static-color='white'][variant='secondary']) {
+    --swc-button-background-color-default: token('transparent-white-100');
+    --swc-button-background-color-hover: token('transparent-white-200');
+    --swc-button-background-color-down: token('transparent-white-200');
+    --swc-button-background-color-focus: token('transparent-white-200');
+    --swc-button-content-color-default: token('transparent-white-800');
+    --swc-button-content-color-hover: token('transparent-white-900');
+    --swc-button-content-color-down: token('transparent-white-900');
+    --swc-button-content-color-focus: token('transparent-white-900');
+}
+
+:host([static-color='white'][variant='secondary'][treatment='outline']) {
+    --swc-button-background-color-default: token('transparent-white-25');
+    --swc-button-background-color-hover: token('transparent-white-100');
+    --swc-button-background-color-down: token('transparent-white-100');
+    --swc-button-background-color-focus: token('transparent-white-100');
+    --swc-button-border-color-default: token('transparent-white-300');
+    --swc-button-border-color-hover: token('transparent-white-400');
+    --swc-button-border-color-down: token('transparent-white-400');
+    --swc-button-border-color-focus: token('transparent-white-400');
+}
+
+/* ---- Static Black (primary) ---- */
+:host([static-color='black']) {
+    --swc-button-background-color-default: token('transparent-black-800');
+    --swc-button-background-color-hover: token('transparent-black-900');
+    --swc-button-background-color-down: token('transparent-black-900');
+    --swc-button-background-color-focus: token('transparent-black-900');
+    --swc-button-content-color-default: token('white');
+    --swc-button-content-color-hover: token('white');
+    --swc-button-content-color-down: token('white');
+    --swc-button-content-color-focus: token('white');
+    --swc-button-focus-indicator-color: token(
+        'static-black-focus-indicator-color'
+    );
+    --swc-button-background-color-disabled: token(
+        'disabled-static-black-background-color'
+    );
+    --swc-button-border-color-disabled: transparent;
+    --swc-button-content-color-disabled: token(
+        'disabled-static-black-content-color'
+    );
+}
+
+:host([static-color='black'][treatment='outline']) {
+    --swc-button-background-color-default: token('transparent-black-25');
+    --swc-button-background-color-hover: token('transparent-black-100');
+    --swc-button-background-color-down: token('transparent-black-100');
+    --swc-button-background-color-focus: token('transparent-black-100');
+    --swc-button-border-color-default: token('transparent-black-800');
+    --swc-button-border-color-hover: token('transparent-black-900');
+    --swc-button-border-color-down: token('transparent-black-900');
+    --swc-button-border-color-focus: token('transparent-black-900');
+    --swc-button-content-color-default: token('transparent-black-800');
+    --swc-button-content-color-hover: token('transparent-black-900');
+    --swc-button-content-color-down: token('transparent-black-900');
+    --swc-button-content-color-focus: token('transparent-black-900');
+    --swc-button-background-color-disabled: token('transparent-black-25');
+    --swc-button-border-color-disabled: token(
+        'disabled-static-black-border-color'
+    );
+    --swc-button-content-color-disabled: token(
+        'disabled-static-black-content-color'
+    );
+}
+
+/* ---- Static Black (secondary)---- */
+:host([static-color='black'][variant='secondary']) {
+    --swc-button-background-color-default: token('transparent-black-100');
+    --swc-button-background-color-hover: token('transparent-black-200');
+    --swc-button-background-color-down: token('transparent-black-200');
+    --swc-button-background-color-focus: token('transparent-black-200');
+    --swc-button-content-color-default: token('transparent-black-800');
+    --swc-button-content-color-hover: token('transparent-black-900');
+    --swc-button-content-color-down: token('transparent-black-900');
+    --swc-button-content-color-focus: token('transparent-black-900');
+}
+
+:host([static-color='black'][variant='secondary'][treatment='outline']) {
+    --swc-button-background-color-default: token('transparent-black-25');
+    --swc-button-background-color-hover: token('transparent-black-100');
+    --swc-button-background-color-down: token('transparent-black-100');
+    --swc-button-background-color-focus: token('transparent-black-100');
+    --swc-button-border-color-default: token('transparent-black-300');
+    --swc-button-border-color-hover: token('transparent-black-400');
+    --swc-button-border-color-down: token('transparent-black-400');
+    --swc-button-border-color-focus: token('transparent-black-400');
+}
+
 a.swc-Button {
     /* Make link text not selectable  */
     user-select: none;
@@ -872,7 +799,7 @@ a.swc-Button {
 }
 
 /* Disable button label wrap */
-.swc-Button--noWrap .swc-Button-label {
+.swc-Button--noWrap:has(.swc-Button-label) {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
