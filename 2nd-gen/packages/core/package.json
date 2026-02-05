@@ -162,6 +162,14 @@
         "./shared/utilities/index.js": {
             "types": "./dist/shared/utilities/index.d.ts",
             "import": "./dist/shared/utilities/index.js"
+        },
+        "./shared/reactive-controllers": {
+            "types": "./dist/shared/reactive-controllers/index.d.ts",
+            "import": "./dist/shared/reactive-controllers/index.js"
+        },
+        "./shared/reactive-controllers/index.js": {
+            "types": "./dist/shared/reactive-controllers/index.d.ts",
+            "import": "./dist/shared/reactive-controllers/index.js"
         }
     },
     "main": "./dist/index.js",
@@ -287,6 +295,12 @@
             ],
             "shared/utilities/index.js": [
                 "dist/shared/utilities/index.d.ts"
+            ],
+            "shared/reactive-controllers": [
+                "dist/shared/reactive-controllers/index.d.ts"
+            ],
+            "shared/reactive-controllers/index.js": [
+                "dist/shared/reactive-controllers/index.d.ts"
             ]
         }
     },
