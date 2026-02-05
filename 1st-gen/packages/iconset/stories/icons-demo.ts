@@ -299,7 +299,7 @@ export class IconsDemo extends SpectrumElement {
                   `}
             ${this.iconset.map(
                 (icon) => html`
-                    <bdo class="icon">
+                    <bdo class="icon" dir="ltr">
                         <sp-icon
                             size="xl"
                             name=${`${this.name}:${icon}`}

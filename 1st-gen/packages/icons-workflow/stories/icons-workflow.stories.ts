@@ -93,7 +93,7 @@ export const Icons = ({ color, size }: Properties): TemplateResult => {
             <icons-demo style="color: ${color}">
                 ${iconTemplates.map(
                     (icon) => html`
-                        <bdo class="icon">
+                        <bdo class="icon" dir="ltr">
                             <sp-icon size=${size}>${icon.template()}</sp-icon>
                             ${icon.name}
                         </bdo>
