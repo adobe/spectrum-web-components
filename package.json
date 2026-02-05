@@ -45,7 +45,8 @@
         "1st-gen/linters/*",
         "2nd-gen",
         "2nd-gen/packages/*",
-        "2nd-gen/packages/tools/*"
+        "2nd-gen/packages/tools/*",
+        "linters/*"
     ],
     "resolutions": {
         "@web/test-runner-coverage-v8": "patch:@web/test-runner-coverage-v8@npm%3A0.8.0#~/.yarn/patches/@web-test-runner-coverage-v8-npm-0.8.0-b19cf60e5f.patch",
@@ -58,6 +59,7 @@
         "@commitlint/config-conventional": "19.8.1",
         "@eslint/js": "9.39.2",
         "@playwright/test": "1.53.1",
+        "@spectrum-web-components/stylelint-header-plugin": "workspace:*",
         "@typescript-eslint/eslint-plugin": "8.54.0",
         "@typescript-eslint/parser": "8.54.0",
         "eslint": "9.39.2",
@@ -82,6 +84,7 @@
         "replace-in-file": "8.3.0",
         "stylelint": "17.1.1",
         "stylelint-config-standard": "40.0.0",
+        "stylelint-declaration-strict-value": "1.10.11",
         "stylelint-order": "7.0.1",
         "typescript-eslint": "8.54.0",
         "yargs": "17.7.2"

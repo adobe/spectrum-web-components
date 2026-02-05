@@ -1,0 +1,13 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "declarationMap": true,
+        // Node.js tool requires Node16 module resolution (base uses "bundler" for browser code)
+        "module": "Node16",
+        "moduleResolution": "Node16"
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "dist"]
+}

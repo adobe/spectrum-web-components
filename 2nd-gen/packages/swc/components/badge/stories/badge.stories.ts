@@ -174,7 +174,9 @@ export const Playground: Story = {
 // ──────────────────────────────
 
 export const Overview: Story = {
-    render: (args) => html` ${template(args)} `,
+    render: (args) => html`
+        ${template(args)}
+    `,
     tags: ['overview'],
     args: {
         size: 'm',

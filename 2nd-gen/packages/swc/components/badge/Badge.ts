@@ -33,13 +33,17 @@ import styles from './badge.css';
  * @element swc-badge
  *
  * @example
+ * ```html
  * <swc-badge variant="positive">New</swc-badge>
+ * ```
  *
  * @example
+ * ```html
  * <swc-badge variant="neutral" fixed="fill">
  *   <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
  *   Verified
  * </swc-badge>
+ * ```
  */
 export class Badge extends BadgeBase {
     // ────────────────────

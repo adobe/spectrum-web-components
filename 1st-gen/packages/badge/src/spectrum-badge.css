@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -114,17 +114,17 @@
 }
 
 :host {
-    min-block-size: var(--mod-badge-height, var(--spectrum-badge-height));
-    inline-size: auto;
-    vertical-align: middle;
-    cursor: default;
-    -webkit-font-smoothing: subpixel-antialiased;
-    -moz-osx-font-smoothing: auto;
+    border: 1px solid #0000;
     border-radius: var(--mod-badge-corner-radius, var(--spectrum-badge-corner-radius));
     color: var(--mod-badge-label-icon-color, var(--spectrum-badge-label-icon-color));
-    border: 1px solid #0000;
+    cursor: default;
     display: inline-flex;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    inline-size: auto;
+    min-block-size: var(--mod-badge-height, var(--spectrum-badge-height));
     position: relative;
+    vertical-align: middle;
 }
 
 :host,
@@ -209,18 +209,18 @@
 }
 
 :host([fixed="inline-start"]) {
-    border-start-start-radius: 0;
     border-end-start-radius: 0;
+    border-start-start-radius: 0;
 }
 
 :host([fixed="inline-end"]) {
-    border-start-end-radius: 0;
     border-end-end-radius: 0;
+    border-start-end-radius: 0;
 }
 
 :host([fixed="block-start"]) {
-    border-start-start-radius: 0;
     border-start-end-radius: 0;
+    border-start-start-radius: 0;
 }
 
 :host([fixed="block-end"]) {
@@ -229,13 +229,13 @@
 }
 
 .label {
+    color: var(--mod-badge-label-icon-color, var(--spectrum-badge-label-icon-color));
     font-size: var(--mod-badge-font-size, var(--spectrum-badge-font-size));
     line-height: var(--mod-badge-line-height, var(--spectrum-badge-line-height));
-    color: var(--mod-badge-label-icon-color, var(--spectrum-badge-label-icon-color));
-    padding-block-start: var(--mod-badge-label-spacing-vertical-top, var(--spectrum-badge-label-spacing-vertical-top));
     padding-block-end: var(--mod-badge-label-spacing-vertical-bottom, var(--spectrum-badge-label-spacing-vertical-bottom));
-    padding-inline-start: var(--mod-badge-label-spacing-horizontal, var(--spectrum-badge-label-spacing-horizontal));
+    padding-block-start: var(--mod-badge-label-spacing-vertical-top, var(--spectrum-badge-label-spacing-vertical-top));
     padding-inline-end: var(--mod-badge-label-spacing-horizontal, var(--spectrum-badge-label-spacing-horizontal));
+    padding-inline-start: var(--mod-badge-label-spacing-horizontal, var(--spectrum-badge-label-spacing-horizontal));
 }
 
 .label:lang(ja),
@@ -250,16 +250,16 @@
 
 ::slotted([slot="icon"]) {
     block-size: var(--mod-badge-workflow-icon-size, var(--spectrum-badge-workflow-icon-size));
-    inline-size: var(--mod-badge-workflow-icon-size, var(--spectrum-badge-workflow-icon-size));
-    flex: 0 0 var(--mod-badge-workflow-icon-size, var(--spectrum-badge-workflow-icon-size));
     color: var(--mod-badge-label-icon-color, var(--spectrum-badge-label-icon-color));
-    padding-block-start: var(--mod-badge-icon-spacing-vertical-top, var(--spectrum-badge-icon-spacing-vertical-top));
+    flex: 0 0 var(--mod-badge-workflow-icon-size, var(--spectrum-badge-workflow-icon-size));
+    inline-size: var(--mod-badge-workflow-icon-size, var(--spectrum-badge-workflow-icon-size));
     padding-block-end: var(--mod-badge-icon-spacing-vertical-top, var(--spectrum-badge-icon-spacing-vertical-top));
-    padding-inline-start: var(--mod-badge-icon-spacing-horizontal, var(--spectrum-badge-icon-spacing-horizontal));
+    padding-block-start: var(--mod-badge-icon-spacing-vertical-top, var(--spectrum-badge-icon-spacing-vertical-top));
     padding-inline-end: var(--mod-badge-icon-text-spacing, var(--spectrum-badge-icon-text-spacing));
+    padding-inline-start: var(--mod-badge-icon-spacing-horizontal, var(--spectrum-badge-icon-spacing-horizontal));
 }
 
 [icon-only]::slotted(*) {
-    padding-inline-start: var(--mod-badge-icon-only-spacing-horizontal, var(--spectrum-badge-icon-only-spacing-horizontal));
     padding-inline-end: var(--mod-badge-icon-only-spacing-horizontal, var(--spectrum-badge-icon-only-spacing-horizontal));
+    padding-inline-start: var(--mod-badge-icon-only-spacing-horizontal, var(--spectrum-badge-icon-only-spacing-horizontal));
 }

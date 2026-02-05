@@ -11,12 +11,13 @@
  */
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { stub } from 'sinon';
 
 import '@spectrum-web-components/badge/sp-badge.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
-import { stub } from 'sinon';
-import { Badge } from '../src/Badge.js';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { Badge } from '../src/Badge.js';
 
 describe('Badge', () => {
     testForLitDevWarnings(
@@ -87,8 +88,10 @@ describe('Badge', () => {
             expect(consoleWarnStub.called).to.be.false;
         });
         it('warns in Dev Mode when sent an incorrect `variant`', async () => {
+            // Invalid variant to test warning behavior
+            const invalidVariant = 'other' as Badge['variant'];
             const el = await fixture<Badge>(html`
-                <sp-badge variant="other">
+                <sp-badge variant=${invalidVariant}>
                     <sp-icon-checkmark-circle
                         slot="icon"
                     ></sp-icon-checkmark-circle>

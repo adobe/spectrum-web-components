@@ -15,8 +15,26 @@
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
     "type": "module",
-    "main": "index.js",
-    "exports": "./index.js",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "default": "./dist/index.js"
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsc",
+        "clean": "rm -rf dist"
+    },
+    "devDependencies": {
+        "@types/node": "22.15.21",
+        "typescript": "5.9.2"
+    },
     "peerDependencies": {
         "stylelint": ">=16"
     },

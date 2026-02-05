@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { expect, test } from '@playwright/test';
+
 import { gotoStory } from '../../../test/a11y-helpers.js';
 
 /**

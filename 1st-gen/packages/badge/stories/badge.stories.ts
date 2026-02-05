@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/badge/sp-badge.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
+
+import '@spectrum-web-components/badge/sp-badge.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
 
 export default {

@@ -1,7 +1,19 @@
 **/node_modules
 **/task
-*.*
-!*.css
+
+# Ignore non-CSS files (but not directories starting with .)
+**/*.ts
+**/*.tsx
+**/*.js
+**/*.jsx
+**/*.json
+**/*.md
+**/*.mdx
+**/*.html
+**/*.yaml
+**/*.yml
+
+# Project-specific ignores
 1st-gen/projects/example-project/dist
 1st-gen/tools/styles
 1st-gen/spectrum-*.css

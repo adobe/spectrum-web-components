@@ -17,7 +17,7 @@
     "[css]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.codeActionsOnSave": {
-            "source.fixAll.stylelint": "explicit"
+            "source.fixAll.stylelint": "always"
         }
     },
     "[json]": {
@@ -33,6 +33,12 @@
     "[markdown]": {
         "editor.wordWrapColumn": 120,
         "editor.wordWrap": "bounded"
+    },
+    "[postcss]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.stylelint": "always"
+        }
     },
 
     // ────────────────────────────────────────────────────────────
@@ -74,8 +80,16 @@
     // ────────────────────────────────────────────────────────────
     "typescript.tsdk": "node_modules/typescript/lib",
     "lit-plugin.strict": true,
+    // Exclude test files from lit-plugin type binding checks
+    // Tests often intentionally use invalid values to verify warning behavior
+    "lit-plugin.exclude": ["**/*.test.ts", "**/test/**/*.ts"],
     "eslint.validate": ["javascript", "typescript"],
-    "stylelint.validate": ["css"],
+    "css.validate": false,
+    "postcss.validate": false,
+    "stylelint.enable": true,
+    "stylelint.packageManager": "yarn",
+    "stylelint.validate": ["css", "postcss"],
+
     "prettier.requireConfig": true,
 
     // ────────────────────────────────────────────────────────────
@@ -84,8 +98,11 @@
     "cSpell.words": [
         "activedescendant",
         "AUTODOCS",
+        "checkmark",
         "coachmark",
         "effectful",
+        "minifiers",
         "valuetext"
-    ]
+    ],
+    "editor.codeActionsOnSave": {}
 }

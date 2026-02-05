@@ -495,11 +495,24 @@ export default defineConfig([
             '**/benchmark/**/*.ts',
             '**/stories/**/*.ts',
         ],
+        languageOptions: {
+            // Mocha globals - provided by web-test-runner at runtime
+            globals: {
+                describe: 'readonly',
+                it: 'readonly',
+                before: 'readonly',
+                beforeEach: 'readonly',
+                afterEach: 'readonly',
+                after: 'readonly',
+            },
+        },
         rules: {
             'swc/document-active-element': 'off',
             'import/no-extraneous-dependencies': 'off',
             'lit-a11y/no-autofocus': 'off',
             'lit-a11y/tabindex-no-positive': 'off',
+            // Chai assertions use expressions like expect(x).to.be.true
+            '@typescript-eslint/no-unused-expressions': 'off',
         },
     },
 
