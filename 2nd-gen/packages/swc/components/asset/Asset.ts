@@ -55,6 +55,24 @@ const folder = (label: string): TemplateResult => html`
     </svg>
 `;
 
+const error = (label: string): TemplateResult => html`
+    <svg
+        class="spectrum-Asset-error"
+        role="img"
+        viewBox="0 0 18 18"
+        aria-label=${label || 'Error'}
+    >
+        <path
+            class="spectrum-Asset-errorBackground"
+            d="M9,0.5c4.7,0,8.5,3.8,8.5,8.5s-3.8,8.5-8.5,8.5S0.5,13.7,0.5,9S4.3,0.5,9,0.5z"
+        ></path>
+        <path
+            class="spectrum-Asset-errorIcon"
+            d="M9,11c-0.6,0-1-0.4-1-1V5c0-0.6,0.4-1,1-1s1,0.4,1,1v5C10,10.6,9.6,11,9,11z M9,14c-0.6,0-1-0.4-1-1s0.4-1,1-1s1,0.4,1,1S9.6,14,9,14z"
+        ></path>
+    </svg>
+`;
+
 /**
  * @element swc-asset
  * @slot - content to be displayed when no `variant` or `src` is set (typically an `<img>` element)
@@ -69,6 +87,9 @@ const folder = (label: string): TemplateResult => html`
  *   loading="lazy"
  *   object-fit="cover"
  * ></swc-asset>
+ *
+ * @example Using error state
+ * <swc-asset error label="Failed to load image"></swc-asset>
  *
  * @example Using slot (legacy)
  * <swc-asset>
@@ -85,7 +106,26 @@ export class Asset extends AssetBase {
     }
 
     protected override render(): TemplateResult {
-        // Priority 1: Built-in variants (file/folder)
+        // Priority 1: Error state
+        if (this.error) {
+            return html`
+                <div
+                    class=${classMap({
+                        ['spectrum-Asset']: true,
+                        ['spectrum-Asset--error']: true,
+                    })}
+                >
+                    ${error(this.label)}
+                    ${this.label
+                        ? html`<span class="spectrum-Asset-errorLabel"
+                              >${this.label}</span
+                          >`
+                        : ''}
+                </div>
+            `;
+        }
+
+        // Priority 2: Built-in variants (file/folder)
         if (this.variant === 'file') {
             return html`
                 <div
@@ -110,7 +150,7 @@ export class Asset extends AssetBase {
             `;
         }
 
-        // Priority 2: Direct image rendering when src is provided
+        // Priority 3: Direct image rendering when src is provided
         if (this.src) {
             const imageStyles: Record<string, string> = {};
 
@@ -140,7 +180,7 @@ export class Asset extends AssetBase {
             `;
         }
 
-        // Priority 3: Fallback to slot (backwards compatible)
+        // Priority 4: Fallback to slot (backwards compatible)
         return html`
             <div
                 class=${classMap({

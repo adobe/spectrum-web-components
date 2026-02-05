@@ -29,63 +29,69 @@ argTypes.variant = {
 };
 
 // Add image-specific argTypes
-// argTypes.src = {
-//     control: { type: 'text' },
-//     description: 'The image source URL. When provided, renders an <img> element directly.',
-//     table: {
-//         category: 'Image Properties',
-//     },
-// };
+argTypes.src = {
+    control: { type: 'text' },
+    description:
+        'The image source URL. When provided, renders an <img> element directly.',
+    table: {
+        category: 'Image Properties',
+    },
+};
 
-// argTypes.alt = {
-//     control: { type: 'text' },
-//     description: 'Alternative text for the image. Required for accessibility when using src.',
-//     table: {
-//         category: 'Image Properties',
-//     },
-// };
+argTypes.alt = {
+    control: { type: 'text' },
+    description:
+        'Alternative text for the image. Required for accessibility when using src.',
+    table: {
+        category: 'Image Properties',
+    },
+};
 
-// argTypes.loading = {
-//     control: { type: 'select' },
-//     options: [undefined, 'lazy', 'eager'],
-//     description: 'Loading behavior for the image.',
-//     table: {
-//         category: 'Image Properties',
-//     },
-// };
+argTypes.loading = {
+    control: { type: 'select' },
+    options: [undefined, 'lazy', 'eager'],
+    description: 'Loading behavior for the image.',
+    table: {
+        category: 'Image Properties',
+    },
+};
 
-// argTypes['object-fit'] = {
-//     control: { type: 'select' },
-//     options: [undefined, 'contain', 'cover', 'fill', 'none', 'scale-down'],
-//     description: 'How the image should be resized to fit its container.',
-//     table: {
-//         category: 'Image Properties',
-//     },
-// };
+argTypes['object-fit'] = {
+    control: { type: 'select' },
+    options: [undefined, 'contain', 'cover', 'fill', 'none', 'scale-down'],
+    description: 'How the image should be resized to fit its container.',
+    table: {
+        category: 'Image Properties',
+        disable: true,
+    },
+};
 
-// argTypes['object-position'] = {
-//     control: { type: 'text' },
-//     description: 'Position of the image within its container when using object-fit.',
-//     table: {
-//         category: 'Image Properties',
-//     },
-// };
+argTypes['object-position'] = {
+    control: { type: 'text' },
+    description:
+        'Position of the image within its container when using object-fit.',
+    table: {
+        category: 'Image Properties',
+    },
+};
 
-// argTypes.srcset = {
-//     control: { type: 'text' },
-//     description: 'Responsive image sources.',
-//     table: {
-//         category: 'Image Properties',
-//     },
-// };
+argTypes.srcset = {
+    control: { type: 'text' },
+    description: 'Responsive image sources.',
+    table: {
+        category: 'Image Properties',
+        disable: true,
+    },
+};
 
-// argTypes.sizes = {
-//     control: { type: 'text' },
-//     description: 'Sizes for responsive images.',
-//     table: {
-//         category: 'Image Properties',
-//     },
-// };
+argTypes.sizes = {
+    control: { type: 'text' },
+    description: 'Sizes for responsive images.',
+    table: {
+        category: 'Image Properties',
+        disable: true,
+    },
+};
 
 /**
  * An asset provides a visual representation of files, folders, or images in your application.
@@ -103,10 +109,10 @@ const meta: Meta = {
     component: 'swc-asset',
     args,
     argTypes,
-    actions: {
-        handles: events,
-    },
     parameters: {
+        actions: {
+            handles: events,
+        },
         docs: {
             subtitle: `Visually represent files, folders, or images in your application`,
         },
@@ -151,13 +157,14 @@ export const Overview: Story = {
  *
  * 1. **Icon or image content** - Either a file/folder icon or custom slotted content
  * 2. **Accessible label** - Provides context for assistive technologies
+ * 3. **Error indicator** (when error state is active) - Error icon with visible label text
  *
  * The asset automatically centers its content both horizontally and vertically within the available space.
  *
  * ### Content
  *
  * - **Default slot**: Custom content to display (typically an image) when variant is not set
- * - **Label**: Accessible label for screen readers (used as `aria-label` on the icon SVGs)
+ * - **Label**: Accessible label for screen readers (used as `aria-label` on the icon SVGs). For error states, the label is also displayed as visible text underneath the error icon.
  */
 export const Anatomy: Story = {
     render: (args) => html`
@@ -326,6 +333,23 @@ export const ObjectFit: Story = {
     tags: ['options'],
 };
 
+// ──────────────────────────
+//    STATES STORIES
+// ──────────────────────────
+
+/**
+ * An asset can display an error state to indicate that content failed to load or is unavailable.
+ * When the `error` attribute is set, the asset displays an error icon with the label text shown underneath.
+ * The error state takes priority over all other rendering modes.
+ */
+export const Error: Story = {
+    args: {
+        error: true,
+        label: 'Failed to load image',
+    },
+    tags: ['states'],
+};
+
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
@@ -337,7 +361,7 @@ export const ObjectFit: Story = {
  *
  * #### ARIA implementation
  *
- * - **Icon labeling**: File and folder SVG icons automatically use the `label` property as `aria-label`
+ * - **Icon labeling**: File, folder, and error SVG icons automatically use the `label` property as `aria-label`
  * - **Non-interactive**: Assets have no interactive behavior and are not focusable
  *
  * #### Visual accessibility
@@ -345,11 +369,13 @@ export const ObjectFit: Story = {
  * - Icons use sufficient color contrast in both light and dark modes
  * - High contrast mode is supported with appropriate color overrides
  * - Content automatically centers for consistent layout and visual balance
+ * - Error states use color combined with iconography (not color alone) to convey status
  *
  * ### Best practices
  *
- * - Always provide a descriptive `label` attribute for file and folder variants
+ * - Always provide a descriptive `label` attribute for file, folder, and error variants
  * - Use specific, meaningful labels or alt text (e.g., "Project proposal PDF", "projects/2025/proposal.pdf", or not just "File")
+ * - For error states, use descriptive labels that explain the error (e.g., "Failed to load profile image")
  * - The `label` on the asset itself should describe the asset's purpose or context
  * - For decorative images, use an empty `alt=""` attribute on the img tag
  * - Test with screen readers to verify assets are announced appropriately in context

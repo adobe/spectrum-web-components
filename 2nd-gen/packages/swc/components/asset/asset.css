@@ -44,7 +44,8 @@
 }
 
 .spectrum-Asset-folder,
-.spectrum-Asset-file {
+.spectrum-Asset-file,
+.spectrum-Asset-error {
     inline-size: clamp(48px, 100%, 80px);
     block-size: 100%;
     margin: clamp(2px, 10%, 20px);
@@ -61,4 +62,21 @@
 .spectrum-Asset-folderOutline,
 .spectrum-Asset-fileOutline {
     fill: token('gray-500');
+}
+
+.spectrum-Asset-errorIcon {
+    fill: token('gray-200');
+}
+
+.spectrum-Asset--error {
+    flex-direction: column;
+    gap: token('spacing-100');
+}
+
+.spectrum-Asset-errorLabel {
+    color: token('gray-500');
+    font-size: token('font-size-75');
+    text-align: center;
+    max-inline-size: 100%;
+    overflow-wrap: break-word;
 }

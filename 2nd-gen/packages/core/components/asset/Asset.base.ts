@@ -55,6 +55,12 @@ export abstract class AssetBase extends SpectrumElement {
     @property()
     public label = '';
 
+    /**
+     * Indicates an error state for the asset. When true, displays an error indicator.
+     */
+    @property({ type: Boolean, reflect: true })
+    public error = false;
+
     // ─────────────────────────────
     //     IMAGE PROPERTIES
     // ─────────────────────────────
