@@ -73,6 +73,9 @@ export const DESCRIPTION_ID = 'option-picker';
  *
  * Extended by Picker, ActionMenu, and other components that display
  * a menu overlay triggered by a button.
+ *
+ * @fires change - Announces that the `value` of the element has changed
+ * @fires sp-opened - Announces that the overlay has been opened
  */
 export class ExpandableElement extends SpectrumElement {
     /**
@@ -231,13 +234,14 @@ export class ExpandableElement extends SpectrumElement {
 }
 
 /**
- * @element sp-picker
  * @slot label - The placeholder content for the Picker
  * @slot description - The description content for the Picker
  * @slot tooltip - Tooltip to to be applied to the the Picker Button
  * @slot - menu items to be listed in the Picker
  * @fires change - Announces that the `value` of the element has changed
  * @fires sp-opened - Announces that the overlay has been opened
+ * @deprecated This class is deprecated and will be removed in the SWC 1.0 release. Use a ExpandableElement base class instead.
+ * @see https://opensource.adobe.com/spectrum-web-components/components/picker/#deprecation
  */
 export class PickerBase extends SizedMixin(ExpandableElement, {
     noDefaultSize: true,
@@ -1225,6 +1229,12 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
     };
 
     public override connectedCallback(): void {
+        window.__swc.warn(
+            this,
+            `PickerBase class is deprecated and will be removed in the SWC 1.0 release. Use a ExpandableElement base class instead.`,
+            'https://opensource.adobe.com/spectrum-web-components/components/picker/#deprecation',
+            { level: 'deprecation' }
+        );
         super.connectedCallback();
         this.updateComplete.then(() => {
             if (!this.tooltipEl?.selfManaged) {
