@@ -26,6 +26,25 @@ export default mergeConfig(
             exclude: ['playwright', 'playwright-core', '@playwright/test'],
         },
         test: {
+            coverage: {
+                provider: 'v8',
+                reporter: ['text', 'json', 'html'],
+                allowExternal: true,
+                include: [
+                    'components/**/*.{ts,js}',
+                    '**/packages/core/components/**/*.{ts,js}',
+                    '**/packages/core/shared/**/*.{ts,js}',
+                ],
+                exclude: [
+                    '**/*.test.ts',
+                    '**/*.stories.ts',
+                    '**/.storybook/**',
+                    '**/utils/**',
+                    '**/node_modules/**',
+                    '**/dist/**',
+                    '**/*.d.ts',
+                ],
+            },
             projects: [
                 {
                     extends: true,
@@ -37,6 +56,21 @@ export default mergeConfig(
                     ],
                     resolve: {
                         alias: {
+                            // Keep the Vite aliases from `vite.config.ts` for Storybook/Vitest.
+                            // Without these, imports can resolve to built output and/or be excluded from coverage.
+                            '@spectrum-web-components/core': path.resolve(
+                                dirname,
+                                '../core'
+                            ),
+                            '@adobe/swc': path.resolve(dirname, './components'),
+                            '@adobe/postcss-token': path.resolve(
+                                dirname,
+                                '../tools/postcss-token'
+                            ),
+                            '@adobe/swc-tokens': path.resolve(
+                                dirname,
+                                '../tools/swc-tokens'
+                            ),
                             // Prevent Vite from trying to bundle Node.js built-ins
                             crypto: false,
                             fs: false,
@@ -65,8 +99,6 @@ export default mergeConfig(
                             headless: true,
                             instances: [{ browser: 'chromium' }],
                         },
-                        // Configure coverage to use standard istanbul reporters only
-                        coverage: true,
                         globals: true,
                         setupFiles: ['./.storybook/vitest.setup.ts'],
                     },
