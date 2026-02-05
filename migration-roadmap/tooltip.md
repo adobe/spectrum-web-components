@@ -262,22 +262,22 @@ None found for this component.
 - `.spectrum-Tooltip-typeIcon` wrapper element and all icon rendering logic
 - Icon imports and icon component instantiation for `info`, `positive`, and `negative` variants
 
-**HTML structure comparison:**
+**Legacy template (main branch):**
 
 ```html
-<!-- LEGACY (main branch) -->
 <span class="spectrum-Tooltip">
-    <svg class="spectrum-Tooltip-typeIcon">
-        <!-- Icon component for info/positive/negative variants -->
-    </svg>
+    <svg class="spectrum-Tooltip-typeIcon"></svg>
     <span class="spectrum-Tooltip-label">[label]</span>
     <span class="spectrum-Tooltip-tip"></span>
 </span>
+```
 
-<!-- SPECTRUM 2 (spectrum-two branch) -->
-<span class="spectrum-Tooltip">
-    <span class="spectrum-Tooltip-label">[label]</span>
-    <span class="spectrum-Tooltip-tip"></span>
+**Spectrum 2 template (spectrum-two branch):**
+
+```html
+<span class=" spectrum-Tooltip is-open " style="">
+    <span class=" spectrum-Tooltip-label "> Label </span>
+    <span class=" spectrum-Tooltip-tip "></span>
 </span>
 ```
 
@@ -286,10 +286,6 @@ None found for this component.
 - **Removed**: `variantIcon` variable and conditional logic for determining icon based on variant
 - **Removed**: Icon component rendering within the template
 - **Removed**: `positive` variant from variants array
-
-**Key impact:**
-
-The most significant change is the complete removal of the `.spectrum-Tooltip-typeIcon` element and all associated icon rendering. Legacy tooltips displayed icons (Info, CheckmarkCircle, or Alert) for semantic variants, but Spectrum 2 tooltips no longer include these icons in the template structure.
 
 </details>
 
@@ -376,6 +372,7 @@ Logical properties provide better RTL (right-to-left) language support by automa
 **Deprecated:**
 
 - `.spectrum-Tooltip--positive` variant was removed in Spectrum 2
+- `.spectrum-Tooltip-typeIcon` wrapper element and all icon rendering logic
 
 ### CSS Spectrum 2 changes
 
