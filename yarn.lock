@@ -5791,7 +5791,6 @@ __metadata:
     fast-glob: "npm:3.3.3"
     fs-extra: "npm:11.3.2"
     geckodriver: "npm:4.4.0"
-    genversion: "npm:3.2.0"
     gh-pages: "npm:6.3.0"
     gunzip-maybe: "npm:1.4.2"
     husky: "npm:9.1.7"

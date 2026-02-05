@@ -29,6 +29,7 @@
     "[mdx]": {
         "editor.wordWrapColumn": 120,
         "editor.wordWrap": "bounded"
+        "editor.wordWrap": "bounded"
     },
     "[markdown]": {
         "editor.wordWrapColumn": 120,
@@ -78,6 +79,10 @@
     // ────────────────────────────────────────────────────────────
     // PROJECT-SPECIFIC TOOLING
     // ────────────────────────────────────────────────────────────
+
+    // ────────────────────────────────────────────────────────────
+    // PROJECT-SPECIFIC TOOLING
+    // ────────────────────────────────────────────────────────────
     "typescript.tsdk": "node_modules/typescript/lib",
     "lit-plugin.strict": true,
     // Exclude test files from lit-plugin type binding checks
@@ -104,5 +109,4 @@
         "minifiers",
         "valuetext"
     ],
-    "editor.codeActionsOnSave": {}
 }
