@@ -13,8 +13,8 @@ This document tracks 1st‑gen items and where they should land in the 2nd‑gen
 
 - `tools/shared/focusable.ts` → `core/mixins/focusable.ts`
 - `tools/shared/like-anchor.ts` → `core/mixins/like-anchor.ts`
-- `tools/shared/observe-slot-presence.ts` → `core/mixins/observe-slot-presence.ts` (or `core/utils/observe-slot-presence.ts` if kept as a utility)
-- `tools/shared/observe-slot-text.ts` → `core/mixins/observe-slot-text.ts` (or `core/utils/observe-slot-text.ts` if kept as a utility)
+- `tools/shared/observe-slot-presence.ts` → `core/mixins/observe-slot-presence.ts` ✅ (also available via `core/utils/` for backward compatibility)
+- `tools/shared/observe-slot-text.ts` → `core/mixins/observe-slot-text.ts` ✅ (also available via `core/utils/` for backward compatibility)
 - `tools/shared/focus-visible-polyfill.ts` → `core/mixins/focus-visible-polyfill.ts`
 
 ## Utilities
@@ -44,8 +44,31 @@ Component-specific mixins should live alongside their component, unless multiple
 - `core/mixins/` when the behavior is generic
 - `core/components/` when the behavior is specific to a family of components
 
+## Items not yet mapped
+
+The following 1st-gen items are not yet mapped. Evaluate when needed:
+
+### From `tools/base/`
+
+- `async-directive.ts`
+- `condition-attribute-with-id.ts`
+- `constants.ts`
+- `decorators.ts`
+- `directive.ts`
+- `directives.ts`
+- `html.ts`
+- `streaming-listener.ts`
+
+### From `tools/shared/`
+
+- `first-focusable-in.ts`
+- `focus-visible.ts`
+- `focusable-selectors.ts`
+- `random-id.ts`
+
 ## Notes
 
 - Keep the `shared/` directory as a compatibility layer until all internal imports have migrated to the new top-level folders.
 - Prefer kebab-case file names for all new files in `core/`.
 - When moving code, update exports so that both the new path and any required legacy path remain available during transition.
+- Slot-observation mixins (`ObserveSlotPresence`, `ObserveSlotText`) are available from both `core/mixins/` (preferred) and `core/utils/` (backward compatibility).

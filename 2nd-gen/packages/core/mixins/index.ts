@@ -11,3 +11,5 @@
  */
 
 export * from './sized-mixin.js';
+export * from './observe-slot-presence.js';
+export * from './observe-slot-text.js';
