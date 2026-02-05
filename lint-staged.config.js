@@ -23,10 +23,10 @@ export default {
         'yarn workspace @spectrum-web-components/1st-gen lit-analyzer',
     ],
     'package.json': () => [
-        'genversion --source ./1st-gen/tools/base/package.json --es6 --semi --force ./2nd-gen/packages/core/shared/base/version.ts',
+        'node scripts/generate-versions.js',
         'yarn constraints --fix',
         'yarn install --refresh-lockfile',
-        'git add 2nd-gen/packages/core/shared/base/version.ts yarn.lock',
+        'git add 1st-gen/tools/base/src/version.ts 2nd-gen/packages/core/shared/base/version.ts yarn.lock',
     ],
     '.changeset/*.md': ['node 1st-gen/scripts/escape-changelog-tags.js'],
     '!(*.css|*.ts)': [
