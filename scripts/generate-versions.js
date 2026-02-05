@@ -12,7 +12,6 @@
  * governing permissions and limitations under the License.
  */
 
-/* eslint-disable no-console */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -20,9 +19,9 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
 
-// Read copyright header from HEADER file
+// Read copyright header from config/HEADER.js
 const COPYRIGHT_HEADER = fs
-    .readFileSync(path.join(root, 'HEADER'), 'utf-8')
+    .readFileSync(path.join(root, 'config/HEADER.js'), 'utf-8')
     .trim();
 
 /**

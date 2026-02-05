@@ -58,7 +58,7 @@ const wrapCSSResult = (content) => {
     `;
 };
 
-const headerPath = path.resolve(__dirname, '..', 'config', 'HEADER.js');
+const headerPath = path.resolve(__dirname, '..', '..', 'config', 'HEADER.js');
 let header = '';
 if (fs.existsSync(headerPath)) {
     header = fs.readFileSync(headerPath, 'utf8');
