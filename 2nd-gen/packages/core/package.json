@@ -90,6 +90,10 @@
         "./shared/reactive-controllers/index.js": {
             "types": "./dist/shared/reactive-controllers/index.d.ts",
             "import": "./dist/shared/reactive-controllers/index.js"
+        },
+        "./shared/reactive-controllers/LanguageResolution.js": {
+            "types": "./dist/shared/reactive-controllers/LanguageResolution.d.ts",
+            "import": "./dist/shared/reactive-controllers/LanguageResolution.js"
         }
     },
     "files": [
@@ -159,6 +163,9 @@
             ],
             "shared/reactive-controllers/index.js": [
                 "dist/shared/reactive-controllers/index.d.ts"
+            ],
+            "shared/reactive-controllers/LanguageResolution.js": [
+                "dist/shared/reactive-controllers/LanguageResolution.d.ts"
             ]
         }
     },
