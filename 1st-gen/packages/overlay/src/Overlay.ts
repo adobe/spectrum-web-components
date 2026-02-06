@@ -752,6 +752,20 @@ export class Overlay extends ComputedOverlayBase {
             await this.updateComplete;
         }
 
+        // Hide the dialog until computePlacement() determines the correct
+        // position. This runs before render() applies is-visible, so the
+        // dialog is invisible during the entire async positioning flow.
+        // Skip when already positioned (e.g. manuallyKeepOpen) to avoid
+        // hiding a visible, correctly-positioned overlay.
+        if (
+            this.open &&
+            this.dialogEl &&
+            this.requiresPositioning &&
+            !this.dialogEl.hasAttribute('actual-placement')
+        ) {
+            this.dialogEl.style.setProperty('opacity', '0', 'important');
+        }
+
         if (this.open) {
             // Add the overlay to the overlay stack.
             overlayStack.add(this);
@@ -776,6 +790,16 @@ export class Overlay extends ComputedOverlayBase {
             }
         } else {
             if (oldOpen) {
+                // Hide the dialog immediately when closing to prevent a
+                // flash caused by resetOverlayPosition() recalculating
+                // placement during the close transition.
+                if (this.dialogEl) {
+                    this.dialogEl.style.setProperty(
+                        'opacity',
+                        '0',
+                        'important'
+                    );
+                }
                 this._focusTrap?.deactivate();
                 this._focusTrap = null;
                 // Dispose of the overlay if it was previously open.
@@ -1071,11 +1095,11 @@ export class Overlay extends ComputedOverlayBase {
 
         // Check if the 'placement' property has changed.
         if (changes.has('placement')) {
-            if (this.placement) {
-                // Set the 'actual-placement' attribute on the dialog element.
-                this.dialogEl.setAttribute('actual-placement', this.placement);
-            } else {
-                // Remove the 'actual-placement' attribute from the dialog element.
+            // When placement is removed, clear actual-placement as well.
+            // When placement is set, do NOT eagerly set actual-placement here;
+            // computePlacement() will set it after determining the real position
+            // (which may differ from the requested placement due to flip).
+            if (!this.placement) {
                 this.dialogEl.removeAttribute('actual-placement');
             }
 
@@ -1093,6 +1117,10 @@ export class Overlay extends ComputedOverlayBase {
         ) {
             // Clear the overlay position.
             this.placementController.clearOverlayPosition();
+            // Remove stale actual-placement and inline opacity so the next
+            // open starts with a clean state.
+            this.dialogEl.removeAttribute('actual-placement');
+            this.dialogEl.style.removeProperty('opacity');
         }
     }
 

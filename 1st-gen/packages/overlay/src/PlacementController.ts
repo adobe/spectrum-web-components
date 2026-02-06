@@ -369,6 +369,17 @@ export class PlacementController implements ReactiveController {
         // Set the 'actual-placement' attribute on the target element.
         target.setAttribute('actual-placement', placement);
 
+        // Reveal the dialog now that it is at the correct position. The
+        // overlay's manageOpen() hides it with inline opacity to prevent a
+        // flash at the wrong location while positioning is computed async.
+        // Only reveal when the overlay is actually open; during the close
+        // transition, shouldHidePopover() triggers resetOverlayPosition()
+        // which re-runs computePlacement() — removing opacity here would
+        // undo the hiding and flash the overlay at the recalculated position.
+        if ((this.host as unknown as { open: boolean }).open) {
+            target.style.removeProperty('opacity');
+        }
+
         // Update the placement attribute for each host element.
         this.host.elements?.forEach((element) => {
             if (!this.originalPlacements.has(element)) {
