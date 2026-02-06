@@ -331,7 +331,6 @@ export class MenuItem extends LikeAnchor(
         if (this.disabled) {
             event.preventDefault();
             event.stopImmediatePropagation();
-            event.stopPropagation();
             return false;
         }
 
@@ -395,7 +394,7 @@ export class MenuItem extends LikeAnchor(
                 this.dependencyManager.loaded}
                 .placement=${this.isLTR ? 'right-start' : 'left-start'}
                 receives-focus="false"
-                .offset=${[-10, -5] as [number, number]}
+                .offset=${[-10, 0] as [number, number]}
                 .type=${'auto'}
                 @close=${(event: Event) => event.stopPropagation()}
                 @slottable-request=${this.handleSlottableRequest}

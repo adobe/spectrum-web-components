@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -36,8 +36,6 @@ import {
  * @slot - Accessible label for the progress circle.
  *
  *   Used to provide context about what is loading or progressing.
- *
- * @fires progress-change - Dispatched when the progress value changes
  */
 export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
     validSizes: PROGRESS_CIRCLE_VALID_SIZES,
@@ -157,7 +155,7 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
             );
         };
 
-        if (window.__swc.DEBUG) {
+        if (window.__swc?.DEBUG) {
             if (
                 !hasAccessibleName() &&
                 this.getAttribute('role') === 'progressbar'

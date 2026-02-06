@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -19,18 +19,12 @@ import {
     ProgressCircleBase,
     type ProgressCircleStaticColorS2,
 } from '@spectrum-web-components/core/components/progress-circle';
+import { capitalize } from '@spectrum-web-components/core/shared/utilities';
 
 import progressCircleStyles from './progress-circle.css';
-
-function capitalize(str?: string): string {
-    if (typeof str !== 'string') {
-        return '';
-    }
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
 /**
- * A progress circle component that visually represents the completion progress of a task.
- * Can be used in both determinate (with specific progress value) and indeterminate (loading) states.
+ * Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way.
+ * They can represent determinate (with a specific progress value) or indeterminate (loading) progress.
  *
  * @element swc-progress-circle
  *
@@ -82,12 +76,11 @@ export class ProgressCircle extends ProgressCircleBase {
         return html`
             <div
                 class=${classMap({
-                    ['spectrum-ProgressCircle']: true,
-                    [`spectrum-ProgressCircle--indeterminate`]:
-                        this.indeterminate,
-                    [`spectrum-ProgressCircle--static${capitalize(this.staticColor)}`]:
+                    ['swc-ProgressCircle']: true,
+                    [`swc-ProgressCircle--indeterminate`]: this.indeterminate,
+                    [`swc-ProgressCircle--static${capitalize(this.staticColor)}`]:
                         typeof this.staticColor !== 'undefined',
-                    [`spectrum-ProgressCircle--size${this.size?.toUpperCase()}`]:
+                    [`swc-ProgressCircle--size${this.size?.toUpperCase()}`]:
                         typeof this.size !== 'undefined',
                 })}
             >
@@ -96,10 +89,10 @@ export class ProgressCircle extends ProgressCircleBase {
                     fill="none"
                     width="100%"
                     height="100%"
-                    class="spectrum-outerCircle"
+                    class="swc-outerCircle"
                 >
                     <circle
-                        class="spectrum-innerCircle"
+                        class="swc-innerCircle"
                         cx="50%"
                         cy="50%"
                         r=${`calc(50% - ${strokeWidth / 1}px)`}
@@ -108,14 +101,14 @@ export class ProgressCircle extends ProgressCircleBase {
                     <circle
                         cx="50%"
                         cy="50%"
-                        class="spectrum-ProgressCircle-track"
+                        class="swc-ProgressCircle-track"
                         r=${radius}
                     />
                     <circle
                         cx="50%"
                         cy="50%"
                         r=${radius}
-                        class="spectrum-ProgressCircle-fill"
+                        class="swc-ProgressCircle-fill"
                         pathLength="100"
                         stroke-dasharray="100 200"
                         stroke-dashoffset=${100 - this.progress}

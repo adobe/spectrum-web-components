@@ -1,0 +1,132 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Customization/Theme and Scales" />
+
+# Theme and Scales
+
+The theme and scale context classes and methods replace the features previously offered via `<sp-theme>`.
+
+Be sure to review the [getting started guide](/docs/guides-customization-getting-started--docs) for how to include the required stylesheet.
+
+## Themes
+
+Spectrum 2 supports a `light` and `dark` theme. Corresponding color values are expressed via custom properties using the `light-dark()` CSS function.
+
+By default, the application will be set to a `light` theme.
+
+Preview component theme color changes via the top toolbar.
+
+### Theme classes
+
+You can change your application - or a section or element - to an alternate theme by including both the `swc-theme` class and a theme class.
+
+- `.swc-theme--dark` - sets `color-scheme: dark`
+- `.swc-theme--light` - sets `color-scheme: light`
+- `.swc-theme--adaptive` - sets `color-scheme: light dark`, adapts to user's OS setting
+
+### Theme examples
+
+```html
+<!-- Default app theme - light -->
+<html></html>
+
+<!-- Dark app theme -->
+<html class="swc-theme swc-theme--dark"></html>
+
+<!-- Adaptive app theme -->
+<html class="swc-theme swc-theme--adaptive"></html>
+
+<!-- Nested theme switching -->
+<div class="swc-theme swc-theme--dark">
+    <div class="swc-theme swc-theme--light"></div>
+</div>
+```
+
+## Scale contexts
+
+There are two scale contexts available: medium (aka "Desktop") and large (aka "Mobile"). Scales apply to properties such as `font-size` and spacing-related values.
+
+By default, the application will be set to use a medium scaling context.
+
+Preview component scale changes via the top toolbar.
+
+### Scale classes
+
+You can change your application - or a section or element - to an alternate theme by including both the `swc-theme` class and a scale class.
+
+- `.swc-theme--sizeM` - use the medium scale
+- `.swc-theme--sizeL` - use the large scale
+
+See the examples for you can also change the scale responsively.
+
+### Scale examples
+
+Option one is to alter scale appearance via classes.
+
+```html
+<!-- Default app theme - medium -->
+<html></html>
+
+<!-- Large app theme -->
+<html class="swc-theme swc-theme--sizeL"></html>
+
+<!-- Nested scale switching -->
+<div class="swc-theme swc-theme--sizeL">
+    <div class="swc-theme swc-theme--sizeM"></div>
+</div>
+```
+
+Alternatively, you can switch the scale context within a media query for the entire application.
+
+```css
+/* Swap entire app to Large below 600px breakpoint */
+@media (max-width: 600px) {
+    :root,
+    .swc-theme {
+        --swc-theme-size: var(--swc-theme--sizeL);
+    }
+}
+```
+
+You can also do this per a custom class (or other selector) for a section or specific element, but **this requires** inclusion of the `swc-theme` class on the targeted element. This enables changing the scale via any valid CSS selector and querying method.
+
+```css
+/* .my-section-large must also have the class .swc-theme */
+.my-section-large {
+    @container (inline-size < 30ch) {
+        --swc-theme-size: var(--swc-theme--sizeL);
+    }
+}
+
+/* Also available for extension inside custom elements
+<custom-element> must also have the class .swc-theme */
+@container (inline-size < 30ch) {
+    :host {
+        --swc-theme-size: var(--swc-theme--sizeL);
+    }
+}
+```
+
+### How dynamic scaling works
+
+Dynamic scaling is available via all provided design tokens which include values for `desktop` (medium) and `mobile` (large) contexts.
+
+These are processed into a format like the following:
+
+```css
+--swc-font-size-100: var(--swc-theme--sizeM, 14px) var(--swc-theme--sizeL, 17px);
+```
+
+Due to a bit of CSS magic relying on [cyclic dependency toggles](https://kizu.dev/cyclic-toggles/), the value that corresponds with the current value of `--swc-theme` is what becomes the computed value.
+
+### Setting up custom dynamic scaling values
+
+To create custom dynamic scaling values, provide values for both sizes within your property definition.
+
+In this example, the value `1rem` will be used for the medium scale, and the value `1.25rem` will be used for the large scale.
+
+```css
+.element {
+    margin-block: var(--swc-theme--sizeM, 1rem) var(--swc-theme--sizeL, 1.25rem);
+}
+```

@@ -1,0 +1,45 @@
+{
+    "name": "@adobe/swc-tokens",
+    "version": "0.0.1",
+    "private": true,
+    "description": "Second generation Spectrum Web Components token processing",
+    "license": "Apache-2.0",
+    "author": "Adobe",
+    "contributors": [
+        "Stephanie Eckles <5t3ph@users.noreply.github.com>"
+    ],
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+    "repository": {
+        "directory": "2nd-gen/packages/tools/swc-tokens",
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "type": "module",
+    "main": "index.js",
+    "bin": "index.js",
+    "scripts": {
+        "debug:tokens": "node index.js --outputType tokens --out ./tokens.json --debug true",
+        "generate:stylesheet": "node index.js --outputType stylesheet --out ./tokens.css --prefix swc",
+        "generate:tokens": "node index.js --outputType tokens --out ./tokens.json",
+        "test": "vitest --run",
+        "test:watch": "vitest --watch"
+    },
+    "dependencies": {
+        "@adobe/spectrum-tokens": "^14.0.0",
+        "prettier": "^3.7.4",
+        "yargs": "^18.0.0"
+    },
+    "devDependencies": {
+        "vitest": "4.0.15"
+    },
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "2nd-gen"
+    ]
+}

@@ -40,6 +40,7 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/slider/sp-slider.js';
+import '@spectrum-web-components/switch/sp-switch.js';
 import '@spectrum-web-components/radio/sp-radio.js';
 import '@spectrum-web-components/radio/sp-radio-group.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
@@ -53,6 +54,7 @@ import './overlay-story-components.js';
 import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { state } from '@spectrum-web-components/base/src/decorators.js';
+import { cache } from 'lit/directives/cache.js';
 
 const storyStyles = html`
     <style>
@@ -290,38 +292,53 @@ insertionOptions.parameters = {
 
 class ManagedOverlayTrigger extends LitElement {
     @state()
-    private isRenderOverlay = false;
+    private quickActionsEnabled = false;
 
     @state()
-    private isOpenState = false;
+    private isMenuOpen = false;
 
     protected override render(): TemplateResult {
         return html`
-            <sp-button
-                @click=${() => {
-                    this.isRenderOverlay = !this.isRenderOverlay;
-                }}
+            <div
+                style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;"
             >
-                Toggle Overlay Render Button
-            </sp-button>
+                <sp-field-label for="quick-actions-toggle">
+                    Enable quick actions toolbar
+                </sp-field-label>
+                <sp-switch
+                    id="quick-actions-toggle"
+                    ?checked=${this.quickActionsEnabled}
+                    @change=${() => {
+                        this.quickActionsEnabled = !this.quickActionsEnabled;
+                    }}
+                >
+                    ${this.quickActionsEnabled ? 'Enabled' : 'Disabled'}
+                </sp-switch>
 
-            <sp-button
-                @click=${() => {
-                    this.isRenderOverlay = true;
-                    this.isOpenState = true;
-                }}
-            >
-                Create Overlay Render Button And Open Overlay
-            </sp-button>
+                <p
+                    style="max-width: 600px; color: var(--spectrum-neutral-content-color-default); font-size: 14px; margin: 0;"
+                >
+                    The quick actions button below is wrapped with Lit's
+                    <code>cache()</code>
+                    directive, which preserves the DOM and component state when
+                    toggled off instead of destroying it. This tests that the
+                    overlay trigger properly handles reconnection without
+                    errors.
+                </p>
 
-            ${this.isRenderOverlay ? this.renderOverlayButton() : html``}
+                ${cache(
+                    this.quickActionsEnabled
+                        ? this.renderQuickActionsButton()
+                        : html``
+                )}
+            </div>
         `;
     }
 
-    private renderOverlayButton(): TemplateResult {
+    private renderQuickActionsButton(): TemplateResult {
         return html`
-            <sp-button
-                ?selected=${this.isOpenState}
+            <sp-action-button
+                ?selected=${this.isMenuOpen}
                 ${trigger(
                     () => html`
                         <sp-popover
@@ -331,8 +348,7 @@ class ManagedOverlayTrigger extends LitElement {
                                 if (event.target !== event.currentTarget) {
                                     return;
                                 }
-                                console.log('sp-opened');
-                                this.isOpenState = true;
+                                this.isMenuOpen = true;
                             }}
                             @sp-closed=${(
                                 event: CustomEvent<OverlayOpenCloseDetail>
@@ -340,22 +356,26 @@ class ManagedOverlayTrigger extends LitElement {
                                 if (event.target !== event.currentTarget) {
                                     return;
                                 }
-                                console.log('sp-closed');
-                                this.isOpenState = false;
+                                this.isMenuOpen = false;
                             }}
                         >
-                            <h1>My Test Popover</h1>
+                            <sp-menu>
+                                <sp-menu-item>Copy</sp-menu-item>
+                                <sp-menu-item>Paste</sp-menu-item>
+                                <sp-menu-divider></sp-menu-divider>
+                                <sp-menu-item>Delete</sp-menu-item>
+                            </sp-menu>
                         </sp-popover>
                     `,
                     {
                         triggerInteraction: 'click',
                         overlayOptions: { placement: 'bottom-end' },
-                        open: this.isOpenState,
+                        open: this.isMenuOpen,
                     }
                 )}
             >
-                Toggle Popover
-            </sp-button>
+                Quick Actions
+            </sp-action-button>
         `;
     }
 }
