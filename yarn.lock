@@ -6643,9 +6643,6 @@ __metadata:
 "@spectrum-web-components/stylelint-header-plugin@workspace:*, @spectrum-web-components/stylelint-header-plugin@workspace:linters/stylelint-header-plugin":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/stylelint-header-plugin@workspace:linters/stylelint-header-plugin"
-  dependencies:
-    "@types/node": "npm:22.15.21"
-    typescript: "npm:5.9.2"
   peerDependencies:
     stylelint: ">=16"
   languageName: unknown

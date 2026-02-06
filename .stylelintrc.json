@@ -1,37 +1,11 @@
 {
-    "plugins": [
-        "@spectrum-web-components/stylelint-header-plugin",
-        "stylelint-order",
-        "stylelint-declaration-strict-value"
-    ],
     "extends": [],
-    "rules": {
-        "order/properties-alphabetical-order": [
-            true,
-            {
-                "severity": "warning"
-            }
-        ]
-    },
     "overrides": [
         {
-            "files": ["**/*.css"],
             "extends": ["stylelint-config-standard"],
+            "files": ["**/*.css"],
             "rules": {
-                "swc/header": "/**\n * Copyright 2026 Adobe. All rights reserved.\n * This file is licensed to you under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License. You may obtain a copy\n * of the License at http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software distributed under\n * the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS\n * OF ANY KIND, either express or implied. See the License for the specific language\n * governing permissions and limitations under the License.\n */",
-                "length-zero-no-unit": [
-                    true,
-                    { "ignore": "custom-properties" }
-                ],
-                "selector-type-no-unknown": [
-                    true,
-                    { "ignore": ["custom-elements"] }
-                ],
-                "selector-pseudo-element-colon-notation": ["single", {}],
                 "custom-property-pattern": "^_?([a-z][a-z0-9]*)(-[a-z0-9]+)*(?:--(sizeM|sizeL))?$",
-                "no-duplicate-selectors": null,
-                "selector-class-pattern": null,
-                "no-descending-specificity": null,
                 "declaration-block-no-redundant-longhand-properties": null,
                 "declaration-property-value-no-unknown": [
                     true,
@@ -40,7 +14,20 @@
                             "/.+/": ["/token((.*))/"]
                         }
                     }
-                ]
+                ],
+                "length-zero-no-unit": [
+                    true,
+                    { "ignore": "custom-properties" }
+                ],
+                "no-descending-specificity": null,
+                "no-duplicate-selectors": null,
+                "selector-class-pattern": null,
+                "selector-pseudo-element-colon-notation": ["single", {}],
+                "selector-type-no-unknown": [
+                    true,
+                    { "ignore": ["custom-elements"] }
+                ],
+                "swc/header": "/**\n * Copyright 2026 Adobe. All rights reserved.\n * This file is licensed to you under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License. You may obtain a copy\n * of the License at http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software distributed under\n * the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS\n * OF ANY KIND, either express or implied. See the License for the specific language\n * governing permissions and limitations under the License.\n */"
             }
         },
         {
@@ -59,7 +46,6 @@
                         "line-height"
                     ],
                     {
-                        "severity": "warning",
                         "disableFix": true,
                         "ignoreValues": [
                             "currentcolor",
@@ -69,10 +55,24 @@
                             "transparent",
                             "unset"
                         ],
-                        "message": "Use a design token (CSS custom property or token() function) instead of hardcoded value for '${property}'"
+                        "message": "Use a design token (CSS custom property or token() function) instead of hardcoded value for '${property}'",
+                        "severity": "warning"
                     }
                 ]
             }
         }
-    ]
+    ],
+    "plugins": [
+        "@spectrum-web-components/stylelint-header-plugin",
+        "stylelint-order",
+        "stylelint-declaration-strict-value"
+    ],
+    "rules": {
+        "order/properties-alphabetical-order": [
+            true,
+            {
+                "severity": "warning"
+            }
+        ]
+    }
 }

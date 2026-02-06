@@ -102,9 +102,6 @@ jobs:
               shell: bash
               run: yarn install --immutable
 
-            - name: Build stylelint plugin
-              run: yarn workspace @spectrum-web-components/stylelint-header-plugin build
-
             - name: Lint styles
               # if: ${{ needs.changed_files.outputs.styles_added_files != '' || needs.changed_files.outputs.styles_modified_files != '' }}
               uses: reviewdog/action-stylelint@v1.30.2

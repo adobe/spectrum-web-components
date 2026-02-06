@@ -10,8 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-/* stylelint-disable selector-class-pattern -- Targeting pre-defined Storybook classes */
-
 body {
     font-family: var(--swc-sans-font-family-stack);
     font-size: var(--swc-body-font-size);
@@ -20,7 +18,7 @@ body {
 }
 
 .docblock-argstable-body tr td {
-    font-size: 1rem;
+    font-size: var(--swc-body-size-s) !important;
     letter-spacing: unset;
 }
 
@@ -34,7 +32,7 @@ body {
 }
 
 .sidebar-item {
-    font-weight: 700 !important;
+    font-weight: var(--swc-bold-font-weight) !important;
 }
 
 button[data-action="collapse-root"] {
@@ -75,4 +73,3 @@ select:focus,
         width: 100% !important;
     }
 }
-/* stylelint-enable selector-class-pattern */
