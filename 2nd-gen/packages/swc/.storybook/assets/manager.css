@@ -1,0 +1,67 @@
+/* stylelint-disable header/header */
+/* stylelint-disable selector-class-pattern -- Targeting pre-defined Storybook classes */
+
+body {
+    margin: 0;
+    font-family: var(--swc-sans-font-family-stack);
+    font-size: var(--swc-body-font-size);
+    font-style: var(--swc-default-font-style);
+}
+
+.docblock-argstable-body tr td {
+    letter-spacing: unset;
+    font-size: 1rem;
+}
+
+.docblock-argstable-body td > span:has(select),
+.docblock-argstable-body td textarea {
+    max-inline-size: 192px !important;
+}
+
+#storybook-explorer-searchfield {
+    padding: 3px 12px 5px 35px !important;
+}
+
+.sidebar-item {
+    font-weight: 700 !important;
+}
+
+button[data-action='collapse-root'] {
+    font-family: var(--swc-sans-font-family-stack);
+    font-style: var(--swc-detail-sans-serif-font-style);
+    font-weight: var(--swc-detail-sans-serif-font-weight);
+    font-size: var(--swc-detail-size-m);
+    margin-block-start: 0;
+    margin-block-end: 0;
+    color: var(--swc-detail-color);
+    line-height: var(--swc-detail-line-height);
+    letter-spacing: var(--swc-detail-letter-spacing);
+    text-transform: uppercase;
+}
+
+.sidebar-item {
+    padding-block: 0.25rem;
+}
+
+input,
+textarea,
+select {
+    border-radius: 0.25rem !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+#storybook-explorer-searchfield:focus {
+    border-color: rgb(2 101 220) !important;
+    box-shadow: rgb(2 101 220) 0 0 0 1px inset !important;
+}
+
+.sbdocs-toc--custom {
+    width: 20rem !important;
+
+    nav {
+        width: 100% !important;
+    }
+}
+/* stylelint-enable selector-class-pattern */

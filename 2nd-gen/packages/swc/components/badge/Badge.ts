@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -16,6 +16,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';
 
 import {
+    BADGE_VALID_SIZES,
     BADGE_VARIANTS_COLOR_S2,
     BADGE_VARIANTS_S2,
     BadgeBase,
@@ -27,6 +28,7 @@ import styles from './badge.css';
 /**
  * A badge component that displays short, descriptive information about an element.
  * Badges are typically used to indicate status, categories, or provide supplementary information.
+ *
  *
  * @element swc-badge
  *
@@ -53,6 +55,11 @@ export class Badge extends BadgeBase {
      * @internal
      */
     static override readonly VARIANTS = BADGE_VARIANTS_S2;
+
+    /**
+     * @internal
+     */
+    static override readonly VALID_SIZES = BADGE_VALID_SIZES;
 
     /**
      * The variant of the badge.
@@ -94,14 +101,12 @@ export class Badge extends BadgeBase {
         return html`
             <div
                 class=${classMap({
-                    ['spectrum-Badge']: true,
-                    [`spectrum-Badge--size${this.size?.toUpperCase()}`]:
-                        typeof this.size !== 'undefined',
-                    [`spectrum-Badge--${this.variant}`]:
+                    ['swc-Badge']: true,
+                    [`swc-Badge--${this.variant}`]:
                         typeof this.variant !== 'undefined',
-                    [`spectrum-Badge--subtle`]: this.subtle,
-                    [`spectrum-Badge--outline`]: this.outline,
-                    [`spectrum-Badge--fixed-${this.fixed}`]:
+                    [`swc-Badge--subtle`]: this.subtle,
+                    [`swc-Badge--outline`]: this.outline,
+                    [`swc-Badge--fixed-${this.fixed}`]:
                         typeof this.fixed !== 'undefined',
                 })}
             >
@@ -110,16 +115,14 @@ export class Badge extends BadgeBase {
                     () => html`
                         <div
                             class=${classMap({
-                                [`spectrum-Badge-icon`]: true,
-                                [`spectrum-Badge-icon--no-label`]:
-                                    !this.slotHasContent,
+                                [`swc-Badge-icon`]: true,
                             })}
                         >
                             <slot name="icon"></slot>
                         </div>
                     `
                 )}
-                <div class="spectrum-Badge-label">
+                <div class="swc-Badge-label">
                     <slot></slot>
                 </div>
             </div>

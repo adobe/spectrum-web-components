@@ -315,6 +315,7 @@
     --system-menu-item-focus-indicator-offset: var(--spectrum-spacing-50);
     --system-menu-item-spacing-multiplier: 1;
     --system-menu-item-focus-indicator-outline-style: solid;
+    --system-submenu-offset-block: -9px;
     --system-meter-min-width: var(--spectrum-meter-minimum-width);
     --system-meter-max-width: var(--spectrum-meter-maximum-width);
     --system-meter-inline-size: var(--spectrum-meter-width);
