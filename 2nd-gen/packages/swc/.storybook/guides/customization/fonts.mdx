@@ -1,0 +1,139 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Customization/Fonts" />
+
+# Fonts
+
+2nd-gen SWC uses **Adobe Clean Spectrum VF** (Variable Font), which is the updated font family introduced with Spectrum 2. This is different from 1st-gen SWC, which uses the legacy **Adobe Clean** font.
+
+## What's new in Adobe Clean Spectrum VF
+
+Adobe Clean Spectrum VF is the default typeface for Spectrum 2. While it looks visually identical to Adobe Clean—the characters, glyphs, and sizing remain the same—it introduces several important improvements:
+
+- **Updated font metrics** - Improved vertical alignment, especially within components and patterns. The font's baseline position is adjusted to better align text with nearby UI elements like icons and visuals
+- **Variable font technology** - Supports expanded width and weight controls, including Condensed and SemiCondensed options, for more precise typographic adjustments and better performance
+- **Serif alignment** - Adobe Clean Spectrum VF and Adobe Clean Spectrum Serif VF are now aligned vertically
+- **Performance and consistency** - Bug fixes and greater consistency across tools used in product design
+- **Modern font development** - Unified vertical metrics in line with current best practices, reducing the need for manual pixel tweaks in layouts
+
+## Font loading in 2nd-gen Storybook
+
+This Storybook automatically loads Adobe Clean Spectrum VF via Adobe Fonts (Typekit) for preview and development purposes. The font is loaded from the `spectrum-web-components-2nd-gen` web project in the SWC Adobe Fonts account.
+
+You can verify the font is loaded by:
+
+1. Opening your browser's Network tab
+2. Looking for successful requests to `use.typekit.net` (status 200)
+3. Inspecting any component's computed styles to see the font family
+
+## Using fonts in your application
+
+**Important:** If you're implementing 2nd-gen SWC in your application, you **must also** include Adobe Clean Spectrum VF in your project. The components will not render correctly with legacy Adobe Clean or system fonts.
+
+### Option 1: Adobe Fonts (Typekit) - Recommended
+
+If your organization has access to Adobe Fonts:
+
+1. Create or use an existing Adobe Fonts web project
+2. Add the following fonts to your project:
+    - **Adobe Clean Spectrum VF** (sans-serif)
+    - **Adobe Clean Serif** (serif, if needed)
+    - **Adobe Clean Han** (CJK languages, if needed)
+3. Include the Adobe Fonts embed code in your application's `<head>`:
+
+```html
+<link rel="preconnect" href="https://use.typekit.net" crossorigin />
+<link rel="stylesheet" href="https://use.typekit.net/YOUR-KIT-ID.css" />
+```
+
+For reference, see the [RSP Spectrum 2 Fonts guide](https://wiki.corp.adobe.com/pages/viewpage.action?spaceKey=RSP&title=Spectrum+2+Fonts) (Adobe internal).
+
+**Note:** There is also a static (non-variable) version of Adobe Clean Spectrum available for teams or platforms that don't support variable fonts. They look exactly the same—it's just about how they function. If you need access to the static font, reach out to the Spectrum team.
+
+### Option 2: Self-hosted fonts
+
+If you need to self-host the fonts:
+
+1. Obtain the Adobe Clean Spectrum VF font files through your organization's licensing
+2. Host the font files on your CDN or application server
+3. Define `@font-face` rules in your CSS:
+
+```css
+@font-face {
+    font-family: 'adobe-clean-spectrum-vf';
+    src: url('/path/to/adobe-clean-spectrum-vf.woff2') format('woff2');
+    font-weight: 100 900;
+    font-display: swap;
+}
+```
+
+## Font fallback stack
+
+2nd-gen SWC uses the following font fallback stacks:
+
+### Sans-serif (default)
+
+```css
+adobe-clean-spectrum-vf, 'Adobe Clean Spectrum VF', adobe-clean, 'Adobe Clean',
+'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif
+```
+
+Note: `'Adobe Clean Spectrum VF'` appears from the upstream Spectrum token resolution.
+
+### Serif
+
+```css
+adobe-clean-spectrum-srf-vf, 'Adobe Clean Spectrum Serif VF', adobe-clean-serif,
+'Adobe Clean Serif', 'Source Serif Pro', Georgia, serif
+```
+
+Note: `'Adobe Clean Spectrum Serif VF'` appears from the upstream Spectrum token resolution.
+
+### CJK (Chinese, Japanese, Korean)
+
+```css
+adobe-clean-han-japanese, Adobe Clean Han, sans-serif
+```
+
+Note: `Adobe Clean Han` appears from the upstream Spectrum token resolution.
+
+These stacks ensure graceful degradation if the primary fonts are unavailable.
+
+## Differences from 1st-gen
+
+| Aspect           | 1st-gen                    | 2nd-gen                       |
+| ---------------- | -------------------------- | ----------------------------- |
+| Primary font     | Adobe Clean                | Adobe Clean Spectrum VF       |
+| Font technology  | Traditional                | Variable Font                 |
+| Spectrum version | Spectrum 1                 | Spectrum 2                    |
+| Loading method   | Via `<sp-theme>` or manual | Manual (required in your app) |
+
+## Troubleshooting
+
+### Fonts not loading
+
+1. Check browser Network tab for failed requests to Adobe Fonts
+2. Verify your Adobe Fonts kit ID is correct
+3. Ensure your domain is allowlisted in your Adobe Fonts web project settings
+4. Check for CORS issues if self-hosting fonts
+
+### Wrong font rendering
+
+1. Inspect computed styles to see which font is actually being used
+2. Check if Adobe Clean Spectrum VF is in your font fallback stack
+3. Verify font files are accessible and loading correctly
+4. Clear browser cache and reload
+
+### CJK font support
+
+CJK (Chinese, Japanese, Korean) font delivery is handled separately from the base Latin fonts. If you need CJK support, ensure you've included Adobe Clean Han in your Adobe Fonts web project or font loading setup.
+
+## Resources
+
+- [Spectrum 2 Typography Fundamentals](https://s2.spectrum.corp.adobe.com/page/typography-fundamentals/) (Adobe internal)
+- [Spectrum 2 Fonts Page](https://s2.spectrum.corp.adobe.com/page/fonts/) (Adobe internal)
+- [Adobe Clean Spectrum Font Guide](https://wiki.corp.adobe.com/pages/viewpage.action?pageId=3228940706) (Adobe internal) - Comprehensive guide covering font metrics, implementation, and FAQs
+- [RSP Spectrum 2 Fonts Wiki](https://wiki.corp.adobe.com/pages/viewpage.action?spaceKey=RSP&title=Spectrum+2+Fonts) (Adobe internal) - Engineering implementation details
+- [Adobe Fonts](https://fonts.adobe.com/) (requires Adobe account)
+- [Using Adobe Fonts at Adobe](https://wiki.corp.adobe.com/display/fonts/Using+Adobe+Fonts+at+Adobe) (Adobe internal)

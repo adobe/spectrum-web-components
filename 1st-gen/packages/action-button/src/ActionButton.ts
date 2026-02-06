@@ -179,7 +179,6 @@ export class ActionButton extends SizedMixin(ButtonBase, {
         if (code === 'Space' || (altKey && code === 'ArrowDown')) {
             event.preventDefault();
             if (code === 'ArrowDown') {
-                event.stopPropagation();
                 event.stopImmediatePropagation();
             }
             this.addEventListener('keyup', this.handleKeyup);

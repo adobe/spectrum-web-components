@@ -27,12 +27,13 @@
     - [Patching dependencies](01_contributor-guides/08_patching-dependencies.md)
     - [Accessibility testing](01_contributor-guides/09_accessibility-testing.md)
 - [Style guide](02_style-guide/README.md)
+    - [2nd-Gen CSS](02_style-guide/01_css/README.md)
 - [Project planning](03_project-planning/README.md)
     - [Objectives and strategy](03_project-planning/01_objectives-and-strategy.md)
     - [Workstreams](03_project-planning/02_workstreams/README.md)
     - [Components](03_project-planning/03_components/README.md)
     - [Milestones](03_project-planning/04_milestones/README.md)
-- [Accessbility Guide](04_accessibility_guides/README.md)
+- [Accessibility Guide](04_accessibility_guides/README.md)
     - [Semantic HTML and ARIA](04_accessibility_guides/01_semantic_html_aria.md)
     - [Accessible pattern libraries](04_accessibility_guides/02_accessible_pattern_libraries.md)
     - [Keyboard testing](04_accessibility_guides/03_keyboard_testing.md)
@@ -69,7 +70,7 @@ The docs are organized into three main sections to help you find the information
 
 **[Style Guide](./02_style-guide/README.md)** - Comprehensive style guide covering project-wide conventions and area-specific rules. This section is useful for human reference and for AI-assisted work, documenting our approaches to linting, JSDoc conventions, component structure, and other coding standards.
 
-**[Accessbility Guide](./04_accessbility_guides/README.md)** - Accessibility guide covering essential accessibility knowledge and practices for customers and contributors to Spectrum Web Components.
+**[Accessibility Guide](./04_accessibility_guides/README.md)** - Accessibility guide covering essential accessibility knowledge and practices for customers and contributors to Spectrum Web Components.
 
 **[Project Planning](./03_project-planning/README.md)** - Strategic planning documentation including objectives, workstreams, component roadmaps, and milestones. This section contains:
 

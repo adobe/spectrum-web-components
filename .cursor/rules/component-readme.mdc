@@ -1,0 +1,216 @@
+---
+description: Guidelines for component README documentation structure and accessibility compliance
+globs: 1st-gen/packages/*/README.md
+alwaysApply: false
+---
+# Component README documentation guidelines
+
+Use this rule when editing or creating component README files in `1st-gen/packages/*/README.md`.
+
+## When to apply
+
+Apply when the user requests any of the following:
+
+- Reorganize or restructure a component README
+- Update component documentation
+- Add accessibility documentation to a component
+- Create documentation for a new component
+- Review README structure for a11y compliance
+- Standardize README format
+
+## Required document structure
+
+Component READMEs must follow this heading hierarchy. All sections are required unless the component genuinely has no content for that section.
+
+```md
+## Overview
+
+A brief description of what the component does and when to use it.
+
+### Usage
+
+NPM badges, yarn install command, and import statements.
+
+### Anatomy
+
+The parts of the component (labels, icons, slots, etc.) with examples.
+
+### Options
+
+Configurable options like sizes, variants, and visual treatments.
+
+### States
+
+Interactive states like disabled, pending, invalid, loading.
+
+### Behaviors
+
+Events, methods, values, and user interactions.
+
+### Accessibility
+
+Tips on accessible usage and notes on a11y considerations in development.
+```
+
+## Heading rules
+
+- Start with `## Overview` (not `# Component Name`)
+- Use `###` for subsections within main sections
+- Use `####` for sub-subsections when needed
+- Maintain logical hierarchy (never skip levels)
+- See W3C WAI [Headings tutorial](https://www.w3.org/WAI/tutorials/page-structure/headings/)
+
+## Usage section format
+
+Include in this order:
+
+1. NPM badges (see it on NPM, bundle size, try on Stackblitz)
+2. Yarn install command
+3. Side-effectful import statement
+4. Base class import for extension
+
+Example:
+
+````md
+[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/COMPONENT?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/COMPONENT)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/COMPONENT?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/COMPONENT)
+
+```bash
+yarn add @spectrum-web-components/COMPONENT
+```
+
+Import the side effectful registration of `<sp-COMPONENT>` via:
+
+```ts
+import '@spectrum-web-components/COMPONENT/sp-COMPONENT.js';
+```
+
+When looking to leverage the `ComponentName` base class as a type and/or for extension purposes, do so via:
+
+```ts
+import { ComponentName } from '@spectrum-web-components/COMPONENT';
+```
+````
+
+## Using sp-tabs for examples
+
+Use `<sp-tabs>` to organize related examples (sizes, variants, states). Always include:
+
+- `selected` attribute for the default tab
+- `auto` attribute for automatic tab selection
+- `label` attribute for accessibility
+
+Pattern:
+
+````html
+<sp-tabs selected="m" auto label="Size attribute options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
+
+```html demo
+<!-- Example code here -->
+```
+
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
+
+```html demo
+<!-- Example code here -->
+```
+
+</sp-tab-panel>
+</sp-tabs>
+````
+
+## Code example requirements
+
+All code examples must be accessible:
+
+1. **Labels required**: Every interactive component needs a visible label or `label` attribute
+2. **Field labels**: Use `<sp-field-label for="id">` paired with the component's `id`
+3. **Icon-only buttons**: Must have `label` attribute on the button or icon
+4. **SVG icons**: Include `aria-hidden="true" role="img"` or provide `label`
+5. **Unique IDs**: Use unique `id` values (e.g., `picker-m`, `picker-l` for size variants)
+
+Good example:
+
+```html
+<sp-field-label for="picker-size-m">Selection type:</sp-field-label>
+<sp-picker id="picker-size-m" size="m" label="Selection type">
+    <sp-menu-item>Option 1</sp-menu-item>
+</sp-picker>
+```
+
+Bad example:
+
+```html
+<!-- Missing label association -->
+<sp-picker>
+    <sp-menu-item>Option 1</sp-menu-item>
+</sp-picker>
+```
+
+## Accessibility section requirements
+
+The accessibility section must include:
+
+1. **Usage guidance**: How to use the component accessibly
+2. **Label requirements**: What labeling is required
+3. **Keyboard considerations**: If applicable
+4. **Screen reader notes**: Any AT-specific behavior
+5. **Development notes**: Cross-root ARIA issues or other implementation details
+
+Use `<sp-table>` for keyboard actions when documenting keyboard interactions.
+Use `<kbd>` tags for keyboard keys (e.g., `<kbd>Tab</kbd>`, `<kbd>Enter</kbd>`).
+
+Link to related component accessibility sections:
+
+```md
+Review the accessibility guidelines for [menu-item](../menu-item#accessibility).
+```
+
+## Cross-component references
+
+Link to related components using relative paths:
+
+- `[sp-menu-item](../menu-item)` - link to component
+- `[accessibility section](../menu-item#accessibility)` - link to specific section
+
+## Prompt template for reorganizing READMEs
+
+When asked to reorganize a README, follow this process:
+
+1. **Do not remove any content** - Only reorganize and restructure
+2. **Map existing content** to the required structure sections
+3. **Use similar components as style references**: `menu`, `help-text`, `button`, `picker`
+4. **Check the component's TypeScript file** for API details to document
+5. **Follow the adding-component documentation standards**
+
+## Reference documents
+
+- [Documentation standards](https://opensource.adobe.com/spectrum-web-components/guides/adding-component/#documentation-standards)
+- [Documentation structure](https://opensource.adobe.com/spectrum-web-components/guides/adding-component/#documentation-structure)
+- [Spectrum Design System](https://spectrum.adobe.com/) for consistent language
+
+## Example component READMEs
+
+Reference these well-structured READMEs:
+
+- `packages/menu/README.md` - Good sp-tabs usage, accessibility cross-references
+- `packages/help-text/README.md` - Good contextual examples, cross-root ARIA notes
+- `packages/button/README.md` - Comprehensive options and accessibility guidance
+- `packages/picker/README.md` - Complex anatomy, help text integration
+
+## Validation checklist
+
+Before completing a README update, verify:
+
+- [ ] Starts with `## Overview` (not h1)
+- [ ] All six main sections present (Overview, Usage, Anatomy, Options, States, Behaviors, Accessibility)
+- [ ] Heading hierarchy is correct (no skipped levels)
+- [ ] All code examples have accessible labels
+- [ ] `<sp-tabs>` have `auto` and `label` attributes
+- [ ] Links to related components use relative paths
+- [ ] Accessibility section has substantive guidance
+- [ ] Language matches Spectrum Design System terminology

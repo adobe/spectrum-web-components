@@ -1,0 +1,43 @@
+{
+    "name": "@adobe/postcss-token",
+    "version": "0.0.1",
+    "private": true,
+    "description": "Second generation Spectrum Web Components token processing",
+    "license": "Apache-2.0",
+    "author": "Adobe",
+    "contributors": [
+        "Stephanie Eckles <5t3ph@users.noreply.github.com>"
+    ],
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+    "repository": {
+        "directory": "2nd-gen/packages/tools/postcss-token",
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+        "test": "vitest --run",
+        "test:watch": "vitest --watch"
+    },
+    "dependencies": {
+        "@adobe/swc-tokens": "workspace:*"
+    },
+    "peerDependencies": {
+        "postcss": "8.5.6"
+    },
+    "devDependencies": {
+        "postcss": "8.5.6",
+        "vitest": "4.0.15"
+    },
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "2nd-gen"
+    ]
+}

@@ -21,9 +21,11 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 // Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
+/* eslint-disable import/no-extraneous-dependencies */
 import '@spectrum-web-components/table/sp-table-body.js';
 import '@spectrum-web-components/table/sp-table-row.js';
 import '@spectrum-web-components/table/sp-table-checkbox-cell.js';
+/* eslint-enable import/no-extraneous-dependencies */
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import styles from './table.css.js';
 import { TableBody } from './TableBody.js';
@@ -83,6 +85,9 @@ export class Table extends SizedMixin(SpectrumElement, {
             const value = this.itemValue(item, index);
             const selected = this.selected.includes(value);
             const hasCheckbox = this.selects && item?._$rowType$ !== 1;
+            const checkboxLabel = hasCheckbox
+                ? this.itemLabel(item, index)
+                : '';
 
             return html`
                 <sp-table-row
@@ -94,6 +99,7 @@ export class Table extends SizedMixin(SpectrumElement, {
                         ? html`
                               <sp-table-checkbox-cell
                                   ?checked=${selected}
+                                  label=${checkboxLabel}
                               ></sp-table-checkbox-cell>
                           `
                         : nothing}
@@ -123,6 +129,13 @@ export class Table extends SizedMixin(SpectrumElement, {
     @property({ type: Array })
     public selected: string[] = [];
 
+    /**
+     * The accessible label for the "select all" checkbox in the table header.
+     * Defaults to 'Select All'.
+     */
+    @property({ type: String, attribute: 'select-all-label' })
+    public selectAllLabel = 'Select All';
+
     private selectedSet = new Set<string>();
 
     /**
@@ -137,6 +150,19 @@ export class Table extends SizedMixin(SpectrumElement, {
     @property({ type: Object })
     public itemValue = (_item: unknown, index: number): string => {
         return `${index}`;
+    };
+
+    /**
+     * A function to extract the accessible label for a row's checkbox from an item.
+     * By default, returns a generic label based on the row index.
+     * Override this to provide more meaningful labels for accessibility in virtualized tables.
+     */
+    @property({ type: Object })
+    public itemLabel = (
+        _item: Record<string, unknown>,
+        index: number
+    ): string => {
+        return `Select row ${index + 1}`;
     };
 
     /**
@@ -180,6 +206,20 @@ export class Table extends SizedMixin(SpectrumElement, {
 
     private get isVirtualized(): boolean {
         return !!this.items.length;
+    }
+
+    /**
+     * Gets the accessible label for a row's checkbox based on the first cell's text content.
+     * Falls back to using the row's value attribute if no cell content is available.
+     */
+    protected getRowCheckboxLabel(row: TableRow): string {
+        const firstCell = row.querySelector('sp-table-cell');
+        const cellText = firstCell?.textContent?.trim();
+        if (cellText) {
+            return cellText;
+        }
+        // Fallback to row value or a generic label
+        return row.value ? `Select ${row.value}` : 'Select row';
     }
 
     public override focus(): void {
@@ -234,7 +274,7 @@ export class Table extends SizedMixin(SpectrumElement, {
         const checkboxes = this.querySelectorAll('sp-table-checkbox-cell');
         const checkbox = document.createElement('sp-table-checkbox-cell');
 
-        if (!!this.selects) {
+        if (this.selects) {
             let allSelected = false;
             if (this.isVirtualized) {
                 allSelected =
@@ -244,13 +284,20 @@ export class Table extends SizedMixin(SpectrumElement, {
                 this.tableRows.forEach((row) => {
                     row.selected = this.selectedSet.has(row.value);
                     // Create and initialize checkboxes in all rows within the table body.
-                    if (!row.querySelector(':scope > sp-table-checkbox-cell')) {
-                        const clonedCheckbox =
+                    let existingCheckbox = row.querySelector(
+                        ':scope > sp-table-checkbox-cell'
+                    ) as TableCheckboxCell | null;
+                    if (!existingCheckbox) {
+                        existingCheckbox =
                             checkbox.cloneNode() as TableCheckboxCell;
-                        checkbox.emphasized = this.emphasized;
-                        row.insertAdjacentElement('afterbegin', clonedCheckbox);
-                        checkbox.checked = row.selected;
+                        row.insertAdjacentElement(
+                            'afterbegin',
+                            existingCheckbox
+                        );
                     }
+                    existingCheckbox.emphasized = this.emphasized;
+                    existingCheckbox.label = this.getRowCheckboxLabel(row);
+                    existingCheckbox.checked = row.selected;
                 });
                 allSelected = this.selected.length === this.tableRows.length;
             }
@@ -262,10 +309,14 @@ export class Table extends SizedMixin(SpectrumElement, {
                 ) as TableCheckboxCell;
                 this.tableHeadCheckboxCell.headCell = true;
                 this.tableHeadCheckboxCell.emphasized = this.emphasized;
+                this.tableHeadCheckboxCell.label = this.selectAllLabel;
                 this.tableHead?.insertAdjacentElement(
                     'afterbegin',
                     this.tableHeadCheckboxCell
                 );
+            } else {
+                // Update the label if it has changed.
+                this.tableHeadCheckboxCell.label = this.selectAllLabel;
             }
             this.manageHeadCheckbox(allSelected);
         } else {
@@ -323,13 +374,14 @@ export class Table extends SizedMixin(SpectrumElement, {
     }
 
     protected manageCheckboxes(): void {
-        if (!!this.selects) {
+        if (this.selects) {
             // Create and initialize table head checkbox cell.
             this.tableHeadCheckboxCell = document.createElement(
                 'sp-table-checkbox-cell'
             ) as TableCheckboxCell;
             this.tableHeadCheckboxCell.headCell = true;
             this.tableHeadCheckboxCell.emphasized = this.emphasized;
+            this.tableHeadCheckboxCell.label = this.selectAllLabel;
 
             const allSelected = this.selected.length === this.tableRows.length;
             this.manageHeadCheckbox(allSelected);
@@ -345,6 +397,7 @@ export class Table extends SizedMixin(SpectrumElement, {
                     'sp-table-checkbox-cell'
                 );
                 checkbox.emphasized = this.emphasized;
+                checkbox.label = this.getRowCheckboxLabel(row);
                 row.insertAdjacentElement('afterbegin', checkbox);
                 row.selected = this.selectedSet.has(row.value);
                 checkbox.checked = row.selected;
@@ -465,6 +518,10 @@ export class Table extends SizedMixin(SpectrumElement, {
 
         if (changed.has('selected') && this.hasUpdated) {
             this.manageSelected();
+        }
+
+        if (changed.has('selectAllLabel') && this.tableHeadCheckboxCell) {
+            this.tableHeadCheckboxCell.label = this.selectAllLabel;
         }
     }
 

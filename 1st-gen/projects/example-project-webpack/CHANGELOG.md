@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.2.9
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/button@1.11.1
+    - @spectrum-web-components/field-label@1.11.1
+    - @spectrum-web-components/menu@1.11.1
+    - @spectrum-web-components/picker@1.11.1
+    - @spectrum-web-components/styles@1.11.1
+
 ## 1.2.8
 
 ### Patch Changes

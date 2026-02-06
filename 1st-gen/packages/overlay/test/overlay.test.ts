@@ -831,6 +831,122 @@ describe('Overlay - type="modal"', () => {
         expect(document.activeElement === trigger, 'trigger focused').to.be
             .true;
     });
+
+    it('should prevent clicks on external elements when modal overlay is open', async () => {
+        const externalButtonClickSpy = spy();
+        const internalButtonClickSpy = spy();
+
+        const el = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-button id="trigger">Open Overlay</sp-button>
+                <sp-overlay trigger="trigger@click" type="modal">
+                    <sp-popover>
+                        <sp-button id="internal-button">
+                            Internal Button
+                        </sp-button>
+                        <p>Modal content</p>
+                    </sp-popover>
+                </sp-overlay>
+                <sp-button id="external-button">External Button</sp-button>
+            </div>
+        `);
+
+        const trigger = el.querySelector('#trigger') as HTMLElement;
+        const overlay = el.querySelector('sp-overlay') as Overlay;
+        const externalButton = el.querySelector(
+            '#external-button'
+        ) as HTMLElement;
+
+        // Add event listener to external button
+        externalButton.addEventListener('click', externalButtonClickSpy);
+
+        await elementUpdated(overlay);
+
+        // Open modal overlay
+        const opened = oneEvent(overlay, 'sp-opened');
+        trigger.click();
+        await opened;
+
+        expect(overlay.open).to.be.true;
+
+        // Get internal button after overlay opens (it's now in the popover)
+        const popover = document.querySelector('sp-popover') as HTMLElement;
+        const internalButton = popover.querySelector(
+            '#internal-button'
+        ) as HTMLElement;
+        internalButton.addEventListener('click', internalButtonClickSpy);
+
+        // Try to click external button - should be blocked
+        externalButton.click();
+        await nextFrame();
+
+        // External button click should not have fired
+        expect(externalButtonClickSpy.called).to.be.false;
+
+        // Internal button click should work
+        internalButton.click();
+        await nextFrame();
+
+        // Internal button click should have fired
+        expect(internalButtonClickSpy.called).to.be.true;
+
+        // Close modal overlay
+        const closed = oneEvent(overlay, 'sp-closed');
+        overlay.open = false;
+        await closed;
+
+        // After closing, external button should be clickable
+        externalButton.click();
+        await nextFrame();
+
+        // External button click should now fire
+        expect(externalButtonClickSpy.called).to.be.true;
+    });
+
+    it('should prevent clicks on external elements when page overlay is open', async () => {
+        const externalButtonClickSpy = spy();
+
+        const el = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-button id="trigger">Open Overlay</sp-button>
+                <sp-overlay trigger="trigger@click" type="page">
+                    <sp-popover>
+                        <p>Page overlay content</p>
+                    </sp-popover>
+                </sp-overlay>
+                <sp-button id="external-button">External Button</sp-button>
+            </div>
+        `);
+
+        const trigger = el.querySelector('#trigger') as HTMLElement;
+        const overlay = el.querySelector('sp-overlay') as Overlay;
+        const externalButton = el.querySelector(
+            '#external-button'
+        ) as HTMLElement;
+
+        externalButton.addEventListener('click', externalButtonClickSpy);
+
+        await elementUpdated(overlay);
+
+        // Open page overlay
+        const opened = oneEvent(overlay, 'sp-opened');
+        trigger.click();
+        await opened;
+
+        expect(overlay.open).to.be.true;
+
+        // Try to click external button - should be blocked
+        externalButton.click();
+        await nextFrame();
+
+        // External button click should not have fired
+        expect(externalButtonClickSpy.called).to.be.false;
+
+        // Close overlay
+        const closed = oneEvent(overlay, 'sp-closed');
+        overlay.open = false;
+        await closed;
+    });
 });
 describe('Overlay - timing', () => {
     it('manages multiple modals in a row without preventing them from closing', async () => {
