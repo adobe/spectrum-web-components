@@ -200,7 +200,7 @@ export default defineConfig([
     eslintConfigPrettier,
 
     // ────────────────────────────────────────────────────────────────────────────
-    // TypeScript and JavaScript files
+    // TypeScript and JavaScript files (shared rules only; TS rules in next block)
     // ────────────────────────────────────────────────────────────────────────────
     {
         files: ['**/*.ts', '**/*.js', '**/*.mjs', '**/*.cjs'],
@@ -330,35 +330,8 @@ export default defineConfig([
             // Curly braces required
             curly: ['error', 'all'],
 
-            // TypeScript recommended rules (manually included since we use defineConfig)
-            '@typescript-eslint/no-array-constructor': 'error',
-            '@typescript-eslint/no-duplicate-enum-values': 'error',
-            '@typescript-eslint/no-empty-object-type': 'error',
-            '@typescript-eslint/no-explicit-any': 'warn',
-            '@typescript-eslint/no-extra-non-null-assertion': 'error',
-            '@typescript-eslint/no-misused-new': 'error',
-            '@typescript-eslint/no-namespace': 'error',
-            '@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
-            '@typescript-eslint/no-require-imports': 'error',
-            '@typescript-eslint/no-this-alias': 'error',
-            '@typescript-eslint/no-unnecessary-type-constraint': 'error',
-            '@typescript-eslint/no-unsafe-declaration-merging': 'error',
-            '@typescript-eslint/no-unsafe-function-type': 'error',
-            '@typescript-eslint/no-unused-expressions': 'error',
-            '@typescript-eslint/no-wrapper-object-types': 'error',
-            '@typescript-eslint/prefer-as-const': 'error',
-            '@typescript-eslint/prefer-namespace-keyword': 'error',
-            '@typescript-eslint/triple-slash-reference': 'error',
-
-            // TypeScript rules (customized)
-            '@typescript-eslint/no-unused-vars': [
-                'error',
-                { argsIgnorePattern: '^_' },
-            ],
-            '@typescript-eslint/explicit-function-return-type': [
-                'warn',
-                { allowExpressions: true },
-            ],
+            // Unused vars (JS only; TS uses @typescript-eslint/no-unused-vars in next block)
+            'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
 
             // Custom SWC rules
             'swc/prevent-argument-names': ['error', ['e', 'ev', 'evt', 'err']],
@@ -483,34 +456,38 @@ export default defineConfig([
     },
 
     // ────────────────────────────────────────────────────────────────────────────
-    // JavaScript only: disable TypeScript rules (they are type-aware and not
-    // applicable to .js/.mjs/.cjs). Base no-unused-vars is used for JS instead.
+    // TypeScript only: enable type-aware rules (not applied to .js/.mjs/.cjs)
     // ────────────────────────────────────────────────────────────────────────────
     {
-        files: ['**/*.js', '**/*.mjs', '**/*.cjs'],
+        files: ['**/*.ts'],
         rules: {
-            '@typescript-eslint/no-array-constructor': 'off',
-            '@typescript-eslint/no-duplicate-enum-values': 'off',
-            '@typescript-eslint/no-empty-object-type': 'off',
-            '@typescript-eslint/no-explicit-any': 'off',
-            '@typescript-eslint/no-extra-non-null-assertion': 'off',
-            '@typescript-eslint/no-misused-new': 'off',
-            '@typescript-eslint/no-namespace': 'off',
-            '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
-            '@typescript-eslint/no-require-imports': 'off',
-            '@typescript-eslint/no-this-alias': 'off',
-            '@typescript-eslint/no-unnecessary-type-constraint': 'off',
-            '@typescript-eslint/no-unsafe-declaration-merging': 'off',
-            '@typescript-eslint/no-unsafe-function-type': 'off',
-            '@typescript-eslint/no-unused-expressions': 'off',
-            '@typescript-eslint/no-wrapper-object-types': 'off',
-            '@typescript-eslint/prefer-as-const': 'off',
-            '@typescript-eslint/prefer-namespace-keyword': 'off',
-            '@typescript-eslint/triple-slash-reference': 'off',
-            '@typescript-eslint/no-unused-vars': 'off',
-            '@typescript-eslint/explicit-function-return-type': 'off',
-            // Use base rule for unused vars in JS
-            'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+            'no-unused-vars': 'off',
+            '@typescript-eslint/no-array-constructor': 'error',
+            '@typescript-eslint/no-duplicate-enum-values': 'error',
+            '@typescript-eslint/no-empty-object-type': 'error',
+            '@typescript-eslint/no-explicit-any': 'warn',
+            '@typescript-eslint/no-extra-non-null-assertion': 'error',
+            '@typescript-eslint/no-misused-new': 'error',
+            '@typescript-eslint/no-namespace': 'error',
+            '@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
+            '@typescript-eslint/no-require-imports': 'error',
+            '@typescript-eslint/no-this-alias': 'error',
+            '@typescript-eslint/no-unnecessary-type-constraint': 'error',
+            '@typescript-eslint/no-unsafe-declaration-merging': 'error',
+            '@typescript-eslint/no-unsafe-function-type': 'error',
+            '@typescript-eslint/no-unused-expressions': 'error',
+            '@typescript-eslint/no-wrapper-object-types': 'error',
+            '@typescript-eslint/prefer-as-const': 'error',
+            '@typescript-eslint/prefer-namespace-keyword': 'error',
+            '@typescript-eslint/triple-slash-reference': 'error',
+            '@typescript-eslint/no-unused-vars': [
+                'error',
+                { argsIgnorePattern: '^_' },
+            ],
+            '@typescript-eslint/explicit-function-return-type': [
+                'warn',
+                { allowExpressions: true },
+            ],
         },
     },
 
