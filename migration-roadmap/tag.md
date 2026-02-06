@@ -234,67 +234,46 @@
 <details>
 <summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
-**Key differences:**
+```diff
+--- Legacy DOM structure
++++ Spectrum 2 DOM structure
+@@ -1,27 +1,29 @@
+ <div
+     class="spectrum-Tag
+          spectrum-Tag--sizeM
+          is-emphasized
+          is-disabled
+-         is-invalid
+          is-selected"
+     id="[id]"
+     tabindex="0"
+ >
+-    <!-- Avatar (if avatarUrl and not isInvalid) -->
++    <!-- Avatar (if avatarUrl) -->
+     <div class="spectrum-Avatar"></div>
 
-- **Invalid state removed**: The `is-invalid` class is no longer supported in Spectrum 2
-- **Avatar logic simplified**: Avatar can now display regardless of invalid state (main branch blocked avatar when `isInvalid` was true)
-- **Icon logic simplified**: Icon no longer automatically shows Alert icon when invalid (main branch forced Alert icon when `isInvalid` was true)
-- **Thumbnail support added**: New `.spectrum-Thumbnail` element for displaying thumbnail images
-- **Parameter renamed**: `hasClearButton` → `isRemovable`
+-    <!-- Icon (if iconName or isInvalid) -->
++    <!-- Icon (if iconName) -->
+     <svg class="spectrum-Tag-itemIcon"></svg>
 
-**Legacy template (main branch):**
++    <!-- Thumbnail (if thumbnailUrl) -->
++    <img class="spectrum-Thumbnail" />
++
+     <span class="spectrum-Tag-itemLabel">[label]</span>
 
-```html
-<div
-    class="spectrum-Tag
-         spectrum-Tag--sizeM
-         is-emphasized
-         is-disabled
-         is-invalid
-         is-selected"
-    id="[id]"
-    tabindex="0"
->
-    <!-- Avatar (if avatarUrl and not isInvalid) -->
-    <div class="spectrum-Avatar"></div>
-
-    <!-- Icon (if iconName or isInvalid) -->
-    <svg class="spectrum-Tag-itemIcon"></svg>
-
-    <span class="spectrum-Tag-itemLabel">[label]</span>
-
-    <!-- Clear button (if hasClearButton) -->
-    <button class="spectrum-Tag-clearButton spectrum-ClearButton"></button>
-</div>
+-    <!-- Clear button (if hasClearButton) -->
++    <!-- Clear button (if isRemovable) -->
+     <button class="spectrum-Tag-clearButton spectrum-ClearButton"></button>
+ </div>
 ```
 
-**Spectrum 2 template (spectrum-two branch):**
+**Key DOM changes:**
 
-```html
-<div
-    class="spectrum-Tag
-         spectrum-Tag--sizeM
-         is-emphasized
-         is-disabled
-         is-selected"
-    id="[id]"
-    tabindex="0"
->
-    <!-- Avatar (if avatarUrl) -->
-    <div class="spectrum-Avatar"></div>
-
-    <!-- Icon (if iconName) -->
-    <svg class="spectrum-Tag-itemIcon"></svg>
-
-    <!-- Thumbnail (if thumbnailUrl) -->
-    <img class="spectrum-Thumbnail" />
-
-    <span class="spectrum-Tag-itemLabel">[label]</span>
-
-    <!-- Clear button (if isRemovable) -->
-    <button class="spectrum-Tag-clearButton spectrum-ClearButton"></button>
-</div>
-```
+- **Removed**: `is-invalid` class (invalid state no longer supported in Spectrum 2)
+- **Avatar**: Shows when `avatarUrl` is set; no longer gated by invalid state
+- **Icon**: Shows only when `iconName` is set; no automatic Alert icon when invalid
+- **Added**: `.spectrum-Thumbnail` element (when `thumbnailUrl` is set)
+- **Parameter**: `hasClearButton` → `isRemovable` for the clear button
 
 </details>
 
@@ -366,7 +345,7 @@ The web component includes some attributes not present in CSS metadata (`readonl
 
 **Maintained features:**
 
-- All size variants (M, L) - Note: Size S appears in main but not in spectrum-two metadata
+- All size variants (S, M, L) - Note: Size S is in both branches, but in spectrum-two, becomes the default size
 - All interactive states (emphasized, disabled, selected, focused, hover, active)
 - Avatar and icon support
 - Clear button functionality
