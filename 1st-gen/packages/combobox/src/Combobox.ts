@@ -314,11 +314,6 @@ export class Combobox extends Textfield {
         this._menuSelectedValue = selected?.value || '';
         this.value = selected?.itemText || '';
         this.handleChange();
-        // Clear _menuSelectedValue after the update cycle completes to prevent stale values
-        // when selecting options with the same itemText (where value doesn't change).
-        this.updateComplete.then(() => {
-            this._menuSelectedValue = '';
-        });
         event.preventDefault();
         this.open = false;
         this._returnItems();
@@ -372,10 +367,10 @@ export class Combobox extends Textfield {
                 this.itemValue = this._menuSelectedValue;
                 this._menuSelectedValue = '';
             } else {
+                const allOptions = this.options || this.optionEls;
                 this.itemValue =
-                    this.availableOptions.find(
-                        (option) => option.itemText === this.value
-                    )?.value ?? '';
+                    allOptions.find((option) => option.itemText === this.value)
+                        ?.value ?? '';
             }
         }
         return super.shouldUpdate(changed);

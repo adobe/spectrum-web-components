@@ -286,14 +286,16 @@ controlled.parameters = {
 };
 
 /**
- * Test story to verify change event includes both value and itemText,
- * especially for options with duplicate itemText values.
+ * Demonstrates the change event providing both value (unique ID) and itemText.
+ * This is useful when options share similar names but have distinct identifiers,
+ * such as contacts with the same name in different departments.
  */
-export const duplicateItemText = (): TemplateResult => {
-    const optionsWithDuplicates: ComboboxOption[] = [
-        { value: 'val1', itemText: 'Same Display Text' },
-        { value: 'val2', itemText: 'Same Display Text' },
-        { value: 'val3', itemText: 'Unique Text' },
+export const changeEventWithValueAndItemText = (): TemplateResult => {
+    const contactOptions: ComboboxOption[] = [
+        { value: 'emp-1042', itemText: 'Alex Johnson (Engineering)' },
+        { value: 'emp-2187', itemText: 'Alex Johnson (Marketing)' },
+        { value: 'emp-3301', itemText: 'Sam Chen (Design)' },
+        { value: 'emp-4455', itemText: 'Jordan Lee (Sales)' },
     ];
 
     const handleChange = (event: CustomEvent): void => {
@@ -302,32 +304,32 @@ export const duplicateItemText = (): TemplateResult => {
         // Update the output display
         const output = document.getElementById('change-event-output');
         if (output) {
-            output.textContent = `value: "${value}", itemText: "${itemText}"`;
+            output.textContent = `Employee ID: "${value}", Name: "${itemText}"`;
         }
     };
 
     return html`
         <div style="display: flex; flex-direction: column; gap: 16px;">
-            <sp-field-label for="combobox-duplicate-test">
-                Options with duplicate itemText
+            <sp-field-label for="combobox-contact-test">
+                Select a team member
             </sp-field-label>
             <sp-combobox
-                id="combobox-duplicate-test"
-                .options=${optionsWithDuplicates}
+                id="combobox-contact-test"
+                .options=${contactOptions}
                 @change=${handleChange}
-                style="width: 200px;"
+                style="width: 280px;"
             ></sp-combobox>
             <div>
-                <strong>Last change event:</strong>
+                <strong>Selected:</strong>
                 <code id="change-event-output">None yet</code>
             </div>
             <p style="color: gray; font-size: 12px;">
-                Select "Same Display Text" multiple times from the dropdown.
-                Each selection should show a different value (val1 or val2).
+                The change event provides both the unique employee ID (value)
+                and the display name (itemText) for use in your application.
             </p>
         </div>
     `;
 };
-duplicateItemText.swc_vrt = {
+changeEventWithValueAndItemText.swc_vrt = {
     skip: true,
 };
