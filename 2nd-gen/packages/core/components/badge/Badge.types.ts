@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,26 +10,33 @@
  * governing permissions and limitations under the License.
  */
 
+import type { ElementSize } from '@spectrum-web-components/core/shared/base/index.js';
+
 /*
  * @todo The S1 types can be removed once we are no longer maintaining 1st-gen.
  */
 
 export const FIXED_VALUES = [
-    'inline-start',
-    'inline-end',
     'block-start',
     'block-end',
+    'inline-start',
+    'inline-end',
 ] as const;
 
-export type FixedValues = (typeof FIXED_VALUES)[number];
+export const BADGE_VALID_SIZES = [
+    's',
+    'm',
+    'l',
+    'xl',
+] as const satisfies readonly ElementSize[];
 
 export const BADGE_VARIANTS_SEMANTIC = [
     'accent',
-    'neutral',
     'informative',
+    'neutral',
     'positive',
-    'negative',
     'notice',
+    'negative',
 ] as const;
 
 export const BADGE_VARIANTS_COLOR_S1 = [
@@ -68,6 +75,11 @@ export const BADGE_VARIANTS_S2 = [
     ...BADGE_VARIANTS_COLOR_S2,
 ] as const;
 
+export type FixedValues = (typeof FIXED_VALUES)[number];
+export type BadgeSize = (typeof BADGE_VALID_SIZES)[number];
+export type BadgeSemanticVariant = (typeof BADGE_VARIANTS_SEMANTIC)[number];
+export type BadgeColorVariantS1 = (typeof BADGE_VARIANTS_COLOR_S1)[number];
+export type BadgeColorVariantS2 = (typeof BADGE_VARIANTS_COLOR_S2)[number];
 export type BadgeVariantS1 = (typeof BADGE_VARIANTS_S1)[number];
 export type BadgeVariantS2 = (typeof BADGE_VARIANTS_S2)[number];
 export type BadgeVariant = BadgeVariantS1 | BadgeVariantS2;

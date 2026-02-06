@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "outDir": "../out/server",
+        "rootDir": ".",
+        "strict": true,
+        "target": "ES2020",
+        "types": ["node"]
+    },
+    "include": ["server.ts", "tokens.ts"]
+}

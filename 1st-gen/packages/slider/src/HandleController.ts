@@ -472,6 +472,14 @@ export class HandleController {
         const input = event.target as InputWithModel;
         input.model.handle.highlight = true;
         this.requestUpdate();
+        // Stop propagation for arrow keys since slider handles them internally
+        if (
+            ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(
+                event.key
+            )
+        ) {
+            event.stopPropagation();
+        }
     };
 
     private dispatchChangeEvent(
@@ -639,7 +647,7 @@ export class HandleController {
                         result.range.min
                     );
                 }
-                if (window.__swc.DEBUG) {
+                if (window.__swc?.DEBUG) {
                     if (!previous) {
                         window.__swc.warn(
                             this.host,
@@ -660,7 +668,7 @@ export class HandleController {
                     }
                     result.clamp.max = Math.min(next.value, result.range.max);
                 }
-                if (window.__swc.DEBUG) {
+                if (window.__swc?.DEBUG) {
                     if (!next) {
                         window.__swc.warn(
                             this.host,

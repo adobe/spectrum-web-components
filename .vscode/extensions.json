@@ -1,3 +1,6 @@
 {
-    "recommendations": ["runem.lit-plugin"]
+    "recommendations": [
+        "runem.lit-plugin",
+        "bierner.jsdoc-markdown-highlighting"
+    ]
 }
