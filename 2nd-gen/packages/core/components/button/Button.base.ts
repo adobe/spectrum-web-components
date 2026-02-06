@@ -24,6 +24,7 @@ import {
     HostWithPendingState,
     PendingStateController,
 } from '@spectrum-web-components/core/shared/pending-state-controller.js';
+import { aetherController } from '@spectrum-web-components/core/shared/reactive-controllers';
 
 import {
     BUTTON_STATIC_COLORS,
@@ -113,6 +114,13 @@ export abstract class ButtonBase
      */
     @property({ type: String, reflect: true, attribute: 'static-color' })
     public staticColor?: ButtonStaticColor;
+
+    /**
+     * Aether variant (e.g. 'primary', 'secondary', 'neutral') for frosted-glass styling.
+     * When set, the component registers with the aether controller and shows the aether look.
+     */
+    @property({ type: String, reflect: true })
+    public aether?: string;
 
     /**
      * Disable this control. It will not receive focus or events.
@@ -346,6 +354,38 @@ export abstract class ButtonBase
                 this.setAttribute('role', 'button');
             }
         }
+    }
+
+    override connectedCallback() {
+        super.connectedCallback();
+
+        // Register with aether controller if aether property is set
+        if (this.aether) {
+            aetherController.register(this);
+        }
+    }
+
+    override disconnectedCallback() {
+        if (this.aether) {
+            aetherController.unregister(this);
+        }
+        super.disconnectedCallback();
+    }
+
+    override attributeChangedCallback(
+        name: string,
+        oldValue: string,
+        newValue: string
+    ) {
+        if (name === 'aether') {
+            if (newValue != null && oldValue == null) {
+                aetherController.register(this);
+            } else if (newValue == null && oldValue != null) {
+                aetherController.unregister(this);
+            }
+            // If just the variant value changed, controller handles it via observer
+        }
+        super.attributeChangedCallback(name, oldValue, newValue);
     }
 
     /**

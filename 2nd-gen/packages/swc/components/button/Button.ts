@@ -96,6 +96,7 @@ export class Button extends ButtonBase {
             <div
                 class=${classMap({
                     ['swc-Button']: true,
+                    ['aether-container']: !!this.aether,
                     [`swc-Button--${this.variant}`]:
                         typeof this.variant !== 'undefined',
                     [`swc-Button--${this.treatment}`]:
@@ -117,41 +118,19 @@ export class Button extends ButtonBase {
                 aria-label=${this.label || this.pendingLabel}
             >
                 ${this.renderButtonContent()}
-            
             </div>
-            <!-- <button
-                class=${classMap({
-                    ['swc-Button']: true,
-                    [`swc-Button--${this.variant}`]:
-                        typeof this.variant !== 'undefined',
-                    [`swc-Button--${this.treatment}`]:
-                        typeof this.treatment !== 'undefined',
-                    [`swc-Button--size${this.size?.toUpperCase()}`]:
-                        this.size != null,
-                    ['swc-Button--iconOnly']: this.hasIcon && !this.hasLabel,
-                    ['swc-Button--noWrap']: this.noWrap,
-                    [`swc-Button--static${
-                        this.staticColor
-                            ? this.staticColor.charAt(0).toUpperCase() +
-                              this.staticColor.slice(1)
-                            : ''
-                    }`]: typeof this.staticColor !== 'undefined',
-                })}
-                ?disabled=${this.disabled}
-                type=${this.type}
-                aria-label=${this.label || this.pendingLabel}
-            >
-                ${this.renderButtonContent()}
-            </button> -->
         `;
     }
 
     private renderAsLink(): TemplateResult {
+        const anchorClass = this.aether
+            ? 'swc-Button-anchor aether-container'
+            : 'swc-Button-anchor';
         return html`
             ${this.renderButtonContent()}
             ${this.renderAnchor({
                 id: 'anchor',
-                className: 'swc-Button-anchor',
+                className: anchorClass,
                 ariaHidden: true,
                 tabindex: -1,
             })}
