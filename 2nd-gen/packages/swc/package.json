@@ -48,7 +48,8 @@
         "test:browser": "vitest --project storybook --browser.headless=false",
         "test:coverage": "vitest --coverage --project storybook",
         "test:ui": "vitest --ui --project storybook",
-        "test:watch": "run-p dev:core test"
+        "test:watch:vitest": "vitest --project storybook --watch",
+        "test:watch": "run-p dev:core test:watch:vitest"
     },
     "types": "./dist/index.d.ts",
     "dependencies": {
