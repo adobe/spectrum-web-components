@@ -252,7 +252,7 @@ const ruleFunction = (pathOrString, options = {}) => {
                 result,
                 ruleName,
                 message: messages.outdated(
-                    `${Math.round(checkResult.similarity * 100)}% match`,
+                    `${checkResult.similarity * 100}% match`,
                     '100% match'
                 ),
                 node: checkResult.existingHeaderComment,

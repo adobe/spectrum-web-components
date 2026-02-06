@@ -483,6 +483,38 @@ export default defineConfig([
     },
 
     // ────────────────────────────────────────────────────────────────────────────
+    // JavaScript only: disable TypeScript rules (they are type-aware and not
+    // applicable to .js/.mjs/.cjs). Base no-unused-vars is used for JS instead.
+    // ────────────────────────────────────────────────────────────────────────────
+    {
+        files: ['**/*.js', '**/*.mjs', '**/*.cjs'],
+        rules: {
+            '@typescript-eslint/no-array-constructor': 'off',
+            '@typescript-eslint/no-duplicate-enum-values': 'off',
+            '@typescript-eslint/no-empty-object-type': 'off',
+            '@typescript-eslint/no-explicit-any': 'off',
+            '@typescript-eslint/no-extra-non-null-assertion': 'off',
+            '@typescript-eslint/no-misused-new': 'off',
+            '@typescript-eslint/no-namespace': 'off',
+            '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
+            '@typescript-eslint/no-require-imports': 'off',
+            '@typescript-eslint/no-this-alias': 'off',
+            '@typescript-eslint/no-unnecessary-type-constraint': 'off',
+            '@typescript-eslint/no-unsafe-declaration-merging': 'off',
+            '@typescript-eslint/no-unsafe-function-type': 'off',
+            '@typescript-eslint/no-unused-expressions': 'off',
+            '@typescript-eslint/no-wrapper-object-types': 'off',
+            '@typescript-eslint/prefer-as-const': 'off',
+            '@typescript-eslint/prefer-namespace-keyword': 'off',
+            '@typescript-eslint/triple-slash-reference': 'off',
+            '@typescript-eslint/no-unused-vars': 'off',
+            '@typescript-eslint/explicit-function-return-type': 'off',
+            // Use base rule for unused vars in JS
+            'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+        },
+    },
+
+    // ────────────────────────────────────────────────────────────────────────────
     // Test and story files: relaxed rules
     // Browser globals are inherited from the main TypeScript config above.
     // These overrides disable rules that are too strict for test/story contexts.
