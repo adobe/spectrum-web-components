@@ -1,28 +1,17 @@
 {
     "compilerOptions": {
         "allowImportingTsExtensions": true,
-        "allowSyntheticDefaultImports": true,
-        "declaration": true,
-        "experimentalDecorators": true,
-        "forceConsistentCasingInFileNames": true,
-        "isolatedModules": true,
-        "lib": ["ES2018", "DOM", "DOM.Iterable"],
-        "module": "ESNext",
-        "moduleResolution": "bundler",
+
+        // 2nd-gen specific: Build configuration
         "noEmit": true,
+
+        // Additional strictness
         "noFallthroughCasesInSwitch": true,
-        "noImplicitReturns": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
         "outDir": "./dist",
-        "resolveJsonModule": true,
-        "rootDir": "./",
-        "skipLibCheck": true,
-        "strict": true,
-        "target": "ES2018",
-        "useDefineForClassFields": false
+        "rootDir": "./"
     },
     "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.stories.ts"],
+    "extends": "../tsconfig.base.json",
     "include": ["packages/**/*.ts", "**/*.d.ts"],
     "references": [
         {
