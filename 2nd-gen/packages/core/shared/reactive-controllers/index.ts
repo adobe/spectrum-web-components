@@ -14,3 +14,4 @@ export {
     LanguageResolutionController,
     languageResolverUpdatedSymbol,
 } from './LanguageResolution.js';
+export { aetherController } from './AetherController.js';

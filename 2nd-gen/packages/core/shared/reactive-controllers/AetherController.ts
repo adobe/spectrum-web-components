@@ -218,11 +218,25 @@ class AetherController {
      * Unregister a component (cleanup)
      */
     unregister(component: HTMLElement): void {
+        this.registeredComponents.delete(component);
+        this.clearTokens(component);
         const observer = this.componentObservers.get(component);
         if (observer) {
             observer.disconnect();
             this.componentObservers.delete(component);
         }
+    }
+
+    /**
+     * Remove aether custom properties from the host so inline styles do not persist after unregister.
+     */
+    private clearTokens(component: HTMLElement): void {
+        const keys = [
+            ...Object.keys(this.config.baseTokens),
+            ...this.config.variants.flatMap((v) => Object.keys(v.tokens)),
+        ];
+        const uniqueKeys = [...new Set(keys)];
+        uniqueKeys.forEach((key) => component.style.removeProperty(key));
     }
 
     private applyTokens(component: HTMLElement): void {
