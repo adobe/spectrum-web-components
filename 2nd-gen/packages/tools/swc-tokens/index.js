@@ -20,7 +20,8 @@ import prettier from 'prettier';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
-import { allTokens, createLogger, generateCSS } from './utils.js';
+import { allTokens, createLogger, generateCSS } from './src/tokens.js';
+import { generateTypographyCssFile } from './src/typography.js';
 
 const argv = yargs(hideBin(process.argv))
     .option('out', {
@@ -41,7 +42,7 @@ const argv = yargs(hideBin(process.argv))
         default: false,
     })
     .option('outputType', {
-        choices: ['stylesheet', 'tokens'],
+        choices: ['stylesheet', 'tokens', 'typography'],
         describe: 'Command output type',
         demandOption: true,
     })
@@ -53,7 +54,9 @@ const outputType = argv.outputType?.trim();
 const debug = argv.debug;
 const debugFile = 'debug-tokens.txt';
 
-fs.mkdirSync(path.dirname(out), { recursive: true });
+if (out) {
+    fs.mkdirSync(path.dirname(out), { recursive: true });
+}
 
 const log = debug && createLogger(`./${debugFile}`);
 
@@ -69,6 +72,8 @@ if (outputType === 'stylesheet') {
     await fs.promises.writeFile(out, formattedCss, 'utf8');
 
     console.log(`✔ Stylesheet written to ${out}`);
+} else if (outputType === 'typography') {
+    await generateTypographyCssFile({ prefix, outFile: out });
 } else {
     fs.writeFileSync(
         out,
