@@ -516,7 +516,8 @@ ${scaling.join('\n')}
 
 // Load individual token JSON files
 async function loadTokenJson(file, src) {
-    const base = src === 'spectrum' ? '@adobe/spectrum-tokens/src' : './custom';
+    const base =
+        src === 'spectrum' ? '@adobe/spectrum-tokens/src' : '../custom';
     const filePath = `${base}/${file}.json`;
 
     try {

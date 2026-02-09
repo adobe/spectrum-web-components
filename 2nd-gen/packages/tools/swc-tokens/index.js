@@ -42,7 +42,7 @@ const argv = yargs(hideBin(process.argv))
         default: false,
     })
     .option('outputType', {
-        choices: ['stylesheet', 'tokens', 'typography'],
+        choices: ['data', 'tokens', 'typography'],
         describe: 'Command output type',
         demandOption: true,
     })
@@ -60,7 +60,7 @@ if (out) {
 
 const log = debug && createLogger(`./${debugFile}`);
 
-if (outputType === 'stylesheet') {
+if (outputType === 'tokens') {
     const prettierConfig = await prettier.resolveConfig(process.cwd());
 
     const css = await generateCSS(prefix, log);
@@ -71,7 +71,7 @@ if (outputType === 'stylesheet') {
 
     await fs.promises.writeFile(out, formattedCss, 'utf8');
 
-    console.log(`✔ Stylesheet written to ${out}`);
+    console.log(`✔ Tokens stylesheet written to ${out}`);
 } else if (outputType === 'typography') {
     await generateTypographyCssFile({ prefix, outFile: out });
 } else {
@@ -85,5 +85,5 @@ if (outputType === 'stylesheet') {
         console.log(`✔ Debug log written to ${debugFile}`);
     }
 
-    console.log(`✔ Tokens written to ${out}`);
+    console.log(`✔ Token data written to ${out}`);
 }
