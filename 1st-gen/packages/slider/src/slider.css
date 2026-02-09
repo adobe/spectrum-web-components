@@ -162,12 +162,14 @@
     bottom: calc(100% + 8px);
     inset-inline-start: 50%;
     transform: translateX(-50%);
-    padding: var(--spectrum-global-dimension-size-50, 4px) var(--spectrum-global-dimension-size-100, 8px);
+    padding-block-start: var(--spectrum-component-top-to-text-75, 4px);
+    padding-block-end: var(--spectrum-component-bottom-to-text-75, 5px);
+    padding-inline: var(--spectrum-component-edge-to-text-75, 9px);
     background-color: var(--spectrum-tooltip-background-color, var(--spectrum-global-color-gray-900));
     color: var(--spectrum-tooltip-text-color, var(--spectrum-global-color-gray-50));
-    font-size: var(--spectrum-global-dimension-font-size-75, 12px);
+    font-size: var(--spectrum-font-size-75, 12px);
     line-height: var(--spectrum-line-height-100, 1.3);
-    border-radius: var(--spectrum-global-dimension-size-50, 4px);
+    border-radius: var(--spectrum-corner-radius-100, 4px);
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
@@ -181,7 +183,6 @@
 :host([dir="rtl"]) .value-tooltip {
     transform: translateX(50%);
 }
-
 
 /* Tooltip arrow/tip */
 .value-tooltip:after {
