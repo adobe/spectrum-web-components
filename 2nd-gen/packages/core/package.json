@@ -15,25 +15,25 @@
     },
     "type": "module",
     "exports": {
-        "./base": {
-            "types": "./dist/base/index.d.ts",
-            "import": "./dist/base/index.js"
+        "./element": {
+            "types": "./dist/element/index.d.ts",
+            "import": "./dist/element/index.js"
         },
-        "./base/define-element.js": {
-            "types": "./dist/base/define-element.d.ts",
-            "import": "./dist/base/define-element.js"
+        "./element/define-element.js": {
+            "types": "./dist/element/define-element.d.ts",
+            "import": "./dist/element/define-element.js"
         },
-        "./base/index.js": {
-            "types": "./dist/base/index.d.ts",
-            "import": "./dist/base/index.js"
+        "./element/index.js": {
+            "types": "./dist/element/index.d.ts",
+            "import": "./dist/element/index.js"
         },
-        "./base/spectrum-element.js": {
-            "types": "./dist/base/spectrum-element.d.ts",
-            "import": "./dist/base/spectrum-element.js"
+        "./element/spectrum-element.js": {
+            "types": "./dist/element/spectrum-element.d.ts",
+            "import": "./dist/element/spectrum-element.js"
         },
-        "./base/version.js": {
-            "types": "./dist/base/version.d.ts",
-            "import": "./dist/base/version.js"
+        "./element/version.js": {
+            "types": "./dist/element/version.d.ts",
+            "import": "./dist/element/version.js"
         },
         "./components/alert-banner": {
             "types": "./dist/components/alert-banner/index.d.ts",
@@ -185,20 +185,20 @@
     },
     "typesVersions": {
         "*": {
-            "base": [
-                "dist/base/index.d.ts"
+            "element": [
+                "dist/element/index.d.ts"
             ],
-            "base/define-element.js": [
-                "dist/base/define-element.d.ts"
+            "element/define-element.js": [
+                "dist/element/define-element.d.ts"
             ],
-            "base/index.js": [
-                "dist/base/index.d.ts"
+            "element/index.js": [
+                "dist/element/index.d.ts"
             ],
-            "base/spectrum-element.js": [
-                "dist/base/spectrum-element.d.ts"
+            "element/spectrum-element.js": [
+                "dist/element/spectrum-element.d.ts"
             ],
-            "base/version.js": [
-                "dist/base/version.d.ts"
+            "element/version.js": [
+                "dist/element/version.d.ts"
             ],
             "components/alert-banner": [
                 "dist/components/alert-banner/index.d.ts"

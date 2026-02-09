@@ -4,10 +4,10 @@ This document tracks 1st‑gen items and where they should land in the 2nd‑gen
 
 ## Base classes and mixins
 
-- `tools/base/Base.ts` → `core/base/spectrum-element.ts`
-- `tools/base/define-element.ts` → `core/base/define-element.ts`
+- `tools/base/Base.ts` → `core/element/spectrum-element.ts`
+- `tools/base/define-element.ts` → `core/element/define-element.ts`
 - `tools/base/sizedMixin.ts` → `core/mixins/sized-mixin.ts`
-- `tools/base/SpectrumMixin` → `core/base/spectrum-element.ts`
+- `tools/base/SpectrumMixin` → `core/element/spectrum-element.ts`
 
 ## Shared mixins
 
@@ -68,7 +68,7 @@ The following 1st-gen items are not yet mapped. Evaluate when needed:
 
 ## Notes
 
-- Keep the `shared/` directory as a compatibility layer until all internal imports have migrated to the new top-level folders.
+- The `shared/` directory contains current implementations; 1st-gen re-exports from here.
 - Prefer kebab-case file names for all new files in `core/`.
 - When moving code, update exports so that both the new path and any required legacy path remain available during transition.
-- Slot-observation mixins (`ObserveSlotPresence`, `ObserveSlotText`) are available from both `core/mixins/` (preferred) and `core/utils/` (backward compatibility).
+- Slot-observation mixins (`ObserveSlotPresence`, `ObserveSlotText`) are available from both `core/mixins/` (preferred) and `core/utils/`.

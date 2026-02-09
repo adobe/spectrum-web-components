@@ -12,13 +12,13 @@ The core package is private/internal, so we can organize foundational code for d
 
 ```
 core/
-  base/         # Core base classes and element registration helpers
+  element/      # SpectrumElement, defineElement, and element infrastructure
   mixins/       # Reusable mixins that extend base classes
   controllers/  # Reactive controllers (Lit controllers, observers, etc.)
   utils/        # Utility functions (DOM, slots, platform helpers, etc.)
   types/        # Shared types and interfaces
   components/   # Component base classes (already established)
-  shared/       # Legacy compatibility layer (existing exports during migration)
+  shared/       # Current implementations (1st-gen re-exports from here)
 ```
 
 ### Naming
@@ -29,13 +29,13 @@ All new folders and files in `/core` should be kebab-case.
 
 Prefer the new top-level paths for new code:
 
-- `@spectrum-web-components/core/base`
+- `@spectrum-web-components/core/element`
 - `@spectrum-web-components/core/mixins`
 - `@spectrum-web-components/core/controllers`
 - `@spectrum-web-components/core/utils`
 - `@spectrum-web-components/core/types`
 
-The existing `shared/` paths remain as a compatibility layer during migration and will be deprecated once the move is complete.
+The `shared/` directory contains current implementations that 1st-gen re-exports from. New code should use the top-level paths above.
 
 ### Migration notes
 
