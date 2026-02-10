@@ -12,7 +12,6 @@
 import {
     CSSResultArray,
     html,
-    PropertyValueMap,
     PropertyValues,
     SizedMixin,
     SpectrumElement,
@@ -127,15 +126,7 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
             ? -dist
             : dist;
         tabsElement.scrollTabs(left, 'smooth');
-    }
-
-    protected override updated(
-        changedProperties: PropertyValueMap<this>
-    ): void {
-        super.updated(changedProperties);
-        if (changedProperties.has('dir')) {
-            this._updateScrollState();
-        }
+        this._updateScrollState();
     }
 
     protected override render(): TemplateResult {
