@@ -326,27 +326,6 @@ None found for this component.
 
 ## Summary of changes
 
-### CSS => SWC implementation gaps
-
-**Physical vs logical property naming:**
-
-CSS uses physical property names (`left`, `right`, `top`, `bottom`) while WC uses logical property names (`start`, `end`) for secondary positioning. These are functionally equivalent:
-
-- `.spectrum-Tooltip--bottom-left` → `placement="bottom-start"`
-- `.spectrum-Tooltip--bottom-right` → `placement="bottom-end"`
-- `.spectrum-Tooltip--top-left` → `placement="top-start"`
-- `.spectrum-Tooltip--top-right` → `placement="top-end"`
-- `.spectrum-Tooltip--left-top` → `placement="left-start"`
-- `.spectrum-Tooltip--left-bottom` → `placement="left-end"`
-- `.spectrum-Tooltip--right-top` → `placement="right-start"`
-- `.spectrum-Tooltip--right-bottom` → `placement="right-end"`
-
-Logical properties provide better RTL (right-to-left) language support by automatically adapting to text direction.
-
-**Missing from WC:**
-
-- Pure logical placement values: `start`, `start-top`, `start-bottom`, `end`, `end-top`, `end-bottom`
-
 **Deprecated:**
 
 - `.spectrum-Tooltip--positive` variant was removed in Spectrum 2

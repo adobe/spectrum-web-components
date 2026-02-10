@@ -200,17 +200,27 @@ None found for `<sp-tags>`.
 
 ### CSS => SWC mapping
 
-| CSS selector                  | Attribute or slot                                                      | Status           |
-| ----------------------------- | ---------------------------------------------------------------------- | ---------------- |
-| `.spectrum-TagGroup`          | Base component (`<sp-tags>`)                                           | Implemented      |
-| `.spectrum-TagGroup-tag`      | Individual tags (from templates); default slot for `<sp-tag>` elements | Implemented      |
-| `.spectrum-TagGroup-tags`     | N/A                                                                    | Missing from WC  |
-| `.spectrum-TagGroup:lang(ja)` | N/A                                                                    | Missing from WC  |
-| `.spectrum-TagGroup:lang(ko)` | N/A                                                                    | Missing from WC  |
-| `.spectrum-TagGroup:lang(zh)` | N/A                                                                    | Missing from WC  |
-| Default slot                  | Slot for `<sp-tag>` elements                                           | Implemented      |
-| Keyboard navigation           | RovingTabindexController                                               | Missing from CSS |
-| Focus management              | Internal controller                                                    | Missing from CSS |
+| CSS selector                                                    | Attribute or slot                                                      | Status                       |
+| --------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------- |
+| `.spectrum-TagGroup`                                            | Base component (`<sp-tags>`)                                           | Implemented                  |
+| `.spectrum-TagGroup--sideLabel`                                 | N/A                                                                    | Missing from WC (new for S2) |
+| `.spectrum-TagGroup--sideLabel .spectrum-TagGroup-actionButton` | N/A                                                                    | Missing from WC (new for S2) |
+| `.spectrum-TagGroup--sideLabel .spectrum-TagGroup-helpText`     | N/A                                                                    | Missing from WC (new for S2) |
+| `.spectrum-TagGroup--sideLabel .spectrum-TagGroup-label`        | N/A                                                                    | Missing from WC (new for S2) |
+| `.spectrum-TagGroup--sideLabel .spectrum-TagGroup-tags`         | N/A                                                                    | Missing from WC (new for S2) |
+| `.spectrum-TagGroup--sizeL`                                     | N/A                                                                    | Missing from WC (new for S2) |
+| `.spectrum-TagGroup--sizeS`                                     | N/A                                                                    | Missing from WC (new for S2) |
+| `.spectrum-TagGroup-actionButton`                               | N/A                                                                    | Missing from WC (new for S2) |
+| `.spectrum-TagGroup-helpText`                                   | N/A                                                                    | Missing from WC (new for S2) |
+| `.spectrum-TagGroup-label`                                      | N/A                                                                    | Missing from WC (new for S2) |
+| `.spectrum-TagGroup-tag`                                        | Individual tags (from templates); default slot for `<sp-tag>` elements | Implemented                  |
+| `.spectrum-TagGroup-tags`                                       | N/A                                                                    | Missing from WC              |
+| `.spectrum-TagGroup:lang(ja)`                                   | N/A                                                                    | Missing from WC              |
+| `.spectrum-TagGroup:lang(ko)`                                   | N/A                                                                    | Missing from WC              |
+| `.spectrum-TagGroup:lang(zh)`                                   | N/A                                                                    | Missing from WC              |
+| Default slot                                                    | Slot for `<sp-tag>` elements                                           | Implemented                  |
+| Keyboard navigation                                             | RovingTabindexController                                               | Missing from CSS             |
+| Focus management                                                | Internal controller                                                    | Missing from CSS             |
 
 ## Summary of changes
 
