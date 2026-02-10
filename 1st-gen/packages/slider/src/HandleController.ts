@@ -534,11 +534,8 @@ export class HandleController {
             dragging: this.draggingHandle?.handleName === model.name,
             'handle-highlight': model.highlight,
         };
-        const dir = getComputedStyle(this.host).direction ?? 'ltr';
         const style = {
-            [dir === 'ltr' ? 'left' : 'right']: `${
-                model.normalizedValue * 100
-            }%`,
+            'inset-inline-start': `${model.normalizedValue * 100}%`,
             'z-index': zIndex.toString(),
             ...(isMultiHandle && {
                 'background-color': `var(--spectrum-slider-handle-background-color-${index}, var(--spectrum-slider-handle-background-color))`,

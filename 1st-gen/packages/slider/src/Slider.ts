@@ -393,7 +393,6 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
             this.min,
             this.max
         );
-        const position = this.dir === 'rtl' ? 'right' : 'left';
         const offsetPosition =
             (this.value > centerPoint
                 ? centerPointNormalized
@@ -403,7 +402,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
             activeModel.normalizedValue
         );
         const styles = {
-            [position]: `${offsetPosition}%`,
+            'inset-inline-start': `${offsetPosition}%`,
             width: `${offsetWidth}%`,
         };
         return styles;
