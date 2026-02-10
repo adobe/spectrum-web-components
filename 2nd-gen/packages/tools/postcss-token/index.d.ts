@@ -9,4 +9,9 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export { version } from '@spectrum-web-components/core/shared/base/version.js';
+
+import type { PluginCreator } from 'postcss';
+
+declare const postcssToken: PluginCreator<unknown>;
+
+export default postcssToken;
