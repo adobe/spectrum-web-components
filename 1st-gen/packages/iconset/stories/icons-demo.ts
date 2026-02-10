@@ -276,6 +276,7 @@ export class IconsDemo extends SpectrumElement {
             ${matchingIcons.map((icon) => {
                 return html`
                     <bdo
+                        dir="ltr"
                         class="icon"
                         part="icon"
                         class="icon"
