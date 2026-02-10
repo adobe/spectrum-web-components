@@ -15,13 +15,13 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import '@spectrum-web-components/button/sp-close-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
-import styles from './alert-banner.css.js';
 import {
     AlertBannerBase,
     AlertBannerVariants,
 } from '@spectrum-web-components/core/components/alert-banner';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
+import styles from './alert-banner.css.js';
 
 export type { AlertBannerVariants };
 

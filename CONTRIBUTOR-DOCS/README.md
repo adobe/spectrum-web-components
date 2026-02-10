@@ -33,13 +33,6 @@
     - [Workstreams](03_project-planning/02_workstreams/README.md)
     - [Components](03_project-planning/03_components/README.md)
     - [Milestones](03_project-planning/04_milestones/README.md)
-- [Accessibility Guide](04_accessibility_guides/README.md)
-    - [Semantic HTML and ARIA](04_accessibility_guides/01_semantic_html_aria.md)
-    - [Accessible pattern libraries](04_accessibility_guides/02_accessible_pattern_libraries.md)
-    - [Keyboard testing](04_accessibility_guides/03_keyboard_testing.md)
-    - [Screen reader testing](04_accessibility_guides/04_screen_reader_testing.md)
-    - [Wave toolbar testing](04_accessibility_guides/05_wave_toolbar_testing.md)
-    - [Accessibility resources](04_accessibility_guides/06_accessibility_resources.md)
 
 </details>
 
