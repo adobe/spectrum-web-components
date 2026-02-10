@@ -1,5 +1,6 @@
 /** @type { import('@storybook/web-components').Preview } */
 import '../stylesheets/swc.css';
+import '../stylesheets/typography.css';
 import './assets/preview.css';
 import DocumentTemplate from './DocumentTemplate.mdx';
 
@@ -12,10 +13,7 @@ import customElements from './custom-elements.json';
 import { withContext } from './decorators/contexts';
 import { withStaticColorPlayground } from './decorators/static-color-playground';
 
-import {
-    withFlexLayout,
-    withStaticColorsDemo,
-} from './decorators';
+import { withFlexLayout, withStaticColorsDemo } from './decorators';
 import { FontLoader } from './loaders/font-loader';
 
 const storybookHelperOptions: Options = {
@@ -133,15 +131,12 @@ const preview = {
                 transform: async (source: string) => {
                     try {
                         const prettier = await import('prettier/standalone');
-                        const prettierPluginHtml = await import(
-                            'prettier/plugins/html'
-                        );
-                        const prettierPluginBabel = await import(
-                            'prettier/plugins/babel'
-                        );
-                        const prettierPluginEstree = await import(
-                            'prettier/plugins/estree'
-                        );
+                        const prettierPluginHtml =
+                            await import('prettier/plugins/html');
+                        const prettierPluginBabel =
+                            await import('prettier/plugins/babel');
+                        const prettierPluginEstree =
+                            await import('prettier/plugins/estree');
 
                         return prettier.format(source, {
                             parser: 'html',

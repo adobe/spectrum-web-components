@@ -3,6 +3,7 @@
 import { addons } from '@storybook/manager-api';
 import { create } from '@storybook/theming';
 import '../stylesheets/swc.css';
+import '../stylesheets/typography.css';
 import './assets/manager.css';
 
 import logo from './assets/logo.svg';

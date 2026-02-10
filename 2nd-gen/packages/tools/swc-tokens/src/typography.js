@@ -10,17 +10,19 @@
  * governing permissions and limitations under the License.
  */
 
-// TODO: storybook page
+// TODO: fix bugs found in storybook
 
 import fs from 'fs';
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import path from 'path';
 
+import { capitalize } from '@spectrum-web-components/core/shared/utilities';
+
 const require = createRequire(import.meta.url);
 
 /**
- * Default category order + size keys.
+ * Default variant order + size keys.
  *
  * Note: 'title' tokens currently not available
  */
@@ -35,7 +37,7 @@ const FONT_TOKENS = {
 };
 
 /**
- * Per-category CJK overrides that should be inherited via the base class.
+ * Per-variant CJK overrides that should be inherited via the base class.
  * Provide only what applies; omitted props won't be emitted.
  */
 const CJK_OVERRIDES = {
@@ -207,8 +209,8 @@ function getMarginMultiplierTokens(cat) {
 
 function buildMarginRuleDecls({ base }) {
     return {
-        'margin-block-start': `calc(var(--${base}-margin-top-multiplier, 0) * var(--${base}-font-size))`,
-        'margin-block-end': `calc(var(--${base}-margin-bottom-multiplier, 0) * var(--${base}-font-size))`,
+        [`--${base}-margin-top`]: `calc(var(--${base}-margin-top-multiplier, 0) * var(--${base}-font-size))`,
+        [`--${base}-margin-bottom`]: `calc(var(--${base}-margin-bottom-multiplier, 0) * var(--${base}-font-size))`,
     };
 }
 
@@ -234,10 +236,10 @@ async function loadTypographyJson() {
  */
 export async function generateTypographyCssString(options = {}) {
     const {
-        categories = DEFAULT_CATEGORIES,
+        variants = DEFAULT_CATEGORIES,
         prefix = 'swc',
         fontTokens = FONT_TOKENS,
-        cjkBaseOverridesByCategory = CJK_OVERRIDES,
+        cjkBaseOverridesByVariant = CJK_OVERRIDES,
     } = options;
 
     const tokens = await loadTypographyJson();
@@ -261,9 +263,10 @@ export async function generateTypographyCssString(options = {}) {
         'font-family': `token('${fontTokens.cjk}')`,
     })}\n`;
 
-    for (const cat of categories) {
+    for (const cat of variants) {
         const base = `${prefix}-${cat}`;
-        const baseClass = `.${base}`;
+        const baseClassName = `${prefix}-${capitalize(cat)}`;
+        const baseClass = `.${baseClassName}`;
 
         const sansWeightToken = `${cat}-sans-serif-font-weight`;
         const serifWeightToken = `${cat}-serif-font-weight`;
@@ -332,7 +335,7 @@ export async function generateTypographyCssString(options = {}) {
         out += `/* =========================\n  ${cat}\n  ========================= */\n`;
 
         // Base selector (+ nested CJK overrides once)
-        const cjkOverrides = cjkBaseOverridesByCategory[cat] || {};
+        const cjkOverrides = cjkBaseOverridesByVariant[cat] || {};
         const nestedCjkDecls = buildCjkNestedDecls({
             base,
             cat,
@@ -352,17 +355,9 @@ export async function generateTypographyCssString(options = {}) {
             ? [nestedLangBlock(mergedBaseCjkDecls)]
             : [];
 
-        // Always set default margin vars to 0 on base class
-        // These are not applied to actual margin until the --margins modifier or prose parent selector.
-        const baseMarginDefaults = {
-            [`--${base}-margin-top-multiplier`]: `var(--${base}-margin-top-multiplier, 0)`,
-            [`--${base}-margin-bottom-multiplier`]: `var(--${base}-margin-bottom-multiplier, 0)`,
-        };
-
         out += cssBlock(
             baseClass,
             pickValidDecls({
-                ...baseMarginDefaults,
                 color: `var(--${base}-color, ${colorRef})`,
                 'font-family': `var(--${base}-font-family, token('${fontTokens.sans}'))`,
                 'font-weight': sansWeightRef
@@ -374,6 +369,7 @@ export async function generateTypographyCssString(options = {}) {
                 'line-height': mLineHeightRef
                     ? `var(--${base}-line-height, ${mLineHeightRef})`
                     : null,
+                'margin-block': `var(--${base}-margin-top, 0) var(--${base}-margin-bottom, 0)`,
             }),
             baseNestedBlocks
         );
@@ -381,7 +377,7 @@ export async function generateTypographyCssString(options = {}) {
         // Margins application selector:
         // - can be applied one-off via .swc-<cat>--margins
         // - or via prose parent: .swc-typography--prose .swc-<cat>
-        const marginsSelector = `.${prefix}-${cat}--margins, .swc-typography--prose .${base}`;
+        const marginsSelector = `.${baseClassName}--margins, .swc-Typography--prose .${baseClassName}`;
 
         // Determine which tokens to use when margins are applied:
         // - If a single "margin-multiplier" exists, it sets both top/bottom.
@@ -491,7 +487,7 @@ export async function generateTypographyCssString(options = {}) {
                 modifierNestedBlocks.length
             ) {
                 out += cssBlock(
-                    `.${prefix}-${cat}--${toSizeLabel(sizeKey)}`,
+                    `.${baseClassName}--size${toSizeLabel(sizeKey)}`,
                     modifierDecls,
                     modifierNestedBlocks
                 );
@@ -501,7 +497,7 @@ export async function generateTypographyCssString(options = {}) {
 
         // Serif modifier (cascade order wins; no compounding)
         if (tokenExists(tokens, serifWeightToken)) {
-            out += cssBlock(`.${prefix}-${cat}--serif`, {
+            out += cssBlock(`.${baseClassName}--serif`, {
                 [`--${base}-font-family`]: `token('${fontTokens.serif}')`,
                 [`--${base}-font-weight`]: `token('${serifWeightToken}')`,
             });
@@ -512,7 +508,7 @@ export async function generateTypographyCssString(options = {}) {
 
         // Heavy modifier (optional)
         if (tokenExists(tokens, sansHeavyWeightToken)) {
-            out += cssBlock(`.${prefix}-${cat}--heavy`, {
+            out += cssBlock(`.${baseClassName}--heavy`, {
                 [`--${base}-font-weight`]: `token('${sansHeavyWeightToken}')`,
             });
             out += '\n';
@@ -527,7 +523,7 @@ export async function generateTypographyCssString(options = {}) {
     // TBD IF NEEDED
     out += `/* =========================\n  Modifiers\n  ========================= */\n`;
 
-    out += `.${prefix}-typography--emphasized:not(:lang(zh), :lang(ja), :lang(ko)) {
+    out += `.${prefix}-Typography--emphasized:not(:lang(zh), :lang(ja), :lang(ko)) {
   font-style: token('italic-font-style');
 }\n`;
 
