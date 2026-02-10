@@ -103,13 +103,13 @@ None found for this component.
 ```html
 <a
     id="anchor"
-    href="[href value]"
-    download="[download value]"
-    target="[target value]"
-    aria-label="[label value]"
-    tabindex="[tabindex value]"
-    referrerpolicy="[referrerpolicy value]"
-    rel="[rel value]"
+    href="[href]"
+    download="[download]"
+    target="[target]"
+    aria-label="[label]"
+    tabindex="[tabindex]"
+    referrerpolicy="[referrerpolicy]"
+    rel="[rel]"
 >
     <slot></slot>
 </a>
@@ -129,7 +129,7 @@ None found for this component.
     id="[id]"
     href="[url]"
 >
-    [text]
+    [label]
 </a>
 ```
 
@@ -160,20 +160,20 @@ None found for this component.
 
 ### CSS => SWC mapping
 
-| CSS selector                                                                    | Attribute or slot         | Status              |
-| ------------------------------------------------------------------------------- | ------------------------- | ------------------- |
-| `.spectrum-Link`                                                                | `:host`                   | Implemented         |
-| `.spectrum-Link--inline`                                                        |                           | Missing from WC     |
-| `.spectrum-Link--quiet`                                                         | `quiet`                   | Implemented         |
-| `.spectrum-Link--secondary`                                                     | `variant="secondary"`     | Implemented         |
-| `.spectrum-Link--staticBlack`                                                   | `static-color="black"`    | Implemented         |
-| `.spectrum-Link--staticWhite`                                                   | `static-color="white"`    | Implemented         |
-| `.spectrum-Link:hover`                                                          | CSS `:hover`              | Implemented via CSS |
-| `.spectrum-Link:active`                                                         | CSS `:active`             | Implemented via CSS |
-| `.spectrum-Link:focus-visible`                                                  | CSS `:focus`              | Implemented via CSS |
-| `.spectrum-Link--quiet:hover`                                                   | CSS `:hover`              | Implemented via CSS |
-| `.spectrum-Link:lang(ja)`, `.spectrum-Link:lang(ko)`, `.spectrum-Link:lang(zh)` | Language-specific styling | Implemented         |
-| (text content)                                                                  | Default slot              | Implemented         |
+| CSS selector                                                                    | Attribute or slot         | Status                       |
+| ------------------------------------------------------------------------------- | ------------------------- | ---------------------------- |
+| `.spectrum-Link`                                                                | `:host`                   | Implemented                  |
+| `.spectrum-Link--inline`                                                        |                           | Missing from WC (new for S2) |
+| `.spectrum-Link--quiet`                                                         | `quiet`                   | Implemented                  |
+| `.spectrum-Link--secondary`                                                     | `variant="secondary"`     | Implemented                  |
+| `.spectrum-Link--staticBlack`                                                   | `static-color="black"`    | Implemented                  |
+| `.spectrum-Link--staticWhite`                                                   | `static-color="white"`    | Implemented                  |
+| `.spectrum-Link:hover`                                                          | CSS `:hover`              | Implemented via CSS          |
+| `.spectrum-Link:active`                                                         | CSS `:active`             | Implemented via CSS          |
+| `.spectrum-Link:focus-visible`                                                  | CSS `:focus`              | Implemented via CSS          |
+| `.spectrum-Link--quiet:hover`                                                   | CSS `:hover`              | Implemented via CSS          |
+| `.spectrum-Link:lang(ja)`, `.spectrum-Link:lang(ko)`, `.spectrum-Link:lang(zh)` | Language-specific styling | Implemented                  |
+| text content                                                                    | Default slot              | Implemented                  |
 
 ## Summary of changes
 
@@ -183,14 +183,11 @@ None found for this component.
 
 - `.spectrum-Link--inline` - New modifier for inline link styling
 
-The `inline` modifier was added in Spectrum 2 to support inline links within paragraphs that have different styling requirements than standalone links (specifically for text decoration and font-weight behavior). This is now the default variant in S2, with the previous default becoming the standalone variant.
+The `inline` link variant is the default style in S2. The modifier was added in Spectrum 2 to support inline links within paragraphs that have different styling requirements than standalone links (specifically for text decoration and font-weight behavior). This standalone variant, the previous default, is still the available as a variant option.
 
 ### CSS Spectrum 2 changes
 
-**No structural changes to core Link component:**
-
-- The base `<a>` element structure remains identical between main and spectrum-two branches
-- All existing CSS classes and most modifiers from main branch are preserved in spectrum-two except for `--mod-link-text-color-primary-*`. The primary variant now shares `--mod-link-text-color-*`.
+No structural changes to core Link component
 
 ## Resources
 

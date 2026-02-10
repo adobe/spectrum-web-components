@@ -108,6 +108,7 @@
 - `.spectrum-Tooltip-label`
 - `.spectrum-Tooltip-tip`
 - `.spectrum-Tooltip.is-open`
+- `.spectrum-Tooltip p`
 
 **Language-specific:**
 
@@ -161,7 +162,7 @@ None found for this component.
 
 - `delayed` - Boolean attribute for warm-up/cooldown behavior
 - `disabled` - Boolean attribute to prevent self-managed tooltip from responding to user input
-- `no-tip` - Boolean attribute to hide the tooltip arrow/tip
+- `no-tip` (2nd-gen only) - Boolean attribute to hide the tooltip arrow/tip
 - `self-managed` - Boolean attribute to automatically bind to parent element
 - `offset` - Number attribute for positioning offset
 - `open` - Boolean attribute reflecting open state
@@ -187,12 +188,13 @@ None found for this component.
 <summary>Spectrum Web Components:</summary>
 
 ```html
-<!-- When self-managed=false (default) -->
-<sp-tooltip id="tooltip" placement="[placement]">
-    <slot name="icon"></slot>
-    <span id="label"><slot></slot></span>
-    <span id="tip" aria-hidden="true"></span>
-</sp-tooltip>
+<sp-tooltip-openable>
+    <sp-tooltip id="tooltip" placement="[placement]">
+        <slot name="icon"></slot>
+        <span id="label"><slot></slot></span>
+        <span id="tip" aria-hidden="true"></span>
+    </sp-tooltip>
+</sp-tooltip-openable>
 
 <!-- When self-managed=true -->
 <sp-overlay
@@ -204,11 +206,13 @@ None found for this component.
     type="hint"
     triggerInteraction="hover"
 >
-    <sp-tooltip id="tooltip" placement="[placement]">
-        <slot name="icon"></slot>
-        <span id="label"><slot></slot></span>
-        <span id="tip" aria-hidden="true"></span>
-    </sp-tooltip>
+    <sp-tooltip-openable>
+        <sp-tooltip id="tooltip" placement="[placement]">
+            <slot name="icon"></slot>
+            <span id="label"><slot></slot></span>
+            <span id="tip" aria-hidden="true"></span>
+        </sp-tooltip>
+    </sp-tooltip-openable>
 </sp-overlay>
 ```
 
@@ -222,8 +226,7 @@ None found for this component.
     class="spectrum-Tooltip
          spectrum-Tooltip--[variant]
          spectrum-Tooltip--[placement]
-         is-open
-         is-focused"
+         is-open"
 >
     <!-- Icon component rendered for info/positive/negative variants -->
     <svg class="spectrum-Tooltip-typeIcon">
@@ -244,8 +247,7 @@ None found for this component.
     class="spectrum-Tooltip
          spectrum-Tooltip--[variant]
          spectrum-Tooltip--[placement]
-         is-open
-         is-focused"
+         is-open"
 >
     <span class="spectrum-Tooltip-label">[label]</span>
     <span class="spectrum-Tooltip-tip"></span>
@@ -280,60 +282,47 @@ None found for this component.
 - `.spectrum-Tooltip-typeIcon` wrapper element and all icon rendering logic
 - Icon imports and icon component instantiation for `info`, `positive`, and `negative` variants
 
-**Template JavaScript changes:**
-
-- **Removed**: `variantIcon` variable and conditional logic for determining icon based on variant
-- **Removed**: Icon component rendering within the template
-- **Removed**: `positive` variant from variants array
-
 </details>
 
 ### CSS => SWC mapping
 
-| CSS selector                                                                             | Attribute or slot                       | Status                        |
-| ---------------------------------------------------------------------------------------- | --------------------------------------- | ----------------------------- |
-| `.spectrum-Tooltip`                                                                      | Base component                          | Implemented                   |
-| `.spectrum-Tooltip-label`                                                                | Default slot (wrapped in `#label` span) | Implemented                   |
-| `.spectrum-Tooltip-tip`                                                                  | Tip element (internal `#tip` span)      | Implemented                   |
-| `.spectrum-Tooltip--info`                                                                | `variant="info"`                        | Implemented                   |
-| `.spectrum-Tooltip--negative`                                                            | `variant="negative"`                    | Implemented                   |
-| `.spectrum-Tooltip--top`                                                                 | `placement="top"`                       | Implemented                   |
-| `.spectrum-Tooltip--top-start`                                                           | `placement="top-start"`                 | Implemented                   |
-| `.spectrum-Tooltip--top-end`                                                             | `placement="top-end"`                   | Implemented                   |
-| `.spectrum-Tooltip--right`                                                               | `placement="right"`                     | Implemented                   |
-| `.spectrum-Tooltip--right-start`                                                         | `placement="right-start"`               | Implemented                   |
-| `.spectrum-Tooltip--right-end`                                                           | `placement="right-end"`                 | Implemented                   |
-| `.spectrum-Tooltip--bottom`                                                              | `placement="bottom"`                    | Implemented                   |
-| `.spectrum-Tooltip--bottom-start`                                                        | `placement="bottom-start"`              | Implemented                   |
-| `.spectrum-Tooltip--bottom-end`                                                          | `placement="bottom-end"`                | Implemented                   |
-| `.spectrum-Tooltip--left`                                                                | `placement="left"`                      | Implemented                   |
-| `.spectrum-Tooltip--left-start`                                                          | `placement="left-start"`                | Implemented                   |
-| `.spectrum-Tooltip--left-end`                                                            | `placement="left-end"`                  | Implemented                   |
-| `.spectrum-Tooltip.is-open`                                                              | `open` attribute                        | Implemented                   |
-| `.spectrum-Tooltip:lang(ja)`, `.spectrum-Tooltip:lang(ko)`, `.spectrum-Tooltip:lang(zh)` | Language-specific styling               | Implemented                   |
-| `.spectrum-Tooltip p`                                                                    | Paragraph styling within tooltip        | Implemented                   |
-| `.spectrum-Tooltip--bottom-left`                                                         | `placement="bottom-start"` (logical)    | Implemented                   |
-| `.spectrum-Tooltip--bottom-right`                                                        | `placement="bottom-end"` (logical)      | Implemented                   |
-| `.spectrum-Tooltip--top-left`                                                            | `placement="top-start"` (logical)       | Implemented                   |
-| `.spectrum-Tooltip--top-right`                                                           | `placement="top-end"` (logical)         | Implemented                   |
-| `.spectrum-Tooltip--left-top`                                                            | `placement="left-start"` (logical)      | Implemented                   |
-| `.spectrum-Tooltip--left-bottom`                                                         | `placement="left-end"` (logical)        | Implemented                   |
-| `.spectrum-Tooltip--right-top`                                                           | `placement="right-start"` (logical)     | Implemented                   |
-| `.spectrum-Tooltip--right-bottom`                                                        | `placement="right-end"` (logical)       | Implemented                   |
-| `.spectrum-Tooltip--start`                                                               |                                         | Missing from WC               |
-| `.spectrum-Tooltip--start-top`                                                           |                                         | Missing from WC               |
-| `.spectrum-Tooltip--start-bottom`                                                        |                                         | Missing from WC               |
-| `.spectrum-Tooltip--end`                                                                 |                                         | Missing from WC               |
-| `.spectrum-Tooltip--end-top`                                                             |                                         | Missing from WC               |
-| `.spectrum-Tooltip--end-bottom`                                                          |                                         | Missing from WC               |
-| `.spectrum-Tooltip--positive`                                                            |                                         | Deprecated                    |
-|                                                                                          | `icon` slot                             | Missing from CSS              |
-|                                                                                          | `icon` slot                             | Missing from CSS (deprecated) |
-|                                                                                          | `disabled` attribute                    | Missing from CSS              |
-|                                                                                          | `no-tip` attribute                      | Missing from CSS              |
-|                                                                                          | `self-managed` attribute                | Missing from CSS              |
-|                                                                                          | `offset` attribute                      | Missing from CSS              |
-|                                                                                          | `tip-padding` attribute                 | Missing from CSS              |
+| CSS selector                                                                             | Attribute or slot                       | Status          |
+| ---------------------------------------------------------------------------------------- | --------------------------------------- | --------------- |
+| `.spectrum-Tooltip`                                                                      | Base component                          | Implemented     |
+| `.spectrum-Tooltip-label`                                                                | Default slot (wrapped in `#label` span) | Implemented     |
+| `.spectrum-Tooltip-tip`                                                                  | Tip element (internal `#tip` span)      | Implemented     |
+| `.spectrum-Tooltip--info`                                                                | `variant="info"`                        | Implemented     |
+| `.spectrum-Tooltip--negative`                                                            | `variant="negative"`                    | Implemented     |
+| `.spectrum-Tooltip--top`                                                                 | `placement="top"`                       | Implemented     |
+| `.spectrum-Tooltip--top-start`                                                           | `placement="top-start"`                 | Implemented     |
+| `.spectrum-Tooltip--top-end`                                                             | `placement="top-end"`                   | Implemented     |
+| `.spectrum-Tooltip--right`                                                               | `placement="right"`                     | Implemented     |
+| `.spectrum-Tooltip--right-start`                                                         | `placement="right-start"`               | Implemented     |
+| `.spectrum-Tooltip--right-end`                                                           | `placement="right-end"`                 | Implemented     |
+| `.spectrum-Tooltip--bottom`                                                              | `placement="bottom"`                    | Implemented     |
+| `.spectrum-Tooltip--bottom-start`                                                        | `placement="bottom-start"`              | Implemented     |
+| `.spectrum-Tooltip--bottom-end`                                                          | `placement="bottom-end"`                | Implemented     |
+| `.spectrum-Tooltip--left`                                                                | `placement="left"`                      | Implemented     |
+| `.spectrum-Tooltip--left-start`                                                          | `placement="left-start"`                | Implemented     |
+| `.spectrum-Tooltip--left-end`                                                            | `placement="left-end"`                  | Implemented     |
+| `.spectrum-Tooltip.is-open`                                                              | `open` attribute                        | Implemented     |
+| `.spectrum-Tooltip:lang(ja)`, `.spectrum-Tooltip:lang(ko)`, `.spectrum-Tooltip:lang(zh)` | Language-specific styling               | Implemented     |
+| `.spectrum-Tooltip p`                                                                    | Paragraph styling within tooltip        | Implemented     |
+| `.spectrum-Tooltip--bottom-left`                                                         | `placement="bottom-start"` (logical)    | Implemented     |
+| `.spectrum-Tooltip--bottom-right`                                                        | `placement="bottom-end"` (logical)      | Implemented     |
+| `.spectrum-Tooltip--top-left`                                                            | `placement="top-start"` (logical)       | Implemented     |
+| `.spectrum-Tooltip--top-right`                                                           | `placement="top-end"` (logical)         | Implemented     |
+| `.spectrum-Tooltip--left-top`                                                            | `placement="left-start"` (logical)      | Implemented     |
+| `.spectrum-Tooltip--left-bottom`                                                         | `placement="left-end"` (logical)        | Implemented     |
+| `.spectrum-Tooltip--right-top`                                                           | `placement="right-start"` (logical)     | Implemented     |
+| `.spectrum-Tooltip--right-bottom`                                                        | `placement="right-end"` (logical)       | Implemented     |
+| `.spectrum-Tooltip--start`                                                               |                                         | Missing from WC |
+| `.spectrum-Tooltip--start-top`                                                           |                                         | Missing from WC |
+| `.spectrum-Tooltip--start-bottom`                                                        |                                         | Missing from WC |
+| `.spectrum-Tooltip--end`                                                                 |                                         | Missing from WC |
+| `.spectrum-Tooltip--end-top`                                                             |                                         | Missing from WC |
+| `.spectrum-Tooltip--end-bottom`                                                          |                                         | Missing from WC |
+| `.spectrum-Tooltip--positive`                                                            |                                         | Deprecated      |
 
 ## Summary of changes
 
@@ -358,16 +347,6 @@ Logical properties provide better RTL (right-to-left) language support by automa
 
 - Pure logical placement values: `start`, `start-top`, `start-bottom`, `end`, `end-top`, `end-bottom`
 
-**Missing from CSS:**
-
-- `icon` slot for custom icon rendering
-- `delayed` attribute for warm-up/cooldown behavior
-- `disabled` attribute for self-managed tooltips
-- `no-tip` attribute to hide the tooltip arrow/tip
-- `self-managed` attribute for automatic parent binding
-- `offset` attribute for custom positioning
-- `tip-padding` attribute for tip padding control
-
 **Deprecated:**
 
 - `.spectrum-Tooltip--positive` variant was removed in Spectrum 2
@@ -381,10 +360,8 @@ Logical properties provide better RTL (right-to-left) language support by automa
 - Variant icons (Info, CheckmarkCircle, Alert) for semantic variants are no longer rendered in the template
 - The `.spectrum-Tooltip-typeIcon` class and associated icon rendering logic were removed
 - This represents a significant visual change: Spectrum 2 tooltips no longer display icons for `info` and `negative` variants
-
-**Variant changes:**
-
-- `positive` variant was removed from Spectrum 2 (deprecated)
+- The `.spectrum-Tooltip-typeIcon` class and associated icon rendering logic were removed
+- This represents a significant visual change: Spectrum 2 tooltips no longer display icons for `info` and `negative` variants
 - Only `neutral`, `info`, and `negative` variants remain in Spectrum 2
 - CSS classes for the positive variant (`.spectrum-Tooltip--positive`) are no longer supported
 

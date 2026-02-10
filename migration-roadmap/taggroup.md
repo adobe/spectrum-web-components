@@ -85,6 +85,7 @@ None found for `<sp-tags>`.
 ```html
 <slot></slot>
 <!-- Slotted sp-tag elements -->
+<slot></slot>
 ```
 
 </details>
@@ -148,7 +149,23 @@ None found for `<sp-tags>`.
 <details>
 <summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
-What do you think about this for the diff section? Definitely feel free to modify the key dom changes Cursor came up with.
+-<div role="list" class="spectrum-TagGroup" style="" aria-label="Tags">
+
+- <div class="spectrum-Tag spectrum-Tag--sizeM spectrum-TagGroup-item" tabindex="0">
+  +<div class="spectrum-TagGroup spectrum-TagGroup--sizeM">
+
+* <label class="spectrum-FieldLabel spectrum-TagGroup-label">Label</label>
+* <div class="spectrum-TagGroup-tags" role="list" aria-label="Tags">
+*        <div class="spectrum-Tag spectrum-Tag--sizeM spectrum-TagGroup-tag" tabindex="0">
+             <span class="spectrum-Tag-label">2025</span>
+         </div>
+*        <div class="spectrum-Tag spectrum-Tag--sizeM spectrum-TagGroup-tag" tabindex="0">
+             <span class="spectrum-Tag-label">Outdoors</span>
+         </div>
+* </div>
+* <button class="spectrum-ActionButton spectrum-TagGroup-actionButton">Show all</button>
+* <div class="spectrum-HelpText spectrum-TagGroup-helpText">Help text</div>
+  </div>
 
 ```diff
 --- Legacy DOM structure
@@ -183,27 +200,17 @@ What do you think about this for the diff section? Definitely feel free to modif
 
 ### CSS => SWC mapping
 
-| CSS selector                                                    | Attribute or slot                | Status           |
-| --------------------------------------------------------------- | -------------------------------- | ---------------- |
-| `.spectrum-TagGroup`                                            | Base component (`<sp-tags>`)     | Implemented      |
-| `.spectrum-TagGroup--sideLabel`                                 | N/A                              | Missing from WC  |
-| `.spectrum-TagGroup--sideLabel .spectrum-TagGroup-actionButton` | N/A                              | Missing from WC  |
-| `.spectrum-TagGroup--sideLabel .spectrum-TagGroup-helpText`     | N/A                              | Missing from WC  |
-| `.spectrum-TagGroup--sideLabel .spectrum-TagGroup-label`        | N/A                              | Missing from WC  |
-| `.spectrum-TagGroup--sideLabel .spectrum-TagGroup-tags`         | N/A                              | Missing from WC  |
-| `.spectrum-TagGroup--sizeL`                                     | N/A                              | Missing from WC  |
-| `.spectrum-TagGroup--sizeS`                                     | N/A                              | Missing from WC  |
-| `.spectrum-TagGroup-actionButton`                               | N/A                              | Missing from WC  |
-| `.spectrum-TagGroup-helpText`                                   | N/A                              | Missing from WC  |
-| `.spectrum-TagGroup-label`                                      | N/A                              | Missing from WC  |
-| `.spectrum-TagGroup-tag`                                        | Individual tags (from templates) | Missing from WC  |
-| `.spectrum-TagGroup-tags`                                       | N/A                              | Missing from WC  |
-| `.spectrum-TagGroup:lang(ja)`                                   | N/A                              | Missing from WC  |
-| `.spectrum-TagGroup:lang(ko)`                                   | N/A                              | Missing from WC  |
-| `.spectrum-TagGroup:lang(zh)`                                   | N/A                              | Missing from WC  |
-| Default slot                                                    | Slot for `<sp-tag>` elements     | Implemented      |
-| Keyboard navigation                                             | RovingTabindexController         | Missing from CSS |
-| Focus management                                                | Internal controller              | Missing from CSS |
+| CSS selector                  | Attribute or slot                                                      | Status           |
+| ----------------------------- | ---------------------------------------------------------------------- | ---------------- |
+| `.spectrum-TagGroup`          | Base component (`<sp-tags>`)                                           | Implemented      |
+| `.spectrum-TagGroup-tag`      | Individual tags (from templates); default slot for `<sp-tag>` elements | Implemented      |
+| `.spectrum-TagGroup-tags`     | N/A                                                                    | Missing from WC  |
+| `.spectrum-TagGroup:lang(ja)` | N/A                                                                    | Missing from WC  |
+| `.spectrum-TagGroup:lang(ko)` | N/A                                                                    | Missing from WC  |
+| `.spectrum-TagGroup:lang(zh)` | N/A                                                                    | Missing from WC  |
+| Default slot                  | Slot for `<sp-tag>` elements                                           | Implemented      |
+| Keyboard navigation           | RovingTabindexController                                               | Missing from CSS |
+| Focus management              | Internal controller                                                    | Missing from CSS |
 
 ## Summary of changes
 
@@ -224,11 +231,6 @@ What do you think about this for the diff section? Definitely feel free to modif
 - Keyboard navigation behavior - The `<sp-tags>` component uses `RovingTabindexController` to manage focus and keyboard navigation between tags
 - Focus management - Automatic focus handling when navigating with arrow keys
 
-**Implementation differences:**
-
-- **CSS approach**: Uses a wrapper `<div>` with class `spectrum-TagGroup` that contains child elements for label, tags container (with `role="list"`), action button, and help text. Individual tags receive the `spectrum-TagGroup-tag` class.
-- **WC approach**: Uses a custom element `<sp-tags>` that acts as a simple slot container with built-in keyboard navigation and focus management. It does not include label, action button, or help text functionality.
-
 ### CSS Spectrum 2 changes
 
 **Structural changes in Spectrum 2:**
@@ -243,24 +245,6 @@ What do you think about this for the diff section? Definitely feel free to modif
 - `.spectrum-TagGroup-label` - Optional field label support with top or side positioning (`--sideLabel` modifier)
 - `.spectrum-TagGroup-actionButton` - Optional action button for tag-related actions
 - `.spectrum-TagGroup-helpText` - Optional help text for additional context or validation messages
-- Side label layout variant via `--sideLabel` modifier for horizontal label positioning
-
-**Maintained features:**
-
-- Size variants (`--sizeS`, `--sizeM`, `--sizeL`)
-- Language-specific styling (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`)
-- Tag wrapping behavior when horizontal space is limited
-- Custom styles and spacing modifiers support
-- Semantic HTML structure with proper ARIA roles for accessibility
-
-**Migration impact:**
-
-Migrating from Legacy to Spectrum 2 requires:
-
-- Updating class names from `.spectrum-TagGroup-item` to `.spectrum-TagGroup-tag`
-- Wrapping tags in a `.spectrum-TagGroup-tags` container
-- Moving `role="list"` from root element to the tags container
-- Adding label, action button, and help text elements within the component
 
 ## Resources
 
