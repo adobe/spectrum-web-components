@@ -31,6 +31,8 @@
             "import": "./dist/utils/*.js"
         }
     },
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
     "files": [
         "dist/",
         "stylesheets/"
@@ -101,8 +103,6 @@
         "css"
     ],
     "customElements": ".storybook/custom-elements.json",
-    "main": "./dist/index.js",
-    "module": "./dist/index.js",
     "publishConfig": {
         "access": "public"
     }
