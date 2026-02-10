@@ -12,13 +12,12 @@
  * governing permissions and limitations under the License.
  */
 
-/* eslint-disable no-console */
-
 /**
  * Unified publishing script for both 1st-gen and 2nd-gen packages.
  * Handles the complete release workflow including build, versioning, and publishing.
  *
  * @example
+ * ```bash
  * # Regular release with git tags (uses "latest" tag)
  * yarn publish
  *
@@ -30,6 +29,7 @@
  *
  * # Beta release
  * node ./scripts/publish.js --tag beta
+ * ```
  */
 
 import { execSync } from 'child_process';
@@ -56,7 +56,7 @@ function run(command, description) {
     try {
         execSync(command, { stdio: 'inherit' });
     } catch (error) {
-        console.error(`❌ Failed: ${description || command}`);
+        console.error(`❌ Failed: ${description || command}`, error);
         process.exit(1);
     }
 }

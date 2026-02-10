@@ -5,7 +5,7 @@
             "extends": ["stylelint-config-standard"],
             "files": ["**/*.css"],
             "rules": {
-                "custom-property-pattern": "^_?([a-z][a-z0-9]*)(-[a-z0-9]+)*(?:--(sizeM|sizeL))?$",
+                "custom-property-pattern": "^_?([a-z][a-z0-9]*)(-[a-z0-9]+)*(?:--(sizeM|sizeL|compact))?$",
                 "declaration-block-no-redundant-longhand-properties": null,
                 "declaration-property-value-no-unknown": [
                     true,

@@ -166,6 +166,65 @@ const clickEventsAllowList = [
     'sp-underlay',
 ];
 
+// Minimal globals for .js files (no-undef is off for .ts; TypeScript compiler handles those).
+const browserGlobals = {
+    document: 'readonly',
+    window: 'readonly',
+    self: 'readonly',
+    console: 'readonly',
+    HTMLElement: 'readonly',
+    HTMLInputElement: 'readonly',
+    HTMLTextAreaElement: 'readonly',
+    Element: 'readonly',
+    Node: 'readonly',
+    customElements: 'readonly',
+    ShadowRoot: 'readonly',
+    DocumentFragment: 'readonly',
+    Event: 'readonly',
+    CustomEvent: 'readonly',
+    KeyboardEvent: 'readonly',
+    setTimeout: 'readonly',
+    clearTimeout: 'readonly',
+    setInterval: 'readonly',
+    clearInterval: 'readonly',
+    requestAnimationFrame: 'readonly',
+    fetch: 'readonly',
+    URL: 'readonly',
+    URLSearchParams: 'readonly',
+    location: 'readonly',
+    navigator: 'readonly',
+    matchMedia: 'readonly',
+    getComputedStyle: 'readonly',
+    performance: 'readonly',
+    addEventListener: 'readonly',
+    removeEventListener: 'readonly',
+};
+
+/** Node/CommonJS globals for scripts and tooling that run in Node. */
+const nodeGlobals = {
+    module: 'readonly',
+    exports: 'readonly',
+    require: 'readonly',
+    process: 'readonly',
+    __dirname: 'readonly',
+    __filename: 'readonly',
+    Buffer: 'readonly',
+    crypto: 'readonly',
+};
+
+/** Mocha/test globals for test and story files (web-test-runner). */
+const mochaGlobals = {
+    describe: 'readonly',
+    it: 'readonly',
+    xit: 'readonly',
+    before: 'readonly',
+    beforeEach: 'readonly',
+    afterEach: 'readonly',
+    after: 'readonly',
+    sinon: 'readonly',
+    Mocha: 'readonly',
+};
+
 // ────────────────────────────────────────────────────────────────────────────────
 // ESLint Flat Config
 // ────────────────────────────────────────────────────────────────────────────────
@@ -177,6 +236,7 @@ export default defineConfig([
             '**/node_modules/**',
             '**/dist/**',
             '**/coverage/**',
+            '**/.wireit/**',
             '**/*.d.ts',
             '1st-gen/packages/icons/src/icons-*.svg.ts',
             // Build outputs
@@ -186,10 +246,15 @@ export default defineConfig([
             // Generated files
             '**/*.css.ts',
             '**/custom-elements.json',
-            // Config files that shouldn't be linted with TS rules
-            '*.config.js',
-            '*.config.cjs',
-            '*.config.mjs',
+            // Config and tooling files (Node env; skip lint to avoid needing node globals for many files)
+            '**/*.config.js',
+            '**/*.config.cjs',
+            '**/*.config.mjs',
+            '**/*.config.ts',
+            '**/plopfile.js',
+            '**/.eleventy.js',
+            '**/web-dev-server.config.*',
+            '**/content/_data/*.js',
         ],
     },
 
@@ -221,96 +286,7 @@ export default defineConfig([
                 ecmaVersion: 'latest',
                 sourceType: 'module',
             },
-            // Browser globals for web component code.
-            // Web components run exclusively in browsers and need access to DOM APIs.
-            // Without these declarations, ESLint would flag browser APIs as undefined.
-            // All are 'readonly' to prevent accidental reassignment (e.g., window = {}).
-            globals: {
-                // Core DOM - fundamental browser objects for DOM manipulation
-                document: 'readonly',
-                window: 'readonly',
-                HTMLElement: 'readonly',
-                HTMLSlotElement: 'readonly',
-                HTMLInputElement: 'readonly',
-                HTMLButtonElement: 'readonly',
-                HTMLAnchorElement: 'readonly',
-                HTMLFormElement: 'readonly',
-                HTMLSelectElement: 'readonly',
-                HTMLTextAreaElement: 'readonly',
-                Element: 'readonly',
-                Node: 'readonly',
-                NodeList: 'readonly',
-                Text: 'readonly',
-
-                // Web Components API - required for custom element registration
-                customElements: 'readonly',
-                ShadowRoot: 'readonly',
-                DocumentFragment: 'readonly',
-                HTMLTemplateElement: 'readonly',
-
-                // Events - used for dispatching and handling user interactions
-                CustomEvent: 'readonly',
-                Event: 'readonly',
-                KeyboardEvent: 'readonly',
-                MouseEvent: 'readonly',
-                FocusEvent: 'readonly',
-                PointerEvent: 'readonly',
-                TouchEvent: 'readonly',
-
-                // Timing - animations, debouncing, scheduling
-                requestAnimationFrame: 'readonly',
-                cancelAnimationFrame: 'readonly',
-                setTimeout: 'readonly',
-                clearTimeout: 'readonly',
-                setInterval: 'readonly',
-                clearInterval: 'readonly',
-                queueMicrotask: 'readonly',
-
-                // Browser APIs - environment detection, navigation, storage
-                console: 'readonly',
-                navigator: 'readonly',
-                location: 'readonly',
-                history: 'readonly',
-                localStorage: 'readonly',
-                sessionStorage: 'readonly',
-
-                // Network - data fetching and request handling
-                fetch: 'readonly',
-                URL: 'readonly',
-                URLSearchParams: 'readonly',
-                Headers: 'readonly',
-                Request: 'readonly',
-                Response: 'readonly',
-                AbortController: 'readonly',
-                AbortSignal: 'readonly',
-
-                // Observers - reactive DOM monitoring for resize, mutation, visibility
-                MutationObserver: 'readonly',
-                ResizeObserver: 'readonly',
-                IntersectionObserver: 'readonly',
-
-                // CSS APIs - style computation and media queries
-                getComputedStyle: 'readonly',
-                matchMedia: 'readonly',
-                CSS: 'readonly',
-                CSSStyleSheet: 'readonly',
-
-                // DOM utilities - text selection, parsing, serialization
-                Range: 'readonly',
-                Selection: 'readonly',
-                DOMParser: 'readonly',
-                XMLSerializer: 'readonly',
-
-                // File/Blob APIs - file handling for uploads, downloads
-                Blob: 'readonly',
-                File: 'readonly',
-                FileReader: 'readonly',
-                FormData: 'readonly',
-
-                // Performance - timing measurements and profiling
-                performance: 'readonly',
-                PerformanceObserver: 'readonly',
-            },
+            globals: browserGlobals,
         },
         rules: {
             // Copyright header (global for all .ts/.js files)
@@ -457,10 +433,12 @@ export default defineConfig([
 
     // ────────────────────────────────────────────────────────────────────────────
     // TypeScript only: enable type-aware rules (not applied to .js/.mjs/.cjs)
+    // no-undef off: TypeScript compiler handles undefined checks and DOM/built-in types.
     // ────────────────────────────────────────────────────────────────────────────
     {
         files: ['**/*.ts'],
         rules: {
+            'no-undef': 'off',
             'no-unused-vars': 'off',
             '@typescript-eslint/no-array-constructor': 'error',
             '@typescript-eslint/no-duplicate-enum-values': 'error',
@@ -492,28 +470,50 @@ export default defineConfig([
     },
 
     // ────────────────────────────────────────────────────────────────────────────
-    // Test and story files: relaxed rules
-    // Browser globals are inherited from the main TypeScript config above.
-    // These overrides disable rules that are too strict for test/story contexts.
+    // Node/scripts: globals for .js/.ts that runs in Node (config files are ignored above)
+    // ────────────────────────────────────────────────────────────────────────────
+    {
+        files: [
+            'scripts/**/*',
+            '**/scripts/**/*.js',
+            '**/scripts/**/*.ts',
+            '1st-gen/linters/**/*.js',
+            'linters/**/*.js',
+            '.github/**/*.js',
+            '1st-gen/test/visual/**/*.js',
+            '1st-gen/test/plugins/**/*.js',
+            '1st-gen/test/testing-helpers.js',
+            '1st-gen/test/benchmark/cli.ts',
+            '1st-gen/web-test-runner*.js',
+            '1st-gen/storybook/**/*.js',
+            'CONTRIBUTOR-DOCS/**/*.js',
+            '2nd-gen/packages/tools/**/*.ts',
+            '2nd-gen/packages/tools/**/*.js',
+            '1st-gen/packages/icons-workflow/bin/**/*.js',
+            '1st-gen/packages/icons-ui/bin/**/*.js',
+        ],
+        languageOptions: {
+            globals: nodeGlobals,
+        },
+    },
+
+    // ────────────────────────────────────────────────────────────────────────────
+    // Test and story files: relaxed rules and Mocha globals for .js
     // ────────────────────────────────────────────────────────────────────────────
     {
         files: [
             '**/*.test.ts',
+            '**/*.test-vrt.ts',
             '**/*.stories.ts',
+            '**/*.spec.ts',
             '**/test/**/*.ts',
+            '**/test/**/*.js',
             '**/benchmark/**/*.ts',
             '**/stories/**/*.ts',
+            '**/e2e/**/*.ts',
         ],
         languageOptions: {
-            // Mocha globals - provided by web-test-runner at runtime
-            globals: {
-                describe: 'readonly',
-                it: 'readonly',
-                before: 'readonly',
-                beforeEach: 'readonly',
-                afterEach: 'readonly',
-                after: 'readonly',
-            },
+            globals: { ...browserGlobals, ...mochaGlobals },
         },
         rules: {
             'swc/document-active-element': 'off',
