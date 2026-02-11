@@ -140,17 +140,29 @@ export const readonly = (): TemplateResult => html`
 export const types = (): TemplateResult => html`
     <sp-textfield label="Default" placeholder="default (text)"></sp-textfield>
     <sp-textfield label="Text" type="text" placeholder="text"></sp-textfield>
-    <sp-textfield label="URL" type="url" placeholder="url"></sp-textfield>
-    <sp-textfield label="Tel" type="tel" placeholder="tel"></sp-textfield>
+    <sp-textfield
+        label="URL"
+        type="url"
+        placeholder="url"
+        autocomplete="url"
+    ></sp-textfield>
+    <sp-textfield
+        label="Tel"
+        type="tel"
+        placeholder="tel"
+        autocomplete="tel"
+    ></sp-textfield>
     <sp-textfield
         label="E-Mail"
         type="email"
         placeholder="email"
+        autocomplete="email"
     ></sp-textfield>
     <sp-textfield
         label="Password"
         type="password"
         placeholder="password"
+        autocomplete="current-password"
     ></sp-textfield>
 `;
 

@@ -13,7 +13,7 @@
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/color-slider/sp-color-slider.js';
-import { ColorSlider } from '@spectrum-web-components/color-slider/src/ColorSlider';
+import { ColorSlider } from '@spectrum-web-components/color-slider/src/ColorSlider.js';
 import '@spectrum-web-components/color-area/sp-color-area.js';
 import { ColorArea } from '@spectrum-web-components/color-area/src/ColorArea.js';
 

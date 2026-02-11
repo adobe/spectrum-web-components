@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+import '@spectrum-web-components/asset/sp-asset.js';
 import {
     CSSResultArray,
     html,
@@ -19,20 +20,19 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
-import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
-import '@spectrum-web-components/asset/sp-asset.js';
+import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 
-import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
-import '@spectrum-web-components/popover/sp-popover.js';
+import type { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox.js';
 import '@spectrum-web-components/divider/sp-divider.js';
+import '@spectrum-web-components/popover/sp-popover.js';
 import cardStyles from './card.css.js';
 
 /**
@@ -147,9 +147,12 @@ export class Card extends LikeAnchor(
                     event.preventDefault();
                     break;
                 }
+                break;
+
             case 'Enter':
             case 'NumpadEnter':
                 this.click();
+                break;
         }
     }
 

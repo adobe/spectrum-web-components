@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -17,6 +17,10 @@ import {
     SpectrumElement,
 } from '@spectrum-web-components/core/shared/base/index.js';
 import { getLabelFromSlot } from '@spectrum-web-components/core/shared/get-label-from-slot.js';
+import {
+    LanguageResolutionController,
+    languageResolverUpdatedSymbol,
+} from '@spectrum-web-components/core/shared/reactive-controllers/LanguageResolution.js';
 
 import {
     PROGRESS_CIRCLE_VALID_SIZES,
@@ -36,8 +40,6 @@ import {
  * @slot - Accessible label for the progress circle.
  *
  *   Used to provide context about what is loading or progressing.
- *
- * @fires progress-change - Dispatched when the progress value changes
  */
 export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
     validSizes: PROGRESS_CIRCLE_VALID_SIZES,
@@ -101,6 +103,8 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
     @property({ type: Number })
     public progress = 0;
 
+    private languageResolver = new LanguageResolutionController(this);
+
     // ──────────────────────
     //     IMPLEMENTATION
     // ──────────────────────
@@ -131,12 +135,34 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
         }
     }
 
+    private formatProgress(): string {
+        return new Intl.NumberFormat(this.languageResolver.language, {
+            style: 'percent',
+            unitDisplay: 'narrow',
+        }).format(this.progress / 100);
+    }
+
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+        if (changes.has('indeterminate')) {
+            if (this.indeterminate) {
+                this.removeAttribute('aria-valuemin');
+                this.removeAttribute('aria-valuemax');
+                this.removeAttribute('aria-valuenow');
+                this.removeAttribute('aria-valuetext');
+            } else {
+                this.setAttribute('aria-valuemin', '0');
+                this.setAttribute('aria-valuemax', '100');
+                this.setAttribute('aria-valuenow', '' + this.progress);
+                this.setAttribute('aria-valuetext', this.formatProgress());
+            }
+        }
         if (!this.indeterminate && changes.has('progress')) {
             this.setAttribute('aria-valuenow', '' + this.progress);
-        } else if (this.hasAttribute('aria-valuenow')) {
-            this.removeAttribute('aria-valuenow');
+            this.setAttribute('aria-valuetext', this.formatProgress());
+        }
+        if (!this.indeterminate && changes.has(languageResolverUpdatedSymbol)) {
+            this.setAttribute('aria-valuetext', this.formatProgress());
         }
         if (changes.has('label')) {
             if (this.label.length) {
