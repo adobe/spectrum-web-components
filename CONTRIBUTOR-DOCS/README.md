@@ -60,7 +60,7 @@ These docs contain essential information about the SWC project for both maintain
 
 The docs are organized into three main sections to help you find the information you need:
 
-**[Contributor Guides](./01_contributor-guides/README.md)** - Topical guides for working on the project. This section includes guides for getting started, understanding processes, and accomplishing specific tasks like adding new components or editing these contributor docs themselves.
+**[Contributor Guides](./01_contributor-guides/README.md)** - Topical guides for working on the project. This section includes guides for getting started, understanding processes, and accomplishing specific tasks like adding new components or editing these contributor docs themselves. When you change doc structure or headings, see [Authoring contributor docs](./01_contributor-guides/07_authoring-contributor-docs/README.md) to regenerate navigation and verify links.
 
 **[Style Guide](./02_style-guide/README.md)** - Comprehensive style guide covering project-wide conventions and area-specific rules. This section is useful for human reference and for AI-assisted work, documenting our approaches to linting, JSDoc conventions, component structure, and other coding standards.
 
