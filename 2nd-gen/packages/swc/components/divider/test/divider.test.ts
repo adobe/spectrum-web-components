@@ -17,6 +17,7 @@ import { Divider } from '@adobe/swc/divider';
 
 import '@adobe/swc/divider';
 
+import { getComponent } from '../../../utils/test-utils.js';
 import meta from '../stories/divider.stories.js';
 import {
     Overview,
@@ -35,66 +36,90 @@ export default {
     tags: ['!autodocs', 'dev'],
 } as Meta;
 
-const getDivider = (canvasElement: HTMLElement): Divider => {
-    return canvasElement.querySelector('swc-divider') as Divider;
-};
+// ──────────────────────────────────────────────────────────────
+// TEST: Defaults
+// ──────────────────────────────────────────────────────────────
 
-// Test: overview renders a separator with expected public attributes.
 export const OverviewTest: Story = {
     ...Overview,
-    play: async ({ canvasElement }) => {
-        const divider = getDivider(canvasElement);
-        await divider.updateComplete;
-        expect(divider.getAttribute('role')).toBe('separator');
-        expect(divider.getAttribute('size')).toBe('m');
+    play: async ({ canvasElement, step }) => {
+        const divider = await getComponent<Divider>(
+            canvasElement,
+            'swc-divider'
+        );
+
+        await step('renders a separator with expected attributes', async () => {
+            expect(divider.getAttribute('role')).toBe('separator');
+            expect(divider.getAttribute('size')).toBe('m');
+        });
     },
 };
 
-// Test: vertical dividers reflect orientation attributes.
+// ──────────────────────────────────────────────────────────────
+// TEST: Properties / Attributes
+// ──────────────────────────────────────────────────────────────
+
 export const VerticalTest: Story = {
     ...Vertical,
-    play: async ({ canvasElement }) => {
+    play: async ({ canvasElement, step }) => {
         const dividers = Array.from(
             canvasElement.querySelectorAll('swc-divider')
         ) as Divider[];
         await Promise.all(dividers.map((divider) => divider.updateComplete));
 
-        dividers.forEach((divider) => {
-            expect(divider.hasAttribute('vertical')).toBe(true);
-            expect(divider.getAttribute('aria-orientation')).toBe('vertical');
+        await step('reflects vertical orientation attributes', async () => {
+            dividers.forEach((divider) => {
+                expect(divider.hasAttribute('vertical')).toBe(true);
+                expect(divider.getAttribute('aria-orientation')).toBe(
+                    'vertical'
+                );
+            });
         });
     },
 };
 
-// Test: static colors reflect to expected public attribute values.
 export const StaticColorsTest: Story = {
     ...StaticColors,
-    play: async ({ canvasElement }) => {
+    play: async ({ canvasElement, step }) => {
         const dividers = Array.from(
             canvasElement.querySelectorAll('swc-divider[static-color]')
         ) as Divider[];
         await Promise.all(dividers.map((divider) => divider.updateComplete));
 
-        dividers.forEach((divider) => {
-            const staticColor = divider.getAttribute('static-color');
-            expect(staticColor).toBeTruthy();
-            expect(['white', 'black']).toContain(staticColor);
-        });
+        await step(
+            'reflects expected static-color attribute values',
+            async () => {
+                dividers.forEach((divider) => {
+                    const staticColor = divider.getAttribute('static-color');
+                    expect(staticColor).toBeTruthy();
+                    expect(['white', 'black']).toContain(staticColor);
+                });
+            }
+        );
     },
 };
 
-// Test: static-color can be removed and clears attributes.
 export const StaticColorToggleTest: Story = {
     render: () => html` <swc-divider static-color="black"></swc-divider> `,
-    play: async ({ canvasElement }) => {
-        const divider = getDivider(canvasElement);
-        await divider.updateComplete;
-        expect(divider.getAttribute('static-color')).toBe('black');
+    play: async ({ canvasElement, step }) => {
+        const divider = await getComponent<Divider>(
+            canvasElement,
+            'swc-divider'
+        );
 
-        divider.removeAttribute('static-color');
-        divider.requestUpdate();
-        await divider.updateComplete;
-        expect(divider.getAttribute('static-color')).toBeNull();
-        expect(divider.hasAttribute('static-color')).toBe(false);
+        await step('renders with static-color attribute', async () => {
+            expect(divider.getAttribute('static-color')).toBe('black');
+        });
+
+        await step(
+            'clears static-color when attribute is removed',
+            async () => {
+                divider.removeAttribute('static-color');
+                divider.requestUpdate();
+                await divider.updateComplete;
+                expect(divider.getAttribute('static-color')).toBeNull();
+                expect(divider.hasAttribute('static-color')).toBe(false);
+            }
+        );
     },
 };

@@ -21,7 +21,7 @@ import { StatusLight } from '@adobe/swc/status-light';
 
 import '@adobe/swc/status-light';
 
-import { setupSwcWarningSpy } from '../../../utils/test-utils.js';
+import { getComponent, setupSwcWarningSpy } from '../../../utils/test-utils.js';
 import { meta } from '../stories/status-light.stories.js';
 import {
     Overview,
@@ -40,27 +40,33 @@ export default {
     tags: ['!autodocs', 'dev'],
 } as Meta;
 
-// Reuse the same element lookup for all play functions.
-const getStatusLight = (canvasElement: HTMLElement): StatusLight => {
-    return canvasElement.querySelector('swc-status-light') as StatusLight;
-};
-// Test: default properties and slot content.
+// ──────────────────────────────────────────────────────────────
+// TEST: Defaults
+// ──────────────────────────────────────────────────────────────
+
 export const DefaultTest: Story = {
     ...Overview,
-    play: async ({ canvasElement }) => {
-        const statusLight = getStatusLight(canvasElement);
-        await statusLight.updateComplete;
+    play: async ({ canvasElement, step }) => {
+        const statusLight = await getComponent<StatusLight>(
+            canvasElement,
+            'swc-status-light'
+        );
 
-        expect(statusLight.variant).toBe('info');
-        expect(statusLight.size).toBe('m');
-        expect(statusLight.textContent?.trim()).toBeTruthy();
+        await step('renders default properties and slot content', async () => {
+            expect(statusLight.variant).toBe('info');
+            expect(statusLight.size).toBe('m');
+            expect(statusLight.textContent?.trim()).toBeTruthy();
+        });
     },
 };
 
-// Test: each size renders and reflects correctly.
+// ──────────────────────────────────────────────────────────────
+// TEST: Properties / Attributes
+// ──────────────────────────────────────────────────────────────
+
 export const SizesTest: Story = {
     ...Sizes,
-    play: async ({ canvasElement }) => {
+    play: async ({ canvasElement, step }) => {
         const statusLights = Array.from(
             canvasElement.querySelectorAll('swc-status-light')
         ) as StatusLight[];
@@ -68,17 +74,18 @@ export const SizesTest: Story = {
             statusLights.map((statusLight) => statusLight.updateComplete)
         );
 
-        StatusLight.VALID_SIZES.forEach((size) => {
-            const statusLight = statusLights.find(
-                (item) => item.getAttribute('size') === size
-            ) as StatusLight;
-            expect(statusLight.variant).toBe('info');
-            expect(statusLight.size).toBe(size);
+        await step('renders and reflects each size correctly', async () => {
+            StatusLight.VALID_SIZES.forEach((size) => {
+                const statusLight = statusLights.find(
+                    (item) => item.getAttribute('size') === size
+                ) as StatusLight;
+                expect(statusLight.variant).toBe('info');
+                expect(statusLight.size).toBe(size);
+            });
         });
     },
 };
 
-// Test: composed content still renders the status light.
 export const ComposedComponentTest: Story = {
     render: (args) => {
         const storyArgs = {
@@ -96,59 +103,77 @@ export const ComposedComponentTest: Story = {
             </div>
         `;
     },
-    play: async ({ canvasElement }) => {
-        const statusLight = getStatusLight(canvasElement);
-        await statusLight.updateComplete;
+    play: async ({ canvasElement, step }) => {
+        const statusLight = await getComponent<StatusLight>(
+            canvasElement,
+            'swc-status-light'
+        );
 
-        expect(statusLight.variant).toBe('positive');
-        expect(statusLight.size).toBe('m');
-        expect(statusLight.textContent?.trim()).toBeTruthy();
+        await step('renders within composed content', async () => {
+            expect(statusLight.variant).toBe('positive');
+            expect(statusLight.size).toBe('m');
+            expect(statusLight.textContent?.trim()).toBeTruthy();
+        });
     },
 };
 
-// Test: unsupported variants warn in debug mode.
+// ──────────────────────────────────────────────────────────────
+// TEST: Dev mode warnings
+// ──────────────────────────────────────────────────────────────
+
 export const UnsupportedVariantWarningTest: Story = {
     render: () => html`
         <swc-status-light variant="info">Active</swc-status-light>
     `,
-    play: async ({ canvasElement }) => {
+    play: async ({ canvasElement, step }) => {
         const { warnCalls, restore } = setupSwcWarningSpy();
-        try {
-            const statusLight = getStatusLight(canvasElement);
-            statusLight.setAttribute('variant', 'accent');
-            await statusLight.updateComplete;
 
-            expect(warnCalls.length).toBeGreaterThan(0);
-            expect(warnCalls[0][0]).toBe(statusLight);
-            expect(warnCalls[0][1]).toBe(
-                `<${statusLight.localName}> element expects the "variant" attribute to be one of the following:`
-            );
-        } finally {
-            restore();
-        }
+        await step('warns when an unsupported variant is set', async () => {
+            try {
+                const statusLight = await getComponent<StatusLight>(
+                    canvasElement,
+                    'swc-status-light'
+                );
+                statusLight.setAttribute('variant', 'accent');
+                await statusLight.updateComplete;
+
+                expect(warnCalls.length).toBeGreaterThan(0);
+                expect(warnCalls[0][0]).toBe(statusLight);
+                expect(warnCalls[0][1]).toBe(
+                    `<${statusLight.localName}> element expects the "variant" attribute to be one of the following:`
+                );
+            } finally {
+                restore();
+            }
+        });
     },
 };
 
-// Test: disabled attribute warns in debug mode.
 export const DisabledAttributeWarningTest: Story = {
     render: () => html`
         <swc-status-light variant="positive">Positive</swc-status-light>
     `,
-    play: async ({ canvasElement }) => {
+    play: async ({ canvasElement, step }) => {
         const { warnCalls, restore } = setupSwcWarningSpy();
-        try {
-            const statusLight = getStatusLight(canvasElement);
-            statusLight.setAttribute('disabled', '');
-            statusLight.requestUpdate();
-            await statusLight.updateComplete;
 
-            expect(warnCalls.length).toBeGreaterThan(0);
-            expect(warnCalls[0][0]).toBe(statusLight);
-            expect(warnCalls[0][1]).toContain(
-                'does not support the disabled state'
-            );
-        } finally {
-            restore();
-        }
+        await step('warns when disabled attribute is set', async () => {
+            try {
+                const statusLight = await getComponent<StatusLight>(
+                    canvasElement,
+                    'swc-status-light'
+                );
+                statusLight.setAttribute('disabled', '');
+                statusLight.requestUpdate();
+                await statusLight.updateComplete;
+
+                expect(warnCalls.length).toBeGreaterThan(0);
+                expect(warnCalls[0][0]).toBe(statusLight);
+                expect(warnCalls[0][1]).toContain(
+                    'does not support the disabled state'
+                );
+            } finally {
+                restore();
+            }
+        });
     },
 };

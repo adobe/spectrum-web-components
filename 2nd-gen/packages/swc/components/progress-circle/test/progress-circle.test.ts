@@ -17,7 +17,7 @@ import { ProgressCircle } from '@adobe/swc/progress-circle';
 
 import '@adobe/swc/progress-circle';
 
-import { setupSwcWarningSpy } from '../../../utils/test-utils.js';
+import { getComponent, setupSwcWarningSpy } from '../../../utils/test-utils.js';
 import meta from '../stories/progress-circle.stories.js';
 import {
     Indeterminate,
@@ -38,100 +38,75 @@ export default {
     tags: ['!autodocs', 'dev'],
 } as Meta;
 
-const getProgressCircle = (canvasElement: HTMLElement): ProgressCircle => {
-    return canvasElement.querySelector('swc-progress-circle') as ProgressCircle;
-};
+// ──────────────────────────────────────────────────────────────
+// TEST: Defaults
+// ──────────────────────────────────────────────────────────────
 
-// Test: overview renders determinate progress with an accessible label.
 export const OverviewTest: Story = {
     ...Overview,
-    play: async ({ canvasElement }) => {
-        const progressCircle = getProgressCircle(canvasElement);
-        await progressCircle.updateComplete;
-        expect(progressCircle.getAttribute('role')).toBe('progressbar');
-        expect(progressCircle.getAttribute('aria-label')).toBe(
-            progressCircle.label
+    play: async ({ canvasElement, step }) => {
+        const progressCircle = await getComponent<ProgressCircle>(
+            canvasElement,
+            'swc-progress-circle'
         );
-        expect(progressCircle.getAttribute('aria-valuenow')).toBe(
-            String(progressCircle.progress)
+
+        await step(
+            'renders determinate progress with an accessible label',
+            async () => {
+                expect(progressCircle.getAttribute('role')).toBe('progressbar');
+                expect(progressCircle.getAttribute('aria-label')).toBe(
+                    progressCircle.label
+                );
+                expect(progressCircle.getAttribute('aria-valuenow')).toBe(
+                    String(progressCircle.progress)
+                );
+            }
         );
     },
 };
 
-// Test: sizes render expected public size attributes.
+// ──────────────────────────────────────────────────────────────
+// TEST: Properties / Attributes
+// ──────────────────────────────────────────────────────────────
+
 export const SizesTest: Story = {
     ...Sizes,
-    play: async ({ canvasElement }) => {
+    play: async ({ canvasElement, step }) => {
         const circles = Array.from(
             canvasElement.querySelectorAll('swc-progress-circle')
         ) as ProgressCircle[];
         await Promise.all(circles.map((circle) => circle.updateComplete));
 
-        circles.forEach((circle) => {
-            const size = circle.getAttribute('size');
-            expect(size).toBeTruthy();
+        await step('renders expected size attributes', async () => {
+            circles.forEach((circle) => {
+                const size = circle.getAttribute('size');
+                expect(size).toBeTruthy();
+            });
         });
     },
 };
 
-// Test: static colors reflect to expected public attribute values.
 export const StaticColorsTest: Story = {
     ...StaticColors,
-    play: async ({ canvasElement }) => {
+    play: async ({ canvasElement, step }) => {
         const circles = Array.from(
             canvasElement.querySelectorAll('swc-progress-circle[static-color]')
         ) as ProgressCircle[];
         await Promise.all(circles.map((circle) => circle.updateComplete));
 
-        circles.forEach((circle) => {
-            const staticColor = circle.getAttribute('static-color');
-            expect(staticColor).toBeTruthy();
-            expect(['white', 'black']).toContain(staticColor);
-        });
+        await step(
+            'reflects expected static-color attribute values',
+            async () => {
+                circles.forEach((circle) => {
+                    const staticColor = circle.getAttribute('static-color');
+                    expect(staticColor).toBeTruthy();
+                    expect(['white', 'black']).toContain(staticColor);
+                });
+            }
+        );
     },
 };
 
-// Test: progress values reflect to aria-valuenow.
-export const ProgressValuesTest: Story = {
-    ...ProgressValues,
-    play: async ({ canvasElement }) => {
-        const circles = Array.from(
-            canvasElement.querySelectorAll('swc-progress-circle')
-        ) as ProgressCircle[];
-        await Promise.all(circles.map((circle) => circle.updateComplete));
-
-        circles.forEach((circle) => {
-            const progress = String(circle.progress);
-            expect(circle.getAttribute('aria-valuenow')).toBe(progress);
-        });
-    },
-};
-
-// Test: indeterminate removes aria-valuenow.
-export const IndeterminateTest: Story = {
-    ...Indeterminate,
-    play: async ({ canvasElement }) => {
-        const progressCircle = getProgressCircle(canvasElement);
-        await progressCircle.updateComplete;
-        expect(progressCircle.indeterminate).toBe(true);
-        expect(progressCircle.hasAttribute('aria-valuenow')).toBe(false);
-    },
-};
-
-// Test: slot content becomes the label.
-export const SlotLabelTest: Story = {
-    render: () => html`
-        <swc-progress-circle>Loading data</swc-progress-circle>
-    `,
-    play: async ({ canvasElement }) => {
-        const progressCircle = getProgressCircle(canvasElement);
-        await progressCircle.updateComplete;
-        expect(progressCircle.label).toBe('Loading data');
-        expect(progressCircle.getAttribute('aria-label')).toBe('Loading data');
-    },
-};
-
-// Test: user-supplied role is preserved.
 export const RoleOverrideTest: Story = {
     render: () => html`
         <swc-progress-circle
@@ -139,33 +114,166 @@ export const RoleOverrideTest: Story = {
             label="Loading"
         ></swc-progress-circle>
     `,
-    play: async ({ canvasElement }) => {
-        const progressCircle = getProgressCircle(canvasElement);
-        await progressCircle.updateComplete;
-        expect(progressCircle.getAttribute('role')).toBe('status');
+    play: async ({ canvasElement, step }) => {
+        const progressCircle = await getComponent<ProgressCircle>(
+            canvasElement,
+            'swc-progress-circle'
+        );
+
+        await step('preserves user-supplied role', async () => {
+            expect(progressCircle.getAttribute('role')).toBe('status');
+        });
     },
 };
 
-// Test: warning emitted when there is no accessible name.
-export const AccessibilityWarningTest: Story = {
-    render: () => html` <swc-progress-circle></swc-progress-circle> `,
-    play: async ({ canvasElement }) => {
-        const progressCircle = getProgressCircle(canvasElement);
-        const { warnCalls, restore } = setupSwcWarningSpy();
+export const LabelClearingTest: Story = {
+    render: () => html`
+        <swc-progress-circle
+            progress="50"
+            label="Uploading file"
+        ></swc-progress-circle>
+    `,
+    play: async ({ canvasElement, step }) => {
+        const progressCircle = await getComponent<ProgressCircle>(
+            canvasElement,
+            'swc-progress-circle'
+        );
 
-        try {
-            progressCircle.progress = 10;
+        await step('initially has aria-label set from label', async () => {
+            expect(progressCircle.getAttribute('aria-label')).toBe(
+                'Uploading file'
+            );
+        });
+
+        await step('removes aria-label when label is cleared', async () => {
+            progressCircle.label = '';
             await progressCircle.updateComplete;
 
-            expect(warnCalls.length).toBeGreaterThan(0);
-            expect(String(warnCalls[0]?.[1] || '')).toContain('accessible');
-        } finally {
-            restore();
-        }
+            expect(progressCircle.getAttribute('aria-label')).toBeNull();
+        });
     },
 };
 
-// Test: determinate can return to indeterminate and clears aria-valuenow.
+export const AriaLabelAccessibleNameTest: Story = {
+    render: () => html`
+        <swc-progress-circle
+            progress="30"
+            aria-label="Downloading update"
+        ></swc-progress-circle>
+    `,
+    play: async ({ canvasElement, step }) => {
+        const progressCircle = await getComponent<ProgressCircle>(
+            canvasElement,
+            'swc-progress-circle'
+        );
+        const { warnCalls, restore } = setupSwcWarningSpy();
+
+        await step(
+            'does not warn when aria-label provides the accessible name',
+            async () => {
+                try {
+                    progressCircle.progress = 40;
+                    await progressCircle.updateComplete;
+
+                    expect(warnCalls.length).toBe(0);
+                } finally {
+                    restore();
+                }
+            }
+        );
+    },
+};
+
+export const AriaLabelledbyAccessibleNameTest: Story = {
+    render: () => html`
+        <span id="pc-label-ext">Syncing data</span>
+        <swc-progress-circle
+            progress="60"
+            aria-labelledby="pc-label-ext"
+        ></swc-progress-circle>
+    `,
+    play: async ({ canvasElement, step }) => {
+        const progressCircle = await getComponent<ProgressCircle>(
+            canvasElement,
+            'swc-progress-circle'
+        );
+        const { warnCalls, restore } = setupSwcWarningSpy();
+
+        await step(
+            'does not warn when aria-labelledby provides the accessible name',
+            async () => {
+                try {
+                    progressCircle.progress = 70;
+                    await progressCircle.updateComplete;
+
+                    expect(warnCalls.length).toBe(0);
+                } finally {
+                    restore();
+                }
+            }
+        );
+    },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Slots
+// ──────────────────────────────────────────────────────────────
+
+export const SlotLabelTest: Story = {
+    render: () => html`
+        <swc-progress-circle>Loading data</swc-progress-circle>
+    `,
+    play: async ({ canvasElement, step }) => {
+        const progressCircle = await getComponent<ProgressCircle>(
+            canvasElement,
+            'swc-progress-circle'
+        );
+
+        await step('uses slot content as the label', async () => {
+            expect(progressCircle.label).toBe('Loading data');
+            expect(progressCircle.getAttribute('aria-label')).toBe(
+                'Loading data'
+            );
+        });
+    },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Variants / States
+// ──────────────────────────────────────────────────────────────
+
+export const ProgressValuesTest: Story = {
+    ...ProgressValues,
+    play: async ({ canvasElement, step }) => {
+        const circles = Array.from(
+            canvasElement.querySelectorAll('swc-progress-circle')
+        ) as ProgressCircle[];
+        await Promise.all(circles.map((circle) => circle.updateComplete));
+
+        await step('reflects progress values to aria-valuenow', async () => {
+            circles.forEach((circle) => {
+                const progress = String(circle.progress);
+                expect(circle.getAttribute('aria-valuenow')).toBe(progress);
+            });
+        });
+    },
+};
+
+export const IndeterminateTest: Story = {
+    ...Indeterminate,
+    play: async ({ canvasElement, step }) => {
+        const progressCircle = await getComponent<ProgressCircle>(
+            canvasElement,
+            'swc-progress-circle'
+        );
+
+        await step('removes aria-valuenow in indeterminate state', async () => {
+            expect(progressCircle.indeterminate).toBe(true);
+            expect(progressCircle.hasAttribute('aria-valuenow')).toBe(false);
+        });
+    },
+};
+
 export const ReturnToIndeterminateTest: Story = {
     render: () => html`
         <swc-progress-circle
@@ -173,16 +281,57 @@ export const ReturnToIndeterminateTest: Story = {
             label="Processing"
         ></swc-progress-circle>
     `,
-    play: async ({ canvasElement }) => {
-        const progressCircle = getProgressCircle(canvasElement);
-        await progressCircle.updateComplete;
+    play: async ({ canvasElement, step }) => {
+        const progressCircle = await getComponent<ProgressCircle>(
+            canvasElement,
+            'swc-progress-circle'
+        );
 
-        expect(progressCircle.hasAttribute('aria-valuenow')).toBe(true);
-        expect(progressCircle.getAttribute('aria-valuenow')).toBe('50');
+        await step(
+            'renders determinate progress with aria-valuenow',
+            async () => {
+                expect(progressCircle.hasAttribute('aria-valuenow')).toBe(true);
+                expect(progressCircle.getAttribute('aria-valuenow')).toBe('50');
+            }
+        );
 
-        progressCircle.indeterminate = true;
-        await progressCircle.updateComplete;
+        await step(
+            'clears aria-valuenow when switched to indeterminate',
+            async () => {
+                progressCircle.indeterminate = true;
+                await progressCircle.updateComplete;
 
-        expect(progressCircle.hasAttribute('aria-valuenow')).toBe(false);
+                expect(progressCircle.hasAttribute('aria-valuenow')).toBe(
+                    false
+                );
+            }
+        );
+    },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Dev mode warnings
+// ──────────────────────────────────────────────────────────────
+
+export const AccessibilityWarningTest: Story = {
+    render: () => html` <swc-progress-circle></swc-progress-circle> `,
+    play: async ({ canvasElement, step }) => {
+        const progressCircle = await getComponent<ProgressCircle>(
+            canvasElement,
+            'swc-progress-circle'
+        );
+        const { warnCalls, restore } = setupSwcWarningSpy();
+
+        await step('warns when there is no accessible name', async () => {
+            try {
+                progressCircle.progress = 10;
+                await progressCircle.updateComplete;
+
+                expect(warnCalls.length).toBeGreaterThan(0);
+                expect(String(warnCalls[0]?.[1] || '')).toContain('accessible');
+            } finally {
+                restore();
+            }
+        });
     },
 };

@@ -44,6 +44,32 @@ export default mergeConfig(
                     '**/dist/**',
                     '**/*.d.ts',
                 ],
+                thresholds: {
+                    // Automatically ratchet thresholds upward when coverage improves.
+                    // Uses Math.floor to avoid noisy decimal diffs in the config.
+                    autoUpdate: (value) => Math.floor(value),
+
+                    // SWC component implementations
+                    'components/**/*.{ts,js}': {
+                        lines: 100,
+                        functions: 100,
+                        statements: 100,
+                    },
+
+                    // Core component logic
+                    '**/packages/core/components/**/*.{ts,js}': {
+                        lines: 100,
+                        functions: 100,
+                        statements: 100,
+                    },
+
+                    // Shared utilities (lower bar while starting out)
+                    '**/packages/core/shared/**/*.{ts,js}': {
+                        lines: 70,
+                        functions: 70,
+                        statements: 70,
+                    },
+                },
             },
             projects: [
                 {
