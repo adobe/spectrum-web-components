@@ -42,15 +42,32 @@ export const VARIANT_CAPABILITIES: Record<
     TypographyVariant,
     VariantCapabilities
 > = {
-    heading: { supportsSerif: true, supportsHeavy: true },
-    body: { supportsSerif: true, supportsHeavy: false },
-    detail: { supportsSerif: true, supportsHeavy: false },
-    code: { supportsSerif: false, supportsHeavy: false },
+    heading: {
+        supportsSerif: true,
+        supportsHeavy: true,
+        supportsEmphasized: true,
+    },
+    body: {
+        supportsSerif: true,
+        supportsHeavy: false,
+        supportsEmphasized: true,
+    },
+    detail: {
+        supportsSerif: true,
+        supportsHeavy: false,
+        supportsEmphasized: true,
+    },
+    code: {
+        supportsSerif: false,
+        supportsHeavy: false,
+        supportsEmphasized: false,
+    },
 };
 
 export type VariantCapabilities = {
     supportsSerif: boolean;
     supportsHeavy: boolean;
+    supportsEmphasized: boolean;
 };
 
 export type TypographySize = (typeof SIZES)[number];
@@ -64,6 +81,7 @@ export type TypographyTemplateProps = {
     size?: TypographySize;
     serif?: boolean;
     heavy?: boolean;
+    emphasized?: boolean;
     margins?: boolean;
     prose?: boolean;
     lang?: TypographyLang;
@@ -162,6 +180,7 @@ export function template(args: TypographyTemplateProps = {}): TemplateResult {
         size = 'M',
         serif = false,
         heavy = false,
+        emphasized = false,
         margins = false,
         prose = false,
         lang = undefined,
@@ -180,11 +199,15 @@ export function template(args: TypographyTemplateProps = {}): TemplateResult {
         if (heavy && !caps.supportsHeavy) {
             return false;
         }
+        if (emphasized && !caps.supportsEmphasized) {
+            return false;
+        }
         return true;
     });
 
     const wrapperClass = cls(
         'typography-samples',
+        'typography-samples--grid',
         prose && 'swc-Typography--prose'
     );
 
@@ -196,6 +219,9 @@ export function template(args: TypographyTemplateProps = {}): TemplateResult {
                 // Per-variant coercion
                 const serifOn = typeCaps.supportsSerif ? serif : false;
                 const heavyOn = typeCaps.supportsHeavy ? heavy : false;
+                const emphasizedOn = typeCaps.supportsEmphasized
+                    ? emphasized
+                    : false;
 
                 const base = variantBase(prefix, typeVar);
                 const tag = elementForVariant(typeVar);
@@ -218,10 +244,11 @@ export function template(args: TypographyTemplateProps = {}): TemplateResult {
                             s != 'M' && sizeClass(base, s),
                             serifOn && `${base}--serif`,
                             heavyOn && `${base}--heavy`,
+                            emphasizedOn && `swc-Typography--emphasized`,
                             margins && `${base}--margins`
                         );
 
-                        const metaSub = `Size ${s}${serifOn ? ' · serif' : ''}${
+                        const metaSub = `size${s}${serifOn ? ' · serif' : ''}${emphasizedOn ? ' · emphasized' : ''}${
                             heavyOn ? ' · heavy' : ''
                         }${margins ? ' · margins' : ''}${prose ? ' · prose' : ''}${
                             lang && lang !== 'en' ? ` · lang:${lang}` : ''

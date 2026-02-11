@@ -21,7 +21,8 @@
 /* =========================
   heading
   ========================= */
-.swc-Heading {
+.swc-Heading,
+.swc-Typography--prose :is(h1, h2, h3, h4) {
     color: var(--swc-heading-font-color, token('heading-color'));
     font-family: var(--swc-heading-font-family, token('sans-serif-font'));
     font-weight: var(
@@ -53,7 +54,8 @@
 }
 
 .swc-Heading--margins,
-.swc-Typography--prose .swc-Heading {
+.swc-Typography--prose .swc-Heading,
+.swc-Typography--prose :is(h1, h2, h3, h4) {
     --swc-heading-margin-top-multiplier: token('heading-margin-top-multiplier');
     --swc-heading-margin-bottom-multiplier: token(
         'heading-margin-bottom-multiplier'
@@ -90,7 +92,8 @@
     }
 }
 
-.swc-Heading--sizeM {
+.swc-Heading--sizeM,
+.swc-Typography--prose h4 {
     --swc-heading-font-size: token('heading-size-m');
     --swc-heading-line-height: token('line-height-font-size-500');
 
@@ -101,7 +104,8 @@
     }
 }
 
-.swc-Heading--sizeL {
+.swc-Heading--sizeL,
+.swc-Typography--prose h3 {
     --swc-heading-font-size: token('heading-size-l');
     --swc-heading-line-height: token('line-height-font-size-700');
 
@@ -112,7 +116,8 @@
     }
 }
 
-.swc-Heading--sizeXL {
+.swc-Heading--sizeXL,
+.swc-Typography--prose h2 {
     --swc-heading-font-size: token('heading-size-xl');
     --swc-heading-line-height: token('line-height-font-size-900');
 
@@ -123,7 +128,8 @@
     }
 }
 
-.swc-Heading--sizeXXL {
+.swc-Heading--sizeXXL,
+.swc-Typography--prose h1 {
     --swc-heading-font-size: token('heading-size-xxl');
     --swc-heading-line-height: token('line-height-font-size-1100');
 
@@ -168,7 +174,8 @@
 /* =========================
   body
   ========================= */
-.swc-Body {
+.swc-Body,
+.swc-Typography--prose :is(p, li) {
     color: var(--swc-body-font-color, token('body-color'));
     font-family: var(--swc-body-font-family, token('sans-serif-font'));
     font-weight: var(
@@ -199,7 +206,8 @@
 }
 
 .swc-Body--margins,
-.swc-Typography--prose .swc-Body {
+.swc-Typography--prose .swc-Body,
+.swc-Typography--prose :is(p, li) {
     --swc-body-margin-top-multiplier: token('body-margin-multiplier');
     --swc-body-margin-bottom-multiplier: token('body-margin-multiplier');
     --swc-body-margin-top: calc(

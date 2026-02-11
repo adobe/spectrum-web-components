@@ -146,10 +146,15 @@
     }
 
     .typography-samples {
-        display: grid;
-        gap: 1rem;
-        background-color: var(--swc-white);
-        padding: 1.5rem;
+        #storybook-root & {
+            background-color: var(--swc-white);
+            padding: 1.5rem;
+        }
+
+        &.typography-samples--grid {
+            display: grid;
+            gap: 1rem;
+        }
 
         .typography-row {
             display: grid;

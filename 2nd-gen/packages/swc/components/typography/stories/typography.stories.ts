@@ -43,6 +43,7 @@ const meta: Meta<TypographyTemplateProps> = {
         size: { control: 'select', options: SIZES },
         serif: { control: 'boolean' },
         heavy: { control: 'boolean' },
+        emphasized: { control: 'boolean' },
         margins: { control: 'boolean' },
         prose: { control: 'boolean' },
         lang: { control: 'select', options: LANGS },
@@ -62,6 +63,7 @@ export const Playground: Story = {
         size: 'M',
         serif: false,
         heavy: false,
+        emphasized: false,
         margins: false,
         prose: false,
         lang: undefined,
@@ -80,6 +82,8 @@ export const Playground: Story = {
 };
 
 /**
+ * Type variants are applied using a base class in the format `.swc-[Variant]`, such as `.swc-Heading`.
+ *
  * Each type variant defaults to sans-serif and size medium.
  */
 export const Defaults: Story = {
@@ -90,6 +94,9 @@ export const Defaults: Story = {
     tags: ['options'],
 };
 
+/**
+ * The following variants include a serif sub-variant, which can be used by adding the `--serif` modifier class alongside the base class.
+ */
 export const SerifVariants: Story = {
     args: {
         showAllVariants: true,
@@ -99,13 +106,26 @@ export const SerifVariants: Story = {
     tags: ['options'],
 };
 
+/**
+ * The following variants may use the emphasized modifier by adding `.swc-Typography--emphasized` alongside the base class.
+ * It may also be applied to the serif sub-variants.
+ */
+export const emphasizedModifier: Story = {
+    args: {
+        showAllVariants: true,
+        emphasized: true,
+    },
+    parameters: { 'section-order': 3 },
+    tags: ['options'],
+};
+
 export const HeadingSizes: Story = {
     args: {
         variant: 'heading',
         includeMultipleSizes: true,
     },
     parameters: {
-        'section-order': 3,
+        'section-order': 4,
     },
     tags: ['options'],
 };
@@ -115,7 +135,7 @@ export const BodySizes: Story = {
         variant: 'body',
         includeMultipleSizes: true,
     },
-    parameters: { 'section-order': 4 },
+    parameters: { 'section-order': 5 },
     tags: ['options'],
 };
 
@@ -124,7 +144,7 @@ export const DetailSizes: Story = {
         variant: 'detail',
         includeMultipleSizes: true,
     },
-    parameters: { 'section-order': 5 },
+    parameters: { 'section-order': 6 },
     tags: ['options'],
 };
 
@@ -133,18 +153,14 @@ export const CodeSizes: Story = {
         variant: 'code',
         includeMultipleSizes: true,
     },
-    parameters: { 'section-order': 6 },
+    parameters: { 'section-order': 7 },
     tags: ['options'],
 };
 
+/**
+ * Applies block-direction margins via the `--margins` modifier.
+ */
 export const MarginsOneOff: Story = {
-    parameters: {
-        docs: {
-            description: {
-                story: 'Applies margin multipliers via the `--margins` modifier.',
-            },
-        },
-    },
     args: {
         variant: 'body',
         margins: true,
@@ -154,19 +170,42 @@ export const MarginsOneOff: Story = {
     tags: ['options'],
 };
 
-export const MarginsProseParent: Story = {
-    parameters: {
-        docs: {
-            description: {
-                story: 'Applies margin multipliers via `.swc-Typography--prose .swc-<variant>` selector.',
-            },
-        },
-    },
+/**
+ * Applies block-direction margins to all type variants within a container with the `.swc-Typography--prose` class applied.
+ *
+ * This also applies foundational type properties based on size medium body styles to common semantic typography elements including:
+ * - `h1, h2, h3, h4`
+ * - `p`
+ * - `li`
+ */
+export const ProseContainer: Story = {
     args: {
         variant: 'body',
         prose: true,
-        sampleText:
-            'This paragraph should receive margins when nested under `.swc-Typography--prose`.',
     },
     tags: ['options'],
+    render: () =>
+        html`<div
+            class="swc-Typography--prose typography-samples typography-samples--nogrid"
+        >
+            <h2>Semantic H2</h2>
+            <p>
+                Semantic paragraph. Lorem ipsum dolor sit amet, consectetur
+                adipiscing elit. Donec eleifend est mollis ligula lobortis,
+                tempus ultricies sapien lacinia. Nulla ut turpis velit. Sed
+                finibus dapibus diam et sollicitudin.
+            </p>
+            <h2 class="swc-Heading">Heading default variant H2</h2>
+            <p class="swc-Body">
+                Body default variant paragraph. Phasellus in ipsum nec ante
+                elementum congue eget in leo. Morbi eleifend justo non rutrum
+                venenatis. Fusce cursus et lectus eu facilisis. Ut laoreet felis
+                in magna dignissim feugiat.
+            </p>
+            <ul>
+                <li>Semantic list item 1</li>
+                <li>Semantic list item 2</li>
+                <li>Semantic list item 3</li>
+            </ul>
+        </div>`,
 };
