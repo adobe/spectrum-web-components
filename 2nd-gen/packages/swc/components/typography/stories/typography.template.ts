@@ -38,17 +38,20 @@ export const SIZES_BY_VARIANT: Record<
     code: ['XS', 'S', 'M', 'L', 'XL'],
 } as const;
 
-export function getAllowedSizes(variant: TypographyVariant) {
-    return SIZES_BY_VARIANT[variant] ?? SIZES;
-}
+export const VARIANT_CAPABILITIES: Record<
+    TypographyVariant,
+    VariantCapabilities
+> = {
+    heading: { supportsSerif: true, supportsHeavy: true },
+    body: { supportsSerif: true, supportsHeavy: false },
+    detail: { supportsSerif: true, supportsHeavy: false },
+    code: { supportsSerif: false, supportsHeavy: false },
+};
 
-export function coerceSize(
-    variant: TypographyVariant,
-    requested: TypographySize
-) {
-    const allowed = getAllowedSizes(variant);
-    return (allowed.includes(requested) ? requested : 'M') as TypographySize;
-}
+export type VariantCapabilities = {
+    supportsSerif: boolean;
+    supportsHeavy: boolean;
+};
 
 export type TypographySize = (typeof SIZES)[number];
 export type TypographyVariant = (typeof VARIANTS)[number];
@@ -69,6 +72,22 @@ export type TypographyTemplateProps = {
     includeMultipleSizes?: boolean;
     showAllVariants?: boolean;
 };
+
+export function getCapabilities(variant: TypographyVariant) {
+    return VARIANT_CAPABILITIES[variant];
+}
+
+export function getAllowedSizes(variant: TypographyVariant) {
+    return SIZES_BY_VARIANT[variant] ?? SIZES;
+}
+
+export function coerceSize(
+    variant: TypographyVariant,
+    requested: TypographySize
+) {
+    const allowed = getAllowedSizes(variant);
+    return (allowed.includes(requested) ? requested : 'M') as TypographySize;
+}
 
 function cls(...parts: Array<string | false | null | undefined>) {
     return parts.filter(Boolean).join(' ');
@@ -151,9 +170,18 @@ export function template(args: TypographyTemplateProps = {}): TemplateResult {
         showAllVariants = false,
     } = args;
 
-    const variants: TypographyVariant[] = showAllVariants
-        ? [...VARIANTS]
-        : [variant];
+    const variants: TypographyVariant[] = (
+        showAllVariants ? [...VARIANTS] : [variant]
+    ).filter((typeVar) => {
+        const caps = getCapabilities(typeVar);
+        if (serif && !caps.supportsSerif) {
+            return false;
+        }
+        if (heavy && !caps.supportsHeavy) {
+            return false;
+        }
+        return true;
+    });
 
     const wrapperClass = cls(
         'typography-samples',
@@ -163,6 +191,12 @@ export function template(args: TypographyTemplateProps = {}): TemplateResult {
     return html`
         <div class=${wrapperClass}>
             ${variants.map((typeVar) => {
+                const typeCaps = getCapabilities(typeVar);
+
+                // Per-variant coercion
+                const serifOn = typeCaps.supportsSerif ? serif : false;
+                const heavyOn = typeCaps.supportsHeavy ? heavy : false;
+
                 const base = variantBase(prefix, typeVar);
                 const tag = elementForVariant(typeVar);
                 const text =
@@ -182,13 +216,13 @@ export function template(args: TypographyTemplateProps = {}): TemplateResult {
                         const className = cls(
                             base,
                             s != 'M' && sizeClass(base, s),
-                            serif && `${base}--serif`,
-                            heavy && `${base}--heavy`,
+                            serifOn && `${base}--serif`,
+                            heavyOn && `${base}--heavy`,
                             margins && `${base}--margins`
                         );
 
-                        const metaSub = `Size ${s}${serif ? ' · serif' : ''}${
-                            heavy ? ' · heavy' : ''
+                        const metaSub = `Size ${s}${serifOn ? ' · serif' : ''}${
+                            heavyOn ? ' · heavy' : ''
                         }${margins ? ' · margins' : ''}${prose ? ' · prose' : ''}${
                             lang && lang !== 'en' ? ` · lang:${lang}` : ''
                         }`;

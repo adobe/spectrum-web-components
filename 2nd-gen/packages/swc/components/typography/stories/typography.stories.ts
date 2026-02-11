@@ -21,8 +21,23 @@ import {
     VARIANTS,
 } from './typography.template.js';
 
+/**
+ * Variants default to Adobe Clean Spectrum VF, a sans-serif font family.
+ * Modifiers are available to use the serif font stack, and other sub-variants.
+ * CJK adjustments are applied based on the `:lang()` selector.
+ *
+ * Learn more about [loading the expected fonts](/?path=/docs/guides-customization-fonts--readme).
+ */
 const meta: Meta<TypographyTemplateProps> = {
     title: 'Typography',
+    parameters: {
+        docs: {
+            subtitle: `Typography variant styles are available via CSS classes.`,
+            canvas: {
+                sourceState: 'hidden',
+            },
+        },
+    },
     argTypes: {
         variant: { control: 'select', options: VARIANTS },
         size: { control: 'select', options: SIZES },
@@ -42,7 +57,6 @@ const meta: Meta<TypographyTemplateProps> = {
 export default meta;
 
 export const Playground: Story = {
-    render: (args) => html` ${template(args)} `,
     args: {
         variant: 'heading',
         size: 'M',
@@ -55,13 +69,20 @@ export const Playground: Story = {
         showAllVariants: false,
         sampleText: '',
     },
+    parameters: {
+        docs: {
+            canvas: {
+                sourceState: 'shown',
+            },
+        },
+    },
     tags: ['autodocs', 'dev'],
 };
 
 /**
  * Each type variant defaults to sans-serif and size medium.
  */
-export const AllVariants: Story = {
+export const Defaults: Story = {
     args: {
         showAllVariants: true,
     },
@@ -69,7 +90,7 @@ export const AllVariants: Story = {
     tags: ['options'],
 };
 
-export const AllVariantsSerif: Story = {
+export const SerifVariants: Story = {
     args: {
         showAllVariants: true,
         serif: true,

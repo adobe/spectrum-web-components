@@ -10,9 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-// TODO: fix bugs found in storybook
-// TODO: extend custom property names to not clash with tokens (see spectrum css)
-
 import fs from 'fs';
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
