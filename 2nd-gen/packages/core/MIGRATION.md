@@ -13,8 +13,8 @@ This document tracks 1st‑gen items and where they should land in the 2nd‑gen
 
 - `tools/shared/focusable.ts` → `core/mixins/focusable.ts`
 - `tools/shared/like-anchor.ts` → `core/mixins/like-anchor.ts`
-- `tools/shared/observe-slot-presence.ts` → `core/mixins/observe-slot-presence.ts` ✅ (also available via `core/utils/` for backward compatibility)
-- `tools/shared/observe-slot-text.ts` → `core/mixins/observe-slot-text.ts` ✅ (also available via `core/utils/` for backward compatibility)
+- `tools/shared/observe-slot-presence.ts` → `core/mixins/observe-slot-presence.ts` ✅
+- `tools/shared/observe-slot-text.ts` → `core/mixins/observe-slot-text.ts` ✅
 - `tools/shared/focus-visible-polyfill.ts` → `core/mixins/focus-visible-polyfill.ts`
 
 ## Utilities
@@ -71,4 +71,4 @@ The following 1st-gen items are not yet mapped. Evaluate when needed:
 - The `shared/` directory contains current implementations; 1st-gen re-exports from here.
 - Prefer kebab-case file names for all new files in `core/`.
 - When moving code, update exports so that both the new path and any required legacy path remain available during transition.
-- Slot-observation mixins (`ObserveSlotPresence`, `ObserveSlotText`) are available from both `core/mixins/` (preferred) and `core/utils/`.
+- Slot-observation mixins (`ObserveSlotPresence`, `ObserveSlotText`) are in `core/mixins/`.

@@ -12,5 +12,3 @@
 
 export * from './capitalize.js';
 export * from './get-label-from-slot.js';
-export * from './observe-slot-presence.js';
-export * from './observe-slot-text.js';

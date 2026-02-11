@@ -143,14 +143,6 @@
             "types": "./dist/utils/get-label-from-slot.d.ts",
             "import": "./dist/utils/get-label-from-slot.js"
         },
-        "./utils/observe-slot-presence.js": {
-            "types": "./dist/utils/observe-slot-presence.d.ts",
-            "import": "./dist/utils/observe-slot-presence.js"
-        },
-        "./utils/observe-slot-text.js": {
-            "types": "./dist/utils/observe-slot-text.d.ts",
-            "import": "./dist/utils/observe-slot-text.js"
-        },
         "./shared/observe-slot-text.js": {
             "types": "./dist/shared/observe-slot-text.d.ts",
             "import": "./dist/shared/observe-slot-text.js"
@@ -274,12 +266,6 @@
             ],
             "utils/get-label-from-slot.js": [
                 "dist/utils/get-label-from-slot.d.ts"
-            ],
-            "utils/observe-slot-presence.js": [
-                "dist/utils/observe-slot-presence.d.ts"
-            ],
-            "utils/observe-slot-text.js": [
-                "dist/utils/observe-slot-text.d.ts"
             ],
             "shared/get-label-from-slot.js": [
                 "dist/shared/get-label-from-slot.d.ts"
