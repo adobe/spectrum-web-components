@@ -17,7 +17,7 @@ import { Badge } from './src/Badge.js';
 defineElement('sp-badge', Badge);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-badge': Badge;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-badge': Badge;
+  }
 }

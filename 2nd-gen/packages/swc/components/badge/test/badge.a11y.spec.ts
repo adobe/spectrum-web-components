@@ -28,60 +28,56 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
  */
 
 test.describe('Badge - ARIA Snapshots', () => {
-    test('should have correct accessibility tree for default badge', async ({
-        page,
-    }) => {
-        const badge = await gotoStory(
-            page,
-            'components-badge--default',
-            'swc-badge'
-        );
-        const snapshot = await badge.ariaSnapshot();
+  test('should have correct accessibility tree for default badge', async ({
+    page,
+  }) => {
+    const badge = await gotoStory(
+      page,
+      'components-badge--default',
+      'swc-badge'
+    );
+    const snapshot = await badge.ariaSnapshot();
 
-        expect(snapshot).toBeTruthy();
-        await expect(badge).toMatchAriaSnapshot();
-    });
+    expect(snapshot).toBeTruthy();
+    await expect(badge).toMatchAriaSnapshot();
+  });
 
-    test('should handle semantic variants', async ({ page }) => {
-        const badge = await gotoStory(
-            page,
-            'components-badge--semantic-variants',
-            'swc-badge'
-        );
-        const snapshot = await badge.ariaSnapshot();
+  test('should handle semantic variants', async ({ page }) => {
+    const badge = await gotoStory(
+      page,
+      'components-badge--semantic-variants',
+      'swc-badge'
+    );
+    const snapshot = await badge.ariaSnapshot();
 
-        expect(snapshot).toBeTruthy();
-        await expect(badge).toMatchAriaSnapshot();
-    });
+    expect(snapshot).toBeTruthy();
+    await expect(badge).toMatchAriaSnapshot();
+  });
 });
 
 test.describe('Badge - aXe Validation', () => {
-    test('should not have accessibility violations - default', async ({
-        page,
-    }) => {
-        await gotoStory(page, 'components-badge--default', 'swc-badge');
+  test('should not have accessibility violations - default', async ({
+    page,
+  }) => {
+    await gotoStory(page, 'components-badge--default', 'swc-badge');
 
-        const results = await new AxeBuilder({ page })
-            .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-            .analyze();
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+      .analyze();
 
-        expect(results.violations).toEqual([]);
-    });
+    expect(results.violations).toEqual([]);
+  });
 
-    test('should not have violations - semantic variants', async ({ page }) => {
-        await gotoStory(
-            page,
-            'components-badge--semantic-variants',
-            'swc-badge'
-        );
+  test('should not have violations - semantic variants', async ({ page }) => {
+    await gotoStory(page, 'components-badge--semantic-variants', 'swc-badge');
 
-        // Wait for any ongoing axe runs to complete
-        await page.waitForLoadState('networkidle');
+    // Wait for any ongoing axe runs to complete
+    await page.waitForLoadState('networkidle');
 
-        const results = await new AxeBuilder({ page })
-            .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-            .analyze();
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+      .analyze();
 
-        expect(results.violations).toEqual([]);
-    });
+    expect(results.violations).toEqual([]);
+  });
 });

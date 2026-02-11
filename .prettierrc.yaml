@@ -1,5 +1,5 @@
 printWidth: 80
-tabWidth: 4
+tabWidth: 2
 semi: true
 singleQuote: true
 trailingComma: es5
@@ -7,7 +7,7 @@ bracketSpacing: true
 arrowParens: always
 htmlWhitespaceSensitivity: ignore
 overrides:
-    - files: '*.css'
-      options:
-          printWidth: 500
-          singleQuote: false
+  - files: '*.css'
+    options:
+      printWidth: 500
+      singleQuote: false
