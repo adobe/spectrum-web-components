@@ -29,3 +29,16 @@ declare module '*.css' {
   const content: string;
   export default content;
 }
+
+// exports storybook-env.d.ts as a module so declare global can augment the Window
+export {};
+
+declare global {
+    interface Window {
+        __SWC_FONT_KIT_IDS__?: Record<string, string>;
+        getKitIdForLang?: (lang: string | false) => string;
+        currentKitId?: string;
+        FontsLoading?: boolean;
+        Typekit?: { load: (config: Record<string, unknown>) => void };
+    }
+}
