@@ -12,7 +12,7 @@
                 <span id="label"><slot></slot></span>
                 <span id="tip" aria-hidden="true"></span>
             </sp-tooltip-openable>
-        `;return this.selfManaged?(this.dependencyManager.add("sp-overlay"),Promise.all([__webpack_require__.e(2067),__webpack_require__.e(9375)]).then(__webpack_require__.bind(__webpack_require__,"./packages/overlay/sp-overlay.dev.js")),index_dev.qy`
+        `;return this.selfManaged?(this.dependencyManager.add("sp-overlay"),Promise.all([__webpack_require__.e(2067),__webpack_require__.e(3080)]).then(__webpack_require__.bind(__webpack_require__,"./packages/overlay/sp-overlay.dev.js")),index_dev.qy`
                 <sp-overlay
                     ?open=${this.open&&!this.disabled&&this.dependencyManager.loaded}
                     ?delayed=${this.delayed}
@@ -28,4 +28,4 @@
                     ${tooltip}
                 </sp-overlay>
             `):tooltip}connectedCallback(){super.connectedCallback(),this.updateComplete.then(()=>{if(!this.selfManaged)return;const overlayElement=this.overlayElement;if(overlayElement){const triggerElement=this.triggerElement;overlayElement.triggerElement=triggerElement}})}}__decorateClass([(0,decorators_dev.MZ)({type:Boolean})],Tooltip.prototype,"delayed",2),__decorateClass([(0,decorators_dev.MZ)({type:Boolean})],Tooltip.prototype,"disabled",2),__decorateClass([(0,decorators_dev.MZ)({type:Boolean,attribute:"self-managed"})],Tooltip.prototype,"selfManaged",2),__decorateClass([(0,decorators_dev.MZ)({type:Number})],Tooltip.prototype,"offset",2),__decorateClass([(0,decorators_dev.MZ)({type:Boolean,reflect:!0})],Tooltip.prototype,"open",2),__decorateClass([(0,decorators_dev.P)("sp-overlay")],Tooltip.prototype,"overlayElement",2),__decorateClass([(0,decorators_dev.MZ)({reflect:!0})],Tooltip.prototype,"placement",2),__decorateClass([(0,decorators_dev.P)("#tip")],Tooltip.prototype,"tipElement",2),__decorateClass([(0,decorators_dev.MZ)({type:Number})],Tooltip.prototype,"tipPadding",2),__decorateClass([(0,decorators_dev.MZ)({type:String})],Tooltip.prototype,"variant",1),(0,__webpack_require__("./tools/base/src/define-element.dev.js").e)("sp-tooltip",Tooltip)}}]);
-//# sourceMappingURL=4987.e10e126c.iframe.bundle.js.map
+//# sourceMappingURL=4987.ee9850a5.iframe.bundle.js.map
