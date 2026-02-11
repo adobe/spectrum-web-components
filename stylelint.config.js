@@ -13,7 +13,7 @@
 import stylelintOrder from 'stylelint-order';
 import stylelintDeclarationStrictValue from 'stylelint-declaration-strict-value';
 import swcHeader from '@spectrum-web-components/stylelint-header-plugin';
-import propertyGroups from './stylelint-property-order.js';
+import propertyGroups from './linters/stylelint-property-order.js';
 
 const HEADER = `/**
  * Copyright 2026 Adobe. All rights reserved.

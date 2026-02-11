@@ -19,9 +19,9 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
 
-// Read copyright header from config/HEADER.js
+// Read copyright header from linters/HEADER.js
 const COPYRIGHT_HEADER = fs
-    .readFileSync(path.join(root, 'config/HEADER.js'), 'utf-8')
+    .readFileSync(path.join(root, 'linters/HEADER.js'), 'utf-8')
     .trim();
 
 /**

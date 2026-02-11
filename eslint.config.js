@@ -255,6 +255,7 @@ export default defineConfig([
             '**/.eleventy.js',
             '**/web-dev-server.config.*',
             '**/content/_data/*.js',
+            '**/*.hbs',
         ],
     },
 
@@ -295,7 +296,7 @@ export default defineConfig([
                 {
                     mustMatch:
                         'Copyright [0-9]{0,4} Adobe. All rights reserved.',
-                    templateFile: 'config/HEADER.js',
+                    templateFile: 'linters/HEADER.js',
                 },
             ],
 
