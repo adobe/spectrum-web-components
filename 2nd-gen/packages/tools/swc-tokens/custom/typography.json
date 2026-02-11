@@ -4,7 +4,7 @@
     "value": "{cjk-font-family-stack}"
   },
   "cjk-font-family-stack": {
-    "value": "adobe-clean-han-japanese, {cjk-font-family}, sans-serif;"
+    "value": "{font-family-chinese-traditional}, {font-family-chinese-simplified}, {font-family-hong-kong}, {font-family-japanese}, {font-family-korean}, {cjk-font-family}, sans-serif;"
   },
   "code-font": {
     "skipResolution": true,
@@ -22,6 +22,21 @@
   },
   "font-family-he": {
     "value": "adobe-clean-hebrew, 'Adobe Clean Hebrew', myriad-arabic, 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif"
+  },
+  "font-family-chinese-traditional": {
+    "value": "adobe-clean-han-traditional, 'Adobe Clean Han Traditional Chinese'"
+  },
+  "font-family-chinese-simplified": {
+    "value": "adobe-clean-han-simplified-c, 'Adobe Clean Han Simplified Chinese'"
+  },
+  "font-family-hong-kong": {
+    "value": "adobe-clean-han-hong-kong, 'Adobe Clean Han Hong Kong'"
+  },
+  "font-family-japanese": {
+    "value": "adobe-clean-han-japanese, 'Adobe Clean Han Japanese'"
+  },
+  "font-family-korean": {
+    "value": "adobe-clean-han-korean, 'Adobe Clean Han Korean'"
   },
   "font-size": {
     "value": "{font-size-100}"
