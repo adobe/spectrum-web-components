@@ -12,8 +12,8 @@
  * governing permissions and limitations under the License.
  */
 
-import fg from 'fast-glob';
 import { build } from 'esbuild';
+import fg from 'fast-glob';
 import fs from 'fs';
 
 const relativeImportRegex = RegExp(
