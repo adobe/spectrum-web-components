@@ -1,0 +1,34 @@
+{
+    "ar": {
+        "fieldlabel.label": "اسم المستخدم",
+        "textfield.value": "محمد_أحمد"
+    },
+    "en": {
+        "fieldlabel.label": "Username",
+        "textfield.value": "john_doe"
+    },
+    "fa": {
+        "fieldlabel.label": "نام کاربری",
+        "textfield.value": "علی_رضا"
+    },
+    "he": {
+        "fieldlabel.label": "שם משתמש",
+        "textfield.value": "דני123"
+    },
+    "ja": {
+        "fieldlabel.label": "ユーザー名",
+        "textfield.value": "山田太郎"
+    },
+    "ko": {
+        "fieldlabel.label": "사용자 이름",
+        "textfield.value": "김철수"
+    },
+    "th": {
+        "fieldlabel.label": "ชื่อผู้ใช้",
+        "textfield.value": "สมชาย"
+    },
+    "zh": {
+        "fieldlabel.label": "用户名",
+        "textfield.value": "张伟"
+    }
+}
