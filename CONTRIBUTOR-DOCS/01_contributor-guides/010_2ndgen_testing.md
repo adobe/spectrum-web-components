@@ -45,13 +45,14 @@ Write tests directly inside each test story’s `play` function. These stories r
 ```ts
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { Badge } from '@adobe/swc/badge';
 import { meta, Default } from '../stories/badge.stories.js';
 
 export default {
     ...meta,
     title: 'Badge/Tests',
     parameters: { ...meta.parameters, docs: { disable: true, page: null } },
-    tags: ['!autodocs'],
+    tags: ['!autodocs', 'dev'],
 } as Meta;
 
 export const DefaultTest: Story = {
@@ -73,9 +74,9 @@ When a story renders a list (semantic variants, color variants, sizes), loop ove
 
 ## A11y checks with aXe
 
-Storybook tests run aXe after each story render via `2nd-gen/packages/swc/.storybook/test-runner.ts`. The test runner uses `@axe-core/playwright` and fails the story when violations are detected.
+Some components include dedicated Playwright accessibility test files (e.g., `badge.a11y.spec.ts`, `status-light.a11y.spec.ts`) that use `@axe-core/playwright` for comprehensive WCAG validation and ARIA snapshot testing.
 
-Run the Storybook test suite (including aXe) with:
+Run the Storybook test suite with:
 
 ```sh
 yarn workspace @adobe/swc test
