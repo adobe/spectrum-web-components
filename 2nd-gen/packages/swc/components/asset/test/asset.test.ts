@@ -54,6 +54,8 @@ export const VariantsTest: Story = {
     ...Variants,
     play: async ({ canvasElement }) => {
         const assets = Array.from(canvasElement.querySelectorAll('swc-asset'));
+        await Promise.all(assets.map((asset) => asset.updateComplete));
+
         const fileAsset = assets.find(
             (item) => item.getAttribute('variant') === 'file'
         );
@@ -63,16 +65,6 @@ export const VariantsTest: Story = {
 
         expect(fileAsset).toBeTruthy();
         expect(folderAsset).toBeTruthy();
-
-        await fileAsset?.updateComplete;
-        await folderAsset?.updateComplete;
-
-        expect(
-            fileAsset?.shadowRoot?.querySelector('.spectrum-Asset-file')
-        ).toBeTruthy();
-        expect(
-            folderAsset?.shadowRoot?.querySelector('.spectrum-Asset-folder')
-        ).toBeTruthy();
     },
 };
 

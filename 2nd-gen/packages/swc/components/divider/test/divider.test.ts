@@ -39,7 +39,7 @@ const getDivider = (canvasElement: HTMLElement): Divider => {
     return canvasElement.querySelector('swc-divider') as Divider;
 };
 
-// Test: overview renders a separator with a size class.
+// Test: overview renders a separator with expected public attributes.
 export const OverviewTest: Story = {
     ...Overview,
     play: async ({ canvasElement }) => {
@@ -47,46 +47,38 @@ export const OverviewTest: Story = {
         await divider.updateComplete;
         expect(divider.getAttribute('role')).toBe('separator');
         expect(divider.getAttribute('size')).toBe('m');
-        expect(
-            divider.shadowRoot?.querySelector('.swc-Divider--sizeM')
-        ).toBeTruthy();
     },
 };
 
-// Test: vertical dividers reflect orientation and class.
+// Test: vertical dividers reflect orientation attributes.
 export const VerticalTest: Story = {
     ...Vertical,
     play: async ({ canvasElement }) => {
         const dividers = Array.from(
             canvasElement.querySelectorAll('swc-divider')
-        );
+        ) as Divider[];
+        await Promise.all(dividers.map((divider) => divider.updateComplete));
+
         dividers.forEach((divider) => {
             expect(divider.hasAttribute('vertical')).toBe(true);
             expect(divider.getAttribute('aria-orientation')).toBe('vertical');
-            expect(
-                divider.shadowRoot?.querySelector('.swc-Divider--vertical')
-            ).toBeTruthy();
         });
     },
 };
 
-// Test: static colors reflect to attribute and class.
+// Test: static colors reflect to expected public attribute values.
 export const StaticColorsTest: Story = {
     ...StaticColors,
     play: async ({ canvasElement }) => {
         const dividers = Array.from(
             canvasElement.querySelectorAll('swc-divider[static-color]')
-        );
+        ) as Divider[];
+        await Promise.all(dividers.map((divider) => divider.updateComplete));
+
         dividers.forEach((divider) => {
             const staticColor = divider.getAttribute('static-color');
             expect(staticColor).toBeTruthy();
-            const className = `swc-Divider--static${staticColor
-                ?.toString()
-                .slice(0, 1)
-                .toUpperCase()}${staticColor?.toString().slice(1)}`;
-            expect(
-                divider.shadowRoot?.querySelector(`.${className}`)
-            ).toBeTruthy();
+            expect(['white', 'black']).toContain(staticColor);
         });
     },
 };

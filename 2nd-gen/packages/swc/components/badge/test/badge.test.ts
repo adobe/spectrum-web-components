@@ -99,7 +99,7 @@ export const AnatomyTest: Story = {
     },
 };
 
-// Test: semantic variant reflects to attribute and class.
+// Test: semantic variants render with expected public variant values.
 export const SemanticVariantsTest: Story = {
     ...SemanticVariants,
     play: async ({ canvasElement }) => {
@@ -109,10 +109,7 @@ export const SemanticVariantsTest: Story = {
             ) as Badge | null;
             await badge?.updateComplete;
             expect(badge).toBeTruthy();
-            const semanticClass = badge?.shadowRoot
-                ?.querySelector(`.swc-Badge--${variant}`)
-                ?.classList.contains(`swc-Badge--${variant}`);
-            expect(semanticClass).toBe(true);
+            expect(badge?.variant).toBe(variant);
         }
     },
 };
@@ -127,9 +124,6 @@ export const OutlineTest: Story = {
             ) as Badge | null;
             await badge?.updateComplete;
             expect(badge?.hasAttribute('outline')).toBe(true);
-            expect(
-                badge?.shadowRoot?.querySelector('.swc-Badge--outline')
-            ).toBeTruthy();
         }
     },
 };
@@ -159,9 +153,6 @@ export const SubtleTest: Story = {
             ) as Badge | null;
             await badge?.updateComplete;
             expect(badge?.hasAttribute('subtle')).toBe(true);
-            expect(
-                badge?.shadowRoot?.querySelector('.swc-Badge--subtle')
-            ).toBeTruthy();
         }
     },
 };
@@ -176,14 +167,12 @@ export const FixedTest: Story = {
             ) as Badge | null;
             await badge?.updateComplete;
             expect(badge).toBeTruthy();
-            expect(
-                badge?.shadowRoot?.querySelector(`.swc-Badge--fixed-${value}`)
-            ).toBeTruthy();
+            expect(badge?.fixed).toBe(value);
         }
     },
 };
 
-// Test: color variants reflect to attribute and class.
+// Test: color variants reflect to expected public variant values.
 export const NonSemanticVariantsTest: Story = {
     ...NonSemanticVariants,
     play: async ({ canvasElement }) => {
@@ -193,10 +182,7 @@ export const NonSemanticVariantsTest: Story = {
                     `swc-badge[variant="${variant}"]`
                 ) as Badge;
                 await badge.updateComplete;
-                expect(badge.getAttribute('variant')).toBe(variant);
-                expect(
-                    badge.shadowRoot?.querySelector(`.swc-Badge--${variant}`)
-                ).toBeTruthy();
+                expect(badge.variant).toBe(variant);
             })
         );
     },

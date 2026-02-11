@@ -49,6 +49,8 @@ export const DefaultTest: Story = {
     ...Overview,
     play: async ({ canvasElement }) => {
         const statusLight = getStatusLight(canvasElement);
+        await statusLight.updateComplete;
+
         expect(statusLight.variant).toBe('info');
         expect(statusLight.size).toBe('m');
         expect(statusLight.textContent?.trim()).toBeTruthy();
@@ -59,10 +61,16 @@ export const DefaultTest: Story = {
 export const SizesTest: Story = {
     ...Sizes,
     play: async ({ canvasElement }) => {
+        const statusLights = Array.from(
+            canvasElement.querySelectorAll('swc-status-light')
+        ) as StatusLight[];
+        await Promise.all(
+            statusLights.map((statusLight) => statusLight.updateComplete)
+        );
+
         StatusLight.VALID_SIZES.forEach((size) => {
-            // Get the current status light from the canvas element.
-            const statusLight = canvasElement.querySelector(
-                `swc-status-light[size="${size}"]`
+            const statusLight = statusLights.find(
+                (item) => item.getAttribute('size') === size
             ) as StatusLight;
             expect(statusLight.variant).toBe('info');
             expect(statusLight.size).toBe(size);
@@ -90,6 +98,8 @@ export const ComposedComponentTest: Story = {
     },
     play: async ({ canvasElement }) => {
         const statusLight = getStatusLight(canvasElement);
+        await statusLight.updateComplete;
+
         expect(statusLight.variant).toBe('positive');
         expect(statusLight.size).toBe('m');
         expect(statusLight.textContent?.trim()).toBeTruthy();

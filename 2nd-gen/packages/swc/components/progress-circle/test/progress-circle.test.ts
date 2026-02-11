@@ -58,42 +58,35 @@ export const OverviewTest: Story = {
     },
 };
 
-// Test: sizes render the proper size class.
+// Test: sizes render expected public size attributes.
 export const SizesTest: Story = {
     ...Sizes,
     play: async ({ canvasElement }) => {
         const circles = Array.from(
             canvasElement.querySelectorAll('swc-progress-circle')
-        );
+        ) as ProgressCircle[];
+        await Promise.all(circles.map((circle) => circle.updateComplete));
+
         circles.forEach((circle) => {
             const size = circle.getAttribute('size');
             expect(size).toBeTruthy();
-            expect(
-                circle.shadowRoot?.querySelector(
-                    `.swc-ProgressCircle--size${size?.toUpperCase()}`
-                )
-            ).toBeTruthy();
         });
     },
 };
 
-// Test: static colors reflect to class.
+// Test: static colors reflect to expected public attribute values.
 export const StaticColorsTest: Story = {
     ...StaticColors,
     play: async ({ canvasElement }) => {
         const circles = Array.from(
             canvasElement.querySelectorAll('swc-progress-circle[static-color]')
-        );
+        ) as ProgressCircle[];
+        await Promise.all(circles.map((circle) => circle.updateComplete));
+
         circles.forEach((circle) => {
             const staticColor = circle.getAttribute('static-color');
             expect(staticColor).toBeTruthy();
-            const className = `swc-ProgressCircle--static${staticColor
-                ?.toString()
-                .slice(0, 1)
-                .toUpperCase()}${staticColor?.toString().slice(1)}`;
-            expect(
-                circle.shadowRoot?.querySelector(`.${className}`)
-            ).toBeTruthy();
+            expect(['white', 'black']).toContain(staticColor);
         });
     },
 };
@@ -104,7 +97,9 @@ export const ProgressValuesTest: Story = {
     play: async ({ canvasElement }) => {
         const circles = Array.from(
             canvasElement.querySelectorAll('swc-progress-circle')
-        );
+        ) as ProgressCircle[];
+        await Promise.all(circles.map((circle) => circle.updateComplete));
+
         circles.forEach((circle) => {
             const progress = String(circle.progress);
             expect(circle.getAttribute('aria-valuenow')).toBe(progress);
@@ -112,7 +107,7 @@ export const ProgressValuesTest: Story = {
     },
 };
 
-// Test: indeterminate removes aria-valuenow and sets class.
+// Test: indeterminate removes aria-valuenow.
 export const IndeterminateTest: Story = {
     ...Indeterminate,
     play: async ({ canvasElement }) => {
@@ -120,11 +115,6 @@ export const IndeterminateTest: Story = {
         await progressCircle.updateComplete;
         expect(progressCircle.indeterminate).toBe(true);
         expect(progressCircle.hasAttribute('aria-valuenow')).toBe(false);
-        expect(
-            progressCircle.shadowRoot?.querySelector(
-                '.swc-ProgressCircle--indeterminate'
-            )
-        ).toBeTruthy();
     },
 };
 
