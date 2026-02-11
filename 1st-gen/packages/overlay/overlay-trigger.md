@@ -1,15 +1,16 @@
-<sp-alert-banner open variant="info">
+<sp-alert-banner open variant="info" class="spectrum-InLineAlert spectrum-InLineAlert--info" style="--mod-alert-banner-font-color: var(--spectrum-inlinealert-content-color)">
     <div class="spectrum-InLineAlert-header">
-        <span> <code class="spectrum-Code" style="font-size: 17px;">triggered-by</code> performance optimization</span>
+        <span> <code class="spectrum-Code">triggered-by</code> performance optimization</span>
     </div>
     <div class="spectrum-InLineAlert-content">
-        Use the new <code class="spectrum-Code"  style="font-size: 17px;">triggered-by</code> attribute to declare which types of overlays
+        Use the new <code class="spectrum-Code">triggered-by</code> attribute to declare which types of overlays
         your implementation will use. This improves performance by avoiding
         unnecessary DOM operations and preventing race conditions during
         rendering. For more information, read the <a href="#performance-optimization">Performance
         optimization</a> section.
     </div>
 </sp-alert-banner>
+</br>
 
 ## Overview
 
