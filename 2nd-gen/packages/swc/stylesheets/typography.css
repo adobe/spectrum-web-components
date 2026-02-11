@@ -22,7 +22,7 @@
   heading
   ========================= */
 .swc-Heading {
-    color: var(--swc-heading-color, token('heading-color'));
+    color: var(--swc-heading-font-color, token('heading-color'));
     font-family: var(--swc-heading-font-family, token('sans-serif-font'));
     font-weight: var(
         --swc-heading-font-weight,
@@ -60,12 +60,23 @@
     );
     --swc-heading-margin-top: calc(
         var(--swc-heading-margin-top-multiplier, 0) *
-            var(--swc-heading-font-size)
+            var(--swc-heading-font-size, token('heading-size-m'))
     );
     --swc-heading-margin-bottom: calc(
         var(--swc-heading-margin-bottom-multiplier, 0) *
-            var(--swc-heading-font-size)
+            var(--swc-heading-font-size, token('heading-size-m'))
     );
+}
+
+.swc-Heading--sizeXS {
+    --swc-heading-font-size: token('heading-size-xs');
+    --swc-heading-line-height: token('line-height-font-size-300');
+
+    &:lang(zh),
+    &:lang(ja),
+    &:lang(ko) {
+        --swc-heading-font-size: token('font-size-200');
+    }
 }
 
 .swc-Heading--sizeS {
@@ -158,7 +169,7 @@
   body
   ========================= */
 .swc-Body {
-    color: var(--swc-body-color, token('body-color'));
+    color: var(--swc-body-font-color, token('body-color'));
     font-family: var(--swc-body-font-family, token('sans-serif-font'));
     font-weight: var(
         --swc-body-font-weight,
@@ -192,11 +203,35 @@
     --swc-body-margin-top-multiplier: token('body-margin-multiplier');
     --swc-body-margin-bottom-multiplier: token('body-margin-multiplier');
     --swc-body-margin-top: calc(
-        var(--swc-body-margin-top-multiplier, 0) * var(--swc-body-font-size)
+        var(--swc-body-margin-top-multiplier, 0) *
+            var(--swc-body-font-size, token('body-size-m'))
     );
     --swc-body-margin-bottom: calc(
-        var(--swc-body-margin-bottom-multiplier, 0) * var(--swc-body-font-size)
+        var(--swc-body-margin-bottom-multiplier, 0) *
+            var(--swc-body-font-size, token('body-size-m'))
     );
+}
+
+.swc-Body--sizeXXS {
+    --swc-body-font-size: token('body-size-xxs');
+    --swc-body-line-height: token('line-height-font-size-50');
+
+    &:lang(zh),
+    &:lang(ja),
+    &:lang(ko) {
+        --swc-body-font-size: token('font-size-25');
+    }
+}
+
+.swc-Body--sizeXS {
+    --swc-body-font-size: token('body-size-xs');
+    --swc-body-line-height: token('line-height-font-size-75');
+
+    &:lang(zh),
+    &:lang(ja),
+    &:lang(ko) {
+        --swc-body-font-size: token('font-size-50');
+    }
 }
 
 .swc-Body--sizeS {
@@ -268,7 +303,7 @@
   detail
   ========================= */
 .swc-Detail {
-    color: var(--swc-detail-color, token('detail-color'));
+    color: var(--swc-detail-font-color, token('detail-color'));
     font-family: var(--swc-detail-font-family, token('sans-serif-font'));
     font-weight: var(
         --swc-detail-font-weight,
@@ -303,12 +338,24 @@
         'detail-margin-bottom-multiplier'
     );
     --swc-detail-margin-top: calc(
-        var(--swc-detail-margin-top-multiplier, 0) * var(--swc-detail-font-size)
+        var(--swc-detail-margin-top-multiplier, 0) *
+            var(--swc-detail-font-size, token('detail-size-m'))
     );
     --swc-detail-margin-bottom: calc(
         var(--swc-detail-margin-bottom-multiplier, 0) *
-            var(--swc-detail-font-size)
+            var(--swc-detail-font-size, token('detail-size-m'))
     );
+}
+
+.swc-Detail--sizeXS {
+    --swc-detail-font-size: token('detail-size-xs');
+    --swc-detail-line-height: token('line-height-font-size-50');
+
+    &:lang(zh),
+    &:lang(ja),
+    &:lang(ko) {
+        --swc-detail-font-size: token('font-size-25');
+    }
 }
 
 .swc-Detail--sizeS {
@@ -358,60 +405,75 @@
   code
   ========================= */
 .swc-Code {
-    color: var(--swc-code-color, token('code-color'));
-    font-family: var(--swc-code-font-family, token('sans-serif-font'));
-    font-weight: var(--swc-code-font-weight, token('regular-font-weight'));
-    font-size: var(--swc-code-font-size, token('code-size-m'));
+    color: var(--swc-monospace-font-color, token('code-color'));
+    font-family: var(--swc-monospace-font-family, token('code-font'));
+    font-weight: var(--swc-monospace-font-weight, token('regular-font-weight'));
+    font-size: var(--swc-monospace-font-size, token('code-size-m'));
     line-height: var(
-        --swc-code-line-height,
+        --swc-monospace-line-height,
         token('line-height-font-size-200')
     );
-    margin-block: var(--swc-code-margin-top, 0) var(--swc-code-margin-bottom, 0);
+    margin-block: var(--swc-monospace-margin-top, 0)
+        var(--swc-monospace-margin-bottom, 0);
 
     &:lang(zh),
     &:lang(ja),
     &:lang(ko) {
-        line-height: var(--swc-code-cjk-line-height, token('line-height-200'));
+        line-height: var(
+            --swc-monospace-cjk-line-height,
+            token('line-height-200')
+        );
 
-        --swc-code-font-size: token('font-size-100');
+        --swc-monospace-font-size: token('font-size-100');
+    }
+}
+
+.swc-Code--sizeXS {
+    --swc-monospace-font-size: token('code-size-xs');
+    --swc-monospace-line-height: token('line-height-font-size-75');
+
+    &:lang(zh),
+    &:lang(ja),
+    &:lang(ko) {
+        --swc-monospace-font-size: token('font-size-50');
     }
 }
 
 .swc-Code--sizeS {
-    --swc-code-font-size: token('code-size-s');
-    --swc-code-line-height: token('line-height-font-size-100');
+    --swc-monospace-font-size: token('code-size-s');
+    --swc-monospace-line-height: token('line-height-font-size-100');
 }
 
 .swc-Code--sizeM {
-    --swc-code-font-size: token('code-size-m');
-    --swc-code-line-height: token('line-height-font-size-200');
+    --swc-monospace-font-size: token('code-size-m');
+    --swc-monospace-line-height: token('line-height-font-size-200');
 
     &:lang(zh),
     &:lang(ja),
     &:lang(ko) {
-        --swc-code-font-size: token('font-size-100');
+        --swc-monospace-font-size: token('font-size-100');
     }
 }
 
 .swc-Code--sizeL {
-    --swc-code-font-size: token('code-size-l');
-    --swc-code-line-height: token('line-height-font-size-300');
+    --swc-monospace-font-size: token('code-size-l');
+    --swc-monospace-line-height: token('line-height-font-size-300');
 
     &:lang(zh),
     &:lang(ja),
     &:lang(ko) {
-        --swc-code-font-size: token('font-size-200');
+        --swc-monospace-font-size: token('font-size-200');
     }
 }
 
 .swc-Code--sizeXL {
-    --swc-code-font-size: token('code-size-xl');
-    --swc-code-line-height: token('line-height-font-size-400');
+    --swc-monospace-font-size: token('code-size-xl');
+    --swc-monospace-line-height: token('line-height-font-size-400');
 
     &:lang(zh),
     &:lang(ja),
     &:lang(ko) {
-        --swc-code-font-size: token('font-size-300');
+        --swc-monospace-font-size: token('font-size-300');
     }
 }
 

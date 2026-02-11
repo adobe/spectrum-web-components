@@ -10,16 +10,49 @@
  * governing permissions and limitations under the License.
  */
 import { html, type TemplateResult } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { capitalize } from '@spectrum-web-components/core/shared/utilities';
 
-export const SIZES = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'XXXXL'] as const;
+export const SIZES = [
+    'XXS',
+    'XS',
+    'S',
+    'M',
+    'L',
+    'XL',
+    'XXL',
+    'XXXL',
+    'XXXXL',
+] as const;
 export const VARIANTS = ['heading', 'body', 'detail', 'code'] as const;
 export const LANGS = ['en', 'zh', 'ja', 'ko'] as const;
 
+export const SIZES_BY_VARIANT: Record<
+    TypographyVariant,
+    readonly TypographySize[]
+> = {
+    heading: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'XXXXL'],
+    body: ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+    detail: ['XS', 'S', 'M', 'L', 'XL'],
+    code: ['XS', 'S', 'M', 'L', 'XL'],
+} as const;
+
+export function getAllowedSizes(variant: TypographyVariant) {
+    return SIZES_BY_VARIANT[variant] ?? SIZES;
+}
+
+export function coerceSize(
+    variant: TypographyVariant,
+    requested: TypographySize
+) {
+    const allowed = getAllowedSizes(variant);
+    return (allowed.includes(requested) ? requested : 'M') as TypographySize;
+}
+
 export type TypographySize = (typeof SIZES)[number];
 export type TypographyVariant = (typeof VARIANTS)[number];
-export type TypographyLang = (typeof LANGS)[number] | boolean;
+export type TypographyLang = (typeof LANGS)[number] | undefined;
 
 export type TypographyTemplateProps = {
     prefix?: string;
@@ -52,13 +85,13 @@ function sizeClass(base: string, size: TypographySize) {
 function defaultSample(variant: TypographyVariant) {
     switch (variant) {
         case 'heading':
-            return 'The quick brown fox jumps over the lazy dog';
+            return 'Lorem ipsum dolor';
         case 'body':
             return 'Body copy should be readable and comfortable for longer blocks of text.';
         case 'detail':
             return 'Detail text for metadata, helper copy, or captions.';
         case 'code':
-            return 'const tokens = generateTypographyCssString();';
+            return "console.log('Hello World');";
     }
 }
 
@@ -73,15 +106,20 @@ function Tag({
     lang: TypographyLang;
     text: string;
 }): TemplateResult {
-    // Render tag type without string HTML:
     switch (tag) {
         case 'h2':
-            return html`<h2 class=${className} lang=${lang}>${text}</h2>`;
+            return html`<h2 class=${className} lang=${ifDefined(lang)}>
+                ${text}
+            </h2>`;
         case 'code':
-            return html`<code class=${className} lang=${lang}>${text}</code>`;
+            return html`<code class=${className} lang=${ifDefined(lang)}
+                >${text}</code
+            >`;
         case 'p':
         default:
-            return html`<p class=${className} lang=${lang}>${text}</p>`;
+            return html`<p class=${className} lang=${ifDefined(lang)}>
+                ${text}
+            </p>`;
     }
 }
 
@@ -107,7 +145,7 @@ export function template(args: TypographyTemplateProps = {}): TemplateResult {
         heavy = false,
         margins = false,
         prose = false,
-        lang = false,
+        lang = undefined,
         sampleText,
         includeMultipleSizes = false,
         showAllVariants = false,
@@ -124,23 +162,26 @@ export function template(args: TypographyTemplateProps = {}): TemplateResult {
 
     return html`
         <div class=${wrapperClass}>
-            ${variants.map((cat) => {
-                const base = variantBase(prefix, cat);
-                const tag = elementForVariant(cat);
+            ${variants.map((typeVar) => {
+                const base = variantBase(prefix, typeVar);
+                const tag = elementForVariant(typeVar);
                 const text =
                     sampleText != null && sampleText !== ''
                         ? sampleText
-                        : defaultSample(cat);
+                        : defaultSample(typeVar);
+
+                const allowedSizes = getAllowedSizes(typeVar);
+                const coerced = coerceSize(typeVar, size);
 
                 const sizes: TypographySize[] = includeMultipleSizes
-                    ? [...SIZES]
-                    : [size];
+                    ? [...allowedSizes]
+                    : [coerced];
 
                 return html`
                     ${sizes.map((s) => {
                         const className = cls(
                             base,
-                            sizeClass(base, s),
+                            s != 'M' && sizeClass(base, s),
                             serif && `${base}--serif`,
                             heavy && `${base}--heavy`,
                             margins && `${base}--margins`
@@ -158,12 +199,13 @@ export function template(args: TypographyTemplateProps = {}): TemplateResult {
                                     <div
                                         class="swc-Typography--emphasized swc-Detail swc-Detail--sizeS"
                                     >
-                                        ${cat}
+                                        ${typeVar}
                                     </div>
                                     <div class="swc-Detail swc-Detail--sizeS">
                                         ${metaSub}
                                     </div>
                                 </div>
+                                <!-- Sample -->
                                 ${Tag({ tag, className, lang, text })}
                             </div>
                         `;

@@ -50,7 +50,7 @@ export const Playground: Story = {
         heavy: false,
         margins: false,
         prose: false,
-        lang: false,
+        lang: undefined,
         includeMultipleSizes: false,
         showAllVariants: false,
         sampleText: '',
@@ -58,6 +58,9 @@ export const Playground: Story = {
     tags: ['autodocs', 'dev'],
 };
 
+/**
+ * Each type variant defaults to sans-serif and size medium.
+ */
 export const AllVariants: Story = {
     args: {
         showAllVariants: true,
@@ -66,12 +69,23 @@ export const AllVariants: Story = {
     tags: ['options'],
 };
 
+export const AllVariantsSerif: Story = {
+    args: {
+        showAllVariants: true,
+        serif: true,
+    },
+    parameters: { 'section-order': 2 },
+    tags: ['options'],
+};
+
 export const HeadingSizes: Story = {
     args: {
         variant: 'heading',
         includeMultipleSizes: true,
     },
-    parameters: { 'section-order': 2 },
+    parameters: {
+        'section-order': 3,
+    },
     tags: ['options'],
 };
 
@@ -80,7 +94,7 @@ export const BodySizes: Story = {
         variant: 'body',
         includeMultipleSizes: true,
     },
-    parameters: { 'section-order': 3 },
+    parameters: { 'section-order': 4 },
     tags: ['options'],
 };
 
@@ -89,7 +103,7 @@ export const DetailSizes: Story = {
         variant: 'detail',
         includeMultipleSizes: true,
     },
-    parameters: { 'section-order': 4 },
+    parameters: { 'section-order': 5 },
     tags: ['options'],
 };
 
@@ -98,7 +112,7 @@ export const CodeSizes: Story = {
         variant: 'code',
         includeMultipleSizes: true,
     },
-    parameters: { 'section-order': 5 },
+    parameters: { 'section-order': 6 },
     tags: ['options'],
 };
 
@@ -123,7 +137,7 @@ export const MarginsProseParent: Story = {
     parameters: {
         docs: {
             description: {
-                story: 'Applies margin multipliers via `.swc-typography--prose .swc-<variant>` selector.',
+                story: 'Applies margin multipliers via `.swc-Typography--prose .swc-<variant>` selector.',
             },
         },
     },
@@ -131,7 +145,7 @@ export const MarginsProseParent: Story = {
         variant: 'body',
         prose: true,
         sampleText:
-            'This paragraph should receive margins when nested under `.swc-typography--prose`.',
+            'This paragraph should receive margins when nested under `.swc-Typography--prose`.',
     },
     tags: ['options'],
 };

@@ -2002,6 +2002,7 @@
     --swc-cjk-font: var(--swc-cjk-font-family-stack);
     --swc-cjk-font-family-stack:
         adobe-clean-han-japanese, Adobe Clean Han, sans-serif;
+    --swc-code-font: var(--swc-code-font-family-stack);
     --swc-code-font-family-stack: 'Source Code Pro', Monaco, monospace;
     --swc-font-family: var(--swc-sans-font-family-stack);
     --swc-font-family-ar: 'adobe-clean-arabic, ' Adobe Clean Arabic
