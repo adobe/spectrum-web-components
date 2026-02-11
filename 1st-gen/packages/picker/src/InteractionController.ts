@@ -145,17 +145,21 @@ export class InteractionController implements ReactiveController {
             return;
         }
         if (event.newState === 'closed') {
-            // If the picker has already set open to false (e.g., via setValueFromItem
+            // If the host has already set open to false (e.g., via setValueFromItem
             // from a programmatic click), respect that decision and don't interfere.
-            if (!this.open) {
+            if (!this.host.open) {
                 // Already closed, nothing to do.
             } else if (this.preventNextToggle === 'no') {
-                this.open = false;
+                // Set both _open and host.open directly to avoid the setter's
+                // early return guard when _open is already false (can happen if
+                // host.open was set directly without going through the controller).
+                this._open = false;
+                this.host.open = false;
             } else if (!this.pointerdownState) {
                 this.overlay?.manuallyKeepOpen();
             }
         }
-        if (!this.open) {
+        if (!this.host.open) {
             this.host.optionsMenu.updateSelectedItemIndex();
             this.host.optionsMenu.closeDescendentOverlays();
         }
