@@ -25,17 +25,17 @@
     --_swc-badge-border-width-deduction: calc(var(--_swc-badge-border-width) * 2);
     --_swc-badge-padding-block: token("component-top-to-text-100") token("component-bottom-to-text-100");
 
-    align-items: center;
-    background: var(--swc-badge-background-color, token("accent-background-color-default"));
-    border: var(--_swc-badge-border-width) solid var(--swc-badge-border-color, transparent);
-    border-radius: var(--swc-badge-corner-radius, token("corner-radius-medium-size-medium"));
-    color: var(--swc-badge-label-icon-color, token("white"));
-    cursor: default;
     display: inline-flex;
     gap: var(--swc-badge-gap, token("text-to-visual-100"));
+    align-items: center;
     min-block-size: var(--swc-badge-height, token("component-height-100"));
     padding-block: calc(var(--swc-badge-padding-block, var(--_swc-badge-padding-block)) - var(--_swc-badge-border-width-deduction));
     padding-inline: calc(var(--swc-badge-padding-inline, token("component-edge-to-text-100")) - var(--_swc-badge-border-width-deduction));
+    color: var(--swc-badge-label-icon-color, token("white"));
+    background: var(--swc-badge-background-color, token("accent-background-color-default"));
+    border: var(--_swc-badge-border-width) solid var(--swc-badge-border-color, transparent);
+    border-radius: var(--swc-badge-corner-radius, token("corner-radius-medium-size-medium"));
+    cursor: default;
 }
 
 .swc-Badge:has(.swc-Badge-icon) {
@@ -57,11 +57,11 @@
 .swc-Badge-icon {
     --_swc-badge-icon-size: token("workflow-icon-size-100");
 
-    block-size: var(--swc-badge-icon-size, var(--_swc-badge-icon-size));
     display: grid;
     flex-shrink: 0;
-    inline-size: var(--swc-badge-icon-size, var(--_swc-badge-icon-size));
     place-content: center;
+    inline-size: var(--swc-badge-icon-size, var(--_swc-badge-icon-size));
+    block-size: var(--swc-badge-icon-size, var(--_swc-badge-icon-size));
 }
 
 :host([size="s"]) {
@@ -98,23 +98,23 @@
 }
 
 .swc-Badge--fixed-inline-start {
-    border-end-start-radius: 0;
     border-start-start-radius: 0;
+    border-end-start-radius: 0;
 }
 
 .swc-Badge--fixed-inline-end {
-    border-end-end-radius: 0;
     border-start-end-radius: 0;
+    border-end-end-radius: 0;
 }
 
 .swc-Badge--fixed-block-start {
-    border-start-end-radius: 0;
     border-start-start-radius: 0;
+    border-start-end-radius: 0;
 }
 
 .swc-Badge--fixed-block-end {
-    border-end-end-radius: 0;
     border-end-start-radius: 0;
+    border-end-end-radius: 0;
 }
 
 :host([variant="notice"]),

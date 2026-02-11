@@ -114,17 +114,17 @@
 }
 
 :host {
-    border: 1px solid #0000;
-    border-radius: var(--mod-badge-corner-radius, var(--spectrum-badge-corner-radius));
-    color: var(--mod-badge-label-icon-color, var(--spectrum-badge-label-icon-color));
-    cursor: default;
-    display: inline-flex;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
+    display: inline-flex;
+    position: relative;
     inline-size: auto;
     min-block-size: var(--mod-badge-height, var(--spectrum-badge-height));
-    position: relative;
     vertical-align: middle;
+    color: var(--mod-badge-label-icon-color, var(--spectrum-badge-label-icon-color));
+    border: 1px solid #0000;
+    border-radius: var(--mod-badge-corner-radius, var(--spectrum-badge-corner-radius));
+    cursor: default;
 }
 
 :host,
@@ -209,33 +209,33 @@
 }
 
 :host([fixed="inline-start"]) {
-    border-end-start-radius: 0;
     border-start-start-radius: 0;
+    border-end-start-radius: 0;
 }
 
 :host([fixed="inline-end"]) {
-    border-end-end-radius: 0;
     border-start-end-radius: 0;
+    border-end-end-radius: 0;
 }
 
 :host([fixed="block-start"]) {
-    border-start-end-radius: 0;
     border-start-start-radius: 0;
+    border-start-end-radius: 0;
 }
 
 :host([fixed="block-end"]) {
-    border-end-end-radius: 0;
     border-end-start-radius: 0;
+    border-end-end-radius: 0;
 }
 
 .label {
-    color: var(--mod-badge-label-icon-color, var(--spectrum-badge-label-icon-color));
+    padding-block-start: var(--mod-badge-label-spacing-vertical-top, var(--spectrum-badge-label-spacing-vertical-top));
+    padding-block-end: var(--mod-badge-label-spacing-vertical-bottom, var(--spectrum-badge-label-spacing-vertical-bottom));
+    padding-inline-start: var(--mod-badge-label-spacing-horizontal, var(--spectrum-badge-label-spacing-horizontal));
+    padding-inline-end: var(--mod-badge-label-spacing-horizontal, var(--spectrum-badge-label-spacing-horizontal));
     font-size: var(--mod-badge-font-size, var(--spectrum-badge-font-size));
     line-height: var(--mod-badge-line-height, var(--spectrum-badge-line-height));
-    padding-block-end: var(--mod-badge-label-spacing-vertical-bottom, var(--spectrum-badge-label-spacing-vertical-bottom));
-    padding-block-start: var(--mod-badge-label-spacing-vertical-top, var(--spectrum-badge-label-spacing-vertical-top));
-    padding-inline-end: var(--mod-badge-label-spacing-horizontal, var(--spectrum-badge-label-spacing-horizontal));
-    padding-inline-start: var(--mod-badge-label-spacing-horizontal, var(--spectrum-badge-label-spacing-horizontal));
+    color: var(--mod-badge-label-icon-color, var(--spectrum-badge-label-icon-color));
 }
 
 .label:lang(ja),
@@ -249,17 +249,17 @@
 }
 
 ::slotted([slot="icon"]) {
-    block-size: var(--mod-badge-workflow-icon-size, var(--spectrum-badge-workflow-icon-size));
-    color: var(--mod-badge-label-icon-color, var(--spectrum-badge-label-icon-color));
     flex: 0 0 var(--mod-badge-workflow-icon-size, var(--spectrum-badge-workflow-icon-size));
     inline-size: var(--mod-badge-workflow-icon-size, var(--spectrum-badge-workflow-icon-size));
-    padding-block-end: var(--mod-badge-icon-spacing-vertical-top, var(--spectrum-badge-icon-spacing-vertical-top));
+    block-size: var(--mod-badge-workflow-icon-size, var(--spectrum-badge-workflow-icon-size));
     padding-block-start: var(--mod-badge-icon-spacing-vertical-top, var(--spectrum-badge-icon-spacing-vertical-top));
-    padding-inline-end: var(--mod-badge-icon-text-spacing, var(--spectrum-badge-icon-text-spacing));
+    padding-block-end: var(--mod-badge-icon-spacing-vertical-top, var(--spectrum-badge-icon-spacing-vertical-top));
     padding-inline-start: var(--mod-badge-icon-spacing-horizontal, var(--spectrum-badge-icon-spacing-horizontal));
+    padding-inline-end: var(--mod-badge-icon-text-spacing, var(--spectrum-badge-icon-text-spacing));
+    color: var(--mod-badge-label-icon-color, var(--spectrum-badge-label-icon-color));
 }
 
 [icon-only]::slotted(*) {
-    padding-inline-end: var(--mod-badge-icon-only-spacing-horizontal, var(--spectrum-badge-icon-only-spacing-horizontal));
     padding-inline-start: var(--mod-badge-icon-only-spacing-horizontal, var(--spectrum-badge-icon-only-spacing-horizontal));
+    padding-inline-end: var(--mod-badge-icon-only-spacing-horizontal, var(--spectrum-badge-icon-only-spacing-horizontal));
 }
