@@ -166,11 +166,9 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         switch (code) {
             case 'Space':
                 event.preventDefault();
-                // allows button to activate when `Space` is pressed
-                if (typeof this.href === 'undefined') {
-                    this.addEventListener('keyup', this.handleKeyup);
-                    this.active = true;
-                }
+                // allows button or link to activate when `Space` is pressed
+                this.addEventListener('keyup', this.handleKeyup);
+                this.active = true;
                 break;
             default:
                 break;
