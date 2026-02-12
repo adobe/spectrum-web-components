@@ -1,0 +1,53 @@
+{
+    "name": "@spectrum-web-components/mcp-server",
+    "version": "0.1.0",
+    "description": "MCP server exposing Spectrum Web Components (list components, get component doc) from Custom Elements Manifest.",
+    "license": "Apache-2.0",
+    "type": "module",
+    "bin": {
+        "swc-mcp": "./dist/index.js"
+    },
+    "main": "./src/index.js",
+    "scripts": {
+        "build": "tsc",
+        "start": "node dist/index.js",
+        "prepare": "yarn build"
+    },
+    "dependencies": {
+        "@modelcontextprotocol/sdk": "1.26.0",
+        "zod": "^4.0.0"
+    },
+    "devDependencies": {
+        "typescript": "5.9.2"
+    },
+    "files": [
+        "dist",
+        "README.md"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "1st-gen/tools/mcp-server"
+    },
+    "author": "Adobe",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/mcp-server",
+    "publishConfig": {
+        "access": "public"
+    },
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "component",
+        "css"
+    ],
+    "module": "./src/index.js"
+}
