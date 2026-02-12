@@ -78,6 +78,12 @@ const TOKEN_PATCHES = {
     },
 };
 
+// Centralize CJK language selectors
+const CJK_LANGS = ['zh', 'ja', 'ko'];
+const CJK_NESTED_SELECTOR = CJK_LANGS.map((l) => `&:lang(${l})`).join(', ');
+const CJK_SELECTOR_LIST = CJK_LANGS.map((l) => `:lang(${l})`).join(',\n');
+const CJK_NOT_LIST = CJK_LANGS.map((l) => `:lang(${l})`).join(', ');
+
 /**
  * Per-variant CJK overrides that should be inherited via the base class.
  * Provide only what applies; omitted props won't be emitted.
@@ -144,6 +150,36 @@ function tokenRefFromName(name) {
     return name ? `token('${name}')` : null;
 }
 
+function tokenExists(tokens, name) {
+    return Boolean(tokens?.[name]);
+}
+
+function tokenRefIfExists(tokens, name) {
+    return tokenExists(tokens, name) ? `token('${name}')` : null;
+}
+
+function warnMissing(typeVar, what, name) {
+    // eslint-disable-next-line no-console
+    console.warn(
+        `[typography] ${typeVar}: missing ${what} token "${name}" (skipped)`
+    );
+}
+
+/**
+ * Get a token('...') reference by name and warn if missing.
+ * Use for non-variant tokens (e.g. derived line-height-*, cjk-line-height-*, etc.)
+ */
+function tokenRefOrWarn(tokens, typeVar, what, tokenName) {
+    const ref = tokenRefIfExists(tokens, tokenName);
+    if (!ref) {
+        warnMissing(typeVar, what, tokenName);
+    }
+    return ref;
+}
+
+/**
+ * Get a token reference for `${typeVar}-${suffix}`, optionally using TOKEN_PATCHES.
+ */
 function getVariantTokenRef(tokens, typeVar, suffix) {
     const primaryName = `${typeVar}-${suffix}`;
 
@@ -177,6 +213,12 @@ function splitSelectors(selector) {
         .filter(Boolean);
 }
 
+const ALIAS_KIND_KEYS = {
+    base: 'base',
+    margins: 'margins',
+    size: 'sizes',
+};
+
 function selectorWithAliases({
     selector,
     prefix,
@@ -193,23 +235,14 @@ function selectorWithAliases({
     }
 
     const prose = proseSelector(prefix);
+    const key = ALIAS_KIND_KEYS[kind];
 
-    if (kind === 'base' && Array.isArray(cfg.base)) {
-        for (const s of cfg.base) {
-            out.add(`${prose} ${s}`);
-        }
-    }
+    const add = (s) => out.add(`${prose} ${s}`);
 
-    if (kind === 'size' && sizeKey && cfg.sizes?.[sizeKey]) {
-        for (const s of cfg.sizes[sizeKey]) {
-            out.add(`${prose} ${s}`);
-        }
-    }
-
-    if (kind === 'margins' && Array.isArray(cfg.margins)) {
-        for (const s of cfg.margins) {
-            out.add(`${prose} ${s}`);
-        }
+    if (key === 'sizes' && sizeKey && cfg.sizes?.[sizeKey]) {
+        cfg.sizes[sizeKey].forEach(add);
+    } else if (Array.isArray(cfg[key])) {
+        cfg[key].forEach(add);
     }
 
     return Array.from(out).join(', ');
@@ -243,49 +276,17 @@ function cssBlock(selector, decls, nestedBlocks = []) {
 }
 
 function nestedLangBlock(decls) {
-    return `  &:lang(zh), &:lang(ja), &:lang(ko) {\n${cssDecls(
-        decls,
-        '    '
-    )}\n  }`;
+    return `  ${CJK_NESTED_SELECTOR} {\n${cssDecls(decls, '    ')}\n  }`;
 }
 
 function langSelectorList(decls) {
-    return (
-        `:lang(zh),\n` +
-        `:lang(ja),\n` +
-        `:lang(ko) {\n` +
-        `${cssDecls(decls)}\n` +
-        `}\n`
-    );
-}
-
-function tokenExists(tokens, name) {
-    return Boolean(tokens?.[name]);
-}
-
-function tokenRefIfExists(tokens, name) {
-    return tokenExists(tokens, name) ? `token('${name}')` : null;
-}
-
-function warnMissing(typeVar, what, name) {
-    // eslint-disable-next-line no-console
-    console.warn(
-        `[typography] ${typeVar}: missing ${what} token "${name}" (skipped)`
-    );
+    return `${CJK_SELECTOR_LIST} {\n${cssDecls(decls)}\n}\n`;
 }
 
 function pickValidDecls(decls) {
     return Object.fromEntries(
         Object.entries(decls).filter(([, v]) => v != null && v !== '')
     );
-}
-
-function getTokenRef(tokens, typeVar, what, tokenName) {
-    const ref = tokenRefIfExists(tokens, tokenName);
-    if (!ref) {
-        warnMissing(typeVar, what, tokenName);
-    }
-    return ref;
 }
 
 function parseFontSizeNumber(aliasedFontSizeToken) {
@@ -334,27 +335,25 @@ function buildCjkNestedDecls({ cpBase, typeVar, cjkOverrides, tokens }) {
     const decls = {};
 
     if (cjkOverrides.lineHeight) {
-        const lh = tokenRefIfExists(tokens, cjkOverrides.lineHeight);
-        if (!lh) {
-            warnMissing(
-                typeVar,
-                'CJK line-height override',
-                cjkOverrides.lineHeight
-            );
-        } else {
+        const lh = tokenRefOrWarn(
+            tokens,
+            typeVar,
+            'CJK line-height override',
+            cjkOverrides.lineHeight
+        );
+        if (lh) {
             decls['line-height'] = `var(--${cpBase}-cjk-line-height, ${lh})`;
         }
     }
 
     if (cjkOverrides.letterSpacing) {
-        const ls = tokenRefIfExists(tokens, cjkOverrides.letterSpacing);
-        if (!ls) {
-            warnMissing(
-                typeVar,
-                'CJK letter-spacing override',
-                cjkOverrides.letterSpacing
-            );
-        } else {
+        const ls = tokenRefOrWarn(
+            tokens,
+            typeVar,
+            'CJK letter-spacing override',
+            cjkOverrides.letterSpacing
+        );
+        if (ls) {
             decls['letter-spacing'] =
                 `var(--${cpBase}-cjk-letter-spacing, ${ls})`;
         }
@@ -366,16 +365,19 @@ function buildCjkNestedDecls({ cpBase, typeVar, cjkOverrides, tokens }) {
 function getCjkFontSizeVarDecl({ cpBase, tokens, typeVar, aliasedFontSize }) {
     const cjkFontSizeTokenName =
         aliasedFontSize && deriveCjkFontSizeTokenName(aliasedFontSize);
-    const cjkFontSizeRef =
-        cjkFontSizeTokenName && tokenRefIfExists(tokens, cjkFontSizeTokenName);
 
-    if (cjkFontSizeTokenName && !cjkFontSizeRef) {
-        warnMissing(typeVar, 'CJK derived font-size', cjkFontSizeTokenName);
+    if (!cjkFontSizeTokenName) {
+        return null;
     }
 
-    return cjkFontSizeRef
-        ? { [`--${cpBase}-font-size`]: cjkFontSizeRef }
-        : null;
+    const cjkFontSizeRef = tokenRefIfExists(tokens, cjkFontSizeTokenName);
+
+    if (!cjkFontSizeRef) {
+        warnMissing(typeVar, 'CJK derived font-size', cjkFontSizeTokenName);
+        return null;
+    }
+
+    return { [`--${cpBase}-font-size`]: cjkFontSizeRef };
 }
 
 function getMarginMultiplierTokens(typeVar) {
@@ -397,12 +399,27 @@ function variantCpBase(prefix, typeVar) {
     const cfg = VARIANT_CONFIG[typeVar] || {
         defaultFont: 'sans',
         cpBaseSuffix: typeVar,
+        supportsCjkSizeAdjustment: true,
     };
     return { cfg, cpBase: `${prefix}-${cfg.cpBaseSuffix}` };
 }
 
 function variantClassName(prefix, typeVar) {
     return `${prefix}-${capitalize(typeVar)}`;
+}
+
+function makeVariantCtx({ prefix, typeVar }) {
+    const { cfg, cpBase } = variantCpBase(prefix, typeVar);
+    const className = variantClassName(prefix, typeVar);
+    return {
+        typeVar,
+        cfg,
+        cpBase,
+        className,
+        baseSelector: `.${className}`,
+        sizeTokenName: (k) => `${typeVar}-size-${k}`,
+        tokenName: (suffix) => `${typeVar}-${suffix}`,
+    };
 }
 
 async function loadTokensJson(tokenModulePath) {
@@ -469,14 +486,13 @@ export async function generateTypographyCssString(options = {}) {
     })}\n`;
 
     for (const typeVar of variants) {
-        const { cfg, cpBase } = variantCpBase(prefix, typeVar);
+        const ctx = makeVariantCtx({ prefix, typeVar });
+        const { cfg, cpBase, className, baseSelector } = ctx;
 
-        const baseClassName = variantClassName(prefix, typeVar);
-        const baseClass = `.${baseClassName}`;
-
-        const sansWeightToken = `${typeVar}-sans-serif-font-weight`;
-        const serifWeightToken = `${typeVar}-serif-font-weight`;
-        const sansHeavyWeightToken = `${typeVar}-sans-serif-heavy-font-weight`;
+        const serifWeightTokenName = ctx.tokenName('serif-font-weight');
+        const sansHeavyWeightTokenName = ctx.tokenName(
+            'sans-serif-heavy-font-weight'
+        );
 
         const defaultFont =
             fontTokens[cfg.defaultFont] != null
@@ -484,7 +500,7 @@ export async function generateTypographyCssString(options = {}) {
                 : fontTokens.sans;
 
         // --- derive M defaults (base class should default to M) ---
-        const mSizeTokenName = `${typeVar}-size-m`;
+        const mSizeTokenName = ctx.sizeTokenName('m');
         const mSizeToken = tokens[mSizeTokenName];
 
         if (!mSizeToken?.value) {
@@ -495,25 +511,31 @@ export async function generateTypographyCssString(options = {}) {
             ? deriveAliasedTokenName(mSizeToken.value, mSizeTokenName)
             : null;
 
-        const mLineHeightToken = aliasedMFontSize
+        const mLineHeightTokenName = aliasedMFontSize
             ? `line-height-${aliasedMFontSize}`
             : null;
 
-        const sansWeightRef = getTokenRef(
+        // use patch-aware lookup for variant tokens
+        const sansWeightRef = getVariantTokenRef(
             tokens,
             typeVar,
-            'sans weight',
-            sansWeightToken
+            'sans-serif-font-weight'
         );
         const colorRef = getVariantTokenRef(tokens, typeVar, 'color');
-        const mSizeRef = getTokenRef(tokens, typeVar, 'M size', mSizeTokenName);
 
-        const mLineHeightRef = mLineHeightToken
-            ? getTokenRef(
+        // non-variant tokens / derived tokens use tokenRefOrWarn
+        const mSizeRef = tokenRefOrWarn(
+            tokens,
+            typeVar,
+            'M size',
+            mSizeTokenName
+        );
+        const mLineHeightRef = mLineHeightTokenName
+            ? tokenRefOrWarn(
                   tokens,
                   typeVar,
                   'M derived line-height',
-                  mLineHeightToken
+                  mLineHeightTokenName
               )
             : null;
 
@@ -555,7 +577,7 @@ export async function generateTypographyCssString(options = {}) {
 
         out += cssBlock(
             selectorWithAliases({
-                selector: baseClass,
+                selector: baseSelector,
                 prefix,
                 typeVar,
                 kind: 'base',
@@ -581,9 +603,9 @@ export async function generateTypographyCssString(options = {}) {
         // Margins application selector:
         // - can be applied one-off via .swc-<typeVar>--margins
         // - or via prose parent: .swc-Typography--prose .swc-<typeVar>
-        const marginsSelector = `.${baseClassName}--margins, ${proseSelector(
+        const marginsSelector = `.${className}--margins, ${proseSelector(
             prefix
-        )} .${baseClassName}`;
+        )} .${className}`;
 
         const marginAppliedVars = pickValidDecls({
             ...(marginBothRef
@@ -616,7 +638,7 @@ export async function generateTypographyCssString(options = {}) {
 
         // Size modifiers
         for (const sizeKey of SIZE_KEYS) {
-            const sizeTokenName = `${typeVar}-size-${sizeKey}`;
+            const sizeTokenName = ctx.sizeTokenName(sizeKey);
             const sizeToken = tokens[sizeTokenName];
 
             if (!sizeToken || sizeToken.deprecated) {
@@ -634,16 +656,16 @@ export async function generateTypographyCssString(options = {}) {
                 sizeTokenName
             );
 
-            const derivedLineHeightToken = `line-height-${aliasedFontSize}`;
+            const derivedLineHeightTokenName = `line-height-${aliasedFontSize}`;
             const derivedLineHeightRef = tokenRefIfExists(
                 tokens,
-                derivedLineHeightToken
+                derivedLineHeightTokenName
             );
             if (!derivedLineHeightRef) {
                 warnMissing(
                     typeVar,
                     `derived line-height for size ${sizeKey}`,
-                    derivedLineHeightToken
+                    derivedLineHeightTokenName
                 );
             }
 
@@ -664,8 +686,9 @@ export async function generateTypographyCssString(options = {}) {
 
             const modifierNestedBlocks = [];
             if (cjkSizeFontSizeVarDecl) {
+                // getCjkFontSizeVarDecl already returns a valid decl object
                 modifierNestedBlocks.push(
-                    nestedLangBlock(pickValidDecls(cjkSizeFontSizeVarDecl))
+                    nestedLangBlock(cjkSizeFontSizeVarDecl)
                 );
             }
 
@@ -673,9 +696,7 @@ export async function generateTypographyCssString(options = {}) {
                 Object.keys(modifierDecls).length ||
                 modifierNestedBlocks.length
             ) {
-                const sizeSelector = `.${baseClassName}--size${toSizeLabel(
-                    sizeKey
-                )}`;
+                const sizeSelector = `.${className}--size${toSizeLabel(sizeKey)}`;
                 out += cssBlock(
                     selectorWithAliases({
                         selector: sizeSelector,
@@ -693,18 +714,18 @@ export async function generateTypographyCssString(options = {}) {
         }
 
         // Serif modifier (cascade order wins; no compounding)
-        if (tokens[serifWeightToken]?.value) {
-            out += cssBlock(`.${baseClassName}--serif`, {
+        if (tokens[serifWeightTokenName]?.value) {
+            out += cssBlock(`.${className}--serif`, {
                 [`--${cpBase}-font-family`]: `token('${fontTokens.serif}')`,
-                [`--${cpBase}-font-weight`]: `token('${serifWeightToken}')`,
+                [`--${cpBase}-font-weight`]: `token('${serifWeightTokenName}')`,
             });
             out += '\n';
         }
 
         // Heavy modifier (optional)
-        if (tokens[sansHeavyWeightToken]?.value) {
-            out += cssBlock(`.${baseClassName}--heavy`, {
-                [`--${cpBase}-font-weight`]: `token('${sansHeavyWeightToken}')`,
+        if (tokens[sansHeavyWeightTokenName]?.value) {
+            out += cssBlock(`.${className}--heavy`, {
+                [`--${cpBase}-font-weight`]: `token('${sansHeavyWeightTokenName}')`,
             });
             out += '\n';
         }
@@ -715,7 +736,7 @@ export async function generateTypographyCssString(options = {}) {
     // Universal modifiers
     out += `/* =========================\n  Modifiers\n  ========================= */\n`;
 
-    out += `.${prefix}-Typography--emphasized:not(:lang(zh), :lang(ja), :lang(ko)) {
+    out += `.${prefix}-Typography--emphasized:not(${CJK_NOT_LIST}) {
   font-style: token('italic-font-style');
 }\n`;
 
