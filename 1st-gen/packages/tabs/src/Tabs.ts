@@ -431,9 +431,6 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 this.setAttribute('aria-orientation', 'vertical');
             }
         }
-        if (changes.has('dir')) {
-            this.updateSelectionIndicator();
-        }
         if (changes.has('disabled')) {
             if (this.disabled) {
                 this.setAttribute('aria-disabled', 'true');
