@@ -32,11 +32,9 @@ argTypes['object-fit'] = {
 };
 
 /**
- * An image component is a container for media (images or video). It provides a consistent
- * wrapper and exposes the inner media via the `image` part and `.spectrum-Image-image` class
- * so you can customize width, height, border-radius, and other styles from outside.
- *
- * Use `src` for a simple image, or the default slot for video or custom content.
+ * An image component is a container for an image. It provides a consistent wrapper and
+ * exposes the inner image via the `image` part and `.spectrum-Image-image` class so you
+ * can customize width, height, border-radius, and other styles from outside.
  */
 const meta: Meta = {
     title: 'Image',
@@ -48,7 +46,7 @@ const meta: Meta = {
             handles: events,
         },
         docs: {
-            subtitle: `Container for images and video with styleable inner media`,
+            subtitle: `Container for images with styleable inner image`,
         },
         flexLayout: 'row-nowrap',
     },
@@ -89,8 +87,8 @@ export const Overview: Story = {
 /**
  * An image consists of:
  *
- * 1. **Container** (`.spectrum-Image`) – Flex wrapper that centers content
- * 2. **Media** (`.spectrum-Image-image`, `part="image"`) – The img or slotted content.
+ * 1. **Container** (`.spectrum-Image`) – Flex wrapper that centers the image
+ * 2. **Image** (`.spectrum-Image-image`, `part="image"`) – The inner `<img>`.
  *    Style this for width, height, border-radius, etc.
  *
  * ### Styling the inner image
@@ -102,43 +100,18 @@ export const Overview: Story = {
  * ```
  */
 export const Anatomy: Story = {
-    render: (args) => html`
-        ${template({
+    render: (args) =>
+        template({
             ...args,
             src: 'https://picsum.photos/id/64/80/80',
             alt: 'Portrait',
-        })}
-        ${template({
-            ...args,
-            'default-slot': `<img class="spectrum-Image-image" src="https://picsum.photos/id/56/80/80/?blur=2" alt="Background preview" />`,
-        })}
-    `,
+        }),
     tags: ['anatomy'],
 };
 
 // ──────────────────────────
 //    OPTIONS STORIES
 // ──────────────────────────
-
-/**
- * Use the `src` attribute for a simple image, or the default slot for video or custom content.
- * Slotted content should use the class `spectrum-Image-image` to match built-in image sizing.
- */
-export const WithSrcOrSlot: Story = {
-    render: (args) => html`
-        ${template({
-            ...args,
-            src: 'https://picsum.photos/id/64/80/80',
-            alt: 'Portrait photo',
-        })}
-        ${template({
-            ...args,
-            'default-slot': `<img class="spectrum-Image-image" src="https://picsum.photos/id/56/80/80/?blur=2" alt="Background preview" />`,
-        })}
-    `,
-    parameters: { 'section-order': 1 },
-    tags: ['options'],
-};
 
 /**
  * Control how the image fits inside the container with `object-fit` and `object-position`.
@@ -177,7 +150,7 @@ export const ObjectFit: Story = {
             </div>
         </div>
     `,
-    parameters: { 'section-order': 2, flexLayout: false },
+    parameters: { 'section-order': 1, flexLayout: false },
     tags: ['options'],
 };
 
@@ -186,8 +159,10 @@ export const ObjectFit: Story = {
  * This mirrors how engineers use `.spectrum-Asset-image` with sp-asset.
  */
 export const StylingTheImage: Story = {
-    render: (args) => html`
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end;">
+    render: () => html`
+        <div
+            style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end;"
+        >
             <div>
                 <p style="margin: 0 0 0.5rem; font-size: 0.875rem;">Default</p>
                 <swc-image
@@ -235,8 +210,7 @@ export const StylingTheImage: Story = {
 /**
  * ### Features
  *
- * - **Labeling**: When using `src`, provide an `alt` attribute for the image.
- * - **Slotted media**: Ensure slotted images have `alt` and videos have captions or `aria-label` as appropriate.
+ * - **Labeling**: Provide an `alt` attribute for the image.
  *
  * ### Best practices
  *

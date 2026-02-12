@@ -27,7 +27,7 @@
 }
 
 /**
- * The inner image or media element. Use this class or the `image` part to customize
+ * The inner image element. Use this class or the `image` part to customize
  * width, height, border-radius, object-fit, etc. from outside the component.
  *
  * Example: swc-image::part(image) { width: 80px; height: 80px; border-radius: 8px; }
@@ -37,12 +37,4 @@
     max-block-size: 100%;
     object-fit: contain;
     display: block;
-}
-
-/* Slotted media (e.g. video or custom img) */
-::slotted(*) {
-    max-inline-size: 100%;
-    max-block-size: 100%;
-    object-fit: contain;
-    transition: opacity token('animation-duration-100');
 }

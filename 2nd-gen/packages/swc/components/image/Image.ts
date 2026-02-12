@@ -21,22 +21,15 @@ import styles from './image.css';
 
 /**
  * @element swc-image
- * @slot - Media content when `src` is not set (e.g. `<img>`, `<video>`). Slotted content
- *         receives the same max size and object-fit as the built-in image.
  *
- * Use the `image` part or the `.spectrum-Image-image` class to style the inner media
- * (width, height, border-radius, etc.):
+ * Renders an image inside a container. Use the `image` part or the `.spectrum-Image-image`
+ * class to style the inner image (width, height, border-radius, etc.).
  *
- * @example With src (built-in img)
+ * @example
  * <swc-image src="photo.jpg" alt="Landscape"></swc-image>
  *
  * @example Styling the image
  * swc-image::part(image) { width: 80px; height: 80px; border-radius: 8px; }
- *
- * @example With slot (video or custom img)
- * <swc-image>
- *   <video class="spectrum-Image-image" src="clip.mp4" muted playsinline></video>
- * </swc-image>
  */
 export class Image extends ImageBase {
     public static override get styles(): CSSResultArray {
@@ -44,34 +37,16 @@ export class Image extends ImageBase {
     }
 
     protected override render(): TemplateResult {
-        if (this.src) {
-            const imageStyles: Record<string, string> = {};
-            if (this.objectFit) imageStyles['object-fit'] = this.objectFit;
-            if (this.objectPosition) imageStyles['object-position'] = this.objectPosition;
+        if (!this.src) {
+            return html`<div class="spectrum-Image"></div>`;
+        }
 
-            return html`
-                <div
-                    class=${classMap({
-                        ['spectrum-Image']: true,
-                    })}
-                >
-                    <img
-                        part="image"
-                        class="spectrum-Image-image"
-                        src=${this.src}
-                        alt=${this.alt || ''}
-                        loading=${ifDefined(this.loading)}
-                        decoding=${ifDefined(this.decoding)}
-                        srcset=${ifDefined(this.srcset)}
-                        sizes=${ifDefined(this.sizes)}
-                        crossorigin=${ifDefined(this.crossorigin)}
-                        referrerpolicy=${ifDefined(this.referrerpolicy)}
-                        width=${ifDefined(this.width)}
-                        height=${ifDefined(this.height)}
-                        style=${styleMap(imageStyles)}
-                    />
-                </div>
-            `;
+        const imageStyles: Record<string, string> = {};
+        if (this.objectFit) {
+            imageStyles['object-fit'] = this.objectFit;
+        }
+        if (this.objectPosition) {
+            imageStyles['object-position'] = this.objectPosition;
         }
 
         return html`
@@ -80,7 +55,21 @@ export class Image extends ImageBase {
                     ['spectrum-Image']: true,
                 })}
             >
-                <slot></slot>
+                <img
+                    part="image"
+                    class="spectrum-Image-image"
+                    src=${this.src}
+                    alt=${this.alt || ''}
+                    loading=${ifDefined(this.loading)}
+                    decoding=${ifDefined(this.decoding)}
+                    srcset=${ifDefined(this.srcset)}
+                    sizes=${ifDefined(this.sizes)}
+                    crossorigin=${ifDefined(this.crossorigin)}
+                    referrerpolicy=${ifDefined(this.referrerpolicy)}
+                    width=${ifDefined(this.width)}
+                    height=${ifDefined(this.height)}
+                    style=${styleMap(imageStyles)}
+                />
             </div>
         `;
     }

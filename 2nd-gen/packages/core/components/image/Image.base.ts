@@ -25,9 +25,9 @@ import type {
 
 /**
  * Base class for the Image component. Renders a container that holds an image
- * (via `src`) or arbitrary media via the default slot (e.g. video). The inner
- * media element is exposed for styling (width, height, border-radius, etc.)
- * via the `image` part and the `.spectrum-Image-image` class.
+ * via the `src` attribute. The inner image element is exposed for styling
+ * (width, height, border-radius, etc.) via the `image` part and the
+ * `.spectrum-Image-image` class.
  */
 export abstract class ImageBase extends SpectrumElement {
     /**
