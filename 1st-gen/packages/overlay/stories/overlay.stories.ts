@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { render } from 'lit-html';
+import { render } from 'lit';
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
@@ -652,7 +652,8 @@ class DefinedOverlayReady extends HTMLElement {
   ready!: (value: boolean | PromiseLike<boolean>) => void;
 
   connectedCallback(): void {
-    if (this.ready) {
+    // eslint-disable-next-line no-extra-boolean-cast -- prevents TS2774
+    if (!!this.ready) {
       return;
     }
 
@@ -661,7 +662,6 @@ class DefinedOverlayReady extends HTMLElement {
       this.setup();
     });
   }
-
   overlayElement!: OverlayTrigger;
   popoverElement!: PopoverContent;
 
@@ -1002,7 +1002,7 @@ export const modalNoFocus = (): TemplateResult => {
             @click=${(event: Event & { target: DialogWrapper }) =>
               event.target.dispatchEvent(closeEvent)}
           >
-            ${'Cancel'}
+            Cancel
           </sp-button>
           <sp-button
             data-test-id="dialog-override-btn"
@@ -1011,7 +1011,7 @@ export const modalNoFocus = (): TemplateResult => {
             @click=${(event: Event & { target: DialogWrapper }) =>
               event.target.dispatchEvent(closeEvent)}
           >
-            ${'Override'}
+            Override
           </sp-button>
         </sp-button-group>
       </sp-dialog-wrapper>
