@@ -7,6 +7,7 @@
     "bin": {
         "swc-mcp": "./dist/index.js"
     },
+    "private": true,
     "main": "./src/index.js",
     "scripts": {
         "build": "tsc",
