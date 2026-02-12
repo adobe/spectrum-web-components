@@ -553,4 +553,4 @@ The Spectrum 2 migration introduces several key structural enhancements to the s
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/3945)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-slider--docs)
-- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/slider--docs)
+- [React](https://react-spectrum.adobe.com/Slider)

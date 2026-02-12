@@ -317,4 +317,4 @@ All spacing, border radius, and layout changes are handled through CSS custom pr
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/2453)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-action-group--docs)
-- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/actionbuttongroup--docs)
+- [React](https://react-spectrum.adobe.com/ActionButtonGroup)
