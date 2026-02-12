@@ -11,7 +11,7 @@
  */
 
 import { TemplateResult } from '@spectrum-web-components/base';
-import { AccordionMarkup } from './/index.js';
+import { AccordionMarkup } from './index.js';
 import { argTypes } from './args.js';
 
 import '@spectrum-web-components/accordion/sp-accordion.js';
