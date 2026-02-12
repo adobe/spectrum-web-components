@@ -18,10 +18,7 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import {
-    property,
-    queryAsync,
-} from '@spectrum-web-components/base/src/decorators.js';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { DARK_MODE } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
@@ -46,8 +43,8 @@ import { type Locale, Locales } from './locales.js';
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
-export let dir: 'ltr' | 'rtl' =
-    (urlParams.get('sp_dir') as 'ltr' | 'rtl') || 'ltr';
+export let dir: CSSStyleDeclaration['direction'] =
+    (urlParams.get('sp_dir') as CSSStyleDeclaration['direction']) || 'ltr';
 export const theme: SystemVariant =
     (urlParams.get('sp_theme') as SystemVariant) || 'spectrum';
 export let system: SystemVariant =
@@ -167,7 +164,7 @@ export class StoryDecorator extends SpectrumElement {
     public scale: Scale = window.__swc_hack_knobs__.defaultScale;
 
     @property({ type: String, reflect: true, attribute: 'dir' })
-    public direction: 'ltr' | 'rtl' =
+    public direction: CSSStyleDeclaration['direction'] =
         window.__swc_hack_knobs__.defaultDirection;
 
     @property({ type: Boolean, attribute: 'reduce-motion', reflect: true })
@@ -179,18 +176,7 @@ export class StoryDecorator extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public screenshot = screenshot;
 
-    @queryAsync('sp-theme')
-    private themeRoot!: Theme;
-
     public ready = false;
-
-    public async startManagingContentDirection(el: HTMLElement): Promise<void> {
-        (await this.themeRoot).startManagingContentDirection(el);
-    }
-
-    public async stopManagingContentDirection(el: HTMLElement): Promise<void> {
-        (await this.themeRoot).stopManagingContentDirection(el);
-    }
 
     private updateTheme({ target }: Event & { target: Picker | Switch }): void {
         const { id } = target;
@@ -219,10 +205,15 @@ export class StoryDecorator extends SpectrumElement {
                 this.direction =
                     dir =
                     window.__swc_hack_knobs__.defaultDirection =
-                        value as 'ltr' | 'rtl';
+                        value as CSSStyleDeclaration['direction'];
                 if (document.documentElement.dir !== dir) {
                     document.documentElement.dir = dir;
                 }
+                // Notify components that depend on layout measurements
+                // so they recalculate after the direction change.
+                requestAnimationFrame(() => {
+                    window.dispatchEvent(new Event('resize'));
+                });
                 break;
             case 'reduceMotion':
                 this.reduceMotion =
@@ -420,7 +411,7 @@ export class StoryDecorator extends SpectrumElement {
                 ?checked=${this.reduceMotion}
                 @change=${this.updateTheme}
             >
-                Reduce Motion
+                Reduce motion
             </sp-switch>
         `;
     }

@@ -56,6 +56,11 @@ export const swcThemeDecorator = (story: StoryFn, context: StoryContext) => {
             window.__swc_hack_knobs__.defaultDirection = textDirection;
             if (document.documentElement.dir !== textDirection) {
                 document.documentElement.dir = textDirection;
+                // Notify components that depend on layout measurements
+                // so they recalculate after the direction change.
+                requestAnimationFrame(() => {
+                    window.dispatchEvent(new Event('resize'));
+                });
             }
         }
         if (reduceMotion !== undefined) {

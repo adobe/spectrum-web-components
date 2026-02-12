@@ -109,8 +109,7 @@
     transform: translateX(calc(var(--mod-switch-control-width, var(--spectrum-switch-control-width)) - 100%));
 }
 
-:host([checked]) #input + #switch:dir(rtl):before,
-:host([dir="rtl"][checked]) #input + #switch:before {
+:host([checked]) #input + #switch:dir(rtl):before {
     transform: translateX(calc((var(--mod-switch-control-width, var(--spectrum-switch-control-width)) - 100%) * -1));
 }
 

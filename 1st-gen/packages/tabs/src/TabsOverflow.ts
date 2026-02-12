@@ -12,7 +12,6 @@
 import {
     CSSResultArray,
     html,
-    PropertyValueMap,
     PropertyValues,
     SizedMixin,
     SpectrumElement,
@@ -53,9 +52,6 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
 
     @property({ type: String, attribute: 'label-next' })
     public labelNext = 'Scroll to next tabs';
-
-    @property({ reflect: true })
-    public override dir!: 'ltr' | 'rtl';
 
     @state()
     private overflowState: TabsOverflowState = {
@@ -130,15 +126,7 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
             ? -dist
             : dist;
         tabsElement.scrollTabs(left, 'smooth');
-    }
-
-    protected override updated(
-        changedProperties: PropertyValueMap<this>
-    ): void {
-        super.updated(changedProperties);
-        if (changedProperties.has('dir')) {
-            this._updateScrollState();
-        }
+        this._updateScrollState();
     }
 
     protected override render(): TemplateResult {
@@ -160,7 +148,6 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
                     })}
                     aria-label=${ariaLabelPrevious}
                     quiet
-                    dir="rtl"
                     tabindex="-1"
                     @click=${this._handleScrollClick}
                 >

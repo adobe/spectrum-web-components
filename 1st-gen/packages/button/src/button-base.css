@@ -18,9 +18,7 @@
 
     --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-100);
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-100);
-}
 
-:host([dir]) {
     /* spectrum-button.css uses "-webkit-appearance: button" to workaround an
      * iOS and Safari issue. However, it results in incorrect styling
      * when applied in :host

@@ -714,7 +714,7 @@ describe('SplitView', () => {
         expect(typeof outsideFocused).not.to.equal(splitter);
     });
 
-    it('handles focus and keyboard inputs and resizes accordingly for horizontal splitviews [rtl]', async () => {
+    it('handles focus and keyboard inputs and resizes accordingly for horizontal splitviews in right to left context', async () => {
         const splitTotalWidth = 500;
         const el = await fixture<SplitView>(html`
             <sp-split-view
