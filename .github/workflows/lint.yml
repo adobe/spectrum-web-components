@@ -133,4 +133,4 @@ jobs:
 
       - name: Prettier
         if: ${{ needs.changed_files.outputs.prettier_added_files != '' || needs.changed_files.outputs.prettier_modified_files != '' }}
-        run: yarn prettier --cache --check ${{ needs.changed_files.outputs.prettier_added_files }} ${{ needs.changed_files.outputs.prettier_modified_files }}
+        run: yarn prettier --check ${{ needs.changed_files.outputs.prettier_added_files }} ${{ needs.changed_files.outputs.prettier_modified_files }}
