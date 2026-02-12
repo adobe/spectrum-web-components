@@ -1,5 +1,23 @@
 # Change Log
 
+## 1.11.2
+
+### Patch Changes
+
+- Updated dependencies [[`6f5419a`](https://github.com/adobe/spectrum-web-components/commit/6f5419a4de29a1ee440a36c1a57d8c2e1476e2f6)]:
+    - @spectrum-web-components/core@0.0.4
+    - @spectrum-web-components/base@1.11.2
+    - @spectrum-web-components/styles@1.11.2
+
+## 1.11.1
+
+### Patch Changes
+
+- Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
+    - @spectrum-web-components/core@0.0.3
+    - @spectrum-web-components/base@1.11.1
+    - @spectrum-web-components/styles@1.11.1
+
 ## 1.11.0
 
 ### Patch Changes

@@ -10,13 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-import type { ReactiveElement } from 'lit';
+import type ColorSpace from 'colorjs.io';
+import type { ColorObject, ColorTypes as DefaultColorTypes } from 'colorjs.io';
 import Color from 'colorjs.io';
-import type {
-    ColorObject,
-    ColorTypes as DefaultColorTypes,
-} from 'colorjs.io/types/src/color';
-import type ColorSpace from 'colorjs.io/types/src/space';
+import type { ReactiveElement } from 'lit';
 
 /**
  * Represents various color types that can be used in the application.
@@ -686,11 +683,11 @@ export class ColorController {
      * Converts the current color to the specified format.
      *
      * @param format - The desired color format. It can be a string representing one of the valid formats
-     * ('srgb', 'hsva', 'hsv', 'hsl', 'hsla') or a ColorSpace object.
+     * ('srgb', 'hsva', 'hsv', 'hsl', 'hsla') or a ColorSpace.Space object.
      * @returns The color object in the specified format.
      * @throws Will throw an error if the provided format is not a valid string format.
      */
-    getColor(format: string | ColorSpace): ColorObject {
+    getColor(format: string | ColorSpace.Space): ColorObject {
         const validFormats = ['srgb', 'hsva', 'hsv', 'hsl', 'hsla'];
         if (typeof format === 'string' && !validFormats.includes(format)) {
             throw new Error('not a valid format');

@@ -58,7 +58,7 @@ export class ProgressCircle extends ProgressCircleBase {
      * When set to 'black', the component uses black styling for images with a light tinted background.
      */
     @property({ reflect: true, attribute: 'static-color' })
-    public staticColor?: ProgressCircleStaticColorS2;
+    public override staticColor?: ProgressCircleStaticColorS2;
 
     // ──────────────────────────────
     //     RENDERING & STYLING

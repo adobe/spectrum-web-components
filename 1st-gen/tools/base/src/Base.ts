@@ -10,4 +10,26 @@
  * governing permissions and limitations under the License.
  */
 
-export * from '@spectrum-web-components/core/shared/base/Base.js';
+import { SpectrumElement as CoreSpectrumElement } from '@spectrum-web-components/core/shared/base/Base.js';
+import { coreVersion, version } from './version.js';
+
+export {
+    type SpectrumInterface,
+    SpectrumMixin,
+} from '@spectrum-web-components/core/shared/base/Base.js';
+
+/**
+ * Base class for 1st-gen Spectrum Web Components.
+ * Extends the core SpectrumElement with 1st-gen specific version information.
+ */
+export class SpectrumElement extends CoreSpectrumElement {
+    /**
+     * The version of the 1st-gen Spectrum Web Components library.
+     */
+    static override VERSION = version;
+
+    /**
+     * The version of the core base package.
+     */
+    static override CORE_VERSION = coreVersion;
+}
