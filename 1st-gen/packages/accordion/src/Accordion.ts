@@ -110,18 +110,12 @@ export class Accordion extends SizedMixin(SpectrumElement, {
 
     protected override updated(changed: PropertyValues<this>): void {
         super.updated(changed);
-        if (
-            changed.has('size') &&
-            (!!changed.get('size') || this.size !== 'm')
-        ) {
+        if (changed.has('size')) {
             this.items.forEach((item) => {
                 item.size = this.size;
             });
         }
-        if (
-            changed.has('level') &&
-            (!!changed.get('level') || this.level !== 3)
-        ) {
+        if (changed.has('level')) {
             this.items.forEach((item) => {
                 item.level = this.level;
             });
