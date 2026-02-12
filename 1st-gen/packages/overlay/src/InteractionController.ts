@@ -74,27 +74,40 @@ export class InteractionController implements ReactiveController {
                 this.overlay.open = true;
                 this.target[lastInteractionType] = this.type;
             });
+        // eslint-disable-next-line import/no-extraneous-dependencies
         import('@spectrum-web-components/overlay/sp-overlay.js');
     }
 
-    public get overlay(): AbstractOverlay {
+    public get overlay(): AbstractOverlay | undefined {
         return this._overlay;
     }
 
     public set overlay(overlay: AbstractOverlay | undefined) {
         if (!overlay) return;
-        if (this.overlay === overlay) return;
-        if (this.overlay) {
-            this.overlay.removeController(this);
+        if (this._overlay === overlay) return;
+        if (this._overlay) {
+            this._overlay.removeController(this);
         }
         this._overlay = overlay;
-        this.overlay.addController(this);
+        overlay.addController(this);
         this.initOverlay();
         this.prepareDescription(this.target);
-        this.handleOverlayReady?.(this.overlay);
+        this.handleOverlayReady?.(overlay);
     }
 
-    private _overlay!: AbstractOverlay;
+    private _overlay?: AbstractOverlay;
+
+    /**
+     * Clears the overlay reference and properly cleans up the controller registration.
+     * This is useful when the overlay needs to be recreated, such as when using
+     * Lit's cache() directive with overlay triggers.
+     */
+    public clearOverlay(): void {
+        if (this._overlay) {
+            this._overlay.removeController(this);
+        }
+        this._overlay = undefined;
+    }
 
     protected isPersistent = false;
 

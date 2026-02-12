@@ -194,6 +194,10 @@ export class TextfieldBase extends ManageHelpText(
 
     /**
      * What form of assistance should be provided when attempting to supply a value to the form control
+     *
+     * Note: combobox overrides `autocomplete` intentionally with `aria-autocomplete` values, which is
+     * why those values (although invalid for native `autocomplete`) are included here to support the
+     * combobox accessibility pattern.
      */
     @property({ type: String, reflect: true })
     public autocomplete?:

@@ -17,11 +17,19 @@
                     { "ignore": ["custom-elements"] }
                 ],
                 "selector-pseudo-element-colon-notation": ["single", {}],
-                "custom-property-pattern": "^_?([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+                "custom-property-pattern": "^_?([a-z][a-z0-9]*)(-[a-z0-9]+)*(?:--(sizeM|sizeL))?$",
                 "no-duplicate-selectors": null,
                 "selector-class-pattern": null,
                 "no-descending-specificity": null,
-                "declaration-block-no-redundant-longhand-properties": null
+                "declaration-block-no-redundant-longhand-properties": null,
+                "declaration-property-value-no-unknown": [
+                    true,
+                    {
+                        "ignoreProperties": {
+                            "/.+/": ["/token((.*))/"]
+                        }
+                    }
+                ]
             }
         }
     ]

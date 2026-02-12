@@ -18,9 +18,9 @@ Output results in the chat window in a way that can be copied and pasted into Ji
 Use these syntax rules when writing Jira tickets:
 
 - `h2.` through `h6.` - Headings (use `h2.` for main, `h3.` for secondary, etc. - avoid `h1.` in descriptions)
-- `{*}{*}` - Bold text
-- `{code}{code}` - Inline code
-- `{code:language}{code}` - Language-specific code blocks
+- `*text*` - Bold text
+- `{{code}}` - Inline code
+-  `{code:language}{code}` - Language-specific code blocks, as in `{code:js}{code}` for JavaScript and Typescript code blocks (JIRA doesn't support `{code:typescript}`)
 - `[text|url]` - Links
 - ` - ` - Bullet points
 - `#` - Numbered list items
@@ -112,6 +112,13 @@ This ticket template is for tracking work for RFCs, new features, new components
 
 Items with an asterisk are optional depending on the context.
 
+**Note:** For RFC tickets, generate three related tickets that must be completed sequentially:
+1. RFC authoring and initial review
+2. Internal discussion shepherding
+3. External community discussion shepherding
+
+#### First ticket: RFC authoring
+
 ```
 h2. Link to original issue
 (Add a link to the original issue in GitHub if applicable)
@@ -121,6 +128,13 @@ h2. Overview
 
 h2. Acceptance criteria
 (What is the desired outcome of this RFC or research process? What would make this ticket "done"? What follow-up work would be required? Refer to the RFC guide for examples.)
+
+Additional acceptance criteria for RFC tickets:
+ - RFC has been added to the [Decisions and RFCs wiki|https://wiki.corp.adobe.com/display/AdobeDesign/Decisions+and+RFCs]
+ - RFC link has been added to this ticket
+ - Announcement posted in {{spectrum-web-reviews}} Slack channel with internal comment deadline (minimum 1 week)
+ - Announcement posted in {{spectrum-web-engineering}} Slack channel with internal comment deadline (minimum 1 week)
+ - Internal discussion scheduled for SWC team sync after comment period
 
 h2. Estimated internal impact
 (If implemented, what impact would this work have on other APIs, other components, the project structure, or team initiatives? Refer to the impact diagram for details.)
@@ -139,6 +153,256 @@ h2. Supplementary documentation
 
 h2. Additional context
 (Add any other context, drafts, etc. if you have them)
+```
+
+#### Second ticket: Internal discussion shepherding
+
+Title format: `Research: Shepherd [RFC name] RFC through SWC Team Sync discussion`
+
+**Note:** This ticket must be completed after the first RFC authoring ticket.
+
+```
+h2. Link to RFC
+
+ * RFC authoring Jira Ticket: [ticket URL]
+
+ * Decisions and RFCs wiki: [https://wiki.corp.adobe.com/display/AdobeDesign/Decisions+and+RFCs] 
+
+h2. Overview
+
+This ticket tracks the work required to shepherd the *[RFC name] RFC* through the internal discussion process and prepare it for external community review. This includes facilitating internal review, updating the RFC based on feedback, scheduling community comment periods, and ensuring proper communication across all relevant channels.
+
+h2. Acceptance criteria
+
+ - SWC team comments on the RFC have been reviewed and addressed
+
+ - RFC discussion has been facilitated during SWC team sync meeting
+
+ - RFC has been updated based on team discussion feedback
+
+ - RFC is prepared and formatted for external discussion
+
+ - Community comment period of at least two weeks has been scheduled
+
+ - Office hours (or other open discussion) session has been scheduled following the comment period
+
+ - If RFC discussion has been scheduled for office hours, it has been added to the office hours agenda
+
+ - Scheduled comment period and discussion dates have been added to the RFC wiki
+
+ - Announcement has been posted in the {{spectrum-web-components}} Slack channel
+
+ - Announcement has been posted in the {{swc-announcements}} Slack channel
+
+ - Individual consumers who may be impacted have been identified and contacted
+
+h2. Tasks
+
+ # Review and respond to all SWC team comments on the RFC
+
+ # Facilitate RFC discussion during scheduled SWC team sync
+
+ # Update RFC document based on internal feedback and discussion
+
+ # Prepare RFC for external discussion (formatting, clarity, completeness)
+
+ # Schedule community comment period (minimum 2 weeks)
+
+ # Schedule SWC office hours (or open discussion) session after comment period concludes
+
+ # If discussion is during office hours, add RFC discussion to SWC office hours agenda
+
+ # Update RFC wiki with scheduled dates:
+
+ ** Comment period start and end dates
+
+ ** Office hours (or other open discussion) date
+
+ # Post announcement in {{spectrum-web-components}} Slack channel
+
+ # Post announcement in {{swc-announcements}} Slack channel
+
+ # Identify consumers potentially impacted by the RFC
+
+ # Reach out to impacted consumers individually
+
+h2. Communication checklist
+
+h3. SWC Team channels:
+
+ - Slack: {{spectrum-web-reviews}}
+
+ - Slack: {{spectrum-web-engineering}}
+
+ - SWC Team sync discussion (scheduled)
+
+ - SWC Team RFC comment responses
+
+h3. External channels:
+
+ - Slack: {{spectrum-web-components}}
+
+ - Slack: {{swc-announcements}}
+
+ - Individual consumer outreach
+
+h3. Documentation:
+
+ - RFC wiki updated with timeline
+
+ - If discussion is scheduled for office hours, office hours agenda updated
+
+h2. Timeline considerations
+
+ - Minimum 2-week community comment period required
+
+ - SWC Office hours (or other open discussion) must be scheduled for a date after comment period ends
+
+ - Allow time for SWC team updates before opening for community comments
+
+ - Build in buffer time for individual consumer outreach
+
+h2. Resources
+
+ - [link to RFC]
+
+ - [Decisions and RFCs wiki|https://wiki.corp.adobe.com/display/AdobeDesign/Decisions+and+RFCs]
+
+ - [SWC Office hours agenda|https://adobe.enterprise.slack.com/lists/T024FSURM/F089J8QEZ0V]
+
+ - [SWC Team sync canvas|https://adobe.enterprise.slack.com/docs/T024FSURM/F089Y29EFFH]
+```
+
+#### Third ticket: External community discussion shepherding
+
+Title format: `Research: Shepherd [RFC name] RFC through Open discussion`
+
+**Note:** This ticket must be completed after the second internal discussion shepherding ticket.
+
+```
+h2. Link to RFC
+
+ * RFC authoring Jira Ticket: [link to RFC ticket]
+
+ * Decisions and RFCs wiki: [https://wiki.corp.adobe.com/display/AdobeDesign/Decisions+and+RFCs] 
+
+h2. Overview
+
+This ticket tracks the work required to shepherd the *[RFC name] RFC* through the community discussion process and to finalize the decision. This includes monitoring and responding to community feedback during the comment period, facilitating discussion during office hours, documenting the final decision, and creating follow-up implementation tickets.
+
+h2. Acceptance criteria
+
+ * All community comments on the RFC have been reviewed and responded to
+
+ * RFC discussion has been facilitated during SWC office hours, or other open discussion
+
+ * RFC has been updated based on community discussion feedback and final decisions
+
+ * RFC is prepared and formatted for community discussion
+
+ * RFC status and decision have been updated on the [Decisions and RFCs wiki|https://wiki.corp.adobe.com/display/AdobeDesign/Decisions+and+RFCs]
+
+ * Follow-up implementation tickets have been created for the agreed-upon course of action
+
+ * Implementation tickets are linked to this RFC ticket
+
+h2. Tasks
+
+ # Review and respond to all community comments on the RFC
+
+ # Facilitate RFC discussion during scheduled open discussion
+
+ # Update RFC document based from scheduled open discussion:
+
+## Key discussion points, concerns, and consensus
+
+ ## Final decisions from discussion
+
+ ## Implementation approach
+
+ ## Timeline considerations
+
+ # Create follow-up tickets for implementation work
+
+ # Link implementation tickets to the RFC
+
+ # Update Decisions and RFCs wiki with:
+
+ ## RFC status (Accepted/Rejected/Modified)
+
+ ## Final decision and rationale
+
+ ## Implementation plan
+
+ ## Link to follow-up tickets
+
+h2. Discussion facilitation notes
+
+h3. Before open discussion:
+
+ * Review all community comments
+
+ * Identify key questions or concerns to address
+
+ * Prepare any examples or demonstrations needed
+
+ * Coordinate with relevant team members
+
+h3. During open discussion:
+
+ * Present RFC overview and context
+
+ * Address questions and concerns from attendees
+
+ * Guide discussion toward consensus
+
+ * Document decisions and action items
+
+ * Clarify next steps
+
+h3. After open discussion:
+
+ * Create follow-up tickets for implementation work
+
+ * Update RFC with final decisions
+
+ * Update Decisions and RFCs wiki page
+
+h2. Documentation updates
+
+h3. RFC document:
+
+ * Status: (Accepted/Rejected/Pending)
+
+ * community feedback summary
+
+ * Final decision rationale
+
+ * Implementation timeline
+
+h3. Wiki page:
+
+ * Decision status and date
+
+ * Link to implementation tickets
+
+h3. Implementation tickets:
+
+ * Reference to the RFC
+
+ * Specific acceptance criteria from RFC decisions
+
+ * Priority and timeline alignment
+
+ * Dependencies between implementation tasks
+
+h2. Resources
+
+ * [link to RFC]
+
+ * [Decisions and RFCs wiki|https://wiki.corp.adobe.com/display/AdobeDesign/Decisions+and+RFCs]
+
+ * [SWC Office hours agenda|https://adobe.enterprise.slack.com/lists/T024FSURM/F089J8QEZ0V]
 ```
 
 ## Severity classification

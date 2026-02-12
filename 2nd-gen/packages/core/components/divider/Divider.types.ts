@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -12,7 +12,13 @@
 
 import type { ElementSize } from '@spectrum-web-components/core/shared/base/index.js';
 
-export const DIVIDER_VALID_SIZES: ElementSize[] = ['s', 'm', 'l'] as const;
+export const DIVIDER_VALID_SIZES = [
+    's',
+    'm',
+    'l',
+] as const satisfies ElementSize[];
 export const DIVIDER_STATIC_COLORS = ['white', 'black'] as const;
 
 export type DividerStaticColor = (typeof DIVIDER_STATIC_COLORS)[number];
+
+export type DividerSize = (typeof DIVIDER_VALID_SIZES)[number];

@@ -11,7 +11,10 @@
  */
 
 import { CSSResult, CSSResultGroup } from '@spectrum-web-components/base';
-import { version } from '@spectrum-web-components/base/src/version.js';
+import {
+    coreVersion,
+    version,
+} from '@spectrum-web-components/base/src/version.js';
 import {
     Color,
     COLOR_VALUES,
@@ -42,7 +45,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     private static templateElement?: HTMLTemplateElement;
     private static instances: Set<Theme> = new Set();
     static VERSION = version;
-
+    static CORE_VERSION = coreVersion;
     static get observedAttributes(): string[] {
         return ['color', 'scale', 'lang', 'dir', 'system'];
     }
@@ -442,7 +445,7 @@ function checkForIssues(
     scale: Scale | '',
     themeFragmentsByKind: ThemeFragmentMap
 ): void {
-    if (window.__swc.DEBUG) {
+    if (window.__swc?.DEBUG) {
         const issues: string[] = [];
         const checkForAttribute = (
             name: 'system' | 'color' | 'scale',

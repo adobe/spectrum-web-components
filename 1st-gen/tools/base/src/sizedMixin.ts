@@ -9,4 +9,12 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from '@spectrum-web-components/core/shared/base/sizedMixin.js';
+export {
+    ElementSizes,
+    SizedMixin,
+} from '@spectrum-web-components/core/shared/base/sizedMixin.js';
+export type {
+    DefaultElementSize,
+    ElementSize,
+    SizedElementInterface,
+} from '@spectrum-web-components/core/shared/base/sizedMixin.js';

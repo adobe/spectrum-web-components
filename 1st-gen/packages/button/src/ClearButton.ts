@@ -95,7 +95,7 @@ export class ClearButton extends SizedMixin(StyledButton, {
         // Set staticColor to white to reflect the updated and expected attribute
         this.staticColor = 'white';
 
-        if (window.__swc.DEBUG) {
+        if (window.__swc?.DEBUG) {
             window.__swc.warn(
                 this,
                 'The overBackground variant is deprecated. Please use `static-color="white"` instead.',
@@ -134,7 +134,7 @@ export class ClearButton extends SizedMixin(StyledButton, {
         super.connectedCallback();
 
         // Deprecation warning for default slot when content is provided
-        if (window.__swc.DEBUG && this.textContent?.trim()) {
+        if (window.__swc?.DEBUG && this.textContent?.trim()) {
             window.__swc.warn(
                 this,
                 `The default slot for text content in <${this.localName}> has been deprecated and will be removed in a future release. The clear button is icon-only and does not render slot content. Use the "label" attribute instead to provide an accessible name.`,
@@ -144,7 +144,7 @@ export class ClearButton extends SizedMixin(StyledButton, {
         }
 
         // Warning for missing label attribute
-        if (window.__swc.DEBUG && !this.label) {
+        if (window.__swc?.DEBUG && !this.label) {
             window.__swc.warn(
                 this,
                 `The "label" attribute is required on <${this.localName}> to provide an accessible name for screen readers. Please add a label attribute, e.g., <${this.localName} label="Clear">.`,
