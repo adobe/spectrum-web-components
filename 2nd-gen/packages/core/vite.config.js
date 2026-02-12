@@ -76,6 +76,21 @@ function getEntries() {
         // shared directory doesn't exist
     }
 
+    // Find all mixins/*.ts files
+    try {
+        const mixinsDir = resolve(__dirname, 'mixins');
+        const mixinsItems = readdirSync(mixinsDir);
+        for (const item of mixinsItems) {
+            const itemPath = resolve(mixinsDir, item);
+            if (statSync(itemPath).isFile() && item.endsWith('.ts')) {
+                const entryName = `mixins/${item.replace('.ts', '')}`;
+                entries[entryName] = itemPath;
+            }
+        }
+    } catch {
+        // mixins directory doesn't exist
+    }
+
     return entries;
 }
 
