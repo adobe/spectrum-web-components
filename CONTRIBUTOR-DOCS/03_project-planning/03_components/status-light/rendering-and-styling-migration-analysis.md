@@ -284,4 +284,4 @@ No differences found between the legacy (CSS main) and Spectrum 2 (CSS spectrum-
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/2818)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-status-light--docs)
-- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/statuslight--docs)
+- [React](https://react-spectrum.adobe.com/StatusLight)

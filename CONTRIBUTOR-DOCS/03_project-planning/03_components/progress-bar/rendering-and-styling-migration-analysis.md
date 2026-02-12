@@ -233,4 +233,4 @@ No structural differences found between the legacy (CSS main) and Spectrum 2 (CS
 - [Original CSS migration](https://github.com/adobe/spectrum-css/pull/2659)
 - [Additional follow-up migration work](https://github.com/adobe/spectrum-css/pull/3968) (occurred in the meter S2 migration)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-progress-bar--docs)
-- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/progressbar--docs)
+- [React](https://react-spectrum.adobe.com/ProgressBar)

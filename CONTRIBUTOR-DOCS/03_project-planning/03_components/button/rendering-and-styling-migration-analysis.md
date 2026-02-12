@@ -450,4 +450,4 @@
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/2600)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-button--docs)
-- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/button--docs)
+- [React](https://react-spectrum.adobe.com/Button)

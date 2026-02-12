@@ -166,4 +166,4 @@ The border attribute is being removed from the group component as the border pro
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/3677)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-swatch-group--docs)
-- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/colorswatchpicker--docs)
+- [React](https://react-spectrum.adobe.com/ColorSwatchPicker)

@@ -23,7 +23,7 @@
 
 <!-- Document content (editable) -->
 
-For the **[COMPONENT_NAME]** component(s), create comprehensive migration documentation in individual markdown files within the `migration-roadmap/` directory of the spectrum-web-components repository, following this exact structure:
+For the **[COMPONENT_NAME]** component(s), create comprehensive migration documentation in individual markdown files under CONTRIBUTOR-DOCS: one file per component in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`, following this exact structure:
 
 **IMPORTANT**: All files must be created on the original spectrum-web-components branch where the session started.
 
@@ -253,8 +253,8 @@ Under this heading, add a placeholder section for resources with a bulleted list
 
 ## Output format notes
 
-- Create individual markdown files in the migration-roadmap/ directory
-- Use component names from spectrum-web-components repository for filenames
+- Create one markdown file per component at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md` (use the component's kebab-case folder name from spectrum-web-components)
+- The filename is always `rendering-and-styling-migration-analysis.md`; the folder name is the component name
 - Use proper markdown formatting with Level 1 heading for component name
 - Ensure all <details> elements are properly closed
 - Use consistent table formatting
