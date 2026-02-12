@@ -12,10 +12,7 @@ import customElements from './custom-elements.json';
 import { withContext } from './decorators/contexts';
 import { withStaticColorPlayground } from './decorators/static-color-playground';
 
-import {
-    withFlexLayout,
-    withStaticColorsDemo,
-} from './decorators';
+import { withFlexLayout, withStaticColorsDemo } from './decorators';
 import { FontLoader } from './loaders/font-loader';
 
 const storybookHelperOptions: Options = {
