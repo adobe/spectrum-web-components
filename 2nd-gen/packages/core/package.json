@@ -1,193 +1,193 @@
 {
-    "name": "@spectrum-web-components/core",
-    "version": "0.0.4",
-    "description": "Abstract base classes for Spectrum Web Components",
-    "license": "Apache-2.0",
-    "author": "Adobe",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/",
-    "repository": {
-        "directory": "2nd-gen/packages/core",
-        "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git"
+  "name": "@spectrum-web-components/core",
+  "version": "0.0.4",
+  "description": "Abstract base classes for Spectrum Web Components",
+  "license": "Apache-2.0",
+  "author": "Adobe",
+  "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+  "repository": {
+    "directory": "2nd-gen/packages/core",
+    "type": "git",
+    "url": "https://github.com/adobe/spectrum-web-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adobe/spectrum-web-components/issues"
+  },
+  "type": "module",
+  "exports": {
+    "./components/alert-banner": {
+      "types": "./dist/components/alert-banner/index.d.ts",
+      "import": "./dist/components/alert-banner/index.js"
     },
-    "bugs": {
-        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    "./components/asset": {
+      "types": "./dist/components/asset/index.d.ts",
+      "import": "./dist/components/asset/index.js"
     },
-    "type": "module",
-    "exports": {
-        "./components/alert-banner": {
-            "types": "./dist/components/alert-banner/index.d.ts",
-            "import": "./dist/components/alert-banner/index.js"
-        },
-        "./components/asset": {
-            "types": "./dist/components/asset/index.d.ts",
-            "import": "./dist/components/asset/index.js"
-        },
-        "./components/badge": {
-            "types": "./dist/components/badge/index.d.ts",
-            "import": "./dist/components/badge/index.js"
-        },
-        "./components/divider": {
-            "types": "./dist/components/divider/index.d.ts",
-            "import": "./dist/components/divider/index.js"
-        },
-        "./components/progress-circle": {
-            "types": "./dist/components/progress-circle/index.d.ts",
-            "import": "./dist/components/progress-circle/index.js"
-        },
-        "./components/status-light": {
-            "types": "./dist/components/status-light/index.d.ts",
-            "import": "./dist/components/status-light/index.js"
-        },
-        "./shared/base": {
-            "types": "./dist/shared/base/index.d.ts",
-            "import": "./dist/shared/base/index.js"
-        },
-        "./shared/base/index.js": {
-            "types": "./dist/shared/base/index.d.ts",
-            "import": "./dist/shared/base/index.js"
-        },
-        "./shared/base/Base.js": {
-            "types": "./dist/shared/base/Base.d.ts",
-            "import": "./dist/shared/base/Base.js"
-        },
-        "./shared/base/define-element.js": {
-            "types": "./dist/shared/base/define-element.d.ts",
-            "import": "./dist/shared/base/define-element.js"
-        },
-        "./shared/base/sizedMixin.js": {
-            "types": "./dist/shared/base/sizedMixin.d.ts",
-            "import": "./dist/shared/base/sizedMixin.js"
-        },
-        "./shared/base/version.js": {
-            "types": "./dist/shared/base/version.d.ts",
-            "import": "./dist/shared/base/version.js"
-        },
-        "./shared/utilities": {
-            "types": "./dist/shared/utilities/index.d.ts",
-            "import": "./dist/shared/utilities/index.js"
-        },
-        "./shared/utilities/index.js": {
-            "types": "./dist/shared/utilities/index.d.ts",
-            "import": "./dist/shared/utilities/index.js"
-        },
-        "./shared/get-label-from-slot.js": {
-            "types": "./dist/shared/get-label-from-slot.d.ts",
-            "import": "./dist/shared/get-label-from-slot.js"
-        },
-        "./shared/observe-slot-presence.js": {
-            "types": "./dist/shared/observe-slot-presence.d.ts",
-            "import": "./dist/shared/observe-slot-presence.js"
-        },
-        "./shared/observe-slot-text.js": {
-            "types": "./dist/shared/observe-slot-text.d.ts",
-            "import": "./dist/shared/observe-slot-text.js"
-        },
-        "./shared/reactive-controllers": {
-            "types": "./dist/shared/reactive-controllers/index.d.ts",
-            "import": "./dist/shared/reactive-controllers/index.js"
-        },
-        "./shared/reactive-controllers/index.js": {
-            "types": "./dist/shared/reactive-controllers/index.d.ts",
-            "import": "./dist/shared/reactive-controllers/index.js"
-        }
+    "./components/badge": {
+      "types": "./dist/components/badge/index.d.ts",
+      "import": "./dist/components/badge/index.js"
     },
-    "files": [
-        "dist/"
-    ],
-    "scripts": {
-        "build": "vite build",
-        "clean": "rimraf dist",
-        "dev": "vite build --watch",
-        "prepublishOnly": "yarn build"
+    "./components/divider": {
+      "types": "./dist/components/divider/index.d.ts",
+      "import": "./dist/components/divider/index.js"
     },
-    "typesVersions": {
-        "*": {
-            "components/alert-banner": [
-                "dist/components/alert-banner/index.d.ts"
-            ],
-            "components/asset": [
-                "dist/components/asset/index.d.ts"
-            ],
-            "components/badge": [
-                "dist/components/badge/index.d.ts"
-            ],
-            "components/divider": [
-                "dist/components/divider/index.d.ts"
-            ],
-            "components/progress-circle": [
-                "dist/components/progress-circle/index.d.ts"
-            ],
-            "components/status-light": [
-                "dist/components/status-light/index.d.ts"
-            ],
-            "shared/base": [
-                "dist/shared/base/index.d.ts"
-            ],
-            "shared/base/index.js": [
-                "dist/shared/base/index.d.ts"
-            ],
-            "shared/base/Base.js": [
-                "dist/shared/base/Base.d.ts"
-            ],
-            "shared/base/define-element.js": [
-                "dist/shared/base/define-element.d.ts"
-            ],
-            "shared/base/sizedMixin.js": [
-                "dist/shared/base/sizedMixin.d.ts"
-            ],
-            "shared/base/version.js": [
-                "dist/shared/base/version.d.ts"
-            ],
-            "shared/utilities": [
-                "dist/shared/utilities/index.d.ts"
-            ],
-            "shared/utilities/index.js": [
-                "dist/shared/utilities/index.d.ts"
-            ],
-            "shared/get-label-from-slot.js": [
-                "dist/shared/get-label-from-slot.d.ts"
-            ],
-            "shared/observe-slot-presence.js": [
-                "dist/shared/observe-slot-presence.d.ts"
-            ],
-            "shared/observe-slot-text.js": [
-                "dist/shared/observe-slot-text.d.ts"
-            ],
-            "shared/reactive-controllers": [
-                "dist/shared/reactive-controllers/index.d.ts"
-            ],
-            "shared/reactive-controllers/index.js": [
-                "dist/shared/reactive-controllers/index.d.ts"
-            ]
-        }
+    "./components/progress-circle": {
+      "types": "./dist/components/progress-circle/index.d.ts",
+      "import": "./dist/components/progress-circle/index.js"
     },
-    "dependencies": {
-        "@lit-labs/observers": "2.0.2",
-        "lit": "^2.5.0 || ^3.1.3"
+    "./components/status-light": {
+      "types": "./dist/components/status-light/index.d.ts",
+      "import": "./dist/components/status-light/index.js"
     },
-    "devDependencies": {
-        "glob": "11.0.3",
-        "rimraf": "6.0.1",
-        "typescript": "5.9.2",
-        "vite": "7.1.7",
-        "vite-plugin-dts": "4.5.4"
+    "./shared/base": {
+      "types": "./dist/shared/base/index.d.ts",
+      "import": "./dist/shared/base/index.js"
     },
-    "keywords": [
-        "design-system",
-        "spectrum",
-        "adobe",
-        "adobe-spectrum",
-        "web components",
-        "web-components",
-        "lit-element",
-        "lit-html",
-        "component",
-        "css"
-    ],
-    "publishConfig": {
-        "access": "public"
+    "./shared/base/Base.js": {
+      "types": "./dist/shared/base/Base.d.ts",
+      "import": "./dist/shared/base/Base.js"
     },
-    "main": "./dist/index.js",
-    "module": "./dist/index.js"
+    "./shared/base/define-element.js": {
+      "types": "./dist/shared/base/define-element.d.ts",
+      "import": "./dist/shared/base/define-element.js"
+    },
+    "./shared/base/index.js": {
+      "types": "./dist/shared/base/index.d.ts",
+      "import": "./dist/shared/base/index.js"
+    },
+    "./shared/base/sizedMixin.js": {
+      "types": "./dist/shared/base/sizedMixin.d.ts",
+      "import": "./dist/shared/base/sizedMixin.js"
+    },
+    "./shared/base/version.js": {
+      "types": "./dist/shared/base/version.d.ts",
+      "import": "./dist/shared/base/version.js"
+    },
+    "./shared/get-label-from-slot.js": {
+      "types": "./dist/shared/get-label-from-slot.d.ts",
+      "import": "./dist/shared/get-label-from-slot.js"
+    },
+    "./shared/observe-slot-presence.js": {
+      "types": "./dist/shared/observe-slot-presence.d.ts",
+      "import": "./dist/shared/observe-slot-presence.js"
+    },
+    "./shared/observe-slot-text.js": {
+      "types": "./dist/shared/observe-slot-text.d.ts",
+      "import": "./dist/shared/observe-slot-text.js"
+    },
+    "./shared/reactive-controllers": {
+      "types": "./dist/shared/reactive-controllers/index.d.ts",
+      "import": "./dist/shared/reactive-controllers/index.js"
+    },
+    "./shared/reactive-controllers/index.js": {
+      "types": "./dist/shared/reactive-controllers/index.d.ts",
+      "import": "./dist/shared/reactive-controllers/index.js"
+    },
+    "./shared/utilities": {
+      "types": "./dist/shared/utilities/index.d.ts",
+      "import": "./dist/shared/utilities/index.js"
+    },
+    "./shared/utilities/index.js": {
+      "types": "./dist/shared/utilities/index.d.ts",
+      "import": "./dist/shared/utilities/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "clean": "rimraf dist",
+    "dev": "vite build --watch",
+    "prepublishOnly": "yarn build"
+  },
+  "typesVersions": {
+    "*": {
+      "components/alert-banner": [
+        "dist/components/alert-banner/index.d.ts"
+      ],
+      "components/asset": [
+        "dist/components/asset/index.d.ts"
+      ],
+      "components/badge": [
+        "dist/components/badge/index.d.ts"
+      ],
+      "components/divider": [
+        "dist/components/divider/index.d.ts"
+      ],
+      "components/progress-circle": [
+        "dist/components/progress-circle/index.d.ts"
+      ],
+      "components/status-light": [
+        "dist/components/status-light/index.d.ts"
+      ],
+      "shared/base": [
+        "dist/shared/base/index.d.ts"
+      ],
+      "shared/base/Base.js": [
+        "dist/shared/base/Base.d.ts"
+      ],
+      "shared/base/define-element.js": [
+        "dist/shared/base/define-element.d.ts"
+      ],
+      "shared/base/index.js": [
+        "dist/shared/base/index.d.ts"
+      ],
+      "shared/base/sizedMixin.js": [
+        "dist/shared/base/sizedMixin.d.ts"
+      ],
+      "shared/base/version.js": [
+        "dist/shared/base/version.d.ts"
+      ],
+      "shared/get-label-from-slot.js": [
+        "dist/shared/get-label-from-slot.d.ts"
+      ],
+      "shared/observe-slot-presence.js": [
+        "dist/shared/observe-slot-presence.d.ts"
+      ],
+      "shared/observe-slot-text.js": [
+        "dist/shared/observe-slot-text.d.ts"
+      ],
+      "shared/reactive-controllers": [
+        "dist/shared/reactive-controllers/index.d.ts"
+      ],
+      "shared/reactive-controllers/index.js": [
+        "dist/shared/reactive-controllers/index.d.ts"
+      ],
+      "shared/utilities": [
+        "dist/shared/utilities/index.d.ts"
+      ],
+      "shared/utilities/index.js": [
+        "dist/shared/utilities/index.d.ts"
+      ]
+    }
+  },
+  "dependencies": {
+    "@lit-labs/observers": "2.0.2",
+    "lit": "^2.5.0 || ^3.1.3"
+  },
+  "devDependencies": {
+    "glob": "11.0.3",
+    "rimraf": "6.0.1",
+    "typescript": "5.9.2",
+    "vite": "7.1.7",
+    "vite-plugin-dts": "4.5.4"
+  },
+  "keywords": [
+    "design-system",
+    "spectrum",
+    "adobe",
+    "adobe-spectrum",
+    "web components",
+    "web-components",
+    "lit-element",
+    "lit-html",
+    "component",
+    "css"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }
