@@ -51,6 +51,13 @@ export class Accordion extends SizedMixin(SpectrumElement, {
     @property({ type: String, reflect: true })
     public density?: 'compact' | 'spacious';
 
+    /**
+     * The heading level (2-6) to use for all accordion item titles.
+     * Defaults to 3.
+     */
+    @property({ type: Number, reflect: true })
+    public level: number = 3;
+
     @queryAssignedNodes()
     private defaultNodes!: NodeListOf<AccordionItem>;
 
@@ -97,17 +104,20 @@ export class Accordion extends SizedMixin(SpectrumElement, {
         this.focusGroupController.clearElementCache();
         this.items.forEach((item) => {
             item.size = this.size;
+            item.level = this.level;
         });
     }
 
     protected override updated(changed: PropertyValues<this>): void {
         super.updated(changed);
-        if (
-            changed.has('size') &&
-            (!!changed.get('size') || this.size !== 'm')
-        ) {
+        if (changed.has('size')) {
             this.items.forEach((item) => {
                 item.size = this.size;
+            });
+        }
+        if (changed.has('level')) {
+            this.items.forEach((item) => {
+                item.level = this.level;
             });
         }
     }
