@@ -26,6 +26,41 @@
     - [Component Improvements](02_workstreams/04_component-improvements/README.md)
     - [1st-gen Spectrum 2 Enhancements](02_workstreams/05_1st-gen-spectrum-2-enhancements/README.md)
 - [Components](03_components/README.md)
+    - Action Button
+    - Action Group
+    - Alert Banner
+    - Alert Dialog
+    - Asset
+    - Avatar
+    - Badge
+    - Breadcrumbs
+    - Button
+    - Button Group
+    - Checkbox
+    - Color Field
+    - Divider
+    - Dropzone
+    - Field Group
+    - Field Label
+    - Help Text
+    - Illustrated Message
+    - Infield Button
+    - Infield Progress Circle
+    - Meter
+    - Number Field
+    - Opacity Checkerboard
+    - Picker Button
+    - Progress Bar
+    - Progress Circle
+    - Radio
+    - Search
+    - Slider
+    - Status Light
+    - Swatch
+    - Swatch Group
+    - Switch
+    - Textfield
+    - Thumbnail
 - [Milestones](04_milestones/README.md)
 
 </details>
