@@ -1,0 +1,8 @@
+{
+    "mcpServers": {
+        "spectrum-web-components": {
+            "command": "node",
+            "args": ["1st-gen/tools/mcp-server/dist/index.js"]
+        }
+    }
+}
