@@ -12,12 +12,12 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
+import { ObserveSlotPresence } from '@spectrum-web-components/core/mixins/observe-slot-presence.js';
+import { ObserveSlotText } from '@spectrum-web-components/core/mixins/observe-slot-text.js';
 import {
     SizedMixin,
     SpectrumElement,
 } from '@spectrum-web-components/core/shared/base/index.js';
-import { ObserveSlotPresence } from '@spectrum-web-components/core/shared/observe-slot-presence.js';
-import { ObserveSlotText } from '@spectrum-web-components/core/shared/observe-slot-text.js';
 
 import {
     BADGE_VARIANTS_SEMANTIC,
