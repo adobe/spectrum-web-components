@@ -209,6 +209,11 @@ export class StoryDecorator extends SpectrumElement {
                 if (document.documentElement.dir !== dir) {
                     document.documentElement.dir = dir;
                 }
+                // Notify components that depend on layout measurements
+                // so they recalculate after the direction change.
+                requestAnimationFrame(() => {
+                    window.dispatchEvent(new Event('resize'));
+                });
                 break;
             case 'reduceMotion':
                 this.reduceMotion =

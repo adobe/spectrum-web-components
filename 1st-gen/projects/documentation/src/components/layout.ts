@@ -195,7 +195,9 @@ export class LayoutElement extends LitElement {
         if (dir === this.dir) {
             return;
         }
+        const oldDir = this.dir;
         this.setAttribute('dir', dir);
+        this.requestUpdate('dir', oldDir);
     }
 
     private _themeTrackers = new Map<HTMLElement, TrackTheme['callback']>();
@@ -516,8 +518,16 @@ export class LayoutElement extends LitElement {
                 loadStyleFragments = true;
             }
         }
-        if (changes.has('dir') && window.localStorage) {
-            localStorage.setItem(SWC_THEME_DIR_KEY, this.dir);
+        if (changes.has('dir')) {
+            if (window.localStorage) {
+                localStorage.setItem(SWC_THEME_DIR_KEY, this.dir);
+            }
+            // Notify light DOM components (e.g. tabs, code examples) that
+            // depend on layout measurements so they recalculate after the
+            // direction change.
+            requestAnimationFrame(() => {
+                window.dispatchEvent(new Event('resize'));
+            });
         }
         if (loadStyleFragments) {
             lazyStyleFragment(this.color, this.system);
