@@ -1,5 +1,29 @@
 # Change Log
 
+## 1.11.2
+
+### Patch Changes
+
+- [#5972](https://github.com/adobe/spectrum-web-components/pull/5972) [`3783d87`](https://github.com/adobe/spectrum-web-components/commit/3783d87c388c88e3ae57f54d0396556a1dea728c) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Fixed** issue where Picker component doesn't show label when value is set before menu-items are rendered. When menu-items are added later (e.g., conditionally rendered with Lit's `when()` directive or lazy loaded), the Picker now preserves the value and correctly displays the label once menu-items become available.
+
+    This fix ensures the value is preserved when `manageSelection()` runs before menu-items exist or when items exist but don't have values yet (e.g., during async custom element upgrade). The value is only cleared when menu-items with meaningful values exist but none match the picker's value.
+
+- Updated dependencies []:
+    - @spectrum-web-components/progress-circle@1.11.2
+    - @spectrum-web-components/base@1.11.2
+    - @spectrum-web-components/shared@1.11.2
+    - @spectrum-web-components/menu@1.11.2
+    - @spectrum-web-components/button@1.11.2
+    - @spectrum-web-components/reactive-controllers@1.11.2
+    - @spectrum-web-components/field-label@1.11.2
+    - @spectrum-web-components/icon@1.11.2
+    - @spectrum-web-components/icons-ui@1.11.2
+    - @spectrum-web-components/icons-workflow@1.11.2
+    - @spectrum-web-components/overlay@1.11.2
+    - @spectrum-web-components/popover@1.11.2
+    - @spectrum-web-components/tooltip@1.11.2
+    - @spectrum-web-components/tray@1.11.2
+
 ## 1.11.1
 
 ### Patch Changes

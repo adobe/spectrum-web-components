@@ -1,5 +1,15 @@
 # Change Log
 
+## 1.11.2
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.11.2
+    - @spectrum-web-components/shared@1.11.2
+    - @spectrum-web-components/reactive-controllers@1.11.2
+    - @spectrum-web-components/overlay@1.11.2
+
 ## 1.11.1
 
 ### Patch Changes

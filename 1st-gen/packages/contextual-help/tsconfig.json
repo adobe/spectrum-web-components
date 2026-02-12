@@ -4,7 +4,7 @@
         "composite": true,
         "rootDir": "./"
     },
-    "include": ["*.ts", "src/*.ts"],
     "exclude": ["test/*.ts", "stories/*.ts"],
-    "references": [{ "path": "../../tools/base" }]
+    "include": ["*.ts", "src/*.ts"],
+    "references": [{ "path": "../../tools/base" }, { "path": "../overlay" }]
 }

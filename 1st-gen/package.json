@@ -160,7 +160,6 @@
         "fast-glob": "3.3.3",
         "fs-extra": "11.3.2",
         "geckodriver": "4.4.0",
-        "genversion": "3.2.0",
         "gh-pages": "6.3.0",
         "gunzip-maybe": "1.4.2",
         "husky": "9.1.7",
@@ -192,7 +191,7 @@
         "tachometer": "0.7.2",
         "tar-stream": "3.1.7",
         "terser": "4.8.1",
-        "typescript": "5.3.3",
+        "typescript": "5.9.2",
         "webpack-merge": "6.0.1",
         "wireit": "0.14.12",
         "yargs": "17.7.2"
@@ -280,8 +279,7 @@
                 "!test/visual/rollup.config.js",
                 "!test/visual/src/review.js",
                 "!test/visual/src/index.html",
-                "!test/visual/wds-vrt.config.js",
-                "!tools/base/src/version.js"
+                "!test/visual/wds-vrt.config.js"
             ]
         },
         "build:ts:watch": {
@@ -309,8 +307,7 @@
                 "packages/**/tsconfig.tsbuildinfo",
                 "tools/**/*.d.ts",
                 "tools/**/tsconfig.tsbuildinfo",
-                "!**/local.d.ts",
-                "!tools/base/src/version.d.ts"
+                "!**/local.d.ts"
             ]
         },
         "build:watch": {
