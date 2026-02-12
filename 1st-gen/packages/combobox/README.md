@@ -72,9 +72,9 @@ mutate() {
 
 ```html
 <sp-combobox size="s" label="Color">
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -84,9 +84,9 @@ mutate() {
 
 ```html
 <sp-combobox size="m" label="Color">
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -96,9 +96,9 @@ mutate() {
 
 ```html
 <sp-combobox size="l" label="Color">
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -108,23 +108,23 @@ mutate() {
 
 ```html
 <sp-combobox size="xl" label="Color">
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
 </sp-tab-panel>
 </sp-tabs>
 
-### Quiet
+#### Quiet
 
 ```html
 <sp-field-label for="color">Color</sp-field-label>
 <sp-combobox id="color" quiet>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -132,38 +132,29 @@ mutate() {
 
 The text in an `<sp-combobox>` is editable, and the string the user has typed in will become the `value` of the combobox unless the user selects a different value in the popup menu.
 
-##### None
-
-`autocomplete="none"`
-
-The suggested popup menu items will remain the same regardless of the currently-input value.
-Whenever the currently-typed input exactly matches the `value` of a popup menu item, that item is automatically selected.
+If `autocomplete="none"`, the suggested popup menu items will remain the same regardless of the currently-input value. Whenever the currently-typed input exactly matches the `value` of a popup menu item, that item is automatically selected.
 
 ```html
 <sp-field-label for="color-none" autocomplete="none">Color</sp-field-label>
 <sp-combobox id="color-none">
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
-#### List
-
-`autocomplete="list"`
-
-The popup menu items are filtered to only those completing the currently-input value.
+If `autocomplete="list"`, the popup menu items are filtered to only those completing the currently-input value.
 
 ```html
 <sp-field-label for="color-list" autocomplete="list">Color</sp-field-label>
 <sp-combobox id="color-list">
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
-## States
+### States
 
 <sp-tabs selected="disabled" auto label="Combobox states">
 <sp-tab value="disabled">Disabled</sp-tab>
@@ -172,16 +163,16 @@ The popup menu items are filtered to only those completing the currently-input v
 ```html
 <sp-field-label for="color-disabled">Color</sp-field-label>
 <sp-combobox id="color-disabled" disabled>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 <br />
 <sp-field-label for="color-disabled-item">Color</sp-field-label>
 <sp-combobox id="color">
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue" disabled>Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue" disabled>Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -192,12 +183,12 @@ The popup menu items are filtered to only those completing the currently-input v
 ```html
 <sp-field-label for="color-invalid">Color</sp-field-label>
 <sp-combobox id="color-invalid" invalid>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
-    <sp-help-text slot="negative-help-text">
-        Choose or add at least one color.
-    </sp-help-text>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-help-text slot="negative-help-text">
+    Choose or add at least one color.
+  </sp-help-text>
 </sp-combobox>
 ```
 
@@ -208,9 +199,9 @@ The popup menu items are filtered to only those completing the currently-input v
 ```html
 <sp-field-label for="color">Color</sp-field-label>
 <sp-combobox id="color" pending>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -228,9 +219,9 @@ For exceptional cases, provide an accessible label via the `label` attribute.
 ```html
 <sp-field-label for="color">Color</sp-field-label>
 <sp-combobox id="color">
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -247,10 +238,10 @@ See [help text](../help-text) and [tooltip](../tooltip) for more information.
 ```html
 <sp-field-label for="color1">Color</sp-field-label>
 <sp-combobox id="color1">
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
-    <sp-help-text slot="help-text">Enter the name of a color.</sp-help-text>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-help-text slot="help-text">Enter the name of a color.</sp-help-text>
 </sp-combobox>
 ```
 
@@ -261,11 +252,11 @@ See [help text](../help-text) and [tooltip](../tooltip) for more information.
 ```html
 <sp-field-label for="color2">Color</sp-field-label>
 <sp-combobox id="color2" required>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
-    <sp-help-text slot="help-text">Enter the name of a color.</sp-help-text>
-    <sp-help-text slot="negative-help-text">A color is required.</sp-help-text>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-help-text slot="help-text">Enter the name of a color.</sp-help-text>
+  <sp-help-text slot="negative-help-text">A color is required.</sp-help-text>
 </sp-combobox>
 ```
 
@@ -276,12 +267,12 @@ See [help text](../help-text) and [tooltip](../tooltip) for more information.
 ```html
 <sp-field-label for="color3">Color</sp-field-label>
 <sp-combobox id="color3">
-    <sp-tooltip slot="tooltip">
-        Color options, such as red, green, or blue.
-    </sp-tooltip>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-tooltip slot="tooltip">
+    Color options, such as red, green, or blue.
+  </sp-tooltip>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
