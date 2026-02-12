@@ -13,12 +13,11 @@ The core package is private/internal, so we can organize foundational code for d
 ```
 core/
   element/      # SpectrumElement, defineElement, and element infrastructure
-  mixins/       # Reusable mixins that extend base classes
+  mixins/       # Reusable mixins (SizedMixin, ObserveSlotPresence, etc.)
   controllers/  # Reactive controllers (Lit controllers, observers, etc.)
-  utils/        # Utility functions (DOM, slots, platform helpers, etc.)
-  types/        # Shared types and interfaces
+  utils/        # Utility functions (DOM helpers, label extraction, etc.)
   components/   # Component base classes (already established)
-  shared/       # Current implementations (1st-gen re-exports from here)
+  shared/       # Existing utilities and base classes
 ```
 
 ### Naming
@@ -33,10 +32,9 @@ Prefer the new top-level paths for new code:
 - `@spectrum-web-components/core/mixins`
 - `@spectrum-web-components/core/controllers`
 - `@spectrum-web-components/core/utils`
-- `@spectrum-web-components/core/types`
 
-The `shared/` directory contains current implementations that 1st-gen re-exports from. New code should use the top-level paths above.
+New code should use the top-level paths above.
 
-### Migration notes
+### Migration
 
-See `MIGRATION.md` for a living map of 1st‑gen utilities/controllers/mixins and their target locations in this structure.
+See `MIGRATION.md` for guidance on where to place migrated code.
