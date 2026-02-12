@@ -25,7 +25,7 @@ export const SIZES = [
     'XXXL',
     'XXXXL',
 ] as const;
-export const VARIANTS = ['heading', 'body', 'detail', 'code'] as const;
+export const VARIANTS = ['heading', 'title', 'body', 'detail', 'code'] as const;
 export const LANGS = ['en', 'zh', 'ja', 'ko'] as const;
 
 export const SIZES_BY_VARIANT: Record<
@@ -33,6 +33,7 @@ export const SIZES_BY_VARIANT: Record<
     readonly TypographySize[]
 > = {
     heading: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'XXXXL'],
+    title: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
     body: ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
     detail: ['XS', 'S', 'M', 'L', 'XL'],
     code: ['XS', 'S', 'M', 'L', 'XL'],
@@ -45,6 +46,11 @@ export const VARIANT_CAPABILITIES: Record<
     heading: {
         supportsSerif: true,
         supportsHeavy: true,
+        supportsEmphasized: true,
+    },
+    title: {
+        supportsSerif: true,
+        supportsHeavy: false,
         supportsEmphasized: true,
     },
     body: {
@@ -123,6 +129,8 @@ function defaultSample(variant: TypographyVariant) {
     switch (variant) {
         case 'heading':
             return 'Lorem ipsum dolor';
+        case 'title':
+            return 'Lorem ipsum dolor';
         case 'body':
             return 'Body copy should be readable and comfortable for longer blocks of text.';
         case 'detail':
@@ -160,10 +168,14 @@ function Tag({
     }
 }
 
-function elementForVariant(variant: TypographyVariant): 'h2' | 'p' | 'code' {
+function elementForVariant(
+    variant: TypographyVariant
+): 'h2' | 'h3' | 'p' | 'code' {
     switch (variant) {
         case 'heading':
             return 'h2';
+        case 'title':
+            return 'h3';
         case 'code':
             return 'code';
         case 'body':

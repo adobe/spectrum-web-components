@@ -130,12 +130,23 @@ export const HeadingSizes: Story = {
     tags: ['options'],
 };
 
+export const TitleSizes: Story = {
+    args: {
+        variant: 'title',
+        includeMultipleSizes: true,
+    },
+    parameters: {
+        'section-order': 5,
+    },
+    tags: ['options'],
+};
+
 export const BodySizes: Story = {
     args: {
         variant: 'body',
         includeMultipleSizes: true,
     },
-    parameters: { 'section-order': 5 },
+    parameters: { 'section-order': 6 },
     tags: ['options'],
 };
 
@@ -144,7 +155,7 @@ export const DetailSizes: Story = {
         variant: 'detail',
         includeMultipleSizes: true,
     },
-    parameters: { 'section-order': 6 },
+    parameters: { 'section-order': 7 },
     tags: ['options'],
 };
 
@@ -153,7 +164,7 @@ export const CodeSizes: Story = {
         variant: 'code',
         includeMultipleSizes: true,
     },
-    parameters: { 'section-order': 7 },
+    parameters: { 'section-order': 8 },
     tags: ['options'],
 };
 
@@ -173,7 +184,7 @@ export const MarginsOneOff: Story = {
 /**
  * Applies block-direction margins to all type variants within a container with the `.swc-Typography--prose` class applied.
  *
- * This also applies foundational type properties based on size medium body styles to common semantic typography elements including:
+ * This also applies foundational type properties based on heading and body styles to common semantic typography elements including:
  * - `h1, h2, h3, h4`
  * - `p`
  * - `li`

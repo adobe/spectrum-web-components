@@ -21,10 +21,8 @@ const require = createRequire(import.meta.url);
 
 /**
  * Default variant order + size keys.
- *
- * Note: 'title' tokens currently not available
  */
-const DEFAULT_CATEGORIES = ['heading', 'body', 'detail', 'code'];
+const DEFAULT_VARIANTS = ['heading', 'title', 'body', 'detail', 'code'];
 const SIZE_KEYS = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl', 'xxxxl'];
 
 // Token names for font families
@@ -37,10 +35,27 @@ const FONT_TOKENS = {
 
 const VARIANT_CONFIG = {
     heading: { defaultFont: 'sans', cpBaseSuffix: 'heading' },
+    title: { defaultFont: 'sans', cpBaseSuffix: 'title' },
     body: { defaultFont: 'sans', cpBaseSuffix: 'body' },
     detail: { defaultFont: 'sans', cpBaseSuffix: 'detail' },
     // Prevent clash with code design tokens by using "monospace" as cp base
     code: { defaultFont: 'code', cpBaseSuffix: 'monospace' },
+};
+
+/**
+ * When a token is missing from the loaded sources, prefer these token names directly in output.
+ * Values should be token names (NOT literal CSS values).
+ */
+const TOKEN_PATCHES = {
+    fallbacks: {
+        title: {
+            color: 'title-color',
+        },
+    },
+    // always force, even if title-color exists
+    overrides: {
+        // title: { color: 'gray-900' },
+    },
 };
 
 /**
@@ -99,6 +114,40 @@ const SELECTOR_ALIASES = {
         margins: [':is(h1, h2, h3, h4)'],
     },
 };
+
+function getPatchedTokenName(typeVar, suffix, mode) {
+    const patch = TOKEN_PATCHES?.[mode]?.[typeVar]?.[suffix];
+    return typeof patch === 'string' && patch !== '' ? patch : null;
+}
+
+function tokenRefFromName(name) {
+    return name ? `token('${name}')` : null;
+}
+
+function getVariantTokenRef(tokens, typeVar, suffix) {
+    const primaryName = `${typeVar}-${suffix}`;
+
+    // 1) overrides always win
+    const overrideName = getPatchedTokenName(typeVar, suffix, 'overrides');
+    if (overrideName) {
+        return tokenRefFromName(overrideName);
+    }
+
+    // 2) use real token if present
+    if (tokenExists(tokens, primaryName)) {
+        return tokenRefFromName(primaryName);
+    }
+
+    // 3) fall back to patched token name (even if not present in this source)
+    const fallbackName = getPatchedTokenName(typeVar, suffix, 'fallbacks');
+    if (fallbackName) {
+        return tokenRefFromName(fallbackName);
+    }
+
+    // 4) nothing available
+    warnMissing(typeVar, suffix, primaryName);
+    return null;
+}
 
 function splitSelectors(selector) {
     // normalize "a, b, c" into ["a","b","c"]
@@ -336,21 +385,34 @@ function variantClassName(prefix, typeVar) {
     return `${prefix}-${capitalize(typeVar)}`;
 }
 
-/**
- * Load typography source design data tokens
- */
-async function loadTypographyJson() {
-    const typographyTokens = '@adobe/spectrum-tokens/src/typography.json';
-
+async function loadTokensJson(tokenModulePath) {
     try {
         return JSON.parse(
-            await readFile(require.resolve(`${typographyTokens}`), 'utf8')
+            await readFile(require.resolve(tokenModulePath), 'utf8')
         );
     } catch (error) {
-        throw new Error(`Failed to load token file: ${typographyTokens}`, {
+        throw new Error(`Failed to load token file: ${tokenModulePath}`, {
             cause: error,
         });
     }
+}
+
+/**
+ * Load typography source design data tokens.
+ * Supports multiple sources; later sources win on key collisions.
+ */
+async function loadTypographyJson() {
+    const tokenSources = [
+        '@adobe/spectrum-tokens/src/typography.json',
+        '@adobe/spectrum-tokens/src/layout-component.json',
+    ];
+
+    const sources = Array.isArray(tokenSources) ? tokenSources : [tokenSources];
+
+    const tokenObjects = await Promise.all(sources.map(loadTokensJson));
+
+    // Merge into one flat token map; last-in wins for collisions.
+    return Object.assign({}, ...tokenObjects);
 }
 
 /**
@@ -358,7 +420,7 @@ async function loadTypographyJson() {
  */
 export async function generateTypographyCssString(options = {}) {
     const {
-        variants = DEFAULT_CATEGORIES,
+        variants = DEFAULT_VARIANTS,
         prefix = 'swc',
         fontTokens = FONT_TOKENS,
         cjkBaseOverridesByVariant = CJK_OVERRIDES,
@@ -395,7 +457,6 @@ export async function generateTypographyCssString(options = {}) {
         const sansWeightToken = `${typeVar}-sans-serif-font-weight`;
         const serifWeightToken = `${typeVar}-serif-font-weight`;
         const sansHeavyWeightToken = `${typeVar}-sans-serif-heavy-font-weight`;
-        const colorToken = `${typeVar}-color`;
 
         const defaultFont =
             fontTokens[cfg.defaultFont] != null
@@ -424,7 +485,7 @@ export async function generateTypographyCssString(options = {}) {
             'sans weight',
             sansWeightToken
         );
-        const colorRef = getTokenRef(tokens, typeVar, 'color', colorToken);
+        const colorRef = getVariantTokenRef(tokens, typeVar, 'color');
         const mSizeRef = getTokenRef(tokens, typeVar, 'M size', mSizeTokenName);
 
         const mLineHeightRef = mLineHeightToken

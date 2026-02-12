@@ -172,6 +172,132 @@
 }
 
 /* =========================
+  title
+  ========================= */
+.swc-Title {
+    color: var(--swc-title-font-color, token('title-color'));
+    font-family: var(--swc-title-font-family, token('sans-serif-font'));
+    font-weight: var(
+        --swc-title-font-weight,
+        token('title-sans-serif-font-weight')
+    );
+    font-size: var(--swc-title-font-size, token('title-size-m'));
+    line-height: var(
+        --swc-title-line-height,
+        token('line-height-font-size-200')
+    );
+    margin-block: var(--swc-title-margin-top, 0)
+        var(--swc-title-margin-bottom, 0);
+
+    &:lang(zh),
+    &:lang(ja),
+    &:lang(ko) {
+        line-height: var(
+            --swc-title-cjk-line-height,
+            token('cjk-line-height-100')
+        );
+        letter-spacing: var(
+            --swc-title-cjk-letter-spacing,
+            token('cjk-letter-spacing')
+        );
+
+        --swc-title-font-size: token('font-size-100');
+    }
+}
+
+.swc-Title--margins,
+.swc-Typography--prose .swc-Title {
+    --swc-title-margin-top-multiplier: token('title-margin-top-multiplier');
+    --swc-title-margin-bottom-multiplier: token(
+        'title-margin-bottom-multiplier'
+    );
+    --swc-title-margin-top: calc(
+        var(--swc-title-margin-top-multiplier, 0) *
+            var(--swc-title-font-size, token('title-size-m'))
+    );
+    --swc-title-margin-bottom: calc(
+        var(--swc-title-margin-bottom-multiplier, 0) *
+            var(--swc-title-font-size, token('title-size-m'))
+    );
+}
+
+.swc-Title--sizeXS {
+    --swc-title-font-size: token('title-size-xs');
+    --swc-title-line-height: token('line-height-font-size-75');
+
+    &:lang(zh),
+    &:lang(ja),
+    &:lang(ko) {
+        --swc-title-font-size: token('font-size-50');
+    }
+}
+
+.swc-Title--sizeS {
+    --swc-title-font-size: token('title-size-s');
+    --swc-title-line-height: token('line-height-font-size-100');
+}
+
+.swc-Title--sizeM {
+    --swc-title-font-size: token('title-size-m');
+    --swc-title-line-height: token('line-height-font-size-200');
+
+    &:lang(zh),
+    &:lang(ja),
+    &:lang(ko) {
+        --swc-title-font-size: token('font-size-100');
+    }
+}
+
+.swc-Title--sizeL {
+    --swc-title-font-size: token('title-size-l');
+    --swc-title-line-height: token('line-height-font-size-300');
+
+    &:lang(zh),
+    &:lang(ja),
+    &:lang(ko) {
+        --swc-title-font-size: token('font-size-200');
+    }
+}
+
+.swc-Title--sizeXL {
+    --swc-title-font-size: token('title-size-xl');
+    --swc-title-line-height: token('line-height-font-size-400');
+
+    &:lang(zh),
+    &:lang(ja),
+    &:lang(ko) {
+        --swc-title-font-size: token('font-size-300');
+    }
+}
+
+.swc-Title--sizeXXL {
+    --swc-title-font-size: token('title-size-xxl');
+    --swc-title-line-height: token('line-height-font-size-500');
+
+    &:lang(zh),
+    &:lang(ja),
+    &:lang(ko) {
+        --swc-title-font-size: token('font-size-400');
+    }
+}
+
+.swc-Title--sizeXXXL {
+    --swc-title-font-size: token('title-size-xxxl');
+    --swc-title-line-height: token('line-height-font-size-600');
+
+    &:lang(zh),
+    &:lang(ja),
+    &:lang(ko) {
+        --swc-title-font-size: token('font-size-500');
+    }
+}
+
+.swc-Title--serif {
+    --swc-title-font-family: token('serif-font');
+    --swc-title-font-weight: token('title-serif-font-weight');
+}
+
+/* =========================
   body
   ========================= */
 .swc-Body,
