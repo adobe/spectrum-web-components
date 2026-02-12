@@ -646,4 +646,4 @@ All the changes mentioned in the textfield section apply to textarea as well, si
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/2856)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-text-field--docs)
-- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/textfield--docs)
+- [React](https://react-spectrum.adobe.com/TextField)

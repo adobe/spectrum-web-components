@@ -240,4 +240,4 @@ No significant structural changes between CSS main and spectrum-two branches. Th
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/3355)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-avatar--docs)
-- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/avatar--docs)
+- [React](https://react-spectrum.adobe.com/Avatar)

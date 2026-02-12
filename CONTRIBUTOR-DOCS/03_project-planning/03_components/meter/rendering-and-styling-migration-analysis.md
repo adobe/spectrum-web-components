@@ -251,4 +251,4 @@ The CSS Spectrum 2 meter DOM includes the addition of optional help text, but ot
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/3968)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-meter--docs)
-- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/meter--docs)
+- [React](https://react-spectrum.adobe.com/Meter)

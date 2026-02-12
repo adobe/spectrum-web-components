@@ -517,4 +517,4 @@ The migration from legacy CSS (main branch) to Spectrum 2 (spectrum-two branch) 
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/3681)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-number-field--docs)
-- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/numberfield--docs)
+- [React](https://react-spectrum.adobe.com/NumberField)

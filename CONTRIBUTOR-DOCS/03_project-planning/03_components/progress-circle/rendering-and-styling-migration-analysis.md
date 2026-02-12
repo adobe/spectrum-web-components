@@ -255,4 +255,4 @@ The progress circle component has significant differences between CSS and web co
 
 - [CSS migration](https://github.com/adobe/spectrum-css/commit/0c52c4820a3c5fb0881f23c6144fb0d0bd9a35cf)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-progress-circle--docs)
-- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/progresscircle--docs)
+- [React](https://react-spectrum.adobe.com/ProgressCircle)
