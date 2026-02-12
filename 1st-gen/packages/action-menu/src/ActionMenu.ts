@@ -576,6 +576,7 @@ export class ActionMenu extends ObserveSlotPresence(
         return html`
             <sp-overlay
                 @slottable-request=${this.handleSlottableRequest}
+                @beforetoggle=${this.handleBeforetoggle}
                 .triggerElement=${this as HTMLElement}
                 .offset=${0}
                 ?open=${this.open && this.dependencyManager.loaded}

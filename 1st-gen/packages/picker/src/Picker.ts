@@ -204,6 +204,47 @@ export class ExpandableElement extends SpectrumElement {
     public handleSlottableRequest = (_event: SlottableRequestEvent): void => {};
 
     /**
+     * Handles the overlay's beforetoggle event.
+     * Manages overlay state and prevents unwanted closures during interaction.
+     * @param event - The beforetoggle event with the new state
+     */
+    protected handleBeforetoggle = (
+        event: Event & {
+            target: Overlay;
+            newState: 'open' | 'closed';
+        }
+    ): void => {
+        if (event.composedPath()[0] !== event.target) {
+            return;
+        }
+        if (event.newState === 'closed') {
+            // Track if we should restore focus before the overlay fully closes.
+            // This must happen now (in beforetoggle) because by the time sp-closed fires,
+            // the overlay animation will be complete and focus will have moved elsewhere.
+            const shouldRestoreFocus =
+                this.optionsMenu?.matches(':focus-within') &&
+                !this.button?.matches(':focus');
+
+            if (this.strategy?.preventNextToggle === 'no') {
+                this.open = false;
+            } else if (!this.strategy?.pointerdownState) {
+                // Prevent browser driven closure while opening the Picker
+                // and the expected event series has not completed.
+                this.overlayElement?.manuallyKeepOpen();
+            }
+
+            // Restore focus to the button if focus was in the menu.
+            if (shouldRestoreFocus && !this.open) {
+                this.button?.focus();
+            }
+        }
+        if (!this.open) {
+            this.optionsMenu?.updateSelectedItemIndex();
+            this.optionsMenu?.closeDescendentOverlays();
+        }
+    };
+
+    /**
      * Binds the appropriate interaction strategy (desktop or mobile) based on device type.
      * Aborts any existing strategy before creating a new one.
      */
@@ -797,6 +838,7 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
         return html`
             <sp-overlay
                 @slottable-request=${this.handleSlottableRequest}
+                @beforetoggle=${this.handleBeforetoggle}
                 .triggerElement=${this as HTMLElement}
                 .offset=${0}
                 ?open=${this.open && this.dependencyManager.loaded}
@@ -1824,6 +1866,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
         return html`
             <sp-overlay
                 @slottable-request=${this.handleSlottableRequest}
+                @beforetoggle=${this.handleBeforetoggle}
                 .triggerElement=${this as HTMLElement}
                 .offset=${0}
                 ?open=${this.open && this.dependencyManager.loaded}

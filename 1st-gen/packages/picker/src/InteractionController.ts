@@ -145,10 +145,18 @@ export class InteractionController implements ReactiveController {
             return;
         }
         if (event.newState === 'closed') {
+            // Track if we should restore focus before the overlay fully closes.
+            // This must happen now (in beforetoggle) because by the time sp-closed fires,
+            // the overlay animation will be complete and focus will have moved elsewhere.
+            const shouldRestoreFocus =
+                this.host.optionsMenu.matches(':focus-within') &&
+                !this.host.button.matches(':focus');
+
             // If the host has already set open to false (e.g., via setValueFromItem
-            // from a programmatic click), respect that decision and don't interfere.
+            // from a programmatic click), respect that decision and sync the controller state.
             if (!this.host.open) {
-                // Already closed, nothing to do.
+                // Sync the controller's internal state so focus restoration works.
+                this._open = false;
             } else if (this.preventNextToggle === 'no') {
                 // Set both _open and host.open directly to avoid the setter's
                 // early return guard when _open is already false (can happen if
@@ -157,6 +165,11 @@ export class InteractionController implements ReactiveController {
                 this.host.open = false;
             } else if (!this.pointerdownState) {
                 this.overlay?.manuallyKeepOpen();
+            }
+
+            // Restore focus to the button if focus was in the menu.
+            if (shouldRestoreFocus && !this._open) {
+                this.host.button.focus();
             }
         }
         if (!this.host.open) {
@@ -171,14 +184,7 @@ export class InteractionController implements ReactiveController {
      */
     initOverlay(): void {
         if (this.overlay) {
-            this.overlay.addEventListener('beforetoggle', (event: Event) => {
-                this.handleBeforetoggle(
-                    event as Event & {
-                        target: Overlay;
-                        newState: 'open' | 'closed';
-                    }
-                );
-            });
+            // Note: beforetoggle is handled via template binding in the host element
             this.overlay.type =
                 this.host.isMobile.matches && !this.host.forcePopover
                     ? 'modal'
