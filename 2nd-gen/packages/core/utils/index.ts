@@ -10,5 +10,5 @@
  * governing permissions and limitations under the License.
  */
 
-export * from './capitalize.js';
-export * from './get-label-from-slot.js';
+export { capitalize } from './capitalize.js';
+export { getLabelFromSlot } from './get-label-from-slot.js';

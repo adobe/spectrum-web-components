@@ -10,6 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-export * from './spectrum-element.js';
-export * from './define-element.js';
-export * from './version.js';
+export { defineElement } from './define-element.js';
+export {
+    SpectrumElement,
+    SpectrumMixin,
+    type SpectrumInterface,
+} from './spectrum-element.js';
+export { coreVersion, version } from './version.js';

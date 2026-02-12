@@ -13,14 +13,12 @@ import { PropertyValues } from 'lit';
 import { property, query } from 'lit/decorators.js';
 
 import {
-    SizedMixin,
-    SpectrumElement,
-} from '@spectrum-web-components/core/shared/base/index.js';
-import { getLabelFromSlot } from '@spectrum-web-components/core/shared/get-label-from-slot.js';
-import {
     LanguageResolutionController,
     languageResolverUpdatedSymbol,
-} from '@spectrum-web-components/core/shared/reactive-controllers/LanguageResolution.js';
+} from '@spectrum-web-components/core/controllers/language-resolution.js';
+import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
+import { getLabelFromSlot } from '@spectrum-web-components/core/utils/get-label-from-slot.js';
 
 import {
     PROGRESS_CIRCLE_VALID_SIZES,

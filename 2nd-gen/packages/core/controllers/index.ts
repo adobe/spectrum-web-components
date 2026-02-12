@@ -10,4 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-export {};
+export {
+    LanguageResolutionController,
+    languageResolverUpdatedSymbol,
+} from './language-resolution.js';

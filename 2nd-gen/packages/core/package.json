@@ -47,6 +47,10 @@
             "types": "./dist/controllers/index.d.ts",
             "import": "./dist/controllers/index.js"
         },
+        "./controllers/language-resolution.js": {
+            "types": "./dist/controllers/language-resolution.d.ts",
+            "import": "./dist/controllers/language-resolution.js"
+        },
         "./element": {
             "types": "./dist/element/index.d.ts",
             "import": "./dist/element/index.js"
@@ -86,50 +90,6 @@
         "./mixins/sized-mixin.js": {
             "types": "./dist/mixins/sized-mixin.d.ts",
             "import": "./dist/mixins/sized-mixin.js"
-        },
-        "./shared/base": {
-            "types": "./dist/shared/base/index.d.ts",
-            "import": "./dist/shared/base/index.js"
-        },
-        "./shared/base/Base.js": {
-            "types": "./dist/shared/base/Base.d.ts",
-            "import": "./dist/shared/base/Base.js"
-        },
-        "./shared/base/define-element.js": {
-            "types": "./dist/shared/base/define-element.d.ts",
-            "import": "./dist/shared/base/define-element.js"
-        },
-        "./shared/base/index.js": {
-            "types": "./dist/shared/base/index.d.ts",
-            "import": "./dist/shared/base/index.js"
-        },
-        "./shared/base/sizedMixin.js": {
-            "types": "./dist/shared/base/sizedMixin.d.ts",
-            "import": "./dist/shared/base/sizedMixin.js"
-        },
-        "./shared/base/version.js": {
-            "types": "./dist/shared/base/version.d.ts",
-            "import": "./dist/shared/base/version.js"
-        },
-        "./shared/get-label-from-slot.js": {
-            "types": "./dist/shared/get-label-from-slot.d.ts",
-            "import": "./dist/shared/get-label-from-slot.js"
-        },
-        "./shared/reactive-controllers": {
-            "types": "./dist/shared/reactive-controllers/index.d.ts",
-            "import": "./dist/shared/reactive-controllers/index.js"
-        },
-        "./shared/reactive-controllers/index.js": {
-            "types": "./dist/shared/reactive-controllers/index.d.ts",
-            "import": "./dist/shared/reactive-controllers/index.js"
-        },
-        "./shared/utilities": {
-            "types": "./dist/shared/utilities/index.d.ts",
-            "import": "./dist/shared/utilities/index.js"
-        },
-        "./shared/utilities/index.js": {
-            "types": "./dist/shared/utilities/index.d.ts",
-            "import": "./dist/shared/utilities/index.js"
         },
         "./utils": {
             "types": "./dist/utils/index.d.ts",
@@ -185,6 +145,9 @@
             "controllers/index.js": [
                 "dist/controllers/index.d.ts"
             ],
+            "controllers/language-resolution.js": [
+                "dist/controllers/language-resolution.d.ts"
+            ],
             "element": [
                 "dist/element/index.d.ts"
             ],
@@ -214,39 +177,6 @@
             ],
             "mixins/sized-mixin.js": [
                 "dist/mixins/sized-mixin.d.ts"
-            ],
-            "shared/base": [
-                "dist/shared/base/index.d.ts"
-            ],
-            "shared/base/Base.js": [
-                "dist/shared/base/Base.d.ts"
-            ],
-            "shared/base/define-element.js": [
-                "dist/shared/base/define-element.d.ts"
-            ],
-            "shared/base/index.js": [
-                "dist/shared/base/index.d.ts"
-            ],
-            "shared/base/sizedMixin.js": [
-                "dist/shared/base/sizedMixin.d.ts"
-            ],
-            "shared/base/version.js": [
-                "dist/shared/base/version.d.ts"
-            ],
-            "shared/get-label-from-slot.js": [
-                "dist/shared/get-label-from-slot.d.ts"
-            ],
-            "shared/reactive-controllers": [
-                "dist/shared/reactive-controllers/index.d.ts"
-            ],
-            "shared/reactive-controllers/index.js": [
-                "dist/shared/reactive-controllers/index.d.ts"
-            ],
-            "shared/utilities": [
-                "dist/shared/utilities/index.d.ts"
-            ],
-            "shared/utilities/index.js": [
-                "dist/shared/utilities/index.d.ts"
             ],
             "utils": [
                 "dist/utils/index.d.ts"

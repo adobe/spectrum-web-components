@@ -10,4 +10,23 @@
  * governing permissions and limitations under the License.
  */
 
-export { capitalize } from '../shared/utilities/capitalize.js';
+/**
+ * Capitalizes the first character of a string.
+ *
+ * @param str - The string to capitalize
+ * @returns The capitalized string, or an empty string if the input is not a string
+ *
+ * @example
+ * ```typescript
+ * capitalize('hello') // Returns: 'Hello'
+ * capitalize('world') // Returns: 'World'
+ * capitalize('') // Returns: ''
+ * capitalize(undefined) // Returns: ''
+ * ```
+ */
+export function capitalize(str?: string): string {
+    if (typeof str !== 'string') {
+        return '';
+    }
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}

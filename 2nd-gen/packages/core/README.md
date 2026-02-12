@@ -17,7 +17,6 @@ core/
   controllers/  # Reactive controllers (Lit controllers, observers, etc.)
   utils/        # Utility functions (DOM helpers, label extraction, etc.)
   components/   # Component base classes (already established)
-  shared/       # Existing utilities and base classes
 ```
 
 ### Naming
