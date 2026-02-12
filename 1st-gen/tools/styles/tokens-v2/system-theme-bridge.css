@@ -613,10 +613,10 @@
     --system-tag-border-color-hover: var(--spectrum-gray-800);
     --system-tag-border-color-active: var(--spectrum-gray-900);
     --system-tag-border-color-focus: var(--spectrum-gray-800);
-    --system-tag-content-color: var(--spectrum-neutral-subdued-content-color-default);
-    --system-tag-content-color-hover: var(--spectrum-neutral-subdued-content-color-hover);
-    --system-tag-content-color-active: var(--spectrum-neutral-subdued-content-color-down);
-    --system-tag-content-color-focus: var(--spectrum-neutral-subdued-content-color-key-focus);
+    --system-tag-content-color: var(--spectrum-neutral-content-color-default);
+    --system-tag-content-color-hover: var(--spectrum-neutral-content-color-hover);
+    --system-tag-content-color-active: var(--spectrum-neutral-content-color-down);
+    --system-tag-content-color-focus: var(--spectrum-neutral-content-color-key-focus);
     --system-tag-content-color-selected: var(--spectrum-gray-25);
     --system-tag-border-color-selected: var(--spectrum-neutral-subdued-background-color-default);
     --system-tag-border-color-selected-hover: var(--spectrum-neutral-subdued-background-color-hover);
