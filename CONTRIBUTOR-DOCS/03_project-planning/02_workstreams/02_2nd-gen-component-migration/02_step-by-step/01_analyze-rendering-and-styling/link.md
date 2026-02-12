@@ -152,6 +152,28 @@ None found for this component.
 </a>
 ```
 
+</details>
+<details>
+<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
+
+```diff
+--- Legacy DOM structure
++++ Spectrum 2 DOM structure
+@@ -1,14 +1,15 @@
+ <a
+     class="spectrum-Link
+          spectrum-Link--quiet
++         spectrum-Link--inline
+          spectrum-Link--[variant]
+          spectrum-Link--static[StaticColor]"
+     id="[id]"
+     href="[url]"
+ >
+-    [label]
++    [text]
+ </a>
+```
+
 **Key changes:**
 
 - New variant: `spectrum-Link--inline` class added for inline link styling

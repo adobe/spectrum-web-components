@@ -154,19 +154,17 @@
 <summary>Spectrum Web Components:</summary>
 
 ```html
-<sp-tag size="m" deletable disabled readonly role="listitem" tabindex="0">
-    <slot name="avatar"></slot>
-    <slot name="icon"></slot>
-    <span class="label"><slot></slot></span>
-    <!-- If deletable -->
-    <sp-clear-button
-        class="clear-button"
-        ?disabled="${disabled}"
-        label="Remove"
-        size="s"
-        tabindex="-1"
-    ></sp-clear-button>
-</sp-tag>
+<slot name="avatar"></slot>
+<slot name="icon"></slot>
+<span class="label"><slot></slot></span>
+<!-- If deletable -->
+<sp-clear-button
+    class="clear-button"
+    ?disabled="${disabled}"
+    label="Remove"
+    size="s"
+    tabindex="-1"
+></sp-clear-button>
 ```
 
 </details>
@@ -243,34 +241,32 @@
           spectrum-Tag--sizeM
           is-emphasized
           is-disabled
--         is-invalid
+          is-invalid
           is-selected"
      id="[id]"
      tabindex="0"
  >
--    <!-- Avatar (if avatarUrl and not isInvalid) -->
-+    <!-- Avatar (if avatarUrl) -->
+    <!-- Avatar (if avatarUrl and not isInvalid) -->
+     <!-- Avatar (if avatarUrl) -->
      <div class="spectrum-Avatar"></div>
 
--    <!-- Icon (if iconName or isInvalid) -->
-+    <!-- Icon (if iconName) -->
+    <!-- Icon (if iconName or isInvalid) -->
+    <!-- Icon (if iconName) -->
      <svg class="spectrum-Tag-itemIcon"></svg>
 
-+    <!-- Thumbnail (if thumbnailUrl) -->
-+    <img class="spectrum-Thumbnail" />
-+
+    <!-- Thumbnail (if thumbnailUrl) -->
++   <img class="spectrum-Thumbnail" />
+
      <span class="spectrum-Tag-itemLabel">[label]</span>
 
--    <!-- Clear button (if hasClearButton) -->
-+    <!-- Clear button (if isRemovable) -->
+    <!-- Clear button (if hasClearButton) -->
+    <!-- Clear button (if isRemovable) -->
      <button class="spectrum-Tag-clearButton spectrum-ClearButton"></button>
  </div>
 ```
 
 **Key DOM changes:**
 
-- **Removed**: `is-invalid` class (invalid state no longer supported in Spectrum 2)
-- **Avatar**: Shows when `avatarUrl` is set; no longer gated by invalid state
 - **Added**: `.spectrum-Thumbnail` element (when `thumbnailUrl` is set)
 
 </details>
@@ -320,14 +316,6 @@ To fully support Spectrum 2, the following CSS features need to be implemented i
 **Note on existing WC attributes:**
 
 The web component includes some attributes not present in CSS metadata (`readonly`, `size="s"`). These are implementation-specific and should be evaluated for retention or deprecation during the S2 migration based on user needs and design specifications.
-
-### CSS Spectrum 2 changes
-
-**Removed features:**
-
-- **Invalid state removed**: The `is-invalid` class and related invalid state styling have been completely removed from Spectrum 2
-- **Invalid icon logic removed**: Main branch automatically shows an Alert icon when `isInvalid` is true; this logic is removed in spectrum-two
-- **Avatar conditional logic changed**: Main branch prevents avatar display when `isInvalid` is true; spectrum-two removes this restriction
 
 **Added features:**
 

@@ -162,7 +162,6 @@ None found for this component.
 
 - `delayed` - Boolean attribute for warm-up/cooldown behavior
 - `disabled` - Boolean attribute to prevent self-managed tooltip from responding to user input
-- `no-tip` (2nd-gen only) - Boolean attribute to hide the tooltip arrow/tip
 - `self-managed` - Boolean attribute to automatically bind to parent element
 - `offset` - Number attribute for positioning offset
 - `open` - Boolean attribute reflecting open state
@@ -189,11 +188,9 @@ None found for this component.
 
 ```html
 <sp-tooltip-openable>
-    <sp-tooltip id="tooltip" placement="[placement]">
-        <slot name="icon"></slot>
-        <span id="label"><slot></slot></span>
-        <span id="tip" aria-hidden="true"></span>
-    </sp-tooltip>
+    <slot name="icon"></slot>
+    <span id="label"><slot></slot></span>
+    <span id="tip" aria-hidden="true"></span>
 </sp-tooltip-openable>
 
 <!-- When self-managed=true -->
@@ -207,11 +204,9 @@ None found for this component.
     triggerInteraction="hover"
 >
     <sp-tooltip-openable>
-        <sp-tooltip id="tooltip" placement="[placement]">
-            <slot name="icon"></slot>
-            <span id="label"><slot></slot></span>
-            <span id="tip" aria-hidden="true"></span>
-        </sp-tooltip>
+        <slot name="icon"></slot>
+        <span id="label"><slot></slot></span>
+        <span id="tip" aria-hidden="true"></span>
     </sp-tooltip-openable>
 </sp-overlay>
 ```
@@ -276,11 +271,7 @@ None found for this component.
 - **Removed**: `.spectrum-Tooltip-typeIcon` wrapper and all icon rendering (icons no longer part of tooltip in Spectrum 2)
 - **Removed**: Icon imports and icon component instantiation for `info`, `positive`, and `negative` variants
 - **Template/JS**: Remove `variantIcon` variable and conditional icon logic, icon rendering in template, and `positive` from variants array
-
-**Removed elements:**
-
-- `.spectrum-Tooltip-typeIcon` wrapper element and all icon rendering logic
-- Icon imports and icon component instantiation for `info`, `positive`, and `negative` variants
+- **Removed**: `.spectrum-Tooltip-typeIcon` wrapper and all icon rendering (icons no longer part of tooltip in Spectrum 2)
 
 </details>
 
@@ -322,6 +313,7 @@ None found for this component.
 | `.spectrum-Tooltip--end`                                                                 |                                         | Missing from WC |
 | `.spectrum-Tooltip--end-top`                                                             |                                         | Missing from WC |
 | `.spectrum-Tooltip--end-bottom`                                                          |                                         | Missing from WC |
+| `.spectrum-Tooltip--no-tip`                                                              |                                         | Missing from WC |
 | `.spectrum-Tooltip--positive`                                                            |                                         | Deprecated      |
 
 ## Summary of changes
@@ -335,14 +327,10 @@ None found for this component.
 
 **Icon removal:**
 
-- The Icon component import was removed from Spectrum 2 templates
 - Variant icons (Info, CheckmarkCircle, Alert) for semantic variants are no longer rendered in the template
 - The `.spectrum-Tooltip-typeIcon` class and associated icon rendering logic were removed
-- This represents a significant visual change: Spectrum 2 tooltips no longer display icons for `info` and `negative` variants
-- The `.spectrum-Tooltip-typeIcon` class and associated icon rendering logic were removed
-- This represents a significant visual change: Spectrum 2 tooltips no longer display icons for `info` and `negative` variants
 - Only `neutral`, `info`, and `negative` variants remain in Spectrum 2
-- CSS classes for the positive variant (`.spectrum-Tooltip--positive`) are no longer supported
+- CSS classes for the positive variant (`.spectrum-Tooltip--positive`) are deprecated
 
 **No structural HTML changes:**
 

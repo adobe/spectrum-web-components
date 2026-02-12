@@ -149,24 +149,6 @@ None found for `<sp-tags>`.
 <details>
 <summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
--<div role="list" class="spectrum-TagGroup" style="" aria-label="Tags">
-
-- <div class="spectrum-Tag spectrum-Tag--sizeM spectrum-TagGroup-item" tabindex="0">
-  +<div class="spectrum-TagGroup spectrum-TagGroup--sizeM">
-
-* <label class="spectrum-FieldLabel spectrum-TagGroup-label">Label</label>
-* <div class="spectrum-TagGroup-tags" role="list" aria-label="Tags">
-*        <div class="spectrum-Tag spectrum-Tag--sizeM spectrum-TagGroup-tag" tabindex="0">
-             <span class="spectrum-Tag-label">2025</span>
-         </div>
-*        <div class="spectrum-Tag spectrum-Tag--sizeM spectrum-TagGroup-tag" tabindex="0">
-             <span class="spectrum-Tag-label">Outdoors</span>
-         </div>
-* </div>
-* <button class="spectrum-ActionButton spectrum-TagGroup-actionButton">Show all</button>
-* <div class="spectrum-HelpText spectrum-TagGroup-helpText">Help text</div>
-  </div>
-
 ```diff
 --- Legacy DOM structure
 +++ Spectrum 2 DOM structure
