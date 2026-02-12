@@ -163,4 +163,4 @@ The ColorField component extends TextfieldBase, which means it will inherit all 
 
 ## Resources
 
-- [Spectrum React ColorField documentation](https://react-spectrum.adobe.com/s2/index.html?path=/docs/colorfield--docs)
+- [React](https://react-spectrum.adobe.com/ColorField)

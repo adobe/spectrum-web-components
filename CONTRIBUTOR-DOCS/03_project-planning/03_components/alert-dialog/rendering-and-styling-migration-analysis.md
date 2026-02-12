@@ -22,6 +22,8 @@
 
 <!-- Document content (editable) -->
 
+> **Status:** This analysis is a POC and not final. Full migration analysis for this component is tracked in SWC-1228.
+
 <details>
 <summary>CSS selectors</summary>
 

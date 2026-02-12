@@ -417,4 +417,4 @@ The Action Button template is functionally identical between the main branch (le
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/2669)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-action-button--docs)
-- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/actionbutton--docs)
+- [React](https://react-spectrum.adobe.com/ActionButton)
