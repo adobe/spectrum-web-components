@@ -31,73 +31,69 @@ import jsoncParser from 'jsonc-eslint-parser';
 // ────────────────────────────────────────────────────────────────────────────────
 
 const swcPlugin = {
-    rules: {
-        'prevent-argument-names': {
-            meta: {
-                type: 'suggestion',
-                docs: {
-                    description:
-                        'Prevent certain argument names from being used',
-                },
-                schema: [
-                    {
-                        type: 'array',
-                        items: { type: 'string' },
-                    },
-                ],
-            },
-            create(context) {
-                const disallowed = context.options[0] || [];
-                return {
-                    Identifier(node) {
-                        if (
-                            node.parent &&
-                            (node.parent.type === 'FunctionDeclaration' ||
-                                node.parent.type === 'FunctionExpression' ||
-                                node.parent.type === 'ArrowFunctionExpression')
-                        ) {
-                            if (
-                                node.parent.params &&
-                                node.parent.params.includes(node)
-                            ) {
-                                if (disallowed.includes(node.name)) {
-                                    context.report({
-                                        node,
-                                        message: `"${node.name}" shouldn't be used as an argument name`,
-                                    });
-                                }
-                            }
-                        }
-                    },
-                };
-            },
+  rules: {
+    'prevent-argument-names': {
+      meta: {
+        type: 'suggestion',
+        docs: {
+          description: 'Prevent certain argument names from being used',
         },
-        'document-active-element': {
-            meta: {
-                type: 'problem',
-                docs: {
-                    description:
-                        'Warn against using document.activeElement which can be incorrect across shadow boundaries',
-                },
-            },
-            create(context) {
-                return {
-                    MemberExpression(node) {
-                        if (
-                            node.object.name === 'document' &&
-                            node.property.name === 'activeElement'
-                        ) {
-                            context.report({
-                                node,
-                                message:
-                                    '"document.activeElement" can be incorrect across shadow boundaries',
-                            });
-                        }
-                    },
-                };
-            },
-        },
+        schema: [
+          {
+            type: 'array',
+            items: { type: 'string' },
+          },
+        ],
+      },
+      create(context) {
+        const disallowed = context.options[0] || [];
+        return {
+          Identifier(node) {
+            if (
+              node.parent &&
+              (node.parent.type === 'FunctionDeclaration' ||
+                node.parent.type === 'FunctionExpression' ||
+                node.parent.type === 'ArrowFunctionExpression')
+            ) {
+              if (node.parent.params && node.parent.params.includes(node)) {
+                if (disallowed.includes(node.name)) {
+                  context.report({
+                    node,
+                    message: `"${node.name}" shouldn't be used as an argument name`,
+                  });
+                }
+              }
+            }
+          },
+        };
+      },
     },
+    'document-active-element': {
+      meta: {
+        type: 'problem',
+        docs: {
+          description:
+            'Warn against using document.activeElement which can be incorrect across shadow boundaries',
+        },
+      },
+      create(context) {
+        return {
+          MemberExpression(node) {
+            if (
+              node.object.name === 'document' &&
+              node.property.name === 'activeElement'
+            ) {
+              context.report({
+                node,
+                message:
+                  '"document.activeElement" can be incorrect across shadow boundaries',
+              });
+            }
+          },
+        };
+      },
+    },
+  },
 };
 
 // ────────────────────────────────────────────────────────────────────────────────
@@ -105,48 +101,48 @@ const swcPlugin = {
 // ────────────────────────────────────────────────────────────────────────────────
 
 const packageJsonKeyOrder = [
-    '$schema',
-    'name',
-    'version',
-    'private',
-    'description',
-    'license',
-    'author',
-    'maintainers',
-    'contributors',
-    'homepage',
-    'repository',
-    'bugs',
-    'type',
-    'exports',
-    'main',
-    'module',
-    'browser',
-    'man',
-    'preferGlobal',
-    'bin',
-    'files',
-    'directories',
-    'scripts',
-    'config',
-    'sideEffects',
-    'types',
-    'typings',
-    'workspaces',
-    'resolutions',
-    'dependencies',
-    'bundleDependencies',
-    'bundledDependencies',
-    'peerDependencies',
-    'peerDependenciesMeta',
-    'optionalDependencies',
-    'devDependencies',
-    'keywords',
-    'engines',
-    'engineStrict',
-    'os',
-    'cpu',
-    'publishConfig',
+  '$schema',
+  'name',
+  'version',
+  'private',
+  'description',
+  'license',
+  'author',
+  'maintainers',
+  'contributors',
+  'homepage',
+  'repository',
+  'bugs',
+  'type',
+  'exports',
+  'main',
+  'module',
+  'browser',
+  'man',
+  'preferGlobal',
+  'bin',
+  'files',
+  'directories',
+  'scripts',
+  'config',
+  'sideEffects',
+  'types',
+  'typings',
+  'workspaces',
+  'resolutions',
+  'dependencies',
+  'bundleDependencies',
+  'bundledDependencies',
+  'peerDependencies',
+  'peerDependenciesMeta',
+  'optionalDependencies',
+  'devDependencies',
+  'keywords',
+  'engines',
+  'engineStrict',
+  'os',
+  'cpu',
+  'publishConfig',
 ];
 
 // ────────────────────────────────────────────────────────────────────────────────
@@ -156,73 +152,73 @@ const packageJsonKeyOrder = [
 // ────────────────────────────────────────────────────────────────────────────────
 
 const clickEventsAllowList = [
-    'sp-button',
-    'sp-action-button',
-    'sp-checkbox',
-    'sp-radio',
-    'sp-switch',
-    'sp-menu-item',
-    'sp-clear-button',
-    'sp-underlay',
+  'sp-button',
+  'sp-action-button',
+  'sp-checkbox',
+  'sp-radio',
+  'sp-switch',
+  'sp-menu-item',
+  'sp-clear-button',
+  'sp-underlay',
 ];
 
 // Minimal globals for .js files (no-undef is off for .ts; TypeScript compiler handles those).
 const browserGlobals = {
-    document: 'readonly',
-    window: 'readonly',
-    self: 'readonly',
-    console: 'readonly',
-    HTMLElement: 'readonly',
-    HTMLInputElement: 'readonly',
-    HTMLTextAreaElement: 'readonly',
-    Element: 'readonly',
-    Node: 'readonly',
-    customElements: 'readonly',
-    ShadowRoot: 'readonly',
-    DocumentFragment: 'readonly',
-    Event: 'readonly',
-    CustomEvent: 'readonly',
-    KeyboardEvent: 'readonly',
-    setTimeout: 'readonly',
-    clearTimeout: 'readonly',
-    setInterval: 'readonly',
-    clearInterval: 'readonly',
-    requestAnimationFrame: 'readonly',
-    fetch: 'readonly',
-    URL: 'readonly',
-    URLSearchParams: 'readonly',
-    location: 'readonly',
-    navigator: 'readonly',
-    matchMedia: 'readonly',
-    getComputedStyle: 'readonly',
-    performance: 'readonly',
-    addEventListener: 'readonly',
-    removeEventListener: 'readonly',
+  document: 'readonly',
+  window: 'readonly',
+  self: 'readonly',
+  console: 'readonly',
+  HTMLElement: 'readonly',
+  HTMLInputElement: 'readonly',
+  HTMLTextAreaElement: 'readonly',
+  Element: 'readonly',
+  Node: 'readonly',
+  customElements: 'readonly',
+  ShadowRoot: 'readonly',
+  DocumentFragment: 'readonly',
+  Event: 'readonly',
+  CustomEvent: 'readonly',
+  KeyboardEvent: 'readonly',
+  setTimeout: 'readonly',
+  clearTimeout: 'readonly',
+  setInterval: 'readonly',
+  clearInterval: 'readonly',
+  requestAnimationFrame: 'readonly',
+  fetch: 'readonly',
+  URL: 'readonly',
+  URLSearchParams: 'readonly',
+  location: 'readonly',
+  navigator: 'readonly',
+  matchMedia: 'readonly',
+  getComputedStyle: 'readonly',
+  performance: 'readonly',
+  addEventListener: 'readonly',
+  removeEventListener: 'readonly',
 };
 
 /** Node/CommonJS globals for scripts and tooling that run in Node. */
 const nodeGlobals = {
-    module: 'readonly',
-    exports: 'readonly',
-    require: 'readonly',
-    process: 'readonly',
-    __dirname: 'readonly',
-    __filename: 'readonly',
-    Buffer: 'readonly',
-    crypto: 'readonly',
+  module: 'readonly',
+  exports: 'readonly',
+  require: 'readonly',
+  process: 'readonly',
+  __dirname: 'readonly',
+  __filename: 'readonly',
+  Buffer: 'readonly',
+  crypto: 'readonly',
 };
 
 /** Mocha/test globals for test and story files (web-test-runner). */
 const mochaGlobals = {
-    describe: 'readonly',
-    it: 'readonly',
-    xit: 'readonly',
-    before: 'readonly',
-    beforeEach: 'readonly',
-    afterEach: 'readonly',
-    after: 'readonly',
-    sinon: 'readonly',
-    Mocha: 'readonly',
+  describe: 'readonly',
+  it: 'readonly',
+  xit: 'readonly',
+  before: 'readonly',
+  beforeEach: 'readonly',
+  afterEach: 'readonly',
+  after: 'readonly',
+  sinon: 'readonly',
+  Mocha: 'readonly',
 };
 
 // ────────────────────────────────────────────────────────────────────────────────
@@ -230,425 +226,420 @@ const mochaGlobals = {
 // ────────────────────────────────────────────────────────────────────────────────
 
 export default defineConfig([
-    // Global ignores
-    {
-        ignores: [
-            '**/node_modules/**',
-            '**/dist/**',
-            '**/coverage/**',
-            '**/.wireit/**',
-            '**/*.d.ts',
-            '1st-gen/packages/icons/src/icons-*.svg.ts',
-            // Build outputs
-            '1st-gen/packages/**/!(src)/**/*.js',
-            '1st-gen/tools/**/!(src)/**/*.js',
-            '2nd-gen/packages/**/dist/**',
-            // Generated files
-            '**/*.css.ts',
-            '**/custom-elements.json',
-            // Config and tooling files (Node env; skip lint to avoid needing node globals for many files)
-            '**/*.config.js',
-            '**/*.config.cjs',
-            '**/*.config.mjs',
-            '**/*.config.ts',
-            '**/plopfile.js',
-            '**/.eleventy.js',
-            '**/web-dev-server.config.*',
-            '**/content/_data/*.js',
-            '**/*.hbs',
-        ],
+  // Global ignores
+  {
+    ignores: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/coverage/**',
+      '**/.wireit/**',
+      '**/*.d.ts',
+      '1st-gen/packages/icons/src/icons-*.svg.ts',
+      // Build outputs
+      '1st-gen/packages/**/!(src)/**/*.js',
+      '1st-gen/tools/**/!(src)/**/*.js',
+      '2nd-gen/packages/**/dist/**',
+      // Generated files
+      '**/*.css.ts',
+      '**/custom-elements.json',
+      // Config and tooling files (Node env; skip lint to avoid needing node globals for many files)
+      '**/*.config.js',
+      '**/*.config.cjs',
+      '**/*.config.mjs',
+      '**/*.config.ts',
+      '**/plopfile.js',
+      '**/.eleventy.js',
+      '**/web-dev-server.config.*',
+      '**/content/_data/*.js',
+      '**/*.hbs',
+    ],
+  },
+
+  // Base recommended configs
+  js.configs.recommended,
+
+  // Prettier config (disables rules that conflict with Prettier)
+  eslintConfigPrettier,
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // TypeScript and JavaScript files (shared rules only; TS rules in next block)
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: ['**/*.ts', '**/*.js', '**/*.mjs', '**/*.cjs'],
+    plugins: {
+      '@typescript-eslint': tseslint,
+      lit: lit,
+      'lit-a11y': litA11y,
+      wc: wc,
+      jsdoc: jsdoc,
+      import: importPlugin,
+      'simple-import-sort': simpleImportSort,
+      notice: notice,
+      swc: swcPlugin,
     },
-
-    // Base recommended configs
-    js.configs.recommended,
-
-    // Prettier config (disables rules that conflict with Prettier)
-    eslintConfigPrettier,
-
-    // ────────────────────────────────────────────────────────────────────────────
-    // TypeScript and JavaScript files (shared rules only; TS rules in next block)
-    // ────────────────────────────────────────────────────────────────────────────
-    {
-        files: ['**/*.ts', '**/*.js', '**/*.mjs', '**/*.cjs'],
-        plugins: {
-            '@typescript-eslint': tseslint,
-            lit: lit,
-            'lit-a11y': litA11y,
-            wc: wc,
-            jsdoc: jsdoc,
-            import: importPlugin,
-            'simple-import-sort': simpleImportSort,
-            notice: notice,
-            swc: swcPlugin,
-        },
-        languageOptions: {
-            parser: tsparser,
-            parserOptions: {
-                ecmaVersion: 'latest',
-                sourceType: 'module',
-            },
-            globals: browserGlobals,
-        },
-        rules: {
-            // Copyright header (global for all .ts/.js files)
-            'notice/notice': [
-                'error',
-                {
-                    mustMatch:
-                        'Copyright [0-9]{0,4} Adobe. All rights reserved.',
-                    templateFile: 'linters/HEADER.js',
-                },
-            ],
-
-            // Console and debugger
-            'no-console': ['error', { allow: ['warn', 'error'] }],
-            'no-debugger': 'error',
-
-            // Curly braces required
-            curly: ['error', 'all'],
-
-            // Unused vars (JS only; TS uses @typescript-eslint/no-unused-vars in next block)
-            'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-
-            // Custom SWC rules
-            'swc/prevent-argument-names': ['error', ['e', 'ev', 'evt', 'err']],
-            'swc/document-active-element': 'error',
-
-            // Import rules
-            'import/prefer-default-export': 'off',
-            'import/no-extraneous-dependencies': [
-                'error',
-                {
-                    devDependencies: false,
-                    optionalDependencies: false,
-                    peerDependencies: false,
-                },
-            ],
-
-            // Accessibility
-            'lit-a11y/click-events-have-key-events': [
-                'error',
-                { allowList: clickEventsAllowList },
-            ],
-
-            // Lit plugin rules (recommended)
-            'lit/attribute-value-entities': 'error',
-            'lit/binding-positions': 'error',
-            'lit/no-duplicate-template-bindings': 'error',
-            'lit/no-invalid-escape-sequences': 'error',
-            'lit/no-invalid-html': 'error',
-            'lit/no-legacy-imports': 'error',
-            'lit/no-legacy-template-syntax': 'error',
-            'lit/no-private-properties': 'error',
-            'lit/no-property-change-update': 'error',
-            'lit/no-template-arrow': 'warn',
-            'lit/no-template-bind': 'warn',
-            'lit/no-useless-template-literals': 'error',
-            'lit/no-value-attribute': 'error',
-            'lit/prefer-nothing': 'warn',
-            'lit/quoted-expressions': ['error', 'never'],
-
-            // Web Components plugin rules (recommended)
-            'wc/attach-shadow-constructor': 'error',
-            'wc/guard-super-call': 'error',
-            'wc/no-closed-shadow-root': 'error',
-            'wc/no-constructor-attributes': 'error',
-            'wc/no-constructor-params': 'error',
-            'wc/no-invalid-element-name': 'error',
-            'wc/no-self-class': 'error',
-            'wc/no-typos': 'error',
-            'wc/require-listener-teardown': 'error',
-
-            // JSDoc plugin rules (minimal set for consistency)
-            // Focus on formatting and accuracy, not requiring docs everywhere.
-            'jsdoc/check-alignment': 'error', // Consistent asterisk alignment
-            'jsdoc/check-indentation': 'warn', // Consistent indentation in descriptions
-            'jsdoc/check-param-names': 'error', // Param names match function signature
-            'jsdoc/check-tag-names': [
-                'error',
-                {
-                    // Custom tags used by Custom Elements Manifest (CEM)
-                    definedTags: [
-                        'element', // Custom element tag name
-                        'slot', // Slot documentation
-                        'csspart', // CSS part documentation
-                        'cssproperty', // CSS custom property documentation
-                        'fires', // Event documentation
-                        'attr', // Attribute shorthand
-                        'attribute', // Attribute documentation
-                        'internal', // Internal member marker
-                    ],
-                },
-            ],
-            'jsdoc/check-types': 'warn', // Valid type syntax in JSDoc (prefer lowercase primitives)
-            'jsdoc/no-undefined-types': 'off', // Disabled: TS handles type checking, JSDoc types are often custom
-            'jsdoc/require-param-description': 'warn', // Params should have descriptions
-            'jsdoc/require-returns-description': 'warn', // Returns should have descriptions
-            'jsdoc/valid-types': 'warn', // Type expressions are valid (warn for @internal usage)
-
-            // Sort imports (member sorting only, declaration sort handled by simple-import-sort)
-            'sort-imports': [
-                'error',
-                {
-                    allowSeparatedGroups: false,
-                    ignoreCase: true,
-                    ignoreDeclarationSort: true,
-                    ignoreMemberSort: false,
-                },
-            ],
-
-            // Import sorting (declaration order)
-            'simple-import-sort/imports': [
-                'error',
-                {
-                    groups: [
-                        // Lit and external packages
-                        [
-                            '^lit',
-                            '^@lit',
-                            '^(?!@adobe/swc|@spectrum-web-components)@?\\w',
-                        ],
-                        // Internal packages
-                        ['^@adobe/swc', '^@spectrum-web-components'],
-                        // Side effect imports
-                        ['^\\u0000'],
-                        // Relative imports
-                        ['^\\.'],
-                        // Style imports
-                        ['^.+\\.(css|scss|sass|less|styl)$'],
-                    ],
-                },
-            ],
-
-            // Import extensions
-            'import/extensions': [
-                'error',
-                'ignorePackages',
-                {
-                    js: 'always',
-                    ts: 'never',
-                },
-            ],
-        },
+    languageOptions: {
+      parser: tsparser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      },
+      globals: browserGlobals,
     },
+    rules: {
+      // Copyright header (global for all .ts/.js files)
+      'notice/notice': [
+        'error',
+        {
+          mustMatch: 'Copyright [0-9]{0,4} Adobe. All rights reserved.',
+          templateFile: 'linters/HEADER.js',
+        },
+      ],
 
-    // ────────────────────────────────────────────────────────────────────────────
-    // TypeScript only: enable type-aware rules (not applied to .js/.mjs/.cjs)
-    // no-undef off: TypeScript compiler handles undefined checks and DOM/built-in types.
-    // ────────────────────────────────────────────────────────────────────────────
-    {
-        files: ['**/*.ts'],
-        rules: {
-            'no-undef': 'off',
-            'no-unused-vars': 'off',
-            '@typescript-eslint/no-array-constructor': 'error',
-            '@typescript-eslint/no-duplicate-enum-values': 'error',
-            '@typescript-eslint/no-empty-object-type': 'error',
-            '@typescript-eslint/no-explicit-any': 'warn',
-            '@typescript-eslint/no-extra-non-null-assertion': 'error',
-            '@typescript-eslint/no-misused-new': 'error',
-            '@typescript-eslint/no-namespace': 'error',
-            '@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
-            '@typescript-eslint/no-require-imports': 'error',
-            '@typescript-eslint/no-this-alias': 'error',
-            '@typescript-eslint/no-unnecessary-type-constraint': 'error',
-            '@typescript-eslint/no-unsafe-declaration-merging': 'error',
-            '@typescript-eslint/no-unsafe-function-type': 'error',
-            '@typescript-eslint/no-unused-expressions': 'error',
-            '@typescript-eslint/no-wrapper-object-types': 'error',
-            '@typescript-eslint/prefer-as-const': 'error',
-            '@typescript-eslint/prefer-namespace-keyword': 'error',
-            '@typescript-eslint/triple-slash-reference': 'error',
-            '@typescript-eslint/no-unused-vars': [
-                'error',
-                { argsIgnorePattern: '^_' },
-            ],
-            '@typescript-eslint/explicit-function-return-type': [
-                'warn',
-                { allowExpressions: true },
-            ],
-        },
-    },
+      // Console and debugger
+      'no-console': ['error', { allow: ['warn', 'error'] }],
+      'no-debugger': 'error',
 
-    // ────────────────────────────────────────────────────────────────────────────
-    // Node/scripts: globals for .js/.ts that runs in Node (config files are ignored above)
-    // ────────────────────────────────────────────────────────────────────────────
-    {
-        files: [
-            'scripts/**/*',
-            '**/scripts/**/*.js',
-            '**/scripts/**/*.ts',
-            '1st-gen/linters/**/*.js',
-            'linters/**/*.js',
-            '.github/**/*.js',
-            '1st-gen/test/visual/**/*.js',
-            '1st-gen/test/plugins/**/*.js',
-            '1st-gen/test/testing-helpers.js',
-            '1st-gen/test/benchmark/cli.ts',
-            '1st-gen/web-test-runner*.js',
-            '1st-gen/storybook/**/*.js',
-            'CONTRIBUTOR-DOCS/**/*.js',
-            '2nd-gen/packages/tools/**/*.ts',
-            '2nd-gen/packages/tools/**/*.js',
-            '1st-gen/packages/icons-workflow/bin/**/*.js',
-            '1st-gen/packages/icons-ui/bin/**/*.js',
-        ],
-        languageOptions: {
-            globals: nodeGlobals,
-        },
-    },
+      // Curly braces required
+      curly: ['error', 'all'],
 
-    // ────────────────────────────────────────────────────────────────────────────
-    // Test and story files: relaxed rules and Mocha globals for .js
-    // ────────────────────────────────────────────────────────────────────────────
-    {
-        files: [
-            '**/*.test.ts',
-            '**/*.test-vrt.ts',
-            '**/*.stories.ts',
-            '**/*.spec.ts',
-            '**/test/**/*.ts',
-            '**/test/**/*.js',
-            '**/benchmark/**/*.ts',
-            '**/stories/**/*.ts',
-            '**/e2e/**/*.ts',
-        ],
-        languageOptions: {
-            globals: { ...browserGlobals, ...mochaGlobals },
-        },
-        rules: {
-            'swc/document-active-element': 'off',
-            'import/no-extraneous-dependencies': 'off',
-            'lit-a11y/no-autofocus': 'off',
-            'lit-a11y/tabindex-no-positive': 'off',
-            // Chai assertions use expressions like expect(x).to.be.true
-            '@typescript-eslint/no-unused-expressions': 'off',
-        },
-    },
+      // Unused vars (JS only; TS uses @typescript-eslint/no-unused-vars in next block)
+      'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
 
-    // ────────────────────────────────────────────────────────────────────────────
-    // Story files: allow console.log
-    // ────────────────────────────────────────────────────────────────────────────
-    {
-        files: ['**/*.stories.ts'],
-        rules: {
-            'no-console': 'off',
-        },
-    },
+      // Custom SWC rules
+      'swc/prevent-argument-names': ['error', ['e', 'ev', 'evt', 'err']],
+      'swc/document-active-element': 'error',
 
-    // ────────────────────────────────────────────────────────────────────────────
-    // Icons and elements: disable sort-imports
-    // ────────────────────────────────────────────────────────────────────────────
-    {
-        files: ['**/icons/*.ts', '**/src/elements/*.ts'],
-        rules: {
-            'sort-imports': 'off',
+      // Import rules
+      'import/prefer-default-export': 'off',
+      'import/no-extraneous-dependencies': [
+        'error',
+        {
+          devDependencies: false,
+          optionalDependencies: false,
+          peerDependencies: false,
         },
-    },
+      ],
 
-    // ────────────────────────────────────────────────────────────────────────────
-    // React wrappers: allow any
-    // ────────────────────────────────────────────────────────────────────────────
-    {
-        files: ['**/react/**/*.ts'],
-        rules: {
-            '@typescript-eslint/no-explicit-any': 'off',
-        },
-    },
+      // Accessibility
+      'lit-a11y/click-events-have-key-events': [
+        'error',
+        { allowList: clickEventsAllowList },
+      ],
 
-    // ────────────────────────────────────────────────────────────────────────────
-    // Scripts: allow console.log
-    // ────────────────────────────────────────────────────────────────────────────
-    {
-        files: ['**/scripts/**/*.js', '**/scripts/**/*.ts', 'scripts/**/*'],
-        rules: {
-            'no-console': 'off',
-        },
-    },
+      // Lit plugin rules (recommended)
+      'lit/attribute-value-entities': 'error',
+      'lit/binding-positions': 'error',
+      'lit/no-duplicate-template-bindings': 'error',
+      'lit/no-invalid-escape-sequences': 'error',
+      'lit/no-invalid-html': 'error',
+      'lit/no-legacy-imports': 'error',
+      'lit/no-legacy-template-syntax': 'error',
+      'lit/no-private-properties': 'error',
+      'lit/no-property-change-update': 'error',
+      'lit/no-template-arrow': 'warn',
+      'lit/no-template-bind': 'warn',
+      'lit/no-useless-template-literals': 'error',
+      'lit/no-value-attribute': 'error',
+      'lit/prefer-nothing': 'warn',
+      'lit/quoted-expressions': ['error', 'never'],
 
-    // ────────────────────────────────────────────────────────────────────────────
-    // JSON files
-    // ────────────────────────────────────────────────────────────────────────────
-    {
-        files: ['**/*.json'],
-        ignores: ['**/package.json', '**/tokens.json'],
-        plugins: {
-            jsonc: jsonc,
-        },
-        languageOptions: {
-            parser: jsoncParser,
-        },
-        rules: {
-            ...jsonc.configs['recommended-with-jsonc'].rules,
-            'jsonc/sort-keys': 'warn',
-            'notice/notice': 'off',
-        },
-    },
+      // Web Components plugin rules (recommended)
+      'wc/attach-shadow-constructor': 'error',
+      'wc/guard-super-call': 'error',
+      'wc/no-closed-shadow-root': 'error',
+      'wc/no-constructor-attributes': 'error',
+      'wc/no-constructor-params': 'error',
+      'wc/no-invalid-element-name': 'error',
+      'wc/no-self-class': 'error',
+      'wc/no-typos': 'error',
+      'wc/require-listener-teardown': 'error',
 
-    // ────────────────────────────────────────────────────────────────────────────
-    // package.json files: custom key ordering
-    // ────────────────────────────────────────────────────────────────────────────
-    {
-        files: ['**/package.json'],
-        plugins: {
-            jsonc: jsonc,
+      // JSDoc plugin rules (minimal set for consistency)
+      // Focus on formatting and accuracy, not requiring docs everywhere.
+      'jsdoc/check-alignment': 'error', // Consistent asterisk alignment
+      'jsdoc/check-indentation': 'warn', // Consistent indentation in descriptions
+      'jsdoc/check-param-names': 'error', // Param names match function signature
+      'jsdoc/check-tag-names': [
+        'error',
+        {
+          // Custom tags used by Custom Elements Manifest (CEM)
+          definedTags: [
+            'element', // Custom element tag name
+            'slot', // Slot documentation
+            'csspart', // CSS part documentation
+            'cssproperty', // CSS custom property documentation
+            'fires', // Event documentation
+            'attr', // Attribute shorthand
+            'attribute', // Attribute documentation
+            'internal', // Internal member marker
+          ],
         },
-        languageOptions: {
-            parser: jsoncParser,
-        },
-        rules: {
-            ...jsonc.configs['recommended-with-jsonc'].rules,
-            'jsonc/sort-keys': [
-                'warn',
-                {
-                    hasProperties: ['type'],
-                    order: packageJsonKeyOrder,
-                    pathPattern: '^$',
-                },
-                {
-                    order: { type: 'asc' },
-                    pathPattern: '^(?!exports\\[).*',
-                },
-            ],
-            'notice/notice': 'off',
-        },
-    },
+      ],
+      'jsdoc/check-types': 'warn', // Valid type syntax in JSDoc (prefer lowercase primitives)
+      'jsdoc/no-undefined-types': 'off', // Disabled: TS handles type checking, JSDoc types are often custom
+      'jsdoc/require-param-description': 'warn', // Params should have descriptions
+      'jsdoc/require-returns-description': 'warn', // Returns should have descriptions
+      'jsdoc/valid-types': 'warn', // Type expressions are valid (warn for @internal usage)
 
-    // ────────────────────────────────────────────────────────────────────────────
-    // tokens.json: disable sort-keys
-    // ────────────────────────────────────────────────────────────────────────────
-    {
-        files: ['**/tokens.json'],
-        plugins: {
-            jsonc: jsonc,
+      // Sort imports (member sorting only, declaration sort handled by simple-import-sort)
+      'sort-imports': [
+        'error',
+        {
+          allowSeparatedGroups: false,
+          ignoreCase: true,
+          ignoreDeclarationSort: true,
+          ignoreMemberSort: false,
         },
-        languageOptions: {
-            parser: jsoncParser,
-        },
-        rules: {
-            ...jsonc.configs['recommended-with-jsonc'].rules,
-            'jsonc/sort-keys': 'off',
-            'notice/notice': 'off',
-        },
-    },
+      ],
 
-    // ────────────────────────────────────────────────────────────────────────────
-    // Markdown and MDX files
-    // ────────────────────────────────────────────────────────────────────────────
-    // Note: Code block linting is disabled because documentation often contains
-    // partial code snippets that won't parse as complete files (e.g., method
-    // implementations without class wrappers). MDX file structure is still linted.
-    {
-        ...mdx.flat,
-        // Disable code block linting - docs contain partial code snippets
-        processor: mdx.createRemarkProcessor({
-            lintCodeBlocks: false,
-        }),
-        rules: {
-            // MDX imports are used in the template, not JS - disable unused vars
-            'no-unused-vars': 'off',
-            // Markdown content may have special whitespace characters
-            'no-irregular-whitespace': 'off',
+      // Import sorting (declaration order)
+      'simple-import-sort/imports': [
+        'error',
+        {
+          groups: [
+            // Lit and external packages
+            ['^lit', '^@lit', '^(?!@adobe/swc|@spectrum-web-components)@?\\w'],
+            // Internal packages
+            ['^@adobe/swc', '^@spectrum-web-components'],
+            // Side effect imports
+            ['^\\u0000'],
+            // Relative imports
+            ['^\\.'],
+            // Style imports
+            ['^.+\\.(css|scss|sass|less|styl)$'],
+          ],
         },
+      ],
+
+      // Import extensions
+      'import/extensions': [
+        'error',
+        'ignorePackages',
+        {
+          js: 'always',
+          ts: 'never',
+        },
+      ],
     },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // TypeScript only: enable type-aware rules (not applied to .js/.mjs/.cjs)
+  // no-undef off: TypeScript compiler handles undefined checks and DOM/built-in types.
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: ['**/*.ts'],
+    rules: {
+      'no-undef': 'off',
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-array-constructor': 'error',
+      '@typescript-eslint/no-duplicate-enum-values': 'error',
+      '@typescript-eslint/no-empty-object-type': 'error',
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-extra-non-null-assertion': 'error',
+      '@typescript-eslint/no-misused-new': 'error',
+      '@typescript-eslint/no-namespace': 'error',
+      '@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
+      '@typescript-eslint/no-require-imports': 'error',
+      '@typescript-eslint/no-this-alias': 'error',
+      '@typescript-eslint/no-unnecessary-type-constraint': 'error',
+      '@typescript-eslint/no-unsafe-declaration-merging': 'error',
+      '@typescript-eslint/no-unsafe-function-type': 'error',
+      '@typescript-eslint/no-unused-expressions': 'error',
+      '@typescript-eslint/no-wrapper-object-types': 'error',
+      '@typescript-eslint/prefer-as-const': 'error',
+      '@typescript-eslint/prefer-namespace-keyword': 'error',
+      '@typescript-eslint/triple-slash-reference': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_' },
+      ],
+      '@typescript-eslint/explicit-function-return-type': [
+        'warn',
+        { allowExpressions: true },
+      ],
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // Node/scripts: globals for .js/.ts that runs in Node (config files are ignored above)
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: [
+      'scripts/**/*',
+      '**/scripts/**/*.js',
+      '**/scripts/**/*.ts',
+      '1st-gen/linters/**/*.js',
+      'linters/**/*.js',
+      '.github/**/*.js',
+      '1st-gen/test/visual/**/*.js',
+      '1st-gen/test/plugins/**/*.js',
+      '1st-gen/test/testing-helpers.js',
+      '1st-gen/test/benchmark/cli.ts',
+      '1st-gen/web-test-runner*.js',
+      '1st-gen/storybook/**/*.js',
+      'CONTRIBUTOR-DOCS/**/*.js',
+      '2nd-gen/packages/tools/**/*.ts',
+      '2nd-gen/packages/tools/**/*.js',
+      '1st-gen/packages/icons-workflow/bin/**/*.js',
+      '1st-gen/packages/icons-ui/bin/**/*.js',
+    ],
+    languageOptions: {
+      globals: nodeGlobals,
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // Test and story files: relaxed rules and Mocha globals for .js
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: [
+      '**/*.test.ts',
+      '**/*.test-vrt.ts',
+      '**/*.stories.ts',
+      '**/*.spec.ts',
+      '**/test/**/*.ts',
+      '**/test/**/*.js',
+      '**/benchmark/**/*.ts',
+      '**/stories/**/*.ts',
+      '**/e2e/**/*.ts',
+    ],
+    languageOptions: {
+      globals: { ...browserGlobals, ...mochaGlobals },
+    },
+    rules: {
+      'swc/document-active-element': 'off',
+      'import/no-extraneous-dependencies': 'off',
+      'lit-a11y/no-autofocus': 'off',
+      'lit-a11y/tabindex-no-positive': 'off',
+      // Chai assertions use expressions like expect(x).to.be.true
+      '@typescript-eslint/no-unused-expressions': 'off',
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // Story files: allow console.log
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: ['**/*.stories.ts'],
+    rules: {
+      'no-console': 'off',
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // Icons and elements: disable sort-imports
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: ['**/icons/*.ts', '**/src/elements/*.ts'],
+    rules: {
+      'sort-imports': 'off',
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // React wrappers: allow any
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: ['**/react/**/*.ts'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // Scripts: allow console.log
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: ['**/scripts/**/*.js', '**/scripts/**/*.ts', 'scripts/**/*'],
+    rules: {
+      'no-console': 'off',
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // JSON files
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: ['**/*.json'],
+    ignores: ['**/package.json', '**/tokens.json'],
+    plugins: {
+      jsonc: jsonc,
+    },
+    languageOptions: {
+      parser: jsoncParser,
+    },
+    rules: {
+      ...jsonc.configs['recommended-with-jsonc'].rules,
+      'jsonc/sort-keys': 'warn',
+      'notice/notice': 'off',
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // package.json files: custom key ordering
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: ['**/package.json'],
+    plugins: {
+      jsonc: jsonc,
+    },
+    languageOptions: {
+      parser: jsoncParser,
+    },
+    rules: {
+      ...jsonc.configs['recommended-with-jsonc'].rules,
+      'jsonc/sort-keys': [
+        'warn',
+        {
+          hasProperties: ['type'],
+          order: packageJsonKeyOrder,
+          pathPattern: '^$',
+        },
+        {
+          order: { type: 'asc' },
+          pathPattern: '^(?!exports\\[).*',
+        },
+      ],
+      'notice/notice': 'off',
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // tokens.json: disable sort-keys
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: ['**/tokens.json'],
+    plugins: {
+      jsonc: jsonc,
+    },
+    languageOptions: {
+      parser: jsoncParser,
+    },
+    rules: {
+      ...jsonc.configs['recommended-with-jsonc'].rules,
+      'jsonc/sort-keys': 'off',
+      'notice/notice': 'off',
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // Markdown and MDX files
+  // ────────────────────────────────────────────────────────────────────────────
+  // Note: Code block linting is disabled because documentation often contains
+  // partial code snippets that won't parse as complete files (e.g., method
+  // implementations without class wrappers). MDX file structure is still linted.
+  {
+    ...mdx.flat,
+    // Disable code block linting - docs contain partial code snippets
+    processor: mdx.createRemarkProcessor({
+      lintCodeBlocks: false,
+    }),
+    rules: {
+      // MDX imports are used in the template, not JS - disable unused vars
+      'no-unused-vars': 'off',
+      // Markdown content may have special whitespace characters
+      'no-irregular-whitespace': 'off',
+    },
+  },
 ]);

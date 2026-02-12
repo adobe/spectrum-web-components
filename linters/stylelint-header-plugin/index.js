@@ -20,40 +20,40 @@ import stylelint from 'stylelint';
  * and looking for common markers like .git, package.json, or .stylelintrc.json
  */
 function findWorkspaceRoot(startDir) {
-    let current = startDir;
-    const root = dirname(current);
+  let current = startDir;
+  const root = dirname(current);
 
-    while (current !== root) {
-        if (
-            existsSync(join(current, '.git')) ||
-            existsSync(join(current, '.stylelintrc.json')) ||
-            existsSync(join(current, 'stylelint.config.js')) ||
-            existsSync(join(current, 'stylelint.config.mjs'))
-        ) {
-            return current;
-        }
-        current = dirname(current);
+  while (current !== root) {
+    if (
+      existsSync(join(current, '.git')) ||
+      existsSync(join(current, '.stylelintrc.json')) ||
+      existsSync(join(current, 'stylelint.config.js')) ||
+      existsSync(join(current, 'stylelint.config.mjs'))
+    ) {
+      return current;
     }
+    current = dirname(current);
+  }
 
-    return null;
+  return null;
 }
 
 const {
-    createPlugin,
-    utils: { report, ruleMessages, validateOptions },
+  createPlugin,
+  utils: { report, ruleMessages, validateOptions },
 } = stylelint;
 
 const ruleName = 'swc/header';
 
 const messages = ruleMessages(ruleName, {
-    rejected: 'Header is missing or does not match the required format.',
-    outdated: (found, expected) =>
-        `Header is outdated. Found "${found}", expected "${expected}".`,
+  rejected: 'Header is missing or does not match the required format.',
+  outdated: (found, expected) =>
+    `Header is outdated. Found "${found}", expected "${expected}".`,
 });
 
 const meta = {
-    url: 'https://github.com/adobe/spectrum-web-components/tree/main/linters/stylelint-header-plugin',
-    fixable: true,
+  url: 'https://github.com/adobe/spectrum-web-components/tree/main/linters/stylelint-header-plugin',
+  fixable: true,
 };
 
 /**
@@ -61,35 +61,35 @@ const meta = {
  * Returns a value between 0 and 1, where 1 means identical strings.
  */
 function compareTwoStrings(first, second) {
-    first = first.replace(/\s+/g, '');
-    second = second.replace(/\s+/g, '');
+  first = first.replace(/\s+/g, '');
+  second = second.replace(/\s+/g, '');
 
-    if (first === second) {
-        return 1;
+  if (first === second) {
+    return 1;
+  }
+  if (first.length < 2 || second.length < 2) {
+    return 0;
+  }
+
+  const firstBigrams = new Map();
+  for (let i = 0; i < first.length - 1; i++) {
+    const bigram = first.substring(i, i + 2);
+    const count = firstBigrams.get(bigram) ?? 0;
+    firstBigrams.set(bigram, count + 1);
+  }
+
+  let intersectionSize = 0;
+  for (let i = 0; i < second.length - 1; i++) {
+    const bigram = second.substring(i, i + 2);
+    const count = firstBigrams.get(bigram) ?? 0;
+
+    if (count > 0) {
+      firstBigrams.set(bigram, count - 1);
+      intersectionSize++;
     }
-    if (first.length < 2 || second.length < 2) {
-        return 0;
-    }
+  }
 
-    const firstBigrams = new Map();
-    for (let i = 0; i < first.length - 1; i++) {
-        const bigram = first.substring(i, i + 2);
-        const count = firstBigrams.get(bigram) ?? 0;
-        firstBigrams.set(bigram, count + 1);
-    }
-
-    let intersectionSize = 0;
-    for (let i = 0; i < second.length - 1; i++) {
-        const bigram = second.substring(i, i + 2);
-        const count = firstBigrams.get(bigram) ?? 0;
-
-        if (count > 0) {
-            firstBigrams.set(bigram, count - 1);
-            intersectionSize++;
-        }
-    }
-
-    return (2.0 * intersectionSize) / (first.length + second.length - 2);
+  return (2.0 * intersectionSize) / (first.length + second.length - 2);
 }
 
 /**
@@ -97,10 +97,10 @@ function compareTwoStrings(first, second) {
  * and the leading `!` used for non-removable comments.
  */
 function cleanCommentText(text) {
-    return text
-        .replace(/(\*|\n|\s)/g, '')
-        .replace(/^!/g, '')
-        .trim();
+  return text
+    .replace(/(\*|\n|\s)/g, '')
+    .replace(/^!/g, '')
+    .trim();
 }
 
 /**
@@ -110,164 +110,162 @@ function cleanCommentText(text) {
  * - No trailing spaces on empty lines
  */
 function formatHeaderComment(header) {
-    return {
-        text: header
-            .split('\n')
-            .map((line) => (line.trim() === '' ? ' *' : ` * ${line}`))
-            .join('\n'),
-        raws: {
-            left: '*\n',
-            right: '\n ',
-        },
-    };
+  return {
+    text: header
+      .split('\n')
+      .map((line) => (line.trim() === '' ? ' *' : ` * ${line}`))
+      .join('\n'),
+    raws: {
+      left: '*\n',
+      right: '\n ',
+    },
+  };
 }
 
 const ruleFunction = (pathOrString, options = {}) => {
-    return (root, result) => {
-        const validOptions = validateOptions(
-            result,
-            ruleName,
-            {
-                actual: pathOrString,
-                possible: [(x) => typeof x === 'string'],
-            },
-            {
-                optional: true,
-                actual: options,
-                possible: {
-                    headerDetectionThreshold: [
-                        (val) =>
-                            typeof val === 'number' && val >= 0 && val <= 1,
-                    ],
-                },
-            }
-        );
+  return (root, result) => {
+    const validOptions = validateOptions(
+      result,
+      ruleName,
+      {
+        actual: pathOrString,
+        possible: [(x) => typeof x === 'string'],
+      },
+      {
+        optional: true,
+        actual: options,
+        possible: {
+          headerDetectionThreshold: [
+            (val) => typeof val === 'number' && val >= 0 && val <= 1,
+          ],
+        },
+      }
+    );
 
-        if (!validOptions) {
-            return;
+    if (!validOptions) {
+      return;
+    }
+
+    const baseDirs = [];
+
+    const sourceFile = root.source?.input?.file ?? root.source?.input?.from;
+
+    if (sourceFile && typeof sourceFile === 'string') {
+      const sourceDir = dirname(sourceFile);
+      const workspaceRoot = findWorkspaceRoot(sourceDir);
+      if (workspaceRoot) {
+        baseDirs.push(workspaceRoot);
+      }
+      baseDirs.push(sourceDir);
+    }
+
+    const opts = result.opts;
+    if (opts && typeof opts.cwd === 'string') {
+      baseDirs.push(opts.cwd);
+    }
+
+    baseDirs.push(process.cwd());
+
+    let headerTemplate = pathOrString;
+    let foundFile = false;
+
+    if (existsSync(pathOrString)) {
+      headerTemplate = readFileSync(pathOrString, 'utf8');
+      foundFile = true;
+    }
+
+    if (!foundFile) {
+      for (const baseDir of baseDirs) {
+        const fullPath = join(baseDir, pathOrString);
+        if (existsSync(fullPath)) {
+          headerTemplate = readFileSync(fullPath, 'utf8');
+          foundFile = true;
+          break;
         }
+      }
+    }
 
-        const baseDirs = [];
+    if (!foundFile && (!headerTemplate || headerTemplate === '')) {
+      return;
+    }
 
-        const sourceFile = root.source?.input?.file ?? root.source?.input?.from;
+    headerTemplate = headerTemplate
+      .replace(/^\/\*\*?\s*\n?/, '')
+      .replace(/\s*\*\/\s*$/, '');
 
-        if (sourceFile && typeof sourceFile === 'string') {
-            const sourceDir = dirname(sourceFile);
-            const workspaceRoot = findWorkspaceRoot(sourceDir);
-            if (workspaceRoot) {
-                baseDirs.push(workspaceRoot);
-            }
-            baseDirs.push(sourceDir);
-        }
+    headerTemplate = headerTemplate
+      .split('\n')
+      .map((line) => line.replace(/^\s*\*\s?/, ''))
+      .join('\n')
+      .trim();
 
-        const opts = result.opts;
-        if (opts && typeof opts.cwd === 'string') {
-            baseDirs.push(opts.cwd);
-        }
+    const expectedHeader = headerTemplate;
 
-        baseDirs.push(process.cwd());
+    const headerDetectionThreshold = options.headerDetectionThreshold ?? 0.8;
 
-        let headerTemplate = pathOrString;
-        let foundFile = false;
+    const cleanExpected = cleanCommentText(expectedHeader);
 
-        if (existsSync(pathOrString)) {
-            headerTemplate = readFileSync(pathOrString, 'utf8');
-            foundFile = true;
-        }
-
-        if (!foundFile) {
-            for (const baseDir of baseDirs) {
-                const fullPath = join(baseDir, pathOrString);
-                if (existsSync(fullPath)) {
-                    headerTemplate = readFileSync(fullPath, 'utf8');
-                    foundFile = true;
-                    break;
-                }
-            }
-        }
-
-        if (!foundFile && (!headerTemplate || headerTemplate === '')) {
-            return;
-        }
-
-        headerTemplate = headerTemplate
-            .replace(/^\/\*\*?\s*\n?/, '')
-            .replace(/\s*\*\/\s*$/, '');
-
-        headerTemplate = headerTemplate
-            .split('\n')
-            .map((line) => line.replace(/^\s*\*\s?/, ''))
-            .join('\n')
-            .trim();
-
-        const expectedHeader = headerTemplate;
-
-        const headerDetectionThreshold =
-            options.headerDetectionThreshold ?? 0.8;
-
-        const cleanExpected = cleanCommentText(expectedHeader);
-
-        const checkResult = {
-            existingHeaderComment: null,
-            isExactMatch: false,
-            similarity: 0,
-        };
-
-        root.walkComments((comment) => {
-            if (checkResult.existingHeaderComment !== null) {
-                return false;
-            }
-
-            const cleanComment = cleanCommentText(comment.text);
-            const similarity = compareTwoStrings(cleanComment, cleanExpected);
-
-            if (similarity >= headerDetectionThreshold) {
-                checkResult.existingHeaderComment = comment;
-                checkResult.similarity = similarity;
-                checkResult.isExactMatch = similarity >= 0.9999;
-            }
-
-            return false;
-        });
-
-        if (checkResult.isExactMatch) {
-            return;
-        }
-
-        const applyFix = () => {
-            if (checkResult.existingHeaderComment) {
-                checkResult.existingHeaderComment.remove();
-            }
-
-            const headerComment = formatHeaderComment(expectedHeader);
-            root.prepend(headerComment);
-
-            if (root.nodes.length > 1 && root.nodes[1]) {
-                root.nodes[1].raws.before = '\n\n';
-            }
-        };
-
-        if (checkResult.existingHeaderComment) {
-            report({
-                result,
-                ruleName,
-                message: messages.outdated(
-                    `${checkResult.similarity * 100}% match`,
-                    '100% match'
-                ),
-                node: checkResult.existingHeaderComment,
-                fix: applyFix,
-            });
-        } else {
-            report({
-                result,
-                ruleName,
-                message: messages.rejected,
-                node: root,
-                fix: applyFix,
-            });
-        }
+    const checkResult = {
+      existingHeaderComment: null,
+      isExactMatch: false,
+      similarity: 0,
     };
+
+    root.walkComments((comment) => {
+      if (checkResult.existingHeaderComment !== null) {
+        return false;
+      }
+
+      const cleanComment = cleanCommentText(comment.text);
+      const similarity = compareTwoStrings(cleanComment, cleanExpected);
+
+      if (similarity >= headerDetectionThreshold) {
+        checkResult.existingHeaderComment = comment;
+        checkResult.similarity = similarity;
+        checkResult.isExactMatch = similarity >= 0.9999;
+      }
+
+      return false;
+    });
+
+    if (checkResult.isExactMatch) {
+      return;
+    }
+
+    const applyFix = () => {
+      if (checkResult.existingHeaderComment) {
+        checkResult.existingHeaderComment.remove();
+      }
+
+      const headerComment = formatHeaderComment(expectedHeader);
+      root.prepend(headerComment);
+
+      if (root.nodes.length > 1 && root.nodes[1]) {
+        root.nodes[1].raws.before = '\n\n';
+      }
+    };
+
+    if (checkResult.existingHeaderComment) {
+      report({
+        result,
+        ruleName,
+        message: messages.outdated(
+          `${checkResult.similarity * 100}% match`,
+          '100% match'
+        ),
+        node: checkResult.existingHeaderComment,
+        fix: applyFix,
+      });
+    } else {
+      report({
+        result,
+        ruleName,
+        message: messages.rejected,
+        node: root,
+        fix: applyFix,
+      });
+    }
+  };
 };
 
 ruleFunction.ruleName = ruleName;

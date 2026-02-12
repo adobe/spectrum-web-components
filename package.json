@@ -59,6 +59,9 @@
     "@web/test-runner-coverage-v8": "patch:@web/test-runner-coverage-v8@npm%3A0.8.0#~/.yarn/patches/@web-test-runner-coverage-v8-npm-0.8.0-b19cf60e5f.patch",
     "playwright": "1.53.1"
   },
+  "dependencies": {
+    "yargs": "17.7.2"
+  },
   "devDependencies": {
     "@axe-core/playwright": "4.11.0",
     "@changesets/cli": "2.29.7",
@@ -93,8 +96,7 @@
     "stylelint-config-standard": "40.0.0",
     "stylelint-declaration-strict-value": "1.10.11",
     "stylelint-order": "7.0.1",
-    "typescript-eslint": "8.54.0",
-    "yargs": "17.7.2"
+    "typescript-eslint": "8.54.0"
   },
   "keywords": [
     "design-system",

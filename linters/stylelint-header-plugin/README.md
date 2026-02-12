@@ -8,9 +8,9 @@ This package is a workspace dependency within the repo. It is not published to n
 
 ```json
 {
-    "devDependencies": {
-        "@spectrum-web-components/stylelint-header-plugin": "workspace:*"
-    }
+  "devDependencies": {
+    "@spectrum-web-components/stylelint-header-plugin": "workspace:*"
+  }
 }
 ```
 
@@ -20,15 +20,15 @@ Add the plugin and rule to your Stylelint config (e.g. `.stylelintrc.json`):
 
 ```json
 {
-    "plugins": ["@spectrum-web-components/stylelint-header-plugin"],
-    "overrides": [
-        {
-            "files": ["**/*.css"],
-            "rules": {
-                "swc/header": "/**\n * Copyright 2026 Adobe. All rights reserved.\n * ...\n */"
-            }
-        }
-    ]
+  "plugins": ["@spectrum-web-components/stylelint-header-plugin"],
+  "overrides": [
+    {
+      "files": ["**/*.css"],
+      "rules": {
+        "swc/header": "/**\n * Copyright 2026 Adobe. All rights reserved.\n * ...\n */"
+      }
+    }
+  ]
 }
 ```
 
@@ -41,7 +41,7 @@ The rule value can be:
 
 - **Fixable**: Yes. `stylelint --fix` will add or update the header.
 - **Options**:
-    - `headerDetectionThreshold` (number, 0–1, default: `0.8`) — Similarity threshold (Sørensen–Dice) for treating an existing comment as a header that only needs updating (e.g. year). Comments below this are treated as missing.
+  - `headerDetectionThreshold` (number, 0–1, default: `0.8`) — Similarity threshold (Sørensen–Dice) for treating an existing comment as a header that only needs updating (e.g. year). Comments below this are treated as missing.
 
 The plugin resolves the header template from:
 
