@@ -22,12 +22,14 @@ export const AccordionMarkup = ({
     open = false,
     size = 'm',
     density = undefined as unknown,
+    level = 3,
 } = {}): TemplateResult => {
     return html`
         <sp-accordion
             ?allow-multiple=${allowMultiple}
             density=${density}
             size=${size}
+            level=${level}
         >
             <sp-accordion-item label="Heading 1" ?disabled=${disabled}>
                 <div>Item 1</div>

@@ -9,6 +9,13 @@
 <!-- Generated TOC - DO NOT EDIT -->
 
 <details open>
+<summary><strong>In this doc</strong></summary>
+
+- [About this section](#about-this-section)
+
+</details>
+
+<details open>
 <summary><strong>Beneath this doc</strong></summary>
 
 - Action Button
@@ -86,4 +93,10 @@
 
 <!-- Document content (editable) -->
 
-(Content to be added)
+## About this section
+
+This section provides a **component-centric view** of individual components and how they are affected by multiple workstreams. Use it to understand each component's roadmap and status.
+
+Each component has its own folder (kebab-case). Inside you'll find analysis and planning docs for that component—for example, **rendering-and-styling-migration-analysis.md** for Spectrum 2 CSS-to-SWC migration. The same structure is intended for future peer docs (e.g. a11y analysis, comparative API analysis).
+
+For a workstream-centric view of the same work, see [Workstreams](../02_workstreams/README.md). For how the two views fit together, see the [Project planning overview](../README.md).

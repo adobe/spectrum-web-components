@@ -171,4 +171,4 @@ The main difference between the legacy (CSS main) and Spectrum 2 (CSS spectrum-t
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/3557)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-divider--docs)
-- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/divider--docs)
+- [React](https://react-spectrum.adobe.com/Divider)

@@ -308,4 +308,4 @@
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/3246)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-illustrated-message--docs&args=isHorizontal:!true)
-- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/illustratedmessage--docs)
+- [React](https://react-spectrum.adobe.com/IllustratedMessage)

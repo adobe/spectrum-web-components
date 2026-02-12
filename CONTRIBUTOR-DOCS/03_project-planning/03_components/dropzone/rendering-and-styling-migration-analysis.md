@@ -298,4 +298,4 @@ Also worth consideration is the concept of "filled" vs. "replace." The design fi
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/3429)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-drop-zone--docs)
-- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/dropzone--docs)
+- [React](https://react-spectrum.adobe.com/DropZone)
