@@ -34,12 +34,32 @@ const FONT_TOKENS = {
 };
 
 const VARIANT_CONFIG = {
-    heading: { defaultFont: 'sans', cpBaseSuffix: 'heading' },
-    title: { defaultFont: 'sans', cpBaseSuffix: 'title' },
-    body: { defaultFont: 'sans', cpBaseSuffix: 'body' },
-    detail: { defaultFont: 'sans', cpBaseSuffix: 'detail' },
-    // Prevent clash with code design tokens by using "monospace" as cp base
-    code: { defaultFont: 'code', cpBaseSuffix: 'monospace' },
+    heading: {
+        defaultFont: 'sans',
+        cpBaseSuffix: 'heading',
+        supportsCjkSizeAdjustment: true,
+    },
+    title: {
+        defaultFont: 'sans',
+        cpBaseSuffix: 'title',
+        supportsCjkSizeAdjustment: true,
+    },
+    body: {
+        defaultFont: 'sans',
+        cpBaseSuffix: 'body',
+        supportsCjkSizeAdjustment: true,
+    },
+    detail: {
+        defaultFont: 'sans',
+        cpBaseSuffix: 'detail',
+        supportsCjkSizeAdjustment: true,
+    },
+    code: {
+        defaultFont: 'code',
+        // Prevent clash with code design tokens by using "monospace" as cp base
+        cpBaseSuffix: 'monospace',
+        supportsCjkSizeAdjustment: false,
+    },
 };
 
 /**
@@ -514,12 +534,14 @@ export async function generateTypographyCssString(options = {}) {
             tokens,
         });
 
-        const cjkFontSizeVarDecl = getCjkFontSizeVarDecl({
-            cpBase,
-            tokens,
-            typeVar,
-            aliasedFontSize: aliasedMFontSize,
-        });
+        const cjkFontSizeVarDecl = cfg.supportsCjkSizeAdjustment
+            ? getCjkFontSizeVarDecl({
+                  cpBase,
+                  tokens,
+                  typeVar,
+                  aliasedFontSize: aliasedMFontSize,
+              })
+            : null;
 
         // One merged nested lang block
         const mergedBaseCjkDecls = pickValidDecls({
@@ -626,12 +648,14 @@ export async function generateTypographyCssString(options = {}) {
             }
 
             // Optional nested CJK override for font-size only (if valid)
-            const cjkSizeFontSizeVarDecl = getCjkFontSizeVarDecl({
-                cpBase,
-                tokens,
-                typeVar,
-                aliasedFontSize,
-            });
+            const cjkSizeFontSizeVarDecl = cfg.supportsCjkSizeAdjustment
+                ? getCjkFontSizeVarDecl({
+                      cpBase,
+                      tokens,
+                      typeVar,
+                      aliasedFontSize,
+                  })
+                : null;
 
             const modifierDecls = pickValidDecls({
                 [`--${cpBase}-font-size`]: sizeRef,
