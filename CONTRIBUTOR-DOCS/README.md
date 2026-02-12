@@ -7,9 +7,10 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-- [About Spectrum Web Components](#about-spectrum-web-components)
-- [About the 1st-gen-to-2nd-gen transition](#about-the-1st-gen-to-2nd-gen-transition)
-- [About these docs](#about-these-docs)
+- [Contributor Documentation](#contributor-documentation)
+  - [About Spectrum Web Components](#about-spectrum-web-components)
+  - [About the 1st-gen-to-2nd-gen transition](#about-the-1st-gen-to-2nd-gen-transition)
+  - [About these docs](#about-these-docs)
 
 </details>
 
@@ -26,7 +27,7 @@
     - [Authoring contributor docs](01_contributor-guides/07_authoring-contributor-docs/README.md)
     - [Patching dependencies](01_contributor-guides/08_patching-dependencies.md)
     - [Accessibility testing](01_contributor-guides/09_accessibility-testing.md)
-    - [TypeScript configuration](01_contributor-guides/10_typescript-configuration.md)
+    - [Maintaining StackBlitz examples for Spectrum Web Components](01_contributor-guides/10_using-stackblitz.md)
 - [Style guide](02_style-guide/README.md)
     - [2nd-Gen CSS](02_style-guide/01_css/README.md)
 - [Project planning](03_project-planning/README.md)
