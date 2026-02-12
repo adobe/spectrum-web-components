@@ -609,10 +609,10 @@
     --system-tag-size-small-corner-radius: var(--spectrum-corner-radius-100);
     --system-tag-size-medium-corner-radius: var(--spectrum-corner-radius-100);
     --system-tag-size-large-corner-radius: var(--spectrum-corner-radius-100);
-    --system-tag-border-color: var(--spectrum-gray-700);
-    --system-tag-border-color-hover: var(--spectrum-gray-800);
-    --system-tag-border-color-active: var(--spectrum-gray-900);
-    --system-tag-border-color-focus: var(--spectrum-gray-800);
+    --system-tag-border-color: var(--spectrum-neutral-content-color-default);
+    --system-tag-border-color-hover: var(--spectrum-neutral-content-color-hover);
+    --system-tag-border-color-active: var(--spectrum-neutral-content-color-down);
+    --system-tag-border-color-focus: var(--spectrum-neutral-content-color-key-focus);
     --system-tag-content-color: var(--spectrum-neutral-content-color-default);
     --system-tag-content-color-hover: var(--spectrum-neutral-content-color-hover);
     --system-tag-content-color-active: var(--spectrum-neutral-content-color-down);
