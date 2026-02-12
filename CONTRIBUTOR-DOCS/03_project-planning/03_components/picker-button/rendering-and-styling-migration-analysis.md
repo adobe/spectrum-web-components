@@ -271,5 +271,5 @@ No implementation gaps found. All CSS functionality is properly mapped to web co
 ## Resources
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/4114)
-- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/picker--docs)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-picker-button--docs)
+- [React](https://react-spectrum.adobe.com/Picker)

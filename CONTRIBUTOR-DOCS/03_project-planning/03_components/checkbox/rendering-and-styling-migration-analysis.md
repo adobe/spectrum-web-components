@@ -309,4 +309,4 @@ No structural differences found between the legacy (CSS main) and Spectrum 2 (CS
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/3531)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-checkbox--docs)
-- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/checkbox--docs)
+- [React](https://react-spectrum.adobe.com/Checkbox)

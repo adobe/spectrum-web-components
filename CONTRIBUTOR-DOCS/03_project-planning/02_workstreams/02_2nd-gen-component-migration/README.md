@@ -13,7 +13,7 @@
 
 - [Status](01_status.md)
 - Step By Step
-    - [Spectrum 2 migration roadmap](02_step-by-step/01_analyze-rendering-and-styling/README.md)
+    - [Analyze rendering and styling](02_step-by-step/01_analyze-rendering-and-styling/README.md)
     - [Factor rendering out of 1st-gen component](02_step-by-step/02_factor-rendering-out-of-1st-gen-component.md)
     - [Move base class to 2nd-gen core](02_step-by-step/03_move-base-class-to-2nd-gen-core.md)
     - [Formalize Spectrum data model](02_step-by-step/04_formalize-spectrum-data-model.md)

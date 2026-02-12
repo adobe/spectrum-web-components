@@ -269,4 +269,4 @@ The light and no border variants have been removed. Individual swatches have a b
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/3677)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-swatch--docs)
-- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/colorswatch--docs)
+- [React](https://react-spectrum.adobe.com/ColorSwatch)
