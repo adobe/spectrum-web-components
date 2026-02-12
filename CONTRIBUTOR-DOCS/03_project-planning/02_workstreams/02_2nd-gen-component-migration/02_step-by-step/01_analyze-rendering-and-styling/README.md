@@ -1,10 +1,10 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../../../README.md) / [Project planning](../../../../README.md) / [Workstreams](../../../README.md) / [2nd-gen Component Migration](../../README.md) / Step By Step / Spectrum 2 migration roadmap
+[CONTRIBUTOR-DOCS](../../../../../README.md) / [Project planning](../../../../README.md) / [Workstreams](../../../README.md) / [2nd-gen Component Migration](../../README.md) / Step By Step / Analyze rendering and styling
 
 <!-- Document title (editable) -->
 
-# Spectrum 2 migration roadmap
+# Analyze rendering and styling
 
 <!-- Generated TOC - DO NOT EDIT -->
 

@@ -351,4 +351,4 @@ No significant structural changes.
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/3740)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-badge--docs)
-- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/badge--docs)
+- [React](https://react-spectrum.adobe.com/Badge)

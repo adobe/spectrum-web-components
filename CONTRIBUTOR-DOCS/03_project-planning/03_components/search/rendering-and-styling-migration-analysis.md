@@ -528,4 +528,4 @@ The most notable changes seen in Spectrum 2 migration work include:
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/2673)
 - [CSS expand/collapse feature](https://github.com/adobe/spectrum-css/pull/4115)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-search-field--docs)
-- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/searchfield--docs)
+- [React](https://react-spectrum.adobe.com/SearchField)
