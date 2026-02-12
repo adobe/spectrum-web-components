@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/core",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "Abstract base classes for Spectrum Web Components",
     "license": "Apache-2.0",
     "author": "Adobe",
@@ -15,6 +15,10 @@
     },
     "type": "module",
     "exports": {
+        "./components/alert-banner": {
+            "types": "./dist/components/alert-banner/index.d.ts",
+            "import": "./dist/components/alert-banner/index.js"
+        },
         "./components/asset": {
             "types": "./dist/components/asset/index.d.ts",
             "import": "./dist/components/asset/index.js"
@@ -78,6 +82,14 @@
         "./shared/observe-slot-text.js": {
             "types": "./dist/shared/observe-slot-text.d.ts",
             "import": "./dist/shared/observe-slot-text.js"
+        },
+        "./shared/reactive-controllers": {
+            "types": "./dist/shared/reactive-controllers/index.d.ts",
+            "import": "./dist/shared/reactive-controllers/index.js"
+        },
+        "./shared/reactive-controllers/index.js": {
+            "types": "./dist/shared/reactive-controllers/index.d.ts",
+            "import": "./dist/shared/reactive-controllers/index.js"
         }
     },
     "files": [
@@ -91,6 +103,9 @@
     },
     "typesVersions": {
         "*": {
+            "components/alert-banner": [
+                "dist/components/alert-banner/index.d.ts"
+            ],
             "components/asset": [
                 "dist/components/asset/index.d.ts"
             ],
@@ -138,6 +153,12 @@
             ],
             "shared/observe-slot-text.js": [
                 "dist/shared/observe-slot-text.d.ts"
+            ],
+            "shared/reactive-controllers": [
+                "dist/shared/reactive-controllers/index.d.ts"
+            ],
+            "shared/reactive-controllers/index.js": [
+                "dist/shared/reactive-controllers/index.d.ts"
             ]
         }
     },

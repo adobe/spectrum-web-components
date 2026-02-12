@@ -23,9 +23,19 @@ import {
 // Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
 /* eslint-disable import/no-extraneous-dependencies */
 import '@spectrum-web-components/table/sp-table-body.js';
-import '@spectrum-web-components/table/sp-table-row.js';
 import '@spectrum-web-components/table/sp-table-checkbox-cell.js';
+import '@spectrum-web-components/table/sp-table-row.js';
 /* eslint-enable import/no-extraneous-dependencies */
+import {
+    RangeChangedEvent,
+    VisibilityChangedEvent,
+} from '@lit-labs/virtualizer/events.js';
+import {
+    virtualize,
+    VirtualizeDirectiveConfig,
+    VirtualizerHostElement,
+    virtualizerRef,
+} from '@lit-labs/virtualizer/virtualize.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import styles from './table.css.js';
 import { TableBody } from './TableBody.js';
@@ -33,16 +43,6 @@ import type { TableCheckboxCell } from './TableCheckboxCell.js';
 import type { TableHead } from './TableHead.js';
 import type { TableHeadCell } from './TableHeadCell.js';
 import type { TableRow } from './TableRow.js';
-import {
-    virtualize,
-    VirtualizeDirectiveConfig,
-    virtualizerRef,
-} from '@lit-labs/virtualizer/virtualize.js';
-import { Virtualizer } from '@lit-labs/virtualizer/Virtualizer.js';
-import {
-    RangeChangedEvent,
-    VisibilityChangedEvent,
-} from '@lit-labs/virtualizer/events.js';
 
 export enum RowType {
     ITEM = 0,
@@ -491,10 +491,8 @@ export class Table extends SizedMixin(SpectrumElement, {
 
     public scrollToIndex(index?: number): void {
         if (index && !!this.tableBody) {
-            const virtualizerParent = this.tableBody as unknown as {
-                [virtualizerRef]: Virtualizer;
-            };
-            const item = virtualizerParent[virtualizerRef].element(index);
+            const virtualizerParent = this.tableBody as VirtualizerHostElement;
+            const item = virtualizerParent[virtualizerRef]?.element(index);
             if (item) {
                 item.scrollIntoView();
             }

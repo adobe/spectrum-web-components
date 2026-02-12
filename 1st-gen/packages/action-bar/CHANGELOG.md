@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.11.2
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.11.2
+    - @spectrum-web-components/shared@1.11.2
+    - @spectrum-web-components/button@1.11.2
+    - @spectrum-web-components/action-group@1.11.2
+    - @spectrum-web-components/field-label@1.11.2
+    - @spectrum-web-components/popover@1.11.2
+
 ## 1.11.1
 
 ### Patch Changes

@@ -8,13 +8,13 @@
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/textfield?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/textfield)
 [![Try it on Stackblitz](https://img.shields.io/badge/Try%20it%20on-Stackblitz-blue?style=for-the-badge)](https://stackblitz.com/edit/vitejs-vite-wb3tywmy)
 
-```
+```zsh
 yarn add @spectrum-web-components/textfield
 ```
 
 Import the side effectful registration of `<sp-textfield>` via:
 
-```
+```js
 import '@spectrum-web-components/textfield/sp-textfield.js';
 ```
 
@@ -166,9 +166,14 @@ user affordances like mobile keyboards and obscured characters:
     id="tel-1"
     type="tel"
     placeholder="Enter your phone number"
+    autocomplete="tel"
 ></sp-textfield>
 <sp-field-label for="password-1">Password</sp-field-label>
-<sp-textfield id="password-1" type="password"></sp-textfield>
+<sp-textfield
+    id="password-1"
+    type="password"
+    autocomplete="current-password"
+></sp-textfield>
 ```
 
 If the `type` attribute is not specified, or if it does not match any of these values, the default type adopted is "text."
@@ -179,7 +184,12 @@ The quiet style works best when a clear layout (vertical stack, table, grid) ass
 
 ```html
 <sp-field-label for="name-3">Name (quietly)</sp-field-label>
-<sp-textfield id="name-3" placeholder="Enter your name" quiet></sp-textfield>
+<sp-textfield
+    id="name-3"
+    placeholder="Enter your name"
+    quiet
+    autocomplete="name"
+></sp-textfield>
 ```
 
 ### States
@@ -193,10 +203,16 @@ Use the `required` attribute to indicate a textfield value is required. Dictate 
     placeholder="Enter your name"
     valid
     value="My Name"
+    autocomplete="name"
 ></sp-textfield>
 <br />
 <sp-field-label for="name-2" required>Name</sp-field-label>
-<sp-textfield id="name-2" invalid placeholder="Enter your name"></sp-textfield>
+<sp-textfield
+    id="name-2"
+    invalid
+    autocomplete="name"
+    placeholder="Enter your name"
+></sp-textfield>
 ```
 
 ### Accessibility
@@ -220,6 +236,36 @@ Learn more about [using help text](https://spectrum.adobe.com/page/text-field/#U
 Write error messaging in a human-centered way by guiding a user and showing them a solution — don’t simply state what’s wrong and then leave them guessing as to how to resolve it. Ambiguous error messages can be frustrating and even shame-inducing for users. Also, keep in mind that something that a system may deem an error may not actually be perceived as an error to a user.
 
 Learn more about [writing error messages](https://spectrum.adobe.com/page/text-field/#Write-error-text-that-shows-a-solution).
+
+#### Autocomplete
+
+Use the `autocomplete` attribute to help users complete forms faster and with fewer errors, especially on mobile devices. Auto-complete is required only for common input fields that collect an individual’s personal data.
+
+```html
+<sp-field-label for="email-1">Email</sp-field-label>
+<sp-textfield id="email-1" type="email" autocomplete="email"></sp-textfield>
+
+<sp-field-label for="phone-1">Phone</sp-field-label>
+<sp-textfield id="phone-1" type="tel" autocomplete="tel"></sp-textfield>
+
+<sp-field-label for="name-1">Full Name</sp-field-label>
+<sp-textfield id="name-1" type="text" autocomplete="name"></sp-textfield>
+```
+
+**Common autocomplete values include**:
+
+| Input type        | Autocomplete token                                                       |
+| ----------------- | ------------------------------------------------------------------------ |
+| `type="text"`     | `name` - Full name                                                       |
+| `type="text"`     | `given-name` - First name                                                |
+| `type="text"`     | `family-name` - Last name                                                |
+| `type="email"`    | `email` - Email address                                                  |
+| `type="tel"`      | `tel` - Telephone number                                                 |
+| `type="url"`      | `url` - Website URL                                                      |
+| `type="password"` | `current-password` - Current password for login                          |
+| `type="password"` | `new-password` - New password when creating account or changing password |
+
+See the [MDN autocomplete reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) for the complete list of values.
 
 #### Do not us a placeholder as a replacement for a label or help-text
 

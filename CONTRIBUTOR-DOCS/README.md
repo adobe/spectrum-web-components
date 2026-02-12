@@ -26,6 +26,7 @@
     - [Authoring contributor docs](01_contributor-guides/07_authoring-contributor-docs/README.md)
     - [Patching dependencies](01_contributor-guides/08_patching-dependencies.md)
     - [Accessibility testing](01_contributor-guides/09_accessibility-testing.md)
+    - [Maintaining StackBlitz examples for Spectrum Web Components](01_contributor-guides/10_using-stackblitz.md)
 - [Style guide](02_style-guide/README.md)
     - [2nd-Gen CSS](02_style-guide/01_css/README.md)
 - [Project planning](03_project-planning/README.md)
@@ -33,13 +34,6 @@
     - [Workstreams](03_project-planning/02_workstreams/README.md)
     - [Components](03_project-planning/03_components/README.md)
     - [Milestones](03_project-planning/04_milestones/README.md)
-- [Accessibility Guide](04_accessibility_guides/README.md)
-    - [Semantic HTML and ARIA](04_accessibility_guides/01_semantic_html_aria.md)
-    - [Accessible pattern libraries](04_accessibility_guides/02_accessible_pattern_libraries.md)
-    - [Keyboard testing](04_accessibility_guides/03_keyboard_testing.md)
-    - [Screen reader testing](04_accessibility_guides/04_screen_reader_testing.md)
-    - [Wave toolbar testing](04_accessibility_guides/05_wave_toolbar_testing.md)
-    - [Accessibility resources](04_accessibility_guides/06_accessibility_resources.md)
 
 </details>
 
