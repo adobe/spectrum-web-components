@@ -55,6 +55,29 @@ export const setupSwcWarningSpy = () => {
 };
 
 /**
+ * Helper to query a single component from the canvas and await its update.
+ *
+ * @example
+ * ```ts
+ * const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
+ * ```
+ *
+ * @param canvasElement - The Storybook canvas root element
+ * @param selector - CSS selector for the component
+ * @returns Promise that resolves to the queried element after its update completes
+ */
+export async function getComponent<T extends HTMLElement>(
+    canvasElement: HTMLElement,
+    selector: string
+): Promise<T> {
+    const el = canvasElement.querySelector(selector) as T;
+    if ('updateComplete' in el) {
+        await (el as { updateComplete: Promise<boolean> }).updateComplete;
+    }
+    return el;
+}
+
+/**
  * Helper to render a Lit template and return the first element.
  *
  * @example
