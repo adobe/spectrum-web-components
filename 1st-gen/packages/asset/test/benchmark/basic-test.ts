@@ -10,10 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/asset/sp-asset.js';
 import { html } from 'lit';
+
+import '@spectrum-web-components/asset/sp-asset.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-asset open></sp-asset>
+  <sp-asset open></sp-asset>
 `);

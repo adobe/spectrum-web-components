@@ -15,8 +15,8 @@ import { Divider } from './Divider.js';
 
 export * from './Divider.js';
 declare global {
-    interface HTMLElementTagNameMap {
-        'swc-divider': Divider;
-    }
+  interface HTMLElementTagNameMap {
+    'swc-divider': Divider;
+  }
 }
 defineElement('swc-divider', Divider);

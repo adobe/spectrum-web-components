@@ -14,9 +14,9 @@ import { fixture } from '@open-wc/testing';
 
 import { Accordion } from '@spectrum-web-components/accordion';
 
-import { Default } from '../stories/accordion.stories.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { Default } from '../stories/accordion.stories.js';
 
 describe('Accordion - dev mode', () => {
-    testForLitDevWarnings(async () => await fixture<Accordion>(Default()));
+  testForLitDevWarnings(async () => await fixture<Accordion>(Default()));
 });

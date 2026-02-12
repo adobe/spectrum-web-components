@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { buttons } from '../stories/button-group.stories.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
+import { buttons } from '../stories/button-group.stories.js';
 
 testForMemoryLeaks(buttons({}));

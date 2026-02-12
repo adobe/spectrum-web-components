@@ -11,14 +11,15 @@
  */
 
 import {
-    CSSResultArray,
-    html,
-    PropertyValues,
-    SizedMixin,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  PropertyValues,
+  SizedMixin,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { CheckboxBase } from '@spectrum-web-components/checkbox/src/CheckboxBase.js';
+
 import switchStyles from './switch.css.js';
 import legacyStyles from './switch-legacy.css.js';
 
@@ -29,37 +30,37 @@ import legacyStyles from './switch-legacy.css.js';
  * @fires change - Announces a change in the `checked` property of a Switch
  */
 export class Switch extends SizedMixin(CheckboxBase) {
-    public static override get styles(): CSSResultArray {
-        /* c8 ignore next 4 */
-        if (window.hasOwnProperty('ShadyDOM')) {
-            // Override some styles if we are using the web component polyfill
-            return [switchStyles, legacyStyles];
-        }
-        return [switchStyles];
+  public static override get styles(): CSSResultArray {
+    /* c8 ignore next 4 */
+    if (window.hasOwnProperty('ShadyDOM')) {
+      // Override some styles if we are using the web component polyfill
+      return [switchStyles, legacyStyles];
     }
+    return [switchStyles];
+  }
 
-    @property({ type: Boolean, reflect: true })
-    public emphasized = false;
+  @property({ type: Boolean, reflect: true })
+  public emphasized = false;
 
-    protected override render(): TemplateResult {
-        return html`
-            ${super.render()}
-            <span id="switch"></span>
-            <label id="label" for="input"><slot></slot></label>
-        `;
+  protected override render(): TemplateResult {
+    return html`
+      ${super.render()}
+      <span id="switch"></span>
+      <label id="label" for="input"><slot></slot></label>
+    `;
+  }
+
+  protected override firstUpdated(changes: PropertyValues): void {
+    super.firstUpdated(changes);
+    this.inputElement.setAttribute('role', 'switch');
+  }
+
+  protected override updated(changes: PropertyValues): void {
+    if (changes.has('checked')) {
+      this.inputElement.setAttribute(
+        'aria-checked',
+        this.checked ? 'true' : 'false'
+      );
     }
-
-    protected override firstUpdated(changes: PropertyValues): void {
-        super.firstUpdated(changes);
-        this.inputElement.setAttribute('role', 'switch');
-    }
-
-    protected override updated(changes: PropertyValues): void {
-        if (changes.has('checked')) {
-            this.inputElement.setAttribute(
-                'aria-checked',
-                this.checked ? 'true' : 'false'
-            );
-        }
-    }
+  }
 }

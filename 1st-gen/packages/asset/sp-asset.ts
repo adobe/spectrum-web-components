@@ -10,13 +10,14 @@
  * governing permissions and limitations under the License.
  */
 
-import { Asset } from './src/Asset.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { Asset } from './src/Asset.js';
 
 defineElement('sp-asset', Asset);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-asset': Asset;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-asset': Asset;
+  }
 }

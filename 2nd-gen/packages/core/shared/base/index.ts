@@ -11,16 +11,16 @@
  */
 
 export {
-    SpectrumElement,
-    SpectrumMixin,
-    type SpectrumInterface,
+  SpectrumElement,
+  SpectrumMixin,
+  type SpectrumInterface,
 } from './Base.js';
 export { defineElement } from './define-element.js';
 export {
-    ElementSizes,
-    SizedMixin,
-    type DefaultElementSize,
-    type ElementSize,
-    type SizedElementInterface,
+  ElementSizes,
+  SizedMixin,
+  type DefaultElementSize,
+  type ElementSize,
+  type SizedElementInterface,
 } from './sizedMixin.js';
 export { version } from './version.js';

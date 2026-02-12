@@ -14,40 +14,40 @@ import { defineConfig, mergeConfig } from 'vitest/config';
 import viteConfig from './vite.config.ts';
 
 export default mergeConfig(
-    viteConfig,
-    defineConfig({
-        optimizeDeps: {
-            exclude: ['playwright', 'playwright-core', '@playwright/test'],
-        },
-        test: {
-            browser: {
-                enabled: true,
-                provider: 'playwright',
-                headless: true,
-                instances: [{ browser: 'chromium' }],
-            },
-            include: ['components/**/*.test.ts'],
-            coverage: {
-                provider: 'v8',
-                reporter: ['text', 'json', 'html'],
-                include: [
-                    'components/**/*.ts',
-                    '../core/components/**/*.ts',
-                    '../core/shared/**/*.ts',
-                ],
-                exclude: [
-                    '**/*.test.ts',
-                    '**/*.stories.ts',
-                    '**/node_modules/**',
-                    '**/dist/**',
-                    '**/*.d.ts',
-                ],
-            },
-            globals: true,
-            setupFiles: ['./utils/test-setup.ts'],
-        },
-        compilerOptions: {
-            types: ['@vitest/browser/providers/playwright'],
-        },
-    })
+  viteConfig,
+  defineConfig({
+    optimizeDeps: {
+      exclude: ['playwright', 'playwright-core', '@playwright/test'],
+    },
+    test: {
+      browser: {
+        enabled: true,
+        provider: 'playwright',
+        headless: true,
+        instances: [{ browser: 'chromium' }],
+      },
+      include: ['components/**/*.test.ts'],
+      coverage: {
+        provider: 'v8',
+        reporter: ['text', 'json', 'html'],
+        include: [
+          'components/**/*.ts',
+          '../core/components/**/*.ts',
+          '../core/shared/**/*.ts',
+        ],
+        exclude: [
+          '**/*.test.ts',
+          '**/*.stories.ts',
+          '**/node_modules/**',
+          '**/dist/**',
+          '**/*.d.ts',
+        ],
+      },
+      globals: true,
+      setupFiles: ['./utils/test-setup.ts'],
+    },
+    compilerOptions: {
+      types: ['@vitest/browser/providers/playwright'],
+    },
+  })
 );

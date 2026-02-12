@@ -24,15 +24,15 @@ import { render } from 'lit';
  * @returns Promise that resolves to the rendered element
  */
 export async function fixture<T extends HTMLElement>(
-    template: unknown
+  template: unknown
 ): Promise<T> {
-    const container = document.createElement('div');
-    render(template, container);
-    document.body.appendChild(container);
-    const element = container.firstElementChild as T;
-    await customElements.whenDefined(element.localName);
-    if ('updateComplete' in element) {
-        await (element as { updateComplete: Promise<boolean> }).updateComplete;
-    }
-    return element;
+  const container = document.createElement('div');
+  render(template, container);
+  document.body.appendChild(container);
+  const element = container.firstElementChild as T;
+  await customElements.whenDefined(element.localName);
+  if ('updateComplete' in element) {
+    await (element as { updateComplete: Promise<boolean> }).updateComplete;
+  }
+  return element;
 }

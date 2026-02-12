@@ -38,8 +38,8 @@ Horizontal dividers are used to separate content stacked vertically.
 <h2 class="spectrum-Heading spectrum-Heading--sizeXS">Small</h2>
 <sp-divider size="s"></sp-divider>
 <p class="spectrum-Body">
-    The small divider is used to divide similar components such as table rows,
-    action button groups, and components within a panel.
+  The small divider is used to divide similar components such as table rows,
+  action button groups, and components within a panel.
 </p>
 ```
 
@@ -51,8 +51,8 @@ Horizontal dividers are used to separate content stacked vertically.
 <h2 class="spectrum-Heading spectrum-Heading--sizeS">Medium</h2>
 <sp-divider size="m"></sp-divider>
 <p class="spectrum-Body">
-    The medium divider is used to divide subsections on a page, or to separate
-    different groups of components such as panels, rails, etc.
+  The medium divider is used to divide subsections on a page, or to separate
+  different groups of components such as panels, rails, etc.
 </p>
 ```
 
@@ -64,7 +64,7 @@ Horizontal dividers are used to separate content stacked vertically.
 <h2 class="spectrum-Heading spectrum-Heading--sizeM">Large</h2>
 <sp-divider size="l"></sp-divider>
 <p class="spectrum-Body">
-    The large divider should be used only for page titles or section titles.
+  The large divider should be used only for page titles or section titles.
 </p>
 ```
 
@@ -83,17 +83,17 @@ When a vertical divider is used inside of a flex container, use `align-self: str
 
 ```html
 <div style="height: 32px; display: flex;">
-    <sp-action-button quiet label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
-    </sp-action-button>
-    <sp-divider
-        size="s"
-        style="align-self: stretch; height: auto;"
-        vertical
-    ></sp-divider>
-    <sp-action-button quiet label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
-    </sp-action-button>
+  <sp-action-button quiet label="Zoom in">
+    <sp-icon-magnify slot="icon"></sp-icon-magnify>
+  </sp-action-button>
+  <sp-divider
+    size="s"
+    style="align-self: stretch; height: auto;"
+    vertical
+  ></sp-divider>
+  <sp-action-button quiet label="Zoom in">
+    <sp-icon-magnify slot="icon"></sp-icon-magnify>
+  </sp-action-button>
 </div>
 ```
 
@@ -103,17 +103,17 @@ When a vertical divider is used inside of a flex container, use `align-self: str
 
 ```html
 <div style="height: 32px; display: flex;">
-    <sp-action-button quiet label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
-    </sp-action-button>
-    <sp-divider
-        size="m"
-        style="align-self: stretch; height: auto;"
-        vertical
-    ></sp-divider>
-    <sp-action-button quiet label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
-    </sp-action-button>
+  <sp-action-button quiet label="Zoom in">
+    <sp-icon-magnify slot="icon"></sp-icon-magnify>
+  </sp-action-button>
+  <sp-divider
+    size="m"
+    style="align-self: stretch; height: auto;"
+    vertical
+  ></sp-divider>
+  <sp-action-button quiet label="Zoom in">
+    <sp-icon-magnify slot="icon"></sp-icon-magnify>
+  </sp-action-button>
 </div>
 ```
 
@@ -123,17 +123,17 @@ When a vertical divider is used inside of a flex container, use `align-self: str
 
 ```html
 <div style="height: 32px; display: flex;">
-    <sp-action-button quiet label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
-    </sp-action-button>
-    <sp-divider
-        size="l"
-        style="align-self: stretch; height: auto;"
-        vertical
-    ></sp-divider>
-    <sp-action-button quiet label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
-    </sp-action-button>
+  <sp-action-button quiet label="Zoom in">
+    <sp-icon-magnify slot="icon"></sp-icon-magnify>
+  </sp-action-button>
+  <sp-divider
+    size="l"
+    style="align-self: stretch; height: auto;"
+    vertical
+  ></sp-divider>
+  <sp-action-button quiet label="Zoom in">
+    <sp-icon-magnify slot="icon"></sp-icon-magnify>
+  </sp-action-button>
 </div>
 ```
 
@@ -150,15 +150,15 @@ Use the static color option when a divider needs to be placed on top of a color 
 
 ```html
 <div
-    style="background-color: var(--spectrum-docs-static-black-background-color); color: var(--spectrum-black); padding: 20px"
+  style="background-color: var(--spectrum-docs-static-black-background-color); color: var(--spectrum-black); padding: 20px"
 >
-    <h2 class="spectrum-Heading spectrum-Heading--sizeS">
-        Static black on light background
-    </h2>
-    <sp-divider static-color="black" size="m"></sp-divider>
-    <p class="spectrum-Body">
-        Use static black on light color or image backgrounds.
-    </p>
+  <h2 class="spectrum-Heading spectrum-Heading--sizeS">
+    Static black on light background
+  </h2>
+  <sp-divider static-color="black" size="m"></sp-divider>
+  <p class="spectrum-Body">
+    Use static black on light color or image backgrounds.
+  </p>
 </div>
 ```
 
@@ -168,15 +168,15 @@ Use the static color option when a divider needs to be placed on top of a color 
 
 ```html
 <div
-    style="background-color: var(--spectrum-docs-static-white-background-color); color: var(--spectrum-white); padding: 20px;"
+  style="background-color: var(--spectrum-docs-static-white-background-color); color: var(--spectrum-white); padding: 20px;"
 >
-    <h2 class="spectrum-Heading spectrum-Heading--sizeS">
-        Static white on dark background
-    </h2>
-    <sp-divider static-color="white" size="m"></sp-divider>
-    <p class="spectrum-Body">
-        Use static white on dark color or image backgrounds.
-    </p>
+  <h2 class="spectrum-Heading spectrum-Heading--sizeS">
+    Static white on dark background
+  </h2>
+  <sp-divider static-color="white" size="m"></sp-divider>
+  <p class="spectrum-Body">
+    Use static white on dark color or image backgrounds.
+  </p>
 </div>
 ```
 

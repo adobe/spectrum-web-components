@@ -39,15 +39,15 @@ The dialog consists of several key parts:
 
 ```html
 <sp-dialog size="s">
-    <div
-        slot="hero"
-        style="background-image: url(https://picsum.photos/1400/260)"
-    ></div>
-    <h2 slot="heading">Disclaimer</h2>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua.
-    <div slot="footer">Footer information</div>
-    <sp-button slot="button">Button</sp-button>
+  <div
+    slot="hero"
+    style="background-image: url(https://picsum.photos/1400/260)"
+  ></div>
+  <h2 slot="heading">Disclaimer</h2>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+  incididunt ut labore et dolore magna aliqua.
+  <div slot="footer">Footer information</div>
+  <sp-button slot="button">Button</sp-button>
 </sp-dialog>
 ```
 
@@ -61,17 +61,17 @@ The dialog consists of several key parts:
 
 ```html demo
 <sp-dialog size="s">
-    <h2 slot="heading">Disclaimer</h2>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
-    augue neque gravida. Libero volutpat sed ornare arcu. Quisque egestas diam
-    in arcu cursus euismod quis viverra. Posuere ac ut consequat semper viverra
-    nam libero justo laoreet. Enim ut tellus elementum sagittis vitae et leo
-    duis ut. Neque laoreet suspendisse interdum consectetur libero id faucibus
-    nisl. Diam volutpat commodo sed egestas egestas. Dolor magna eget est lorem
-    ipsum dolor. Vitae suscipit tellus mauris a diam maecenas sed. Turpis in eu
-    mi bibendum neque egestas congue. Rhoncus est pellentesque elit ullamcorper
-    dignissim cras lobortis.
+  <h2 slot="heading">Disclaimer</h2>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+  incididunt ut labore et dolore magna aliqua. Auctor augue mauris augue neque
+  gravida. Libero volutpat sed ornare arcu. Quisque egestas diam in arcu cursus
+  euismod quis viverra. Posuere ac ut consequat semper viverra nam libero justo
+  laoreet. Enim ut tellus elementum sagittis vitae et leo duis ut. Neque laoreet
+  suspendisse interdum consectetur libero id faucibus nisl. Diam volutpat
+  commodo sed egestas egestas. Dolor magna eget est lorem ipsum dolor. Vitae
+  suscipit tellus mauris a diam maecenas sed. Turpis in eu mi bibendum neque
+  egestas congue. Rhoncus est pellentesque elit ullamcorper dignissim cras
+  lobortis.
 </sp-dialog>
 ```
 
@@ -81,17 +81,17 @@ The dialog consists of several key parts:
 
 ```html demo
 <sp-dialog size="m">
-    <h2 slot="heading">Disclaimer</h2>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
-    augue neque gravida. Libero volutpat sed ornare arcu. Quisque egestas diam
-    in arcu cursus euismod quis viverra. Posuere ac ut consequat semper viverra
-    nam libero justo laoreet. Enim ut tellus elementum sagittis vitae et leo
-    duis ut. Neque laoreet suspendisse interdum consectetur libero id faucibus
-    nisl. Diam volutpat commodo sed egestas egestas. Dolor magna eget est lorem
-    ipsum dolor. Vitae suscipit tellus mauris a diam maecenas sed. Turpis in eu
-    mi bibendum neque egestas congue. Rhoncus est pellentesque elit ullamcorper
-    dignissim cras lobortis.
+  <h2 slot="heading">Disclaimer</h2>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+  incididunt ut labore et dolore magna aliqua. Auctor augue mauris augue neque
+  gravida. Libero volutpat sed ornare arcu. Quisque egestas diam in arcu cursus
+  euismod quis viverra. Posuere ac ut consequat semper viverra nam libero justo
+  laoreet. Enim ut tellus elementum sagittis vitae et leo duis ut. Neque laoreet
+  suspendisse interdum consectetur libero id faucibus nisl. Diam volutpat
+  commodo sed egestas egestas. Dolor magna eget est lorem ipsum dolor. Vitae
+  suscipit tellus mauris a diam maecenas sed. Turpis in eu mi bibendum neque
+  egestas congue. Rhoncus est pellentesque elit ullamcorper dignissim cras
+  lobortis.
 </sp-dialog>
 ```
 
@@ -101,17 +101,17 @@ The dialog consists of several key parts:
 
 ```html demo
 <sp-dialog size="l">
-    <h2 slot="heading">Disclaimer</h2>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
-    augue neque gravida. Libero volutpat sed ornare arcu. Quisque egestas diam
-    in arcu cursus euismod quis viverra. Posuere ac ut consequat semper viverra
-    nam libero justo laoreet. Enim ut tellus elementum sagittis vitae et leo
-    duis ut. Neque laoreet suspendisse interdum consectetur libero id faucibus
-    nisl. Diam volutpat commodo sed egestas egestas. Dolor magna eget est lorem
-    ipsum dolor. Vitae suscipit tellus mauris a diam maecenas sed. Turpis in eu
-    mi bibendum neque egestas congue. Rhoncus est pellentesque elit ullamcorper
-    dignissim cras lobortis.
+  <h2 slot="heading">Disclaimer</h2>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+  incididunt ut labore et dolore magna aliqua. Auctor augue mauris augue neque
+  gravida. Libero volutpat sed ornare arcu. Quisque egestas diam in arcu cursus
+  euismod quis viverra. Posuere ac ut consequat semper viverra nam libero justo
+  laoreet. Enim ut tellus elementum sagittis vitae et leo duis ut. Neque laoreet
+  suspendisse interdum consectetur libero id faucibus nisl. Diam volutpat
+  commodo sed egestas egestas. Dolor magna eget est lorem ipsum dolor. Vitae
+  suscipit tellus mauris a diam maecenas sed. Turpis in eu mi bibendum neque
+  egestas congue. Rhoncus est pellentesque elit ullamcorper dignissim cras
+  lobortis.
 </sp-dialog>
 ```
 
@@ -126,17 +126,17 @@ Note: the `dissmissable` attribute will not be followed when `mode="fullscreen"`
 
 ```html
 <sp-dialog dismissable>
-    <h2 slot="heading">Disclaimer</h2>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
-    augue neque gravida. Libero volutpat sed ornare arcu. Quisque egestas diam
-    in arcu cursus euismod quis viverra. Posuere ac ut consequat semper viverra
-    nam libero justo laoreet. Enim ut tellus elementum sagittis vitae et leo
-    duis ut. Neque laoreet suspendisse interdum consectetur libero id faucibus
-    nisl. Diam volutpat commodo sed egestas egestas. Dolor magna eget est lorem
-    ipsum dolor. Vitae suscipit tellus mauris a diam maecenas sed. Turpis in eu
-    mi bibendum neque egestas congue. Rhoncus est pellentesque elit ullamcorper
-    dignissim cras lobortis.
+  <h2 slot="heading">Disclaimer</h2>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+  incididunt ut labore et dolore magna aliqua. Auctor augue mauris augue neque
+  gravida. Libero volutpat sed ornare arcu. Quisque egestas diam in arcu cursus
+  euismod quis viverra. Posuere ac ut consequat semper viverra nam libero justo
+  laoreet. Enim ut tellus elementum sagittis vitae et leo duis ut. Neque laoreet
+  suspendisse interdum consectetur libero id faucibus nisl. Diam volutpat
+  commodo sed egestas egestas. Dolor magna eget est lorem ipsum dolor. Vitae
+  suscipit tellus mauris a diam maecenas sed. Turpis in eu mi bibendum neque
+  egestas congue. Rhoncus est pellentesque elit ullamcorper dignissim cras
+  lobortis.
 </sp-dialog>
 ```
 
@@ -144,17 +144,17 @@ Note: the `dissmissable` attribute will not be followed when `mode="fullscreen"`
 
 ```html
 <sp-dialog dismissable no-divider>
-    <h2 slot="heading">Disclaimer</h2>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
-    augue neque gravida. Libero volutpat sed ornare arcu. Quisque egestas diam
-    in arcu cursus euismod quis viverra. Posuere ac ut consequat semper viverra
-    nam libero justo laoreet. Enim ut tellus elementum sagittis vitae et leo
-    duis ut. Neque laoreet suspendisse interdum consectetur libero id faucibus
-    nisl. Diam volutpat commodo sed egestas egestas. Dolor magna eget est lorem
-    ipsum dolor. Vitae suscipit tellus mauris a diam maecenas sed. Turpis in eu
-    mi bibendum neque egestas congue. Rhoncus est pellentesque elit ullamcorper
-    dignissim cras lobortis.
+  <h2 slot="heading">Disclaimer</h2>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+  incididunt ut labore et dolore magna aliqua. Auctor augue mauris augue neque
+  gravida. Libero volutpat sed ornare arcu. Quisque egestas diam in arcu cursus
+  euismod quis viverra. Posuere ac ut consequat semper viverra nam libero justo
+  laoreet. Enim ut tellus elementum sagittis vitae et leo duis ut. Neque laoreet
+  suspendisse interdum consectetur libero id faucibus nisl. Diam volutpat
+  commodo sed egestas egestas. Dolor magna eget est lorem ipsum dolor. Vitae
+  suscipit tellus mauris a diam maecenas sed. Turpis in eu mi bibendum neque
+  egestas congue. Rhoncus est pellentesque elit ullamcorper dignissim cras
+  lobortis.
 </sp-dialog>
 ```
 
@@ -169,31 +169,31 @@ Use the dialog with an overlay to create a dialog that appears over the current 
 ```html
 <sp-button id="trigger">Overlay Trigger</sp-button>
 <sp-overlay trigger="trigger@click" placement="bottom">
-    <sp-popover>
-        <sp-dialog>
-            <h2 slot="heading">Overlay 1</h2>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Auctor
-            augue mauris augue neque gravida. Libero volutpat sed ornare arcu.
-        </sp-dialog>
-    </sp-popover>
+  <sp-popover>
+    <sp-dialog>
+      <h2 slot="heading">Overlay 1</h2>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
+      augue neque gravida. Libero volutpat sed ornare arcu.
+    </sp-dialog>
+  </sp-popover>
 </sp-overlay>
 <overlay-trigger placement="top" type="replace">
-    <sp-button slot="trigger">Overlay Trigger 2</sp-button>
-    <sp-popover slot="click-content" open>
-        <sp-dialog size="s">
-            <h2 slot="heading">Overlay 2</h2>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Auctor
-            augue mauris augue neque gravida. Libero volutpat sed ornare arcu.
-            <sp-button
-                slot="button"
-                onclick="javascript: this.dispatchEvent(new Event('close', {bubbles: true, composed: true}));"
-            >
-                I understand
-            </sp-button>
-        </sp-dialog>
-    </sp-popover>
+  <sp-button slot="trigger">Overlay Trigger 2</sp-button>
+  <sp-popover slot="click-content" open>
+    <sp-dialog size="s">
+      <h2 slot="heading">Overlay 2</h2>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
+      augue neque gravida. Libero volutpat sed ornare arcu.
+      <sp-button
+        slot="button"
+        onclick="javascript: this.dispatchEvent(new Event('close', {bubbles: true, composed: true}));"
+      >
+        I understand
+      </sp-button>
+    </sp-dialog>
+  </sp-popover>
 </overlay-trigger>
 ```
 
@@ -212,14 +212,14 @@ For accessible dialogs, always use `receives-focus="auto"` or `receives-focus="t
 ```html
 <sp-button id="focus">Overlay Trigger</sp-button>
 <sp-overlay trigger="focus@click" type="modal" receives-focus="auto">
-    <sp-popover>
-        <sp-dialog>
-            <h2 slot="heading">Dialog Heading</h2>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Auctor
-            augue mauris augue neque gravida. Libero volutpat sed ornare arcu.
-        </sp-dialog>
-    </sp-popover>
+  <sp-popover>
+    <sp-dialog>
+      <h2 slot="heading">Dialog Heading</h2>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
+      augue neque gravida. Libero volutpat sed ornare arcu.
+    </sp-dialog>
+  </sp-popover>
 </sp-overlay>
 ```
 

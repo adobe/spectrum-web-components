@@ -11,26 +11,27 @@
  */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import { spreadProps } from '../../../test/lit-helpers.js';
-import { StoryArgs } from './args.js';
+
 import '@spectrum-web-components/link/sp-link.js';
 import '../sp-contextual-help.js';
 
+import { spreadProps } from '../../../test/lit-helpers.js';
+import { StoryArgs } from './args.js';
+
 export const ContextualHelpMarkup = (args: StoryArgs = {}): TemplateResult => {
-    return html`
-        <sp-contextual-help
-            ${spreadProps(args)}
-            placement=${ifDefined(args.placement)}
-        >
-            <h2 slot="heading">Permission required</h2>
-            Your admin must grant you permission before you can create a
-            segment.
-            <sp-link
-                slot="link"
-                href="https://opensource.adobe.com/spectrum-web-components/"
-            >
-                Request permission
-            </sp-link>
-        </sp-contextual-help>
-    `;
+  return html`
+    <sp-contextual-help
+      ${spreadProps(args)}
+      placement=${ifDefined(args.placement)}
+    >
+      <h2 slot="heading">Permission required</h2>
+      Your admin must grant you permission before you can create a segment.
+      <sp-link
+        slot="link"
+        href="https://opensource.adobe.com/spectrum-web-components/"
+      >
+        Request permission
+      </sp-link>
+    </sp-contextual-help>
+  `;
 };

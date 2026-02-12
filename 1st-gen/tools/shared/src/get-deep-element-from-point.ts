@@ -11,20 +11,20 @@
  */
 
 export const getDeepElementFromPoint = (
-    x: number,
-    y: number
+  x: number,
+  y: number
 ): Element | null => {
-    let target = document.elementFromPoint(x, y);
-    while (target?.shadowRoot) {
-        const innerTarget = (
-            target.shadowRoot as unknown as {
-                elementFromPoint: (x: number, y: number) => Element | null;
-            }
-        ).elementFromPoint(x, y);
-        if (!innerTarget || innerTarget === target) {
-            break;
-        }
-        target = innerTarget;
+  let target = document.elementFromPoint(x, y);
+  while (target?.shadowRoot) {
+    const innerTarget = (
+      target.shadowRoot as unknown as {
+        elementFromPoint: (x: number, y: number) => Element | null;
+      }
+    ).elementFromPoint(x, y);
+    if (!innerTarget || innerTarget === target) {
+      break;
     }
-    return target;
+    target = innerTarget;
+  }
+  return target;
 };

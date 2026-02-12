@@ -22,24 +22,23 @@ import styles from './divider.css';
  * @element swc-divider
  */
 export class Divider extends DividerBase {
-    // ────────────────────
-    //     RENDERING & STYLING
-    // ────────────────────
+  // ────────────────────
+  //     RENDERING & STYLING
+  // ────────────────────
 
-    public static override styles: CSSResultArray = [styles];
+  public static override styles: CSSResultArray = [styles];
 
-    protected override render(): TemplateResult {
-        return html`
-            <div
-                class=${classMap({
-                    ['swc-Divider']: true,
-                    [`swc-Divider--size${this.size?.toUpperCase()}`]:
-                        this.size != null,
-                    [`swc-Divider--static${capitalize(this.staticColor)}`]:
-                        this.staticColor != null,
-                    [`swc-Divider--vertical`]: this.vertical,
-                })}
-            ></div>
-        `;
-    }
+  protected override render(): TemplateResult {
+    return html`
+      <div
+        class=${classMap({
+          ['swc-Divider']: true,
+          [`swc-Divider--size${this.size?.toUpperCase()}`]: this.size != null,
+          [`swc-Divider--static${capitalize(this.staticColor)}`]:
+            this.staticColor != null,
+          [`swc-Divider--vertical`]: this.vertical,
+        })}
+      ></div>
+    `;
+  }
 }

@@ -50,15 +50,15 @@ For tabs that have an icon and no visible label, the icon should have a `label` 
 
 ```html
 <sp-tabs>
-    <sp-tab value="complete">
-        <sp-icon-checkmark
-            slot="icon"
-            label="Checking your work"
-        ></sp-icon-checkmark>
-    </sp-tab>
-    <sp-tab-panel value="complete">
-        A screenreader will read this tab as "Checking your work"
-    </sp-tab-panel>
+  <sp-tab value="complete">
+    <sp-icon-checkmark
+      slot="icon"
+      label="Checking your work"
+    ></sp-icon-checkmark>
+  </sp-tab>
+  <sp-tab-panel value="complete">
+    A screenreader will read this tab as "Checking your work"
+  </sp-tab-panel>
 </sp-tabs>
 ```
 
@@ -94,8 +94,8 @@ The tab is currently active and its associated panel is visible.
 
 ```html
 <sp-tabs>
-    <sp-tab selected="label" label="Label" value="1"></sp-tab>
-    <sp-tab-panel value="1">This tab is selected.</sp-tab-panel>
+  <sp-tab selected="label" label="Label" value="1"></sp-tab>
+  <sp-tab-panel value="1">This tab is selected.</sp-tab-panel>
 </sp-tabs>
 ```
 
@@ -109,14 +109,14 @@ When an `<sp-tab>` element is given the `disabled` attribute, it will prevent vi
 
 ```html
 <sp-tabs selected="2">
-    <sp-tab label="Tab 1" value="1"></sp-tab>
-    <sp-tab label="Tab 2" value="2"></sp-tab>
-    <sp-tab label="Tab 3" value="3" disabled></sp-tab>
-    <sp-tab label="Tab 4" value="4"></sp-tab>
-    <sp-tab-panel value="1">Content for Tab 1 is selectable</sp-tab-panel>
-    <sp-tab-panel value="2">Content for Tab 2 is selected</sp-tab-panel>
-    <sp-tab-panel value="3">Content for Tab 3 is not selectable</sp-tab-panel>
-    <sp-tab-panel value="4">Content for Tab 4 is selectable</sp-tab-panel>
+  <sp-tab label="Tab 1" value="1"></sp-tab>
+  <sp-tab label="Tab 2" value="2"></sp-tab>
+  <sp-tab label="Tab 3" value="3" disabled></sp-tab>
+  <sp-tab label="Tab 4" value="4"></sp-tab>
+  <sp-tab-panel value="1">Content for Tab 1 is selectable</sp-tab-panel>
+  <sp-tab-panel value="2">Content for Tab 2 is selected</sp-tab-panel>
+  <sp-tab-panel value="3">Content for Tab 3 is not selectable</sp-tab-panel>
+  <sp-tab-panel value="4">Content for Tab 4 is selectable</sp-tab-panel>
 </sp-tabs>
 ```
 

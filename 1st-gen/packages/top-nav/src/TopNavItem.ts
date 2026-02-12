@@ -11,19 +11,19 @@
  */
 
 import {
-    CSSResultArray,
-    html,
-    PropertyValues,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  PropertyValues,
+  TemplateResult,
 } from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
-    property,
-    query,
+  property,
+  query,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { Focusable, LikeAnchor } from '@spectrum-web-components/shared';
-
 import itemStyles from '@spectrum-web-components/tabs/src/tab.css.js';
+
 import topNavItemStyles from './top-nav-item.css.js';
 
 /**
@@ -33,46 +33,46 @@ import topNavItemStyles from './top-nav-item.css.js';
  */
 
 export class TopNavItem extends LikeAnchor(Focusable) {
-    public static override get styles(): CSSResultArray {
-        return [itemStyles, topNavItemStyles];
-    }
+  public static override get styles(): CSSResultArray {
+    return [itemStyles, topNavItemStyles];
+  }
 
-    @query('a')
-    private anchor!: HTMLAnchorElement;
+  @query('a')
+  private anchor!: HTMLAnchorElement;
 
-    @property({ type: Boolean, reflect: true })
-    public selected = false;
+  @property({ type: Boolean, reflect: true })
+  public selected = false;
 
-    public value = '';
+  public value = '';
 
-    public override get focusElement(): HTMLAnchorElement {
-        return this.anchor;
-    }
+  public override get focusElement(): HTMLAnchorElement {
+    return this.anchor;
+  }
 
-    public override click(): void {
-        this.anchor.click();
-    }
+  public override click(): void {
+    this.anchor.click();
+  }
 
-    protected override render(): TemplateResult {
-        return html`
-            <a
-                id="item-label"
-                href=${ifDefined(this.href)}
-                download=${ifDefined(this.download)}
-                target=${ifDefined(this.target)}
-                aria-label=${ifDefined(this.label)}
-                aria-current=${ifDefined(
-                    this.selected && this.href ? 'page' : undefined
-                )}
-                rel=${ifDefined(this.rel)}
-            >
-                <slot></slot>
-            </a>
-        `;
-    }
+  protected override render(): TemplateResult {
+    return html`
+      <a
+        id="item-label"
+        href=${ifDefined(this.href)}
+        download=${ifDefined(this.download)}
+        target=${ifDefined(this.target)}
+        aria-label=${ifDefined(this.label)}
+        aria-current=${ifDefined(
+          this.selected && this.href ? 'page' : undefined
+        )}
+        rel=${ifDefined(this.rel)}
+      >
+        <slot></slot>
+      </a>
+    `;
+  }
 
-    protected override updated(changes: PropertyValues): void {
-        super.updated(changes);
-        this.value = this.anchor.href;
-    }
+  protected override updated(changes: PropertyValues): void {
+    super.updated(changes);
+    this.value = this.anchor.href;
+  }
 }

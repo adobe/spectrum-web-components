@@ -16,8 +16,9 @@ import fg from 'fast-glob';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { gatherDemoURLs as gatherPackageNames } from './gather-wcd-urls.js';
+
 import { gatherStorybookURLs } from './gather-storybook-urls.js';
+import { gatherDemoURLs as gatherPackageNames } from './gather-wcd-urls.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectDir = path.resolve(__dirname, '..', '..', '..');

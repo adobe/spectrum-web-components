@@ -11,6 +11,7 @@
  */
 
 import { SpectrumElement } from '@spectrum-web-components/base';
+
 import { ManageHelpText } from './manage-help-text.js';
 
 /**

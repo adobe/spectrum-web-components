@@ -11,21 +11,21 @@
  */
 
 import {
-    CSSResultArray,
-    html,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  TemplateResult,
 } from '@spectrum-web-components/base';
-
 import { DividerBase } from '@spectrum-web-components/core/components/divider';
+
 import styles from './divider.css.js';
 
 /**
  * @element sp-divider
  */
 export class Divider extends DividerBase {
-    public static override styles: CSSResultArray = [styles];
+  public static override styles: CSSResultArray = [styles];
 
-    protected override render(): TemplateResult {
-        return html``;
-    }
+  protected override render(): TemplateResult {
+    return html``;
+  }
 }

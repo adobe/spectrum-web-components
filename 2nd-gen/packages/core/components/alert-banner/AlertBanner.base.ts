@@ -21,104 +21,104 @@ export type AlertBannerVariants = (typeof VALID_VARIANTS)[number];
  * Base class for alert banner components
  */
 export abstract class AlertBannerBase extends SpectrumElement {
-    public static override get styles(): CSSResultArray {
-        return [];
+  public static override get styles(): CSSResultArray {
+    return [];
+  }
+
+  /**
+   * Controls the display of the alert banner
+   *
+   * @param {boolean} open
+   */
+  @property({ type: Boolean, reflect: true })
+  public open = false;
+
+  /**
+   * Whether to include an icon-only close button to dismiss the alert banner
+   *
+   * @param {boolean} dismissible
+   */
+  @property({ type: Boolean, reflect: true })
+  public dismissible = false;
+
+  /**
+   * The variant applies specific styling when set to `negative` or `info`;
+   * `variant` attribute is removed when it's passed an invalid variant.
+   *
+   * @param {string} variant
+   */
+  @property({ type: String })
+  public set variant(variant: AlertBannerVariants) {
+    if (variant === this.variant) {
+      return;
     }
+    const oldValue = this.variant;
 
-    /**
-     * Controls the display of the alert banner
-     *
-     * @param {Boolean} open
-     */
-    @property({ type: Boolean, reflect: true })
-    public open = false;
+    if (this.isValidVariant(variant)) {
+      this.setAttribute('variant', variant);
+      this._variant = variant;
+    } else {
+      this.removeAttribute('variant');
+      this._variant = '';
 
-    /**
-     * Whether to include an icon-only close button to dismiss the alert banner
-     *
-     * @param {Boolean} dismissible
-     */
-    @property({ type: Boolean, reflect: true })
-    public dismissible = false;
-
-    /**
-     * The variant applies specific styling when set to `negative` or `info`;
-     * `variant` attribute is removed when it's passed an invalid variant.
-     *
-     * @param {String} variant
-     */
-    @property({ type: String })
-    public set variant(variant: AlertBannerVariants) {
-        if (variant === this.variant) {
-            return;
-        }
-        const oldValue = this.variant;
-
-        if (this.isValidVariant(variant)) {
-            this.setAttribute('variant', variant);
-            this._variant = variant;
-        } else {
-            this.removeAttribute('variant');
-            this._variant = '';
-
-            if (window.__swc?.DEBUG) {
-                window.__swc.warn(
-                    this,
-                    `<${this.localName}> element expects the "variant" attribute to be one of the following:`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/alert-banner/#variants',
-                    {
-                        issues: [...VALID_VARIANTS],
-                    }
-                );
-            }
-        }
-        this.requestUpdate('variant', oldValue);
-    }
-
-    public get variant(): AlertBannerVariants {
-        return this._variant;
-    }
-
-    private _variant: AlertBannerVariants = '';
-
-    protected isValidVariant(variant: string): boolean {
-        return VALID_VARIANTS.includes(variant);
-    }
-
-    protected abstract renderIcon(variant: string): TemplateResult;
-
-    protected shouldClose(): void {
-        const applyDefault = this.dispatchEvent(
-            new CustomEvent('close', {
-                composed: true,
-                bubbles: true,
-                cancelable: true,
-            })
+      if (window.__swc?.DEBUG) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> element expects the "variant" attribute to be one of the following:`,
+          'https://opensource.adobe.com/spectrum-web-components/components/alert-banner/#variants',
+          {
+            issues: [...VALID_VARIANTS],
+          }
         );
-        if (applyDefault) {
-            this.close();
-        }
+      }
     }
+    this.requestUpdate('variant', oldValue);
+  }
 
-    public close(): void {
-        this.open = false;
+  public get variant(): AlertBannerVariants {
+    return this._variant;
+  }
+
+  private _variant: AlertBannerVariants = '';
+
+  protected isValidVariant(variant: string): boolean {
+    return VALID_VARIANTS.includes(variant);
+  }
+
+  protected abstract renderIcon(variant: string): TemplateResult;
+
+  protected shouldClose(): void {
+    const applyDefault = this.dispatchEvent(
+      new CustomEvent('close', {
+        composed: true,
+        bubbles: true,
+        cancelable: true,
+      })
+    );
+    if (applyDefault) {
+      this.close();
     }
+  }
 
-    protected handleKeydown(event: KeyboardEvent): void {
-        if (event.code === 'Escape' && this.dismissible) {
-            this.shouldClose();
-        }
+  public close(): void {
+    this.open = false;
+  }
+
+  protected handleKeydown(event: KeyboardEvent): void {
+    if (event.code === 'Escape' && this.dismissible) {
+      this.shouldClose();
     }
+  }
 
-    protected override updated(changes: PropertyValues): void {
-        super.updated(changes);
+  protected override updated(changes: PropertyValues): void {
+    super.updated(changes);
 
-        if (changes.has('open')) {
-            if (this.open) {
-                this.addEventListener('keydown', this.handleKeydown);
-            } else {
-                this.removeEventListener('keydown', this.handleKeydown);
-            }
-        }
+    if (changes.has('open')) {
+      if (this.open) {
+        this.addEventListener('keydown', this.handleKeydown);
+      } else {
+        this.removeEventListener('keydown', this.handleKeydown);
+      }
     }
+  }
 }

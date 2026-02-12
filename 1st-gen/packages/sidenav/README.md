@@ -33,9 +33,9 @@ When looking to leverage the `Sidenav`, `SidenavHeading`, or `SidenavItem` base 
 
 ```js
 import {
-    Sidenav,
-    SidenavHeading,
-    SidenavItem,
+  Sidenav,
+  SidenavHeading,
+  SidenavItem,
 } from '@spectrum-web-components/sidenav';
 ```
 
@@ -50,10 +50,10 @@ The side navigation consists of several key parts:
 
 ```html live-demo
 <sp-sidenav>
-    <sp-sidenav-heading label="Piano"></sp-sidenav-heading>
-    <sp-sidenav-item label="Treble"></sp-sidenav-item>
-    <sp-sidenav-item label="Bass"></sp-sidenav-item>
-    <sp-sidenav-item disabled label="Grand staff"></sp-sidenav-item>
+  <sp-sidenav-heading label="Piano"></sp-sidenav-heading>
+  <sp-sidenav-item label="Treble"></sp-sidenav-item>
+  <sp-sidenav-item label="Bass"></sp-sidenav-item>
+  <sp-sidenav-item disabled label="Grand staff"></sp-sidenav-item>
 </sp-sidenav>
 ```
 
@@ -71,41 +71,41 @@ Make sure to use the right option for the context and user needs. Don’t mix be
 
 ```html
 <sp-sidenav defaultValue="Docs">
-    <sp-sidenav-item
-        value="Docs"
-        href="/components/SideNav"
-        label="Docs"
-        selected
-    ></sp-sidenav-item>
-    <sp-sidenav-item
-        value="Guides"
-        href="/guides"
-        label="Guides"
-    ></sp-sidenav-item>
-    <sp-sidenav-item
-        value="Community"
-        href="/community"
-        label="Community"
-    ></sp-sidenav-item>
-    <sp-sidenav-item
-        value="Storybook"
-        href="/storybook"
-        target="_blank"
-        label="Storybook"
-    ></sp-sidenav-item>
-    <sp-sidenav-item
-        value="Releases"
-        href="/releases"
-        target="_blank"
-        label="Releases"
-        disabled
-    ></sp-sidenav-item>
-    <sp-sidenav-item
-        value="GitHub"
-        href="/github"
-        target="_blank"
-        label="Github"
-    ></sp-sidenav-item>
+  <sp-sidenav-item
+    value="Docs"
+    href="/components/SideNav"
+    label="Docs"
+    selected
+  ></sp-sidenav-item>
+  <sp-sidenav-item
+    value="Guides"
+    href="/guides"
+    label="Guides"
+  ></sp-sidenav-item>
+  <sp-sidenav-item
+    value="Community"
+    href="/community"
+    label="Community"
+  ></sp-sidenav-item>
+  <sp-sidenav-item
+    value="Storybook"
+    href="/storybook"
+    target="_blank"
+    label="Storybook"
+  ></sp-sidenav-item>
+  <sp-sidenav-item
+    value="Releases"
+    href="/releases"
+    target="_blank"
+    label="Releases"
+    disabled
+  ></sp-sidenav-item>
+  <sp-sidenav-item
+    value="GitHub"
+    href="/github"
+    target="_blank"
+    label="Github"
+  ></sp-sidenav-item>
 </sp-sidenav>
 ```
 
@@ -117,15 +117,15 @@ In single-level side navigation, do not mix icon usage between side nav items. E
 
 ```html
 <sp-sidenav>
-    <sp-sidenav-item value="Section Title 1" label="Section Title 1">
-        <sp-icon-star slot="icon"></sp-icon-star>
-    </sp-sidenav-item>
-    <sp-sidenav-item value="Section Title 2" label="Section Title 2" expanded>
-        <sp-icon-star slot="icon"></sp-icon-star>
-    </sp-sidenav-item>
-    <sp-sidenav-item value="Section Title 3" label="Section Title 3" expanded>
-        <sp-icon-star slot="icon"></sp-icon-star>
-    </sp-sidenav-item>
+  <sp-sidenav-item value="Section Title 1" label="Section Title 1">
+    <sp-icon-star slot="icon"></sp-icon-star>
+  </sp-sidenav-item>
+  <sp-sidenav-item value="Section Title 2" label="Section Title 2" expanded>
+    <sp-icon-star slot="icon"></sp-icon-star>
+  </sp-sidenav-item>
+  <sp-sidenav-item value="Section Title 3" label="Section Title 3" expanded>
+    <sp-icon-star slot="icon"></sp-icon-star>
+  </sp-sidenav-item>
 </sp-sidenav>
 ```
 
@@ -139,16 +139,16 @@ Although headings can be used in multi-level side navigation, they can only be u
 
 ```html
 <sp-sidenav>
-    <sp-sidenav-item value="Section 1" label="Section 1"></sp-sidenav-item>
-    <sp-sidenav-item value="Section 2" label="Section 2"></sp-sidenav-item>
-    <sp-sidenav-heading label="Category 1">
-        <sp-sidenav-item value="Section 3" label="Section 3"></sp-sidenav-item>
-        <sp-sidenav-item value="Section 4" label="Section 4"></sp-sidenav-item>
-    </sp-sidenav-heading>
-    <sp-sidenav-heading label="Category 2">
-        <sp-sidenav-item value="Section 5" label="Section 5"></sp-sidenav-item>
-        <sp-sidenav-item value="Section 6" label="Section 6"></sp-sidenav-item>
-    </sp-sidenav-heading>
+  <sp-sidenav-item value="Section 1" label="Section 1"></sp-sidenav-item>
+  <sp-sidenav-item value="Section 2" label="Section 2"></sp-sidenav-item>
+  <sp-sidenav-heading label="Category 1">
+    <sp-sidenav-item value="Section 3" label="Section 3"></sp-sidenav-item>
+    <sp-sidenav-item value="Section 4" label="Section 4"></sp-sidenav-item>
+  </sp-sidenav-heading>
+  <sp-sidenav-heading label="Category 2">
+    <sp-sidenav-item value="Section 5" label="Section 5"></sp-sidenav-item>
+    <sp-sidenav-item value="Section 6" label="Section 6"></sp-sidenav-item>
+  </sp-sidenav-heading>
 </sp-sidenav>
 ```
 
@@ -165,23 +165,17 @@ Up to three levels of navigation are supported.
 
 ```html
 <sp-sidenav variant="multilevel" defaultValue="Layout">
-    <sp-sidenav-item value="Guidelines" label="Guidelines"></sp-sidenav-item>
-    <sp-sidenav-heading value="Styles" label="Styles">
-        <sp-sidenav-item value="Color" label="Color"></sp-sidenav-item>
-        <sp-sidenav-item value="Grid" label="Grid" expanded>
-            <sp-sidenav-item value="Layout" label="Layout"></sp-sidenav-item>
-            <sp-sidenav-item
-                value="Responsive"
-                label="Responsive"
-            ></sp-sidenav-item>
-        </sp-sidenav-item>
-        <sp-sidenav-item
-            value="Typography"
-            label="Typography"
-        ></sp-sidenav-item>
-    </sp-sidenav-heading>
-    <sp-sidenav-item value="Elements" label="Elements"></sp-sidenav-item>
-    <sp-sidenav-item value="Patterns" label="Patterns"></sp-sidenav-item>
+  <sp-sidenav-item value="Guidelines" label="Guidelines"></sp-sidenav-item>
+  <sp-sidenav-heading value="Styles" label="Styles">
+    <sp-sidenav-item value="Color" label="Color"></sp-sidenav-item>
+    <sp-sidenav-item value="Grid" label="Grid" expanded>
+      <sp-sidenav-item value="Layout" label="Layout"></sp-sidenav-item>
+      <sp-sidenav-item value="Responsive" label="Responsive"></sp-sidenav-item>
+    </sp-sidenav-item>
+    <sp-sidenav-item value="Typography" label="Typography"></sp-sidenav-item>
+  </sp-sidenav-heading>
+  <sp-sidenav-item value="Elements" label="Elements"></sp-sidenav-item>
+  <sp-sidenav-item value="Patterns" label="Patterns"></sp-sidenav-item>
 </sp-sidenav>
 ```
 
@@ -199,27 +193,21 @@ In multi-level side navigation, icon and text-only navigation items can be used 
 
 ```html
 <sp-sidenav>
-    <sp-sidenav-item value="Section Title 1" label="Section Title 1">
-        <sp-icon-star slot="icon"></sp-icon-star>
-        <sp-sidenav-item
-            value="Typography"
-            label="Typography"
-        ></sp-sidenav-item>
+  <sp-sidenav-item value="Section Title 1" label="Section Title 1">
+    <sp-icon-star slot="icon"></sp-icon-star>
+    <sp-sidenav-item value="Typography" label="Typography"></sp-sidenav-item>
+  </sp-sidenav-item>
+  <sp-sidenav-item value="Section Title 2" label="Section Title 2" expanded>
+    <sp-icon-star slot="icon"></sp-icon-star>
+    <sp-sidenav-item value="Iconography" label="Iconography"></sp-sidenav-item>
+  </sp-sidenav-item>
+  <sp-sidenav-item value="Section Title 3" label="Section Title 3" expanded>
+    <sp-icon-star slot="icon"></sp-icon-star>
+    <sp-sidenav-item value="Patterns" label="Patterns" expanded>
+      <sp-sidenav-item value="Forms" label="Forms"></sp-sidenav-item>
+      <sp-sidenav-item value="Cards" label="Cards"></sp-sidenav-item>
     </sp-sidenav-item>
-    <sp-sidenav-item value="Section Title 2" label="Section Title 2" expanded>
-        <sp-icon-star slot="icon"></sp-icon-star>
-        <sp-sidenav-item
-            value="Iconography"
-            label="Iconography"
-        ></sp-sidenav-item>
-    </sp-sidenav-item>
-    <sp-sidenav-item value="Section Title 3" label="Section Title 3" expanded>
-        <sp-icon-star slot="icon"></sp-icon-star>
-        <sp-sidenav-item value="Patterns" label="Patterns" expanded>
-            <sp-sidenav-item value="Forms" label="Forms"></sp-sidenav-item>
-            <sp-sidenav-item value="Cards" label="Cards"></sp-sidenav-item>
-        </sp-sidenav-item>
-    </sp-sidenav-item>
+  </sp-sidenav-item>
 </sp-sidenav>
 ```
 

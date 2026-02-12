@@ -31,7 +31,7 @@ import { InfieldButton } from '@spectrum-web-components/infield-button';
 
 ```html
 <sp-infield-button label="Add" size="s">
-    <sp-icon-add></sp-icon-add>
+  <sp-icon-add></sp-icon-add>
 </sp-infield-button>
 ```
 
@@ -41,7 +41,7 @@ import { InfieldButton } from '@spectrum-web-components/infield-button';
 
 ```html
 <sp-infield-button label="Add" size="m">
-    <sp-icon-add></sp-icon-add>
+  <sp-icon-add></sp-icon-add>
 </sp-infield-button>
 ```
 
@@ -51,7 +51,7 @@ import { InfieldButton } from '@spectrum-web-components/infield-button';
 
 ```html
 <sp-infield-button label="Add" size="l">
-    <sp-icon-add></sp-icon-add>
+  <sp-icon-add></sp-icon-add>
 </sp-infield-button>
 ```
 
@@ -61,7 +61,7 @@ import { InfieldButton } from '@spectrum-web-components/infield-button';
 
 ```html
 <sp-infield-button label="Add" size="xl">
-    <sp-icon-add></sp-icon-add>
+  <sp-icon-add></sp-icon-add>
 </sp-infield-button>
 ```
 
@@ -76,7 +76,7 @@ Use the `inline` attribute to describe whether the `<sp-infield-button>` should 
 
 ```html
 <sp-infield-button inline="start" label="Add">
-    <sp-icon-add></sp-icon-add>
+  <sp-icon-add></sp-icon-add>
 </sp-infield-button>
 ```
 
@@ -84,7 +84,7 @@ Use the `inline` attribute to describe whether the `<sp-infield-button>` should 
 
 ```html
 <sp-infield-button inline="end" label="Add">
-    <sp-icon-add></sp-icon-add>
+  <sp-icon-add></sp-icon-add>
 </sp-infield-button>
 ```
 
@@ -94,10 +94,10 @@ The `block` attribute can be used to create a vertial stack of buttons. You can 
 
 ```html
 <sp-infield-button block="start" label="Increment">
-    <sp-icon-add size="xxs"></sp-icon-add>
+  <sp-icon-add size="xxs"></sp-icon-add>
 </sp-infield-button>
 <sp-infield-button block="end" label="Decrement">
-    <sp-icon-remove size="xxs"></sp-icon-remove>
+  <sp-icon-remove size="xxs"></sp-icon-remove>
 </sp-infield-button>
 ```
 
@@ -107,7 +107,7 @@ An `<sp-infield-button>` with the `disabled` attribute will become non-interacti
 
 ```html
 <sp-infield-button disabled inline="start" label="Add">
-    <sp-icon-add></sp-icon-add>
+  <sp-icon-add></sp-icon-add>
 </sp-infield-button>
 ```
 
@@ -117,6 +117,6 @@ An `<sp-infield-button>` with the `quiet` attribute will feature a diminished vi
 
 ```html
 <sp-infield-button inline="start" label="Add" quiet>
-    <sp-icon-add></sp-icon-add>
+  <sp-icon-add></sp-icon-add>
 </sp-infield-button>
 ```
