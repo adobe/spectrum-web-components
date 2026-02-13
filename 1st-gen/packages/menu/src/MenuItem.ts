@@ -392,7 +392,7 @@ export class MenuItem extends LikeAnchor(
                 ?open=${this.hasSubmenu &&
                 this.open &&
                 this.dependencyManager.loaded}
-                .placement=${this.isLTR ? 'right-start' : 'left-start'}
+                .placement=${this.dir === 'ltr' ? 'right-start' : 'left-start'}
                 receives-focus="false"
                 .offset=${[-10, 0] as [number, number]}
                 .type=${'auto'}

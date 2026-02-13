@@ -510,9 +510,10 @@ export class HandleController {
         const offset = event.clientX;
         const size = rect.width;
 
-        const directionalOffset = this.host.isLTR
-            ? offset - minOffset
-            : size - (offset - minOffset);
+        const dir = getComputedStyle(this.host).direction ?? 'ltr';
+
+        const directionalOffset =
+            dir === 'ltr' ? offset - minOffset : size - (offset - minOffset);
         const normalized = directionalOffset / size;
 
         return model.normalization.fromNormalized(
@@ -534,9 +535,7 @@ export class HandleController {
             'handle-highlight': model.highlight,
         };
         const style = {
-            [this.host.isLTR ? 'left' : 'right']: `${
-                model.normalizedValue * 100
-            }%`,
+            'inset-inline-start': `${model.normalizedValue * 100}%`,
             'z-index': zIndex.toString(),
             ...(isMultiHandle && {
                 'background-color': `var(--spectrum-slider-handle-background-color-${index}, var(--spectrum-slider-handle-background-color))`,

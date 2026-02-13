@@ -6,6 +6,16 @@
 
 # Status
 
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
+
+- [Utility components (no standalone SWC)](#utility-components-no-standalone-swc)
+- [New for Spectrum 2](#new-for-spectrum-2)
+
+</details>
+
 <!-- Document content (editable) -->
 
 | Component           | [Analyze](02_step-by-step/01_analyze-rendering-and-styling/README.md) | [Factor Component](02_step-by-step/02_factor-rendering-out-of-1st-gen-component.md) | [Move to Core](02_step-by-step/03_move-base-class-to-2nd-gen-core.md) | [Add Data Model](02_step-by-step/04_formalize-spectrum-data-model.md) | [Add 2nd-Gen](02_step-by-step/05_implement-2nd-gen-component.md) | [Render & Style](02_step-by-step/06_migrate-rendering-and-styles.md) | [Add Stories](02_step-by-step/07_add-stories-for-2nd-gen-component.md) |

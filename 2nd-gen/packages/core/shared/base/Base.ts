@@ -13,10 +13,6 @@
 import { LitElement, ReactiveElement } from 'lit';
 
 import { coreVersion, version } from './version.js';
-type ThemeRoot = HTMLElement & {
-    startManagingContentDirection: (el: HTMLElement) => void;
-    stopManagingContentDirection: (el: HTMLElement) => void;
-};
 
 type Constructor<T = Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,37 +22,8 @@ type Constructor<T = Record<string, unknown>> = {
 
 export interface SpectrumInterface {
     shadowRoot: ShadowRoot;
-    isLTR: boolean;
     hasVisibleFocusInTree(): boolean;
-    dir: 'ltr' | 'rtl';
 }
-
-const observedForElements: Set<HTMLElement> = new Set();
-
-const updateRTL = (): void => {
-    const dir =
-        document.documentElement.dir === 'rtl'
-            ? document.documentElement.dir
-            : 'ltr';
-    observedForElements.forEach((el) => {
-        el.setAttribute('dir', dir);
-    });
-};
-
-const rtlObserver = new MutationObserver(updateRTL);
-
-rtlObserver.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ['dir'],
-});
-
-type ContentDirectionManager = HTMLElement & {
-    startManagingContentDirection?(): void;
-};
-
-const canManageContentDirection = (el: ContentDirectionManager): boolean =>
-    typeof el.startManagingContentDirection !== 'undefined' ||
-    el.tagName === 'SP-THEME';
 
 export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
     constructor: T
@@ -66,22 +33,6 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
          * @internal
          */
         public override shadowRoot!: ShadowRoot;
-        private _dirParent?: HTMLElement;
-
-        /**
-         * @internal
-         */
-        public override dir!: 'ltr' | 'rtl';
-
-        /**
-         * @internal
-         */
-        public get isLTR(): boolean {
-            return this.dir === 'ltr';
-        }
-        /**
-         * @internal
-         */
         public hasVisibleFocusInTree(): boolean {
             const getAncestors = (root: Document = document): HTMLElement[] => {
                 // eslint-disable-next-line @spectrum-web-components/document-active-element
@@ -128,69 +79,18 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                 return activeElement.matches('.focus-visible');
             }
         }
-
-        public override connectedCallback(): void {
-            if (!this.hasAttribute('dir')) {
-                let dirParent = ((this as HTMLElement).assignedSlot ||
-                    this.parentNode) as HTMLElement;
-                while (
-                    dirParent !== document.documentElement &&
-                    !canManageContentDirection(
-                        dirParent as ContentDirectionManager
-                    )
-                ) {
-                    dirParent = ((dirParent as HTMLElement).assignedSlot || // step into the shadow DOM of the parent of a slotted node
-                        dirParent.parentNode || // DOM Element detected
-                        (dirParent as unknown as ShadowRoot)
-                            .host) as HTMLElement;
-                }
-                this.dir =
-                    dirParent.dir === 'rtl' ? dirParent.dir : this.dir || 'ltr';
-                if (dirParent === document.documentElement) {
-                    observedForElements.add(this);
-                } else {
-                    const { localName } = dirParent;
-                    if (
-                        localName.search('-') > -1 &&
-                        !customElements.get(localName)
-                    ) {
-                        /* c8 ignore next 5 */
-                        customElements.whenDefined(localName).then(() => {
-                            (
-                                dirParent as ThemeRoot
-                            ).startManagingContentDirection(this);
-                        });
-                    } else {
-                        (dirParent as ThemeRoot).startManagingContentDirection(
-                            this
-                        );
-                    }
-                }
-                this._dirParent = dirParent as HTMLElement;
-            }
-            super.connectedCallback();
-        }
-
-        public override disconnectedCallback(): void {
-            super.disconnectedCallback();
-            if (this._dirParent) {
-                if (this._dirParent === document.documentElement) {
-                    observedForElements.delete(this);
-                } else {
-                    (this._dirParent as ThemeRoot).stopManagingContentDirection(
-                        this
-                    );
-                }
-                this.removeAttribute('dir');
-            }
-        }
     }
     return SpectrumMixinElement;
 }
 
 export class SpectrumElement extends SpectrumMixin(LitElement) {
     static VERSION = version;
+
     static CORE_VERSION = coreVersion;
+
+    public override get dir(): CSSStyleDeclaration['direction'] {
+        return getComputedStyle(this).direction ?? 'ltr';
+    }
 }
 
 if (process.env.NODE_ENV === 'development') {

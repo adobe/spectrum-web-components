@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../../../README.md) / [Project planning](../../../../README.md) / [Workstreams](../../../README.md) / [2nd-gen Component Migration](../../README.md) / Step By Step / [Spectrum 2 migration roadmap](README.md) / Spectrum Migration Documentation Prompt
+[CONTRIBUTOR-DOCS](../../../../../README.md) / [Project planning](../../../../README.md) / [Workstreams](../../../README.md) / [2nd-gen Component Migration](../../README.md) / Step By Step / [Analyze rendering and styling](README.md) / Spectrum Migration Documentation Prompt
 
 <!-- Document title (editable) -->
 

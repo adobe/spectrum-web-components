@@ -276,9 +276,9 @@ export class IconsDemo extends SpectrumElement {
             ${matchingIcons.map((icon) => {
                 return html`
                     <bdo
+                        dir="ltr"
                         class="icon"
                         part="icon"
-                        dir="ltr"
                         class="icon"
                         @click=${() => this.shouldCopy(icon.tag)}
                         @keydown=${(event: KeyboardEvent) =>
