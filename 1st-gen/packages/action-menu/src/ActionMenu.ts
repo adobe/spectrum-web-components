@@ -34,14 +34,14 @@ import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slo
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 import actionMenuStyles from './action-menu.css.js';
 import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
-import { Tooltip } from '@spectrum-web-components/tooltip';
-import {
+import type { Tooltip } from '@spectrum-web-components/tooltip';
+import type {
     Menu,
     MenuItem,
     MenuItemChildren,
     MenuItemKeydownEvent,
 } from '@spectrum-web-components/menu';
-import { FieldLabel } from '@spectrum-web-components/field-label';
+import type { FieldLabel } from '@spectrum-web-components/field-label';
 
 /**
  * An `<sp-action-menu>` is an action button with an attached menu of options.
