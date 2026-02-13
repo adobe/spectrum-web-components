@@ -10,11 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-export const ASSET_VARIANTS = ['file', 'folder'] as const;
-
-export type AssetVariant = (typeof ASSET_VARIANTS)[number];
-
-// Image-specific types
 export const LOADING_TYPES = ['lazy', 'eager'] as const;
 export type LoadingType = (typeof LOADING_TYPES)[number];
 

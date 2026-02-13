@@ -12,6 +12,8 @@
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import { styleMap } from 'lit/directives/style-map.js';
 
 import { AssetBase } from '@spectrum-web-components/core/components/asset';
 
@@ -53,20 +55,46 @@ const folder = (label: string): TemplateResult => html`
     </svg>
 `;
 
+const error = (label: string): TemplateResult => html`
+    <svg
+        class="spectrum-Asset-error"
+        role="img"
+        viewBox="0 0 18 18"
+        aria-label=${label || 'Error'}
+    >
+        <path
+            class="spectrum-Asset-errorBackground"
+            d="M9,0.5c4.7,0,8.5,3.8,8.5,8.5s-3.8,8.5-8.5,8.5S0.5,13.7,0.5,9S4.3,0.5,9,0.5z"
+        ></path>
+        <path
+            class="spectrum-Asset-errorIcon"
+            d="M9,11c-0.6,0-1-0.4-1-1V5c0-0.6,0.4-1,1-1s1,0.4,1,1v5C10,10.6,9.6,11,9,11z M9,14c-0.6,0-1-0.4-1-1s0.4-1,1-1s1,0.4,1,1S9.6,14,9,14z"
+        ></path>
+    </svg>
+`;
+
 /**
  * @element swc-asset
- * @slot - content to be displayed when no `variant` is set (typically an `<img>` element)
+ * @slot - content to be displayed when no `variant` or `src` is set (typically an `<img>` element)
  *
- * @example
+ * @example Using variant
+ * <swc-asset variant="file" label="README.md"></swc-asset>
+ *
+ * @example Using src (direct image)
+ * <swc-asset
+ *   src="photo.jpg"
+ *   alt="Mountain landscape"
+ *   loading="lazy"
+ *   object-fit="cover"
+ * ></swc-asset>
+ *
+ * @example Using error state
+ * <swc-asset error label="Failed to load image"></swc-asset>
+ *
+ * @example Using slot (legacy)
  * <swc-asset>
  *   <img class="spectrum-Asset-image" src="example.png" alt="Example image" />
  * </swc-asset>
- *
- * @example
- * <swc-asset variant="file"></swc-asset>
- *
- * @example
- * <swc-asset variant="folder"></swc-asset>
  */
 export class Asset extends AssetBase {
     // ──────────────────────────────
@@ -78,17 +106,88 @@ export class Asset extends AssetBase {
     }
 
     protected override render(): TemplateResult {
+        // Priority 1: Error state
+        if (this.error) {
+            return html`
+                <div
+                    class=${classMap({
+                        ['spectrum-Asset']: true,
+                        ['spectrum-Asset--error']: true,
+                    })}
+                >
+                    ${error(this.label)}
+                    ${this.label
+                        ? html`<span class="spectrum-Asset-errorLabel"
+                              >${this.label}</span
+                          >`
+                        : ''}
+                </div>
+            `;
+        }
+
+        // Priority 2: Built-in variants (file/folder)
+        if (this.variant === 'file') {
+            return html`
+                <div
+                    class=${classMap({
+                        ['spectrum-Asset']: true,
+                    })}
+                >
+                    ${file(this.label)}
+                </div>
+            `;
+        }
+
+        if (this.variant === 'folder') {
+            return html`
+                <div
+                    class=${classMap({
+                        ['spectrum-Asset']: true,
+                    })}
+                >
+                    ${folder(this.label)}
+                </div>
+            `;
+        }
+
+        // Priority 3: Direct image rendering when src is provided
+        if (this.src) {
+            const imageStyles: Record<string, string> = {};
+
+            if (this.objectFit) {
+                imageStyles['object-fit'] = this.objectFit;
+            }
+
+            if (this.objectPosition) {
+                imageStyles['object-position'] = this.objectPosition;
+            }
+
+            return html`
+                <img
+                    class="spectrum-Asset-image"
+                    src=${this.src}
+                    alt=${this.alt || ''}
+                    loading=${ifDefined(this.loading)}
+                    decoding=${ifDefined(this.decoding)}
+                    srcset=${ifDefined(this.srcset)}
+                    sizes=${ifDefined(this.sizes)}
+                    crossorigin=${ifDefined(this.crossorigin)}
+                    referrerpolicy=${ifDefined(this.referrerpolicy)}
+                    width=${ifDefined(this.width)}
+                    height=${ifDefined(this.height)}
+                    style=${styleMap(imageStyles)}
+                />
+            `;
+        }
+
+        // Priority 4: Fallback to slot (backwards compatible)
         return html`
             <div
                 class=${classMap({
                     ['spectrum-Asset']: true,
                 })}
             >
-                ${this.variant === 'file'
-                    ? file(this.label)
-                    : this.variant === 'folder'
-                      ? folder(this.label)
-                      : html` <slot></slot> `}
+                <slot></slot>
             </div>
         `;
     }
