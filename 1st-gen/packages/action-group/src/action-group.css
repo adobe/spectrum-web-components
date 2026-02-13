@@ -18,7 +18,7 @@
     --spectrum-actiongroup-vertical-spacing-regular: var(--spectrum-spacing-75);
 }
 
-:host([dir][compact][vertical]) ::slotted(:nth-child(n)) {
+:host([compact][vertical]) ::slotted(:nth-child(n)) {
     margin-right: 0;
     margin-left: 0;
 }
@@ -41,32 +41,26 @@
 }
 
 :host([compact][vertical]:not([quiet])) ::slotted(:not([role]):first-child) {
-    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
     --overriden-border-radius: var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) 0 0;
 }
 
 :host([compact][vertical]:not([quiet])) ::slotted(:not([role]):last-child) {
-    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
     --overriden-border-radius: 0 0 var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
 }
 
-:host([dir="ltr"][compact]:not([quiet], [vertical])) ::slotted(:not([role]):first-child) {
-    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
+:host([compact]:not([quiet], [vertical])) ::slotted(:not([role]):first-child) {
     --overriden-border-radius: var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) 0 0 var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
 }
 
-:host([dir="rtl"][compact]:not([quiet], [vertical])) ::slotted(:not([role]):first-child) {
-    /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
+:host([compact]:not([quiet], [vertical]):dir(rtl)) ::slotted(:not([role]):first-child) {
     --overriden-border-radius: 0 var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) 0;
 }
 
-:host([dir="ltr"][compact]:not([quiet], [vertical])) ::slotted(:not([role]):last-child) {
-    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
+:host([compact]:not([quiet], [vertical])) ::slotted(:not([role]):last-child) {
     --overriden-border-radius: 0 var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) 0;
 }
 
-:host([dir="rtl"][compact]:not([quiet], [vertical])) ::slotted(:not([role]):last-child) {
-    /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
+:host([compact]:not([quiet], [vertical]):dir(rtl)) ::slotted(:not([role]):last-child) {
     --overriden-border-radius: var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) 0 0 var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
 }
 
@@ -75,32 +69,26 @@
 }
 
 :host([compact][vertical]:not([quiet])) ::slotted(:first-child) {
-    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
     --mod-actionbutton-focus-ring-border-radius: var(--spectrum-alias-component-border-radius) var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) 0 0;
 }
 
 :host([compact][vertical]:not([quiet])) ::slotted(:last-child) {
-    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
     --mod-actionbutton-focus-ring-border-radius: 0 0 var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
 }
 
-:host([dir="ltr"][compact]:not([quiet], [vertical])) ::slotted(:first-child) {
-    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
+:host([compact]:not([quiet], [vertical])) ::slotted(:first-child) {
     --mod-actionbutton-focus-ring-border-radius: var(--spectrum-alias-component-border-radius) 0 0 var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
 }
 
-:host([dir="rtl"][compact]:not([quiet], [vertical])) ::slotted(:first-child) {
-    /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
+:host([compact]:not([quiet], [vertical]):dir(rtl)) ::slotted(:first-child) {
     --mod-actionbutton-focus-ring-border-radius: 0 var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) 0;
 }
 
-:host([dir="ltr"][compact]:not([quiet], [vertical])) ::slotted(:last-child) {
-    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
+:host([compact]:not([quiet], [vertical])) ::slotted(:last-child) {
     --mod-actionbutton-focus-ring-border-radius: 0 var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) 0;
 }
 
-:host([dir="rtl"][compact]:not([quiet], [vertical])) ::slotted(:last-child) {
-    /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
+:host([compact]:not([quiet], [vertical]):dir(rtl)) ::slotted(:last-child) {
     --mod-actionbutton-focus-ring-border-radius: var(--spectrum-alias-component-border-radius) 0 0 var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
 }
 

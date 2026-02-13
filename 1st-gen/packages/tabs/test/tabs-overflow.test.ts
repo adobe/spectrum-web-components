@@ -57,7 +57,7 @@ type OverflowProperties = {
     selected?: number;
     labelPrev?: string;
     labelNext?: string;
-    dir?: 'ltr' | 'rtl';
+    dir?: CSSStyleDeclaration['direction'];
 };
 
 const renderTabsOverflow = async ({
@@ -470,7 +470,7 @@ async function repeatScroll(
 async function scrollToEnd(
     tabsContainer: HTMLDivElement,
     buttonSelector: string,
-    direction: 'ltr' | 'rtl' = 'ltr'
+    direction: CSSStyleDeclaration['direction'] = 'ltr'
 ): Promise<void> {
     const tabs = tabsContainer.querySelector('sp-tabs') as Tabs;
     const tabsList = tabs.shadowRoot!.querySelector('#list') as HTMLElement;

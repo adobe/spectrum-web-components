@@ -273,7 +273,7 @@ export class SplitView extends SpectrumElement {
     private onPointermove(event: PointerEvent): void {
         event.preventDefault();
         let pos =
-            this.vertical || this.isLTR
+            this.vertical || this.dir === 'ltr'
                 ? this.getPosition(event) - this.offset
                 : this.offset - this.getPosition(event);
         if (this.collapsible && pos < this.minPos - COLLAPSE_THREASHOLD) {
@@ -293,7 +293,7 @@ export class SplitView extends SpectrumElement {
         if (!this.rect) {
             this.rect = this.getBoundingClientRect();
         }
-        const offsetX = this.isLTR ? this.rect.left : this.rect.right;
+        const offsetX = this.dir === 'ltr' ? this.rect.left : this.rect.right;
         return this.vertical ? this.rect.top : offsetX;
     }
 
@@ -313,7 +313,8 @@ export class SplitView extends SpectrumElement {
             return;
         }
         let direction = 0;
-        const isLTRorVertical = this.isLTR || this.vertical;
+        const isLTRorVertical =
+            getComputedStyle(this).direction === 'ltr' || this.vertical;
         switch (event.key) {
             case 'Home':
                 event.preventDefault();

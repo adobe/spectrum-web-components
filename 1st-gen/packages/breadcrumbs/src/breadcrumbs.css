@@ -24,7 +24,7 @@
     --mod-breadcrumbs-action-button-spacing-block: var(--mod-breadcrumbs-action-button-spacing-block-compact, var(--spectrum-breadcrumbs-action-button-spacing-block-compact));
 }
 
-:host([dir]) slot[slot="icon"]::slotted([slot="icon"]),
-:host([dir]) slot[slot="icon"] .icon {
+slot[slot="icon"]::slotted([slot="icon"]),
+slot[slot="icon"] .icon {
     margin-inline: calc((var(--custom-actionbutton-edge-to-text, var(--spectrum-actionbutton-edge-to-text)) - var(--custom-actionbutton-edge-to-visual-only, var(--spectrum-actionbutton-edge-to-visual-only))) * -1);
 }
