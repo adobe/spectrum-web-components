@@ -234,7 +234,7 @@ describe('ColorWheel', () => {
 
         expect(el.value).to.equal(0);
     });
-    it('accepts "Arrow*" keypresses in dir="rtl"', async () => {
+    it('accepts "Arrow*" keypresses in right to left context', async () => {
         const el = await fixture<ColorWheel>(html`
             <sp-color-wheel dir="rtl"></sp-color-wheel>
         `);
@@ -749,7 +749,7 @@ describe('ColorWheel', () => {
         expect(el.value).to.equal(hue);
         expect(el.color).to.equal(hsva);
     });
-    it('should flip orientation with dir="rtl"', async () => {
+    it('should flip orientation with right to left context', async () => {
         const el = await fixture<ColorWheel>(html`
             <sp-color-wheel></sp-color-wheel>
         `);

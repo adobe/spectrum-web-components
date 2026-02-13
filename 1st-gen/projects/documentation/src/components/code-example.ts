@@ -148,7 +148,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
                       </div>
                   `
                 : undefined}
-            <bdo class="markup" dir="ltr">
+            <bdo class="markup">
                 ${highlightedCode}
                 <div class="copy-holder">
                     <sp-action-button

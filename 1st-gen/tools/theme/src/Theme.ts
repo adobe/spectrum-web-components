@@ -47,33 +47,11 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     static VERSION = version;
     static CORE_VERSION = coreVersion;
     static get observedAttributes(): string[] {
-        return ['color', 'scale', 'lang', 'dir', 'system'];
-    }
-
-    _dir: 'ltr' | 'rtl' | '' = '';
-
-    override set dir(dir: 'ltr' | 'rtl' | '') {
-        if (dir === this.dir) return;
-        this.setAttribute('dir', dir);
-        this._dir = dir;
-        const targetDir = dir === 'rtl' ? dir : 'ltr';
-        /* c8 ignore next 3 */
-        this.trackedChildren.forEach((el) => {
-            el.setAttribute('dir', targetDir);
-        });
-    }
-
-    /**
-     * Reading direction of the content scoped to this `sp-theme` element.
-     * @type {"ltr" | "rtl" | ""}
-     * @attr
-     */
-    override get dir(): 'ltr' | 'rtl' | '' {
-        return this._dir;
+        return ['color', 'scale', 'lang', 'system'];
     }
 
     protected attributeChangedCallback(
-        attrName: SettableFragmentTypes | 'lang' | 'dir',
+        attrName: SettableFragmentTypes | 'lang',
         old: string | null,
         value: string | null
     ): void {
@@ -90,8 +68,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         } else if (attrName === 'system') {
             this.system = value as SystemVariant;
             this._provideSystemContext();
-        } else if (attrName === 'dir') {
-            this.dir = value as 'ltr' | 'rtl' | '';
         }
     }
     private requestUpdate(): void {
@@ -326,38 +302,12 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
 
         // Add `this` to the instances array.
         Theme.instances.add(this);
-        if (!this.hasAttribute('dir')) {
-            let dirParent = ((this as HTMLElement).assignedSlot ||
-                this.parentNode) as HTMLElement | DocumentFragment | ShadowRoot;
-            while (
-                dirParent !== document.documentElement &&
-                !(dirParent instanceof Theme)
-            ) {
-                dirParent = ((dirParent as HTMLElement).assignedSlot || // step into the shadow DOM of the parent of a slotted node
-                    dirParent.parentNode || // DOM Element detected
-                    (dirParent as ShadowRoot).host) as
-                    | HTMLElement
-                    | DocumentFragment
-                    | ShadowRoot;
-            }
-            this.dir = dirParent.dir === 'rtl' ? dirParent.dir : 'ltr';
-        }
     }
 
     protected disconnectedCallback(): void {
         // Remove `this` to the instances array.
         Theme.instances.delete(this);
     }
-
-    public startManagingContentDirection(el: HTMLElement): void {
-        this.trackedChildren.add(el);
-    }
-
-    public stopManagingContentDirection(el: HTMLElement): void {
-        this.trackedChildren.delete(el);
-    }
-
-    private trackedChildren: Set<HTMLElement> = new Set();
 
     private _updateRequested = false;
 

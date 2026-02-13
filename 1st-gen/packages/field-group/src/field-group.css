@@ -13,14 +13,14 @@
 @import url("./spectrum-field-group.css");
 @import url("./field-group-overrides.css");
 
-:host([horizontal][dir="rtl"]) slot:not([name])::slotted(*:not(:last-child)),
-:host([dir="rtl"]:not([vertical])) slot:not([name])::slotted(*:not(:last-child)) {
-    /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item+.spectrum-FieldGroup-item */
-    margin: 0 0 0 var(--spectrum-fieldgroup-margin);
-}
-
-:host([horizontal][dir="ltr"]) slot:not([name])::slotted(*:not(:last-child)),
-:host([dir="ltr"]:not([vertical])) slot:not([name])::slotted(*:not(:last-child)) {
+:host([horizontal]) slot:not([name])::slotted(*:not(:last-child)),
+:host(:not([vertical])) slot:not([name])::slotted(*:not(:last-child)) {
     /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item+.spectrum-FieldGroup-item */
     margin: 0 var(--spectrum-fieldgroup-margin) 0 0;
+}
+
+:host([horizontal]:dir(rtl)) slot:not([name])::slotted(*:not(:last-child)),
+:host(:not([vertical]):dir(rtl)) slot:not([name])::slotted(*:not(:last-child)) {
+    /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item+.spectrum-FieldGroup-item */
+    margin: 0 0 0 var(--spectrum-fieldgroup-margin);
 }
