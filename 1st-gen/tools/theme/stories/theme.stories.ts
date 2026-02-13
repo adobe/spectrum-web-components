@@ -171,7 +171,6 @@ export const nestedTheme = ({
                 </sp-button-group>
                 <sp-theme
                     color="${inner}"
-                    dir="ltr"
                     theme=${window.__swc_hack_knobs__.defaultSystemVariant}
                     system=${window.__swc_hack_knobs__.defaultSystemVariant}
                 >

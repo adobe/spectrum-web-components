@@ -75,8 +75,7 @@
     position: relative;
 }
 
-:host([indeterminate]) .fill:dir(rtl),
-:host([dir="rtl"][indeterminate]) .fill {
+:host([indeterminate]) .fill:dir(rtl) {
     animation-name: indeterminate-loop-rtl;
 }
 

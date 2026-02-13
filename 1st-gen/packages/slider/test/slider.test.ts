@@ -933,7 +933,7 @@ describe('Slider', () => {
         ) as HTMLDivElement;
 
         expect(fillElement).to.exist;
-        expect(fillElement.style.left).to.equal('50%');
+        expect(fillElement.style.insetInlineStart).to.equal('50%');
         expect(fillElement.style.width).to.equal('0%');
         expect(el.values).to.deep.equal({ value: 10 });
     });
@@ -957,7 +957,7 @@ describe('Slider', () => {
         ) as HTMLDivElement;
 
         expect(fillElement).to.exist;
-        expect(fillElement.style.left).to.equal('25%');
+        expect(fillElement.style.insetInlineStart).to.equal('25%');
         expect(fillElement.style.width).to.equal('12.5%');
         expect(el.values).to.deep.equal({ value: 25 });
     });
@@ -974,7 +974,7 @@ describe('Slider', () => {
         ) as HTMLDivElement;
 
         expect(fillElement).to.exist;
-        expect(fillElement.style.left).to.equal('10%');
+        expect(fillElement.style.insetInlineStart).to.equal('10%');
         expect(fillElement.style.width).to.equal('5%');
         expect(el.values).to.deep.equal({ value: 10 });
 
@@ -1034,7 +1034,7 @@ describe('Slider', () => {
         ) as HTMLDivElement;
 
         expect(fillElement).to.exist;
-        expect(fillElement.style.left).to.equal('25%');
+        expect(fillElement.style.insetInlineStart).to.equal('25%');
         expect(fillElement.style.width).to.equal('25%');
         expect(el.values).to.deep.equal({ value: -25 });
     });
