@@ -81,23 +81,14 @@ argTypes.size = {
  * Reserve bold fill for high-attention badging only.
  */
 export const meta: Meta = {
-    title: 'Badge',
-    component: 'swc-badge',
-    args,
-    argTypes,
-    render: (args) => template(args),
-    parameters: {
-        docs: {
-            subtitle: `Display small amounts of color-categorized metadata to get a user's attention.`,
-        },
-        design: {
-            type: 'figma',
-            url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=36806-6551',
-        },
-        stackblitz: {
-            url: 'https://stackblitz.com/edit/vitejs-vite-4glrpeeb?file=package.json',
-        },
-        flexLayout: 'row-wrap',
+  title: 'Badge',
+  component: 'swc-badge',
+  args,
+  argTypes,
+  render: (args) => template(args),
+  parameters: {
+    docs: {
+      subtitle: `Display small amounts of color-categorized metadata to get a user's attention.`,
     },
     design: {
       type: 'figma',
@@ -112,9 +103,9 @@ export const meta: Meta = {
 };
 
 export default {
-    ...meta,
-    title: 'Badge',
-    excludeStories: ['meta'],
+  ...meta,
+  title: 'Badge',
+  excludeStories: ['meta'],
 } as Meta;
 
 // ────────────────────
@@ -406,19 +397,19 @@ export const Fixed: Story = {
  * This ensures badges remain readable even with longer status messages or category names.
  */
 export const TextWrapping: Story = {
-    render: (args) => html`
-        ${template({
-            ...args,
-            variant: 'informative',
-            'default-slot': 'Document review pending approval from manager',
-            style: 'max-inline-size: 120px',
-        })}
-    `,
-    tags: ['behaviors'],
-    args: {
-        variant: 'informative',
-        size: 'm',
-    },
+  render: (args) => html`
+    ${template({
+      ...args,
+      variant: 'informative',
+      'default-slot': 'Document review pending approval from manager',
+      style: 'max-inline-size: 120px',
+    })}
+  `,
+  tags: ['behaviors'],
+  args: {
+    variant: 'informative',
+    size: 'm',
+  },
 };
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
