@@ -24,7 +24,11 @@ import {
     BADGE_VARIANTS_SEMANTIC,
     FIXED_VALUES,
 } from '../../../../core/components/badge/Badge.types.js';
-import { getComponent, setupSwcWarningSpy } from '../../../utils/test-utils.js';
+import {
+    getComponent,
+    getComponents,
+    withWarningSpy,
+} from '../../../utils/test-utils.js';
 import { meta } from '../stories/badge.stories.js';
 import {
     Anatomy,
@@ -134,8 +138,7 @@ export const FixedClearingTest: Story = {
 export const AnatomyTest: Story = {
     ...Anatomy,
     play: async ({ canvasElement, step }) => {
-        const badges = Array.from(canvasElement.querySelectorAll('swc-badge'));
-        await Promise.all(badges.map((badge) => badge.updateComplete));
+        const badges = await getComponents<Badge>(canvasElement, 'swc-badge');
 
         await step('includes icon slot content', async () => {
             const badgeWithIcon = badges.find((item) =>
@@ -262,24 +265,15 @@ export const InvalidVariantWarningTest: Story = {
     render: () => html`<swc-badge>Label</swc-badge>`,
     play: async ({ canvasElement, step }) => {
         const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
-        const { warnCalls, restore } = setupSwcWarningSpy();
 
-        await step(
-            'warns when an invalid variant is set in DEBUG mode',
-            async () => {
-                try {
-                    badge.variant =
-                        'not-a-variant' as unknown as Badge['variant'];
-                    await badge.updateComplete;
+        await step('warns when an invalid variant is set in DEBUG mode', () =>
+            withWarningSpy(async (warnCalls) => {
+                badge.variant = 'not-a-variant' as unknown as Badge['variant'];
+                await badge.updateComplete;
 
-                    expect(warnCalls.length).toBeGreaterThan(0);
-                    expect(String(warnCalls[0]?.[1] || '')).toContain(
-                        'variant'
-                    );
-                } finally {
-                    restore();
-                }
-            }
+                expect(warnCalls.length).toBeGreaterThan(0);
+                expect(String(warnCalls[0]?.[1] || '')).toContain('variant');
+            })
         );
     },
 };
@@ -288,20 +282,16 @@ export const ValidVariantNoWarningTest: Story = {
     render: () => html`<swc-badge variant="positive">Approved</swc-badge>`,
     play: async ({ canvasElement, step }) => {
         const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
-        const { warnCalls, restore } = setupSwcWarningSpy();
 
         await step(
             'does not warn when a valid variant is set in DEBUG mode',
-            async () => {
-                try {
+            () =>
+                withWarningSpy(async (warnCalls) => {
                     badge.variant = 'negative';
                     await badge.updateComplete;
 
                     expect(warnCalls.length).toBe(0);
-                } finally {
-                    restore();
-                }
-            }
+                })
         );
     },
 };
@@ -311,12 +301,11 @@ export const OutlineNonSemanticWarningTest: Story = {
         html`<swc-badge variant="seafoam" outline>Seafoam</swc-badge>`,
     play: async ({ canvasElement, step }) => {
         const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
-        const { warnCalls, restore } = setupSwcWarningSpy();
 
         await step(
             'warns when outline is used with a non-semantic variant',
-            async () => {
-                try {
+            () =>
+                withWarningSpy(async (warnCalls) => {
                     badge.requestUpdate();
                     await badge.updateComplete;
 
@@ -324,10 +313,7 @@ export const OutlineNonSemanticWarningTest: Story = {
                     expect(String(warnCalls[0]?.[1] || '')).toContain(
                         'outline'
                     );
-                } finally {
-                    restore();
-                }
-            }
+                })
         );
     },
 };

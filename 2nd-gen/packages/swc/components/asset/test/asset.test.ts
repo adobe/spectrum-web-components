@@ -17,7 +17,11 @@ import { Asset } from '@adobe/swc/asset';
 
 import '@adobe/swc/asset';
 
-import { getComponent, setupSwcWarningSpy } from '../../../utils/test-utils.js';
+import {
+    getComponent,
+    getComponents,
+    withWarningSpy,
+} from '../../../utils/test-utils.js';
 import meta from '../stories/asset.stories.js';
 import { Overview, Variants } from '../stories/asset.stories.js';
 
@@ -63,8 +67,7 @@ export const DefaultLabelFallbackTest: Story = {
         <swc-asset variant="folder"></swc-asset>
     `,
     play: async ({ canvasElement, step }) => {
-        const assets = Array.from(canvasElement.querySelectorAll('swc-asset'));
-        await Promise.all(assets.map((asset) => asset.updateComplete));
+        const assets = await getComponents<Asset>(canvasElement, 'swc-asset');
 
         await step(
             'file variant falls back to default aria-label',
@@ -97,8 +100,7 @@ export const DefaultLabelFallbackTest: Story = {
 export const VariantsTest: Story = {
     ...Variants,
     play: async ({ canvasElement, step }) => {
-        const assets = Array.from(canvasElement.querySelectorAll('swc-asset'));
-        await Promise.all(assets.map((asset) => asset.updateComplete));
+        const assets = await getComponents<Asset>(canvasElement, 'swc-asset');
 
         await step('renders file and folder icons with labels', async () => {
             const fileAsset = assets.find(
@@ -122,23 +124,15 @@ export const InvalidVariantWarningTest: Story = {
     render: () => html` <swc-asset></swc-asset> `,
     play: async ({ canvasElement, step }) => {
         const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
-        const { warnCalls, restore } = setupSwcWarningSpy();
 
-        await step(
-            'warns when an invalid variant is set in DEBUG mode',
-            async () => {
-                try {
-                    asset.variant = 'not-a-variant' as Asset['variant'];
-                    await asset.updateComplete;
+        await step('warns when an invalid variant is set in DEBUG mode', () =>
+            withWarningSpy(async (warnCalls) => {
+                asset.variant = 'not-a-variant' as Asset['variant'];
+                await asset.updateComplete;
 
-                    expect(warnCalls.length).toBeGreaterThan(0);
-                    expect(String(warnCalls[0]?.[1] || '')).toContain(
-                        'variant'
-                    );
-                } finally {
-                    restore();
-                }
-            }
+                expect(warnCalls.length).toBeGreaterThan(0);
+                expect(String(warnCalls[0]?.[1] || '')).toContain('variant');
+            })
         );
     },
 };
@@ -147,20 +141,16 @@ export const ValidVariantNoWarningTest: Story = {
     render: () => html` <swc-asset variant="file" label="Report"></swc-asset> `,
     play: async ({ canvasElement, step }) => {
         const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
-        const { warnCalls, restore } = setupSwcWarningSpy();
 
         await step(
             'does not warn when a valid variant is set in DEBUG mode',
-            async () => {
-                try {
+            () =>
+                withWarningSpy(async (warnCalls) => {
                     asset.variant = 'folder';
                     await asset.updateComplete;
 
                     expect(warnCalls.length).toBe(0);
-                } finally {
-                    restore();
-                }
-            }
+                })
         );
     },
 };

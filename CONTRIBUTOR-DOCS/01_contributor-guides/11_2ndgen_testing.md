@@ -20,6 +20,7 @@
 - [Writing test stories](#writing-test-stories)
     - [Using the step function](#using-the-step-function)
     - [Using getComponent](#using-getcomponent)
+    - [Using getComponents](#using-getcomponents)
     - [Attribute and property checks](#attribute-and-property-checks)
     - [Testing variant collections](#testing-variant-collections)
 - [Testing warnings and debug messages](#testing-warnings-and-debug-messages)
@@ -201,11 +202,28 @@ await badge.updateComplete;
 const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
 ```
 
-When a story renders multiple components, use `querySelectorAll` with `Promise.all` instead:
+### Using getComponents
+
+When a story renders multiple components, use the `getComponents<T>` helper to query all matching elements and await their updates in one call:
 
 ```ts
+import { getComponents } from '../../../utils/test-utils.js';
+
+// Instead of:
 const badges = Array.from(canvasElement.querySelectorAll('swc-badge')) as Badge[];
 await Promise.all(badges.map((badge) => badge.updateComplete));
+
+// Use:
+const badges = await getComponents<Badge>(canvasElement, 'swc-badge');
+```
+
+You can also pass more specific selectors to narrow the query:
+
+```ts
+const staticCircles = await getComponents<ProgressCircle>(
+    canvasElement,
+    'swc-progress-circle[static-color]'
+);
 ```
 
 ### Attribute and property checks
@@ -231,34 +249,32 @@ await step('renders all semantic variant values', async () => {
 
 ## Testing warnings and debug messages
 
-Use `setupSwcWarningSpy()` from `test-utils.ts` to capture `__swc` warning calls. Always restore the spy in a `finally` block to avoid leaking state between tests.
+Use `withWarningSpy` from `test-utils.ts` to capture `__swc` warning calls. It enables DEBUG mode, runs your callback, and automatically restores the original state — no manual `try/finally` needed.
 
 ```ts
-import { getComponent, setupSwcWarningSpy } from '../../../utils/test-utils.js';
+import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
 
 export const InvalidVariantWarningTest: Story = {
     render: () => html`<swc-badge>Label</swc-badge>`,
     play: async ({ canvasElement, step }) => {
         const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
-        const { warnCalls, restore } = setupSwcWarningSpy();
 
         await step(
             'warns when an invalid variant is set in DEBUG mode',
-            async () => {
-                try {
+            () =>
+                withWarningSpy(async (warnCalls) => {
                     badge.variant = 'not-a-variant' as unknown as Badge['variant'];
                     await badge.updateComplete;
 
                     expect(warnCalls.length).toBeGreaterThan(0);
                     expect(String(warnCalls[0]?.[1] || '')).toContain('variant');
-                } finally {
-                    restore();
-                }
-            }
+                })
         );
     },
 };
 ```
+
+If you need lower-level control (e.g., checking `swcGlobals` directly), `setupSwcWarningSpy()` is still available — just remember to call `restore()` in a `finally` block.
 
 ## Code coverage
 
@@ -315,8 +331,9 @@ yarn workspace @adobe/swc test
 - Keep each test story focused on one behavior.
 - Always destructure `step` from the play function and wrap assertions in labeled steps.
 - Use `getComponent<T>` from `test-utils.ts` to query and await a single component.
+- Use `getComponents<T>` from `test-utils.ts` to query and await multiple components.
 - Use `await element.updateComplete` after property mutations before asserting.
 - Use `canvasElement` inside story `play` to scope selectors.
 - Keep test stories in the component's `test` folder and reuse base stories.
 - Organize test stories into the 5 standard sections in order: Defaults → Properties / Attributes → Slots → Variants / States → Dev mode warnings. Skip sections that don't apply.
-- Always restore warning spies in a `finally` block.
+- Use `withWarningSpy` for warning tests — it handles setup and teardown automatically.

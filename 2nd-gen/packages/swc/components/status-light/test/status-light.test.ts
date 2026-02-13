@@ -21,7 +21,11 @@ import { StatusLight } from '@adobe/swc/status-light';
 
 import '@adobe/swc/status-light';
 
-import { getComponent, setupSwcWarningSpy } from '../../../utils/test-utils.js';
+import {
+    getComponent,
+    getComponents,
+    withWarningSpy,
+} from '../../../utils/test-utils.js';
 import { meta } from '../stories/status-light.stories.js';
 import {
     Overview,
@@ -67,11 +71,9 @@ export const DefaultTest: Story = {
 export const SizesTest: Story = {
     ...Sizes,
     play: async ({ canvasElement, step }) => {
-        const statusLights = Array.from(
-            canvasElement.querySelectorAll('swc-status-light')
-        ) as StatusLight[];
-        await Promise.all(
-            statusLights.map((statusLight) => statusLight.updateComplete)
+        const statusLights = await getComponents<StatusLight>(
+            canvasElement,
+            'swc-status-light'
         );
 
         await step('renders and reflects each size correctly', async () => {
@@ -126,10 +128,8 @@ export const UnsupportedVariantWarningTest: Story = {
         <swc-status-light variant="info">Active</swc-status-light>
     `,
     play: async ({ canvasElement, step }) => {
-        const { warnCalls, restore } = setupSwcWarningSpy();
-
-        await step('warns when an unsupported variant is set', async () => {
-            try {
+        await step('warns when an unsupported variant is set', () =>
+            withWarningSpy(async (warnCalls) => {
                 const statusLight = await getComponent<StatusLight>(
                     canvasElement,
                     'swc-status-light'
@@ -142,10 +142,8 @@ export const UnsupportedVariantWarningTest: Story = {
                 expect(warnCalls[0][1]).toBe(
                     `<${statusLight.localName}> element expects the "variant" attribute to be one of the following:`
                 );
-            } finally {
-                restore();
-            }
-        });
+            })
+        );
     },
 };
 
@@ -154,10 +152,8 @@ export const DisabledAttributeWarningTest: Story = {
         <swc-status-light variant="positive">Positive</swc-status-light>
     `,
     play: async ({ canvasElement, step }) => {
-        const { warnCalls, restore } = setupSwcWarningSpy();
-
-        await step('warns when disabled attribute is set', async () => {
-            try {
+        await step('warns when disabled attribute is set', () =>
+            withWarningSpy(async (warnCalls) => {
                 const statusLight = await getComponent<StatusLight>(
                     canvasElement,
                     'swc-status-light'
@@ -171,9 +167,7 @@ export const DisabledAttributeWarningTest: Story = {
                 expect(warnCalls[0][1]).toContain(
                     'does not support the disabled state'
                 );
-            } finally {
-                restore();
-            }
-        });
+            })
+        );
     },
 };

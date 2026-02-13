@@ -17,7 +17,11 @@ import { ProgressCircle } from '@adobe/swc/progress-circle';
 
 import '@adobe/swc/progress-circle';
 
-import { getComponent, setupSwcWarningSpy } from '../../../utils/test-utils.js';
+import {
+    getComponent,
+    getComponents,
+    withWarningSpy,
+} from '../../../utils/test-utils.js';
 import meta from '../stories/progress-circle.stories.js';
 import {
     Indeterminate,
@@ -72,10 +76,10 @@ export const OverviewTest: Story = {
 export const SizesTest: Story = {
     ...Sizes,
     play: async ({ canvasElement, step }) => {
-        const circles = Array.from(
-            canvasElement.querySelectorAll('swc-progress-circle')
-        ) as ProgressCircle[];
-        await Promise.all(circles.map((circle) => circle.updateComplete));
+        const circles = await getComponents<ProgressCircle>(
+            canvasElement,
+            'swc-progress-circle'
+        );
 
         await step('renders expected size attributes', async () => {
             circles.forEach((circle) => {
@@ -89,10 +93,10 @@ export const SizesTest: Story = {
 export const StaticColorsTest: Story = {
     ...StaticColors,
     play: async ({ canvasElement, step }) => {
-        const circles = Array.from(
-            canvasElement.querySelectorAll('swc-progress-circle[static-color]')
-        ) as ProgressCircle[];
-        await Promise.all(circles.map((circle) => circle.updateComplete));
+        const circles = await getComponents<ProgressCircle>(
+            canvasElement,
+            'swc-progress-circle[static-color]'
+        );
 
         await step(
             'reflects expected static-color attribute values',
@@ -166,20 +170,15 @@ export const AriaLabelAccessibleNameTest: Story = {
             canvasElement,
             'swc-progress-circle'
         );
-        const { warnCalls, restore } = setupSwcWarningSpy();
-
         await step(
             'does not warn when aria-label provides the accessible name',
-            async () => {
-                try {
+            () =>
+                withWarningSpy(async (warnCalls) => {
                     progressCircle.progress = 40;
                     await progressCircle.updateComplete;
 
                     expect(warnCalls.length).toBe(0);
-                } finally {
-                    restore();
-                }
-            }
+                })
         );
     },
 };
@@ -197,20 +196,15 @@ export const AriaLabelledbyAccessibleNameTest: Story = {
             canvasElement,
             'swc-progress-circle'
         );
-        const { warnCalls, restore } = setupSwcWarningSpy();
-
         await step(
             'does not warn when aria-labelledby provides the accessible name',
-            async () => {
-                try {
+            () =>
+                withWarningSpy(async (warnCalls) => {
                     progressCircle.progress = 70;
                     await progressCircle.updateComplete;
 
                     expect(warnCalls.length).toBe(0);
-                } finally {
-                    restore();
-                }
-            }
+                })
         );
     },
 };
@@ -245,10 +239,10 @@ export const SlotLabelTest: Story = {
 export const ProgressValuesTest: Story = {
     ...ProgressValues,
     play: async ({ canvasElement, step }) => {
-        const circles = Array.from(
-            canvasElement.querySelectorAll('swc-progress-circle')
-        ) as ProgressCircle[];
-        await Promise.all(circles.map((circle) => circle.updateComplete));
+        const circles = await getComponents<ProgressCircle>(
+            canvasElement,
+            'swc-progress-circle'
+        );
 
         await step('reflects progress values to aria-valuenow', async () => {
             circles.forEach((circle) => {
@@ -320,18 +314,14 @@ export const AccessibilityWarningTest: Story = {
             canvasElement,
             'swc-progress-circle'
         );
-        const { warnCalls, restore } = setupSwcWarningSpy();
-
-        await step('warns when there is no accessible name', async () => {
-            try {
+        await step('warns when there is no accessible name', () =>
+            withWarningSpy(async (warnCalls) => {
                 progressCircle.progress = 10;
                 await progressCircle.updateComplete;
 
                 expect(warnCalls.length).toBeGreaterThan(0);
                 expect(String(warnCalls[0]?.[1] || '')).toContain('accessible');
-            } finally {
-                restore();
-            }
-        });
+            })
+        );
     },
 };

@@ -17,7 +17,7 @@ import { Divider } from '@adobe/swc/divider';
 
 import '@adobe/swc/divider';
 
-import { getComponent } from '../../../utils/test-utils.js';
+import { getComponent, getComponents } from '../../../utils/test-utils.js';
 import meta from '../stories/divider.stories.js';
 import {
     Overview,
@@ -62,10 +62,10 @@ export const OverviewTest: Story = {
 export const VerticalTest: Story = {
     ...Vertical,
     play: async ({ canvasElement, step }) => {
-        const dividers = Array.from(
-            canvasElement.querySelectorAll('swc-divider')
-        ) as Divider[];
-        await Promise.all(dividers.map((divider) => divider.updateComplete));
+        const dividers = await getComponents<Divider>(
+            canvasElement,
+            'swc-divider'
+        );
 
         await step('reflects vertical orientation attributes', async () => {
             dividers.forEach((divider) => {
@@ -81,10 +81,10 @@ export const VerticalTest: Story = {
 export const StaticColorsTest: Story = {
     ...StaticColors,
     play: async ({ canvasElement, step }) => {
-        const dividers = Array.from(
-            canvasElement.querySelectorAll('swc-divider[static-color]')
-        ) as Divider[];
-        await Promise.all(dividers.map((divider) => divider.updateComplete));
+        const dividers = await getComponents<Divider>(
+            canvasElement,
+            'swc-divider[static-color]'
+        );
 
         await step(
             'reflects expected static-color attribute values',

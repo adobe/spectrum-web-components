@@ -55,6 +55,32 @@ export const setupSwcWarningSpy = () => {
 };
 
 /**
+ * Scoped warning spy that sets up debug mode, runs the callback, and
+ * automatically restores the original state — no manual `try/finally` needed.
+ *
+ * @example
+ * ```ts
+ * await withWarningSpy(async (warnCalls) => {
+ *     badge.variant = 'invalid' as Badge['variant'];
+ *     await badge.updateComplete;
+ *     expect(warnCalls.length).toBeGreaterThan(0);
+ * });
+ * ```
+ *
+ * @param fn - Async callback that receives the captured warn calls array
+ */
+export async function withWarningSpy(
+    fn: (warnCalls: unknown[][]) => Promise<void>
+): Promise<void> {
+    const { warnCalls, restore } = setupSwcWarningSpy();
+    try {
+        await fn(warnCalls);
+    } finally {
+        restore();
+    }
+}
+
+/**
  * Helper to query a single component from the canvas and await its update.
  *
  * @example
@@ -75,6 +101,35 @@ export async function getComponent<T extends HTMLElement>(
         await (el as { updateComplete: Promise<boolean> }).updateComplete;
     }
     return el;
+}
+
+/**
+ * Helper to query multiple components from the canvas and await all their updates.
+ *
+ * @example
+ * ```ts
+ * const badges = await getComponents<Badge>(canvasElement, 'swc-badge');
+ * ```
+ *
+ * @param canvasElement - The Storybook canvas root element
+ * @param selector - CSS selector for the components
+ * @returns Promise that resolves to an array of queried elements after all updates complete
+ */
+export async function getComponents<T extends HTMLElement>(
+    canvasElement: HTMLElement,
+    selector: string
+): Promise<T[]> {
+    const elements = Array.from(
+        canvasElement.querySelectorAll(selector)
+    ) as T[];
+    await Promise.all(
+        elements.map((el) =>
+            'updateComplete' in el
+                ? (el as { updateComplete: Promise<boolean> }).updateComplete
+                : Promise.resolve()
+        )
+    );
+    return elements;
 }
 
 /**
