@@ -940,6 +940,43 @@ TwoHandles.args = {
     tickStep: 10,
 };
 
+export const TwoHandlesWithValueTooltips = (
+    args: StoryArgs = {}
+): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin: 32px 20px;">
+            <sp-slider
+                value="5"
+                step="1"
+                min="0"
+                max="255"
+                label-visibility="none"
+                @input=${handleHandleEvent(args)}
+                @change=${handleHandleEvent(args)}
+                ...=${spreadProps(args)}
+            >
+                Output Levels
+                <sp-slider-handle
+                    slot="handle"
+                    name="min"
+                    label="Minimum"
+                    value="5"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    slot="handle"
+                    name="max"
+                    label="Maximum"
+                    value="250"
+                ></sp-slider-handle>
+            </sp-slider>
+        </div>
+    `;
+};
+TwoHandlesWithValueTooltips.args = {
+    variant: 'range',
+    tickStep: 10,
+};
+
 export const TwoHandlesPt = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">

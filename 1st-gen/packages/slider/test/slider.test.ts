@@ -1842,5 +1842,286 @@ describe('Slider', () => {
                 },
             });
         });
+        it('warns in Dev Mode when multi-handle slider has handles without labels', async () => {
+            window.__swc.issuedWarnings = new Set<BrandedSWCWarningID>();
+            const el = await fixture<Slider>(html`
+                <sp-slider min="0" max="100">
+                    <sp-slider-handle
+                        slot="handle"
+                        name="min"
+                        value="25"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        slot="handle"
+                        name="max"
+                        value="75"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `);
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.true;
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('label'),
+                'confirm "label" in message'
+            ).to.be.true;
+            expect(
+                (spyCall.args.at(0) as string).includes('2 handle(s)'),
+                'confirm handle count in message'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-slider',
+                    type: 'api',
+                    level: 'low',
+                },
+            });
+        });
+        it('does not warn when multi-handle slider has labels on all handles', async () => {
+            window.__swc.issuedWarnings = new Set<BrandedSWCWarningID>();
+            consoleWarnStub.resetHistory();
+            const el = await fixture<Slider>(html`
+                <sp-slider min="0" max="100">
+                    <sp-slider-handle
+                        slot="handle"
+                        name="min"
+                        label="Minimum"
+                        value="25"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        slot="handle"
+                        name="max"
+                        label="Maximum"
+                        value="75"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `);
+
+            await elementUpdated(el);
+
+            // Check that no warning about labels was issued
+            const labelWarningCalled = consoleWarnStub
+                .getCalls()
+                .some((call: { args: string[] }) =>
+                    (call.args.at(0) as string).includes('label')
+                );
+            expect(labelWarningCalled).to.be.false;
+        });
+        it('does not warn for single-handle sliders without labels', async () => {
+            window.__swc.issuedWarnings = new Set<BrandedSWCWarningID>();
+            consoleWarnStub.resetHistory();
+            const el = await fixture<Slider>(html`
+                <sp-slider min="0" max="100" value="50"></sp-slider>
+            `);
+
+            await elementUpdated(el);
+
+            // Check that no warning about labels was issued
+            const labelWarningCalled = consoleWarnStub
+                .getCalls()
+                .some((call: { args: string[] }) =>
+                    (call.args.at(0) as string).includes('label')
+                );
+            expect(labelWarningCalled).to.be.false;
+        });
+    });
+    describe('Multi-handle value tooltips', () => {
+        it('shows value tooltips for multi-handle sliders when label-visibility is "none"', async () => {
+            const el = await fixture<Slider>(html`
+                <sp-slider min="0" max="100" label-visibility="none">
+                    <sp-slider-handle
+                        slot="handle"
+                        name="min"
+                        label="Minimum"
+                        value="25"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        slot="handle"
+                        name="max"
+                        label="Maximum"
+                        value="75"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `);
+
+            await elementUpdated(el);
+
+            const tooltips = el.shadowRoot.querySelectorAll('.value-tooltip');
+            expect(tooltips.length).to.equal(2);
+            expect(tooltips[0].textContent?.trim()).to.equal('25');
+            expect(tooltips[1].textContent?.trim()).to.equal('75');
+        });
+        it('shows value tooltips for multi-handle sliders when label-visibility is "text"', async () => {
+            const el = await fixture<Slider>(html`
+                <sp-slider min="0" max="100" label-visibility="text">
+                    <sp-slider-handle
+                        slot="handle"
+                        name="min"
+                        label="Minimum"
+                        value="30"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        slot="handle"
+                        name="max"
+                        label="Maximum"
+                        value="80"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `);
+
+            await elementUpdated(el);
+
+            const tooltips = el.shadowRoot.querySelectorAll('.value-tooltip');
+            expect(tooltips.length).to.equal(2);
+            expect(tooltips[0].textContent?.trim()).to.equal('30');
+            expect(tooltips[1].textContent?.trim()).to.equal('80');
+        });
+        it('does not show value tooltips for single-handle sliders', async () => {
+            const el = await fixture<Slider>(html`
+                <sp-slider
+                    min="0"
+                    max="100"
+                    value="50"
+                    label-visibility="none"
+                ></sp-slider>
+            `);
+
+            await elementUpdated(el);
+
+            const tooltips = el.shadowRoot.querySelectorAll('.value-tooltip');
+            expect(tooltips.length).to.equal(0);
+        });
+        it('does not show value tooltips when label-visibility is "value"', async () => {
+            const el = await fixture<Slider>(html`
+                <sp-slider min="0" max="100" label-visibility="value">
+                    <sp-slider-handle
+                        slot="handle"
+                        name="min"
+                        label="Minimum"
+                        value="25"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        slot="handle"
+                        name="max"
+                        label="Maximum"
+                        value="75"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `);
+
+            await elementUpdated(el);
+
+            const tooltips = el.shadowRoot.querySelectorAll('.value-tooltip');
+            expect(tooltips.length).to.equal(0);
+        });
+        it('does not show value tooltips when no label-visibility is set', async () => {
+            const el = await fixture<Slider>(html`
+                <sp-slider min="0" max="100">
+                    <sp-slider-handle
+                        slot="handle"
+                        name="min"
+                        label="Minimum"
+                        value="25"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        slot="handle"
+                        name="max"
+                        label="Maximum"
+                        value="75"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `);
+
+            await elementUpdated(el);
+
+            const tooltips = el.shadowRoot.querySelectorAll('.value-tooltip');
+            expect(tooltips.length).to.equal(0);
+        });
+        it('updates value tooltip content when handle value changes', async () => {
+            const el = await fixture<Slider>(html`
+                <sp-slider min="0" max="100" label-visibility="none">
+                    <sp-slider-handle
+                        id="min-handle"
+                        slot="handle"
+                        name="min"
+                        label="Minimum"
+                        value="25"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        slot="handle"
+                        name="max"
+                        label="Maximum"
+                        value="75"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `);
+
+            await elementUpdated(el);
+
+            const minHandle = el.querySelector('#min-handle') as SliderHandle;
+            minHandle.value = 40;
+            await elementUpdated(el);
+
+            const tooltips = el.shadowRoot.querySelectorAll('.value-tooltip');
+            expect(tooltips[0].textContent?.trim()).to.equal('40');
+        });
+        it('value tooltips are hidden from screen readers', async () => {
+            const el = await fixture<Slider>(html`
+                <sp-slider min="0" max="100" label-visibility="none">
+                    <sp-slider-handle
+                        slot="handle"
+                        name="min"
+                        label="Minimum"
+                        value="25"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        slot="handle"
+                        name="max"
+                        label="Maximum"
+                        value="75"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `);
+
+            await elementUpdated(el);
+
+            const tooltips = el.shadowRoot.querySelectorAll('.value-tooltip');
+            // Tooltips should be hidden from screen readers since aria-valuetext
+            // on the input already provides the value to assistive technology
+            expect(tooltips[0].getAttribute('aria-hidden')).to.equal('true');
+            expect(tooltips[1].getAttribute('aria-hidden')).to.equal('true');
+        });
+        it('shows formatted value in tooltip when formatOptions is set', async () => {
+            const el = await fixture<Slider>(html`
+                <sp-slider
+                    min="0"
+                    max="1"
+                    label-visibility="none"
+                    .formatOptions=${{ style: 'percent' }}
+                >
+                    <sp-slider-handle
+                        slot="handle"
+                        name="min"
+                        label="Minimum"
+                        value="0.25"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        slot="handle"
+                        name="max"
+                        label="Maximum"
+                        value="0.75"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `);
+
+            await elementUpdated(el);
+
+            const tooltips = el.shadowRoot.querySelectorAll('.value-tooltip');
+            // Formatted values should include the percent symbol
+            expect(tooltips[0].textContent?.trim()).to.include('%');
+            expect(tooltips[1].textContent?.trim()).to.include('%');
+        });
     });
 });
