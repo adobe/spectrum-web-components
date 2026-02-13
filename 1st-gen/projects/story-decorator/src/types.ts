@@ -18,7 +18,7 @@ declare global {
             defaultSystemVariant: SystemVariant;
             defaultColor: Color;
             defaultScale: Scale;
-            defaultDirection: 'ltr' | 'rtl';
+            defaultDirection: CSSStyleDeclaration['direction'];
             defaultReduceMotion: boolean;
             hcm: boolean;
             defaultLocale: Locale;

@@ -299,6 +299,39 @@ The `density` property, when applied, accepts the values of `compact` or `spacio
 </sp-tab-panel>
 </sp-tabs>
 
+#### Heading level
+
+The `level` attribute controls the semantic heading level (2-6) used for all accordion item titles. This helps maintain proper document structure and accessibility. The range is restricted to 2-6 as there should only be one `h1` per page. Defaults to 3.
+
+All items within an accordion will use the same heading level, ensuring items of equal importance have consistent semantic meaning.
+
+```html
+<h1>Main Page Title</h1>
+
+<sp-accordion level="2">
+    <sp-accordion-item label="First Section">
+        <div>Content for the first main section.</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Second Section">
+        <div>Content for the second main section.</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Third Section">
+        <div>Content for the third main section.</div>
+    </sp-accordion-item>
+</sp-accordion>
+
+<h2>Subsection Title</h2>
+
+<sp-accordion level="3">
+    <sp-accordion-item label="Subsection A">
+        <div>Content for subsection A.</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Subsection B">
+        <div>Content for subsection B.</div>
+    </sp-accordion-item>
+</sp-accordion>
+```
+
 ### States
 
 #### Allow Multiple
