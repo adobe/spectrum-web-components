@@ -10,8 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-export {
-    LanguageResolutionController,
-    languageResolverUpdatedSymbol,
-} from './LanguageResolution.js';
-export { aetherController } from './AetherController.js';
+// @todo: Implement accessibility tests using playwright/axe-core
+// This file is a placeholder for future accessibility testing
+
+import '@adobe/swc/button';

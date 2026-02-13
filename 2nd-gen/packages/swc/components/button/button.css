@@ -1,0 +1,877 @@
+/*!
+ * Copyright 2026 Adobe. All rights reserved.
+ *
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at <http://www.apache.org/licenses/LICENSE-2.0>
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+    display: inline-block;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+
+.swc-Button {
+    --_swc-button-animation-duration: token('animation-duration-100');
+    --_swc-button-focus-ring-gap: token('focus-indicator-gap');
+    --_swc-button-focus-ring-thickness: token('focus-indicator-thickness');
+    --_swc-button-focus-indicator-color: token('focus-indicator-color');
+    --_swc-button-min-width: calc(
+        token('component-height-100') * token('button-minimum-width-multiplier')
+    );
+    --_swc-button-height: token('component-height-100');
+    --_swc-button-border-radius: calc(
+        var(--swc-button-height, var(--_swc-button-height)) / 2
+    );
+    --_swc-button-border-width: token('border-width-200');
+
+    /* @todo set line-height using font size specific line-height tokens when they are finalized along with the new variable font. */
+    --_swc-button-line-height: 1.2;
+    --_swc-button-font-weight: token('bold-font-weight');
+    --_swc-button-font-size: token('font-size-100');
+    --_swc-button-edge-to-visual: calc(
+        token('component-pill-edge-to-visual-100') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --_swc-button-edge-to-visual-only: calc(
+        token('component-pill-edge-to-visual-only-100') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --_swc-button-edge-to-text: calc(
+        token('component-pill-edge-to-text-100') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --_swc-button-padding-label-to-icon: token('text-to-visual-100');
+    --_swc-button-top-to-text: token('component-top-to-text-100');
+    --_swc-button-bottom-to-text: token('component-bottom-to-text-100');
+    --_swc-button-top-to-icon: token('component-top-to-workflow-icon-100');
+    --_swc-button-intended-icon-size: token('workflow-icon-size-100');
+
+    /* --_swc-button-downstate-perspective: max(
+        token('downstate-height'),
+        token('downstate-width') * token('component-size-width-ratio-down')
+    ); */
+
+    /* Variants and colors */
+    --_swc-button-border-color-default: transparent;
+    --_swc-button-border-color-hover: transparent;
+    --_swc-button-border-color-down: transparent;
+    --_swc-button-border-color-focus: transparent;
+    --_swc-button-content-color-default: token('white');
+    --_swc-button-content-color-hover: token('white');
+    --_swc-button-content-color-down: token('white');
+    --_swc-button-content-color-focus: token('white');
+    --_swc-button-background-color-disabled: token('disabled-background-color');
+    --_swc-button-border-color-disabled: transparent;
+    --_swc-button-content-color-disabled: token('disabled-content-color');
+
+    cursor: pointer;
+    user-select: none;
+
+    /* Contain halo */
+    position: relative;
+
+    /* Show the button overflow in Edge. */
+    overflow: visible;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+
+    /* Remove button the margin in Firefox and Safari. */
+    margin: 0;
+    font-family: var(--swc-button-font-family, token('sans-font-family-stack'));
+
+    /* Adjacent buttons should be aligned correctly */
+    vertical-align: top;
+    -webkit-font-smoothing: antialiased;
+
+    /* Font smoothing for Firefox */
+    -moz-osx-font-smoothing: grayscale;
+    line-height: var(--swc-button-line-height, var(--_swc-button-line-height));
+    text-decoration: none;
+
+    /* Remove the inheritance of text transform on button in Edge, Firefox, and IE. */
+    text-transform: none;
+
+    /* stylelint-disable-next-line property-no-vendor-prefix -- Correct the inability to style clickable types in iOS and Safari (normalize). */
+    -webkit-appearance: button;
+    border-radius: var(
+        --swc-button-border-radius,
+        var(--_swc-button-border-radius)
+    );
+    border-width: var(
+        --swc-button-border-width,
+        var(--_swc-button-border-width)
+    );
+    border-style: solid;
+    font-size: var(--swc-button-font-size, var(--_swc-button-font-size));
+    font-weight: var(--swc-button-font-weight, var(--_swc-button-font-weight));
+    gap: var(
+        --swc-button-padding-label-to-icon,
+        var(--_swc-button-padding-label-to-icon)
+    );
+    max-inline-size: var(--swc-button-max-inline-size, none);
+    min-inline-size: var(--swc-button-min-width, var(--_swc-button-min-width));
+    min-block-size: var(--swc-button-height, var(--_swc-button-height));
+    padding-block: 0;
+    padding-inline: var(
+        --swc-button-edge-to-text,
+        var(--_swc-button-edge-to-text)
+    );
+    background-color: var(
+        --highcontrast-button-background-color-default,
+        var(
+            --swc-button-background-color-default,
+            var(--_swc-button-background-color-default)
+        )
+    );
+    border-color: var(
+        --highcontrast-button-border-color-default,
+        var(
+            --swc-button-border-color-default,
+            var(--_swc-button-border-color-default)
+        )
+    );
+    color: var(
+        --highcontrast-button-content-color-default,
+        var(
+            --swc-button-content-color-default,
+            var(--_swc-button-content-color-default)
+        )
+    );
+    transition:
+        border-color
+            var(
+                --swc-button-animation-duration,
+                var(--_swc-button-animation-duration, 130ms)
+            )
+            linear,
+        color
+            var(
+                --swc-button-animation-duration,
+                var(--_swc-button-animation-duration, 130ms)
+            )
+            linear,
+        background
+            var(
+                --swc-button-animation-duration,
+                var(--_swc-button-animation-duration, 130ms)
+            )
+            linear;
+    margin-block: var(--swc-button-margin-block);
+    margin-inline-end: var(--swc-button-margin-right);
+    margin-inline-start: var(--swc-button-margin-left);
+
+    ::slotted([slot='icon']) {
+        /* Any block-size difference between the intended workflow icon size and actual icon used. Helps support any existing use of smaller UI icons instead of intended Workflow icons. */
+        --_icon-size-difference: max(
+            0px,
+            var(--_swc-button-intended-icon-size) -
+                var(
+                    --spectrum-icon-block-size,
+                    var(--_swc-button-intended-icon-size)
+                )
+        );
+
+        margin-block-start: var(
+            --swc-button-icon-margin-block-start,
+            max(
+                0px,
+                var(--swc-button-top-to-icon, var(--_swc-button-top-to-icon)) -
+                    var(
+                        --swc-button-border-width,
+                        var(--_swc-button-border-width)
+                    ) +
+                    (var(--_icon-size-difference, 0px) / 2)
+            )
+        );
+        margin-inline-start: calc(
+            var(
+                    --swc-button-edge-to-visual,
+                    var(--_swc-button-edge-to-visual)
+                ) -
+                var(--swc-button-edge-to-text, var(--_swc-button-edge-to-text))
+        );
+        color: inherit;
+        flex-shrink: 0;
+        align-self: flex-start;
+    }
+
+    &:disabled,
+    &.is-disabled {
+        cursor: default;
+    }
+
+    /* Focus indicator */
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        inset: 0;
+        margin: calc(
+            (
+                    var(
+                            --swc-button-focus-ring-gap,
+                            var(--_swc-button-focus-ring-gap)
+                        ) +
+                        var(
+                            --swc-button-border-width,
+                            var(--_swc-button-border-width)
+                        )
+                ) *
+                -1
+        );
+        border-radius: var(
+            --swc-button-focus-ring-border-radius,
+            calc(
+                var(
+                        --swc-button-border-radius,
+                        var(--_swc-button-border-radius)
+                    ) +
+                    var(
+                        --swc-button-focus-ring-gap,
+                        var(--_swc-button-focus-ring-gap)
+                    )
+            )
+        );
+        transition: box-shadow
+            var(
+                --swc-button-animation-duration,
+                var(--_swc-button-animation-duration)
+            )
+            ease-in-out;
+        pointer-events: none;
+    }
+
+    /* Fix Firefox */
+    &::-moz-focus-inner {
+        margin-block-start: -2px;
+        margin-block-end: -2px;
+        padding: 0;
+        border: 0;
+
+        /* Remove the inner border and padding for button in Firefox. */
+        border-style: none;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus-visible,
+    &.is-focused {
+        box-shadow: none;
+        outline: none;
+
+        &:after {
+            box-shadow: 0 0 0
+                var(
+                    --swc-button-focus-ring-thickness,
+                    var(--_swc-button-focus-ring-thickness)
+                )
+                var(
+                    --highcontrast-button-focus-ring-color,
+                    var(
+                        --swc-button-focus-ring-color,
+                        var(--_swc-button-focus-indicator-color)
+                    )
+                );
+        }
+    }
+
+    /* States and interaction */
+    &:hover,
+    &:active {
+        box-shadow: none;
+    }
+
+    &:hover {
+        background-color: var(
+            --highcontrast-button-background-color-hover,
+            var(
+                --swc-button-background-color-hover,
+                var(--_swc-button-background-color-hover)
+            )
+        );
+        border-color: var(
+            --highcontrast-button-border-color-hover,
+            var(
+                --swc-button-border-color-hover,
+                var(--_swc-button-border-color-hover)
+            )
+        );
+        color: var(
+            --highcontrast-button-content-color-hover,
+            var(
+                --swc-button-content-color-hover,
+                var(--_swc-button-content-color-hover)
+            )
+        );
+    }
+
+    &:focus-visible {
+        background-color: var(
+            --highcontrast-button-background-color-focus,
+            var(
+                --swc-button-background-color-focus,
+                var(--_swc-button-background-color-focus)
+            )
+        );
+        border-color: var(
+            --highcontrast-button-border-color-focus,
+            var(
+                --swc-button-border-color-focus,
+                var(--_swc-button-border-color-focus)
+            )
+        );
+        color: var(
+            --highcontrast-button-content-color-focus,
+            var(
+                --swc-button-content-color-focus,
+                var(--_swc-button-content-color-focus)
+            )
+        );
+    }
+
+    &:active {
+        background-color: var(
+            --highcontrast-button-background-color-down,
+            var(
+                --swc-button-background-color-down,
+                var(--_swc-button-background-color-down)
+            )
+        );
+        border-color: var(
+            --highcontrast-button-border-color-down,
+            var(
+                --swc-button-border-color-down,
+                var(--_swc-button-border-color-down)
+            )
+        );
+        color: var(
+            --highcontrast-button-content-color-down,
+            var(
+                --swc-button-content-color-down,
+                var(--_swc-button-content-color-down)
+            )
+        );
+
+        /* transform: perspective(var(--_swc-button-downstate-perspective))
+            translateZ(token('component-size-difference-down')); */
+    }
+
+    &:disabled,
+    &.is-disabled,
+    &[pending],
+    &.is-pending {
+        background-color: var(
+            --highcontrast-button-background-color-disabled,
+            var(
+                --swc-button-background-color-disabled,
+                var(--_swc-button-background-color-disabled)
+            )
+        );
+        border-color: var(
+            --highcontrast-button-border-color-disabled,
+            var(
+                --swc-button-border-color-disabled,
+                var(--_swc-button-border-color-disabled)
+            )
+        );
+        color: var(
+            --highcontrast-button-content-color-disabled,
+            var(
+                --swc-button-content-color-disabled,
+                var(--_swc-button-content-color-disabled)
+            )
+        );
+    }
+
+    ::slotted([slot='icon']),
+    .swc-Button-label {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity
+            var(
+                --swc-button-animation-duration,
+                var(--_swc-button-animation-duration, 130ms)
+            )
+            ease-in-out;
+    }
+
+    ::slotted(swc-progress-circle) {
+        visibility: hidden;
+        opacity: 0;
+        transition:
+            opacity
+                var(
+                    --swc-button-animation-duration,
+                    var(--_swc-button-animation-duration, 130ms)
+                )
+                ease-in-out,
+            visibility 0ms linear
+                var(
+                    --swc-button-animation-duration,
+                    var(--_swc-button-animation-duration, 130ms)
+                );
+    }
+
+    &[pending],
+    &.is-pending {
+        cursor: default;
+
+        ::slotted([slot='icon']),
+        .swc-Button-label {
+            visibility: hidden;
+            opacity: 0;
+            transition:
+                opacity
+                    var(
+                        --swc-button-animation-duration,
+                        var(--_swc-button-animation-duration, 130ms)
+                    )
+                    ease-in-out,
+                visibility 0ms linear
+                    var(
+                        --swc-button-animation-duration,
+                        var(--_swc-button-animation-duration, 130ms)
+                    );
+        }
+
+        ::slotted(swc-progress-circle) {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity
+                var(
+                    --swc-button-animation-duration,
+                    var(--_swc-button-animation-duration, 130ms)
+                )
+                ease-in-out;
+        }
+    }
+}
+
+.swc-Button.swc-Button--iconOnly {
+    --_swc-button-border-radius: token('corner-radius-full');
+}
+
+:host([size='s']) {
+    --swc-button-min-width: calc(
+        token('component-height-75') * token('button-minimum-width-multiplier')
+    );
+    --swc-button-height: token('component-height-75');
+    --swc-button-font-size: token('font-size-75');
+    --swc-button-edge-to-visual: calc(
+        token('component-pill-edge-to-visual-75') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --swc-button-edge-to-visual-only: calc(
+        token('component-pill-edge-to-visual-only-75') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --swc-button-edge-to-text: calc(
+        token('component-pill-edge-to-text-75') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --swc-button-padding-label-to-icon: token('text-to-visual-75');
+    --swc-button-top-to-text: token('component-top-to-text-75');
+    --swc-button-bottom-to-text: token('component-bottom-to-text-75');
+    --swc-button-top-to-icon: token('component-top-to-workflow-icon-75');
+    --swc-button-intended-icon-size: token('workflow-icon-size-75');
+}
+
+:host([size='s']).swc-Button--iconOnly {
+    --swc-button-downstate-perspective: token(
+        'component-size-minimum-perspective-down'
+    );
+}
+
+:host([size='l']) {
+    --swc-button-min-width: calc(
+        token('component-height-200') * token('button-minimum-width-multiplier')
+    );
+    --swc-button-height: token('component-height-200');
+    --swc-button-font-size: token('font-size-200');
+    --swc-button-edge-to-visual: calc(
+        token('component-pill-edge-to-visual-200') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --swc-button-edge-to-visual-only: calc(
+        token('component-pill-edge-to-visual-only-200') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --swc-button-edge-to-text: calc(
+        token('component-pill-edge-to-text-200') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --swc-button-padding-label-to-icon: token('text-to-visual-200');
+    --swc-button-top-to-text: token('component-top-to-text-200');
+    --swc-button-bottom-to-text: token('component-bottom-to-text-200');
+    --swc-button-top-to-icon: token('component-top-to-workflow-icon-200');
+    --swc-button-intended-icon-size: token('workflow-icon-size-200');
+}
+
+:host([size='xl']) {
+    --swc-button-min-width: calc(
+        token('component-height-300') * token('button-minimum-width-multiplier')
+    );
+    --swc-button-height: token('component-height-300');
+    --swc-button-font-size: token('font-size-300');
+    --swc-button-edge-to-visual: calc(
+        token('component-pill-edge-to-visual-300') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --swc-button-edge-to-visual-only: calc(
+        token('component-pill-edge-to-visual-only-300') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --swc-button-edge-to-text: calc(
+        token('component-pill-edge-to-text-300') -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    --swc-button-padding-label-to-icon: token('text-to-visual-300');
+    --swc-button-top-to-text: token('component-top-to-text-300');
+    --swc-button-bottom-to-text: token('component-bottom-to-text-300');
+    --swc-button-top-to-icon: token('component-top-to-workflow-icon-300');
+    --swc-button-intended-icon-size: token('workflow-icon-size-300');
+}
+
+/* Variants and colors */
+:host([treatment='outline']) {
+    --swc-button-background-color-disabled: transparent;
+    --swc-button-border-color-disabled: token('disabled-border-color');
+    --swc-button-content-color-disabled: token('disabled-content-color');
+}
+
+/* ---- Accent ---- */
+
+/* Also shows as the default when a variant class is not used. */
+:host,
+:host([variant='accent']) {
+    --swc-button-background-color-default: token(
+        'accent-background-color-default'
+    );
+    --swc-button-background-color-hover: token('accent-background-color-hover');
+    --swc-button-background-color-down: token('accent-background-color-down');
+    --swc-button-background-color-focus: token(
+        'accent-background-color-key-focus'
+    );
+}
+
+/* ---- Negative ---- */
+:host([variant='negative']) {
+    --swc-button-background-color-default: token(
+        'negative-background-color-default'
+    );
+    --swc-button-background-color-hover: token(
+        'negative-background-color-hover'
+    );
+    --swc-button-background-color-down: token('negative-background-color-down');
+    --swc-button-background-color-focus: token(
+        'negative-background-color-key-focus'
+    );
+}
+
+/* ---- Primary ---- */
+:host([variant='primary']) {
+    --swc-button-content-color-default: token('gray-25');
+    --swc-button-content-color-hover: token('gray-25');
+    --swc-button-content-color-down: token('gray-25');
+    --swc-button-content-color-focus: token('gray-25');
+    --swc-button-background-color-default: token(
+        'neutral-background-color-default'
+    );
+    --swc-button-background-color-hover: token(
+        'neutral-background-color-hover'
+    );
+    --swc-button-background-color-down: token('neutral-background-color-down');
+    --swc-button-background-color-focus: token(
+        'neutral-background-color-key-focus'
+    );
+}
+
+:host([variant='primary'][treatment='outline']) {
+    --swc-button-background-color-default: transparent;
+    --swc-button-background-color-hover: token('gray-100');
+    --swc-button-background-color-down: token('gray-100');
+    --swc-button-background-color-focus: token('gray-100');
+    --swc-button-border-color-default: token('gray-800');
+    --swc-button-border-color-hover: token('gray-900');
+    --swc-button-border-color-down: token('gray-900');
+    --swc-button-border-color-focus: token('gray-900');
+    --swc-button-content-color-default: token('neutral-content-color-default');
+    --swc-button-content-color-hover: token('neutral-content-color-hover');
+    --swc-button-content-color-down: token('neutral-content-color-down');
+    --swc-button-content-color-focus: token('neutral-content-color-key-focus');
+}
+
+/* ---- Secondary ---- */
+:host([variant='secondary']) {
+    --swc-button-background-color-default: token('gray-100');
+    --swc-button-background-color-hover: token('gray-200');
+    --swc-button-background-color-down: token('gray-200');
+    --swc-button-background-color-focus: token('gray-200');
+    --swc-button-content-color-default: token('neutral-content-color-default');
+    --swc-button-content-color-hover: token('neutral-content-color-hover');
+    --swc-button-content-color-down: token('neutral-content-color-down');
+    --swc-button-content-color-focus: token('neutral-content-color-key-focus');
+}
+
+:host([variant='secondary'][treatment='outline']) {
+    --swc-button-background-color-default: transparent;
+    --swc-button-background-color-hover: token('gray-100');
+    --swc-button-background-color-down: token('gray-100');
+    --swc-button-background-color-focus: token('gray-100');
+    --swc-button-border-color-default: token('gray-300');
+    --swc-button-border-color-hover: token('gray-400');
+    --swc-button-border-color-down: token('gray-400');
+    --swc-button-border-color-focus: token('gray-400');
+}
+
+/* ---- Static White (primary)---- */
+:host([static-color='white']) {
+    --swc-button-background-color-default: token('transparent-white-800');
+    --swc-button-background-color-hover: token('transparent-white-900');
+    --swc-button-background-color-down: token('transparent-white-900');
+    --swc-button-background-color-focus: token('transparent-white-900');
+    --swc-button-content-color-default: token('black');
+    --swc-button-content-color-hover: token('black');
+    --swc-button-content-color-down: token('black');
+    --swc-button-content-color-focus: token('black');
+    --swc-button-focus-indicator-color: token(
+        'static-white-focus-indicator-color'
+    );
+    --swc-button-background-color-disabled: token(
+        'disabled-static-white-background-color'
+    );
+    --swc-button-border-color-disabled: transparent;
+    --swc-button-content-color-disabled: token(
+        'disabled-static-white-content-color'
+    );
+}
+
+:host([static-color='white'][treatment='outline']) {
+    --swc-button-background-color-default: token('transparent-white-25');
+    --swc-button-background-color-hover: token('transparent-white-100');
+    --swc-button-background-color-down: token('transparent-white-100');
+    --swc-button-background-color-focus: token('transparent-white-100');
+    --swc-button-border-color-default: token('transparent-white-800');
+    --swc-button-border-color-hover: token('transparent-white-900');
+    --swc-button-border-color-down: token('transparent-white-900');
+    --swc-button-border-color-focus: token('transparent-white-900');
+    --swc-button-content-color-default: token('transparent-white-800');
+    --swc-button-content-color-hover: token('transparent-white-900');
+    --swc-button-content-color-down: token('transparent-white-900');
+    --swc-button-content-color-focus: token('transparent-white-900');
+    --swc-button-background-color-disabled: token('transparent-white-25');
+    --swc-button-border-color-disabled: token(
+        'disabled-static-white-border-color'
+    );
+    --swc-button-content-color-disabled: token(
+        'disabled-static-white-content-color'
+    );
+}
+
+/* ---- Static White (secondary)---- */
+:host([static-color='white'][variant='secondary']) {
+    --swc-button-background-color-default: token('transparent-white-100');
+    --swc-button-background-color-hover: token('transparent-white-200');
+    --swc-button-background-color-down: token('transparent-white-200');
+    --swc-button-background-color-focus: token('transparent-white-200');
+    --swc-button-content-color-default: token('transparent-white-800');
+    --swc-button-content-color-hover: token('transparent-white-900');
+    --swc-button-content-color-down: token('transparent-white-900');
+    --swc-button-content-color-focus: token('transparent-white-900');
+}
+
+:host([static-color='white'][variant='secondary'][treatment='outline']) {
+    --swc-button-background-color-default: token('transparent-white-25');
+    --swc-button-background-color-hover: token('transparent-white-100');
+    --swc-button-background-color-down: token('transparent-white-100');
+    --swc-button-background-color-focus: token('transparent-white-100');
+    --swc-button-border-color-default: token('transparent-white-300');
+    --swc-button-border-color-hover: token('transparent-white-400');
+    --swc-button-border-color-down: token('transparent-white-400');
+    --swc-button-border-color-focus: token('transparent-white-400');
+}
+
+/* ---- Static Black (primary) ---- */
+:host([static-color='black']) {
+    --swc-button-background-color-default: token('transparent-black-800');
+    --swc-button-background-color-hover: token('transparent-black-900');
+    --swc-button-background-color-down: token('transparent-black-900');
+    --swc-button-background-color-focus: token('transparent-black-900');
+    --swc-button-content-color-default: token('white');
+    --swc-button-content-color-hover: token('white');
+    --swc-button-content-color-down: token('white');
+    --swc-button-content-color-focus: token('white');
+    --swc-button-focus-indicator-color: token(
+        'static-black-focus-indicator-color'
+    );
+    --swc-button-background-color-disabled: token(
+        'disabled-static-black-background-color'
+    );
+    --swc-button-border-color-disabled: transparent;
+    --swc-button-content-color-disabled: token(
+        'disabled-static-black-content-color'
+    );
+}
+
+:host([static-color='black'][treatment='outline']) {
+    --swc-button-background-color-default: token('transparent-black-25');
+    --swc-button-background-color-hover: token('transparent-black-100');
+    --swc-button-background-color-down: token('transparent-black-100');
+    --swc-button-background-color-focus: token('transparent-black-100');
+    --swc-button-border-color-default: token('transparent-black-800');
+    --swc-button-border-color-hover: token('transparent-black-900');
+    --swc-button-border-color-down: token('transparent-black-900');
+    --swc-button-border-color-focus: token('transparent-black-900');
+    --swc-button-content-color-default: token('transparent-black-800');
+    --swc-button-content-color-hover: token('transparent-black-900');
+    --swc-button-content-color-down: token('transparent-black-900');
+    --swc-button-content-color-focus: token('transparent-black-900');
+    --swc-button-background-color-disabled: token('transparent-black-25');
+    --swc-button-border-color-disabled: token(
+        'disabled-static-black-border-color'
+    );
+    --swc-button-content-color-disabled: token(
+        'disabled-static-black-content-color'
+    );
+}
+
+/* ---- Static Black (secondary)---- */
+:host([static-color='black'][variant='secondary']) {
+    --swc-button-background-color-default: token('transparent-black-100');
+    --swc-button-background-color-hover: token('transparent-black-200');
+    --swc-button-background-color-down: token('transparent-black-200');
+    --swc-button-background-color-focus: token('transparent-black-200');
+    --swc-button-content-color-default: token('transparent-black-800');
+    --swc-button-content-color-hover: token('transparent-black-900');
+    --swc-button-content-color-down: token('transparent-black-900');
+    --swc-button-content-color-focus: token('transparent-black-900');
+}
+
+:host([static-color='black'][variant='secondary'][treatment='outline']) {
+    --swc-button-background-color-default: token('transparent-black-25');
+    --swc-button-background-color-hover: token('transparent-black-100');
+    --swc-button-background-color-down: token('transparent-black-100');
+    --swc-button-background-color-focus: token('transparent-black-100');
+    --swc-button-border-color-default: token('transparent-black-300');
+    --swc-button-border-color-hover: token('transparent-black-400');
+    --swc-button-border-color-down: token('transparent-black-400');
+    --swc-button-border-color-focus: token('transparent-black-400');
+}
+
+a.swc-Button {
+    /* Make link text not selectable  */
+    user-select: none;
+
+    /* stylelint-disable-next-line property-no-vendor-prefix -- Remove appearance for clickable types in iOS and Safari. */
+    -webkit-appearance: none;
+}
+
+.swc-Button-label {
+    align-self: start;
+    justify-self: center;
+
+    /* Fixes horizontal alignment of text in anchor buttons */
+    text-align: center;
+    padding-block-start: calc(
+        var(--swc-button-top-to-text, var(--_swc-button-top-to-text)) -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    padding-block-end: calc(
+        var(--swc-button-bottom-to-text, var(--_swc-button-bottom-to-text)) -
+            var(--swc-button-border-width, var(--_swc-button-border-width))
+    );
+    line-height: var(--swc-button-line-height, var(--_swc-button-line-height));
+
+    &:empty {
+        display: none;
+    }
+}
+
+/* Disable button label wrap */
+.swc-Button--noWrap:has(.swc-Button-label) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.swc-Button ::slotted([slot='icon']) + .swc-Button-label {
+    text-align: start;
+}
+
+/* Icon only variant */
+.swc-Button.swc-Button--iconOnly {
+    min-inline-size: unset;
+    padding: var(
+        --swc-button-edge-to-visual-only,
+        var(--_swc-button-edge-to-visual-only)
+    );
+
+    ::slotted([slot='icon']) {
+        align-self: center;
+        margin-inline-start: 0;
+        margin-block-start: 0;
+    }
+}
+
+/* Forced colors / high contrast mode */
+@media (forced-colors: active) {
+    .swc-Button {
+        --highcontrast-button-border-color-default: ButtonBorder;
+        --highcontrast-button-border-color-hover: ButtonBorder;
+        --highcontrast-button-border-color-focus: ButtonBorder;
+        --highcontrast-button-border-color-down: ButtonBorder;
+        --highcontrast-button-content-color-disabled: GrayText;
+        --highcontrast-button-border-color-disabled: GrayText;
+        --highcontrast-button-background-color-disabled: ButtonFace;
+
+        /* @passthrough start -- progress circle highcontrast overrides */
+        --mod-progress-circle-track-border-color: ButtonText;
+        --mod-progress-circle-track-border-color-over-background: ButtonText;
+        --mod-progress-circle-thickness: token(
+            'progress-circle-thickness-medium'
+        );
+        --highcontrast-button-focus-ring-color: ButtonText;
+
+        &:focus-visible {
+            &:after {
+                /* Make sure the box-shadow used for the focus indicator is displayed. */
+                forced-color-adjust: none;
+            }
+        }
+
+        &.swc-Button--accent,
+        &:not(
+            .swc-Button--primary,
+            .swc-Button--negative,
+            .swc-Button--secondary,
+            .swc-Button--staticBlack,
+            .swc-Button--staticWhite
+        ) {
+            /* The accent fill variant looks different than the other buttons.
+         It inverts the background and content colors. */
+            --highcontrast-button-background-color-default: ButtonText;
+            --highcontrast-button-content-color-default: ButtonFace;
+            --highcontrast-button-background-color-hover: Highlight;
+            --highcontrast-button-background-color-down: Highlight;
+            --highcontrast-button-background-color-focus: Highlight;
+            --highcontrast-button-content-color-hover: HighlightText;
+            --highcontrast-button-content-color-down: HighlightText;
+            --highcontrast-button-content-color-focus: HighlightText;
+
+            .swc-Button-label {
+                forced-color-adjust: none;
+            }
+        }
+    }
+}

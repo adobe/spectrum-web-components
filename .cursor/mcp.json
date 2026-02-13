@@ -1,0 +1,56 @@
+{
+  "mcpServers": {
+    "Corp Jira": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--name",
+        "corp-jira-bhabv",
+        "--env-file",
+        "~/.easymcp/adobe-mcp-servers/src/corp-jira/.env",
+        "corp-jira"
+      ]
+    },
+    "Figma": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--name",
+        "figma-wbfso",
+        "--env-file",
+        "~/.easymcp/adobe-mcp-servers/src/figma-mcp/.env",
+        "figma"
+      ]
+    },
+    "PR Review MCP Server": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--name",
+        "pr-review-mcp-server-lnrol",
+        "--env-file",
+        "~/.easymcp/adobe-mcp-servers/src/pr-review-mcp/.env",
+        "pr-review-mcp-server"
+      ]
+    },
+    "Corp GitHub": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--name",
+        "corp-github-wvhbj",
+        "--env-file",
+        "~/.easymcp/adobe-mcp-servers/src/corp-github/.env",
+        "corp-github"
+      ]
+    }
+  }
+}

@@ -9,9 +9,17 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { defineElement } from '@spectrum-web-components/core/shared/base';
 
-export {
-    LanguageResolutionController,
-    languageResolverUpdatedSymbol,
-} from './LanguageResolution.js';
-export { aetherController } from './AetherController.js';
+// Import progress-circle for pending state support
+import '@adobe/swc/progress-circle';
+
+import { Button } from './Button.js';
+
+export * from './Button.js';
+declare global {
+    interface HTMLElementTagNameMap {
+        'swc-button': Button;
+    }
+}
+defineElement('swc-button', Button);

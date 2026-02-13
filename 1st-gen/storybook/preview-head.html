@@ -30,4 +30,23 @@
     .sbdocs-preview sp-story-decorator::part(container) {
         min-height: 100px;
     }
+
+    .sbdocs-preview sp-story-decorator[color='dark']::part(container),
+    sp-story-decorator[color='dark']::part(container) {
+        /* background: url(./images/dropzone-illustration.png); */
+        background: url(./images/gradient-background-dark.png);
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    /* Aether button particle effects */
+    .aether-particle {
+        border-radius: 50%;
+        left: 0;
+        pointer-events: none;
+        position: fixed;
+        top: 0;
+        opacity: 0;
+        z-index: 9999;
+    }
 </style>
