@@ -9,5 +9,7 @@ htmlWhitespaceSensitivity: ignore
 overrides:
   - files: '*.css'
     options:
+      # Effectively disables line wrapping so CSS declarations stay on a single
+      # line; line breaks in stylesheets are managed by stylelint rules instead.
       printWidth: 500
       singleQuote: false

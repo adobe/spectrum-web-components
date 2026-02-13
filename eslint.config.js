@@ -23,8 +23,10 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import jsonc from 'eslint-plugin-jsonc';
 import * as mdx from 'eslint-plugin-mdx';
 import notice from 'eslint-plugin-notice';
+import storybook from 'eslint-plugin-storybook';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import jsoncParser from 'jsonc-eslint-parser';
+import globals from 'globals';
 
 // ────────────────────────────────────────────────────────────────────────────────
 // Custom rules (inlined from @spectrum-web-components/eslint-plugin)
@@ -162,61 +164,11 @@ const clickEventsAllowList = [
   'sp-underlay',
 ];
 
-// Minimal globals for .js files (no-undef is off for .ts; TypeScript compiler handles those).
-const browserGlobals = {
-  document: 'readonly',
-  window: 'readonly',
-  self: 'readonly',
-  console: 'readonly',
-  HTMLElement: 'readonly',
-  HTMLInputElement: 'readonly',
-  HTMLTextAreaElement: 'readonly',
-  Element: 'readonly',
-  Node: 'readonly',
-  customElements: 'readonly',
-  ShadowRoot: 'readonly',
-  DocumentFragment: 'readonly',
-  Event: 'readonly',
-  CustomEvent: 'readonly',
-  KeyboardEvent: 'readonly',
-  setTimeout: 'readonly',
-  clearTimeout: 'readonly',
-  setInterval: 'readonly',
-  clearInterval: 'readonly',
-  requestAnimationFrame: 'readonly',
-  fetch: 'readonly',
-  URL: 'readonly',
-  URLSearchParams: 'readonly',
-  location: 'readonly',
-  navigator: 'readonly',
-  matchMedia: 'readonly',
-  getComputedStyle: 'readonly',
-  performance: 'readonly',
-  addEventListener: 'readonly',
-  removeEventListener: 'readonly',
-};
-
-/** Node/CommonJS globals for scripts and tooling that run in Node. */
-const nodeGlobals = {
-  module: 'readonly',
-  exports: 'readonly',
-  require: 'readonly',
-  process: 'readonly',
-  __dirname: 'readonly',
-  __filename: 'readonly',
-  Buffer: 'readonly',
-  crypto: 'readonly',
-};
-
-/** Mocha/test globals for test and story files (web-test-runner). */
-const mochaGlobals = {
-  describe: 'readonly',
-  it: 'readonly',
-  xit: 'readonly',
-  before: 'readonly',
-  beforeEach: 'readonly',
-  afterEach: 'readonly',
-  after: 'readonly',
+/**
+ * Test-library globals not included in the globals package.
+ * Sinon is a test spy/stub library; Mocha is referenced as a namespace in some tests.
+ */
+const testLibGlobals = {
   sinon: 'readonly',
   Mocha: 'readonly',
 };
@@ -283,7 +235,7 @@ export default defineConfig([
         ecmaVersion: 'latest',
         sourceType: 'module',
       },
-      globals: browserGlobals,
+      globals: globals.browser,
     },
     rules: {
       // Copyright header (global for all .ts/.js files)
@@ -485,7 +437,7 @@ export default defineConfig([
       '1st-gen/packages/icons-ui/bin/**/*.js',
     ],
     languageOptions: {
-      globals: nodeGlobals,
+      globals: globals.node,
     },
   },
 
@@ -505,7 +457,7 @@ export default defineConfig([
       '**/e2e/**/*.ts',
     ],
     languageOptions: {
-      globals: { ...browserGlobals, ...mochaGlobals },
+      globals: { ...globals.browser, ...globals.mocha, ...testLibGlobals },
     },
     rules: {
       'swc/document-active-element': 'off',
@@ -524,6 +476,34 @@ export default defineConfig([
     files: ['**/*.stories.ts'],
     rules: {
       'no-console': 'off',
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // Storybook plugin: recommended rules for story files (CSF format, naming, etc.)
+  // ────────────────────────────────────────────────────────────────────────────
+  ...storybook.configs['flat/recommended'],
+  // 2nd-gen test files are CSF story files using play functions (e.g., asset.test.ts)
+  {
+    files: ['2nd-gen/**/test/*.test.ts'],
+    plugins: { storybook: storybook },
+    rules: {
+      'storybook/await-interactions': 'error',
+      'storybook/context-in-play-function': 'error',
+      'storybook/default-exports': 'error',
+      'storybook/hierarchy-separator': 'warn',
+      'storybook/no-redundant-story-name': 'warn',
+      'storybook/prefer-pascal-case': 'warn',
+      'storybook/story-exports': 'error',
+      'storybook/use-storybook-expect': 'error',
+      'storybook/use-storybook-testing-library': 'error',
+    },
+  },
+  {
+    files: ['**/*.stories.ts', '**/*.stories.js', '2nd-gen/**/test/*.test.ts'],
+    rules: {
+      // Project imports from @storybook/web-components intentionally
+      'storybook/no-renderer-packages': 'off',
     },
   },
 

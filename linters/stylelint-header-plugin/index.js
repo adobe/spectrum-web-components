@@ -17,7 +17,7 @@ import stylelint from 'stylelint';
 
 /**
  * Finds the workspace root by walking up from a starting directory
- * and looking for common markers like .git, package.json, or .stylelintrc.json
+ * and looking for common markers like .git or stylelint config files
  */
 function findWorkspaceRoot(startDir) {
   let current = startDir;
@@ -26,7 +26,6 @@ function findWorkspaceRoot(startDir) {
   while (current !== root) {
     if (
       existsSync(join(current, '.git')) ||
-      existsSync(join(current, '.stylelintrc.json')) ||
       existsSync(join(current, 'stylelint.config.js')) ||
       existsSync(join(current, 'stylelint.config.mjs'))
     ) {

@@ -7,7 +7,7 @@ This guide covers the linting tools used in the repository and how to work with 
 All linting is centralized at the repo root with a single configuration for each tool:
 
 - **ESLint** — JavaScript/TypeScript linting with flat config (`eslint.config.js`)
-- **Stylelint** — CSS linting (`.stylelintrc.json`)
+- **Stylelint** — CSS linting (`stylelint.config.js`)
 - **Prettier** — Code formatting (`.prettierrc.yaml`)
 
 Pre-commit hooks via `lint-staged` run linting and formatting on staged files automatically.
@@ -19,7 +19,7 @@ Pre-commit hooks via `lint-staged` run linting and formatting on staged files au
 | Tool      | Config location     | Notes                              |
 | --------- | ------------------- | ---------------------------------- |
 | ESLint    | `eslint.config.js`  | Flat config at root                |
-| Stylelint | `.stylelintrc.json` | With custom `swc/header` plugin    |
+| Stylelint | `stylelint.config.js` | With custom `swc/header` plugin    |
 | Prettier  | `.prettierrc.yaml`  | Separate formatter (not in ESLint) |
 
 ### ESLint plugins
@@ -43,7 +43,7 @@ Pre-commit hooks via `lint-staged` run linting and formatting on staged files au
 | Plugin                                             | Purpose                                 |
 | -------------------------------------------------- | --------------------------------------- |
 | `stylelint-config-standard`                        | Baseline CSS rules                      |
-| `stylelint-order`                                  | Alphabetical property ordering          |
+| `stylelint-order`                                  | Logical order property ordering          |
 | `stylelint-declaration-strict-value`               | Design token enforcement (2nd-gen only) |
 | `@spectrum-web-components/stylelint-header-plugin` | Custom header comment rule              |
 
@@ -65,10 +65,10 @@ Pre-commit hooks via `lint-staged` run linting and formatting on staged files au
 ### From the command line
 
 ```bash
-# Check all files (runs in parallel)
+# Check all files (runs sequentially)
 yarn lint
 
-# Fix all files (runs in parallel)
+# Fix all files (runs sequentially)
 yarn format
 
 # Check specific tool only
@@ -161,7 +161,7 @@ Import groups are ordered as:
 
 ### CSS property ordering
 
-CSS properties are sorted alphabetically by `stylelint-order`. Run `yarn format:styles` to sort properties.
+CSS properties are sorted in a custom logical order by `stylelint-order`, defined in [`stylelint-property-order.js`](../../linters/stylelint-property-order.js). Run `yarn format:styles` to sort properties.
 
 ### Design tokens (2nd-gen only)
 

@@ -16,7 +16,7 @@ import swcHeader from '@spectrum-web-components/stylelint-header-plugin';
 import propertyGroups from './linters/stylelint-property-order.js';
 
 const HEADER = `/**
- * Copyright 2026 Adobe. All rights reserved.
+ * Copyright ${new Date().getFullYear()} Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -47,7 +47,7 @@ export default {
     ],
     'length-zero-no-unit': [true, { ignore: 'custom-properties' }],
     'selector-class-pattern': null,
-    'selector-pseudo-element-colon-notation': ['double', {}],
+    'selector-pseudo-element-colon-notation': ['double'],
     'selector-type-no-unknown': [true, { ignore: ['custom-elements'] }],
     'swc/header': HEADER,
     'order/properties-order': [
