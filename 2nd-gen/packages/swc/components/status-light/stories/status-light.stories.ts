@@ -44,7 +44,10 @@ argTypes.size = {
 /**
  * Status lights describe the condition of an entity. Much like [badges](../?path=/docs/components-badge--readme), they can be used to convey semantic meaning, such as statuses and categories.
  */
-const meta: Meta = {
+args['default-slot'] = 'Status light';
+args.size = 'm';
+
+export const meta: Meta = {
     title: 'Status light',
     component: 'swc-status-light',
     parameters: {
@@ -66,7 +69,11 @@ const meta: Meta = {
     tags: ['migrated'],
 };
 
-export default meta;
+export default {
+    ...meta,
+    title: 'Status light',
+    excludeStories: ['meta'],
+} as Meta;
 
 // ────────────────────
 //    HELPERS

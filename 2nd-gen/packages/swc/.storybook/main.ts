@@ -2,28 +2,49 @@ import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { mergeConfig } from 'vite';
 import remarkGfm from 'remark-gfm';
+import type { Indexer } from '@storybook/types';
+import { readCsf } from '@storybook/core/csf-tools';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const includeTestStories = process.env.NODE_ENV !== 'production';
+const testStoryIndexer: Indexer = {
+    test: /\.test\.ts$/,
+    createIndex: async (fileName, options) => {
+        const csfFile = await readCsf(fileName, options);
+        return csfFile.parse().indexInputs;
+    },
+};
+
+const stories = [
+    {
+        directory: '../components',
+        files: '**/*.stories.ts',
+        titlePrefix: 'Components',
+    },
+    {
+        directory: 'learn-about-swc',
+        files: '*.mdx',
+        titlePrefix: 'Learn about SWC',
+    },
+    {
+        directory: 'guides',
+        files: '**/!(*documentation).mdx',
+        titlePrefix: 'Guides',
+    },
+];
+
+if (includeTestStories) {
+    stories.push({
+        directory: '../components',
+        files: '**/*.test.ts',
+        titlePrefix: 'Components',
+    });
+}
 
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
 const config = {
-    stories: [
-        {
-            directory: '../components',
-            files: '**/*.stories.ts',
-            titlePrefix: 'Components',
-        },
-        {
-            directory: 'learn-about-swc',
-            files: '*.mdx',
-            titlePrefix: 'Learn about SWC',
-        },
-        {
-            directory: 'guides',
-            files: '**/!(*documentation).mdx',
-            titlePrefix: 'Guides',
-        },
-    ],
+    stories,
+    experimental_indexers: [testStoryIndexer],
     docs: {
         defaultName: 'README',
     },
