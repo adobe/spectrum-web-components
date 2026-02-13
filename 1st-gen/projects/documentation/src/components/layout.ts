@@ -19,7 +19,6 @@ import {
 } from '@spectrum-web-components/base';
 import {
     property,
-    queryAsync,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/theme/sp-theme.js';
@@ -27,7 +26,6 @@ import type {
     Color,
     Scale,
     SystemVariant,
-    Theme,
 } from '@spectrum-web-components/theme';
 import type { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/button/sp-button.js';
@@ -80,9 +78,9 @@ const DEFAULT_SYSTEM = (
 ) as SystemVariant;
 const DEFAULT_DIR = (
     window.localStorage
-        ? localStorage.getItem(SWC_THEME_DIR_KEY) || DIR_FALLBACK
+        ? (localStorage.getItem(SWC_THEME_DIR_KEY) ?? DIR_FALLBACK)
         : DIR_FALLBACK
-) as 'ltr' | 'rtl';
+) as HTMLElement['dir'];
 
 const isNarrowMediaQuery = matchMedia('screen and (max-width: 960px)');
 
@@ -173,9 +171,6 @@ export class LayoutElement extends LitElement {
     @property({ attribute: false })
     public color: Color = DEFAULT_COLOR;
 
-    @property({ reflect: true })
-    public override dir: 'ltr' | 'rtl' = DEFAULT_DIR;
-
     @property({ type: Boolean })
     public open = false;
 
@@ -191,18 +186,30 @@ export class LayoutElement extends LitElement {
     @property({ attribute: false })
     public system: SystemVariant = DEFAULT_SYSTEM;
 
-    @queryAsync('sp-theme')
-    private themeRoot!: Theme;
-
-    public async startManagingContentDirection(el: HTMLElement): Promise<void> {
-        (await this.themeRoot).startManagingContentDirection(el);
+    override get dir(): CSSStyleDeclaration['direction'] {
+        return (getComputedStyle(this).direction ??
+            DEFAULT_DIR) as CSSStyleDeclaration['direction'];
     }
 
-    public async stopManagingContentDirection(el: HTMLElement): Promise<void> {
-        (await this.themeRoot).stopManagingContentDirection(el);
+    override set dir(dir: CSSStyleDeclaration['direction']) {
+        if (dir === this.dir) {
+            return;
+        }
+        const oldDir = this.dir;
+        this.setAttribute('dir', dir);
+        this.requestUpdate('dir', oldDir);
     }
 
     private _themeTrackers = new Map<HTMLElement, TrackTheme['callback']>();
+
+    public constructor() {
+        super();
+
+        // Initialize the direction to the default value if provided
+        if (['ltr', 'rtl'].includes(DEFAULT_DIR)) {
+            this.dir = DEFAULT_DIR;
+        }
+    }
 
     private handleMatchMediaChange = (event: MediaQueryListEvent) => {
         this.isNarrow = event.matches;
@@ -228,9 +235,7 @@ export class LayoutElement extends LitElement {
     }
 
     private updateDirection(event: Event) {
-        const dir = (event.target as Picker).value;
-        this.dir = dir === 'rtl' ? dir : 'ltr';
-        document.documentElement.dir = this.dir;
+        this.dir = (event.target as Picker).value as HTMLElement['dir'];
     }
 
     private handleTrackTheme(event: CustomEvent<TrackTheme>): void {
@@ -513,8 +518,16 @@ export class LayoutElement extends LitElement {
                 loadStyleFragments = true;
             }
         }
-        if (changes.has('dir') && window.localStorage) {
-            localStorage.setItem(SWC_THEME_DIR_KEY, this.dir);
+        if (changes.has('dir')) {
+            if (window.localStorage) {
+                localStorage.setItem(SWC_THEME_DIR_KEY, this.dir);
+            }
+            // Notify light DOM components (e.g. tabs, code examples) that
+            // depend on layout measurements so they recalculate after the
+            // direction change.
+            requestAnimationFrame(() => {
+                window.dispatchEvent(new Event('resize'));
+            });
         }
         if (loadStyleFragments) {
             lazyStyleFragment(this.color, this.system);

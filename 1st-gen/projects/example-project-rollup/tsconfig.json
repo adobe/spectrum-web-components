@@ -1,20 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es2017",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noEmitOnError": true,
-    "lib": ["es2017", "dom", "dom.iterable"],
-    "strict": true,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
     "importHelpers": true,
-    "outDir": "out-tsc",
-    "sourceMap": true,
-    "skipLibCheck": true,
     "inlineSources": true,
+    "noEmitOnError": true,
+    "outDir": "out-tsc",
     "rootDir": "./"
   },
+  "extends": "../../tsconfig.json",
   "include": ["**/*.ts"]
 }

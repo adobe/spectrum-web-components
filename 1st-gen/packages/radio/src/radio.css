@@ -24,7 +24,7 @@
 /**
  * Work around for https://github.com/adobe/spectrum-css/issues/2251
  **/
-:host([dir="rtl"]) #button:after {
+#button:dir(rtl):after {
     transform: translateX(50%) translateY(-50%);
 }
 

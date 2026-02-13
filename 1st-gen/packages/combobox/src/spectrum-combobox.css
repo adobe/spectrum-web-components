@@ -220,8 +220,7 @@
     inset-inline-end: calc(var(--mod-combobox-spacing-inline-icon-to-button, var(--spectrum-combobox-spacing-inline-icon-to-button)) + var(--mod-combobox-button-width, var(--spectrum-combobox-button-width)));
 }
 
-.progress-circle:dir(rtl),
-:host([dir="rtl"]) .progress-circle {
+.progress-circle:dir(rtl) {
     inset-inline-start: calc(var(--mod-combobox-spacing-inline-icon-to-button, var(--spectrum-combobox-spacing-inline-icon-to-button)) + var(--mod-combobox-button-width, var(--spectrum-combobox-button-width)));
     inset-inline-end: inherit;
 }

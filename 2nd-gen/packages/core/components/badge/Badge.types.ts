@@ -28,7 +28,7 @@ export const BADGE_VALID_SIZES = [
     'm',
     'l',
     'xl',
-] as const satisfies readonly ElementSize[];
+] as const satisfies ElementSize[];
 
 export const BADGE_VARIANTS_SEMANTIC = [
     'accent',
