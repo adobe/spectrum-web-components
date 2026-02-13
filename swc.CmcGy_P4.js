@@ -1,0 +1,2 @@
+const t=(t,e,r)=>(r.configurable=!0,r.enumerable=!0,Reflect.decorate&&"object"!=typeof e&&Object.defineProperty(t,e,r),r);function e(e,r){return(n,o,s)=>{const c=t=>t.renderRoot?.querySelector(e)??null;if(r){const{get:e,set:r}="object"==typeof o?n:s??(()=>{const t=Symbol();return{get(){return this[t]},set(e){this[t]=e}}})();return t(n,o,{get(){let t=e.call(this);return void 0===t&&(t=c(this),(null!==t||this.hasUpdated)&&r.call(this,t)),t}})}return t(n,o,{get(){return c(this)}})}}export{t as a,e};
+//# sourceMappingURL=swc.DMkhV-XS.js.map
