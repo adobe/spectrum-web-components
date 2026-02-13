@@ -70,25 +70,25 @@
     justify-content: start;
 }
 
-:host([dir="ltr"]) .not-exact .tick {
+:host(:dir(ltr)) .not-exact .tick {
     padding-right: var(--sp-slider-tick-offset);
 }
 
-:host([dir="rtl"]) .not-exact .tick {
+:host(:dir(rtl)) .not-exact .tick {
     padding-left: var(--sp-slider-tick-offset);
 }
 
-:host([dir="ltr"]) .not-exact .tick:after {
+:host(:dir(ltr)) .not-exact .tick:after {
     left: auto;
     transform: translate(-50%, 0);
 }
 
-:host([dir="rtl"]) .not-exact .tick:after {
+:host(:dir(rtl)) .not-exact .tick:after {
     right: auto;
     transform: translate(50%, 0);
 }
 
-:host([dir="rtl"]) .handle:before {
+:host(:dir(rtl)) .handle:before {
     transform: translate(50%, -50%);
 }
 
@@ -101,19 +101,19 @@
     background-size: var(--spectrum-slider-track-background-size) !important;
 }
 
-:host([dir="ltr"]) .track:last-of-type:before {
+:host(:dir(ltr)) .track:last-of-type:before {
     background-position: 100%;
 }
 
-:host([dir="rtl"]) .track:first-of-type:before {
+:host(:dir(rtl)) .track:first-of-type:before {
     background-position: 100%;
 }
 
-:host([dir="ltr"]) .track:not(:first-of-type, :last-of-type) {
+:host(:dir(ltr)) .track:not(:first-of-type, :last-of-type) {
     left: var(--spectrum-slider-track-segment-position);
 }
 
-:host([dir="rtl"]) .track:not(:first-of-type, :last-of-type) {
+:host(:dir(rtl)) .track:not(:first-of-type, :last-of-type) {
     right: var(--spectrum-slider-track-segment-position);
 }
 
@@ -127,11 +127,11 @@
     width: 1px;
 }
 
-:host([label-visibility="value"][dir="ltr"]) #value {
+:host([label-visibility="value"]:dir(ltr)) #value {
     margin-left: auto;
 }
 
-:host([label-visibility="value"][dir="rtl"]) #value {
+:host([label-visibility="value"]:dir(rtl)) #value {
     margin-right: auto;
 }
 
@@ -154,4 +154,80 @@
 
 :host([label-visibility="none"]) #label-container + #track {
     margin-block-start: 0;
+}
+
+/* Value tooltip for multi-handle sliders when value label is not visible */
+.value-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+    padding-block-start: var(--spectrum-component-top-to-text-75, 4px);
+    padding-block-end: var(--spectrum-component-bottom-to-text-75, 5px);
+    padding-inline: var(--spectrum-component-edge-to-text-75, 9px);
+    background-color: var(--spectrum-gray-900);
+    color: var(--spectrum-gray-50);
+    font-size: var(--spectrum-font-size-75, 12px);
+    line-height: var(--spectrum-line-height-100, 1.3);
+    border-radius: var(--spectrum-corner-radius-100, 4px);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity var(--spectrum-animation-duration-100, 130ms) ease-in-out,
+        visibility var(--spectrum-animation-duration-100, 130ms) ease-in-out;
+    pointer-events: none;
+    z-index: 10;
+}
+
+:host([dir="rtl"]) .value-tooltip {
+    transform: translateX(50%);
+}
+
+/* Tooltip arrow/tip */
+.value-tooltip:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+    border-width: 4px;
+    border-style: solid;
+    border-color: var(--spectrum-gray-900) transparent transparent;
+}
+
+:host([dir="rtl"]) .value-tooltip:after {
+    transform: translateX(50%);
+}
+
+/* Show tooltip on hover and focus within handle */
+.handle.show-value-tooltip:hover .value-tooltip,
+.handle.show-value-tooltip:focus-within .value-tooltip,
+.handle.show-value-tooltip.handle-highlight .value-tooltip,
+.handle.show-value-tooltip.dragging .value-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* High contrast mode support for value tooltip */
+@media (forced-colors: active) {
+    .value-tooltip {
+        background-color: Canvas;
+        color: CanvasText;
+        border: 1px solid CanvasText;
+    }
+
+    .value-tooltip:after {
+        border-color: CanvasText transparent transparent;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .value-tooltip {
+        transition: none;
+    }
+}
+
+:host([disabled]) .value-tooltip {
+    display: none;
 }
