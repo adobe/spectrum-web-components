@@ -333,18 +333,7 @@ export default defineConfig([
       'jsdoc/require-returns-description': 'warn', // Returns should have descriptions
       'jsdoc/valid-types': 'warn', // Type expressions are valid (warn for @internal usage)
 
-      // Sort imports (member sorting only, declaration sort handled by simple-import-sort)
-      'sort-imports': [
-        'error',
-        {
-          allowSeparatedGroups: false,
-          ignoreCase: true,
-          ignoreDeclarationSort: true,
-          ignoreMemberSort: false,
-        },
-      ],
-
-      // Import sorting (declaration order)
+      // Import sorting (declaration and member order)
       'simple-import-sort/imports': [
         'error',
         {
@@ -504,16 +493,6 @@ export default defineConfig([
     rules: {
       // Project imports from @storybook/web-components intentionally
       'storybook/no-renderer-packages': 'off',
-    },
-  },
-
-  // ────────────────────────────────────────────────────────────────────────────
-  // Icons and elements: disable sort-imports
-  // ────────────────────────────────────────────────────────────────────────────
-  {
-    files: ['**/icons/*.ts', '**/src/elements/*.ts'],
-    rules: {
-      'sort-imports': 'off',
     },
   },
 
