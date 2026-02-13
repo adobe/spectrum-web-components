@@ -1,4 +1,30 @@
+<!-- Generated breadcrumbs - DO NOT EDIT -->
+
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Taggroup / TagGroup migration roadmap
+
+<!-- Document title (editable) -->
+
 # TagGroup migration roadmap
+
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
+
+- [Component specifications](#component-specifications)
+    - [CSS](#css)
+    - [SWC](#swc)
+- [Comparison](#comparison)
+    - [DOM Structure changes](#dom-structure-changes)
+    - [CSS => SWC mapping](#css--swc-mapping)
+- [Summary of changes](#summary-of-changes)
+    - [CSS => SWC implementation gaps](#css--swc-implementation-gaps)
+    - [CSS Spectrum 2 changes](#css-spectrum-2-changes)
+- [Resources](#resources)
+
+</details>
+
+<!-- Document content (editable) -->
 
 ## Component specifications
 

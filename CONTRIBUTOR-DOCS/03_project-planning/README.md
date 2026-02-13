@@ -46,6 +46,7 @@
     - Illustrated Message
     - Infield Button
     - Infield Progress Circle
+    - Link
     - Meter
     - Number Field
     - Opacity Checkerboard
@@ -59,8 +60,11 @@
     - Swatch
     - Swatch Group
     - Switch
+    - Tag
+    - Taggroup
     - Textfield
     - Thumbnail
+    - Tooltip
 - [Milestones](04_milestones/README.md)
 
 </details>
