@@ -133,4 +133,10 @@ jobs:
 
       - name: Prettier
         if: ${{ needs.changed_files.outputs.prettier_added_files != '' || needs.changed_files.outputs.prettier_modified_files != '' }}
-        run: yarn prettier --check ${{ needs.changed_files.outputs.prettier_added_files }} ${{ needs.changed_files.outputs.prettier_modified_files }}
+        run: |
+          FILES="${{ needs.changed_files.outputs.prettier_added_files }} ${{ needs.changed_files.outputs.prettier_modified_files }}"
+          # Trim whitespace and skip if only whitespace remains
+          FILES=$(echo "$FILES" | xargs)
+          if [ -n "$FILES" ]; then
+            yarn prettier --check $FILES
+          fi

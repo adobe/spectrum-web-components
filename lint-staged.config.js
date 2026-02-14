@@ -15,7 +15,7 @@ export default {
     'stylelint --fix --cache --allow-empty-input',
     'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
   ],
-  '*.ts': [
+  '*.{ts,js,mjs,cjs}': [
     'eslint --fix --cache --no-error-on-unmatched-pattern',
     'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
   ],

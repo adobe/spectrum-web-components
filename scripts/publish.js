@@ -21,7 +21,6 @@
  * # Regular release with git tags (uses "latest" tag)
  * yarn publish
  *
- 
  * # Snapshot release with custom tag
  * node ./scripts/publish.js --tag snapshot
  *
