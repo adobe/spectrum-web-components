@@ -16,6 +16,8 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Asset } from '@adobe/swc/asset';
 
+import '@adobe/swc/image';
+
 // ────────────────
 //    METADATA
 // ────────────────
@@ -28,81 +30,10 @@ argTypes.variant = {
     options: [undefined, ...Asset.VARIANTS],
 };
 
-// Add image-specific argTypes
-argTypes.src = {
-    control: { type: 'text' },
-    description:
-        'The image source URL. When provided, renders an <img> element directly.',
-    table: {
-        category: 'Image Properties',
-    },
-};
-
-argTypes.alt = {
-    control: { type: 'text' },
-    description:
-        'Alternative text for the image. Required for accessibility when using src.',
-    table: {
-        category: 'Image Properties',
-    },
-};
-
-argTypes.loading = {
-    control: { type: 'select' },
-    options: [undefined, 'lazy', 'eager'],
-    description: 'Loading behavior for the image.',
-    table: {
-        category: 'Image Properties',
-    },
-};
-
-argTypes['object-fit'] = {
-    control: { type: 'select' },
-    options: [undefined, 'contain', 'cover', 'fill', 'none', 'scale-down'],
-    description: 'How the image should be resized to fit its container.',
-    table: {
-        category: 'Image Properties',
-        disable: true,
-    },
-};
-
-argTypes['object-position'] = {
-    control: { type: 'text' },
-    description:
-        'Position of the image within its container when using object-fit.',
-    table: {
-        category: 'Image Properties',
-    },
-};
-
-argTypes.srcset = {
-    control: { type: 'text' },
-    description: 'Responsive image sources.',
-    table: {
-        category: 'Image Properties',
-        disable: true,
-    },
-};
-
-argTypes.sizes = {
-    control: { type: 'text' },
-    description: 'Sizes for responsive images.',
-    table: {
-        category: 'Image Properties',
-        disable: true,
-    },
-};
-
 /**
- * An asset provides a visual representation of files, folders, or images in your application.
- *
- * The component supports three usage patterns:
- * - **Built-in variants**: Use `variant="file"` or `variant="folder"` for standard icons
- * - **Direct image rendering** (NEW): Use the `src` attribute for streamlined image display with modern features
- * - **Slot-based**: Provide custom content via the default slot (backwards compatible)
- *
- * The direct image rendering approach includes support for lazy loading, object-fit controls, responsive images (srcset/sizes),
- * and all standard HTML image attributes.
+ * An asset is a media wrapper. It displays either a built-in file or folder icon,
+ * an error state, or slotted content (e.g. swc-image, video, iframe). Use the
+ * default slot to wrap images (via swc-image), video, or other media.
  */
 const meta: Meta = {
     title: 'Asset',
@@ -114,7 +45,7 @@ const meta: Meta = {
             handles: events,
         },
         docs: {
-            subtitle: `Visually represent files, folders, or images in your application`,
+            subtitle: `Media wrapper for file/folder icons, error state, or slotted image, video, iframe`,
         },
         flexLayout: 'row-nowrap',
     },
@@ -130,8 +61,7 @@ export default meta;
 
 export const Playground: Story = {
     args: {
-        label: 'Background',
-        'default-slot': `<img src="https://picsum.photos/id/56/80/80/?blur=2" alt="preview of background" />`,
+        'default-slot': `<swc-image src="https://picsum.photos/id/56/80/80/?blur=2" alt="Preview of background"></swc-image>`,
     },
     tags: ['autodocs', 'dev'],
 };
@@ -142,8 +72,7 @@ export const Playground: Story = {
 
 export const Overview: Story = {
     args: {
-        label: 'Background',
-        'default-slot': `<img src="https://picsum.photos/id/56/80/80/?blur=2" alt="preview of background" />`,
+        'default-slot': `<swc-image src="https://picsum.photos/id/56/80/80/?blur=2" alt="Preview of background"></swc-image>`,
     },
     tags: ['overview'],
 };
@@ -155,16 +84,11 @@ export const Overview: Story = {
 /**
  * An asset consists of:
  *
- * 1. **Icon or image content** - Either a file/folder icon or custom slotted content
- * 2. **Accessible label** - Provides context for assistive technologies
- * 3. **Error indicator** (when error state is active) - Error icon with visible label text
+ * 1. **File/folder icon** – When `variant="file"` or `variant="folder"`
+ * 2. **Error state** – When `error` is set (icon + optional label text)
+ * 3. **Slotted media** – When no variant: image (e.g. swc-image), video, or iframe
  *
- * The asset automatically centers its content both horizontally and vertically within the available space.
- *
- * ### Content
- *
- * - **Default slot**: Custom content to display (typically an image) when variant is not set
- * - **Label**: Accessible label for screen readers (used as `aria-label` on the icon SVGs). For error states, the label is also displayed as visible text underneath the error icon.
+ * The asset centers its content. Use the default slot for swc-image, video, or iframe.
  */
 export const Anatomy: Story = {
     render: (args) => html`
@@ -172,9 +96,7 @@ export const Anatomy: Story = {
         ${template({ ...args, variant: 'folder', label: 'packages/swc/' })}
         ${template({
             ...args,
-            ...args,
-            src: 'https://picsum.photos/id/64/80/80',
-            alt: 'Portrait photo',
+            'default-slot': `<swc-image src="https://picsum.photos/id/64/80/80" alt="Portrait"></swc-image>`,
         })}
     `,
     tags: ['anatomy'],
@@ -185,12 +107,8 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 /**
- * Assets support two built-in icon variants for representing files and folders:
- *
- * - **`file`**: Displays a file icon, useful for representing documents, files, or file types
- * - **`folder`**: Displays a folder icon, useful for representing directories or collections
- *
- * When no variant is specified, the asset displays custom content provided via the default slot (typically an image).
+ * Use `variant="file"` or `variant="folder"` for built-in icons. Omit variant
+ * and put content in the default slot to use the asset as a media wrapper.
  */
 export const Variants: Story = {
     render: (args) => html`
@@ -206,130 +124,33 @@ export const Variants: Story = {
         })}
         ${template({
             ...args,
-            src: 'https://picsum.photos/id/64/80/80',
-            alt: 'Portrait photo',
+            'default-slot': `<swc-image src="https://picsum.photos/id/64/80/80" alt="Portrait photo"></swc-image>`,
         })}
     `,
-    parameters: {
-        'section-order': 1,
-    },
+    parameters: { 'section-order': 1 },
     tags: ['options'],
 };
 
 /**
- * The asset component now supports direct image rendering via the `src` attribute, providing a more streamlined API
- * for displaying images without needing to manually slot an `<img>` element.
- *
- * - **Basic usage**: Simply provide `src` and `alt` attributes
- * - **Lazy loading**: Use `loading="lazy"` for performance optimization
- * - **Object-fit**: Control how images are sized with `object-fit` (contain, cover, fill, none, scale-down)
- * - **Responsive**: Support for `srcset` and `sizes` for responsive images
- *
- * This is a new feature that doesn't break existing slot-based usage.
+ * Use the default slot to wrap different media types. For images, use swc-image.
+ * For video or iframe, slot the native element. Slotted content is sized to fit the container.
  */
-export const DirectImageRendering: Story = {
+export const MediaWrapper: Story = {
     render: (args) => html`
         ${template({
             ...args,
-            src: 'https://picsum.photos/id/64/80/80',
-            alt: 'Portrait photo',
+            'default-slot': `<swc-image src="https://picsum.photos/id/64/80/80" alt="Portrait"></swc-image>`,
         })}
         ${template({
             ...args,
-            src: 'https://picsum.photos/id/237/80/80',
-            alt: 'Dog photo',
-            loading: 'lazy',
+            'default-slot': `<swc-image src="https://picsum.photos/id/56/80/80/?blur=2" alt="Background preview"></swc-image>`,
         })}
         ${template({
             ...args,
-            src: 'https://picsum.photos/id/1015/120/80',
-            alt: 'Landscape photo',
-            'object-fit': 'cover',
-        })}
-        ${template({
-            ...args,
-            src: 'https://picsum.photos/id/1015/120/80',
-            alt: 'Landscape photo',
-            'object-fit': 'contain',
+            'default-slot': `<video style="max-inline-size:100%;max-block-size:100%;object-fit:contain;" src="https://www.w3schools.com/html/mov_bbb.mp4" muted playsinline aria-label="Sample video"></video>`,
         })}
     `,
-    parameters: {
-        'section-order': 2,
-    },
-    tags: ['options'],
-};
-
-/**
- * When using the `src` attribute, you can control how the image fits within the asset container using the `object-fit` property:
- *
- * - **contain** (default): Scales image to fit while maintaining aspect ratio, may leave empty space
- * - **cover**: Scales image to fill container while maintaining aspect ratio, may crop image
- * - **fill**: Stretches image to fill container, may distort aspect ratio
- * - **none**: Image is not resized
- * - **scale-down**: Uses whichever is smaller: none or contain
- *
- * You can also use `object-position` to control where the image is positioned within the container.
- */
-export const ObjectFit: Story = {
-    render: (args) => html`
-        <div
-            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 1rem;"
-        >
-            <div>
-                <p style="margin: 0 0 0.5rem; font-size: 0.875rem;">
-                    contain (default)
-                </p>
-                ${template({
-                    ...args,
-                    src: 'https://picsum.photos/id/1015/200/300',
-                    alt: 'Tall image',
-                    'object-fit': 'contain',
-                })}
-            </div>
-            <div>
-                <p style="margin: 0 0 0.5rem; font-size: 0.875rem;">cover</p>
-                ${template({
-                    ...args,
-                    src: 'https://picsum.photos/id/1015/200/300',
-                    alt: 'Tall image',
-                    'object-fit': 'cover',
-                })}
-            </div>
-            <div>
-                <p style="margin: 0 0 0.5rem; font-size: 0.875rem;">fill</p>
-                ${template({
-                    ...args,
-                    src: 'https://picsum.photos/id/1015/200/300',
-                    alt: 'Tall image',
-                    'object-fit': 'fill',
-                })}
-            </div>
-            <div>
-                <p style="margin: 0 0 0.5rem; font-size: 0.875rem;">none</p>
-                ${template({
-                    ...args,
-                    src: 'https://picsum.photos/id/1015/200/300',
-                    alt: 'Tall image',
-                    'object-fit': 'none',
-                })}
-            </div>
-            <div>
-                <p style="margin: 0 0 0.5rem; font-size: 0.875rem;">
-                    scale-down
-                </p>
-                ${template({
-                    ...args,
-                    src: 'https://picsum.photos/id/1015/200/300',
-                    alt: 'Tall image',
-                    'object-fit': 'scale-down',
-                })}
-            </div>
-        </div>
-    `,
-    parameters: {
-        'section-order': 3,
-        flexLayout: false,
-    },
+    parameters: { 'section-order': 2 },
     tags: ['options'],
 };
 
@@ -338,14 +159,13 @@ export const ObjectFit: Story = {
 // ──────────────────────────
 
 /**
- * An asset can display an error state to indicate that content failed to load or is unavailable.
- * When the `error` attribute is set, the asset displays an error icon with the label text shown underneath.
- * The error state takes priority over all other rendering modes.
+ * When `error` is set, the asset shows an error icon and optional label text.
+ * Use for failed or unavailable media.
  */
 export const Error: Story = {
     args: {
         error: true,
-        label: 'Failed to load image',
+        label: 'Failed to load',
     },
     tags: ['states'],
 };
@@ -357,28 +177,13 @@ export const Error: Story = {
 /**
  * ### Features
  *
- * The `<swc-asset>` element implements several accessibility features:
- *
- * #### ARIA implementation
- *
- * - **Icon labeling**: File, folder, and error SVG icons automatically use the `label` property as `aria-label`
- * - **Non-interactive**: Assets have no interactive behavior and are not focusable
- *
- * #### Visual accessibility
- *
- * - Icons use sufficient color contrast in both light and dark modes
- * - High contrast mode is supported with appropriate color overrides
- * - Content automatically centers for consistent layout and visual balance
- * - Error states use color combined with iconography (not color alone) to convey status
+ * - **Icon labeling**: File, folder, and error SVGs use `label` as `aria-label`
+ * - **Slotted media**: Provide accessible content (e.g. swc-image with `alt`, video with captions/aria-label)
  *
  * ### Best practices
  *
- * - Always provide a descriptive `label` attribute for file, folder, and error variants
- * - Use specific, meaningful labels or alt text (e.g., "Project proposal PDF", "projects/2025/proposal.pdf", or not just "File")
- * - For error states, use descriptive labels that explain the error (e.g., "Failed to load profile image")
- * - The `label` on the asset itself should describe the asset's purpose or context
- * - For decorative images, use an empty `alt=""` attribute on the img tag
- * - Test with screen readers to verify assets are announced appropriately in context
+ * - Use a descriptive `label` for file, folder, and error variants
+ * - When wrapping an image, use swc-image with a meaningful `alt`
  */
 export const Accessibility: Story = {
     render: (args) => html`
@@ -394,8 +199,7 @@ export const Accessibility: Story = {
         })}
         ${template({
             ...args,
-            label: 'User profile photo',
-            'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="Profile photo of Maria Rodriguez, Senior Designer" />`,
+            'default-slot': `<swc-image src="https://picsum.photos/id/64/80/80" alt="Profile photo of Maria Rodriguez, Senior Designer"></swc-image>`,
         })}
     `,
     tags: ['a11y'],

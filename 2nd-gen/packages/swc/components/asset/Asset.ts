@@ -12,8 +12,6 @@
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
-import { styleMap } from 'lit/directives/style-map.js';
 
 import { AssetBase } from '@spectrum-web-components/core/components/asset';
 
@@ -75,38 +73,32 @@ const error = (label: string): TemplateResult => html`
 
 /**
  * @element swc-asset
- * @slot - content to be displayed when no `variant` or `src` is set (typically an `<img>` element)
+ * @slot - Media content when no `variant` is set: e.g. swc-image, video, or iframe.
  *
- * @example Using variant
+ * Asset is a media wrapper. It either shows a file/folder icon, an error state,
+ * or whatever you put in the default slot (image via swc-image, video, iframe, etc.).
+ *
+ * @example File or folder variant
  * <swc-asset variant="file" label="README.md"></swc-asset>
+ * <swc-asset variant="folder" label="packages/"></swc-asset>
  *
- * @example Using src (direct image)
- * <swc-asset
- *   src="photo.jpg"
- *   alt="Mountain landscape"
- *   loading="lazy"
- *   object-fit="cover"
- * ></swc-asset>
+ * @example Error state
+ * <swc-asset error label="Failed to load"></swc-asset>
  *
- * @example Using error state
- * <swc-asset error label="Failed to load image"></swc-asset>
- *
- * @example Using slot (legacy)
+ * @example Media wrapper (image, video, iframe)
  * <swc-asset>
- *   <img class="spectrum-Asset-image" src="example.png" alt="Example image" />
+ *   <swc-image src="photo.jpg" alt="Landscape"></swc-image>
+ * </swc-asset>
+ * <swc-asset>
+ *   <video src="clip.mp4" muted playsinline></video>
  * </swc-asset>
  */
 export class Asset extends AssetBase {
-    // ──────────────────────────────
-    //     RENDERING & STYLING
-    // ──────────────────────────────
-
     public static override get styles(): CSSResultArray {
         return [styles];
     }
 
     protected override render(): TemplateResult {
-        // Priority 1: Error state
         if (this.error) {
             return html`
                 <div
@@ -125,7 +117,6 @@ export class Asset extends AssetBase {
             `;
         }
 
-        // Priority 2: Built-in variants (file/folder)
         if (this.variant === 'file') {
             return html`
                 <div
@@ -150,37 +141,6 @@ export class Asset extends AssetBase {
             `;
         }
 
-        // Priority 3: Direct image rendering when src is provided
-        if (this.src) {
-            const imageStyles: Record<string, string> = {};
-
-            if (this.objectFit) {
-                imageStyles['object-fit'] = this.objectFit;
-            }
-
-            if (this.objectPosition) {
-                imageStyles['object-position'] = this.objectPosition;
-            }
-
-            return html`
-                <img
-                    class="spectrum-Asset-image"
-                    src=${this.src}
-                    alt=${this.alt || ''}
-                    loading=${ifDefined(this.loading)}
-                    decoding=${ifDefined(this.decoding)}
-                    srcset=${ifDefined(this.srcset)}
-                    sizes=${ifDefined(this.sizes)}
-                    crossorigin=${ifDefined(this.crossorigin)}
-                    referrerpolicy=${ifDefined(this.referrerpolicy)}
-                    width=${ifDefined(this.width)}
-                    height=${ifDefined(this.height)}
-                    style=${styleMap(imageStyles)}
-                />
-            `;
-        }
-
-        // Priority 4: Fallback to slot (backwards compatible)
         return html`
             <div
                 class=${classMap({

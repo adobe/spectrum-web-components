@@ -16,12 +16,8 @@ import { expect, test } from '@playwright/test';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
- * Accessibility tests for Asset component (2nd Generation)
- *
- * Tests both ARIA snapshot structure and aXe WCAG compliance
- *
- * This component has been enhanced to support direct image rendering via the src attribute,
- * in addition to the existing file/folder variants and slot-based usage.
+ * Accessibility tests for Asset component (2nd generation).
+ * Asset is a media wrapper: file/folder icons, error state, or slotted content (e.g. swc-image, video).
  */
 
 test.describe('Asset - ARIA Snapshots', () => {
@@ -39,13 +35,12 @@ test.describe('Asset - ARIA Snapshots', () => {
         await expect(asset).toMatchAriaSnapshot();
     });
 
-    test('should have correct accessibility tree for direct image', async ({
+    test('should have correct accessibility tree for media wrapper', async ({
         page,
     }) => {
-        // Test the new direct image rendering feature
         const asset = await gotoStory(
             page,
-            'components-asset--direct-image-rendering',
+            'components-asset--media-wrapper',
             'swc-asset'
         );
         const snapshot = await asset.ariaSnapshot();
@@ -80,31 +75,9 @@ test.describe('Asset - aXe Validation', () => {
         expect(results.violations).toEqual([]);
     });
 
-    test('should not have violations - direct image rendering', async ({
-        page,
-    }) => {
-        await gotoStory(
-            page,
-            'components-asset--direct-image-rendering',
-            'swc-asset'
-        );
+    test('should not have violations - media wrapper', async ({ page }) => {
+        await gotoStory(page, 'components-asset--media-wrapper', 'swc-asset');
 
-        // Wait for images to load
-        await page.waitForLoadState('networkidle');
-
-        const results = await new AxeBuilder({ page })
-            .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-            .analyze();
-
-        expect(results.violations).toEqual([]);
-    });
-
-    test('should not have violations - object-fit variations', async ({
-        page,
-    }) => {
-        await gotoStory(page, 'components-asset--object-fit', 'swc-asset');
-
-        // Wait for images to load
         await page.waitForLoadState('networkidle');
 
         const results = await new AxeBuilder({ page })
@@ -129,40 +102,10 @@ test.describe('Asset - aXe Validation', () => {
     });
 });
 
-test.describe('Asset - Image Alt Text Validation', () => {
-    test('should have alt text on direct images', async ({ page }) => {
-        await gotoStory(
-            page,
-            'components-asset--direct-image-rendering',
-            'swc-asset'
-        );
-
-        // Get all images in shadow DOM
-        const images = await page.locator('swc-asset').evaluateAll((assets) =>
-            assets.flatMap((asset) => {
-                const shadowRoot = asset.shadowRoot;
-                if (!shadowRoot) {
-                    return [];
-                }
-                const imgs = Array.from(shadowRoot.querySelectorAll('img'));
-                return imgs.map((img) => ({
-                    src: img.getAttribute('src'),
-                    alt: img.getAttribute('alt'),
-                    hasAlt: img.hasAttribute('alt'),
-                }));
-            })
-        );
-
-        // Every image should have an alt attribute (even if empty)
-        images.forEach((img) => {
-            expect(img.hasAlt).toBe(true);
-        });
-    });
-
+test.describe('Asset - Icon and slot accessibility', () => {
     test('should have aria-label on file/folder variants', async ({ page }) => {
         await gotoStory(page, 'components-asset--variants', 'swc-asset');
 
-        // Get all SVGs with aria-label
         const svgs = await page.locator('swc-asset').evaluateAll((assets) =>
             assets.flatMap((asset) => {
                 const shadowRoot = asset.shadowRoot;
@@ -180,7 +123,6 @@ test.describe('Asset - Image Alt Text Validation', () => {
             })
         );
 
-        // Every SVG should have role="img" and aria-label
         svgs.forEach((svg) => {
             expect(svg.role).toBe('img');
             expect(svg.hasAriaLabel).toBe(true);
