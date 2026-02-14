@@ -15,6 +15,7 @@ import {
     expect,
     fixture,
     html,
+    nextFrame,
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
@@ -254,11 +255,14 @@ describe('Picker, responsive', () => {
             el.open = true;
             await opened;
             await elementUpdated(el);
+            await nextFrame();
+            await nextFrame();
 
-            // Wait for menu to be ready.
+            // Wait for menu to be ready (longer timeout for Firefox CI).
             await waitUntil(
                 () => el.optionsMenu && el.optionsMenu.childItems.length > 0,
-                'Menu should be initialized'
+                'Menu should be initialized',
+                { timeout: 3000 }
             );
 
             // Wait for menu to be fully updated.
@@ -280,6 +284,14 @@ describe('Picker, responsive', () => {
             const closed = oneEvent(el, 'sp-closed');
             menuItem.click();
             await closed;
+
+            // Allow async work (change dispatch) to complete; Firefox can order these differently.
+            await elementUpdated(el);
+            await waitUntil(
+                () => changeSpy.callCount >= 1,
+                'Change event should be dispatched',
+                { timeout: 2000 }
+            );
 
             // Verify the change event was dispatched.
             expect(changeSpy.callCount).to.equal(1);
