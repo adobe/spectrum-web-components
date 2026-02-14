@@ -49,8 +49,28 @@ export abstract class AssetBase extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public error = false;
 
+    /**
+     * Aspect ratio of the asset container. Any valid CSS aspect-ratio value
+     * (e.g. "1", "16/9", "4/3"). When set, the wrapper keeps this ratio regardless of slotted content.
+     */
+    @property({ type: String, attribute: 'aspect-ratio' })
+    public aspectRatio?: string;
+
+    /**
+     * When true, applies rounded corners to the asset container (and clips slotted content to that shape).
+     */
+    @property({ type: Boolean, reflect: true })
+    public rounded = false;
+
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+
+        if (this.aspectRatio) {
+            this.style.aspectRatio = this.aspectRatio;
+        } else {
+            this.style.removeProperty('aspect-ratio');
+        }
+
         if (window.__swc?.DEBUG) {
             const constructor = this.constructor as typeof AssetBase;
             if (

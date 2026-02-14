@@ -89,8 +89,16 @@ const error = (label: string): TemplateResult => html`
  * <swc-asset>
  *   <swc-image src="photo.jpg" alt="Landscape"></swc-image>
  * </swc-asset>
- * <swc-asset>
- *   <video src="clip.mp4" muted playsinline></video>
+ *
+ * @example Aspect ratio (container keeps shape)
+ * <swc-asset aspect-ratio="1">
+ *   <swc-image src="photo.jpg" alt="Landscape"></swc-image>
+ * </swc-asset>
+ * <swc-asset aspect-ratio="16/9">...</swc-asset>
+ *
+ * @example Rounded corners
+ * <swc-asset rounded>
+ *   <swc-image src="photo.jpg" alt="Landscape"></swc-image>
  * </swc-asset>
  */
 export class Asset extends AssetBase {
@@ -105,6 +113,7 @@ export class Asset extends AssetBase {
                     class=${classMap({
                         ['spectrum-Asset']: true,
                         ['spectrum-Asset--error']: true,
+                        ['spectrum-Asset--rounded']: this.rounded,
                     })}
                 >
                     ${error(this.label)}
@@ -122,6 +131,7 @@ export class Asset extends AssetBase {
                 <div
                     class=${classMap({
                         ['spectrum-Asset']: true,
+                        ['spectrum-Asset--rounded']: this.rounded,
                     })}
                 >
                     ${file(this.label)}
@@ -134,6 +144,7 @@ export class Asset extends AssetBase {
                 <div
                     class=${classMap({
                         ['spectrum-Asset']: true,
+                        ['spectrum-Asset--rounded']: this.rounded,
                     })}
                 >
                     ${folder(this.label)}
@@ -145,6 +156,7 @@ export class Asset extends AssetBase {
             <div
                 class=${classMap({
                     ['spectrum-Asset']: true,
+                    ['spectrum-Asset--rounded']: this.rounded,
                 })}
             >
                 <slot></slot>

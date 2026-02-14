@@ -27,12 +27,19 @@
     block-size: 100%;
 }
 
+.spectrum-Asset--rounded {
+    border-radius: token('corner-radius-medium-default');
+    overflow: hidden;
+}
+
 /* Slotted media (e.g. swc-image, video, iframe) */
 ::slotted(*) {
     max-inline-size: 100%;
     max-block-size: 100%;
-    object-fit: contain;
+    object-fit: cover;
     transition: opacity token('animation-duration-100');
+    block-size: 100%;
+    inline-size: 100%;
 }
 
 .spectrum-Asset-folder,
