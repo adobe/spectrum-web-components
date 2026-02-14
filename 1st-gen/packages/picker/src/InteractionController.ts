@@ -15,7 +15,6 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { AbstractOverlay } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
-import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import { ExpandableElement } from './Picker.js';
 
 /**
@@ -131,54 +130,6 @@ export class InteractionController implements ReactiveController {
     releaseDescription(): void {}
 
     /**
-     * Handles the overlay's beforetoggle event.
-     * Manages overlay state and prevents unwanted closures during interaction.
-     * @param event - The beforetoggle event with the new state
-     */
-    protected handleBeforetoggle(
-        event: Event & {
-            target: Overlay;
-            newState: 'open' | 'closed';
-        }
-    ): void {
-        if (event.composedPath()[0] !== event.target) {
-            return;
-        }
-        if (event.newState === 'closed') {
-            // Track if we should restore focus before the overlay fully closes.
-            // This must happen now (in beforetoggle) because by the time sp-closed fires,
-            // the overlay animation will be complete and focus will have moved elsewhere.
-            const shouldRestoreFocus =
-                this.host.optionsMenu.matches(':focus-within') &&
-                !this.host.button.matches(':focus');
-
-            // If the host has already set open to false (e.g., via setValueFromItem
-            // from a programmatic click), respect that decision and sync the controller state.
-            if (!this.host.open) {
-                // Sync the controller's internal state so focus restoration works.
-                this._open = false;
-            } else if (this.preventNextToggle === 'no') {
-                // Set both _open and host.open directly to avoid the setter's
-                // early return guard when _open is already false (can happen if
-                // host.open was set directly without going through the controller).
-                this._open = false;
-                this.host.open = false;
-            } else if (!this.pointerdownState) {
-                this.overlay?.manuallyKeepOpen();
-            }
-
-            // Restore focus to the button if focus was in the menu.
-            if (shouldRestoreFocus && !this._open) {
-                this.host.button.focus();
-            }
-        }
-        if (!this.host.open) {
-            this.host.optionsMenu.updateSelectedItemIndex();
-            this.host.optionsMenu.closeDescendentOverlays();
-        }
-    }
-
-    /**
      * Initializes the overlay with appropriate configuration.
      * Sets up event listeners, type, placement, and focus behavior.
      */
@@ -255,19 +206,10 @@ export class InteractionController implements ReactiveController {
 
     /**
      * Lifecycle callback when the host element is connected to the DOM.
-     * Initializes event listeners and sets up close handler to return focus.
+     * Initializes event listeners.
      */
     hostConnected(): void {
         this.init();
-        this.host.addEventListener('sp-closed', () => {
-            if (
-                !this.open &&
-                this.host.optionsMenu.matches(':focus-within') &&
-                !this.host.button.matches(':focus')
-            ) {
-                this.host.button.focus();
-            }
-        });
     }
 
     /**

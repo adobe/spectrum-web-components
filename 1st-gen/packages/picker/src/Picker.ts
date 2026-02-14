@@ -225,7 +225,17 @@ export class ExpandableElement extends SpectrumElement {
                 this.optionsMenu?.matches(':focus-within') &&
                 !this.button?.matches(':focus');
 
-            if (this.strategy?.preventNextToggle === 'no') {
+            // Handle three cases:
+            // 1. open was already set to false externally (e.g., via setValueFromItem
+            //    from a programmatic click) - allow overlay to close
+            // 2. preventNextToggle is 'no' - normal close, set open to false
+            // 3. Otherwise, prevent browser-driven closure while opening
+            if (!this.open) {
+                // Already closed externally, sync controller state if present
+                if (this.strategy) {
+                    this.strategy.open = false;
+                }
+            } else if (this.strategy?.preventNextToggle === 'no') {
                 this.open = false;
             } else if (!this.strategy?.pointerdownState) {
                 // Prevent browser driven closure while opening the Picker
@@ -281,17 +291,12 @@ export class ExpandableElement extends SpectrumElement {
  * @slot - menu items to be listed in the Picker
  * @fires change - Announces that the `value` of the element has changed
  * @fires sp-opened - Announces that the overlay has been opened
- * @deprecated This class is deprecated and will be removed in the SWC 1.0 release. Use a ExpandableElement base class instead.
+ * @deprecated This class is deprecated and will be removed in a future major release. Use the ExpandableElement base class instead.
  * @see https://opensource.adobe.com/spectrum-web-components/components/picker/#deprecation
  */
 export class PickerBase extends SizedMixin(ExpandableElement, {
     noDefaultSize: true,
 }) {
-    static override shadowRootOptions = {
-        ...SpectrumElement.shadowRootOptions,
-        delegatesFocus: true,
-    };
-
     /** The label applied to the picker, typically from an associated field label. */
     @state()
     appliedLabel?: string;
@@ -869,6 +874,7 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
             </div>
         `;
     }
+
     // a helper to throw focus to the button is needed because Safari
     // won't include buttons in the tab order even with tabindex="0"
     protected override render(): TemplateResult {
@@ -919,11 +925,8 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
 
     protected override update(changes: PropertyValues<this>): void {
         if (this.selects) {
-            /**
-             * Always force `selects` to "single" when set.
-             *
-             * @todo: Add support functionally and visually for "multiple"
-             */
+            // Always force `selects` to "single" when set.
+            // @todo: Add support functionally and visually for "multiple"
             this.selects = 'single';
         }
         if (changes.has('disabled') && this.disabled) {
@@ -1242,12 +1245,14 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
     };
 
     public override connectedCallback(): void {
-        window.__swc.warn(
-            this,
-            `PickerBase class is deprecated and will be removed in the SWC 1.0 release. Use a ExpandableElement base class instead.`,
-            'https://opensource.adobe.com/spectrum-web-components/components/picker/#deprecation',
-            { level: 'deprecation' }
-        );
+        if (window.__swc?.DEBUG) {
+            window.__swc.warn(
+                this,
+                `PickerBase class is deprecated and will be removed in the SWC 1.0 release. Use a ExpandableElement base class instead.`,
+                'https://opensource.adobe.com/spectrum-web-components/components/picker/#deprecation',
+                { level: 'deprecation' }
+            );
+        }
         super.connectedCallback();
         this.updateComplete.then(() => {
             if (!this.tooltipEl?.selfManaged) {
@@ -1283,11 +1288,6 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
 export class Picker extends SizedMixin(ExpandableElement, {
     noDefaultSize: true,
 }) {
-    static override shadowRootOptions = {
-        ...SpectrumElement.shadowRootOptions,
-        delegatesFocus: true,
-    };
-
     public static override get styles(): CSSResultArray {
         return [pickerStyles, chevronStyles];
     }
