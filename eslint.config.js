@@ -507,12 +507,13 @@ export default defineConfig([
   },
 
   // ────────────────────────────────────────────────────────────────────────────
-  // Scripts: allow console.log
+  // Scripts: allow console.log and devDependencies imports
   // ────────────────────────────────────────────────────────────────────────────
   {
     files: ['**/scripts/**/*.js', '**/scripts/**/*.ts', 'scripts/**/*'],
     rules: {
       'no-console': 'off',
+      'import/no-extraneous-dependencies': 'off',
     },
   },
 
