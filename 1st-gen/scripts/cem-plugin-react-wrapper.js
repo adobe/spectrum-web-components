@@ -62,8 +62,7 @@ function genPackageJson(
         "author": "Adobe",
         "repository": {
             "type": "git",
-            "url": "https://github.com/adobe/spectrum-web-components.git",
-            "directory": "1st-gen/react/${componentName}"
+            "url": "https://github.com/adobe/spectrum-web-components.git"
         },
         "type": "module",${
             isIconPkg

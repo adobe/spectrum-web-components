@@ -15,6 +15,10 @@
     },
     "type": "module",
     "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        },
         "./*": {
             "types": "./dist/components/*/index.d.ts",
             "import": "./dist/components/*/index.js"
@@ -23,8 +27,8 @@
             "types": "./dist/components/*/index.d.ts",
             "import": "./dist/components/*/index.js"
         },
-        "./stylesheets/*.css": {
-            "default": "./stylesheets/*.css"
+        "./*.css": {
+            "default": "./dist/*.css"
         },
         "./utils/*": {
             "types": "./dist/utils/*.d.ts",
@@ -34,8 +38,7 @@
     "main": "./dist/index.js",
     "module": "./dist/index.js",
     "files": [
-        "dist/",
-        "stylesheets/"
+        "dist/"
     ],
     "scripts": {
         "analyze": "cem analyze --config cem.config.js",
@@ -46,7 +49,7 @@
         "dev:core": "yarn workspace @spectrum-web-components/core dev",
         "storybook": "yarn analyze && storybook dev -p 6006",
         "storybook:build": "yarn analyze && storybook build",
-        "stylesheets": "swc-tokens --outputType stylesheet --out ./stylesheets/tokens.css --prefix swc",
+        "stylesheets": "swc-tokens --outputType stylesheet --out ./dist/tokens.css --prefix swc",
         "test": "vitest --run",
         "test:coverage": "vitest --coverage",
         "test:ui": "vitest --ui",
