@@ -25,7 +25,7 @@ import {
     findAccessibilityNode,
     sendKeys,
 } from '@web/test-runner-commands';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     arrowDownEvent,
@@ -317,9 +317,36 @@ describe('Group Accessibility', () => {
     });
 });
 
+describe('dev mode', () => {
+    let consoleWarnStub!: ReturnType<typeof stub>;
+    before(() => {
+        window.__swc.verbose = true;
+        consoleWarnStub = stub(console, 'warn');
+    });
+    afterEach(() => {
+        consoleWarnStub.resetHistory();
+    });
+    after(() => {
+        window.__swc.verbose = false;
+        consoleWarnStub.restore();
+    });
+    it('warns when [invalid] is used on children and updates group invalid state', async () => {
+        const el = await fixture<RadioGroup>(html`
+            <sp-radio-group>
+                <sp-radio value="first" invalid>Option 1</sp-radio>
+                <sp-radio value="second">Option 2</sp-radio>
+            </sp-radio-group>
+        `);
+        await elementUpdated(el);
+
+        expect(el.invalid).to.be.true;
+        expect(el.hasAttribute('aria-invalid')).to.be.true;
+        expect(consoleWarnStub.called).to.be.true;
+    });
+});
+
 describe('Radio Group', () => {
     let testDiv!: HTMLDivElement;
-
     beforeEach(async () => {
         testDiv = await fixture<HTMLDivElement>(html`
             <div id="test-radio-group">
@@ -609,6 +636,63 @@ describe('Radio Group', () => {
         charmander.click();
 
         expect(changeSpy.calledWith(undefined)).to.be.false;
+    });
+
+    it('updates [aria-invalid] when [invalid] changes', async () => {
+        const el = await fixture<RadioGroup>(html`
+            <sp-radio-group invalid>
+                <sp-radio value="first">Option 1</sp-radio>
+                <sp-radio value="second">Option 2</sp-radio>
+            </sp-radio-group>
+        `);
+        await elementUpdated(el);
+        expect(el.hasAttribute('aria-invalid')).to.be.true;
+        expect(el.getAttribute('aria-invalid')).to.equal('true');
+        el.invalid = false;
+        await elementUpdated(el);
+        expect(el.hasAttribute('aria-invalid')).to.be.false;
+        el.invalid = true;
+        await elementUpdated(el);
+        expect(el.hasAttribute('aria-invalid')).to.be.true;
+        expect(el.getAttribute('aria-invalid')).to.equal('true');
+    });
+
+    it('should not have invalid state when children do not have invalid attribute', async () => {
+        const swcWarnSpy = spy(window.__swc, 'warn');
+        const el = await fixture<RadioGroup>(html`
+            <sp-radio-group>
+                <sp-radio value="first">Option 1</sp-radio>
+                <sp-radio value="second">Option 2</sp-radio>
+            </sp-radio-group>
+        `);
+        await elementUpdated(el);
+
+        expect(el.invalid).to.be.false;
+        expect(el.hasAttribute('aria-invalid')).to.be.false;
+        expect(swcWarnSpy.called).to.be.false;
+        swcWarnSpy.restore();
+    });
+
+    it('should update group invalid state when child radio has invalid attribute and then remove it', async () => {
+        const el = await fixture<RadioGroup>(html`
+            <sp-radio-group>
+                <sp-radio value="first" checked>Option 1</sp-radio>
+                <sp-radio value="second">Option 2</sp-radio>
+            </sp-radio-group>
+        `);
+        await elementUpdated(el);
+
+        const childRadio = el.querySelector('sp-radio') as Radio;
+        childRadio.setAttribute('invalid', 'true');
+
+        await elementUpdated(el);
+        expect(el.invalid).to.be.true;
+        expect(el.hasAttribute('aria-invalid')).to.be.true;
+
+        childRadio.removeAttribute('invalid');
+        await elementUpdated(el);
+        expect(el.invalid).to.be.false;
+        expect(el.hasAttribute('aria-invalid')).to.be.false;
     });
 });
 

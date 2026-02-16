@@ -61,6 +61,11 @@ export class Radio extends SizedMixin(
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
 
+    /**
+     * @deprecated
+     * The invalid state of a single radio button is deprecated.
+     * Please use the invalid state of the radio group instead.
+     */
     @property({ type: Boolean, reflect: true })
     public invalid = false;
 
