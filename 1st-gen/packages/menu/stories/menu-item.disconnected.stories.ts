@@ -92,7 +92,6 @@ class MyView1 extends XElement {
             <my-picker
                 .blendMode=${BlendModeValue.normal}
                 .blendModeOptions=${blendModeOptions}
-                dir="ltr"
             ></my-picker>
         `;
     }
