@@ -14,13 +14,60 @@ on:
             - main
 
 jobs:
-    publish:
+    check-changesets:
         runs-on: ubuntu-latest
         if: >-
             github.event_name == 'workflow_dispatch' ||
             github.event_name == 'push' ||
             (github.event_name == 'pull_request' &&
             contains(github.event.pull_request.labels.*.name, 'release-to-npm'))
+        outputs:
+            has_changesets: ${{ steps.check.outputs.has_changesets }}
+            has_1st_gen_changesets: ${{ steps.check.outputs.has_1st_gen_changesets }}
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Check for changesets
+              id: check
+              run: |
+                  if [ -z "$(ls -A .changeset/*.md 2>/dev/null | grep -v README)" ]; then
+                    echo "has_changesets=false" >> $GITHUB_OUTPUT
+                    echo "has_1st_gen_changesets=false" >> $GITHUB_OUTPUT
+                    echo "No changesets found - skipping publish"
+                  else
+                    echo "has_changesets=true" >> $GITHUB_OUTPUT
+                    CHANGESET_COUNT=$(ls -1 .changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
+                    echo "Found $CHANGESET_COUNT changesets"
+
+                    # Check if any changeset mentions 1st-gen packages
+                    # 1st-gen packages are @spectrum-web-components/* except core
+                    HAS_1ST_GEN=false
+                    for file in .changeset/*.md; do
+                      if [ "$(basename "$file")" != "README.md" ]; then
+                        # Check for @spectrum-web-components packages that are NOT core
+                        if grep -q "@spectrum-web-components/" "$file" && ! grep -q "^'@spectrum-web-components/core'" "$file"; then
+                          # Verify it's not ONLY core by checking for other packages
+                          if grep "@spectrum-web-components/" "$file" | grep -qv "@spectrum-web-components/core"; then
+                            HAS_1ST_GEN=true
+                            break
+                          fi
+                        fi
+                      fi
+                    done
+
+                    echo "has_1st_gen_changesets=$HAS_1ST_GEN" >> $GITHUB_OUTPUT
+                    if [ "$HAS_1ST_GEN" = "true" ]; then
+                      echo "Found 1st-gen changesets - React wrappers will be built and published"
+                    else
+                      echo "No 1st-gen changesets found - React wrappers will be skipped"
+                    fi
+                  fi
+
+    publish:
+        needs: check-changesets
+        if: needs.check-changesets.outputs.has_changesets == 'true'
+        runs-on: ubuntu-latest
         environment: npm-publish
         permissions:
             id-token: write # Required for OIDC trusted publishing (1st-gen )
@@ -68,45 +115,8 @@ jobs:
                   echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
                   echo "Using npm tag: $WORKFLOW_TAG"
 
-            - name: Check for changesets
-              id: check-changesets
-              run: |
-                  if [ -z "$(ls -A .changeset/*.md 2>/dev/null | grep -v README)" ]; then
-                    echo "has_changesets=false" >> $GITHUB_OUTPUT
-                    echo "has_1st_gen_changesets=false" >> $GITHUB_OUTPUT
-                    echo "No changesets found - skipping publish"
-                  else
-                    echo "has_changesets=true" >> $GITHUB_OUTPUT
-                    CHANGESET_COUNT=$(ls -1 .changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
-                    echo "Found $CHANGESET_COUNT changesets"
-
-                    # Check if any changeset mentions 1st-gen packages
-                    # 1st-gen packages are @spectrum-web-components/* except core
-                    HAS_1ST_GEN=false
-                    for file in .changeset/*.md; do
-                      if [ "$(basename "$file")" != "README.md" ]; then
-                        # Check for @spectrum-web-components packages that are NOT core
-                        if grep -q "@spectrum-web-components/" "$file" && ! grep -q "^'@spectrum-web-components/core'" "$file"; then
-                          # Verify it's not ONLY core by checking for other packages
-                          if grep "@spectrum-web-components/" "$file" | grep -qv "@spectrum-web-components/core"; then
-                            HAS_1ST_GEN=true
-                            break
-                          fi
-                        fi
-                      fi
-                    done
-
-                    echo "has_1st_gen_changesets=$HAS_1ST_GEN" >> $GITHUB_OUTPUT
-                    if [ "$HAS_1ST_GEN" = "true" ]; then
-                      echo "Found 1st-gen changesets - React wrappers will be built and published"
-                    else
-                      echo "No 1st-gen changesets found - React wrappers will be skipped"
-                    fi
-                  fi
-
             - name: Verify OIDC token and configure NPM authentication
               id: npm-auth
-              if: steps.check-changesets.outputs.has_changesets == 'true'
               run: |
                   if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
                     echo "✓ OIDC token is available for 1st-gen trusted publishing"
@@ -119,19 +129,15 @@ jobs:
                   echo "✓ NPM authentication configured for 2nd-gen (Adobe namespace)"
 
             - name: Build all packages
-              if: steps.check-changesets.outputs.has_changesets == 'true'
               run: yarn build
 
             - name: Generate custom elements manifests
-              if: steps.check-changesets.outputs.has_changesets == 'true'
               run: yarn workspace @spectrum-web-components/1st-gen custom-element-json
 
             - name: Confirm build artifacts
-              if: steps.check-changesets.outputs.has_changesets == 'true'
               run: yarn workspace @spectrum-web-components/1st-gen build:confirm
 
             - name: Version packages
-              if: steps.check-changesets.outputs.has_changesets == 'true'
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
@@ -144,13 +150,12 @@ jobs:
                   fi
 
             - name: Refresh lockfile and rebuild
-              if: steps.check-changesets.outputs.has_changesets == 'true'
               run: |
                   yarn install --refresh-lockfile
                   yarn build
 
             - name: Publish all packages
-              if: steps.check-changesets.outputs.has_changesets == 'true' && steps.npm-auth.outcome == 'success'
+              if: steps.npm-auth.outcome == 'success'
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
               run: |
@@ -167,11 +172,11 @@ jobs:
                   fi
 
             - name: Build React wrappers
-              if: steps.check-changesets.outputs.has_1st_gen_changesets == 'true'
+              if: needs.check-changesets.outputs.has_1st_gen_changesets == 'true'
               run: yarn workspace @spectrum-web-components/1st-gen build:react
 
             - name: Publish React wrappers
-              if: steps.check-changesets.outputs.has_1st_gen_changesets == 'true'
+              if: needs.check-changesets.outputs.has_1st_gen_changesets == 'true'
               run: |
                   TAG="${{ steps.extract-tag.outputs.tag }}"
                   if [ "$TAG" == "latest" ]; then
@@ -185,12 +190,12 @@ jobs:
                   done
 
             - name: Commit and push changes
-              if: steps.check-changesets.outputs.has_changesets == 'true' && steps.extract-tag.outputs.tag == 'latest'
+              if: steps.extract-tag.outputs.tag == 'latest'
               run: |
                   git add .
                   git commit -m "chore: release packages #publish" || echo "No changes to commit"
                   git push
 
             - name: Create git tag
-              if: steps.check-changesets.outputs.has_changesets == 'true' && steps.extract-tag.outputs.tag == 'latest'
+              if: steps.extract-tag.outputs.tag == 'latest'
               run: node ./1st-gen/scripts/create-git-tag.js
