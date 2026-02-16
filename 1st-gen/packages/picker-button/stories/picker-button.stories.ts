@@ -12,10 +12,10 @@
 
 import { TemplateResult } from '@spectrum-web-components/base';
 
-import { argTypes, StoryArgs, Template } from './index.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
-
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-add.js';
+
+import { argTypes, StoryArgs, Template } from './index.js';
 
 export default {
     title: 'Picker Button',

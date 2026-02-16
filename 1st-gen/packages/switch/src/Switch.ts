@@ -19,6 +19,7 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { CheckboxBase } from '@spectrum-web-components/checkbox/src/CheckboxBase.js';
+
 import switchStyles from './switch.css.js';
 import legacyStyles from './switch-legacy.css.js';
 

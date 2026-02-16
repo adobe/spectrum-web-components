@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+import { ActionGroup } from '@spectrum-web-components/action-group/src/ActionGroup.js';
 import {
     html,
     nothing,
@@ -17,7 +18,6 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { state } from '@spectrum-web-components/base/src/decorators.js';
-import { spreadProps } from '../../../test/lit-helpers.js';
 
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
@@ -26,7 +26,8 @@ import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-properties.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-view-all-tags.js';
-import { ActionGroup } from '@spectrum-web-components/action-group/src/ActionGroup.js';
+
+import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {
     title: 'Action Group/Tooltips',
@@ -184,7 +185,7 @@ const template = (args: Properties): TemplateResult => {
                 <sp-tooltip slot="hover-content">The sun at noon.</sp-tooltip>
             </overlay-trigger>
         </sp-action-group>
-        ${!!args.selects
+        ${args.selects
             ? html`
                   <div>Selected:</div>
               `

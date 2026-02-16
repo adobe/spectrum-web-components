@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-/* eslint-disable no-console */
+ 
 
 import fs from 'fs';
 import { readFile } from 'node:fs/promises';

@@ -18,12 +18,15 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import { OverlayTrigger } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import { Tooltip } from '@spectrum-web-components/tooltip';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
+
+import { OverlayTrigger } from '@spectrum-web-components/overlay';
+import { Tooltip } from '@spectrum-web-components/tooltip';
+
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+
 import { sendTabKey } from '../../../test/testing-helpers';
 
 describe('Overlay Trigger - accessible hover content management', () => {

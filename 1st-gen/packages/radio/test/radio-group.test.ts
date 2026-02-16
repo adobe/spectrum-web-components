@@ -17,15 +17,18 @@ import {
     html,
     nextFrame,
 } from '@open-wc/testing';
-import { Radio, RadioGroup } from '@spectrum-web-components/radio';
-import '@spectrum-web-components/radio/sp-radio-group.js';
-import '@spectrum-web-components/radio/sp-radio.js';
 import {
     a11ySnapshot,
     findAccessibilityNode,
     sendKeys,
 } from '@web/test-runner-commands';
 import { spy } from 'sinon';
+
+import { Radio, RadioGroup } from '@spectrum-web-components/radio';
+
+import '@spectrum-web-components/radio/sp-radio-group.js';
+import '@spectrum-web-components/radio/sp-radio.js';
+
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     arrowDownEvent,

@@ -10,8 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
+import { ActionGroup } from '@spectrum-web-components/action-group/src/ActionGroup.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { spreadProps } from '../../../test/lit-helpers.js';
 
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
@@ -23,7 +23,8 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-view-all-tags.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import { ActionGroup } from '@spectrum-web-components/action-group/src/ActionGroup.js';
+
+import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {
     title: 'Action Group',

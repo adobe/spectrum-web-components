@@ -87,7 +87,7 @@ export class FocusGroupController<T extends HTMLElement>
 
     protected set focused(focused: boolean) {
         /* c8 ignore next 1 */
-        if (focused === this.focused) return;
+        if (focused === this.focused) {return;}
         this._focused = focused;
     }
 
@@ -105,16 +105,16 @@ export class FocusGroupController<T extends HTMLElement>
         return this._focusInIndex(this.elements);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+     
     _focusInIndex = (_elements: T[]): number => 0;
 
     host: ReactiveElement;
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+     
     isFocusableElement = (_el: T): boolean => true;
 
     isEventWithinListenerScope(event: Event): boolean {
-        if (this._listenerScope() === this.host) return true;
+        if (this._listenerScope() === this.host) {return true;}
         return event.composedPath().includes(this._listenerScope());
     }
 
@@ -179,10 +179,10 @@ export class FocusGroupController<T extends HTMLElement>
             this._currentIndex == -1 ||
             this.elements.length <= this._elements().length
         )
-            return;
+            {return;}
         const focusedElement = this.elements[this.currentIndex];
         this.clearElementCache();
-        if (this.elements.includes(focusedElement)) return;
+        if (this.elements.includes(focusedElement)) {return;}
         const moveToNextElement = this.currentIndex !== this.elements.length;
         const diff = moveToNextElement ? 1 : -1;
         if (moveToNextElement) {
@@ -204,7 +204,7 @@ export class FocusGroupController<T extends HTMLElement>
      */
     reset(): void {
         const elements = this.elements;
-        if (!elements.length) return;
+        if (!elements.length) {return;}
         this.setCurrentIndexCircularly(this.focusInIndex - this.currentIndex);
         let focusElement = elements[this.currentIndex];
         if (this.currentIndex < 0) {
@@ -235,7 +235,7 @@ export class FocusGroupController<T extends HTMLElement>
 
     focus(options?: FocusOptions): void {
         const elements = this.elements;
-        if (!elements.length) return;
+        if (!elements.length) {return;}
         let focusElement = elements[this.currentIndex];
         if (!focusElement || !this.isFocusableElement(focusElement)) {
             this.setCurrentIndexCircularly(1);
@@ -315,7 +315,7 @@ export class FocusGroupController<T extends HTMLElement>
     }
 
     handleFocusin = (event: FocusEvent): void => {
-        if (!this.isEventWithinListenerScope(event)) return;
+        if (!this.isEventWithinListenerScope(event)) {return;}
 
         const path = event.composedPath() as T[];
         let targetIndex = -1;
@@ -338,7 +338,7 @@ export class FocusGroupController<T extends HTMLElement>
     handleClick = (): void => {
         // Manually set the tabindex to 0 for the current element on receiving focus (from keyboard or mouse)
         const elements = this.elements;
-        if (!elements.length) return;
+        if (!elements.length) {return;}
         let focusElement = elements[this.currentIndex];
         if (this.currentIndex < 0) {
             return;

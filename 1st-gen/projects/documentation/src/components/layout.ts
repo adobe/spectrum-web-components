@@ -21,34 +21,35 @@ import {
     property,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
-import '@spectrum-web-components/theme/sp-theme.js';
+import {
+    type OverlayTriggerOptions,
+    trigger,
+} from '@spectrum-web-components/overlay/src/overlay-trigger-directive.js';
+import type { Picker } from '@spectrum-web-components/picker';
+import {
+    DARK_MODE,
+    IS_MOBILE,
+} from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import type {
     Color,
     Scale,
     SystemVariant,
 } from '@spectrum-web-components/theme';
-import type { Picker } from '@spectrum-web-components/picker';
+
+import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/divider/sp-divider.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
-import {
-    type OverlayTriggerOptions,
-    trigger,
-} from '@spectrum-web-components/overlay/src/overlay-trigger-directive.js';
-
 import './adobe-logo.js';
-import type { CodeExample } from './code-example.js';
 import './code-example.js';
+
+import type { CodeExample } from './code-example.js';
 import { copyText } from './copy-to-clipboard.js';
 
 import layoutStyles from './layout.css';
-import {
-    DARK_MODE,
-    IS_MOBILE,
-} from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 
 const SWC_THEME_COLOR_KEY = 'swc-docs:theme:color';
 const SWC_THEME_SCALE_KEY = 'swc-docs:theme:scale';

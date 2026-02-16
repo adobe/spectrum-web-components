@@ -19,6 +19,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 
 import styles from './help-text.css.js';

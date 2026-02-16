@@ -11,6 +11,7 @@
  */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+
 import '@spectrum-web-components/slider/sp-slider.js';
 
 export default {

@@ -9,18 +9,12 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/action-group/sp-action-group.js';
+import { render } from 'lit-html';
+
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import '@spectrum-web-components/button/sp-button.js';
+import { Button } from '@spectrum-web-components/button';
 import { DialogWrapper } from '@spectrum-web-components/dialog';
-import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
-import '@spectrum-web-components/dialog/sp-dialog.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-open-in.js';
-import '@spectrum-web-components/link/sp-link.js';
 import {
     openOverlay,
     Overlay,
@@ -30,8 +24,19 @@ import {
     TriggerInteractions,
     VirtualTrigger,
 } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
+import { Picker } from '@spectrum-web-components/picker';
+import { Popover } from '@spectrum-web-components/popover';
 
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/action-group/sp-action-group.js';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-open-in.js';
+import '@spectrum-web-components/link/sp-link.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
@@ -40,7 +45,6 @@ import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
-import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/radio/sp-radio-group.js';
@@ -50,13 +54,9 @@ import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
-
 import '../../../projects/story-decorator/src/types.js';
-
-import { Button } from '@spectrum-web-components/button';
-import { Popover } from '@spectrum-web-components/popover';
-import { render } from 'lit-html';
 import './overlay-story-components.js';
+
 import { PopoverContent } from './overlay-story-components.js';
 
 const storyStyles = html`
@@ -161,13 +161,13 @@ const template = ({
         <overlay-trigger
             triggered-by="click hover"
             id="trigger"
-            placement="${placement}"
-            offset="${offset}"
+            placement=${placement}
+            offset=${offset}
             open=${ifDefined(open)}
             type=${ifDefined(type)}
         >
             <sp-button variant="primary" slot="trigger">Show Popover</sp-button>
-            <sp-popover slot="click-content" placement="${placement}" tip>
+            <sp-popover slot="click-content" placement=${placement} tip>
                 <sp-dialog no-divider>
                     <sp-slider
                         value="5"

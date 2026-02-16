@@ -20,9 +20,11 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ButtonBase } from '@spectrum-web-components/button';
-import buttonStyles from './action-button.css.js';
 import cornerTriangleStyles from '@spectrum-web-components/icon/src/spectrum-icon-corner-triangle.css.js';
+
 import '@spectrum-web-components/icons-ui/icons/sp-icon-corner-triangle300.js';
+
+import buttonStyles from './action-button.css.js';
 
 const holdAffordanceClass = {
     xs: 'spectrum-UIIcon-CornerTriangle75',
@@ -137,7 +139,7 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     };
 
     private handlePointerdownHoldAffordance(event: PointerEvent): void {
-        if (event.button !== 0) return;
+        if (event.button !== 0) {return;}
         this.addEventListener('pointerup', this.handlePointerupHoldAffordance);
         this.addEventListener(
             'pointercancel',

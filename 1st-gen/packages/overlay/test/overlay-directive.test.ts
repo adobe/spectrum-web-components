@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from '@spectrum-web-components/base';
 import {
     elementUpdated,
     expect,
@@ -18,12 +17,11 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
+
+import { html } from '@spectrum-web-components/base';
 import { Button } from '@spectrum-web-components/button';
 import { Overlay } from '@spectrum-web-components/overlay';
-import {
-    Default,
-    insertionOptions,
-} from '../stories/overlay-directive.stories.js';
+
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     fixture,
@@ -31,6 +29,10 @@ import {
     mouseClickOn,
     mouseMoveOver,
 } from '../../../test/testing-helpers.js';
+import {
+    Default,
+    insertionOptions,
+} from '../stories/overlay-directive.stories.js';
 
 describe('Overlay Directive', () => {
     it('opens declaratively', async function () {

@@ -16,9 +16,7 @@ import {
     nothing,
     TemplateResult,
 } from '@spectrum-web-components/base';
-
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-
 import {
     BADGE_VARIANTS_COLOR_S1,
     BADGE_VARIANTS_S1,

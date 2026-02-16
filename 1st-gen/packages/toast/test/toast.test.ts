@@ -10,8 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/toast/sp-toast.js';
-import { Toast, toastVariants } from '@spectrum-web-components/toast';
 import {
     elementUpdated,
     expect,
@@ -20,12 +18,17 @@ import {
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
+import { spy } from 'sinon';
+
 import { CloseButton } from '@spectrum-web-components/button';
+import { Toast, toastVariants } from '@spectrum-web-components/toast';
+
+import '@spectrum-web-components/toast/sp-toast.js';
+
 import {
     testForLitDevWarnings,
     waitForPredicate,
 } from '../../../test/testing-helpers.js';
-import { spy } from 'sinon';
 
 interface TestableToast {
     _timeout: number;

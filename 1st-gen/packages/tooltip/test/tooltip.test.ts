@@ -18,12 +18,15 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import { Button } from '@spectrum-web-components/button';
-import '@spectrum-web-components/button/sp-button.js';
-import { Tooltip } from '@spectrum-web-components/tooltip';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { resetMouse } from '@web/test-runner-commands';
 import { spy, stub } from 'sinon';
+
+import { Button } from '@spectrum-web-components/button';
+import { Tooltip } from '@spectrum-web-components/tooltip';
+
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Tooltip', () => {
@@ -78,7 +81,7 @@ describe('Tooltip', () => {
             <div></div>
         `);
         test.attachShadow({ mode: 'open' });
-        if (!test.shadowRoot) return;
+        if (!test.shadowRoot) {return;}
         test.shadowRoot.innerHTML = `
             <sp-button>
                 This is a button.

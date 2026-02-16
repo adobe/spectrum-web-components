@@ -19,14 +19,16 @@ import {
     oneEvent,
 } from '@open-wc/testing';
 
-import '@spectrum-web-components/tray/sp-tray.js';
 import { Tray } from '@spectrum-web-components/tray';
+
+import '@spectrum-web-components/tray/sp-tray.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Tray', () => {

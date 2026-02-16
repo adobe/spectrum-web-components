@@ -10,10 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from '@spectrum-web-components/base';
 import { useEffect } from '@storybook/preview-api';
-import './sp-story-decorator.js';
 import type { StoryContext, StoryFn } from '@storybook/web-components';
+
+import { html } from '@spectrum-web-components/base';
+
+import './sp-story-decorator.js';
 
 export const themeStyles = html`
     <style>

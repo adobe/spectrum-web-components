@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+
 import { CheckboxMixin } from './CheckboxMixin.js';
 
 export class CheckboxBase extends CheckboxMixin(Focusable) {

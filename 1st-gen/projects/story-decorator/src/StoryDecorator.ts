@@ -19,7 +19,16 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { Picker } from '@spectrum-web-components/picker';
 import { DARK_MODE } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
+import { Switch } from '@spectrum-web-components/switch';
+import {
+    Color,
+    Scale,
+    SystemVariant,
+    Theme,
+} from '@spectrum-web-components/theme';
+
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/theme/src/spectrum-two/themes.js';
@@ -29,15 +38,8 @@ import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/switch/sp-switch.js';
-import { Picker } from '@spectrum-web-components/picker';
-import { Switch } from '@spectrum-web-components/switch';
-import {
-    Color,
-    Scale,
-    SystemVariant,
-    Theme,
-} from '@spectrum-web-components/theme';
 import './types.js';
+
 import { type Locale, Locales } from './locales.js';
 
 const queryString = window.location.search;

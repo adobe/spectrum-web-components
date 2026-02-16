@@ -17,11 +17,10 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { queryAssignedNodes } from '@spectrum-web-components/base/src/decorators.js';
-import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
+import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 
 import { Tag } from './Tag.js';
-
 import styles from './tags.css.js';
 
 /**
@@ -69,7 +68,7 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     private handleKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
-        if (code !== 'PageUp' && code !== 'PageDown') return;
+        if (code !== 'PageUp' && code !== 'PageDown') {return;}
 
         const circularIndexedElement = <T extends HTMLElement>(
             list: T[],

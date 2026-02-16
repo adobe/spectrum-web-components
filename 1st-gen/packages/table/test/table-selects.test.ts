@@ -16,6 +16,13 @@ import {
     html,
     nextFrame,
 } from '@open-wc/testing';
+import { spy } from 'sinon';
+
+import type {
+    Table,
+    TableCheckboxCell,
+    TableRow,
+} from '@spectrum-web-components/table';
 
 import '@spectrum-web-components/table/sp-table.js';
 import '@spectrum-web-components/table/sp-table-head.js';
@@ -23,19 +30,14 @@ import '@spectrum-web-components/table/sp-table-head-cell.js';
 import '@spectrum-web-components/table/sp-table-body.js';
 import '@spectrum-web-components/table/sp-table-row.js';
 import '@spectrum-web-components/table/sp-table-cell.js';
-import type {
-    Table,
-    TableCheckboxCell,
-    TableRow,
-} from '@spectrum-web-components/table';
+
+import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
 import {
     elements,
     noSelectsSpecified,
     selectsMultiple,
     selectsSingle,
 } from '../stories/table-elements.stories.js';
-import { spy } from 'sinon';
-import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
 
 ignoreResizeObserverLoopError(before, after);
 

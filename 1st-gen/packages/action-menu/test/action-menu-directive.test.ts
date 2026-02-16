@@ -11,12 +11,13 @@
  */
 
 import { expect, oneEvent } from '@open-wc/testing';
-import { ActionMenu } from '@spectrum-web-components/action-menu';
 import { sendKeys } from '@web/test-runner-commands';
 
-import { directive } from '../stories/action-menu.stories.js';
-import { fixture } from '../../../test/testing-helpers.js';
+import { ActionMenu } from '@spectrum-web-components/action-menu';
 import { nextFrame } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
+
+import { fixture } from '../../../test/testing-helpers.js';
+import { directive } from '../stories/action-menu.stories.js';
 
 describe('Slottable Request Directive', () => {
     it('Action Menu requests for options rendering when opening and closing', async function () {

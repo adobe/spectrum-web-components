@@ -28,7 +28,7 @@ export abstract class AlertBannerBase extends SpectrumElement {
     /**
      * Controls the display of the alert banner
      *
-     * @param {Boolean} open
+     * @param {boolean} open
      */
     @property({ type: Boolean, reflect: true })
     public open = false;
@@ -36,7 +36,7 @@ export abstract class AlertBannerBase extends SpectrumElement {
     /**
      * Whether to include an icon-only close button to dismiss the alert banner
      *
-     * @param {Boolean} dismissible
+     * @param {boolean} dismissible
      */
     @property({ type: Boolean, reflect: true })
     public dismissible = false;
@@ -45,7 +45,7 @@ export abstract class AlertBannerBase extends SpectrumElement {
      * The variant applies specific styling when set to `negative` or `info`;
      * `variant` attribute is removed when it's passed an invalid variant.
      *
-     * @param {String} variant
+     * @param {string} variant
      */
     @property({ type: String })
     public set variant(variant: AlertBannerVariants) {

@@ -12,6 +12,7 @@
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import type { DialogWrapper } from '@spectrum-web-components/dialog';
 
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -19,12 +20,11 @@ import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
-
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
-import { landscape } from './images.js';
-import { isOverlayOpen } from '../../overlay/stories/index.js';
 import '../../overlay/stories/index.js';
-import type { DialogWrapper } from '@spectrum-web-components/dialog';
+
+import { isOverlayOpen } from '../../overlay/stories/index.js';
+import { landscape } from './images.js';
 
 export default {
     title: 'Dialog Wrapper',
@@ -47,25 +47,25 @@ type StoryArgs = {
 const handleClose =
     ({ onClose }: StoryArgs) =>
     (event: Event) => {
-        if (onClose) onClose(event);
+        if (onClose) {onClose(event);}
     };
 
 const handleConfirm =
     ({ onConfirm }: StoryArgs) =>
     (event: Event) => {
-        if (onConfirm) onConfirm(event);
+        if (onConfirm) {onConfirm(event);}
     };
 
 const handleSecondary =
     ({ onSecondary }: StoryArgs) =>
     (event: Event) => {
-        if (onSecondary) onSecondary(event);
+        if (onSecondary) {onSecondary(event);}
     };
 
 const handleCancel =
     ({ onCancel }: StoryArgs) =>
     (event: Event) => {
-        if (onCancel) onCancel(event);
+        if (onCancel) {onCancel(event);}
     };
 
 export const wrapperLabeledHero = (

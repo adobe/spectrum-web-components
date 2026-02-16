@@ -11,10 +11,12 @@
  */
 
 import { html } from '@open-wc/testing';
+
 import '@spectrum-web-components/radio/sp-radio.js';
 import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-heading.js';
+
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
 testForMemoryLeaks(html`

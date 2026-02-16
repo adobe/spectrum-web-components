@@ -17,18 +17,21 @@ import {
     html,
     oneEvent,
 } from '@open-wc/testing';
+import { sendKeys } from '@web/test-runner-commands';
+
 import { ActionButton } from '@spectrum-web-components/action-button';
-import '@spectrum-web-components/action-button/sp-action-button.js';
 import { Button } from '@spectrum-web-components/button';
+import { TriggerInteractions } from '@spectrum-web-components/overlay/src/overlay-types.js';
+import { OverlayTrigger } from '@spectrum-web-components/overlay/src/OverlayTrigger.js';
+import { Tooltip } from '@spectrum-web-components/tooltip/src/Tooltip.js';
+
+import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
-import { OverlayTrigger } from '@spectrum-web-components/overlay/src/OverlayTrigger.js';
-import { TriggerInteractions } from '@spectrum-web-components/overlay/src/overlay-types.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import { Tooltip } from '@spectrum-web-components/tooltip/src/Tooltip.js';
-import { sendKeys } from '@web/test-runner-commands';
+
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     ignoreResizeObserverLoopError,

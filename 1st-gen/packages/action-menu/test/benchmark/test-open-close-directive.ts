@@ -10,12 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/action-menu/sp-action-menu.js';
-import type { ActionMenu } from '@spectrum-web-components/action-menu';
-import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
 import { html, TemplateResult } from 'lit';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
+
+import type { ActionMenu } from '@spectrum-web-components/action-menu';
 import { SpectrumElement } from '@spectrum-web-components/base';
+import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
+
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 const renderOptions = (): TemplateResult => {
     import('@spectrum-web-components/menu/sp-menu-item.js');

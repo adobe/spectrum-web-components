@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 import { expect } from '@open-wc/testing';
+
+import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 describe('randomID()', () => {
     it('creates unique strings of 8 hex characters', () => {

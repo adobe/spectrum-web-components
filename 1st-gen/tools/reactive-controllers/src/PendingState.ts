@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import { html, LitElement, ReactiveController, TemplateResult } from 'lit';
+
+import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 
 /**
  * Renders a pending state visual element and manages the aria-label of the host element.
@@ -116,7 +117,7 @@ export class PendingStateController<T extends HostWithPendingState>
 
     hostConnected(): void {
         if (!this.cachedAriaLabel)
-            this.cachedAriaLabel = this.host.getAttribute('aria-label');
+            {this.cachedAriaLabel = this.host.getAttribute('aria-label');}
         this.updateAriaLabel();
     }
 

@@ -1,11 +1,17 @@
 {
-    "extends": "../tsconfig.json",
     "compilerOptions": {
-        "outDir": "../",
-        "types": ["mocha", "chai", "sinon", "webpack-env", "node"],
+        "declaration": false,
         "emitDeclarationOnly": false,
-        "declaration": false
+        "outDir": "../",
+        "types": ["mocha", "chai", "sinon", "webpack-env", "node"]
     },
+    "exclude": [
+        "../packages/**/node_modules/**/*",
+        "../packages/*/test/benchmark/*.ts",
+        "../tools/**/node_modules/**/*",
+        "../tools/*/test/benchmark/*.ts"
+    ],
+    "extends": "../tsconfig.json",
     "include": [
         "../packages/**/*.ts",
         "../packages/*/stories/*.ts",
@@ -14,11 +20,5 @@
         "./testing-helpers.ts",
         "./visual/test.ts",
         "../global.d.ts"
-    ],
-    "exclude": [
-        "../packages/**/node_modules/**/*",
-        "../packages/*/test/benchmark/*.ts",
-        "../tools/**/node_modules/**/*",
-        "../tools/*/test/benchmark/*.ts"
     ]
 }

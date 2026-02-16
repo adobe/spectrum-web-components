@@ -18,9 +18,10 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+import opacityCheckerboardStyles from '@spectrum-web-components/opacity-checkerboard/src/is-opacity-checkerboard.css.js';
 
 import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
-import opacityCheckerboardStyles from '@spectrum-web-components/opacity-checkerboard/src/is-opacity-checkerboard.css.js';
+
 import styles from './color-handle.css.js';
 
 /**

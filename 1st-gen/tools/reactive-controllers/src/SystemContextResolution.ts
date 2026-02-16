@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import type { ReactiveController, ReactiveElement } from 'lit';
+
 import type { SystemVariant } from '@spectrum-web-components/theme';
 
 export const systemResolverUpdatedSymbol = Symbol('system resolver updated');

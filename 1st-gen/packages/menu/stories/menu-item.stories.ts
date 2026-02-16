@@ -15,6 +15,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { when } from '@spectrum-web-components/base/src/directives.js';
+
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';

@@ -10,13 +10,14 @@
  * governing permissions and limitations under the License.
  */
 import type { ReactiveController } from 'lit';
-
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
-import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 import {
     RangeChangedEvent,
     VisibilityChangedEvent,
 } from '@lit-labs/virtualizer/events.js';
+
+import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
+
 import { Grid } from './Grid.js';
 
 interface ItemSize {

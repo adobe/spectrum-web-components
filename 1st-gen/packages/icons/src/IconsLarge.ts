@@ -11,7 +11,6 @@
  */
 
 import { TemplateResult } from '@spectrum-web-components/base';
-
 import { IconsetSVG } from '@spectrum-web-components/iconset/src/iconset-svg.js';
 
 import iconsSVG from './icons-large.svg.js';

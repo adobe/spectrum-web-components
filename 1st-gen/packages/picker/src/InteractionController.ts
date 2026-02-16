@@ -16,6 +16,7 @@ import {
 } from '@spectrum-web-components/base';
 import { AbstractOverlay } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
 import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
+
 import { PickerBase } from './Picker.js';
 
 export enum InteractionTypes {
@@ -47,7 +48,7 @@ export class InteractionController implements ReactiveController {
      * Set `open`
      */
     public set open(open: boolean) {
-        if (this._open === open) return;
+        if (this._open === open) {return;}
         this._open = open;
 
         this.host.open = open;
@@ -64,8 +65,8 @@ export class InteractionController implements ReactiveController {
     }
 
     public set overlay(overlay: AbstractOverlay | undefined) {
-        if (!overlay) return;
-        if (this.overlay === overlay) return;
+        if (!overlay) {return;}
+        if (this.overlay === overlay) {return;}
         this._overlay = overlay;
         this.initOverlay();
     }
@@ -149,7 +150,7 @@ export class InteractionController implements ReactiveController {
         ) {
             this.preventNextToggle = 'yes';
         }
-        if (this.preventNextToggle === 'no') this.host.close();
+        if (this.preventNextToggle === 'no') {this.host.close();}
     }
 
     public handleActivate(_event: Event): void {}

@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+import '../src/express/core-tokens.js';
+
 import largeStyles from '../src/express/scale-large-core-tokens.css.js';
 import { Theme } from '../src/Theme.js';
-import '../src/express/core-tokens.js';
 
 Theme.registerThemeFragment('large-express', 'scale', largeStyles);

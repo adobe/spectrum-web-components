@@ -10,8 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import { merge } from 'webpack-merge';
 import { resolve } from 'path';
+import { merge } from 'webpack-merge';
 
 /** @type { import('@storybook/web-components-webpack5').StorybookConfig } */
 export default {

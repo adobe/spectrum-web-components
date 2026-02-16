@@ -10,8 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
 import { html } from 'lit';
+
+import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 import { thumbnail } from '../../stories/images.js';
 

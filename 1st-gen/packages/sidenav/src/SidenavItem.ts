@@ -19,11 +19,10 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 
 import { SideNav, SidenavSelectDetail } from './Sidenav.js';
-
 import sidenavItemStyles from './sidenav-item.css.js';
 
 /**
@@ -124,8 +123,8 @@ export class SideNavItem extends LikeAnchor(Focusable) {
                 target=${ifDefined(this.target)}
                 download=${ifDefined(this.download)}
                 rel=${ifDefined(this.rel)}
-                data-level="${this.depth}"
-                @click="${this.handleClick}"
+                data-level=${this.depth}
+                @click=${this.handleClick}
                 id="item-link"
                 aria-current=${ifDefined(
                     this.selected && this.href ? 'page' : undefined

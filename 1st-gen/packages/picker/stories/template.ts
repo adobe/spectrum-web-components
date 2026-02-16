@@ -10,18 +10,20 @@
  * governing permissions and limitations under the License.
  */
 
+import { ifDefined } from 'lit-html/directives/if-defined.js';
+
 import {
     ElementSize,
     html,
     type TemplateResult,
 } from '@spectrum-web-components/base';
 import type { Picker } from '@spectrum-web-components/picker';
+
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
 import { spreadProps } from '../../../test/lit-helpers.js';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 export interface StoryArgs {
     disabled?: boolean;
@@ -39,7 +41,7 @@ export const handleChange =
     ({ onChange }: StoryArgs) =>
     (event: Event): void => {
         const picker = event.target as Picker;
-        if (onChange) onChange(picker.value);
+        if (onChange) {onChange(picker.value);}
     };
 
 export const Template = (args: StoryArgs): TemplateResult => html`

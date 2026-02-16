@@ -11,6 +11,7 @@
  */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
+
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 

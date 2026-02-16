@@ -9,6 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { ActionMenu } from '@spectrum-web-components/action-menu';
 import {
     CSSResultArray,
     html,
@@ -22,23 +23,23 @@ import {
     queryAssignedElements,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
-import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder-open.js';
-import '@spectrum-web-components/action-menu/sp-action-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import { ActionMenu } from '@spectrum-web-components/action-menu';
-import {
-    BreadcrumbItem as BreadcrumbElement,
-    BreadcrumbSelectDetail,
-} from './BreadcrumbItem.js';
 import {
     createRef,
     Ref,
     ref,
 } from '@spectrum-web-components/base/src/directives.js';
-
-import styles from './breadcrumbs.css.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+
+import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder-open.js';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+
+import {
+    BreadcrumbItem as BreadcrumbElement,
+    BreadcrumbSelectDetail,
+} from './BreadcrumbItem.js';
+import styles from './breadcrumbs.css.js';
 
 type BreadcrumbItem = {
     label?: string;

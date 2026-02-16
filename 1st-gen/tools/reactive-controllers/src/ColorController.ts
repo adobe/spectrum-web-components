@@ -10,10 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
+import type { ReactiveElement } from 'lit';
 import type ColorSpace from 'colorjs.io';
 import type { ColorObject, ColorTypes as DefaultColorTypes } from 'colorjs.io';
 import Color from 'colorjs.io';
-import type { ReactiveElement } from 'lit';
 
 /**
  * Represents various color types that can be used in the application.
@@ -76,15 +76,15 @@ type ColorValidationResult = {
  * @property {ColorTypes} colorValue - Gets the color value in various formats based on the original color input.
  * @property {number} hue - Gets or sets the hue value of the current color.
  *
- * @method validateColorString(color: string): ColorValidationResult - Validates a color string and returns the validation result.
- * @method getColor(format: string | ColorSpace): ColorObject - Converts the current color to the specified format.
- * @method getHslString(): string - Returns the current color in HSL string format.
- * @method savePreviousColor(): void - Saves the current color as the previous color.
- * @method restorePreviousColor(): void - Restores the previous color.
+ * @function validateColorString(color: string): ColorValidationResult - Validates a color string and returns the validation result.
+ * @function getColor(format: string | ColorSpace): ColorObject - Converts the current color to the specified format.
+ * @function getHslString(): string - Returns the current color in HSL string format.
+ * @function savePreviousColor(): void - Saves the current color as the previous color.
+ * @function restorePreviousColor(): void - Restores the previous color.
  *
- * @constructor
+ * @class
  * @param {ReactiveElement} host - The host element that uses this controller.
- * @param {Object} [options] - Optional configuration options.
+ * @param {object} [options] - Optional configuration options.
  * @param {string} [options.manageAs] - Specifies the color space to manage the color as.
  */
 

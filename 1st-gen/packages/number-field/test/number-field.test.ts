@@ -20,16 +20,6 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
-import { html } from '@spectrum-web-components/base';
-
-import {
-    CHANGE_DEBOUNCE_MS,
-    FRAMES_PER_CHANGE,
-    indeterminatePlaceholder,
-    NumberField,
-} from '@spectrum-web-components/number-field';
-import '@spectrum-web-components/number-field/sp-number-field.js';
-import { isWebKit } from '@spectrum-web-components/shared';
 import {
     a11ySnapshot,
     findAccessibilityNode,
@@ -38,6 +28,18 @@ import {
     setUserAgent,
 } from '@web/test-runner-commands';
 import { SinonSpy, spy } from 'sinon';
+
+import { html } from '@spectrum-web-components/base';
+import {
+    CHANGE_DEBOUNCE_MS,
+    FRAMES_PER_CHANGE,
+    indeterminatePlaceholder,
+    NumberField,
+} from '@spectrum-web-components/number-field';
+import { isWebKit } from '@spectrum-web-components/shared';
+
+import '@spectrum-web-components/number-field/sp-number-field.js';
+
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     fixture,

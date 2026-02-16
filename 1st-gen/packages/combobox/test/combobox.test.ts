@@ -11,16 +11,18 @@
  */
 
 import { elementUpdated, expect, oneEvent } from '@open-wc/testing';
-
-import '@spectrum-web-components/combobox/sp-combobox.js';
-import { MenuItem } from '@spectrum-web-components/menu';
-import { PickerButton } from '@spectrum-web-components/picker-button';
-import type { Tooltip } from '@spectrum-web-components/tooltip';
 import {
     executeServerCommand,
     sendKeys,
     setViewport,
 } from '@web/test-runner-commands';
+
+import { MenuItem } from '@spectrum-web-components/menu';
+import { PickerButton } from '@spectrum-web-components/picker-button';
+import type { Tooltip } from '@spectrum-web-components/tooltip';
+
+import '@spectrum-web-components/combobox/sp-combobox.js';
+
 import {
     arrowDownEvent,
     arrowLeftEvent,

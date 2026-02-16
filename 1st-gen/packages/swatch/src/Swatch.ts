@@ -21,15 +21,16 @@ import {
     ifDefined,
     when,
 } from '@spectrum-web-components/base/src/directives.js';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import dashStyles from '@spectrum-web-components/icon/src/spectrum-icon-dash.css.js';
 import opacityCheckerboardStyles from '@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.css.js';
+import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash75.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash100.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash200.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash300.js';
 
 import styles from './swatch.css.js';
-import dashStyles from '@spectrum-web-components/icon/src/spectrum-icon-dash.css.js';
 
 export type SwatchBorder = 'light' | 'none' | undefined;
 export type SwatchRounding = 'none' | 'full' | undefined;
@@ -106,7 +107,7 @@ export class Swatch extends SizedMixin(Focusable, {
     }
 
     set value(value: string) {
-        if (value === this._value) return;
+        if (value === this._value) {return;}
         const oldValue = this.value;
         this._value = value;
         this.requestUpdate('value', oldValue);
@@ -123,7 +124,7 @@ export class Swatch extends SizedMixin(Focusable, {
     }
 
     private handleClick(): void {
-        if (this.disabled || this.mixedValue) return;
+        if (this.disabled || this.mixedValue) {return;}
         this.toggle();
         const applyDefault = this.dispatchEvent(
             new Event('change', {

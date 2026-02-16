@@ -9,10 +9,11 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { html, TemplateResult } from '@spectrum-web-components/base';
+
 import '@spectrum-web-components/icons/sp-icons-large.js';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
 import '../../iconset/stories/icons-demo.js';
-import { html, TemplateResult } from '@spectrum-web-components/base';
 
 export default {
     title: 'Icons',

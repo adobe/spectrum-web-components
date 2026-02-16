@@ -9,9 +9,11 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
-import { IllustratedMessage } from '../';
 import { expect, fixture, html } from '@open-wc/testing';
+
+import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
+
+import { IllustratedMessage } from '../';
 
 describe('Illustrated Message', () => {
     it('loads', async () => {
@@ -34,7 +36,7 @@ describe('Illustrated Message', () => {
             </sp-illustrated-message>
         `);
         expect(el).to.not.equal(undefined);
-        if (!el.shadowRoot) throw new Error('No shadowRoot');
+        if (!el.shadowRoot) {throw new Error('No shadowRoot');}
         const slot = el.shadowRoot.querySelector('slot') as HTMLSlotElement;
         expect(slot).to.not.equal(undefined);
         return true;

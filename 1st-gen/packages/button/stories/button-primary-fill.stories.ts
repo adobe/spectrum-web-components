@@ -10,6 +10,10 @@
  * governing permissions and limitations under the License.
  */
 import { html, TemplateResult } from '@spectrum-web-components/base';
+
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
+
+import type { Properties } from './index.js';
 import {
     renderButton,
     renderButtonSet,
@@ -19,8 +23,6 @@ import {
     renderWithIcon,
     renderWithIconOnly,
 } from './index.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
-import type { Properties } from './index.js';
 import { args, argTypes } from './index.js';
 
 const variant = 'primary';

@@ -10,22 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import {
-    CSSResultArray,
-    html,
-    nothing,
-    PropertyValues,
-    render,
-    SizedMixin,
-    SpectrumElement,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-// Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
-/* eslint-disable import/no-extraneous-dependencies */
-import '@spectrum-web-components/table/sp-table-body.js';
-import '@spectrum-web-components/table/sp-table-checkbox-cell.js';
-import '@spectrum-web-components/table/sp-table-row.js';
-/* eslint-enable import/no-extraneous-dependencies */
+ 
 import {
     RangeChangedEvent,
     VisibilityChangedEvent,
@@ -36,7 +21,25 @@ import {
     VirtualizerHostElement,
     virtualizerRef,
 } from '@lit-labs/virtualizer/virtualize.js';
+
+import {
+    CSSResultArray,
+    html,
+    nothing,
+    PropertyValues,
+    render,
+    SizedMixin,
+    SpectrumElement,
+    TemplateResult,
+} from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+
+// Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
+/* eslint-disable import/no-extraneous-dependencies */
+import '@spectrum-web-components/table/sp-table-body.js';
+import '@spectrum-web-components/table/sp-table-checkbox-cell.js';
+import '@spectrum-web-components/table/sp-table-row.js';
+
 import styles from './table.css.js';
 import { TableBody } from './TableBody.js';
 import type { TableCheckboxCell } from './TableCheckboxCell.js';
@@ -246,7 +249,7 @@ export class Table extends SizedMixin(SpectrumElement, {
         }
         this.selected = [...this.selectedSet];
 
-        if (!this.tableHeadCheckboxCell) /* c8 ignore next */ return;
+        if (!this.tableHeadCheckboxCell) /* c8 ignore next */ {return;}
         this.tableHeadCheckboxCell.checked = true;
         this.tableHeadCheckboxCell.indeterminate = false;
     }
@@ -265,7 +268,7 @@ export class Table extends SizedMixin(SpectrumElement, {
             });
         }
 
-        if (!this.tableHeadCheckboxCell) /* c8 ignore next */ return;
+        if (!this.tableHeadCheckboxCell) /* c8 ignore next */ {return;}
         this.tableHeadCheckboxCell.checked = false;
         this.tableHeadCheckboxCell.indeterminate = false;
     }
@@ -362,7 +365,7 @@ export class Table extends SizedMixin(SpectrumElement, {
     protected manageSelected(): void {
         this.validateSelected();
 
-        if (this.isVirtualized) return;
+        if (this.isVirtualized) {return;}
 
         this.tableRows.forEach((row) => {
             row.selected = this.selectedSet.has(row.value);
@@ -415,7 +418,7 @@ export class Table extends SizedMixin(SpectrumElement, {
     }
 
     protected manageHeadCheckbox(allSelected: boolean): void {
-        if (!this.tableHeadCheckboxCell) /* c8 ignore next */ return;
+        if (!this.tableHeadCheckboxCell) /* c8 ignore next */ {return;}
 
         this.tableHeadCheckboxCell.selectsSingle = this.selects === 'single';
         this.tableHeadCheckboxCell.emphasized = this.emphasized;
@@ -436,7 +439,7 @@ export class Table extends SizedMixin(SpectrumElement, {
         };
         if (!rowItem.value) {
             const { checkbox } = target as TableCheckboxCell;
-            if (!checkbox) return;
+            if (!checkbox) {return;}
             if (checkbox.checked || checkbox.indeterminate) {
                 this.selectAllRows();
             } else {
@@ -464,7 +467,7 @@ export class Table extends SizedMixin(SpectrumElement, {
                         this.selected.length === this.tableRows.length;
 
                     if (!this.tableHeadCheckboxCell)
-                        /* c8 ignore next */ return;
+                        /* c8 ignore next */ {return;}
                     this.tableHeadCheckboxCell.checked = allSelected;
                     this.tableHeadCheckboxCell.indeterminate =
                         this.selected.length > 0 && !allSelected;
@@ -534,7 +537,7 @@ export class Table extends SizedMixin(SpectrumElement, {
     protected renderVirtualizedItems(): void {
         // Rendering updates into the table while disconnected can
         // cause runaway event binding in ancestor elements.
-        if (!this.isConnected) return;
+        if (!this.isConnected) {return;}
         if (!this.tableBody) {
             this.tableBody = this.querySelector('sp-table-body') as TableBody;
             if (!this.tableBody) {

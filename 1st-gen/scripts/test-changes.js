@@ -15,7 +15,6 @@
 import { execSync } from 'child_process';
 import { existsSync, readdirSync, readFileSync } from 'fs';
 import path from 'path';
-
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 

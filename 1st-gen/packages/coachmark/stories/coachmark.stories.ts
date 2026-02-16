@@ -11,13 +11,15 @@
  */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import type { MediaType } from '../src/CoachmarkItem.js';
+import type { Placement } from '@spectrum-web-components/overlay';
+
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
 import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
-import { cave, gif } from './images.js';
-import type { Placement } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/sp-overlay.js';
+
+import type { MediaType } from '../src/CoachmarkItem.js';
+import { cave, gif } from './images.js';
 
 export default {
     title: 'Coachmark',

@@ -12,9 +12,12 @@
 
 import { expect, fixture } from '@open-wc/testing';
 import { html } from '@open-wc/testing';
+
 import { ComboboxOption } from '@spectrum-web-components/combobox';
-import '@spectrum-web-components/combobox/sp-combobox.js';
 import { MenuItem } from '@spectrum-web-components/menu';
+
+import '@spectrum-web-components/combobox/sp-combobox.js';
+
 import { countries, fruits } from '../stories/index.js';
 
 export type TestableCombobox = HTMLElement & {

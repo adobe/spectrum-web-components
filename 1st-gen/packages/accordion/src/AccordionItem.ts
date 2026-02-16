@@ -18,10 +18,11 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { when } from '@spectrum-web-components/base/src/directives.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+
+import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 
 import styles from './accordion-item.css.js';
 

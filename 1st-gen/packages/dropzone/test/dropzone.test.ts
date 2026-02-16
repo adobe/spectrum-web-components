@@ -9,11 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import '@spectrum-web-components/dropzone/sp-dropzone.js';
-import { Dropzone } from '@spectrum-web-components/dropzone';
-import { illustration } from './test-svg.js';
-import { waitForPredicate } from '../../../test/testing-helpers.js';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+
+import { Dropzone } from '@spectrum-web-components/dropzone';
+
+import '@spectrum-web-components/dropzone/sp-dropzone.js';
+
+import { waitForPredicate } from '../../../test/testing-helpers.js';
+import { illustration } from './test-svg.js';
 
 describe('Dropzone', () => {
     it('loads', async () => {
@@ -45,7 +48,7 @@ describe('Dropzone', () => {
             </sp-dropzone>
         `);
         expect(el).to.not.equal(undefined);
-        if (!el.shadowRoot) throw new Error('No shadowRoot');
+        if (!el.shadowRoot) {throw new Error('No shadowRoot');}
         const slot = el.shadowRoot.querySelector('slot') as HTMLSlotElement;
         expect(slot).to.not.equal(undefined);
         return true;

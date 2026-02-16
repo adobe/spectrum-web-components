@@ -12,6 +12,7 @@
 
 import { LitElement } from 'lit';
 import { expect } from '@open-wc/testing';
+
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
 describe('RovingTabindex', () => {

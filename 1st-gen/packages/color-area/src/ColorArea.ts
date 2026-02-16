@@ -17,16 +17,13 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
-import { SWCResizeObserverEntry, WithSWCResizeObserver } from './types.js';
 import type { ColorHandle } from '@spectrum-web-components/color-handle';
-import '@spectrum-web-components/color-handle/sp-color-handle.js';
-
 import {
     ColorController,
     ColorTypes,
@@ -37,7 +34,10 @@ import {
     isIOS,
 } from '@spectrum-web-components/shared/src/platform.js';
 
+import '@spectrum-web-components/color-handle/sp-color-handle.js';
+
 import styles from './color-area.css.js';
+import { SWCResizeObserverEntry, WithSWCResizeObserver } from './types.js';
 
 /**
  * @element sp-color-area
@@ -92,7 +92,7 @@ export class ColorArea extends SpectrumElement {
      * @memberof ColorArea
      *
      * @property {ColorArea} this - The instance of the ColorArea component.
-     * @property {Object} options - Configuration options for the ColorController.
+     * @property {object} options - Configuration options for the ColorController.
      * @property {string} options.manageAs - Specifies the color model to manage, in this case 'hsv'.
      */
     private colorController = new ColorController(this, { manageAs: 'hsv' });

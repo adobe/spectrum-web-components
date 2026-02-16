@@ -20,7 +20,6 @@ import {
     customElement,
     property,
 } from '@spectrum-web-components/base/src/decorators.js';
-
 import styles from '@spectrum-web-components/theme/src/typography.css.js';
 
 /**
@@ -34,7 +33,7 @@ export class Typography extends LitElement {
     public story?: TemplateResult;
 
     protected override render(): TemplateResult {
-        if (!this.story) return html``;
+        if (!this.story) {return html``;}
         return html`
             <div class="spectrum-Typography">${this.story}</div>
         `;

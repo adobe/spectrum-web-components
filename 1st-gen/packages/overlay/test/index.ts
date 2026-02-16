@@ -18,20 +18,22 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import { fixture, isOnTopLayer } from '../../../test/testing-helpers.js';
+import { sendKeys } from '@web/test-runner-commands';
 
 import { Button } from '@spectrum-web-components/button';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/dialog/sp-dialog.js';
 import {
     OVERLAY_TYPES,
     OverlayTrigger,
 } from '@spectrum-web-components/overlay';
 import { Popover } from '@spectrum-web-components/popover';
+
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/theme/sp-theme.js';
-import { sendKeys } from '@web/test-runner-commands';
+
 import { sendMouse } from '../../../test/plugins/browser.js';
+import { fixture, isOnTopLayer } from '../../../test/testing-helpers.js';
 
 export const runOverlayTriggerTests = (type: string): void => {
     describe(`Overlay Trigger - ${type}`, () => {

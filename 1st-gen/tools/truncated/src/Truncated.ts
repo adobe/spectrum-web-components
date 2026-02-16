@@ -17,9 +17,6 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import type { Overlay, Placement } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/overlay/sp-overlay.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import {
     property,
     query,
@@ -27,6 +24,10 @@ import {
     queryAssignedNodes,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
+import type { Overlay, Placement } from '@spectrum-web-components/overlay';
+
+import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 
 import styles from './truncated.css.js';
 
@@ -167,7 +168,7 @@ export class Truncated extends SpectrumElement {
     }
 
     private handleClick(): void {
-        if (!this.overflowing) return;
+        if (!this.overflowing) {return;}
 
         const textToCopy = this.slottedContent
             .map((node) => node.textContent ?? '')
@@ -188,7 +189,7 @@ export class Truncated extends SpectrumElement {
 
     // Copies just the textContent of slotted nodes into the tooltip to avoid duplicating the user's DOM
     private copyText(): void {
-        if (this.hasCustomOverflow) return;
+        if (this.hasCustomOverflow) {return;}
         this.fullText = this.slottedContent
             .map((node) => node.textContent ?? '')
             .join('');

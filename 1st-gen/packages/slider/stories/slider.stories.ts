@@ -10,18 +10,19 @@
  * governing permissions and limitations under the License.
  */
 import { html, TemplateResult } from '@spectrum-web-components/base';
-
-import '@spectrum-web-components/slider/sp-slider.js';
-import '@spectrum-web-components/slider/sp-slider-handle.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/dialog/sp-dialog.js';
 import {
     Slider,
     SliderHandle,
     variants,
 } from '@spectrum-web-components/slider';
-import { spreadProps } from '../../../test/lit-helpers.js';
+
+import '@spectrum-web-components/slider/sp-slider.js';
+import '@spectrum-web-components/slider/sp-slider-handle.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
+
+import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {
     component: 'sp-slider',
@@ -269,13 +270,13 @@ export const FillStartWithNegativeMinRange = (
                 .formatOptions=${{ style: 'number' }}
                 .normalization=${{
                     toNormalized: (value: number): number => {
-                        if (value === 0) return 0.5;
+                        if (value === 0) {return 0.5;}
                         return value < 0
                             ? 0.5 - (value / -50) * 0.5
                             : 0.5 + (value / 100) * 0.5;
                     },
                     fromNormalized: (value: number): number => {
-                        if (value === 0.5) return 0;
+                        if (value === 0.5) {return 0;}
                         return value < 0.5
                             ? (1 - value / 0.5) * -50
                             : ((value - 0.5) / 0.5) * 100;
@@ -1262,10 +1263,10 @@ export const focusTabDemo = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px 20px;">
             <sp-slider
-                value="${value}"
-                step="${step}"
-                min="${min}"
-                max="${max}"
+                value=${value}
+                step=${step}
+                min=${min}
+                max=${max}
                 label="Opacity"
                 id="opacity-slider-opacity"
                 ...=${spreadProps(args)}
@@ -1273,10 +1274,10 @@ export const focusTabDemo = (args: StoryArgs = {}): TemplateResult => {
         </div>
         <div style="width: 500px; margin: 20px;">
             <sp-slider
-                value="${value}"
-                step="${step}"
-                min="${min}"
-                max="${max}"
+                value=${value}
+                step=${step}
+                min=${min}
+                max=${max}
                 label="Lightness"
                 id="opacity-slider-lightness"
                 ...=${spreadProps(args)}
@@ -1284,10 +1285,10 @@ export const focusTabDemo = (args: StoryArgs = {}): TemplateResult => {
         </div>
         <div style="width: 500px; margin: 20px 20px 12px;">
             <sp-slider
-                value="${value}"
-                step="${step}"
-                min="${min}"
-                max="${max}"
+                value=${value}
+                step=${step}
+                min=${min}
+                max=${max}
                 label="Saturation"
                 id="opacity-slider-saturation"
                 ...=${spreadProps(args)}

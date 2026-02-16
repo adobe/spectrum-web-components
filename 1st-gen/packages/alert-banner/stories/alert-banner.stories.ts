@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
 import { AlertBannerVariants } from '@spectrum-web-components/alert-banner';
+import { html, TemplateResult } from '@spectrum-web-components/base';
+
 import { AlertBannerMarkup } from './';
 import { argTypes } from './args.js';
 

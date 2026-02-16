@@ -10,6 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
+import { html } from '@spectrum-web-components/base';
+
 import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow75.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow100.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow200.js';
@@ -58,7 +60,7 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-dash600.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-double-gripper.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-single-gripper.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-triple-gripper.js';
-import { html } from '@spectrum-web-components/base';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`

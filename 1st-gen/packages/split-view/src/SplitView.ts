@@ -20,20 +20,19 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
-    classMap,
-    ifDefined,
-} from '@spectrum-web-components/base/src/directives.js';
-import {
     property,
     query,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    classMap,
+    ifDefined,
+} from '@spectrum-web-components/base/src/directives.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
-import { WithSWCResizeObserver } from './types';
-
 import styles from './split-view.css.js';
+import { WithSWCResizeObserver } from './types';
 
 const DEFAULT_MAX_SIZE = 3840;
 

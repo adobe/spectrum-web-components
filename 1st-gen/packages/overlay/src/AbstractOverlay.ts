@@ -10,8 +10,11 @@
  * governing permissions and limitations under the License.
  */
 import { SpectrumElement } from '@spectrum-web-components/base';
+import type { ElementResolutionController } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
 import { reparentChildren } from '@spectrum-web-components/shared/src/reparent-children.js';
 
+import type { Overlay } from './Overlay.js';
+import { OverlayTimer } from './overlay-timer.js';
 import type {
     OpenableElement,
     OverlayOptions,
@@ -21,11 +24,8 @@ import type {
     Placement,
     TriggerInteractionsV1,
 } from './overlay-types.js';
-import type { Overlay } from './Overlay.js';
-import type { VirtualTrigger } from './VirtualTrigger.js';
-import { OverlayTimer } from './overlay-timer.js';
 import type { PlacementController } from './PlacementController.js';
-import type { ElementResolutionController } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
+import type { VirtualTrigger } from './VirtualTrigger.js';
 
 export const overlayTimer = new OverlayTimer();
 

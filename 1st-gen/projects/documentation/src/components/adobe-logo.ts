@@ -19,6 +19,7 @@ import {
     customElement,
     property,
 } from '@spectrum-web-components/base/src/decorators.js';
+
 import logoStyles from './adobe-logo.css';
 
 @customElement('docs-spectrum-logo')
@@ -38,7 +39,7 @@ export class SpectrumLogo extends LitElement {
                 x="0"
                 y="0"
                 viewBox="0 0 30 26"
-                width="${this.size}"
+                width=${this.size}
                 xml:space="preserve"
                 role="img"
                 aria-label="Adobe"

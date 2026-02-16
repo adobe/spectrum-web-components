@@ -11,9 +11,9 @@
  */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { Picker } from '@spectrum-web-components/picker';
 
 import '@spectrum-web-components/picker/sp-picker.js';
-import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
@@ -76,13 +76,13 @@ const picker = ({
         <sp-picker
             id="picker-${size}"
             size=${size}
-            @change="${(event: Event): void => {
+            @change=${(event: Event): void => {
                 const picker = event.target as Picker;
                 onChange(picker.value);
-            }}"
+            }}
             label="Select a Country with a very long label, too long, in fact"
-            ?pending="${pending}"
-            ?invalid="${invalid}"
+            ?pending=${pending}
+            ?invalid=${invalid}
             ?open=${open}
         >
             <sp-menu-item>Deselect</sp-menu-item>

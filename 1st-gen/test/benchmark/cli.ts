@@ -9,12 +9,12 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { main } from 'tachometer/lib/cli.js';
-import { ConfigFile } from 'tachometer/lib/configfile.js';
-import { existsSync, readdirSync, writeFileSync } from 'fs';
-import { join as pathjoin } from 'path';
 import commandLineArgs from 'command-line-args';
 import commandLineUsage from 'command-line-usage';
+import { existsSync, readdirSync, writeFileSync } from 'fs';
+import { join as pathjoin } from 'path';
+import { main } from 'tachometer/lib/cli.js';
+import { ConfigFile } from 'tachometer/lib/configfile.js';
 
 const optionDefinitions: commandLineUsage.OptionDefinition[] = [
     {

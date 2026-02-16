@@ -14,10 +14,10 @@ import {
     html,
     TemplateResult,
 } from '@spectrum-web-components/base';
-
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ColorController } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
+
 import styles from './color-field.css.js';
 /**
  * @element sp-color-field
@@ -58,9 +58,9 @@ export class ColorField extends TextfieldBase {
             ? html`
                   <sp-color-handle
                       size="m"
-                      color="${this.colorController
+                      color=${this.colorController
                           .getColor('srgb')
-                          .toString()}"
+                          .toString()}
                   ></sp-color-handle>
               `
             : html``;

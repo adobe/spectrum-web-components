@@ -10,13 +10,13 @@
  * governing permissions and limitations under the License.
  */
 
-import { readFile } from 'fs/promises';
-import fsExtra from 'fs-extra';
-import { basename, dirname, resolve } from 'path';
-import prettier from 'prettier';
 import Case from 'case';
 import fg from 'fast-glob';
+import { readFile } from 'fs/promises';
+import fsExtra from 'fs-extra';
 import yaml from 'js-yaml';
+import { basename, dirname, resolve } from 'path';
+import prettier from 'prettier';
 import { fileURLToPath } from 'url';
 
 const { existsSync, outputFile, readFileSync, readJSON } = fsExtra;

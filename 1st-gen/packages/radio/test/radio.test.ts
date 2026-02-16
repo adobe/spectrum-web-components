@@ -18,13 +18,16 @@ import {
     triggerBlurFor,
     waitUntil,
 } from '@open-wc/testing';
-import { Radio } from '@spectrum-web-components/radio';
-import '@spectrum-web-components/radio/sp-radio.js';
 import { sendKeys } from '@web/test-runner-commands';
+
+import { Radio } from '@spectrum-web-components/radio';
+
+import '@spectrum-web-components/radio/sp-radio.js';
+
 import { sendMouse } from '../../../test/plugins/browser.js';
 
 function labelNodeForRadio(radio: Radio): Node {
-    if (!radio.shadowRoot) throw new Error('No shadowRoot');
+    if (!radio.shadowRoot) {throw new Error('No shadowRoot');}
     const slotEl = radio.shadowRoot.querySelector('slot') as HTMLSlotElement;
 
     return slotEl.assignedNodes()[0];

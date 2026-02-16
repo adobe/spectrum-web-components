@@ -11,10 +11,13 @@
  */
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { SinonStub, stub } from 'sinon';
+
 import { ElementSize } from '@spectrum-web-components/base';
 import { ClearButton } from '@spectrum-web-components/button';
+
 import '@spectrum-web-components/button/sp-clear-button.js';
-import { SinonStub, stub } from 'sinon';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Clear Button', () => {

@@ -17,16 +17,18 @@ import {
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
+import { emulateMedia, resetMouse, sendKeys } from '@web/test-runner-commands';
+
 import { html } from '@spectrum-web-components/base';
 import { Card } from '@spectrum-web-components/card';
-
 import { Grid } from '@spectrum-web-components/grid';
-import '@spectrum-web-components/grid/sp-grid.js';
 import { isWebKit } from '@spectrum-web-components/shared';
+
+import '@spectrum-web-components/grid/sp-grid.js';
 import '@spectrum-web-components/theme/scale-medium.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/theme-light.js';
-import { emulateMedia, resetMouse, sendKeys } from '@web/test-runner-commands';
+
 import {
     mouseClickOn,
     sendShiftTabKey,

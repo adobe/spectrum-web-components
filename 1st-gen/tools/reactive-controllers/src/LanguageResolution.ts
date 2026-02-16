@@ -11,6 +11,7 @@
  */
 
 import type { ReactiveController, ReactiveElement } from 'lit';
+
 import { ProvideLang } from '@spectrum-web-components/theme';
 
 export const languageResolverUpdatedSymbol = Symbol(

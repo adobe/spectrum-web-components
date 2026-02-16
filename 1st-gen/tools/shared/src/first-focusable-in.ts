@@ -11,6 +11,7 @@
  */
 
 import type { SpectrumElement } from '@spectrum-web-components/base';
+
 import { userFocusableSelector } from './focusable-selectors.js';
 
 export const firstFocusableIn = (

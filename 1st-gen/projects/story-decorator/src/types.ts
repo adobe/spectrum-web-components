@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { Color, Scale, SystemVariant } from '@spectrum-web-components/theme';
+
 import { Locale } from './locales.js';
 
 declare global {

@@ -9,22 +9,6 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import '@spectrum-web-components/button/sp-button.js';
-import { Dialog } from '@spectrum-web-components/dialog';
-import '@spectrum-web-components/dialog/sp-dialog.js';
-import {
-    Overlay,
-    OverlayTrigger,
-    Placement,
-    VirtualTrigger,
-} from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
-import { Popover } from '@spectrum-web-components/popover';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import { setViewport } from '@web/test-runner-commands';
-
 import {
     elementUpdated,
     expect,
@@ -32,18 +16,36 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import { render, TemplateResult } from '@spectrum-web-components/base';
-import { Button } from '@spectrum-web-components/button';
-import { Menu } from '@spectrum-web-components/menu';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import { Theme } from '@spectrum-web-components/theme';
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/themes.js';
+import { setViewport } from '@web/test-runner-commands';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
-import { sendMouse } from '../../../test/plugins/browser.js';
+
+import { render, TemplateResult } from '@spectrum-web-components/base';
+import { Button } from '@spectrum-web-components/button';
+import { Dialog } from '@spectrum-web-components/dialog';
+import { Menu } from '@spectrum-web-components/menu';
+import {
+    Overlay,
+    OverlayTrigger,
+    Placement,
+    VirtualTrigger,
+} from '@spectrum-web-components/overlay';
+import { Popover } from '@spectrum-web-components/popover';
 import { isFirefox } from '@spectrum-web-components/shared/src/platform.js';
+import { Theme } from '@spectrum-web-components/theme';
+
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
+
+import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     fixture,
     isInteractive,
@@ -51,12 +53,12 @@ import {
     sendShiftTabKey,
     sendTabKey,
 } from '../../../test/testing-helpers.js';
-import { PopoverContent } from '../stories/overlay-story-components.js';
 import {
     clickAndHoverTarget,
     definedOverlayElement,
     virtualElement,
 } from '../stories/overlay.stories.js';
+import { PopoverContent } from '../stories/overlay-story-components.js';
 // import { isWebKit } from '@spectrum-web-components/shared';
 
 async function styledFixture<T extends Element>(
@@ -807,7 +809,7 @@ describe('Overlay - type="modal"', () => {
 
     it('should not open hover overlay right after closing the click overlay using the keyboard', async () => {
         // @TODO: skipping on Firefox due to flakiness. Will review in the migration to Spectrum 2.
-        if (isFirefox()) return;
+        if (isFirefox()) {return;}
         const overlayTrigger = await fixture<OverlayTrigger>(
             clickAndHoverTarget()
         );

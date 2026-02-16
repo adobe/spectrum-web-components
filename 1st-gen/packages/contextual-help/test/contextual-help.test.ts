@@ -9,13 +9,15 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { render, TemplateResult } from 'lit';
 import { elementUpdated, expect, fixture, oneEvent } from '@open-wc/testing';
-import { nextFrame } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
 import { sendKeys } from '@web/test-runner-commands';
+
+import { nextFrame } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { ContextualHelp, DEFAULT_ARIA_LABELS } from '../src/ContextualHelp.js';
 import { ContextualHelpMarkup } from '../stories/index.js';
-import { render, TemplateResult } from 'lit';
 
 describe('ContextualHelp', () => {
     testForLitDevWarnings(

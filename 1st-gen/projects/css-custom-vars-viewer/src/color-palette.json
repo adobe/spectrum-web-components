@@ -1,34 +1,4 @@
 {
-    "white": {
-        "value": "rgb(255, 255, 255)"
-    },
-    "transparent-white-100": {
-        "value": "rgba(255, 255, 255, 0)"
-    },
-    "transparent-white-200": {
-        "value": "rgba(255, 255, 255, 0.1)"
-    },
-    "transparent-white-300": {
-        "value": "rgba(255, 255, 255, 0.25)"
-    },
-    "transparent-white-400": {
-        "value": "rgba(255, 255, 255, 0.4)"
-    },
-    "transparent-white-500": {
-        "value": "rgba(255, 255, 255, 0.55)"
-    },
-    "transparent-white-600": {
-        "value": "rgba(255, 255, 255, 0.7)"
-    },
-    "transparent-white-700": {
-        "value": "rgba(255, 255, 255, 0.8)"
-    },
-    "transparent-white-800": {
-        "value": "rgba(255, 255, 255, 0.9)"
-    },
-    "transparent-white-900": {
-        "value": "rgb(255, 255, 255)"
-    },
     "black": {
         "value": "rgb(0, 0, 0)"
     },
@@ -3067,16 +3037,46 @@
             }
         }
     },
+    "transparent-white-100": {
+        "value": "rgba(255, 255, 255, 0)"
+    },
+    "transparent-white-200": {
+        "value": "rgba(255, 255, 255, 0.1)"
+    },
+    "transparent-white-300": {
+        "value": "rgba(255, 255, 255, 0.25)"
+    },
+    "transparent-white-400": {
+        "value": "rgba(255, 255, 255, 0.4)"
+    },
+    "transparent-white-500": {
+        "value": "rgba(255, 255, 255, 0.55)"
+    },
+    "transparent-white-600": {
+        "value": "rgba(255, 255, 255, 0.7)"
+    },
+    "transparent-white-700": {
+        "value": "rgba(255, 255, 255, 0.8)"
+    },
+    "transparent-white-800": {
+        "value": "rgba(255, 255, 255, 0.9)"
+    },
+    "transparent-white-900": {
+        "value": "rgb(255, 255, 255)"
+    },
+    "white": {
+        "value": "rgb(255, 255, 255)"
+    },
     "magenta-1000": {
         "sets": {
-            "light": {
-                "value": "rgb(173, 9, 85)"
-            },
             "dark": {
                 "value": "rgb(255, 172, 202)"
             },
             "darkest": {
                 "value": "rgb(255, 152, 191)"
+            },
+            "light": {
+                "value": "rgb(173, 9, 85)"
             },
             "wireframe": {
                 "value": "rgb(133, 161, 219)"
@@ -3085,14 +3085,14 @@
     },
     "magenta-1100": {
         "sets": {
-            "light": {
-                "value": "rgb(142, 0, 69)"
-            },
             "dark": {
                 "value": "rgb(255, 198, 218)"
             },
             "darkest": {
                 "value": "rgb(255, 179, 207)"
+            },
+            "light": {
+                "value": "rgb(142, 0, 69)"
             },
             "wireframe": {
                 "value": "rgb(114, 145, 211)"
@@ -3101,14 +3101,14 @@
     },
     "magenta-1200": {
         "sets": {
-            "light": {
-                "value": "rgb(112, 0, 55)"
-            },
             "dark": {
                 "value": "rgb(255, 221, 233)"
             },
             "darkest": {
                 "value": "rgb(255, 202, 221)"
+            },
+            "light": {
+                "value": "rgb(112, 0, 55)"
             },
             "wireframe": {
                 "value": "rgb(96, 130, 201)"
@@ -3117,14 +3117,14 @@
     },
     "magenta-1300": {
         "sets": {
-            "light": {
-                "value": "rgb(84, 3, 42)"
-            },
             "dark": {
                 "value": "rgb(255, 240, 245)"
             },
             "darkest": {
                 "value": "rgb(255, 221, 233)"
+            },
+            "light": {
+                "value": "rgb(84, 3, 42)"
             },
             "wireframe": {
                 "value": "rgb(82, 117, 192)"
@@ -3133,14 +3133,14 @@
     },
     "magenta-1400": {
         "sets": {
-            "light": {
-                "value": "rgb(60, 6, 29)"
-            },
             "dark": {
                 "value": "rgb(255, 252, 253)"
             },
             "darkest": {
                 "value": "rgb(255, 236, 243)"
+            },
+            "light": {
+                "value": "rgb(60, 6, 29)"
             },
             "wireframe": {
                 "value": "rgb(74, 109, 184)"

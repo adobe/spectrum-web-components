@@ -22,8 +22,8 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-
 import { Textfield } from '@spectrum-web-components/textfield';
+
 import '@spectrum-web-components/button/sp-clear-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-search.js';
 

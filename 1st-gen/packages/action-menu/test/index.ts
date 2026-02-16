@@ -21,35 +21,36 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import {
+    a11ySnapshot,
+    findAccessibilityNode,
+    sendKeys,
+    setViewport,
+} from '@web/test-runner-commands';
+import { spy } from 'sinon';
+
+import { ActionMenu } from '@spectrum-web-components/action-menu';
+import { TemplateResult } from '@spectrum-web-components/base';
+import type { Menu, MenuItem } from '@spectrum-web-components/menu';
+import type { Overlay } from '@spectrum-web-components/overlay';
+import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/InteractionController.js';
+import { isWebKit } from '@spectrum-web-components/shared';
+import type { Tooltip } from '@spectrum-web-components/tooltip';
+
+import '@spectrum-web-components/dialog/sp-dialog-base.js';
+
+import { sendMouse } from '../../../test/plugins/browser.js';
+import {
     mouseClickAway,
     mouseClickOn,
     mouseMoveOver,
     sendTabKey,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers';
-
-import { spy } from 'sinon';
-
-import { ActionMenu } from '@spectrum-web-components/action-menu';
-import { TemplateResult } from '@spectrum-web-components/base';
-import '@spectrum-web-components/dialog/sp-dialog-base.js';
-import type { Menu, MenuItem } from '@spectrum-web-components/menu';
-import type { Overlay } from '@spectrum-web-components/overlay';
-import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/InteractionController.js';
-import { isWebKit } from '@spectrum-web-components/shared';
-import type { Tooltip } from '@spectrum-web-components/tooltip';
-import {
-    a11ySnapshot,
-    findAccessibilityNode,
-    sendKeys,
-    setViewport,
-} from '@web/test-runner-commands';
-import { sendMouse } from '../../../test/plugins/browser.js';
-import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import {
     fixture,
     ignoreResizeObserverLoopError,
 } from '../../../test/testing-helpers.js';
+import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import type { TestablePicker } from '../../picker/test/index.js';
 import {
     iconOnly,

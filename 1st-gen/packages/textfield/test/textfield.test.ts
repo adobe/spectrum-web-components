@@ -10,21 +10,24 @@
  * governing permissions and limitations under the License.
  */
 import { elementUpdated, expect, html, litFixture } from '@open-wc/testing';
+import { sendKeys } from '@web/test-runner-commands';
+
 import { HelpText } from '@spectrum-web-components/help-text';
-import '@spectrum-web-components/help-text/sp-help-text.js';
 import {
     isFirefox,
     isWebKit,
 } from '@spectrum-web-components/shared/src/platform.js';
+
+import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
-import { sendKeys } from '@web/test-runner-commands';
-import { Textfield, TextfieldType } from '../';
+
 import { sendMouse } from '../../../test/plugins/browser.js';
-import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import {
     fixture,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
+import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
+import { Textfield, TextfieldType } from '../';
 
 describe('Textfield', () => {
     testForLitDevWarnings(
@@ -960,7 +963,7 @@ describe('Textfield', () => {
                 <sp-textfield type="url"></sp-textfield>
             `);
 
-            // eslint-disable-next-line
+             
             // @ts-ignore
             el.type = 'range';
             await elementUpdated(el);

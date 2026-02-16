@@ -11,12 +11,13 @@
  */
 
 import { elementUpdated, expect, oneEvent } from '@open-wc/testing';
-import { fixture } from '../../../test/testing-helpers.js';
 import { sendKeys } from '@web/test-runner-commands';
 
-import { groupsWithSelects } from '../stories/action-menu.stories.js';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import { MenuItem } from '@spectrum-web-components/menu';
+
+import { fixture } from '../../../test/testing-helpers.js';
+import { groupsWithSelects } from '../stories/action-menu.stories.js';
 
 describe('Action Menu - Groups', () => {
     it('throws focus into the Menu when opened', async function () {

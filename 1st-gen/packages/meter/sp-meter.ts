@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { Meter } from './src/Meter.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { Meter } from './src/Meter.js';
 
 defineElement('sp-meter', Meter);
 

@@ -11,13 +11,16 @@
  */
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
-import { HelpText } from '@spectrum-web-components/help-text';
+
 import { FieldGroup } from '@spectrum-web-components/field-group';
+import { HelpText } from '@spectrum-web-components/help-text';
+
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/field-group/sp-field-group.js';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 
 describe('FieldGroup', () => {
     testForLitDevWarnings(

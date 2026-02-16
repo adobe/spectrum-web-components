@@ -11,12 +11,13 @@
  */
 
 import { TemplateResult } from '@spectrum-web-components/base';
-import { AccordionMarkup } from './index.js';
-import { argTypes } from './args.js';
 
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
 import '@spectrum-web-components/link/sp-link.js';
+
+import { argTypes } from './args.js';
+import { AccordionMarkup } from './index.js';
 
 export default {
     title: 'Accordion',

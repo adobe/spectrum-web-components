@@ -20,15 +20,15 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-
+import { Button } from '@spectrum-web-components/button';
 import {
     Overlay,
     OverlayTrigger,
     Placement,
 } from '@spectrum-web-components/overlay';
 import { RadioGroup } from '@spectrum-web-components/radio';
+
 import '@spectrum-web-components/button/sp-button.js';
-import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/radio/sp-radio.js';
 import '@spectrum-web-components/radio/sp-radio-group.js';
@@ -106,12 +106,12 @@ class OverlayDrag extends LitElement {
         const slotElement = nodes.find(
             (node) => node instanceof HTMLElement
         ) as HTMLElement;
-        if (!slotElement) return;
+        if (!slotElement) {return;}
 
         this.targetElement = slotElement.querySelector(
             '[slot="trigger"]'
         ) as HTMLElement;
-        if (!this.targetElement) return;
+        if (!this.targetElement) {return;}
 
         this.targetElement.addEventListener(
             'pointerdown',
@@ -124,7 +124,7 @@ class OverlayDrag extends LitElement {
     private onMouseDown(event: PointerEvent): void {
         const target = event.target as HTMLElement;
         const parent = target.parentElement;
-        if (!parent) return;
+        if (!parent) {return;}
         target.setPointerCapture(event.pointerId);
 
         const max = {
@@ -165,10 +165,10 @@ class OverlayDrag extends LitElement {
     }
 
     public resetTargetPosition(): void {
-        if (!this.targetElement) return;
+        if (!this.targetElement) {return;}
         const target = this.targetElement as HTMLElement;
         const parent = target.parentElement;
-        if (!parent) return;
+        if (!parent) {return;}
 
         this.left = (parent.offsetWidth - target.offsetWidth) / 2;
         this.top = (parent.offsetHeight - target.offsetHeight) / 2;
@@ -272,7 +272,7 @@ class RecursivePopover extends LitElement {
             <sp-radio-group
                 horizontal
                 @change=${this.onRadioChange}
-                selected="${this.placement}"
+                selected=${this.placement}
                 name="group-example"
             >
                 <sp-radio value="top">Top</sp-radio>
@@ -281,7 +281,7 @@ class RecursivePopover extends LitElement {
                 <sp-radio value="left">Left</sp-radio>
             </sp-radio-group>
             <overlay-trigger
-                placement="${this.placement}"
+                placement=${this.placement}
                 type="modal"
                 triggered-by="click hover"
             >
@@ -294,15 +294,15 @@ class RecursivePopover extends LitElement {
                 </sp-button>
                 <sp-popover
                     slot="click-content"
-                    direction="${this.placement}"
+                    direction=${this.placement}
                     tip
                 >
                     <sp-dialog size="s" no-divider>
                         ${this.depth < MAX_DEPTH
                             ? html`
                                   <recursive-popover
-                                      position="${this.placement}"
-                                      depth="${this.depth + 1}"
+                                      position=${this.placement}
+                                      depth=${this.depth + 1}
                                       tabindex="0"
                                   ></recursive-popover>
                               `

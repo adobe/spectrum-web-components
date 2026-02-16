@@ -10,17 +10,19 @@
  * governing permissions and limitations under the License.
  */
 
-import { PropertyValues } from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import {
-    LanguageResolutionController,
-    languageResolverUpdatedSymbol,
-} from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 import {
     NumberFormatOptions,
     NumberFormatter,
 } from '@internationalized/number';
+
+import { PropertyValues } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    LanguageResolutionController,
+    languageResolverUpdatedSymbol,
+} from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
+import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+
 import { HandleController } from './HandleController.js';
 
 export type HandleMin = number | 'previous';
@@ -47,7 +49,7 @@ export const defaultNormalization: SliderNormalization = {
 
 const MinConverter = {
     fromAttribute: (value: string): number | 'previous' => {
-        if (value === 'previous') return value;
+        if (value === 'previous') {return value;}
         return parseFloat(value);
     },
     toAttribute: (value: 'previous' | number): string => {
@@ -57,7 +59,7 @@ const MinConverter = {
 
 const MaxConverter = {
     fromAttribute: (value: string): number | 'next' => {
-        if (value === 'next') return value;
+        if (value === 'next') {return value;}
         return parseFloat(value);
     },
     toAttribute: (value: 'next' | number): string => {
@@ -224,7 +226,7 @@ export class SliderHandle extends Focusable {
     }
 
     public get numberFormat(): NumberFormatter | undefined {
-        if (!this.formatOptions) return;
+        if (!this.formatOptions) {return;}
         return this.getNumberFormat();
     }
 }

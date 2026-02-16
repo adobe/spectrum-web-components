@@ -18,22 +18,24 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import { TemplateResult } from '@spectrum-web-components/base';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
-import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import { Theme } from '@spectrum-web-components/theme';
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/themes.js';
-import { Tooltip } from '@spectrum-web-components/tooltip';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
-
-import { Button } from '@spectrum-web-components/button';
-import { OverlayStateEvent } from '@spectrum-web-components/overlay/src/events.js';
-import { Slider } from '@spectrum-web-components/slider/src/Slider.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { stub } from 'sinon';
+
+import { TemplateResult } from '@spectrum-web-components/base';
+import { Button } from '@spectrum-web-components/button';
+import { OverlayStateEvent } from '@spectrum-web-components/overlay/src/events.js';
+import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
+import { Slider } from '@spectrum-web-components/slider/src/Slider.js';
+import { Theme } from '@spectrum-web-components/theme';
+import { Tooltip } from '@spectrum-web-components/tooltip';
+
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { mouseClickOn } from '../../../test/testing-helpers.js';
 import {

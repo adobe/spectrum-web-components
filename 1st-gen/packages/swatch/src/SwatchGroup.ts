@@ -10,6 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
+import { MutationController } from '@lit-labs/observers/mutation-controller.js';
+
 import {
     CSSResultArray,
     ElementSize,
@@ -24,15 +26,14 @@ import {
     queryAssignedElements,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
-import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
-import styles from './swatch-group.css.js';
 import type {
     Swatch,
     SwatchBorder,
     SwatchRounding,
     SwatchShape,
 } from './Swatch.js';
+import styles from './swatch-group.css.js';
 
 export type SwatchGroupSizes = Exclude<ElementSize, 'xxs' | 'xl' | 'xxl'>;
 export type SwatchSelects = 'single' | 'multiple' | undefined;
@@ -65,7 +66,7 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
     }
 
     public set selected(selected: string[]) {
-        if (selected === this.selected) return;
+        if (selected === this.selected) {return;}
 
         const oldSelected = this.selected;
         this._selected = selected;
@@ -140,7 +141,7 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
             this.selectedSet.clear();
             this.selectedSet.add(target.value);
             this.rovingTabindexController.elements.forEach((child) => {
-                if (child === target) return;
+                if (child === target) {return;}
                 child.selected = false;
             });
         } else if (this.selects === 'multiple') {
@@ -243,12 +244,12 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
                     }
                 }
                 if ('border' in targetValues)
-                    swatch.border = targetValues.border;
+                    {swatch.border = targetValues.border;}
                 if ('rounding' in targetValues)
-                    swatch.rounding = targetValues.rounding;
-                if ('shape' in targetValues) swatch.shape = targetValues.shape;
+                    {swatch.rounding = targetValues.rounding;}
+                if ('shape' in targetValues) {swatch.shape = targetValues.shape;}
                 if ('size' in targetValues)
-                    swatch.size = targetValues.size as SwatchGroupSizes;
+                    {swatch.size = targetValues.size as SwatchGroupSizes;}
             });
         }
         return passThroughSwatchActions;
@@ -258,7 +259,7 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
         changes: PropertyValues
     ): ((swatch: Swatch) => void)[] {
         const selectionSwatchActions: ((swatch: Swatch) => void)[] = [];
-        if (!changes.has('selects')) return selectionSwatchActions;
+        if (!changes.has('selects')) {return selectionSwatchActions;}
         if (this.selects) {
             this.setAttribute(
                 'role',

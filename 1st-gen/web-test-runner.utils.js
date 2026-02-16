@@ -10,11 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-import fs from 'fs';
-import path from 'path';
-
 import { playwrightLauncher } from '@web/test-runner-playwright';
 import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugin';
+import fs from 'fs';
+import path from 'path';
 
 export const chromium = playwrightLauncher({
     product: 'chromium',

@@ -9,13 +9,15 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { html, TemplateResult } from '@spectrum-web-components/base';
+
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/switch/sp-switch.js';
 import '@spectrum-web-components/slider/sp-slider.js';
-import { html, TemplateResult } from '@spectrum-web-components/base';
+
 import { Color } from '../src/index.js';
 
 export default {
@@ -65,7 +67,7 @@ export const Default = ({
     return html`
         ${storyStyles}
         <sp-theme
-            color="${color}"
+            color=${color}
             system=${window.__swc_hack_knobs__.defaultSystemVariant}
         >
             <div id="example">
@@ -147,7 +149,7 @@ export const nestedTheme = ({
     return html`
         ${storyStyles}
         <sp-theme
-            color="${outer}"
+            color=${outer}
             theme=${window.__swc_hack_knobs__.defaultSystemVariant}
             system=${window.__swc_hack_knobs__.defaultSystemVariant}
         >
@@ -170,7 +172,7 @@ export const nestedTheme = ({
                     <sp-button variant="accent">Continue</sp-button>
                 </sp-button-group>
                 <sp-theme
-                    color="${inner}"
+                    color=${inner}
                     theme=${window.__swc_hack_knobs__.defaultSystemVariant}
                     system=${window.__swc_hack_knobs__.defaultSystemVariant}
                 >
@@ -226,7 +228,7 @@ export const reverseColorNestedTheme = ({
             }
         </style>
         <sp-theme
-            color="${inner}"
+            color=${inner}
             theme=${window.__swc_hack_knobs__.defaultSystemVariant}
             system=${window.__swc_hack_knobs__.defaultSystemVariant}
         >
@@ -249,7 +251,7 @@ export const reverseColorNestedTheme = ({
                     <sp-button variant="accent">Continue</sp-button>
                 </sp-button-group>
                 <sp-theme
-                    color="${outer}"
+                    color=${outer}
                     dir="rtl"
                     theme=${window.__swc_hack_knobs__.defaultSystemVariant}
                     system=${window.__swc_hack_knobs__.defaultSystemVariant}

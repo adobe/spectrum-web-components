@@ -17,18 +17,19 @@ import {
     type TemplateResult,
 } from '@spectrum-web-components/base';
 import { directive } from '@spectrum-web-components/base/src/async-directive.js';
-import { strategies } from './strategies.js';
-import type { OverlayOptions, TriggerInteraction } from './overlay-types.js';
+
+import { AbstractOverlay } from './AbstractOverlay.js';
 import type { ClickController } from './ClickController.js';
 import type { HoverController } from './HoverController.js';
+import { InteractionTypes } from './InteractionController.js';
 import type { LongpressController } from './LongpressController.js';
+import type { OverlayOptions, TriggerInteraction } from './overlay-types.js';
+import { SlottableRequestDirective } from './slottable-request-directive.js';
 import {
     removeSlottableRequest,
     type SlottableRequestEvent,
 } from './slottable-request-event.js';
-import { SlottableRequestDirective } from './slottable-request-directive.js';
-import { AbstractOverlay } from './AbstractOverlay.js';
-import { InteractionTypes } from './InteractionController.js';
+import { strategies } from './strategies.js';
 
 export type InsertionOptions = {
     el: HTMLElement | (() => HTMLElement);
@@ -107,7 +108,7 @@ export class OverlayTriggerDirective extends SlottableRequestDirective {
 
     override handleSlottableRequest(event: SlottableRequestEvent): void {
         /* c8 ignore next 1 */
-        if (event.target !== event.currentTarget) return;
+        if (event.target !== event.currentTarget) {return;}
 
         const willRemoveSlottable = event.data === removeSlottableRequest;
         const options = {} as RenderOptions;

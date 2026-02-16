@@ -10,13 +10,16 @@
  * governing permissions and limitations under the License.
  */
 
+import { html, TemplateResult } from 'lit';
+
 import { trigger } from '@spectrum-web-components/overlay';
+
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import { html, TemplateResult } from 'lit';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 const renderPopover = (): TemplateResult => {

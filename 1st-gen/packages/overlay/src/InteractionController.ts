@@ -11,6 +11,7 @@
  */
 
 import type { ReactiveController } from '@spectrum-web-components/base';
+
 import { AbstractOverlay } from './AbstractOverlay.js';
 
 export enum InteractionTypes {
@@ -51,7 +52,7 @@ export class InteractionController implements ReactiveController {
      * Set `open` against the associated Overlay lazily.
      */
     public set open(open: boolean) {
-        if (open === this.open) return;
+        if (open === this.open) {return;}
         this.isLazilyOpen = open;
         if (this.overlay) {
             // If there already is an Overlay, apply the value of `open` directly.
@@ -83,8 +84,8 @@ export class InteractionController implements ReactiveController {
     }
 
     public set overlay(overlay: AbstractOverlay | undefined) {
-        if (!overlay) return;
-        if (this._overlay === overlay) return;
+        if (!overlay) {return;}
+        if (this._overlay === overlay) {return;}
         if (this._overlay) {
             this._overlay.removeController(this);
         }

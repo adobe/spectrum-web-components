@@ -10,9 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/shared/src/focusable.js';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+
+import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+
+import '@spectrum-web-components/shared/src/focusable.js';
 
 describe('Focusable', () => {
     it('enforces the presense of a `focusElement`', async () => {

@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import type { Table } from '@spectrum-web-components/table';
 
 import '@spectrum-web-components/table/sp-table.js';
 import '@spectrum-web-components/table/sp-table-checkbox-cell.js';
@@ -18,7 +19,6 @@ import '@spectrum-web-components/table/sp-table-head-cell.js';
 import '@spectrum-web-components/table/sp-table-body.js';
 import '@spectrum-web-components/table/sp-table-row.js';
 import '@spectrum-web-components/table/sp-table-cell.js';
-import type { Table } from '@spectrum-web-components/table';
 
 export default {
     title: 'Table',

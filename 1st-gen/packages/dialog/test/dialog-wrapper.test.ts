@@ -22,14 +22,16 @@ import { SinonStub, spy, stub } from 'sinon';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { Button } from '@spectrum-web-components/button';
 import { Dialog, DialogWrapper } from '@spectrum-web-components/dialog';
-import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import { Divider } from '@spectrum-web-components/divider/src/Divider.js';
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import { nextFrame } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
 import { Theme } from '@spectrum-web-components/theme';
+import { Underlay } from '@spectrum-web-components/underlay';
+
+import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import { Underlay } from '@spectrum-web-components/underlay';
+
 import {
     mouseClickOn,
     testForLitDevWarnings,

@@ -16,14 +16,17 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { Picker } from '@spectrum-web-components/picker';
+import { SwatchGroup } from '@spectrum-web-components/swatch';
+import { TableItem } from '@spectrum-web-components/table';
+
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/swatch/sp-swatch.js';
 import '@spectrum-web-components/swatch/sp-swatch-group.js';
-import { Picker } from '@spectrum-web-components/picker';
-import { SwatchGroup } from '@spectrum-web-components/swatch';
-import { TableItem } from '@spectrum-web-components/table';
+import './sp-css-table.js';
+
 import {
     blueValues,
     celeryValues,
@@ -40,7 +43,6 @@ import {
     seafoamValues,
     yellowValues,
 } from './parsed-data.js';
-import './sp-css-table.js';
 
 export interface Item extends TableItem {
     customVar: string;

@@ -11,6 +11,7 @@
  */
 
 import { TemplateResult } from '@spectrum-web-components/base';
+
 import { AccordionMarkup } from './';
 
 export default {

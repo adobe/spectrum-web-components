@@ -10,10 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+
+import { SideNavItem } from '@spectrum-web-components/sidenav';
+
 import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
-import { SideNavItem } from '@spectrum-web-components/sidenav';
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 describe('Sidenav Item', () => {
     it('can exist disabled and with no parent', async () => {
@@ -66,7 +68,7 @@ describe('Sidenav Item', () => {
         await elementUpdated(el);
 
         expect(el.shadowRoot).to.exist;
-        if (!el.shadowRoot) return;
+        if (!el.shadowRoot) {return;}
 
         let slot: HTMLSlotElement | null = el.shadowRoot.querySelector(
             'slot[name="descendant"]'
@@ -85,7 +87,7 @@ describe('Sidenav Item', () => {
             'slot[name="descendant"]'
         ) as HTMLSlotElement;
         expect(slot).to.exist;
-        if (!slot) return;
+        if (!slot) {return;}
 
         expect(slot.assignedElements().length).to.equal(2);
     });

@@ -10,9 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/button/sp-close-button.js';
-import { CloseButton } from '@spectrum-web-components/button';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+
+import { CloseButton } from '@spectrum-web-components/button';
+
+import '@spectrum-web-components/button/sp-close-button.js';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Close Button', () => {

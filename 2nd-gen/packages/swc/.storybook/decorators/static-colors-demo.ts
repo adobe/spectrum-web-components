@@ -10,10 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-import { makeDecorator } from '@storybook/preview-api';
-import type { DecoratorFunction } from '@storybook/types';
 import { html } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
+import { makeDecorator } from '@storybook/preview-api';
+import type { DecoratorFunction } from '@storybook/types';
 
 /**
  * Static color background settings - matching spectrum-css gradients

@@ -1,13 +1,13 @@
 {
-    "extends": "../../tsconfig.json",
     "compilerOptions": {
         "declaration": false,
         "emitDeclarationOnly": false,
-        "resolveJsonModule": true,
-        "skipLibCheck": true,
         "outDir": "./_site/src",
-        "rootDir": "./src"
+        "resolveJsonModule": true,
+        "rootDir": "./src",
+        "skipLibCheck": true
     },
-    "include": ["./**/*.ts", "./src/global.d.ts"],
-    "exclude": []
+    "exclude": [],
+    "extends": "../../tsconfig.json",
+    "include": ["./**/*.ts", "./src/global.d.ts"]
 }

@@ -11,6 +11,7 @@
  */
 
 import { ReactiveElement, TemplateResult } from '@spectrum-web-components/base';
+
 import { HelpTextManager } from './HelpTextManager.js';
 
 type Constructor<T = Record<string, unknown>> = {

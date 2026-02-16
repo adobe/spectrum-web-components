@@ -15,10 +15,10 @@ import {
     ifDefined,
     unsafeHTML,
 } from '@spectrum-web-components/base/src/directives.js';
+
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
-
 import '@spectrum-web-components/action-button/sp-action-button.js';
 
 export interface Properties {
@@ -45,9 +45,9 @@ export function renderButton({
     return html`
         <sp-action-button
             href=${ifDefined(properties.href)}
-            ?quiet="${!!properties.quiet}"
-            ?emphasized="${!!properties.emphasized}"
-            static-color="${ifDefined(properties.staticColor)}"
+            ?quiet=${!!properties.quiet}
+            ?emphasized=${!!properties.emphasized}
+            static-color=${ifDefined(properties.staticColor)}
             ?disabled=${!!properties.disabled}
             ?selected=${!!properties.selected}
             ?toggles=${!!properties.toggles}
@@ -66,10 +66,10 @@ function renderGroup(properties: Properties): TemplateResult {
     const icon = `<sp-icon-edit slot="icon"></sp-icon-edit>`;
     return html`
         <sp-action-group
-            ?quiet="${!!properties.quiet}"
-            ?emphasized="${!!properties.emphasized}"
+            ?quiet=${!!properties.quiet}
+            ?emphasized=${!!properties.emphasized}
             size=${properties.size || 'm'}
-            static-color="${ifDefined(properties.staticColor)}"
+            static-color=${ifDefined(properties.staticColor)}
         >
             ${renderButton({
                 ...properties,

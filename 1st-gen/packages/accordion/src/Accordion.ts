@@ -24,9 +24,8 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusGroupController } from '@spectrum-web-components/reactive-controllers/src/FocusGroup.js';
 
-import { AccordionItem } from './AccordionItem.js';
-
 import styles from './accordion.css.js';
+import { AccordionItem } from './AccordionItem.js';
 
 /**
  * @element sp-accordion

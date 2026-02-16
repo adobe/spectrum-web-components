@@ -9,10 +9,12 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import '@spectrum-web-components/status-light/sp-status-light.js';
-import { StatusLight } from '@spectrum-web-components/status-light';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { spy } from 'sinon';
+
+import { StatusLight } from '@spectrum-web-components/status-light';
+
+import '@spectrum-web-components/status-light/sp-status-light.js';
 
 describe('Status Light', () => {
     it('loads correctly', async () => {

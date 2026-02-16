@@ -10,14 +10,17 @@
  * governing permissions and limitations under the License.
  */
 
-import { waitForPredicate } from '../../../test/testing-helpers.js';
-import '@spectrum-web-components/icons/sp-icons-medium.js';
-import '@spectrum-web-components/icon/sp-icon.js';
-import { IconsMedium } from '@spectrum-web-components/icons';
-import { Icon } from '@spectrum-web-components/icon';
-import { IconsetRegistry } from '@spectrum-web-components/iconset/src/iconset-registry.js';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { stub } from 'sinon';
+
+import { Icon } from '@spectrum-web-components/icon';
+import { IconsMedium } from '@spectrum-web-components/icons';
+import { IconsetRegistry } from '@spectrum-web-components/iconset/src/iconset-registry.js';
+
+import '@spectrum-web-components/icons/sp-icons-medium.js';
+import '@spectrum-web-components/icon/sp-icon.js';
+
+import { waitForPredicate } from '../../../test/testing-helpers.js';
 
 describe('Iconset', () => {
     after(() => {

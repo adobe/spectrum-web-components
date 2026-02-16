@@ -11,10 +11,12 @@
  */
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { stub } from 'sinon';
+
+import { ProgressCircle } from '@spectrum-web-components/progress-circle';
 
 import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
-import { ProgressCircle } from '@spectrum-web-components/progress-circle';
-import { stub } from 'sinon';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('ProgressCircle', () => {

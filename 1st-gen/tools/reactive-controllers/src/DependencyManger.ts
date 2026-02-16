@@ -34,7 +34,7 @@ export class DependencyManagerController {
     }
 
     private set loaded(loaded: boolean) {
-        if (loaded === this.loaded) return;
+        if (loaded === this.loaded) {return;}
         this._loaded = loaded;
         this.host.requestUpdate(dependencyManagerLoadedSymbol, !this.loaded);
     }

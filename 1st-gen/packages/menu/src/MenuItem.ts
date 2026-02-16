@@ -10,6 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
+import { MutationController } from '@lit-labs/observers/mutation-controller.js';
+
 import {
     CSSResultArray,
     html,
@@ -19,28 +21,27 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
+import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import type { Overlay } from '@spectrum-web-components/overlay';
+import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
+import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
+import {
     ObserveSlotPresence,
     ObserveSlotText,
     randomID,
 } from '@spectrum-web-components/shared';
-import {
-    property,
-    query,
-} from '@spectrum-web-components/base/src/decorators.js';
+import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
-import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 
-import menuItemStyles from './menu-item.css.js';
-import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 import type { Menu } from './Menu.js';
-import { MutationController } from '@lit-labs/observers/mutation-controller.js';
-import type { Overlay } from '@spectrum-web-components/overlay';
-import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
+import menuItemStyles from './menu-item.css.js';
 
 /**
  * Duration during which a pointing device can leave an `<sp-menu-item>` element
@@ -557,7 +558,7 @@ export class MenuItem extends LikeAnchor(
                     | Document
                     | ShadowRoot;
                 activeElement = root.activeElement as HTMLElement;
-                if (activeElement) break;
+                if (activeElement) {break;}
             }
         }
 
@@ -651,7 +652,7 @@ export class MenuItem extends LikeAnchor(
                 ['ArrowLeft', 'ArrowRight', 'Escape'].includes(key) ||
                 openSubmenuKey
             )
-                event.preventDefault();
+                {event.preventDefault();}
             this.dispatchEvent(
                 new MenuItemKeydownEvent({ root: this, event: event })
             );
@@ -659,7 +660,7 @@ export class MenuItem extends LikeAnchor(
     };
 
     protected closeOverlaysForRoot(): void {
-        if (this.open) return;
+        if (this.open) {return;}
         this.menuData.parentMenu?.closeDescendentOverlays();
     }
 

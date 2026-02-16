@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { ActionMenu } from './src/ActionMenu.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { ActionMenu } from './src/ActionMenu.js';
 
 defineElement('sp-action-menu', ActionMenu);
 

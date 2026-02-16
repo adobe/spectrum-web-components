@@ -17,9 +17,12 @@ import {
     html,
     nextFrame,
 } from '@open-wc/testing';
+import { spy } from 'sinon';
+
+import { SplitView } from '@spectrum-web-components/split-view';
 
 import '@spectrum-web-components/split-view/sp-split-view.js';
-import { SplitView } from '@spectrum-web-components/split-view';
+
 import {
     arrowDownEvent,
     arrowLeftEvent,
@@ -32,7 +35,6 @@ import {
     shiftTabEvent,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
-import { spy } from 'sinon';
 
 describe('SplitView', () => {
     testForLitDevWarnings(

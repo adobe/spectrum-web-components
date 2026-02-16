@@ -19,6 +19,7 @@ import {
     AsyncDirective,
     directive,
 } from '@spectrum-web-components/base/src/async-directive.js';
+
 import {
     removeSlottableRequest,
     SlottableRequestEvent,
@@ -54,7 +55,7 @@ export class SlottableRequestDirective extends AsyncDirective {
 
     handleSlottableRequest(event: SlottableRequestEvent): void {
         /* c8 ignore next 1 */
-        if (event.target !== event.currentTarget) return;
+        if (event.target !== event.currentTarget) {return;}
 
         const willRemoveSlottable = event.data === removeSlottableRequest;
 

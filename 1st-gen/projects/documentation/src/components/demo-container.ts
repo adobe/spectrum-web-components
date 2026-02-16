@@ -10,6 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
+import { ResizeController } from '@lit-labs/observers/resize-controller.js';
+
 import {
     CSSResultArray,
     html,
@@ -21,7 +23,6 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 
 import styles from './demo-container.css';
 

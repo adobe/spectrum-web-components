@@ -9,24 +9,27 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { ResizeController } from '@lit-labs/observers/resize-controller.js';
+
 import {
     CSSResultArray,
     html,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
 import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
+import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
+
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/divider/sp-divider.js';
-import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
-import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
-import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
-import { ResizeController } from '@lit-labs/observers/resize-controller.js';
+
 import alertStyles from './alert-dialog.css.js';
 
 export type AlertDialogVariants =
@@ -153,7 +156,7 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
     }
 
     public shouldManageTabOrderForScrolling = (): void => {
-        if (!this.contentElement) return;
+        if (!this.contentElement) {return;}
 
         const { offsetHeight, scrollHeight } = this.contentElement;
         if (offsetHeight < scrollHeight) {
@@ -190,7 +193,7 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
             );
         } else if (!ids.length) {
             const idProvided = !!this.id;
-            if (!idProvided) this.id = this.describedbyId;
+            if (!idProvided) {this.id = this.describedbyId;}
             const conditionDescribedby = conditionAttributeWithId(
                 this,
                 'aria-describedby',

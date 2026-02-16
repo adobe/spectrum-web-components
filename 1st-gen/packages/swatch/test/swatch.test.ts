@@ -14,7 +14,9 @@ import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 
 import { ElementSize } from '@spectrum-web-components/base';
+
 import '@spectrum-web-components/swatch/sp-swatch.js';
+
 import {
     sendShiftTabKey,
     sendTabKey,

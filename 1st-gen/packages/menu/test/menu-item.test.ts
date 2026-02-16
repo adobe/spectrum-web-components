@@ -17,11 +17,14 @@ import {
     html,
     waitUntil,
 } from '@open-wc/testing';
-import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import { spy } from 'sinon';
+
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
+
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
-import { spy } from 'sinon';
+
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { mouseClickOn } from '../../../test/testing-helpers.js';
 
@@ -254,6 +257,6 @@ describe('Menu item', () => {
         ) as NodeListOf<MenuItem>;
 
         for (const menuItem of menuItems)
-            expect(getComputedStyle(menuItem).textAlign).to.equal('start');
+            {expect(getComputedStyle(menuItem).textAlign).to.equal('start');}
     });
 });

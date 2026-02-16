@@ -10,10 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
+import { html } from 'lit';
+
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
-import { html } from 'lit';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`

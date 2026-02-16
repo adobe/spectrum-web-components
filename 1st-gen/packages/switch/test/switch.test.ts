@@ -10,18 +10,21 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/switch/sp-switch.js';
-import { Switch } from '@spectrum-web-components/switch';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+
+import { Switch } from '@spectrum-web-components/switch';
+
+import '@spectrum-web-components/switch/sp-switch.js';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 function inputForSwitch(checkbox: Switch): HTMLInputElement {
-    if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
+    if (!checkbox.shadowRoot) {throw new Error('No shadowRoot');}
     return checkbox.shadowRoot.querySelector('#input') as HTMLInputElement;
 }
 
 function labelForSwitch(checkbox: Switch): HTMLLabelElement {
-    if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
+    if (!checkbox.shadowRoot) {throw new Error('No shadowRoot');}
     const labelEl = checkbox.shadowRoot.querySelector('label');
     if (!labelEl) {
         throw new Error('Failed to find label in shadowRoot');

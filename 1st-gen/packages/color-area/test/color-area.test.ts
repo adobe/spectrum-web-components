@@ -18,13 +18,15 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
+import { sendKeys } from '@web/test-runner-commands';
+import { spy } from 'sinon';
+
+import { ColorArea } from '@spectrum-web-components/color-area';
+import { ColorHandle } from '@spectrum-web-components/color-handle';
 import { ColorTypes } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 
 import '@spectrum-web-components/color-area/sp-color-area.js';
-import { ColorArea } from '@spectrum-web-components/color-area';
-import { sendKeys } from '@web/test-runner-commands';
-import { spy } from 'sinon';
-import { ColorHandle } from '@spectrum-web-components/color-handle';
+
 import {
     sendShiftTabKey,
     sendTabKey,

@@ -12,13 +12,15 @@
 
 import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill.js';
 import { elementUpdated, expect, nextFrame } from '@open-wc/testing';
-import { html } from '@spectrum-web-components/base';
-import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
-import { getElFrom } from './helpers.js';
-
-import { remapMultiByteCharacters } from '@spectrum-web-components/number-field';
-import '@spectrum-web-components/number-field/sp-number-field.js';
 import { sendKeys } from '@web/test-runner-commands';
+
+import { html } from '@spectrum-web-components/base';
+import { remapMultiByteCharacters } from '@spectrum-web-components/number-field';
+
+import '@spectrum-web-components/number-field/sp-number-field.js';
+
+import { sendTabKey } from '../../../test/testing-helpers.js';
+import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
 import {
     currency,
     decimals,
@@ -26,7 +28,7 @@ import {
     minMax,
     percents,
 } from '../stories/number-field.stories.js';
-import { sendTabKey } from '../../../test/testing-helpers.js';
+import { getElFrom } from './helpers.js';
 
 describe('NumberField - inputs', () => {
     before(async () => {

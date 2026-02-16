@@ -18,10 +18,11 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+import arrowStyles from '@spectrum-web-components/icon/src/spectrum-icon-arrow.css.js';
+
 import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow100.js';
 
 import styles from './table-head-cell.css.js';
-import arrowStyles from '@spectrum-web-components/icon/src/spectrum-icon-arrow.css.js';
 
 export type SortedEventDetails = {
     sortDirection: 'asc' | 'desc';
@@ -103,7 +104,7 @@ export class TableHeadCell extends SpectrumElement {
     }
 
     protected handleClick(): void {
-        if (!this.sortable) return;
+        if (!this.sortable) {return;}
         if (this.sortDirection) {
             this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
         } else {

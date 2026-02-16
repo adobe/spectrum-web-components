@@ -9,17 +9,20 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/themes.js';
 import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
-import { html } from '@spectrum-web-components/base';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/alert-dialog/sp-alert-dialog.js';
+
 import {
     AlertDialog,
     alertDialogVariants,
 } from '@spectrum-web-components/alert-dialog';
+import { html } from '@spectrum-web-components/base';
 import { Button } from '@spectrum-web-components/button/src/Button.js';
+
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/alert-dialog/sp-alert-dialog.js';
+
 import {
     confirmation,
     secondary,

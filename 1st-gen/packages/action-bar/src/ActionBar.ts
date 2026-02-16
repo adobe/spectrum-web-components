@@ -17,13 +17,15 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
+
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/button/sp-close-button.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
+
 import actionBarStyles from './action-bar.css.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 export const actionBarVariants = ['sticky', 'fixed'];
 
 /**
@@ -45,7 +47,7 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
      * When `flexible` the action bar sizes itself to its content
      * rather than a specific width.
      *
-     * @param {Boolean} flexible
+     * @param {boolean} flexible
      */
     @property({ type: Boolean, reflect: true })
     public flexible = false;
@@ -57,7 +59,7 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
      * The variant applies specific styling when set to `sticky` or `fixed`.
      * `variant` attribute is removed when not matching one of the above.
      *
-     * @param {String} variant
+     * @param {string} variant
      */
     @property({ type: String })
     public set variant(variant: string) {

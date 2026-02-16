@@ -13,20 +13,22 @@
 import {
     elementUpdated,
     expect,
-    nextFrame,
     fixture as owcFixture,
+    nextFrame,
 } from '@open-wc/testing';
-import { html, render, TemplateResult } from '@spectrum-web-components/base';
-import { Theme } from '@spectrum-web-components/theme';
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/themes.js';
+import { sendKeys } from '@web/test-runner-commands';
 import type { HookFunction } from 'mocha';
 import { SinonStub, spy, stub } from 'sinon';
 
+import { html, render, TemplateResult } from '@spectrum-web-components/base';
+import { isWebKit } from '@spectrum-web-components/shared';
+import { Theme } from '@spectrum-web-components/theme';
+
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
+
 import { sendMouse } from './plugins/browser.js';
 import { MouseOptions, PointerPosition } from './plugins/send-mouse-plugin.js';
-import { sendKeys } from '@web/test-runner-commands';
-import { isWebKit } from '@spectrum-web-components/shared';
 
 /**
  * Send a mouse click to a specific DOMRect or HTMLElement

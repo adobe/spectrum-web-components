@@ -9,21 +9,6 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import '@spectrum-web-components/button/sp-button.js';
-import { Dialog } from '@spectrum-web-components/dialog';
-import '@spectrum-web-components/dialog/sp-dialog.js';
-import {
-    Overlay,
-    OverlayTrigger,
-    Placement,
-} from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
-import { Popover } from '@spectrum-web-components/popover';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import { setViewport } from '@web/test-runner-commands';
-
 import {
     elementUpdated,
     expect,
@@ -31,12 +16,29 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
+import { setViewport } from '@web/test-runner-commands';
+import { sendKeys } from '@web/test-runner-commands';
+
 import { render, TemplateResult } from '@spectrum-web-components/base';
+import { Dialog } from '@spectrum-web-components/dialog';
 import { Menu } from '@spectrum-web-components/menu';
+import {
+    Overlay,
+    OverlayTrigger,
+    Placement,
+} from '@spectrum-web-components/overlay';
+import { Popover } from '@spectrum-web-components/popover';
 import { Theme } from '@spectrum-web-components/theme';
+
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import { sendKeys } from '@web/test-runner-commands';
+
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     fixture,
@@ -46,11 +48,11 @@ import {
     sendShiftTabKey,
     sendTabKey,
 } from '../../../test/testing-helpers.js';
-import { PopoverContent } from '../stories/overlay-story-components.js';
 import {
     definedOverlayElement,
     virtualElementV1,
 } from '../stories/overlay.stories';
+import { PopoverContent } from '../stories/overlay-story-components.js';
 
 async function styledFixture<T extends Element>(
     story: TemplateResult

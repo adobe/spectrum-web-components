@@ -16,14 +16,14 @@ import {
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { Focusable, LikeAnchor } from '@spectrum-web-components/shared';
-
 import itemStyles from '@spectrum-web-components/tabs/src/tab.css.js';
+
 import topNavItemStyles from './top-nav-item.css.js';
 
 /**

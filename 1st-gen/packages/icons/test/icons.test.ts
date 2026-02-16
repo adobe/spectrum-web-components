@@ -9,12 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import '@spectrum-web-components/icons/sp-icons-large.js';
-import '@spectrum-web-components/icons/sp-icons-medium.js';
-import { IconsLarge, IconsMedium } from '../';
-import IconsetSVG from '../src/icons-large.svg.js';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { stub } from 'sinon';
+
+import '@spectrum-web-components/icons/sp-icons-large.js';
+import '@spectrum-web-components/icons/sp-icons-medium.js';
+
+import { IconsLarge, IconsMedium } from '../';
+import IconsetSVG from '../src/icons-large.svg.js';
 
 describe('icons', () => {
     it('large', async () => {

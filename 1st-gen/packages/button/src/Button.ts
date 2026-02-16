@@ -17,9 +17,10 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { ButtonBase } from './ButtonBase.js';
-import buttonStyles from './button.css.js';
 import { PendingStateController } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
+
+import buttonStyles from './button.css.js';
+import { ButtonBase } from './ButtonBase.js';
 
 export type DeprecatedButtonVariants = 'cta' | 'overBackground';
 export type ButtonStaticColors = 'white' | 'black';
@@ -86,7 +87,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         return this._variant;
     }
     public set variant(variant: ButtonVariants) {
-        if (variant === this.variant) return;
+        if (variant === this.variant) {return;}
 
         this.requestUpdate('variant', this.variant);
         switch (variant) {

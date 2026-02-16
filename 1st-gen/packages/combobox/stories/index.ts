@@ -15,8 +15,10 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { Combobox, ComboboxOption } from '@spectrum-web-components/combobox';
+
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
+
 import { spreadProps } from '../../../test/lit-helpers';
 
 export type StoryArgs = {
@@ -37,14 +39,14 @@ const handleChange =
     ({ onChange }: StoryArgs) =>
     (event: Event): void => {
         const picker = event.target as Combobox;
-        if (onChange) onChange(picker.value);
+        if (onChange) {onChange(picker.value);}
     };
 
 const handleInput =
     ({ onInput }: StoryArgs) =>
     (event: Event): void => {
         const picker = event.target as Combobox;
-        if (onInput) onInput(picker.value);
+        if (onInput) {onInput(picker.value);}
     };
 
 export const ComboboxMarkup = (args: StoryArgs): TemplateResult => {

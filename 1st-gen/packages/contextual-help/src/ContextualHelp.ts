@@ -16,10 +16,6 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-help-outline.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-info-outline.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import type { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
@@ -31,6 +27,12 @@ import {
     IS_MOBILE,
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
+
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-help-outline.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-info-outline.js';
+
 import styles from './contextual-help.css.js';
 
 export const DEFAULT_ARIA_LABELS = {
@@ -56,14 +58,14 @@ export class ContextualHelp extends SpectrumElement {
 
     /**
      * Provides an accessible name for the action button trigger.
-     * @param {String} label
+     * @param {string} label
      */
     @property()
     public label?: string;
 
     /**
      * The `variant` property applies specific styling on the action button trigger.
-     * @param {String} variant
+     * @param {string} variant
      */
     @property()
     public variant: 'info' | 'help' = 'info';

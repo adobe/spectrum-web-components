@@ -14,6 +14,7 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/swatch/sp-swatch-group.js';
 import '@spectrum-web-components/swatch/sp-swatch.js';
+
 import type {
     SwatchBorder,
     SwatchRounding,
@@ -111,7 +112,7 @@ export default {
             <div
                 @change=${async (event: Event & { target: SwatchGroup }) => {
                     await 0;
-                    if (event.defaultPrevented) return;
+                    if (event.defaultPrevented) {return;}
                     const next = event.target
                         .nextElementSibling as HTMLDivElement;
                     next.textContent = `Selected: ${JSON.stringify(
@@ -150,7 +151,7 @@ const template = ({
     selected = [],
     shape,
 }: Properties): TemplateResult => {
-    const groupLabel = !!selects
+    const groupLabel = selects
         ? selects === 'single'
             ? 'Select a color'
             : 'Selects color(s)'

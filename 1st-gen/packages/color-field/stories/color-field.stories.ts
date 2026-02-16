@@ -10,10 +10,12 @@
  * governing permissions and limitations under the License.
  */
 import { html, TemplateResult } from '@spectrum-web-components/base';
+
 import '@spectrum-web-components/color-field/sp-color-field.js';
-import { ColorFieldMarkup } from './template.js';
+
 import { argTypes } from './args.js';
 import { DEFAULT_COLOR, DEMO_COLORS } from './colors.js';
+import { ColorFieldMarkup } from './template.js';
 
 export default {
     component: 'sp-color-field',

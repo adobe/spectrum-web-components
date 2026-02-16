@@ -10,6 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
+import type { NumberFormatter } from '@internationalized/number';
+
 import {
     CSSResultArray,
     html,
@@ -29,15 +31,15 @@ import {
     type StyleInfo,
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
-
-import sliderStyles from './slider.css.js';
-import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import type { NumberField } from '@spectrum-web-components/number-field';
-import { HandleController, HandleValueDictionary } from './HandleController.js';
-import { SliderHandle } from './SliderHandle.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
-import type { NumberFormatter } from '@internationalized/number';
+import type { NumberField } from '@spectrum-web-components/number-field';
+import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
+
+import '@spectrum-web-components/field-label/sp-field-label.js';
+
+import { HandleController, HandleValueDictionary } from './HandleController.js';
+import sliderStyles from './slider.css.js';
+import { SliderHandle } from './SliderHandle.js';
 
 export const variants = ['filled', 'ramp', 'range', 'tick'];
 
@@ -68,7 +70,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     }
 
     public set editable(editable: boolean) {
-        if (editable === this.editable) return;
+        if (editable === this.editable) {return;}
         const oldValue = this.editable;
         this._editable = this.handleController.size < 2 ? editable : false;
         if (this.editable) {
@@ -129,7 +131,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     ) => {
         const valueArray = [...values.values()];
         if (valueArray.length === 2)
-            return `${valueArray[0]} - ${valueArray[1]}`;
+            {return `${valueArray[0]} - ${valueArray[1]}`;}
         return valueArray.join(', ');
     };
 

@@ -38,7 +38,7 @@ try {
     document.body.querySelector(':focus-visible');
 } catch (error) {
     hasFocusVisible = false;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+     
     // @ts-ignore
     import('focus-visible');
 }
@@ -70,7 +70,7 @@ export const FocusVisiblePolyfillMixin = <
             instance.shadowRoot == null ||
             instance.hasAttribute('data-js-focus-visible')
         ) {
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
+             
             return () => {};
         }
 
@@ -110,7 +110,7 @@ export const FocusVisiblePolyfillMixin = <
             };
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+         
         return () => {};
     };
 
@@ -144,7 +144,7 @@ export const FocusVisiblePolyfillMixin = <
             if (!hasFocusVisible) {
                 requestAnimationFrame(() => {
                     if (this[$endPolyfillCoordination] != null) {
-                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                         
                         this[$endPolyfillCoordination]!();
                         this[$endPolyfillCoordination] = null;
                     }

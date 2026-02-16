@@ -10,6 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
+import { ifDefined } from 'lit-html/directives/if-defined.js';
+
 import {
     html,
     LitElement,
@@ -31,9 +33,9 @@ import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
-import { spreadProps } from '../../../test/lit-helpers.js';
 import '../../overlay/stories/index.js';
+
+import { spreadProps } from '../../../test/lit-helpers.js';
 import { areIconsPresent, isOverlayOpen } from '../../overlay/stories/index.js';
 import { argTypes } from './args.js';
 import { states } from './states.js';
@@ -539,7 +541,7 @@ export const dynamicIcons = (args: StoryArgs): TemplateResult => {
                     );
                 });
                 const picker = document.querySelector('sp-picker');
-                if (picker) picker.open = true;
+                if (picker) {picker.open = true;}
             }}
         >
             Change icons

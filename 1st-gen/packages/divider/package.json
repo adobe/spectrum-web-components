@@ -1,17 +1,14 @@
 {
     "name": "@spectrum-web-components/divider",
     "version": "1.11.2",
-    "publishConfig": {
-        "access": "public"
-    },
     "description": "",
     "license": "Apache-2.0",
     "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/components/divider",
     "repository": {
+        "directory": "1st-gen/packages/divider",
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "1st-gen/packages/divider"
+        "url": "https://github.com/adobe/spectrum-web-components.git"
     },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
@@ -73,5 +70,8 @@
         "component",
         "css"
     ],
+    "publishConfig": {
+        "access": "public"
+    },
     "customElements": "custom-elements.json"
 }

@@ -10,14 +10,16 @@
  * governing permissions and limitations under the License.
  */
 
-import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { html } from 'lit/static-html.js';
+import { elementUpdated, expect, fixture } from '@open-wc/testing';
+import { sendKeys } from '@web/test-runner-commands';
 
 import { nextFrame } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
 import { Tag, Tags } from '@spectrum-web-components/tags';
+
 import '@spectrum-web-components/tags/sp-tag.js';
 import '@spectrum-web-components/tags/sp-tags.js';
-import { sendKeys } from '@web/test-runner-commands';
+
 import {
     arrowDownEvent,
     arrowLeftEvent,

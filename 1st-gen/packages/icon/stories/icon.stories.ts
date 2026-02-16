@@ -12,9 +12,10 @@
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/icon/sp-icon.js';
-import { back } from './images';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
 import '@spectrum-web-components/icons/sp-icons-large.js';
+
+import { back } from './images';
 
 const sizes = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl'];
 

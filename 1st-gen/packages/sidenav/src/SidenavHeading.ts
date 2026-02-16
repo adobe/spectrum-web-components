@@ -19,8 +19,8 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
-import sidenavItemStyles from './sidenav-item.css.js';
 import sidenavHeadingStyles from './sidenav-heading.css.js';
+import sidenavItemStyles from './sidenav-item.css.js';
 
 /**
  * @element sp-sidenav-heading

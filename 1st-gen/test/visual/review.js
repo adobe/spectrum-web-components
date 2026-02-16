@@ -9,14 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import fs from 'fs';
+import slugify from '@sindresorhus/slugify';
+import crypto from 'crypto';
 import fg from 'fast-glob';
-import { PNG } from 'pngjs';
+import fs from 'fs';
 import pixelmatch from 'pixelmatch';
+import { PNG } from 'pngjs';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import crypto from 'crypto';
-import slugify from '@sindresorhus/slugify';
 
 const { commit, system, branch } = yargs(hideBin(process.argv)).argv;
 

@@ -10,9 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-import standard from './web-test-runner.config.js';
 import { defaultReporter } from '@web/test-runner';
 import { junitReporter } from '@web/test-runner-junit-reporter';
+
+import standard from './web-test-runner.config.js';
 
 standard.reporters = [
     // Use the default reporter for console logging in the test job.

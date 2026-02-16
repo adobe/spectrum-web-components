@@ -18,16 +18,19 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
+import { spy } from 'sinon';
+
 import type { MenuItem } from '@spectrum-web-components/menu';
-import '@spectrum-web-components/menu/sp-menu-item.js';
 import { Picker } from '@spectrum-web-components/picker';
-import '@spectrum-web-components/picker/sync/sp-picker.js';
-import { spreadProps } from '../../../test/lit-helpers.js';
 import { Popover } from '@spectrum-web-components/popover';
 import { Tray } from '@spectrum-web-components/tray/src/Tray.js';
-import { spy } from 'sinon';
+
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/menu/sp-menu-divider.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/picker/sync/sp-picker.js';
+
+import { spreadProps } from '../../../test/lit-helpers.js';
 
 describe('Picker, responsive', () => {
     let el: Picker;

@@ -19,15 +19,18 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
-import '@spectrum-web-components/button/sp-button.js';
-import { Overlay } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/overlay/sp-overlay.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import { Slider, SliderHandle } from '@spectrum-web-components/slider';
-import '@spectrum-web-components/slider/sp-slider-handle.js';
-import '@spectrum-web-components/slider/sp-slider.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy, stub } from 'sinon';
+
+import { Overlay } from '@spectrum-web-components/overlay';
+import { Slider, SliderHandle } from '@spectrum-web-components/slider';
+
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/slider/sp-slider-handle.js';
+import '@spectrum-web-components/slider/sp-slider.js';
+
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
@@ -520,7 +523,7 @@ describe('Slider', () => {
         let frames = 0;
         let shouldCountFrames = true;
         const countFrames = (): void => {
-            if (!shouldCountFrames) return;
+            if (!shouldCountFrames) {return;}
             frames += 1;
             requestAnimationFrame(countFrames);
         };
@@ -1011,13 +1014,13 @@ describe('Slider', () => {
                 value="-25"
                 .normalization=${{
                     toNormalized: (value: number): number => {
-                        if (value === 0) return 0.5;
+                        if (value === 0) {return 0.5;}
                         return value < 0
                             ? 0.5 - (value / -50) * 0.5
                             : 0.5 + (value / 100) * 0.5;
                     },
                     fromNormalized: (value: number): number => {
-                        if (value === 0.5) return 0;
+                        if (value === 0.5) {return 0;}
                         return value < 0.5
                             ? (1 - value / 0.5) * -50
                             : ((value - 0.5) / 0.5) * 100;

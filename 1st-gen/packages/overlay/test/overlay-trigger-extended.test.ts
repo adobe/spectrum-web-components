@@ -18,13 +18,16 @@ import {
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
+
 import { Button } from '@spectrum-web-components/button';
+import { OverlayTrigger } from '@spectrum-web-components/overlay';
+import { Popover } from '@spectrum-web-components/popover';
+
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
-import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
-import { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/popover/sp-popover.js';
+
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     fixture,

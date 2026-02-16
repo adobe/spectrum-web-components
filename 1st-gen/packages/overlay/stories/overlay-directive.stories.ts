@@ -9,17 +9,27 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { cache } from 'lit/directives/cache.js';
+
 import {
     html,
     LitElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import { state } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
     OverlayContentTypes,
     OverlayOpenCloseDetail,
     Placement,
     TriggerInteractions,
 } from '@spectrum-web-components/overlay';
+import {
+    InsertionOptions,
+    trigger,
+} from '@spectrum-web-components/overlay/src/overlay-trigger-directive.js';
+import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
+
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/button/sp-button.js';
@@ -28,11 +38,6 @@ import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-open-in.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
-import {
-    InsertionOptions,
-    trigger,
-} from '@spectrum-web-components/overlay/src/overlay-trigger-directive.js';
-
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -49,12 +54,7 @@ import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
 import '../../../projects/story-decorator/src/types.js';
-
 import './overlay-story-components.js';
-import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import { state } from '@spectrum-web-components/base/src/decorators.js';
-import { cache } from 'lit/directives/cache.js';
 
 const storyStyles = html`
     <style>
@@ -174,7 +174,7 @@ const template = ({
         Click to open a popover.
     `;
     const renderPopover = (): TemplateResult => html`
-        <sp-popover placement="${ifDefined(placement)}" tip>
+        <sp-popover placement=${ifDefined(placement)} tip>
             <sp-dialog no-divider>
                 <div class="options-popover-content">
                     <sp-slider

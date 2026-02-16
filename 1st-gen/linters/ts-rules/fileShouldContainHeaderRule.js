@@ -22,7 +22,7 @@ var __extends =
                         d.__proto__ = b;
                     }) ||
                 function (d, b) {
-                    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+                    for (var p in b) {if (b.hasOwnProperty(p)) {d[p] = b[p];}}
                 };
             return extendStatics(d, b);
         };

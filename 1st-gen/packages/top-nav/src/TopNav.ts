@@ -10,6 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
+import { ResizeController } from '@lit-labs/observers/resize-controller.js';
+
 import {
     CSSResultArray,
     html,
@@ -23,12 +25,11 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import { ResizeController } from '@lit-labs/observers/resize-controller.js';
-import { TopNavItem } from './TopNavItem.js';
-
-import tabsSizes from '@spectrum-web-components/tabs/src/tabs-sizes.css.js';
 import tabStyles from '@spectrum-web-components/tabs/src/tabs.css.js';
 import { ScaledIndicator } from '@spectrum-web-components/tabs/src/Tabs.js';
+import tabsSizes from '@spectrum-web-components/tabs/src/tabs-sizes.css.js';
+
+import { TopNavItem } from './TopNavItem.js';
 
 const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
 
@@ -36,7 +37,7 @@ const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
  * @element sp-top-nav
  *
  * @slot - Nav Items to display as a group
- * @attr {Boolean} compact - The collection of tabs take up less space
+ * @attr {boolean} compact - The collection of tabs take up less space
  */
 
 export class TopNav extends SizedMixin(SpectrumElement) {
@@ -101,7 +102,7 @@ export class TopNav extends SizedMixin(SpectrumElement) {
     }
 
     protected set items(items: TopNavItem[]) {
-        if (items === this.items) return;
+        if (items === this.items) {return;}
         this._items.forEach((item) => {
             this.resizeController.unobserve(item);
         });

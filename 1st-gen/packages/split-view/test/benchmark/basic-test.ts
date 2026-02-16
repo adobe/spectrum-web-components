@@ -10,8 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/split-view/sp-split-view.js';
 import { html } from 'lit';
+
+import '@spectrum-web-components/split-view/sp-split-view.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`

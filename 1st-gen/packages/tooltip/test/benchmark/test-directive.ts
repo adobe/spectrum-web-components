@@ -10,9 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
 import { html } from 'lit';
+
+import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
+
+import '@spectrum-web-components/action-button/sp-action-button.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`

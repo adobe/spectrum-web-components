@@ -12,12 +12,13 @@
  * governing permissions and limitations under the License.
  */
 
-import path from 'path';
+import { stripIndent } from 'common-tags';
 import fs from 'fs';
 import { bundleAsync } from 'lightningcss';
-import { fileURLToPath } from 'url';
 import { createRequire } from 'node:module';
-import { stripIndent } from 'common-tags';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 import 'colors';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

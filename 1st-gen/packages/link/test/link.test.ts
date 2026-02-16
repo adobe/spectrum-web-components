@@ -10,11 +10,14 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/link/sp-link.js';
-import { Link } from '@spectrum-web-components/link';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { spy } from 'sinon';
+
+import { Link } from '@spectrum-web-components/link';
+
+import '@spectrum-web-components/link/sp-link.js';
+
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Link', () => {
     testForLitDevWarnings(

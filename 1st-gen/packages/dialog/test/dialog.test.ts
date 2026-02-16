@@ -17,18 +17,20 @@ import {
     html,
     nextFrame,
 } from '@open-wc/testing';
+import { spy } from 'sinon';
+
 import { TemplateResult } from '@spectrum-web-components/base';
+import { Dialog } from '@spectrum-web-components/dialog';
 
 import '@spectrum-web-components/dialog/sp-dialog.js';
-import { Dialog } from '@spectrum-web-components/dialog';
+
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import {
     alertError,
     dismissable,
     fullscreen,
     small,
 } from '../stories/dialog.stories.js';
-import { spy } from 'sinon';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Dialog', () => {
     testForLitDevWarnings(async () => await fixture<Dialog>(small()));

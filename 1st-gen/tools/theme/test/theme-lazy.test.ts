@@ -10,16 +10,18 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/theme/sp-theme.js';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+
 import { Theme, ThemeFragmentMap } from '@spectrum-web-components/theme';
-import coreStyles from '@spectrum-web-components/theme/src/theme.css.js';
-import lightStyles from '@spectrum-web-components/theme/src/theme-light.css.js';
-import lightestStyles from '@spectrum-web-components/theme/src/theme-lightest.css.js';
-import darkStyles from '@spectrum-web-components/theme/src/theme-dark.css.js';
-import darkestStyles from '@spectrum-web-components/theme/src/theme-darkest.css.js';
 import largeStyles from '@spectrum-web-components/theme/src/scale-large.css.js';
 import mediumStyles from '@spectrum-web-components/theme/src/scale-medium.css.js';
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import coreStyles from '@spectrum-web-components/theme/src/theme.css.js';
+import darkStyles from '@spectrum-web-components/theme/src/theme-dark.css.js';
+import darkestStyles from '@spectrum-web-components/theme/src/theme-darkest.css.js';
+import lightStyles from '@spectrum-web-components/theme/src/theme-light.css.js';
+import lightestStyles from '@spectrum-web-components/theme/src/theme-lightest.css.js';
+
+import '@spectrum-web-components/theme/sp-theme.js';
 
 type TestableThemeConstructor = {
     instances: Set<Theme>;

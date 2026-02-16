@@ -18,28 +18,31 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
+import { sendKeys } from '@web/test-runner-commands';
+import { spy } from 'sinon';
+
 import { ActionButton } from '@spectrum-web-components/action-button';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/action-group/sp-action-group.js';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import {
     LONGPRESS_INSTRUCTIONS,
     OverlayTrigger,
 } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
 import type { Popover } from '@spectrum-web-components/popover';
-import '@spectrum-web-components/popover/sp-popover.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
-import { sendKeys } from '@web/test-runner-commands';
-import { spy } from 'sinon';
+
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/action-group/sp-action-group.js';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+
 import { sendMouse } from '../../../test/plugins/browser.js';
-import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import {
     fixture,
     isOnTopLayer,
     sendTabKey,
 } from '../../../test/testing-helpers.js';
+import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import { longpress } from '../stories/overlay.stories.js';
 
 describe('Overlay Trigger - Longpress', () => {

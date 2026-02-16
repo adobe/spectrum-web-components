@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { Tray } from './src/Tray.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { Tray } from './src/Tray.js';
 
 defineElement('sp-tray', Tray);
 

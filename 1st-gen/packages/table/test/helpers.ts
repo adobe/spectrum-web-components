@@ -14,6 +14,7 @@ import {
     virtualizerRef,
 } from '@lit-labs/virtualizer/virtualize.js';
 import { fixture, html } from '@open-wc/testing';
+
 import { TemplateResult } from '@spectrum-web-components/base';
 import type { Table, TableBody } from '@spectrum-web-components/table';
 import type { Theme } from '@spectrum-web-components/theme';

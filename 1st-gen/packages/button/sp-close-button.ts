@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { CloseButton } from './src/CloseButton.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { CloseButton } from './src/CloseButton.js';
 
 defineElement('sp-close-button', CloseButton);
 

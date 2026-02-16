@@ -13,6 +13,7 @@
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/color-slider/sp-color-slider.js';
+
 import { gradient } from './images.js';
 export default {
     title: 'Color/Slider',

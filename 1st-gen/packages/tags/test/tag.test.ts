@@ -10,14 +10,16 @@
  * governing permissions and limitations under the License.
  */
 
-import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { html } from 'lit/static-html.js';
+import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { spy, stub } from 'sinon';
+
+import { ClearButton } from '@spectrum-web-components/button';
+import { Tag } from '@spectrum-web-components/tags';
 
 import '@spectrum-web-components/tags/sp-tag.js';
 import '@spectrum-web-components/tags/sp-tags.js';
-import { Tag } from '@spectrum-web-components/tags';
-import { ClearButton } from '@spectrum-web-components/button';
+
 import {
     backspaceEvent,
     deleteEvent,

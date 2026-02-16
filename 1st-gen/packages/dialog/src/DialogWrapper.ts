@@ -21,10 +21,10 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/underlay/sp-underlay.js';
-
 // Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
 // eslint-disable-next-line import/no-extraneous-dependencies
 import '@spectrum-web-components/dialog/sp-dialog.js';
+
 import { Dialog } from './Dialog.js';
 import { DialogBase } from './DialogBase.js';
 
@@ -137,7 +137,7 @@ export class DialogWrapper extends DialogBase {
                 ${this.hero
                     ? html`
                           <img
-                              src="${this.hero}"
+                              src=${this.hero}
                               slot="hero"
                               aria-hidden=${ifDefined(
                                   this.heroLabel ? undefined : 'true'

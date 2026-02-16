@@ -12,6 +12,7 @@
 
 import { expect } from '@open-wc/testing';
 import { stub } from 'sinon';
+
 import {
     isFirefox,
     isWebKit,

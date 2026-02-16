@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { ColorHandle } from './src/ColorHandle.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { ColorHandle } from './src/ColorHandle.js';
 
 defineElement('sp-color-handle', ColorHandle);
 

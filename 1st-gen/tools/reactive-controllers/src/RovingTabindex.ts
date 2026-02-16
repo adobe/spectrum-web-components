@@ -21,7 +21,7 @@ export class RovingTabindexController<
     T extends HTMLElement,
 > extends FocusGroupController<T> {
     protected override set focused(focused: boolean) {
-        if (focused === this.focused) return;
+        if (focused === this.focused) {return;}
         super.focused = focused;
         this.manageTabindexes();
     }
@@ -37,7 +37,7 @@ export class RovingTabindexController<
     override clearElementCache(offset = 0): void {
         cancelAnimationFrame(this.manageIndexesAnimationFrame);
         super.clearElementCache(offset);
-        if (!this.managed) return;
+        if (!this.managed) {return;}
 
         this.manageIndexesAnimationFrame = requestAnimationFrame(() =>
             this.manageTabindexes()
@@ -75,7 +75,7 @@ export class RovingTabindexController<
             const updatable = el as unknown as {
                 requestUpdate?: () => void;
             };
-            if (updatable.requestUpdate) updatable.requestUpdate();
+            if (updatable.requestUpdate) {updatable.requestUpdate();}
         });
     }
 

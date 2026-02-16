@@ -1,19 +1,30 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 /** @type { import('@storybook/web-components').Preview } */
-import '../stylesheets/swc.css';
-import './assets/preview.css';
-import DocumentTemplate from './DocumentTemplate.mdx';
-
 import { setCustomElementsManifest } from '@storybook/web-components';
 import {
-    setStorybookHelpersConfig,
     type Options,
+    setStorybookHelpersConfig,
 } from '@wc-toolkit/storybook-helpers';
+
 import customElements from './custom-elements.json';
+import { withFlexLayout, withStaticColorsDemo } from './decorators';
 import { withContext } from './decorators/contexts';
 import { withStaticColorPlayground } from './decorators/static-color-playground';
-
-import { withFlexLayout, withStaticColorsDemo } from './decorators';
+import DocumentTemplate from './DocumentTemplate.mdx';
 import { FontLoader } from './loaders/font-loader';
+
+import '../stylesheets/swc.css';
+import './assets/preview.css';
 
 const storybookHelperOptions: Options = {
     categoryOrder: [

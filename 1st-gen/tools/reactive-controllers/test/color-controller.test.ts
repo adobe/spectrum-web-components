@@ -10,9 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-import { expect } from '@open-wc/testing';
 import { ReactiveElement } from 'lit';
+import { expect } from '@open-wc/testing';
 import Color from 'colorjs.io';
+
 import {
     ColorController,
     ColorTypes,

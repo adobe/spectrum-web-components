@@ -9,11 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import '@spectrum-web-components/tabs/sp-tabs.js';
-import '@spectrum-web-components/tabs/sp-tab.js';
-import '@spectrum-web-components/tabs/sp-tab-panel.js';
-import { Tab, TabPanel, Tabs } from '@spectrum-web-components/tabs';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
+import { html } from 'lit/static-html.js';
 import {
     elementUpdated,
     expect,
@@ -21,8 +17,16 @@ import {
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
-import { html } from 'lit/static-html.js';
+import { sendKeys } from '@web/test-runner-commands';
+
 import { LitElement, TemplateResult } from '@spectrum-web-components/base';
+import { Tab, TabPanel, Tabs } from '@spectrum-web-components/tabs';
+
+import '@spectrum-web-components/tabs/sp-tabs.js';
+import '@spectrum-web-components/tabs/sp-tab.js';
+import '@spectrum-web-components/tabs/sp-tab-panel.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
+
 import {
     arrowDownEvent,
     arrowLeftEvent,
@@ -31,7 +35,6 @@ import {
     enterEvent,
     spaceEvent,
 } from '../../../test/testing-helpers.js';
-import { sendKeys } from '@web/test-runner-commands';
 
 const createTabs = async (): Promise<Tabs> => {
     const tabs = await fixture<Tabs>(html`
@@ -226,8 +229,8 @@ describe('Tabs', () => {
 
         const tab1 = tabs.querySelector('sp-tab[value=first]') as Tab;
         const tab2 = tabs.querySelector('sp-tab[value=second]') as Tab;
-        if (!(tab1 instanceof Tab)) throw new Error('tab1 not of type Tab');
-        if (!(tab2 instanceof Tab)) throw new Error('tab2 not of type Tab');
+        if (!(tab1 instanceof Tab)) {throw new Error('tab1 not of type Tab');}
+        if (!(tab2 instanceof Tab)) {throw new Error('tab2 not of type Tab');}
 
         expect(tabs.selected).to.equal('first');
         expect(tab1.selected).to.be.true;
@@ -241,9 +244,9 @@ describe('Tabs', () => {
         const tab2 = tabs.querySelector('sp-tab[value=second]') as Tab;
         const tab3 = tabs.querySelector('sp-tab[value=third]') as Tab;
 
-        if (!(tab1 instanceof Tab)) throw new Error('tab1 not of type Tab');
-        if (!(tab2 instanceof Tab)) throw new Error('tab2 not of type Tab');
-        if (!(tab3 instanceof Tab)) throw new Error('tab3 not of type Tab');
+        if (!(tab1 instanceof Tab)) {throw new Error('tab1 not of type Tab');}
+        if (!(tab2 instanceof Tab)) {throw new Error('tab2 not of type Tab');}
+        if (!(tab3 instanceof Tab)) {throw new Error('tab3 not of type Tab');}
 
         expect(tabs.selected).to.equal('first');
         expect(tab1.selected, 'first: 1, selected').to.be.true;
@@ -274,9 +277,9 @@ describe('Tabs', () => {
         const tab2 = tabs.querySelector('sp-tab[value=second]') as Tab;
         const tab3 = tabs.querySelector('sp-tab[value=third]') as Tab;
 
-        if (!(tab1 instanceof Tab)) throw new Error('tab1 not of type Tab');
-        if (!(tab2 instanceof Tab)) throw new Error('tab2 not of type Tab');
-        if (!(tab3 instanceof Tab)) throw new Error('tab3 not of type Tab');
+        if (!(tab1 instanceof Tab)) {throw new Error('tab1 not of type Tab');}
+        if (!(tab2 instanceof Tab)) {throw new Error('tab2 not of type Tab');}
+        if (!(tab3 instanceof Tab)) {throw new Error('tab3 not of type Tab');}
 
         tab2.click();
         await elementUpdated(tabs);

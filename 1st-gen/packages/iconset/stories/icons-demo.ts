@@ -9,7 +9,6 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { IconsetAddedDetail } from '@spectrum-web-components/iconset';
 import {
     css,
     CSSResultGroup,
@@ -24,19 +23,20 @@ import {
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import { Search } from '@spectrum-web-components/search';
-import '@spectrum-web-components/search/sp-search.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import bodyStyles from '@spectrum-web-components/styles/body.js';
-import '@spectrum-web-components/icon/sp-icon.js';
-import '@spectrum-web-components/help-text/sp-help-text.js';
-
-import iconsList from './iconsList.json' with { type: 'json' };
-
+import { IconsetAddedDetail } from '@spectrum-web-components/iconset';
 import {
     SystemResolutionController,
     systemResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/SystemContextResolution.js';
+import { Search } from '@spectrum-web-components/search';
+import bodyStyles from '@spectrum-web-components/styles/body.js';
+
+import '@spectrum-web-components/search/sp-search.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/icon/sp-icon.js';
+import '@spectrum-web-components/help-text/sp-help-text.js';
+
+import iconsList from './iconsList.json' with { type: 'json' };
 
 @customElement('delayed-ready')
 export class DelayedReady extends SpectrumElement {
@@ -226,7 +226,7 @@ export class IconsDemo extends SpectrumElement {
     }
 
     private shouldCopy(tag: string): void {
-        if (!this.package) return;
+        if (!this.package) {return;}
         const conditionedTag = tag.slice(1, tag.length - 1);
         const importURL = `import '@spectrum-web-components/${this.package}/icons/${conditionedTag}.js';`;
         this.dispatchEvent(

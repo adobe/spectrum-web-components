@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { TemplateResult } from '@spectrum-web-components/base';
+
 import { makeOverBackground, Properties, renderButtonSet } from './index.js';
 import { args, argTypes } from './index.js';
 

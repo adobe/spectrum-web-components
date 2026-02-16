@@ -10,11 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
+import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
 import {
     isAndroid,
     isIOS,
 } from '@spectrum-web-components/shared/src/platform.js';
-import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 import { noop } from './AbstractOverlay.js';
@@ -57,16 +57,16 @@ export class LongpressController extends InteractionController {
     }
 
     handlePointerdown(event: PointerEvent): void {
-        if (!this.target) return;
-        if (event.button !== 0) return;
+        if (!this.target) {return;}
+        if (event.button !== 0) {return;}
         this.longpressState = 'potential';
         document.addEventListener('pointerup', this.handlePointerup);
         document.addEventListener('pointercancel', this.handlePointerup);
         // Only dispatch longpress event if the trigger element isn't doing it for us.
         const triggerHandlesLongpress = 'holdAffordance' in this.target;
-        if (triggerHandlesLongpress) return;
+        if (triggerHandlesLongpress) {return;}
         this.timeout = setTimeout(() => {
-            if (!this.target) return;
+            if (!this.target) {return;}
             this.target.dispatchEvent(
                 new CustomEvent<LongpressEvent>('longpress', {
                     bubbles: true,
@@ -81,7 +81,7 @@ export class LongpressController extends InteractionController {
 
     private handlePointerup = (): void => {
         clearTimeout(this.timeout);
-        if (!this.target) return;
+        if (!this.target) {return;}
         // When triggered by the pointer, the last of `opened`
         // or `pointerup` should move the `longpressState` to
         // `null` so that the earlier event can void the "light

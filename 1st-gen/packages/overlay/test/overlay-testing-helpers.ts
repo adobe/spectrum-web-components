@@ -11,6 +11,7 @@
  */
 
 import { oneEvent, waitUntil } from '@open-wc/testing';
+
 import { Overlay } from '../src/Overlay';
 
 // make sure overlay state is about to change, and wait until overlay state changes to 'opened'

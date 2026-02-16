@@ -11,6 +11,7 @@
  */
 
 import { NumberFormatter, NumberParser } from '@internationalized/number';
+
 import {
     CSSResultArray,
     html,
@@ -23,20 +24,21 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import {
     LanguageResolutionController,
     languageResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
+import { isAndroid, isIOS, isIPhone } from '@spectrum-web-components/shared';
+import { TextfieldBase } from '@spectrum-web-components/textfield';
 
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron50.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron75.js';
 import '@spectrum-web-components/infield-button/sp-infield-button.js';
-import { TextfieldBase } from '@spectrum-web-components/textfield';
+
 import styles from './number-field.css.js';
-import { isAndroid, isIOS, isIPhone } from '@spectrum-web-components/shared';
 
 export const FRAMES_PER_CHANGE = 5;
 // Debounce duration for inserting a `change` event after a batch of `wheel` originating `input` events.
@@ -214,7 +216,7 @@ export class NumberField extends TextfieldBase {
     }
 
     public get formattedValue(): string {
-        if (isNaN(this.value)) return '';
+        if (isNaN(this.value)) {return '';}
         return (
             this.numberFormatter.format(this.value) +
             (this.focused ? '' : this._forcedUnit)
@@ -266,7 +268,7 @@ export class NumberField extends TextfieldBase {
                     if (!hasReplacedDecimal) {
                         valueChars[index] = replacementDecimal;
                         hasReplacedDecimal = true;
-                    } else valueChars[index] = '';
+                    } else {valueChars[index] = '';}
                 }
             }
             normalizedValue = valueChars.join('');
@@ -392,7 +394,7 @@ export class NumberField extends TextfieldBase {
     }
 
     private handleKeydown(event: KeyboardEvent): void {
-        if (this.isComposing) return;
+        if (this.isComposing) {return;}
         switch (event.code) {
             case 'ArrowUp':
                 event.preventDefault();
@@ -522,7 +524,7 @@ export class NumberField extends TextfieldBase {
             );
         }
         if (event.data && this.decimalsChars.has(event.data))
-            this.isIntentDecimal = true;
+            {this.isIntentDecimal = true;}
 
         const { value: originalValue, selectionStart } = this.inputElement;
         const value = originalValue
@@ -834,11 +836,11 @@ export class NumberField extends TextfieldBase {
             let inputMode = 'numeric';
             /* c8 ignore next 5 */
             // iPhone doesn't have a minus sign in either numeric or decimal.
-            if (isIPhone() && !hasOnlyPositives) inputMode = 'text';
-            else if (isIOS() && hasDecimals) inputMode = 'decimal';
+            if (isIPhone() && !hasOnlyPositives) {inputMode = 'text';}
+            else if (isIOS() && hasDecimals) {inputMode = 'decimal';}
             // Android numeric has both a decimal point and minus key. Decimal does not have a minus key.
             else if (isAndroid() && hasDecimals && hasOnlyPositives)
-                inputMode = 'decimal';
+                {inputMode = 'decimal';}
 
             this.inputElement.inputMode = inputMode;
         }

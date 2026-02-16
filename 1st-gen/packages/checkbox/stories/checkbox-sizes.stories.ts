@@ -40,8 +40,8 @@ const checkbox = ({
             size=${size}
             ?checked=${checked}
             ?indeterminate=${indeterminate}
-            @click="${onClick}"
-            @change="${onChange}"
+            @click=${onClick}
+            @change=${onChange}
         >
             Checkbox
         </sp-checkbox>

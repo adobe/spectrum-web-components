@@ -115,7 +115,7 @@ export const Download = (): TemplateResult => {
     });
     return html`
         This is a
-        <sp-link download="somefile.txt" href="${URL.createObjectURL(blob)}">
+        <sp-link download="somefile.txt" href=${URL.createObjectURL(blob)}>
             downloadable file
         </sp-link>
         for you to click on.

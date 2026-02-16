@@ -15,6 +15,7 @@ import {
     queryAssignedNodes,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { Slider } from '@spectrum-web-components/slider';
+
 import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
 import '@spectrum-web-components/overlay/sync/overlay-trigger.js';

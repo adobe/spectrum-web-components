@@ -17,25 +17,26 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
+import {
     ifDefined,
     StyleInfo,
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
-import {
-    property,
-    query,
-} from '@spectrum-web-components/base/src/decorators.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import type { ColorHandle } from '@spectrum-web-components/color-handle';
-import '@spectrum-web-components/color-handle/sp-color-handle.js';
+import opacityCheckerBoardStyles from '@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.css.js';
 import {
     ColorController,
     ColorTypes,
 } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
+import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
-import opacityCheckerBoardStyles from '@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.css.js';
+import '@spectrum-web-components/color-handle/sp-color-handle.js';
+
 import styles from './color-slider.css.js';
 
 /**

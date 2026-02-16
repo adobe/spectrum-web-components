@@ -14,8 +14,8 @@ import {
     LitElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-
 import type { Menu, MenuItem } from '@spectrum-web-components/menu';
+
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';

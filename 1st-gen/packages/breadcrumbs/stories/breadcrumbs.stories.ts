@@ -10,10 +10,15 @@
  * governing permissions and limitations under the License.
  */
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import { LitElement } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
+import '@spectrum-web-components/button/sp-button.js';
+
+import { spreadProps } from '../../../test/lit-helpers.js';
+import { argTypes } from './args.js';
 import {
     getBreadcrumbs,
     getBreadcrumbsWithLinks,
@@ -21,10 +26,6 @@ import {
     StoryArgs,
     Template,
 } from './template.js';
-import { argTypes } from './args.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import { spreadProps } from '../../../test/lit-helpers.js';
-import '@spectrum-web-components/button/sp-button.js';
 
 export default {
     title: 'Breadcrumbs',

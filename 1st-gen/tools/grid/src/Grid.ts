@@ -10,6 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+import { grid } from '@lit-labs/virtualizer/layouts/grid.js';
+import { LitVirtualizer } from '@lit-labs/virtualizer/LitVirtualizer.js';
+
 import {
     adoptStyles,
     CSSResultArray,
@@ -21,8 +24,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { LitVirtualizer } from '@lit-labs/virtualizer/LitVirtualizer.js';
-import { grid } from '@lit-labs/virtualizer/layouts/grid.js';
+
 import styles from './grid.css.js';
 import { GridController } from './GridController.js';
 
