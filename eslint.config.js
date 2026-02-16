@@ -183,8 +183,15 @@ export default defineConfig([
     ignores: [
       '**/node_modules/**',
       '**/dist/**',
+      '**/storybook-static/**',
       '**/coverage/**',
       '**/.wireit/**',
+      '**/out/**',
+      '**/out-tsc/**',
+      '**/_site/**',
+      '**/.tmp/**',
+      '**/playwright-report/**',
+      '**/test-results/**',
       '**/*.d.ts',
       '1st-gen/packages/icons/src/icons-*.svg.ts',
       // Build outputs

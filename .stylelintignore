@@ -1,4 +1,14 @@
 **/node_modules
+**/dist
+**/storybook-static
+**/coverage
+**/.wireit
+**/out
+**/out-tsc
+**/_site
+**/.tmp
+**/playwright-report
+**/test-results
 **/task
 
 # Ignore non-CSS files (but not directories starting with .)
