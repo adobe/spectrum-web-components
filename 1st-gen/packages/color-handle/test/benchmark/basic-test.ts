@@ -17,5 +17,5 @@ import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-color-handle open></sp-color-handle>
+  <sp-color-handle open></sp-color-handle>
 `);

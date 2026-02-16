@@ -16,7 +16,7 @@ import { Tag } from './src/Tag.js';
 defineElement('sp-tag', Tag);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-tag': Tag;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-tag': Tag;
+  }
 }

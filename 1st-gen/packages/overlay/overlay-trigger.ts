@@ -16,7 +16,7 @@ import { OverlayTrigger } from './src/OverlayTrigger.js';
 defineElement('overlay-trigger', OverlayTrigger);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'overlay-trigger': OverlayTrigger;
-    }
+  interface HTMLElementTagNameMap {
+    'overlay-trigger': OverlayTrigger;
+  }
 }

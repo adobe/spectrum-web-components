@@ -17,7 +17,7 @@ import { Meter } from './src/Meter.js';
 defineElement('sp-meter', Meter);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-meter': Meter;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-meter': Meter;
+  }
 }

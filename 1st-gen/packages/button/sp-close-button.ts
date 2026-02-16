@@ -17,7 +17,7 @@ import { CloseButton } from './src/CloseButton.js';
 defineElement('sp-close-button', CloseButton);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-close-button': CloseButton;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-close-button': CloseButton;
+  }
 }

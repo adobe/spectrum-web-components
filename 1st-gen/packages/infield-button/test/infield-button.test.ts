@@ -20,21 +20,21 @@ import { args } from '../stories/index.js';
 import { Default, stacked } from '../stories/infield-button.stories.js';
 
 describe('InfieldButton', () => {
-    testForLitDevWarnings(
-        async () => await fixture<InfieldButton>(Default(args))
-    );
-    it('loads default infield-button accessibly', async () => {
-        const el = await fixture<InfieldButton>(Default(args));
+  testForLitDevWarnings(
+    async () => await fixture<InfieldButton>(Default(args))
+  );
+  it('loads default infield-button accessibly', async () => {
+    const el = await fixture<InfieldButton>(Default(args));
 
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        await expect(el).to.be.accessible();
-    });
-    it('loads stacked infield-button accessibly', async () => {
-        const el = await fixture<InfieldButton>(stacked());
+    await expect(el).to.be.accessible();
+  });
+  it('loads stacked infield-button accessibly', async () => {
+    const el = await fixture<InfieldButton>(stacked());
 
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        await expect(el).to.be.accessible();
-    });
+    await expect(el).to.be.accessible();
+  });
 });

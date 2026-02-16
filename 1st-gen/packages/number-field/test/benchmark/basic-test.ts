@@ -17,5 +17,5 @@ import '@spectrum-web-components/number-field/sp-number-field.js';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-number-field></sp-number-field>
+  <sp-number-field></sp-number-field>
 `);

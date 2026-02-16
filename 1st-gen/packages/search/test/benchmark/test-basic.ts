@@ -17,11 +17,11 @@ import '@spectrum-web-components/search/sp-search.js';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-search
-        placeholder="Search millions of images"
-        label="Search for an image"
-        @submit=${(event: Event) => {
-            event.preventDefault();
-        }}
-    ></sp-search>
+  <sp-search
+    placeholder="Search millions of images"
+    label="Search for an image"
+    @submit=${(event: Event) => {
+      event.preventDefault();
+    }}
+  ></sp-search>
 `);

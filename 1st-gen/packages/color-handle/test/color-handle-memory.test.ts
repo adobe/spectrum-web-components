@@ -17,5 +17,5 @@ import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
 testForMemoryLeaks(html`
-    <sp-color-handle></sp-color-handle>
+  <sp-color-handle></sp-color-handle>
 `);

@@ -16,7 +16,7 @@ import { TableRow } from './src/TableRow.js';
 defineElement('sp-table-row', TableRow);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-table-row': TableRow;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-table-row': TableRow;
+  }
 }

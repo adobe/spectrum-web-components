@@ -16,7 +16,7 @@ import { Avatar } from './src/Avatar.js';
 defineElement('sp-avatar', Avatar);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-avatar': Avatar;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-avatar': Avatar;
+  }
 }

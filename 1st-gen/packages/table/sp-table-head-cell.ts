@@ -16,7 +16,7 @@ import { TableHeadCell } from './src/TableHeadCell.js';
 defineElement('sp-table-head-cell', TableHeadCell);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-table-head-cell': TableHeadCell;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-table-head-cell': TableHeadCell;
+  }
 }

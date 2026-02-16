@@ -17,7 +17,7 @@ import { FieldLabel } from './src/FieldLabel.js';
 defineElement('sp-field-label', FieldLabel);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-field-label': FieldLabel;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-field-label': FieldLabel;
+  }
 }

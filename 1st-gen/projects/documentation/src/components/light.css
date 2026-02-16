@@ -10,5 +10,5 @@
  * governing permissions and limitations under the License.
  */
 
-@import url('@spectrum-web-components/styles/tokens/light-vars.css');
-@import url('prismjs/themes/prism.css');
+@import url("@spectrum-web-components/styles/tokens/light-vars.css");
+@import url("prismjs/themes/prism.css");

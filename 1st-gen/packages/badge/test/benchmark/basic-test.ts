@@ -18,8 +18,8 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.j
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-badge>
-        <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
-        Icon and label
-    </sp-badge>
+  <sp-badge>
+    <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
+    Icon and label
+  </sp-badge>
 `);

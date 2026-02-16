@@ -18,15 +18,15 @@
  */
 
 .fill::before {
-    background: var(--spectrum-picked-color, transparent);
+  background: var(--spectrum-picked-color, transparent);
 }
 
 :host([border="none"]) .fill::before {
-    background: var(--spectrum-picked-color, transparent);
+  background: var(--spectrum-picked-color, transparent);
 }
 
 :host .is-image .fill::before {
-    background: #0000;
+  background: #0000;
 }
 
 /**

@@ -16,7 +16,7 @@ import { TableCheckboxCell } from './src/TableCheckboxCell.js';
 defineElement('sp-table-checkbox-cell', TableCheckboxCell);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-table-checkbox-cell': TableCheckboxCell;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-table-checkbox-cell': TableCheckboxCell;
+  }
 }

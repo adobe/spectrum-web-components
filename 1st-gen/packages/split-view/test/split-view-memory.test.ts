@@ -17,5 +17,5 @@ import '@spectrum-web-components/split-view/sp-split-view.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
 testForMemoryLeaks(html`
-    <sp-split-view></sp-split-view>
+  <sp-split-view></sp-split-view>
 `);

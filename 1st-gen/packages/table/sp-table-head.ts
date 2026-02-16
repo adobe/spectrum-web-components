@@ -16,7 +16,7 @@ import { TableHead } from './src/TableHead.js';
 defineElement('sp-table-head', TableHead);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-table-head': TableHead;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-table-head': TableHead;
+  }
 }

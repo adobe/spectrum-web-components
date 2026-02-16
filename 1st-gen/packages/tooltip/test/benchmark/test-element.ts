@@ -19,8 +19,8 @@ import '@spectrum-web-components/overlay/sp-overlay.js';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-action-button id="button">I'm a button...</sp-action-button>
-    <sp-overlay trigger="button@hover" type="hint">
-        <sp-tooltip>Tip me!</sp-tooltip>
-    </sp-overlay>
+  <sp-action-button id="button">I'm a button...</sp-action-button>
+  <sp-overlay trigger="button@hover" type="hint">
+    <sp-tooltip>Tip me!</sp-tooltip>
+  </sp-overlay>
 `);

@@ -16,7 +16,7 @@ import { Coachmark } from './src/Coachmark.js';
 defineElement('sp-coachmark', Coachmark);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-coachmark': Coachmark;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-coachmark': Coachmark;
+  }
 }

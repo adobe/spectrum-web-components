@@ -15,8 +15,8 @@ import { addons } from '@storybook/manager-api';
 import customTheme from './theme.js';
 
 addons.setConfig({
-    theme: customTheme,
-    sidebar: {
-        showRoots: false,
-    },
+  theme: customTheme,
+  sidebar: {
+    showRoots: false,
+  },
 });

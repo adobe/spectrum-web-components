@@ -16,7 +16,7 @@ import { MenuGroup } from './src/MenuGroup.js';
 defineElement('sp-menu-group', MenuGroup);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-menu-group': MenuGroup;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-menu-group': MenuGroup;
+  }
 }

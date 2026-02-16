@@ -17,5 +17,5 @@ import '@spectrum-web-components/combobox/sp-combobox.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
 testForMemoryLeaks(html`
-    <sp-combobox></sp-combobox>
+  <sp-combobox></sp-combobox>
 `);

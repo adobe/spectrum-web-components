@@ -16,5 +16,5 @@ import '@spectrum-web-components/contextual-help/sp-contextual-help.js';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-contextual-help></sp-contextual-help>
+  <sp-contextual-help></sp-contextual-help>
 `);

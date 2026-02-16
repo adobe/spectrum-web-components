@@ -17,5 +17,5 @@ import '@spectrum-web-components/asset/sp-asset.js';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-asset open></sp-asset>
+  <sp-asset open></sp-asset>
 `);

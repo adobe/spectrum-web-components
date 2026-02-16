@@ -17,5 +17,5 @@ import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
 testForMemoryLeaks(html`
-    <sp-coach-indicator></sp-coach-indicator>
+  <sp-coach-indicator></sp-coach-indicator>
 `);

@@ -16,7 +16,7 @@ import { Toast } from './src/Toast.js';
 defineElement('sp-toast', Toast);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-toast': Toast;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-toast': Toast;
+  }
 }

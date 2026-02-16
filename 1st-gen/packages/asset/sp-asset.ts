@@ -17,7 +17,7 @@ import { Asset } from './src/Asset.js';
 defineElement('sp-asset', Asset);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-asset': Asset;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-asset': Asset;
+  }
 }

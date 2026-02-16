@@ -10,13 +10,13 @@
  * governing permissions and limitations under the License.
  */
 import {
-    CSSResultArray,
-    html,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import {
-    AlertBannerBase,
-    AlertBannerVariants,
+  AlertBannerBase,
+  AlertBannerVariants,
 } from '@spectrum-web-components/core/components/alert-banner';
 
 import '@spectrum-web-components/button/sp-close-button.js';
@@ -36,48 +36,45 @@ export type { AlertBannerVariants };
  * @fires close - Announces the alert banner has been closed
  */
 export class AlertBanner extends AlertBannerBase {
-    public static override get styles(): CSSResultArray {
-        return [styles];
-    }
+  public static override get styles(): CSSResultArray {
+    return [styles];
+  }
 
-    protected override renderIcon(variant: string): TemplateResult {
-        switch (variant) {
-            case 'info':
-                return html`
-                    <sp-icon-info
-                        label="Information"
-                        class="type"
-                    ></sp-icon-info>
-                `;
-            case 'negative':
-                return html`
-                    <sp-icon-alert label="Error" class="type"></sp-icon-alert>
-                `;
-            default:
-                return html``;
-        }
-    }
-
-    protected override render(): TemplateResult {
+  protected override renderIcon(variant: string): TemplateResult {
+    switch (variant) {
+      case 'info':
         return html`
-            <div class="body" role="alert">
-                <div class="content">
-                    ${this.renderIcon(this.variant)}
-                    <div class="text"><slot></slot></div>
-                </div>
-                <slot name="action"></slot>
-            </div>
-            <div class="end">
-                ${this.dismissible
-                    ? html`
-                          <sp-close-button
-                              @click=${this.shouldClose}
-                              label="Close"
-                              static-color="white"
-                          ></sp-close-button>
-                      `
-                    : html``}
-            </div>
+          <sp-icon-info label="Information" class="type"></sp-icon-info>
         `;
+      case 'negative':
+        return html`
+          <sp-icon-alert label="Error" class="type"></sp-icon-alert>
+        `;
+      default:
+        return html``;
     }
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <div class="body" role="alert">
+        <div class="content">
+          ${this.renderIcon(this.variant)}
+          <div class="text"><slot></slot></div>
+        </div>
+        <slot name="action"></slot>
+      </div>
+      <div class="end">
+        ${this.dismissible
+          ? html`
+              <sp-close-button
+                @click=${this.shouldClose}
+                label="Close"
+                static-color="white"
+              ></sp-close-button>
+            `
+          : html``}
+      </div>
+    `;
+  }
 }

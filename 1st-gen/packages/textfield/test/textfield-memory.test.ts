@@ -17,5 +17,5 @@ import '@spectrum-web-components/textfield/sp-textfield.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
 testForMemoryLeaks(html`
-    <sp-textfield></sp-textfield>
+  <sp-textfield></sp-textfield>
 `);

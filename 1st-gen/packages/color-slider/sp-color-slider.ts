@@ -17,7 +17,7 @@ import { ColorSlider } from './src/ColorSlider.js';
 defineElement('sp-color-slider', ColorSlider);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-color-slider': ColorSlider;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-color-slider': ColorSlider;
+  }
 }

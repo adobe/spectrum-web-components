@@ -16,5 +16,5 @@ import '@spectrum-web-components/infield-button/sp-infield-button.js';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-infield-button></sp-infield-button>
+  <sp-infield-button></sp-infield-button>
 `);

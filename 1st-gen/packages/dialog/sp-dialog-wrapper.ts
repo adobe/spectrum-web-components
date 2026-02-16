@@ -16,7 +16,7 @@ import { DialogWrapper } from './src/DialogWrapper.js';
 defineElement('sp-dialog-wrapper', DialogWrapper);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-dialog-wrapper': DialogWrapper;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-dialog-wrapper': DialogWrapper;
+  }
 }

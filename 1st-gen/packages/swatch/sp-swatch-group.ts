@@ -16,7 +16,7 @@ import { SwatchGroup } from './src/SwatchGroup.js';
 defineElement('sp-swatch-group', SwatchGroup);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-swatch-group': SwatchGroup;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-swatch-group': SwatchGroup;
+  }
 }

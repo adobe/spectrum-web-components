@@ -16,7 +16,7 @@ import { Underlay } from './src/Underlay.js';
 defineElement('sp-underlay', Underlay);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-underlay': Underlay;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-underlay': Underlay;
+  }
 }

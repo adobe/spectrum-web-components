@@ -15,12 +15,12 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
 
 import type { Properties } from './index.js';
 import {
-    renderButtonSet,
-    renderLink,
-    renderLinkWithTarget,
-    renderMinWidthButton,
-    renderWithIcon,
-    renderWithIconOnly,
+  renderButtonSet,
+  renderLink,
+  renderLinkWithTarget,
+  renderMinWidthButton,
+  renderWithIcon,
+  renderWithIconOnly,
 } from './index.js';
 import { args, argTypes } from './index.js';
 
@@ -28,27 +28,27 @@ const variant = 'negative';
 const treatment = 'fill';
 
 export default {
-    component: 'sp-button',
-    title: 'Button/Negative/Fill',
-    args: {
-        ...args,
-        variant,
-        treatment,
-    },
-    argTypes,
+  component: 'sp-button',
+  title: 'Button/Negative/Fill',
+  args: {
+    ...args,
+    variant,
+    treatment,
+  },
+  argTypes,
 };
 
 export const Default = (props: Properties): TemplateResult =>
-    renderButtonSet(props);
+  renderButtonSet(props);
 
 export const withIcon = (props: Properties): TemplateResult =>
-    renderWithIcon(props);
+  renderWithIcon(props);
 
 export const withIconOnly = (props: Properties): TemplateResult =>
-    renderWithIconOnly(props);
+  renderWithIconOnly(props);
 
 export const minWidthButton = (props: Properties): TemplateResult =>
-    renderMinWidthButton(props);
+  renderMinWidthButton(props);
 
 minWidthButton.storyName = 'min-width';
 
@@ -57,6 +57,6 @@ export const link = (props: Properties): TemplateResult => renderLink(props);
 link.storyName = 'href';
 
 export const linkWithTarget = (props: Properties): TemplateResult =>
-    renderLinkWithTarget(props);
+  renderLinkWithTarget(props);
 
 linkWithTarget.storyName = 'href with target="_blank"';

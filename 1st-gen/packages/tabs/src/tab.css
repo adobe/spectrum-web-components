@@ -13,59 +13,59 @@
 @import url("./spectrum-tab.css");
 
 :host {
-    scroll-margin-inline: var(--mod-tabs-item-horizontal-spacing, var(--spectrum-tabs-item-horizontal-spacing));
+  scroll-margin-inline: var(--mod-tabs-item-horizontal-spacing, var(--spectrum-tabs-item-horizontal-spacing));
 }
 
 :host([disabled]) {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 #item-label[hidden] {
-    display: none;
+  display: none;
 }
 
 @media (forced-colors: active) {
-    :host::before {
-        background-color: ButtonFace;
-    }
+  :host::before {
+    background-color: ButtonFace;
+  }
 
-    :host ::slotted([slot="icon"]) {
-        position: relative;
-        z-index: 1;
-        color: inherit;
-    }
+  :host ::slotted([slot="icon"]) {
+    position: relative;
+    z-index: 1;
+    color: inherit;
+  }
 
-    #item-label {
-        position: relative;
-        z-index: 1;
-    }
+  #item-label {
+    position: relative;
+    z-index: 1;
+  }
 
-    :host([selected]) {
-        color: HighlightText;
-    }
+  :host([selected]) {
+    color: HighlightText;
+  }
 
-    :host([selected]) ::slotted([slot="icon"]) {
-        color: HighlightText;
-    }
+  :host([selected]) ::slotted([slot="icon"]) {
+    color: HighlightText;
+  }
 
-    :host([selected]) #item-label {
-        color: HighlightText;
-    }
+  :host([selected]) #item-label {
+    color: HighlightText;
+  }
 }
 
 :host([vertical]) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
 }
 
 :host([vertical]) slot[name="icon"] + #item-label {
-    margin-block: calc(var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) / 2) calc(var(--mod-tabs-bottom-to-text, var(--spectrum-tabs-bottom-to-text)) / 2);
-    margin-inline-start: 0;
+  margin-block: calc(var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) / 2) calc(var(--mod-tabs-bottom-to-text, var(--spectrum-tabs-bottom-to-text)) / 2);
+  margin-inline-start: 0;
 }
 
 :host([vertical]) ::slotted([slot="icon"]) {
-    margin-block-start: calc(var(--mod-tabs-top-to-icon, var(--spectrum-tabs-top-to-icon)) / 2);
+  margin-block-start: calc(var(--mod-tabs-top-to-icon, var(--spectrum-tabs-top-to-icon)) / 2);
 }

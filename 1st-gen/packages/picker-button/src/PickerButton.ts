@@ -10,11 +10,11 @@
  * governing permissions and limitations under the License.
  */
 import {
-    CSSResultArray,
-    DefaultElementSize,
-    html,
-    SizedMixin,
-    TemplateResult,
+  CSSResultArray,
+  DefaultElementSize,
+  html,
+  SizedMixin,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { classMap } from '@spectrum-web-components/base/src/directives.js';
@@ -27,56 +27,56 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import styles from './picker-button.css.js';
 
 const chevronClass = {
-    s: 'spectrum-UIIcon-ChevronDown75',
-    m: 'spectrum-UIIcon-ChevronDown100',
-    l: 'spectrum-UIIcon-ChevronDown200',
-    xl: 'spectrum-UIIcon-ChevronDown300',
+  s: 'spectrum-UIIcon-ChevronDown75',
+  m: 'spectrum-UIIcon-ChevronDown100',
+  l: 'spectrum-UIIcon-ChevronDown200',
+  xl: 'spectrum-UIIcon-ChevronDown300',
 };
 
 /**
  * @element sp-picker-button
  */
 export class PickerButton extends SizedMixin(
-    ObserveSlotPresence(ButtonBase, '[slot="label"]')
+  ObserveSlotPresence(ButtonBase, '[slot="label"]')
 ) {
-    public static override get styles(): CSSResultArray {
-        return [styles, chevronStyles];
-    }
+  public static override get styles(): CSSResultArray {
+    return [styles, chevronStyles];
+  }
 
-    @property({ type: Boolean, reflect: true })
-    invalid = false;
+  @property({ type: Boolean, reflect: true })
+  invalid = false;
 
-    @property({ reflect: true })
-    position: 'left' | 'right' = 'right';
+  @property({ reflect: true })
+  position: 'left' | 'right' = 'right';
 
-    protected get hasText(): boolean {
-        return this.slotContentIsPresent;
-    }
+  protected get hasText(): boolean {
+    return this.slotContentIsPresent;
+  }
 
-    protected override render(): TemplateResult {
-        const rootClasses = {
-            root: true,
-            uiicononly: !this.hasText,
-            textuiicon: this.hasText,
-        };
-        return html`
-            <div class=${classMap(rootClasses)}>
-                <div class="spectrum-PickerButton-fill">
-                    <span
-                        class="spectrum-PickerButton-label is-placeholder"
-                        ?hidden=${!this.hasText}
-                    >
-                        <slot name="label"></slot>
-                    </span>
-                    <slot name="icon">
-                        <sp-icon-chevron100
-                            class="spectrum-PickerButton-icon spectrum-Icon ${chevronClass[
-                                this.size as DefaultElementSize
-                            ]}"
-                        ></sp-icon-chevron100>
-                    </slot>
-                </div>
-            </div>
-        `;
-    }
+  protected override render(): TemplateResult {
+    const rootClasses = {
+      root: true,
+      uiicononly: !this.hasText,
+      textuiicon: this.hasText,
+    };
+    return html`
+      <div class=${classMap(rootClasses)}>
+        <div class="spectrum-PickerButton-fill">
+          <span
+            class="spectrum-PickerButton-label is-placeholder"
+            ?hidden=${!this.hasText}
+          >
+            <slot name="label"></slot>
+          </span>
+          <slot name="icon">
+            <sp-icon-chevron100
+              class="spectrum-PickerButton-icon spectrum-Icon ${chevronClass[
+                this.size as DefaultElementSize
+              ]}"
+            ></sp-icon-chevron100>
+          </slot>
+        </div>
+      </div>
+    `;
+  }
 }

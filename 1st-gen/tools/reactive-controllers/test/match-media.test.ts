@@ -20,23 +20,23 @@ class TestEl extends LitElement {}
 customElements.define('test-match-media-el', TestEl);
 
 describe('Match Media', () => {
-    it('responds to media changes', async () => {
-        const el = await fixture(html`
-            <test-match-media-el></test-match-media-el>
-        `);
-        const controller = new MatchMediaController(
-            el as LitElement & { shadowRoot: ShadowRoot },
-            '(min-width: 500px)'
-        );
-        // Allow Controller to initialize
-        await nextFrame();
-        await nextFrame();
-        expect(controller.matches).to.be.true;
+  it('responds to media changes', async () => {
+    const el = await fixture(html`
+      <test-match-media-el></test-match-media-el>
+    `);
+    const controller = new MatchMediaController(
+      el as LitElement & { shadowRoot: ShadowRoot },
+      '(min-width: 500px)'
+    );
+    // Allow Controller to initialize
+    await nextFrame();
+    await nextFrame();
+    expect(controller.matches).to.be.true;
 
-        await setViewport({ width: 360, height: 640 });
-        // Allow viewport update to propagate.
-        await nextFrame();
-        await nextFrame();
-        expect(controller.matches).to.be.false;
-    });
+    await setViewport({ width: 360, height: 640 });
+    // Allow viewport update to propagate.
+    await nextFrame();
+    await nextFrame();
+    expect(controller.matches).to.be.false;
+  });
 });

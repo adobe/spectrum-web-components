@@ -17,5 +17,5 @@ import '@spectrum-web-components/field-label/sp-field-label.js';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-field-label open></sp-field-label>
+  <sp-field-label open></sp-field-label>
 `);

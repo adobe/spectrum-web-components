@@ -17,5 +17,5 @@ import '@spectrum-web-components/icon/sp-icon.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
 testForMemoryLeaks(html`
-    <sp-icon name="ui:Chevron200"></sp-icon>
+  <sp-icon name="ui:Chevron200"></sp-icon>
 `);

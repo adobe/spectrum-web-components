@@ -17,7 +17,7 @@ import { Picker } from './src/Picker.js';
 defineElement('sp-picker', Picker);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-picker': Picker;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-picker': Picker;
+  }
 }

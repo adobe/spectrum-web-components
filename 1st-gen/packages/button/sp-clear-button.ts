@@ -16,7 +16,7 @@ import { ClearButton } from './src/ClearButton.js';
 defineElement('sp-clear-button', ClearButton);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-clear-button': ClearButton;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-clear-button': ClearButton;
+  }
 }

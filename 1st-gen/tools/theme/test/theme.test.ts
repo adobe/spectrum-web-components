@@ -20,10 +20,10 @@ class DirElement extends Theme {}
 customElements.define('dir-element', DirElement);
 
 describe('Theme', () => {
-    it('has a static VERSION property', () => {
-        expect(DirElement.VERSION).to.equal(version);
-    });
-    it('has a static CORE_VERSION property', () => {
-        expect(DirElement.CORE_VERSION).to.equal(coreVersion);
-    });
+  it('has a static VERSION property', () => {
+    expect(DirElement.VERSION).to.equal(version);
+  });
+  it('has a static CORE_VERSION property', () => {
+    expect(DirElement.CORE_VERSION).to.equal(coreVersion);
+  });
 });

@@ -17,7 +17,7 @@ import { Textfield } from './src/Textfield.js';
 defineElement('sp-textfield', Textfield);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-textfield': Textfield;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-textfield': Textfield;
+  }
 }

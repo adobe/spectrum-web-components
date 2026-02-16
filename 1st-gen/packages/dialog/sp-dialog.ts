@@ -16,7 +16,7 @@ import { Dialog } from './src/Dialog.js';
 defineElement('sp-dialog', Dialog);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-dialog': Dialog;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-dialog': Dialog;
+  }
 }

@@ -17,5 +17,5 @@ import '@spectrum-web-components/divider/sp-divider.js';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-divider></sp-divider>
+  <sp-divider></sp-divider>
 `);

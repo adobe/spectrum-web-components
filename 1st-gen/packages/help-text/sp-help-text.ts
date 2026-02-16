@@ -17,7 +17,7 @@ import { HelpText } from './src/HelpText.js';
 defineElement('sp-help-text', HelpText);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-help-text': HelpText;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-help-text': HelpText;
+  }
 }

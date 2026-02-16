@@ -17,7 +17,7 @@ import { ActionGroup } from './src/ActionGroup.js';
 defineElement('sp-action-group', ActionGroup);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-action-group': ActionGroup;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-action-group': ActionGroup;
+  }
 }

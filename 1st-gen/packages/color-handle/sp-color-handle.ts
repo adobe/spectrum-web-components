@@ -17,7 +17,7 @@ import { ColorHandle } from './src/ColorHandle.js';
 defineElement('sp-color-handle', ColorHandle);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-color-handle': ColorHandle;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-color-handle': ColorHandle;
+  }
 }

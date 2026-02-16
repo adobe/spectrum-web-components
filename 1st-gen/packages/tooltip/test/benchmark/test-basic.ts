@@ -18,8 +18,8 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-action-button>
-        I'm a button...
-        <sp-tooltip self-managed>Tip me!</sp-tooltip>
-    </sp-action-button>
+  <sp-action-button>
+    I'm a button...
+    <sp-tooltip self-managed>Tip me!</sp-tooltip>
+  </sp-action-button>
 `);

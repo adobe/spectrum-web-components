@@ -17,7 +17,7 @@ import { ProgressBar } from './src/ProgressBar.js';
 defineElement('sp-progress-bar', ProgressBar);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-progress-bar': ProgressBar;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-progress-bar': ProgressBar;
+  }
 }

@@ -17,5 +17,5 @@ import '@spectrum-web-components/search/sp-search.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
 testForMemoryLeaks(html`
-    <sp-search></sp-search>
+  <sp-search></sp-search>
 `);

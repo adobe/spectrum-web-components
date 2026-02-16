@@ -13,16 +13,16 @@
 @import url("./spectrum-accordion-item.css");
 
 :host {
-    display: block;
+  display: block;
 }
 
 #heading {
-    position: relative;
+  position: relative;
 
-    /* .spectrum-Accordion-itemHeading */
-    height: auto;
+  /* .spectrum-Accordion-itemHeading */
+  height: auto;
 }
 
 :host([disabled]) #heading .indicator {
-    color: var(--mod-accordion-item-header-disabled-color, var(--spectrum-accordion-item-header-disabled-color));
+  color: var(--mod-accordion-item-header-disabled-color, var(--spectrum-accordion-item-header-disabled-color));
 }

@@ -17,5 +17,5 @@ import '@spectrum-web-components/switch/sp-switch.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
 testForMemoryLeaks(html`
-    <sp-switch></sp-switch>
+  <sp-switch></sp-switch>
 `);

@@ -18,33 +18,33 @@ const variant = 'white';
 const treatment = 'outline';
 
 export default {
-    component: 'sp-button',
-    title: 'Button/White/Outline/Sizes',
-    decorators: [makeOverBackground()],
-    args: {
-        ...args,
-        variant,
-        treatment,
-    },
-    argTypes,
+  component: 'sp-button',
+  title: 'Button/White/Outline/Sizes',
+  decorators: [makeOverBackground()],
+  args: {
+    ...args,
+    variant,
+    treatment,
+  },
+  argTypes,
 };
 
 export const s = (args: Properties): TemplateResult => renderButtonSet(args);
 s.args = {
-    size: 's',
+  size: 's',
 };
 
 export const m = (args: Properties): TemplateResult => renderButtonSet(args);
 m.args = {
-    size: 'm',
+  size: 'm',
 };
 
 export const l = (args: Properties): TemplateResult => renderButtonSet(args);
 l.args = {
-    size: 'l',
+  size: 'l',
 };
 
 export const XL = (args: Properties): TemplateResult => renderButtonSet(args);
 XL.args = {
-    size: 'xl',
+  size: 'xl',
 };

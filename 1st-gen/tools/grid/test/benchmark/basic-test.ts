@@ -17,5 +17,5 @@ import '@spectrum-web-components/grid/sp-grid.js';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-grid></sp-grid>
+  <sp-grid></sp-grid>
 `);

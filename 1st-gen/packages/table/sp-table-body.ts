@@ -16,7 +16,7 @@ import { TableBody } from './src/TableBody.js';
 defineElement('sp-table-body', TableBody);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-table-body': TableBody;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-table-body': TableBody;
+  }
 }

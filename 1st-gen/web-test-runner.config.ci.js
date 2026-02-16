@@ -16,20 +16,20 @@ import { junitReporter } from '@web/test-runner-junit-reporter';
 import standard from './web-test-runner.config.js';
 
 standard.reporters = [
-    // Use the default reporter for console logging in the test job.
-    defaultReporter(),
-    // Use junit reporter for aggregate test success/timing results across jobs.
-    junitReporter({
-        outputPath: './results/test-results.xml', // default `'./test-results.xml'`
-        reportLogs: true, // default `false`
-    }),
+  // Use the default reporter for console logging in the test job.
+  defaultReporter(),
+  // Use junit reporter for aggregate test success/timing results across jobs.
+  junitReporter({
+    outputPath: './results/test-results.xml', // default `'./test-results.xml'`
+    reportLogs: true, // default `false`
+  }),
 ];
 
 standard.middleware = standard.middleware || [];
 standard.middleware.push(async (ctx, next) => {
-    await next();
-    // permanently cache ALL of the things!
-    ctx.set('Cache-Control', 'public, max-age=604800, immutable');
+  await next();
+  // permanently cache ALL of the things!
+  ctx.set('Cache-Control', 'public, max-age=604800, immutable');
 });
 
 standard.testFramework.config.retries = 2;

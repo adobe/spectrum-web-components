@@ -16,7 +16,7 @@ import { SideNav } from './src/Sidenav.js';
 defineElement('sp-sidenav', SideNav);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-sidenav': SideNav;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-sidenav': SideNav;
+  }
 }

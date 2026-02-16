@@ -16,7 +16,7 @@ import { Overlay } from './src/Overlay.js';
 defineElement('sp-overlay', Overlay);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-overlay': Overlay;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-overlay': Overlay;
+  }
 }

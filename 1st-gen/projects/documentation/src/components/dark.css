@@ -10,5 +10,5 @@
  * governing permissions and limitations under the License.
  */
 
-@import url('@spectrum-web-components/styles/tokens/dark-vars.css');
-@import url('prismjs/themes/prism-okaidia.css');
+@import url("@spectrum-web-components/styles/tokens/dark-vars.css");
+@import url("prismjs/themes/prism-okaidia.css");

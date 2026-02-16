@@ -16,7 +16,7 @@ import { Switch } from './src/Switch.js';
 defineElement('sp-switch', Switch);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-switch': Switch;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-switch': Switch;
+  }
 }

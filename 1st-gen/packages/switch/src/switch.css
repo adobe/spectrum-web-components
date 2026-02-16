@@ -14,29 +14,29 @@
 @import url("./switch-overrides.css");
 
 :host([disabled]) {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 /* the handle's border in the down/active state remains the same if a user moves their cursor 
 while still activating/pressing the switch. Read-only switches should not have this behavior. */
 :host(:hover:active) #input + #switch::before,
 :host([emphasized]:hover:active) #input + #switch::before {
-    border-color: var(--highcontrast-switch-handle-border-color-down, var(--mod-switch-handle-border-color-down, var(--spectrum-switch-handle-border-color-down)));
+  border-color: var(--highcontrast-switch-handle-border-color-down, var(--mod-switch-handle-border-color-down, var(--spectrum-switch-handle-border-color-down)));
 }
 
 :host(:active[checked]) #input:enabled + #switch::before {
-    border-color: var(--highcontrast-switch-handle-border-color-selelcted-down, var(--mod-switch-handle-border-color-selected-down, var(--spectrum-switch-handle-border-color-selected-down)));
+  border-color: var(--highcontrast-switch-handle-border-color-selelcted-down, var(--mod-switch-handle-border-color-selected-down, var(--spectrum-switch-handle-border-color-selected-down)));
 }
 
 :host(:active[checked]) #input:enabled + #switch {
-    background-color: var(--highcontrast-switch-background-color-selected-down, var(--mod-switch-background-color-selected-down, var(--spectrum-switch-background-color-selected-down)));
+  background-color: var(--highcontrast-switch-background-color-selected-down, var(--mod-switch-background-color-selected-down, var(--spectrum-switch-background-color-selected-down)));
 }
 
 /* Ensure read-only switches don't show interaction styles */
 :host([readonly]) #input + #switch::before {
-    border-color: var(--highcontrast-switch-handle-border-color-default, var(--mod-switch-handle-border-color-default, var(--spectrum-switch-handle-border-color-default))) !important;
+  border-color: var(--highcontrast-switch-handle-border-color-default, var(--mod-switch-handle-border-color-default, var(--spectrum-switch-handle-border-color-default))) !important;
 }
 
 :host([readonly][checked]) #input + #switch::before {
-    border-color: var(--highcontrast-switch-handle-border-color-selected-default, var(--mod-switch-handle-border-color-selected-default, var(--spectrum-switch-handle-border-color-selected-default))) !important;
+  border-color: var(--highcontrast-switch-handle-border-color-selected-default, var(--mod-switch-handle-border-color-selected-default, var(--spectrum-switch-handle-border-color-selected-default))) !important;
 }

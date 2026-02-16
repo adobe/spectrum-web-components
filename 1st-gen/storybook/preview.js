@@ -25,16 +25,16 @@ import DocumentationTemplate from './DocumentationTemplate.mdx';
  * when the debug flag is inlined to `true` by the dev build configuration.
  */
 if (typeof window !== 'undefined') {
-    window.__swc = window.__swc || {};
-    if (typeof window.__swc.DEBUG === 'undefined') {
-        window.__swc.DEBUG = true;
-    }
-    if (typeof window.__swc.warn !== 'function') {
-        window.__swc.warn = (...args) => {
-            // Forward warnings to the console for visibility in storybook.
-            console.warn('[SWC]', ...args);
-        };
-    }
+  window.__swc = window.__swc || {};
+  if (typeof window.__swc.DEBUG === 'undefined') {
+    window.__swc.DEBUG = true;
+  }
+  if (typeof window.__swc.warn !== 'function') {
+    window.__swc.warn = (...args) => {
+      // Forward warnings to the console for visibility in storybook.
+      console.warn('[SWC]', ...args);
+    };
+  }
 }
 
 // const cem = await import('./custom-elements.json', {
@@ -44,145 +44,145 @@ if (typeof window !== 'undefined') {
 // setCustomElementsManifest(cem);
 
 export const globalTypes = {
-    system: {
-        title: 'Design context',
-        description: 'The variation of Spectrum to use in the component',
-        defaultValue: 'spectrum',
-        type: 'string',
-        showName: true,
-        toolbar: {
-            items: [
-                {
-                    value: 'spectrum-two',
-                    title: 'Spectrum 2',
-                    right: 'default',
-                },
-                { value: 'spectrum', title: 'Spectrum 1', right: 'legacy' },
-                { value: 'express', title: 'Express' },
-            ],
-            dynamicTitle: true,
+  system: {
+    title: 'Design context',
+    description: 'The variation of Spectrum to use in the component',
+    defaultValue: 'spectrum',
+    type: 'string',
+    showName: true,
+    toolbar: {
+      items: [
+        {
+          value: 'spectrum-two',
+          title: 'Spectrum 2',
+          right: 'default',
         },
+        { value: 'spectrum', title: 'Spectrum 1', right: 'legacy' },
+        { value: 'express', title: 'Express' },
+      ],
+      dynamicTitle: true,
     },
-    color: {
-        title: 'Color',
-        description: 'Controls the color context of the component',
-        defaultValue: 'light',
-        icon: 'paintbrush',
-        type: 'string',
-        toolbar: {
-            items: [
-                { value: 'light', title: 'Light', right: 'default' },
-                { value: 'dark', title: 'Dark' },
-            ],
-            dynamicTitle: true,
+  },
+  color: {
+    title: 'Color',
+    description: 'Controls the color context of the component',
+    defaultValue: 'light',
+    icon: 'paintbrush',
+    type: 'string',
+    toolbar: {
+      items: [
+        { value: 'light', title: 'Light', right: 'default' },
+        { value: 'dark', title: 'Dark' },
+      ],
+      dynamicTitle: true,
+    },
+  },
+  scale: {
+    title: 'Platform scale',
+    description: 'Controls the platform scale of the component',
+    defaultValue: 'medium',
+    type: 'string',
+    toolbar: {
+      items: [
+        {
+          value: 'medium',
+          title: 'Medium',
+          right: 'default',
+          icon: 'browser',
         },
+        { value: 'large', title: 'Large', icon: 'mobile' },
+      ],
+      dynamicTitle: true,
     },
-    scale: {
-        title: 'Platform scale',
-        description: 'Controls the platform scale of the component',
-        defaultValue: 'medium',
-        type: 'string',
-        toolbar: {
-            items: [
-                {
-                    value: 'medium',
-                    title: 'Medium',
-                    right: 'default',
-                    icon: 'browser',
-                },
-                { value: 'large', title: 'Large', icon: 'mobile' },
-            ],
-            dynamicTitle: true,
-        },
+  },
+  textDirection: {
+    title: 'Text direction',
+    description: 'Direction of the content flow',
+    defaultValue: 'ltr',
+    type: 'string',
+    toolbar: {
+      items: [
+        { value: 'ltr', title: 'Left to right' },
+        { value: 'rtl', title: 'Right to left' },
+      ],
+      dynamicTitle: true,
     },
-    textDirection: {
-        title: 'Text direction',
-        description: 'Direction of the content flow',
-        defaultValue: 'ltr',
-        type: 'string',
-        toolbar: {
-            items: [
-                { value: 'ltr', title: 'Left to right' },
-                { value: 'rtl', title: 'Right to left' },
-            ],
-            dynamicTitle: true,
-        },
+  },
+  lang: {
+    title: 'Language',
+    description: 'Language of the content',
+    defaultValue: 'en-US',
+    type: 'string',
+    toolbar: {
+      items: Object.entries(Locales).map(([key, value]) => ({
+        value: key,
+        title: value,
+      })),
+      dynamicTitle: true,
     },
-    lang: {
-        title: 'Language',
-        description: 'Language of the content',
-        defaultValue: 'en-US',
-        type: 'string',
-        toolbar: {
-            items: Object.entries(Locales).map(([key, value]) => ({
-                value: key,
-                title: value,
-            })),
-            dynamicTitle: true,
-        },
+  },
+  reducedMotion: {
+    title: 'Reduce motion',
+    description: 'Reduce animation and transitions',
+    defaultValue: false,
+    type: 'boolean',
+    toolbar: {
+      items: [
+        { value: false, title: 'Default', icon: 'play' },
+        { value: true, title: 'Reduced motion', icon: 'stop' },
+      ],
+      dynamicTitle: true,
     },
-    reducedMotion: {
-        title: 'Reduce motion',
-        description: 'Reduce animation and transitions',
-        defaultValue: false,
-        type: 'boolean',
-        toolbar: {
-            items: [
-                { value: false, title: 'Default', icon: 'play' },
-                { value: true, title: 'Reduced motion', icon: 'stop' },
-            ],
-            dynamicTitle: true,
-        },
-    },
+  },
 };
 
 export const parameters = {
-    docs: {
-        template: DocumentationTemplate,
+  docs: {
+    template: DocumentationTemplate,
+  },
+  controls: {
+    expanded: true,
+    matchers: {
+      color: /(backgroundColor|color)$/i,
+      date: /Date$/,
     },
-    controls: {
-        expanded: true,
-        matchers: {
-            color: /(backgroundColor|color)$/i,
-            date: /Date$/,
-        },
+  },
+  layout: 'fullscreen',
+  options: {
+    storySort: {
+      method: 'alphabetical-by-kind',
     },
-    layout: 'fullscreen',
-    options: {
-        storySort: {
-            method: 'alphabetical-by-kind',
-        },
+  },
+  badgesConfig: {
+    deprecated: {
+      styles: {
+        backgroundColor: '#FFF',
+        borderColor: '#ea3829',
+        color: '#ea3829',
+      },
+      title: 'Deprecated',
     },
-    badgesConfig: {
-        deprecated: {
-            styles: {
-                backgroundColor: '#FFF',
-                borderColor: '#ea3829',
-                color: '#ea3829',
-            },
-            title: 'Deprecated',
-        },
+  },
+  chromatic: {
+    forcedColors: 'none',
+    prefersReducedMotion: 'no-preference',
+    pauseAnimationAtEnd: true,
+    modes: {
+      'Context: Spectrum 1': {
+        scale: 'medium',
+        color: 'light',
+        textDirection: 'ltr',
+        context: 'spectrum1',
+      },
+      'Context: Express': {
+        context: 'express',
+      },
+      'Dark | RTL': {
+        color: 'dark',
+        textDirection: 'rtl',
+      },
     },
-    chromatic: {
-        forcedColors: 'none',
-        prefersReducedMotion: 'no-preference',
-        pauseAnimationAtEnd: true,
-        modes: {
-            'Context: Spectrum 1': {
-                scale: 'medium',
-                color: 'light',
-                textDirection: 'ltr',
-                context: 'spectrum1',
-            },
-            'Context: Express': {
-                context: 'express',
-            },
-            'Dark | RTL': {
-                color: 'dark',
-                textDirection: 'rtl',
-            },
-        },
-    },
+  },
 };
 
 export const decorators = [swcThemeDecorator];

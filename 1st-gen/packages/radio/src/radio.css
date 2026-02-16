@@ -14,18 +14,18 @@
 @import url("./radio-overrides.css");
 
 :host(:focus) {
-    outline: none;
+  outline: none;
 }
 
 :host([disabled]) {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 /**
  * Work around for https://github.com/adobe/spectrum-css/issues/2251
  **/
 #button:dir(rtl)::after {
-    transform: translateX(50%) translateY(-50%);
+  transform: translateX(50%) translateY(-50%);
 }
 
 /**

@@ -16,7 +16,7 @@ import { Button } from './src/Button.js';
 defineElement('sp-button', Button);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-button': Button;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-button': Button;
+  }
 }
