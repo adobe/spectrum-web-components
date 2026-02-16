@@ -6,7 +6,9 @@ on:
             tag:
                 description: 'NPM dist-tag (e.g., latest, beta, snapshot)'
                 required: false
-                default: 'snapshot-test'
+                default: 'next'
+    pull_request:
+        types: [labeled, synchronize]
     push:
         branches:
             - SWC-1405
@@ -14,6 +16,11 @@ on:
 jobs:
     publish:
         runs-on: ubuntu-latest
+        if: >-
+            github.event_name == 'workflow_dispatch' ||
+            github.event_name == 'push' ||
+            (github.event_name == 'pull_request' &&
+            contains(github.event.pull_request.labels.*.name, 'release-to-npm'))
         environment: npm-publish
         permissions:
             id-token: write # Required for OIDC trusted publishing (1st-gen )
@@ -44,22 +51,18 @@ jobs:
                   git config --global user.email "support+actions@github.com"
                   git config --global user.name "github-actions-bot"
 
-            - name: Extract tag from commit message or use default
+            - name: Determine release tag
               id: extract-tag
               run: |
-                  # Get tag from workflow_dispatch input (if manually triggered)
-                  WORKFLOW_TAG="${{ github.event.inputs.tag }}"
-
-                  # If not manually triggered, try to extract from commit message
-                  if [ -z "$WORKFLOW_TAG" ]; then
-                    COMMIT_MSG="${{ github.event.head_commit.message }}"
-                    # Look for [tag:xxx] pattern in commit message
-                    if echo "$COMMIT_MSG" | grep -qE '\[tag:([a-zA-Z0-9-]+)\]'; then
-                      WORKFLOW_TAG=$(echo "$COMMIT_MSG" | grep -oE '\[tag:([a-zA-Z0-9-]+)\]' | sed 's/\[tag://;s/\]//')
-                    else
-                      # Default to snapshot-test if no tag specified
-                      WORKFLOW_TAG="snapshot-test"
-                    fi
+                  if [ "${{ github.event_name }}" == "pull_request" ]; then
+                    # PRs with the release-to-npm label always use snapshot-test
+                    WORKFLOW_TAG="snapshot-test"
+                  elif [ -n "${{ github.event.inputs.tag }}" ]; then
+                    # Use the tag provided via workflow_dispatch input
+                    WORKFLOW_TAG="${{ github.event.inputs.tag }}"
+                  else
+                    # Default tag for push-triggered runs
+                    WORKFLOW_TAG="next"
                   fi
 
                   echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
@@ -101,7 +104,8 @@ jobs:
                     fi
                   fi
 
-            - name: Verify OIDC token availability
+            - name: Verify OIDC token and configure NPM authentication
+              id: npm-auth
               if: steps.check-changesets.outputs.has_changesets == 'true'
               run: |
                   if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
@@ -110,6 +114,9 @@ jobs:
                     echo "✗ OIDC token NOT available - trusted publishing will fail"
                     exit 1
                   fi
+
+                  echo "//registry.npmjs.org/:_authToken=${{ secrets.ADOBE_BOT_NPM_TOKEN }}" > ~/.npmrc
+                  echo "✓ NPM authentication configured for 2nd-gen (Adobe namespace)"
 
             - name: Build all packages
               if: steps.check-changesets.outputs.has_changesets == 'true'
@@ -142,13 +149,8 @@ jobs:
                   yarn install --refresh-lockfile
                   yarn build
 
-            - name: Configure NPM authentication for 2nd-gen (Adobe namespace)
-              if: steps.check-changesets.outputs.has_changesets == 'true'
-              run: |
-                  echo "//registry.npmjs.org/:_authToken=${{ secrets.ADOBE_BOT_NPM_TOKEN }}" > ~/.npmrc
-
             - name: Publish all packages
-              if: steps.check-changesets.outputs.has_changesets == 'true'
+              if: steps.check-changesets.outputs.has_changesets == 'true' && steps.npm-auth.outcome == 'success'
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
               run: |
