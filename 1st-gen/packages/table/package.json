@@ -48,6 +48,10 @@
       "development": "./sp-table-row.dev.js",
       "default": "./sp-table-row.js"
     },
+    "./sp-table.js": {
+      "development": "./sp-table.dev.js",
+      "default": "./sp-table.js"
+    },
     "./src/Table.js": {
       "development": "./src/Table.dev.js",
       "default": "./src/Table.js"
@@ -92,11 +96,7 @@
     "./src/table-overrides.css.js": "./src/table-overrides.css.js",
     "./src/table-row-overrides.css.js": "./src/table-row-overrides.css.js",
     "./src/table-row.css.js": "./src/table-row.css.js",
-    "./src/table.css.js": "./src/table.css.js",
-    "./sp-table.js": {
-      "development": "./sp-table.dev.js",
-      "default": "./sp-table.js"
-    }
+    "./src/table.css.js": "./src/table.css.js"
   },
   "main": "./src/index.js",
   "module": "./src/index.js",

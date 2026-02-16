@@ -19,19 +19,6 @@
       "development": "./src/index.dev.js",
       "default": "./src/index.js"
     },
-    "./src/theme-core-tokens.css.js": "./src/theme-core-tokens.css.js",
-    "./src/theme-dark-core-tokens.css.js": "./src/theme-dark-core-tokens.css.js",
-    "./src/theme-dark.css.js": "./src/theme-dark.css.js",
-    "./src/theme-darkest-core-tokens.css.js": "./src/theme-darkest-core-tokens.css.js",
-    "./src/theme-darkest.css.js": "./src/theme-darkest.css.js",
-    "./src/theme-interfaces.js": {
-      "development": "./src/theme-interfaces.dev.js",
-      "default": "./src/theme-interfaces.js"
-    },
-    "./src/theme-light-core-tokens.css.js": "./src/theme-light-core-tokens.css.js",
-    "./src/theme-light.css.js": "./src/theme-light.css.js",
-    "./src/theme-lightest-core-tokens.css.js": "./src/theme-lightest-core-tokens.css.js",
-    "./src/theme-lightest.css.js": "./src/theme-lightest.css.js",
     "./src/theme.css.js": "./src/theme.css.js",
     "./src/themes-core-tokens.js": {
       "development": "./src/themes-core-tokens.dev.js",
@@ -203,6 +190,19 @@
       "development": "./src/spectrum-two/themes.dev.js",
       "default": "./src/spectrum-two/themes.js"
     },
+    "./src/theme-core-tokens.css.js": "./src/theme-core-tokens.css.js",
+    "./src/theme-dark-core-tokens.css.js": "./src/theme-dark-core-tokens.css.js",
+    "./src/theme-dark.css.js": "./src/theme-dark.css.js",
+    "./src/theme-darkest-core-tokens.css.js": "./src/theme-darkest-core-tokens.css.js",
+    "./src/theme-darkest.css.js": "./src/theme-darkest.css.js",
+    "./src/theme-interfaces.js": {
+      "development": "./src/theme-interfaces.dev.js",
+      "default": "./src/theme-interfaces.js"
+    },
+    "./src/theme-light-core-tokens.css.js": "./src/theme-light-core-tokens.css.js",
+    "./src/theme-light.css.js": "./src/theme-light.css.js",
+    "./src/theme-lightest-core-tokens.css.js": "./src/theme-lightest-core-tokens.css.js",
+    "./src/theme-lightest.css.js": "./src/theme-lightest.css.js",
     "./core.js": {
       "development": "./core.dev.js",
       "default": "./core.js"
