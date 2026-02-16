@@ -13,7 +13,7 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/shared/base/index.js';
+import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 import { ASSET_VARIANTS, type AssetVariant } from './Asset.types.js';
 

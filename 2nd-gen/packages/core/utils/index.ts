@@ -10,7 +10,5 @@
  * governing permissions and limitations under the License.
  */
 
-export {
-    LanguageResolutionController,
-    languageResolverUpdatedSymbol,
-} from './LanguageResolution.js';
+export { capitalize } from './capitalize.js';
+export { getLabelFromSlot } from './get-label-from-slot.js';

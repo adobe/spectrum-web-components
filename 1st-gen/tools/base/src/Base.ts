@@ -10,13 +10,13 @@
  * governing permissions and limitations under the License.
  */
 
-import { SpectrumElement as CoreSpectrumElement } from '@spectrum-web-components/core/shared/base/Base.js';
+import { SpectrumElement as CoreSpectrumElement } from '@spectrum-web-components/core/element/spectrum-element.js';
 import { coreVersion, version } from './version.js';
 
 export {
     type SpectrumInterface,
     SpectrumMixin,
-} from '@spectrum-web-components/core/shared/base/Base.js';
+} from '@spectrum-web-components/core/element/spectrum-element.js';
 
 /**
  * Base class for 1st-gen Spectrum Web Components.
