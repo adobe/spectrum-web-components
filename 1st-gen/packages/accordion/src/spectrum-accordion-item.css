@@ -18,13 +18,13 @@
     margin: 0;
     border-color: var(--mod-accordion-divider-color, var(--spectrum-accordion-divider-color));
     border-width: var(--mod-accordion-divider-thickness, var(--spectrum-divider-thickness-small));
-    border-block-end: 1px solid #0000;
+    border-block-end-style: solid;
 }
 
 :host(:first-child) {
     border-color: var(--mod-accordion-divider-color, var(--spectrum-accordion-divider-color));
     border-width: var(--mod-accordion-divider-thickness, var(--spectrum-divider-thickness-small));
-    border-block-start: 1px solid #0000;
+    border-block-start-style: solid;
 }
 
 #heading {
