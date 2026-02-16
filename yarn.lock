@@ -6095,7 +6095,7 @@ __metadata:
     "@rollup/plugin-json": "npm:6.1.0"
     "@rollup/plugin-node-resolve": "npm:15.3.1"
     "@sindresorhus/slugify": "npm:2.2.1"
-    "@spectrum-web-components/eslint-plugin": "file:./linters/eslint"
+    "@spectrum-web-components/eslint-plugin": "workspace:*"
     "@storybook/addon-a11y": "npm:8.6.14"
     "@storybook/addon-designs": "npm:8.2.1"
     "@storybook/addon-essentials": "npm:8.6.14"
@@ -6689,14 +6689,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40spectrum-web-components%2F1st-gen%40workspace%3A1st-gen":
-  version: 1.11.2
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=562ab4&locator=%40spectrum-web-components%2F1st-gen%40workspace%3A1st-gen"
-  checksum: 10c0/00f19d85b68fecef5e692939fec05a3f33ad27bca1fce9b014d065e374031e52f12869b529ecc441418f7ad4a8f5b5635db324e21330ddeea5a1f0778a847e15
-  languageName: node
-  linkType: hard
-
-"@spectrum-web-components/eslint-plugin@workspace:1st-gen/linters/eslint":
+"@spectrum-web-components/eslint-plugin@workspace:*, @spectrum-web-components/eslint-plugin@workspace:1st-gen/linters/eslint":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/eslint-plugin@workspace:1st-gen/linters/eslint"
   languageName: unknown
