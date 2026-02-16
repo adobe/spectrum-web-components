@@ -10,10 +10,10 @@
  * governing permissions and limitations under the License.
  */
 import {
-    CSSResultArray,
-    html,
-    SpectrumElement,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  SpectrumElement,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
@@ -26,39 +26,35 @@ import type { TableHeadCell } from './TableHeadCell.js';
  *
  */
 export class TableHead extends SpectrumElement {
-    public static override get styles(): CSSResultArray {
-        return [styles];
-    }
+  public static override get styles(): CSSResultArray {
+    return [styles];
+  }
 
-    @property({ reflect: true })
-    public override role = 'row';
+  @property({ reflect: true })
+  public override role = 'row';
 
-    @property({ type: Boolean, reflect: true })
-    public selected?: boolean;
+  @property({ type: Boolean, reflect: true })
+  public selected?: boolean;
 
-    private handleSorted({ target }: Event): void {
-        const childCells = [...this.children] as TableHeadCell[];
-        childCells.forEach((cell) => {
-            if (cell !== target) {
-                cell.sortDirection = undefined;
-            }
-        });
-    }
+  private handleSorted({ target }: Event): void {
+    const childCells = [...this.children] as TableHeadCell[];
+    childCells.forEach((cell) => {
+      if (cell !== target) {
+        cell.sortDirection = undefined;
+      }
+    });
+  }
 
-    protected handleChange({
-        target: checkboxCell,
-    }: Event & { target: TableCheckboxCell }): void {
-        this.selected =
-            checkboxCell.checkbox.checked ||
-            checkboxCell.checkbox.indeterminate;
-    }
+  protected handleChange({
+    target: checkboxCell,
+  }: Event & { target: TableCheckboxCell }): void {
+    this.selected =
+      checkboxCell.checkbox.checked || checkboxCell.checkbox.indeterminate;
+  }
 
-    protected override render(): TemplateResult {
-        return html`
-            <slot
-                @sorted=${this.handleSorted}
-                @change=${this.handleChange}
-            ></slot>
-        `;
-    }
+  protected override render(): TemplateResult {
+    return html`
+      <slot @sorted=${this.handleSorted} @change=${this.handleChange}></slot>
+    `;
+  }
 }

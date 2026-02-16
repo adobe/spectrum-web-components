@@ -14,10 +14,10 @@
 @import url("./divider-overrides.css");
 
 :host {
-    display: block;
+  display: block;
 }
 
 hr {
-    margin: 0;
-    border: none;
+  margin: 0;
+  border: none;
 }

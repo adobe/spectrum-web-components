@@ -17,7 +17,7 @@ import { TopNavItem } from './src/TopNavItem.js';
 defineElement('sp-top-nav-item', TopNavItem);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-top-nav-item': TopNavItem;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-top-nav-item': TopNavItem;
+  }
 }

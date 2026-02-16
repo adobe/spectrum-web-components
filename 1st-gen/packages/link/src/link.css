@@ -14,19 +14,19 @@
 @import url("./link-overrides.css");
 
 :host {
-    display: inline;
+  display: inline;
 }
 
 :host(:focus) {
-    outline: none;
+  outline: none;
 }
 
 :host([href]) a:focus-visible {
-    /* .spectrum-Link.focus-ring */
-    text-decoration: underline;
-    text-decoration-style: double;
+  /* .spectrum-Link.focus-ring */
+  text-decoration: underline;
+  text-decoration-style: double;
 }
 
 :host([disabled]) {
-    pointer-events: none;
+  pointer-events: none;
 }

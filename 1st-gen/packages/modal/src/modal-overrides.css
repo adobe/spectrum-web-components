@@ -11,5 +11,5 @@
  */
 
 :host {
-    --spectrum-modal-background-color: var(--system-modal-background-color);
+  --spectrum-modal-background-color: var(--system-modal-background-color);
 }

@@ -14,26 +14,26 @@
 @import url("./color-wheel-overrides.css");
 
 :host {
-    touch-action: none;
+  touch-action: none;
 }
 
 :host(:focus) {
-    outline: none;
+  outline: none;
 }
 
 ::slotted([slot="gradient"]) {
-    box-sizing: border-box;
-    position: relative;
-    z-index: 0;
-    inline-size: var(--mod-colorwheel-width, var(--spectrum-colorwheel-width));
-    block-size: var(--mod-colorwheel-height, var(--spectrum-colorwheel-height));
-    border-color: var(--mod-colorwheel-border-color, var(--spectrum-colorwheel-border-color));
-    border-style: solid;
-    border-width: var(--_border-width);
-    border-radius: 100%;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 0;
+  inline-size: var(--mod-colorwheel-width, var(--spectrum-colorwheel-width));
+  block-size: var(--mod-colorwheel-height, var(--spectrum-colorwheel-height));
+  border-color: var(--mod-colorwheel-border-color, var(--spectrum-colorwheel-border-color));
+  border-style: solid;
+  border-width: var(--_border-width);
+  border-radius: 100%;
 }
 
 .wheel:dir(rtl),
 ::slotted([slot="gradient"]:dir(rtl)) {
-    transform: scaleX(-1);
+  transform: scaleX(-1);
 }

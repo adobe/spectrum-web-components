@@ -1,16 +1,16 @@
 {
-    "compilerOptions": {
-        "composite": true,
-        "rootDir": "./"
-    },
-    "exclude": ["test/*.ts", "stories/*.ts"],
-    "extends": "../../tsconfig.json",
-    "include": ["*.ts", "src/*.ts"],
-    "references": [
-        { "path": "../action-button" },
-        { "path": "../icons-ui" },
-        { "path": "../icons-workflow" },
-        { "path": "../../tools/shared" },
-        { "path": "../underlay" }
-    ]
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "./"
+  },
+  "exclude": ["test/*.ts", "stories/*.ts"],
+  "extends": "../../tsconfig.json",
+  "include": ["*.ts", "src/*.ts"],
+  "references": [
+    { "path": "../action-button" },
+    { "path": "../icons-ui" },
+    { "path": "../icons-workflow" },
+    { "path": "../../tools/shared" },
+    { "path": "../underlay" }
+  ]
 }

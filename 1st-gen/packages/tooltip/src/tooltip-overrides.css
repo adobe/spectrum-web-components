@@ -11,5 +11,5 @@
  */
 
 #tooltip {
-    --spectrum-tooltip-backgound-color-default-neutral: var(--system-tooltip-backgound-color-default-neutral);
+  --spectrum-tooltip-backgound-color-default-neutral: var(--system-tooltip-backgound-color-default-neutral);
 }

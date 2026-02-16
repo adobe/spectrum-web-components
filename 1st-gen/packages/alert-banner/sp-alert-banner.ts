@@ -16,7 +16,7 @@ import { AlertBanner } from './src/AlertBanner.js';
 defineElement('sp-alert-banner', AlertBanner);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-alert-banner': AlertBanner;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-alert-banner': AlertBanner;
+  }
 }

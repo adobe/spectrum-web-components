@@ -16,7 +16,7 @@ import { IconsMedium } from './src/IconsMedium.js';
 defineElement('sp-icons-medium', IconsMedium);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-icons-medium': IconsMedium;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-icons-medium': IconsMedium;
+  }
 }

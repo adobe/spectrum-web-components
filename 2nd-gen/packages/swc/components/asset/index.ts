@@ -15,8 +15,8 @@ import { Asset } from './Asset.js';
 
 export * from './Asset.js';
 declare global {
-    interface HTMLElementTagNameMap {
-        'swc-asset': Asset;
-    }
+  interface HTMLElementTagNameMap {
+    'swc-asset': Asset;
+  }
 }
 defineElement('swc-asset', Asset);

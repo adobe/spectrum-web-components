@@ -17,7 +17,7 @@ import { ProgressCircle } from './src/ProgressCircle.js';
 defineElement('sp-progress-circle', ProgressCircle);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-progress-circle': ProgressCircle;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-progress-circle': ProgressCircle;
+  }
 }

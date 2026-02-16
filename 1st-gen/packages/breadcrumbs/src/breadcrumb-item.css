@@ -13,9 +13,9 @@
 @import url("./spectrum-breadcrumbs-item.css");
 
 :host([hidden]) {
-    display: none;
+  display: none;
 }
 
 :host([disabled]) {
-    pointer-events: none;
+  pointer-events: none;
 }

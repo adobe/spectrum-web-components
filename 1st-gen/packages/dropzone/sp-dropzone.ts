@@ -16,7 +16,7 @@ import { Dropzone } from './src/Dropzone.js';
 defineElement('sp-dropzone', Dropzone);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-dropzone': Dropzone;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-dropzone': Dropzone;
+  }
 }

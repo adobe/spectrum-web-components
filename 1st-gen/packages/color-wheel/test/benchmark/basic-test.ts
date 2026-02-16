@@ -17,5 +17,5 @@ import '@spectrum-web-components/color-wheel/sp-color-wheel.js';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-color-wheel></sp-color-wheel>
+  <sp-color-wheel></sp-color-wheel>
 `);

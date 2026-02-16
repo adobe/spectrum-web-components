@@ -11,9 +11,9 @@
  */
 
 :host {
-    display: inline-flex;
+  display: inline-flex;
 }
 
 :host(:not([selected])) {
-    display: none;
+  display: none;
 }

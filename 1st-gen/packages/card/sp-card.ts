@@ -17,7 +17,7 @@ import { Card } from './src/Card.js';
 defineElement('sp-card', Card);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-card': Card;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-card': Card;
+  }
 }

@@ -13,5 +13,5 @@
 @import url("./spectrum-table-head.css");
 
 :host {
-    display: flex;
+  display: flex;
 }

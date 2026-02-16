@@ -10,9 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-@import url('@spectrum-web-components/styles/tokens/medium-vars.css');
-@import url('@spectrum-web-components/styles/tokens/spectrum/medium-vars.css');
+@import url("@spectrum-web-components/styles/tokens/medium-vars.css");
+@import url("@spectrum-web-components/styles/tokens/spectrum/medium-vars.css");
 
 :root {
-    --swc-scale-factor: 1;
+  --swc-scale-factor: 1;
 }

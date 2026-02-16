@@ -17,7 +17,7 @@ import { ActionMenu } from './src/ActionMenu.js';
 defineElement('sp-action-menu', ActionMenu);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-action-menu': ActionMenu;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-action-menu': ActionMenu;
+  }
 }

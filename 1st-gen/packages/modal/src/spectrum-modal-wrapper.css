@@ -11,37 +11,37 @@
  */
 
 :host {
-    box-sizing: border-box;
-    display: flex;
-    visibility: hidden;
-    position: fixed;
-    inset-block-start: 0;
-    inset-inline-start: 0;
-    z-index: 1;
-    align-items: center;
-    justify-content: center;
-    inline-size: 100vw;
-    block-size: 100vh;
-    block-size: -webkit-fill-available;
-    block-size: stretch;
-    pointer-events: none;
-    transition: visibility 0s linear var(--mod-modal-transition-animation-duration, var(--spectrum-animation-duration-100));
+  box-sizing: border-box;
+  display: flex;
+  visibility: hidden;
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100vw;
+  block-size: 100vh;
+  block-size: -webkit-fill-available;
+  block-size: stretch;
+  pointer-events: none;
+  transition: visibility 0s linear var(--mod-modal-transition-animation-duration, var(--spectrum-animation-duration-100));
 }
 
 :host([open]) {
-    visibility: visible;
+  visibility: visible;
 }
 
 @media only screen and (device-height <= 350px), only screen and (device-width <= 400px) {
-    :host([responsive]) {
-        inline-size: 100%;
-        max-inline-size: 100%;
-        block-size: 100%;
-        max-block-size: 100%;
-        border-radius: 0;
-    }
+  :host([responsive]) {
+    inline-size: 100%;
+    max-inline-size: 100%;
+    block-size: 100%;
+    max-block-size: 100%;
+    border-radius: 0;
+  }
 
-    :host([responsive]) {
-        margin-block-start: 0;
-    }
+  :host([responsive]) {
+    margin-block-start: 0;
+  }
 }

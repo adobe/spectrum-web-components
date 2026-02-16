@@ -15,7 +15,7 @@ import { CoachIndicator } from './src/CoachIndicator.js';
 defineElement('sp-coach-indicator', CoachIndicator);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-coach-indicator': CoachIndicator;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-coach-indicator': CoachIndicator;
+  }
 }

@@ -18,7 +18,7 @@ import { Slider } from './src/Slider.js';
 defineElement('sp-slider', Slider);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-slider': Slider;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-slider': Slider;
+  }
 }

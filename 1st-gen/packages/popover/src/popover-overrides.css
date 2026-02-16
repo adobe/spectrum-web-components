@@ -11,5 +11,5 @@
  */
 
 :host {
-    --spectrum-popover-border-width: var(--system-popover-border-width);
+  --spectrum-popover-border-width: var(--system-popover-border-width);
 }

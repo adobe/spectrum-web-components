@@ -14,10 +14,10 @@
 @import url("./infield-button-overrides.css");
 
 :host {
-    box-sizing: border-box;
-    user-select: none;
+  box-sizing: border-box;
+  user-select: none;
 }
 
 ::slotted(*) {
-    --spectrum-icon-size: inherit;
+  --spectrum-icon-size: inherit;
 }

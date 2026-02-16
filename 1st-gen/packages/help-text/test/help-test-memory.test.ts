@@ -17,5 +17,5 @@ import '@spectrum-web-components/help-text/sp-help-text.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
 testForMemoryLeaks(html`
-    <sp-help-text></sp-help-text>
+  <sp-help-text></sp-help-text>
 `);

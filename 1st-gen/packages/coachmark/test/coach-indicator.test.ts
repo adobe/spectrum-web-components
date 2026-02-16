@@ -18,17 +18,17 @@ import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('CoachIndicator', () => {
-    testForLitDevWarnings(
-        async () =>
-            await fixture<CoachIndicator>(html`
-                <sp-coach-indicator></sp-coach-indicator>
-            `)
-    );
-    it('loads default coach-indicator accessibly', async () => {
-        const el = await fixture<CoachIndicator>(html`
-            <sp-coach-indicator></sp-coach-indicator>
-        `);
-        await elementUpdated(el);
-        await expect(el).to.be.accessible();
-    });
+  testForLitDevWarnings(
+    async () =>
+      await fixture<CoachIndicator>(html`
+        <sp-coach-indicator></sp-coach-indicator>
+      `)
+  );
+  it('loads default coach-indicator accessibly', async () => {
+    const el = await fixture<CoachIndicator>(html`
+      <sp-coach-indicator></sp-coach-indicator>
+    `);
+    await elementUpdated(el);
+    await expect(el).to.be.accessible();
+  });
 });

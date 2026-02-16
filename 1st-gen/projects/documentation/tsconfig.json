@@ -1,13 +1,13 @@
 {
-    "compilerOptions": {
-        "declaration": false,
-        "emitDeclarationOnly": false,
-        "outDir": "./_site/src",
-        "resolveJsonModule": true,
-        "rootDir": "./src",
-        "skipLibCheck": true
-    },
-    "exclude": [],
-    "extends": "../../tsconfig.json",
-    "include": ["./**/*.ts", "./src/global.d.ts"]
+  "compilerOptions": {
+    "declaration": false,
+    "emitDeclarationOnly": false,
+    "outDir": "./_site/src",
+    "resolveJsonModule": true,
+    "rootDir": "./src",
+    "skipLibCheck": true
+  },
+  "exclude": [],
+  "extends": "../../tsconfig.json",
+  "include": ["./**/*.ts", "./src/global.d.ts"]
 }

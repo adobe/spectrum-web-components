@@ -16,7 +16,7 @@ import { SideNavHeading } from './src/SidenavHeading.js';
 defineElement('sp-sidenav-heading', SideNavHeading);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-sidenav-heading': SideNavHeading;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-sidenav-heading': SideNavHeading;
+  }
 }

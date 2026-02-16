@@ -14,7 +14,7 @@ import type { ReactiveController, ReactiveElement } from 'lit';
 
 // TODO: Update this when theme is migrated to 2nd-gen
 type ProvideLang = {
-    callback: (lang: string, unsubscribe: () => void) => void;
+  callback: (lang: string, unsubscribe: () => void) => void;
 };
 
 /**
@@ -33,7 +33,7 @@ type ProvideLang = {
  * ```
  */
 export const languageResolverUpdatedSymbol = Symbol(
-    'language resolver updated'
+  'language resolver updated'
 );
 
 /**
@@ -65,59 +65,56 @@ export const languageResolverUpdatedSymbol = Symbol(
  * ```
  */
 export class LanguageResolutionController implements ReactiveController {
-    private host: ReactiveElement;
+  private host: ReactiveElement;
 
-    /**
-     * The currently resolved language/locale code (e.g., 'en-US', 'fr-FR').
-     * Defaults to document language, browser language, or 'en-US'.
-     */
-    language = document.documentElement.lang || navigator.language || 'en-US';
+  /**
+   * The currently resolved language/locale code (e.g., 'en-US', 'fr-FR').
+   * Defaults to document language, browser language, or 'en-US'.
+   */
+  language = document.documentElement.lang || navigator.language || 'en-US';
 
-    private unsubscribe?: () => void;
+  private unsubscribe?: () => void;
 
-    constructor(host: ReactiveElement) {
-        this.host = host;
-        this.host.addController(this);
+  constructor(host: ReactiveElement) {
+    this.host = host;
+    this.host.addController(this);
+  }
+
+  public hostConnected(): void {
+    this.resolveLanguage();
+  }
+
+  public hostDisconnected(): void {
+    this.unsubscribe?.();
+  }
+
+  /**
+   * Resolves the language from the theme context and validates it against Intl API.
+   * Falls back to 'en-US' if the language is not supported.
+   * @private
+   */
+  private resolveLanguage(): void {
+    try {
+      Intl.DateTimeFormat.supportedLocalesOf([this.language]);
+    } catch {
+      this.language = 'en-US';
     }
-
-    public hostConnected(): void {
-        this.resolveLanguage();
-    }
-
-    public hostDisconnected(): void {
-        this.unsubscribe?.();
-    }
-
-    /**
-     * Resolves the language from the theme context and validates it against Intl API.
-     * Falls back to 'en-US' if the language is not supported.
-     * @private
-     */
-    private resolveLanguage(): void {
-        try {
-            Intl.DateTimeFormat.supportedLocalesOf([this.language]);
-        } catch {
-            this.language = 'en-US';
-        }
-        const queryThemeEvent = new CustomEvent<ProvideLang>(
-            'sp-language-context',
-            {
-                bubbles: true,
-                composed: true,
-                detail: {
-                    callback: (lang: string, unsubscribe: () => void) => {
-                        const previous = this.language;
-                        this.language = lang;
-                        this.unsubscribe = unsubscribe;
-                        this.host.requestUpdate(
-                            languageResolverUpdatedSymbol,
-                            previous
-                        );
-                    },
-                },
-                cancelable: true,
-            }
-        );
-        this.host.dispatchEvent(queryThemeEvent);
-    }
+    const queryThemeEvent = new CustomEvent<ProvideLang>(
+      'sp-language-context',
+      {
+        bubbles: true,
+        composed: true,
+        detail: {
+          callback: (lang: string, unsubscribe: () => void) => {
+            const previous = this.language;
+            this.language = lang;
+            this.unsubscribe = unsubscribe;
+            this.host.requestUpdate(languageResolverUpdatedSymbol, previous);
+          },
+        },
+        cancelable: true,
+      }
+    );
+    this.host.dispatchEvent(queryThemeEvent);
+  }
 }

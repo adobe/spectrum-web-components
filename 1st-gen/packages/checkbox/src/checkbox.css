@@ -14,18 +14,18 @@
 @import url("./checkbox-overrides.css");
 
 :host {
-    display: inline-flex;
-    vertical-align: top;
+  display: inline-flex;
+  vertical-align: top;
 }
 
 :host(:focus) {
-    outline: none;
+  outline: none;
 }
 
 :host([disabled]) {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 :host(:empty) label {
-    display: none;
+  display: none;
 }

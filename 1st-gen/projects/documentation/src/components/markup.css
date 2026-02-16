@@ -11,17 +11,17 @@
  */
 
 .markup {
-    position: relative;
-    max-width: 100%;
-    padding: 0.75rem 1.5rem;
-    line-height: 1.3em;
-    background: var(--spectrum-gray-75);
-    border-top: 1px solid var(--spectrum-gray-100);
-    border-radius: 6px;
-    overflow: hidden;
-    overflow-x: auto;
+  position: relative;
+  max-width: 100%;
+  padding: 0.75rem 1.5rem;
+  line-height: 1.3em;
+  background: var(--spectrum-gray-75);
+  border-top: 1px solid var(--spectrum-gray-100);
+  border-radius: 6px;
+  overflow: hidden;
+  overflow-x: auto;
 }
 
 div + .markup {
-    border-radius: 0 0 6px 6px;
+  border-radius: 0 0 6px 6px;
 }

@@ -17,7 +17,7 @@ import { Thumbnail } from './src/Thumbnail.js';
 defineElement('sp-thumbnail', Thumbnail);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-thumbnail': Thumbnail;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-thumbnail': Thumbnail;
+  }
 }

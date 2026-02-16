@@ -25,64 +25,64 @@ self.skipWaiting();
 
 // Cache the Typekit stylesheets with a stale while revalidate strategy.
 registerRoute(
-    /^https:\/\/use\.typekit\.net\/evk7lzt\.css$/,
-    new CacheFirst({
-        cacheName: 'typekit-stylesheets',
-        plugins: [
-            new CacheableResponsePlugin({
-                statuses: [0, 200],
-            }),
-            new ExpirationPlugin({
-                maxAgeSeconds: 60 * 60 * 24 * 365,
-            }),
-        ],
-    })
+  /^https:\/\/use\.typekit\.net\/evk7lzt\.css$/,
+  new CacheFirst({
+    cacheName: 'typekit-stylesheets',
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+      new ExpirationPlugin({
+        maxAgeSeconds: 60 * 60 * 24 * 365,
+      }),
+    ],
+  })
 );
 
 registerRoute(
-    /^https:\/\/p\.typekit\.net/,
-    new CacheFirst({
-        cacheName: 'typekit-stylesheets',
-        plugins: [
-            new CacheableResponsePlugin({
-                statuses: [0, 200],
-            }),
-            new ExpirationPlugin({
-                maxAgeSeconds: 60 * 60 * 24 * 365,
-            }),
-        ],
-    })
+  /^https:\/\/p\.typekit\.net/,
+  new CacheFirst({
+    cacheName: 'typekit-stylesheets',
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+      new ExpirationPlugin({
+        maxAgeSeconds: 60 * 60 * 24 * 365,
+      }),
+    ],
+  })
 );
 
 registerRoute(
-    /^https:\/\/img\.shields\.io/,
-    new StaleWhileRevalidate({
-        cacheName: 'badges',
-        plugins: [
-            new CacheableResponsePlugin({
-                statuses: [0, 200],
-            }),
-            new ExpirationPlugin({
-                maxAgeSeconds: 60 * 60 * 24 * 365,
-            }),
-        ],
-    })
+  /^https:\/\/img\.shields\.io/,
+  new StaleWhileRevalidate({
+    cacheName: 'badges',
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+      new ExpirationPlugin({
+        maxAgeSeconds: 60 * 60 * 24 * 365,
+      }),
+    ],
+  })
 );
 
 // Cache the Typekit webfont files with a cache first strategy for 1 year.
 registerRoute(
-    /^https:\/\/use\.typekit\.net/,
-    new CacheFirst({
-        cacheName: 'typekit-webfonts',
-        plugins: [
-            new CacheableResponsePlugin({
-                statuses: [0, 200],
-            }),
-            new ExpirationPlugin({
-                maxAgeSeconds: 60 * 60 * 24 * 365,
-            }),
-        ],
-    })
+  /^https:\/\/use\.typekit\.net/,
+  new CacheFirst({
+    cacheName: 'typekit-webfonts',
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+      new ExpirationPlugin({
+        maxAgeSeconds: 60 * 60 * 24 * 365,
+      }),
+    ],
+  })
 );
 
 // const shellStrategy = new CacheFirst({ cacheName: cacheNames.precache });

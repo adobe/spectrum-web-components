@@ -24,8 +24,8 @@ When looking to leverage the `Breadcrumbs` or `BreadcrumbItem` base class as a t
 
 ```js
 import {
-    Breadcrumbs,
-    BreadcrumbItem,
+  Breadcrumbs,
+  BreadcrumbItem,
 } from '@spectrum-web-components/breadcrumbs';
 ```
 
@@ -39,9 +39,9 @@ Breadcrumbs consist of several key parts:
 
 ```html
 <sp-breadcrumbs>
-    <sp-breadcrumb-item value="home">Home</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="assets">March 2019 Assets</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="home">Home</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="assets">March 2019 Assets</sp-breadcrumb-item>
 </sp-breadcrumbs>
 ```
 
@@ -53,9 +53,9 @@ When needing to optimize for functional space of `<sp-breadcrumbs>`, the `compac
 
 ```html
 <sp-breadcrumbs compact>
-    <sp-breadcrumb-item value="1">Home</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="2">Trend</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="3">March 2019 Assets</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="1">Home</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="2">Trend</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="3">March 2019 Assets</sp-breadcrumb-item>
 </sp-breadcrumbs>
 ```
 
@@ -71,14 +71,14 @@ By default, the maximum number of visible breadcrumbs is 4, as recommended by [S
 
 ```html
 <sp-breadcrumbs>
-    <sp-breadcrumb-item value="your_stuff">Your stuff</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="team">Team</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="in_progress">In progress</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="files">Files</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="winter">Winter</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="assets">Assets</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="18x24">18x24</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="your_stuff">Your stuff</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="team">Team</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="in_progress">In progress</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="files">Files</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="winter">Winter</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="assets">Assets</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="18x24">18x24</sp-breadcrumb-item>
 </sp-breadcrumbs>
 ```
 
@@ -88,14 +88,14 @@ By default, the maximum number of visible breadcrumbs is 4, as recommended by [S
 
 ```html
 <sp-breadcrumbs max-visible-items="1">
-    <sp-breadcrumb-item value="your_stuff">Your stuff</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="team">Team</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="in_progress">In progress</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="files">Files</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="winter">Winter</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="assets">Assets</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="18x24">18x24</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="your_stuff">Your stuff</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="team">Team</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="in_progress">In progress</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="files">Files</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="winter">Winter</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="assets">Assets</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="18x24">18x24</sp-breadcrumb-item>
 </sp-breadcrumbs>
 ```
 
@@ -105,14 +105,14 @@ By default, the maximum number of visible breadcrumbs is 4, as recommended by [S
 
 ```html
 <sp-breadcrumbs max-visible-items="3">
-    <sp-breadcrumb-item value="your_stuff">Your stuff</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="team">Team</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="in_progress">In progress</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="files">Files</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="winter">Winter</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="assets">Assets</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="18x24">18x24</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="your_stuff">Your stuff</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="team">Team</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="in_progress">In progress</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="files">Files</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="winter">Winter</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="assets">Assets</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="18x24">18x24</sp-breadcrumb-item>
 </sp-breadcrumbs>
 ```
 
@@ -124,16 +124,16 @@ These breadcrumbs are in a resizable container. Reduce the size of the container
 
 ```html
 <div style="border: 2px solid; padding: 20px; resize: both; overflow: auto;">
-    <sp-breadcrumbs max-visible-items="8">
-        <sp-breadcrumb-item value="your_stuff">Your stuff</sp-breadcrumb-item>
-        <sp-breadcrumb-item value="team">Team</sp-breadcrumb-item>
-        <sp-breadcrumb-item value="in_progress">In progress</sp-breadcrumb-item>
-        <sp-breadcrumb-item value="files">Files</sp-breadcrumb-item>
-        <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
-        <sp-breadcrumb-item value="winter">Winter</sp-breadcrumb-item>
-        <sp-breadcrumb-item value="assets">Assets</sp-breadcrumb-item>
-        <sp-breadcrumb-item value="18x24">18x24</sp-breadcrumb-item>
-    </sp-breadcrumbs>
+  <sp-breadcrumbs max-visible-items="8">
+    <sp-breadcrumb-item value="your_stuff">Your stuff</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="team">Team</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="in_progress">In progress</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="files">Files</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="winter">Winter</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="assets">Assets</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="18x24">18x24</sp-breadcrumb-item>
+  </sp-breadcrumbs>
 </div>
 ```
 
@@ -150,14 +150,14 @@ Use the `root` slot on the first breadcrumb item to always render the first brea
 
 ```html
 <sp-breadcrumbs>
-    <sp-breadcrumb-item slot="root" value="your_stuff">
-        Your stuff
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item value="team">Files</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="winter">Winter</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="assets">Assets</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="18x24">18x24</sp-breadcrumb-item>
+  <sp-breadcrumb-item slot="root" value="your_stuff">
+    Your stuff
+  </sp-breadcrumb-item>
+  <sp-breadcrumb-item value="team">Files</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="winter">Winter</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="assets">Assets</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="18x24">18x24</sp-breadcrumb-item>
 </sp-breadcrumbs>
 ```
 
@@ -167,13 +167,13 @@ Use the `root` slot on the first breadcrumb item to always render the first brea
 
 ```html
 <sp-breadcrumbs>
-    <sp-breadcrumb-item slot="root" value="your_stuff">
-        Your stuff
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item value="files">Files</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="winter">Winter</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="assets">Assets</sp-breadcrumb-item>
+  <sp-breadcrumb-item slot="root" value="your_stuff">
+    Your stuff
+  </sp-breadcrumb-item>
+  <sp-breadcrumb-item value="files">Files</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="winter">Winter</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="assets">Assets</sp-breadcrumb-item>
 </sp-breadcrumbs>
 ```
 
@@ -188,15 +188,15 @@ Please note that the `change` event will no longer be triggered in this case.
 
 ```html
 <sp-breadcrumbs>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/">
-        Home
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/trend">
-        Trend
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/assets">
-        March 2019 Assets
-    </sp-breadcrumb-item>
+  <sp-breadcrumb-item href="https://opensource.adobe.com/">
+    Home
+  </sp-breadcrumb-item>
+  <sp-breadcrumb-item href="https://opensource.adobe.com/trend">
+    Trend
+  </sp-breadcrumb-item>
+  <sp-breadcrumb-item href="https://opensource.adobe.com/assets">
+    March 2019 Assets
+  </sp-breadcrumb-item>
 </sp-breadcrumbs>
 ```
 
@@ -206,13 +206,13 @@ The component offers the possibility to replace the action menu's icon with a cu
 
 ```html
 <sp-breadcrumbs menu-label="Settings">
-    <sp-icon-settings slot="icon"></sp-icon-settings>
+  <sp-icon-settings slot="icon"></sp-icon-settings>
 
-    <sp-breadcrumb-item value="displays">Displays</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="main">Main display</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="brightness">Brightness</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="presets">Presets</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="1">Preset #1</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="displays">Displays</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="main">Main display</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="brightness">Brightness</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="presets">Presets</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="1">Preset #1</sp-breadcrumb-item>
 </sp-breadcrumbs>
 ```
 

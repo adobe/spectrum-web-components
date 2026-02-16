@@ -18,8 +18,8 @@ import type { DecoratorFunction } from '@storybook/types';
  * Static color background settings - matching spectrum-css gradients
  */
 const staticColorSettings = {
-    black: 'linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255))',
-    white: 'linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67))',
+  black: 'linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255))',
+  white: 'linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67))',
 } as const;
 
 /**
@@ -27,29 +27,29 @@ const staticColorSettings = {
  * Wraps the story in a div with the appropriate background when static-color is set.
  */
 export const withStaticColorPlayground: DecoratorFunction = makeDecorator({
-    name: 'withStaticColorPlayground',
-    parameterName: 'staticColorPlayground',
-    wrapper: (StoryFn, context) => {
-        const { args } = context;
-        const staticColor = args?.[
-            'static-color'
-        ] as keyof typeof staticColorSettings;
+  name: 'withStaticColorPlayground',
+  parameterName: 'staticColorPlayground',
+  wrapper: (StoryFn, context) => {
+    const { args } = context;
+    const staticColor = args?.[
+      'static-color'
+    ] as keyof typeof staticColorSettings;
 
-        const background =
-            staticColor && staticColorSettings[staticColor]
-                ? staticColorSettings[staticColor]
-                : '';
+    const background =
+      staticColor && staticColorSettings[staticColor]
+        ? staticColorSettings[staticColor]
+        : '';
 
-        // If no static color is set, just return the story as-is
-        if (!background) {
-            return StoryFn(context);
-        }
+    // If no static color is set, just return the story as-is
+    if (!background) {
+      return StoryFn(context);
+    }
 
-        // Wrap the story with the background
-        return html`
-            <div style="background: ${background}; padding: 24px;">
-                ${StoryFn(context)}
-            </div>
-        `;
-    },
+    // Wrap the story with the background
+    return html`
+      <div style="background: ${background}; padding: 24px;">
+        ${StoryFn(context)}
+      </div>
+    `;
+  },
 });

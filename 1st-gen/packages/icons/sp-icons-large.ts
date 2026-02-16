@@ -16,7 +16,7 @@ import { IconsLarge } from './src/IconsLarge.js';
 defineElement('sp-icons-large', IconsLarge);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-icons-large': IconsLarge;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-icons-large': IconsLarge;
+  }
 }

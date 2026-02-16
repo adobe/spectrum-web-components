@@ -11,5 +11,5 @@
  */
 
 :host {
-    --spectrum-colorwheel-border-color: var(--system-color-wheel-border-color);
+  --spectrum-colorwheel-border-color: var(--system-color-wheel-border-color);
 }

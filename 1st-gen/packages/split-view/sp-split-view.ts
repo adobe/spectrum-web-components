@@ -17,7 +17,7 @@ import { SplitView } from './src/SplitView.js';
 defineElement('sp-split-view', SplitView);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-split-view': SplitView;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-split-view': SplitView;
+  }
 }

@@ -17,8 +17,8 @@ import '@spectrum-web-components/help-text/sp-help-text.js';
 import { ColorFieldMarkup } from './template.js';
 
 export default {
-    component: 'sp-color-field',
-    title: 'Color Field/Sizes',
+  component: 'sp-color-field',
+  title: 'Color Field/Sizes',
 };
 
 export const s = (): TemplateResult => ColorFieldMarkup({ size: 's' });

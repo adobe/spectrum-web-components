@@ -1,8 +1,8 @@
 {
-    "compilerOptions": {
-        "composite": true,
-        "rootDir": "./"
-    },
-    "extends": "../../tsconfig.json",
-    "include": ["*.ts", "src/*.ts"]
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "./"
+  },
+  "extends": "../../tsconfig.json",
+  "include": ["*.ts", "src/*.ts"]
 }

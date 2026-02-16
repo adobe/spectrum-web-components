@@ -14,5 +14,5 @@
 @import url("./field-label-overrides.css");
 
 label {
-    display: inline-block;
+  display: inline-block;
 }

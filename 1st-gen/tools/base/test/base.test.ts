@@ -19,21 +19,21 @@ class DirElement extends SpectrumElement {}
 customElements.define('dir-element', DirElement);
 
 describe('Base', () => {
-    after(() => {
-        document.dir = '';
-    });
-    it('component understands `dir` from `document`', async () => {
-        document.dir = 'rtl';
-        const el = await fixture<DirElement>(html`
-            <dir-element></dir-element>
-        `);
+  after(() => {
+    document.dir = '';
+  });
+  it('component understands `dir` from `document`', async () => {
+    document.dir = 'rtl';
+    const el = await fixture<DirElement>(html`
+      <dir-element></dir-element>
+    `);
 
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        const dir = getComputedStyle(el).direction;
-        expect(dir).to.equal('rtl');
-    });
-    it('has a static VERSION property', () => {
-        expect(DirElement.VERSION).to.equal(version);
-    });
+    const dir = getComputedStyle(el).direction;
+    expect(dir).to.equal('rtl');
+  });
+  it('has a static VERSION property', () => {
+    expect(DirElement.VERSION).to.equal(version);
+  });
 });

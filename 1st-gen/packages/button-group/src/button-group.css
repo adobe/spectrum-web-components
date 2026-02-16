@@ -14,10 +14,10 @@
 @import url("./button-group-overrides.css");
 
 :host([vertical]) ::slotted(sp-action-button) {
-    --spectrum-actionbutton-label-flex-grow: 1;
-    --spectrum-actionbutton-label-text-align: left;
+  --spectrum-actionbutton-label-flex-grow: 1;
+  --spectrum-actionbutton-label-text-align: left;
 }
 
 :host([vertical]:dir(rtl)) ::slotted(sp-action-button) {
-    --spectrum-actionbutton-label-text-align: right;
+  --spectrum-actionbutton-label-text-align: right;
 }

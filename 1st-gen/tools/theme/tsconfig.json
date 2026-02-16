@@ -1,10 +1,10 @@
 {
-    "compilerOptions": {
-        "composite": true,
-        "rootDir": "./"
-    },
-    "exclude": ["test/*.ts", "stories/*.ts"],
-    "extends": "../../tsconfig.json",
-    "include": ["*.ts", "src/**/*.ts", "express/*.ts", "spectrum-two/*.ts"],
-    "references": [{ "path": "../base" }]
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "./"
+  },
+  "exclude": ["test/*.ts", "stories/*.ts"],
+  "extends": "../../tsconfig.json",
+  "include": ["*.ts", "src/**/*.ts", "express/*.ts", "spectrum-two/*.ts"],
+  "references": [{ "path": "../base" }]
 }

@@ -1,9 +1,9 @@
 {
-    "compilerOptions": {
-        "composite": true,
-        "rootDir": "./"
-    },
-    "exclude": ["test/*.ts", "stories/*.ts"],
-    "extends": "../../tsconfig.json",
-    "include": ["*.ts", "src/*.ts"]
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "./"
+  },
+  "exclude": ["test/*.ts", "stories/*.ts"],
+  "extends": "../../tsconfig.json",
+  "include": ["*.ts", "src/*.ts"]
 }

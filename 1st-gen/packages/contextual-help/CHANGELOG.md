@@ -5,26 +5,26 @@
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.11.2
-    - @spectrum-web-components/dialog@1.11.2
-    - @spectrum-web-components/reactive-controllers@1.11.2
-    - @spectrum-web-components/action-button@1.11.2
-    - @spectrum-web-components/icons-workflow@1.11.2
-    - @spectrum-web-components/overlay@1.11.2
-    - @spectrum-web-components/popover@1.11.2
+  - @spectrum-web-components/base@1.11.2
+  - @spectrum-web-components/dialog@1.11.2
+  - @spectrum-web-components/reactive-controllers@1.11.2
+  - @spectrum-web-components/action-button@1.11.2
+  - @spectrum-web-components/icons-workflow@1.11.2
+  - @spectrum-web-components/overlay@1.11.2
+  - @spectrum-web-components/popover@1.11.2
 
 ## 1.11.1
 
 ### Patch Changes
 
 - Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
-    - @spectrum-web-components/base@1.11.1
-    - @spectrum-web-components/action-button@1.11.1
-    - @spectrum-web-components/dialog@1.11.1
-    - @spectrum-web-components/overlay@1.11.1
-    - @spectrum-web-components/icons-workflow@1.11.1
-    - @spectrum-web-components/popover@1.11.1
-    - @spectrum-web-components/reactive-controllers@1.11.1
+  - @spectrum-web-components/base@1.11.1
+  - @spectrum-web-components/action-button@1.11.1
+  - @spectrum-web-components/dialog@1.11.1
+  - @spectrum-web-components/overlay@1.11.1
+  - @spectrum-web-components/icons-workflow@1.11.1
+  - @spectrum-web-components/popover@1.11.1
+  - @spectrum-web-components/reactive-controllers@1.11.1
 
 ## 1.11.0
 
@@ -32,57 +32,57 @@
 
 - [#5960](https://github.com/adobe/spectrum-web-components/pull/5960) [`e66cdb2`](https://github.com/adobe/spectrum-web-components/commit/e66cdb2ea99f263f923480b70fc2b41be103b589) Thanks [@blunteshwar](https://github.com/blunteshwar)! - ## Changeset
 
-    **Fix: Contextual Help popover inaccessible to screen readers**
+  **Fix: Contextual Help popover inaccessible to screen readers**
 
-    Adds required ARIA attributes to associate the trigger button with popover content, enabling screen readers to announce the heading and body text when the popover opens.
+  Adds required ARIA attributes to associate the trigger button with popover content, enabling screen readers to announce the heading and body text when the popover opens.
 
 - Updated dependencies [[`b95e254`](https://github.com/adobe/spectrum-web-components/commit/b95e25413830825a506b7d4025d6b4d982691771), [`02b2d7d`](https://github.com/adobe/spectrum-web-components/commit/02b2d7d2c7d204d7f0f6501ec075e923f58244c9), [`f07344f`](https://github.com/adobe/spectrum-web-components/commit/f07344f400f64c12f15762e3fedcdab2629e781b), [`1d76b70`](https://github.com/adobe/spectrum-web-components/commit/1d76b7093d8ff5f9b26f07a69086488341a02650), [`cadc39e`](https://github.com/adobe/spectrum-web-components/commit/cadc39ea419f572a79451fc886cd45c8d8821cde), [`4cb0b7b`](https://github.com/adobe/spectrum-web-components/commit/4cb0b7b86ebfaad89f1866916415b8578aa6dbea), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
-    - @spectrum-web-components/reactive-controllers@1.11.0
-    - @spectrum-web-components/overlay@1.11.0
-    - @spectrum-web-components/base@1.11.0
-    - @spectrum-web-components/popover@1.11.0
-    - @spectrum-web-components/action-button@1.11.0
-    - @spectrum-web-components/dialog@1.11.0
-    - @spectrum-web-components/icons-workflow@1.11.0
+  - @spectrum-web-components/reactive-controllers@1.11.0
+  - @spectrum-web-components/overlay@1.11.0
+  - @spectrum-web-components/base@1.11.0
+  - @spectrum-web-components/popover@1.11.0
+  - @spectrum-web-components/action-button@1.11.0
+  - @spectrum-web-components/dialog@1.11.0
+  - @spectrum-web-components/icons-workflow@1.11.0
 
 ## 1.10.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.10.0
-    - @spectrum-web-components/action-button@1.10.0
-    - @spectrum-web-components/dialog@1.10.0
-    - @spectrum-web-components/icons-workflow@1.10.0
-    - @spectrum-web-components/overlay@1.10.0
-    - @spectrum-web-components/popover@1.10.0
-    - @spectrum-web-components/reactive-controllers@1.10.0
+  - @spectrum-web-components/base@1.10.0
+  - @spectrum-web-components/action-button@1.10.0
+  - @spectrum-web-components/dialog@1.10.0
+  - @spectrum-web-components/icons-workflow@1.10.0
+  - @spectrum-web-components/overlay@1.10.0
+  - @spectrum-web-components/popover@1.10.0
+  - @spectrum-web-components/reactive-controllers@1.10.0
 
 ## 1.9.1
 
 ### Patch Changes
 
 - Updated dependencies [[`a19cbe3`](https://github.com/adobe/spectrum-web-components/commit/a19cbe3e8b4690d8abd1530e3930e5d48ae43618)]:
-    - @spectrum-web-components/overlay@1.9.1
-    - @spectrum-web-components/popover@1.9.1
-    - @spectrum-web-components/action-button@1.9.1
-    - @spectrum-web-components/dialog@1.9.1
-    - @spectrum-web-components/icons-workflow@1.9.1
-    - @spectrum-web-components/base@1.9.1
-    - @spectrum-web-components/reactive-controllers@1.9.1
+  - @spectrum-web-components/overlay@1.9.1
+  - @spectrum-web-components/popover@1.9.1
+  - @spectrum-web-components/action-button@1.9.1
+  - @spectrum-web-components/dialog@1.9.1
+  - @spectrum-web-components/icons-workflow@1.9.1
+  - @spectrum-web-components/base@1.9.1
+  - @spectrum-web-components/reactive-controllers@1.9.1
 
 ## 1.9.0
 
 ### Patch Changes
 
 - Updated dependencies [[`bdf54c1`](https://github.com/adobe/spectrum-web-components/commit/bdf54c1bc6d3eb20da1a1bf3b40650e6ab1ba399), [`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8)]:
-    - @spectrum-web-components/icons-workflow@1.9.0
-    - @spectrum-web-components/reactive-controllers@1.9.0
-    - @spectrum-web-components/action-button@1.9.0
-    - @spectrum-web-components/dialog@1.9.0
-    - @spectrum-web-components/overlay@1.9.0
-    - @spectrum-web-components/popover@1.9.0
-    - @spectrum-web-components/base@1.9.0
+  - @spectrum-web-components/icons-workflow@1.9.0
+  - @spectrum-web-components/reactive-controllers@1.9.0
+  - @spectrum-web-components/action-button@1.9.0
+  - @spectrum-web-components/dialog@1.9.0
+  - @spectrum-web-components/overlay@1.9.0
+  - @spectrum-web-components/popover@1.9.0
+  - @spectrum-web-components/base@1.9.0
 
 ## 1.8.0
 
@@ -90,52 +90,52 @@
 
 - [#5690](https://github.com/adobe/spectrum-web-components/pull/5690) [`99ab45e`](https://github.com/adobe/spectrum-web-components/commit/99ab45ea77ae5870b2170c1860c67a70e9a5d66a) Thanks [@5t3ph](https://github.com/5t3ph)! - Fixed a typo in the default `info` variant label from "Informations" to "Information".
 
-    Additionally, added package dependency for `@spectrum-web-components/reactive-controllers@1.7.0`.
+  Additionally, added package dependency for `@spectrum-web-components/reactive-controllers@1.7.0`.
 
 - Updated dependencies [[`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7), [`ee1bae6`](https://github.com/adobe/spectrum-web-components/commit/ee1bae6f9a7401dc31ebc84e4e27f9d39be692d1), [`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7)]:
-    - @spectrum-web-components/overlay@1.8.0
-    - @spectrum-web-components/popover@1.8.0
-    - @spectrum-web-components/action-button@1.8.0
-    - @spectrum-web-components/dialog@1.8.0
-    - @spectrum-web-components/icons-workflow@1.8.0
-    - @spectrum-web-components/base@1.8.0
-    - @spectrum-web-components/reactive-controllers@1.8.0
+  - @spectrum-web-components/overlay@1.8.0
+  - @spectrum-web-components/popover@1.8.0
+  - @spectrum-web-components/action-button@1.8.0
+  - @spectrum-web-components/dialog@1.8.0
+  - @spectrum-web-components/icons-workflow@1.8.0
+  - @spectrum-web-components/base@1.8.0
+  - @spectrum-web-components/reactive-controllers@1.8.0
 
 ## 1.7.0
 
 ### Patch Changes
 
 - Updated dependencies [[`a646ae8`](https://github.com/adobe/spectrum-web-components/commit/a646ae8b0e652308d359226740d2cb189e492e45), [`c1669d2`](https://github.com/adobe/spectrum-web-components/commit/c1669d2dc5e1ceeb84486ce49a428f86a3173caa)]:
-    - @spectrum-web-components/overlay@1.7.0
-    - @spectrum-web-components/action-button@1.7.0
-    - @spectrum-web-components/popover@1.7.0
-    - @spectrum-web-components/dialog@1.7.0
-    - @spectrum-web-components/icons-workflow@1.7.0
-    - @spectrum-web-components/base@1.7.0
+  - @spectrum-web-components/overlay@1.7.0
+  - @spectrum-web-components/action-button@1.7.0
+  - @spectrum-web-components/popover@1.7.0
+  - @spectrum-web-components/dialog@1.7.0
+  - @spectrum-web-components/icons-workflow@1.7.0
+  - @spectrum-web-components/base@1.7.0
 
 ## 1.6.0
 
 ### Patch Changes
 
 - Updated dependencies [[`03a4439`](https://github.com/adobe/spectrum-web-components/commit/03a443946b760aedc668630f33ac660443ff915e), [`f6cebbd`](https://github.com/adobe/spectrum-web-components/commit/f6cebbd90008a2abb1232c355ae06e8566086093), [`53f3769`](https://github.com/adobe/spectrum-web-components/commit/53f3769f07b6e7853a8a4c0dc63b21fe14cf3d4b)]:
-    - @spectrum-web-components/popover@1.6.0
-    - @spectrum-web-components/icons-workflow@1.6.0
-    - @spectrum-web-components/overlay@1.6.0
-    - @spectrum-web-components/dialog@1.6.0
-    - @spectrum-web-components/action-button@1.6.0
-    - @spectrum-web-components/base@1.6.0
+  - @spectrum-web-components/popover@1.6.0
+  - @spectrum-web-components/icons-workflow@1.6.0
+  - @spectrum-web-components/overlay@1.6.0
+  - @spectrum-web-components/dialog@1.6.0
+  - @spectrum-web-components/action-button@1.6.0
+  - @spectrum-web-components/base@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
 - Updated dependencies [[`8f8735c`](https://github.com/adobe/spectrum-web-components/commit/8f8735c9ec3eac3b6473424c78257cb46ee17f70), [`6c58f50`](https://github.com/adobe/spectrum-web-components/commit/6c58f50f7b1f5489c11e0d3484e3f4a9d576f1c8)]:
-    - @spectrum-web-components/overlay@1.5.0
-    - @spectrum-web-components/action-button@1.5.0
-    - @spectrum-web-components/dialog@1.5.0
-    - @spectrum-web-components/popover@1.5.0
-    - @spectrum-web-components/icons-workflow@1.5.0
-    - @spectrum-web-components/base@1.5.0
+  - @spectrum-web-components/overlay@1.5.0
+  - @spectrum-web-components/action-button@1.5.0
+  - @spectrum-web-components/dialog@1.5.0
+  - @spectrum-web-components/popover@1.5.0
+  - @spectrum-web-components/icons-workflow@1.5.0
+  - @spectrum-web-components/base@1.5.0
 
 ## 1.4.0
 
@@ -146,24 +146,24 @@
 ### Patch Changes
 
 - Updated dependencies [[`72dbe62`](https://github.com/adobe/spectrum-web-components/commit/72dbe629cddfc57171eaaadf7206df47c19d3c98), [`46cd782`](https://github.com/adobe/spectrum-web-components/commit/46cd7828f65491fc08790e5ba0aec412ee89199d), [`70f5f6f`](https://github.com/adobe/spectrum-web-components/commit/70f5f6f3a97b530fb20f9f5ee049e9a8c124b02d)]:
-    - @spectrum-web-components/action-button@1.4.0
-    - @spectrum-web-components/overlay@1.4.0
-    - @spectrum-web-components/popover@1.4.0
-    - @spectrum-web-components/dialog@1.4.0
-    - @spectrum-web-components/icons-workflow@1.4.0
-    - @spectrum-web-components/base@1.4.0
+  - @spectrum-web-components/action-button@1.4.0
+  - @spectrum-web-components/overlay@1.4.0
+  - @spectrum-web-components/popover@1.4.0
+  - @spectrum-web-components/dialog@1.4.0
+  - @spectrum-web-components/icons-workflow@1.4.0
+  - @spectrum-web-components/base@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
 - Updated dependencies [[`468314f`](https://github.com/adobe/spectrum-web-components/commit/468314f45cf5fedb2e9029da210a5886260abca9)]:
-    - @spectrum-web-components/dialog@1.3.0
-    - @spectrum-web-components/overlay@1.3.0
-    - @spectrum-web-components/popover@1.3.0
-    - @spectrum-web-components/action-button@1.3.0
-    - @spectrum-web-components/icons-workflow@1.3.0
-    - @spectrum-web-components/base@1.3.0
+  - @spectrum-web-components/dialog@1.3.0
+  - @spectrum-web-components/overlay@1.3.0
+  - @spectrum-web-components/popover@1.3.0
+  - @spectrum-web-components/action-button@1.3.0
+  - @spectrum-web-components/icons-workflow@1.3.0
+  - @spectrum-web-components/base@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

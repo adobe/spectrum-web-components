@@ -17,7 +17,7 @@ import { FieldGroup } from './src/FieldGroup.js';
 defineElement('sp-field-group', FieldGroup);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-field-group': FieldGroup;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-field-group': FieldGroup;
+  }
 }

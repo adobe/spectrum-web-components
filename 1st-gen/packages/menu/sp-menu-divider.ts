@@ -16,7 +16,7 @@ import { MenuDivider } from './src/MenuDivider.js';
 defineElement('sp-menu-divider', MenuDivider);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-menu-divider': MenuDivider;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-menu-divider': MenuDivider;
+  }
 }

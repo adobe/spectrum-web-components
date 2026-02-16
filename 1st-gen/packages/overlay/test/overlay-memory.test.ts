@@ -15,8 +15,8 @@ import { Default } from '../stories/overlay.stories.js';
 
 // Defualt Overlay
 testForMemoryLeaks(
-    Default({
-        placement: 'bottom',
-        offset: 0,
-    })
+  Default({
+    placement: 'bottom',
+    offset: 0,
+  })
 );

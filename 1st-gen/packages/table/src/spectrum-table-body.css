@@ -11,16 +11,16 @@
  */
 
 :host {
-    display: table-row-group;
-    position: relative;
-    border: none;
-    border-radius: var(--mod-table-border-radius, var(--spectrum-table-border-radius));
+  display: table-row-group;
+  position: relative;
+  border: none;
+  border-radius: var(--mod-table-border-radius, var(--spectrum-table-border-radius));
 }
 
 :host([drop-target]) {
-    --mod-table-border-color: transparent;
+  --mod-table-border-color: transparent;
 
-    outline-width: var(--mod-table-focus-indicator-thickness, var(--spectrum-table-focus-indicator-thickness));
-    outline-style: solid;
-    outline-color: var(--highcontrast-table-focus-indicator-color, var(--mod-table-drop-zone-outline-color, var(--spectrum-table-drop-zone-outline-color)));
+  outline-width: var(--mod-table-focus-indicator-thickness, var(--spectrum-table-focus-indicator-thickness));
+  outline-style: solid;
+  outline-color: var(--highcontrast-table-focus-indicator-color, var(--mod-table-drop-zone-outline-color, var(--spectrum-table-drop-zone-outline-color)));
 }

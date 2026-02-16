@@ -17,7 +17,7 @@ import { ColorWheel } from './src/ColorWheel.js';
 defineElement('sp-color-wheel', ColorWheel);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-color-wheel': ColorWheel;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-color-wheel': ColorWheel;
+  }
 }

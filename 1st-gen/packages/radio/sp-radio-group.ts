@@ -16,7 +16,7 @@ import { RadioGroup } from './src/RadioGroup.js';
 defineElement('sp-radio-group', RadioGroup);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-radio-group': RadioGroup;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-radio-group': RadioGroup;
+  }
 }

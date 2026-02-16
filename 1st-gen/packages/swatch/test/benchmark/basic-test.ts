@@ -16,5 +16,5 @@ import '@spectrum-web-components/swatch/sp-swatch.js';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-swatch></sp-swatch>
+  <sp-swatch></sp-swatch>
 `);

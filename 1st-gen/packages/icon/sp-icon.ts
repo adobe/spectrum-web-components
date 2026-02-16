@@ -16,7 +16,7 @@ import { Icon } from './src/Icon.js';
 defineElement('sp-icon', Icon);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-icon': Icon;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-icon': Icon;
+  }
 }

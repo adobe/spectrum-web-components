@@ -15,10 +15,10 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { StatusLight } from '@adobe/swc/status-light';
 import {
-    STATUSLIGHT_VARIANTS_COLOR_S2,
-    STATUSLIGHT_VARIANTS_SEMANTIC_S2,
-    StatusLightColorVariantS2,
-    StatusLightSemanticVariantS2,
+  STATUSLIGHT_VARIANTS_COLOR_S2,
+  STATUSLIGHT_VARIANTS_SEMANTIC_S2,
+  StatusLightColorVariantS2,
+  StatusLightSemanticVariantS2,
 } from '@spectrum-web-components/core/components/status-light';
 
 import '@adobe/swc/status-light';
@@ -30,15 +30,15 @@ import '@adobe/swc/status-light';
 const { args, argTypes, template } = getStorybookHelpers('swc-status-light');
 
 argTypes.variant = {
-    ...argTypes.variant,
-    control: { type: 'select' },
-    options: StatusLight.VARIANTS,
+  ...argTypes.variant,
+  control: { type: 'select' },
+  options: StatusLight.VARIANTS,
 };
 
 argTypes.size = {
-    ...argTypes.size,
-    control: { type: 'select' },
-    options: StatusLight.VALID_SIZES,
+  ...argTypes.size,
+  control: { type: 'select' },
+  options: StatusLight.VALID_SIZES,
 };
 
 /**
@@ -48,31 +48,31 @@ args['default-slot'] = 'Status light';
 args.size = 'm';
 
 export const meta: Meta = {
-    title: 'Status light',
-    component: 'swc-status-light',
-    parameters: {
-        docs: {
-            subtitle: `Status lights convey semantic meaning through colored dots accompanied by descriptive text.`,
-        },
-        design: {
-            type: 'figma',
-            url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=36797-954',
-        },
-        stackblitz: {
-            url: 'https://stackblitz.com/edit/vitejs-vite-y2kz1rkx?file=package.json',
-        },
-        flexLayout: 'row-wrap',
+  title: 'Status light',
+  component: 'swc-status-light',
+  parameters: {
+    docs: {
+      subtitle: `Status lights convey semantic meaning through colored dots accompanied by descriptive text.`,
     },
-    args,
-    argTypes,
-    render: (args) => template(args),
-    tags: ['migrated'],
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=36797-954',
+    },
+    stackblitz: {
+      url: 'https://stackblitz.com/edit/vitejs-vite-y2kz1rkx?file=package.json',
+    },
+    flexLayout: 'row-wrap',
+  },
+  args,
+  argTypes,
+  render: (args) => template(args),
+  tags: ['migrated'],
 };
 
 export default {
-    ...meta,
-    title: 'Status light',
-    excludeStories: ['meta'],
+  ...meta,
+  title: 'Status light',
+  excludeStories: ['meta'],
 } as Meta;
 
 // ────────────────────
@@ -80,28 +80,28 @@ export default {
 // ────────────────────
 
 const semanticLabels = {
-    info: 'Active',
-    neutral: 'Archived',
-    positive: 'Approved',
-    notice: 'Pending approval',
-    negative: 'Rejected',
+  info: 'Active',
+  neutral: 'Archived',
+  positive: 'Approved',
+  notice: 'Pending approval',
+  negative: 'Rejected',
 } as const satisfies Record<StatusLightSemanticVariantS2, string>;
 
 const nonSemanticLabels = {
-    yellow: 'Operations',
-    chartreuse: 'Quality',
-    celery: 'Documentation',
-    seafoam: 'Support',
-    cyan: 'Analytics',
-    indigo: 'Engineering',
-    purple: 'Product',
-    fuchsia: 'Marketing',
-    magenta: 'Design',
-    pink: 'Creative',
-    turquoise: 'Training',
-    brown: 'Facilities',
-    cinnamon: 'Compliance',
-    silver: 'Version 1.2.10',
+  yellow: 'Operations',
+  chartreuse: 'Quality',
+  celery: 'Documentation',
+  seafoam: 'Support',
+  cyan: 'Analytics',
+  indigo: 'Engineering',
+  purple: 'Product',
+  fuchsia: 'Marketing',
+  magenta: 'Design',
+  pink: 'Creative',
+  turquoise: 'Training',
+  brown: 'Facilities',
+  cinnamon: 'Compliance',
+  silver: 'Version 1.2.10',
 } as const satisfies Record<StatusLightColorVariantS2, string>;
 
 // ────────────────────
@@ -109,12 +109,12 @@ const nonSemanticLabels = {
 // ────────────────────
 
 export const Playground: Story = {
-    tags: ['autodocs', 'dev'],
-    args: {
-        size: 'm',
-        variant: 'info',
-        'default-slot': 'Active',
-    },
+  tags: ['autodocs', 'dev'],
+  args: {
+    size: 'm',
+    variant: 'info',
+    'default-slot': 'Active',
+  },
 };
 
 // ────────────────────
@@ -122,12 +122,12 @@ export const Playground: Story = {
 // ────────────────────
 
 export const Overview: Story = {
-    tags: ['overview'],
-    args: {
-        size: 'm',
-        variant: 'info',
-        'default-slot': 'Active',
-    },
+  tags: ['overview'],
+  args: {
+    size: 'm',
+    variant: 'info',
+    'default-slot': 'Active',
+  },
 };
 
 // ──────────────────────────
@@ -145,17 +145,17 @@ export const Overview: Story = {
  * - **Default slot**: Text content describing the status or category (required for accessibility)
  */
 export const Anatomy: Story = {
-    render: (args) => html`
-        ${template({
-            ...args,
-            variant: 'positive',
-            'default-slot': 'Approved',
-        })}
-    `,
-    tags: ['anatomy'],
-    args: {
-        size: 'm',
-    },
+  render: (args) => html`
+    ${template({
+      ...args,
+      variant: 'positive',
+      'default-slot': 'Approved',
+    })}
+  `,
+  tags: ['anatomy'],
+  args: {
+    size: 'm',
+  },
 };
 
 // ──────────────────────────
@@ -173,14 +173,14 @@ export const Anatomy: Story = {
  * All sizes shown below for comparison.
  */
 export const Sizes: Story = {
-    render: (args) => html`
-        ${template({ ...args, size: 's', 'default-slot': 'Small' })}
-        ${template({ ...args, size: 'm', 'default-slot': 'Medium' })}
-        ${template({ ...args, size: 'l', 'default-slot': 'Large' })}
-        ${template({ ...args, size: 'xl', 'default-slot': 'Extra-large' })}
-    `,
-    parameters: { 'section-order': 1 },
-    tags: ['options'],
+  render: (args) => html`
+    ${template({ ...args, size: 's', 'default-slot': 'Small' })}
+    ${template({ ...args, size: 'm', 'default-slot': 'Medium' })}
+    ${template({ ...args, size: 'l', 'default-slot': 'Large' })}
+    ${template({ ...args, size: 'xl', 'default-slot': 'Extra-large' })}
+  `,
+  parameters: { 'section-order': 1 },
+  tags: ['options'],
 };
 /**
  * Semantic variants provide meaning through color:
@@ -192,18 +192,18 @@ export const Sizes: Story = {
  * - **`negative`**: Error, alert, rejected, failed
  */
 export const SemanticVariants: Story = {
-    render: (args) => html`
-        ${STATUSLIGHT_VARIANTS_SEMANTIC_S2.map(
-            (variant: StatusLightSemanticVariantS2) =>
-                template({
-                    ...args,
-                    variant,
-                    'default-slot': semanticLabels[variant],
-                })
-        )}
-    `,
-    parameters: { 'section-order': 2 },
-    tags: ['options'],
+  render: (args) => html`
+    ${STATUSLIGHT_VARIANTS_SEMANTIC_S2.map(
+      (variant: StatusLightSemanticVariantS2) =>
+        template({
+          ...args,
+          variant,
+          'default-slot': semanticLabels[variant],
+        })
+    )}
+  `,
+  parameters: { 'section-order': 2 },
+  tags: ['options'],
 };
 
 /**
@@ -213,18 +213,17 @@ export const SemanticVariants: Story = {
  * **Note**: The `pink`, `turquoise`, `brown`, `cinnamon`, and `silver` variants are new in 2nd-gen and not available in 1st-gen.
  */
 export const NonSemanticVariants: Story = {
-    render: (args) => html`
-        ${STATUSLIGHT_VARIANTS_COLOR_S2.map(
-            (variant: StatusLightColorVariantS2) =>
-                template({
-                    ...args,
-                    variant,
-                    'default-slot': nonSemanticLabels[variant],
-                })
-        )}
-    `,
-    parameters: { 'section-order': 3 },
-    tags: ['options'],
+  render: (args) => html`
+    ${STATUSLIGHT_VARIANTS_COLOR_S2.map((variant: StatusLightColorVariantS2) =>
+      template({
+        ...args,
+        variant,
+        'default-slot': nonSemanticLabels[variant],
+      })
+    )}
+  `,
+  parameters: { 'section-order': 3 },
+  tags: ['options'],
 };
 NonSemanticVariants.storyName = 'Non-semantic variants';
 
@@ -237,16 +236,16 @@ NonSemanticVariants.storyName = 'Non-semantic variants';
  * You can control the wrapping behavior by setting a `max-inline-size` style on the component.
  */
 export const TextWrapping: Story = {
-    render: (args) => html`
-        ${template({
-            ...args,
-            variant: 'positive',
-            'default-slot':
-                'Document processing in progress - please wait while we validate your submission',
-            style: 'max-inline-size: 200px',
-        })}
-    `,
-    tags: ['behaviors'],
+  render: (args) => html`
+    ${template({
+      ...args,
+      variant: 'positive',
+      'default-slot':
+        'Document processing in progress - please wait while we validate your submission',
+      style: 'max-inline-size: 200px',
+    })}
+  `,
+  tags: ['behaviors'],
 };
 
 // ────────────────────────────────
@@ -278,47 +277,47 @@ export const TextWrapping: Story = {
  * - For non-semantic variants, ensure the text label provides complete context
  */
 export const Accessibility: Story = {
-    render: (args) => html`
-        ${template({
-            ...args,
-            variant: 'positive',
-            'default-slot': semanticLabels['positive'],
-        })}
-        ${template({
-            ...args,
-            variant: 'negative',
-            'default-slot': semanticLabels['negative'],
-        })}
-        ${template({
-            ...args,
-            variant: 'notice',
-            'default-slot': semanticLabels['notice'],
-        })}
-        ${template({
-            ...args,
-            variant: 'info',
-            'default-slot': semanticLabels['info'],
-        })}
-        ${template({
-            ...args,
-            variant: 'neutral',
-            'default-slot': semanticLabels['neutral'],
-        })}
-        ${template({
-            ...args,
-            variant: 'celery',
-            'default-slot': nonSemanticLabels['celery'],
-        })}
-        ${template({
-            ...args,
-            variant: 'yellow',
-            'default-slot': nonSemanticLabels['yellow'],
-        })}
-        ${template({
-            ...args,
-            variant: 'silver',
-            'default-slot': nonSemanticLabels['silver'],
-        })}
-    `,
-    tags: ['a11y'],
+  render: (args) => html`
+    ${template({
+      ...args,
+      variant: 'positive',
+      'default-slot': semanticLabels['positive'],
+    })}
+    ${template({
+      ...args,
+      variant: 'negative',
+      'default-slot': semanticLabels['negative'],
+    })}
+    ${template({
+      ...args,
+      variant: 'notice',
+      'default-slot': semanticLabels['notice'],
+    })}
+    ${template({
+      ...args,
+      variant: 'info',
+      'default-slot': semanticLabels['info'],
+    })}
+    ${template({
+      ...args,
+      variant: 'neutral',
+      'default-slot': semanticLabels['neutral'],
+    })}
+    ${template({
+      ...args,
+      variant: 'celery',
+      'default-slot': nonSemanticLabels['celery'],
+    })}
+    ${template({
+      ...args,
+      variant: 'yellow',
+      'default-slot': nonSemanticLabels['yellow'],
+    })}
+    ${template({
+      ...args,
+      variant: 'silver',
+      'default-slot': nonSemanticLabels['silver'],
+    })}
+  `,
+  tags: ['a11y'],
 };

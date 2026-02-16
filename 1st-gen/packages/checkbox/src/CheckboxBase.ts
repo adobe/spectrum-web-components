@@ -14,7 +14,7 @@ import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { CheckboxMixin } from './CheckboxMixin.js';
 
 export class CheckboxBase extends CheckboxMixin(Focusable) {
-    public override get focusElement(): HTMLElement {
-        return this.inputElement;
-    }
+  public override get focusElement(): HTMLElement {
+    return this.inputElement;
+  }
 }

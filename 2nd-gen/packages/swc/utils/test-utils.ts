@@ -13,45 +13,45 @@
 import { render } from 'lit';
 
 type SwcTestGlobals = {
-    warn: (...args: unknown[]) => void;
-    DEBUG?: boolean;
-    issuedWarnings?: Set<string>;
+  warn: (...args: unknown[]) => void;
+  DEBUG?: boolean;
+  issuedWarnings?: Set<string>;
 };
 
 // Returns the shared SWC test globals, creating defaults when needed.
 export const getSwcTestGlobals = (): SwcTestGlobals => {
-    const swcWindow = window as Window & { __swc?: SwcTestGlobals };
+  const swcWindow = window as Window & { __swc?: SwcTestGlobals };
 
-    if (!swcWindow.__swc) {
-        swcWindow.__swc = { warn: () => {} };
-    }
+  if (!swcWindow.__swc) {
+    swcWindow.__swc = { warn: () => {} };
+  }
 
-    return swcWindow.__swc;
+  return swcWindow.__swc;
 };
 
 // Enables debug warnings and captures warn calls for assertions.
 export const setupSwcWarningSpy = () => {
-    const swcGlobals = getSwcTestGlobals();
-    const originalWarn = swcGlobals.warn;
-    const originalDebug = swcGlobals.DEBUG ?? false;
-    const originalIssuedWarnings = swcGlobals.issuedWarnings;
-    const warnCalls: unknown[][] = [];
+  const swcGlobals = getSwcTestGlobals();
+  const originalWarn = swcGlobals.warn;
+  const originalDebug = swcGlobals.DEBUG ?? false;
+  const originalIssuedWarnings = swcGlobals.issuedWarnings;
+  const warnCalls: unknown[][] = [];
 
-    swcGlobals.warn = (...args: unknown[]) => {
-        warnCalls.push(args);
-    };
-    swcGlobals.issuedWarnings = new Set();
-    swcGlobals.DEBUG = true;
+  swcGlobals.warn = (...args: unknown[]) => {
+    warnCalls.push(args);
+  };
+  swcGlobals.issuedWarnings = new Set();
+  swcGlobals.DEBUG = true;
 
-    return {
-        swcGlobals,
-        warnCalls,
-        restore: () => {
-            swcGlobals.warn = originalWarn;
-            swcGlobals.DEBUG = originalDebug;
-            swcGlobals.issuedWarnings = originalIssuedWarnings;
-        },
-    };
+  return {
+    swcGlobals,
+    warnCalls,
+    restore: () => {
+      swcGlobals.warn = originalWarn;
+      swcGlobals.DEBUG = originalDebug;
+      swcGlobals.issuedWarnings = originalIssuedWarnings;
+    },
+  };
 };
 
 /**
@@ -70,14 +70,14 @@ export const setupSwcWarningSpy = () => {
  * @param fn - Async callback that receives the captured warn calls array
  */
 export async function withWarningSpy(
-    fn: (warnCalls: unknown[][]) => Promise<void>
+  fn: (warnCalls: unknown[][]) => Promise<void>
 ): Promise<void> {
-    const { warnCalls, restore } = setupSwcWarningSpy();
-    try {
-        await fn(warnCalls);
-    } finally {
-        restore();
-    }
+  const { warnCalls, restore } = setupSwcWarningSpy();
+  try {
+    await fn(warnCalls);
+  } finally {
+    restore();
+  }
 }
 
 /**
@@ -93,14 +93,14 @@ export async function withWarningSpy(
  * @returns Promise that resolves to the queried element after its update completes
  */
 export async function getComponent<T extends HTMLElement>(
-    canvasElement: HTMLElement,
-    selector: string
+  canvasElement: HTMLElement,
+  selector: string
 ): Promise<T> {
-    const el = canvasElement.querySelector(selector) as T;
-    if ('updateComplete' in el) {
-        await (el as { updateComplete: Promise<boolean> }).updateComplete;
-    }
-    return el;
+  const el = canvasElement.querySelector(selector) as T;
+  if ('updateComplete' in el) {
+    await (el as { updateComplete: Promise<boolean> }).updateComplete;
+  }
+  return el;
 }
 
 /**
@@ -116,20 +116,18 @@ export async function getComponent<T extends HTMLElement>(
  * @returns Promise that resolves to an array of queried elements after all updates complete
  */
 export async function getComponents<T extends HTMLElement>(
-    canvasElement: HTMLElement,
-    selector: string
+  canvasElement: HTMLElement,
+  selector: string
 ): Promise<T[]> {
-    const elements = Array.from(
-        canvasElement.querySelectorAll(selector)
-    ) as T[];
-    await Promise.all(
-        elements.map((el) =>
-            'updateComplete' in el
-                ? (el as { updateComplete: Promise<boolean> }).updateComplete
-                : Promise.resolve()
-        )
-    );
-    return elements;
+  const elements = Array.from(canvasElement.querySelectorAll(selector)) as T[];
+  await Promise.all(
+    elements.map((el) =>
+      'updateComplete' in el
+        ? (el as { updateComplete: Promise<boolean> }).updateComplete
+        : Promise.resolve()
+    )
+  );
+  return elements;
 }
 
 /**
@@ -144,15 +142,15 @@ export async function getComponents<T extends HTMLElement>(
  * @returns Promise that resolves to the rendered element
  */
 export async function fixture<T extends HTMLElement>(
-    template: unknown
+  template: unknown
 ): Promise<T> {
-    const container = document.createElement('div');
-    render(template, container);
-    document.body.appendChild(container);
-    const element = container.firstElementChild as T;
-    await customElements.whenDefined(element.localName);
-    if ('updateComplete' in element) {
-        await (element as { updateComplete: Promise<boolean> }).updateComplete;
-    }
-    return element;
+  const container = document.createElement('div');
+  render(template, container);
+  document.body.appendChild(container);
+  const element = container.firstElementChild as T;
+  await customElements.whenDefined(element.localName);
+  if ('updateComplete' in element) {
+    await (element as { updateComplete: Promise<boolean> }).updateComplete;
+  }
+  return element;
 }

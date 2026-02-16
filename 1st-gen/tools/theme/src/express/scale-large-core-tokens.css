@@ -16,6 +16,6 @@
 
 :root,
 :host {
-    --spectrum-global-alias-appframe-border-size: 1px;
-    --swc-scale-factor: 1.25;
+  --spectrum-global-alias-appframe-border-size: 1px;
+  --swc-scale-factor: 1.25;
 }

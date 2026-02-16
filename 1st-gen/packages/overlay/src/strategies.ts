@@ -15,7 +15,7 @@ import { HoverController } from './HoverController.js';
 import { LongpressController } from './LongpressController.js';
 
 export const strategies = {
-    click: ClickController,
-    longpress: LongpressController,
-    hover: HoverController,
+  click: ClickController,
+  longpress: LongpressController,
+  hover: HoverController,
 };

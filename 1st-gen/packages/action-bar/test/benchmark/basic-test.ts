@@ -17,5 +17,5 @@ import '@spectrum-web-components/action-bar/sp-action-bar.js';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-action-bar open></sp-action-bar>
+  <sp-action-bar open></sp-action-bar>
 `);

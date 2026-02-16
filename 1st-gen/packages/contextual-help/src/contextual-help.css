@@ -14,9 +14,9 @@
 @import url("./contextual-help-overrides.css");
 
 :host {
-    display: inline-block;
+  display: inline-block;
 }
 
 ::slotted([slot="link"]) {
-    display: block;
+  display: block;
 }

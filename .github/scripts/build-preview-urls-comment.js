@@ -13,80 +13,80 @@
  */
 
 export const buildPreviewURLComment = (prNumber) => {
-    // Use just PR number so each commit overwrites the previous deployment
-    const prHash = `pr-${prNumber}`;
+  // Use just PR number so each commit overwrites the previous deployment
+  const prHash = `pr-${prNumber}`;
 
-    // Azure Blob Storage base URL
-    const baseUrl = 'https://swcpreviews.z13.web.core.windows.net';
+  // Azure Blob Storage base URL
+  const baseUrl = 'https://swcpreviews.z13.web.core.windows.net';
 
-    const previewLinks = [];
+  const previewLinks = [];
 
-    const previewCombinations = [
-        {
-            system: 'Spectrum',
-            color: 'Light',
-            scale: 'Medium',
-            direction: 'LTR',
-            urlPath: 'spectrum-light-medium-ltr',
-        },
-        {
-            system: 'Spectrum',
-            color: 'Dark',
-            scale: 'Large',
-            direction: 'RTL',
-            urlPath: 'spectrum-dark-large-rtl',
-        },
-        {
-            system: 'Express',
-            color: 'Light',
-            scale: 'Medium',
-            direction: 'LTR',
-            urlPath: 'express-light-medium-ltr',
-        },
-        {
-            system: 'Express',
-            color: 'Dark',
-            scale: 'Large',
-            direction: 'RTL',
-            urlPath: 'express-dark-large-rtl',
-        },
-        {
-            system: 'Spectrum-two',
-            color: 'Light',
-            scale: 'Medium',
-            direction: 'LTR',
-            urlPath: 'spectrum-two-light-medium-ltr',
-        },
-        {
-            system: 'Spectrum-two',
-            color: 'Dark',
-            scale: 'Large',
-            direction: 'RTL',
-            urlPath: 'spectrum-two-dark-large-rtl',
-        },
-    ];
+  const previewCombinations = [
+    {
+      system: 'Spectrum',
+      color: 'Light',
+      scale: 'Medium',
+      direction: 'LTR',
+      urlPath: 'spectrum-light-medium-ltr',
+    },
+    {
+      system: 'Spectrum',
+      color: 'Dark',
+      scale: 'Large',
+      direction: 'RTL',
+      urlPath: 'spectrum-dark-large-rtl',
+    },
+    {
+      system: 'Express',
+      color: 'Light',
+      scale: 'Medium',
+      direction: 'LTR',
+      urlPath: 'express-light-medium-ltr',
+    },
+    {
+      system: 'Express',
+      color: 'Dark',
+      scale: 'Large',
+      direction: 'RTL',
+      urlPath: 'express-dark-large-rtl',
+    },
+    {
+      system: 'Spectrum-two',
+      color: 'Light',
+      scale: 'Medium',
+      direction: 'LTR',
+      urlPath: 'spectrum-two-light-medium-ltr',
+    },
+    {
+      system: 'Spectrum-two',
+      color: 'Dark',
+      scale: 'Large',
+      direction: 'RTL',
+      urlPath: 'spectrum-two-dark-large-rtl',
+    },
+  ];
 
-    // Generate preview links for each combination
-    previewCombinations.forEach(
-        ({ system, color, scale, direction, urlPath }) => {
-            const vrtUrl = `${baseUrl}/${prHash}/${urlPath}/review/`;
+  // Generate preview links for each combination
+  previewCombinations.forEach(
+    ({ system, color, scale, direction, urlPath }) => {
+      const vrtUrl = `${baseUrl}/${prHash}/${urlPath}/review/`;
 
-            previewLinks.push(`
+      previewLinks.push(`
 - [${system} | ${color} | ${scale} | ${direction}](${vrtUrl})`);
-        }
-    );
+    }
+  );
 
-    // Add high contrast mode preview link
-    const hcmUrl = `${baseUrl}/${prHash}/hcm/review/`;
-    previewLinks.push(`
+  // Add high contrast mode preview link
+  const hcmUrl = `${baseUrl}/${prHash}/hcm/review/`;
+  previewLinks.push(`
 - [High Contrast Mode | Medium | LTR](${hcmUrl})`);
 
-    // Documentation and Storybook URLs
-    const docsFirstGenUrl = `${baseUrl}/${prHash}/docs/first-gen-docs/`;
-    const storybookFirstGenUrl = `${baseUrl}/${prHash}/docs/first-gen-storybook/`;
-    const storybookSecondGenUrl = `${baseUrl}/${prHash}/docs/second-gen-storybook/`;
+  // Documentation and Storybook URLs
+  const docsFirstGenUrl = `${baseUrl}/${prHash}/docs/first-gen-docs/`;
+  const storybookFirstGenUrl = `${baseUrl}/${prHash}/docs/first-gen-storybook/`;
+  const storybookSecondGenUrl = `${baseUrl}/${prHash}/docs/second-gen-storybook/`;
 
-    let comment = `## 📚 Branch Preview Links
+  let comment = `## 📚 Branch Preview Links
 
 - [Documentation Site (first-gen)](${docsFirstGenUrl})
 - [Storybook (first-gen)](${storybookFirstGenUrl})
@@ -103,5 +103,5 @@ ${previewLinks.join('')}
 If the changes are expected, update the <code>current_golden_images_cache</code> hash in the circleci config to accept the new images. Instructions are included in that file. 
 If the changes are unexpected, you can investigate the cause of the differences and update the code accordingly.
 `;
-    return comment;
+  return comment;
 };

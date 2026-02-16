@@ -16,7 +16,7 @@ import { SliderHandle } from './src/SliderHandle.js';
 defineElement('sp-slider-handle', SliderHandle);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-slider-handle': SliderHandle;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-slider-handle': SliderHandle;
+  }
 }

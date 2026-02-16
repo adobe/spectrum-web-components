@@ -16,9 +16,9 @@
 @import url("./meter-overrides.css");
 
 .fill {
-    transform-origin: left;
+  transform-origin: left;
 }
 
 .fill:dir(rtl) {
-    transform-origin: right;
+  transform-origin: right;
 }

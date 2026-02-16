@@ -16,7 +16,7 @@ import { TabsOverflow } from './src/TabsOverflow.js';
 defineElement('sp-tabs-overflow', TabsOverflow);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-tabs-overflow': TabsOverflow;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-tabs-overflow': TabsOverflow;
+  }
 }

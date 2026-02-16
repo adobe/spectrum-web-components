@@ -14,5 +14,5 @@
 @import url("./coach-indicator-overrides.css");
 
 :host {
-    display: inline-block;
+  display: inline-block;
 }

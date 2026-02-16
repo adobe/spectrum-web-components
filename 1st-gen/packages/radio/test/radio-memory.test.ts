@@ -17,5 +17,5 @@ import '@spectrum-web-components/radio/sp-radio.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
 testForMemoryLeaks(html`
-    <sp-radio></sp-radio>
+  <sp-radio></sp-radio>
 `);

@@ -16,7 +16,7 @@ import { ButtonGroup } from './src/ButtonGroup.js';
 defineElement('sp-button-group', ButtonGroup);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-button-group': ButtonGroup;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-button-group': ButtonGroup;
+  }
 }

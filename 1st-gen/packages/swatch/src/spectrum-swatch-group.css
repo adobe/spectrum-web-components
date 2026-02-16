@@ -11,17 +11,17 @@
  */
 
 :host {
-    display: inline-flex;
-    flex-flow: wrap;
-    gap: var(--mod-swatchgroup-spacing-regular, var(--spectrum-swatchgroup-spacing-regular));
-    align-items: flex-start;
-    justify-content: flex-start;
+  display: inline-flex;
+  flex-flow: wrap;
+  gap: var(--mod-swatchgroup-spacing-regular, var(--spectrum-swatchgroup-spacing-regular));
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 :host([density="compact"]) {
-    gap: var(--mod-swatchgroup-spacing-compact, var(--spectrum-swatchgroup-spacing-compact));
+  gap: var(--mod-swatchgroup-spacing-compact, var(--spectrum-swatchgroup-spacing-compact));
 }
 
 :host([density="spacious"]) {
-    gap: var(--mod-swatchgroup-spacing-spacious, var(--spectrum-swatchgroup-spacing-spacious));
+  gap: var(--mod-swatchgroup-spacing-spacious, var(--spectrum-swatchgroup-spacing-spacious));
 }

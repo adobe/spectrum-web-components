@@ -16,7 +16,7 @@ import { Search } from './src/Search.js';
 defineElement('sp-search', Search);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-search': Search;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-search': Search;
+  }
 }

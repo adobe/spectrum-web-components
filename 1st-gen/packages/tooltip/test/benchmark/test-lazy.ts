@@ -12,8 +12,8 @@
 
 import { html, render } from '@spectrum-web-components/base';
 import {
-    removeSlottableRequest,
-    type SlottableRequestEvent,
+  removeSlottableRequest,
+  type SlottableRequestEvent,
 } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 
 import '@spectrum-web-components/action-button/sp-action-button.js';
@@ -22,21 +22,21 @@ import '@spectrum-web-components/overlay/sp-overlay.js';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 const handleSlottableRequest = (event: SlottableRequestEvent): void => {
-    import('@spectrum-web-components/tooltip/sp-tooltip.js');
-    const template =
-        event.data === removeSlottableRequest
-            ? undefined
-            : html`
-                  <sp-tooltip>Tip me!</sp-tooltip>
-              `;
-    render(template, event.target as HTMLElement);
+  import('@spectrum-web-components/tooltip/sp-tooltip.js');
+  const template =
+    event.data === removeSlottableRequest
+      ? undefined
+      : html`
+          <sp-tooltip>Tip me!</sp-tooltip>
+        `;
+  render(template, event.target as HTMLElement);
 };
 
 measureFixtureCreation(html`
-    <sp-action-button id="button">I'm a button...</sp-action-button>
-    <sp-overlay
-        trigger="button@hover"
-        type="hint"
-        @slottable-request=${handleSlottableRequest}
-    ></sp-overlay>
+  <sp-action-button id="button">I'm a button...</sp-action-button>
+  <sp-overlay
+    trigger="button@hover"
+    type="hint"
+    @slottable-request=${handleSlottableRequest}
+  ></sp-overlay>
 `);

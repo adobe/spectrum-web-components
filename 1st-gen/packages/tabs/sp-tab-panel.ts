@@ -17,7 +17,7 @@ import { TabPanel } from './src/TabPanel.js';
 defineElement('sp-tab-panel', TabPanel);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-tab-panel': TabPanel;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-tab-panel': TabPanel;
+  }
 }

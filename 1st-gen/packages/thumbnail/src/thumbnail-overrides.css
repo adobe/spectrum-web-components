@@ -11,5 +11,5 @@
  */
 
 :host {
-    --spectrum-thumbnail-border-radius: var(--system-thumbnail-border-radius);
+  --spectrum-thumbnail-border-radius: var(--system-thumbnail-border-radius);
 }

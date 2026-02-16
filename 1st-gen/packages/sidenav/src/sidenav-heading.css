@@ -14,5 +14,5 @@
 @import url("./sidenav-heading-overrides.css");
 
 :host {
-    display: block;
+  display: block;
 }

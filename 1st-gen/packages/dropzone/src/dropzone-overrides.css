@@ -11,5 +11,5 @@
  */
 
 :host {
-    --spectrum-drop-zone-border-color: var(--system-drop-zone-border-color);
+  --spectrum-drop-zone-border-color: var(--system-drop-zone-border-color);
 }

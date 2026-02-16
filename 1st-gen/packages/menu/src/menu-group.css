@@ -13,12 +13,12 @@
 @import url("./spectrum-menu-sectionHeading.css");
 
 :host {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    overflow: visible;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  overflow: visible;
 }
 
 [hidden] {
-    display: none !important;
+  display: none !important;
 }

@@ -11,12 +11,12 @@
  */
 
 :host {
-    display: block;
-    position: relative;
-    contain: strict;
-    pointer-events: none;
+  display: block;
+  position: relative;
+  contain: strict;
+  pointer-events: none;
 }
 
 ::slotted(*) {
-    pointer-events: all;
+  pointer-events: all;
 }

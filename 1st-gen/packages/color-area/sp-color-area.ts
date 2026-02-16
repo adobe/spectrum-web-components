@@ -17,7 +17,7 @@ import { ColorArea } from './src/ColorArea.js';
 defineElement('sp-color-area', ColorArea);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-color-area': ColorArea;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-color-area': ColorArea;
+  }
 }

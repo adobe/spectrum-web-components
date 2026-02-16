@@ -10,39 +10,39 @@
  * governing permissions and limitations under the License.
  */
 
-@import url('tokens.css');
+@import url("tokens.css");
 
 /* Global font defaults */
 :root {
-    font-family: token('sans-serif-font');
-    font-size: token('font-size');
-    font-style: token('font-style');
-    background-color: var(--swc-application-background, token('gray-75'));
+  font-family: token("sans-serif-font");
+  font-size: token("font-size");
+  font-style: token("font-style");
+  background-color: var(--swc-application-background, token("gray-75"));
 }
 
 /* Theme scaling setup */
 :root,
 .swc-theme,
 .swc-theme--sizeM {
-    --swc-theme-size: var(--swc-theme--sizeM,);
-    --swc-theme--sizeM: var(--swc-theme-size,);
-    --swc-theme--sizeL: var(--swc-theme-size,);
+  --swc-theme-size: var(--swc-theme--sizeM,);
+  --swc-theme--sizeM: var(--swc-theme-size,);
+  --swc-theme--sizeL: var(--swc-theme-size,);
 }
 
 .swc-theme--sizeL {
-    --swc-theme-size: var(--swc-theme--sizeL);
+  --swc-theme-size: var(--swc-theme--sizeL);
 }
 
 /* Theme colors setup */
 :root,
 .swc-theme--light {
-    color-scheme: light;
+  color-scheme: light;
 }
 
 .swc-theme--dark {
-    color-scheme: dark;
+  color-scheme: dark;
 }
 
 .swc-theme--adaptive {
-    color-scheme: light dark;
+  color-scheme: light dark;
 }

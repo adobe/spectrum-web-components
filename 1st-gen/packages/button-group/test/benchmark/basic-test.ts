@@ -18,9 +18,9 @@ import '@spectrum-web-components/button/sp-button.js';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-button-group>
-        <sp-button>Button 1</sp-button>
-        <sp-button>Longer Button 2</sp-button>
-        <sp-button>Short 3</sp-button>
-    </sp-button-group>
+  <sp-button-group>
+    <sp-button>Button 1</sp-button>
+    <sp-button>Longer Button 2</sp-button>
+    <sp-button>Short 3</sp-button>
+  </sp-button-group>
 `);

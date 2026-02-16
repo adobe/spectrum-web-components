@@ -16,7 +16,7 @@ import { Checkbox } from './src/Checkbox.js';
 defineElement('sp-checkbox', Checkbox);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-checkbox': Checkbox;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-checkbox': Checkbox;
+  }
 }

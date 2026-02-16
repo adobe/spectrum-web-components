@@ -16,7 +16,7 @@ import { Link } from './src/Link.js';
 defineElement('sp-link', Link);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-link': Link;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-link': Link;
+  }
 }

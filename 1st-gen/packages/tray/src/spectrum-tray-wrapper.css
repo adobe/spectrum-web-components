@@ -11,10 +11,10 @@
  */
 
 :host {
-    display: flex;
-    position: fixed;
-    inset-block-end: 0;
-    inset-inline-start: 0;
-    justify-content: center;
-    inline-size: 100%;
+  display: flex;
+  position: fixed;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  justify-content: center;
+  inline-size: 100%;
 }

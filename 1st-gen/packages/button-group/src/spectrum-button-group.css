@@ -11,30 +11,30 @@
  */
 
 :host {
-    --spectrum-buttongroup-spacing: var(--mod-buttongroup-spacing, var(--mod-buttongroup-spacing-horizontal, var(--spectrum-spacing-300)));
-    --spectrum-buttongroup-display: flex;
-    --spectrum-buttongroup-flex-direction: row;
-    --spectrum-buttongroup-justify-content: var(--mod-buttongroup-justify-content, normal);
+  --spectrum-buttongroup-spacing: var(--mod-buttongroup-spacing, var(--mod-buttongroup-spacing-horizontal, var(--spectrum-spacing-300)));
+  --spectrum-buttongroup-display: flex;
+  --spectrum-buttongroup-flex-direction: row;
+  --spectrum-buttongroup-justify-content: var(--mod-buttongroup-justify-content, normal);
 }
 
 :host([size="s"]) {
-    --spectrum-buttongroup-spacing: var(--mod-buttongroup-spacing, var(--mod-buttongroup-spacing-horizontal, var(--spectrum-spacing-200)));
+  --spectrum-buttongroup-spacing: var(--mod-buttongroup-spacing, var(--mod-buttongroup-spacing-horizontal, var(--spectrum-spacing-200)));
 }
 
 :host([vertical]) {
-    --mod-buttongroup-spacing: var(--mod-buttongroup-spacing-vertical);
-    --spectrum-buttongroup-display: inline-flex;
-    --spectrum-buttongroup-flex-direction: column;
+  --mod-buttongroup-spacing: var(--mod-buttongroup-spacing-vertical);
+  --spectrum-buttongroup-display: inline-flex;
+  --spectrum-buttongroup-flex-direction: column;
 }
 
 :host {
-    display: var(--spectrum-buttongroup-display);
-    flex-direction: var(--spectrum-buttongroup-flex-direction);
-    flex-wrap: wrap;
-    gap: var(--spectrum-buttongroup-spacing);
-    justify-content: var(--spectrum-buttongroup-justify-content);
+  display: var(--spectrum-buttongroup-display);
+  flex-direction: var(--spectrum-buttongroup-flex-direction);
+  flex-wrap: wrap;
+  gap: var(--spectrum-buttongroup-spacing);
+  justify-content: var(--spectrum-buttongroup-justify-content);
 }
 
 ::slotted(*) {
-    flex-shrink: 0;
+  flex-shrink: 0;
 }

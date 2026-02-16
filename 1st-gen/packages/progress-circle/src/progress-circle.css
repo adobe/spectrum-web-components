@@ -14,42 +14,42 @@
 @import url("./progress-circle-overrides.css");
 
 :host {
-    inline-size: var(--mod-progress-circle-size, var(--_spectrum-progress-circle-size));
-    block-size: var(--mod-progress-circle-size, var(--_spectrum-progress-circle-size));
+  inline-size: var(--mod-progress-circle-size, var(--_spectrum-progress-circle-size));
+  block-size: var(--mod-progress-circle-size, var(--_spectrum-progress-circle-size));
 
-    --spectrum-progress-circle-size: inherit;
-    --spectrum-progresscircle-m-over-background-track-fill-color: var(--spectrum-alias-track-fill-color-overbackground);
-    --_spectrum-progress-circle-size: var(--spectrum-progress-circle-size, var(--spectrum-progress-circle-size-medium));
+  --spectrum-progress-circle-size: inherit;
+  --spectrum-progresscircle-m-over-background-track-fill-color: var(--spectrum-alias-track-fill-color-overbackground);
+  --_spectrum-progress-circle-size: var(--spectrum-progress-circle-size, var(--spectrum-progress-circle-size-medium));
 }
 
 :host([size="s"]) {
-    --_spectrum-progress-circle-size: var(--spectrum-progress-circle-size, var(--spectrum-progress-circle-size-small));
+  --_spectrum-progress-circle-size: var(--spectrum-progress-circle-size, var(--spectrum-progress-circle-size-small));
 }
 
 :host([size="l"]) {
-    --_spectrum-progress-circle-size: var(--spectrum-progress-circle-size, var(--spectrum-progress-circle-size-large));
+  --_spectrum-progress-circle-size: var(--spectrum-progress-circle-size, var(--spectrum-progress-circle-size-large));
 }
 
 slot {
-    display: none;
+  display: none;
 }
 
 .track {
-    inline-size: var(--mod-progress-circle-size, var(--_spectrum-progress-circle-size));
-    block-size: var(--mod-progress-circle-size, var(--_spectrum-progress-circle-size));
-    border-radius: var(--mod-progress-circle-size, var(--_spectrum-progress-circle-size));
+  inline-size: var(--mod-progress-circle-size, var(--_spectrum-progress-circle-size));
+  block-size: var(--mod-progress-circle-size, var(--_spectrum-progress-circle-size));
+  border-radius: var(--mod-progress-circle-size, var(--_spectrum-progress-circle-size));
 }
 
 .fill {
-    inline-size: var(--mod-progress-circle-size, var(--_spectrum-progress-circle-size));
-    block-size: var(--mod-progress-circle-size, var(--_spectrum-progress-circle-size));
-    border-radius: var(--mod-progress-circle-size, var(--_spectrum-progress-circle-size));
+  inline-size: var(--mod-progress-circle-size, var(--_spectrum-progress-circle-size));
+  block-size: var(--mod-progress-circle-size, var(--_spectrum-progress-circle-size));
+  border-radius: var(--mod-progress-circle-size, var(--_spectrum-progress-circle-size));
 }
 
 /* stylelint-disable */
 :host([indeterminate]) .fills,
 :host([indeterminate]) .fillSubMask1,
 :host([indeterminate]) .fillSubMask2 {
-    animation-duration: var(--spectrum-animation-duration-2000);
+  animation-duration: var(--spectrum-animation-duration-2000);
 }
 /* stylelint-enable */

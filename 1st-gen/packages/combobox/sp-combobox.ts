@@ -15,7 +15,7 @@ import { Combobox } from './src/Combobox.js';
 customElements.define('sp-combobox', Combobox);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-combobox': Combobox;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-combobox': Combobox;
+  }
 }

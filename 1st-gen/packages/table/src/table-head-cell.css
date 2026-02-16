@@ -13,7 +13,7 @@
 @import url("./spectrum-table-head-cell.css");
 
 :host {
-    display: block;
-    flex: 1;
-    block-size: auto;
+  display: block;
+  flex: 1;
+  block-size: auto;
 }

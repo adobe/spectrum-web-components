@@ -17,7 +17,7 @@ import { Tray } from './src/Tray.js';
 defineElement('sp-tray', Tray);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-tray': Tray;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-tray': Tray;
+  }
 }

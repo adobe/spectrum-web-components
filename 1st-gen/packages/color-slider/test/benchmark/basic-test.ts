@@ -17,5 +17,5 @@ import '@spectrum-web-components/color-slider/sp-color-slider.js';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-color-slider></sp-color-slider>
+  <sp-color-slider></sp-color-slider>
 `);

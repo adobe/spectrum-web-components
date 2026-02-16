@@ -17,7 +17,7 @@ import { ActionBar } from './src/ActionBar.js';
 defineElement('sp-action-bar', ActionBar);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-action-bar': ActionBar;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-action-bar': ActionBar;
+  }
 }

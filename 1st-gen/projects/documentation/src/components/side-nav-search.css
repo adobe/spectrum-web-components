@@ -11,24 +11,24 @@
  */
 
 :host {
-    display: block;
+  display: block;
 }
 
 sp-search {
-    width: 100%;
+  width: 100%;
 
-    --spectrum-alias-single-line-width: 100%;
+  --spectrum-alias-single-line-width: 100%;
 }
 
 #search-results-menu {
-    display: flex;
-    flex-direction: column;
-    width: 250px;
-    max-height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  max-height: calc(100vh - 200px);
 }
 
 sp-illustrated-message {
-    flex: 1 1;
-    margin-bottom: 2em;
-    color: var(--spectrum-gray-800);
+  flex: 1 1;
+  margin-bottom: 2em;
+  color: var(--spectrum-gray-800);
 }

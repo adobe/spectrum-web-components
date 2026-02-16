@@ -15,12 +15,12 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/underlay/sp-underlay.js';
 
 export default {
-    title: 'Underlay',
-    component: 'sp-underlay',
+  title: 'Underlay',
+  component: 'sp-underlay',
 };
 
 export const Default = (): TemplateResult => {
-    return html`
-        <sp-underlay open></sp-underlay>
-    `;
+  return html`
+    <sp-underlay open></sp-underlay>
+  `;
 };

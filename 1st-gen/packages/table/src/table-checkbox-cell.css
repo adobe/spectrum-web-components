@@ -13,20 +13,20 @@
 @import url("./spectrum-table-checkbox-cell.css");
 
 :host {
-    display: flex;
-    flex: 0 1 0%;
-    align-items: center;
-    block-size: auto;
-    border-radius: 0;
+  display: flex;
+  flex: 0 1 0%;
+  align-items: center;
+  block-size: auto;
+  border-radius: 0;
 }
 
 :host(:not([head-cell])),
 :host([head-cell]) {
-    display: flex;
-    inline-size: auto;
-    block-size: auto;
+  display: flex;
+  inline-size: auto;
+  block-size: auto;
 }
 
 :host([selects-single]) sp-checkbox {
-    visibility: hidden;
+  visibility: hidden;
 }

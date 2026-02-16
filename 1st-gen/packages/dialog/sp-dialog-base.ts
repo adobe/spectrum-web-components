@@ -16,7 +16,7 @@ import { DialogBase } from './src/DialogBase.js';
 defineElement('sp-dialog-base', DialogBase);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-dialog-base': DialogBase;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-dialog-base': DialogBase;
+  }
 }

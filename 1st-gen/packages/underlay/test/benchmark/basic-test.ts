@@ -17,5 +17,5 @@ import '@spectrum-web-components/underlay/sp-underlay.js';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-underlay open></sp-underlay>
+  <sp-underlay open></sp-underlay>
 `);

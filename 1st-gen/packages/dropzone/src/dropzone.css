@@ -18,14 +18,14 @@
  * We need it as a block
  */
 :host {
-    display: block;
+  display: block;
 }
 
 ::slotted(*) {
-    margin-block: 0;
-    font-family: var(--mod-drop-zone-body-font-family, var(--spectrum-sans-font-family-stack));
-    font-size: var(--mod-drop-zone-body-font-size, var(--spectrum-drop-zone-body-size));
-    font-style: var(--mod-drop-zone-body-font-style, var(--spectrum-body-sans-serif-font-style));
-    font-weight: var(--mod-drop-zone-body-font-weight, var(--spectrum-body-sans-serif-font-weight));
-    line-height: var(--mod-drop-zone-body-line-height, var(--spectrum-body-line-height));
+  margin-block: 0;
+  font-family: var(--mod-drop-zone-body-font-family, var(--spectrum-sans-font-family-stack));
+  font-size: var(--mod-drop-zone-body-font-size, var(--spectrum-drop-zone-body-size));
+  font-style: var(--mod-drop-zone-body-font-style, var(--spectrum-body-sans-serif-font-style));
+  font-weight: var(--mod-drop-zone-body-font-weight, var(--spectrum-body-sans-serif-font-weight));
+  line-height: var(--mod-drop-zone-body-line-height, var(--spectrum-body-line-height));
 }

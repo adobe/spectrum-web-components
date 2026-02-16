@@ -16,7 +16,7 @@ import { IllustratedMessage } from './src/IllustratedMessage.js';
 defineElement('sp-illustrated-message', IllustratedMessage);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-illustrated-message': IllustratedMessage;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-illustrated-message': IllustratedMessage;
+  }
 }

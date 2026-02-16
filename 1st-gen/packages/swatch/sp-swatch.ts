@@ -16,7 +16,7 @@ import { Swatch } from './src/Swatch.js';
 defineElement('sp-swatch', Swatch);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-swatch': Swatch;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-swatch': Swatch;
+  }
 }

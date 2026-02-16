@@ -11,12 +11,12 @@
  */
 
 :host([scrollable]) {
-    place-content: start center !important;
-    overflow: auto;
+  place-content: start center !important;
+  overflow: auto;
 }
 
 .wrapper {
-    width: var(--demo-container-width, max-content);
-    max-width: 580px;
-    margin: 0 auto;
+  width: var(--demo-container-width, max-content);
+  max-width: 580px;
+  margin: 0 auto;
 }

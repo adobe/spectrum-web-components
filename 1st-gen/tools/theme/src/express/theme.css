@@ -18,31 +18,31 @@
 @import url("@spectrum-web-components/styles/typography.css");
 
 :host {
-    display: block;
+  display: block;
 
-    /* Workaround while https://github.com/adobe/spectrum-css/issues/2162 remains open */
-    --spectrum-picker-border-width: var(--spectrum-border-width-100);
+  /* Workaround while https://github.com/adobe/spectrum-css/issues/2162 remains open */
+  --spectrum-picker-border-width: var(--spectrum-border-width-100);
 
-    /* end workaround */
-    --spectrum-font-family: var(--spectrum-sans-font-family-stack);
-    --spectrum-font-style: var(--spectrum-default-font-style);
-    --spectrum-font-size: var(--spectrum-font-size-100);
+  /* end workaround */
+  --spectrum-font-family: var(--spectrum-sans-font-family-stack);
+  --spectrum-font-style: var(--spectrum-default-font-style);
+  --spectrum-font-size: var(--spectrum-font-size-100);
 
-    font-family: var(--spectrum-font-family);
-    font-size: var(--spectrum-font-size);
-    font-style: var(--spectrum-font-style);
+  font-family: var(--spectrum-font-family);
+  font-size: var(--spectrum-font-size);
+  font-style: var(--spectrum-font-style);
 
-    &:lang(ar) {
-        font-family: var(--spectrum-font-family-ar);
-    }
+  &:lang(ar) {
+    font-family: var(--spectrum-font-family-ar);
+  }
 
-    &:lang(he) {
-        font-family: var(--spectrum-font-family-he);
-    }
+  &:lang(he) {
+    font-family: var(--spectrum-font-family-he);
+  }
 }
 
 #scale,
 #theme {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }

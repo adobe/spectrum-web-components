@@ -17,5 +17,5 @@ import '@spectrum-web-components/popover/sp-popover.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
 testForMemoryLeaks(html`
-    <sp-popover></sp-popover>
+  <sp-popover></sp-popover>
 `);

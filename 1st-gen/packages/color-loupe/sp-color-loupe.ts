@@ -17,7 +17,7 @@ import { ColorLoupe } from './src/ColorLoupe.js';
 defineElement('sp-color-loupe', ColorLoupe);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-color-loupe': ColorLoupe;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-color-loupe': ColorLoupe;
+  }
 }

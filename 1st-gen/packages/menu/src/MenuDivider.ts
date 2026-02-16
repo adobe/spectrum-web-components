@@ -11,10 +11,10 @@
  */
 
 import {
-    CSSResultArray,
-    PropertyValues,
-    SizedMixin,
-    SpectrumElement,
+  CSSResultArray,
+  PropertyValues,
+  SizedMixin,
+  SpectrumElement,
 } from '@spectrum-web-components/base';
 import dividerStyles from '@spectrum-web-components/divider/src/divider.css.js';
 
@@ -24,14 +24,14 @@ import menuDividerStyles from './menu-divider.css.js';
  * @element sp-menu-divider
  */
 export class MenuDivider extends SizedMixin(SpectrumElement, {
-    validSizes: ['s', 'm', 'l'],
+  validSizes: ['s', 'm', 'l'],
 }) {
-    public static override get styles(): CSSResultArray {
-        return [dividerStyles, menuDividerStyles];
-    }
+  public static override get styles(): CSSResultArray {
+    return [dividerStyles, menuDividerStyles];
+  }
 
-    protected override firstUpdated(changed: PropertyValues<this>): void {
-        super.firstUpdated(changed);
-        this.setAttribute('role', 'separator');
-    }
+  protected override firstUpdated(changed: PropertyValues<this>): void {
+    super.firstUpdated(changed);
+    this.setAttribute('role', 'separator');
+  }
 }

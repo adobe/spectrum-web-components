@@ -14,41 +14,41 @@
 @import url("./color-area-overrides.css");
 
 :host {
-    touch-action: none;
+  touch-action: none;
 }
 
 :host::before {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 .gradient {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .handle {
-    transform: translate(var(--spectrum-colorarea-default-width), 0);
+  transform: translate(var(--spectrum-colorarea-default-width), 0);
 }
 
 ::slotted(*) {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .gradient:dir(rtl) {
-    transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
 .slider[orient="vertical"] {
-    /* stylelint-disable-next-line declaration-property-value-no-unknown */
-    appearance: slider-vertical;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  appearance: slider-vertical;
 }
 
 .slider:focus {
-    z-index: 1;
+  z-index: 1;
 }
 
 .fieldset {
-    padding: 0;
-    margin: 0;
-    border: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
 }

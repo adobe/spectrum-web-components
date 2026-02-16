@@ -13,10 +13,10 @@
 @import url("./spectrum-tags.css");
 
 :host {
-    --mod-clear-button-width: fit-content;
+  --mod-clear-button-width: fit-content;
 
-    display: inline-flex;
-    padding: 0;
-    margin: 0;
-    list-style: none;
+  display: inline-flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }

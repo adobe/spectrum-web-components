@@ -17,5 +17,5 @@ import '@spectrum-web-components/meter/sp-meter.js';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-meter open></sp-meter>
+  <sp-meter open></sp-meter>
 `);

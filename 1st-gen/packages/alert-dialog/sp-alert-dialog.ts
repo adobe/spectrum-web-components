@@ -15,7 +15,7 @@ import { AlertDialog } from './src/AlertDialog.js';
 defineElement('sp-alert-dialog', AlertDialog);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-alert-dialog': AlertDialog;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-alert-dialog': AlertDialog;
+  }
 }

@@ -14,42 +14,42 @@
 @import url("./tabs-overrides.css");
 
 :host {
-    display: grid;
-    position: relative;
-    grid-template-columns: 100%;
+  display: grid;
+  position: relative;
+  grid-template-columns: 100%;
 }
 
 :host(:not([direction^="vertical"])) {
-    grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr;
 }
 
 :host([direction^="vertical"]) {
-    grid-template-columns: auto 1fr;
+  grid-template-columns: auto 1fr;
 }
 
 #selection-indicator:dir(rtl) {
-    right: auto;
-    left: 0;
+  right: auto;
+  left: 0;
 }
 
 :host([direction="vertical-right"]) #list #selection-indicator {
-    inset-inline: auto 0;
+  inset-inline: auto 0;
 }
 
 #list {
-    justify-content: var(--swc-tabs-list-justify-content);
+  justify-content: var(--swc-tabs-list-justify-content);
 }
 
 :host([disabled]) #list {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 :host([disabled]) #list #selection-indicator {
-    background-color: var(--mod-tabs-color-disabled, var(--spectrum-tabs-color-disabled));
+  background-color: var(--mod-tabs-color-disabled, var(--spectrum-tabs-color-disabled));
 }
 
 :host([disabled]) ::slotted(sp-tab) {
-    color: var(--mod-tabs-color-disabled, var(--spectrum-tabs-color-disabled));
+  color: var(--mod-tabs-color-disabled, var(--spectrum-tabs-color-disabled));
 }
 
 /*
@@ -59,18 +59,18 @@
  */
 :host([direction="vertical-right"]) #list #selection-indicator,
 :host([direction="vertical"]) #list #selection-indicator {
-    inset-block-start: 0;
+  inset-block-start: 0;
 }
 
 #selection-indicator.first-position {
-    transition: none;
+  transition: none;
 }
 
 :host([direction="horizontal"]) #list.scroll {
-    overflow: auto hidden;
-    scrollbar-width: none;
+  overflow: auto hidden;
+  scrollbar-width: none;
 }
 
 :host([direction="horizontal"]) #list.scroll::-webkit-scrollbar {
-    display: none;
+  display: none;
 }

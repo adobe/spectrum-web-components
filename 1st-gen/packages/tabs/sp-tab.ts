@@ -17,7 +17,7 @@ import { Tab } from './src/Tab.js';
 defineElement('sp-tab', Tab);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-tab': Tab;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-tab': Tab;
+  }
 }

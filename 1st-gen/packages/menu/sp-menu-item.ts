@@ -16,7 +16,7 @@ import { MenuItem } from './src/MenuItem.js';
 defineElement('sp-menu-item', MenuItem);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-menu-item': MenuItem;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-menu-item': MenuItem;
+  }
 }

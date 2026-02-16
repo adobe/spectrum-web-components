@@ -17,7 +17,7 @@ import { ActionButton } from './src/ActionButton.js';
 defineElement('sp-action-button', ActionButton);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-action-button': ActionButton;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-action-button': ActionButton;
+  }
 }

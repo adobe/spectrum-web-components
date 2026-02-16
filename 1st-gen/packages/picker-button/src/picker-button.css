@@ -14,9 +14,9 @@
 @import url("./picker-button-overrides.css");
 
 :host {
-    display: inline-flex;
+  display: inline-flex;
 }
 
 .root {
-    display: flex;
+  display: flex;
 }

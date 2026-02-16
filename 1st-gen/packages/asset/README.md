@@ -28,7 +28,7 @@ import { Asset } from '@spectrum-web-components/asset';
 
 ```html
 <sp-asset style="height: 128px">
-    <img src="https://picsum.photos/500/500" alt="Demo Image" />
+  <img src="https://picsum.photos/500/500" alt="Demo Image" />
 </sp-asset>
 ```
 
@@ -36,8 +36,8 @@ import { Asset } from '@spectrum-web-components/asset';
 
 ```html
 <div class="flex">
-    <sp-asset variant="file"></sp-asset>
-    <sp-asset variant="file" label="Named File Asset"></sp-asset>
+  <sp-asset variant="file"></sp-asset>
+  <sp-asset variant="file" label="Named File Asset"></sp-asset>
 </div>
 ```
 
@@ -45,7 +45,7 @@ import { Asset } from '@spectrum-web-components/asset';
 
 ```html
 <div class="flex">
-    <sp-asset variant="folder"></sp-asset>
-    <sp-asset variant="folder" label="Named Folder Asset"></sp-asset>
+  <sp-asset variant="folder"></sp-asset>
+  <sp-asset variant="folder" label="Named Folder Asset"></sp-asset>
 </div>
 ```

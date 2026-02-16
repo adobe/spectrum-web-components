@@ -16,7 +16,7 @@ import { Tooltip } from './src/Tooltip.js';
 defineElement('sp-tooltip', Tooltip);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-tooltip': Tooltip;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-tooltip': Tooltip;
+  }
 }

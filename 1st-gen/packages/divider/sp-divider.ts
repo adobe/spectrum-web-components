@@ -17,7 +17,7 @@ import { Divider } from './src/Divider.js';
 defineElement('sp-divider', Divider);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-divider': Divider;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-divider': Divider;
+  }
 }

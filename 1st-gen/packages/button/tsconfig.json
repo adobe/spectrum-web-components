@@ -1,15 +1,15 @@
 {
-    "compilerOptions": {
-        "composite": true,
-        "rootDir": "./"
-    },
-    "exclude": ["test/*.ts", "stories/*.ts"],
-    "extends": "../../tsconfig.json",
-    "include": ["*.ts", "src/*.ts"],
-    "references": [
-        { "path": "../../tools/base" },
-        { "path": "../icon" },
-        { "path": "../icons-ui" },
-        { "path": "../../tools/shared" }
-    ]
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "./"
+  },
+  "exclude": ["test/*.ts", "stories/*.ts"],
+  "extends": "../../tsconfig.json",
+  "include": ["*.ts", "src/*.ts"],
+  "references": [
+    { "path": "../../tools/base" },
+    { "path": "../icon" },
+    { "path": "../icons-ui" },
+    { "path": "../../tools/shared" }
+  ]
 }

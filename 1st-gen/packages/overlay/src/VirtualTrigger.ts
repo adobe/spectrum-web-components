@@ -13,34 +13,34 @@
 import { AbstractOverlay } from './AbstractOverlay.js';
 
 export class VirtualTrigger {
-    private x = 0;
-    private y = 0;
+  private x = 0;
+  private y = 0;
 
-    public constructor(x: number, y: number) {
-        this.x = x;
-        this.y = y;
-    }
+  public constructor(x: number, y: number) {
+    this.x = x;
+    this.y = y;
+  }
 
-    public updateBoundingClientRect(x: number, y: number): void {
-        this.x = x;
-        this.y = y;
-        AbstractOverlay.update();
-    }
+  public updateBoundingClientRect(x: number, y: number): void {
+    this.x = x;
+    this.y = y;
+    AbstractOverlay.update();
+  }
 
-    public getBoundingClientRect(): DOMRect {
-        return {
-            width: 0,
-            height: 0,
-            top: this.y,
-            right: this.x,
-            y: this.y,
-            x: this.x,
-            bottom: this.y,
-            left: this.x,
-            /* c8 ignore next 3 */
-            toJSON() {
-                return;
-            },
-        };
-    }
+  public getBoundingClientRect(): DOMRect {
+    return {
+      width: 0,
+      height: 0,
+      top: this.y,
+      right: this.x,
+      y: this.y,
+      x: this.x,
+      bottom: this.y,
+      left: this.x,
+      /* c8 ignore next 3 */
+      toJSON() {
+        return;
+      },
+    };
+  }
 }

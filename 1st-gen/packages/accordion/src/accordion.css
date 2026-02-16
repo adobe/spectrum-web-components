@@ -14,5 +14,5 @@
 @import url("./accordion-overrides.css");
 
 :host {
-    --spectrum-logical-rotation: ;
+  --spectrum-logical-rotation: ;
 }

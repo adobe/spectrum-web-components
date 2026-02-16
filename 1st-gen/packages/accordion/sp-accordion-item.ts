@@ -17,7 +17,7 @@ import { AccordionItem } from './src/AccordionItem.js';
 defineElement('sp-accordion-item', AccordionItem);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-accordion-item': AccordionItem;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-accordion-item': AccordionItem;
+  }
 }

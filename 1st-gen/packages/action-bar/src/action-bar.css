@@ -14,9 +14,9 @@
 @import url("./action-bar-overrides.css");
 
 :host {
-    display: block;
+  display: block;
 }
 
 :host([flexible]) {
-    display: inline-block;
+  display: inline-block;
 }

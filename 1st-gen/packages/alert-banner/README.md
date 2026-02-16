@@ -27,7 +27,7 @@ The message in its default slot.
 
 ```html
 <sp-alert-banner open>
-    All documents in this folder have been archived
+  All documents in this folder have been archived
 </sp-alert-banner>
 ```
 
@@ -37,10 +37,10 @@ An optional action using `slot="action"`:
 
 ```html
 <sp-alert-banner open>
-    Your trial has expired
-    <sp-button treatment="outline" variant="secondary" slot="action">
-        Buy now
-    </sp-button>
+  Your trial has expired
+  <sp-button treatment="outline" variant="secondary" slot="action">
+    Buy now
+  </sp-button>
 </sp-alert-banner>
 <bd></bd>
 ```
@@ -53,7 +53,7 @@ Use the `dismissible` attribute to include an icon-only close button used to dis
 
 ```html
 <sp-alert-banner open dismissible>
-    All documents in this folder have been archived
+  All documents in this folder have been archived
 </sp-alert-banner>
 ```
 
@@ -69,10 +69,10 @@ Use `variant="info"` for informational messages.
 
 ```html
 <sp-alert-banner open variant="info" dismissible>
-    Your trial will expire in 3 days
-    <sp-button treatment="outline" static-color="white" slot="action">
-        Buy now
-    </sp-button>
+  Your trial will expire in 3 days
+  <sp-button treatment="outline" static-color="white" slot="action">
+    Buy now
+  </sp-button>
 </sp-alert-banner>
 ```
 
@@ -84,7 +84,7 @@ Use `variant="negative"` for error or warning messages.
 
 ```html
 <sp-alert-banner open variant="negative" dismissible>
-    Connection interrupted. Check your network to continue
+  Connection interrupted. Check your network to continue
 </sp-alert-banner>
 ```
 

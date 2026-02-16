@@ -16,7 +16,7 @@ import { Table } from './src/Table.js';
 defineElement('sp-table', Table);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-table': Table;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-table': Table;
+  }
 }

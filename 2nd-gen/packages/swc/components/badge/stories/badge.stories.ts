@@ -19,15 +19,15 @@ import { Badge } from '@adobe/swc/badge';
 import '@adobe/swc/badge';
 
 import {
-    BADGE_VALID_SIZES,
-    BADGE_VARIANTS_COLOR_S2,
-    BADGE_VARIANTS_S2,
-    BADGE_VARIANTS_SEMANTIC,
-    type BadgeColorVariantS2,
-    type BadgeSemanticVariant,
-    type BadgeSize,
-    FIXED_VALUES,
-    type FixedValues,
+  BADGE_VALID_SIZES,
+  BADGE_VARIANTS_COLOR_S2,
+  BADGE_VARIANTS_S2,
+  BADGE_VARIANTS_SEMANTIC,
+  type BadgeColorVariantS2,
+  type BadgeSemanticVariant,
+  type BadgeSize,
+  FIXED_VALUES,
+  type FixedValues,
 } from '../../../../core/components/badge/Badge.types.js';
 
 // ────────────────
@@ -38,39 +38,39 @@ const { args, argTypes, template } = getStorybookHelpers('swc-badge');
 
 // @todo: Carry the args table defaultValue pattern to all argTypes in all components. Explore how to get our custom types to properly reflect with this new pattern.
 argTypes.variant = {
-    ...argTypes.variant,
-    control: { type: 'select' },
-    options: Badge.VARIANTS,
-    table: {
-        category: 'attributes',
-        defaultValue: {
-            summary: 'informative',
-        },
+  ...argTypes.variant,
+  control: { type: 'select' },
+  options: Badge.VARIANTS,
+  table: {
+    category: 'attributes',
+    defaultValue: {
+      summary: 'informative',
     },
+  },
 };
 
 argTypes.fixed = {
-    ...argTypes.fixed,
-    control: { type: 'select' },
-    options: ['', ...Badge.FIXED_VALUES],
-    table: {
-        category: 'attributes',
-        defaultValue: {
-            summary: '',
-        },
+  ...argTypes.fixed,
+  control: { type: 'select' },
+  options: ['', ...Badge.FIXED_VALUES],
+  table: {
+    category: 'attributes',
+    defaultValue: {
+      summary: '',
     },
+  },
 };
 
 argTypes.size = {
-    ...argTypes.size,
-    control: { type: 'select' },
-    options: Badge.VALID_SIZES,
-    table: {
-        category: 'attributes',
-        defaultValue: {
-            summary: 'm',
-        },
+  ...argTypes.size,
+  control: { type: 'select' },
+  options: Badge.VALID_SIZES,
+  table: {
+    category: 'attributes',
+    defaultValue: {
+      summary: 'm',
     },
+  },
 };
 
 /**
@@ -81,31 +81,31 @@ argTypes.size = {
  * Reserve bold fill for high-attention badging only.
  */
 export const meta: Meta = {
-    title: 'Badge',
-    component: 'swc-badge',
-    args,
-    argTypes,
-    render: (args) => template(args),
-    parameters: {
-        docs: {
-            subtitle: `Display small amounts of color-categorized metadata to get a user's attention.`,
-        },
-        design: {
-            type: 'figma',
-            url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=36806-6551',
-        },
-        stackblitz: {
-            url: 'https://stackblitz.com/edit/vitejs-vite-4glrpeeb?file=package.json',
-        },
-        flexLayout: 'row-wrap',
+  title: 'Badge',
+  component: 'swc-badge',
+  args,
+  argTypes,
+  render: (args) => template(args),
+  parameters: {
+    docs: {
+      subtitle: `Display small amounts of color-categorized metadata to get a user's attention.`,
     },
-    tags: ['migrated'],
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=36806-6551',
+    },
+    stackblitz: {
+      url: 'https://stackblitz.com/edit/vitejs-vite-4glrpeeb?file=package.json',
+    },
+    flexLayout: 'row-wrap',
+  },
+  tags: ['migrated'],
 };
 
 export default {
-    ...meta,
-    title: 'Badge',
-    excludeStories: ['meta'],
+  ...meta,
+  title: 'Badge',
+  excludeStories: ['meta'],
 } as Meta;
 
 // ────────────────────
@@ -113,50 +113,50 @@ export default {
 // ────────────────────
 
 const sizeLabels = {
-    s: 'Small',
-    m: 'Medium',
-    l: 'Large',
-    xl: 'Extra-large',
+  s: 'Small',
+  m: 'Medium',
+  l: 'Large',
+  xl: 'Extra-large',
 } as const satisfies Record<BadgeSize, string>;
 
 const semanticLabels = {
-    accent: 'New',
-    informative: 'Active',
-    neutral: 'Archived',
-    positive: 'Approved',
-    notice: 'Pending approval',
-    negative: 'Rejected',
+  accent: 'New',
+  informative: 'Active',
+  neutral: 'Archived',
+  positive: 'Approved',
+  notice: 'Pending approval',
+  negative: 'Rejected',
 } as const satisfies Record<BadgeSemanticVariant, string>;
 
 const nonSemanticLabels = {
-    fuchsia: 'Marketing',
-    indigo: 'Engineering',
-    magenta: 'Design',
-    purple: 'Product',
-    seafoam: 'Support',
-    yellow: 'Busy',
-    gray: 'Available',
-    red: 'Sales',
-    orange: 'Research',
-    chartreuse: 'Quality',
-    celery: 'Documentation',
-    green: 'Legal',
-    cyan: 'Analytics',
-    blue: 'Security',
-    pink: 'Creative',
-    turquoise: 'Training',
-    brown: 'Facilities',
-    cinnamon: 'Compliance',
-    silver: 'Version 1.2.10',
+  fuchsia: 'Marketing',
+  indigo: 'Engineering',
+  magenta: 'Design',
+  purple: 'Product',
+  seafoam: 'Support',
+  yellow: 'Busy',
+  gray: 'Available',
+  red: 'Sales',
+  orange: 'Research',
+  chartreuse: 'Quality',
+  celery: 'Documentation',
+  green: 'Legal',
+  cyan: 'Analytics',
+  blue: 'Security',
+  pink: 'Creative',
+  turquoise: 'Training',
+  brown: 'Facilities',
+  cinnamon: 'Compliance',
+  silver: 'Version 1.2.10',
 } as const satisfies Record<BadgeColorVariantS2, string>;
 
 const allVariantsLabels = { ...semanticLabels, ...nonSemanticLabels };
 
 const fixedLabels = {
-    'block-start': 'Block start',
-    'block-end': 'Block end',
-    'inline-start': 'Inline start',
-    'inline-end': 'Inline end',
+  'block-start': 'Block start',
+  'block-end': 'Block end',
+  'inline-start': 'Inline start',
+  'inline-end': 'Inline end',
 } as const satisfies Record<FixedValues, string>;
 
 // ────────────────────
@@ -164,13 +164,13 @@ const fixedLabels = {
 // ────────────────────
 
 export const Playground: Story = {
-    render: (args) => template(args),
-    args: {
-        size: 'm',
-        variant: 'informative',
-        'default-slot': 'Active',
-    },
-    tags: ['autodocs', 'dev'],
+  render: (args) => template(args),
+  args: {
+    size: 'm',
+    variant: 'informative',
+    'default-slot': 'Active',
+  },
+  tags: ['autodocs', 'dev'],
 };
 
 // ──────────────────────────────
@@ -178,13 +178,15 @@ export const Playground: Story = {
 // ──────────────────────────────
 
 export const Overview: Story = {
-    render: (args) => html` ${template(args)} `,
-    tags: ['overview'],
-    args: {
-        size: 'm',
-        variant: 'informative',
-        'default-slot': 'Active',
-    },
+  render: (args) => html`
+    ${template(args)}
+  `,
+  tags: ['overview'],
+  args: {
+    size: 'm',
+    variant: 'informative',
+    'default-slot': 'Active',
+  },
 };
 
 // ──────────────────────────
@@ -204,20 +206,20 @@ export const Overview: Story = {
  * - **icon slot**: (optional) - Visual indicator positioned before the label
  */
 export const Anatomy: Story = {
-    render: (args) => html`
-        ${template({ ...args, 'default-slot': 'Label only' })}
-        ${template({ ...args, 'icon-slot': '✓', 'aria-label': 'Icon only' })}
-        ${template({
-            ...args,
-            'icon-slot': '✓',
-            'default-slot': 'Icon and label',
-        })}
-    `,
-    tags: ['anatomy'],
-    args: {
-        variant: 'informative',
-        size: 'm',
-    },
+  render: (args) => html`
+    ${template({ ...args, 'default-slot': 'Label only' })}
+    ${template({ ...args, 'icon-slot': '✓', 'aria-label': 'Icon only' })}
+    ${template({
+      ...args,
+      'icon-slot': '✓',
+      'default-slot': 'Icon and label',
+    })}
+  `,
+  tags: ['anatomy'],
+  args: {
+    variant: 'informative',
+    size: 'm',
+  },
 };
 
 // ──────────────────────────
@@ -235,20 +237,20 @@ export const Anatomy: Story = {
  * The `m` size is the default and most frequently used option. Use larger sizes sparingly to create a hierarchy of importance on a page.
  */
 export const Sizes: Story = {
-    render: (args) => html`
-        ${BADGE_VALID_SIZES.map((size) =>
-            template({
-                ...args,
-                size,
-                'default-slot': sizeLabels[size],
-            })
-        )}
-    `,
-    parameters: { 'section-order': 1 },
-    tags: ['options'],
-    args: {
-        variant: 'informative',
-    },
+  render: (args) => html`
+    ${BADGE_VALID_SIZES.map((size) =>
+      template({
+        ...args,
+        size,
+        'default-slot': sizeLabels[size],
+      })
+    )}
+  `,
+  parameters: { 'section-order': 1 },
+  tags: ['options'],
+  args: {
+    variant: 'informative',
+  },
 };
 
 /**
@@ -265,17 +267,17 @@ export const Sizes: Story = {
  * - **negative**: Rejected, error, alert, failed
  */
 export const SemanticVariants: Story = {
-    render: (args) => html`
-        ${BADGE_VARIANTS_SEMANTIC.map((variant) =>
-            template({
-                ...args,
-                variant,
-                'default-slot': semanticLabels[variant],
-            })
-        )}
-    `,
-    parameters: { 'section-order': 2 },
-    tags: ['options'],
+  render: (args) => html`
+    ${BADGE_VARIANTS_SEMANTIC.map((variant) =>
+      template({
+        ...args,
+        variant,
+        'default-slot': semanticLabels[variant],
+      })
+    )}
+  `,
+  parameters: { 'section-order': 2 },
+  tags: ['options'],
 };
 SemanticVariants.storyName = 'Semantic variants';
 
@@ -292,17 +294,17 @@ SemanticVariants.storyName = 'Semantic variants';
  * 1st-gen variants `gray`, `red`, `orange`, `green`, and `blue` are not available in 2nd-gen.
  */
 export const NonSemanticVariants: Story = {
-    render: (args) => html`
-        ${BADGE_VARIANTS_COLOR_S2.map((variant) =>
-            template({
-                ...args,
-                variant,
-                'default-slot': nonSemanticLabels[variant],
-            })
-        )}
-    `,
-    parameters: { 'section-order': 3 },
-    tags: ['options'],
+  render: (args) => html`
+    ${BADGE_VARIANTS_COLOR_S2.map((variant) =>
+      template({
+        ...args,
+        variant,
+        'default-slot': nonSemanticLabels[variant],
+      })
+    )}
+  `,
+  parameters: { 'section-order': 3 },
+  tags: ['options'],
 };
 NonSemanticVariants.storyName = 'Non-semantic variants';
 
@@ -314,18 +316,18 @@ NonSemanticVariants.storyName = 'Non-semantic variants';
  * Attempting to use `outline` with non-semantic color variants will not apply the style.
  */
 export const Outline: Story = {
-    render: (args) => html`
-        ${BADGE_VARIANTS_SEMANTIC.map((variant) =>
-            template({
-                ...args,
-                variant,
-                outline: true,
-                'default-slot': semanticLabels[variant],
-            })
-        )}
-    `,
-    parameters: { 'section-order': 4 },
-    tags: ['options'],
+  render: (args) => html`
+    ${BADGE_VARIANTS_SEMANTIC.map((variant) =>
+      template({
+        ...args,
+        variant,
+        outline: true,
+        'default-slot': semanticLabels[variant],
+      })
+    )}
+  `,
+  parameters: { 'section-order': 4 },
+  tags: ['options'],
 };
 
 /**
@@ -338,18 +340,18 @@ export const Outline: Story = {
  * - Maintaining design system color palette while reducing emphasis
  */
 export const Subtle: Story = {
-    render: (args) => html`
-        ${BADGE_VARIANTS_S2.map((variant) =>
-            template({
-                ...args,
-                variant,
-                subtle: true,
-                'default-slot': allVariantsLabels[variant],
-            })
-        )}
-    `,
-    parameters: { 'section-order': 5 },
-    tags: ['options'],
+  render: (args) => html`
+    ${BADGE_VARIANTS_S2.map((variant) =>
+      template({
+        ...args,
+        variant,
+        subtle: true,
+        'default-slot': allVariantsLabels[variant],
+      })
+    )}
+  `,
+  parameters: { 'section-order': 5 },
+  tags: ['options'],
 };
 
 /**
@@ -367,21 +369,21 @@ export const Subtle: Story = {
  * All fixed positions shown below for comparison.
  */
 export const Fixed: Story = {
-    render: (args) => html`
-        ${FIXED_VALUES.map((fixed) =>
-            template({
-                ...args,
-                fixed,
-                'default-slot': fixedLabels[fixed],
-            })
-        )}
-    `,
-    parameters: { 'section-order': 6 },
-    tags: ['options'],
-    args: {
-        variant: 'informative',
-        size: 'm',
-    },
+  render: (args) => html`
+    ${FIXED_VALUES.map((fixed) =>
+      template({
+        ...args,
+        fixed,
+        'default-slot': fixedLabels[fixed],
+      })
+    )}
+  `,
+  parameters: { 'section-order': 6 },
+  tags: ['options'],
+  args: {
+    variant: 'informative',
+    size: 'm',
+  },
 };
 
 // ──────────────────────────────
@@ -395,19 +397,19 @@ export const Fixed: Story = {
  * This ensures badges remain readable even with longer status messages or category names.
  */
 export const TextWrapping: Story = {
-    render: (args) => html`
-        ${template({
-            ...args,
-            variant: 'informative',
-            'default-slot': 'Document review pending approval from manager',
-            style: 'max-inline-size: 120px',
-        })}
-    `,
-    tags: ['behaviors'],
-    args: {
-        variant: 'informative',
-        size: 'm',
-    },
+  render: (args) => html`
+    ${template({
+      ...args,
+      variant: 'informative',
+      'default-slot': 'Document review pending approval from manager',
+      style: 'max-inline-size: 120px',
+    })}
+  `,
+  tags: ['behaviors'],
+  args: {
+    variant: 'informative',
+    size: 'm',
+  },
 };
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
@@ -443,50 +445,50 @@ export const TextWrapping: Story = {
  * - Consider placement carefully - badges should be close to the content they describe
  */
 export const Accessibility: Story = {
-    render: (args) => html`
-        ${template({
-            ...args,
-            variant: 'positive',
-            'default-slot': 'Approved',
-        })}
-        ${template({
-            ...args,
-            variant: 'negative',
-            'default-slot': 'Rejected',
-        })}
-        ${template({
-            ...args,
-            variant: 'notice',
-            'default-slot': 'Pending approval',
-        })}
-        ${template({
-            ...args,
-            variant: 'informative',
-            'default-slot': 'Active',
-        })}
-        ${template({
-            ...args,
-            variant: 'neutral',
-            'default-slot': 'Archived',
-        })}
-        ${template({
-            ...args,
-            variant: 'celery',
-            'default-slot': 'Documentation',
-        })}
-        ${template({
-            ...args,
-            variant: 'yellow',
-            'default-slot': 'Busy',
-        })}
-        ${template({
-            ...args,
-            variant: 'silver',
-            'default-slot': 'Version 1.2.10',
-        })}
-    `,
-    tags: ['a11y'],
-    args: {
-        size: 'm',
-    },
+  render: (args) => html`
+    ${template({
+      ...args,
+      variant: 'positive',
+      'default-slot': 'Approved',
+    })}
+    ${template({
+      ...args,
+      variant: 'negative',
+      'default-slot': 'Rejected',
+    })}
+    ${template({
+      ...args,
+      variant: 'notice',
+      'default-slot': 'Pending approval',
+    })}
+    ${template({
+      ...args,
+      variant: 'informative',
+      'default-slot': 'Active',
+    })}
+    ${template({
+      ...args,
+      variant: 'neutral',
+      'default-slot': 'Archived',
+    })}
+    ${template({
+      ...args,
+      variant: 'celery',
+      'default-slot': 'Documentation',
+    })}
+    ${template({
+      ...args,
+      variant: 'yellow',
+      'default-slot': 'Busy',
+    })}
+    ${template({
+      ...args,
+      variant: 'silver',
+      'default-slot': 'Version 1.2.10',
+    })}
+  `,
+  tags: ['a11y'],
+  args: {
+    size: 'm',
+  },
 };

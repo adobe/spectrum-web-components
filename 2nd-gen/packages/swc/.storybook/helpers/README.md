@@ -32,9 +32,9 @@ formatComponentName('Components/Action Button', 'pascal');
 
 // Typical usage in stories
 export default {
-    title: 'Progress Circle',
-    component: 'swc-progress-circle',
-    // ...
+  title: 'Progress Circle',
+  component: 'swc-progress-circle',
+  // ...
 } as Meta;
 
 const componentName = formatComponentName(meta.title);

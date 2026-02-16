@@ -16,7 +16,7 @@ import { Popover } from './src/Popover.js';
 defineElement('sp-popover', Popover);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-popover': Popover;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-popover': Popover;
+  }
 }

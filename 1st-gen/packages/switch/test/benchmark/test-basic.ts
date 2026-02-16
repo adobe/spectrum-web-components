@@ -17,5 +17,5 @@ import '@spectrum-web-components/switch/sp-switch.js';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-switch>Switch</sp-switch>
+  <sp-switch>Switch</sp-switch>
 `);

@@ -14,5 +14,5 @@
 @import url("./thumbnail-overrides.css");
 
 ::slotted(:not(img)) {
-    display: none;
+  display: none;
 }

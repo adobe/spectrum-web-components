@@ -1,11 +1,11 @@
 {
-    "compilerOptions": {
-        "outDir": ".",
-        "rootDir": ".",
-        "typeRoots": ["../../node_modules/@types"],
-        "types": ["node"]
-    },
-    "exclude": [],
-    "extends": "./tsconfig.json",
-    "include": ["benchmark/cli.ts"]
+  "compilerOptions": {
+    "outDir": ".",
+    "rootDir": ".",
+    "typeRoots": ["../../node_modules/@types"],
+    "types": ["node"]
+  },
+  "exclude": [],
+  "extends": "./tsconfig.json",
+  "include": ["benchmark/cli.ts"]
 }

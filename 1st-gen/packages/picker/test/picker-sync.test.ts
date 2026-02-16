@@ -15,5 +15,5 @@ import '@spectrum-web-components/picker/sync/sp-picker.js';
 import { runPickerTests } from './index.js';
 
 describe('Picker, sync', () => {
-    runPickerTests();
+  runPickerTests();
 });

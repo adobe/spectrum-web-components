@@ -26,16 +26,16 @@ const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'));
 const version = pkg.version;
 
 try {
-    // Check if the tag already exists
-    execSync(`git rev-parse v${version}`, { stdio: 'ignore' });
-    console.log(`Tag v${version} already exists.`);
+  // Check if the tag already exists
+  execSync(`git rev-parse v${version}`, { stdio: 'ignore' });
+  console.log(`Tag v${version} already exists.`);
 } catch (error) {
-    console.log(`Creating tag v${version}...`);
-    execSync(`git tag -a v${version} -m "Release v${version}"`, {
-        stdio: 'inherit',
-    });
-    console.log(`Tag v${version} created successfully.`);
-    console.log(`Pushing tag v${version} to remote...`);
-    execSync(`git push origin v${version}`, { stdio: 'inherit' });
-    console.log(`Tag v${version} pushed successfully.`);
+  console.log(`Creating tag v${version}...`);
+  execSync(`git tag -a v${version} -m "Release v${version}"`, {
+    stdio: 'inherit',
+  });
+  console.log(`Tag v${version} created successfully.`);
+  console.log(`Pushing tag v${version} to remote...`);
+  execSync(`git push origin v${version}`, { stdio: 'inherit' });
+  console.log(`Tag v${version} pushed successfully.`);
 }
