@@ -88,7 +88,10 @@ export default mergeConfig(
                                 dirname,
                                 '../core'
                             ),
-                            '@adobe/swc': path.resolve(dirname, './components'),
+                            '@adobe/spectrum-wc': path.resolve(
+                                dirname,
+                                './components'
+                            ),
                             '@adobe/postcss-token': path.resolve(
                                 dirname,
                                 '../tools/postcss-token'

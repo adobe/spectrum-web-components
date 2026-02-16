@@ -13,9 +13,9 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Divider } from '@adobe/swc/divider';
+import { Divider } from '@adobe/spectrum-wc/divider';
 
-import '@adobe/swc/divider';
+import '@adobe/spectrum-wc/divider';
 
 import { getComponent, getComponents } from '../../../utils/test-utils.js';
 import meta from '../stories/divider.stories.js';
