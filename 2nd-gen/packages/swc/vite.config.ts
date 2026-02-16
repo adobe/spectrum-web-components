@@ -12,16 +12,55 @@
 
 import postcssToken from '@adobe/postcss-token';
 import autoprefixer from 'autoprefixer';
+import { readFile, writeFile } from 'fs/promises';
 import { glob } from 'glob';
-import { resolve } from 'path';
+import { basename, resolve } from 'path';
+import postcss from 'postcss';
 import postcssPresetEnv from 'postcss-preset-env';
+import type { Plugin } from 'vite';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import litCss from 'vite-plugin-lit-css';
 
+const postcssPlugins = [
+    postcssToken({ prefix: 'swc' }),
+    autoprefixer(),
+    postcssPresetEnv({
+        stage: 2,
+        features: {
+            'nesting-rules': true,
+            'custom-properties': false,
+            'light-dark-function': false,
+            'logical-properties-and-values': false,
+        },
+    }),
+];
+
+/** Processes stylesheets/ CSS through PostCSS and writes them to dist/. */
+function processStylesheets(): Plugin {
+    return {
+        name: 'process-stylesheets',
+        apply: 'build',
+        async closeBundle() {
+            const processor = postcss(postcssPlugins);
+            for (const file of glob.sync(
+                resolve(__dirname, 'stylesheets/*.css')
+            )) {
+                const dest = resolve(__dirname, 'dist', basename(file));
+                const result = await processor.process(
+                    await readFile(file, 'utf-8'),
+                    { from: file, to: dest }
+                );
+                await writeFile(dest, result.css);
+            }
+        },
+    };
+}
+
 export default defineConfig({
     plugins: [
         litCss({ exclude: ['./stylesheets/*.css'] }),
+        processStylesheets(),
         dts({
             include: ['**/*.ts'],
             exclude: ['**/*.test.ts', '**/*.stories.ts'],
@@ -43,19 +82,7 @@ export default defineConfig({
     ],
     css: {
         postcss: {
-            plugins: [
-                postcssToken({ prefix: 'swc' }),
-                autoprefixer(),
-                postcssPresetEnv({
-                    stage: 2, // Use stage 2 features (stable)
-                    features: {
-                        'nesting-rules': true,
-                        'custom-properties': false, // Let lit-css handle this
-                        'light-dark-function': false,
-                        'logical-properties-and-values': false,
-                    },
-                }),
-            ],
+            plugins: postcssPlugins,
         },
     },
     build: {
