@@ -36,6 +36,44 @@ export const languageResolverUpdatedSymbol = Symbol(
     'language resolver updated'
 );
 
+// ────────────────────────────────────────────
+// Shared <html lang> observer (singleton)
+// ────────────────────────────────────────────
+//
+// Instead of each controller instance creating its own MutationObserver on
+// document.documentElement, a single module-scoped observer fans out to every
+// registered callback. The observer is created lazily when the first controller
+// connects and torn down automatically when the last one disconnects.
+
+type LangChangeListener = () => void;
+
+const listeners = new Set<LangChangeListener>();
+let sharedObserver: MutationObserver | undefined;
+
+function addLangListener(listener: LangChangeListener): () => void {
+    listeners.add(listener);
+
+    if (!sharedObserver) {
+        sharedObserver = new MutationObserver(() => {
+            for (const cb of listeners) {
+                cb();
+            }
+        });
+        sharedObserver.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['lang'],
+        });
+    }
+
+    return () => {
+        listeners.delete(listener);
+        if (listeners.size === 0) {
+            sharedObserver?.disconnect();
+            sharedObserver = undefined;
+        }
+    };
+}
+
 /**
  * A reactive controller that manages language/locale resolution for components.
  *
@@ -44,9 +82,9 @@ export const languageResolverUpdatedSymbol = Symbol(
  * - Optionally subscribes to a provider (e.g. 1st-gen `<sp-theme>`) via the
  *   `sp-language-context` event; if something up the tree handles it and calls the
  *   callback, that becomes the source of truth for live updates
- * - Observes `<html lang>` attribute changes so that when the document language
- *   changes at runtime (e.g. app-level locale switching), the controller updates
- *   and the host re-renders (e.g. aria-valuetext reformats)
+ * - Observes `<html lang>` attribute changes via a shared singleton observer so that
+ *   when the document language changes at runtime (e.g. app-level locale switching),
+ *   the controller updates and the host re-renders (e.g. aria-valuetext reformats)
  * - Validates locale support using Intl API and falls back to `'en-US'` if unsupported
  *
  * In 2nd-gen there is no sp-theme language provider, so live updates come from
@@ -82,9 +120,11 @@ export class LanguageResolutionController implements ReactiveController {
      */
     language = this.getDocumentLanguage();
 
+    /** Unsubscribe from the sp-language-context provider (if any). */
     private unsubscribe?: () => void;
 
-    private langObserver?: MutationObserver;
+    /** Unsubscribe from the shared <html lang> observer. */
+    private removeLangListener?: () => void;
 
     constructor(host: ReactiveElement) {
         this.host = host;
@@ -108,36 +148,33 @@ export class LanguageResolutionController implements ReactiveController {
 
     public hostConnected(): void {
         this.resolveLanguage();
-        this.observeDocumentLang();
+        this.removeLangListener = addLangListener(
+            this.handleLangChange.bind(this)
+        );
     }
 
     public hostDisconnected(): void {
         this.unsubscribe?.();
-        this.langObserver?.disconnect();
-        this.langObserver = undefined;
+        this.unsubscribe = undefined;
+        this.removeLangListener?.();
+        this.removeLangListener = undefined;
     }
 
     /**
-     * Observes `<html lang>` attribute changes so that when the document
-     * language changes at runtime, the controller updates and the host re-renders.
+     * Called by the shared observer when `<html lang>` changes.
+     * Skipped when a provider (e.g. sp-theme) is the source of truth.
      */
-    private observeDocumentLang(): void {
-        this.langObserver = new MutationObserver(() => {
-            if (this.unsubscribe) {
-                return;
-            }
-            const next = this.getDocumentLanguage();
-            if (next === this.language) {
-                return;
-            }
-            const previous = this.language;
-            this.language = next;
-            this.host.requestUpdate(languageResolverUpdatedSymbol, previous);
-        });
-        this.langObserver.observe(document.documentElement, {
-            attributes: true,
-            attributeFilter: ['lang'],
-        });
+    private handleLangChange(): void {
+        if (this.unsubscribe) {
+            return;
+        }
+        const next = this.getDocumentLanguage();
+        if (next === this.language) {
+            return;
+        }
+        const previous = this.language;
+        this.language = next;
+        this.host.requestUpdate(languageResolverUpdatedSymbol, previous);
     }
 
     /**
