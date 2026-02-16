@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -23,10 +23,10 @@
 
 :host([editable]) {
     display: grid;
-    grid-template-columns: 1fr auto;
     grid-template-areas:
         "label number"
         "slider number";
+    grid-template-columns: 1fr auto;
 }
 
 :host([editable]) #label-container {
@@ -44,16 +44,16 @@
 }
 
 :host([editable]) output {
-    border: 0;
-    clip: rect(0, 0, 0, 0);
-    clip-path: inset(50%);
-    height: 1px;
-    margin: 0 -1px -1px 0;
-    overflow: hidden;
-    padding: 0;
     position: absolute;
     width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: 0 -1px -1px 0;
     white-space: nowrap;
+    border: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
 }
 
 :host([disabled]) {
@@ -78,17 +78,17 @@
     padding-left: var(--sp-slider-tick-offset);
 }
 
-:host(:dir(ltr)) .not-exact .tick:after {
+:host(:dir(ltr)) .not-exact .tick::after {
     left: auto;
     transform: translate(-50%, 0);
 }
 
-:host(:dir(rtl)) .not-exact .tick:after {
+:host(:dir(rtl)) .not-exact .tick::after {
     right: auto;
     transform: translate(50%, 0);
 }
 
-:host(:dir(rtl)) .handle:before {
+:host(:dir(rtl)) .handle::before {
     transform: translate(50%, -50%);
 }
 
@@ -97,15 +97,15 @@
  * waits to be addressed at the Spectrum CSS level.
  */
 
-.track:before {
+.track::before {
     background-size: var(--spectrum-slider-track-background-size) !important;
 }
 
-:host(:dir(ltr)) .track:last-of-type:before {
+:host(:dir(ltr)) .track:last-of-type::before {
     background-position: 100%;
 }
 
-:host(:dir(rtl)) .track:first-of-type:before {
+:host(:dir(rtl)) .track:first-of-type::before {
     background-position: 100%;
 }
 
@@ -118,13 +118,13 @@
 }
 
 .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    white-space: nowrap;
+    overflow: hidden;
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
 }
 
 :host([label-visibility="value"]:dir(ltr)) #value {
@@ -158,26 +158,26 @@
 
 /* Value tooltip for multi-handle sliders when value label is not visible */
 .value-tooltip {
+    visibility: hidden;
     position: absolute;
-    bottom: calc(100% + 8px);
     inset-inline-start: 50%;
-    transform: translateX(-50%);
+    bottom: calc(100% + 8px);
+    z-index: 10;
     padding-block-start: var(--spectrum-component-top-to-text-75, 4px);
     padding-block-end: var(--spectrum-component-bottom-to-text-75, 5px);
     padding-inline: var(--spectrum-component-edge-to-text-75, 9px);
-    background-color: var(--spectrum-gray-900);
-    color: var(--spectrum-gray-50);
     font-size: var(--spectrum-font-size-75, 12px);
     line-height: var(--spectrum-line-height-100, 1.3);
-    border-radius: var(--spectrum-corner-radius-100, 4px);
+    color: var(--spectrum-gray-50);
     white-space: nowrap;
+    background-color: var(--spectrum-gray-900);
+    border-radius: var(--spectrum-corner-radius-100, 4px);
+    pointer-events: none;
     opacity: 0;
-    visibility: hidden;
+    transform: translateX(-50%);
     transition:
         opacity var(--spectrum-animation-duration-100, 130ms) ease-in-out,
         visibility var(--spectrum-animation-duration-100, 130ms) ease-in-out;
-    pointer-events: none;
-    z-index: 10;
 }
 
 :host([dir="rtl"]) .value-tooltip {
@@ -185,18 +185,18 @@
 }
 
 /* Tooltip arrow/tip */
-.value-tooltip:after {
-    content: "";
+.value-tooltip::after {
     position: absolute;
-    top: 100%;
     inset-inline-start: 50%;
-    transform: translateX(-50%);
-    border-width: 4px;
-    border-style: solid;
+    top: 100%;
     border-color: var(--spectrum-gray-900) transparent transparent;
+    border-style: solid;
+    border-width: 4px;
+    content: "";
+    transform: translateX(-50%);
 }
 
-:host([dir="rtl"]) .value-tooltip:after {
+:host([dir="rtl"]) .value-tooltip::after {
     transform: translateX(50%);
 }
 
@@ -205,19 +205,19 @@
 .handle.show-value-tooltip:focus-within .value-tooltip,
 .handle.show-value-tooltip.handle-highlight .value-tooltip,
 .handle.show-value-tooltip.dragging .value-tooltip {
-    opacity: 1;
     visibility: visible;
+    opacity: 1;
 }
 
 /* High contrast mode support for value tooltip */
 @media (forced-colors: active) {
     .value-tooltip {
-        background-color: Canvas;
         color: CanvasText;
+        background-color: Canvas;
         border: 1px solid CanvasText;
     }
 
-    .value-tooltip:after {
+    .value-tooltip::after {
         border-color: CanvasText transparent transparent;
     }
 }

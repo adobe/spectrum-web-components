@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -48,15 +48,15 @@
 }
 
 sp-action-button {
-    width: var(--sp-tabs-overflow-button-size);
-    height: var(--sp-tabs-overflow-button-height);
     position: absolute;
     z-index: 2;
-    border: none;
-    text-align: center;
-    box-shadow: none;
-    background: transparent;
+    width: var(--sp-tabs-overflow-button-size);
+    height: var(--sp-tabs-overflow-button-height);
     color: var(--sp-tabs-overflow-icon-color);
+    text-align: center;
+    background: transparent;
+    border: none;
+    box-shadow: none;
 }
 
 sp-action-button.left-scroll {
@@ -79,29 +79,29 @@ sp-action-button.right-scroll.show {
 }
 
 /* styling for shadow behind the left and right buttons */
-.tabs-overflow-container:before,
-.tabs-overflow-container:after {
-    content: "";
+.tabs-overflow-container::before,
+.tabs-overflow-container::after {
     visibility: hidden;
     position: absolute;
-    z-index: 1;
-    height: var(--sp-tabs-overflow-button-height);
-    width: var(--sp-tabs-overflow-shadow-width);
-    pointer-events: none;
     inset-block-start: 0;
+    z-index: 1;
+    width: var(--sp-tabs-overflow-shadow-width);
+    height: var(--sp-tabs-overflow-button-height);
+    pointer-events: none;
+    content: "";
 }
 
-.tabs-overflow-container:before {
-    background: transparent linear-gradient(270deg, transparent, var(--sp-tabs-overflow-shadow-color)) 0 0 no-repeat padding-box;
+.tabs-overflow-container::before {
     left: 0;
+    background: transparent linear-gradient(270deg, transparent, var(--sp-tabs-overflow-shadow-color)) 0 0 no-repeat padding-box;
 }
 
-.tabs-overflow-container:after {
-    background: transparent linear-gradient(90deg, transparent, var(--sp-tabs-overflow-shadow-color)) 0 0 no-repeat padding-box;
+.tabs-overflow-container::after {
     right: 0;
+    background: transparent linear-gradient(90deg, transparent, var(--sp-tabs-overflow-shadow-color)) 0 0 no-repeat padding-box;
 }
 
-.tabs-overflow-container.left-shadow:before,
-.tabs-overflow-container.right-shadow:after {
+.tabs-overflow-container.left-shadow::before,
+.tabs-overflow-container.right-shadow::after {
     visibility: visible;
 }

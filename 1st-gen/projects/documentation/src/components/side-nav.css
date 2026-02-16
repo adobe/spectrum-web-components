@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -16,40 +16,40 @@
 
 aside {
     display: flex;
-    flex-direction: column;
-    max-height: 100vh;
-    height: 100vh;
-    overflow: auto;
     position: sticky;
     top: 0;
     left: 0;
+    flex-direction: column;
+    height: 100vh;
+    max-height: 100vh;
     background-color: var(--spectrum-gray-75);
+    overflow: auto;
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (width <= 960px) {
     aside {
+        visibility: hidden;
         position: fixed;
         top: 0;
         left: 0;
+        z-index: 10;
+        min-height: 100vh;
+        transform: translateX(-100%);
         transition:
             transform var(--spectrum-dialog-confirm-background-entry-animation-duration, var(--spectrum-animation-duration-600)) cubic-bezier(0, 0, 0.4, 1),
             visibility 0s linear var(--spectrum-animation-duration-600);
-        transform: translateX(-100%);
-        z-index: 10;
-        min-height: 100vh;
-        visibility: hidden;
     }
 
     aside:dir(rtl) {
+        visibility: hidden;
         right: 0;
         left: auto;
         transform: translateX(100%);
-        visibility: hidden;
     }
 
     :host([open]) aside {
-        transform: translateX(0);
         visibility: visible;
+        transform: translateX(0);
         transition-delay: 0s, 0s;
     }
 
@@ -66,19 +66,19 @@ aside {
 }
 
 .navigation {
-    width: calc(var(--swc-scale-factor) * 240px - 48px);
-    padding: 0 24px 24px;
     flex: 1;
     flex-grow: 1;
+    width: calc(var(--swc-scale-factor) * 240px - 48px);
+    padding: 0 24px 24px;
     overflow: auto;
     overflow-x: hidden;
     overflow-y: auto;
 }
 
 docs-spectrum-logo {
+    display: block;
     width: 36px;
     height: 32px;
-    display: block;
     padding-top: 7px;
 }
 
@@ -91,8 +91,8 @@ docs-spectrum-logo:dir(rtl) {
 }
 
 #logo-container {
-    outline: none;
     border-radius: 4px;
+    outline: none;
 }
 
 docs-search {
@@ -105,8 +105,8 @@ sp-sidenav {
 }
 
 .spectrum-web {
-    margin-top: 80px;
     display: block;
+    margin-top: 80px;
 }
 
 sp-underlay:not(:defined) {

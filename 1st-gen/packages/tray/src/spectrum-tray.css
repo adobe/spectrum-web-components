@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -20,13 +20,21 @@
     --spectrum-tray-corner-radius: var(--mod-tray-corner-radius, var(--spectrum-corner-radius-100));
     --spectrum-tray-background-color: var(--highcontrast-tray-background-color, var(--mod-tray-background-color, var(--spectrum-background-layer-2-color)));
     --mod-modal-max-width: 100%;
+
+    box-sizing: border-box;
     inline-size: 100%;
     max-inline-size: 100%;
     max-block-size: calc(100vh - 64px);
     max-block-size: calc(100vh - var(--spectrum-tray-spacing-edge-to-tray-safe-zone));
-    box-sizing: border-box;
+    padding-block-start: var(--mod-tray-top-to-content-area, var(--spectrum-tray-top-to-content-area));
+    padding-block-end: var(--mod-tray-bottom-to-content-area, var(--spectrum-tray-top-to-content-area));
+    margin-block-start: var(--spectrum-tray-spacing-edge-to-tray-safe-zone);
+    background-color: var(--spectrum-tray-background-color);
     border-radius: 0;
     border-radius: var(--mod-tray-corner-radius-portrait, 0) var(--mod-tray-corner-radius-portrait, 0) 0 0;
+    overflow: auto;
+    outline: none;
+    transform: translateY(100%);
     transition:
         opacity var(--spectrum-tray-exit-animation-duration) cubic-bezier(0.5, 0, 1, 1) 0s,
         visibility var(--spectrum-tray-exit-animation-duration) linear calc(var(--spectrum-tray-exit-animation-duration)),
@@ -35,20 +43,13 @@
         opacity var(--spectrum-tray-exit-animation-duration) cubic-bezier(0.5, 0, 1, 1) var(--spectrum-tray-exit-animation-delay),
         visibility var(--spectrum-tray-exit-animation-duration) linear calc(var(--spectrum-tray-exit-animation-delay) + var(--spectrum-tray-exit-animation-duration)),
         transform var(--spectrum-tray-exit-animation-duration) cubic-bezier(0.5, 0, 1, 1) var(--spectrum-tray-exit-animation-delay);
-    background-color: var(--spectrum-tray-background-color);
-    outline: none;
-    margin-block-start: var(--spectrum-tray-spacing-edge-to-tray-safe-zone);
-    padding-block-start: var(--mod-tray-top-to-content-area, var(--spectrum-tray-top-to-content-area));
-    padding-block-end: var(--mod-tray-bottom-to-content-area, var(--spectrum-tray-top-to-content-area));
-    overflow: auto;
-    transform: translateY(100%);
 }
 
 :host([open]) .tray {
+    transform: translateY(0);
     transition:
         transform var(--spectrum-tray-entry-animation-duration) cubic-bezier(0, 0, 0.4, 1) var(--spectrum-tray-entry-animation-delay),
         opacity var(--spectrum-tray-entry-animation-duration) cubic-bezier(0, 0, 0.4, 1) var(--spectrum-tray-entry-animation-delay);
-    transform: translateY(0);
 }
 
 @media screen and (orientation: landscape) {
@@ -62,6 +63,7 @@
 @media (forced-colors: active) {
     .tray {
         --highcontrast-tray-background-color: Canvas;
+
         border: solid;
     }
 

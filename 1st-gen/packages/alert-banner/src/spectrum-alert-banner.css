@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -35,6 +35,9 @@
     --mod-closebutton-margin-inline: var(--mod-alert-banner-close-button-spacing, var(--spectrum-alert-banner-close-button-spacing));
     --mod-closebutton-margin-top: var(--mod-alert-banner-close-button-spacing, var(--spectrum-alert-banner-close-button-spacing));
     --mod-closebutton-align-self: flex-start;
+
+    display: none;
+    justify-content: space-between;
     inline-size: auto;
     inline-size: var(--mod-alert-banner-size, var(--spectrum-alert-banner-size));
     max-inline-size: var(--mod-alert-banner-max-inline-size, var(--spectrum-alert-banner-max-inline-size));
@@ -44,8 +47,6 @@
     background-color: var(--mod-alert-banner-neutral-background, var(--spectrum-alert-banner-neutral-background));
     border: 0 solid #0000;
     border: var(--highcontrast-alert-banner-border-width, 0) solid var(--highcontrast-alert-banner-border-color, transparent);
-    justify-content: space-between;
-    display: none;
 }
 
 :host([open]) {
@@ -61,12 +62,12 @@
 }
 
 .body {
-    inline-size: 100%;
-    gap: max(calc(var(--mod-alert-banner-text-to-button-vertical, var(--spectrum-alert-banner-text-to-button-vertical)) - var(--mod-alert-banner-edge-to-button, var(--spectrum-alert-banner-edge-to-button))), 0px);
-    flex-wrap: wrap;
-    align-items: center;
-    margin-inline-start: var(--mod-alert-banner-start-edge, var(--spectrum-alert-banner-start-edge));
     display: flex;
+    flex-wrap: wrap;
+    gap: max(calc(var(--mod-alert-banner-text-to-button-vertical, var(--spectrum-alert-banner-text-to-button-vertical)) - var(--mod-alert-banner-edge-to-button, var(--spectrum-alert-banner-edge-to-button))), 0px);
+    align-items: center;
+    inline-size: 100%;
+    margin-inline-start: var(--mod-alert-banner-start-edge, var(--spectrum-alert-banner-start-edge));
 }
 
 .content {
@@ -74,14 +75,14 @@
 }
 
 .end {
-    align-items: center;
     display: flex;
+    align-items: center;
 }
 
 .type {
+    flex-shrink: 0;
     inline-size: var(--mod-alert-banner-icon-size, var(--spectrum-alert-banner-icon-size));
     block-size: var(--mod-alert-banner-icon-size, var(--spectrum-alert-banner-icon-size));
-    flex-shrink: 0;
     margin-block-start: var(--mod-alert-banner-top-icon, var(--spectrum-alert-banner-top-icon));
     margin-inline-end: var(--mod-alert-banner-icon-to-text, var(--spectrum-alert-banner-icon-to-text));
 }

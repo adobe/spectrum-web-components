@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,8 +11,8 @@
  */
 
 #tooltip {
-    pointer-events: none;
     visibility: hidden;
+    pointer-events: none;
     opacity: 0;
     transition:
         transform 0.13s ease-in-out,
@@ -25,8 +25,8 @@
 }
 
 :host([open]) #tooltip {
-    pointer-events: auto;
     visibility: visible;
+    pointer-events: auto;
     opacity: 1;
     transition-delay: 0s;
     transition-delay: var(--mod-overlay-animation-duration-opened, var(--spectrum-animation-duration-0, 0s));
@@ -73,33 +73,34 @@
         --highcontrast-tooltip-background-color-informative: CanvasText;
         --highcontrast-tooltip-background-color-positive: CanvasText;
         --highcontrast-tooltip-background-color-negative: CanvasText;
+
         forced-color-adjust: none;
     }
 }
 
 #tooltip {
+    -webkit-font-smoothing: antialiased;
     box-sizing: border-box;
-    vertical-align: top;
+    display: inline-flex;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
     inline-size: auto;
-    padding-inline: var(--mod-tooltip-spacing-inline, var(--spectrum-tooltip-spacing-inline));
-    border-radius: var(--mod-tooltip-border-radius, var(--spectrum-tooltip-border-radius));
+    max-inline-size: var(--mod-tooltip-max-inline-size, var(--spectrum-tooltip-max-inline-size));
     block-size: auto;
     min-block-size: var(--mod-tooltip-height, var(--spectrum-tooltip-height));
-    max-inline-size: var(--mod-tooltip-max-inline-size, var(--spectrum-tooltip-max-inline-size));
-    background-color: var(--highcontrast-tooltip-background-color-default, var(--mod-tooltip-background-color-default, var(--spectrum-tooltip-background-color-default)));
-    color: var(--mod-tooltip-content-color, var(--spectrum-tooltip-content-color));
+    padding-inline: var(--mod-tooltip-spacing-inline, var(--spectrum-tooltip-spacing-inline));
     font-size: var(--mod-tooltip-font-size, var(--spectrum-tooltip-font-size));
     font-weight: var(--mod-tooltip-font-weight, var(--spectrum-tooltip-font-weight));
     line-height: var(--mod-tooltip-line-height, var(--spectrum-tooltip-line-height));
+    vertical-align: top;
+    color: var(--mod-tooltip-content-color, var(--spectrum-tooltip-content-color));
     overflow-wrap: break-word;
-    -webkit-font-smoothing: antialiased;
+    background-color: var(--highcontrast-tooltip-background-color-default, var(--mod-tooltip-background-color-default, var(--spectrum-tooltip-background-color-default)));
+    border-radius: var(--mod-tooltip-border-radius, var(--spectrum-tooltip-border-radius));
     cursor: default;
     -webkit-user-select: none;
     user-select: none;
-    flex-direction: row;
-    align-items: center;
-    display: inline-flex;
-    position: relative;
 }
 
 :host(:lang(ja)) #tooltip,
@@ -125,13 +126,13 @@
 }
 
 #tip {
-    block-size: var(--mod-tooltip-tip-square-size, var(--spectrum-tooltip-tip-square-size));
-    inline-size: var(--mod-tooltip-tip-square-size, var(--spectrum-tooltip-tip-square-size));
+    position: absolute;
     inset-block-start: 100%;
+    left: 50%;
+    inline-size: var(--mod-tooltip-tip-square-size, var(--spectrum-tooltip-tip-square-size));
+    block-size: var(--mod-tooltip-tip-square-size, var(--spectrum-tooltip-tip-square-size));
     background-color: var(--highcontrast-tooltip-background-color-default, var(--mod-tooltip-background-color-default, var(--spectrum-tooltip-background-color-default)));
     clip-path: polygon(0 calc(0% - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))), 50% var(--mod-tooltip-tip-height-percentage, var(--spectrum-tooltip-tip-height-percentage)), 100% calc(0% - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))));
-    position: absolute;
-    left: 50%;
     transform: translateX(-50%);
 }
 
@@ -160,8 +161,8 @@
 .spectrum-Tooltip--bottom-left #tip,
 .spectrum-Tooltip--bottom-right #tip,
 .spectrum-Tooltip--bottom-start #tip {
-    clip-path: polygon(50% calc(100% - var(--mod-tooltip-tip-height-percentage, var(--spectrum-tooltip-tip-height-percentage))), 0 calc(100% + var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))), 100% calc(100% + var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))));
     inset-block: auto 100%;
+    clip-path: polygon(50% calc(100% - var(--mod-tooltip-tip-height-percentage, var(--spectrum-tooltip-tip-height-percentage))), 0 calc(100% + var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))), 100% calc(100% + var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))));
 }
 
 .spectrum-Tooltip--bottom-end #tip,
@@ -203,8 +204,8 @@
 
 .spectrum-Tooltip--bottom-end #tip:dir(rtl),
 .spectrum-Tooltip--top-end #tip:dir(rtl) {
-    left: var(--mod-tooltip-pointer-corner-spacing, var(--spectrum-tooltip-pointer-corner-spacing));
     right: auto;
+    left: var(--mod-tooltip-pointer-corner-spacing, var(--spectrum-tooltip-pointer-corner-spacing));
 }
 
 .spectrum-Tooltip--end #tip,
@@ -241,8 +242,8 @@
 :host([placement*="right"]) #tooltip #tip,
 .spectrum-Tooltip--right-bottom #tip,
 .spectrum-Tooltip--right-top #tip {
-    clip-path: polygon(calc(100% - var(--mod-tooltip-tip-height-percentage, var(--spectrum-tooltip-tip-height-percentage))) 50%, calc(100% + var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 100%, calc(100% + var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 0);
     inset-inline: auto 100%;
+    clip-path: polygon(calc(100% - var(--mod-tooltip-tip-height-percentage, var(--spectrum-tooltip-tip-height-percentage))) 50%, calc(100% + var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 100%, calc(100% + var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 0);
 }
 
 :host([placement*="left"]) #tooltip #tip,
@@ -251,8 +252,8 @@
 .spectrum-Tooltip--start #tip,
 .spectrum-Tooltip--start-bottom #tip,
 .spectrum-Tooltip--start-top #tip {
-    clip-path: polygon(calc(0% - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 0, calc(0% - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 100%, var(--mod-tooltip-tip-height-percentage, var(--spectrum-tooltip-tip-height-percentage)) 50%);
     inset-inline-start: 100%;
+    clip-path: polygon(calc(0% - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 0, calc(0% - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 100%, var(--mod-tooltip-tip-height-percentage, var(--spectrum-tooltip-tip-height-percentage)) 50%);
 }
 
 .spectrum-Tooltip--end-top #tip,
@@ -275,9 +276,9 @@
 :host([placement*="left"]) #tooltip #tip:dir(rtl),
 .spectrum-Tooltip--left-bottom #tip:dir(rtl),
 .spectrum-Tooltip--left-top #tip:dir(rtl) {
-    clip-path: polygon(calc(0% - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 0, calc(0% - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 100%, var(--mod-tooltip-tip-height-percentage, var(--spectrum-tooltip-tip-height-percentage)) 50%);
-    left: 100%;
     right: auto;
+    left: 100%;
+    clip-path: polygon(calc(0% - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 0, calc(0% - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 100%, var(--mod-tooltip-tip-height-percentage, var(--spectrum-tooltip-tip-height-percentage)) 50%);
 }
 
 :host([placement*="right"]) #tooltip #tip:dir(rtl),
@@ -286,29 +287,28 @@
 .spectrum-Tooltip--start #tip:dir(rtl),
 .spectrum-Tooltip--start-bottom #tip:dir(rtl),
 .spectrum-Tooltip--start-top #tip:dir(rtl) {
-    clip-path: polygon(var(--mod-tooltip-tip-height-percentage, var(--spectrum-tooltip-tip-height-percentage)) 50%, calc(100% + var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 100%, calc(100% + var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 0);
-    left: auto;
     right: 100%;
+    left: auto;
+    clip-path: polygon(var(--mod-tooltip-tip-height-percentage, var(--spectrum-tooltip-tip-height-percentage)) 50%, calc(100% + var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 100%, calc(100% + var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 0);
 }
 
 ::slotted([slot="icon"]) {
-    inline-size: var(--mod-tooltip-icon-width, var(--spectrum-tooltip-icon-width));
-    block-size: var(--mod-tooltip-icon-height, var(--spectrum-tooltip-icon-height));
     flex-shrink: 0;
     align-self: flex-start;
+    inline-size: var(--mod-tooltip-icon-width, var(--spectrum-tooltip-icon-width));
+    block-size: var(--mod-tooltip-icon-height, var(--spectrum-tooltip-icon-height));
     margin-block-start: var(--mod-tooltip-icon-spacing-block-start, var(--spectrum-tooltip-icon-spacing-block-start));
     margin-inline-start: calc(var(--mod-tooltip-icon-spacing-inline-start, var(--spectrum-tooltip-icon-spacing-inline-start)) - var(--mod-tooltip-spacing-inline, var(--spectrum-tooltip-spacing-inline)));
     margin-inline-end: var(--mod-tooltip-icon-spacing-inline-end, var(--spectrum-tooltip-icon-spacing-inline-end));
 }
 
 #label {
-    line-height: var(--mod-tooltip-line-height, var(--spectrum-tooltip-line-height));
-    margin-block-start: var(--mod-tooltip-spacing-block-start, var(--spectrum-tooltip-spacing-block-start));
-    margin-block-end: var(--mod-tooltip-spacing-block-end, var(--spectrum-tooltip-spacing-block-end));
-
     /* Allow overflow-wrap to work and prevent text overflow */
     inline-size: 100%;
     min-inline-size: 0;
+    margin-block-start: var(--mod-tooltip-spacing-block-start, var(--spectrum-tooltip-spacing-block-start));
+    margin-block-end: var(--mod-tooltip-spacing-block-end, var(--spectrum-tooltip-spacing-block-end));
+    line-height: var(--mod-tooltip-line-height, var(--spectrum-tooltip-line-height));
 }
 
 #tooltip,

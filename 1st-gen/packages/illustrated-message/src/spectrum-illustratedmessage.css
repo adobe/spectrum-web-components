@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -36,16 +36,17 @@
     --spectrum-illustrated-message-description-font-size: var(--spectrum-illustrated-message-body-size);
     --spectrum-illustrated-message-description-line-height: var(--spectrum-body-line-height);
     --spectrum-illustrated-message-description-color: var(--spectrum-body-color);
-    block-size: 100%;
+
     display: flex;
     display: var(--mod-illustrated-message-display, flex);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-inline-size: var(--mod-illustrated-message-content-maximum-width);
+    block-size: 100%;
     text-align: center;
     pointer-events: auto;
     pointer-events: var(--mod-illustrated-message-pointer-events, auto);
-    max-inline-size: var(--mod-illustrated-message-content-maximum-width);
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 :host:lang(ja),
@@ -55,42 +56,42 @@
 }
 
 #illustration {
-    color: var(--highcontrast-illustrated-message-illustration-color, var(--mod-illustrated-message-illustration-color, var(--spectrum-illustrated-message-illustration-color)));
-    fill: currentColor;
-    stroke: currentColor;
     margin-block-end: var(--mod-illustrated-message-title-to-heading, var(--spectrum-illustrated-message-title-to-heading));
+    color: var(--highcontrast-illustrated-message-illustration-color, var(--mod-illustrated-message-illustration-color, var(--spectrum-illustrated-message-illustration-color)));
+    fill: currentcolor;
+    stroke: currentcolor;
 }
 
 .spectrum-IllustratedMessage-accent {
     color: var(--highcontrast-illustrated-message-illustration-accent-color, var(--mod-illustrated-message-illustration-accent-color, var(--spectrum-illustrated-message-illustration-accent-color)));
-    fill: currentColor;
-    stroke: currentColor;
+    fill: currentcolor;
+    stroke: currentcolor;
 }
 
 #heading {
-    font-family: var(--mod-illustrated-message-title-font-family, var(--spectrum-illustrated-message-title-font-family));
-    font-weight: var(--mod-illustrated-message-title-font-weight, var(--spectrum-illustrated-message-title-font-weight));
-    font-style: var(--mod-illustrated-message-title-font-style, var(--spectrum-illustrated-message-title-font-style));
-    font-size: var(--mod-illustrated-message-title-font-size, var(--spectrum-illustrated-message-title-font-size));
-    line-height: var(--mod-illustrated-message-title-line-height, var(--spectrum-illustrated-message-title-line-height));
-    color: var(--mod-illustrated-message-title-color, var(--spectrum-illustrated-message-title-color));
     max-inline-size: var(--mod-illustrated-message-heading-max-inline-size, var(--spectrum-illustrated-message-heading-max-inline-size));
     margin-block-start: 0;
     margin-block-end: var(--mod-illustrated-message-heading-to-body, 0);
+    font-family: var(--mod-illustrated-message-title-font-family, var(--spectrum-illustrated-message-title-font-family));
+    font-size: var(--mod-illustrated-message-title-font-size, var(--spectrum-illustrated-message-title-font-size));
+    font-style: var(--mod-illustrated-message-title-font-style, var(--spectrum-illustrated-message-title-font-style));
+    font-weight: var(--mod-illustrated-message-title-font-weight, var(--spectrum-illustrated-message-title-font-weight));
+    line-height: var(--mod-illustrated-message-title-line-height, var(--spectrum-illustrated-message-title-line-height));
+    color: var(--mod-illustrated-message-title-color, var(--spectrum-illustrated-message-title-color));
 }
 
 #description {
     position: var(--mod-illustrated-message-description-position);
     z-index: var(--mod-illustrated-message-description-z-index);
-    pointer-events: auto;
-    pointer-events: var(--mod-illustrated-message-description-pointer-events, auto);
-    font-family: var(--mod-illustrated-message-description-font-family, var(--spectrum-illustrated-message-description-font-family));
-    font-weight: var(--mod-illustrated-message-description-font-weight, var(--spectrum-illustrated-message-description-font-weight));
-    font-style: var(--mod-illustrated-message-description-font-style, var(--spectrum-illustrated-message-description-font-style));
-    font-size: var(--mod-illustrated-message-description-font-size, var(--spectrum-illustrated-message-description-font-size));
-    line-height: var(--mod-illustrated-message-description-line-height, var(--spectrum-illustrated-message-description-line-height));
-    color: var(--mod-illustrated-message-description-color, var(--spectrum-illustrated-message-description-color));
     max-inline-size: var(--mod-illustrated-message-description-max-inline-size, var(--spectrum-illustrated-message-description-max-inline-size));
     margin-block-start: var(--mod-illustrated-message-heading-to-description, var(--spectrum-illustrated-message-heading-to-description));
     margin-block-end: 0;
+    font-family: var(--mod-illustrated-message-description-font-family, var(--spectrum-illustrated-message-description-font-family));
+    font-size: var(--mod-illustrated-message-description-font-size, var(--spectrum-illustrated-message-description-font-size));
+    font-style: var(--mod-illustrated-message-description-font-style, var(--spectrum-illustrated-message-description-font-style));
+    font-weight: var(--mod-illustrated-message-description-font-weight, var(--spectrum-illustrated-message-description-font-weight));
+    line-height: var(--mod-illustrated-message-description-line-height, var(--spectrum-illustrated-message-description-line-height));
+    color: var(--mod-illustrated-message-description-color, var(--spectrum-illustrated-message-description-color));
+    pointer-events: auto;
+    pointer-events: var(--mod-illustrated-message-description-pointer-events, auto);
 }

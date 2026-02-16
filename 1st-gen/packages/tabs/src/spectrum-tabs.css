@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -72,13 +72,13 @@
 }
 
 #list {
-    z-index: 0;
-    vertical-align: top;
-    background: linear-gradient(to var(--mod-tabs-list-background-direction, var(--spectrum-tabs-list-background-direction)), var(--highcontrast-tabs-divider-background-color, var(--mod-tabs-divider-background-color, var(--spectrum-tabs-divider-background-color))) 0 var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size)), transparent var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size)));
-    margin: 0;
-    padding-block: 0;
     display: flex;
     position: relative;
+    z-index: 0;
+    padding-block: 0;
+    margin: 0;
+    vertical-align: top;
+    background: linear-gradient(to var(--mod-tabs-list-background-direction, var(--spectrum-tabs-list-background-direction)), var(--highcontrast-tabs-divider-background-color, var(--mod-tabs-divider-background-color, var(--spectrum-tabs-divider-background-color))) 0 var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size)), transparent var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size)));
 }
 
 ::slotted([selected]:not([slot])) {
@@ -86,18 +86,18 @@
 }
 
 ::slotted([disabled]:not([slot])) {
-    cursor: default;
     color: var(--highcontrast-tabs-color-disabled, var(--mod-tabs-color-disabled, var(--spectrum-tabs-color-disabled)));
+    cursor: default;
 }
 
 #selection-indicator {
-    background-color: var(--highcontrast-tabs-selection-indicator-color, var(--mod-tabs-selection-indicator-color, var(--spectrum-tabs-selection-indicator-color)));
-    z-index: 0;
-    transition: transform var(--mod-tabs-animation-duration, var(--spectrum-tabs-animation-duration)) var(--mod-tabs-animation-ease, var(--spectrum-tabs-animation-ease));
-    transform-origin: 0 0;
-    border-radius: var(--mod-tabs-divider-border-radius, var(--spectrum-tabs-divider-border-radius));
     position: absolute;
     inset-inline-start: 0;
+    z-index: 0;
+    background-color: var(--highcontrast-tabs-selection-indicator-color, var(--mod-tabs-selection-indicator-color, var(--spectrum-tabs-selection-indicator-color)));
+    border-radius: var(--mod-tabs-divider-border-radius, var(--spectrum-tabs-divider-border-radius));
+    transform-origin: 0 0;
+    transition: transform var(--mod-tabs-animation-duration, var(--spectrum-tabs-animation-duration)) var(--mod-tabs-animation-ease, var(--spectrum-tabs-animation-ease));
 }
 
 :host([direction^="horizontal"]) #list {
@@ -113,9 +113,9 @@
 }
 
 :host([direction^="horizontal"]) #list #selection-indicator {
-    block-size: var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size));
     position: absolute;
     inset-block-end: 0;
+    block-size: var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size));
 }
 
 :host([direction^="horizontal"][compact]) #list {
@@ -124,9 +124,9 @@
 }
 
 :host([quiet]) #list {
+    display: inline-flex;
     background: none;
     border-color: #0000;
-    display: inline-flex;
 }
 
 :host([quiet]) #selection-indicator {
@@ -135,9 +135,9 @@
 
 :host([direction^="vertical"]) #list,
 :host([direction^="vertical-right"]) #list {
+    display: inline-flex;
     flex-direction: column;
     padding: 0;
-    display: inline-flex;
 }
 
 :host([direction^="vertical-right"][quiet]) #list,
@@ -148,24 +148,24 @@
 :host([direction^="vertical"]) #list ::slotted(:not([slot])),
 :host([direction^="vertical-right"]) #list ::slotted(:not([slot])) {
     block-size: var(--mod-tabs-item-height, var(--spectrum-tabs-item-height));
-    line-height: var(--mod-tabs-item-height, var(--spectrum-tabs-item-height));
+    padding-block: 0;
     margin-block-end: var(--mod-tabs-item-vertical-spacing, var(--spectrum-tabs-item-vertical-spacing));
     margin-inline-start: var(--mod-tabs-start-to-edge, var(--spectrum-tabs-start-to-edge));
     margin-inline-end: var(--mod-tabs-start-to-edge, var(--spectrum-tabs-start-to-edge));
-    padding-block: 0;
+    line-height: var(--mod-tabs-item-height, var(--spectrum-tabs-item-height));
 }
 
-:host([direction^="vertical"]) #list ::slotted(:not([slot])):before,
-:host([direction^="vertical-right"]) #list ::slotted(:not([slot])):before {
+:host([direction^="vertical"]) #list ::slotted(:not([slot]))::before,
+:host([direction^="vertical-right"]) #list ::slotted(:not([slot]))::before {
     inset-inline-start: calc(var(--mod-tabs-focus-indicator-gap, var(--spectrum-tabs-focus-indicator-gap)) * -1);
 }
 
 :host([direction^="vertical"]) #list #selection-indicator,
 :host([direction^="vertical-right"]) #list #selection-indicator {
-    inline-size: var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size));
     position: absolute;
     inset-block-start: 0;
     inset-inline-start: 0;
+    inline-size: var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size));
 }
 
 :host([direction^="vertical-right"]) #list #selection-indicator {
@@ -183,16 +183,17 @@
         --highcontrast-tabs-color-selected: HighlightText;
         --highcontrast-tabs-color-key-focus: ButtonText;
         --highcontrast-tabs-color-disabled: GrayText;
+
         forced-color-adjust: none;
     }
 
-    #list ::slotted([selected]:not([slot])):before {
+    #list ::slotted([selected]:not([slot]))::before {
         background-color: var(--highcontrast-tabs-focus-indicator-background-color);
     }
 
-    :host([direction^="vertical"][compact]) #list #list ::slotted(:not([slot])):before {
-        block-size: 100%;
+    :host([direction^="vertical"][compact]) #list #list ::slotted(:not([slot]))::before {
         inset-block-start: 0;
+        block-size: 100%;
     }
 
     :host([quiet]) #list {

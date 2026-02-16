@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -33,22 +33,22 @@
 }
 
 .dialog {
-    margin: 0;
-    border: 0;
-    background: none;
-    padding: 0;
-    position: fixed;
-    overflow: visible;
-    opacity: 1 !important;
     box-sizing: border-box;
-    max-height: calc(100vh - 16px);
-    max-height: calc(100dvh - 16px);
-    max-width: calc(100vw - 16px);
-    height: auto;
+    display: flex;
+    position: fixed;
     inset: auto;
     top: 0;
     left: 0;
-    display: flex;
+    max-width: calc(100vw - 16px);
+    height: auto;
+    max-height: calc(100vh - 16px);
+    max-height: calc(100dvh - 16px);
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: 0;
+    overflow: visible;
+    opacity: 1 !important;
 
     --sp-overlay-open: true;
 }
@@ -73,14 +73,14 @@ dialog:modal {
     display: none;
 }
 
-.dialog:before {
+.dialog::before {
     position: absolute;
     inset: -999em;
-    content: "";
     pointer-events: auto !important;
+    content: "";
 }
 
-.dialog:not(.not-immediately-closable):before {
+.dialog:not(.not-immediately-closable)::before {
     display: none;
 }
 
@@ -89,8 +89,8 @@ dialog:modal {
 }
 
 ::slotted(*) {
-    pointer-events: auto;
     visibility: visible !important;
+    pointer-events: auto;
 }
 
 ::slotted(sp-popover) {

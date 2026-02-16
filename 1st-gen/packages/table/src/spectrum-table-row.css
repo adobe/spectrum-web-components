@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,13 +11,13 @@
  */
 
 @media (forced-colors: active) {
-    :host([focused]) .spectrum-Table-checkbox .spectrum-Checkbox-box:before,
-    :host(:focus-visible) .spectrum-Table-checkbox .spectrum-Checkbox-box:before {
+    :host([focused]) .spectrum-Table-checkbox .spectrum-Checkbox-box::before,
+    :host(:focus-visible) .spectrum-Table-checkbox .spectrum-Checkbox-box::before {
         outline: var(--highcontrast-table-row-text-color-hover) 1px solid;
     }
 
     @media (hover: hover) {
-        :host(:hover) .spectrum-Table-checkbox .spectrum-Checkbox-box:before {
+        :host(:hover) .spectrum-Table-checkbox .spectrum-Checkbox-box::before {
             outline: var(--highcontrast-table-row-text-color-hover) 1px solid;
         }
     }
@@ -29,9 +29,9 @@
         --highcontrast-table-cell-focus-extra-offset: 1px;
     }
 
-    :host([drop-target]) .spectrum-Table-body .spectrum-Table-checkbox .spectrum-Checkbox-box:before,
-    :host([drop-target]) .spectrum-Table-checkbox .spectrum-Checkbox-box:before,
-    :host([selected]) .spectrum-Table-checkbox .spectrum-Checkbox-box:before {
+    :host([drop-target]) .spectrum-Table-body .spectrum-Table-checkbox .spectrum-Checkbox-box::before,
+    :host([drop-target]) .spectrum-Table-checkbox .spectrum-Checkbox-box::before,
+    :host([selected]) .spectrum-Table-checkbox .spectrum-Checkbox-box::before {
         outline: var(--highcontrast-table-selected-row-text-color) 1px solid;
     }
 }
@@ -53,11 +53,11 @@
 }
 
 :host {
-    transition: background-color var(--highcontrast-table-transition-duration, var(--mod-table-transition-duration, var(--spectrum-table-transition-duration))) ease-in-out;
+    position: relative;
+    border-block-start: none;
     cursor: pointer;
     cursor: var(--mod-table-cursor-row-default, pointer);
-    border-block-start: none;
-    position: relative;
+    transition: background-color var(--highcontrast-table-transition-duration, var(--mod-table-transition-duration, var(--spectrum-table-transition-duration))) ease-in-out;
 }
 
 :host(:first-child) ::slotted(:first-child) {
@@ -82,8 +82,8 @@
 }
 
 :host(:last-child) {
-    border-end-end-radius: var(--mod-table-border-radius, var(--spectrum-table-border-radius));
     border-end-start-radius: var(--mod-table-border-radius, var(--spectrum-table-border-radius));
+    border-end-end-radius: var(--mod-table-border-radius, var(--spectrum-table-border-radius));
 }
 
 :host(:focus) {
@@ -125,6 +125,7 @@
 
 :host([drop-target]) {
     --mod-table-border-color: var(--highcontrast-table-focus-indicator-color, transparent);
+
     outline-width: var(--mod-table-focus-indicator-thickness, var(--spectrum-table-focus-indicator-thickness));
     outline-style: solid;
     outline-color: var(--highcontrast-table-focus-indicator-color, var(--mod-table-drop-zone-outline-color, var(--spectrum-table-drop-zone-outline-color)));
@@ -140,31 +141,32 @@
 }
 
 .spectrum-Table-row--summary ::slotted(*) {
-    font-weight: var(--mod-table-summary-row-font-weight, var(--spectrum-table-summary-row-font-weight));
-    font-size: var(--mod-table-summary-row-font-size, var(--spectrum-table-row-font-size));
     font-family: var(--mod-table-summary-row-font-family, var(--spectrum-table-row-font-family));
+    font-size: var(--mod-table-summary-row-font-size, var(--spectrum-table-row-font-size));
     font-style: var(--mod-table-summary-row-font-style, var(--spectrum-table-row-font-style));
+    font-weight: var(--mod-table-summary-row-font-weight, var(--spectrum-table-summary-row-font-weight));
     line-height: var(--mod-table-summary-row-line-height, var(--spectrum-table-row-line-height));
     color: var(--highcontrast-table-row-text-color, var(--mod-table-summary-row-text-color, var(--spectrum-table-row-text-color)));
 }
 
 .spectrum-Table-row--sectionHeader {
     --spectrum-table-cell-background-color: var(--highcontrast-table-section-header-background-color, var(--mod-table-section-header-background-color, var(--spectrum-table-section-header-background-color)));
+
     cursor: auto;
     cursor: var(--mod-table-cursor-section-header, initial);
 }
 
 .spectrum-Table-row--sectionHeader ::slotted(*) {
-    font-weight: var(--mod-table-section-header-font-weight, var(--spectrum-table-section-header-font-weight));
-    text-align: start;
     block-size: var(--mod-table-section-header-min-height, var(--spectrum-table-section-header-min-height));
-    font-size: var(--mod-table-section-header-font-size, var(--spectrum-table-row-font-size));
-    font-family: var(--mod-table-section-header-font-family, var(--spectrum-table-row-font-family));
-    font-style: var(--mod-table-section-header-font-style, var(--spectrum-table-row-font-style));
-    line-height: var(--mod-table-section-header-line-height, var(--spectrum-table-row-line-height));
-    color: var(--highcontrast-table-section-header-text-color, var(--mod-table-section-header-text-color, var(--spectrum-table-row-text-color)));
     padding-block-start: calc(var(--mod-table-section-header-block-start-spacing, var(--spectrum-table-section-header-block-start-spacing)) - var(--mod-table-border-width, var(--spectrum-table-border-width)));
     padding-block-end: calc(var(--mod-table-section-header-block-end-spacing, var(--spectrum-table-section-header-block-end-spacing)) - var(--mod-table-border-width, var(--spectrum-table-border-width)));
+    font-family: var(--mod-table-section-header-font-family, var(--spectrum-table-row-font-family));
+    font-size: var(--mod-table-section-header-font-size, var(--spectrum-table-row-font-size));
+    font-style: var(--mod-table-section-header-font-style, var(--spectrum-table-row-font-style));
+    font-weight: var(--mod-table-section-header-font-weight, var(--spectrum-table-section-header-font-weight));
+    line-height: var(--mod-table-section-header-line-height, var(--spectrum-table-row-line-height));
+    color: var(--highcontrast-table-section-header-text-color, var(--mod-table-section-header-text-color, var(--spectrum-table-row-text-color)));
+    text-align: start;
 }
 
 :host {
@@ -230,8 +232,8 @@
 }
 
 .spectrum-Table-row--collapsible .spectrum-Table-disclosureIcon {
-    margin-inline: var(--mod-table-collapsible-disclosure-inline-spacing, var(--spectrum-table-collapsible-disclosure-inline-spacing));
     margin-block-start: max(0px, calc((var(--mod-table-min-row-height, var(--spectrum-table-min-row-height)) - var(--mod-table-disclosure-icon-size, var(--spectrum-table-disclosure-icon-size))) / 2));
+    margin-inline: var(--mod-table-collapsible-disclosure-inline-spacing, var(--spectrum-table-collapsible-disclosure-inline-spacing));
 }
 
 :host([hidden]) .spectrum-Table-row--collapsible {

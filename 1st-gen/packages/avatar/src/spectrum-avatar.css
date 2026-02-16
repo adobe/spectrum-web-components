@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -73,37 +73,37 @@
 }
 
 :host {
-    inline-size: var(--mod-avatar-inline-size, var(--spectrum-avatar-inline-size));
-    block-size: var(--mod-avatar-block-size, var(--spectrum-avatar-block-size));
-    border-radius: var(--mod-avatar-border-radius, var(--spectrum-avatar-border-radius));
     -webkit-user-drag: none;
-    -webkit-user-select: none;
-    user-select: none;
-    opacity: var(--mod-avatar-color-opacity, var(--spectrum-avatar-color-opacity));
-    border-width: 0;
-    outline: none;
     display: inline-block;
     position: relative;
+    inline-size: var(--mod-avatar-inline-size, var(--spectrum-avatar-inline-size));
+    block-size: var(--mod-avatar-block-size, var(--spectrum-avatar-block-size));
+    border-width: 0;
+    border-radius: var(--mod-avatar-border-radius, var(--spectrum-avatar-border-radius));
     overflow: visible;
+    -webkit-user-select: none;
+    user-select: none;
+    outline: none;
+    opacity: var(--mod-avatar-color-opacity, var(--spectrum-avatar-color-opacity));
 }
 
 :host([disabled]) {
     opacity: var(--mod-avatar-color-opacity-disabled, var(--spectrum-avatar-color-opacity-disabled));
 }
 
-:host(:not([disabled])) .is-focused:after,
-:host(:not([disabled])) .link:focus-visible:after {
-    pointer-events: none;
-    content: "";
-    inline-size: calc(var(--mod-avatar-inline-size, var(--spectrum-avatar-inline-size)) + var(--mod-avatar-focus-indicator-gap, var(--spectrum-avatar-focus-indicator-gap)) * 2);
-    block-size: calc(var(--mod-avatar-inline-size, var(--spectrum-avatar-inline-size)) + var(--mod-avatar-focus-indicator-gap, var(--spectrum-avatar-focus-indicator-gap)) * 2);
-    border-style: solid;
-    border-width: var(--mod-avatar-focus-indicator-thickness, var(--spectrum-avatar-focus-indicator-thickness));
-    border-color: var(--highcontrast-avatar-focus-indicator-color, var(--mod-avatar-focus-indicator-color, var(--spectrum-avatar-focus-indicator-color)));
-    border-radius: var(--mod-avatar-border-radius, var(--spectrum-avatar-border-radius));
+:host(:not([disabled])) .is-focused::after,
+:host(:not([disabled])) .link:focus-visible::after {
     position: absolute;
     inset-block-start: calc((var(--mod-avatar-focus-indicator-gap, var(--spectrum-avatar-focus-indicator-gap)) + var(--mod-avatar-focus-indicator-thickness, var(--spectrum-avatar-focus-indicator-thickness))) * -1);
     inset-inline-start: calc((var(--mod-avatar-focus-indicator-gap, var(--spectrum-avatar-focus-indicator-gap)) + var(--mod-avatar-focus-indicator-thickness, var(--spectrum-avatar-focus-indicator-thickness))) * -1);
+    inline-size: calc(var(--mod-avatar-inline-size, var(--spectrum-avatar-inline-size)) + var(--mod-avatar-focus-indicator-gap, var(--spectrum-avatar-focus-indicator-gap)) * 2);
+    block-size: calc(var(--mod-avatar-inline-size, var(--spectrum-avatar-inline-size)) + var(--mod-avatar-focus-indicator-gap, var(--spectrum-avatar-focus-indicator-gap)) * 2);
+    border-color: var(--highcontrast-avatar-focus-indicator-color, var(--mod-avatar-focus-indicator-color, var(--spectrum-avatar-focus-indicator-color)));
+    border-style: solid;
+    border-width: var(--mod-avatar-focus-indicator-thickness, var(--spectrum-avatar-focus-indicator-thickness));
+    border-radius: var(--mod-avatar-border-radius, var(--spectrum-avatar-border-radius));
+    pointer-events: none;
+    content: "";
 }
 
 .link {

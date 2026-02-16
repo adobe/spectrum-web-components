@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,34 +11,35 @@
  */
 
 .sortedIcon {
-    vertical-align: initial;
-    transition: transform var(--highcontrast-table-transition-duration, var(--mod-table-transition-duration, var(--spectrum-table-transition-duration))) ease-in-out;
+    display: none;
     margin-inline-start: var(--mod-table-sort-icon-inline-start-spacing, 0);
     margin-inline-end: var(--mod-table-sort-icon-inline-end-spacing, var(--mod-table-icon-to-text, var(--spectrum-table-icon-to-text)));
-    display: none;
+    vertical-align: initial;
+    transition: transform var(--highcontrast-table-transition-duration, var(--mod-table-transition-duration, var(--spectrum-table-transition-duration))) ease-in-out;
 }
 
 :host {
     --spectrum-table-icon-color: var(--highcontrast-table-icon-color, var(--mod-table-icon-color-default, var(--spectrum-table-icon-color-default)));
+
     box-sizing: border-box;
-    text-align: start;
-    vertical-align: var(--mod-table-header-vertical-align, var(--spectrum-table-header-vertical-align));
+    block-size: var(--mod-table-min-header-height, var(--spectrum-table-min-header-height));
+    padding-block: var(--mod-table-header-top-to-text, var(--spectrum-table-header-top-to-text)) var(--mod-table-header-bottom-to-text, var(--spectrum-table-header-bottom-to-text));
+    padding-inline: var(--mod-table-cell-inline-space, var(--spectrum-table-cell-inline-space));
     font-family: var(--mod-table-header-font-family, var(--spectrum-table-row-font-family));
     font-size: var(--mod-table-header-font-size, var(--spectrum-table-row-font-size));
     font-weight: var(--mod-table-header-font-weight, var(--spectrum-table-header-font-weight));
     line-height: var(--mod-table-header-line-height, var(--spectrum-table-row-line-height));
+    vertical-align: var(--mod-table-header-vertical-align, var(--spectrum-table-header-vertical-align));
+    color: var(--mod-table-header-text-color, var(--spectrum-table-header-text-color));
+    text-align: start;
     text-transform: none;
     text-transform: var(--mod-table-header-text-transform, none);
-    block-size: var(--mod-table-min-header-height, var(--spectrum-table-min-header-height));
-    padding-block: var(--mod-table-header-top-to-text, var(--spectrum-table-header-top-to-text)) var(--mod-table-header-bottom-to-text, var(--spectrum-table-header-bottom-to-text));
-    padding-inline: var(--mod-table-cell-inline-space, var(--spectrum-table-cell-inline-space));
-    color: var(--mod-table-header-text-color, var(--spectrum-table-header-text-color));
     background-color: var(--mod-table-header-background-color, var(--spectrum-table-header-background-color));
-    transition: color var(--highcontrast-table-transition-duration, var(--mod-table-transition-duration, var(--spectrum-table-transition-duration))) ease-in-out;
+    border-radius: 0;
     cursor: auto;
     cursor: var(--mod-table-cursor-header-default, initial);
-    border-radius: 0;
     outline: 0;
+    transition: color var(--highcontrast-table-transition-duration, var(--mod-table-transition-duration, var(--spectrum-table-transition-duration))) ease-in-out;
 }
 
 .spectrum-Table-menuIcon,
