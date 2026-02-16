@@ -11,7 +11,7 @@ on:
         types: [labeled, synchronize]
     push:
         branches:
-            - SWC-1405
+            - main
 
 jobs:
     publish:
