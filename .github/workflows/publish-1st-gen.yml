@@ -21,7 +21,7 @@ jobs:
             github.event_name == 'workflow_dispatch' ||
             github.event_name == 'push' ||
             (github.event_name == 'pull_request' &&
-            contains(github.event.pull_request.labels.*.name, 'release-to-npm'))
+            contains(github.event.pull_request.labels.*.name, 'snapshot-release'))
         outputs:
             has_changesets: ${{ steps.check.outputs.has_changesets }}
             has_1st_gen_changesets: ${{ steps.check.outputs.has_1st_gen_changesets }}
@@ -103,7 +103,7 @@ jobs:
               id: extract-tag
               run: |
                   if [ "${{ github.event_name }}" == "pull_request" ]; then
-                    # PRs with the release-to-npm label always use snapshot-test
+                    # PRs with the snapshot-release label always use snapshot-test
                     WORKFLOW_TAG="snapshot-test"
                   elif [ -n "${{ github.event.inputs.tag }}" ]; then
                     # Use the tag provided via workflow_dispatch input
