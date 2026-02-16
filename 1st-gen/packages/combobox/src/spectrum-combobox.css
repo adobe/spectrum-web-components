@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -177,14 +177,14 @@
 }
 
 :host {
+    display: inline-flex;
+    position: relative;
+    flex-flow: row;
     inline-size: var(--mod-combobox-inline-size, var(--spectrum-combobox-inline-size));
     min-inline-size: var(--mod-combobox-min-inline-size, var(--spectrum-combobox-min-inline-size));
     block-size: var(--mod-combobox-block-size, var(--spectrum-combobox-block-size));
-    border-radius: var(--mod-combobox-border-radius, var(--spectrum-combobox-border-radius));
-    flex-flow: row;
     margin-block-start: var(--mod-combobox-spacing-label-to-combobox, var(--spectrum-combobox-spacing-label-to-combobox));
-    display: inline-flex;
-    position: relative;
+    border-radius: var(--mod-combobox-border-radius, var(--spectrum-combobox-border-radius));
 }
 
 .spectrum-Popover.is-open {
@@ -192,9 +192,9 @@
 }
 
 :host([keyboard-focused]) .is-readOnly:not(.spectrum-Combobox--quiet) #textfield #input {
-    outline-offset: var(--mod-textfield-focus-indicator-gap);
     outline: var(--mod-textfield-focus-indicator-width) solid;
     outline-color: var(--mod-textfield-focus-indicator-color);
+    outline-offset: var(--mod-textfield-focus-indicator-gap);
 }
 
 :host .is-readOnly:not(.spectrum-Combobox--quiet) #input:read-only {
@@ -207,10 +207,10 @@
 }
 
 :host([disabled]) .is-readOnly:not(.spectrum-Combobox--quiet) #input:read-only {
+    color: var(--highcontrast-textfield-text-color-disabled, var(--mod-textfield-text-color-disabled, var(--spectrum-combobox-readonly-text-color-disabled)));
     background-color: var(--mod-textfield-background-color-disabled, var(--spectrum-combobox-readonly-background-color-disabled));
     border-color: #0000;
     border-color: var(--mod-combobox-readonly-border-color-disabled, var(--spectrum-combobox-readonly-border-color-disabled, transparent));
-    color: var(--highcontrast-textfield-text-color-disabled, var(--mod-textfield-text-color-disabled, var(--spectrum-combobox-readonly-text-color-disabled)));
 }
 
 .progress-circle {
@@ -279,14 +279,14 @@
 }
 
 #input {
-    backface-visibility: hidden;
-    line-height: var(--mod-combobox-line-height, var(--spectrum-combobox-line-height));
-    font-size: var(--mod-combobox-font-size, var(--spectrum-combobox-font-size));
-    font-style: var(--mod-combobox-font-style, var(--spectrum-combobox-font-style));
     padding-block-start: calc(var(--mod-combobox-spacing-block-start-edge-to-text, var(--spectrum-combobox-spacing-block-start-edge-to-text)) - var(--mod-combobox-border-width, var(--spectrum-combobox-border-width)));
     padding-block-end: calc(var(--mod-combobox-spacing-block-end-edge-to-text, var(--spectrum-combobox-spacing-block-end-edge-to-text)) - var(--mod-combobox-border-width, var(--spectrum-combobox-border-width)));
     padding-inline-start: calc(var(--mod-combobox-spacing-inline-start-edge-to-text, var(--spectrum-combobox-spacing-inline-start-edge-to-text)) - var(--mod-combobox-border-width, var(--spectrum-combobox-border-width)));
     padding-inline-end: calc(var(--mod-combobox-button-width, var(--spectrum-combobox-button-width)) + var(--mod-combobox-spacing-inline-end-edge-to-text, var(--spectrum-combobox-spacing-inline-end-edge-to-text)) - var(--mod-combobox-border-width, var(--spectrum-combobox-border-width)) * 2);
+    font-size: var(--mod-combobox-font-size, var(--spectrum-combobox-font-size));
+    font-style: var(--mod-combobox-font-style, var(--spectrum-combobox-font-style));
+    line-height: var(--mod-combobox-line-height, var(--spectrum-combobox-line-height));
+    backface-visibility: hidden;
 }
 
 #input::placeholder {
@@ -362,11 +362,11 @@
 }
 
 :host([invalid]) #textfield .icon {
-    inline-size: var(--mod-combobox-icon-size, var(--spectrum-combobox-icon-size));
-    block-size: var(--mod-combobox-icon-size, var(--spectrum-combobox-icon-size));
     inset-block-start: var(--mod-combobox-block-spacing-edge-to-alert, var(--spectrum-combobox-block-spacing-edge-to-alert));
     inset-block-end: var(--mod-combobox-block-spacing-edge-to-alert, var(--spectrum-combobox-block-spacing-edge-to-alert));
     inset-inline-end: calc(var(--mod-combobox-spacing-inline-icon-to-button, var(--spectrum-combobox-spacing-inline-icon-to-button)) + var(--mod-combobox-button-width, var(--spectrum-combobox-button-width)));
+    inline-size: var(--mod-combobox-icon-size, var(--spectrum-combobox-icon-size));
+    block-size: var(--mod-combobox-icon-size, var(--spectrum-combobox-icon-size));
 }
 
 :host([disabled]) #textfield .icon,
@@ -397,11 +397,11 @@
 }
 
 :host([quiet]) #input {
-    border-block-end-width: var(--mod-combobox-border-width, var(--spectrum-combobox-border-width));
     padding-block-start: var(--mod-combobox-spacing-block-start-edge-to-text, var(--spectrum-combobox-spacing-block-start-edge-to-text));
     padding-block-end: calc(var(--mod-combobox-spacing-block-end-edge-to-text, var(--spectrum-combobox-spacing-block-end-edge-to-text)) - var(--mod-combobox-border-width, var(--spectrum-combobox-border-width)));
     padding-inline-start: var(--mod-combobox-spacing-inline-start-edge-to-text, var(--spectrum-combobox-spacing-inline-start-edge-to-text));
     padding-inline-end: calc(var(--mod-combobox-button-width, var(--spectrum-combobox-button-width)) + var(--mod-combobox-spacing-inline-end-edge-to-text, var(--spectrum-combobox-spacing-inline-end-edge-to-text)) - var(--mod-combobox-button-inline-offset, var(--spectrum-combobox-button-inline-offset, 0px)));
+    border-block-end-width: var(--mod-combobox-border-width, var(--spectrum-combobox-border-width));
 }
 
 :host([quiet][invalid]) #textfield #input,

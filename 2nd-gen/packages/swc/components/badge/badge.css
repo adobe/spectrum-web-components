@@ -1,9 +1,8 @@
-/*!
+/**
  * Copyright 2026 Adobe. All rights reserved.
- *
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
- * of the License at <http://www.apache.org/licenses/LICENSE-2.0>
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software distributed under
  * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
@@ -13,8 +12,8 @@
 
 :host {
     display: inline-block;
-    vertical-align: middle;
     place-self: start;
+    vertical-align: middle;
 }
 
 * {
@@ -30,29 +29,29 @@
         token('component-bottom-to-text-100');
 
     display: inline-flex;
-    align-items: center;
-    cursor: default;
-    min-block-size: var(--swc-badge-height, token('component-height-100'));
-    border-radius: var(
-        --swc-badge-corner-radius,
-        token('corner-radius-medium-size-medium')
-    );
-    border: var(--_swc-badge-border-width) solid
-        var(--swc-badge-border-color, transparent);
-    background: var(
-        --swc-badge-background-color,
-        token('accent-background-color-default')
-    );
-    color: var(--swc-badge-label-icon-color, token('white'));
     gap: var(--swc-badge-gap, token('text-to-visual-100'));
-    padding-inline: calc(
-        var(--swc-badge-padding-inline, token('component-edge-to-text-100')) -
-            var(--_swc-badge-border-width-deduction)
-    );
+    align-items: center;
+    min-block-size: var(--swc-badge-height, token('component-height-100'));
     padding-block: calc(
         var(--swc-badge-padding-block, var(--_swc-badge-padding-block)) -
             var(--_swc-badge-border-width-deduction)
     );
+    padding-inline: calc(
+        var(--swc-badge-padding-inline, token('component-edge-to-text-100')) -
+            var(--_swc-badge-border-width-deduction)
+    );
+    color: var(--swc-badge-label-icon-color, token('white'));
+    background: var(
+        --swc-badge-background-color,
+        token('accent-background-color-default')
+    );
+    border: var(--_swc-badge-border-width) solid
+        var(--swc-badge-border-color, transparent);
+    border-radius: var(
+        --swc-badge-corner-radius,
+        token('corner-radius-medium-size-medium')
+    );
+    cursor: default;
 }
 
 .swc-Badge:has(.swc-Badge-icon) {
@@ -77,11 +76,11 @@
 .swc-Badge-icon {
     --_swc-badge-icon-size: token('workflow-icon-size-100');
 
-    block-size: var(--swc-badge-icon-size, var(--_swc-badge-icon-size));
-    inline-size: var(--swc-badge-icon-size, var(--_swc-badge-icon-size));
-    flex-shrink: 0;
     display: grid;
+    flex-shrink: 0;
     place-content: center;
+    inline-size: var(--swc-badge-icon-size, var(--_swc-badge-icon-size));
+    block-size: var(--swc-badge-icon-size, var(--_swc-badge-icon-size));
 }
 
 :host([size='s']) {

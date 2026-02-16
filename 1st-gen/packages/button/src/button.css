@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -22,9 +22,9 @@
         border-color: highlight;
     }
 
-    :host(.remove-focus-ring-safari-hack:focus-visible):after {
-        forced-color-adjust: none;
+    :host(.remove-focus-ring-safari-hack:focus-visible)::after {
         box-shadow: none;
+        forced-color-adjust: none;
     }
 }
 
@@ -50,15 +50,15 @@
 
 @keyframes update-pending-button-styles {
     100% {
+        color: var(--highcontrast-button-content-color-disabled, var(--mod-button-content-color-disabled, var(--spectrum-button-content-color-disabled)));
         background-color: var(--highcontrast-button-background-color-disabled, var(--mod-button-background-color-disabled, var(--spectrum-button-background-color-disabled)));
         border-color: var(--highcontrast-button-border-color-disabled, var(--mod-button-border-color-disabled, var(--spectrum-button-border-color-disabled)));
-        color: var(--highcontrast-button-content-color-disabled, var(--mod-button-content-color-disabled, var(--spectrum-button-content-color-disabled)));
     }
 }
 
 :host([pending]:not([disabled])) {
-    cursor: default;
     pointer-events: none;
+    cursor: default;
     animation: update-pending-button-styles 0s var(--pending-delay, 1s) forwards;
 }
 
@@ -87,7 +87,7 @@ sp-progress-circle {
     animation: hide-icons-label 0s var(--pending-delay, 1s) forwards;
 }
 
-:host(.remove-focus-ring-safari-hack:focus-visible):after {
+:host(.remove-focus-ring-safari-hack:focus-visible)::after {
     margin: calc(-1 * var(--mod-button-focus-indicator-gap, var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap))));
     box-shadow: none;
 }
@@ -98,7 +98,7 @@ sp-progress-circle {
 }
 
 :host(.remove-focus-ring-safari-hack:focus-visible:not(:hover)) {
+    color: var(--highcontrast-button-content-color-default, var(--mod-button-content-color-default, var(--spectrum-button-content-color-default)));
     background-color: var(--highcontrast-button-background-color-default, var(--mod-button-background-color-default, var(--spectrum-button-background-color-default)));
     border-color: var(--highcontrast-button-border-color-default, var(--mod-button-border-color-default, var(--spectrum-button-border-color-default)));
-    color: var(--highcontrast-button-content-color-default, var(--mod-button-content-color-default, var(--spectrum-button-content-color-default)));
 }

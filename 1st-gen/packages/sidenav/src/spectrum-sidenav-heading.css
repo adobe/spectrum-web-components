@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -65,11 +65,12 @@
     --spectrum-sidenav-header-font-style: var(--spectrum-default-font-style);
     --spectrum-sidenav-header-font-size: var(--spectrum-font-size-75);
     --spectrum-sidenav-header-line-height: var(--spectrum-line-height-100);
-    flex-direction: column;
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
+
     display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
 }
 
 #list:lang(ja),
@@ -82,12 +83,12 @@
 
 #heading {
     padding-inline: var(--mod-sidenav-inline-padding, var(--spectrum-sidenav-inline-padding));
-    color: var(--mod-sidenav-header-color, var(--spectrum-sidenav-header-color));
-    font-family: var(--spectrum-sidenav-header-font-family);
-    font-size: var(--mod-sidenav-header-font-size, var(--spectrum-sidenav-header-font-size));
-    font-weight: var(--mod-sidenav-header-font-weight, var(--spectrum-sidenav-header-font-weight));
-    font-style: var(--mod-sidenav-header-font-style, var(--spectrum-sidenav-header-font-style));
-    line-height: var(--mod-sidenav-header-line-height, var(--spectrum-sidenav-header-line-height));
     margin-block-start: calc(var(--mod-sidenav-heading-top-margin, var(--spectrum-sidenav-heading-top-margin)) - var(--mod-sidenav-gap, var(--spectrum-sidenav-gap)));
     margin-block-end: var(--mod-sidenav-heading-bottom-margin, var(--spectrum-sidenav-heading-bottom-margin));
+    font-family: var(--spectrum-sidenav-header-font-family);
+    font-size: var(--mod-sidenav-header-font-size, var(--spectrum-sidenav-header-font-size));
+    font-style: var(--mod-sidenav-header-font-style, var(--spectrum-sidenav-header-font-style));
+    font-weight: var(--mod-sidenav-header-font-weight, var(--spectrum-sidenav-header-font-weight));
+    line-height: var(--mod-sidenav-header-line-height, var(--spectrum-sidenav-header-line-height));
+    color: var(--mod-sidenav-header-color, var(--spectrum-sidenav-header-color));
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,8 +11,8 @@
  */
 
 :host {
-    pointer-events: none;
     visibility: hidden;
+    pointer-events: none;
     opacity: 0;
     transition:
         transform 0.13s ease-in-out,
@@ -25,8 +25,8 @@
 }
 
 :host([open]) {
-    pointer-events: auto;
     visibility: visible;
+    pointer-events: auto;
     opacity: 1;
     transition-delay: 0s;
     transition-delay: var(--mod-overlay-animation-duration-opened, var(--spectrum-animation-duration-0, 0s));
@@ -58,17 +58,17 @@
     --spectrum-popover-filter: drop-shadow(var(--mod-popover-shadow-horizontal, var(--spectrum-popover-shadow-horizontal)) var(--mod-popover-shadow-vertical, var(--spectrum-popover-shadow-vertical)) var(--mod-popover-shadow-blur, var(--spectrum-popover-shadow-blur)) var(--mod-popover-shadow-color, var(--spectrum-popover-shadow-color)));
 
     box-sizing: border-box;
-    padding: var(--mod-popover-content-area-spacing-vertical, var(--spectrum-popover-content-area-spacing-vertical)) 0;
-    border-radius: var(--mod-popover-corner-radius, var(--spectrum-popover-corner-radius));
-    border-style: solid;
-    border-color: var(--highcontrast-popover-border-color, var(--mod-popover-border-color, var(--spectrum-popover-border-color)));
-    border-width: var(--mod-popover-border-width, var(--spectrum-popover-border-width));
-    background-color: var(--mod-popover-background-color, var(--spectrum-popover-background-color));
-    filter: var(--mod-popover-filter, var(--spectrum-popover-filter));
-    outline: none;
-    flex-direction: column;
     display: inline-flex;
     position: absolute;
+    flex-direction: column;
+    padding: var(--mod-popover-content-area-spacing-vertical, var(--spectrum-popover-content-area-spacing-vertical)) 0;
+    background-color: var(--mod-popover-background-color, var(--spectrum-popover-background-color));
+    border-color: var(--highcontrast-popover-border-color, var(--mod-popover-border-color, var(--spectrum-popover-border-color)));
+    border-style: solid;
+    border-width: var(--mod-popover-border-width, var(--spectrum-popover-border-width));
+    border-radius: var(--mod-popover-corner-radius, var(--spectrum-popover-corner-radius));
+    outline: none;
+    filter: var(--mod-popover-filter, var(--spectrum-popover-filter));
 }
 
 :host([tip]) {
@@ -76,11 +76,11 @@
 }
 
 :host([tip]) #tip .triangle {
-    stroke-linecap: square;
-    stroke-linejoin: miter;
     fill: var(--mod-popover-background-color, var(--spectrum-popover-background-color));
     stroke: var(--highcontrast-popover-border-color, var(--mod-popover-border-color, var(--spectrum-popover-border-color)));
     stroke-width: var(--mod-popover-border-width, var(--spectrum-popover-border-width));
+    stroke-linecap: square;
+    stroke-linejoin: miter;
 }
 
 * {
@@ -190,12 +190,12 @@
 :host([tip]) .spectrum-Popover--top-left #tip,
 :host([tip]) .spectrum-Popover--top-right #tip,
 :host([tip]) .spectrum-Popover--top-start #tip {
-    inline-size: var(--mod-popover-pointer-width, var(--spectrum-popover-pointer-width));
-    block-size: var(--mod-popover-pointer-height, var(--spectrum-popover-pointer-height));
-    margin: auto;
     position: absolute;
     inset-block-start: 100%;
     inset-inline: 0;
+    inline-size: var(--mod-popover-pointer-width, var(--spectrum-popover-pointer-width));
+    block-size: var(--mod-popover-pointer-height, var(--spectrum-popover-pointer-height));
+    margin: auto;
     transform: translate(0);
 }
 
@@ -252,23 +252,23 @@
 :host([tip]) .spectrum-Popover--start #tip,
 :host([tip]) .spectrum-Popover--start-bottom #tip,
 :host([tip]) .spectrum-Popover--start-top #tip {
+    inset-block: 0;
     inline-size: var(--mod-popover-pointer-height, var(--spectrum-popover-pointer-height));
     block-size: var(--mod-popover-pointer-width, var(--spectrum-popover-pointer-width));
-    inset-block: 0;
 }
 
 :host([tip][placement*="left"]) #tip,
 :host([tip]) .spectrum-Popover--left-bottom #tip,
 :host([tip]) .spectrum-Popover--left-top #tip {
-    left: 100%;
     right: auto;
+    left: 100%;
 }
 
 :host([tip][placement*="right"]) #tip,
 :host([tip]) .spectrum-Popover--right-bottom #tip,
 :host([tip]) .spectrum-Popover--right-top #tip {
-    left: auto;
     right: 100%;
+    left: auto;
     transform: scaleX(-1);
 }
 

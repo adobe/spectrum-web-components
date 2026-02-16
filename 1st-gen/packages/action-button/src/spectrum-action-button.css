@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,30 +11,30 @@
  */
 
 :host {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    font-family: var(--mod-button-font-family, var(--mod-sans-font-family-stack, var(--spectrum-sans-font-family-stack)));
+    line-height: var(--mod-button-line-height, var(--mod-line-height-100, var(--spectrum-line-height-100)));
+    vertical-align: top;
+    text-transform: none;
+    -webkit-text-decoration: none;
+    text-decoration: none;
+    border-style: solid;
+    overflow: visible;
+    -webkit-appearance: button;
     cursor: pointer;
     -webkit-user-select: none;
     user-select: none;
-    box-sizing: border-box;
-    font-family: var(--mod-button-font-family, var(--mod-sans-font-family-stack, var(--spectrum-sans-font-family-stack)));
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    line-height: var(--mod-button-line-height, var(--mod-line-height-100, var(--spectrum-line-height-100)));
-    text-transform: none;
-    vertical-align: top;
-    -webkit-appearance: button;
     transition:
         background var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
         border-color var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
         color var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
         box-shadow var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out;
-    border-style: solid;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    -webkit-text-decoration: none;
-    text-decoration: none;
-    display: inline-flex;
-    overflow: visible;
 }
 
 :host(:focus) {
@@ -47,13 +47,13 @@
 }
 
 ::slotted([slot="icon"]) {
-    max-block-size: 100%;
     flex-shrink: 0;
+    max-block-size: 100%;
 }
 
 #label {
-    text-align: center;
     place-self: center;
+    text-align: center;
 }
 
 #label:empty {
@@ -66,7 +66,7 @@
         --highcontrast-actionbutton-content-color: ButtonText;
     }
 
-    :host:after {
+    :host::after {
         forced-color-adjust: none;
     }
 
@@ -264,27 +264,27 @@
     --spectrum-actionbutton-edge-to-text: var(--mod-actionbutton-edge-to-text, calc(var(--spectrum-actionbutton-sized-edge-to-text) - var(--spectrum-actionbutton-border-width)));
     --spectrum-actionbutton-edge-to-visual-only: var(--mod-actionbutton-edge-to-visual-only, calc(var(--spectrum-actionbutton-sized-edge-to-visual-only) - var(--spectrum-actionbutton-border-width)));
 
+    position: relative;
+    gap: calc(var(--spectrum-actionbutton-text-to-visual) + var(--spectrum-actionbutton-edge-to-text) - var(--spectrum-actionbutton-edge-to-visual-only));
     min-inline-size: var(--mod-actionbutton-min-width, calc(var(--mod-actionbutton-edge-to-visual-only, var(--spectrum-actionbutton-sized-edge-to-visual-only)) * 2 + var(--spectrum-actionbutton-icon-size)));
     block-size: var(--spectrum-actionbutton-height);
-    border-radius: var(--spectrum-actionbutton-border-radius);
-    border-width: var(--spectrum-actionbutton-border-width);
-    gap: calc(var(--spectrum-actionbutton-text-to-visual) + var(--spectrum-actionbutton-edge-to-text) - var(--spectrum-actionbutton-edge-to-visual-only));
     padding-inline: var(--spectrum-actionbutton-edge-to-text);
+    color: var(--spectrum-actionbutton-content-color);
     background-color: var(--spectrum-actionbutton-background-color);
     border-color: var(--spectrum-actionbutton-border-color);
-    color: var(--spectrum-actionbutton-content-color);
+    border-width: var(--spectrum-actionbutton-border-width);
+    border-radius: var(--spectrum-actionbutton-border-radius);
     transition: border-color var(--mod-actionbutton-animation-duration, var(--spectrum-animation-duration-100)) ease-in-out;
-    position: relative;
 }
 
-:host:after {
-    margin: calc((var(--spectrum-actionbutton-focus-indicator-gap) + var(--spectrum-actionbutton-border-width)) * -1);
-    border-radius: var(--mod-actionbutton-focus-indicator-border-radius, calc(var(--spectrum-actionbutton-border-radius) + var(--spectrum-actionbutton-focus-indicator-gap)));
-    transition: box-shadow var(--mod-actionbutton-animation-duration, var(--spectrum-animation-duration-100)) ease-in-out;
-    pointer-events: none;
-    content: "";
+:host::after {
     position: absolute;
     inset: 0;
+    margin: calc((var(--spectrum-actionbutton-focus-indicator-gap) + var(--spectrum-actionbutton-border-width)) * -1);
+    border-radius: var(--mod-actionbutton-focus-indicator-border-radius, calc(var(--spectrum-actionbutton-border-radius) + var(--spectrum-actionbutton-focus-indicator-gap)));
+    pointer-events: none;
+    content: "";
+    transition: box-shadow var(--mod-actionbutton-animation-duration, var(--spectrum-animation-duration-100)) ease-in-out;
 }
 
 :host(:focus-visible) {
@@ -292,16 +292,16 @@
     outline: none;
 }
 
-:host(:focus-visible):after {
+:host(:focus-visible)::after {
     box-shadow: 0 0 0 var(--spectrum-actionbutton-focus-indicator-thickness) var(--spectrum-actionbutton-focus-indicator-color);
 }
 
 ::slotted([slot="icon"]) {
     inline-size: var(--spectrum-actionbutton-icon-size);
     block-size: var(--spectrum-actionbutton-icon-size);
-    color: inherit;
     margin-inline-start: calc(var(--spectrum-actionbutton-edge-to-visual) - var(--spectrum-actionbutton-edge-to-text));
     margin-inline-end: calc(var(--spectrum-actionbutton-edge-to-visual-only) - var(--spectrum-actionbutton-edge-to-text));
+    color: inherit;
 }
 
 .hold-affordance + ::slotted([slot="icon"]),
@@ -310,19 +310,19 @@
 }
 
 #label {
-    pointer-events: none;
-    line-height: var(--spectrum-actionbutton-height);
     font-size: var(--spectrum-actionbutton-font-size);
-    white-space: nowrap;
+    line-height: var(--spectrum-actionbutton-height);
     color: var(--mod-actionbutton-label-color, inherit);
-    text-overflow: ellipsis;
+    white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
 }
 
 .hold-affordance {
-    color: inherit;
-    transform: var(--spectrum-logical-rotation,);
     position: absolute;
     inset-block-end: calc(var(--spectrum-actionbutton-edge-to-hold-icon) - var(--spectrum-actionbutton-border-width));
     inset-inline-end: calc(var(--spectrum-actionbutton-edge-to-hold-icon) - var(--spectrum-actionbutton-border-width));
+    color: inherit;
+    transform: var(--spectrum-logical-rotation,);
 }

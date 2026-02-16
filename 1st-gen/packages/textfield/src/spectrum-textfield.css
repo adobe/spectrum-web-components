@@ -1,3 +1,15 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
 /*!
  * Copyright 2025 Adobe. All rights reserved. This file is licensed to you under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License./
  * 
@@ -139,23 +151,23 @@
 }
 
 #textfield {
-    text-overflow: ellipsis;
-    inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
-    grid-template-rows: auto auto auto;
-    grid-template-columns: auto auto;
-    margin: 0;
     display: inline-grid;
     position: relative;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: auto auto;
+    inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
+    margin: 0;
     overflow: visible;
+    text-overflow: ellipsis;
 }
 
 :host([invalid]) #textfield .icon,
 :host([valid]) #textfield .icon {
-    pointer-events: all;
-    grid-area: 2 / 2;
-    margin-inline-start: auto;
     position: absolute;
     inset-block-start: 0;
+    grid-area: 2 / 2;
+    margin-inline-start: auto;
+    pointer-events: all;
 }
 
 #textfield.spectrum-Textfield--sideLabel .icon {
@@ -163,19 +175,19 @@
 }
 
 :host([valid]) #textfield .icon {
-    color: var(--mod-textfield-icon-color-valid, var(--spectrum-textfield-icon-color-valid));
     inset-block-start: var(--mod-textfield-icon-spacing-block-valid, var(--spectrum-textfield-icon-spacing-block-valid));
     inset-block-end: var(--mod-textfield-icon-spacing-block-valid, var(--spectrum-textfield-icon-spacing-block-valid));
     inset-inline-end: var(--mod-textfield-icon-spacing-inline-end-valid, var(--spectrum-textfield-icon-spacing-inline-end-valid));
+    color: var(--mod-textfield-icon-color-valid, var(--spectrum-textfield-icon-color-valid));
 }
 
 :host([invalid]) #textfield .icon {
-    block-size: var(--mod-textfield-icon-size-invalid, var(--spectrum-textfield-icon-size-invalid));
-    inline-size: var(--mod-textfield-icon-size-invalid, var(--spectrum-textfield-icon-size-invalid));
-    color: var(--mod-textfield-icon-color-invalid, var(--spectrum-textfield-icon-color-invalid));
     inset-block-start: var(--mod-textfield-icon-spacing-block-invalid, var(--spectrum-textfield-icon-spacing-block-invalid));
     inset-block-end: var(--mod-textfield-icon-spacing-block-invalid, var(--spectrum-textfield-icon-spacing-block-invalid));
     inset-inline-end: var(--mod-textfield-icon-spacing-inline-end-invalid, var(--spectrum-textfield-icon-spacing-inline-end-invalid));
+    inline-size: var(--mod-textfield-icon-size-invalid, var(--spectrum-textfield-icon-size-invalid));
+    block-size: var(--mod-textfield-icon-size-invalid, var(--spectrum-textfield-icon-size-invalid));
+    color: var(--mod-textfield-icon-color-invalid, var(--spectrum-textfield-icon-color-invalid));
 }
 
 :host([disabled]) #textfield .icon,
@@ -214,18 +226,18 @@
 }
 
 .spectrum-Textfield-characterCount {
-    inline-size: auto;
-    font-size: var(--mod-textfield-character-count-font-size, var(--spectrum-textfield-character-count-font-size));
-    font-family: var(--mod-textfield-character-count-font-family, var(--spectrum-textfield-character-count-font-family));
-    font-weight: var(--mod-textfield-character-count-font-weight, var(--spectrum-textfield-character-count-font-weight));
+    display: inline-flex;
     grid-area: 1 / 2 / auto / span 1;
-    justify-content: flex-end;
     align-items: flex-end;
+    justify-content: flex-end;
+    inline-size: auto;
+    padding-inline-end: calc(var(--mod-textfield-corner-radius, var(--spectrum-textfield-corner-radius)) / 2);
     margin-block-end: var(--mod-textfield-character-count-spacing-block, var(--spectrum-textfield-character-count-spacing-block));
     margin-inline-start: var(--mod-textfield-character-count-spacing-inline, var(--spectrum-textfield-character-count-spacing-inline));
     margin-inline-end: 0;
-    padding-inline-end: calc(var(--mod-textfield-corner-radius, var(--spectrum-textfield-corner-radius)) / 2);
-    display: inline-flex;
+    font-family: var(--mod-textfield-character-count-font-family, var(--spectrum-textfield-character-count-font-family));
+    font-size: var(--mod-textfield-character-count-font-size, var(--spectrum-textfield-character-count-font-size));
+    font-weight: var(--mod-textfield-character-count-font-weight, var(--spectrum-textfield-character-count-font-weight));
 }
 
 :host([quiet]) .spectrum-Textfield-characterCount {
@@ -233,30 +245,30 @@
 }
 
 .input {
-    line-height: var(--spectrum-textfield-input-line-height);
     box-sizing: border-box;
+    grid-area: 2 / 1 / auto / span 2;
     inline-size: 100%;
     min-inline-size: var(--mod-textfield-min-width, var(--spectrum-textfield-min-width));
     block-size: var(--mod-textfield-height, var(--spectrum-textfield-height));
     padding-block-start: calc(var(--mod-textfield-spacing-block-start, var(--spectrum-textfield-spacing-block-start)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)));
     padding-block-end: calc(var(--mod-textfield-spacing-block-end, var(--spectrum-textfield-spacing-block-end)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)));
     padding-inline: calc(var(--mod-textfield-spacing-inline, var(--spectrum-textfield-spacing-inline)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)));
-    vertical-align: top;
-    background-color: var(--mod-textfield-background-color, var(--spectrum-textfield-background-color));
-    border-width: var(--mod-textfield-border-width, var(--spectrum-textfield-border-width));
-    border-style: solid;
-    border-color: var(--highcontrast-textfield-border-color, var(--mod-textfield-border-color, var(--spectrum-textfield-border-color)));
-    border-radius: var(--mod-textfield-corner-radius, var(--spectrum-textfield-corner-radius));
-    transition: border-color var(--mod-texfield-animation-duration, var(--spectrum-texfield-animation-duration)) ease-in-out;
-    font-size: var(--mod-textfield-placeholder-font-size, var(--spectrum-textfield-placeholder-font-size));
+    margin: 0;
     font-family: var(--mod-textfield-font-family, var(--spectrum-textfield-font-family));
+    font-size: var(--mod-textfield-placeholder-font-size, var(--spectrum-textfield-placeholder-font-size));
     font-weight: var(--mod-textfield-font-weight, var(--spectrum-textfield-font-weight));
+    line-height: var(--spectrum-textfield-input-line-height);
+    vertical-align: top;
     color: var(--highcontrast-textfield-text-color-default, var(--mod-textfield-text-color-default, var(--spectrum-textfield-text-color-default)));
+    background-color: var(--mod-textfield-background-color, var(--spectrum-textfield-background-color));
+    border-color: var(--highcontrast-textfield-border-color, var(--mod-textfield-border-color, var(--spectrum-textfield-border-color)));
+    border-style: solid;
+    border-width: var(--mod-textfield-border-width, var(--spectrum-textfield-border-width));
+    border-radius: var(--mod-textfield-corner-radius, var(--spectrum-textfield-corner-radius));
     text-overflow: ellipsis;
     appearance: none;
     outline: none;
-    grid-area: 2 / 1 / auto / span 2;
-    margin: 0;
+    transition: border-color var(--mod-texfield-animation-duration, var(--spectrum-texfield-animation-duration)) ease-in-out;
 }
 
 :host([type="number"]) .input {
@@ -265,8 +277,8 @@
 
 :host([type="number"]) .input::-webkit-inner-spin-button,
 :host([type="number"]) .input::-webkit-outer-spin-button {
-    appearance: none;
     margin: 0;
+    appearance: none;
 }
 
 .input:-moz-ui-invalid {
@@ -274,11 +286,11 @@
 }
 
 .input::placeholder {
-    opacity: 1;
-    font-size: var(--mod-textfield-placeholder-font-size, var(--spectrum-textfield-placeholder-font-size));
     font-family: var(--mod-textfield-font-family, var(--spectrum-textfield-font-family));
+    font-size: var(--mod-textfield-placeholder-font-size, var(--spectrum-textfield-placeholder-font-size));
     font-weight: var(--mod-textfield-font-weight, var(--spectrum-textfield-font-weight));
     color: var(--highcontrast-textfield-text-color-default, var(--mod-textfield-text-color-default, var(--spectrum-textfield-text-color-default)));
+    opacity: 1;
     transition: color var(--mod-texfield-animation-duration, var(--spectrum-texfield-animation-duration)) ease-in-out;
 }
 
@@ -313,14 +325,14 @@
 }
 
 :host([valid]) .input {
-    color: var(--highcontrast-textfield-text-color-valid, var(--mod-textfield-text-color-valid, var(--spectrum-textfield-text-color-valid)));
     padding-inline-end: calc(var(--mod-textfield-icon-spacing-inline-start-valid, var(--spectrum-textfield-icon-spacing-inline-start-valid)) + var(--mod-textfield-icon-size-valid, var(--spectrum-textfield-icon-size-valid)) + var(--mod-textfield-icon-spacing-inline-end-valid, var(--spectrum-textfield-icon-spacing-inline-end-valid)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)));
+    color: var(--highcontrast-textfield-text-color-valid, var(--mod-textfield-text-color-valid, var(--spectrum-textfield-text-color-valid)));
 }
 
 :host([invalid]) .input {
+    padding-inline-end: calc(var(--mod-textfield-icon-spacing-inline-start-invalid, var(--spectrum-textfield-icon-spacing-inline-start-invalid)) + var(--mod-textfield-icon-size-invalid, var(--spectrum-textfield-icon-size-invalid)) + var(--mod-textfield-icon-spacing-inline-end-invalid, var(--spectrum-textfield-icon-spacing-inline-end-invalid)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)));
     color: var(--highcontrast-textfield-text-color-invalid, var(--mod-textfield-text-color-invalid, var(--spectrum-textfield-text-color-invalid)));
     border-color: var(--highcontrast-textfield-border-color-invalid-default, var(--mod-textfield-border-color-invalid-default, var(--spectrum-textfield-border-color-invalid-default)));
-    padding-inline-end: calc(var(--mod-textfield-icon-spacing-inline-start-invalid, var(--spectrum-textfield-icon-spacing-inline-start-invalid)) + var(--mod-textfield-icon-size-invalid, var(--spectrum-textfield-icon-size-invalid)) + var(--mod-textfield-icon-spacing-inline-end-invalid, var(--spectrum-textfield-icon-spacing-inline-end-invalid)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)));
 }
 
 :host([invalid]) .input:focus,
@@ -350,16 +362,16 @@
 }
 
 :host([quiet]) .input {
+    border-inline-width: 0;
     padding-block-start: var(--mod-textfield-spacing-block-start, var(--spectrum-textfield-spacing-block-start));
     padding-inline: var(--mod-textfield-spacing-inline-quiet, var(--spectrum-textfield-spacing-inline-quiet));
-    background-color: initial;
-    resize: none;
-    border-block-start-width: 0;
-    border-inline-width: 0;
-    border-radius: 0;
-    outline: none;
     margin-block-end: var(--mod-textfield-spacing-block-quiet, var(--spectrum-textfield-spacing-block-quiet));
+    background-color: initial;
+    border-block-start-width: 0;
+    border-radius: 0;
     overflow-y: hidden;
+    resize: none;
+    outline: none;
 }
 
 :host([quiet][disabled]) .input,
@@ -377,8 +389,8 @@
 
 .input:read-only,
 :host([readonly]) #textfield .input {
-    background-color: initial;
     color: var(--highcontrast-textfield-text-color-readonly, var(--mod-textfield-text-color-readonly, var(--spectrum-textfield-text-color-readonly)));
+    background-color: initial;
     border-color: #0000;
     outline: none;
 }
@@ -454,8 +466,8 @@
 
     :host([readonly]) #textfield:hover .input,
     :host([readonly]) #textfield:hover .input::placeholder {
-        background-color: initial;
         color: var(--highcontrast-textfield-text-color-readonly, var(--mod-textfield-text-color-readonly, var(--spectrum-textfield-text-color-readonly)));
+        background-color: initial;
     }
 }
 
@@ -464,7 +476,7 @@
     grid-template-columns: auto auto auto;
 }
 
-.spectrum-Textfield--sideLabel:after {
+.spectrum-Textfield--sideLabel::after {
     grid-area: 1 / 2 / span 1 / span 1;
 }
 
@@ -509,21 +521,21 @@
 
 :host([multiline][quiet]) .input {
     min-block-size: var(--mod-text-area-min-block-size-quiet, var(--spectrum-text-area-min-block-size-quiet));
-    resize: none;
     overflow-y: hidden;
+    resize: none;
 }
 
-:host([quiet]) #textfield:after {
-    content: "";
-    pointer-events: none;
-    inline-size: 100%;
-    block-size: var(--mod-textfield-focus-indicator-width, var(--spectrum-textfield-focus-indicator-width));
+:host([quiet]) #textfield::after {
     position: absolute;
     inset-block-end: calc((var(--mod-textfield-focus-indicator-gap, var(--spectrum-textfield-focus-indicator-gap)) + var(--mod-textfield-focus-indicator-width, var(--spectrum-textfield-focus-indicator-width))) * -1);
     inset-inline-start: 0;
+    inline-size: 100%;
+    block-size: var(--mod-textfield-focus-indicator-width, var(--spectrum-textfield-focus-indicator-width));
+    pointer-events: none;
+    content: "";
 }
 
-:host([quiet][focused]) #textfield:after {
+:host([quiet][focused]) #textfield::after {
     background-color: var(--highcontrast-textfield-focus-indicator-color, var(--mod-textfield-focus-indicator-color, var(--spectrum-textfield-focus-indicator-color)));
 }
 

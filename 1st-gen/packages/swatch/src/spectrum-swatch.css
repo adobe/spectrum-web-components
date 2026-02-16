@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -31,15 +31,15 @@
 }
 
 :host {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
     inline-size: var(--mod-swatch-size, var(--spectrum-swatch-size));
     block-size: var(--mod-swatch-size, var(--spectrum-swatch-size));
     -webkit-user-select: none;
     user-select: none;
     outline: none;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    position: relative;
 }
 
 .disabledIcon {
@@ -48,7 +48,7 @@
 }
 
 :host,
-:host:before {
+:host::before {
     border-radius: var(--mod-swatch-border-radius, var(--spectrum-swatch-border-radius));
 }
 
@@ -57,25 +57,25 @@
 }
 
 :host([selected]) .fill {
+    border-radius: 0;
     clip-path: polygon(
         calc(var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected)) * 2) calc(var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected)) * 2),
         calc(100% - var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected)) * 2) calc(var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected)) * 2),
         calc(100% - var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected)) * 2) calc(100% - var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected)) * 2),
         calc(var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected)) * 2) calc(100% - var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected)) * 2)
     );
-    border-radius: 0;
 }
 
-:host([selected]) .fill:before {
+:host([selected]) .fill::before {
+    border-radius: 0;
     box-shadow: none;
-    border-radius: 0;
 }
 
-:host([selected]):before {
+:host([selected])::before {
     opacity: 1;
 }
 
-:host .is-image .fill:before {
+:host .is-image .fill::before {
     background-color: initial;
 }
 
@@ -85,8 +85,8 @@
 }
 
 :host([mixed-value]) .mixedValueIcon {
-    color: var(--spectrum-swatch-dash-icon-color);
     display: block;
+    color: var(--spectrum-swatch-dash-icon-color);
 }
 
 :host([nothing]) .fill {
@@ -95,16 +95,16 @@
     background-image: none;
 }
 
-:host([nothing]) .fill:after {
+:host([nothing]) .fill::after {
+    position: absolute;
     inline-size: var(--mod-swatch-slash-thickness, var(--spectrum-swatch-slash-thickness));
-    content: "";
     block-size: 200%;
     background: var(--highcontrast-swatch-fill-foreground-color, var(--mod-swatch-slash-icon-color, var(--spectrum-swatch-slash-icon-color)));
-    position: absolute;
+    content: "";
     transform: rotate(-45deg);
 }
 
-:host([nothing][shape="rectangle"]) .fill:after {
+:host([nothing][shape="rectangle"]) .fill::after {
     transform: rotate(-25deg);
 }
 
@@ -113,82 +113,82 @@
     display: block;
 }
 
-:host:before {
-    content: "";
-    border-width: var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected));
-    border-style: solid;
-    border-color: var(--highcontrast-swatch-border-color-selected, var(--mod-swatch-border-color-selected, var(--spectrum-swatch-border-color-selected)));
-    opacity: 0;
-    pointer-events: none;
+:host::before {
     position: absolute;
     inset: 0;
-}
-
-:host:after {
-    content: "";
-    inset: calc(var(--mod-swatch-focus-indicator-gap, var(--spectrum-swatch-focus-indicator-gap)) * -2);
-    opacity: 0;
-    border-width: var(--mod-swatch-focus-indicator-thickness, var(--spectrum-swatch-focus-indicator-thickness));
+    border-color: var(--highcontrast-swatch-border-color-selected, var(--mod-swatch-border-color-selected, var(--spectrum-swatch-border-color-selected)));
     border-style: solid;
-    border-color: var(--highcontrast-swatch-focus-indicator-color, var(--mod-swatch-focus-indicator-color, var(--spectrum-swatch-focus-indicator-color)));
-    border-radius: var(--mod-swatch-focus-indicator-border-radius, var(--spectrum-swatch-focus-indicator-border-radius));
-    transition: opacity var(--mod-animation-duration-100, var(--spectrum-animation-duration-100)) ease-in-out;
-    position: absolute;
+    border-width: var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected));
+    pointer-events: none;
+    content: "";
+    opacity: 0;
 }
 
-:host(:focus-visible):after {
+:host::after {
+    position: absolute;
+    inset: calc(var(--mod-swatch-focus-indicator-gap, var(--spectrum-swatch-focus-indicator-gap)) * -2);
+    border-color: var(--highcontrast-swatch-focus-indicator-color, var(--mod-swatch-focus-indicator-color, var(--spectrum-swatch-focus-indicator-color)));
+    border-style: solid;
+    border-width: var(--mod-swatch-focus-indicator-thickness, var(--spectrum-swatch-focus-indicator-thickness));
+    border-radius: var(--mod-swatch-focus-indicator-border-radius, var(--spectrum-swatch-focus-indicator-border-radius));
+    content: "";
+    opacity: 0;
+    transition: opacity var(--mod-animation-duration-100, var(--spectrum-animation-duration-100)) ease-in-out;
+}
+
+:host(:focus-visible)::after {
     opacity: 1;
 }
 
 .fill {
-    inline-size: 100%;
-    block-size: 100%;
     box-sizing: border-box;
-    border-radius: var(--mod-swatch-border-radius, var(--spectrum-swatch-border-radius));
-    justify-content: center;
-    align-items: center;
     display: flex;
     position: relative;
+    align-items: center;
+    justify-content: center;
+    inline-size: 100%;
+    block-size: 100%;
+    border-radius: var(--mod-swatch-border-radius, var(--spectrum-swatch-border-radius));
     overflow: hidden;
 }
 
-.fill:before {
-    content: "";
-    z-index: 0;
-    box-shadow: inset 0 0 0 var(--mod-swatch-border-thickness, var(--spectrum-swatch-border-thickness)) var(--highcontrast-swatch-border-color, var(--mod-swatch-border-color, var(--spectrum-swatch-border-color)));
-    border-radius: var(--mod-swatch-border-radius, var(--spectrum-swatch-border-radius));
+.fill::before {
     position: absolute;
     inset: 0;
+    z-index: 0;
+    border-radius: var(--mod-swatch-border-radius, var(--spectrum-swatch-border-radius));
+    box-shadow: inset 0 0 0 var(--mod-swatch-border-thickness, var(--spectrum-swatch-border-thickness)) var(--highcontrast-swatch-border-color, var(--mod-swatch-border-color, var(--spectrum-swatch-border-color)));
+    content: "";
 }
 
-:host([border="none"]) .fill:before,
-.fill:before {
+:host([border="none"]) .fill::before,
+.fill::before {
     background-color: initial;
     background-color: var(--spectrum-picked-color, transparent);
 }
 
-:host([border="none"]) .fill:before {
+:host([border="none"]) .fill::before {
     box-shadow: none;
 }
 
-:host([border="light"]) .fill:before {
+:host([border="light"]) .fill::before {
     box-shadow: inset 0 0 0 var(--mod-swatch-border-thickness, var(--spectrum-swatch-border-thickness)) var(--highcontrast-swatch-border-color-light, var(--mod-swatch-border-color-light, var(--spectrum-swatch-border-color-light)));
 }
 
 .mixedValueIcon {
-    pointer-events: none;
+    display: none;
     color: #0000;
     color: var(--spectrum-picked-color, transparent);
-    display: none;
+    pointer-events: none;
 }
 
 .disabledIcon {
-    z-index: 1;
-    pointer-events: none;
-    color: var(--highcontrast-swatch-disabled-icon-color, var(--mod-swatch-disabled-icon-color, var(--spectrum-swatch-disabled-icon-color)));
-    stroke: var(--highcontrast-swatch-disabled-icon-color, var(--mod-swatch-disabled-icon-color, var(--spectrum-swatch-disabled-icon-color)));
     display: none;
     position: relative;
+    z-index: 1;
+    color: var(--highcontrast-swatch-disabled-icon-color, var(--mod-swatch-disabled-icon-color, var(--spectrum-swatch-disabled-icon-color)));
+    pointer-events: none;
+    stroke: var(--highcontrast-swatch-disabled-icon-color, var(--mod-swatch-disabled-icon-color, var(--spectrum-swatch-disabled-icon-color)));
 }
 
 .disabledIcon path:first-child {
@@ -205,21 +205,21 @@
 
 :host([rounding="none"]),
 :host([rounding="none"]) .fill,
-:host([rounding="none"]) .fill:before,
+:host([rounding="none"]) .fill::before,
 :host([rounding="none"][selected]) .fill,
-:host([rounding="none"][selected]) .fill:before,
-:host([rounding="none"]):after,
-:host([rounding="none"]):before {
+:host([rounding="none"][selected]) .fill::before,
+:host([rounding="none"])::after,
+:host([rounding="none"])::before {
     border-radius: 0;
 }
 
 :host([rounding="full"][selected]:not([shape="rectangle"])) .fill,
-:host([rounding="full"][selected]:not([shape="rectangle"])) .fill:before,
+:host([rounding="full"][selected]:not([shape="rectangle"])) .fill::before,
 :host([rounding="full"]:not([shape="rectangle"])),
 :host([rounding="full"]:not([shape="rectangle"])) .fill,
-:host([rounding="full"]:not([shape="rectangle"])) .fill:before,
-:host([rounding="full"]:not([shape="rectangle"])):after,
-:host([rounding="full"]:not([shape="rectangle"])):before {
+:host([rounding="full"]:not([shape="rectangle"])) .fill::before,
+:host([rounding="full"]:not([shape="rectangle"]))::after,
+:host([rounding="full"]:not([shape="rectangle"]))::before {
     border-radius: 100%;
 }
 
@@ -228,9 +228,9 @@
 }
 
 ::slotted([slot="image"]) {
-    object-fit: contain;
     inline-size: 100%;
     block-size: 100%;
+    object-fit: contain;
     transition:
         width var(--mod-animation-duration-100, var(--spectrum-animation-duration-100)) ease-in-out,
         height var(--mod-animation-duration-100, var(--spectrum-animation-duration-100)) ease-in-out;

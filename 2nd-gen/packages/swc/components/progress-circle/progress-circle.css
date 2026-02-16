@@ -59,9 +59,9 @@
     );
 
     display: inline-block;
+    position: relative;
     inline-size: var(--_swc-progress-circle-size);
     block-size: var(--_swc-progress-circle-size);
-    position: relative;
     direction: ltr;
     transform: translateZ(0);
 }
@@ -73,23 +73,23 @@
 }
 
 .swc-ProgressCircle-track {
-    stroke-width: var(--_swc-progress-circle-thickness);
     stroke: var(--_swc-progress-circle-track-border-color);
+    stroke-width: var(--_swc-progress-circle-thickness);
 }
 
 .swc-ProgressCircle-fill {
-    stroke-width: var(--_swc-progress-circle-thickness);
     stroke: var(--_swc-progress-circle-fill-border-color);
+    stroke-width: var(--_swc-progress-circle-thickness);
     transform: rotate(-90deg);
     transform-origin: center;
 }
 
 .swc-ProgressCircle--indeterminate .swc-ProgressCircle-fill {
-    will-change: transform;
+    transform-origin: center;
     animation:
         swc-fills-rotate 1s cubic-bezier(0.6, 0.1, 0.3, 0.9) infinite,
         swc-dashoffset-animation 1s cubic-bezier(0.25, 0.1, 0.25, 1.3) infinite;
-    transform-origin: center;
+    will-change: transform;
 }
 
 :host([size='s']) {

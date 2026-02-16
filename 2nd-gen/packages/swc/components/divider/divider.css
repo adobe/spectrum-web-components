@@ -24,11 +24,11 @@
         token('divider-thickness-medium')
     );
 
+    inline-size: 100%;
+    block-size: var(--_swc-divider-thickness);
+    background-color: var(--swc-divider-background-color, token('gray-200'));
     border: none;
     border-radius: var(--_swc-divider-thickness);
-    background-color: var(--swc-divider-background-color, token('gray-200'));
-    block-size: var(--_swc-divider-thickness);
-    inline-size: 100%;
 }
 
 .swc-Divider:not(.swc-Divider--vertical) {
@@ -36,11 +36,11 @@
 }
 
 .swc-Divider--vertical {
+    align-self: flex-start;
     inline-size: var(--_swc-divider-thickness);
+    block-size: 100%;
     min-block-size: token('divider-vertical-minimum-height');
     margin-block: 0;
-    block-size: 100%;
-    align-self: flex-start;
 }
 
 :host([size='s']) {

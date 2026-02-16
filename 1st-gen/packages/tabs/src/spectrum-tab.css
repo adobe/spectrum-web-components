@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -12,21 +12,21 @@
 
 :host {
     box-sizing: border-box;
-    block-size: calc(var(--mod-tabs-item-height, var(--spectrum-tabs-item-height)) - var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size)));
+    position: relative;
     z-index: 1;
-    white-space: nowrap;
+    block-size: calc(var(--mod-tabs-item-height, var(--spectrum-tabs-item-height)) - var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size)));
     color: var(--highcontrast-tabs-color, var(--mod-tabs-color, var(--spectrum-tabs-color)));
-    transition: color var(--mod-tabs-animation-duration, var(--spectrum-tabs-animation-duration)) ease-out;
-    cursor: pointer;
-    outline: none;
+    white-space: nowrap;
     -webkit-text-decoration: none;
     text-decoration: none;
-    position: relative;
+    cursor: pointer;
+    outline: none;
+    transition: color var(--mod-tabs-animation-duration, var(--spectrum-tabs-animation-duration)) ease-out;
 }
 
 ::slotted([slot="icon"]) {
-    block-size: var(--mod-tabs-icon-size, var(--spectrum-tabs-icon-size));
     inline-size: var(--mod-tabs-icon-size, var(--spectrum-tabs-icon-size));
+    block-size: var(--mod-tabs-icon-size, var(--spectrum-tabs-icon-size));
     margin-block-start: var(--mod-tabs-top-to-icon, var(--spectrum-tabs-top-to-icon));
 }
 
@@ -34,18 +34,18 @@
     margin-inline-start: var(--mod-tabs-icon-to-text, var(--spectrum-tabs-icon-to-text));
 }
 
-:host:before {
-    content: "";
+:host::before {
     box-sizing: border-box;
-    block-size: calc(100% - var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)));
-    inline-size: calc(100% + var(--mod-tabs-focus-indicator-gap, var(--spectrum-tabs-focus-indicator-gap)) * 2);
-    border: var(--mod-tabs-focus-indicator-width, var(--spectrum-tabs-focus-indicator-width)) solid transparent;
-    border-radius: var(--mod-tabs-focus-indicator-border-radius, var(--spectrum-tabs-focus-indicator-border-radius));
-    pointer-events: none;
     position: absolute;
     inset-block-start: calc(var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) / 2);
     inset-inline-start: calc(var(--mod-tabs-focus-indicator-gap, var(--spectrum-tabs-focus-indicator-gap)) * -1);
     inset-inline-end: calc(var(--mod-tabs-focus-indicator-gap, var(--spectrum-tabs-focus-indicator-gap)) * -1);
+    inline-size: calc(100% + var(--mod-tabs-focus-indicator-gap, var(--spectrum-tabs-focus-indicator-gap)) * 2);
+    block-size: calc(100% - var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)));
+    border: var(--mod-tabs-focus-indicator-width, var(--spectrum-tabs-focus-indicator-width)) solid transparent;
+    border-radius: var(--mod-tabs-focus-indicator-border-radius, var(--spectrum-tabs-focus-indicator-border-radius));
+    pointer-events: none;
+    content: "";
 }
 
 @media (hover: hover) {
@@ -59,8 +59,8 @@
 }
 
 :host([disabled]) {
-    cursor: default;
     color: var(--highcontrast-tabs-color-disabled, var(--mod-tabs-color-disabled, var(--spectrum-tabs-color-disabled)));
+    cursor: default;
 }
 
 :host([disabled]) #item-label {
@@ -71,23 +71,23 @@
     color: var(--highcontrast-tabs-color-key-focus, var(--mod-tabs-color-key-focus, var(--spectrum-tabs-color-key-focus)));
 }
 
-:host(:focus-visible):before {
+:host(:focus-visible)::before {
     border-color: var(--highcontrast-tabs-focus-indicator-color, var(--mod-tabs-focus-indicator-color, var(--spectrum-tabs-focus-indicator-color)));
 }
 
 #item-label {
-    cursor: pointer;
-    vertical-align: top;
-    font-family: var(--mod-tabs-font-family, var(--spectrum-tabs-font-family));
-    font-style: var(--mod-tabs-font-style, var(--spectrum-tabs-font-style));
-    font-size: var(--mod-tabs-font-size, var(--spectrum-tabs-font-size));
-    font-weight: var(--mod-tabs-font-weight, var(--spectrum-tabs-font-weight));
-    line-height: var(--mod-tabs-line-height, var(--spectrum-tabs-line-height));
+    display: inline-block;
     margin-block-start: var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text));
     margin-block-end: var(--mod-tabs-bottom-to-text, var(--spectrum-tabs-bottom-to-text));
+    font-family: var(--mod-tabs-font-family, var(--spectrum-tabs-font-family));
+    font-size: var(--mod-tabs-font-size, var(--spectrum-tabs-font-size));
+    font-style: var(--mod-tabs-font-style, var(--spectrum-tabs-font-style));
+    font-weight: var(--mod-tabs-font-weight, var(--spectrum-tabs-font-weight));
+    line-height: var(--mod-tabs-line-height, var(--spectrum-tabs-line-height));
+    vertical-align: top;
     -webkit-text-decoration: none;
     text-decoration: none;
-    display: inline-block;
+    cursor: pointer;
 }
 
 #item-label:empty {

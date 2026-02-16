@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -40,25 +40,26 @@
 @media (forced-colors: active) {
     :host {
         --highcontrast-toast-border-color: ButtonText;
+
         border: var(--mod-toast-border-width, var(--spectrum-toast-border-width)) solid var(--highcontrast-toast-border-color, transparent);
     }
 }
 
 :host {
-    box-sizing: border-box;
-    min-block-size: var(--mod-toast-block-size, var(--spectrum-toast-block-size));
-    max-inline-size: var(--mod-toast-max-inline-size, var(--spectrum-toast-max-inline-size));
-    border-radius: var(--mod-toast-corner-radius, var(--spectrum-toast-corner-radius));
-    font-size: var(--mod-toast-font-size, var(--spectrum-toast-font-size));
-    font-weight: var(--mod-toast-font-weight, var(--spectrum-toast-font-weight));
     -webkit-font-smoothing: antialiased;
-    background-color: var(--mod-toast-background-color-default, var(--spectrum-toast-background-color-default));
-    color: var(--mod-toast-background-color-default, var(--spectrum-toast-background-color-default));
-    overflow-wrap: anywhere;
+    box-sizing: border-box;
+    display: inline-flex;
     flex-direction: row;
     align-items: stretch;
+    max-inline-size: var(--mod-toast-max-inline-size, var(--spectrum-toast-max-inline-size));
+    min-block-size: var(--mod-toast-block-size, var(--spectrum-toast-block-size));
     padding-inline-start: var(--mod-toast-spacing-start-edge-to-text-and-icon, var(--spectrum-toast-spacing-start-edge-to-text-and-icon));
-    display: inline-flex;
+    font-size: var(--mod-toast-font-size, var(--spectrum-toast-font-size));
+    font-weight: var(--mod-toast-font-weight, var(--spectrum-toast-font-weight));
+    color: var(--mod-toast-background-color-default, var(--spectrum-toast-background-color-default));
+    overflow-wrap: anywhere;
+    background-color: var(--mod-toast-background-color-default, var(--spectrum-toast-background-color-default));
+    border-radius: var(--mod-toast-corner-radius, var(--spectrum-toast-corner-radius));
 }
 
 :host([variant="negative"]) {
@@ -103,14 +104,14 @@
 
 .content {
     box-sizing: border-box;
-    line-height: var(--mod-toast-line-height, var(--spectrum-toast-line-height));
-    text-align: start;
+    display: inline-block;
     flex: auto;
     padding-block-start: calc(var(--mod-toast-spacing-top-edge-to-text, var(--spectrum-toast-spacing-top-edge-to-text)) - var(--mod-toast-spacing-block-start, var(--spectrum-toast-spacing-block-start)));
     padding-block-end: calc(var(--mod-toast-spacing-bottom-edge-to-text, var(--spectrum-toast-spacing-bottom-edge-to-text)) - var(--mod-toast-spacing-block-end, var(--spectrum-toast-spacing-block-end)));
     padding-inline-start: 0;
     padding-inline-end: var(--mod-toast-spacing-text-to-action-button-horizontal, var(--spectrum-toast-spacing-text-to-action-button-horizontal));
-    display: inline-block;
+    line-height: var(--mod-toast-line-height, var(--spectrum-toast-line-height));
+    text-align: start;
 }
 
 .content:lang(ja),
@@ -120,13 +121,13 @@
 }
 
 .buttons {
-    border-inline-start-color: var(--mod-toast-divider-color, var(--spectrum-toast-divider-color));
+    display: flex;
     flex: none;
     align-items: flex-start;
+    padding-inline-end: var(--mod-toast-spacing-close-button, var(--spectrum-toast-spacing-close-button));
     margin-block-start: var(--mod-toast-spacing-top-edge-to-divider, var(--spectrum-toast-spacing-top-edge-to-divider));
     margin-block-end: var(--mod-toast-spacing-bottom-edge-to-divider, var(--spectrum-toast-spacing-bottom-edge-to-divider));
-    padding-inline-end: var(--mod-toast-spacing-close-button, var(--spectrum-toast-spacing-close-button));
-    display: flex;
+    border-inline-start-color: var(--mod-toast-divider-color, var(--spectrum-toast-divider-color));
 }
 
 .buttons .spectrum-CloseButton {
@@ -134,13 +135,13 @@
 }
 
 .body {
-    flex-wrap: wrap;
+    display: flex;
     flex: auto;
-    align-self: center;
+    flex-wrap: wrap;
     align-items: center;
+    align-self: center;
     padding-block-start: var(--mod-toast-spacing-block-start, var(--spectrum-toast-spacing-block-start));
     padding-block-end: var(--mod-toast-spacing-block-end, var(--spectrum-toast-spacing-block-end));
-    display: flex;
 }
 
 .body ::slotted([slot="action"]) {
@@ -153,7 +154,7 @@
 }
 
 .body + .buttons {
+    padding-inline-start: var(--mod-toast-spacing-close-button, var(--spectrum-toast-spacing-close-button));
     border-inline-start-style: solid;
     border-inline-start-width: 1px;
-    padding-inline-start: var(--mod-toast-spacing-close-button, var(--spectrum-toast-spacing-close-button));
 }

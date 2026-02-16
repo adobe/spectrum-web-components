@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -14,10 +14,10 @@
 @import url("./popover-overrides.css");
 
 :host {
-    min-width: min-content;
-    max-height: 100%;
-    max-width: 100%;
     inline-size: var(--mod-popover-inline-size);
+    min-width: min-content;
+    max-width: 100%;
+    max-height: 100%;
     clip-path: none;
 }
 
@@ -39,9 +39,9 @@
 
 .block,
 .inline {
+    display: block;
     width: 100%;
     height: 100%;
-    display: block;
 }
 
 :host([placement*="left"]) .block,
@@ -55,16 +55,16 @@
 }
 
 ::slotted(.visually-hidden) {
-    border: 0;
-    clip: rect(0, 0, 0, 0);
-    clip-path: inset(50%);
-    height: 1px;
-    margin: 0 -1px -1px 0;
-    overflow: hidden;
-    padding: 0;
     position: absolute;
     width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: 0 -1px -1px 0;
     white-space: nowrap;
+    border: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
 }
 
 ::slotted(sp-menu) {

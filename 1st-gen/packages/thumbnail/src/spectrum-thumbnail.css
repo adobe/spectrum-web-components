@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -74,28 +74,29 @@
     --spectrum-thumbnail-focus-indicator-gap: var(--mod-thumbnail-focus-indicator-gap, var(--spectrum-focus-indicator-gap));
     --spectrum-thumbnail-focus-indicator-color: var(--highcontrast-thumbnail-focus-indicator-color, var(--mod-thumbnail-focus-indicator-color, var(--spectrum-focus-indicator-color)));
     --spectrum-thumbnail-color-opacity-disabled: var(--spectrum-thumbnail-opacity-disabled);
-    inline-size: var(--spectrum-thumbnail-size);
-    block-size: var(--spectrum-thumbnail-size);
-    z-index: 0;
-    margin: 0;
-    padding: 0;
+
     display: block;
     position: relative;
+    z-index: 0;
+    inline-size: var(--spectrum-thumbnail-size);
+    block-size: var(--spectrum-thumbnail-size);
+    padding: 0;
+    margin: 0;
     overflow: hidden;
 }
 
 :host,
-:host:before {
+:host::before {
     border-radius: var(--spectrum-thumbnail-border-radius-default);
 }
 
-:host:before {
-    content: "";
+:host::before {
+    position: absolute;
     z-index: 2;
     inline-size: 100%;
     block-size: 100%;
     box-shadow: inset 0 0 0 var(--spectrum-thumbnail-border-width) var(--spectrum-thumbnail-border-color);
-    position: absolute;
+    content: "";
 }
 
 :host([disabled]) {
@@ -106,17 +107,17 @@
     overflow: visible;
 }
 
-:host([focused]):after {
-    content: "";
-    border-style: solid;
-    border-width: var(--spectrum-thumbnail-focus-indicator-thickness);
-    border-color: var(--spectrum-thumbnail-focus-indicator-color);
-    border-radius: var(--spectrum-thumbnail-border-radius-default);
+:host([focused])::after {
     position: absolute;
     inset-block-start: calc((var(--spectrum-thumbnail-focus-indicator-gap) + var(--spectrum-thumbnail-focus-indicator-thickness)) * -1);
     inset-block-end: calc((var(--spectrum-thumbnail-focus-indicator-gap) + var(--spectrum-thumbnail-focus-indicator-thickness)) * -1);
     inset-inline-start: calc((var(--spectrum-thumbnail-focus-indicator-gap) + var(--spectrum-thumbnail-focus-indicator-thickness)) * -1);
     inset-inline-end: calc((var(--spectrum-thumbnail-focus-indicator-gap) + var(--spectrum-thumbnail-focus-indicator-thickness)) * -1);
+    border-color: var(--spectrum-thumbnail-focus-indicator-color);
+    border-style: solid;
+    border-width: var(--spectrum-thumbnail-focus-indicator-thickness);
+    border-radius: var(--spectrum-thumbnail-border-radius-default);
+    content: "";
 }
 
 :host([focused]) .image-wrapper {
@@ -125,69 +126,69 @@
 }
 
 :host([layer]) {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-color: var(--spectrum-thumbnail-layer-border-color-outer);
     border-style: solid;
     border-width: var(--spectrum-thumbnail-layer-border-width-outer);
-    border-color: var(--spectrum-thumbnail-layer-border-color-outer);
-    box-sizing: border-box;
-    justify-content: center;
-    align-items: center;
-    display: flex;
 }
 
-:host([layer]):before {
+:host([layer])::before {
     content: none;
 }
 
 :host([layer][selected]) {
+    outline-width: var(--spectrum-thumbnail-border-width-selected);
     outline-style: solid;
     outline-color: var(--spectrum-thumbnail-border-color-selected);
-    outline-width: var(--spectrum-thumbnail-border-width-selected);
     outline-offset: calc(var(--spectrum-thumbnail-border-width-selected) - var(--spectrum-thumbnail-layer-border-width-inner));
 }
 
 .layer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     inline-size: calc(var(--spectrum-thumbnail-size) - var(--spectrum-thumbnail-layer-border-width-inner) * 2);
     block-size: calc(var(--spectrum-thumbnail-size) - var(--spectrum-thumbnail-layer-border-width-inner) * 2);
+    outline-width: calc(var(--spectrum-thumbnail-layer-border-width-inner) - var(--spectrum-thumbnail-layer-border-width-outer));
     outline-style: solid;
     outline-color: var(--spectrum-thumbnail-layer-border-color-inner);
-    outline-width: calc(var(--spectrum-thumbnail-layer-border-width-inner) - var(--spectrum-thumbnail-layer-border-width-outer));
-    justify-content: center;
-    align-items: center;
-    display: flex;
 }
 
 .image-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     inline-size: 100%;
     block-size: 100%;
-    justify-content: center;
-    align-items: center;
-    display: flex;
 }
 
 ::slotted(*) {
+    position: relative;
+    z-index: 1;
     max-inline-size: 100%;
     max-block-size: 100%;
-    z-index: 1;
-    position: relative;
 }
 
 :host([cover]) ::slotted(*) {
-    block-size: 100%;
     inline-size: 100%;
+    block-size: 100%;
     object-fit: cover;
     object-position: center;
 }
 
 .background {
-    z-index: 0;
-    block-size: 100%;
-    inline-size: 100%;
-    border-radius: var(--spectrum-thumbnail-border-radius-default);
-    background-position: 50%;
-    background-size: cover;
     position: absolute;
     inset-block: 0;
     inset-inline: 0;
+    z-index: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    background-position: 50%;
+    background-size: cover;
+    border-radius: var(--spectrum-thumbnail-border-radius-default);
 }
 
 @media (forced-colors: active) {
@@ -197,6 +198,7 @@
         --highcontrast-thumbnail-border-color: CanvasText;
         --highcontrast-thumbnail-layer-border-color-inner: Canvas;
         --highcontrast-thumbnail-layer-border-color-outer: CanvasText;
+
         forced-color-adjust: none;
     }
 }

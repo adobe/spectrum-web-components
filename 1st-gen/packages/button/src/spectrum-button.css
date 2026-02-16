@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,29 +11,29 @@
  */
 
 :host {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    font-family: var(--mod-button-font-family, var(--mod-sans-font-family-stack, var(--spectrum-sans-font-family-stack)));
+    line-height: var(--mod-button-line-height, var(--mod-line-height-100, var(--spectrum-line-height-100)));
+    vertical-align: top;
+    text-transform: none;
+    -webkit-text-decoration: none;
+    text-decoration: none;
+    overflow: visible;
+    -webkit-appearance: button;
     cursor: pointer;
     -webkit-user-select: none;
     user-select: none;
-    box-sizing: border-box;
-    font-family: var(--mod-button-font-family, var(--mod-sans-font-family-stack, var(--spectrum-sans-font-family-stack)));
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    line-height: var(--mod-button-line-height, var(--mod-line-height-100, var(--spectrum-line-height-100)));
-    text-transform: none;
-    vertical-align: top;
-    -webkit-appearance: button;
     transition:
         background var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
         border-color var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
         color var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
         box-shadow var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    -webkit-text-decoration: none;
-    text-decoration: none;
-    display: inline-flex;
-    overflow: visible;
 }
 
 :host(:focus) {
@@ -45,23 +45,23 @@
     cursor: default;
 }
 
-:host:after {
+:host::after {
+    display: block;
+    inset-block: 0;
+    inset-inline: 0;
     margin: calc(var(--mod-button-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) * -1);
     transition:
         opacity var(--mod-button-animation-duration, var(--mod-button-animation-duration, var(--spectrum-animation-duration-100))) ease-out,
         margin var(--mod-button-animation-duration, var(--mod-button-animation-duration, var(--spectrum-animation-duration-100))) ease-out;
-    display: block;
-    inset-block: 0;
-    inset-inline: 0;
 }
 
-:host(:focus-visible):after {
+:host(:focus-visible)::after {
     margin: calc(var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) * -2);
 }
 
 #label {
-    text-align: center;
     place-self: center;
+    text-align: center;
 }
 
 #label[hidden] {
@@ -368,69 +368,70 @@
     --spectrum-button-focus-ring-gap: var(--mod-focus-indicator-gap, var(--mod-button-focus-ring-gap, var(--spectrum-focus-indicator-gap)));
     --spectrum-button-border-radius: var(--mod-button-border-radius, calc(var(--spectrum-button-height) / 2));
     --mod-progress-circle-position: absolute;
-    border-radius: var(--spectrum-button-border-radius);
-    border-width: var(--spectrum-button-border-width);
-    font-size: var(--spectrum-button-font-size);
-    font-weight: var(--mod-bold-font-weight, var(--spectrum-bold-font-weight));
+
+    position: relative;
     gap: var(--spectrum-button-padding-label-to-icon);
-    max-inline-size: var(--mod-button-max-inline-size, none);
     min-inline-size: var(--spectrum-button-min-width);
+    max-inline-size: var(--mod-button-max-inline-size, none);
     min-block-size: var(--spectrum-button-height);
     padding-block: 0;
     padding-inline: var(--spectrum-button-edge-to-text);
     margin-block: var(--mod-button-margin-block);
-    background-color: var(--highcontrast-button-background-color-default, var(--mod-button-background-color-default, var(--spectrum-button-background-color-default)));
-    border-style: solid;
-    border-color: var(--highcontrast-button-border-color-default, var(--mod-button-border-color-default, var(--spectrum-button-border-color-default)));
+    margin-inline-start: var(--mod-button-margin-left);
+    margin-inline-end: var(--mod-button-margin-right);
+    font-size: var(--spectrum-button-font-size);
+    font-weight: var(--mod-bold-font-weight, var(--spectrum-bold-font-weight));
     color: var(--highcontrast-button-content-color-default, var(--mod-button-content-color-default, var(--spectrum-button-content-color-default, inherit)));
+    background-color: var(--highcontrast-button-background-color-default, var(--mod-button-background-color-default, var(--spectrum-button-background-color-default)));
+    border-color: var(--highcontrast-button-border-color-default, var(--mod-button-border-color-default, var(--spectrum-button-border-color-default)));
+    border-style: solid;
+    border-width: var(--spectrum-button-border-width);
+    border-radius: var(--spectrum-button-border-radius);
     transition:
         border var(--spectrum-button-animation-duration, 0.13s) linear,
         color var(--spectrum-button-animation-duration, 0.13s) linear,
         background-color var(--spectrum-button-animation-duration, 0.13s) linear;
-    margin-inline-start: var(--mod-button-margin-left);
-    margin-inline-end: var(--mod-button-margin-right);
-    position: relative;
 }
 
 :host([treatment="outline"]) {
     background-color: initial;
 }
 
-:host:after {
-    margin: var(--mod-button-focus-ring-border-radius, calc((var(--spectrum-button-focus-ring-gap) + var(--spectrum-button-border-width)) * -1));
-    transition: box-shadow var(--spectrum-button-animation-duration) ease-in-out;
-    pointer-events: none;
-    content: "";
-    border-radius: calc(var(--spectrum-button-border-radius) + var(--spectrum-focus-indicator-gap));
+:host::after {
     position: absolute;
     inset: 0;
+    margin: var(--mod-button-focus-ring-border-radius, calc((var(--spectrum-button-focus-ring-gap) + var(--spectrum-button-border-width)) * -1));
+    border-radius: calc(var(--spectrum-button-border-radius) + var(--spectrum-focus-indicator-gap));
+    pointer-events: none;
+    content: "";
+    transition: box-shadow var(--spectrum-button-animation-duration) ease-in-out;
 }
 
 :host(:focus-visible) {
+    color: var(--highcontrast-button-content-color-focus, var(--mod-button-content-color-focus, var(--spectrum-button-content-color-focus)));
     background-color: var(--highcontrast-button-background-color-focus, var(--mod-button-background-color-focus, var(--spectrum-button-background-color-focus)));
     border-color: var(--highcontrast-button-border-color-focus, var(--mod-button-border-color-focus, var(--spectrum-button-border-color-focus)));
-    color: var(--highcontrast-button-content-color-focus, var(--mod-button-content-color-focus, var(--spectrum-button-content-color-focus)));
     box-shadow: none;
     outline: none;
 }
 
-:host([focused]):after,
-:host(:focus-visible):after {
+:host([focused])::after,
+:host(:focus-visible)::after {
     box-shadow: 0 0 0 var(--spectrum-button-focus-ring-thickness) var(--spectrum-button-focus-indicator-color);
 }
 
 :host(:is(:active, [active])) {
+    color: var(--highcontrast-button-content-color-down, var(--mod-button-content-color-down, var(--spectrum-button-content-color-down)));
     background-color: var(--highcontrast-button-background-color-down, var(--mod-button-background-color-down, var(--spectrum-button-background-color-down)));
     border-color: var(--highcontrast-button-border-color-down, var(--mod-button-border-color-down, var(--spectrum-button-border-color-down)));
-    color: var(--highcontrast-button-content-color-down, var(--mod-button-content-color-down, var(--spectrum-button-content-color-down)));
     box-shadow: none;
 }
 
 @media (hover: hover) {
     :host(:hover) {
+        color: var(--highcontrast-button-content-color-hover, var(--mod-button-content-color-hover, var(--spectrum-button-content-color-hover)));
         background-color: var(--highcontrast-button-background-color-hover, var(--mod-button-background-color-hover, var(--spectrum-button-background-color-hover)));
         border-color: var(--highcontrast-button-border-color-hover, var(--mod-button-border-color-hover, var(--spectrum-button-border-color-hover)));
-        color: var(--highcontrast-button-content-color-hover, var(--mod-button-content-color-hover, var(--spectrum-button-content-color-hover)));
         box-shadow: none;
     }
 }
@@ -439,13 +440,14 @@
 :host([pending]),
 :host([disabled]),
 :host([pending]) {
+    color: var(--highcontrast-button-content-color-disabled, var(--mod-button-content-color-disabled, var(--spectrum-button-content-color-disabled)));
     background-color: var(--highcontrast-button-background-color-disabled, var(--mod-button-background-color-disabled, var(--spectrum-button-background-color-disabled)));
     border-color: var(--highcontrast-button-border-color-disabled, var(--mod-button-border-color-disabled, var(--spectrum-button-border-color-disabled)));
-    color: var(--highcontrast-button-content-color-disabled, var(--mod-button-content-color-disabled, var(--spectrum-button-content-color-disabled)));
 }
 
 ::slotted([slot="icon"]) {
     --_icon-size-difference: max(0px, var(--spectrum-button-intended-icon-size) - var(--spectrum-icon-block-size, var(--spectrum-button-intended-icon-size)));
+
     margin-block-start: var(--mod-button-icon-margin-block-start, max(0px, var(--mod-button-top-to-icon, var(--spectrum-button-top-to-icon)) - var(--mod-button-border-width, var(--spectrum-button-border-width)) + (var(--_icon-size-difference, 0px) / 2)));
     margin-inline-start: calc(var(--mod-button-edge-to-visual, var(--spectrum-button-edge-to-visual)) - var(--mod-button-edge-to-text, var(--spectrum-button-edge-to-text)));
 }
@@ -483,11 +485,12 @@
 
 ::slotted([slot="icon"]) {
     --_icon-size-difference: max(0px, calc(var(--spectrum-button-intended-icon-size) - var(--spectrum-icon-block-size, var(--spectrum-button-intended-icon-size))));
-    color: inherit;
+
     flex-shrink: 0;
     align-self: flex-start;
     margin-block-start: var(--mod-button-icon-margin-block-start, max(0px, calc(var(--spectrum-button-top-to-icon) - var(--spectrum-button-border-width) + var(--_icon-size-difference, 0px) / 2)));
     margin-inline-start: calc(var(--spectrum-button-edge-to-visual) - var(--spectrum-button-edge-to-text));
+    color: inherit;
 }
 
 :host([icon-only]) {
@@ -502,7 +505,7 @@
     margin-inline-start: 0;
 }
 
-:host([icon-only]):after {
+:host([icon-only])::after {
     border-radius: 50%;
 }
 
@@ -511,17 +514,17 @@
 }
 
 #label {
-    line-height: var(--spectrum-button-line-height);
-    text-align: var(--mod-button-text-align, center);
     align-self: start;
     padding-block-start: calc(var(--spectrum-button-top-to-text) - var(--spectrum-button-border-width));
     padding-block-end: calc(var(--spectrum-button-bottom-to-text) - var(--spectrum-button-border-width));
+    line-height: var(--spectrum-button-line-height);
+    text-align: var(--mod-button-text-align, center);
 }
 
 :host([no-wrap]) #label {
-    text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 @media (forced-colors: active) {
@@ -551,9 +554,9 @@
         forced-color-adjust: none;
     }
 
-    :host(:focus-visible):after {
-        forced-color-adjust: none;
+    :host(:focus-visible)::after {
         box-shadow: 0 0 0 var(--spectrum-button-focus-ring-thickness) ButtonText;
+        forced-color-adjust: none;
     }
 
     :host([variant="accent"][treatment="fill"]) {
