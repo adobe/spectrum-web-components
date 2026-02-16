@@ -776,6 +776,16 @@ export class Overlay extends ComputedOverlayBase {
             }
         } else {
             if (oldOpen) {
+                // Hide the dialog immediately when closing to prevent a
+                // flash caused by resetOverlayPosition() recalculating
+                // placement during the close transition.
+                if (this.dialogEl) {
+                    this.dialogEl.style.setProperty(
+                        'opacity',
+                        '0',
+                        'important'
+                    );
+                }
                 this._focusTrap?.deactivate();
                 this._focusTrap = null;
                 // Dispose of the overlay if it was previously open.
@@ -1093,6 +1103,9 @@ export class Overlay extends ComputedOverlayBase {
         ) {
             // Clear the overlay position.
             this.placementController.clearOverlayPosition();
+            // Remove inline opacity so the next open starts with a
+            // clean state.
+            this.dialogEl.style.removeProperty('opacity');
         }
     }
 

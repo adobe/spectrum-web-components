@@ -67,22 +67,23 @@ const MIN_OVERLAY_HEIGHT = 100;
  * @param {Placement} placement - The initial placement of the overlay.
  * @returns {Placement[]} An array of fallback placements.
  */
+const fallbackPlacements: Record<Placement, Placement[]> = {
+    left: ['right', 'bottom', 'top'],
+    'left-start': ['right-start', 'bottom', 'top'],
+    'left-end': ['right-end', 'bottom', 'top'],
+    right: ['left', 'bottom', 'top'],
+    'right-start': ['left-start', 'bottom', 'top'],
+    'right-end': ['left-end', 'bottom', 'top'],
+    top: ['bottom', 'left', 'right'],
+    'top-start': ['bottom-start', 'left', 'right'],
+    'top-end': ['bottom-end', 'left', 'right'],
+    bottom: ['top', 'left', 'right'],
+    'bottom-start': ['top-start', 'left', 'right'],
+    'bottom-end': ['top-end', 'left', 'right'],
+};
+
 const getFallbackPlacements = (placement: Placement): Placement[] => {
-    const fallbacks: Record<Placement, Placement[]> = {
-        left: ['right', 'bottom', 'top'],
-        'left-start': ['right-start', 'bottom', 'top'],
-        'left-end': ['right-end', 'bottom', 'top'],
-        right: ['left', 'bottom', 'top'],
-        'right-start': ['left-start', 'bottom', 'top'],
-        'right-end': ['left-end', 'bottom', 'top'],
-        top: ['bottom', 'left', 'right'],
-        'top-start': ['bottom-start', 'left', 'right'],
-        'top-end': ['bottom-end', 'left', 'right'],
-        bottom: ['top', 'left', 'right'],
-        'bottom-start': ['top-start', 'left', 'right'],
-        'bottom-end': ['top-end', 'left', 'right'],
-    };
-    return fallbacks[placement] ?? [placement];
+    return fallbackPlacements[placement] ?? [placement];
 };
 
 /**
@@ -369,6 +370,17 @@ export class PlacementController implements ReactiveController {
         // Set the 'actual-placement' attribute on the target element.
         target.setAttribute('actual-placement', placement);
 
+        // Reveal the dialog now that it is at the correct position. The
+        // overlay's manageOpen() hides it with inline opacity to prevent a
+        // flash at the wrong location while positioning is computed async.
+        // Only reveal when the overlay is actually open; during the close
+        // transition, shouldHidePopover() triggers resetOverlayPosition()
+        // which re-runs computePlacement() — removing opacity here would
+        // undo the hiding and flash the overlay at the recalculated position.
+        if ((this.host as Overlay).open) {
+            target.style.removeProperty('opacity');
+        }
+
         // Update the placement attribute for each host element.
         this.host.elements?.forEach((element) => {
             if (!this.originalPlacements.has(element)) {
@@ -425,11 +437,9 @@ export class PlacementController implements ReactiveController {
      */
     public resetOverlayPosition = (): void => {
         if (!this.target || !this.options) return;
+        if (!(this.host as Overlay).open) return;
         // Clear the overlay's position.
         this.clearOverlayPosition();
-
-        // Force a reflow.
-        this.host.offsetHeight;
         // Recompute the placement.
         this.computePlacement();
     };

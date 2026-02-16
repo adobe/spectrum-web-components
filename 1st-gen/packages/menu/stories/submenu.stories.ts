@@ -125,6 +125,7 @@ const submenuDecorator = (story: () => TemplateResult): TemplateResult => {
 };
 
 export const submenu = (): TemplateResult => {
+    const ITEMS_PER_LEVEL = 20;
     const getValueEls = (): {
         root: HTMLElement;
         first: HTMLElement;
@@ -158,6 +159,75 @@ export const submenu = (): TemplateResult => {
         const valueEls = getValueEls();
         valueEls.second.textContent = event.target.selected[0] || '';
     };
+
+    const leafItems = (
+        valuePrefix: string,
+        labelPrefix: string
+    ): TemplateResult[] => {
+        return Array.from({ length: ITEMS_PER_LEVEL }, (_, index) => {
+            const n = index + 1;
+            return html`
+                <sp-menu-item value="${valuePrefix}-${n}">
+                    ${labelPrefix} ${n}
+                </sp-menu-item>
+            `;
+        });
+    };
+
+    const secondLevelMenu = (
+        rootIndex: number,
+        firstIndex: number
+    ): TemplateResult => html`
+        <sp-menu slot="submenu" @change=${handleSecondDescendantChange}>
+            ${leafItems(`level-3-${rootIndex}-${firstIndex}`, 'Level 3 item')}
+        </sp-menu>
+    `;
+
+    const firstLevelItem = (
+        rootIndex: number,
+        firstIndex: number
+    ): TemplateResult => {
+        const value = `level-2-${rootIndex}-${firstIndex}`;
+        const content = html`
+            Level 2 item ${firstIndex} ${secondLevelMenu(rootIndex, firstIndex)}
+        `;
+        if (rootIndex === 1 && firstIndex === 1) {
+            return html`
+                <sp-menu-item id="submenu-item-2" value="${value}">
+                    ${content}
+                </sp-menu-item>
+            `;
+        }
+        return html`
+            <sp-menu-item value="${value}">${content}</sp-menu-item>
+        `;
+    };
+
+    const firstLevelMenu = (rootIndex: number): TemplateResult => html`
+        <sp-menu slot="submenu" @change=${handleFirstDescendantChange}>
+            ${Array.from({ length: ITEMS_PER_LEVEL }, (_, index) => {
+                const n = index + 1;
+                return firstLevelItem(rootIndex, n);
+            })}
+        </sp-menu>
+    `;
+
+    const rootItem = (rootIndex: number): TemplateResult => {
+        const value = `level-1-${rootIndex}`;
+        const content = html`
+            Level 1 item ${rootIndex} ${firstLevelMenu(rootIndex)}
+        `;
+        if (rootIndex === 1) {
+            return html`
+                <sp-menu-item id="submenu-item-1" value="${value}">
+                    ${content}
+                </sp-menu-item>
+            `;
+        }
+        return html`
+            <sp-menu-item value="${value}">${content}</sp-menu-item>
+        `;
+    };
     return html`
         <sp-action-menu
             label="More Actions"
@@ -169,60 +239,11 @@ export const submenu = (): TemplateResult => {
                 @change=${() => console.log('group change')}
                 role="none"
             >
-                <span slot="header">New York</span>
-                <sp-menu-item>Bronx</sp-menu-item>
-                <sp-menu-item id="submenu-item-1">
-                    Brooklyn
-                    <sp-menu
-                        slot="submenu"
-                        @change=${handleFirstDescendantChange}
-                    >
-                        <sp-menu-item id="submenu-item-2">
-                            Ft. Greene
-                            <sp-menu
-                                slot="submenu"
-                                @change=${handleSecondDescendantChange}
-                            >
-                                <sp-menu-item>S. Oxford St</sp-menu-item>
-                                <sp-menu-item>S. Portland Ave</sp-menu-item>
-                                <sp-menu-item>S. Elliot Pl</sp-menu-item>
-                            </sp-menu>
-                        </sp-menu-item>
-                        <sp-menu-item disabled>Park Slope</sp-menu-item>
-                        <sp-menu-item>Williamsburg</sp-menu-item>
-                    </sp-menu>
-                </sp-menu-item>
-                <sp-menu-item>
-                    Manhattan
-                    <sp-menu
-                        slot="submenu"
-                        @change=${handleFirstDescendantChange}
-                    >
-                        <sp-menu-item disabled>SoHo</sp-menu-item>
-                        <sp-menu-item>
-                            Union Square
-                            <sp-menu
-                                slot="submenu"
-                                @change=${handleSecondDescendantChange}
-                            >
-                                <sp-menu-item>14th St</sp-menu-item>
-                                <sp-menu-item>Broadway</sp-menu-item>
-                                <sp-menu-item>Park Ave</sp-menu-item>
-                            </sp-menu>
-                        </sp-menu-item>
-                        <sp-menu-item>Upper East Side</sp-menu-item>
-                    </sp-menu>
-                </sp-menu-item>
-                <sp-menu-item disabled>
-                    Queens
-                    <sp-menu slot="submenu">
-                        <sp-menu-item>
-                            You shouldn't be able to see this!
-                        </sp-menu-item>
-                        <sp-menu-item>Forest Hills</sp-menu-item>
-                        <sp-menu-item>Jamaica</sp-menu-item>
-                    </sp-menu>
-                </sp-menu-item>
+                <span slot="header">Large submenu demo</span>
+                ${Array.from({ length: ITEMS_PER_LEVEL }, (_, index) => {
+                    const n = index + 1;
+                    return rootItem(n);
+                })}
             </sp-menu-group>
         </sp-action-menu>
         <div>
@@ -299,6 +320,7 @@ export const contextMenu = (): TemplateResult => {
         </div>
         <sp-overlay>
             <sp-popover
+                slot="default"
                 style="max-width: 33vw;"
                 @click=${(event: Event) =>
                     event.target?.dispatchEvent(
@@ -310,15 +332,15 @@ export const contextMenu = (): TemplateResult => {
                         <span slot="header">Options</span>
                         <sp-menu-item>
                             Copy
-                            <span slot="value">⌘​S</span>
+                            <span slot="value">⌘S</span>
                         </sp-menu-item>
                         <sp-menu-item>
                             Paste
-                            <span slot="value">⌘​P</span>
+                            <span slot="value">⌘P</span>
                         </sp-menu-item>
                         <sp-menu-item>
                             Cut
-                            <span slot="value">⌘​X</span>
+                            <span slot="value">⌘X</span>
                         </sp-menu-item>
                         <sp-menu-divider></sp-menu-divider>
                         <sp-menu-item>
@@ -334,28 +356,28 @@ export const contextMenu = (): TemplateResult => {
                         </sp-menu-item>
                         <sp-menu-item>
                             Group
-                            <span slot="value">⌘​G</span>
+                            <span slot="value">⌘G</span>
                         </sp-menu-item>
                         <sp-menu-item>
                             Unlock
-                            <span slot="value">⌘​L</span>
+                            <span slot="value">⌘L</span>
                         </sp-menu-item>
                         <sp-menu-divider></sp-menu-divider>
                         <sp-menu-item>
                             Bring to front
-                            <span slot="value">⇧​⌘​​]</span>
+                            <span slot="value">⇧⌘]</span>
                         </sp-menu-item>
                         <sp-menu-item>
                             Bring forward
-                            <span slot="value">⌘​​]</span>
+                            <span slot="value">⌘]</span>
                         </sp-menu-item>
                         <sp-menu-item>
                             Send backward
-                            <span slot="value">⌘​​[</span>
+                            <span slot="value">⌘[</span>
                         </sp-menu-item>
                         <sp-menu-item>
                             Send to back
-                            <span slot="value">⇧​⌘​​[</span>
+                            <span slot="value">⇧⌘[</span>
                         </sp-menu-item>
                         <sp-menu-divider></sp-menu-divider>
                         <sp-menu-item>
