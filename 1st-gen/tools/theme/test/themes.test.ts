@@ -10,11 +10,13 @@
  * governing permissions and limitations under the License.
  */
 
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+
+import { css } from '@spectrum-web-components/base';
+import { Theme, ThemeFragmentMap } from '@spectrum-web-components/theme';
+
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import { Theme, ThemeFragmentMap } from '@spectrum-web-components/theme';
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import { css } from '@spectrum-web-components/base';
 
 type TestableThemeConstructor = {
     instances: Set<Theme>;

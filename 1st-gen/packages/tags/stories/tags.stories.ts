@@ -14,9 +14,10 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/tags/sp-tag.js';
 import '@spectrum-web-components/tags/sp-tags.js';
 import '@spectrum-web-components/avatar/sp-avatar.js';
-import { avatar } from '../../avatar/stories/images';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
+
+import { avatar } from '../../avatar/stories/images';
 
 export default {
     title: 'Tags',

@@ -11,12 +11,13 @@
  */
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { stub } from 'sinon';
 
 import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
+
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { Thumbnail } from '..';
 import { thumbnail } from '../stories/images.js';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { stub } from 'sinon';
 
 describe('Thumbnail', () => {
     testForLitDevWarnings(

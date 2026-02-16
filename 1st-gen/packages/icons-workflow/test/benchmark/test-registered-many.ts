@@ -10,6 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
+import { html } from '@spectrum-web-components/base';
+
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-abc.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-actions.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-display-advert.js';
@@ -46,7 +48,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-book.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-bookmark.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-bookmark-single.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-bookmark-single-outline.js';
-import { html } from '@spectrum-web-components/base';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`

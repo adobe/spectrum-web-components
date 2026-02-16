@@ -11,10 +11,12 @@
  */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import { spreadProps } from '../../../test/lit-helpers.js';
-import { StoryArgs } from './args.js';
+
 import '@spectrum-web-components/link/sp-link.js';
 import '../sp-contextual-help.js';
+
+import { spreadProps } from '../../../test/lit-helpers.js';
+import { StoryArgs } from './args.js';
 
 export const ContextualHelpMarkup = (args: StoryArgs = {}): TemplateResult => {
     return html`

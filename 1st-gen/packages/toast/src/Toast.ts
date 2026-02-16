@@ -18,11 +18,12 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
+
 import '@spectrum-web-components/button/sp-close-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
-import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 
 import toastStyles from './toast.css.js';
 
@@ -59,7 +60,7 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
     /**
      * The `open` property indicates whether the toast is visible or hidden.
      *
-     * @param {Boolean} open
+     * @param {boolean} open
      */
     @property({ type: Boolean, reflect: true })
     public open = false;
@@ -78,7 +79,7 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
      * For example, a message with 240 words should have a timeout of 7000ms,
      * and a message with 360 words should have a timeout of 8000ms.
      *
-     * @param {Number | null} timeout
+     * @param {number | null} timeout
      * @default null
      */
     //TODO(#4939): Align on the timeout minimum with design
@@ -109,7 +110,7 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
      *
      * `variant` attribute is removed when not matching one of the above.
      *
-     * @param {String} variant
+     * @param {string} variant
      */
     @property({ type: String })
     public set variant(variant: ToastVariants) {
@@ -140,7 +141,7 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
      *
      * If the `iconLabel` property is not set, the icon will use the `variant` to dynamically set the `label`.
      *
-     * @param {String} iconLabel
+     * @param {string} iconLabel
      */
     @property({ type: String, attribute: 'icon-label' })
     public iconLabel?: string;

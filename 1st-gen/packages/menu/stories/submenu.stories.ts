@@ -10,18 +10,18 @@
  * governing permissions and limitations under the License.
  */
 
+import type { ActionMenu } from '@spectrum-web-components/action-menu';
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import type { Menu, MenuItem } from '@spectrum-web-components/menu';
+import { Overlay, VirtualTrigger } from '@spectrum-web-components/overlay';
 
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
-import { Overlay, VirtualTrigger } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
-import type { ActionMenu } from '@spectrum-web-components/action-menu';
-import type { Menu, MenuItem } from '@spectrum-web-components/menu';
 
 export default {
     component: 'sp-menu',

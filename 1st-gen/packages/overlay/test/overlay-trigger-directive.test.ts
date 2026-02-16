@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+import { cache } from 'lit/directives/cache.js';
 import {
     elementUpdated,
     expect,
@@ -17,18 +18,19 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import { html, TemplateResult } from '@spectrum-web-components/base';
 import { stub } from 'sinon';
+
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import { LitElement } from '@spectrum-web-components/base';
+import { Button } from '@spectrum-web-components/button';
+import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import { trigger } from '@spectrum-web-components/overlay/src/overlay-trigger-directive.js';
+
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
-import { LitElement } from '@spectrum-web-components/base';
-import { cache } from 'lit/directives/cache.js';
-import { Button } from '@spectrum-web-components/button';
 
 describe('Overlay trigger directive', () => {
     describe('dev mode', () => {

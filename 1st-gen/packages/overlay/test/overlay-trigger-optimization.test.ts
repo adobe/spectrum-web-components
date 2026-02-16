@@ -11,17 +11,19 @@
  */
 
 import { elementUpdated, expect, html } from '@open-wc/testing';
-import { OverlayTrigger } from '../src/OverlayTrigger.js';
 import { stub } from 'sinon';
-import {
-    fixture,
-    testForLitDevWarnings,
-} from '../../../test/testing-helpers.js';
+
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/overlay/sync/overlay-trigger.js';
+
+import {
+    fixture,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
+import { OverlayTrigger } from '../src/OverlayTrigger.js';
 
 describe('Overlay Trigger - Trigger Interactions', () => {
     it('accepts valid trigger interaction combinations', async () => {

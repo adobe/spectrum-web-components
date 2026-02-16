@@ -16,19 +16,20 @@ import {
     html,
     oneEvent,
 } from '@open-wc/testing';
-
+import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
+
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import {
     Breadcrumbs,
     BreadcrumbSelectDetail,
 } from '@spectrum-web-components/breadcrumbs';
-import { getBreadcrumbs } from '../stories/template.js';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumbs.js';
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
-import { sendKeys } from '@web/test-runner-commands';
+
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { getBreadcrumbs } from '../stories/template.js';
 
 describe('Breadcrumbs', () => {
     testForLitDevWarnings(

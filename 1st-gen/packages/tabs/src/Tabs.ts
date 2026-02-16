@@ -10,6 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+import { IntersectionController } from '@lit-labs/observers/intersection-controller.js';
+import { ResizeController } from '@lit-labs/observers/resize-controller.js';
+
 import {
     css,
     CSSResult,
@@ -28,15 +31,13 @@ import {
     classMap,
     ifDefined,
 } from '@spectrum-web-components/base/src/directives.js';
-import { IntersectionController } from '@lit-labs/observers/intersection-controller.js';
-import { ResizeController } from '@lit-labs/observers/resize-controller.js';
-import { Tab } from './Tab.js';
-import { Focusable } from '@spectrum-web-components/shared';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
+import { Focusable } from '@spectrum-web-components/shared';
 
+import { Tab } from './Tab.js';
+import { TabPanel } from './TabPanel.js';
 import tabStyles from './tabs.css.js';
 import tabSizes from './tabs-sizes.css.js';
-import { TabPanel } from './TabPanel.js';
 
 // Encapsulated for use both here and in TopNav
 export const ScaledIndicator = {
@@ -164,7 +165,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
     selected = '';
 
     private set tabs(tabs: Tab[]) {
-        if (tabs === this.tabs) return;
+        if (tabs === this.tabs) {return;}
         this._tabs.forEach((tab) => {
             this.resizeController.unobserve(tab);
         });
@@ -215,7 +216,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         },
         direction: () => 'both',
         elementEnterAction: (el) => {
-            if (!this.auto) return;
+            if (!this.auto) {return;}
 
             this.shouldAnimate = true;
             this.selectTarget(el);
@@ -234,8 +235,8 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     private limitDeltaToInterval(min: number, max: number) {
         return (delta: number): number => {
-            if (delta < min) return min;
-            if (delta > max) return max;
+            if (delta < min) {return min;}
+            if (delta > max) {return max;}
             return delta;
         };
     }
@@ -249,7 +250,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         delta: number,
         behavior: ScrollBehavior = 'smooth'
     ): void {
-        if (delta === 0) return;
+        if (delta === 0) {return;}
 
         const { scrollLeft, clientWidth, scrollWidth } = this.tabList;
         const dirLimit = scrollWidth - clientWidth - Math.abs(scrollLeft);
@@ -417,12 +418,12 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 const previous = this.querySelector(
                     `[role="tabpanel"][value="${changes.get('selected')}"]`
                 ) as TabPanel;
-                if (previous) previous.selected = false;
+                if (previous) {previous.selected = false;}
             }
             const next = this.querySelector(
                 `[role="tabpanel"][value="${this.selected}"]`
             ) as TabPanel;
-            if (next) next.selected = true;
+            if (next) {next.selected = true;}
         }
         if (changes.has('direction')) {
             if (this.direction === 'horizontal') {

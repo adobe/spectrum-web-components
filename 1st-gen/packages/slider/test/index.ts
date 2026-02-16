@@ -10,22 +10,24 @@
  * governing permissions and limitations under the License.
  */
 
+import { elementUpdated, expect, nextFrame } from '@open-wc/testing';
+import { sendKeys } from '@web/test-runner-commands';
+import { spy } from 'sinon';
+
+import { html, TemplateResult } from '@spectrum-web-components/base';
 import { Slider } from '@spectrum-web-components/slider';
+
+import { sendMouse } from '../../../test/plugins/browser.js';
+import {
+    fixture,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
 import {
     editable,
     hideStepper,
     Indeterminate,
     StoryArgs,
 } from '../stories/slider.stories.js';
-import { elementUpdated, expect, nextFrame } from '@open-wc/testing';
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import { sendKeys } from '@web/test-runner-commands';
-import { spy } from 'sinon';
-import {
-    fixture,
-    testForLitDevWarnings,
-} from '../../../test/testing-helpers.js';
-import { sendMouse } from '../../../test/plugins/browser.js';
 
 async function sliderFromFixture(
     sliderFixture: (args: StoryArgs) => TemplateResult
@@ -139,7 +141,7 @@ export const testEditableSlider = (type: string): void => {
             let frames = 0;
             let shouldCountFrames = true;
             const countFrames = (): void => {
-                if (!shouldCountFrames) return;
+                if (!shouldCountFrames) {return;}
                 frames += 1;
                 requestAnimationFrame(countFrames);
             };

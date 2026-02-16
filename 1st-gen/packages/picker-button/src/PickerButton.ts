@@ -16,14 +16,15 @@ import {
     SizedMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { classMap } from '@spectrum-web-components/base/src/directives.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { classMap } from '@spectrum-web-components/base/src/directives.js';
 import { ButtonBase } from '@spectrum-web-components/button/src/ButtonBase.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 
+import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
+
 import styles from './picker-button.css.js';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 const chevronClass = {
     s: 'spectrum-UIIcon-ChevronDown75',

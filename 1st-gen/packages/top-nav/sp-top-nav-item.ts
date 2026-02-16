@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { TopNavItem } from './src/TopNavItem.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { TopNavItem } from './src/TopNavItem.js';
 
 defineElement('sp-top-nav-item', TopNavItem);
 

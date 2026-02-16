@@ -18,13 +18,16 @@ import {
     html,
     waitUntil,
 } from '@open-wc/testing';
+import { sendKeys } from '@web/test-runner-commands';
+import { spy } from 'sinon';
+
 import {
     ActionButton,
     LONGPRESS_DURATION,
 } from '@spectrum-web-components/action-button';
+
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import { sendKeys } from '@web/test-runner-commands';
-import { spy } from 'sinon';
+
 import {
     mouseClickOn,
     testForLitDevWarnings,

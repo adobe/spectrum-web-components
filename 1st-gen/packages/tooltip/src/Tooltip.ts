@@ -26,9 +26,9 @@ import type {
     OverlayOpenCloseDetail,
     Placement,
 } from '@spectrum-web-components/overlay';
-
 import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 import { focusableSelector } from '@spectrum-web-components/shared/src/focusable-selectors.js';
+
 import tooltipStyles from './tooltip.css.js';
 
 class TooltipOpenable extends HTMLElement {

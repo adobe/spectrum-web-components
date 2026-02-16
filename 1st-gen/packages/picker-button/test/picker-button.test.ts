@@ -12,8 +12,9 @@
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
-import { PickerButton } from '..';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { PickerButton } from '..';
 
 describe('PickerButton', () => {
     testForLitDevWarnings(

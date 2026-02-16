@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html, TemplateResult } from '@spectrum-web-components/base';
+
 import { OverflowProperties, renderTabsOverflowExample } from './index.js';
 
 export default {

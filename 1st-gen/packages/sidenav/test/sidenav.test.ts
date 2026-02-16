@@ -18,13 +18,16 @@ import {
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
+import { spy } from 'sinon';
+
 import { LitElement, TemplateResult } from '@spectrum-web-components/base';
 import { isChrome } from '@spectrum-web-components/shared';
 import { SideNav, SideNavItem } from '@spectrum-web-components/sidenav';
+
 import '@spectrum-web-components/sidenav/sp-sidenav-heading.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
 import '@spectrum-web-components/sidenav/sp-sidenav.js';
-import { spy } from 'sinon';
+
 import {
     arrowDownEvent,
     arrowUpEvent,

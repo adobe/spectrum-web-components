@@ -9,9 +9,13 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+// Import Overlay type for type casting
+import type { Overlay } from '@spectrum-web-components/overlay';
+import { Placement } from '@spectrum-web-components/overlay';
+
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
@@ -20,12 +24,9 @@ import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import { Placement } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
-// Import Overlay type for type casting
-import type { Overlay } from '@spectrum-web-components/overlay';
 
 const iconOptions: {
     [key: string]: ({
@@ -160,7 +161,7 @@ export const wIcon = ({
 }: Properties): TemplateResult => {
     return html`
         <sp-tooltip ?open=${open} placement=${placement} variant=${variant}>
-            ${!!variant ? iconOptions[variant]() : nothing} ${text}
+            ${variant ? iconOptions[variant]() : nothing} ${text}
         </sp-tooltip>
     `;
 };

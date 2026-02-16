@@ -10,13 +10,16 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import { html } from 'lit';
+
 import type { ActionMenu } from '@spectrum-web-components/action-menu';
+import { SpectrumElement } from '@spectrum-web-components/base';
+
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
-import { html } from 'lit';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
-import { SpectrumElement } from '@spectrum-web-components/base';
 
 class ActionMenuWorkflow extends HTMLElement {
     ready!: (value: boolean | PromiseLike<boolean>) => void;

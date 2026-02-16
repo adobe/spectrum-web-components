@@ -38,9 +38,9 @@ export function conditionAttributeWithId(
     const hadIds = ids.every((id) => descriptors.indexOf(id) > -1);
     if (hadIds)
         /* c8 ignore next 3 */
-        return (): void => {
+        {return (): void => {
             return;
-        };
+        };}
     descriptors.push(...ids);
     el.setAttribute(attribute, descriptors.join(' '));
     return () => conditionAttributeWithoutId(el, attribute, ids);

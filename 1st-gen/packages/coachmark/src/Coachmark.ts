@@ -18,18 +18,20 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { when } from '@spectrum-web-components/base/src/directives.js';
-import coachmarkStyles from './coachmark.css.js';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
-import { Popover } from '@spectrum-web-components/popover';
 import { join } from '@spectrum-web-components/base/src/directives.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import type { Placement } from '@spectrum-web-components/overlay';
-import { MediaType } from './CoachmarkItem.js';
-import type { CoachmarkItem } from './CoachmarkItem.js';
+import { Popover } from '@spectrum-web-components/popover';
+
+import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
 import '@spectrum-web-components/asset/sp-asset.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
+
+import coachmarkStyles from './coachmark.css.js';
+import type { CoachmarkItem } from './CoachmarkItem.js';
+import { MediaType } from './CoachmarkItem.js';
 
 /**
  * @element sp-coachmark
@@ -103,8 +105,8 @@ export class Coachmark extends Popover {
                         class="image"
                         loading="lazy"
                         slot="cover-photo"
-                        src="${ifDefined(this.source)}"
-                        alt="${ifDefined(this?.content?.imageAlt)}"
+                        src=${ifDefined(this.source)}
+                        alt=${ifDefined(this?.content?.imageAlt)}
                     />
                 </div>
             </sp-asset>
@@ -116,7 +118,7 @@ export class Coachmark extends Popover {
         type: 'modifier' | 'shortcut' = 'modifier'
     ): TemplateResult {
         return html`
-            <span type="${type}" class="keyboard-shortcut">${modifierKey}</span>
+            <span type=${type} class="keyboard-shortcut">${modifierKey}</span>
         `;
     }
 
@@ -170,9 +172,9 @@ export class Coachmark extends Popover {
     private renderContent(): TemplateResult {
         const hasDescription = Boolean(this.content?.description);
         if (!hasDescription)
-            return html`
+            {return html`
                 <slot name="content"></slot>
-            `;
+            `;}
         return html`
             <div>${this.content?.description}</div>
         `;

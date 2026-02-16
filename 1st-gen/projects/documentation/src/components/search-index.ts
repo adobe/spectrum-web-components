@@ -10,12 +10,13 @@
  * governing permissions and limitations under the License.
  */
 
+import lunr from 'lunr';
+
 import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/popover/sp-popover.js';
-import lunr from 'lunr';
 
 // The search index is lazily loaded and cached in this variable
 let index: lunr.Index | undefined;

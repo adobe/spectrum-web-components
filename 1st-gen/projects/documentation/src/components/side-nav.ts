@@ -20,11 +20,13 @@ import {
     customElement,
     property,
 } from '@spectrum-web-components/base/src/decorators.js';
+
 import './side-nav-search.js';
-import sideNavStyles from './side-nav.css';
 import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
 import '@spectrum-web-components/underlay/sp-underlay.js';
+
+import sideNavStyles from './side-nav.css';
 
 @customElement('docs-side-nav')
 export class SideNav extends LitElement {

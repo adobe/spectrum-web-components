@@ -9,8 +9,9 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { SpectrumElement } from '@spectrum-web-components/base';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+
+import { SpectrumElement } from '@spectrum-web-components/base';
 import { version } from '@spectrum-web-components/base/src/version.js';
 
 class DirElement extends SpectrumElement {}

@@ -17,20 +17,22 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
-import type { Popover } from '@spectrum-web-components/popover';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import { spy } from 'sinon';
 
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
+import { ActionButton } from '@spectrum-web-components/action-button';
 import {
     OverlayTrigger,
     TriggerInteractionsV1,
 } from '@spectrum-web-components/overlay';
+import type { Popover } from '@spectrum-web-components/popover';
+
+import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
-import { spy } from 'sinon';
-import { ActionButton } from '@spectrum-web-components/action-button';
+
 import { fixture, isOnTopLayer } from '../../../test/testing-helpers.js';
 
 describe('Overlay Trigger - Click', () => {

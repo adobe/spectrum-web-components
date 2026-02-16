@@ -18,14 +18,17 @@ import {
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
-import { Button } from '@spectrum-web-components/button';
-import '@spectrum-web-components/button/sp-button.js';
 import {
     a11ySnapshot,
     findAccessibilityNode,
     sendKeys,
 } from '@web/test-runner-commands';
 import { spy, stub } from 'sinon';
+
+import { Button } from '@spectrum-web-components/button';
+
+import '@spectrum-web-components/button/sp-button.js';
+
 import {
     mouseClickOn,
     sendShiftTabKey,
@@ -792,7 +795,7 @@ describe('Button', () => {
             ['white', 'black'].forEach((variant) => {
                 it(`manages [variant="${variant}"]`, async () => {
                     const el = await fixture<Button>(html`
-                        <sp-button variant="${variant as 'white' | 'black'}">
+                        <sp-button variant=${variant as 'white' | 'black'}>
                             Button
                         </sp-button>
                     `);

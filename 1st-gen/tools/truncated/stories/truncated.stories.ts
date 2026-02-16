@@ -11,6 +11,7 @@
  */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
+
 import '../sp-truncated.js';
 
 const Dog =

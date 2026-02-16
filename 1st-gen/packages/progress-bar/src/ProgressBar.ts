@@ -23,14 +23,15 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-
-import { getLabelFromSlot } from '@spectrum-web-components/shared/src/get-label-from-slot.js';
-import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import {
     LanguageResolutionController,
     languageResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
+import { getLabelFromSlot } from '@spectrum-web-components/shared/src/get-label-from-slot.js';
+import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
+
 import '@spectrum-web-components/field-label/sp-field-label.js';
+
 import styles from './progress-bar.css.js';
 
 /**

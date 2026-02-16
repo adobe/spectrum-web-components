@@ -10,14 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
+import { html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture } from '@open-wc/testing';
+
 import {
     ElementSize,
     SizedMixin,
     SpectrumElement,
     TemplateResult,
 } from '../src/index.js';
-import { html } from '@open-wc/testing';
-import { elementUpdated, expect, fixture } from '@open-wc/testing';
 
 export class FancySizedComponent extends SizedMixin(SpectrumElement, {
     defaultSize: 'm',

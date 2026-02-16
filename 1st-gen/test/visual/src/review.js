@@ -9,12 +9,13 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { html, nothing, render } from 'lit-html';
+
 import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
 import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-heading.js';
 import '@spectrum-web-components/vrt-compare/vrt-compare.js';
-import { html, nothing, render } from 'lit-html';
 
 const review = document.querySelector('vrt-compare');
 const resultTypes = ['new', 'updated', 'removed', 'passed'];

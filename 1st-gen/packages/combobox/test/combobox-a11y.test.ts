@@ -17,18 +17,20 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-
-import { Combobox } from '@spectrum-web-components/combobox';
-import '@spectrum-web-components/combobox/sp-combobox.js';
-import { MenuItem } from '@spectrum-web-components/menu';
-import { isWebKit } from '@spectrum-web-components/shared';
 import {
     a11ySnapshot,
     findAccessibilityNode,
     sendKeys,
 } from '@web/test-runner-commands';
-import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
+
+import { Combobox } from '@spectrum-web-components/combobox';
+import { MenuItem } from '@spectrum-web-components/menu';
+import { isWebKit } from '@spectrum-web-components/shared';
+
+import '@spectrum-web-components/combobox/sp-combobox.js';
+
 import { fixture } from '../../../test/testing-helpers.js';
+import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import {
     withFieldLabel,
     withHelpText,

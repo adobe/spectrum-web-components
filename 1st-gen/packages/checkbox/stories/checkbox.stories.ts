@@ -9,11 +9,12 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import type { Checkbox } from '@spectrum-web-components/checkbox';
+
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/field-group/sp-field-group.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import type { Checkbox } from '@spectrum-web-components/checkbox';
 
 export default {
     component: 'sp-checkbox',

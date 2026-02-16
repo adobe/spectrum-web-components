@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { ActionGroup } from './src/ActionGroup.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { ActionGroup } from './src/ActionGroup.js';
 
 defineElement('sp-action-group', ActionGroup);
 

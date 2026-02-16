@@ -13,6 +13,7 @@
  */
 
 import fg from 'fast-glob';
+
 import 'colors';
 
 import { processCSS } from './css-tools.js';

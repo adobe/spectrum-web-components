@@ -12,8 +12,9 @@
 
 import { ReactiveElement } from 'lit';
 import { expect, nextFrame } from '@open-wc/testing';
-import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 import { spy } from 'sinon';
+
+import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 
 describe('Dependency Manager', () => {
     it('manages dependencies', async function () {

@@ -10,8 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
+import { Placement } from '@floating-ui/dom';
+
 import { html, render, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
@@ -37,12 +40,11 @@ import '@spectrum-web-components/table/sp-table-head-cell.js';
 import '@spectrum-web-components/table/sp-table-body.js';
 import '@spectrum-web-components/table/sp-table-row.js';
 import '@spectrum-web-components/table/sp-table-cell.js';
-
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-rect-select.js';
-import { Placement } from '@floating-ui/dom';
-import { OverlayTypes } from '../src/overlay-types.js';
-import { notAgain } from '../../dialog/stories/dialog-base.stories.js';
 import './overlay-story-components.js';
+
+import { notAgain } from '../../dialog/stories/dialog-base.stories.js';
+import { OverlayTypes } from '../src/overlay-types.js';
 import {
     removeSlottableRequest,
     SlottableRequestEvent,

@@ -11,6 +11,7 @@
  */
 
 import { expect, fixture, html } from '@open-wc/testing';
+
 import { reparentChildren } from '@spectrum-web-components/shared/src/reparent-children.js';
 
 describe('Reparent Children', () => {

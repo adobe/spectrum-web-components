@@ -12,8 +12,10 @@
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
-import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
 import { ColorLoupe } from '@spectrum-web-components/color-loupe';
+
+import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('ColorLoupe', () => {

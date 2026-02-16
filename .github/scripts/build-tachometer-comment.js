@@ -12,9 +12,8 @@
  * governing permissions and limitations under the License.
  */
 
-import fs from 'fs';
-
 import fg from 'fast-glob';
+import fs from 'fs';
 import prettyBytes from 'pretty-bytes';
 
 const getTachometerResults = () => {

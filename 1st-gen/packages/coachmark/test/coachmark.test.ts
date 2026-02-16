@@ -17,14 +17,16 @@ import {
     html,
     nextFrame,
 } from '@open-wc/testing';
+import { spy } from 'sinon';
 
+import { Button } from '@spectrum-web-components/button';
 import { Coachmark, CoachmarkItem } from '@spectrum-web-components/coachmark';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
 import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
-import { spy } from 'sinon';
-import { Button } from '@spectrum-web-components/button';
+
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import {
     Default,
     InTour,

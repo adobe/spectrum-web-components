@@ -10,9 +10,9 @@
  * governing permissions and limitations under the License.
  */
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/card/sp-card.js';
-import { landscape, portrait } from './images';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-file-txt.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
@@ -20,7 +20,8 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/link/sp-link.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+
+import { landscape, portrait } from './images';
 
 export default {
     component: 'sp-card',
@@ -90,7 +91,7 @@ export const href = (args: StoryArgs): TemplateResult => {
             href="https://opensource.adobe.com/spectrum-web-components"
             @click=${(event: Event) => {
                 const composedTarget = event.composedPath()[0] as HTMLElement;
-                if (composedTarget.id !== 'like-anchor') return;
+                if (composedTarget.id !== 'like-anchor') {return;}
                 event.stopPropagation();
                 event.preventDefault();
                 onClick && onClick(event);

@@ -33,15 +33,12 @@ import {
 } from '@spectrum-web-components/base/src/directives.js';
 import type { FieldLabel } from '@spectrum-web-components/field-label';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import type {
     Menu,
     MenuItem,
     MenuItemChildren,
     MenuItemKeydownEvent,
 } from '@spectrum-web-components/menu';
-import '@spectrum-web-components/menu/sp-menu.js';
 import { Placement } from '@spectrum-web-components/overlay';
 import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import type { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
@@ -52,6 +49,11 @@ import {
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
+
+import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+
 import { DesktopController } from './DesktopController.js';
 import { MobileController } from './MobileController.js';
 import pickerStyles from './picker.css.js';
@@ -184,7 +186,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             ? selectedItem.itemChildren
             : undefined;
 
-        if (selectedItem === this.selectedItem) return;
+        if (selectedItem === this.selectedItem) {return;}
         const oldSelectedItem = this.selectedItem;
         this._selectedItem = selectedItem;
         this.requestUpdate('selectedItem', oldSelectedItem);
@@ -363,7 +365,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 
     protected setMenuItemSelected(item: MenuItem, value: boolean): void {
         // matches null | undefined
-        if (this.selects == null) return;
+        if (this.selects == null) {return;}
         item.selected = value;
     }
 
@@ -408,7 +410,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     protected set selectedItemContent(
         selectedItemContent: MenuItemChildren | undefined
     ) {
-        if (selectedItemContent === this.selectedItemContent) return;
+        if (selectedItemContent === this.selectedItemContent) {return;}
 
         const oldContent = this.selectedItemContent;
         this._selectedItemContent = selectedItemContent;
@@ -889,7 +891,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
      * updates menu selection based on value
      */
     protected async manageSelection(): Promise<void> {
-        if (this.selects == null) return;
+        if (this.selects == null) {return;}
 
         this.selectionPromise = new Promise(
             (res) => (this.selectionResolver = res)
@@ -1070,7 +1072,7 @@ export class Picker extends PickerBase {
         );
         if (!this.value || nextItem !== this.selectedItem) {
             // updates picker text but does not fire change event until action is completed
-            if (nextItem) this.setValueFromItem(nextItem as MenuItem);
+            if (nextItem) {this.setValueFromItem(nextItem as MenuItem);}
         }
     };
 }

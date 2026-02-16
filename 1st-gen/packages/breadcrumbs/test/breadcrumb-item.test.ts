@@ -11,11 +11,12 @@
  */
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { spy } from 'sinon';
-import { BreadcrumbItem, BreadcrumbSelectDetail } from '../src/index.js';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumbs.js';
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
+
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { BreadcrumbItem, BreadcrumbSelectDetail } from '../src/index.js';
 
 describe('Breadcrumb Item', () => {
     testForLitDevWarnings(

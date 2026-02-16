@@ -12,8 +12,10 @@
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
-import '@spectrum-web-components/divider/sp-divider.js';
 import { Divider } from '@spectrum-web-components/divider';
+
+import '@spectrum-web-components/divider/sp-divider.js';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Divider', () => {

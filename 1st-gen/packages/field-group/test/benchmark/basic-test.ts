@@ -10,9 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
+import { html } from 'lit';
+
 import '@spectrum-web-components/field-group/sp-field-group.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
-import { html } from 'lit';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`

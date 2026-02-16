@@ -1,30 +1,37 @@
 {
     "name": "@spectrum-web-components/overlay",
     "version": "1.11.2",
-    "publishConfig": {
-        "access": "public"
-    },
     "description": "",
     "license": "Apache-2.0",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "1st-gen/packages/overlay"
-    },
     "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/components/overlay",
+    "repository": {
+        "directory": "1st-gen/packages/overlay",
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git"
+    },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "./src/index.js",
-    "module": "./src/index.js",
     "type": "module",
     "exports": {
         ".": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./active-overlay.js": {
+            "development": "./active-overlay.dev.js",
+            "default": "./active-overlay.js"
+        },
+        "./overlay-trigger.js": {
+            "development": "./overlay-trigger.dev.js",
+            "default": "./overlay-trigger.js"
+        },
         "./package.json": "./package.json",
+        "./sp-overlay.js": {
+            "development": "./sp-overlay.dev.js",
+            "default": "./sp-overlay.js"
+        },
         "./src/AbstractOverlay.js": {
             "development": "./src/AbstractOverlay.dev.js",
             "default": "./src/AbstractOverlay.js"
@@ -123,26 +130,13 @@
             "development": "./src/strategies.dev.js",
             "default": "./src/strategies.js"
         },
-        "./active-overlay.js": {
-            "development": "./active-overlay.dev.js",
-            "default": "./active-overlay.js"
-        },
-        "./overlay-trigger.js": {
-            "development": "./overlay-trigger.dev.js",
-            "default": "./overlay-trigger.js"
-        },
         "./sync/overlay-trigger.js": {
             "development": "./sync/overlay-trigger.dev.js",
             "default": "./sync/overlay-trigger.js"
-        },
-        "./sp-overlay.js": {
-            "development": "./sp-overlay.dev.js",
-            "default": "./sp-overlay.js"
         }
     },
-    "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
-    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
     "files": [
         "**/*.d.ts",
         "**/*.js",
@@ -151,6 +145,28 @@
         "!stories/",
         "!test/"
     ],
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "sideEffects": [
+        "./active-overlay.js",
+        "./overlay-trigger.js",
+        "./sp-overlay.js",
+        "./sync/overlay-trigger.js",
+        "./stories/overlay-story-components.js",
+        "./**/*.dev.js"
+    ],
+    "types": "./src/index.d.ts",
+    "dependencies": {
+        "@floating-ui/dom": "1.7.4",
+        "@floating-ui/utils": "0.2.10",
+        "@spectrum-web-components/action-button": "1.11.2",
+        "@spectrum-web-components/base": "1.11.2",
+        "@spectrum-web-components/reactive-controllers": "1.11.2",
+        "@spectrum-web-components/shared": "1.11.2",
+        "@spectrum-web-components/theme": "1.11.2",
+        "focus-trap": "7.6.5"
+    },
     "keywords": [
         "design-system",
         "spectrum",
@@ -163,24 +179,8 @@
         "component",
         "css"
     ],
-    "dependencies": {
-        "@floating-ui/dom": "1.7.4",
-        "@floating-ui/utils": "0.2.10",
-        "@spectrum-web-components/action-button": "1.11.2",
-        "@spectrum-web-components/base": "1.11.2",
-        "@spectrum-web-components/reactive-controllers": "1.11.2",
-        "@spectrum-web-components/shared": "1.11.2",
-        "@spectrum-web-components/theme": "1.11.2",
-        "focus-trap": "7.6.5"
+    "publishConfig": {
+        "access": "public"
     },
-    "types": "./src/index.d.ts",
-    "customElements": "custom-elements.json",
-    "sideEffects": [
-        "./active-overlay.js",
-        "./overlay-trigger.js",
-        "./sp-overlay.js",
-        "./sync/overlay-trigger.js",
-        "./stories/overlay-story-components.js",
-        "./**/*.dev.js"
-    ]
+    "customElements": "custom-elements.json"
 }

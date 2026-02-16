@@ -12,8 +12,10 @@
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
-import '@spectrum-web-components/help-text/sp-help-text.js';
 import { HelpText } from '@spectrum-web-components/help-text';
+
+import '@spectrum-web-components/help-text/sp-help-text.js';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('HelpText', () => {

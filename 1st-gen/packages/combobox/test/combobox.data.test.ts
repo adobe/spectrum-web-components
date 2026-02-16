@@ -19,14 +19,17 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
-import '@spectrum-web-components/combobox/sp-combobox.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import { fixture } from '../../../test/testing-helpers.js';
-import { comboboxFixture, TestableCombobox } from './helpers.js';
+
 import { SpectrumElement, TemplateResult } from '@spectrum-web-components/base';
 import { customElement } from '@spectrum-web-components/base/src/decorators.js';
 import { MenuItem } from '@spectrum-web-components/menu';
+
+import '@spectrum-web-components/combobox/sp-combobox.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+
+import { fixture } from '../../../test/testing-helpers.js';
 import { fruits } from '../stories/index.js';
+import { comboboxFixture, TestableCombobox } from './helpers.js';
 
 @customElement('combobox-slot-test-el')
 export class TestEl extends SpectrumElement {

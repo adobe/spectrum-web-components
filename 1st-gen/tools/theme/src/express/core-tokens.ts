@@ -11,7 +11,6 @@
  */
 
 import { Theme } from '../Theme.js';
-
 import coreStyles from './theme-core-tokens.css.js';
 
 Theme.registerThemeFragment('express', 'system', coreStyles);

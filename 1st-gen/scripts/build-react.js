@@ -12,18 +12,19 @@
  * governing permissions and limitations under the License.
  */
 
+import { exec as execCallback } from 'child_process';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { exec as execCallback } from 'child_process';
 import { promisify } from 'util';
 const exec = promisify(execCallback);
 
 import fg from 'fast-glob';
+
 import 'colors';
 
-import { buildPackage } from './ts-tools.js';
 import { generateIconWrapper } from './cem-plugin-react-wrapper.js';
 import { getWorkspacePackages } from './cem-tools.js';
+import { buildPackage } from './ts-tools.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.join(__dirname, '..');

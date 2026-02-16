@@ -19,7 +19,7 @@ export class ElementResolutionController implements ReactiveController {
     }
 
     set element(element: HTMLElement | null) {
-        if (element === this.element) return;
+        if (element === this.element) {return;}
         const previous = this.element;
         this._element = element;
         // requestUpdate leveraging the exported Symbol() so that the
@@ -38,7 +38,7 @@ export class ElementResolutionController implements ReactiveController {
     }
 
     set selector(selector: string) {
-        if (selector === this.selector) return;
+        if (selector === this.selector) {return;}
         this.releaseElement();
         this._selector = selector;
         this.resolveElement();
@@ -69,7 +69,7 @@ export class ElementResolutionController implements ReactiveController {
     protected mutationCallback: MutationCallback = (mutationList) => {
         let needsResolution = false;
         mutationList.forEach((mutation) => {
-            if (needsResolution) return;
+            if (needsResolution) {return;}
             if (mutation.type === 'childList') {
                 const currentElementRemoved =
                     this.element &&

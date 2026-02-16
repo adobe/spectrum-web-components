@@ -10,10 +10,13 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/theme/sp-theme.js';
-import { Theme } from '@spectrum-web-components/theme';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { stub } from 'sinon';
+
+import { Theme } from '@spectrum-web-components/theme';
+
+import '@spectrum-web-components/theme/sp-theme.js';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Theme', () => {

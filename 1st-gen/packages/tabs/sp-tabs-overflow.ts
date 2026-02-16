@@ -9,8 +9,9 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { TabsOverflow } from './src/TabsOverflow.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { TabsOverflow } from './src/TabsOverflow.js';
 
 defineElement('sp-tabs-overflow', TabsOverflow);
 

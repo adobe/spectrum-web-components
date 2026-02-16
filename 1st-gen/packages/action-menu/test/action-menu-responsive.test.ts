@@ -17,12 +17,15 @@ import {
     html,
     waitUntil,
 } from '@open-wc/testing';
+
 import { ActionMenu } from '@spectrum-web-components/action-menu';
+import { Popover } from '@spectrum-web-components/popover';
+import { Tray } from '@spectrum-web-components/tray/src/Tray.js';
+
 import '@spectrum-web-components/action-menu/sync/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import { Popover } from '@spectrum-web-components/popover';
-import { Tray } from '@spectrum-web-components/tray/src/Tray.js';
+
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { mouseClickOn } from '../../../test/testing-helpers.js';
 

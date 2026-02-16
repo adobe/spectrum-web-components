@@ -13,9 +13,11 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 import { SinonStub, spy, stub } from 'sinon';
 
+import { AlertBanner } from '@spectrum-web-components/alert-banner';
+
 import '@spectrum-web-components/alert-banner/sp-alert-banner.js';
 import '@spectrum-web-components/button/sp-button.js';
-import { AlertBanner } from '@spectrum-web-components/alert-banner';
+
 import {
     escapeEvent,
     testForLitDevWarnings,

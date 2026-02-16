@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+import '../src/express/core.js';
+
 import lightStyles from '../src/express/theme-light.css.js';
 import { Theme } from '../src/Theme.js';
-import '../src/express/core.js';
 
 Theme.registerThemeFragment('lightest-express', 'color', lightStyles);

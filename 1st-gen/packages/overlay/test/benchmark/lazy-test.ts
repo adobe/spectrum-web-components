@@ -10,13 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/overlay/sp-overlay.js';
-import '@spectrum-web-components/button/sp-button.js';
+import { html, render } from '@spectrum-web-components/base';
 import {
     removeSlottableRequest,
     type SlottableRequestEvent,
 } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
-import { html, render } from '@spectrum-web-components/base';
+
+import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/button/sp-button.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 const handleSlottableRequest = (event: SlottableRequestEvent): void => {

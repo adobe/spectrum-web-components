@@ -22,15 +22,20 @@ import {
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import {
-    ElementResolutionController,
-    elementResolverUpdatedSymbol,
-} from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
-import {
     ifDefined,
     StyleInfo,
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
+import {
+    ElementResolutionController,
+    elementResolverUpdatedSymbol,
+} from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
+
+import { AbstractOverlay, nextFrame } from './AbstractOverlay.js';
+import type { ClickController } from './ClickController.js';
+import type { HoverController } from './HoverController.js';
+import type { LongpressController } from './LongpressController.js';
 import type {
     OpenableElement,
     OverlayState,
@@ -38,24 +43,20 @@ import type {
     Placement,
     TriggerInteraction,
 } from './overlay-types.js';
-import { AbstractOverlay, nextFrame } from './AbstractOverlay.js';
-import { OverlayPopover } from './OverlayPopover.js';
 import { OverlayNoPopover } from './OverlayNoPopover.js';
+import { OverlayPopover } from './OverlayPopover.js';
 import { overlayStack } from './OverlayStack.js';
-import { VirtualTrigger } from './VirtualTrigger.js';
 import { PlacementController } from './PlacementController.js';
-import type { ClickController } from './ClickController.js';
-import type { HoverController } from './HoverController.js';
-import type { LongpressController } from './LongpressController.js';
+import { VirtualTrigger } from './VirtualTrigger.js';
 export { LONGPRESS_INSTRUCTIONS } from './LongpressController.js';
-import { strategies } from './strategies.js';
+import { FocusTrap } from 'focus-trap';
+
+import styles from './overlay.css.js';
 import {
     removeSlottableRequest,
     SlottableRequestEvent,
 } from './slottable-request-event.js';
-
-import styles from './overlay.css.js';
-import { FocusTrap } from 'focus-trap';
+import { strategies } from './strategies.js';
 
 const browserSupportsPopover = 'showPopover' in document.createElement('div');
 
@@ -224,14 +225,14 @@ export class Overlay extends ComputedOverlayBase {
 
     override set open(open: boolean) {
         // Don't respond if the overlay is disabled.
-        if (open && this.disabled) return;
+        if (open && this.disabled) {return;}
 
         // Don't respond if the state is not changing.
-        if (open === this.open) return;
+        if (open === this.open) {return;}
 
         // Don't respond if the overlay is in the shadow state during a longpress.
         // The shadow state occurs when the first "click" would normally close the popover.
-        if (this.strategy?.activelyOpening && !open) return;
+        if (this.strategy?.activelyOpening && !open) {return;}
 
         // Update the internal _open property.
         this._open = open;
@@ -329,7 +330,7 @@ export class Overlay extends ComputedOverlayBase {
 
     override set state(state) {
         // Do not respond if the state is not changing.
-        if (state === this.state) return;
+        if (state === this.state) {return;}
 
         const oldState = this.state;
 
@@ -467,12 +468,12 @@ export class Overlay extends ComputedOverlayBase {
      */
     protected get requiresPositioning(): boolean {
         // Do not position "page" overlays as they should block the entire UI.
-        if (this.type === 'page' || !this.open) return false;
+        if (this.type === 'page' || !this.open) {return false;}
 
         // Do not position content without a trigger element, as there is nothing to position it relative to.
         // Do not automatically position content unless it is a "hint".
         if (!this.triggerElement || (!this.placement && this.type !== 'hint'))
-            return false;
+            {return false;}
 
         return true;
     }
@@ -499,7 +500,7 @@ export class Overlay extends ComputedOverlayBase {
      */
     protected override managePosition(): void {
         // Do not proceed if positioning is not required or the overlay is not open.
-        if (!this.requiresPositioning || !this.open) return;
+        if (!this.requiresPositioning || !this.open) {return;}
 
         const offset = this.offset || 0;
 
@@ -642,7 +643,7 @@ export class Overlay extends ComputedOverlayBase {
      */
     protected override returnFocus(): void {
         // Do not proceed if the overlay is open or if the overlay type is "hint".
-        if (this.open || this.type === 'hint') return;
+        if (this.open || this.type === 'hint') {return;}
 
         /**
          * Retrieves the ancestors of the currently focused element.
@@ -745,7 +746,7 @@ export class Overlay extends ComputedOverlayBase {
     protected async manageOpen(oldOpen: boolean): Promise<void> {
         // Prevent entering the manage workflow if the overlay is not connected to the DOM.
         // The `.showPopover()` event will error on content that is not connected to the DOM.
-        if (!this.isConnected && this.open) return;
+        if (!this.isConnected && this.open) {return;}
 
         // Wait for the component to finish updating if it has not already done so.
         if (!this.hasUpdated) {
@@ -849,10 +850,10 @@ export class Overlay extends ComputedOverlayBase {
         this.strategy = undefined;
 
         // Return early if there is no non-virtual trigger element.
-        if (!this.hasNonVirtualTrigger) return;
+        if (!this.hasNonVirtualTrigger) {return;}
 
         // Return early if no trigger interaction is specified.
-        if (!this.triggerInteraction) return;
+        if (!this.triggerInteraction) {return;}
 
         // Set up a new event handling strategy based on the specified trigger interaction.
         this.strategy = new strategies[this.triggerInteraction](

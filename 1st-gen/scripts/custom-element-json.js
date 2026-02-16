@@ -13,7 +13,7 @@
  */
 
 /**
- * @fileoverview This task generates and updates custom elements manifest JSON files
+ * @file This task generates and updates custom elements manifest JSON files
  * for all workspace packages using the Custom Elements Manifest analyzer (CEM).
  *
  * @description
@@ -31,13 +31,14 @@
 
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-
+import { fileURLToPath } from 'url';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { customElementJson, getWorkspacePackages } from './cem-tools.js';
+
 import 'colors';
+
+import { customElementJson, getWorkspacePackages } from './cem-tools.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = path.join(__dirname, '..');

@@ -12,8 +12,10 @@
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
-import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import { ColorHandle } from '@spectrum-web-components/color-handle';
+
+import '@spectrum-web-components/color-handle/sp-color-handle.js';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('ColorHandle', () => {

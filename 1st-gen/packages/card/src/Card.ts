@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/asset/sp-asset.js';
 import {
     CSSResultArray,
     html,
@@ -25,14 +24,16 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import type { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 
+import '@spectrum-web-components/asset/sp-asset.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
-import type { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox.js';
 import '@spectrum-web-components/divider/sp-divider.js';
 import '@spectrum-web-components/popover/sp-popover.js';
+
 import cardStyles from './card.css.js';
 
 /**
@@ -74,7 +75,7 @@ export class Card extends LikeAnchor(
         return this._selected;
     }
     set selected(selected: boolean) {
-        if (selected === this.selected) return;
+        if (selected === this.selected) {return;}
         this._selected = selected;
         if (this.role === 'row' && this.toggles) {
             this.setAttribute('aria-selected', String(this.selected));
@@ -205,7 +206,7 @@ export class Card extends LikeAnchor(
         const hasAnchor = path.some(
             (el) => (el as HTMLElement).localName === 'a'
         );
-        if (hasAnchor) return;
+        if (hasAnchor) {return;}
         // Record the time and initial position of the pointerdown event
         const startTime = event.timeStamp;
         const startX = event.clientX;
@@ -275,8 +276,8 @@ export class Card extends LikeAnchor(
 
     protected get images(): TemplateResult[] {
         const images: TemplateResult[] = [];
-        if (this.hasPreview) images.push(this.renderPreviewImage);
-        if (this.hasCoverPhoto) images.push(this.renderCoverImage);
+        if (this.hasPreview) {images.push(this.renderPreviewImage);}
+        if (this.hasCoverPhoto) {images.push(this.renderCoverImage);}
         return images;
     }
 

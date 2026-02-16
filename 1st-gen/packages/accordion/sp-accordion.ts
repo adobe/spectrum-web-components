@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { Accordion } from './src/Accordion.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { Accordion } from './src/Accordion.js';
 
 defineElement('sp-accordion', Accordion);
 

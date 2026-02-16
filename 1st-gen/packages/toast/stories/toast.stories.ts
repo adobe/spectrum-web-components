@@ -10,14 +10,13 @@
  * governing permissions and limitations under the License.
  */
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { Placement } from '@spectrum-web-components/overlay';
 
 import '@spectrum-web-components/toast/sp-toast.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
-
-import { Placement } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 const toast = ({
     variant = '',

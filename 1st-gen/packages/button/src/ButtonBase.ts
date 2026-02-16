@@ -20,9 +20,10 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
+
 import buttonStyles from './button-base.css.js';
 
 /**

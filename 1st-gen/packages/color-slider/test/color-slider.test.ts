@@ -11,6 +11,16 @@
  */
 
 import { elementUpdated, expect, html } from '@open-wc/testing';
+import { sendKeys } from '@web/test-runner-commands';
+import { spy } from 'sinon';
+
+import { ColorHandle } from '@spectrum-web-components/color-handle';
+import { ColorSlider } from '@spectrum-web-components/color-slider';
+import { ColorTypes } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
+
+import '@spectrum-web-components/color-slider/sp-color-slider.js';
+
+import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     arrowDownEvent,
     arrowDownKeyupEvent,
@@ -25,14 +35,6 @@ import {
     sendTabKey,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
-
-import { ColorHandle } from '@spectrum-web-components/color-handle';
-import { ColorSlider } from '@spectrum-web-components/color-slider';
-import '@spectrum-web-components/color-slider/sp-color-slider.js';
-import { ColorTypes } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
-import { sendKeys } from '@web/test-runner-commands';
-import { spy } from 'sinon';
-import { sendMouse } from '../../../test/plugins/browser.js';
 import { Default } from '../stories/color-slider.stories.js';
 
 describe('ColorSlider', () => {

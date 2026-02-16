@@ -10,15 +10,18 @@
  * governing permissions and limitations under the License.
  */
 import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
-import { html } from '@spectrum-web-components/base';
-import '@spectrum-web-components/swatch/sp-swatch.js';
 import { spy, stub } from 'sinon';
-import { Swatch, SwatchGroup } from '../';
+
+import { html } from '@spectrum-web-components/base';
+
+import '@spectrum-web-components/swatch/sp-swatch.js';
+
 import {
     sendShiftTabKey,
     sendTabKey,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
+import { Swatch, SwatchGroup } from '../';
 import { Default } from '../stories/swatch-group.stories.js';
 
 describe('Swatch Group', () => {

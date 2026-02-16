@@ -21,13 +21,14 @@
  * into organized changelog entries.
  */
 
-import { version as currentVersion } from '@spectrum-web-components/base/src/version.js';
 import { execSync } from 'child_process';
 import fs from 'fs';
 import { promises as fsPromises } from 'fs';
 import path from 'path';
 import semver from 'semver';
 import { fileURLToPath } from 'url';
+
+import { version as currentVersion } from '@spectrum-web-components/base/src/version.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoUrl = 'https://github.com/adobe/spectrum-web-components';
@@ -74,7 +75,7 @@ function validateCurrentVersion() {
  * @param {string} description - The description of the change
  * @param {RegExp} pattern - The regex pattern to match package changes
  * @param {string} prefix - Optional prefix to add to the entry (e.g., 'sp-')
- * @returns {Object} Object containing major, minor, and patch changes
+ * @returns {object} Object containing major, minor, and patch changes
  */
 function extractChanges(frontmatter, description, pattern, prefix = '') {
     const changes = { major: [], minor: [], patch: [] };
@@ -98,7 +99,7 @@ function extractChanges(frontmatter, description, pattern, prefix = '') {
 
 /**
  * Processes changeset files and categorizes changes by type and target
- * @returns {Promise<Object>} Object containing categorized changes for both 1st-gen and core
+ * @returns {Promise<object>} Object containing categorized changes for both 1st-gen and core
  */
 async function processChangesets() {
     const changesetDir = path.resolve(__dirname, '../../.changeset');
@@ -179,7 +180,7 @@ function calculateNextVersion(currentVersion, majorChanges, minorChanges) {
 /**
  * Extracts and preserves the header from an existing changelog
  * @param {string} changelogContent - The existing changelog content
- * @returns {Object} Object with headerText and remaining content
+ * @returns {object} Object with headerText and remaining content
  */
 function extractChangelogHeader(changelogContent) {
     let headerText = '';
@@ -209,7 +210,7 @@ function extractChangelogHeader(changelogContent) {
  * @param {string} version - Version string
  * @param {string} compareUrl - URL for comparing versions
  * @param {string} date - Date string
- * @param {Object} changes - Object containing major, minor, and patch changes
+ * @param {object} changes - Object containing major, minor, and patch changes
  * @param {string} headerLevel - Header level for change sections (## or ###)
  * @returns {string} Formatted changelog entry
  */
@@ -242,7 +243,7 @@ function buildChangelogEntry(
  * @param {string} version - Version string
  * @param {string} compareUrl - URL for comparing versions
  * @param {string} date - Date string
- * @param {Object} changes - Object containing categorized changes
+ * @param {object} changes - Object containing categorized changes
  * @param {string} headerLevel - Header level for change sections
  * @param {string} versionPattern - Regex pattern for version entries
  * @param {string} skipMessage - Message to show when skipping update

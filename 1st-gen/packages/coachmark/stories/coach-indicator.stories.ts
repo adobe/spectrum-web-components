@@ -11,6 +11,7 @@
  */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
+
 import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 
 export default {

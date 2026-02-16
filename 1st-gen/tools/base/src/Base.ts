@@ -11,6 +11,7 @@
  */
 
 import { SpectrumElement as CoreSpectrumElement } from '@spectrum-web-components/core/element/spectrum-element.js';
+
 import { coreVersion, version } from './version.js';
 
 export {

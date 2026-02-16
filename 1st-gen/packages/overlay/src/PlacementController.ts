@@ -10,10 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import type {
-    ReactiveController,
-    ReactiveElement,
-} from '@spectrum-web-components/base';
 import {
     arrow,
     autoUpdate,
@@ -24,10 +20,16 @@ import {
     shift,
     size,
 } from '@floating-ui/dom';
+
+import type {
+    ReactiveController,
+    ReactiveElement,
+} from '@spectrum-web-components/base';
 import { isWebKit } from '@spectrum-web-components/shared';
-import type { VirtualTrigger } from './VirtualTrigger.js';
-import type { OpenableElement } from './overlay-types.js';
+
 import type { Overlay } from './Overlay.js';
+import type { OpenableElement } from './overlay-types.js';
+import type { VirtualTrigger } from './VirtualTrigger.js';
 
 type OverlayOptionsV1 = {
     abortPromise?: Promise<boolean>;
@@ -49,7 +51,7 @@ type OverlayOptionsV1 = {
  * @returns {number} The rounded number.
  */
 function roundByDPR(num?: number): number {
-    if (typeof num === 'undefined') return 0;
+    if (typeof num === 'undefined') {return 0;}
     const dpr = window.devicePixelRatio || 1;
     return Math.round(num * dpr) / dpr;
 }
@@ -179,7 +181,7 @@ export class PlacementController implements ReactiveController {
         // Set the target and options for the overlay.
         this.target = target;
         this.options = options;
-        if (!target || !options) return;
+        if (!target || !options) {return;}
 
         // Set up auto-update for ancestor resize events.
         const cleanupAncestorResize = autoUpdate(
@@ -424,7 +426,7 @@ export class PlacementController implements ReactiveController {
      * This method clears the overlay's position, forces a reflow, and recomputes the placement.
      */
     public resetOverlayPosition = (): void => {
-        if (!this.target || !this.options) return;
+        if (!this.target || !this.options) {return;}
         // Clear the overlay's position.
         this.clearOverlayPosition();
 

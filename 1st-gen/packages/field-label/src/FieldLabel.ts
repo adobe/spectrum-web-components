@@ -20,21 +20,22 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
-    property,
-    query,
-} from '@spectrum-web-components/base/src/decorators.js';
-import type { Focusable } from '@spectrum-web-components/shared';
-import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk100.js';
-import asteriskIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-asterisk.css.js';
-import {
     conditionAttributeWithId,
     conditionAttributeWithoutId,
 } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
 import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
+import asteriskIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-asterisk.css.js';
+import {
     ElementResolutionController,
     elementResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
+import type { Focusable } from '@spectrum-web-components/shared';
+import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
+
+import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk100.js';
 
 import styles from './field-label.css.js';
 
@@ -79,7 +80,7 @@ export class FieldLabel extends SizedMixin(SpectrumElement, {
     private target?: Labelable;
 
     private handleClick(event: Event): void {
-        if (!this.target || this.disabled || event.defaultPrevented) return;
+        if (!this.target || this.disabled || event.defaultPrevented) {return;}
         this.target.focus();
         const parent = this.getRootNode() as ShadowRoot;
         const target = this.target as AcceptsFocusVisisble;

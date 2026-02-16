@@ -18,19 +18,22 @@
  * compares them against baseline screenshots.
  */
 
+import { render } from 'lit';
 import {
     elementUpdated,
     fixture,
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import { StoryDecorator } from '@spectrum-web-components/story-decorator';
-import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
-import { Color, Scale } from '@spectrum-web-components/theme';
 import { emulateMedia, sendKeys } from '@web/test-runner-commands';
 import { visualDiff } from '@web/test-runner-visual-regression';
-import { render } from 'lit';
+
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import { StoryDecorator } from '@spectrum-web-components/story-decorator';
+import { Color, Scale } from '@spectrum-web-components/theme';
+
+import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
+
 import { ignoreResizeObserverLoopError } from '../testing-helpers.js';
 
 // Suppress ResizeObserver errors which can occur during testing

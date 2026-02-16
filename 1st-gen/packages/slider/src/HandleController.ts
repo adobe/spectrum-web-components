@@ -9,13 +9,15 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { MutationController } from '@lit-labs/observers/mutation-controller.js';
+
 import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
 import {
     classMap,
     ifDefined,
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
-import { MutationController } from '@lit-labs/observers/mutation-controller.js';
+
 import { Slider } from './Slider.js';
 import { SliderHandle, SliderNormalization } from './SliderHandle.js';
 
@@ -119,7 +121,7 @@ export class HandleController {
     public setValueFromHandle(handle: SliderHandle): void {
         const elements = this.getHandleElements(handle);
         /* c8 ignore next */
-        if (!elements) return;
+        if (!elements) {return;}
 
         const { input } = elements;
 
@@ -390,7 +392,7 @@ export class HandleController {
     public handlePointerup(event: PointerEvent): void {
         const { input, model } = this.extractDataFromEvent(event);
         delete this._activePointerEventData;
-        if (!model) return;
+        if (!model) {return;}
         if (event.pointerType === 'mouse') {
             this.host.labelEl.click();
         }
@@ -402,7 +404,7 @@ export class HandleController {
 
     public handlePointermove(event: PointerEvent): void {
         const { input, model } = this.extractDataFromEvent(event);
-        if (!model) return;
+        if (!model) {return;}
         /* c8 ignore next 3 */
         if (!this.draggingHandle) {
             return;
@@ -416,7 +418,7 @@ export class HandleController {
     public cancelDrag(model?: ModelValue): void {
         model =
             model || this.model.find((item) => item.name === this.activeHandle);
-        if (!model) return;
+        if (!model) {return;}
         model.handle.highlight = false;
         delete this.draggingHandle;
         model.handle.dragging = false;
@@ -570,7 +572,7 @@ export class HandleController {
                     min=${model.clamp.min}
                     max=${model.clamp.max}
                     step=${model.step}
-                    value=${model.value}
+                    .value=${model.value}
                     aria-disabled=${ifDefined(
                         this.host.disabled ? 'true' : undefined
                     )}

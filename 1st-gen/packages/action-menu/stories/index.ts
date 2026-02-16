@@ -10,18 +10,18 @@
  * governing permissions and limitations under the License.
  */
 
+import type { ActionMenu } from '@spectrum-web-components/action-menu';
 import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
 import {
     ifDefined,
     unsafeHTML,
 } from '@spectrum-web-components/base/src/directives.js';
+import { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
 
-import type { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 
 export const ActionMenuMarkup = ({

@@ -11,12 +11,13 @@
  */
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { stub } from 'sinon';
 
 import '@spectrum-web-components/badge/sp-badge.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
-import { stub } from 'sinon';
-import { Badge } from '../src/Badge.js';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { Badge } from '../src/Badge.js';
 
 describe('Badge', () => {
     testForLitDevWarnings(

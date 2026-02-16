@@ -45,7 +45,7 @@ spectrumColours.forEach((colour) => {
         if (colourSubstring !== -1) {
             const infoValues = info.value;
             if (infoValues !== undefined) {
-                // eslint-disable-next-line no-console
+                 
                 console.log('invalid format!');
             } else {
                 colorArray.push({

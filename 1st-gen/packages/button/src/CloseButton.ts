@@ -17,14 +17,16 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { StyledButton } from './StyledButton.js';
 import buttonStyles from '@spectrum-web-components/close-button/src/close-button.css.js';
+import crossMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
+
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross200.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross300.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross400.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross500.js';
-import crossMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
+
 import type { ButtonStaticColors } from './Button.js';
+import { StyledButton } from './StyledButton.js';
 
 const crossIcon: Record<string, () => TemplateResult> = {
     s: () => html`

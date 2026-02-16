@@ -15,11 +15,12 @@ import {
     LitElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import { Menu } from '@spectrum-web-components/menu';
+
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/popover/sp-popover.js';
-import { Menu } from '@spectrum-web-components/menu';
 
 export const MenuMarkup = ({
     size = 'm' as 's' | 'm' | 'l' | 'xl',

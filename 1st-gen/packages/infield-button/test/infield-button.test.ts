@@ -11,11 +11,13 @@
  */
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 
-import '@spectrum-web-components/infield-button/sp-infield-button.js';
 import { InfieldButton } from '@spectrum-web-components/infield-button';
+
+import '@spectrum-web-components/infield-button/sp-infield-button.js';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { Default, stacked } from '../stories/infield-button.stories.js';
 import { args } from '../stories/index.js';
+import { Default, stacked } from '../stories/infield-button.stories.js';
 
 describe('InfieldButton', () => {
     testForLitDevWarnings(

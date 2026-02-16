@@ -18,7 +18,12 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
+import { sendKeys } from '@web/test-runner-commands';
+import { spy } from 'sinon';
+
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
+import { isFirefox, isWebKit } from '@spectrum-web-components/shared';
+
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
@@ -29,9 +34,7 @@ import '@spectrum-web-components/number-field/sp-number-field.js';
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import '@spectrum-web-components/color-field/sp-color-field.js';
 import '@spectrum-web-components/popover/sp-popover.js';
-import { isFirefox, isWebKit } from '@spectrum-web-components/shared';
-import { sendKeys } from '@web/test-runner-commands';
-import { spy } from 'sinon';
+
 import {
     arrowDownEvent,
     arrowUpEvent,
@@ -708,7 +711,7 @@ describe('Menu', () => {
         const menuItems = Array.from(
             { length: 30 },
             (_, i) => html`
-                <sp-menu-item value="${i + 1}">Item ${i + 1}</sp-menu-item>
+                <sp-menu-item value=${i + 1}>Item ${i + 1}</sp-menu-item>
             `
         );
 
@@ -774,7 +777,7 @@ describe('Menu', () => {
         const menuItems = Array.from(
             { length: 30 },
             (_, i) => html`
-                <sp-menu-item value="${i + 1}">Item ${i + 1}</sp-menu-item>
+                <sp-menu-item value=${i + 1}>Item ${i + 1}</sp-menu-item>
             `
         );
 

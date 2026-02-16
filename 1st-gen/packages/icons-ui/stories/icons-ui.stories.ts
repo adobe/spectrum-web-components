@@ -10,10 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/icon/sp-icon.js';
-import '../../iconset/stories/icons-demo.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { until } from '@spectrum-web-components/base/src/directives.js';
+
+import '@spectrum-web-components/icon/sp-icon.js';
+import '../../iconset/stories/icons-demo.js';
 
 export default {
     title: 'Icons/UI',
@@ -83,7 +84,7 @@ export const Icons = ({ color, size }: Properties): TemplateResult => {
             name: string;
         }[] = [];
         for (const icon in icons) {
-            if (icon === 'setCustomTemplateLiteralTag') continue;
+            if (icon === 'setCustomTemplateLiteralTag') {continue;}
             iconTemplates.push({
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 template: (icons as any)[icon],

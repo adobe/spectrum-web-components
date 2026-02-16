@@ -22,6 +22,7 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import type { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
+
 import popoverStyles from './popover.css.js';
 
 /**

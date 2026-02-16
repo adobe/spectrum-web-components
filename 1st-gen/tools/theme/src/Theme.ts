@@ -15,6 +15,7 @@ import {
     coreVersion,
     version,
 } from '@spectrum-web-components/base/src/version.js';
+
 import {
     Color,
     COLOR_VALUES,
@@ -92,7 +93,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     }
 
     set system(newValue: SystemVariant | '') {
-        if (newValue === this._system) return;
+        if (newValue === this._system) {return;}
         const system =
             !!newValue && SYSTEM_VARIANT_VALUES.includes(newValue)
                 ? newValue
@@ -126,7 +127,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     }
 
     set color(newValue: Color | '') {
-        if (newValue === this._color) return;
+        if (newValue === this._color) {return;}
         const color =
             !!newValue && COLOR_VALUES.includes(newValue)
                 ? newValue
@@ -159,7 +160,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     }
 
     set scale(newValue: Scale | '') {
-        if (newValue === this._scale) return;
+        if (newValue === this._scale) {return;}
         const scale =
             !!newValue && SCALE_VALUES.includes(newValue)
                 ? newValue

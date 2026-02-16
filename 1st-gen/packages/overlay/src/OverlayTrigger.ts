@@ -10,6 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
+import type { Placement } from '@floating-ui/dom';
+
 import {
     CSSResultArray,
     html,
@@ -22,15 +24,14 @@ import {
     query,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
-import type { Placement } from '@floating-ui/dom';
 
-import type { BeforetoggleOpenEvent } from './events.js';
-import type { Overlay } from './Overlay.js';
-import type { OverlayTypes } from './overlay-types.js';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import '@spectrum-web-components/overlay/sp-overlay.js';
 
+import type { BeforetoggleOpenEvent } from './events.js';
+import type { Overlay } from './Overlay.js';
 import overlayTriggerStyles from './overlay-trigger.css.js';
+import type { OverlayTypes } from './overlay-types.js';
 
 export type OverlayContentTypes = 'click' | 'hover' | 'longpress';
 

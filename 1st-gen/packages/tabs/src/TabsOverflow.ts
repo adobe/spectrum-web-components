@@ -9,6 +9,8 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { ResizeController } from '@lit-labs/observers/resize-controller.js';
+
 import {
     CSSResultArray,
     html,
@@ -24,13 +26,14 @@ import {
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { classMap } from '@spectrum-web-components/base/src/directives.js';
-import { ResizeController } from '@lit-labs/observers/resize-controller.js';
-import { Tabs } from './Tabs.js';
+import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-import tabSizes from './tabs-sizes.css.js';
+
+import { Tabs } from './Tabs.js';
 import styles from './tabs-overflow.css.js';
+import tabSizes from './tabs-sizes.css.js';
 
 interface TabsOverflowState {
     canScrollLeft: boolean;

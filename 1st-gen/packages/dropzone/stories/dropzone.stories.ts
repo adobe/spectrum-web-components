@@ -14,14 +14,15 @@ import {
     LitElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
 import { state } from '@spectrum-web-components/base/src/decorators.js';
+import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
 
 import '@spectrum-web-components/dropzone/sp-dropzone.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import { illustration } from '../test/test-svg';
 import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
 import '@spectrum-web-components/link/sp-link.js';
+
+import { illustration } from '../test/test-svg';
 
 export default {
     component: 'sp-dropzone',

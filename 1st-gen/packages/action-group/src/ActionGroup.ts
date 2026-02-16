@@ -10,6 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+import { MutationController } from '@lit-labs/observers/mutation-controller.js';
+
+import { ActionButton } from '@spectrum-web-components/action-button';
 import {
     CSSResultArray,
     html,
@@ -22,9 +25,7 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-import { ActionButton } from '@spectrum-web-components/action-button';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
-import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 import styles from './action-group.css.js';
 
@@ -50,7 +51,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
 
     public set buttons(buttons: ActionButton[]) {
         /* c8 ignore next 1 */
-        if (buttons === this.buttons) return;
+        if (buttons === this.buttons) {return;}
         this._buttons = buttons;
         this.rovingTabindexController.clearElementCache();
     }
@@ -161,12 +162,12 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
 
     private setSelected(selected: string[], announce?: boolean): void {
         /* c8 ignore next 1 */
-        if (selected === this.selected) return;
+        if (selected === this.selected) {return;}
 
         const old = this.selected;
         this.requestUpdate('selected', old);
         this._selected = selected;
-        if (!announce) return;
+        if (!announce) {return;}
         this.dispatchChange(old);
     }
 
@@ -176,7 +177,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
 
     private deselectSelectedButtons(): void {
         this.buttons.forEach((button) => {
-            if (!button.selected) return;
+            if (!button.selected) {return;}
 
             button.selected = false;
             button.tabIndex = -1;
@@ -251,7 +252,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                 const updates = options.map(async (option) => {
                     await option.updateComplete;
                     if (option instanceof ActionButton)
-                        option.setAttribute('role', 'radio');
+                        {option.setAttribute('role', 'radio');}
                     option.setAttribute(
                         'aria-checked',
                         option.selected ? 'true' : 'false'
@@ -260,7 +261,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                         selections.push(option);
                     }
                 });
-                if (applied) break;
+                if (applied) {break;}
                 await Promise.all(updates);
 
                 const selected = selections.map((button) => {
@@ -280,7 +281,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                 const updates = options.map(async (option) => {
                     await option.updateComplete;
                     if (option instanceof ActionButton)
-                        option.setAttribute('role', 'checkbox');
+                        {option.setAttribute('role', 'checkbox');}
                     option.setAttribute(
                         'aria-checked',
                         option.selected ? 'true' : 'false'
@@ -290,9 +291,9 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                         selections.push(option);
                     }
                 });
-                if (applied) break;
+                if (applied) {break;}
                 await Promise.all(updates);
-                const selected = !!selection.length
+                const selected = selection.length
                     ? selection
                     : EMPTY_SELECTION;
                 this.setSelected(selected);
@@ -305,7 +306,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                     const updates = options.map(async (option) => {
                         await option.updateComplete;
                         if (option instanceof ActionButton)
-                            option.setAttribute('role', 'button');
+                            {option.setAttribute('role', 'button');}
                         if (option.selected) {
                             option.setAttribute('aria-pressed', 'true');
                             selections.push(option);
@@ -313,7 +314,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                             option.removeAttribute('aria-pressed');
                         }
                     });
-                    if (applied) break;
+                    if (applied) {break;}
                     await Promise.all(updates);
 
                     this.setSelected(
@@ -324,7 +325,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                 } else {
                     this.buttons.forEach((option) => {
                         if (option instanceof ActionButton)
-                            option.setAttribute('role', 'button');
+                            {option.setAttribute('role', 'button');}
                     });
                     break;
                 }
@@ -352,7 +353,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         if (changes.has('selects')) {
             this.manageSelects();
             this.manageChildren();
-            if (!!this.selects) {
+            if (this.selects) {
                 this.shadowRoot.addEventListener(
                     'change',
                     this.handleActionButtonChange

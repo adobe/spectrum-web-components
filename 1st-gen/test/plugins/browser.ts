@@ -11,6 +11,7 @@
  */
 
 import { executeServerCommand, resetMouse } from '@web/test-runner-commands';
+
 import type { Step } from './send-mouse-plugin.js';
 
 export type SendMouseOptions = {

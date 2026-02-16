@@ -24,6 +24,7 @@ import type {
     SortedEventDetails,
     TableItem,
 } from '@spectrum-web-components/table';
+
 import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/table/elements.js';
 

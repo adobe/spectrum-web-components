@@ -11,12 +11,14 @@
  */
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { spy } from 'sinon';
+
+import { ActionBar } from '@spectrum-web-components/action-bar';
 
 import '@spectrum-web-components/action-bar/sp-action-bar.js';
-import { ActionBar } from '@spectrum-web-components/action-bar';
-import { Default, emphasized } from '../stories/action-bar.stories.js';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { spy } from 'sinon';
+import { Default, emphasized } from '../stories/action-bar.stories.js';
 
 describe('ActionBar', () => {
     testForLitDevWarnings(async () => await fixture<ActionBar>(Default()));

@@ -15,19 +15,20 @@ import {
     LitElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import { query, state } from '@spectrum-web-components/base/src/decorators.js';
+import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { live } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
+
 import { Combobox, ComboboxOption } from '../src/Combobox.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
-import { query, state } from '@spectrum-web-components/base/src/decorators.js';
-import { live } from '@spectrum-web-components/base/src/directives.js';
+import { argTypes } from './args.js';
 import { countries, fruits, StoryArgs } from './index.js';
 import { Template } from './template.js';
-import { argTypes } from './args.js';
 
 export default {
     title: 'Combobox',

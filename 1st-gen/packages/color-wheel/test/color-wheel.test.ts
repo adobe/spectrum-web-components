@@ -11,6 +11,15 @@
  */
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { sendKeys } from '@web/test-runner-commands';
+import { spy } from 'sinon';
+
+import { ColorWheel } from '@spectrum-web-components/color-wheel';
+import { ColorTypes } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
+
+import '@spectrum-web-components/color-wheel/sp-color-wheel.js';
+
+import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     arrowDownEvent,
     arrowDownKeyupEvent,
@@ -25,13 +34,6 @@ import {
     sendTabKey,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
-
-import { ColorWheel } from '@spectrum-web-components/color-wheel';
-import '@spectrum-web-components/color-wheel/sp-color-wheel.js';
-import { ColorTypes } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
-import { sendKeys } from '@web/test-runner-commands';
-import { spy } from 'sinon';
-import { sendMouse } from '../../../test/plugins/browser.js';
 
 ignoreResizeObserverLoopError(before, after);
 
@@ -718,7 +720,7 @@ describe('ColorWheel', () => {
                 expect(el.color).to.equal(format.color);
             } else if (format.name === 'string') {
                 expect(el.color).to.equal(format.test);
-            } else expect(el.color).to.deep.equal(format.color);
+            } else {expect(el.color).to.deep.equal(format.color);}
         });
     });
     it(`maintains hue value`, async () => {

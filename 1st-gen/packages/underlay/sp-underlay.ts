@@ -9,8 +9,9 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { Underlay } from './src/Underlay.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { Underlay } from './src/Underlay.js';
 
 defineElement('sp-underlay', Underlay);
 

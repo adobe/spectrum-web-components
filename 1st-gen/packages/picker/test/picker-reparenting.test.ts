@@ -10,11 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/picker/sp-picker.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
-import { Picker } from '@spectrum-web-components/picker';
-import { MenuItem } from '@spectrum-web-components/menu';
 import {
     elementUpdated,
     expect,
@@ -24,8 +19,15 @@ import {
     oneEvent,
 } from '@open-wc/testing';
 
+import { MenuItem } from '@spectrum-web-components/menu';
+import { Picker } from '@spectrum-web-components/picker';
+
+import '@spectrum-web-components/picker/sp-picker.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
+
 import type { TestablePicker } from './index.js';
 
 const fixtureElements = async (): Promise<{

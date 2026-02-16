@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
 import { Overlay } from './src/Overlay.js';
 
 defineElement('sp-overlay', Overlay);

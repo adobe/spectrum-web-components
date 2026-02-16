@@ -23,11 +23,12 @@ import {
     query,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
-import '@spectrum-web-components/underlay/sp-underlay.js';
-import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
-import { MatchMediaController } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
-
 import modalStyles from '@spectrum-web-components/modal/src/modal.css.js';
+import { MatchMediaController } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
+import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
+
+import '@spectrum-web-components/underlay/sp-underlay.js';
+
 import styles from './tray.css.js';
 
 /**
@@ -74,7 +75,7 @@ export class Tray extends SpectrumElement {
     private animating = false;
 
     public overlayWillCloseCallback(): boolean {
-        if (!this.open) return this.animating;
+        if (!this.open) {return this.animating;}
         this.close();
         return true;
     }

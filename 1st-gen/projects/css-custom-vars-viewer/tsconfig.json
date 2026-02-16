@@ -1,10 +1,10 @@
 {
-    "extends": "../../tsconfig.json",
     "compilerOptions": {
         "composite": true,
-        "rootDir": "./",
+        "emitDeclarationOnly": false,
         "outDir": "dist",
-        "emitDeclarationOnly": false
+        "rootDir": "./"
     },
+    "extends": "../../tsconfig.json",
     "include": ["**/*.ts"]
 }

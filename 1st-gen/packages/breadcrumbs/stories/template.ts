@@ -11,10 +11,12 @@
  */
 
 import { html, type TemplateResult } from '@spectrum-web-components/base';
-import { spreadProps } from '../../../test/lit-helpers.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumbs.js';
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
+
+import { spreadProps } from '../../../test/lit-helpers.js';
 
 export type StoryArgs = {
     compact?: boolean;

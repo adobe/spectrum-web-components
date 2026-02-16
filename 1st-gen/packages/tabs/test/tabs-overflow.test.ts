@@ -9,7 +9,25 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { repeat } from 'lit/directives/repeat.js';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
+import {
+    elementUpdated,
+    expect,
+    fixture,
+    nextFrame,
+    oneEvent,
+    waitUntil,
+} from '@open-wc/testing';
+import { sendKeys, setViewport } from '@web/test-runner-commands';
+
 import { ActionButton } from '@spectrum-web-components/action-button';
+import {
+    ElementSize,
+    ElementSizes,
+    html,
+    nothing,
+} from '@spectrum-web-components/base';
 import {
     isFirefox,
     isWebKit,
@@ -21,6 +39,7 @@ import {
     Tabs,
     TabsOverflow,
 } from '@spectrum-web-components/tabs';
+
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tabs-overflow.js';
@@ -28,24 +47,6 @@ import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/theme/scale-medium.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/theme-light.js';
-
-import {
-    elementUpdated,
-    expect,
-    fixture,
-    nextFrame,
-    oneEvent,
-    waitUntil,
-} from '@open-wc/testing';
-import {
-    ElementSize,
-    ElementSizes,
-    html,
-    nothing,
-} from '@spectrum-web-components/base';
-import { sendKeys, setViewport } from '@web/test-runner-commands';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
-import { repeat } from 'lit/directives/repeat.js';
 
 const RIGHT_BUTTON_SELECTOR = '.right-scroll';
 const LEFT_BUTTON_SELECTOR = '.left-scroll';
@@ -213,7 +214,7 @@ describe('TabsOverflow', () => {
         // );
 
         // @TODO: Skipping on Firefox and Webkit due to timeouts on CI. Will review in the migration to Spectrum 2.
-        if (isFirefox() || isWebKit()) return;
+        if (isFirefox() || isWebKit()) {return;}
 
         const { tabsContainer, tabsOverflow } = await renderTabsOverflow({
             count: 8,
@@ -262,7 +263,7 @@ describe('TabsOverflow', () => {
         // );
 
         // @TODO: Skipping on Firefox due to timeouts on CI. Will review in the migration to Spectrum 2.
-        if (isFirefox()) return;
+        if (isFirefox()) {return;}
 
         const { tabsContainer, tabsOverflow } = await renderTabsOverflow({
             count: 8,
@@ -451,7 +452,7 @@ async function repeatScroll(
         elementToScroll,
         distanceToReachInIteration,
     } = options;
-    if (iteration > times) return;
+    if (iteration > times) {return;}
 
     const distanceToReach = distanceToReachInIteration(iteration);
 

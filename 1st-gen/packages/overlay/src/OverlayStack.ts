@@ -140,7 +140,7 @@ class OverlayStack {
             }
 
             const dialogEl = overlay.dialogEl;
-            if (!dialogEl) continue;
+            if (!dialogEl) {continue;}
 
             // Check if dialog element is in the path
             if (eventPath.includes(dialogEl)) {
@@ -163,7 +163,7 @@ class OverlayStack {
      * @param event {PointerEvent}
      */
     handlePointerdown = (event: Event): void => {
-        if (!this.stack.length) return;
+        if (!this.stack.length) {return;}
 
         const pointerPath = event.composedPath();
 
@@ -193,15 +193,15 @@ class OverlayStack {
      * @param event {MouseEvent}
      */
     handleClick = (event: MouseEvent): void => {
-        if (!this.stack.length) return;
+        if (!this.stack.length) {return;}
 
         const modalOverlays = this.getModalOverlays();
-        if (!modalOverlays.length) return;
+        if (!modalOverlays.length) {return;}
 
         // Only block clicks for page overlays, not modal overlays.
         // Modal overlays use popover="manual" for stacking and have light dismiss.
         const pageOverlays = modalOverlays.filter((o) => o.type === 'page');
-        if (!pageOverlays.length) return;
+        if (!pageOverlays.length) {return;}
 
         // Check if the click is inside any page overlay dialog
         const clickPath = event.composedPath();
@@ -224,8 +224,8 @@ class OverlayStack {
         // Ensure that this value is cleared even if the work in this method goes undone.
         const composedPath = this.pointerdownPath;
         this.pointerdownPath = undefined;
-        if (!this.stack.length) return;
-        if (!composedPath?.length) return;
+        if (!this.stack.length) {return;}
+        if (!composedPath?.length) {return;}
         const lastOverlay = this.lastOverlay;
         this.lastOverlay = undefined;
 
@@ -292,13 +292,13 @@ class OverlayStack {
         const { target, newState: open } = event as Event & {
             newState: string;
         };
-        if (open === 'open') return;
+        if (open === 'open') {return;}
         this.closeOverlay(target as Overlay);
     };
 
     private handleKeydown = (event: KeyboardEvent): void => {
-        if (event.code !== 'Escape') return;
-        if (!this.stack.length) return;
+        if (event.code !== 'Escape') {return;}
+        if (!this.stack.length) {return;}
         const last = this.stack[this.stack.length - 1];
         if (last?.type === 'hint') {
             // Close hint/tooltip overlays on "Escape" key and prevent further handling of the event.
@@ -322,8 +322,8 @@ class OverlayStack {
             this.closeOverlay(last);
             return;
         }
-        if (supportsPopover) return;
-        if (!last) return;
+        if (supportsPopover) {return;}
+        if (!last) {return;}
         this.closeOverlay(last);
     };
 

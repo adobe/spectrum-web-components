@@ -17,11 +17,14 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
+
 import { render, TemplateResult } from '@spectrum-web-components/base';
-import '@spectrum-web-components/button/sp-button.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
+
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+
 import { sendTabKey } from '../../../test/testing-helpers';
 
 describe('Tooltip Directive', () => {

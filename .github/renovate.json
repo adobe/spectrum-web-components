@@ -5,14 +5,11 @@
         ":widenPeerDependencies",
         "group:githubArtifactActions"
     ],
-    "timezone": "America/Los_Angeles",
-    "schedule": ["after 12pm on thursday"],
-    "semanticCommitScope": "",
     "labels": ["dependencies"],
     "packageRules": [
         {
-            "matchFileNames": ["@*/*.css"],
-            "labels": ["Spectrum CSS"]
+            "labels": ["Spectrum CSS"],
+            "matchFileNames": ["@*/*.css"]
         },
         {
             "groupName": "storybook ecosystem",
@@ -48,5 +45,8 @@
         }
     ],
     "rebaseWhen": "behind-base-branch",
-    "reviewers": ["team:swc-maintainers"]
+    "reviewers": ["team:swc-maintainers"],
+    "schedule": ["after 12pm on thursday"],
+    "semanticCommitScope": "",
+    "timezone": "America/Los_Angeles"
 }

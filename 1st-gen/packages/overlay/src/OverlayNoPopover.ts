@@ -9,13 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import type { SpectrumElement } from '@spectrum-web-components/base';
+import { userFocusableSelector } from '@spectrum-web-components/shared';
 import {
     firstFocusableIn,
     firstFocusableSlottedIn,
 } from '@spectrum-web-components/shared/src/first-focusable-in.js';
-import type { SpectrumElement } from '@spectrum-web-components/base';
-import { VirtualTrigger } from './VirtualTrigger.js';
-import { Constructor, OpenableElement } from './overlay-types.js';
+
+import type { AbstractOverlay } from './AbstractOverlay.js';
 import {
     guaranteedAllTransitionend,
     nextFrame,
@@ -26,8 +27,8 @@ import {
     BeforetoggleOpenEvent,
     OverlayStateEvent,
 } from './events.js';
-import type { AbstractOverlay } from './AbstractOverlay.js';
-import { userFocusableSelector } from '@spectrum-web-components/shared';
+import { Constructor, OpenableElement } from './overlay-types.js';
+import { VirtualTrigger } from './VirtualTrigger.js';
 
 export function OverlayNoPopover<T extends Constructor<AbstractOverlay>>(
     constructor: T

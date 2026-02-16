@@ -28,6 +28,11 @@ import {
     live,
     repeat,
 } from '@spectrum-web-components/base/src/directives.js';
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import { Menu, MenuItem } from '@spectrum-web-components/menu';
+import { Textfield } from '@spectrum-web-components/textfield';
+import type { Tooltip } from '@spectrum-web-components/tooltip';
+
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -35,11 +40,7 @@ import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
 import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import '@spectrum-web-components/popover/sp-popover.js';
-import { Textfield } from '@spectrum-web-components/textfield';
-import type { Tooltip } from '@spectrum-web-components/tooltip';
 
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-import { Menu, MenuItem } from '@spectrum-web-components/menu';
 import styles from './combobox.css.js';
 
 export type ComboboxOption = {
@@ -225,7 +226,7 @@ export class Combobox extends Textfield {
                 (this.availableOptions.length + nextActiveIndex + 1) %
                 this.availableOptions.length;
             // Break if we've checked all options to avoid infinite loop
-            if (nextActiveIndex === activeIndex) break;
+            if (nextActiveIndex === activeIndex) {break;}
         } while (this.availableOptions[nextActiveIndex].disabled);
 
         if (!this.availableOptions[nextActiveIndex].disabled) {
@@ -249,7 +250,7 @@ export class Combobox extends Textfield {
                 (this.availableOptions.length + previousActiveIndex - 1) %
                 this.availableOptions.length;
             // Break if we've checked all options to avoid infinite loop
-            if (previousActiveIndex === activeIndex) break;
+            if (previousActiveIndex === activeIndex) {break;}
         } while (this.availableOptions[previousActiveIndex].disabled);
 
         if (!this.availableOptions[previousActiveIndex].disabled) {
@@ -429,7 +430,7 @@ export class Combobox extends Textfield {
                     this.open ? 'listbox-menu' : undefined
                 )}
                 aria-describedby="${this.helpTextId} tooltip"
-                aria-expanded="${this.open ? 'true' : 'false'}"
+                aria-expanded=${this.open ? 'true' : 'false'}
                 aria-label=${ifDefined(this.label || this.appliedLabel)}
                 aria-labelledby="label applied-label pending-label"
                 aria-invalid=${ifDefined(this.invalid || undefined)}
@@ -523,7 +524,7 @@ export class Combobox extends Textfield {
                                   (option) => {
                                       return html`
                                           <sp-menu-item
-                                              id="${option.value}"
+                                              id=${option.value}
                                               ?focused=${this.activeDescendant
                                                   ?.value === option.value}
                                               aria-selected=${this

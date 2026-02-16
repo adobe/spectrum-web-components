@@ -11,10 +11,12 @@
  */
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { stub } from 'sinon';
+
+import { ProgressBar } from '@spectrum-web-components/progress-bar';
 
 import '@spectrum-web-components/progress-bar/sp-progress-bar.js';
-import { ProgressBar } from '@spectrum-web-components/progress-bar';
-import { stub } from 'sinon';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
 

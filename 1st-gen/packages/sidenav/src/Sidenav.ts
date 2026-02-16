@@ -17,13 +17,13 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
+import { Focusable } from '@spectrum-web-components/shared';
 
 import sidenavStyles from './sidenav.css.js';
-import { Focusable } from '@spectrum-web-components/shared';
-import { SideNavItem } from './SidenavItem.js';
 import { SideNavHeading } from './SidenavHeading.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { SideNavItem } from './SidenavItem.js';
 
 export interface SidenavSelectDetail {
     value: string;

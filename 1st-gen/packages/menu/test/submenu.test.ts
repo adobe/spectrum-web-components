@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+import { TemplateResult } from 'lit-html';
 import {
     aTimeout,
     elementUpdated,
@@ -19,18 +20,20 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
+import { sendKeys } from '@web/test-runner-commands';
+import { spy } from 'sinon';
+
 import { ActionMenu } from '@spectrum-web-components/action-menu';
+import { Menu, MenuItem } from '@spectrum-web-components/menu';
+import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
+
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
-import { Menu, MenuItem } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
-import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
-import { sendKeys } from '@web/test-runner-commands';
-import { TemplateResult } from 'lit-html';
-import { spy } from 'sinon';
+
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     fixture,

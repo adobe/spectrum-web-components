@@ -9,12 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import { html, render } from '@spectrum-web-components/base';
 import {
     removeSlottableRequest,
     type SlottableRequestEvent,
 } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
+
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 const handleSlottableRequest = (event: SlottableRequestEvent): void => {

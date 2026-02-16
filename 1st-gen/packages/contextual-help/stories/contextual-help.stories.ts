@@ -10,9 +10,10 @@
  * governing permissions and limitations under the License.
  */
 import { html, TemplateResult } from '@spectrum-web-components/base';
+
+import { spreadProps } from '../../../test/lit-helpers.js';
 import { argTypes, StoryArgs } from './args.js';
 import { Template } from './template.js';
-import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {
     title: 'Contextual Help',

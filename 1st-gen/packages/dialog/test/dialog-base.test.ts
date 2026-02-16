@@ -18,17 +18,19 @@ import {
     html,
     oneEvent,
 } from '@open-wc/testing';
+
 import { TemplateResult } from '@spectrum-web-components/base';
+import { Button } from '@spectrum-web-components/button/src/Button.js';
+import { DialogBase } from '@spectrum-web-components/dialog';
+import { OverlayTrigger } from '@spectrum-web-components/overlay';
+import { Theme } from '@spectrum-web-components/theme';
 
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/dialog/sp-dialog-base.js';
-import { Theme } from '@spectrum-web-components/theme';
-import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
+
 import { alertDestructive } from '../stories/dialog.stories.js';
-import { Button } from '@spectrum-web-components/button/src/Button.js';
-import { DialogBase } from '@spectrum-web-components/dialog';
 
 async function styledFixture<T extends Element>(
     story: TemplateResult

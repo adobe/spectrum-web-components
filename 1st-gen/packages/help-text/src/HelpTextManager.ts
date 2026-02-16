@@ -11,9 +11,10 @@
  */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
+
 import type { HelpText } from './HelpText';
 
 export class HelpTextManager {
@@ -76,7 +77,7 @@ export class HelpTextManager {
             this.conditionId();
             delete this.conditionId;
         }
-        if (this.helpTextElement) return;
+        if (this.helpTextElement) {return;}
         if (this.previousTabindex) {
             this.host.tabIndex = this.previousTabindex;
         } else {
@@ -92,7 +93,7 @@ export class HelpTextManager {
     };
 
     private handleHelpText(target: HTMLSlotElement): void {
-        if (this.isInternal) return;
+        if (this.isInternal) {return;}
 
         if (this.helpTextElement && this.helpTextElement.id === this.id) {
             this.helpTextElement.removeAttribute('id');
@@ -110,7 +111,7 @@ export class HelpTextManager {
     }
 
     private handleNegativeHelpText(target: HTMLSlotElement): void {
-        if (target.name !== 'negative-help-text') return;
+        if (target.name !== 'negative-help-text') {return;}
 
         const assignedElements = target.assignedElements();
         assignedElements.forEach(

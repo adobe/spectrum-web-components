@@ -22,14 +22,17 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-import sideNavSearchMenuStyles from './side-nav-search.css';
-import type { Search } from '@spectrum-web-components/search';
+import { Menu } from '@spectrum-web-components/menu';
 import type { Overlay } from '@spectrum-web-components/overlay';
 import type { Popover } from '@spectrum-web-components/popover';
-import type { ResultGroup } from './search-index.js';
-import { Menu } from '@spectrum-web-components/menu';
+import type { Search } from '@spectrum-web-components/search';
+
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/search/sp-search.js';
+
+import type { ResultGroup } from './search-index.js';
+
+import sideNavSearchMenuStyles from './side-nav-search.css';
 
 const stopPropagation = (event: Event): void => event.stopPropagation();
 
@@ -166,7 +169,7 @@ export class SearchComponent extends LitElement {
                                 <span slot="header">${category.name}</span>
                                 ${category.results.map(
                                     (result) => html`
-                                        <sp-menu-item href="${result.url}">
+                                        <sp-menu-item href=${result.url}>
                                             ${result.label}
                                         </sp-menu-item>
                                     `

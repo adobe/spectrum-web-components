@@ -10,9 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import type { Picker } from '@spectrum-web-components/picker';
-
-// eslint-disable-next-line import/no-extraneous-dependencies
+ 
 import {
     aTimeout,
     elementUpdated,
@@ -24,28 +22,6 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/dialog/sp-dialog.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import { FieldLabel } from '@spectrum-web-components/field-label/src/FieldLabel.js';
-import type { Icon } from '@spectrum-web-components/icon';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
-import type { Menu, MenuItem } from '@spectrum-web-components/menu';
-import '@spectrum-web-components/menu/sp-menu-group.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import '@spectrum-web-components/picker/sp-picker.js';
-import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/InteractionController.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import { isWebKit } from '@spectrum-web-components/shared';
-import '@spectrum-web-components/shared/src/focus-visible.js';
-import '@spectrum-web-components/theme/src/themes.js';
-import { Tooltip } from '@spectrum-web-components/tooltip';
-
-import { Button } from '@spectrum-web-components/button';
-import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import {
     a11ySnapshot,
     findAccessibilityNode,
@@ -54,21 +30,45 @@ import {
     setViewport,
 } from '@web/test-runner-commands';
 import { spy, stub } from 'sinon';
+
+import { Button } from '@spectrum-web-components/button';
+import { FieldLabel } from '@spectrum-web-components/field-label/src/FieldLabel.js';
+import type { Icon } from '@spectrum-web-components/icon';
+import type { Menu, MenuItem } from '@spectrum-web-components/menu';
+import { OverlayTrigger } from '@spectrum-web-components/overlay';
+import type { Picker } from '@spectrum-web-components/picker';
+import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/InteractionController.js';
+import { isWebKit } from '@spectrum-web-components/shared';
+import { Tooltip } from '@spectrum-web-components/tooltip';
+
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
+import '@spectrum-web-components/menu/sp-menu-group.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/picker/sp-picker.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/shared/src/focus-visible.js';
+import '@spectrum-web-components/theme/src/themes.js';
+
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     arrowDownEvent,
     arrowRightEvent,
     arrowUpEvent,
+    fixture as styledFixture,
     ignoreResizeObserverLoopError,
     mouseClickAway,
     mouseClickOn,
     sendShiftTabKey,
     sendTabKey,
-    fixture as styledFixture,
     testForLitDevWarnings,
     tEvent,
 } from '../../../test/testing-helpers.js';
-import { M as pending } from '../stories/picker-pending.stories.js';
 import {
     Default,
     disabled,
@@ -78,6 +78,7 @@ import {
     slottedLabel,
     tooltip,
 } from '../stories/picker.stories.js';
+import { M as pending } from '../stories/picker-pending.stories.js';
 
 export type TestablePicker = { optionsMenu: Menu };
 

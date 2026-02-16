@@ -10,12 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
+import { Overlay } from './Overlay.js';
 import type {
     OverlayOptions,
     OverlayOptionsV1,
     TriggerInteractionsV1,
 } from './overlay-types.js';
-import { Overlay } from './Overlay.js';
 
 // Re-export Overlay.open and openOverlay to persist functionality from before 0.37.0.
 // Wrap it in a method (which needs duplicate argument typings) instead of exporting

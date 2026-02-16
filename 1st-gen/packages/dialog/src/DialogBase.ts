@@ -19,17 +19,17 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+import modalStyles from '@spectrum-web-components/modal/src/modal.css.js';
+import modalWrapperStyles from '@spectrum-web-components/modal/src/modal-wrapper.css.js';
+import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
+import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/underlay/sp-underlay.js';
-
 // Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
 // eslint-disable-next-line import/no-extraneous-dependencies
 import '@spectrum-web-components/dialog/sp-dialog.js';
-import modalWrapperStyles from '@spectrum-web-components/modal/src/modal-wrapper.css.js';
-import modalStyles from '@spectrum-web-components/modal/src/modal.css.js';
-import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
-import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
+
 import { Dialog } from './Dialog.js';
 
 /**
@@ -103,7 +103,7 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
     private animating = false;
 
     public overlayWillCloseCallback(): boolean {
-        if (!this.open) return this.animating;
+        if (!this.open) {return this.animating;}
         this.close();
         return true;
     }
@@ -162,7 +162,7 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
         const modalTransitionDurations =
             window.getComputedStyle(modal).transitionDuration;
         for (const duration of modalTransitionDurations.split(','))
-            if (parseFloat(duration) > 0) return true;
+            {if (parseFloat(duration) > 0) {return true;}}
 
         const underlay = this.shadowRoot.querySelector(
             'sp-underlay'
@@ -172,7 +172,7 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
             const underlayTransitionDurations =
                 window.getComputedStyle(underlay).transitionDuration;
             for (const duration of underlayTransitionDurations.split(','))
-                if (parseFloat(duration) > 0) return true;
+                {if (parseFloat(duration) > 0) {return true;}}
         }
 
         return false;
@@ -186,11 +186,11 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
                 this.resolveTransitionPromise = () => {
                     this.animating = false;
                     if (!this.open && hasTransitionDuration)
-                        this.dispatchClosed();
+                        {this.dispatchClosed();}
                     res();
                 };
             });
-            if (!this.open && !hasTransitionDuration) this.dispatchClosed();
+            if (!this.open && !hasTransitionDuration) {this.dispatchClosed();}
         }
         super.update(changes);
     }

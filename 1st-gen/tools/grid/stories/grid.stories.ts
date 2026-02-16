@@ -10,12 +10,16 @@
  * governing permissions and limitations under the License.
  */
 
+import type { RenderItemFunction } from '@lit-labs/virtualizer/virtualize.js';
+
+import type { ActionBar } from '@spectrum-web-components/action-bar';
 import {
     css,
     html,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import type { Grid } from '@spectrum-web-components/grid';
 
 import '@spectrum-web-components/grid/sp-grid.js';
 import '@spectrum-web-components/action-bar/sp-action-bar.js';
@@ -28,9 +32,6 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
-import type { ActionBar } from '@spectrum-web-components/action-bar';
-import type { Grid } from '@spectrum-web-components/grid';
-import type { RenderItemFunction } from '@lit-labs/virtualizer/virtualize.js';
 
 export default {
     title: 'Grid',
@@ -107,7 +108,7 @@ const handleChange = (event: Event & { currentTarget: Grid }): void => {
     actionbar.open = !!event.currentTarget.selected.length;
     actionbar.style.setProperty(
         'display',
-        !!event.currentTarget.selected.length ? 'flex' : 'none'
+        event.currentTarget.selected.length ? 'flex' : 'none'
     );
     selected.textContent = '' + event.currentTarget.selected.length;
     ids.textContent = `[${

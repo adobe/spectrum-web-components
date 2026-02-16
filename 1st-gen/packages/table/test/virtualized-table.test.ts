@@ -17,6 +17,8 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
+import { sendKeys } from '@web/test-runner-commands';
+import { spy } from 'sinon';
 
 import type {
     Table,
@@ -24,6 +26,7 @@ import type {
     TableHeadCell,
     TableRow,
 } from '@spectrum-web-components/table';
+
 import '@spectrum-web-components/table/sp-table-body.js';
 import '@spectrum-web-components/table/sp-table-cell.js';
 import '@spectrum-web-components/table/sp-table-head-cell.js';
@@ -32,8 +35,7 @@ import '@spectrum-web-components/table/sp-table-row.js';
 import '@spectrum-web-components/table/sp-table.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import { sendKeys } from '@web/test-runner-commands';
-import { spy } from 'sinon';
+
 import {
     ignoreResizeObserverLoopError,
     sendTabKey,

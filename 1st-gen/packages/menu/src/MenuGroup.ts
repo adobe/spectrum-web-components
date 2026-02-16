@@ -21,9 +21,10 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
-import { Menu } from './Menu.js';
 // Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
 import '@spectrum-web-components/menu/sp-menu.js';
+
+import { Menu } from './Menu.js';
 import menuGroupStyles from './menu-group.css.js';
 
 /**

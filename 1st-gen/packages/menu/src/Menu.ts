@@ -22,15 +22,15 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
+import type { Overlay } from '@spectrum-web-components/overlay';
+import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
-import { MenuItem } from './MenuItem.js';
+import menuStyles from './menu.css.js';
 import type {
     MenuItemAddedOrUpdatedEvent,
     MenuItemKeydownEvent,
 } from './MenuItem.js';
-import type { Overlay } from '@spectrum-web-components/overlay';
-import menuStyles from './menu.css.js';
-import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
+import { MenuItem } from './MenuItem.js';
 
 export interface MenuChildItem {
     menuItem: MenuItem;
@@ -355,7 +355,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     ): void {
         const cascadeData = event.menuCascade.get(this);
         /* c8 ignore next 1 */
-        if (!cascadeData) return;
+        if (!cascadeData) {return;}
 
         event.item.menuData.parentMenu = event.item.menuData.parentMenu || this;
         this.addChildItem(event.item);
@@ -490,7 +490,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     public focusOnFirstSelectedItem({
         preventScroll,
     }: FocusOptions = {}): void {
-        if (!this.rovingTabindexController) return;
+        if (!this.rovingTabindexController) {return;}
         const selectedItem = this.selectedItems.find((el) =>
             this.isFocusableElement(el)
         );
@@ -597,7 +597,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
     private handleFocusout(): void {
         if (!this.matches(':focus-within'))
-            this.rovingTabindexController?.reset();
+            {this.rovingTabindexController?.reset();}
     }
 
     private handleClick(event: Event): void {
@@ -683,7 +683,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     protected handleDescendentOverlayOpened(event: Event): void {
         const target = event.composedPath()[0] as MenuItem;
         /* c8 ignore next 1 */
-        if (!target.overlayElement) return;
+        if (!target.overlayElement) {return;}
         this.descendentOverlays.set(
             target.overlayElement,
             target.overlayElement
@@ -693,7 +693,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     protected handleDescendentOverlayClosed(event: Event): void {
         const target = event.composedPath()[0] as MenuItem;
         /* c8 ignore next 1 */
-        if (!target.overlayElement) return;
+        if (!target.overlayElement) {return;}
         this.descendentOverlays.delete(target.overlayElement);
     }
 
@@ -749,7 +749,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             .composedPath()
             .find((el) => this.childItemSet.has(el as MenuItem));
         /* c8 ignore next 1 */
-        if (!openedItem) return;
+        if (!openedItem) {return;}
     };
 
     public async selectOrToggleItem(targetItem: MenuItem): Promise<void> {
@@ -777,7 +777,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             const selectedItems: MenuItem[] = [];
 
             this.childItemSet.forEach((childItem) => {
-                if (childItem.menuData.selectionRoot !== this) return;
+                if (childItem.menuData.selectionRoot !== this) {return;}
 
                 if (this.selectedItemsMap.has(childItem)) {
                     selected.push(childItem.value);
@@ -889,7 +889,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         if (key === ' ' || key === 'Enter') {
             event.preventDefault();
             root?.focusElement?.click();
-            if (root) this.selectOrToggleItem(root);
+            if (root) {this.selectOrToggleItem(root);}
             return;
         }
         this.navigateBetweenRelatedMenus(event as MenuItemKeydownEvent);

@@ -13,6 +13,7 @@
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
+
 import { thumbnail as image } from './images.js';
 
 export default {

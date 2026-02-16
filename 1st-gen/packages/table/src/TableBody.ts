@@ -9,6 +9,8 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { MutationController } from '@lit-labs/observers/mutation-controller.js';
+
 import {
     CSSResultArray,
     html,
@@ -16,8 +18,8 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+
 import styles from './table-body.css.js';
-import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 /**
  * @element sp-table-body

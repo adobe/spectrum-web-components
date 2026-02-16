@@ -12,6 +12,7 @@
 
 import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
+
 import { noop } from './AbstractOverlay.js';
 import {
     InteractionController,
@@ -69,7 +70,7 @@ export class HoverController extends InteractionController {
     handleTargetFocusout(): void {
         this.targetFocused = false;
         // Don't close immediately if pointer is over the content
-        if (this.hovering) return;
+        if (this.hovering) {return;}
         // Use delay to allow focus to move into overlay content
         this.doFocusleave();
     }
@@ -83,7 +84,7 @@ export class HoverController extends InteractionController {
 
     handleTargetPointerenter(): void {
         this.clearCloseTimeout();
-        if (this.overlay?.disabled) return;
+        if (this.overlay?.disabled) {return;}
         this.open = true;
         this.hovering = true;
     }
@@ -111,15 +112,15 @@ export class HoverController extends InteractionController {
     handleOverlayFocusout(): void {
         this.overlayFocused = false;
         // Don't close immediately if pointer is over the content or trigger has focus
-        if (this.hovering) return;
-        if (this.targetFocused && this.target.matches(':focus-visible')) return;
+        if (this.hovering) {return;}
+        if (this.targetFocused && this.target.matches(':focus-visible')) {return;}
         // Use delay before closing
         this.doFocusleave();
     }
 
     override prepareDescription(): void {
         // require "content" to apply relationship
-        if (!this.overlay || !this.overlay.elements.length) return;
+        if (!this.overlay || !this.overlay.elements.length) {return;}
 
         const triggerRoot = this.target.getRootNode();
         const contentRoot = this.overlay.elements[0].getRootNode();
@@ -132,7 +133,7 @@ export class HoverController extends InteractionController {
     }
 
     private prepareOverlayRelativeDescription(): void {
-        if (!this.overlay) return;
+        if (!this.overlay) {return;}
         const releaseDescription = conditionAttributeWithId(
             this.target,
             'aria-describedby',
@@ -145,7 +146,7 @@ export class HoverController extends InteractionController {
     }
 
     private prepareContentRelativeDescription(): void {
-        if (!this.overlay) return;
+        if (!this.overlay) {return;}
         const overlay = this.overlay; // Capture for closure
         const elementIds: string[] = [];
         const appliedIds = overlay.elements.map((el) => {
@@ -180,9 +181,9 @@ export class HoverController extends InteractionController {
         this.hovering = false;
         const triggerElement = this.target as HTMLElement;
         if (this.targetFocused && triggerElement.matches(':focus-visible'))
-            return;
+            {return;}
         // Don't close if focus is within overlay content
-        if (this.overlayFocused) return;
+        if (this.overlayFocused) {return;}
 
         this.scheduleClose();
     }

@@ -11,11 +11,13 @@
  */
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { spy } from 'sinon';
+
+import { Underlay } from '@spectrum-web-components/underlay';
 
 import '@spectrum-web-components/underlay/sp-underlay.js';
-import { Underlay } from '@spectrum-web-components/underlay';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { spy } from 'sinon';
 
 describe('Underlay', () => {
     testForLitDevWarnings(

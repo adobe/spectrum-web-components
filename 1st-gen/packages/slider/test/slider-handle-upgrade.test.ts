@@ -11,8 +11,10 @@
  */
 
 import { expect, fixture, html } from '@open-wc/testing';
-import '@spectrum-web-components/slider/sp-slider.js';
+
 import { Slider } from '@spectrum-web-components/slider/src/Slider.js';
+
+import '@spectrum-web-components/slider/sp-slider.js';
 
 describe('Slider - upgrade order', () => {
     it('loads both handles when document imports sp-slider-handle after sp-slider', async () => {

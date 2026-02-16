@@ -19,6 +19,13 @@ import {
     oneEvent,
 } from '@open-wc/testing';
 
+import type {
+    Table,
+    TableBody,
+    TableCheckboxCell,
+    TableRow,
+} from '@spectrum-web-components/table';
+
 import '@spectrum-web-components/table/sp-table.js';
 import '@spectrum-web-components/table/sp-table-head.js';
 import '@spectrum-web-components/table/sp-table-head-cell.js';
@@ -27,12 +34,9 @@ import '@spectrum-web-components/table/sp-table-row.js';
 import '@spectrum-web-components/table/sp-table-cell.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import type {
-    Table,
-    TableBody,
-    TableCheckboxCell,
-    TableRow,
-} from '@spectrum-web-components/table';
+
+import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
+import { makeItems, Properties, renderItem } from '../stories/index.js';
 import {
     virtualized,
     virtualizedCustomRow,
@@ -40,8 +44,6 @@ import {
     virtualizedMultiple,
     virtualizedSingle,
 } from '../stories/table-virtualized.stories.js';
-import { makeItems, Properties, renderItem } from '../stories/index.js';
-import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
 import { styledFixture, tableLayoutComplete } from './helpers.js';
 
 ignoreResizeObserverLoopError(before, after);

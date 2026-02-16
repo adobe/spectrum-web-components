@@ -11,7 +11,9 @@
  */
 
 import { html } from '@open-wc/testing';
+
 import '@spectrum-web-components/switch/sp-switch.js';
+
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
 testForMemoryLeaks(html`

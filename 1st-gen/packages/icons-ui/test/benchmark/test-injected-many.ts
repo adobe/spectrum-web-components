@@ -10,7 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/icon/sp-icon.js';
+import { html } from '@spectrum-web-components/base';
+import { setCustomTemplateLiteralTag } from '@spectrum-web-components/icons-ui/src/custom-tag.js';
 import { Arrow75Icon } from '@spectrum-web-components/icons-ui/src/icons/Arrow75.js';
 import { Arrow100Icon } from '@spectrum-web-components/icons-ui/src/icons/Arrow100.js';
 import { Arrow200Icon } from '@spectrum-web-components/icons-ui/src/icons/Arrow200.js';
@@ -59,8 +60,9 @@ import { Dash600Icon } from '@spectrum-web-components/icons-ui/src/icons/Dash600
 import { DoubleGripperIcon } from '@spectrum-web-components/icons-ui/src/icons/DoubleGripper.js';
 import { SingleGripperIcon } from '@spectrum-web-components/icons-ui/src/icons/SingleGripper.js';
 import { TripleGripperIcon } from '@spectrum-web-components/icons-ui/src/icons/TripleGripper.js';
-import { setCustomTemplateLiteralTag } from '@spectrum-web-components/icons-ui/src/custom-tag.js';
-import { html } from '@spectrum-web-components/base';
+
+import '@spectrum-web-components/icon/sp-icon.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 setCustomTemplateLiteralTag(html);

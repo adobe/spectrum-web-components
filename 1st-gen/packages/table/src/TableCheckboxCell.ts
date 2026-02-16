@@ -16,14 +16,16 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import styles from './table-checkbox-cell.css.js';
 import { Checkbox } from '@spectrum-web-components/checkbox';
+
+import '@spectrum-web-components/checkbox/sp-checkbox.js';
+
+import styles from './table-checkbox-cell.css.js';
 
 /**
  * @element sp-table-checkbox-cell

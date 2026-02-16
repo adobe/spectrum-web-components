@@ -13,9 +13,10 @@
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 
 import '@spectrum-web-components/button-group/sp-button-group.js';
+
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { ButtonGroup } from '..';
 import { buttons, buttonsVertical } from '../stories/button-group.stories.js';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Buttongroup', () => {
     testForLitDevWarnings(

@@ -9,12 +9,15 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { RangeChangedEvent } from '@lit-labs/virtualizer/events.js';
+
 import {
     html,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+import type { SortedEventDetails, Table } from '@spectrum-web-components/table';
 
 import '@spectrum-web-components/table/sp-table.js';
 import '@spectrum-web-components/table/sp-table-checkbox-cell.js';
@@ -23,9 +26,8 @@ import '@spectrum-web-components/table/sp-table-head-cell.js';
 import '@spectrum-web-components/table/sp-table-body.js';
 import '@spectrum-web-components/table/sp-table-row.js';
 import '@spectrum-web-components/table/sp-table-cell.js';
+
 import { Item, makeItems, Properties, renderItem } from './index.js';
-import type { SortedEventDetails, Table } from '@spectrum-web-components/table';
-import { RangeChangedEvent } from '@lit-labs/virtualizer/events.js';
 
 export default {
     title: 'Table/Virtualized',

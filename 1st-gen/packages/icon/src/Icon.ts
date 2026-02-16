@@ -16,7 +16,6 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-
 import { IconsetRegistry } from '@spectrum-web-components/iconset/src/iconset-registry.js';
 
 import { IconBase } from './IconBase.js';
@@ -88,7 +87,7 @@ export class Icon extends IconBase {
         } else if (this.src) {
             return html`
                 <img
-                    src="${this.src}"
+                    src=${this.src}
                     alt=${ifDefined(this.label)}
                     @error=${this.announceIconImageSrcError}
                 />

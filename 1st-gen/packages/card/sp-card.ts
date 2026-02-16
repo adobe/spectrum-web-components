@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { Card } from './src/Card.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { Card } from './src/Card.js';
 
 defineElement('sp-card', Card);
 

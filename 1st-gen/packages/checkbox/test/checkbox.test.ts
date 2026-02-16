@@ -10,8 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/checkbox/sp-checkbox.js';
-import { Checkbox } from '../';
 import {
     elementUpdated,
     expect,
@@ -20,17 +18,21 @@ import {
     triggerBlurFor,
     waitUntil,
 } from '@open-wc/testing';
-import '@spectrum-web-components/shared/src/focus-visible.js';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
 
+import '@spectrum-web-components/checkbox/sp-checkbox.js';
+import '@spectrum-web-components/shared/src/focus-visible.js';
+
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { Checkbox } from '../';
+
 function inputForCheckbox(checkbox: Checkbox): HTMLInputElement {
-    if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
+    if (!checkbox.shadowRoot) {throw new Error('No shadowRoot');}
     return checkbox.shadowRoot.querySelector('#input') as HTMLInputElement;
 }
 
 function labelForCheckbox(checkbox: Checkbox): HTMLLabelElement {
-    if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
+    if (!checkbox.shadowRoot) {throw new Error('No shadowRoot');}
     const labelEl = checkbox.shadowRoot.querySelector('label');
     if (!labelEl) {
         throw new Error('Failed to find label in shadowRoot');
@@ -39,7 +41,7 @@ function labelForCheckbox(checkbox: Checkbox): HTMLLabelElement {
 }
 
 function labelNodeForCheckbox(checkbox: Checkbox): Node {
-    if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
+    if (!checkbox.shadowRoot) {throw new Error('No shadowRoot');}
     const slotEl = checkbox.shadowRoot.querySelector('slot');
     if (!slotEl) {
         throw new Error('Failed to find slot in shadowRoot');

@@ -15,8 +15,8 @@ import {
     html,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
     PROGRESS_CIRCLE_STATIC_COLORS_S1,
     ProgressCircleBase,

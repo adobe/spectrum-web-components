@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+import '../src/spectrum-two/core-tokens.js';
+
 import lightStyles from '../src/spectrum-two/theme-light-core-tokens.css.js';
 import { Theme } from '../src/Theme.js';
-import '../src/spectrum-two/core-tokens.js';
 
 Theme.registerThemeFragment('light-spectrum-two', 'color', lightStyles);

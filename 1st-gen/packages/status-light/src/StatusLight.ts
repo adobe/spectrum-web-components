@@ -16,9 +16,7 @@ import {
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
-
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-
 import {
     STATUSLIGHT_VARIANTS_COLOR_S1,
     STATUSLIGHT_VARIANTS_S1,

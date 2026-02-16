@@ -16,11 +16,13 @@ import {
     html,
     oneEvent,
 } from '@open-wc/testing';
-import { Tooltip } from '@spectrum-web-components/tooltip/src/Tooltip.js';
 
 import { isWebKit } from '@spectrum-web-components/shared';
-import { mouseMoveOver } from '../../../test/testing-helpers.js';
+import { Tooltip } from '@spectrum-web-components/tooltip/src/Tooltip.js';
+
 import '../sp-truncated.js';
+
+import { mouseMoveOver } from '../../../test/testing-helpers.js';
 import { Truncated } from '../src/index.js';
 
 describe('Truncated', () => {

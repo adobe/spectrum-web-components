@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { Textfield } from './src/Textfield.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { Textfield } from './src/Textfield.js';
 
 defineElement('sp-textfield', Textfield);
 

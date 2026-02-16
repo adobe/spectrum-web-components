@@ -11,6 +11,7 @@
  */
 
 import { TemplateResult } from '@spectrum-web-components/base';
+
 import type { Properties } from './index.js';
 import { renderButtons } from './index.js';
 

@@ -51,7 +51,7 @@ class StreamingListenerDirective extends AsyncDirective {
     stream?: number;
 
     /* c8 ignore next 4 */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+     
     render(_configGroup: ListenerConfigGroup): typeof nothing {
         return nothing;
     }

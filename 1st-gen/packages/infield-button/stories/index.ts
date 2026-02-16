@@ -10,12 +10,12 @@
  * governing permissions and limitations under the License.
  */
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 import '@spectrum-web-components/infield-button/sp-infield-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-add.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron75.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 document.adoptedStyleSheets = [
     ...document.adoptedStyleSheets,

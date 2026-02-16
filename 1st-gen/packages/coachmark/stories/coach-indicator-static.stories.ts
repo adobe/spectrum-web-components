@@ -11,8 +11,10 @@
  */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { makeOverBackground } from '../../button/stories/index.js';
+
 import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
+
+import { makeOverBackground } from '../../button/stories/index.js';
 
 export default {
     title: 'CoachIndicator',

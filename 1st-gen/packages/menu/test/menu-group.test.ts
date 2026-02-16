@@ -17,12 +17,15 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
+import { sendKeys } from '@web/test-runner-commands';
+
 import { Menu, MenuGroup, MenuItem } from '@spectrum-web-components/menu';
+
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
-import { sendKeys } from '@web/test-runner-commands';
+
 import {
     mouseClickOn,
     testForLitDevWarnings,

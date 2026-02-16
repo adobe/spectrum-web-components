@@ -1,10 +1,10 @@
 {
-    "extends": "./tsconfig-all.json",
     "compilerOptions": {
-        "rootDir": "./",
+        "emitDeclarationOnly": false,
         "noEmit": true,
-        "emitDeclarationOnly": false
+        "rootDir": "./"
     },
+    "extends": "./tsconfig-all.json",
     "include": ["react/**/*.ts"],
     "references": [
         {

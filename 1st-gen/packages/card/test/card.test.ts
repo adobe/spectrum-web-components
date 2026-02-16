@@ -11,16 +11,18 @@
  */
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import { setViewport } from '@web/test-runner-commands';
+import { spy } from 'sinon';
+
 import { Card } from '@spectrum-web-components/card';
+import { Checkbox } from '@spectrum-web-components/checkbox';
+
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/card/sp-card.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
-import { setViewport } from '@web/test-runner-commands';
 
-import { Checkbox } from '@spectrum-web-components/checkbox';
-import { spy } from 'sinon';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     mouseClickOn,
@@ -206,7 +208,7 @@ describe('card', () => {
 
         el.addEventListener('click', (event: Event) => {
             const composedTarget = event.composedPath()[0] as HTMLElement;
-            if (composedTarget.id !== 'like-anchor') return;
+            if (composedTarget.id !== 'like-anchor') {return;}
             clickSpy();
         });
 
@@ -256,7 +258,7 @@ describe('card', () => {
             const hasLikeAnchor = path.some(
                 (el) => (el as HTMLElement).id === 'like-anchor'
             );
-            if (!hasLikeAnchor) return;
+            if (!hasLikeAnchor) {return;}
             clickSpy();
         });
 
@@ -465,7 +467,7 @@ describe('card', () => {
         el.addEventListener('click', (event: Event) => {
             event.preventDefault();
             const composedTarget = event.composedPath()[0] as HTMLElement;
-            if (composedTarget.id !== 'like-anchor') return;
+            if (composedTarget.id !== 'like-anchor') {return;}
             clickSpy();
         });
         await elementUpdated(el);

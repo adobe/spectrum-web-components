@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { ProgressCircle } from './src/ProgressCircle.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { ProgressCircle } from './src/ProgressCircle.js';
 
 defineElement('sp-progress-circle', ProgressCircle);
 

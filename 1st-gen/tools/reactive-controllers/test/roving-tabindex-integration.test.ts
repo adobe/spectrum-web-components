@@ -10,20 +10,23 @@
  * governing permissions and limitations under the License.
  */
 import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
+import { sendKeys } from '@web/test-runner-commands';
+
 import { ActionButton } from '@spectrum-web-components/action-button';
-import '@spectrum-web-components/action-button/sp-action-button.js';
 import { ActionGroup } from '@spectrum-web-components/action-group';
-import '@spectrum-web-components/action-group/sp-action-group.js';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
-import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import { html } from '@spectrum-web-components/base';
+import { Tab, TabPanel, Tabs } from '@spectrum-web-components/tabs';
+
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/action-group/sp-action-group.js';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
-import { Tab, TabPanel, Tabs } from '@spectrum-web-components/tabs';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
-import { sendKeys } from '@web/test-runner-commands';
+
 import { mouseClickOn } from '../../../test/testing-helpers.js';
 
 const createTabs = async (): Promise<Tabs> => {

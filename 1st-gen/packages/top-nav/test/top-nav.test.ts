@@ -11,9 +11,10 @@
  */
 
 import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
+import { spy } from 'sinon';
 
 import { TopNav, TopNavItem } from '@spectrum-web-components/top-nav';
-import { spy } from 'sinon';
+
 import {
     mouseClickOn,
     testForLitDevWarnings,

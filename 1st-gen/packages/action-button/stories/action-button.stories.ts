@@ -11,12 +11,13 @@
  */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
+
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
+import '@spectrum-web-components/action-button/sp-action-button.js';
+
 import type { Properties } from './index.js';
 import { renderButton } from './index.js';
-
-import '@spectrum-web-components/action-button/sp-action-button.js';
 
 export default {
     component: 'sp-action-button',
@@ -26,8 +27,8 @@ export default {
 function renderButtonsSelected(args: Properties): TemplateResult {
     return html`
         <sp-action-group
-            ?emphasized="${!!args.emphasized}"
-            ?quiet="${!!args.quiet}"
+            ?emphasized=${!!args.emphasized}
+            ?quiet=${!!args.quiet}
         >
             ${renderButton(args)} ${renderButton({ ...args, selected: true })}
             ${renderButton({ ...args, disabled: true })}

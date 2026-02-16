@@ -20,8 +20,9 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { CheckboxMixin } from './CheckboxMixin.js';
-import checkboxStyles from './checkbox.css.js';
+import checkmarkSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
+import dashSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-dash.css.js';
+
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark75.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark200.js';
@@ -30,8 +31,9 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-dash75.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash100.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash200.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash300.js';
-import checkmarkSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
-import dashSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-dash.css.js';
+
+import checkboxStyles from './checkbox.css.js';
+import { CheckboxMixin } from './CheckboxMixin.js';
 
 const checkmarkIcon = {
     s: () => {

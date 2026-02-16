@@ -10,11 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import Sinon from 'sinon';
-import { isWebKit } from '@spectrum-web-components/shared';
-import '@spectrum-web-components/icon/sp-icon.js';
-import { Icon } from '@spectrum-web-components/icon';
-import '@spectrum-web-components/icons/sp-icons-medium.js';
 import {
     elementUpdated,
     expect,
@@ -22,6 +17,14 @@ import {
     html,
     waitUntil,
 } from '@open-wc/testing';
+import Sinon from 'sinon';
+
+import { Icon } from '@spectrum-web-components/icon';
+import { isWebKit } from '@spectrum-web-components/shared';
+
+import '@spectrum-web-components/icon/sp-icon.js';
+import '@spectrum-web-components/icons/sp-icons-medium.js';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Icon', () => {

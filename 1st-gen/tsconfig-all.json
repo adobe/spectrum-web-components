@@ -1,19 +1,19 @@
 {
-    "extends": "./tsconfig.json",
     "compilerOptions": {
-        "rootDir": "./",
+        "emitDeclarationOnly": false,
         "noEmit": true,
-        "emitDeclarationOnly": false
+        "rootDir": "./"
     },
+    "exclude": [
+        "packages/*/node_modules/**/*.ts",
+        "tools/*/node_modules/**/*.ts"
+    ],
+    "extends": "./tsconfig.json",
     "include": [
         "packages/**/*.ts",
         "tools/**/*.ts",
         "projects/story-decorator/**/*.ts",
         "projects/vrt-compare/**/*.ts"
-    ],
-    "exclude": [
-        "packages/*/node_modules/**/*.ts",
-        "tools/*/node_modules/**/*.ts"
     ],
     "references": [
         {

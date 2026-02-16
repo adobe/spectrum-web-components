@@ -10,8 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import type { DecoratorFunction } from '@storybook/types';
 import { html } from 'lit';
+import type { DecoratorFunction } from '@storybook/types';
 
 /**
  * Decorator that applies selected theme and scale

@@ -11,9 +11,9 @@
  */
 
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import { visualizer } from 'rollup-plugin-visualizer';
 import terser from '@rollup/plugin-terser';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 export default {
     preserveEntrySignatures: false,

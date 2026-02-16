@@ -9,25 +9,25 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import type { ActionMenu } from '@spectrum-web-components/action-menu';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { Menu } from '@spectrum-web-components/menu';
+import type { MenuItem } from '@spectrum-web-components/menu/src/MenuItem.js';
+import { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
+import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
 
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
-import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
+
 import { makeOverBackground } from '../../button/stories/index.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
 import { ActionMenuMarkup } from './';
-
-import type { ActionMenu } from '@spectrum-web-components/action-menu';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
-import { Menu } from '@spectrum-web-components/menu';
-import type { MenuItem } from '@spectrum-web-components/menu/src/MenuItem.js';
-import { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
 
 export default {
     component: 'sp-action-menu',
@@ -349,7 +349,7 @@ export const controlled = ({ align = 'start' } = {}): TemplateResult => {
         logState();
     }
     function logState(): void {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+         
         document.getElementById('state-json')!.textContent =
             `application state: ${JSON.stringify(state)}`;
     }

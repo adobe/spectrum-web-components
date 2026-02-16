@@ -11,8 +11,10 @@
  */
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
-import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 import { CoachIndicator } from '@spectrum-web-components/coachmark';
+
+import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('CoachIndicator', () => {

@@ -15,9 +15,10 @@ import { property, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { when } from 'lit/directives/when.js';
 
+import { SpectrumMixin } from '@spectrum-web-components/base';
+
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/button/sp-button.js';
-import { SpectrumMixin } from '@spectrum-web-components/base';
 
 enum BlendModeValue {
     normal = 2,

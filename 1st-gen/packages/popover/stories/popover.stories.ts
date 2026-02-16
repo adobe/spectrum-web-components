@@ -9,15 +9,17 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import '@spectrum-web-components/popover/sp-popover.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { Placement } from '@spectrum-web-components/overlay';
+
+import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/button/sp-button.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import { isOverlayOpen } from '../../overlay/stories/index.js';
 import '../../overlay/stories/index.js';
+
+import { isOverlayOpen } from '../../overlay/stories/index.js';
 
 export default {
     component: 'sp-popover',
@@ -101,7 +103,7 @@ const Template = ({ tip, placement, open }: StoryArgs): TemplateResult => {
                 placement=${placement}
                 ?open=${open}
                 style=" max-width: 320px"
-                .tip="${tip}"
+                .tip=${tip}
             >
                 <sp-dialog size="s">
                     <h2 slot="heading">Popover Title</h2>

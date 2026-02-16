@@ -20,27 +20,30 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
+import { sendKeys } from '@web/test-runner-commands';
+import sinon, { spy } from 'sinon';
 
 import { ActionButton } from '@spectrum-web-components/action-button';
-import '@spectrum-web-components/action-button/sp-action-button.js';
 import { ActionGroup } from '@spectrum-web-components/action-group';
-import '@spectrum-web-components/action-group/sp-action-group.js';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
-import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import {
     LitElement,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { MenuItem } from '@spectrum-web-components/menu';
+import { isWebKit } from '@spectrum-web-components/shared';
+
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/action-group/sp-action-group.js';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/picker/sp-picker.js';
-import { isWebKit } from '@spectrum-web-components/shared';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import { sendKeys } from '@web/test-runner-commands';
-import sinon, { spy } from 'sinon';
+import '../stories/action-group.stories.js';
+
 import {
     arrowDownEvent,
     arrowLeftEvent,
@@ -53,9 +56,8 @@ import {
     sendTabKey,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
-import { controlled } from '../stories/action-group-tooltip.stories.js';
-import '../stories/action-group.stories.js';
 import { HasActionMenuAsChild } from '../stories/action-group.stories.js';
+import { controlled } from '../stories/action-group-tooltip.stories.js';
 
 class QuietActionGroup extends LitElement {
     protected override render(): TemplateResult {

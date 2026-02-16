@@ -12,6 +12,7 @@
 
 import { html, LitElement } from 'lit';
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
+
 import { ElementResolutionController } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
 
 describe('Element Resolution', () => {

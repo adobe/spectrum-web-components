@@ -12,13 +12,13 @@
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { NumberField } from '@spectrum-web-components/number-field/src/NumberField.js';
 
 import '@spectrum-web-components/number-field/sp-number-field.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 
 import { spreadProps } from '../../../test/lit-helpers.js';
-import { NumberField } from '@spectrum-web-components/number-field/src/NumberField.js';
 
 export default {
     title: 'Number Field',
@@ -268,7 +268,7 @@ export const germanDecimals = (args: StoryArgs): TemplateResult => {
         <sp-field-label for="decimals">
             Enter a number with visible decimals
         </sp-field-label>
-        <sp-theme lang="de" dir="${currentDir}" system=${currentSystem}>
+        <sp-theme lang="de" dir=${currentDir} system=${currentSystem}>
             <sp-number-field
                 id="decimals"
                 ...=${spreadProps(args)}

@@ -13,7 +13,7 @@
  */
 
 /**
- * @fileoverview This task generates and updates custom elements manifest JSON files
+ * @file This task generates and updates custom elements manifest JSON files
  * for all workspace packages using the Custom Elements Manifest analyzer (CEM).
  *
  * @description
@@ -29,14 +29,14 @@
  * - Error: "Error executing custom-element-json command:" followed by error details
  */
 
+import { cli } from '@custom-elements-manifest/analyzer/cli.js';
+import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
-import { execSync } from 'child_process';
-import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-
 import { rimraf } from 'rimraf';
-import { cli } from '@custom-elements-manifest/analyzer/cli.js';
+import { fileURLToPath } from 'url';
+
 import 'colors';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

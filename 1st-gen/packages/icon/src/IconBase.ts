@@ -18,14 +18,13 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
-    SystemResolutionController,
-    systemResolverUpdatedSymbol,
-} from '@spectrum-web-components/reactive-controllers/src/SystemContextResolution.js';
-
-import {
     property,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    SystemResolutionController,
+    systemResolverUpdatedSymbol,
+} from '@spectrum-web-components/reactive-controllers/src/SystemContextResolution.js';
 
 import iconStyles from './icon.css.js';
 

@@ -9,10 +9,12 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+
+import { Popover } from '@spectrum-web-components/popover';
+
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
-import { Popover } from '@spectrum-web-components/popover';
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 describe('popover', () => {
     let popover!: Popover;
@@ -39,7 +41,7 @@ describe('popover', () => {
         await expect(popover).to.be.accessible();
     });
     it('tip exists only when tip attribute is true', async () => {
-        if (!popover.shadowRoot) throw new Error('No shadowRoot');
+        if (!popover.shadowRoot) {throw new Error('No shadowRoot');}
         expect(popover.getAttribute('tip')).to.equal(null);
 
         let tip = popover.shadowRoot.querySelector('tip') as HTMLElement;

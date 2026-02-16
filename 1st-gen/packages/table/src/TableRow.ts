@@ -20,6 +20,7 @@ import {
     property,
     queryAssignedElements,
 } from '@spectrum-web-components/base/src/decorators.js';
+
 import styles from './table-row.css.js';
 import { TableCheckboxCell } from './TableCheckboxCell.js';
 
@@ -89,7 +90,7 @@ export class TableRow extends SpectrumElement {
             this.removeAttribute('aria-selected');
         }
         const [checkboxCell] = this.checkboxCells;
-        if (!checkboxCell) return;
+        if (!checkboxCell) {return;}
         checkboxCell.checked = this.selected;
     }
 
@@ -106,7 +107,7 @@ export class TableRow extends SpectrumElement {
             return;
         }
         const [checkboxCell] = this.checkboxCells;
-        if (!checkboxCell) /* c8 ignore next */ return;
+        if (!checkboxCell) /* c8 ignore next */ {return;}
         checkboxCell.click();
     }
 

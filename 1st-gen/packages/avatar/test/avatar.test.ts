@@ -9,11 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import '@spectrum-web-components/avatar/sp-avatar.js';
-import { Avatar } from '@spectrum-web-components/avatar';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { stub } from 'sinon';
+
+import { Avatar } from '@spectrum-web-components/avatar';
+
+import '@spectrum-web-components/avatar/sp-avatar.js';
+
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Avatar', () => {
     testForLitDevWarnings(

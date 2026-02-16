@@ -12,9 +12,11 @@
 
 import { swcThemeDecorator } from '@spectrum-web-components/story-decorator/decorator.js';
 import { Locales } from '@spectrum-web-components/story-decorator/src/locales.js';
+
+import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
+
 // import { setCustomElementsManifest } from '@storybook/web-components';
 import DocumentationTemplate from './DocumentationTemplate.mdx';
-import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
 
 /**
  * Ensure that window.__swc is defined in the storybook runtime.

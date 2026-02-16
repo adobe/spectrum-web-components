@@ -11,11 +11,13 @@
  */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { trigger } from '@spectrum-web-components/overlay';
+
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/dialog/sp-dialog-base.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
-import { trigger } from '@spectrum-web-components/overlay';
+
 import { alertDestructive } from './dialog.stories.js';
 import { portrait } from './images.js';
 import {

@@ -16,10 +16,10 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import type { TableHeadCell } from './TableHeadCell.js';
-import { TableCheckboxCell } from './TableCheckboxCell.js';
 
 import styles from './table-head.css.js';
+import { TableCheckboxCell } from './TableCheckboxCell.js';
+import type { TableHeadCell } from './TableHeadCell.js';
 
 /**
  * @element sp-table-head
