@@ -189,6 +189,44 @@ jobs:
                     (cd "$dir" && $PUBLISH_CMD) || exit 1
                   done
 
+            - name: Publish summary
+              if: always()
+              run: |
+                  TAG="${{ steps.extract-tag.outputs.tag }}"
+                  echo "## Publish summary" >> $GITHUB_STEP_SUMMARY
+                  echo "" >> $GITHUB_STEP_SUMMARY
+
+                  if [ "${{ github.event_name }}" == "pull_request" ]; then
+                    echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+                    echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+                    echo "| **Trigger** | Pull request |" >> $GITHUB_STEP_SUMMARY
+                    echo "| **PR** | #${{ github.event.pull_request.number }} — ${{ github.event.pull_request.title }} |" >> $GITHUB_STEP_SUMMARY
+                    echo "| **Branch** | \`${{ github.head_ref }}\` → \`${{ github.base_ref }}\` |" >> $GITHUB_STEP_SUMMARY
+                    echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
+                    echo "| **Author** | @${{ github.event.pull_request.user.login }} |" >> $GITHUB_STEP_SUMMARY
+                  elif [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+                    echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+                    echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+                    echo "| **Trigger** | Manual dispatch |" >> $GITHUB_STEP_SUMMARY
+                    echo "| **Branch** | \`${{ github.ref_name }}\` |" >> $GITHUB_STEP_SUMMARY
+                    echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
+                    echo "| **Actor** | @${{ github.actor }} |" >> $GITHUB_STEP_SUMMARY
+                  else
+                    echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+                    echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+                    echo "| **Trigger** | Push |" >> $GITHUB_STEP_SUMMARY
+                    echo "| **Branch** | \`${{ github.ref_name }}\` |" >> $GITHUB_STEP_SUMMARY
+                    echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
+                    echo "| **Commit** | \`${{ github.sha }}\` |" >> $GITHUB_STEP_SUMMARY
+                  fi
+
+                  echo "" >> $GITHUB_STEP_SUMMARY
+                  if [ "${{ steps.npm-auth.outcome }}" == "success" ]; then
+                    echo "✅ Publish completed with tag \`${TAG}\`" >> $GITHUB_STEP_SUMMARY
+                  else
+                    echo "❌ Publish failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
+                  fi
+
             - name: Commit and push changes
               if: steps.extract-tag.outputs.tag == 'latest'
               run: |
