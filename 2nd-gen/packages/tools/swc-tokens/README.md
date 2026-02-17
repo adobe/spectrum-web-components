@@ -238,14 +238,13 @@ This keeps runtime usage predictable and avoids re-implementing token logic in d
 
 An additional option is to generate a stylesheet with classes for typography styles.
 
-Classes are availale for the following type style categories, and include CJK adjustments:
+Classes are available for the following type style categories, and include CJK adjustments:
 
 - heading
+- title
 - body
 - detail
 - code
-
-> **Note**: `title` tokens are presently missing from the design token data, and will be added when available.
 
 ## CLI Options
 
