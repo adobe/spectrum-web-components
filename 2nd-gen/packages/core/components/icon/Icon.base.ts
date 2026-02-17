@@ -12,7 +12,7 @@
 import { PropertyValues } from 'lit';
 import { property, query } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/shared/base/index.js';
+import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 /**
  * An icon renderer that displays either an external image or slotted SVG markup.
@@ -21,68 +21,66 @@ import { SpectrumElement } from '@spectrum-web-components/core/shared/base/index
  * @attribute {string} label - Accessible label for the icon.
  */
 export abstract class IconBase extends SpectrumElement {
-    // ──────────────────
-    //     SHARED API
-    // ──────────────────
+  // ──────────────────
+  //     SHARED API
+  // ──────────────────
 
-    /**
-     * URL to an image or SVG file.
-     */
-    @property()
-    public src?: string;
+  /**
+   * URL to an image or SVG file.
+   */
+  @property()
+  public src?: string;
 
-    /**
-     * Accessible label for the icon.
-     */
-    @property()
-    public label = '';
+  /**
+   * Accessible label for the icon.
+   */
+  @property()
+  public label = '';
 
-    @query('slot')
-    private defaultSlot?: HTMLSlotElement;
+  @query('slot')
+  private defaultSlot?: HTMLSlotElement;
 
-    // ──────────────────────
-    //     IMPLEMENTATION
-    // ──────────────────────
+  // ──────────────────────
+  //     IMPLEMENTATION
+  // ──────────────────────
 
-    protected override updated(changedProperties: PropertyValues): void {
-        super.updated(changedProperties);
-        if (changedProperties.has('label')) {
-            if (this.label) {
-                this.removeAttribute('aria-hidden');
-            } else {
-                this.setAttribute('aria-hidden', 'true');
-            }
-            this.updateSlottedIcon();
-        }
+  protected override updated(changedProperties: PropertyValues): void {
+    super.updated(changedProperties);
+    if (changedProperties.has('label')) {
+      if (this.label) {
+        this.removeAttribute('aria-hidden');
+      } else {
+        this.setAttribute('aria-hidden', 'true');
+      }
+      this.updateSlottedIcon();
     }
+  }
 
-    protected handleSlotChange(): void {
-        this.updateSlottedIcon();
-    }
+  protected handleSlotChange(): void {
+    this.updateSlottedIcon();
+  }
 
-    private updateSlottedIcon(): void {
-        const slot = this.defaultSlot;
-        if (!slot) {
-            return;
-        }
-        const [slotted] = slot.assignedElements({ flatten: true });
-        if (!slotted) {
-            return;
-        }
-        const svgElement =
-            slotted instanceof SVGElement
-                ? slotted
-                : slotted.querySelector?.('svg');
-        if (!svgElement) {
-            return;
-        }
-        svgElement.setAttribute('role', 'img');
-        if (this.label) {
-            svgElement.setAttribute('aria-label', this.label);
-            svgElement.removeAttribute('aria-hidden');
-        } else {
-            svgElement.setAttribute('aria-hidden', 'true');
-            svgElement.removeAttribute('aria-label');
-        }
+  private updateSlottedIcon(): void {
+    const slot = this.defaultSlot;
+    if (!slot) {
+      return;
     }
+    const [slotted] = slot.assignedElements({ flatten: true });
+    if (!slotted) {
+      return;
+    }
+    const svgElement =
+      slotted instanceof SVGElement ? slotted : slotted.querySelector?.('svg');
+    if (!svgElement) {
+      return;
+    }
+    svgElement.setAttribute('role', 'img');
+    if (this.label) {
+      svgElement.setAttribute('aria-label', this.label);
+      svgElement.removeAttribute('aria-hidden');
+    } else {
+      svgElement.setAttribute('aria-hidden', 'true');
+      svgElement.removeAttribute('aria-label');
+    }
+  }
 }
