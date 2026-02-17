@@ -29,6 +29,11 @@ import styles from './icon.css';
  *     <path d="M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"/>
  *   </svg>
  * </swc-icon>
+ *
+ * @example
+ * import { Chevron100Icon } from '@adobe/swc/icon/icons';
+ *
+ * html`<swc-icon label="Expand">${Chevron100Icon()}</swc-icon>`;
  */
 export class Icon extends IconBase {
     // ──────────────────────────────
