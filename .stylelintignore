@@ -1,11 +1,29 @@
-node_modules
-HEADER
-1st-gen/node_modules
-2nd-gen/node_modules
-1st-gen/task
-2nd-gen/task
-*.*
-!*.css
+**/node_modules
+**/dist
+**/storybook-static
+**/coverage
+**/.wireit
+**/out
+**/out-tsc
+**/_site
+**/.tmp
+**/playwright-report
+**/test-results
+**/task
+
+# Ignore non-CSS files (but not directories starting with .)
+**/*.ts
+**/*.tsx
+**/*.js
+**/*.jsx
+**/*.json
+**/*.md
+**/*.mdx
+**/*.html
+**/*.yaml
+**/*.yml
+
+# Project-specific ignores
 1st-gen/projects/example-project/dist
 1st-gen/tools/styles
 1st-gen/spectrum-*.css

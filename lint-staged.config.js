@@ -11,25 +11,25 @@
  */
 
 export default {
-    '*.css': [
-        'stylelint --fix --cache --allow-empty-input',
-        'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
-    ],
-    '*.ts': [
-        'eslint --fix --format pretty --cache --no-error-on-unmatched-pattern --quiet',
-        'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
-    ],
-    '1st-gen/{packages,tools}/*/src/**/!(*.css).ts': [
-        'yarn workspace @spectrum-web-components/1st-gen lit-analyzer',
-    ],
-    'package.json': () => [
-        'node scripts/generate-versions.js',
-        'yarn constraints --fix',
-        'yarn install --refresh-lockfile',
-        'git add 1st-gen/tools/base/src/version.ts 2nd-gen/packages/core/element/version.ts yarn.lock',
-    ],
-    '.changeset/*.md': ['node 1st-gen/scripts/escape-changelog-tags.js'],
-    '!(*.css|*.ts)': [
-        'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
-    ],
+  '*.css': [
+    'stylelint --fix --cache --allow-empty-input',
+    'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
+  ],
+  '*.{ts,js,mjs,cjs}': [
+    'eslint --fix --cache --no-error-on-unmatched-pattern',
+    'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
+  ],
+  '1st-gen/{packages,tools}/*/src/**/!(*.css).ts': [
+    'yarn workspace @spectrum-web-components/1st-gen lit-analyzer',
+  ],
+  'package.json': () => [
+    'node scripts/generate-versions.js',
+    'yarn constraints --fix',
+    'yarn install --refresh-lockfile',
+    'git add 1st-gen/tools/base/src/version.ts 2nd-gen/packages/core/element/version.ts yarn.lock',
+  ],
+  '.changeset/*.md': ['node 1st-gen/scripts/escape-changelog-tags.js'],
+  '!(*.css|*.ts)': [
+    'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
+  ],
 };

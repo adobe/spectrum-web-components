@@ -678,7 +678,9 @@ class DefinedOverlayReady extends HTMLElement {
     ready!: (value: boolean | PromiseLike<boolean>) => void;
 
     connectedCallback(): void {
-        if (!!this.ready) return;
+        if (this.ready !== undefined) {
+            return;
+        }
 
         this.readyPromise = new Promise((res) => {
             this.ready = res;
