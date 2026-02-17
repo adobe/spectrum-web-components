@@ -12,7 +12,6 @@
  * governing permissions and limitations under the License.
  */
 
-/* eslint-disable no-console */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -20,10 +19,10 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
 
-// Read copyright header from HEADER file
+// Read copyright header from linters/HEADER.js
 const COPYRIGHT_HEADER = fs
-    .readFileSync(path.join(root, 'HEADER'), 'utf-8')
-    .trim();
+  .readFileSync(path.join(root, 'linters/HEADER.js'), 'utf-8')
+  .trim();
 
 /**
  * Generate a version TypeScript file from a package.json
@@ -34,13 +33,13 @@ const COPYRIGHT_HEADER = fs
  * @param {string} [options.coreVersion] - Optional core version to include
  */
 function generateVersion(packageJsonPath, outputPath, options = {}) {
-    const { generationName, coreVersion } = options;
+  const { generationName, coreVersion } = options;
 
-    try {
-        const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
-        const version = pkg.version;
+  try {
+    const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+    const version = pkg.version;
 
-        let content = `${COPYRIGHT_HEADER}
+    let content = `${COPYRIGHT_HEADER}
 
 // Auto-generated from ${path.relative(root, packageJsonPath)}
 // Generation: ${generationName}
@@ -57,28 +56,28 @@ export const version = '${version}';
 export const coreVersion = '${coreVersion || version}';
 `;
 
-        fs.writeFileSync(outputPath, content);
-        console.log(
-            `✓ Generated ${path.relative(root, outputPath)} with version ${version}`
-        );
-    } catch (error) {
-        console.error(
-            `✗ Failed to generate ${path.relative(root, outputPath)}:`,
-            error.message
-        );
-        process.exit(1);
-    }
+    fs.writeFileSync(outputPath, content);
+    console.log(
+      `✓ Generated ${path.relative(root, outputPath)} with version ${version}`
+    );
+  } catch (error) {
+    console.error(
+      `✗ Failed to generate ${path.relative(root, outputPath)}:`,
+      error.message
+    );
+    process.exit(1);
+  }
 }
 
 // Generate 2nd-gen version first (this is the core)
 const secondGenPkgPath = path.join(root, '2nd-gen/packages/core/package.json');
 const secondGenOutputPath = path.join(
-    root,
-    '2nd-gen/packages/core/element/version.ts'
+  root,
+  '2nd-gen/packages/core/element/version.ts'
 );
 
 generateVersion(secondGenPkgPath, secondGenOutputPath, {
-    generationName: '2nd-gen',
+  generationName: '2nd-gen',
 });
 
 // Get 2nd-gen version for use as coreVersion in 1st-gen
@@ -90,8 +89,8 @@ const firstGenPkgPath = path.join(root, '1st-gen/tools/base/package.json');
 const firstGenOutputPath = path.join(root, '1st-gen/tools/base/src/version.ts');
 
 generateVersion(firstGenPkgPath, firstGenOutputPath, {
-    generationName: '1st-gen',
-    coreVersion: secondGenVersion,
+  generationName: '1st-gen',
+  coreVersion: secondGenVersion,
 });
 
 console.log('\n✓ All version files generated successfully');
