@@ -304,6 +304,124 @@ export const ReturnToIndeterminateTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Language resolution
+// ──────────────────────────────────────────────────────────────
+
+export const LanguageResolutionTest: Story = {
+    render: () => html`
+        <swc-progress-circle
+            progress="50"
+            label="Uploading file"
+        ></swc-progress-circle>
+    `,
+    play: async ({ canvasElement, step }) => {
+        const progressCircle = await getComponent<ProgressCircle>(
+            canvasElement,
+            'swc-progress-circle'
+        );
+        const originalLang = document.documentElement.lang;
+
+        await step(
+            'formats aria-valuetext with the default locale',
+            async () => {
+                expect(
+                    progressCircle.getAttribute('aria-valuetext')
+                ).toBeTruthy();
+            }
+        );
+
+        await step(
+            'updates aria-valuetext when document language changes',
+            async () => {
+                document.documentElement.lang = 'fr-FR';
+                // MutationObserver delivers asynchronously
+                await new Promise((r) => setTimeout(r, 0));
+                await progressCircle.updateComplete;
+
+                const valueText =
+                    progressCircle.getAttribute('aria-valuetext') || '';
+                // French locale uses a non-breaking space before the percent sign
+                expect(valueText).toContain('50');
+
+                // Restore
+                document.documentElement.lang = originalLang;
+                await new Promise((r) => setTimeout(r, 0));
+                await progressCircle.updateComplete;
+            }
+        );
+    },
+};
+
+export const SharedObserverTest: Story = {
+    render: () => html`
+        <swc-progress-circle progress="25" label="Task A"></swc-progress-circle>
+        <swc-progress-circle progress="75" label="Task B"></swc-progress-circle>
+    `,
+    play: async ({ canvasElement, step }) => {
+        const circles = await getComponents<ProgressCircle>(
+            canvasElement,
+            'swc-progress-circle'
+        );
+        const originalLang = document.documentElement.lang;
+
+        await step(
+            'all progress circles update when document language changes',
+            async () => {
+                document.documentElement.lang = 'de-DE';
+                await new Promise((r) => setTimeout(r, 0));
+                await Promise.all(circles.map((c) => c.updateComplete));
+
+                circles.forEach((circle) => {
+                    const valueText =
+                        circle.getAttribute('aria-valuetext') || '';
+                    expect(valueText).toBeTruthy();
+                });
+
+                // Restore
+                document.documentElement.lang = originalLang;
+                await new Promise((r) => setTimeout(r, 0));
+                await Promise.all(circles.map((c) => c.updateComplete));
+            }
+        );
+    },
+};
+
+export const DisconnectedControllerTest: Story = {
+    render: () => html`
+        <swc-progress-circle
+            progress="50"
+            label="Processing"
+        ></swc-progress-circle>
+    `,
+    play: async ({ canvasElement, step }) => {
+        const progressCircle = await getComponent<ProgressCircle>(
+            canvasElement,
+            'swc-progress-circle'
+        );
+        const originalLang = document.documentElement.lang;
+
+        await step(
+            'stops updating after the component is removed',
+            async () => {
+                const valueBefore =
+                    progressCircle.getAttribute('aria-valuetext');
+                progressCircle.remove();
+
+                document.documentElement.lang = 'ja-JP';
+                await new Promise((r) => setTimeout(r, 0));
+
+                expect(progressCircle.getAttribute('aria-valuetext')).toBe(
+                    valueBefore
+                );
+
+                // Restore
+                document.documentElement.lang = originalLang;
+            }
+        );
+    },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Dev mode warnings
 // ──────────────────────────────────────────────────────────────
 
