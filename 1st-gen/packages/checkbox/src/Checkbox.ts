@@ -74,7 +74,7 @@ const dashIcon = {
   s: () => {
     return html`
       <sp-icon-dash75
-        id="partialCheckmark"
+        id="partial-checkmark"
         class="spectrum-Icon spectrum-UIIcon-Dash75"
       ></sp-icon-dash75>
     `;
@@ -82,7 +82,7 @@ const dashIcon = {
   m: () => {
     return html`
       <sp-icon-dash100
-        id="partialCheckmark"
+        id="partial-checkmark"
         class="spectrum-Icon spectrum-UIIcon-Dash100"
       ></sp-icon-dash100>
     `;
@@ -90,7 +90,7 @@ const dashIcon = {
   l: () => {
     return html`
       <sp-icon-dash200
-        id="partialCheckmark"
+        id="partial-checkmark"
         class="spectrum-Icon spectrum-UIIcon-Dash200"
       ></sp-icon-dash200>
     `;
@@ -98,7 +98,7 @@ const dashIcon = {
   xl: () => {
     return html`
       <sp-icon-dash300
-        id="partialCheckmark"
+        id="partial-checkmark"
         class="spectrum-Icon spectrum-UIIcon-Dash300"
       ></sp-icon-dash300>
     `;

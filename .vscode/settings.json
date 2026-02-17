@@ -57,7 +57,12 @@
     "checkmark",
     "coachmark",
     "effectful",
+    "focusable",
+    "highcontrast",
     "minifiers",
+    "nowrap",
+    "sidenav",
+    "tabindex",
     "valuetext"
   ],
   "css.validate": false,
