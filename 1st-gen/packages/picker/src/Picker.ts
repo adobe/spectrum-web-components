@@ -73,9 +73,6 @@ export const DESCRIPTION_ID = 'option-picker';
  *
  * Extended by Picker, ActionMenu, and other components that display
  * a menu overlay triggered by a button.
- *
- * @fires change - Announces that the `value` of the element has changed
- * @fires sp-opened - Announces that the overlay has been opened
  */
 export class ExpandableElement extends SpectrumElement {
     /**
