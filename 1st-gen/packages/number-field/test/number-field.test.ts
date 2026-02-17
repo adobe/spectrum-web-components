@@ -95,6 +95,104 @@ describe('NumberField', () => {
 
     await expect(el).to.be.accessible();
   });
+  describe('truncated value tooltip', () => {
+    it('renders truncated value tooltip when neither valid nor invalid and value is clipped', async () => {
+      const el = await fixture<NumberField>(html`
+        <sp-number-field
+          style="--mod-textfield-width: 56px; --spectrum-textfield-min-width: 0;"
+          hide-stepper
+          value="123456789"
+        ></sp-number-field>
+      `);
+      await elementUpdated(el);
+      await elementUpdated(el);
+
+      const tooltipOverlay = el.shadowRoot?.querySelector(
+        '#truncated-value-tooltip'
+      );
+      expect(tooltipOverlay).to.exist;
+      const tooltip = el.shadowRoot?.querySelector(
+        '#truncated-value-tooltip sp-tooltip'
+      );
+      expect(tooltip?.textContent?.trim()).to.equal(el.focusElement.value);
+    });
+    it('renders truncated value tooltip when valid and value is clipped', async () => {
+      const el = await fixture<NumberField>(html`
+        <sp-number-field
+          style="--mod-textfield-width: 56px; --spectrum-textfield-min-width: 0;"
+          hide-stepper
+          value="123456789"
+          valid
+        ></sp-number-field>
+      `);
+      await elementUpdated(el);
+      await elementUpdated(el);
+
+      const tooltipOverlay = el.shadowRoot?.querySelector(
+        '#truncated-value-tooltip'
+      );
+      expect(tooltipOverlay).to.exist;
+      const tooltip = el.shadowRoot?.querySelector(
+        '#truncated-value-tooltip sp-tooltip'
+      );
+      expect(tooltip?.textContent?.trim()).to.equal(el.focusElement.value);
+    });
+
+    it('renders truncated value tooltip when invalid and value is clipped', async () => {
+      const el = await fixture<NumberField>(html`
+        <sp-number-field
+          style="--mod-textfield-width: 56px; --spectrum-textfield-min-width: 0;"
+          hide-stepper
+          value="123456789"
+          invalid
+        ></sp-number-field>
+      `);
+      await elementUpdated(el);
+      await elementUpdated(el);
+
+      const tooltipOverlay = el.shadowRoot?.querySelector(
+        '#truncated-value-tooltip'
+      );
+      expect(tooltipOverlay).to.exist;
+      const tooltip = el.shadowRoot?.querySelector(
+        '#truncated-value-tooltip sp-tooltip'
+      );
+      expect(tooltip?.textContent?.trim()).to.equal(el.focusElement.value);
+    });
+    it('does not render when the displayed value fits', async () => {
+      const el = await fixture<NumberField>(html`
+        <sp-number-field
+          style="--mod-textfield-width: 320px; --spectrum-textfield-min-width: 0;"
+          hide-stepper
+          value="123"
+        ></sp-number-field>
+      `);
+      await elementUpdated(el);
+      await elementUpdated(el);
+
+      const tooltipOverlay = el.shadowRoot?.querySelector(
+        '#truncated-value-tooltip'
+      );
+      expect(tooltipOverlay).to.not.exist;
+    });
+    it('does not render truncated value tooltip when disabled and value is clipped', async () => {
+      const el = await fixture<NumberField>(html`
+        <sp-number-field
+          style="--mod-textfield-width: 56px; --spectrum-textfield-min-width: 0;"
+          hide-stepper
+          value="123456789"
+          disabled
+        ></sp-number-field>
+      `);
+      await elementUpdated(el);
+      await elementUpdated(el);
+
+      const tooltipOverlay = el.shadowRoot?.querySelector(
+        '#truncated-value-tooltip'
+      );
+      expect(tooltipOverlay).to.not.exist;
+    });
+  });
   describe('receives input', () => {
     it('without language context', async () => {
       const el = await getElFrom(Default({ value: 1337 }));
@@ -1003,7 +1101,7 @@ describe('NumberField', () => {
     });
     it('manages currency', async () => {
       const el = await getElFrom(currency({ value: 234.21 }));
-      expect(el.formattedValue).to.equal('EUR 234.21');
+      expect(el.formattedValue).to.equal('EUR\u00a0234.21');
       expect(el.valueAsString).to.equal('234.21');
       expect(el.value).to.equal(234.21);
     });
