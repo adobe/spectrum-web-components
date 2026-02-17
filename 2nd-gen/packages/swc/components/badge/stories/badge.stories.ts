@@ -80,7 +80,7 @@ argTypes.size = {
  * Choose one style consistently within a product - `outline` and `subtle` fill draw similar attention levels.
  * Reserve bold fill for high-attention badging only.
  */
-const meta: Meta = {
+export const meta: Meta = {
     title: 'Badge',
     component: 'swc-badge',
     args,
@@ -102,7 +102,11 @@ const meta: Meta = {
     tags: ['migrated'],
 };
 
-export default meta;
+export default {
+    ...meta,
+    title: 'Badge',
+    excludeStories: ['meta'],
+} as Meta;
 
 // ────────────────────
 //    HELPERS
@@ -401,10 +405,10 @@ export const TextWrapping: Story = {
     `,
     tags: ['behaviors'],
     args: {
+        variant: 'informative',
         size: 'm',
     },
 };
-
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────

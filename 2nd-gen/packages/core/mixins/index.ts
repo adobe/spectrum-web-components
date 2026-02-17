@@ -11,16 +11,17 @@
  */
 
 export {
-    SpectrumElement,
-    SpectrumMixin,
-    type SpectrumInterface,
-} from './Base.js';
-export { defineElement } from './define-element.js';
+    ObserveSlotPresence,
+    type SlotPresenceObservingInterface,
+} from './observe-slot-presence.js';
 export {
-    ElementSizes,
-    SizedMixin,
-    type DefaultElementSize,
-    type ElementSize,
-    type SizedElementInterface,
-} from './sizedMixin.js';
-export { version } from './version.js';
+    ObserveSlotText,
+    type SlotTextObservingInterface,
+} from './observe-slot-text.js';
+export { ElementSizes, SizedMixin } from './sized-mixin.js';
+export type {
+    DefaultElementSize,
+    ElementSize,
+    SizedElementConstructor,
+    SizedElementInterface,
+} from './sized-mixin.js';

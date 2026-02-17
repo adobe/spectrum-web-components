@@ -74,7 +74,7 @@ export const coreVersion = '${coreVersion || version}';
 const secondGenPkgPath = path.join(root, '2nd-gen/packages/core/package.json');
 const secondGenOutputPath = path.join(
     root,
-    '2nd-gen/packages/core/shared/base/version.ts'
+    '2nd-gen/packages/core/element/version.ts'
 );
 
 generateVersion(secondGenPkgPath, secondGenOutputPath, {

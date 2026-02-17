@@ -10,4 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-export { capitalize } from './capitalize.js';
+export {
+    LanguageResolutionController,
+    languageResolverUpdatedSymbol,
+} from './language-resolution.js';

@@ -19,7 +19,7 @@ import {
     ProgressCircleBase,
     type ProgressCircleStaticColorS2,
 } from '@spectrum-web-components/core/components/progress-circle';
-import { capitalize } from '@spectrum-web-components/core/shared/utilities';
+import { capitalize } from '@spectrum-web-components/core/utils/index.js';
 
 import progressCircleStyles from './progress-circle.css';
 /**

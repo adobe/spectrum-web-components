@@ -12,10 +12,8 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import {
-    SizedMixin,
-    SpectrumElement,
-} from '@spectrum-web-components/core/shared/base';
+import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
 
 import { type StatusLightVariant } from './StatusLight.types.js';
 

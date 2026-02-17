@@ -26,7 +26,7 @@ export default {
         'node scripts/generate-versions.js',
         'yarn constraints --fix',
         'yarn install --refresh-lockfile',
-        'git add 1st-gen/tools/base/src/version.ts 2nd-gen/packages/core/shared/base/version.ts yarn.lock',
+        'git add 1st-gen/tools/base/src/version.ts 2nd-gen/packages/core/element/version.ts yarn.lock',
     ],
     '.changeset/*.md': ['node 1st-gen/scripts/escape-changelog-tags.js'],
     '!(*.css|*.ts)': [

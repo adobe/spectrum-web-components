@@ -17,4 +17,4 @@
 export {
     LanguageResolutionController,
     languageResolverUpdatedSymbol,
-} from '@spectrum-web-components/core/shared/reactive-controllers/LanguageResolution.js';
+} from '@spectrum-web-components/core/controllers/language-resolution.js';
