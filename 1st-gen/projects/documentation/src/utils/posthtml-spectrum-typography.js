@@ -16,23 +16,23 @@ import parseAttrs from 'posthtml-attrs-parser';
 import matchHelper from 'posthtml-match-helper';
 
 export default (options = {}) => {
-    const htmlTransforms = options.customTransforms || [];
-    return function postHTMLSpectrumTypeography(tree) {
-        for (const transform of htmlTransforms) {
-            tree.match(matchHelper(transform.selector), (node) => {
-                const attrs = parseAttrs(node.attrs);
-                if (transform.classes) {
-                    attrs.class = attrs.class
-                        ? transform.classes.concat(attrs.class)
-                        : transform.classes;
-                }
-                node.attrs = attrs.compose();
-                if (transform.fn) {
-                    node = transform.fn(node);
-                }
-                return node;
-            });
+  const htmlTransforms = options.customTransforms || [];
+  return function postHTMLSpectrumTypeography(tree) {
+    for (const transform of htmlTransforms) {
+      tree.match(matchHelper(transform.selector), (node) => {
+        const attrs = parseAttrs(node.attrs);
+        if (transform.classes) {
+          attrs.class = attrs.class
+            ? transform.classes.concat(attrs.class)
+            : transform.classes;
         }
-        return tree;
-    };
+        node.attrs = attrs.compose();
+        if (transform.fn) {
+          node = transform.fn(node);
+        }
+        return node;
+      });
+    }
+    return tree;
+  };
 };

@@ -9,13 +9,13 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { CoachIndicator } from './src/CoachIndicator.js';
-
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { CoachIndicator } from './src/CoachIndicator.js';
 defineElement('sp-coach-indicator', CoachIndicator);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-coach-indicator': CoachIndicator;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-coach-indicator': CoachIndicator;
+  }
 }

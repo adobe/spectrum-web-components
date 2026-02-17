@@ -10,10 +10,10 @@
  * governing permissions and limitations under the License.
  */
 import {
-    CSSResultArray,
-    html,
-    SpectrumElement,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  SpectrumElement,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
@@ -23,16 +23,16 @@ import styles from './table-cell.css.js';
  * @element sp-table-cell
  */
 export class TableCell extends SpectrumElement {
-    public static override get styles(): CSSResultArray {
-        return [styles];
-    }
+  public static override get styles(): CSSResultArray {
+    return [styles];
+  }
 
-    @property({ reflect: true })
-    public override role = 'gridcell';
+  @property({ reflect: true })
+  public override role = 'gridcell';
 
-    protected override render(): TemplateResult {
-        return html`
-            <slot></slot>
-        `;
-    }
+  protected override render(): TemplateResult {
+    return html`
+      <slot></slot>
+    `;
+  }
 }

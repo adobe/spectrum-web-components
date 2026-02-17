@@ -10,11 +10,11 @@
  * governing permissions and limitations under the License.
  */
 import { ElementPart, Part } from 'lit';
-import { nothing } from 'lit/html.js';
 import { AsyncDirective, directive } from 'lit/async-directive.js';
+import { nothing } from 'lit/html.js';
 
 type EventListenerWithOptions = EventListenerOrEventListenerObject &
-    Partial<AddEventListenerOptions>;
+  Partial<AddEventListenerOptions>;
 
 /**
  * Usage:
@@ -38,184 +38,196 @@ type EventListenerWithOptions = EventListenerOrEventListenerObject &
  * @TODO: replace this with a lit-native directive once one is released: https://github.com/lit/lit/pull/1960
  */
 class SpreadDirective extends AsyncDirective {
-    host!: EventTarget | object | Element;
-    element!: Element;
-    prevData: { [key: string]: unknown } = {};
+  host!: EventTarget | object | Element;
+  element!: Element;
+  prevData: { [key: string]: unknown } = {};
 
-    render(_spreadData: { [key: string]: unknown }) {
-        return nothing;
+  render(_spreadData: { [key: string]: unknown }) {
+    return nothing;
+  }
+  override update(part: Part, [spreadData]: Parameters<this['render']>) {
+    if (this.element !== (part as ElementPart).element) {
+      this.element = (part as ElementPart).element;
     }
-    override update(part: Part, [spreadData]: Parameters<this['render']>) {
-        if (this.element !== (part as ElementPart).element) {
-            this.element = (part as ElementPart).element;
-        }
-        this.host = part.options?.host || this.element;
-        this.apply(spreadData);
-        this.groom(spreadData);
-        this.prevData = spreadData;
-    }
+    this.host = part.options?.host || this.element;
+    this.apply(spreadData);
+    this.groom(spreadData);
+    this.prevData = spreadData;
+  }
 
-    apply(data: { [key: string]: unknown }) {
-        if (!data) return;
-        const { prevData, element } = this;
-        for (const key in data) {
-            const value = data[key];
-            if (value === prevData[key]) {
-                continue;
-            }
-            const name = key.slice(1);
-            switch (key[0]) {
-                case '@': // event listener
-                    const prevHandler = prevData[key];
-                    if (prevHandler) {
-                        element.removeEventListener(
-                            name,
-                            this,
-                            value as EventListenerWithOptions
-                        );
-                    }
-                    element.addEventListener(
-                        name,
-                        this,
-                        value as EventListenerWithOptions
-                    );
-                    break;
-                case '.': // property
-                    // @ts-ignore
-                    element[name] = value;
-                    break;
-                case '?': // boolean attribute
-                    if (value) {
-                        element.setAttribute(name, '');
-                    } else {
-                        element.removeAttribute(name);
-                    }
-                    break;
-                default:
-                    // standard attribute
-                    if (value != null) {
-                        element.setAttribute(key, String(value));
-                    } else {
-                        element.removeAttribute(key);
-                    }
-                    break;
-            }
-        }
+  apply(data: { [key: string]: unknown }) {
+    if (!data) {
+      return;
     }
-
-    groom(data: { [key: string]: unknown }) {
-        const { prevData, element } = this;
-        if (!prevData) return;
-        for (const key in prevData) {
-            if (!data || !(key in data)) {
-                switch (key[0]) {
-                    case '@': // event listener
-                        const value = prevData[key];
-                        element.removeEventListener(
-                            key.slice(1),
-                            this,
-                            value as EventListenerWithOptions
-                        );
-                        break;
-                    case '.': // property
-                        // @ts-ignore
-                        element[key.slice(1)] = undefined;
-                        break;
-                    case '?': // boolean attribute
-                        element.removeAttribute(key.slice(1));
-                        break;
-                    default:
-                        // standard attribute
-                        element.removeAttribute(key);
-                        break;
-                }
-            }
-        }
+    const { prevData, element } = this;
+    for (const key in data) {
+      const value = data[key];
+      if (value === prevData[key]) {
+        continue;
+      }
+      const name = key.slice(1);
+      switch (key[0]) {
+        case '@': // event listener
+          const prevHandler = prevData[key];
+          if (prevHandler) {
+            element.removeEventListener(
+              name,
+              this,
+              value as EventListenerWithOptions
+            );
+          }
+          element.addEventListener(
+            name,
+            this,
+            value as EventListenerWithOptions
+          );
+          break;
+        case '.': // property
+          // @ts-ignore
+          element[name] = value;
+          break;
+        case '?': // boolean attribute
+          if (value) {
+            element.setAttribute(name, '');
+          } else {
+            element.removeAttribute(name);
+          }
+          break;
+        default:
+          // standard attribute
+          if (value != null) {
+            element.setAttribute(key, String(value));
+          } else {
+            element.removeAttribute(key);
+          }
+          break;
+      }
     }
+  }
 
-    handleEvent(event: Event) {
-        const value: Function | EventListenerObject = this.prevData[
-            `@${event.type}`
-        ] as Function | EventListenerObject;
-        if (typeof value === 'function') {
-            (value as Function).call(this.host, event);
-        } else {
-            (value as EventListenerObject).handleEvent(event);
-        }
+  groom(data: { [key: string]: unknown }) {
+    const { prevData, element } = this;
+    if (!prevData) {
+      return;
     }
-
-    override disconnected() {
-        const { prevData, element } = this;
-        for (const key in prevData) {
-            if (key[0] !== '@') continue;
-            // event listener
+    for (const key in prevData) {
+      if (!data || !(key in data)) {
+        switch (key[0]) {
+          case '@': // event listener
             const value = prevData[key];
             element.removeEventListener(
-                key.slice(1),
-                this,
-                value as EventListenerWithOptions
+              key.slice(1),
+              this,
+              value as EventListenerWithOptions
             );
+            break;
+          case '.': // property
+            // @ts-ignore
+            element[key.slice(1)] = undefined;
+            break;
+          case '?': // boolean attribute
+            element.removeAttribute(key.slice(1));
+            break;
+          default:
+            // standard attribute
+            element.removeAttribute(key);
+            break;
         }
+      }
     }
+  }
 
-    override reconnected() {
-        const { prevData, element } = this;
-        for (const key in prevData) {
-            if (key[0] !== '@') continue;
-            // event listener
-            const value = prevData[key];
-            element.addEventListener(
-                key.slice(1),
-                this,
-                value as EventListenerWithOptions
-            );
-        }
+  handleEvent(event: Event) {
+    const value: Function | EventListenerObject = this.prevData[
+      `@${event.type}`
+    ] as Function | EventListenerObject;
+    if (typeof value === 'function') {
+      (value as Function).call(this.host, event);
+    } else {
+      (value as EventListenerObject).handleEvent(event);
     }
+  }
+
+  override disconnected() {
+    const { prevData, element } = this;
+    for (const key in prevData) {
+      if (key[0] !== '@') {
+        continue;
+      }
+      // event listener
+      const value = prevData[key];
+      element.removeEventListener(
+        key.slice(1),
+        this,
+        value as EventListenerWithOptions
+      );
+    }
+  }
+
+  override reconnected() {
+    const { prevData, element } = this;
+    for (const key in prevData) {
+      if (key[0] !== '@') {
+        continue;
+      }
+      // event listener
+      const value = prevData[key];
+      element.addEventListener(
+        key.slice(1),
+        this,
+        value as EventListenerWithOptions
+      );
+    }
+  }
 }
 
 export const spread = directive(SpreadDirective);
 
 class SpreadPropsDirective extends AsyncDirective {
-    host!: EventTarget | object | Element;
-    element!: Element;
-    prevData: { [key: string]: unknown } = {};
+  host!: EventTarget | object | Element;
+  element!: Element;
+  prevData: { [key: string]: unknown } = {};
 
-    render(_spreadData: { [key: string]: unknown }) {
-        return nothing;
+  render(_spreadData: { [key: string]: unknown }) {
+    return nothing;
+  }
+  override update(part: Part, [spreadData]: Parameters<this['render']>) {
+    if (this.element !== (part as ElementPart).element) {
+      this.element = (part as ElementPart).element;
     }
-    override update(part: Part, [spreadData]: Parameters<this['render']>) {
-        if (this.element !== (part as ElementPart).element) {
-            this.element = (part as ElementPart).element;
-        }
-        this.host = part.options?.host || this.element;
-        this.apply(spreadData);
-        this.groom(spreadData);
-        this.prevData = spreadData;
-    }
+    this.host = part.options?.host || this.element;
+    this.apply(spreadData);
+    this.groom(spreadData);
+    this.prevData = spreadData;
+  }
 
-    apply(data: { [key: string]: unknown }) {
-        if (!data) return;
-        const { prevData, element } = this;
-        for (const key in data) {
-            const value = data[key];
-            if (value === prevData[key]) {
-                continue;
-            }
-            // @ts-ignore
-            element[key] = value;
-        }
+  apply(data: { [key: string]: unknown }) {
+    if (!data) {
+      return;
     }
+    const { prevData, element } = this;
+    for (const key in data) {
+      const value = data[key];
+      if (value === prevData[key]) {
+        continue;
+      }
+      // @ts-ignore
+      element[key] = value;
+    }
+  }
 
-    groom(data: { [key: string]: unknown }) {
-        const { prevData, element } = this;
-        if (!prevData) return;
-        for (const key in prevData) {
-            if (!data || !(key in data)) {
-                // @ts-ignore
-                element[key] = undefined;
-            }
-        }
+  groom(data: { [key: string]: unknown }) {
+    const { prevData, element } = this;
+    if (!prevData) {
+      return;
     }
+    for (const key in prevData) {
+      if (!data || !(key in data)) {
+        // @ts-ignore
+        element[key] = undefined;
+      }
+    }
+  }
 }
 
 export const spreadProps = directive(SpreadPropsDirective);

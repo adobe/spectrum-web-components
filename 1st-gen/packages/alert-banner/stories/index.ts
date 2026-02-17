@@ -10,27 +10,27 @@
  * governing permissions and limitations under the License.
  */
 
+import { AlertBannerVariants } from '@spectrum-web-components/alert-banner';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import { AlertBannerVariants } from '@spectrum-web-components/alert-banner';
 import '@spectrum-web-components/alert-banner/sp-alert-banner.js';
 import '@spectrum-web-components/button/sp-button.js';
 
 export const AlertBannerMarkup = ({
-    text = 'Your trial has expired',
-    variant = 'neutral',
-    dismissible = true,
-    open = false,
-    actionLabel = 'Action',
+  text = 'Your trial has expired',
+  variant = 'neutral',
+  dismissible = true,
+  open = false,
+  actionLabel = 'Action',
 }): TemplateResult => html`
-    <sp-alert-banner
-        variant=${variant as AlertBannerVariants}
-        ?dismissible=${dismissible}
-        ?open=${open}
-    >
-        ${text}
-        <sp-button treatment="outline" static-color="white" slot="action">
-            ${actionLabel}
-        </sp-button>
-    </sp-alert-banner>
+  <sp-alert-banner
+    variant=${variant as AlertBannerVariants}
+    ?dismissible=${dismissible}
+    ?open=${open}
+  >
+    ${text}
+    <sp-button treatment="outline" static-color="white" slot="action">
+      ${actionLabel}
+    </sp-button>
+  </sp-alert-banner>
 `;

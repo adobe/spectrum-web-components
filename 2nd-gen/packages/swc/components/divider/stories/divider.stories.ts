@@ -25,15 +25,15 @@ import '@adobe/swc/divider';
 const { events, args, argTypes, template } = getStorybookHelpers('swc-divider');
 
 argTypes.size = {
-    ...argTypes.size,
-    control: { type: 'select' },
-    options: Divider.VALID_SIZES,
+  ...argTypes.size,
+  control: { type: 'select' },
+  options: Divider.VALID_SIZES,
 };
 
 argTypes['static-color'] = {
-    ...argTypes['static-color'],
-    control: { type: 'select' },
-    options: [undefined, ...Divider.STATIC_COLORS],
+  ...argTypes['static-color'],
+  control: { type: 'select' },
+  options: [undefined, ...Divider.STATIC_COLORS],
 };
 
 /**
@@ -42,28 +42,30 @@ argTypes['static-color'] = {
  * for users to scan and understand content structure.
  */
 const meta: Meta = {
-    title: 'Divider',
-    component: 'swc-divider',
-    args,
-    argTypes,
-    render: (args) => html` ${template({ ...args })} `,
-    parameters: {
-        actions: {
-            handles: events,
-        },
-        docs: {
-            subtitle: `Visual separator for grouping and dividing content`,
-        },
-        design: {
-            type: 'figma',
-            url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=13642-334',
-        },
-        stackblitz: {
-            url: 'https://stackblitz.com/edit/vitejs-vite-rqfjtpgz?file=package.json',
-        },
-        flexLayout: 'row-nowrap',
+  title: 'Divider',
+  component: 'swc-divider',
+  args,
+  argTypes,
+  render: (args) => html`
+    ${template({ ...args })}
+  `,
+  parameters: {
+    actions: {
+      handles: events,
     },
-    tags: ['migrated'],
+    docs: {
+      subtitle: `Visual separator for grouping and dividing content`,
+    },
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=13642-334',
+    },
+    stackblitz: {
+      url: 'https://stackblitz.com/edit/vitejs-vite-rqfjtpgz?file=package.json',
+    },
+    flexLayout: 'row-nowrap',
+  },
+  tags: ['migrated'],
 };
 
 export default meta;
@@ -73,7 +75,7 @@ export default meta;
 // ────────────────────
 
 export const Playground: Story = {
-    tags: ['autodocs', 'dev'],
+  tags: ['autodocs', 'dev'],
 };
 
 // ──────────────────────────
@@ -81,15 +83,15 @@ export const Playground: Story = {
 // ──────────────────────────
 
 export const Overview: Story = {
-    render: (args) => html`
-        <h3>Content above the divider</h3>
-        ${template({ ...args, size: 'm' })}
-        <p>Content below the divider</p>
-    `,
-    parameters: {
-        flexLayout: 'column-stretch',
-    },
-    tags: ['overview'],
+  render: (args) => html`
+    <h3>Content above the divider</h3>
+    ${template({ ...args, size: 'm' })}
+    <p>Content below the divider</p>
+  `,
+  parameters: {
+    flexLayout: 'column-stretch',
+  },
+  tags: ['overview'],
 };
 
 // ──────────────────────────
@@ -102,15 +104,15 @@ export const Overview: Story = {
  * 1. **Line** - The visual separator element that creates visual separation between content
  */
 export const Anatomy: Story = {
-    render: (args) => html`
-        <h4>Content above the divider</h4>
-        ${template({ ...args, size: 'm' })}
-        <p>Content below the divider</p>
-    `,
-    tags: ['anatomy'],
-    parameters: {
-        flexLayout: 'column-stretch',
-    },
+  render: (args) => html`
+    <h4>Content above the divider</h4>
+    ${template({ ...args, size: 'm' })}
+    <p>Content below the divider</p>
+  `,
+  tags: ['anatomy'],
+  parameters: {
+    flexLayout: 'column-stretch',
+  },
 };
 
 // ──────────────────────────
@@ -125,27 +127,27 @@ export const Anatomy: Story = {
  * - **Large (`l`)**: Should only be used for page titles or section titles
  */
 export const Sizes: Story = {
-    render: (args) => html`
-        <div>
-            <h3>Small</h3>
-            ${template({ ...args, size: 's' })}
-            <p>Content below the small divider.</p>
-        </div>
-        <div>
-            <h3>Medium</h3>
-            ${template({ ...args, size: 'm' })}
-            <p>Content below the medium divider.</p>
-        </div>
-        <div>
-            <h3>Large</h3>
-            ${template({ ...args, size: 'l' })}
-            <p>Content below the large divider.</p>
-        </div>
-    `,
-    parameters: {
-        'section-order': 1,
-    },
-    tags: ['options'],
+  render: (args) => html`
+    <div>
+      <h3>Small</h3>
+      ${template({ ...args, size: 's' })}
+      <p>Content below the small divider.</p>
+    </div>
+    <div>
+      <h3>Medium</h3>
+      ${template({ ...args, size: 'm' })}
+      <p>Content below the medium divider.</p>
+    </div>
+    <div>
+      <h3>Large</h3>
+      ${template({ ...args, size: 'l' })}
+      <p>Content below the large divider.</p>
+    </div>
+  `,
+  parameters: {
+    'section-order': 1,
+  },
+  tags: ['options'],
 };
 
 /**
@@ -153,33 +155,33 @@ export const Sizes: Story = {
  * horizontal content, use the `vertical` attribute.
  */
 export const Vertical: Story = {
-    render: (args) => html`
-        <h4>Small</h4>
-        ${template({
-            ...args,
-            size: 's',
-        })}
-        <p>Content next to the small divider.</p>
-        <h4>Medium</h4>
-        ${template({
-            ...args,
-            size: 'm',
-        })}
-        <p>Content next to the medium divider.</p>
-        <h4>Large</h4>
-        ${template({
-            ...args,
-            size: 'l',
-        })}
-        <p>Content next to the large divider.</p>
-    `,
-    parameters: {
-        'section-order': 2,
-    },
-    tags: ['options'],
-    args: {
-        vertical: true,
-    },
+  render: (args) => html`
+    <h4>Small</h4>
+    ${template({
+      ...args,
+      size: 's',
+    })}
+    <p>Content next to the small divider.</p>
+    <h4>Medium</h4>
+    ${template({
+      ...args,
+      size: 'm',
+    })}
+    <p>Content next to the medium divider.</p>
+    <h4>Large</h4>
+    ${template({
+      ...args,
+      size: 'l',
+    })}
+    <p>Content next to the large divider.</p>
+  `,
+  parameters: {
+    'section-order': 2,
+  },
+  tags: ['options'],
+  args: {
+    vertical: true,
+  },
 };
 
 /**
@@ -189,26 +191,25 @@ export const Vertical: Story = {
  * - **black**: Use on light backgrounds for better contrast
  */
 export const StaticColors: Story = {
-    render: (args) => html`
-        ${['white', 'black'].map(
-            (color) =>
-                html` <div>
-                    <h4>Dashboard settings</h4>
-                    ${template({ ...args, 'static-color': color })}
-                    <p>
-                        Configure your dashboard preferences and layout options.
-                    </p>
-                </div>`
-        )}
-    `,
-    args: {
-        size: 'm',
-    },
-    parameters: {
-        staticColorsDemo: true,
-        'section-order': 3,
-    },
-    tags: ['options'],
+  render: (args) => html`
+    ${['white', 'black'].map(
+      (color) => html`
+        <div>
+          <h4>Dashboard settings</h4>
+          ${template({ ...args, 'static-color': color })}
+          <p>Configure your dashboard preferences and layout options.</p>
+        </div>
+      `
+    )}
+  `,
+  args: {
+    size: 'm',
+  },
+  parameters: {
+    staticColorsDemo: true,
+    'section-order': 3,
+  },
+  tags: ['options'],
 };
 StaticColors.storyName = 'Static colors';
 
@@ -241,16 +242,16 @@ StaticColors.storyName = 'Static colors';
  * - Consider using headings or other semantic elements for screen reader users when dividers mark major content transitions
  */
 export const Accessibility: Story = {
-    render: (args) => html`
-        <h4>Project overview</h4>
-        ${template({ ...args, size: 'l' })}
-        <p>
-            Review the project timeline, milestones, and deliverables for the
-            current sprint.
-        </p>
-    `,
-    parameters: {
-        flexLayout: 'column-stretch',
-    },
-    tags: ['a11y'],
+  render: (args) => html`
+    <h4>Project overview</h4>
+    ${template({ ...args, size: 'l' })}
+    <p>
+      Review the project timeline, milestones, and deliverables for the current
+      sprint.
+    </p>
+  `,
+  parameters: {
+    flexLayout: 'column-stretch',
+  },
+  tags: ['a11y'],
 };

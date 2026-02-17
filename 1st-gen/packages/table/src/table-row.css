@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -14,26 +14,26 @@
 
 :host,
 :host([role="row"]) {
-    display: flex;
-    width: 100%;
+  display: flex;
+  width: 100%;
 }
 
 /* Remove original outer borders used with table-based 'display' property values.
    These are replaced by a border around the scrollable table body. */
 :host(:first-child) ::slotted(*) {
-    border-block-start: none;
+  border-block-start: none;
 }
 
 :host(:last-child) ::slotted(*) {
-    border-block-end: none;
+  border-block-end: none;
 }
 
 ::slotted(:first-child) {
-    border-inline-start: none;
+  border-inline-start: none;
 }
 
 ::slotted(:last-child) {
-    border-inline-end: none;
+  border-inline-end: none;
 }
 
 /* @todo: When section header is supported, set selector equivalent of

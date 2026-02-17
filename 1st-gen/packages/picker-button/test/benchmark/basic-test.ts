@@ -9,10 +9,12 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import '@spectrum-web-components/picker-button/sp-picker-button.js';
 import { html } from '@spectrum-web-components/base';
+
+import '@spectrum-web-components/picker-button/sp-picker-button.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-picker-button></sp-picker-button>
+  <sp-picker-button></sp-picker-button>
 `);

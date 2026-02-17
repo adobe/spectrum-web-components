@@ -31,10 +31,10 @@ import { Radio, RadioGroup } from '@spectrum-web-components/radio';
 
 ```html
 <sp-radio-group label="Choose an option" name="anatomy">
-    <sp-radio value="first">Option 1</sp-radio>
-    <sp-radio value="second">Option 2</sp-radio>
-    <sp-radio value="third">Option 3</sp-radio>
-    <sp-radio value="fourth">Option 4</sp-radio>
+  <sp-radio value="first">Option 1</sp-radio>
+  <sp-radio value="second">Option 2</sp-radio>
+  <sp-radio value="third">Option 3</sp-radio>
+  <sp-radio value="fourth">Option 4</sp-radio>
 </sp-radio-group>
 ```
 
@@ -44,10 +44,10 @@ The `<sp-radio>` elements are labelled with text in their default slot.
 
 ```html
 <sp-radio-group label="Choose an option" name="anatomy">
-    <sp-radio value="first">Option 1</sp-radio>
-    <sp-radio value="second">Option 2</sp-radio>
-    <sp-radio value="third">Option 3</sp-radio>
-    <sp-radio value="fourth">Option 4</sp-radio>
+  <sp-radio value="first">Option 1</sp-radio>
+  <sp-radio value="second">Option 2</sp-radio>
+  <sp-radio value="third">Option 3</sp-radio>
+  <sp-radio value="fourth">Option 4</sp-radio>
 </sp-radio-group>
 ```
 
@@ -61,10 +61,10 @@ The `<sp-radio>` elements are labelled with text in their default slot.
 
 ```html
 <sp-radio-group label="Small" selected="first" name="small">
-    <sp-radio value="first" size="s">Option 1</sp-radio>
-    <sp-radio value="second" size="s">Option 2</sp-radio>
-    <sp-radio value="third" size="s">Option 3</sp-radio>
-    <sp-radio value="fourth" size="s">Option 4</sp-radio>
+  <sp-radio value="first" size="s">Option 1</sp-radio>
+  <sp-radio value="second" size="s">Option 2</sp-radio>
+  <sp-radio value="third" size="s">Option 3</sp-radio>
+  <sp-radio value="fourth" size="s">Option 4</sp-radio>
 </sp-radio-group>
 ```
 
@@ -74,10 +74,10 @@ The `<sp-radio>` elements are labelled with text in their default slot.
 
 ```html
 <sp-radio-group label="Medium" selected="first" name="medium">
-    <sp-radio value="first" size="m">Option 1</sp-radio>
-    <sp-radio value="second" size="m">Option 2</sp-radio>
-    <sp-radio value="third" size="m">Option 3</sp-radio>
-    <sp-radio value="fourth" size="m">Option 4</sp-radio>
+  <sp-radio value="first" size="m">Option 1</sp-radio>
+  <sp-radio value="second" size="m">Option 2</sp-radio>
+  <sp-radio value="third" size="m">Option 3</sp-radio>
+  <sp-radio value="fourth" size="m">Option 4</sp-radio>
 </sp-radio-group>
 ```
 
@@ -87,10 +87,10 @@ The `<sp-radio>` elements are labelled with text in their default slot.
 
 ```html
 <sp-radio-group label="Large" selected="first" name="large">
-    <sp-radio value="first" size="l">Option 1</sp-radio>
-    <sp-radio value="second" size="l">Option 2</sp-radio>
-    <sp-radio value="third" size="l">Option 3</sp-radio>
-    <sp-radio value="fourth" size="l">Option 4</sp-radio>
+  <sp-radio value="first" size="l">Option 1</sp-radio>
+  <sp-radio value="second" size="l">Option 2</sp-radio>
+  <sp-radio value="third" size="l">Option 3</sp-radio>
+  <sp-radio value="fourth" size="l">Option 4</sp-radio>
 </sp-radio-group>
 ```
 
@@ -100,10 +100,10 @@ The `<sp-radio>` elements are labelled with text in their default slot.
 
 ```html
 <sp-radio-group label="Extra large" selected="first" name="extra-large">
-    <sp-radio value="first" size="xl">Option 1</sp-radio>
-    <sp-radio value="second" size="xl">Option 2</sp-radio>
-    <sp-radio value="third" size="xl">Option 3</sp-radio>
-    <sp-radio value="fourth" size="xl">Option 4</sp-radio>
+  <sp-radio value="first" size="xl">Option 1</sp-radio>
+  <sp-radio value="second" size="xl">Option 2</sp-radio>
+  <sp-radio value="third" size="xl">Option 3</sp-radio>
+  <sp-radio value="fourth" size="xl">Option 4</sp-radio>
 </sp-radio-group>
 ```
 
@@ -209,7 +209,7 @@ Event handlers for clicks and other user actions can be registered on an `<sp-ra
 
 ```html
 <sp-radio id="radio-example" onclick="spAlert(this, '<sp-radio> clicked!')">
-    Web component
+  Web component
 </sp-radio>
 ```
 

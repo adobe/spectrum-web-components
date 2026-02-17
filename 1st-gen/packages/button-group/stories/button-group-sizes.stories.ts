@@ -13,14 +13,14 @@
 import { TemplateResult } from '@spectrum-web-components/base';
 
 import {
-    buttons,
-    buttonsVertical,
-    Properties,
+  buttons,
+  buttonsVertical,
+  Properties,
 } from './button-group.stories.js';
 
 export default {
-    title: 'Button Group/Sizes',
-    component: 'sp-button-group',
+  title: 'Button Group/Sizes',
+  component: 'sp-button-group',
 };
 
 export const s = (args: Properties): TemplateResult => buttons(args);
@@ -36,17 +36,17 @@ export const XL = (args: Properties): TemplateResult => buttons(args);
 XL.args = { size: 'XL' };
 
 export const verticalS = (args: Properties): TemplateResult =>
-    buttonsVertical(args);
+  buttonsVertical(args);
 verticalS.args = { size: 's' };
 
 export const verticalM = (args: Properties): TemplateResult =>
-    buttonsVertical(args);
+  buttonsVertical(args);
 verticalM.args = { size: 'm' };
 
 export const verticalL = (args: Properties): TemplateResult =>
-    buttonsVertical(args);
+  buttonsVertical(args);
 verticalL.args = { size: 'l' };
 
 export const verticalXL = (args: Properties): TemplateResult =>
-    buttonsVertical(args);
+  buttonsVertical(args);
 verticalXL.args = { size: 'XL' };

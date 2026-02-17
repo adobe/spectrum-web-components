@@ -11,8 +11,8 @@
  */
 
 import {
-    InteractionController,
-    InteractionTypes,
+  InteractionController,
+  InteractionTypes,
 } from './InteractionController.js';
 
 /**

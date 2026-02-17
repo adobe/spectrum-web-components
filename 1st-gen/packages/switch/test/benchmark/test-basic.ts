@@ -10,10 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/switch/sp-switch.js';
 import { html } from 'lit';
+
+import '@spectrum-web-components/switch/sp-switch.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-switch>Switch</sp-switch>
+  <sp-switch>Switch</sp-switch>
 `);

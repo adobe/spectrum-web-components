@@ -9,13 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { SliderHandle } from './src/SliderHandle.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { SliderHandle } from './src/SliderHandle.js';
 
 defineElement('sp-slider-handle', SliderHandle);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-slider-handle': SliderHandle;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-slider-handle': SliderHandle;
+  }
 }

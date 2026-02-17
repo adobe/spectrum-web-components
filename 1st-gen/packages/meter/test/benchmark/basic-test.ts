@@ -10,10 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/meter/sp-meter.js';
 import { html } from 'lit';
+
+import '@spectrum-web-components/meter/sp-meter.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-meter open></sp-meter>
+  <sp-meter open></sp-meter>
 `);

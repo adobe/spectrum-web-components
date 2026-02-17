@@ -36,7 +36,7 @@ Since most components feature multiple variants and/or state-based styles, selec
 ```css
 /* Badge, size extra-large */
 swc-badge[size='xl'] {
-    --swc-badge-font-size: var(--swc-font-size-400);
+  --swc-badge-font-size: var(--swc-font-size-400);
 }
 ```
 
@@ -45,7 +45,7 @@ For components with compounding visual features, include all related features fo
 ```css
 /* Badge, outline, positive variant */
 swc-badge[outline][variant='positive'] {
-    --swc-badge-border-color: var(--swc-celery-background-color-default);
+  --swc-badge-border-color: var(--swc-celery-background-color-default);
 }
 ```
 
@@ -63,7 +63,7 @@ To exclude a style further, overrides can be applied via custom classes for spec
 
 ```css
 .divider--accent {
-    --swc-divider-background-color: var(--swc-accent-visual-color);
+  --swc-divider-background-color: var(--swc-accent-visual-color);
 }
 
 /* Apply directly to component instance:
@@ -76,7 +76,7 @@ There are some exclusions to what can be successfully overridden:
 
 - color properties for static white and static black variants
 - color properties when tied to non-semantic color palette variants
-    - _example_: the `magenta` variant of Badge
+  - _example_: the `magenta` variant of Badge
 - properties modified for forced-colors mode
 
 To modify non-semantic color palette variants, you may add a global override to re-assign those values instead.
@@ -96,13 +96,13 @@ Overrides should be included after the [main library stylesheet](docs/guides-cus
 
 /* Overrides for non-scaling values */
 :root {
-    --swc-accent-color-500: var(--swc-indigo-500);
+  --swc-accent-color-500: var(--swc-indigo-500);
 }
 
 /* Overrides for scaling values */
 :root,
 .swc-theme {
-    --swc-avatar-size-400: var(--swc-theme--sizeM, 32px)
-        var(--swc-theme--sizeL, 48px);
+  --swc-avatar-size-400: var(--swc-theme--sizeM, 32px)
+    var(--swc-theme--sizeL, 48px);
 }
 ```

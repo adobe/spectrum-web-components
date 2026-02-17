@@ -11,8 +11,8 @@
  */
 
 import {
-    ReactiveController,
-    TemplateResult,
+  ReactiveController,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import { AbstractOverlay } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
 import { ExpandableElement } from './Picker.js';
@@ -21,8 +21,8 @@ import { ExpandableElement } from './Picker.js';
  * Enum representing the interaction strategy types.
  */
 export enum InteractionTypes {
-    'desktop',
-    'mobile',
+  'desktop',
+  'mobile',
 }
 
 /** CSS class applied to Safari to manage focus ring visibility. */
@@ -62,7 +62,7 @@ export class InteractionController implements ReactiveController {
         return false;
     }
 
-    private _open = false;
+  private _open = false;
 
     /**
      * Whether the host element overlay is currently open.
@@ -79,14 +79,14 @@ export class InteractionController implements ReactiveController {
         if (this._open === open) return;
         this._open = open;
 
-        this.host.open = open;
+    this.host.open = open;
 
-        if (!this.overlay && this.host.overlayElement) {
-            this.overlay = this.host.overlayElement;
-        }
+    if (!this.overlay && this.host.overlayElement) {
+      this.overlay = this.host.overlayElement;
     }
+  }
 
-    private _overlay!: AbstractOverlay;
+  private _overlay!: AbstractOverlay;
 
     /**
      * Reference to the overlay element managing the host element's dropdown.
@@ -229,8 +229,8 @@ export class InteractionController implements ReactiveController {
             this.overlay = this.host.overlayElement;
         }
 
-        if (this.overlay && this.host.dependencyManager.loaded) {
-            this.overlay.willPreventClose = this.preventNextToggle !== 'no';
-        }
+    if (this.overlay && this.host.dependencyManager.loaded) {
+      this.overlay.willPreventClose = this.preventNextToggle !== 'no';
     }
+  }
 }

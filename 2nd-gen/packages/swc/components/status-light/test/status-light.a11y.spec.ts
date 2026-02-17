@@ -28,101 +28,95 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
  */
 
 test.describe('Status Light - ARIA Snapshots', () => {
-    test('should have correct accessibility tree structure', async ({
-        page,
-    }) => {
-        const statusLight = await gotoStory(
-            page,
-            'components-status-light--default',
-            'swc-status-light'
-        );
+  test('should have correct accessibility tree structure', async ({ page }) => {
+    const statusLight = await gotoStory(
+      page,
+      'components-status-light--default',
+      'swc-status-light'
+    );
 
-        const snapshot = await statusLight.ariaSnapshot();
-        expect(snapshot).toBeTruthy();
-        await expect(statusLight).toMatchAriaSnapshot();
-    });
+    const snapshot = await statusLight.ariaSnapshot();
+    expect(snapshot).toBeTruthy();
+    await expect(statusLight).toMatchAriaSnapshot();
+  });
 
-    test('should handle semantic variants', async ({ page }) => {
-        const statusLight = await gotoStory(
-            page,
-            'components-status-light--semantic-variants',
-            'swc-status-light'
-        );
+  test('should handle semantic variants', async ({ page }) => {
+    const statusLight = await gotoStory(
+      page,
+      'components-status-light--semantic-variants',
+      'swc-status-light'
+    );
 
-        const snapshot = await statusLight.ariaSnapshot();
-        expect(snapshot).toBeTruthy();
-        await expect(statusLight).toMatchAriaSnapshot();
-    });
+    const snapshot = await statusLight.ariaSnapshot();
+    expect(snapshot).toBeTruthy();
+    await expect(statusLight).toMatchAriaSnapshot();
+  });
 
-    test('should reflect different sizes', async ({ page }) => {
-        const statusLight = await gotoStory(
-            page,
-            'components-status-light--sizes',
-            'swc-status-light'
-        );
+  test('should reflect different sizes', async ({ page }) => {
+    const statusLight = await gotoStory(
+      page,
+      'components-status-light--sizes',
+      'swc-status-light'
+    );
 
-        const snapshot = await statusLight.ariaSnapshot();
-        expect(snapshot).toBeTruthy();
-        await expect(statusLight).toMatchAriaSnapshot();
-    });
+    const snapshot = await statusLight.ariaSnapshot();
+    expect(snapshot).toBeTruthy();
+    await expect(statusLight).toMatchAriaSnapshot();
+  });
 });
 
 test.describe('Status Light - aXe Validation', () => {
-    test('should not have accessibility violations - default', async ({
-        page,
-    }) => {
-        await gotoStory(
-            page,
-            'components-status-light--default',
-            'swc-status-light'
-        );
+  test('should not have accessibility violations - default', async ({
+    page,
+  }) => {
+    await gotoStory(
+      page,
+      'components-status-light--default',
+      'swc-status-light'
+    );
 
-        const results = await new AxeBuilder({ page })
-            .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-            .analyze();
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+      .analyze();
 
-        expect(results.violations).toEqual([]);
-    });
+    expect(results.violations).toEqual([]);
+  });
 
-    test('should not have violations - semantic variants', async ({ page }) => {
-        await gotoStory(
-            page,
-            'components-status-light--semantic-variants',
-            'swc-status-light'
-        );
+  test('should not have violations - semantic variants', async ({ page }) => {
+    await gotoStory(
+      page,
+      'components-status-light--semantic-variants',
+      'swc-status-light'
+    );
 
-        const results = await new AxeBuilder({ page })
-            .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-            .analyze();
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+      .analyze();
 
-        expect(results.violations).toEqual([]);
-    });
+    expect(results.violations).toEqual([]);
+  });
 
-    test('should not have violations - sizes', async ({ page }) => {
-        await gotoStory(
-            page,
-            'components-status-light--sizes',
-            'swc-status-light'
-        );
+  test('should not have violations - sizes', async ({ page }) => {
+    await gotoStory(page, 'components-status-light--sizes', 'swc-status-light');
 
-        const results = await new AxeBuilder({ page })
-            .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-            .analyze();
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+      .analyze();
 
-        expect(results.violations).toEqual([]);
-    });
+    expect(results.violations).toEqual([]);
+  });
 
-    test('should verify color contrast', async ({ page }) => {
-        await gotoStory(
-            page,
-            'components-status-light--default',
-            'swc-status-light'
-        );
+  test('should verify color contrast', async ({ page }) => {
+    await gotoStory(
+      page,
+      'components-status-light--default',
+      'swc-status-light'
+    );
 
-        const results = await new AxeBuilder({ page })
-            .withRules(['color-contrast'])
-            .analyze();
+    const results = await new AxeBuilder({ page })
+      .withRules(['color-contrast'])
+      .analyze();
 
-        expect(results.violations).toEqual([]);
-    });
+    expect(results.violations).toEqual([]);
+  });
 });

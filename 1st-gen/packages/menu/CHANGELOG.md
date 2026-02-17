@@ -5,30 +5,30 @@
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/divider@1.11.2
-    - @spectrum-web-components/base@1.11.2
-    - @spectrum-web-components/shared@1.11.2
-    - @spectrum-web-components/reactive-controllers@1.11.2
-    - @spectrum-web-components/action-button@1.11.2
-    - @spectrum-web-components/icon@1.11.2
-    - @spectrum-web-components/icons-ui@1.11.2
-    - @spectrum-web-components/overlay@1.11.2
-    - @spectrum-web-components/popover@1.11.2
+  - @spectrum-web-components/divider@1.11.2
+  - @spectrum-web-components/base@1.11.2
+  - @spectrum-web-components/shared@1.11.2
+  - @spectrum-web-components/reactive-controllers@1.11.2
+  - @spectrum-web-components/action-button@1.11.2
+  - @spectrum-web-components/icon@1.11.2
+  - @spectrum-web-components/icons-ui@1.11.2
+  - @spectrum-web-components/overlay@1.11.2
+  - @spectrum-web-components/popover@1.11.2
 
 ## 1.11.1
 
 ### Patch Changes
 
 - Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
-    - @spectrum-web-components/shared@1.11.1
-    - @spectrum-web-components/base@1.11.1
-    - @spectrum-web-components/divider@1.11.1
-    - @spectrum-web-components/action-button@1.11.1
-    - @spectrum-web-components/overlay@1.11.1
-    - @spectrum-web-components/icon@1.11.1
-    - @spectrum-web-components/icons-ui@1.11.1
-    - @spectrum-web-components/popover@1.11.1
-    - @spectrum-web-components/reactive-controllers@1.11.1
+  - @spectrum-web-components/shared@1.11.1
+  - @spectrum-web-components/base@1.11.1
+  - @spectrum-web-components/divider@1.11.1
+  - @spectrum-web-components/action-button@1.11.1
+  - @spectrum-web-components/overlay@1.11.1
+  - @spectrum-web-components/icon@1.11.1
+  - @spectrum-web-components/icons-ui@1.11.1
+  - @spectrum-web-components/popover@1.11.1
+  - @spectrum-web-components/reactive-controllers@1.11.1
 
 ## 1.11.0
 
@@ -39,45 +39,45 @@
 - [#5965](https://github.com/adobe/spectrum-web-components/pull/5965) [`b95e254`](https://github.com/adobe/spectrum-web-components/commit/b95e25413830825a506b7d4025d6b4d982691771) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Fixed**: `sp-menu` now stops propagation of arrow key events when navigating between menu items. This prevents unintended side effects in layouts or applications that also listen for arrow key events.
 
 - Updated dependencies [[`b95e254`](https://github.com/adobe/spectrum-web-components/commit/b95e25413830825a506b7d4025d6b4d982691771), [`02b2d7d`](https://github.com/adobe/spectrum-web-components/commit/02b2d7d2c7d204d7f0f6501ec075e923f58244c9), [`f07344f`](https://github.com/adobe/spectrum-web-components/commit/f07344f400f64c12f15762e3fedcdab2629e781b), [`1d76b70`](https://github.com/adobe/spectrum-web-components/commit/1d76b7093d8ff5f9b26f07a69086488341a02650), [`f8bdeec`](https://github.com/adobe/spectrum-web-components/commit/f8bdeecf8a230822122a990fb977d3654649f891), [`cadc39e`](https://github.com/adobe/spectrum-web-components/commit/cadc39ea419f572a79451fc886cd45c8d8821cde), [`4cb0b7b`](https://github.com/adobe/spectrum-web-components/commit/4cb0b7b86ebfaad89f1866916415b8578aa6dbea), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
-    - @spectrum-web-components/reactive-controllers@1.11.0
-    - @spectrum-web-components/overlay@1.11.0
-    - @spectrum-web-components/shared@1.11.0
-    - @spectrum-web-components/base@1.11.0
-    - @spectrum-web-components/icon@1.11.0
-    - @spectrum-web-components/popover@1.11.0
-    - @spectrum-web-components/divider@1.11.0
-    - @spectrum-web-components/action-button@1.11.0
-    - @spectrum-web-components/icons-ui@1.11.0
+  - @spectrum-web-components/reactive-controllers@1.11.0
+  - @spectrum-web-components/overlay@1.11.0
+  - @spectrum-web-components/shared@1.11.0
+  - @spectrum-web-components/base@1.11.0
+  - @spectrum-web-components/icon@1.11.0
+  - @spectrum-web-components/popover@1.11.0
+  - @spectrum-web-components/divider@1.11.0
+  - @spectrum-web-components/action-button@1.11.0
+  - @spectrum-web-components/icons-ui@1.11.0
 
 ## 1.10.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.10.0
-    - @spectrum-web-components/action-button@1.10.0
-    - @spectrum-web-components/divider@1.10.0
-    - @spectrum-web-components/icon@1.10.0
-    - @spectrum-web-components/icons-ui@1.10.0
-    - @spectrum-web-components/overlay@1.10.0
-    - @spectrum-web-components/popover@1.10.0
-    - @spectrum-web-components/shared@1.10.0
-    - @spectrum-web-components/reactive-controllers@1.10.0
+  - @spectrum-web-components/base@1.10.0
+  - @spectrum-web-components/action-button@1.10.0
+  - @spectrum-web-components/divider@1.10.0
+  - @spectrum-web-components/icon@1.10.0
+  - @spectrum-web-components/icons-ui@1.10.0
+  - @spectrum-web-components/overlay@1.10.0
+  - @spectrum-web-components/popover@1.10.0
+  - @spectrum-web-components/shared@1.10.0
+  - @spectrum-web-components/reactive-controllers@1.10.0
 
 ## 1.9.1
 
 ### Patch Changes
 
 - Updated dependencies [[`a19cbe3`](https://github.com/adobe/spectrum-web-components/commit/a19cbe3e8b4690d8abd1530e3930e5d48ae43618)]:
-    - @spectrum-web-components/overlay@1.9.1
-    - @spectrum-web-components/popover@1.9.1
-    - @spectrum-web-components/action-button@1.9.1
-    - @spectrum-web-components/divider@1.9.1
-    - @spectrum-web-components/icon@1.9.1
-    - @spectrum-web-components/icons-ui@1.9.1
-    - @spectrum-web-components/base@1.9.1
-    - @spectrum-web-components/reactive-controllers@1.9.1
-    - @spectrum-web-components/shared@1.9.1
+  - @spectrum-web-components/overlay@1.9.1
+  - @spectrum-web-components/popover@1.9.1
+  - @spectrum-web-components/action-button@1.9.1
+  - @spectrum-web-components/divider@1.9.1
+  - @spectrum-web-components/icon@1.9.1
+  - @spectrum-web-components/icons-ui@1.9.1
+  - @spectrum-web-components/base@1.9.1
+  - @spectrum-web-components/reactive-controllers@1.9.1
+  - @spectrum-web-components/shared@1.9.1
 
 ## 1.9.0
 
@@ -86,15 +86,15 @@
 - [#5732](https://github.com/adobe/spectrum-web-components/pull/5732) [`4880da4`](https://github.com/adobe/spectrum-web-components/commit/4880da4f80a25ae1b475f52ce4ba7914cdcd9de4) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - - **Fixed**: MenuItem focus stealing from input elements on mouseover by enhancing MenuItem's `handleMouseover` method to detect when an input element currently has focus and prevent stealing focus in those cases.
 
 - Updated dependencies [[`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8)]:
-    - @spectrum-web-components/reactive-controllers@1.9.0
-    - @spectrum-web-components/action-button@1.9.0
-    - @spectrum-web-components/icon@1.9.0
-    - @spectrum-web-components/overlay@1.9.0
-    - @spectrum-web-components/icons-ui@1.9.0
-    - @spectrum-web-components/popover@1.9.0
-    - @spectrum-web-components/divider@1.9.0
-    - @spectrum-web-components/base@1.9.0
-    - @spectrum-web-components/shared@1.9.0
+  - @spectrum-web-components/reactive-controllers@1.9.0
+  - @spectrum-web-components/action-button@1.9.0
+  - @spectrum-web-components/icon@1.9.0
+  - @spectrum-web-components/overlay@1.9.0
+  - @spectrum-web-components/icons-ui@1.9.0
+  - @spectrum-web-components/popover@1.9.0
+  - @spectrum-web-components/divider@1.9.0
+  - @spectrum-web-components/base@1.9.0
+  - @spectrum-web-components/shared@1.9.0
 
 ## 1.8.0
 
@@ -102,20 +102,20 @@
 
 - [#5616](https://github.com/adobe/spectrum-web-components/pull/5616) [`f27ab09`](https://github.com/adobe/spectrum-web-components/commit/f27ab096f4d53543dc53f75ec196c696b78b3baa) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed** : Fix iPad scrolling issue in picker dropdown where scrolling through menu items would accidentally select the first touched item and close the picker.
 
-    The fix implements touch gesture detection to distinguish between scrolling and selection. Added `isScrolling` getter for public API access. Test on iPad devices with long menus to validate scrolling behavior and selection accuracy.
+  The fix implements touch gesture detection to distinguish between scrolling and selection. Added `isScrolling` getter for public API access. Test on iPad devices with long menus to validate scrolling behavior and selection accuracy.
 
 ### Patch Changes
 
 - Updated dependencies [[`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7), [`ee1bae6`](https://github.com/adobe/spectrum-web-components/commit/ee1bae6f9a7401dc31ebc84e4e27f9d39be692d1), [`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7), [`826a2d5`](https://github.com/adobe/spectrum-web-components/commit/826a2d533e46a6f945daefa8999fadca78bd8688)]:
-    - @spectrum-web-components/overlay@1.8.0
-    - @spectrum-web-components/divider@1.8.0
-    - @spectrum-web-components/popover@1.8.0
-    - @spectrum-web-components/action-button@1.8.0
-    - @spectrum-web-components/icon@1.8.0
-    - @spectrum-web-components/icons-ui@1.8.0
-    - @spectrum-web-components/base@1.8.0
-    - @spectrum-web-components/reactive-controllers@1.8.0
-    - @spectrum-web-components/shared@1.8.0
+  - @spectrum-web-components/overlay@1.8.0
+  - @spectrum-web-components/divider@1.8.0
+  - @spectrum-web-components/popover@1.8.0
+  - @spectrum-web-components/action-button@1.8.0
+  - @spectrum-web-components/icon@1.8.0
+  - @spectrum-web-components/icons-ui@1.8.0
+  - @spectrum-web-components/base@1.8.0
+  - @spectrum-web-components/reactive-controllers@1.8.0
+  - @spectrum-web-components/shared@1.8.0
 
 ## 1.7.0
 
@@ -124,15 +124,15 @@
 - [#5402](https://github.com/adobe/spectrum-web-components/pull/5402) [`3aeafdd`](https://github.com/adobe/spectrum-web-components/commit/3aeafddab98fe30f4db538ded9052997aaa05b07) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixes**: Icons in menu stories weren't properly responding to theme changes when used in functional story components.
   Switching to class-based LitElement components ensures proper component lifecycle hooks and shadow DOM context for icon initialization and theme integration.
 - Updated dependencies [[`a646ae8`](https://github.com/adobe/spectrum-web-components/commit/a646ae8b0e652308d359226740d2cb189e492e45), [`c1669d2`](https://github.com/adobe/spectrum-web-components/commit/c1669d2dc5e1ceeb84486ce49a428f86a3173caa)]:
-    - @spectrum-web-components/overlay@1.7.0
-    - @spectrum-web-components/action-button@1.7.0
-    - @spectrum-web-components/popover@1.7.0
-    - @spectrum-web-components/divider@1.7.0
-    - @spectrum-web-components/icon@1.7.0
-    - @spectrum-web-components/icons-ui@1.7.0
-    - @spectrum-web-components/base@1.7.0
-    - @spectrum-web-components/reactive-controllers@1.7.0
-    - @spectrum-web-components/shared@1.7.0
+  - @spectrum-web-components/overlay@1.7.0
+  - @spectrum-web-components/action-button@1.7.0
+  - @spectrum-web-components/popover@1.7.0
+  - @spectrum-web-components/divider@1.7.0
+  - @spectrum-web-components/icon@1.7.0
+  - @spectrum-web-components/icons-ui@1.7.0
+  - @spectrum-web-components/base@1.7.0
+  - @spectrum-web-components/reactive-controllers@1.7.0
+  - @spectrum-web-components/shared@1.7.0
 
 ## 1.6.0
 
@@ -141,15 +141,15 @@
 - [#5349](https://github.com/adobe/spectrum-web-components/pull/5349) [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
 
 - Updated dependencies [[`03a4439`](https://github.com/adobe/spectrum-web-components/commit/03a443946b760aedc668630f33ac660443ff915e), [`53f3769`](https://github.com/adobe/spectrum-web-components/commit/53f3769f07b6e7853a8a4c0dc63b21fe14cf3d4b)]:
-    - @spectrum-web-components/popover@1.6.0
-    - @spectrum-web-components/overlay@1.6.0
-    - @spectrum-web-components/action-button@1.6.0
-    - @spectrum-web-components/divider@1.6.0
-    - @spectrum-web-components/icon@1.6.0
-    - @spectrum-web-components/icons-ui@1.6.0
-    - @spectrum-web-components/base@1.6.0
-    - @spectrum-web-components/reactive-controllers@1.6.0
-    - @spectrum-web-components/shared@1.6.0
+  - @spectrum-web-components/popover@1.6.0
+  - @spectrum-web-components/overlay@1.6.0
+  - @spectrum-web-components/action-button@1.6.0
+  - @spectrum-web-components/divider@1.6.0
+  - @spectrum-web-components/icon@1.6.0
+  - @spectrum-web-components/icons-ui@1.6.0
+  - @spectrum-web-components/base@1.6.0
+  - @spectrum-web-components/reactive-controllers@1.6.0
+  - @spectrum-web-components/shared@1.6.0
 
 ## 1.5.0
 
@@ -164,51 +164,51 @@
 - [#5270](https://github.com/adobe/spectrum-web-components/pull/5270) [`a69accb`](https://github.com/adobe/spectrum-web-components/commit/a69accb8b44b2612d53d31ba52c99aa751ce9f3a) Thanks [@nikkimk](https://github.com/nikkimk)! - correctly applies menuitem hover styling with pointerenter actions and only applies menuitem focus styling with keyboard/click action [#5269](https://github.com/adobe/spectrum-web-components/issues/5269)
 
 - Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0), [`8f8735c`](https://github.com/adobe/spectrum-web-components/commit/8f8735c9ec3eac3b6473424c78257cb46ee17f70), [`6c58f50`](https://github.com/adobe/spectrum-web-components/commit/6c58f50f7b1f5489c11e0d3484e3f4a9d576f1c8)]:
-    - @spectrum-web-components/divider@1.5.0
-    - @spectrum-web-components/overlay@1.5.0
-    - @spectrum-web-components/action-button@1.5.0
-    - @spectrum-web-components/popover@1.5.0
-    - @spectrum-web-components/icon@1.5.0
-    - @spectrum-web-components/icons-ui@1.5.0
-    - @spectrum-web-components/base@1.5.0
-    - @spectrum-web-components/reactive-controllers@1.5.0
-    - @spectrum-web-components/shared@1.5.0
+  - @spectrum-web-components/divider@1.5.0
+  - @spectrum-web-components/overlay@1.5.0
+  - @spectrum-web-components/action-button@1.5.0
+  - @spectrum-web-components/popover@1.5.0
+  - @spectrum-web-components/icon@1.5.0
+  - @spectrum-web-components/icons-ui@1.5.0
+  - @spectrum-web-components/base@1.5.0
+  - @spectrum-web-components/reactive-controllers@1.5.0
+  - @spectrum-web-components/shared@1.5.0
 
 ## 1.4.0
 
 ### Minor Changes
 
 - [#5187](https://github.com/adobe/spectrum-web-components/pull/5187) [`2a0422e`](https://github.com/adobe/spectrum-web-components/commit/2a0422ec1b667a9f236858f8cc9dca261ba27f9f) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Disabled drag and select functionality of picker in mobile devices. This is done to prevent click event being captured behind the menu-tray combination because the menu was closing immediately on pointerup.
-    - Fixed a bug where the picker in a dialog was not closing when clicking outside the dialog. ([#5111](https://github.com/adobe/spectrum-web-components/issues/5111))
-    - Fixed another bug where the elements behind the menu were receiving click events. ([#5060](https://github.com/adobe/spectrum-web-components/issues/5060))
+  - Fixed a bug where the picker in a dialog was not closing when clicking outside the dialog. ([#5111](https://github.com/adobe/spectrum-web-components/issues/5111))
+  - Fixed another bug where the elements behind the menu were receiving click events. ([#5060](https://github.com/adobe/spectrum-web-components/issues/5060))
 
 ### Patch Changes
 
 - [#5197](https://github.com/adobe/spectrum-web-components/pull/5197) [`6618422`](https://github.com/adobe/spectrum-web-components/commit/6618422848df234e420eed95f4a5a30557e1e46f) Thanks [@nikkimk](https://github.com/nikkimk)! - `<sp-menu>` - fixes `<sp-menu-item>` focus on hover ([#5180](https://github.com/adobe/spectrum-web-components/issues/5180))
 
 - Updated dependencies [[`72dbe62`](https://github.com/adobe/spectrum-web-components/commit/72dbe629cddfc57171eaaadf7206df47c19d3c98), [`46cd782`](https://github.com/adobe/spectrum-web-components/commit/46cd7828f65491fc08790e5ba0aec412ee89199d), [`70f5f6f`](https://github.com/adobe/spectrum-web-components/commit/70f5f6f3a97b530fb20f9f5ee049e9a8c124b02d)]:
-    - @spectrum-web-components/action-button@1.4.0
-    - @spectrum-web-components/overlay@1.4.0
-    - @spectrum-web-components/popover@1.4.0
-    - @spectrum-web-components/divider@1.4.0
-    - @spectrum-web-components/icon@1.4.0
-    - @spectrum-web-components/icons-ui@1.4.0
-    - @spectrum-web-components/base@1.4.0
-    - @spectrum-web-components/reactive-controllers@1.4.0
-    - @spectrum-web-components/shared@1.4.0
+  - @spectrum-web-components/action-button@1.4.0
+  - @spectrum-web-components/overlay@1.4.0
+  - @spectrum-web-components/popover@1.4.0
+  - @spectrum-web-components/divider@1.4.0
+  - @spectrum-web-components/icon@1.4.0
+  - @spectrum-web-components/icons-ui@1.4.0
+  - @spectrum-web-components/base@1.4.0
+  - @spectrum-web-components/reactive-controllers@1.4.0
+  - @spectrum-web-components/shared@1.4.0
 
 ## 1.3.0
 
 ### Minor Changes
 
 - [#5031](https://github.com/adobe/spectrum-web-components/pull/5031) [`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f) Thanks [@nikkimk](https://github.com/nikkimk)! - Used WAI ARIA Authoring Practices Guide (APG) to make accessibility improvements for `<sp-action-menu>`, `<sp-menu>`, and `<sp-picker>`, including:
-    - Numpad keys now work with `<sp-picker>` and `<sp-action-menu>` -`<sp-action-menu>`'s `<sp-menu-item>` elements can now be read by a screen reader ([#4556](https://github.com/adobe/spectrum-web-components/issues/4556))
-    - `<sp-menu-item>` href can now be clicked by a screen reader ([#4997](https://github.com/adobe/spectrum-web-components/issues/4997))
-    - Opening a `<sp-action-menu>`, `<sp-menu>`, and `<sp-picker>` with a keyboard now sets focus on an item within the menu. ([#4557](https://github.com/adobe/spectrum-web-components/issues/4557))
+  - Numpad keys now work with `<sp-picker>` and `<sp-action-menu>` -`<sp-action-menu>`'s `<sp-menu-item>` elements can now be read by a screen reader ([#4556](https://github.com/adobe/spectrum-web-components/issues/4556))
+  - `<sp-menu-item>` href can now be clicked by a screen reader ([#4997](https://github.com/adobe/spectrum-web-components/issues/4997))
+  - Opening a `<sp-action-menu>`, `<sp-menu>`, and `<sp-picker>` with a keyboard now sets focus on an item within the menu. ([#4557](https://github.com/adobe/spectrum-web-components/issues/4557))
 
-    See the following APG examples for more information:
-    - [Navigation Menu Example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/)
-    - [Editor Menubar Example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/)
+  See the following APG examples for more information:
+  - [Navigation Menu Example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/)
+  - [Editor Menubar Example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/)
 
 ### Patch Changes
 
@@ -217,15 +217,15 @@
   sp-overlay with type="manual" should close on pressing ESC key. When the last item is on overlay stack we are triggering the close method on esc key event.
 
 - Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f), [`468314f`](https://github.com/adobe/spectrum-web-components/commit/468314f45cf5fedb2e9029da210a5886260abca9)]:
-    - @spectrum-web-components/reactive-controllers@1.3.0
-    - @spectrum-web-components/overlay@1.3.0
-    - @spectrum-web-components/popover@1.3.0
-    - @spectrum-web-components/action-button@1.3.0
-    - @spectrum-web-components/divider@1.3.0
-    - @spectrum-web-components/icon@1.3.0
-    - @spectrum-web-components/icons-ui@1.3.0
-    - @spectrum-web-components/base@1.3.0
-    - @spectrum-web-components/shared@1.3.0
+  - @spectrum-web-components/reactive-controllers@1.3.0
+  - @spectrum-web-components/overlay@1.3.0
+  - @spectrum-web-components/popover@1.3.0
+  - @spectrum-web-components/action-button@1.3.0
+  - @spectrum-web-components/divider@1.3.0
+  - @spectrum-web-components/icon@1.3.0
+  - @spectrum-web-components/icons-ui@1.3.0
+  - @spectrum-web-components/base@1.3.0
+  - @spectrum-web-components/shared@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

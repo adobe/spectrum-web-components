@@ -10,13 +10,13 @@
  * governing permissions and limitations under the License.
  */
 
-import { Default } from '../stories/overlay.stories.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
+import { Default } from '../stories/overlay.stories.js';
 
 // Defualt Overlay
 testForMemoryLeaks(
-    Default({
-        placement: 'bottom',
-        offset: 0,
-    })
+  Default({
+    placement: 'bottom',
+    offset: 0,
+  })
 );

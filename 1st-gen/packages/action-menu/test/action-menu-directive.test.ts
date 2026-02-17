@@ -11,38 +11,38 @@
  */
 
 import { expect, oneEvent } from '@open-wc/testing';
-import { ActionMenu } from '@spectrum-web-components/action-menu';
 import { sendKeys } from '@web/test-runner-commands';
 
-import { directive } from '../stories/action-menu.stories.js';
-import { fixture } from '../../../test/testing-helpers.js';
+import { ActionMenu } from '@spectrum-web-components/action-menu';
 import { nextFrame } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
 
+import { fixture } from '../../../test/testing-helpers.js';
+import { directive } from '../stories/action-menu.stories.js';
+
 describe('Slottable Request Directive', () => {
-    it('Action Menu requests for options rendering when opening and closing', async function () {
-        const el = await fixture<ActionMenu>(directive());
-        const initialNodeLength = el.children.length;
+  it('Action Menu requests for options rendering when opening and closing', async function () {
+    const el = await fixture<ActionMenu>(directive());
+    const initialNodeLength = el.children.length;
 
-        expect(el.open, 'should be closed initially').to.be.false;
-        expect(el.children.length).to.equal(initialNodeLength);
+    expect(el.open, 'should be closed initially').to.be.false;
+    expect(el.children.length).to.equal(initialNodeLength);
 
-        const opened = oneEvent(el, 'sp-opened');
+    const opened = oneEvent(el, 'sp-opened');
 
-        el.click();
-        await opened;
+    el.click();
+    await opened;
 
-        expect(el.open, 'should be open after clicking').to.be.true;
-        expect(el.children.length).to.be.gt(initialNodeLength);
+    expect(el.open, 'should be open after clicking').to.be.true;
+    expect(el.children.length).to.be.gt(initialNodeLength);
 
-        const closed = oneEvent(el, 'sp-closed');
+    const closed = oneEvent(el, 'sp-closed');
 
-        await sendKeys({ press: 'Escape' });
-        await closed;
-        await nextFrame();
-        await nextFrame();
+    await sendKeys({ press: 'Escape' });
+    await closed;
+    await nextFrame();
+    await nextFrame();
 
-        expect(el.open, 'should be closed after escape key is pressed').to.be
-            .false;
-        expect(el.children.length).to.equal(initialNodeLength);
-    });
+    expect(el.open, 'should be closed after escape key is pressed').to.be.false;
+    expect(el.children.length).to.equal(initialNodeLength);
+  });
 });

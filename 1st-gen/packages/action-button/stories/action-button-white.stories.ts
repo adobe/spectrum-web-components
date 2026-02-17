@@ -11,44 +11,45 @@
  */
 
 import { TemplateResult } from '@spectrum-web-components/base';
+
 import { makeOverBackground } from '../../button/stories/index.js';
 import type { Properties } from './index.js';
 import { renderButtons } from './index.js';
 
 export default {
-    component: 'sp-action-button',
-    title: 'Action Button/Static White',
-    decorators: [makeOverBackground()],
+  component: 'sp-action-button',
+  title: 'Action Button/Static White',
+  decorators: [makeOverBackground()],
 };
 
 const staticColor = 'white';
 
 export const XS = (args: Properties): TemplateResult => renderButtons(args);
 XS.args = {
-    size: 'xs',
-    staticColor,
+  size: 'xs',
+  staticColor,
 };
 
 export const s = (args: Properties): TemplateResult => renderButtons(args);
 s.args = {
-    size: 's',
-    staticColor,
+  size: 's',
+  staticColor,
 };
 
 export const m = (args: Properties): TemplateResult => renderButtons(args);
 m.args = {
-    size: 'm',
-    staticColor,
+  size: 'm',
+  staticColor,
 };
 
 export const l = (args: Properties): TemplateResult => renderButtons(args);
 l.args = {
-    size: 'l',
-    staticColor,
+  size: 'l',
+  staticColor,
 };
 
 export const XL = (args: Properties): TemplateResult => renderButtons(args);
 XL.args = {
-    size: 'xl',
-    staticColor,
+  size: 'xl',
+  staticColor,
 };

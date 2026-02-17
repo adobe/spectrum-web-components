@@ -10,13 +10,13 @@
  * governing permissions and limitations under the License.
  */
 
-import { bundleAsync } from 'lightningcss';
 import fg from 'fast-glob';
+import fs from 'fs-extra';
+import { bundleAsync } from 'lightningcss';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import path from 'path';
-import fs from 'fs-extra';
-import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectDir = path.resolve(__dirname, '..');

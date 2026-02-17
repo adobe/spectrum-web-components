@@ -11,20 +11,18 @@
  */
 
 import {
-    CSSResultArray,
-    html,
-    PropertyValues,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  PropertyValues,
+  TemplateResult,
 } from '@spectrum-web-components/base';
-
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-
 import {
-    STATUSLIGHT_VARIANTS_COLOR_S1,
-    STATUSLIGHT_VARIANTS_S1,
-    STATUSLIGHT_VARIANTS_SEMANTIC_S1,
-    StatusLightBase,
-    type StatusLightVariantS1,
+  STATUSLIGHT_VARIANTS_COLOR_S1,
+  STATUSLIGHT_VARIANTS_S1,
+  STATUSLIGHT_VARIANTS_SEMANTIC_S1,
+  StatusLightBase,
+  type StatusLightVariantS1,
 } from '@spectrum-web-components/core/components/status-light';
 
 import statusLightStyles from './status-light.css.js';
@@ -49,71 +47,70 @@ export type StatusLightVariant = StatusLightVariantS1;
  * @slot - text label of the Status Light
  */
 export class StatusLight extends StatusLightBase {
-    // ────────────────────
-    //     API OVERRIDES
-    // ────────────────────
+  // ────────────────────
+  //     API OVERRIDES
+  // ────────────────────
 
-    /**
-     * @internal
-     */
-    static override readonly VARIANTS_COLOR = STATUSLIGHT_VARIANTS_COLOR_S1;
+  /**
+   * @internal
+   */
+  static override readonly VARIANTS_COLOR = STATUSLIGHT_VARIANTS_COLOR_S1;
 
-    /**
-     * @internal
-     */
-    static override readonly VARIANTS_SEMANTIC =
-        STATUSLIGHT_VARIANTS_SEMANTIC_S1;
+  /**
+   * @internal
+   */
+  static override readonly VARIANTS_SEMANTIC = STATUSLIGHT_VARIANTS_SEMANTIC_S1;
 
-    /**
-     * @internal
-     */
-    static override readonly VARIANTS = STATUSLIGHT_VARIANTS_S1;
+  /**
+   * @internal
+   */
+  static override readonly VARIANTS = STATUSLIGHT_VARIANTS_S1;
 
-    /**
-     * The variant of the status light.
-     */
-    @property({ type: String, reflect: true })
-    public override variant: StatusLightVariantS1 = 'info';
+  /**
+   * The variant of the status light.
+   */
+  @property({ type: String, reflect: true })
+  public override variant: StatusLightVariantS1 = 'info';
 
-    // ───────────────────────
-    //     API ADDITIONS
-    // ───────────────────────
+  // ───────────────────────
+  //     API ADDITIONS
+  // ───────────────────────
 
-    /**
-     * @deprecated The `disabled` property is is deprecated and will be removed
-     * in a future release.
-     *
-     * A status light in a disabled state shows that a status exists, but is not available in that circumstance. This can be used to maintain layout continuity and communicate that a status may become available later.
-     *
-     */
-    @property({ type: Boolean, reflect: true })
-    public disabled = false;
+  /**
+   * @deprecated The `disabled` property is is deprecated and will be removed
+   * in a future release.
+   *
+   * A status light in a disabled state shows that a status exists, but is not available in that circumstance. This can be used to maintain layout continuity and communicate that a status may become available later.
+   *
+   */
+  @property({ type: Boolean, reflect: true })
+  public disabled = false;
 
-    // ──────────────────────
-    //     IMPLEMENTATION
-    // ──────────────────────
+  // ──────────────────────
+  //     IMPLEMENTATION
+  // ──────────────────────
 
-    protected override updated(changes: PropertyValues): void {
-        super.updated(changes);
-        if (changes.has('disabled')) {
-            if (this.disabled) {
-                this.setAttribute('aria-disabled', 'true');
-            } else {
-                this.removeAttribute('aria-disabled');
-            }
-        }
+  protected override updated(changes: PropertyValues): void {
+    super.updated(changes);
+    if (changes.has('disabled')) {
+      if (this.disabled) {
+        this.setAttribute('aria-disabled', 'true');
+      } else {
+        this.removeAttribute('aria-disabled');
+      }
     }
-    // ──────────────────────────────
-    //     RENDERING & STYLING
-    // ──────────────────────────────
+  }
+  // ──────────────────────────────
+  //     RENDERING & STYLING
+  // ──────────────────────────────
 
-    public static override get styles(): CSSResultArray {
-        return [statusLightStyles];
-    }
+  public static override get styles(): CSSResultArray {
+    return [statusLightStyles];
+  }
 
-    protected override render(): TemplateResult {
-        return html`
-            <slot></slot>
-        `;
-    }
+  protected override render(): TemplateResult {
+    return html`
+      <slot></slot>
+    `;
+  }
 }

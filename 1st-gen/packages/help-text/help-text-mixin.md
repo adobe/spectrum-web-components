@@ -47,14 +47,14 @@ import { SpectrumElement, html } from '@spectrum-web-components/base';
 import { ManageHelpText } from '@spectrum-web-components/help-text/src/manage-hep-text.js';
 
 export class MyElement extends ManageHelpText(SpectrumElement) {
-    invalid = false;
+  invalid = false;
 
-    render() {
-        return html`
-            <input aria-describedby=${this.helpTextId} />
-            ${this.renderHelpText(this.invalid)}
-        `;
-    }
+  render() {
+    return html`
+      <input aria-describedby=${this.helpTextId} />
+      ${this.renderHelpText(this.invalid)}
+    `;
+  }
 }
 ```
 
@@ -67,15 +67,15 @@ import { SpectrumElement, html } from '@spectrum-web-components/base';
 import { ManageHelpText } from '@spectrum-web-components/help-text/src/manage-help-text.js';
 
 export class MyElement extends ManageHelpText(SpectrumElement, {
-    mode: 'external',
+  mode: 'external',
 }) {
-    invalid = false;
+  invalid = false;
 
-    render() {
-        return html`
-            ${this.renderHelpText(this.invalid)}
-        `;
-    }
+  render() {
+    return html`
+      ${this.renderHelpText(this.invalid)}
+    `;
+  }
 }
 ```
 
@@ -92,18 +92,18 @@ Spectrum Web Components that have an `invalid` attribute, like `<sp-fieldgroup>`
 ```html
 <sp-field-label for="fruit">What are your favorite fruits?</sp-field-label>
 <sp-field-group horizontal id="fruit">
-    <sp-checkbox value="apple">Apple</sp-checkbox>
-    <sp-checkbox
-        value="not-a-fruit"
-        onchange="javascript:this.parentElement.invalid = this.checked"
-    >
-        Lettuce
-    </sp-checkbox>
-    <sp-checkbox value="strawberry" checked>Strawberry</sp-checkbox>
-    <sp-help-text slot="help-text">One of these is not a fruit.</sp-help-text>
-    <sp-help-text slot="negative-help-text" icon>
-        Choose actual fruit(s).
-    </sp-help-text>
+  <sp-checkbox value="apple">Apple</sp-checkbox>
+  <sp-checkbox
+    value="not-a-fruit"
+    onchange="javascript:this.parentElement.invalid = this.checked"
+  >
+    Lettuce
+  </sp-checkbox>
+  <sp-checkbox value="strawberry" checked>Strawberry</sp-checkbox>
+  <sp-help-text slot="help-text">One of these is not a fruit.</sp-help-text>
+  <sp-help-text slot="negative-help-text" icon>
+    Choose actual fruit(s).
+  </sp-help-text>
 </sp-field-group>
 ```
 
@@ -113,22 +113,22 @@ Spectrum Web Components that have an `invalid` attribute, like `<sp-fieldgroup>`
 
 ```html
 <sp-field-label for="icecream">
-    What is your favorite ice cream flavor?
+  What is your favorite ice cream flavor?
 </sp-field-label>
 <sp-radio-group
-    is="icecream"
-    onchange="
+  is="icecream"
+  onchange="
         this.invalid = this.value === 'fourth';
     "
 >
-    <sp-radio value="first">Vanilla</sp-radio>
-    <sp-radio value="second">Chocolate</sp-radio>
-    <sp-radio value="third">Strawberry</sp-radio>
-    <sp-radio value="fourth">I don't like ice cream</sp-radio>
-    <sp-help-text slot="help-text">Everyone likes ice cream.</sp-help-text>
-    <sp-help-text slot="negative-help-text" icon>
-        You can't not like ice cream.
-    </sp-help-text>
+  <sp-radio value="first">Vanilla</sp-radio>
+  <sp-radio value="second">Chocolate</sp-radio>
+  <sp-radio value="third">Strawberry</sp-radio>
+  <sp-radio value="fourth">I don't like ice cream</sp-radio>
+  <sp-help-text slot="help-text">Everyone likes ice cream.</sp-help-text>
+  <sp-help-text slot="negative-help-text" icon>
+    You can't not like ice cream.
+  </sp-help-text>
 </sp-radio-group>
 ```
 
@@ -139,15 +139,15 @@ Spectrum Web Components that have an `invalid` attribute, like `<sp-fieldgroup>`
 ```html
 <sp-field-label for="textarea">Stay "Positive"</sp-field-label>
 <sp-textfield
-    multiline
-    id="textarea"
-    pattern="[P][o][s][i][t][i][v][e]"
-    value="Positive"
+  multiline
+  id="textarea"
+  pattern="[P][o][s][i][t][i][v][e]"
+  value="Positive"
 >
-    <sp-help-text slot="help-text">
-        Tell us how you are feeling today.
-    </sp-help-text>
-    <sp-help-text slot="negative-help-text">Please be "Positive".</sp-help-text>
+  <sp-help-text slot="help-text">
+    Tell us how you are feeling today.
+  </sp-help-text>
+  <sp-help-text slot="negative-help-text">Please be "Positive".</sp-help-text>
 </sp-textfield>
 ```
 
@@ -158,14 +158,14 @@ Spectrum Web Components that have an `invalid` attribute, like `<sp-fieldgroup>`
 ```html
 <sp-field-label for="textfield">Stay "Positive"</sp-field-label>
 <sp-textfield
-    id="textfield"
-    pattern="[P][o][s][i][t][i][v][e]"
-    value="Positive"
+  id="textfield"
+  pattern="[P][o][s][i][t][i][v][e]"
+  value="Positive"
 >
-    <sp-help-text slot="help-text">
-        Tell us how you are feeling today.
-    </sp-help-text>
-    <sp-help-text slot="negative-help-text">Please be "Positive".</sp-help-text>
+  <sp-help-text slot="help-text">
+    Tell us how you are feeling today.
+  </sp-help-text>
+  <sp-help-text slot="negative-help-text">Please be "Positive".</sp-help-text>
 </sp-textfield>
 ```
 
@@ -183,20 +183,20 @@ When the parent element does not manage its own validity, or you would prefer to
 ```html
 <sp-field-label for="fruit">What are your favorite fruits?</sp-field-label>
 <sp-field-group horizontal id="fruit">
-    <sp-checkbox value="apple">Apple</sp-checkbox>
-    <sp-checkbox
-        value="not-a-fruit"
-        onchange="
+  <sp-checkbox value="apple">Apple</sp-checkbox>
+  <sp-checkbox
+    value="not-a-fruit"
+    onchange="
             const helpText = this.parentElement.querySelector(`[slot='help-text']`);
             helpText.icon = this.checked;
             helpText.textContent = this.checked ? 'Choose actual fruit(s).' : 'One of these is not a fruit.';
             helpText.variant = this.checked ? 'negative' : 'neutral';
         "
-    >
-        Lettuce
-    </sp-checkbox>
-    <sp-checkbox value="strawberry" checked>Strawberry</sp-checkbox>
-    <sp-help-text slot="help-text">One of these is not a fruit.</sp-help-text>
+  >
+    Lettuce
+  </sp-checkbox>
+  <sp-checkbox value="strawberry" checked>Strawberry</sp-checkbox>
+  <sp-help-text slot="help-text">One of these is not a fruit.</sp-help-text>
 </sp-field-group>
 ```
 
@@ -206,11 +206,11 @@ When the parent element does not manage its own validity, or you would prefer to
 
 ```html
 <sp-field-label for="icecream">
-    What is your favorite ice cream flavor?
+  What is your favorite ice cream flavor?
 </sp-field-label>
 <sp-radio-group
-    is="icecream"
-    onchange="
+  is="icecream"
+  onchange="
         const helpText = this.querySelector(`[slot='help-text']`);
         const isInvalid = this.selected === 'fourth';
         helpText.icon = isInvalid;
@@ -218,11 +218,11 @@ When the parent element does not manage its own validity, or you would prefer to
         helpText.variant = isInvalid ? 'negative' : 'neutral';
     "
 >
-    <sp-radio value="first">Vanilla</sp-radio>
-    <sp-radio value="second">Chocolate</sp-radio>
-    <sp-radio value="third">Strawberry</sp-radio>
-    <sp-radio value="fourth">I don't like ice cream</sp-radio>
-    <sp-help-text slot="help-text">Everyone likes ice cream.</sp-help-text>
+  <sp-radio value="first">Vanilla</sp-radio>
+  <sp-radio value="second">Chocolate</sp-radio>
+  <sp-radio value="third">Strawberry</sp-radio>
+  <sp-radio value="fourth">I don't like ice cream</sp-radio>
+  <sp-help-text slot="help-text">Everyone likes ice cream.</sp-help-text>
 </sp-radio-group>
 ```
 
@@ -233,19 +233,19 @@ When the parent element does not manage its own validity, or you would prefer to
 ```html
 <sp-field-label for="textarea">Stay "Positive"</sp-field-label>
 <sp-textfield
-    multiline
-    id="textarea"
-    pattern="[P][o][s][i][t][i][v][e]"
-    value="Positive"
-    oninput='
+  multiline
+  id="textarea"
+  pattern="[P][o][s][i][t][i][v][e]"
+  value="Positive"
+  oninput='
         const helpText = this.querySelector(`[slot="help-text"]`);
         helpText.textContent = this.invalid ? `Please be "Positive".` : `Tell us how you are feeling today.`;
         helpText.variant = this.invalid ? `negative` : `neutral`;
     '
 >
-    <sp-help-text slot="help-text">
-        Tell us how you're feeling today.
-    </sp-help-text>
+  <sp-help-text slot="help-text">
+    Tell us how you're feeling today.
+  </sp-help-text>
 </sp-textfield>
 ```
 
@@ -256,18 +256,18 @@ When the parent element does not manage its own validity, or you would prefer to
 ```html
 <sp-field-label for="textfield">Stay "Positive"</sp-field-label>
 <sp-textfield
-    id="textfield"
-    pattern="[P][o][s][i][t][i][v][e]"
-    value="Positive"
-    oninput='
+  id="textfield"
+  pattern="[P][o][s][i][t][i][v][e]"
+  value="Positive"
+  oninput='
         const helpText = this.querySelector(`[slot="help-text"]`);
         helpText.textContent = this.invalid ? `Please be "Positive".` : `Tell us how you are feeling today.`;
         helpText.variant = this.invalid ? `negative` : `neutral`;
     '
 >
-    <sp-help-text slot="help-text">
-        Tell us how you are feeling today.
-    </sp-help-text>
+  <sp-help-text slot="help-text">
+    Tell us how you are feeling today.
+  </sp-help-text>
 </sp-textfield>
 ```
 

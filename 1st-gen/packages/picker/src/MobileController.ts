@@ -10,12 +10,13 @@
  * governing permissions and limitations under the License.
  */
 
-import {
-    InteractionController,
-    InteractionTypes,
-    SAFARI_FOCUS_RING_CLASS,
-} from './InteractionController.js';
 import { isWebKit } from '@spectrum-web-components/shared';
+
+import {
+  InteractionController,
+  InteractionTypes,
+  SAFARI_FOCUS_RING_CLASS,
+} from './InteractionController.js';
 
 /**
  * Controller for managing picker interactions on mobile/touch devices.

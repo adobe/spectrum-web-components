@@ -9,13 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { TableHeadCell } from './src/TableHeadCell.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { TableHeadCell } from './src/TableHeadCell.js';
 
 defineElement('sp-table-head-cell', TableHeadCell);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-table-head-cell': TableHeadCell;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-table-head-cell': TableHeadCell;
+  }
 }
