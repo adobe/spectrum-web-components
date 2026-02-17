@@ -130,14 +130,20 @@ const SELECTOR_ALIASES = {
         margins: [':is(p, li)'],
     },
     heading: {
-        base: [':is(h1, h2, h3, h4)'],
+        base: [':is(h1)'],
         sizes: {
-            xxl: ['h1'],
+            m: ['h1'],
+        },
+        margins: [':is(h1)'],
+    },
+    title: {
+        base: [':is(h2, h3, h4)'],
+        sizes: {
             xl: ['h2'],
             l: ['h3'],
             m: ['h4'],
         },
-        margins: [':is(h1, h2, h3, h4)'],
+        margins: [':is(h2, h3, h4)'],
     },
 };
 

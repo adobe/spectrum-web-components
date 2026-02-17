@@ -128,13 +128,13 @@ function sizeClass(base: string, size: TypographySize) {
 function defaultSample(variant: TypographyVariant) {
     switch (variant) {
         case 'heading':
-            return 'Lorem ipsum dolor';
+            return 'Reserved for main page heading';
         case 'title':
-            return 'Lorem ipsum dolor';
+            return 'Important information and wayfinding';
         case 'body':
             return 'Body copy should be readable and comfortable for longer blocks of text.';
         case 'detail':
-            return 'Detail text for metadata, helper copy, or captions.';
+            return 'Supporting metadata';
         case 'code':
             return "console.log('Hello World');";
     }

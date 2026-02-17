@@ -22,7 +22,7 @@
   heading
   ========================= */
 .swc-Heading,
-.swc-Typography--prose :is(h1, h2, h3, h4) {
+.swc-Typography--prose :is(h1) {
     color: var(--swc-heading-font-color, token('heading-color'));
     font-family: var(--swc-heading-font-family, token('sans-serif-font'));
     font-weight: var(
@@ -55,7 +55,7 @@
 
 .swc-Heading--margins,
 .swc-Typography--prose .swc-Heading,
-.swc-Typography--prose :is(h1, h2, h3, h4) {
+.swc-Typography--prose :is(h1) {
     --swc-heading-margin-top-multiplier: token('heading-margin-top-multiplier');
     --swc-heading-margin-bottom-multiplier: token(
         'heading-margin-bottom-multiplier'
@@ -93,7 +93,7 @@
 }
 
 .swc-Heading--sizeM,
-.swc-Typography--prose h4 {
+.swc-Typography--prose h1 {
     --swc-heading-font-size: token('heading-size-m');
     --swc-heading-line-height: token('line-height-font-size-500');
 
@@ -104,8 +104,7 @@
     }
 }
 
-.swc-Heading--sizeL,
-.swc-Typography--prose h3 {
+.swc-Heading--sizeL {
     --swc-heading-font-size: token('heading-size-l');
     --swc-heading-line-height: token('line-height-font-size-700');
 
@@ -116,8 +115,7 @@
     }
 }
 
-.swc-Heading--sizeXL,
-.swc-Typography--prose h2 {
+.swc-Heading--sizeXL {
     --swc-heading-font-size: token('heading-size-xl');
     --swc-heading-line-height: token('line-height-font-size-900');
 
@@ -128,8 +126,7 @@
     }
 }
 
-.swc-Heading--sizeXXL,
-.swc-Typography--prose h1 {
+.swc-Heading--sizeXXL {
     --swc-heading-font-size: token('heading-size-xxl');
     --swc-heading-line-height: token('line-height-font-size-1100');
 
@@ -174,7 +171,8 @@
 /* =========================
   title
   ========================= */
-.swc-Title {
+.swc-Title,
+.swc-Typography--prose :is(h2, h3, h4) {
     color: var(--swc-title-font-color, token('title-color'));
     font-family: var(--swc-title-font-family, token('sans-serif-font'));
     font-weight: var(
@@ -206,7 +204,8 @@
 }
 
 .swc-Title--margins,
-.swc-Typography--prose .swc-Title {
+.swc-Typography--prose .swc-Title,
+.swc-Typography--prose :is(h2, h3, h4) {
     --swc-title-margin-top-multiplier: token('title-margin-top-multiplier');
     --swc-title-margin-bottom-multiplier: token(
         'title-margin-bottom-multiplier'
@@ -237,7 +236,8 @@
     --swc-title-line-height: token('line-height-font-size-100');
 }
 
-.swc-Title--sizeM {
+.swc-Title--sizeM,
+.swc-Typography--prose h4 {
     --swc-title-font-size: token('title-size-m');
     --swc-title-line-height: token('line-height-font-size-200');
 
@@ -248,7 +248,8 @@
     }
 }
 
-.swc-Title--sizeL {
+.swc-Title--sizeL,
+.swc-Typography--prose h3 {
     --swc-title-font-size: token('title-size-l');
     --swc-title-line-height: token('line-height-font-size-300');
 
@@ -259,7 +260,8 @@
     }
 }
 
-.swc-Title--sizeXL {
+.swc-Title--sizeXL,
+.swc-Typography--prose h2 {
     --swc-title-font-size: token('title-size-xl');
     --swc-title-line-height: token('line-height-font-size-400');
 

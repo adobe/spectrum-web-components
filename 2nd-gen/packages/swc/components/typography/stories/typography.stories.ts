@@ -97,7 +97,7 @@ export const Defaults: Story = {
 /**
  * The following variants include a serif sub-variant, which can be used by adding the `--serif` modifier class alongside the base class.
  */
-export const SerifVariants: Story = {
+export const SerifModifier: Story = {
     args: {
         showAllVariants: true,
         serif: true,
@@ -110,7 +110,7 @@ export const SerifVariants: Story = {
  * The following variants may use the emphasized modifier by adding `.swc-Typography--emphasized` alongside the base class.
  * It may also be applied to the serif sub-variants.
  */
-export const emphasizedModifier: Story = {
+export const EmphasizedModifier: Story = {
     args: {
         showAllVariants: true,
         emphasized: true,
@@ -119,7 +119,10 @@ export const emphasizedModifier: Story = {
     tags: ['options'],
 };
 
-export const HeadingSizes: Story = {
+/**
+ * Heading text represents the biggest and boldest text on a page, and it draws the most attention. Only the broadest idea, such as the main page title, should use this style.
+ */
+export const HeadingVariant: Story = {
     args: {
         variant: 'heading',
         includeMultipleSizes: true,
@@ -130,7 +133,11 @@ export const HeadingSizes: Story = {
     tags: ['options'],
 };
 
-export const TitleSizes: Story = {
+/**
+ * Title is used for essential text items on the page, such as wayfinding or context-setting.
+ * While the Heading style is for the loudest, most broad message, there are still going to be other important items in an information hierarchy.
+ */
+export const TitleVariant: Story = {
     args: {
         variant: 'title',
         includeMultipleSizes: true,
@@ -141,7 +148,11 @@ export const TitleSizes: Story = {
     tags: ['options'],
 };
 
-export const BodySizes: Story = {
+/**
+ * Body is the type style that’s primarily used for longer-form text that may extend to multiple lines.
+ * It's used for the text that creates the main content on a page.
+ */
+export const BodyVariant: Story = {
     args: {
         variant: 'body',
         includeMultipleSizes: true,
@@ -150,7 +161,11 @@ export const BodySizes: Story = {
     tags: ['options'],
 };
 
-export const DetailSizes: Story = {
+/**
+ * "Detail text" is a broad term for any kind of text that communicates ideas that are even more specific than body text.
+ * Text using the Detail style acts as supporting context to any other information presented, such as metadata, helper copy, or captions.
+ */
+export const DetailVariant: Story = {
     args: {
         variant: 'detail',
         includeMultipleSizes: true,
@@ -159,7 +174,7 @@ export const DetailSizes: Story = {
     tags: ['options'],
 };
 
-export const CodeSizes: Story = {
+export const CodeVariant: Story = {
     args: {
         variant: 'code',
         includeMultipleSizes: true,
@@ -171,7 +186,7 @@ export const CodeSizes: Story = {
 /**
  * Applies block-direction margins via the `--margins` modifier.
  */
-export const MarginsOneOff: Story = {
+export const MarginsModifier: Story = {
     args: {
         variant: 'body',
         margins: true,
@@ -184,10 +199,12 @@ export const MarginsOneOff: Story = {
 /**
  * Applies block-direction margins to all type variants within a container with the `.swc-Typography--prose` class applied.
  *
- * This also applies foundational type properties based on heading and body styles to common semantic typography elements including:
- * - `h1, h2, h3, h4`
- * - `p`
- * - `li`
+ * This also applies foundational type properties based on heading, title and body styles to common semantic typography elements including:
+ * - `h1` - Heading, size M
+ * - `h2` - Title, size XL
+ * - `h3` - Title, size L
+ * - `h4` - Title, size M
+ * - `p, li` - Body, size M
  */
 export const ProseContainer: Story = {
     args: {
@@ -199,12 +216,22 @@ export const ProseContainer: Story = {
         html`<div
             class="swc-Typography--prose typography-samples typography-samples--nogrid"
         >
+            <h1>Semantic H1</h1>
             <h2>Semantic H2</h2>
             <p>
                 Semantic paragraph. Lorem ipsum dolor sit amet, consectetur
                 adipiscing elit. Donec eleifend est mollis ligula lobortis,
-                tempus ultricies sapien lacinia. Nulla ut turpis velit. Sed
-                finibus dapibus diam et sollicitudin.
+                tempus ultricies sapien lacinia.
+            </p>
+            <h3>Semantic H3</h3>
+            <p>
+                Semantic paragraph. Nulla ut turpis velit. Sed finibus dapibus
+                diam et sollicitudin.
+            </p>
+            <h4>Semantic H4</h4>
+            <p>
+                Semantic paragraph. Donec scelerisque orci sit amet venenatis
+                luctus.
             </p>
             <h2 class="swc-Heading">Heading default variant H2</h2>
             <p class="swc-Body">

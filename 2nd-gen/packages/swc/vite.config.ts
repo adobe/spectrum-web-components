@@ -53,6 +53,7 @@ export default defineConfig({
                         'custom-properties': false, // Let lit-css handle this
                         'light-dark-function': false,
                         'logical-properties-and-values': false,
+                        'is-pseudo-class': false,
                     },
                 }),
             ],
