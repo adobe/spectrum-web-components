@@ -9,6 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
 import { expect, test } from '@playwright/test';
 
 import { gotoStory } from '../../../utils/a11y-helpers.js';
@@ -16,7 +17,9 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
 /**
  * Accessibility tests for Badge component (2nd Generation)
  *
- * Tests both ARIA snapshot structure and aXe WCAG compliance
+ * ARIA snapshot tests validate the accessibility tree structure.
+ * aXe WCAG compliance and color contrast validation are handled automatically
+ * by the Storybook test-runner (see .storybook/test-runner.ts).
  *
  * Note: Uses the same test helpers as 1st gen - they work for both!
  * Key differences:
@@ -31,7 +34,7 @@ test.describe('Badge - ARIA Snapshots', () => {
   }) => {
     const badge = await gotoStory(
       page,
-      'components-badge--default',
+      'components-badge--overview',
       'swc-badge'
     );
     const snapshot = await badge.ariaSnapshot();
@@ -44,6 +47,50 @@ test.describe('Badge - ARIA Snapshots', () => {
     const badge = await gotoStory(
       page,
       'components-badge--semantic-variants',
+      'swc-badge'
+    );
+    const snapshot = await badge.ariaSnapshot();
+
+    expect(snapshot).toBeTruthy();
+    await expect(badge).toMatchAriaSnapshot();
+  });
+
+  test('should handle non-semantic variants', async ({ page }) => {
+    const badge = await gotoStory(
+      page,
+      'components-badge--non-semantic-variants',
+      'swc-badge'
+    );
+    const snapshot = await badge.ariaSnapshot();
+
+    expect(snapshot).toBeTruthy();
+    await expect(badge).toMatchAriaSnapshot();
+  });
+
+  test('should handle different sizes', async ({ page }) => {
+    const badge = await gotoStory(page, 'components-badge--sizes', 'swc-badge');
+    const snapshot = await badge.ariaSnapshot();
+
+    expect(snapshot).toBeTruthy();
+    await expect(badge).toMatchAriaSnapshot();
+  });
+
+  test('should handle outline style', async ({ page }) => {
+    const badge = await gotoStory(
+      page,
+      'components-badge--outline',
+      'swc-badge'
+    );
+    const snapshot = await badge.ariaSnapshot();
+
+    expect(snapshot).toBeTruthy();
+    await expect(badge).toMatchAriaSnapshot();
+  });
+
+  test('should handle subtle style', async ({ page }) => {
+    const badge = await gotoStory(
+      page,
+      'components-badge--subtle',
       'swc-badge'
     );
     const snapshot = await badge.ariaSnapshot();

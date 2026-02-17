@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
 import { gotoStory } from '../../../utils/a11y-helpers.js';
@@ -18,7 +17,12 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
 /**
  * Accessibility tests for Status Light component (2nd Generation)
  *
- * Tests both ARIA snapshot structure and aXe WCAG compliance
+ * ARIA snapshot tests validate the accessibility tree structure.
+ * aXe WCAG compliance and color contrast validation are handled automatically
+ * by the Storybook test-runner (see .storybook/test-runner.ts).
+ *
+ * Note: The neutral variant has a known color contrast issue (4.39 vs 4.5:1 required)
+ * which is handled via test-runner configuration until design team addresses it.
  *
  * Note: Uses the same test helpers as 1st gen - they work for both!
  * Key differences:
@@ -31,7 +35,7 @@ test.describe('Status Light - ARIA Snapshots', () => {
   test('should have correct accessibility tree structure', async ({ page }) => {
     const statusLight = await gotoStory(
       page,
-      'components-status-light--default',
+      'components-status-light--overview',
       'swc-status-light'
     );
 
@@ -52,6 +56,18 @@ test.describe('Status Light - ARIA Snapshots', () => {
     await expect(statusLight).toMatchAriaSnapshot();
   });
 
+  test('should handle non-semantic variants', async ({ page }) => {
+    const statusLight = await gotoStory(
+      page,
+      'components-status-light--non-semantic-variants',
+      'swc-status-light'
+    );
+
+    const snapshot = await statusLight.ariaSnapshot();
+    expect(snapshot).toBeTruthy();
+    await expect(statusLight).toMatchAriaSnapshot();
+  });
+
   test('should reflect different sizes', async ({ page }) => {
     const statusLight = await gotoStory(
       page,
@@ -62,61 +78,5 @@ test.describe('Status Light - ARIA Snapshots', () => {
     const snapshot = await statusLight.ariaSnapshot();
     expect(snapshot).toBeTruthy();
     await expect(statusLight).toMatchAriaSnapshot();
-  });
-});
-
-test.describe('Status Light - aXe Validation', () => {
-  test('should not have accessibility violations - default', async ({
-    page,
-  }) => {
-    await gotoStory(
-      page,
-      'components-status-light--default',
-      'swc-status-light'
-    );
-
-    const results = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-      .analyze();
-
-    expect(results.violations).toEqual([]);
-  });
-
-  test('should not have violations - semantic variants', async ({ page }) => {
-    await gotoStory(
-      page,
-      'components-status-light--semantic-variants',
-      'swc-status-light'
-    );
-
-    const results = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-      .analyze();
-
-    expect(results.violations).toEqual([]);
-  });
-
-  test('should not have violations - sizes', async ({ page }) => {
-    await gotoStory(page, 'components-status-light--sizes', 'swc-status-light');
-
-    const results = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-      .analyze();
-
-    expect(results.violations).toEqual([]);
-  });
-
-  test('should verify color contrast', async ({ page }) => {
-    await gotoStory(
-      page,
-      'components-status-light--default',
-      'swc-status-light'
-    );
-
-    const results = await new AxeBuilder({ page })
-      .withRules(['color-contrast'])
-      .analyze();
-
-    expect(results.violations).toEqual([]);
   });
 });

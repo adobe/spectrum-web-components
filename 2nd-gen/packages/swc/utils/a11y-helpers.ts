@@ -17,7 +17,7 @@ import type { Locator, Page } from '@playwright/test';
  * This is more deterministic than waiting for visibility alone.
  *
  * @param page - Playwright page object
- * @param tagName - Custom element tag name (e.g., 'sp-badge')
+ * @param tagName - Custom element tag name (e.g., 'swc-badge')
  * @returns Promise that resolves when element is defined
  */
 export async function waitForCustomElement(
@@ -27,6 +27,9 @@ export async function waitForCustomElement(
   await page.evaluate((tag) => {
     return customElements.whenDefined(tag);
   }, tagName);
+
+  // Add small delay to ensure element is fully upgraded
+  await page.waitForTimeout(100);
 }
 
 /**
