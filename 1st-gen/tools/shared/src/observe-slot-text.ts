@@ -9,5 +9,5 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export { ObserveSlotText } from '@spectrum-web-components/core/shared/observe-slot-text.js';
-export type { SlotTextObservingInterface } from '@spectrum-web-components/core/shared/observe-slot-text.js';
+export { ObserveSlotText } from '@spectrum-web-components/core/mixins/observe-slot-text.js';
+export type { SlotTextObservingInterface } from '@spectrum-web-components/core/mixins/observe-slot-text.js';

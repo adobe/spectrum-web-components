@@ -17,64 +17,74 @@ import dts from 'vite-plugin-dts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+// Helper to scan a directory for *.ts files
+function scanTsFiles(dir, prefix) {
+    const entries = {};
+    try {
+        const items = readdirSync(dir);
+        for (const item of items) {
+            const itemPath = resolve(dir, item);
+            if (statSync(itemPath).isFile() && item.endsWith('.ts')) {
+                const entryName = `${prefix}/${item.replace('.ts', '')}`;
+                entries[entryName] = itemPath;
+            }
+        }
+    } catch {
+        // Directory doesn't exist
+    }
+    return entries;
+}
+
+// Helper to scan a directory for subdirectories with index.ts
+function scanSubdirIndexes(dir, prefix) {
+    const entries = {};
+    try {
+        const items = readdirSync(dir);
+        for (const item of items) {
+            const itemPath = resolve(dir, item);
+            if (statSync(itemPath).isDirectory()) {
+                const indexPath = resolve(itemPath, 'index.ts');
+                try {
+                    statSync(indexPath);
+                    entries[`${prefix}/${item}/index`] = indexPath;
+                } catch {
+                    // index.ts doesn't exist, skip
+                }
+            }
+        }
+    } catch {
+        // Directory doesn't exist
+    }
+    return entries;
+}
+
 // Automatically discover entry points
 function getEntries() {
     const entries = {};
 
     // Find all components/*/index.ts
-    try {
-        const componentsDir = resolve(__dirname, 'components');
-        const componentDirs = readdirSync(componentsDir);
-        for (const dir of componentDirs) {
-            const dirPath = resolve(componentsDir, dir);
-            if (statSync(dirPath).isDirectory()) {
-                const indexPath = resolve(dirPath, 'index.ts');
-                try {
-                    statSync(indexPath);
-                    entries[`components/${dir}/index`] = indexPath;
-                } catch {
-                    // index.ts doesn't exist, skip
-                }
-            }
-        }
-    } catch {
-        // components directory doesn't exist
-    }
+    Object.assign(
+        entries,
+        scanSubdirIndexes(resolve(__dirname, 'components'), 'components')
+    );
 
-    // Find all shared/*.ts files (excluding directories)
-    try {
-        const sharedDir = resolve(__dirname, 'shared');
-        const sharedItems = readdirSync(sharedDir);
-        for (const item of sharedItems) {
-            const itemPath = resolve(sharedDir, item);
-            if (statSync(itemPath).isFile() && item.endsWith('.ts')) {
-                const entryName = `shared/${item.replace('.ts', '')}`;
-                entries[entryName] = itemPath;
-            }
-        }
-    } catch {
-        // shared directory doesn't exist
-    }
+    // Find all element/*.ts files
+    Object.assign(
+        entries,
+        scanTsFiles(resolve(__dirname, 'element'), 'element')
+    );
 
-    // Find all shared/*/index.ts
-    try {
-        const sharedDir = resolve(__dirname, 'shared');
-        const sharedItems = readdirSync(sharedDir);
-        for (const item of sharedItems) {
-            const itemPath = resolve(sharedDir, item);
-            if (statSync(itemPath).isDirectory()) {
-                const indexPath = resolve(itemPath, 'index.ts');
-                try {
-                    statSync(indexPath);
-                    entries[`shared/${item}/index`] = indexPath;
-                } catch {
-                    // index.ts doesn't exist, skip
-                }
-            }
-        }
-    } catch {
-        // shared directory doesn't exist
-    }
+    // Find all mixins/*.ts files
+    Object.assign(entries, scanTsFiles(resolve(__dirname, 'mixins'), 'mixins'));
+
+    // Find all controllers/*.ts files
+    Object.assign(
+        entries,
+        scanTsFiles(resolve(__dirname, 'controllers'), 'controllers')
+    );
+
+    // Find all utils/*.ts files
+    Object.assign(entries, scanTsFiles(resolve(__dirname, 'utils'), 'utils'));
 
     return entries;
 }

@@ -24,7 +24,7 @@ export default defineConfig({
         litCss({ exclude: ['./stylesheets/*.css'] }),
         dts({
             include: ['**/*.ts'],
-            exclude: ['**/*.test.ts', '**/*.stories.ts'],
+            exclude: ['**/*.test.ts', '**/*.spec.ts', '**/*.stories.ts'],
             outDir: 'dist',
             beforeWriteFile: (filePath, content) => {
                 return {
