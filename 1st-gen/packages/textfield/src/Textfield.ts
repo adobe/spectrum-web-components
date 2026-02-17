@@ -33,6 +33,8 @@ import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 
 import textfieldStyles from './textfield.css.js';
 
@@ -394,9 +396,26 @@ export class TextfieldBase extends ManageHelpText(
     `;
   }
 
+  protected renderTruncatedValueTooltip(): TemplateResult | typeof nothing {
+    if (!this.isTruncated || this.disabled || !this.inputElement) {
+      return nothing;
+    }
+    return html`
+      <sp-overlay
+        id="truncated-value-tooltip"
+        .triggerElement=${this.inputElement}
+        .triggerInteraction=${'hover'}
+        type="hint"
+      >
+        <sp-tooltip>${this.displayValue}</sp-tooltip>
+      </sp-overlay>
+    `;
+  }
+
   protected override render(): TemplateResult {
     return html`
       <div id="textfield">${this.renderField()}</div>
+      ${this.renderTruncatedValueTooltip()}
       ${this.renderHelpText(this.invalid)}
     `;
   }
