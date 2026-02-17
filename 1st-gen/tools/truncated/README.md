@@ -31,7 +31,7 @@ The basic structure of the truncated component:
 
 ```html
 <sp-truncated>
-    This will truncate into a tooltip if there isn't enough space for it.
+  This will truncate into a tooltip if there isn't enough space for it.
 </sp-truncated>
 ```
 
@@ -43,12 +43,12 @@ By default, `<sp-truncated>` will automatically detect when text overflows its c
 
 ```html demo
 <div
-    style="width: 200px; border: 1px solid var(--spectrum-gray-300); padding: 8px; overflow: hidden; resize: both;"
+  style="width: 200px; border: 1px solid var(--spectrum-gray-300); padding: 8px; overflow: hidden; resize: both;"
 >
-    <sp-truncated>
-        This is a very long sentence that should be truncated when there isn't
-        enough space to display it fully.
-    </sp-truncated>
+  <sp-truncated>
+    This is a very long sentence that should be truncated when there isn't
+    enough space to display it fully.
+  </sp-truncated>
 </div>
 ```
 
@@ -58,15 +58,15 @@ By default, `<sp-truncated>` will automatically detect when text overflows its c
 
 ```html demo
 <div
-    style="width: 250px; border: 1px solid var(--spectrum-gray-300); padding: 8px;"
+  style="width: 250px; border: 1px solid var(--spectrum-gray-300); padding: 8px;"
 >
-    <sp-truncated>
-        This is a
-        <strong>very long</strong>
-        sentence with
-        <em>formatted text</em>
-        that should be truncated.
-    </sp-truncated>
+  <sp-truncated>
+    This is a
+    <strong>very long</strong>
+    sentence with
+    <em>formatted text</em>
+    that should be truncated.
+  </sp-truncated>
 </div>
 ```
 
@@ -76,11 +76,11 @@ The component handles long words or strings without spaces appropriately:
 
 ```html demo
 <div
-    style="width: 150px; border: 1px solid var(--spectrum-gray-300); padding: 8px;"
+  style="width: 150px; border: 1px solid var(--spectrum-gray-300); padding: 8px;"
 >
-    <sp-truncated>
-        ThisIsAVeryLongWordWithoutAnySpacesThatShouldBeTruncated
-    </sp-truncated>
+  <sp-truncated>
+    ThisIsAVeryLongWordWithoutAnySpacesThatShouldBeTruncated
+  </sp-truncated>
 </div>
 ```
 
@@ -90,15 +90,15 @@ By default, tooltip text will be extracted from the overflowing content. To prov
 
 ```html demo
 <div
-    style="width: 200px; border: 1px solid var(--spectrum-gray-300); padding: 8px;"
+  style="width: 200px; border: 1px solid var(--spectrum-gray-300); padding: 8px;"
 >
-    <sp-truncated>
-        This is the inline content that gets truncated
-        <span slot="overflow">
-            This custom overflow content will appear in the tooltip with any
-            additional information or formatting you need.
-        </span>
-    </sp-truncated>
+  <sp-truncated>
+    This is the inline content that gets truncated
+    <span slot="overflow">
+      This custom overflow content will appear in the tooltip with any
+      additional information or formatting you need.
+    </span>
+  </sp-truncated>
 </div>
 ```
 
@@ -108,34 +108,34 @@ You can control the placement of the tooltip using the `placement` attribute. Th
 
 ```html demo
 <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-    <div
-        style="width: 150px; border: 1px solid var(--spectrum-gray-300); padding: 8px;"
-    >
-        <sp-truncated placement="top">
-            Top placement for this truncated text
-        </sp-truncated>
-    </div>
-    <div
-        style="width: 150px; border: 1px solid var(--spectrum-gray-300); padding: 8px;"
-    >
-        <sp-truncated placement="bottom">
-            Bottom placement for this truncated text
-        </sp-truncated>
-    </div>
-    <div
-        style="width: 150px; border: 1px solid var(--spectrum-gray-300); padding: 8px;"
-    >
-        <sp-truncated placement="left">
-            Left placement for this truncated text
-        </sp-truncated>
-    </div>
-    <div
-        style="width: 150px; border: 1px solid var(--spectrum-gray-300); padding: 8px;"
-    >
-        <sp-truncated placement="right">
-            Right placement for this truncated text
-        </sp-truncated>
-    </div>
+  <div
+    style="width: 150px; border: 1px solid var(--spectrum-gray-300); padding: 8px;"
+  >
+    <sp-truncated placement="top">
+      Top placement for this truncated text
+    </sp-truncated>
+  </div>
+  <div
+    style="width: 150px; border: 1px solid var(--spectrum-gray-300); padding: 8px;"
+  >
+    <sp-truncated placement="bottom">
+      Bottom placement for this truncated text
+    </sp-truncated>
+  </div>
+  <div
+    style="width: 150px; border: 1px solid var(--spectrum-gray-300); padding: 8px;"
+  >
+    <sp-truncated placement="left">
+      Left placement for this truncated text
+    </sp-truncated>
+  </div>
+  <div
+    style="width: 150px; border: 1px solid var(--spectrum-gray-300); padding: 8px;"
+  >
+    <sp-truncated placement="right">
+      Right placement for this truncated text
+    </sp-truncated>
+  </div>
 </div>
 ```
 
@@ -145,11 +145,11 @@ When text is copied to the clipboard, a custom success message can be displayed:
 
 ```html demo
 <div
-    style="width: 200px; border: 1px solid var(--spectrum-gray-300); padding: 8px;"
+  style="width: 200px; border: 1px solid var(--spectrum-gray-300); padding: 8px;"
 >
-    <sp-truncated success-message="Email copied successfully!">
-        iamaverylongusernametoshowthecustom.message.text@example.com
-    </sp-truncated>
+  <sp-truncated success-message="Email copied successfully!">
+    iamaverylongusernametoshowthecustom.message.text@example.com
+  </sp-truncated>
 </div>
 ```
 
@@ -161,18 +161,16 @@ When text is copied to the clipboard, a custom success message can be displayed:
 
 ```html demo
 <div style="width: 250px;">
-    <p
-        style="margin: 0 0 8px 0; font-size: 12px; color: var(--spectrum-gray-700);"
-    >
-        Email address
-    </p>
-    <div
-        style="border: 1px solid var(--spectrum-gray-300); padding: 8px; border-radius: 4px;"
-    >
-        <sp-truncated>
-            very.long.email.address@subdomain.example.com
-        </sp-truncated>
-    </div>
+  <p
+    style="margin: 0 0 8px 0; font-size: 12px; color: var(--spectrum-gray-700);"
+  >
+    Email address
+  </p>
+  <div
+    style="border: 1px solid var(--spectrum-gray-300); padding: 8px; border-radius: 4px;"
+  >
+    <sp-truncated>very.long.email.address@subdomain.example.com</sp-truncated>
+  </div>
 </div>
 ```
 
@@ -183,16 +181,16 @@ For use within overlays, ensure the popover has appropriate width constraints:
 ```html
 <sp-button id="user-trigger">User Info</sp-button>
 <sp-overlay trigger="user-trigger@click" placement="bottom">
-    <sp-popover style="width: 250px;">
-        <div style="padding: 16px;">
-            <sp-field-label>Username</sp-field-label>
-            <div style="width: 200px;">
-                <sp-truncated>
-                    very.long.username.that.exceeds.the.available.width
-                </sp-truncated>
-            </div>
-        </div>
-    </sp-popover>
+  <sp-popover style="width: 250px;">
+    <div style="padding: 16px;">
+      <sp-field-label>Username</sp-field-label>
+      <div style="width: 200px;">
+        <sp-truncated>
+          very.long.username.that.exceeds.the.available.width
+        </sp-truncated>
+      </div>
+    </div>
+  </sp-popover>
 </sp-overlay>
 ```
 

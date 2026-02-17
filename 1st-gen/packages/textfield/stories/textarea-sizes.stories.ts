@@ -10,37 +10,37 @@
  * governing permissions and limitations under the License.
  */
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 export default {
-    component: 'sp-textfield',
-    title: 'Textarea/Sizes',
+  component: 'sp-textfield',
+  title: 'Textarea/Sizes',
 };
 
 const template = ({
-    size,
+  size,
 }: {
-    size?: 's' | 'm' | 'l' | 'xl';
+  size?: 's' | 'm' | 'l' | 'xl';
 } = {}): TemplateResult => {
-    return html`
-        <sp-field-label for="name" size=${ifDefined(size)}>
-            Enter your life story
-        </sp-field-label>
-        <sp-textfield
-            id="name"
-            multiline
-            size=${ifDefined(size)}
-            value="Sized Textarea"
-        >
-            <sp-help-text size=${ifDefined(size)} slot="help-text">
-                Spare no expense.
-            </sp-help-text>
-        </sp-textfield>
-    `;
+  return html`
+    <sp-field-label for="name" size=${ifDefined(size)}>
+      Enter your life story
+    </sp-field-label>
+    <sp-textfield
+      id="name"
+      multiline
+      size=${ifDefined(size)}
+      value="Sized Textarea"
+    >
+      <sp-help-text size=${ifDefined(size)} slot="help-text">
+        Spare no expense.
+      </sp-help-text>
+    </sp-textfield>
+  `;
 };
 
 export const s = (): TemplateResult => template({ size: 's' });

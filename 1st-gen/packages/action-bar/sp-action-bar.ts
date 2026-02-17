@@ -10,13 +10,14 @@
  * governing permissions and limitations under the License.
  */
 
-import { ActionBar } from './src/ActionBar.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { ActionBar } from './src/ActionBar.js';
 
 defineElement('sp-action-bar', ActionBar);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-action-bar': ActionBar;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-action-bar': ActionBar;
+  }
 }

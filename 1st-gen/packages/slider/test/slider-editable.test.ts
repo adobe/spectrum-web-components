@@ -11,6 +11,7 @@
  */
 
 import '@spectrum-web-components/slider/sp-slider.js';
+
 import { testEditableSlider } from './index.js';
 
 testEditableSlider('async');

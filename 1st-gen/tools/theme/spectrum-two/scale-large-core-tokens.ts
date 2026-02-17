@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+import '../src/spectrum-two/core-tokens.js';
+
 import largeStyles from '../src/spectrum-two/scale-large-core-tokens.css.js';
 import { Theme } from '../src/Theme.js';
-import '../src/spectrum-two/core-tokens.js';
 
 Theme.registerThemeFragment('large-spectrum-two', 'scale', largeStyles);

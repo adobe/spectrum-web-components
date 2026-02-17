@@ -12,24 +12,24 @@
 
 // Inspired from https://github.com/focus-trap/tabbable/blob/8acf516c29da42c928753950210b07ac32efc724/src/index.js#L6
 const focusables = [
-    'input:not([inert])',
-    'select:not([inert])',
-    'textarea:not([inert])',
-    'a[href]:not([inert])',
-    'button:not([inert])',
-    'label:not([inert])',
-    '[tabindex]:not([inert])',
-    'audio[controls]:not([inert])',
-    'video[controls]:not([inert])',
-    '[contenteditable]:not([contenteditable="false"]):not([inert])',
-    'details>summary:first-of-type:not([inert])',
-    'details:not([inert])',
-    '[focusable]:not([focusable="false"])', // custom dev use-case
+  'input:not([inert])',
+  'select:not([inert])',
+  'textarea:not([inert])',
+  'a[href]:not([inert])',
+  'button:not([inert])',
+  'label:not([inert])',
+  '[tabindex]:not([inert])',
+  'audio[controls]:not([inert])',
+  'video[controls]:not([inert])',
+  '[contenteditable]:not([contenteditable="false"]):not([inert])',
+  'details>summary:first-of-type:not([inert])',
+  'details:not([inert])',
+  '[focusable]:not([focusable="false"])', // custom dev use-case
 ];
 
 const userFocuable = ':not([tabindex="-1"])';
 
 export const userFocusableSelector =
-    focusables.join(`${userFocuable}, `) + userFocuable;
+  focusables.join(`${userFocuable}, `) + userFocuable;
 
 export const focusableSelector = focusables.join(', ');

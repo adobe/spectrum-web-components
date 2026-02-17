@@ -71,7 +71,7 @@ title: Spectrum Web Components
 
 ```html
 <sp-button variant="accent" href="components/button">
-    Use Spectrum Web Component buttons
+  Use Spectrum Web Component buttons
 </sp-button>
 ```
 

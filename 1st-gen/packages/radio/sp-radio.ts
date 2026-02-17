@@ -9,13 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { Radio } from './src/Radio.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { Radio } from './src/Radio.js';
 
 defineElement('sp-radio', Radio);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-radio': Radio;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-radio': Radio;
+  }
 }

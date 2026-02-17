@@ -1,3 +1,14 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 #!/usr/bin/env node
 
 /**
@@ -13,6 +24,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+
 import { verifyAllLinks } from './verify-links.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -246,7 +258,7 @@ function walkTree(dir, baseDir = dir, parentPath = null) {
 
 function generateBreadcrumb(filePath, metadata) {
     const fileMeta = metadata.files[filePath];
-    if (!fileMeta) return '';
+    if (!fileMeta) {return '';}
 
     // Root README has no breadcrumb
     if (filePath === './README.md' || filePath === 'README.md') {
@@ -260,7 +272,7 @@ function generateBreadcrumb(filePath, metadata) {
     // Walk up parent chain
     while (currentPath && currentPath !== '.') {
         const folderMeta = metadata.folders[currentPath];
-        if (!folderMeta) break;
+        if (!folderMeta) {break;}
 
         const hasReadme = folderMeta.hasReadme;
 
@@ -307,7 +319,7 @@ function generateBreadcrumb(filePath, metadata) {
 
 function generateTOC(filePath, metadata) {
     const fileMeta = metadata.files[filePath];
-    if (!fileMeta) return '';
+    if (!fileMeta) {return '';}
 
     const sections = [];
 
@@ -378,7 +390,7 @@ function generateBeneathDoc(filePath, metadata, indentLevel, depth) {
         if (metadata.files[childPath]) {
             const childFileMeta = metadata.files[childPath];
             // Skip self (the README file)
-            if (childPath === filePath) continue;
+            if (childPath === filePath) {continue;}
 
             const relPath = path.relative(path.dirname(filePath), childPath);
             lines.push(`${indent}- [${childFileMeta.displayName}](${relPath})`);
@@ -446,7 +458,7 @@ function generateGrandchildren(
         if (metadata.files[childPath]) {
             const childFileMeta = metadata.files[childPath];
             // Skip README in the folder itself (already linked from parent)
-            if (childName === 'README.md') continue;
+            if (childName === 'README.md') {continue;}
 
             const relPath = path.relative(
                 path.dirname(originFilePath),
@@ -497,7 +509,7 @@ function generateGrandchildren(
 
 function updateFile(filePath, metadata, docsRoot) {
     const fileMeta = metadata.files[filePath];
-    if (!fileMeta) return false;
+    if (!fileMeta) {return false;}
 
     const fullPath = fileMeta.fullPath;
 

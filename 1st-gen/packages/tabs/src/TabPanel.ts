@@ -11,10 +11,10 @@
  */
 
 import {
-    html,
-    PropertyValues,
-    SpectrumElement,
-    TemplateResult,
+  html,
+  PropertyValues,
+  SpectrumElement,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
@@ -27,49 +27,49 @@ import panelStyles from './tab-panel.css.js';
  * @slot - content of the Tab Panel
  */
 export class TabPanel extends SpectrumElement {
-    static override styles = [panelStyles];
+  static override styles = [panelStyles];
 
-    @property({ type: Boolean, reflect: true })
-    public selected = false;
+  @property({ type: Boolean, reflect: true })
+  public selected = false;
 
-    @property({ type: String, reflect: true })
-    public value = '';
+  @property({ type: String, reflect: true })
+  public value = '';
 
-    protected handleFocusin(): void {
-        this.removeAttribute('tabindex');
+  protected handleFocusin(): void {
+    this.removeAttribute('tabindex');
+  }
+
+  protected handleFocusout(): void {
+    this.tabIndex = this.selected ? 0 : -1;
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <slot
+        @focusin=${this.handleFocusin}
+        @focusout=${this.handleFocusout}
+      ></slot>
+    `;
+  }
+
+  protected override firstUpdated(): void {
+    this.slot = 'tab-panel';
+    this.setAttribute('role', 'tabpanel');
+    this.tabIndex = 0;
+    if (!this.hasAttribute('id')) {
+      this.id = `sp-tab-panel-${randomID()}`;
     }
+  }
 
-    protected handleFocusout(): void {
-        this.tabIndex = this.selected ? 0 : -1;
-    }
-
-    protected override render(): TemplateResult {
-        return html`
-            <slot
-                @focusin=${this.handleFocusin}
-                @focusout=${this.handleFocusout}
-            ></slot>
-        `;
-    }
-
-    protected override firstUpdated(): void {
-        this.slot = 'tab-panel';
-        this.setAttribute('role', 'tabpanel');
+  protected override updated(changes: PropertyValues<this>): void {
+    if (changes.has('selected')) {
+      if (this.selected) {
+        this.removeAttribute('aria-hidden');
         this.tabIndex = 0;
-        if (!this.hasAttribute('id')) {
-            this.id = `sp-tab-panel-${randomID()}`;
-        }
+      } else {
+        this.setAttribute('aria-hidden', 'true');
+        this.tabIndex = -1;
+      }
     }
-
-    protected override updated(changes: PropertyValues<this>): void {
-        if (changes.has('selected')) {
-            if (this.selected) {
-                this.removeAttribute('aria-hidden');
-                this.tabIndex = 0;
-            } else {
-                this.setAttribute('aria-hidden', 'true');
-                this.tabIndex = -1;
-            }
-        }
-    }
+  }
 }

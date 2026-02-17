@@ -10,10 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/progress-bar/sp-progress-bar.js';
 import { html } from 'lit';
+
+import '@spectrum-web-components/progress-bar/sp-progress-bar.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-progress-bar label="Loading" indeterminate></sp-progress-bar>
+  <sp-progress-bar label="Loading" indeterminate></sp-progress-bar>
 `);

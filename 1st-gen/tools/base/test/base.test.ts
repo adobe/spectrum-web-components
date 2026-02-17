@@ -9,8 +9,9 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { SpectrumElement } from '@spectrum-web-components/base';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+
+import { SpectrumElement } from '@spectrum-web-components/base';
 import { version } from '@spectrum-web-components/base/src/version.js';
 
 class DirElement extends SpectrumElement {}
@@ -18,21 +19,21 @@ class DirElement extends SpectrumElement {}
 customElements.define('dir-element', DirElement);
 
 describe('Base', () => {
-    after(() => {
-        document.dir = '';
-    });
-    it('component understands `dir` from `document`', async () => {
-        document.dir = 'rtl';
-        const el = await fixture<DirElement>(html`
-            <dir-element></dir-element>
-        `);
+  after(() => {
+    document.dir = '';
+  });
+  it('component understands `dir` from `document`', async () => {
+    document.dir = 'rtl';
+    const el = await fixture<DirElement>(html`
+      <dir-element></dir-element>
+    `);
 
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        const dir = getComputedStyle(el).direction;
-        expect(dir).to.equal('rtl');
-    });
-    it('has a static VERSION property', () => {
-        expect(DirElement.VERSION).to.equal(version);
-    });
+    const dir = getComputedStyle(el).direction;
+    expect(dir).to.equal('rtl');
+  });
+  it('has a static VERSION property', () => {
+    expect(DirElement.VERSION).to.equal(version);
+  });
 });

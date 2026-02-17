@@ -32,9 +32,9 @@ The accordion item consists of two key parts:
 
 ```html
 <sp-accordion>
-    <sp-accordion-item label="Accordion Item">
-        <div>Accordion item content can be toggled visible.</div>
-    </sp-accordion-item>
+  <sp-accordion-item label="Accordion Item">
+    <div>Accordion item content can be toggled visible.</div>
+  </sp-accordion-item>
 </sp-accordion>
 ```
 
@@ -46,9 +46,9 @@ An accordion item can be opened by default using the `open` attribute:
 
 ```html
 <sp-accordion allow-multiple>
-    <sp-accordion-item open label="Opened Accordion Item">
-        <div>This accordion item content is visible by default.</div>
-    </sp-accordion-item>
+  <sp-accordion-item open label="Opened Accordion Item">
+    <div>This accordion item content is visible by default.</div>
+  </sp-accordion-item>
 </sp-accordion>
 ```
 
@@ -58,9 +58,9 @@ Individual accordion items can be disabled using the `disabled` attribute. Disab
 
 ```html
 <sp-accordion allow-multiple>
-    <sp-accordion-item disabled label="Disabled Accordion Item">
-        <div>You can not toggle this content visible.</div>
-    </sp-accordion-item>
+  <sp-accordion-item disabled label="Disabled Accordion Item">
+    <div>You can not toggle this content visible.</div>
+  </sp-accordion-item>
 </sp-accordion>
 ```
 

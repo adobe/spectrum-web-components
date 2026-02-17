@@ -5,120 +5,120 @@
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.11.2
-    - @spectrum-web-components/reactive-controllers@1.11.2
-    - @spectrum-web-components/action-button@1.11.2
-    - @spectrum-web-components/icons-workflow@1.11.2
+  - @spectrum-web-components/base@1.11.2
+  - @spectrum-web-components/reactive-controllers@1.11.2
+  - @spectrum-web-components/action-button@1.11.2
+  - @spectrum-web-components/icons-workflow@1.11.2
 
 ## 1.11.1
 
 ### Patch Changes
 
 - Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
-    - @spectrum-web-components/base@1.11.1
-    - @spectrum-web-components/action-button@1.11.1
-    - @spectrum-web-components/icons-workflow@1.11.1
-    - @spectrum-web-components/reactive-controllers@1.11.1
+  - @spectrum-web-components/base@1.11.1
+  - @spectrum-web-components/action-button@1.11.1
+  - @spectrum-web-components/icons-workflow@1.11.1
+  - @spectrum-web-components/reactive-controllers@1.11.1
 
 ## 1.11.0
 
 ### Patch Changes
 
 - Updated dependencies [[`b95e254`](https://github.com/adobe/spectrum-web-components/commit/b95e25413830825a506b7d4025d6b4d982691771), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
-    - @spectrum-web-components/reactive-controllers@1.11.0
-    - @spectrum-web-components/base@1.11.0
-    - @spectrum-web-components/action-button@1.11.0
-    - @spectrum-web-components/icons-workflow@1.11.0
+  - @spectrum-web-components/reactive-controllers@1.11.0
+  - @spectrum-web-components/base@1.11.0
+  - @spectrum-web-components/action-button@1.11.0
+  - @spectrum-web-components/icons-workflow@1.11.0
 
 ## 1.10.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.10.0
-    - @spectrum-web-components/action-button@1.10.0
-    - @spectrum-web-components/icons-workflow@1.10.0
-    - @spectrum-web-components/reactive-controllers@1.10.0
+  - @spectrum-web-components/base@1.10.0
+  - @spectrum-web-components/action-button@1.10.0
+  - @spectrum-web-components/icons-workflow@1.10.0
+  - @spectrum-web-components/reactive-controllers@1.10.0
 
 ## 1.9.1
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/action-button@1.9.1
-    - @spectrum-web-components/icons-workflow@1.9.1
-    - @spectrum-web-components/base@1.9.1
-    - @spectrum-web-components/reactive-controllers@1.9.1
+  - @spectrum-web-components/action-button@1.9.1
+  - @spectrum-web-components/icons-workflow@1.9.1
+  - @spectrum-web-components/base@1.9.1
+  - @spectrum-web-components/reactive-controllers@1.9.1
 
 ## 1.9.0
 
 ### Patch Changes
 
 - Updated dependencies [[`bdf54c1`](https://github.com/adobe/spectrum-web-components/commit/bdf54c1bc6d3eb20da1a1bf3b40650e6ab1ba399), [`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8)]:
-    - @spectrum-web-components/icons-workflow@1.9.0
-    - @spectrum-web-components/reactive-controllers@1.9.0
-    - @spectrum-web-components/action-button@1.9.0
-    - @spectrum-web-components/base@1.9.0
+  - @spectrum-web-components/icons-workflow@1.9.0
+  - @spectrum-web-components/reactive-controllers@1.9.0
+  - @spectrum-web-components/action-button@1.9.0
+  - @spectrum-web-components/base@1.9.0
 
 ## 1.8.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/action-button@1.8.0
-    - @spectrum-web-components/icons-workflow@1.8.0
-    - @spectrum-web-components/base@1.8.0
-    - @spectrum-web-components/reactive-controllers@1.8.0
+  - @spectrum-web-components/action-button@1.8.0
+  - @spectrum-web-components/icons-workflow@1.8.0
+  - @spectrum-web-components/base@1.8.0
+  - @spectrum-web-components/reactive-controllers@1.8.0
 
 ## 1.7.0
 
 ### Patch Changes
 
 - Updated dependencies [[`c1669d2`](https://github.com/adobe/spectrum-web-components/commit/c1669d2dc5e1ceeb84486ce49a428f86a3173caa)]:
-    - @spectrum-web-components/action-button@1.7.0
-    - @spectrum-web-components/icons-workflow@1.7.0
-    - @spectrum-web-components/base@1.7.0
-    - @spectrum-web-components/reactive-controllers@1.7.0
+  - @spectrum-web-components/action-button@1.7.0
+  - @spectrum-web-components/icons-workflow@1.7.0
+  - @spectrum-web-components/base@1.7.0
+  - @spectrum-web-components/reactive-controllers@1.7.0
 
 ## 1.6.0
 
 ### Patch Changes
 
 - Updated dependencies [[`f6cebbd`](https://github.com/adobe/spectrum-web-components/commit/f6cebbd90008a2abb1232c355ae06e8566086093)]:
-    - @spectrum-web-components/icons-workflow@1.6.0
-    - @spectrum-web-components/action-button@1.6.0
-    - @spectrum-web-components/base@1.6.0
-    - @spectrum-web-components/reactive-controllers@1.6.0
+  - @spectrum-web-components/icons-workflow@1.6.0
+  - @spectrum-web-components/action-button@1.6.0
+  - @spectrum-web-components/base@1.6.0
+  - @spectrum-web-components/reactive-controllers@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
 - Updated dependencies [[`6c58f50`](https://github.com/adobe/spectrum-web-components/commit/6c58f50f7b1f5489c11e0d3484e3f4a9d576f1c8)]:
-    - @spectrum-web-components/action-button@1.5.0
-    - @spectrum-web-components/icons-workflow@1.5.0
-    - @spectrum-web-components/base@1.5.0
-    - @spectrum-web-components/reactive-controllers@1.5.0
+  - @spectrum-web-components/action-button@1.5.0
+  - @spectrum-web-components/icons-workflow@1.5.0
+  - @spectrum-web-components/base@1.5.0
+  - @spectrum-web-components/reactive-controllers@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
 - Updated dependencies [[`72dbe62`](https://github.com/adobe/spectrum-web-components/commit/72dbe629cddfc57171eaaadf7206df47c19d3c98)]:
-    - @spectrum-web-components/action-button@1.4.0
-    - @spectrum-web-components/icons-workflow@1.4.0
-    - @spectrum-web-components/base@1.4.0
-    - @spectrum-web-components/reactive-controllers@1.4.0
+  - @spectrum-web-components/action-button@1.4.0
+  - @spectrum-web-components/icons-workflow@1.4.0
+  - @spectrum-web-components/base@1.4.0
+  - @spectrum-web-components/reactive-controllers@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
 - Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)]:
-    - @spectrum-web-components/reactive-controllers@1.3.0
-    - @spectrum-web-components/action-button@1.3.0
-    - @spectrum-web-components/icons-workflow@1.3.0
-    - @spectrum-web-components/base@1.3.0
+  - @spectrum-web-components/reactive-controllers@1.3.0
+  - @spectrum-web-components/action-button@1.3.0
+  - @spectrum-web-components/icons-workflow@1.3.0
+  - @spectrum-web-components/base@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

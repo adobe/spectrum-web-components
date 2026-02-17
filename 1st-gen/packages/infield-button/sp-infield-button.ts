@@ -14,7 +14,7 @@ import { InfieldButton } from './src/InfieldButton.js';
 customElements.define('sp-infield-button', InfieldButton);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-infield-button': InfieldButton;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-infield-button': InfieldButton;
+  }
 }

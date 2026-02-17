@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { Default } from '../stories/asset.stories.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
+import { Default } from '../stories/asset.stories.js';
 
 testForMemoryLeaks(Default());

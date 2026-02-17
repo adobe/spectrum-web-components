@@ -10,43 +10,43 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
 import { elementUpdated, fixture, nextFrame } from '@open-wc/testing';
+
+import { html, TemplateResult } from '@spectrum-web-components/base';
 import { NumberField } from '@spectrum-web-components/number-field';
+
 import { sendMouse } from '../../../test/plugins/browser.js';
 
 export async function getElFrom(test: TemplateResult): Promise<NumberField> {
-    const wrapped = await fixture<HTMLDivElement>(html`
-        <div style="--spectrum-alias-ui-icon-chevron-size-75: 20px;">
-            ${test}
-        </div>
-    `);
-    const el = wrapped.querySelector('sp-number-field') as NumberField;
-    await elementUpdated(el);
-    return el;
+  const wrapped = await fixture<HTMLDivElement>(html`
+    <div style="--spectrum-alias-ui-icon-chevron-size-75: 20px;">${test}</div>
+  `);
+  const el = wrapped.querySelector('sp-number-field') as NumberField;
+  await elementUpdated(el);
+  return el;
 }
 
 export async function clickBySelector(
-    el: NumberField,
-    selector: string,
-    options: { button?: 'left' | 'right' | 'middle' } = {}
+  el: NumberField,
+  selector: string,
+  options: { button?: 'left' | 'right' | 'middle' } = {}
 ): Promise<void> {
-    const target = el.shadowRoot.querySelector(selector) as HTMLElement;
-    await sendMouse([
-        {
-            type: 'move',
-            position: [target],
-            options,
-        },
-        {
-            type: 'down',
-            options,
-        },
-    ]);
-    await nextFrame();
-    await sendMouse({
-        type: 'up',
-        options,
-    });
-    await elementUpdated(el);
+  const target = el.shadowRoot.querySelector(selector) as HTMLElement;
+  await sendMouse([
+    {
+      type: 'move',
+      position: [target],
+      options,
+    },
+    {
+      type: 'down',
+      options,
+    },
+  ]);
+  await nextFrame();
+  await sendMouse({
+    type: 'up',
+    options,
+  });
+  await elementUpdated(el);
 }

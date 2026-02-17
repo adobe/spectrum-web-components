@@ -12,22 +12,22 @@
 
 // Opt-in resize observer types
 export interface SWCResizeObserverEntry {
-    contentRect: DOMRectReadOnly;
+  contentRect: DOMRectReadOnly;
 }
 
 export interface SWCResizeObserver {
-    // eslint-disable-next-line @typescript-eslint/no-misused-new
-    new (callback: SWCResizeObserverCallback): SWCResizeObserver;
-    disconnect(): void;
-    observe(target: Element): void;
-    unobserve(target: Element): void;
+  // eslint-disable-next-line @typescript-eslint/no-misused-new
+  new (callback: SWCResizeObserverCallback): SWCResizeObserver;
+  disconnect(): void;
+  observe(target: Element): void;
+  unobserve(target: Element): void;
 }
 
 export interface WithSWCResizeObserver {
-    ResizeObserver: SWCResizeObserver;
+  ResizeObserver: SWCResizeObserver;
 }
 
 export type SWCResizeObserverCallback = (
-    entries: SWCResizeObserverEntry[],
-    observer: SWCResizeObserver
+  entries: SWCResizeObserverEntry[],
+  observer: SWCResizeObserver
 ) => void;

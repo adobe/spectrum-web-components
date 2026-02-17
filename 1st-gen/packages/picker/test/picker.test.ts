@@ -11,8 +11,9 @@
  */
 
 import '@spectrum-web-components/picker/sp-picker.js';
+
 import { runPickerTests } from './index.js';
 
 describe('Picker, async', () => {
-    runPickerTests();
+  runPickerTests();
 });

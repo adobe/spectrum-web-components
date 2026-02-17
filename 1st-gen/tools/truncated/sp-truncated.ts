@@ -15,7 +15,7 @@ import { Truncated } from './src/Truncated.js';
 customElements.define('sp-truncated', Truncated);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-truncated': Truncated;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-truncated': Truncated;
+  }
 }

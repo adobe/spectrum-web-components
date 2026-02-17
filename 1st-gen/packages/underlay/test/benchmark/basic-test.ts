@@ -10,10 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/underlay/sp-underlay.js';
 import { html } from 'lit';
+
+import '@spectrum-web-components/underlay/sp-underlay.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-underlay open></sp-underlay>
+  <sp-underlay open></sp-underlay>
 `);

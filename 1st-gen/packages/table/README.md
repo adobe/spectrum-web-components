@@ -34,13 +34,13 @@ When looking to leverage the `Table`, `TableBody`, `TableCell`, `TableCheckboxCe
 
 ```js
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableCheckboxCell,
-    TableHead,
-    TableHeadCell,
-    TableRow,
+  Table,
+  TableBody,
+  TableCell,
+  TableCheckboxCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
 } from '@spectrum-web-components/table';
 ```
 
@@ -56,32 +56,32 @@ A table consists of the following parts:
 
 ```html demo
 <sp-table>
-    <sp-table-head>
-        <sp-table-head-cell>File name</sp-table-head-cell>
-        <sp-table-head-cell>Type</sp-table-head-cell>
-        <sp-table-head-cell>Size</sp-table-head-cell>
-        <sp-table-head-cell>Status</sp-table-head-cell>
-    </sp-table-head>
-    <sp-table-body>
-        <sp-table-row>
-            <sp-table-cell>Budget</sp-table-cell>
-            <sp-table-cell>PDF</sp-table-cell>
-            <sp-table-cell>89 KB</sp-table-cell>
-            <sp-table-cell>Reviewed</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row>
-            <sp-table-cell>Onboarding</sp-table-cell>
-            <sp-table-cell>XLS</sp-table-cell>
-            <sp-table-cell>120 KB</sp-table-cell>
-            <sp-table-cell>Draft</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row>
-            <sp-table-cell>Proposal</sp-table-cell>
-            <sp-table-cell>PDF</sp-table-cell>
-            <sp-table-cell>139 KB</sp-table-cell>
-            <sp-table-cell>Published</sp-table-cell>
-        </sp-table-row>
-    </sp-table-body>
+  <sp-table-head>
+    <sp-table-head-cell>File name</sp-table-head-cell>
+    <sp-table-head-cell>Type</sp-table-head-cell>
+    <sp-table-head-cell>Size</sp-table-head-cell>
+    <sp-table-head-cell>Status</sp-table-head-cell>
+  </sp-table-head>
+  <sp-table-body>
+    <sp-table-row>
+      <sp-table-cell>Budget</sp-table-cell>
+      <sp-table-cell>PDF</sp-table-cell>
+      <sp-table-cell>89 KB</sp-table-cell>
+      <sp-table-cell>Reviewed</sp-table-cell>
+    </sp-table-row>
+    <sp-table-row>
+      <sp-table-cell>Onboarding</sp-table-cell>
+      <sp-table-cell>XLS</sp-table-cell>
+      <sp-table-cell>120 KB</sp-table-cell>
+      <sp-table-cell>Draft</sp-table-cell>
+    </sp-table-row>
+    <sp-table-row>
+      <sp-table-cell>Proposal</sp-table-cell>
+      <sp-table-cell>PDF</sp-table-cell>
+      <sp-table-cell>139 KB</sp-table-cell>
+      <sp-table-cell>Published</sp-table-cell>
+    </sp-table-row>
+  </sp-table-body>
 </sp-table>
 ```
 
@@ -104,42 +104,42 @@ You can customize the header checkbox label using the `select-all-label` attribu
 
 ```html demo
 <sp-table selects="multiple" select-all-label="Select all files">
-    <sp-table-head>
-        <sp-table-head-cell>File name</sp-table-head-cell>
-        <sp-table-head-cell>Type</sp-table-head-cell>
-    </sp-table-head>
-    <sp-table-body>
-        <sp-table-row value="row1">
-            <sp-table-cell>Budget</sp-table-cell>
-            <sp-table-cell>PDF</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row value="row2">
-            <sp-table-cell>Onboarding</sp-table-cell>
-            <sp-table-cell>XLS</sp-table-cell>
-        </sp-table-row>
-    </sp-table-body>
+  <sp-table-head>
+    <sp-table-head-cell>File name</sp-table-head-cell>
+    <sp-table-head-cell>Type</sp-table-head-cell>
+  </sp-table-head>
+  <sp-table-body>
+    <sp-table-row value="row1">
+      <sp-table-cell>Budget</sp-table-cell>
+      <sp-table-cell>PDF</sp-table-cell>
+    </sp-table-row>
+    <sp-table-row value="row2">
+      <sp-table-cell>Onboarding</sp-table-cell>
+      <sp-table-cell>XLS</sp-table-cell>
+    </sp-table-row>
+  </sp-table-body>
 </sp-table>
 ```
 
 ```html demo
 <sp-table selects="multiple" selected='["row1", "row2"]'>
-    <sp-table-head>
-        <sp-table-head-cell>File name</sp-table-head-cell>
-        <sp-table-head-cell>Type</sp-table-head-cell>
-        <sp-table-head-cell>Size</sp-table-head-cell>
-    </sp-table-head>
-    <sp-table-body>
-        <sp-table-row value="row1">
-            <sp-table-cell>Budget</sp-table-cell>
-            <sp-table-cell>PDF</sp-table-cell>
-            <sp-table-cell>89 KB</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row value="row2">
-            <sp-table-cell>Onboarding</sp-table-cell>
-            <sp-table-cell>XLS</sp-table-cell>
-            <sp-table-cell>120 KB</sp-table-cell>
-        </sp-table-row>
-    </sp-table-body>
+  <sp-table-head>
+    <sp-table-head-cell>File name</sp-table-head-cell>
+    <sp-table-head-cell>Type</sp-table-head-cell>
+    <sp-table-head-cell>Size</sp-table-head-cell>
+  </sp-table-head>
+  <sp-table-body>
+    <sp-table-row value="row1">
+      <sp-table-cell>Budget</sp-table-cell>
+      <sp-table-cell>PDF</sp-table-cell>
+      <sp-table-cell>89 KB</sp-table-cell>
+    </sp-table-row>
+    <sp-table-row value="row2">
+      <sp-table-cell>Onboarding</sp-table-cell>
+      <sp-table-cell>XLS</sp-table-cell>
+      <sp-table-cell>120 KB</sp-table-cell>
+    </sp-table-row>
+  </sp-table-body>
 </sp-table>
 ```
 
@@ -151,23 +151,23 @@ The `emphasized` attribute adds visual priority to the table content. This affec
 
 ```html demo
 <sp-table emphasized selects="multiple" selected='["row1"]'>
-    <sp-table-head>
-        <sp-table-head-cell>File name</sp-table-head-cell>
-        <sp-table-head-cell>Type</sp-table-head-cell>
-        <sp-table-head-cell>Size</sp-table-head-cell>
-    </sp-table-head>
-    <sp-table-body>
-        <sp-table-row value="row1">
-            <sp-table-cell>Budget</sp-table-cell>
-            <sp-table-cell>PDF</sp-table-cell>
-            <sp-table-cell>89 KB</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row value="row2">
-            <sp-table-cell>Onboarding</sp-table-cell>
-            <sp-table-cell>XLS</sp-table-cell>
-            <sp-table-cell>120 KB</sp-table-cell>
-        </sp-table-row>
-    </sp-table-body>
+  <sp-table-head>
+    <sp-table-head-cell>File name</sp-table-head-cell>
+    <sp-table-head-cell>Type</sp-table-head-cell>
+    <sp-table-head-cell>Size</sp-table-head-cell>
+  </sp-table-head>
+  <sp-table-body>
+    <sp-table-row value="row1">
+      <sp-table-cell>Budget</sp-table-cell>
+      <sp-table-cell>PDF</sp-table-cell>
+      <sp-table-cell>89 KB</sp-table-cell>
+    </sp-table-row>
+    <sp-table-row value="row2">
+      <sp-table-cell>Onboarding</sp-table-cell>
+      <sp-table-cell>XLS</sp-table-cell>
+      <sp-table-cell>120 KB</sp-table-cell>
+    </sp-table-row>
+  </sp-table-body>
 </sp-table>
 ```
 
@@ -183,23 +183,23 @@ The `density` attribute controls the spacing around table cell content. Availabl
 
 ```html demo
 <sp-table density="compact">
-    <sp-table-head>
-        <sp-table-head-cell>File name</sp-table-head-cell>
-        <sp-table-head-cell>Type</sp-table-head-cell>
-        <sp-table-head-cell>Size</sp-table-head-cell>
-    </sp-table-head>
-    <sp-table-body>
-        <sp-table-row>
-            <sp-table-cell>Budget</sp-table-cell>
-            <sp-table-cell>PDF</sp-table-cell>
-            <sp-table-cell>89 KB</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row>
-            <sp-table-cell>Onboarding</sp-table-cell>
-            <sp-table-cell>XLS</sp-table-cell>
-            <sp-table-cell>120 KB</sp-table-cell>
-        </sp-table-row>
-    </sp-table-body>
+  <sp-table-head>
+    <sp-table-head-cell>File name</sp-table-head-cell>
+    <sp-table-head-cell>Type</sp-table-head-cell>
+    <sp-table-head-cell>Size</sp-table-head-cell>
+  </sp-table-head>
+  <sp-table-body>
+    <sp-table-row>
+      <sp-table-cell>Budget</sp-table-cell>
+      <sp-table-cell>PDF</sp-table-cell>
+      <sp-table-cell>89 KB</sp-table-cell>
+    </sp-table-row>
+    <sp-table-row>
+      <sp-table-cell>Onboarding</sp-table-cell>
+      <sp-table-cell>XLS</sp-table-cell>
+      <sp-table-cell>120 KB</sp-table-cell>
+    </sp-table-row>
+  </sp-table-body>
 </sp-table>
 ```
 
@@ -209,23 +209,23 @@ The `density` attribute controls the spacing around table cell content. Availabl
 
 ```html demo
 <sp-table density="spacious">
-    <sp-table-head>
-        <sp-table-head-cell>File name</sp-table-head-cell>
-        <sp-table-head-cell>Type</sp-table-head-cell>
-        <sp-table-head-cell>Size</sp-table-head-cell>
-    </sp-table-head>
-    <sp-table-body>
-        <sp-table-row>
-            <sp-table-cell>Budget</sp-table-cell>
-            <sp-table-cell>PDF</sp-table-cell>
-            <sp-table-cell>89 KB</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row>
-            <sp-table-cell>Onboarding</sp-table-cell>
-            <sp-table-cell>XLS</sp-table-cell>
-            <sp-table-cell>120 KB</sp-table-cell>
-        </sp-table-row>
-    </sp-table-body>
+  <sp-table-head>
+    <sp-table-head-cell>File name</sp-table-head-cell>
+    <sp-table-head-cell>Type</sp-table-head-cell>
+    <sp-table-head-cell>Size</sp-table-head-cell>
+  </sp-table-head>
+  <sp-table-body>
+    <sp-table-row>
+      <sp-table-cell>Budget</sp-table-cell>
+      <sp-table-cell>PDF</sp-table-cell>
+      <sp-table-cell>89 KB</sp-table-cell>
+    </sp-table-row>
+    <sp-table-row>
+      <sp-table-cell>Onboarding</sp-table-cell>
+      <sp-table-cell>XLS</sp-table-cell>
+      <sp-table-cell>120 KB</sp-table-cell>
+    </sp-table-row>
+  </sp-table-body>
 </sp-table>
 ```
 
@@ -244,23 +244,23 @@ The `size` attribute controls the overall size of the table. Available values ar
 
 ```html demo
 <sp-table size="s">
-    <sp-table-head>
-        <sp-table-head-cell>File name</sp-table-head-cell>
-        <sp-table-head-cell>Type</sp-table-head-cell>
-        <sp-table-head-cell>Size</sp-table-head-cell>
-    </sp-table-head>
-    <sp-table-body>
-        <sp-table-row>
-            <sp-table-cell>Budget</sp-table-cell>
-            <sp-table-cell>PDF</sp-table-cell>
-            <sp-table-cell>89 KB</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row>
-            <sp-table-cell>Onboarding</sp-table-cell>
-            <sp-table-cell>XLS</sp-table-cell>
-            <sp-table-cell>120 KB</sp-table-cell>
-        </sp-table-row>
-    </sp-table-body>
+  <sp-table-head>
+    <sp-table-head-cell>File name</sp-table-head-cell>
+    <sp-table-head-cell>Type</sp-table-head-cell>
+    <sp-table-head-cell>Size</sp-table-head-cell>
+  </sp-table-head>
+  <sp-table-body>
+    <sp-table-row>
+      <sp-table-cell>Budget</sp-table-cell>
+      <sp-table-cell>PDF</sp-table-cell>
+      <sp-table-cell>89 KB</sp-table-cell>
+    </sp-table-row>
+    <sp-table-row>
+      <sp-table-cell>Onboarding</sp-table-cell>
+      <sp-table-cell>XLS</sp-table-cell>
+      <sp-table-cell>120 KB</sp-table-cell>
+    </sp-table-row>
+  </sp-table-body>
 </sp-table>
 ```
 
@@ -270,23 +270,23 @@ The `size` attribute controls the overall size of the table. Available values ar
 
 ```html demo
 <sp-table>
-    <sp-table-head>
-        <sp-table-head-cell>File name</sp-table-head-cell>
-        <sp-table-head-cell>Type</sp-table-head-cell>
-        <sp-table-head-cell>Size</sp-table-head-cell>
-    </sp-table-head>
-    <sp-table-body>
-        <sp-table-row>
-            <sp-table-cell>Budget</sp-table-cell>
-            <sp-table-cell>PDF</sp-table-cell>
-            <sp-table-cell>89 KB</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row>
-            <sp-table-cell>Onboarding</sp-table-cell>
-            <sp-table-cell>XLS</sp-table-cell>
-            <sp-table-cell>120 KB</sp-table-cell>
-        </sp-table-row>
-    </sp-table-body>
+  <sp-table-head>
+    <sp-table-head-cell>File name</sp-table-head-cell>
+    <sp-table-head-cell>Type</sp-table-head-cell>
+    <sp-table-head-cell>Size</sp-table-head-cell>
+  </sp-table-head>
+  <sp-table-body>
+    <sp-table-row>
+      <sp-table-cell>Budget</sp-table-cell>
+      <sp-table-cell>PDF</sp-table-cell>
+      <sp-table-cell>89 KB</sp-table-cell>
+    </sp-table-row>
+    <sp-table-row>
+      <sp-table-cell>Onboarding</sp-table-cell>
+      <sp-table-cell>XLS</sp-table-cell>
+      <sp-table-cell>120 KB</sp-table-cell>
+    </sp-table-row>
+  </sp-table-body>
 </sp-table>
 ```
 
@@ -296,23 +296,23 @@ The `size` attribute controls the overall size of the table. Available values ar
 
 ```html demo
 <sp-table size="l">
-    <sp-table-head>
-        <sp-table-head-cell>File name</sp-table-head-cell>
-        <sp-table-head-cell>Type</sp-table-head-cell>
-        <sp-table-head-cell>Size</sp-table-head-cell>
-    </sp-table-head>
-    <sp-table-body>
-        <sp-table-row>
-            <sp-table-cell>Budget</sp-table-cell>
-            <sp-table-cell>PDF</sp-table-cell>
-            <sp-table-cell>89 KB</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row>
-            <sp-table-cell>Onboarding</sp-table-cell>
-            <sp-table-cell>XLS</sp-table-cell>
-            <sp-table-cell>120 KB</sp-table-cell>
-        </sp-table-row>
-    </sp-table-body>
+  <sp-table-head>
+    <sp-table-head-cell>File name</sp-table-head-cell>
+    <sp-table-head-cell>Type</sp-table-head-cell>
+    <sp-table-head-cell>Size</sp-table-head-cell>
+  </sp-table-head>
+  <sp-table-body>
+    <sp-table-row>
+      <sp-table-cell>Budget</sp-table-cell>
+      <sp-table-cell>PDF</sp-table-cell>
+      <sp-table-cell>89 KB</sp-table-cell>
+    </sp-table-row>
+    <sp-table-row>
+      <sp-table-cell>Onboarding</sp-table-cell>
+      <sp-table-cell>XLS</sp-table-cell>
+      <sp-table-cell>120 KB</sp-table-cell>
+    </sp-table-row>
+  </sp-table-body>
 </sp-table>
 ```
 
@@ -322,23 +322,23 @@ The `size` attribute controls the overall size of the table. Available values ar
 
 ```html demo
 <sp-table size="xl">
-    <sp-table-head>
-        <sp-table-head-cell>File name</sp-table-head-cell>
-        <sp-table-head-cell>Type</sp-table-head-cell>
-        <sp-table-head-cell>Size</sp-table-head-cell>
-    </sp-table-head>
-    <sp-table-body>
-        <sp-table-row>
-            <sp-table-cell>Budget</sp-table-cell>
-            <sp-table-cell>PDF</sp-table-cell>
-            <sp-table-cell>89 KB</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row>
-            <sp-table-cell>Onboarding</sp-table-cell>
-            <sp-table-cell>XLS</sp-table-cell>
-            <sp-table-cell>120 KB</sp-table-cell>
-        </sp-table-row>
-    </sp-table-body>
+  <sp-table-head>
+    <sp-table-head-cell>File name</sp-table-head-cell>
+    <sp-table-head-cell>Type</sp-table-head-cell>
+    <sp-table-head-cell>Size</sp-table-head-cell>
+  </sp-table-head>
+  <sp-table-body>
+    <sp-table-row>
+      <sp-table-cell>Budget</sp-table-cell>
+      <sp-table-cell>PDF</sp-table-cell>
+      <sp-table-cell>89 KB</sp-table-cell>
+    </sp-table-row>
+    <sp-table-row>
+      <sp-table-cell>Onboarding</sp-table-cell>
+      <sp-table-cell>XLS</sp-table-cell>
+      <sp-table-cell>120 KB</sp-table-cell>
+    </sp-table-row>
+  </sp-table-body>
 </sp-table>
 ```
 
@@ -353,23 +353,23 @@ The `quiet` attribute creates a more subtle table appearance with a transparent 
 
 ```html demo
 <sp-table quiet>
-    <sp-table-head>
-        <sp-table-head-cell>File name</sp-table-head-cell>
-        <sp-table-head-cell>Type</sp-table-head-cell>
-        <sp-table-head-cell>Size</sp-table-head-cell>
-    </sp-table-head>
-    <sp-table-body>
-        <sp-table-row>
-            <sp-table-cell>Budget</sp-table-cell>
-            <sp-table-cell>PDF</sp-table-cell>
-            <sp-table-cell>89 KB</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row>
-            <sp-table-cell>Onboarding</sp-table-cell>
-            <sp-table-cell>XLS</sp-table-cell>
-            <sp-table-cell>120 KB</sp-table-cell>
-        </sp-table-row>
-    </sp-table-body>
+  <sp-table-head>
+    <sp-table-head-cell>File name</sp-table-head-cell>
+    <sp-table-head-cell>Type</sp-table-head-cell>
+    <sp-table-head-cell>Size</sp-table-head-cell>
+  </sp-table-head>
+  <sp-table-body>
+    <sp-table-row>
+      <sp-table-cell>Budget</sp-table-cell>
+      <sp-table-cell>PDF</sp-table-cell>
+      <sp-table-cell>89 KB</sp-table-cell>
+    </sp-table-row>
+    <sp-table-row>
+      <sp-table-cell>Onboarding</sp-table-cell>
+      <sp-table-cell>XLS</sp-table-cell>
+      <sp-table-cell>120 KB</sp-table-cell>
+    </sp-table-row>
+  </sp-table-body>
 </sp-table>
 ```
 
@@ -882,7 +882,7 @@ Example of customizing labels:
 ```html
 <!-- Custom header checkbox label -->
 <sp-table selects="multiple" select-all-label="Select all documents">
-    ...
+  ...
 </sp-table>
 ```
 
