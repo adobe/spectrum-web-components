@@ -27,9 +27,6 @@ export async function waitForCustomElement(
   await page.evaluate((tag) => {
     return customElements.whenDefined(tag);
   }, tagName);
-
-  // Add small delay to ensure element is fully upgraded
-  await page.waitForTimeout(100);
 }
 
 /**

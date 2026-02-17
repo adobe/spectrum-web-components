@@ -38,19 +38,18 @@ export default defineConfig({
         },
       },
     },
-    // Uncomment to test in other browsers (will multiply test count)
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+    },
   ],
   webServer: {
     command: 'yarn storybook',
-    url: 'http://localhost:6006',
+    port: 6006,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000, // 2 minutes for Storybook to start
   },
