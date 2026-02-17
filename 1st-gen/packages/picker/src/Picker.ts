@@ -806,10 +806,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 
     private onScroll(): void {
         this.dispatchEvent(
-            new Event('scroll', {
-                cancelable: true,
-                composed: false,
-            })
+            new Event('scroll')
         );
     }
 
