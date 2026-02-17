@@ -97,35 +97,39 @@ export type TypographyTemplateProps = {
   showAllVariants?: boolean;
 };
 
-export function getCapabilities(variant: TypographyVariant) {
+export function getCapabilities(
+  variant: TypographyVariant
+): VariantCapabilities {
   return VARIANT_CAPABILITIES[variant];
 }
 
-export function getAllowedSizes(variant: TypographyVariant) {
+export function getAllowedSizes(
+  variant: TypographyVariant
+): readonly TypographySize[] {
   return SIZES_BY_VARIANT[variant] ?? SIZES;
 }
 
 export function coerceSize(
   variant: TypographyVariant,
   requested: TypographySize
-) {
+): TypographySize {
   const allowed = getAllowedSizes(variant);
   return (allowed.includes(requested) ? requested : 'M') as TypographySize;
 }
 
-function cls(...parts: Array<string | false | null | undefined>) {
+function cls(...parts: Array<string | false | null | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
-function variantBase(prefix: string, variant: TypographyVariant) {
+function variantBase(prefix: string, variant: TypographyVariant): string {
   return `${prefix}-${capitalize(variant)}`;
 }
 
-function sizeClass(base: string, size: TypographySize) {
+function sizeClass(base: string, size: TypographySize): string {
   return `${base}--size${size}`;
 }
 
-function defaultSample(variant: TypographyVariant) {
+function defaultSample(variant: TypographyVariant): string {
   switch (variant) {
     case 'heading':
       return 'Reserved for main page heading';
@@ -146,7 +150,7 @@ function Tag({
   lang,
   text,
 }: {
-  tag: 'h2' | 'p' | 'code';
+  tag: 'h2' | 'h3' | 'p' | 'code';
   className: string;
   lang: TypographyLang;
   text: string;
