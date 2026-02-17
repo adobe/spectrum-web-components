@@ -55,6 +55,9 @@ export class TextfieldBase extends ManageHelpText(
   @state()
   protected appliedLabel?: string;
 
+  @state()
+  protected isTruncated = false;
+
   /**
    * A regular expression outlining the keys that will be allowed to update the value of the form control.
    */
@@ -290,6 +293,14 @@ export class TextfieldBase extends ManageHelpText(
 
   protected get displayValue(): string {
     return this.value.toString();
+  }
+
+  protected get inputElementIsTruncated(): boolean {
+    if (!this.inputElement || this.multiline) {
+      return false;
+    }
+    // Add 1 because Safari sometimes rounds by 1px, breaking the calculation otherwise.
+    return this.inputElement.scrollWidth > this.inputElement.clientWidth + 1;
   }
 
   // prettier-ignore
