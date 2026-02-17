@@ -12,30 +12,30 @@
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
-    OverlayTriggerOptions,
-    trigger,
+  OverlayTriggerOptions,
+  trigger,
 } from '@spectrum-web-components/overlay/src/overlay-trigger-directive.js';
 
 export const tooltip = function tooltip(
-    tooltipContent: () => TemplateResult,
-    options?: Partial<OverlayTriggerOptions & { variant: string }>
+  tooltipContent: () => TemplateResult,
+  options?: Partial<OverlayTriggerOptions & { variant: string }>
 ): ReturnType<typeof trigger> {
-    return trigger(
-        () => {
-            import('@spectrum-web-components/tooltip/sp-tooltip.js');
-            return html`
-                <sp-tooltip variant=${ifDefined(options?.variant)}>
-                    ${tooltipContent()}
-                </sp-tooltip>
-            `;
-        },
-        {
-            ...options,
-            triggerInteraction: 'hover',
-            overlayOptions: {
-                type: 'hint',
-                ...options?.overlayOptions,
-            },
-        }
-    );
+  return trigger(
+    () => {
+      import('@spectrum-web-components/tooltip/sp-tooltip.js');
+      return html`
+        <sp-tooltip variant=${ifDefined(options?.variant)}>
+          ${tooltipContent()}
+        </sp-tooltip>
+      `;
+    },
+    {
+      ...options,
+      triggerInteraction: 'hover',
+      overlayOptions: {
+        type: 'hint',
+        ...options?.overlayOptions,
+      },
+    }
+  );
 };

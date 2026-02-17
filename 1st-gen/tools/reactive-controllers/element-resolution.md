@@ -23,8 +23,8 @@ Import the `ElementResolutionController` and/or `elementResolverUpdatedSymbol` v
 
 ```typescript
 import {
-    ElementResolutionController,
-    elementResolverUpdatedSymbol,
+  ElementResolutionController,
+  elementResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
 ```
 
@@ -39,21 +39,21 @@ import { html, LitElement } from 'lit';
 import { ElementResolutionController } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
 
 class RootEl extends LitElement {
-    resolvedElement = new ElementResolutionController(this);
+  resolvedElement = new ElementResolutionController(this);
 
-    constructor() {
-        super();
-        this.resolvedElement.selector = '.other-element';
-    }
+  constructor() {
+    super();
+    this.resolvedElement.selector = '.other-element';
+  }
 
-    render() {
-        return html`
-            <p>
-                Resolved element:
-                ${this.resolvedElement.element ? 'Found' : 'Not found'}
-            </p>
-        `;
-    }
+  render() {
+    return html`
+      <p>
+        Resolved element:
+        ${this.resolvedElement.element ? 'Found' : 'Not found'}
+      </p>
+    `;
+  }
 }
 
 customElements.define('root-el', RootEl);
@@ -85,15 +85,15 @@ import { LitElement } from 'lit';
 import { ElementResolutionController } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
 
 class FormController extends LitElement {
-    resolvedElement = new ElementResolutionController(this, {
-        selector: '#submit-button',
-    });
+  resolvedElement = new ElementResolutionController(this, {
+    selector: '#submit-button',
+  });
 
-    handleSubmit() {
-        if (this.resolvedElement.element) {
-            this.resolvedElement.element.click();
-        }
+  handleSubmit() {
+    if (this.resolvedElement.element) {
+      this.resolvedElement.element.click();
     }
+  }
 }
 
 customElements.define('form-controller', FormController);
@@ -106,36 +106,32 @@ Changes to the resolved element reference are reported to the host element via a
 ```typescript
 import { html, LitElement, PropertyValues } from 'lit';
 import {
-    ElementResolutionController,
-    elementResolverUpdatedSymbol,
+  ElementResolutionController,
+  elementResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
 
 class RootEl extends LitElement {
-    resolvedElement = new ElementResolutionController(this);
+  resolvedElement = new ElementResolutionController(this);
 
-    constructor() {
-        super();
-        this.resolvedElement.selector = '.other-element';
-    }
+  constructor() {
+    super();
+    this.resolvedElement.selector = '.other-element';
+  }
 
-    protected override willUpdate(changes: PropertyValues): void {
-        if (changes.has(elementResolverUpdatedSymbol)) {
-            // Work to be done only when the element reference has been updated
-            console.log(
-                'Resolved element changed:',
-                this.resolvedElement.element
-            );
-        }
+  protected override willUpdate(changes: PropertyValues): void {
+    if (changes.has(elementResolverUpdatedSymbol)) {
+      // Work to be done only when the element reference has been updated
+      console.log('Resolved element changed:', this.resolvedElement.element);
     }
+  }
 
-    render() {
-        return html`
-            <p>
-                Element status:
-                ${this.resolvedElement.element ? 'Found' : 'Not found'}
-            </p>
-        `;
-    }
+  render() {
+    return html`
+      <p>
+        Element status: ${this.resolvedElement.element ? 'Found' : 'Not found'}
+      </p>
+    `;
+  }
 }
 
 customElements.define('root-el', RootEl);
@@ -150,43 +146,40 @@ import { html, LitElement } from 'lit';
 import { ElementResolutionController } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
 
 class CustomInput extends LitElement {
-    labelElement = new ElementResolutionController(this, {
-        selector: '.input-label',
-    });
+  labelElement = new ElementResolutionController(this, {
+    selector: '.input-label',
+  });
 
-    firstUpdated() {
-        // Connect input to label for accessibility
-        // This handles cross-root ARIA relationships
-        const target = this.labelElement.element;
-        const input = this.shadowRoot?.querySelector('input');
+  firstUpdated() {
+    // Connect input to label for accessibility
+    // This handles cross-root ARIA relationships
+    const target = this.labelElement.element;
+    const input = this.shadowRoot?.querySelector('input');
 
-        if (input && target) {
-            const targetParent = target.getRootNode() as HTMLElement;
+    if (input && target) {
+      const targetParent = target.getRootNode() as HTMLElement;
 
-            if (targetParent === (this.getRootNode() as HTMLElement)) {
-                // Same root: use aria-labelledby with ID reference
-                const labelId = target.id || this.generateId();
-                target.id = labelId;
-                input.setAttribute('aria-labelledby', labelId);
-            } else {
-                // Different root: use aria-label with text content
-                input.setAttribute(
-                    'aria-label',
-                    target.textContent?.trim() || ''
-                );
-            }
-        }
+      if (targetParent === (this.getRootNode() as HTMLElement)) {
+        // Same root: use aria-labelledby with ID reference
+        const labelId = target.id || this.generateId();
+        target.id = labelId;
+        input.setAttribute('aria-labelledby', labelId);
+      } else {
+        // Different root: use aria-label with text content
+        input.setAttribute('aria-label', target.textContent?.trim() || '');
+      }
     }
+  }
 
-    generateId() {
-        return `label-${Math.random().toString(36).substr(2, 9)}`;
-    }
+  generateId() {
+    return `label-${Math.random().toString(36).substr(2, 9)}`;
+  }
 
-    render() {
-        return html`
-            <input type="text" />
-        `;
-    }
+  render() {
+    return html`
+      <input type="text" />
+    `;
+  }
 }
 
 customElements.define('custom-input', CustomInput);
@@ -209,28 +202,28 @@ import { property } from 'lit/decorators.js';
 import { ElementResolutionController } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
 
 class DynamicResolver extends LitElement {
-    resolvedElement = new ElementResolutionController(this);
+  resolvedElement = new ElementResolutionController(this);
 
-    @property({ type: String })
-    targetSelector = '.default-target';
+  @property({ type: String })
+  targetSelector = '.default-target';
 
-    updated(changedProperties: Map<string, any>) {
-        if (changedProperties.has('targetSelector')) {
-            this.resolvedElement.selector = this.targetSelector;
-        }
+  updated(changedProperties: Map<string, any>) {
+    if (changedProperties.has('targetSelector')) {
+      this.resolvedElement.selector = this.targetSelector;
     }
+  }
 
-    render() {
-        const status = this.resolvedElement.element
-            ? `Found: ${this.resolvedElement.element.tagName}`
-            : 'Not found';
+  render() {
+    const status = this.resolvedElement.element
+      ? `Found: ${this.resolvedElement.element.tagName}`
+      : 'Not found';
 
-        return html`
-            <div role="status" aria-live="polite">
-                Current target (${this.targetSelector}): ${status}
-            </div>
-        `;
-    }
+    return html`
+      <div role="status" aria-live="polite">
+        Current target (${this.targetSelector}): ${status}
+      </div>
+    `;
+  }
 }
 
 customElements.define('dynamic-resolver', DynamicResolver);
@@ -245,54 +238,54 @@ import { html, LitElement } from 'lit';
 import { ElementResolutionController } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
 
 class ModalManager extends LitElement {
-    firstFocusableElement = new ElementResolutionController(this, {
-        selector: '[data-first-focus]',
-    });
+  firstFocusableElement = new ElementResolutionController(this, {
+    selector: '[data-first-focus]',
+  });
 
-    lastFocusableElement = new ElementResolutionController(this, {
-        selector: '[data-last-focus]',
-    });
+  lastFocusableElement = new ElementResolutionController(this, {
+    selector: '[data-last-focus]',
+  });
 
-    connectedCallback() {
-        super.connectedCallback();
-        this.addEventListener('keydown', this.handleKeydown);
-    }
+  connectedCallback() {
+    super.connectedCallback();
+    this.addEventListener('keydown', this.handleKeydown);
+  }
 
-    disconnectedCallback() {
-        super.disconnectedCallback();
-        this.removeEventListener('keydown', this.handleKeydown);
-    }
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener('keydown', this.handleKeydown);
+  }
 
-    handleKeydown(event: KeyboardEvent) {
-        if (event.key === 'Tab') {
-            const activeElement = document.activeElement;
+  handleKeydown(event: KeyboardEvent) {
+    if (event.key === 'Tab') {
+      const activeElement = document.activeElement;
 
-            if (event.shiftKey) {
-                // Tabbing backward
-                if (activeElement === this.firstFocusableElement.element) {
-                    event.preventDefault();
-                    this.lastFocusableElement.element?.focus();
-                }
-            } else {
-                // Tabbing forward
-                if (activeElement === this.lastFocusableElement.element) {
-                    event.preventDefault();
-                    this.firstFocusableElement.element?.focus();
-                }
-            }
+      if (event.shiftKey) {
+        // Tabbing backward
+        if (activeElement === this.firstFocusableElement.element) {
+          event.preventDefault();
+          this.lastFocusableElement.element?.focus();
         }
+      } else {
+        // Tabbing forward
+        if (activeElement === this.lastFocusableElement.element) {
+          event.preventDefault();
+          this.firstFocusableElement.element?.focus();
+        }
+      }
     }
+  }
 
-    render() {
-        return html`
-            <div role="dialog" aria-modal="true" aria-labelledby="dialog-title">
-                <h2 id="dialog-title">Modal Dialog</h2>
-                <button data-first-focus>First Action</button>
-                <slot></slot>
-                <button data-last-focus>Cancel</button>
-            </div>
-        `;
-    }
+  render() {
+    return html`
+      <div role="dialog" aria-modal="true" aria-labelledby="dialog-title">
+        <h2 id="dialog-title">Modal Dialog</h2>
+        <button data-first-focus>First Action</button>
+        <slot></slot>
+        <button data-last-focus>Cancel</button>
+      </div>
+    `;
+  }
 }
 
 customElements.define('modal-manager', ModalManager);

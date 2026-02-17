@@ -15,8 +15,6 @@ import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import path from 'path';
 
-import { capitalize } from '@spectrum-web-components/core/shared/utilities';
-
 const require = createRequire(import.meta.url);
 
 /**
@@ -146,6 +144,13 @@ const SELECTOR_ALIASES = {
         margins: [':is(h2, h3, h4)'],
     },
 };
+
+function capitalize(str) {
+    if (typeof str !== 'string') {
+        return '';
+    }
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 function getPatchedTokenName(typeVar, suffix, mode) {
     const patch = TOKEN_PATCHES?.[mode]?.[typeVar]?.[suffix];

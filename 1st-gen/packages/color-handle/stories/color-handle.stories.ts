@@ -15,32 +15,32 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
 
 export default {
-    title: 'Color/Handle',
-    component: 'sp-color-handle',
+  title: 'Color/Handle',
+  component: 'sp-color-handle',
 };
 
 export const Default = (): TemplateResult => {
-    return html`
-        <sp-color-handle
-            style="left: 50%; top: 50%; transform: translate(-50%, -50%);"
-        ></sp-color-handle>
-    `;
+  return html`
+    <sp-color-handle
+      style="left: 50%; top: 50%; transform: translate(-50%, -50%);"
+    ></sp-color-handle>
+  `;
 };
 
 export const disabled = (): TemplateResult => {
-    return html`
-        <sp-color-handle
-            disabled
-            style="left: 50%; top: 50%; transform: translate(-50%, -50%);"
-        ></sp-color-handle>
-    `;
+  return html`
+    <sp-color-handle
+      disabled
+      style="left: 50%; top: 50%; transform: translate(-50%, -50%);"
+    ></sp-color-handle>
+  `;
 };
 
 export const open = (): TemplateResult => {
-    return html`
-        <sp-color-handle
-            open
-            style="left: 50%; top: 50%; transform: translate(-50%, -50%);"
-        ></sp-color-handle>
-    `;
+  return html`
+    <sp-color-handle
+      open
+      style="left: 50%; top: 50%; transform: translate(-50%, -50%);"
+    ></sp-color-handle>
+  `;
 };

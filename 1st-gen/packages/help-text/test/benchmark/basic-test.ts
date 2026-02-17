@@ -10,10 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/help-text/sp-help-text.js';
 import { html } from 'lit';
+
+import '@spectrum-web-components/help-text/sp-help-text.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-help-text></sp-help-text>
+  <sp-help-text></sp-help-text>
 `);

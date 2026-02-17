@@ -21,13 +21,13 @@ By default the removal of functionality or a component is considered for the nex
 
 Deprecation warnings are categorised into the following levels:
 
--   **Yellow**: Components are marked as deprecated but still functional. Users are encouraged to migrate to alternative solutions.
+- **Yellow**: Components are marked as deprecated but still functional. Users are encouraged to migrate to alternative solutions.
 
-    <img src="https://github.com/adobe/spectrum-web-components/blob/dea262add8a832f8ec89ae54d77484b64758b139/.github/images/yellow-warning.png?raw=true" alt="Yellow warning" width="50%"/>
+  <img src="https://github.com/adobe/spectrum-web-components/blob/dea262add8a832f8ec89ae54d77484b64758b139/.github/images/yellow-warning.png?raw=true" alt="Yellow warning" width="50%"/>
 
--   **Red**: Components are nearing removal and require immediate action for migration.
+- **Red**: Components are nearing removal and require immediate action for migration.
 
-    <img src="https://github.com/adobe/spectrum-web-components/blob/3dcbf73f2fc9f207cddb39a5edf5bb5438eff88b/.github/images/red-warning.png?raw=true" alt="Red warning" width="50%"/>
+  <img src="https://github.com/adobe/spectrum-web-components/blob/3dcbf73f2fc9f207cddb39a5edf5bb5438eff88b/.github/images/red-warning.png?raw=true" alt="Red warning" width="50%"/>
 
 ### Communication
 
@@ -66,20 +66,20 @@ const enableScrollIntoView = () => {
 
 **Context**:
 
--   This example demonstrates how a deprecation notice is added to a component using the `window.__swc.warn` method.
--   The `window.__swc.warn` method is used to display a warning message to developers using the deprecated component.
+- This example demonstrates how a deprecation notice is added to a component using the `window.__swc.warn` method.
+- The `window.__swc.warn` method is used to display a warning message to developers using the deprecated component.
 
 **Purpose**:
 
--   The purpose of this deprecation notice is to inform developers using the deprecated component about its status and encourage them to migrate to alternative solutions in dev mode.
--   The notice provides a link to documentation for more information on migrating to alternative solutions.
+- The purpose of this deprecation notice is to inform developers using the deprecated component about its status and encourage them to migrate to alternative solutions in dev mode.
+- The notice provides a link to documentation for more information on migrating to alternative solutions.
 
 ```js
 window.__swc.warn(
-    this,
-    `<${this.localName}> is deprecated and will be removed in the SWC 1.0 release. Use a Button Group to show any additional actions related to the most critical action.`,
-    'https://opensource.adobe.com/spectrum-web-components/components/split-button/#deprecation',
-    { level: 'deprecation' }
+  this,
+  `<${this.localName}> is deprecated and will be removed in the SWC 1.0 release. Use a Button Group to show any additional actions related to the most critical action.`,
+  'https://opensource.adobe.com/spectrum-web-components/components/split-button/#deprecation',
+  { level: 'deprecation' }
 );
 ```
 
@@ -87,19 +87,19 @@ window.__swc.warn(
 
 **Context**:
 
--   This example demonstrates how the `package.json` file of a deprecated component is updated with a `deprecationNotice` key.
--   The `deprecationNotice` key contains a message informing users about the deprecation and providing guidance on alternative solutions.
+- This example demonstrates how the `package.json` file of a deprecated component is updated with a `deprecationNotice` key.
+- The `deprecationNotice` key contains a message informing users about the deprecation and providing guidance on alternative solutions.
 
 **Purpose**:
 
--   The purpose of updating the `package.json` file with a `deprecationNotice` key is to provide a clear and visible indication to users that the component is deprecated.
--   This helps users to easily identify the deprecated component and access guidance on migrating to alternative solutions.
+- The purpose of updating the `package.json` file with a `deprecationNotice` key is to provide a clear and visible indication to users that the component is deprecated.
+- This helps users to easily identify the deprecated component and access guidance on migrating to alternative solutions.
 
 ```json
 {
-    "name": "@spectrum-web-components/some-component",
-    "version": "0.0.1",
-    "deprecationNotice": "@spectrum-web-components/some-component is deprecated and will be removed in some future release."
+  "name": "@spectrum-web-components/some-component",
+  "version": "0.0.1",
+  "deprecationNotice": "@spectrum-web-components/some-component is deprecated and will be removed in some future release."
 }
 ```
 

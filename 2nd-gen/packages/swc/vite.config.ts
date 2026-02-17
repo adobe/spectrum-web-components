@@ -24,7 +24,7 @@ export default defineConfig({
         litCss({ exclude: ['./stylesheets/*.css'] }),
         dts({
             include: ['**/*.ts'],
-            exclude: ['**/*.test.ts', '**/*.stories.ts'],
+            exclude: ['**/*.test.ts', '**/*.spec.ts', '**/*.stories.ts'],
             outDir: 'dist',
             beforeWriteFile: (filePath, content) => {
                 return {
@@ -106,6 +106,16 @@ export default defineConfig({
                 '../tools/postcss-token'
             ),
             '@adobe/swc-tokens': resolve(__dirname, '../tools/swc-tokens'),
+        },
+    },
+    server: {
+        fs: {
+            // Allow Vite to serve dependencies hoisted to workspace and repo roots.
+            allow: [
+                resolve(__dirname, '..'),
+                resolve(__dirname, '../..'),
+                resolve(__dirname, '../../..'),
+            ],
         },
     },
     esbuild: {

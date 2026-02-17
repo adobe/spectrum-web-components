@@ -12,47 +12,47 @@
 
 import { expect, nextFrame } from '@open-wc/testing';
 import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
+
 import { isWebKit } from '@spectrum-web-components/shared';
 
 export type DescribedNode = {
-    name: string;
-    description: string;
+  name: string;
+  description: string;
 };
 
 export const findDescribedNode = async (
-    name: string,
-    description: string,
-    debug?: boolean
+  name: string,
+  description: string,
+  debug?: boolean
 ): Promise<void> => {
-    await nextFrame();
+  await nextFrame();
 
-    const snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
-        children: DescribedNode[];
-    };
+  const snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
+    children: DescribedNode[];
+  };
 
-    if (debug) {
-        // eslint-disable-next-line no-console
-        console.log(JSON.stringify(snapshot, undefined, '  '));
-    }
+  if (debug) {
+    // eslint-disable-next-line no-console
+    console.log(JSON.stringify(snapshot, undefined, '  '));
+  }
 
-    // WebKit doesn't currently associate the `aria-describedby` element to the attribute
-    // host in the accessibility tree. Give it an escape hatch for now.
-    const node = findAccessibilityNode(
-        snapshot,
-        (node) =>
-            node.name === name &&
-            (node.description === description || isWebKit())
+  // WebKit doesn't currently associate the `aria-describedby` element to the attribute
+  // host in the accessibility tree. Give it an escape hatch for now.
+  const node = findAccessibilityNode(
+    snapshot,
+    (node) =>
+      node.name === name && (node.description === description || isWebKit())
+  );
+
+  expect(node).to.not.be.null;
+
+  if (isWebKit()) {
+    // Retest WebKit without the escape hatch, expecting it to fail.
+    // This way we get notified when the results are as expected, again.
+    const iOSNode = findAccessibilityNode(
+      snapshot,
+      (node) => node.name === name && node.description === description
     );
-
-    expect(node).to.not.be.null;
-
-    if (isWebKit()) {
-        // Retest WebKit without the escape hatch, expecting it to fail.
-        // This way we get notified when the results are as expected, again.
-        const iOSNode = findAccessibilityNode(
-            snapshot,
-            (node) => node.name === name && node.description === description
-        );
-        expect(iOSNode).to.be.null;
-    }
+    expect(iOSNode).to.be.null;
+  }
 };

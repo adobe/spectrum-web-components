@@ -1,4 +1,4 @@
-<sp-alert-banner open variant="negative">
+<sp-alert-banner open variant="negative" class="spectrum-InLineAlert spectrum-InLineAlert--negative" style="--mod-alert-banner-font-color: var(--spectrum-inlinealert-content-color)">
     <div class="spectrum-InLineAlert-header">
         <span>Experimental Feature</span>
     </div>
@@ -6,6 +6,7 @@
         The <code>slottable-request</code> event system is experimental. Its shape and presence in the library may change. For stable overlay content management, consider using <code>sp-overlay</code> or <code>Overlay.open()</code>.
     </div>
 </sp-alert-banner>
+</br>
 
 ## Overview
 
@@ -30,8 +31,8 @@ For type information and utilities, import:
 
 ```ts
 import {
-    removeSlottableRequest,
-    SlottableRequestEvent,
+  removeSlottableRequest,
+  SlottableRequestEvent,
 } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 ```
 
@@ -102,9 +103,9 @@ Here's a basic example of using `slottable-request` with vanilla JavaScript:
 
 The `SlottableRequestEvent` includes the following properties:
 
--   `data`: Contains either an empty object (when opening) or the `removeSlottableRequest` symbol (when closing)
--   `name`: The name of the request
--   `slotName`: The slot name, optionally with a key appended
+- `data`: Contains either an empty object (when opening) or the `removeSlottableRequest` symbol (when closing)
+- `name`: The name of the request
+- `slotName`: The slot name, optionally with a key appended
 
 ### Advanced topics
 
@@ -121,10 +122,10 @@ This timing ensures proper coordination with overlay transitions and animations.
 
 By starting with an empty overlay and removing content when closed, applications can better manage memory usage, especially when dealing with:
 
--   Large DOM trees
--   Complex components
--   Multiple overlays
--   Resource-intensive content
+- Large DOM trees
+- Complex components
+- Multiple overlays
+- Resource-intensive content
 
 #### Integration with Lit
 
@@ -135,14 +136,14 @@ import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable
 
 // Use in a lit template
 html`
-    <sp-overlay
-        ${slottableRequest(
-            () => html`
-                <sp-popover>
-                    <p>Lazily rendered content</p>
-                </sp-popover>
-            `
-        )}
-    ></sp-overlay>
+  <sp-overlay
+    ${slottableRequest(
+      () => html`
+        <sp-popover>
+          <p>Lazily rendered content</p>
+        </sp-popover>
+      `
+    )}
+  ></sp-overlay>
 `;
 ```

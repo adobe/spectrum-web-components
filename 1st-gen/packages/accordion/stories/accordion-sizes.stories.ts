@@ -11,11 +11,12 @@
  */
 
 import { TemplateResult } from '@spectrum-web-components/base';
+
 import { AccordionMarkup } from './';
 
 export default {
-    title: 'Accordion/Sizes',
-    component: 'sp-accordion',
+  title: 'Accordion/Sizes',
+  component: 'sp-accordion',
 };
 
 export const s = (): TemplateResult => AccordionMarkup({ size: 's' });

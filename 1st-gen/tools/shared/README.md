@@ -15,13 +15,13 @@ Individual base classes, mixins, and utilities can be imported as follows:
 
 ```javascript
 import {
-    Focusable,
-    FocusVisiblePolyfillMixin,
-    getActiveElement,
-    getDeepElementFromPoint,
-    LikeAnchor,
-    ObserveSlotPresence,
-    ObserveSlotText,
+  Focusable,
+  FocusVisiblePolyfillMixin,
+  getActiveElement,
+  getDeepElementFromPoint,
+  LikeAnchor,
+  ObserveSlotPresence,
+  ObserveSlotText,
 } from '@spectrum-web-components/shared';
 ```
 
@@ -160,7 +160,7 @@ This mixin coordinates with the focus-visible polyfill to ensure proper behavior
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
 
 class MyElement extends FocusVisiblePolyfillMixin(HTMLElement) {
-    // Your element now supports `:focus-visible` selectors and coordinates with the polyfill
+  // Your element now supports `:focus-visible` selectors and coordinates with the polyfill
 }
 ```
 

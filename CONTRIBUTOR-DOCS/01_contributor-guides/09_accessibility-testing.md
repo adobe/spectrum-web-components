@@ -12,6 +12,7 @@
 <summary><strong>In this doc</strong></summary>
 
 - [About this guide](#about-this-guide)
+- [Why manual testing is necessary](#why-manual-testing-is-necessary)
 - [Quick start](#quick-start)
 - [What we test](#what-we-test)
     - [1. ARIA snapshots](#1-aria-snapshots)
@@ -39,6 +40,9 @@
     - [Playwright config](#playwright-config)
     - [Auto-starting Storybook](#auto-starting-storybook)
 - [File structure](#file-structure)
+- [Manual testing required for PRs](#manual-testing-required-for-prs)
+    - [Keyboard testing](#keyboard-testing)
+    - [Screen reader testing](#screen-reader-testing)
 - [Resources](#resources)
 - [Benefits](#benefits)
 
@@ -49,6 +53,16 @@
 ## About this guide
 
 This guide covers automated accessibility testing for Spectrum Web Components using Playwright. You'll learn how to write, run, and maintain accessibility tests for both 1st-gen and 2nd-gen components.
+
+## Why manual testing is necessary
+
+Automated accessibility testing (ARIA snapshots, aXe-core) catches many issues but **cannot capture everything**. Manual testing is required because:
+
+- **Keyboard behavior** — Focus order, tab stops, arrow-key patterns, and whether focus is visible or trapped must be verified by actually using the keyboard. Tools can detect some keyboard-related rules but not the full interaction flow.
+- **Screen reader behavior** — How a component is announced (role, name, state), the order of announcements, and whether state changes are communicated depend on real assistive technology. Automated checks cannot replicate this.
+- **Context and UX** — Whether an interaction makes sense for keyboard-only or screen reader users often requires human judgment.
+
+For every PR that affects interactive components, you must perform **manual keyboard and screen reader testing** and document your steps in the [pull request template](https://github.com/adobe/spectrum-web-components/blob/main/.github/PULL_REQUEST_TEMPLATE.md#accessibility-testing-checklist). Reviewers use this to ensure accessibility is validated during the review process.
 
 ## Quick start
 
@@ -454,6 +468,41 @@ spectrum-web-components/
                 ├── status-light.a11y.spec.ts
                 └── status-light.a11y.spec.ts-snapshots/
 ```
+
+## Manual testing required for PRs
+
+In addition to automated tests, contributors must complete the **Accessibility testing checklist** in the pull request template and document their **keyboard** and **screen reader** testing steps. The following resources help you perform and document that testing.
+
+### Keyboard testing
+
+When testing with the keyboard, verify and document:
+
+1. **Tab order** — <kbd>Tab</kbd> moves focus into and through the component in a logical order; no focus traps.
+2. **Activation** — <kbd>Enter</kbd> and/or <kbd>Space</kbd> activate buttons, links, and controls as expected.
+3. **Arrow keys** — For components that use arrow keys (tabs, menus, sliders, listboxes, etc.), <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> move focus or change value as per the [WAI-ARIA keyboard interface](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/).
+4. **Escape** — <kbd>Escape</kbd> dismisses overlays, popovers, or menus when applicable.
+5. **Focus visibility** — Focus indicator is clearly visible and not obscured.
+
+**Reference:** [WAI-ARIA Authoring Practices Guide — Keyboard interface](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/) and [APG patterns](https://www.w3.org/WAI/ARIA/apg/patterns/) for component-specific keyboard patterns.
+
+In the PR template, fill in: where you tested (e.g. Storybook URL), what you did (e.g. "Tabbed to the menu, used arrow keys to move between items"), and the expected result.
+
+### Screen reader testing
+
+When testing with a screen reader, verify and document:
+
+1. **Role and name** — The component is announced with the correct role and an understandable name (or label).
+2. **State** — States such as expanded/collapsed, selected, checked, and disabled are announced when they change.
+3. **Relationships** — Labels, descriptions, and group relationships are announced so the structure is clear.
+4. **No clutter** — There are no unnecessary or duplicate announcements.
+
+**Tools:** Test with at least one screen reader, for example:
+
+- **Windows:** [NVDA](https://www.nvaccess.org/) (free) or [JAWS](https://www.freedomscientific.com/products/jaws/)
+- **macOS:** VoiceOver (built-in; <kbd>Cmd</kbd>+<kbd>F5</kbd> to toggle)
+- **Mobile:** VoiceOver (iOS), TalkBack (Android)
+
+In the PR template, document where you tested, what you did (e.g. "Navigated to the menu with VO and arrow keys, opened it with VO+Space"), and the expected announcements or result.
 
 ## Resources
 

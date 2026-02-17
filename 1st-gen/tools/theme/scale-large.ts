@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+import './core.js';
+
 import largeStyles from './src/scale-large.css.js';
 import { Theme } from './src/Theme.js';
-import './core.js';
 
 Theme.registerThemeFragment('large', 'scale', largeStyles);

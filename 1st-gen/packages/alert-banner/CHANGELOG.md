@@ -7,84 +7,84 @@
 - [#5998](https://github.com/adobe/spectrum-web-components/pull/5998) [`6f5419a`](https://github.com/adobe/spectrum-web-components/commit/6f5419a4de29a1ee440a36c1a57d8c2e1476e2f6) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Fixed** missing export for `alert-banner` from `@spectrum-web-components/core`, which could cause build failures in certain environments.
 
 - Updated dependencies [[`6f5419a`](https://github.com/adobe/spectrum-web-components/commit/6f5419a4de29a1ee440a36c1a57d8c2e1476e2f6)]:
-    - @spectrum-web-components/core@0.0.4
-    - @spectrum-web-components/base@1.11.2
-    - @spectrum-web-components/button@1.11.2
-    - @spectrum-web-components/icons-workflow@1.11.2
+  - @spectrum-web-components/core@0.0.4
+  - @spectrum-web-components/base@1.11.2
+  - @spectrum-web-components/button@1.11.2
+  - @spectrum-web-components/icons-workflow@1.11.2
 
 ## 1.11.1
 
 ### Patch Changes
 
 - Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
-    - @spectrum-web-components/core@0.0.3
-    - @spectrum-web-components/base@1.11.1
-    - @spectrum-web-components/button@1.11.1
-    - @spectrum-web-components/icons-workflow@1.11.1
+  - @spectrum-web-components/core@0.0.3
+  - @spectrum-web-components/base@1.11.1
+  - @spectrum-web-components/button@1.11.1
+  - @spectrum-web-components/icons-workflow@1.11.1
 
 ## 1.11.0
 
 ### Patch Changes
 
 - Updated dependencies [[`283f0fe`](https://github.com/adobe/spectrum-web-components/commit/283f0fe07533c464e9fe1a3e7edebecb9128e11f), [`1d76b70`](https://github.com/adobe/spectrum-web-components/commit/1d76b7093d8ff5f9b26f07a69086488341a02650), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
-    - @spectrum-web-components/core@0.0.2
-    - @spectrum-web-components/base@1.11.0
-    - @spectrum-web-components/button@1.11.0
-    - @spectrum-web-components/icons-workflow@1.11.0
+  - @spectrum-web-components/core@0.0.2
+  - @spectrum-web-components/base@1.11.0
+  - @spectrum-web-components/button@1.11.0
+  - @spectrum-web-components/icons-workflow@1.11.0
 
 ## 1.10.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.10.0
-    - @spectrum-web-components/button@1.10.0
-    - @spectrum-web-components/icons-workflow@1.10.0
+  - @spectrum-web-components/base@1.10.0
+  - @spectrum-web-components/button@1.10.0
+  - @spectrum-web-components/icons-workflow@1.10.0
 
 ## 1.9.1
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/button@1.9.1
-    - @spectrum-web-components/icons-workflow@1.9.1
-    - @spectrum-web-components/base@1.9.1
+  - @spectrum-web-components/button@1.9.1
+  - @spectrum-web-components/icons-workflow@1.9.1
+  - @spectrum-web-components/base@1.9.1
 
 ## 1.9.0
 
 ### Patch Changes
 
 - Updated dependencies [[`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8), [`bdf54c1`](https://github.com/adobe/spectrum-web-components/commit/bdf54c1bc6d3eb20da1a1bf3b40650e6ab1ba399)]:
-    - @spectrum-web-components/button@1.9.0
-    - @spectrum-web-components/icons-workflow@1.9.0
-    - @spectrum-web-components/base@1.9.0
+  - @spectrum-web-components/button@1.9.0
+  - @spectrum-web-components/icons-workflow@1.9.0
+  - @spectrum-web-components/base@1.9.0
 
 ## 1.8.0
 
 ### Patch Changes
 
 - Updated dependencies [[`15be17d`](https://github.com/adobe/spectrum-web-components/commit/15be17db91f1140ccf3cad52b1f2ed6c4b9e28ba)]:
-    - @spectrum-web-components/button@1.8.0
-    - @spectrum-web-components/icons-workflow@1.8.0
-    - @spectrum-web-components/base@1.8.0
+  - @spectrum-web-components/button@1.8.0
+  - @spectrum-web-components/icons-workflow@1.8.0
+  - @spectrum-web-components/base@1.8.0
 
 ## 1.7.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/button@1.7.0
-    - @spectrum-web-components/icons-workflow@1.7.0
-    - @spectrum-web-components/base@1.7.0
+  - @spectrum-web-components/button@1.7.0
+  - @spectrum-web-components/icons-workflow@1.7.0
+  - @spectrum-web-components/base@1.7.0
 
 ## 1.6.0
 
 ### Patch Changes
 
 - Updated dependencies [[`f6cebbd`](https://github.com/adobe/spectrum-web-components/commit/f6cebbd90008a2abb1232c355ae06e8566086093), [`00eb0a8`](https://github.com/adobe/spectrum-web-components/commit/00eb0a889583dff9d964341d9c1c27048be3d19e)]:
-    - @spectrum-web-components/icons-workflow@1.6.0
-    - @spectrum-web-components/button@1.6.0
-    - @spectrum-web-components/base@1.6.0
+  - @spectrum-web-components/icons-workflow@1.6.0
+  - @spectrum-web-components/button@1.6.0
+  - @spectrum-web-components/base@1.6.0
 
 ## 1.5.0
 
@@ -93,27 +93,27 @@
 - [#5271](https://github.com/adobe/spectrum-web-components/pull/5271) [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
 
 - Updated dependencies [[`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5)]:
-    - @spectrum-web-components/button@1.5.0
-    - @spectrum-web-components/icons-workflow@1.5.0
-    - @spectrum-web-components/base@1.5.0
+  - @spectrum-web-components/button@1.5.0
+  - @spectrum-web-components/icons-workflow@1.5.0
+  - @spectrum-web-components/base@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/button@1.4.0
-    - @spectrum-web-components/icons-workflow@1.4.0
-    - @spectrum-web-components/base@1.4.0
+  - @spectrum-web-components/button@1.4.0
+  - @spectrum-web-components/icons-workflow@1.4.0
+  - @spectrum-web-components/base@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/button@1.3.0
-    - @spectrum-web-components/icons-workflow@1.3.0
-    - @spectrum-web-components/base@1.3.0
+  - @spectrum-web-components/button@1.3.0
+  - @spectrum-web-components/icons-workflow@1.3.0
+  - @spectrum-web-components/base@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

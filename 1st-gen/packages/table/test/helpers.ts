@@ -10,30 +10,29 @@
  * governing permissions and limitations under the License.
  */
 import {
-    VirtualizerHostElement,
-    virtualizerRef,
+  VirtualizerHostElement,
+  virtualizerRef,
 } from '@lit-labs/virtualizer/virtualize.js';
 import { fixture, html } from '@open-wc/testing';
+
 import { TemplateResult } from '@spectrum-web-components/base';
 import type { Table, TableBody } from '@spectrum-web-components/table';
 import type { Theme } from '@spectrum-web-components/theme';
 
 export async function styledFixture<T extends Element>(
-    story: TemplateResult
+  story: TemplateResult
 ): Promise<T> {
-    const test = await fixture<Theme>(html`
-        <sp-theme system="spectrum" scale="medium" color="light">
-            ${story}
-        </sp-theme>
-    `);
-    return test.children[0] as T;
+  const test = await fixture<Theme>(html`
+    <sp-theme system="spectrum" scale="medium" color="light">${story}</sp-theme>
+  `);
+  return test.children[0] as T;
 }
 
 /* awaiting a `rangeChanged` event does not guarantee that the component has updated. We need to use
  ** layout complete to ensure the TableBody has updated for tests involving scrolling.
  */
 export async function tableLayoutComplete(table: Table): Promise<void> {
-    const body = table.querySelector('sp-table-body') as unknown as TableBody &
-        VirtualizerHostElement;
-    await body[virtualizerRef]?.layoutComplete;
+  const body = table.querySelector('sp-table-body') as unknown as TableBody &
+    VirtualizerHostElement;
+  await body[virtualizerRef]?.layoutComplete;
 }

@@ -17,6 +17,8 @@
     - [Shadow DOM Specificity and Custom Property Inheritance](#shadow-dom-specificity-and-custom-property-inheritance)
     - [Using Cascade Layers (`@layer`)](#using-cascade-layers-layer)
 - [Component Specs vs. Component Styles](#component-specs-vs-component-styles)
+- [Color Themes](#color-themes)
+    - [Modifying Non-Color Properties](#modifying-non-color-properties)
 - [Closing Note for Contributors](#closing-note-for-contributors)
 
 </details>
@@ -232,6 +234,38 @@ For example:
     - Badge also uses `:has()` to conditionally adjust padding when icons are present; this replaces Spectrum-era spacing rules.
 
 The ultimate intent here is to prioritize working with the grain of CSS layout models.
+
+## Color Themes
+
+Spectrum supports a light and dark theme. Any tokens that represent colors that change per theme use the CSS function `light-dark()`. Therefore, most component styles only need to reference the appropriate color token and theme changes will be handled.
+
+### Modifying Non-Color Properties
+
+While not currently present in the system, should a need arise to change non-color properties (ex. `border-width`), those changes should be exposed as global tokens. Global tokens that are exclusive to SWC and not foundational token data can be added in the global 2nd-gen stylesheet, `swc.css`.
+
+Non-color tokens that should relate to color themes should be nested within the corresponding theme classes. This example illustrates a mock token addition.
+
+```css
+:root,
+.swc-theme--light {
+    --swc-theme-border-width: 2px;
+}
+
+.swc-theme--dark {
+    --swc-theme-border-width: 1px;
+}
+
+/* Adapts to user preference, so assign per preference query value */
+.swc-theme--adaptive {
+    @media (prefers-color-scheme: light) {
+        --swc-theme-border-width: 2px;
+    }
+
+     @media (prefers-color-scheme: dark) {
+        --swc-theme-border-width: 1px;
+    }
+}
+```
 
 ## Closing Note for Contributors
 

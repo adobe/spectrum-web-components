@@ -1,27 +1,27 @@
 {
-    "private": true,
-    "name": "@spectrum-web-components/eslint-plugin",
-    "version": "1.11.2",
-    "license": "Apache-2.0",
-    "author": "Adobe",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "1st-gen/linters/eslint"
-    },
-    "bugs": {
-        "url": "https://github.com/adobe/spectrum-web-components/issues"
-    },
-    "main": "index.js",
-    "keywords": [
-        "design-system",
-        "spectrum",
-        "adobe",
-        "adobe-spectrum",
-        "web components",
-        "web-components",
-        "lit-element",
-        "lit-html"
-    ]
+  "author": "Adobe",
+  "bugs": {
+    "url": "https://github.com/adobe/spectrum-web-components/issues"
+  },
+  "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+  "keywords": [
+    "design-system",
+    "spectrum",
+    "adobe",
+    "adobe-spectrum",
+    "web components",
+    "web-components",
+    "lit-element",
+    "lit-html"
+  ],
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "name": "@spectrum-web-components/eslint-plugin",
+  "private": true,
+  "repository": {
+    "directory": "1st-gen/linters/eslint",
+    "type": "git",
+    "url": "https://github.com/adobe/spectrum-web-components.git"
+  },
+  "version": "1.11.2"
 }

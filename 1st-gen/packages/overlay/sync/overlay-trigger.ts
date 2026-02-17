@@ -10,10 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-import { OverlayTrigger } from '../src/OverlayTrigger.js';
-import { OverlayOptionsV1, TriggerInteractions } from '../src/index.js';
 import '../overlay-trigger.js';
 import '../sp-overlay.js';
+
+import { OverlayOptionsV1, TriggerInteractions } from '../src/index.js';
+import { OverlayTrigger } from '../src/OverlayTrigger.js';
 
 export { OverlayTrigger };
 export type { OverlayOptionsV1, TriggerInteractions };

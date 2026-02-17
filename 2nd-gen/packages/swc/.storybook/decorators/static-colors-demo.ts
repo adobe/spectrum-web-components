@@ -10,17 +10,17 @@
  * governing permissions and limitations under the License.
  */
 
-import { makeDecorator } from '@storybook/preview-api';
-import type { DecoratorFunction } from '@storybook/types';
 import { html } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
+import { makeDecorator } from '@storybook/preview-api';
+import type { DecoratorFunction } from '@storybook/types';
 
 /**
  * Static color background settings - matching spectrum-css gradients
  */
 const staticColorSettings = {
-    black: 'linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255))',
-    white: 'linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67))',
+  black: 'linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255))',
+  white: 'linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67))',
 } as const;
 
 /**
@@ -31,44 +31,44 @@ const staticColorSettings = {
  * Enable per-story by setting parameters.staticColorsDemo = true
  */
 export const withStaticColorsDemo: DecoratorFunction = makeDecorator({
-    name: 'withStaticColorsDemo',
-    parameterName: 'staticColorsDemo',
-    wrapper: (StoryFn, context) => {
-        const { parameters } = context;
-        const { styles, staticColorsDemo } = parameters;
+  name: 'withStaticColorsDemo',
+  parameterName: 'staticColorsDemo',
+  wrapper: (StoryFn, context) => {
+    const { parameters } = context;
+    const { styles, staticColorsDemo } = parameters;
 
-        // Only apply when staticColorsDemo is enabled
-        if (!staticColorsDemo) {
-            return StoryFn(context);
+    // Only apply when staticColorsDemo is enabled
+    if (!staticColorsDemo) {
+      return StoryFn(context);
+    }
+
+    return html`
+      <style>
+        .spectrum-examples-static-colors {
+          display: flex;
+          gap: 24px;
+          align-items: center;
+        }
+        .spectrum-examples-static-colors > * {
+          padding: 24px;
         }
 
-        return html`
-            <style>
-                .spectrum-examples-static-colors {
-                    display: flex;
-                    gap: 24px;
-                    align-items: center;
-                }
-                .spectrum-examples-static-colors > * {
-                    padding: 24px;
-                }
+        .spectrum-examples-static-colors > *:first-child {
+          color: white;
+          background: ${staticColorSettings.white};
+        }
 
-                .spectrum-examples-static-colors > *:first-child {
-                    color: white;
-                    background: ${staticColorSettings.white};
-                }
-
-                .spectrum-examples-static-colors > *:last-child {
-                    color: black;
-                    background: ${staticColorSettings.black};
-                }
-            </style>
-            <div
-                class="spectrum-examples-static-colors"
-                style=${styleMap({ ...styles })}
-            >
-                ${StoryFn(context)}
-            </div>
-        `;
-    },
+        .spectrum-examples-static-colors > *:last-child {
+          color: black;
+          background: ${staticColorSettings.black};
+        }
+      </style>
+      <div
+        class="spectrum-examples-static-colors"
+        style=${styleMap({ ...styles })}
+      >
+        ${StoryFn(context)}
+      </div>
+    `;
+  },
 });

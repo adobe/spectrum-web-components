@@ -1,91 +1,112 @@
 {
-    // ────────────────────────────────────────────────────────────
-    // PROJECT FORMATTERS & CODE ACTIONS
-    // ────────────────────────────────────────────────────────────
-    "[typescript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.codeActionsOnSave": {
-            "source.fixAll.eslint": "explicit"
-        }
+  "[css]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.stylelint": "always"
     },
-    "[javascript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.codeActionsOnSave": {
-            "source.fixAll.eslint": "explicit"
-        }
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
     },
-    "[css]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.codeActionsOnSave": {
-            "source.fixAll.stylelint": "explicit"
-        }
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
     },
-    "[json]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
     },
-    "[jsonc]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 120
+  },
+  "[mdx]": {
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 120
+  },
+  "[postcss]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.stylelint": "always"
     },
-    "[mdx]": {
-        "editor.wordWrapColumn": 120,
-        "editor.wordWrap": "bounded"
-    },
-    "[markdown]": {
-        "editor.wordWrapColumn": 120,
-        "editor.wordWrap": "bounded"
-    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
 
-    // ────────────────────────────────────────────────────────────
-    // FILE EXCLUSIONS (Generated files)
-    // ────────────────────────────────────────────────────────────
-    "files.exclude": {
-        "**/*.css.ts": {
-            "when": "$(basename)"
-        },
-        "1st-gen/packages/**/*.js.map": true,
-        "1st-gen/packages/**/*.js": {
-            "when": "$(basename).ts"
-        },
-        "1st-gen/packages/**/*.dev.js": {
-            "when": "$(basename).js"
-        },
-        "1st-gen/packages/**/*.d.ts": {
-            "when": "$(basename).ts"
-        },
-        "1st-gen/tools/**/*.js.map": true,
-        "1st-gen/tools/**/*.js": {
-            "when": "$(basename).ts"
-        },
-        "1st-gen/tools/**/*.dev.js": {
-            "when": "$(basename).js"
-        },
-        "1st-gen/tools/**/*.d.ts": {
-            "when": "$(basename).ts"
-        },
-        "**/*.test-vrt.ts": true,
-        "projects/**": true,
-        "tools/**": true,
-        "test/**": true,
-        "packages/**": true
+  // ────────────────────────────────────────────────────────────
+  // PROJECT FORMATTERS & CODE ACTIONS
+  // ────────────────────────────────────────────────────────────
+  "[typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
     },
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
 
-    // ────────────────────────────────────────────────────────────
-    // PROJECT-SPECIFIC TOOLING
-    // ────────────────────────────────────────────────────────────
-    "typescript.tsdk": "node_modules/typescript/lib",
-    "lit-plugin.strict": true,
-    "eslint.validate": ["javascript", "typescript"],
-    "stylelint.validate": ["css"],
-    "prettier.requireConfig": true,
+  // ────────────────────────────────────────────────────────────
+  // PROJECT DICTIONARY
+  // ────────────────────────────────────────────────────────────
+  "cSpell.words": [
+    "activedescendant",
+    "AUTODOCS",
+    "checkmark",
+    "coachmark",
+    "effectful",
+    "minifiers",
+    "valuetext"
+  ],
+  "css.validate": false,
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "eslint.validate": ["javascript", "typescript", "json", "jsonc"],
 
-    // ────────────────────────────────────────────────────────────
-    // PROJECT DICTIONARY
-    // ────────────────────────────────────────────────────────────
-    "cSpell.words": [
-        "activedescendant",
-        "AUTODOCS",
-        "coachmark",
-        "effectful",
-        "valuetext"
-    ]
+  // ────────────────────────────────────────────────────────────
+  // FILE EXCLUSIONS (Generated files)
+  // ────────────────────────────────────────────────────────────
+  "files.exclude": {
+    "**/*.css.ts": {
+      "when": "$(basename)"
+    },
+    "**/*.test-vrt.ts": true,
+    "1st-gen/packages/**/*.d.ts": {
+      "when": "$(basename).ts"
+    },
+    "1st-gen/packages/**/*.dev.js": {
+      "when": "$(basename).js"
+    },
+    "1st-gen/packages/**/*.js": {
+      "when": "$(basename).ts"
+    },
+    "1st-gen/packages/**/*.js.map": true,
+    "1st-gen/tools/**/*.d.ts": {
+      "when": "$(basename).ts"
+    },
+    "1st-gen/tools/**/*.dev.js": {
+      "when": "$(basename).js"
+    },
+    "1st-gen/tools/**/*.js": {
+      "when": "$(basename).ts"
+    },
+    "1st-gen/tools/**/*.js.map": true,
+    "packages/**": true,
+    "projects/**": true,
+    "test/**": true,
+    "tools/**": true
+  },
+  "lit-plugin.strict": true,
+  "postcss.validate": false,
+  "prettier.requireConfig": true,
+  "stylelint.enable": true,
+  "stylelint.packageManager": "yarn",
+  "stylelint.validate": ["css", "postcss"],
+
+  // ────────────────────────────────────────────────────────────
+  // PROJECT-SPECIFIC TOOLING
+  // ────────────────────────────────────────────────────────────
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

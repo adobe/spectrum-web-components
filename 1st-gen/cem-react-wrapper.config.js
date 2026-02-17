@@ -22,25 +22,25 @@ import reactWrapperPlugin from './scripts/cem-plugin-react-wrapper.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default {
-    globs: ['**/sp-*.ts', '**/overlay-trigger.ts', '**/src/[A-Z]*.ts'],
-    exclude: [
-        '**/sp-icon-*.ts',
-        '**/*.d.ts',
-        '**/stories/**',
-        '**/test/**',
-        'node_modules/*',
-        '**/*.dev.*',
-    ],
-    litelement: true,
-    packagejson: false,
-    plugins: [
-        defineElementPlugin(),
-        reactWrapperPlugin({
-            exclude: ['StoryDecorator', 'TooltipOpenable'],
-            outDir: join(__dirname, 'react'),
-            prettierConfig: yaml.load(
-                readFileSync(join(__dirname, '.prettierrc.yaml'))
-            ),
-        }),
-    ],
+  globs: ['**/sp-*.ts', '**/overlay-trigger.ts', '**/src/[A-Z]*.ts'],
+  exclude: [
+    '**/sp-icon-*.ts',
+    '**/*.d.ts',
+    '**/stories/**',
+    '**/test/**',
+    'node_modules/*',
+    '**/*.dev.*',
+  ],
+  litelement: true,
+  packagejson: false,
+  plugins: [
+    defineElementPlugin(),
+    reactWrapperPlugin({
+      exclude: ['StoryDecorator', 'TooltipOpenable'],
+      outDir: join(__dirname, 'react'),
+      prettierConfig: yaml.load(
+        readFileSync(join(__dirname, '.prettierrc.yaml'))
+      ),
+    }),
+  ],
 };

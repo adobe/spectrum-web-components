@@ -11,123 +11,112 @@
  */
 import { css, html, SpectrumElement } from '@spectrum-web-components/base';
 import {
-    property,
-    queryAssignedNodes,
+  property,
+  queryAssignedNodes,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { Slider } from '@spectrum-web-components/slider';
+
 import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
 import '@spectrum-web-components/overlay/sync/overlay-trigger.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 
 export class OnionSkinner extends SpectrumElement {
-    @property({ type: Number }) public onionLevel = 0.5;
+  @property({ type: Number }) public onionLevel = 0.5;
 
-    @queryAssignedNodes({
-        slot: '',
-        flatten: true,
-    })
-    private assignments!: NodeListOf<HTMLImageElement>;
+  @queryAssignedNodes({
+    slot: '',
+    flatten: true,
+  })
+  private assignments!: NodeListOf<HTMLImageElement>;
 
-    private leftThumbnail?: HTMLImageElement;
-    private rightThumbnail?: HTMLImageElement;
+  private leftThumbnail?: HTMLImageElement;
+  private rightThumbnail?: HTMLImageElement;
 
-    private handleOnionInput(event: Event & { target: Slider }) {
-        this.onionLevel = event.target.value;
+  private handleOnionInput(event: Event & { target: Slider }) {
+    this.onionLevel = event.target.value;
+  }
+
+  private handleSlotchange() {
+    const images = [...this.assignments].filter(
+      (node) => node.tagName && node.matches('img')
+    );
+    if (images[0]) {
+      this.leftThumbnail = images[0].cloneNode() as HTMLImageElement;
+      this.leftThumbnail.removeAttribute('slot');
     }
-
-    private handleSlotchange() {
-        const images = [...this.assignments].filter(
-            (node) => node.tagName && node.matches('img')
-        );
-        if (images[0]) {
-            this.leftThumbnail = images[0].cloneNode() as HTMLImageElement;
-            this.leftThumbnail.removeAttribute('slot');
-        }
-        if (images[1]) {
-            this.rightThumbnail = images[1].cloneNode() as HTMLImageElement;
-            this.rightThumbnail.removeAttribute('slot');
-        }
-        if (images.length) {
-            this.requestUpdate();
-        }
+    if (images[1]) {
+      this.rightThumbnail = images[1].cloneNode() as HTMLImageElement;
+      this.rightThumbnail.removeAttribute('slot');
     }
-
-    private allLeft() {
-        this.onionLevel = 0;
+    if (images.length) {
+      this.requestUpdate();
     }
+  }
 
-    private allRight() {
-        this.onionLevel = 1;
-    }
+  private allLeft() {
+    this.onionLevel = 0;
+  }
 
-    override render() {
-        return html`
-            <slot
-                @slotchange=${this.handleSlotchange}
-                style="--onion-level: ${this.onionLevel}"
-            ></slot>
-            <div class="controls">
-                <overlay-trigger placement="top">
-                    <sp-thumbnail
-                        slot="trigger"
-                        size="xl"
-                        @click=${this.allLeft}
-                    >
-                        ${this.leftThumbnail}
-                    </sp-thumbnail>
-                    <sp-tooltip slot="hover-content">
-                        Baseline screenshot
-                    </sp-tooltip>
-                </overlay-trigger>
-                <sp-slider
-                    min="0"
-                    max="1"
-                    step="0.001"
-                    .value=${this.onionLevel}
-                    .getAriaValueText=${() => ''}
-                    @input=${this.handleOnionInput}
-                ></sp-slider>
-                <overlay-trigger placement="top">
-                    <sp-thumbnail
-                        slot="trigger"
-                        size="xl"
-                        @click=${this.allRight}
-                    >
-                        ${this.rightThumbnail}
-                    </sp-thumbnail>
-                    <sp-tooltip slot="hover-content">
-                        Current screenshot
-                    </sp-tooltip>
-                </overlay-trigger>
-            </div>
-        `;
-    }
+  private allRight() {
+    this.onionLevel = 1;
+  }
 
-    static override styles = [
-        css`
-            :host {
-                display: grid;
-                grid-template-areas: 'main';
-            }
-            ::slotted(*) {
-                grid-area: main;
-            }
-            ::slotted(:first-child) {
-                opacity: calc(1 - var(--onion-level));
-            }
-            ::slotted(:last-child) {
-                opacity: var(--onion-level);
-            }
-            .controls {
-                display: flex;
-                gap: 1em;
-                margin: 0.25em;
-                align-items: center;
-            }
-            sp-slider {
-                flex-grow: 1;
-            }
-        `,
-    ];
+  override render() {
+    return html`
+      <slot
+        @slotchange=${this.handleSlotchange}
+        style="--onion-level: ${this.onionLevel}"
+      ></slot>
+      <div class="controls">
+        <overlay-trigger placement="top">
+          <sp-thumbnail slot="trigger" size="xl" @click=${this.allLeft}>
+            ${this.leftThumbnail}
+          </sp-thumbnail>
+          <sp-tooltip slot="hover-content">Baseline screenshot</sp-tooltip>
+        </overlay-trigger>
+        <sp-slider
+          min="0"
+          max="1"
+          step="0.001"
+          .value=${this.onionLevel}
+          .getAriaValueText=${() => ''}
+          @input=${this.handleOnionInput}
+        ></sp-slider>
+        <overlay-trigger placement="top">
+          <sp-thumbnail slot="trigger" size="xl" @click=${this.allRight}>
+            ${this.rightThumbnail}
+          </sp-thumbnail>
+          <sp-tooltip slot="hover-content">Current screenshot</sp-tooltip>
+        </overlay-trigger>
+      </div>
+    `;
+  }
+
+  static override styles = [
+    css`
+      :host {
+        display: grid;
+        grid-template-areas: 'main';
+      }
+      ::slotted(*) {
+        grid-area: main;
+      }
+      ::slotted(:first-child) {
+        opacity: calc(1 - var(--onion-level));
+      }
+      ::slotted(:last-child) {
+        opacity: var(--onion-level);
+      }
+      .controls {
+        display: flex;
+        gap: 1em;
+        margin: 0.25em;
+        align-items: center;
+      }
+      sp-slider {
+        flex-grow: 1;
+      }
+    `,
+  ];
 }

@@ -13,27 +13,26 @@
  */
 
 import fg from 'fast-glob';
+
 import 'colors';
 
 import { processCSS } from './css-tools.js';
 
 async function buildCSS() {
-    const promises = [];
-    for (const cssPath of await fg([
-        './packages/*/src/**/*.css',
-        './tools/*/src/*.css',
-        './tools/*/src/**/*.css',
-    ])) {
-        promises.push(
-            processCSS(cssPath)
-                .then(() => console.log(`Processed ${cssPath.yellow}`))
-                .catch((error) =>
-                    console.error(`Error processing ${cssPath}`, error)
-                )
-        );
-    }
+  const promises = [];
+  for (const cssPath of await fg([
+    './packages/*/src/**/*.css',
+    './tools/*/src/*.css',
+    './tools/*/src/**/*.css',
+  ])) {
+    promises.push(
+      processCSS(cssPath)
+        .then(() => console.log(`Processed ${cssPath.yellow}`))
+        .catch((error) => console.error(`Error processing ${cssPath}`, error))
+    );
+  }
 
-    return Promise.all(promises);
+  return Promise.all(promises);
 }
 
 await buildCSS();

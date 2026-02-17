@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import lightStyles from './src/theme-light.css.js';
-import { Theme } from './src/Theme.js';
 import './core.js';
+
+import { Theme } from './src/Theme.js';
+import lightStyles from './src/theme-light.css.js';
 
 Theme.registerThemeFragment('light', 'color', lightStyles);

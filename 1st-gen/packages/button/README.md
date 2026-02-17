@@ -59,8 +59,8 @@ fulfill the accessibility contract of the button.
 
 ```html demo
 <sp-button variant="primary">
-    <sp-icon-help slot="icon"></sp-icon-help>
-    Icon + Label
+  <sp-icon-help slot="icon"></sp-icon-help>
+  Icon + Label
 </sp-button>
 ```
 
@@ -70,18 +70,18 @@ fulfill the accessibility contract of the button.
 
 ```html demo
 <sp-button variant="primary">
-    <svg
-        slot="icon"
-        viewBox="0 0 36 36"
-        focusable="false"
-        aria-hidden="true"
-        role="img"
-    >
-        <path
-            d="M16 36a4.407 4.407 0 0 0 4-4h-8a4.407 4.407 0 0 0 4 4zm9.143-24.615c0-3.437-3.206-4.891-7.143-5.268V3a1.079 1.079 0 0 0-1.143-1h-1.714A1.079 1.079 0 0 0 14 3v3.117c-3.937.377-7.143 1.831-7.143 5.268C6.857 26.8 2 26.111 2 28.154V30h28v-1.846C30 26 25.143 26.8 25.143 11.385z"
-        ></path>
-    </svg>
-    SVG Icon + Label
+  <svg
+    slot="icon"
+    viewBox="0 0 36 36"
+    focusable="false"
+    aria-hidden="true"
+    role="img"
+  >
+    <path
+      d="M16 36a4.407 4.407 0 0 0 4-4h-8a4.407 4.407 0 0 0 4 4zm9.143-24.615c0-3.437-3.206-4.891-7.143-5.268V3a1.079 1.079 0 0 0-1.143-1h-1.714A1.079 1.079 0 0 0 14 3v3.117c-3.937.377-7.143 1.831-7.143 5.268C6.857 26.8 2 26.111 2 28.154V30h28v-1.846C30 26 25.143 26.8 25.143 11.385z"
+    ></path>
+  </svg>
+  SVG Icon + Label
 </sp-button>
 ```
 
@@ -91,7 +91,7 @@ fulfill the accessibility contract of the button.
 
 ```html demo
 <sp-button variant="primary" label="Icon only">
-    <sp-icon-help slot="icon"></sp-icon-help>
+  <sp-icon-help slot="icon"></sp-icon-help>
 </sp-button>
 ```
 
@@ -148,14 +148,14 @@ attribute defaults to `accent`, but also accepts the following value: `accent`, 
 
 ```html demo
 <sp-button-group style="min-width: max-content">
-    <sp-button variant="accent">Label only</sp-button>
-    <sp-button variant="accent">
-        <sp-icon-help slot="icon"></sp-icon-help>
-        Icon + Label
-    </sp-button>
-    <sp-button variant="accent" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
+  <sp-button variant="accent">Label only</sp-button>
+  <sp-button variant="accent">
+    <sp-icon-help slot="icon"></sp-icon-help>
+    Icon + Label
+  </sp-button>
+  <sp-button variant="accent" label="Icon only" icon-only>
+    <sp-icon-help slot="icon"></sp-icon-help>
+  </sp-button>
 </sp-button-group>
 ```
 
@@ -165,14 +165,14 @@ attribute defaults to `accent`, but also accepts the following value: `accent`, 
 
 ```html demo
 <sp-button-group style="min-width: max-content">
-    <sp-button variant="primary">Label only</sp-button>
-    <sp-button variant="primary">
-        <sp-icon-help slot="icon"></sp-icon-help>
-        Icon + Label
-    </sp-button>
-    <sp-button variant="primary" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
+  <sp-button variant="primary">Label only</sp-button>
+  <sp-button variant="primary">
+    <sp-icon-help slot="icon"></sp-icon-help>
+    Icon + Label
+  </sp-button>
+  <sp-button variant="primary" label="Icon only" icon-only>
+    <sp-icon-help slot="icon"></sp-icon-help>
+  </sp-button>
 </sp-button-group>
 ```
 
@@ -182,14 +182,14 @@ attribute defaults to `accent`, but also accepts the following value: `accent`, 
 
 ```html demo
 <sp-button-group style="min-width: max-content">
-    <sp-button variant="secondary">Label only</sp-button>
-    <sp-button variant="secondary">
-        <sp-icon-help slot="icon"></sp-icon-help>
-        Icon + Label
-    </sp-button>
-    <sp-button variant="secondary" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
+  <sp-button variant="secondary">Label only</sp-button>
+  <sp-button variant="secondary">
+    <sp-icon-help slot="icon"></sp-icon-help>
+    Icon + Label
+  </sp-button>
+  <sp-button variant="secondary" label="Icon only" icon-only>
+    <sp-icon-help slot="icon"></sp-icon-help>
+  </sp-button>
 </sp-button-group>
 ```
 
@@ -199,14 +199,14 @@ attribute defaults to `accent`, but also accepts the following value: `accent`, 
 
 ```html demo
 <sp-button-group style="min-width: max-content">
-    <sp-button variant="negative">Label only</sp-button>
-    <sp-button variant="negative">
-        <sp-icon-help slot="icon"></sp-icon-help>
-        Icon + Label
-    </sp-button>
-    <sp-button variant="negative" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
+  <sp-button variant="negative">Label only</sp-button>
+  <sp-button variant="negative">
+    <sp-icon-help slot="icon"></sp-icon-help>
+    Icon + Label
+  </sp-button>
+  <sp-button variant="negative" label="Icon only" icon-only>
+    <sp-icon-help slot="icon"></sp-icon-help>
+  </sp-button>
 </sp-button-group>
 ```
 
@@ -223,9 +223,9 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 
 ```html demo
 <sp-button-group style="min-width: max-content">
-    <sp-button treatment="fill" variant="primary">Primary, Fill</sp-button>
-    <sp-button treatment="fill" variant="secondary">Secondary, Fill</sp-button>
-    <sp-button treatment="fill" variant="negative">Negative, Fill</sp-button>
+  <sp-button treatment="fill" variant="primary">Primary, Fill</sp-button>
+  <sp-button treatment="fill" variant="secondary">Secondary, Fill</sp-button>
+  <sp-button treatment="fill" variant="negative">Negative, Fill</sp-button>
 </sp-button-group>
 ```
 
@@ -235,15 +235,13 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 
 ```html demo
 <sp-button-group style="min-width: max-content">
-    <sp-button treatment="outline" variant="primary">
-        Primary, Outline
-    </sp-button>
-    <sp-button treatment="outline" variant="secondary">
-        Secondary, Outline
-    </sp-button>
-    <sp-button treatment="outline" variant="negative">
-        Negative, Outline
-    </sp-button>
+  <sp-button treatment="outline" variant="primary">Primary, Outline</sp-button>
+  <sp-button treatment="outline" variant="secondary">
+    Secondary, Outline
+  </sp-button>
+  <sp-button treatment="outline" variant="negative">
+    Negative, Outline
+  </sp-button>
 </sp-button-group>
 ```
 
@@ -253,21 +251,21 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 
 ```html demo
 <sp-button-group
-    style="background: var(--spectrum-seafoam-600); padding: 0.5em; min-width: max-content"
+  style="background: var(--spectrum-seafoam-600); padding: 0.5em; min-width: max-content"
 >
-    <sp-button treatment="outline" static-color="black">Label only</sp-button>
-    <sp-button treatment="outline" static-color="black">
-        <sp-icon-help slot="icon"></sp-icon-help>
-        Icon + Label
-    </sp-button>
-    <sp-button
-        treatment="outline"
-        static-color="black"
-        label="Icon only"
-        icon-only
-    >
-        <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
+  <sp-button treatment="outline" static-color="black">Label only</sp-button>
+  <sp-button treatment="outline" static-color="black">
+    <sp-icon-help slot="icon"></sp-icon-help>
+    Icon + Label
+  </sp-button>
+  <sp-button
+    treatment="outline"
+    static-color="black"
+    label="Icon only"
+    icon-only
+  >
+    <sp-icon-help slot="icon"></sp-icon-help>
+  </sp-button>
 </sp-button-group>
 ```
 
@@ -277,21 +275,21 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 
 ```html demo
 <sp-button-group
-    style="background: var(--spectrum-seafoam-600); padding: 0.5em; min-width: max-content"
+  style="background: var(--spectrum-seafoam-600); padding: 0.5em; min-width: max-content"
 >
-    <sp-button treatment="outline" static-color="white">Label only</sp-button>
-    <sp-button treatment="outline" static-color="white">
-        <sp-icon-help slot="icon"></sp-icon-help>
-        Icon + Label
-    </sp-button>
-    <sp-button
-        treatment="outline"
-        static-color="white"
-        label="Icon only"
-        icon-only
-    >
-        <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
+  <sp-button treatment="outline" static-color="white">Label only</sp-button>
+  <sp-button treatment="outline" static-color="white">
+    <sp-icon-help slot="icon"></sp-icon-help>
+    Icon + Label
+  </sp-button>
+  <sp-button
+    treatment="outline"
+    static-color="white"
+    label="Icon only"
+    icon-only
+  >
+    <sp-icon-help slot="icon"></sp-icon-help>
+  </sp-button>
 </sp-button-group>
 ```
 
@@ -308,8 +306,8 @@ While disabled, `<sp-button>` elements will not respond to click events and will
 
 ```html
 <sp-button-group>
-    <sp-button variant="primary">Normal</sp-button>
-    <sp-button variant="primary" disabled>Disabled</sp-button>
+  <sp-button variant="primary">Normal</sp-button>
+  <sp-button variant="primary" disabled>Disabled</sp-button>
 </sp-button-group>
 ```
 
@@ -322,8 +320,8 @@ Note: The pending state of the `<sp-button>` element is applied after a 1s delay
 
 ```html
 <sp-button-group>
-    <sp-button variant="primary">Normal</sp-button>
-    <sp-button variant="primary" pending>Pending</sp-button>
+  <sp-button variant="primary">Normal</sp-button>
+  <sp-button variant="primary" pending>Pending</sp-button>
 </sp-button-group>
 ```
 
@@ -342,10 +340,10 @@ In addition to handling events like a native `<button>` HTML element, one can al
 
 ```html demo
 <sp-button
-    href="https://github.com/adobe/spectrum-web-components"
-    target="_blank"
+  href="https://github.com/adobe/spectrum-web-components"
+  target="_blank"
 >
-    Click me
+  Click me
 </sp-button>
 ```
 
@@ -358,10 +356,10 @@ popover or dialog opens.
 ```html
 <sp-button id="trigger">Open</sp-button>
 <sp-overlay trigger="trigger@click" placement="bottom">
-    <sp-popover>
-        <!-- Button will autofocus when open -->
-        <sp-button autofocus>Confirm</sp-button>
-    </sp-popover>
+  <sp-popover>
+    <!-- Button will autofocus when open -->
+    <sp-button autofocus>Confirm</sp-button>
+  </sp-popover>
 </sp-overlay>
 ```
 
@@ -390,10 +388,10 @@ To ensure maximum contrast with the background, use static black for light backg
 
 ```html demo
 <div
-    style="background-color: var(--spectrum-docs-static-black-background-color); padding: 20px"
+  style="background-color: var(--spectrum-docs-static-black-background-color); padding: 20px"
 >
-    <sp-button static-color="black">Click me</sp-button>
-    <sp-button static-color="black" treatment="outline">Click me</sp-button>
+  <sp-button static-color="black">Click me</sp-button>
+  <sp-button static-color="black" treatment="outline">Click me</sp-button>
 </div>
 ```
 
@@ -403,10 +401,10 @@ To ensure maximum contrast with the background, use static black for light backg
 
 ```html demo
 <div
-    style="background-color: var(--spectrum-docs-static-white-background-color); padding: 20px"
+  style="background-color: var(--spectrum-docs-static-white-background-color); padding: 20px"
 >
-    <sp-button static-color="white">Click me</sp-button>
-    <sp-button static-color="white" treatment="outline">Click me</sp-button>
+  <sp-button static-color="white">Click me</sp-button>
+  <sp-button static-color="white" treatment="outline">Click me</sp-button>
 </div>
 ```
 

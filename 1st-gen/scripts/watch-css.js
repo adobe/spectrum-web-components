@@ -21,16 +21,16 @@ const debounceProcessCSS = debounce(processCSS, 200);
 
 // One-liner for current directory
 chokidar
-    .watch(['./packages/*/src/**/*.css', './tools/*/src/**/*.css'], {
-        ignoreInitial: true,
-    })
-    .on('change', (path) => {
-        console.log(`Process CSS change in: ${path}`);
-        debounceProcessCSS(path);
-    })
-    .on('add', (path) => {
-        console.log(`Process CSS added at: ${path}`);
-        debounceProcessCSS(path);
-    });
+  .watch(['./packages/*/src/**/*.css', './tools/*/src/**/*.css'], {
+    ignoreInitial: true,
+  })
+  .on('change', (path) => {
+    console.log(`Process CSS change in: ${path}`);
+    debounceProcessCSS(path);
+  })
+  .on('add', (path) => {
+    console.log(`Process CSS added at: ${path}`);
+    debounceProcessCSS(path);
+  });
 
 console.log('Listening to CSS...');

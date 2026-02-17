@@ -48,8 +48,8 @@ The `insertionOptions` define where in the DOM the Overlay should be inserted:
 
 ```ts
 type InsertionOptions = {
-    el: HTMLElement | (() => HTMLElement); // returning a reference to the element the Overlay should be inserted adjacent to
-    where: InsertPosition; // 'afterbegin' | 'afterend' | 'beforebegin' | 'beforeend'
+  el: HTMLElement | (() => HTMLElement); // returning a reference to the element the Overlay should be inserted adjacent to
+  where: InsertPosition; // 'afterbegin' | 'afterend' | 'beforebegin' | 'beforeend'
 };
 ```
 

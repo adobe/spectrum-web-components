@@ -13,10 +13,10 @@ swc-react is a collection of React wrapper components for the Spectrum Web Compo
 
 1. [Introduction](#introduction)
 2. [Getting Started](#getting-started)
-    - [Installation](#installation)
-    - [Importing Components](#importing-components)
-    - [Theming](#theming)
-    - [Event Handling and Type Definitions](#event-handling-and-type-definitions)
+   - [Installation](#installation)
+   - [Importing Components](#importing-components)
+   - [Theming](#theming)
+   - [Event Handling and Type Definitions](#event-handling-and-type-definitions)
 3. [Using Next.js Wrapper Components](#using-next.js-wrapper-components)
 4. [API Reference](#api-reference)
 5. [FAQs](#faqs)
@@ -60,11 +60,11 @@ import React from 'react';
 import { Button } from '@swc-react/button';
 
 function App() {
-    return (
-        <div>
-            <Button onClick={() => alert('Button clicked!')}>Click me</Button>
-        </div>
-    );
+  return (
+    <div>
+      <Button onClick={() => alert('Button clicked!')}>Click me</Button>
+    </div>
+  );
 }
 
 export default App;
@@ -218,21 +218,21 @@ If you encounter an error like "sp-xxx has already been used with this registry"
 
 ```javascript
 webpack: (
-    config,
-    { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }
+  config,
+  { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }
 ) => {
-    config.module.rules.push({
-        test: /\.(js)$/,
-        loader: 'string-replace-loader',
-        options: {
-            search: /customElements\.define\("(.*?)"/,
-            replace: (_match, p1) => {
-                return `!customElements.get("${p1}")&&customElements.define("${p1}"`;
-            },
-            flags: 'g',
-        },
-    });
-    return config;
+  config.module.rules.push({
+    test: /\.(js)$/,
+    loader: 'string-replace-loader',
+    options: {
+      search: /customElements\.define\("(.*?)"/,
+      replace: (_match, p1) => {
+        return `!customElements.get("${p1}")&&customElements.define("${p1}"`;
+      },
+      flags: 'g',
+    },
+  });
+  return config;
 };
 ```
 

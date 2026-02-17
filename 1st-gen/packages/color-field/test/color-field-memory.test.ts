@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { Template } from '../stories/template.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
+import { Template } from '../stories/template.js';
 
 testForMemoryLeaks(Template({ label: 'Enter color value' }));

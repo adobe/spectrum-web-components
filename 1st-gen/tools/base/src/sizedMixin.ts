@@ -10,11 +10,11 @@
  * governing permissions and limitations under the License.
  */
 export {
-    ElementSizes,
-    SizedMixin,
-} from '@spectrum-web-components/core/shared/base/sizedMixin.js';
+  ElementSizes,
+  SizedMixin,
+} from '@spectrum-web-components/core/mixins/sized-mixin.js';
 export type {
-    DefaultElementSize,
-    ElementSize,
-    SizedElementInterface,
-} from '@spectrum-web-components/core/shared/base/sizedMixin.js';
+  DefaultElementSize,
+  ElementSize,
+  SizedElementInterface,
+} from '@spectrum-web-components/core/mixins/sized-mixin.js';

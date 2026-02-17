@@ -32,10 +32,7 @@ Progress bars have the following parts:
 - **Value label:** Progress bars can have a value label that gives detailed information about the progress. This value label works alongside the label and should not be displayed if the label itself is not displayed. The value label is always placed above the track. Use the `progress` attribute to set the value label.
 
 ```html
-<sp-progress-bar
-        label="Generating images..."
-        progress="58"
-    ></sp-progress-bar>
+<sp-progress-bar label="Generating images..." progress="58"></sp-progress-bar>
 ```
 
 ### Options
@@ -48,13 +45,13 @@ Progress bars have the following parts:
 
 ```html
 <div
-    style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
+  style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >
-    <sp-progress-bar
-        size="s"
-        label="Loaded a little"
-        progress="22"
-    ></sp-progress-bar>
+  <sp-progress-bar
+    size="s"
+    label="Loaded a little"
+    progress="22"
+  ></sp-progress-bar>
 </div>
 ```
 
@@ -64,13 +61,13 @@ Progress bars have the following parts:
 
 ```html
 <div
-    style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
+  style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >
-    <sp-progress-bar
-        size="m"
-        label="Loaded a little"
-        progress="22"
-    ></sp-progress-bar>
+  <sp-progress-bar
+    size="m"
+    label="Loaded a little"
+    progress="22"
+  ></sp-progress-bar>
 </div>
 ```
 
@@ -80,13 +77,13 @@ Progress bars have the following parts:
 
 ```html
 <div
-    style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
+  style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >
-    <sp-progress-bar
-        size="l"
-        label="Loaded a little"
-        progress="22"
-    ></sp-progress-bar>
+  <sp-progress-bar
+    size="l"
+    label="Loaded a little"
+    progress="22"
+  ></sp-progress-bar>
 </div>
 ```
 
@@ -96,19 +93,18 @@ Progress bars have the following parts:
 
 ```html
 <div
-    style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
+  style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >
-    <sp-progress-bar
-        size="xl"
-        label="Loaded a little"
-        progress="22"
-    ></sp-progress-bar>
+  <sp-progress-bar
+    size="xl"
+    label="Loaded a little"
+    progress="22"
+  ></sp-progress-bar>
 </div>
 ```
 
 </sp-tab-panel>
 </sp-tabs>
-
 
 #### Variants
 
@@ -120,13 +116,13 @@ When a progress bar needs to be placed on top of a colored background, use the s
 
 ```html
 <div
-    style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around; background-color: var(--spectrum-seafoam-900);"
+  style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around; background-color: var(--spectrum-seafoam-900);"
 >
-    <sp-progress-bar
-        label="Loaded a large amount"
-        progress="77"
-        static-color="white"
-    ></sp-progress-bar>
+  <sp-progress-bar
+    label="Loaded a large amount"
+    progress="77"
+    static-color="white"
+  ></sp-progress-bar>
 </div>
 ```
 
@@ -138,12 +134,12 @@ A progress bar can be either determinate or indeterminate as signified by `[inde
 
 ```html
 <div
-    style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
+  style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >
-    <sp-progress-bar
-        aria-label="Loaded an unclear amount"
-        indeterminate
-    ></sp-progress-bar>
+  <sp-progress-bar
+    aria-label="Loaded an unclear amount"
+    indeterminate
+  ></sp-progress-bar>
 </div>
 ```
 
@@ -157,13 +153,13 @@ A progress bar can be delivered with its labeling displayed above its visual ind
 
 ```html
 <div
-    style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
+  style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >
-    <sp-progress-bar
-        side-label
-        label="Label Beside"
-        progress="23"
-    ></sp-progress-bar>
+  <sp-progress-bar
+    side-label
+    label="Label Beside"
+    progress="23"
+  ></sp-progress-bar>
 </div>
 ```
 
@@ -176,6 +172,6 @@ An `sp-progress-bar` element will register itself as a `role="progressbar"` elem
 
 #### Include a label
 
-Progress bars should have a label that gives context about the operation being performed. Use an ellipsis at the end of the label text to communicate that the process is in progress. 
+Progress bars should have a label that gives context about the operation being performed. Use an ellipsis at the end of the label text to communicate that the process is in progress.
 
- In rare cases where a visible label is not desired, context is sufficient and an accessibility expert has reviewed the design, be sure to include an `aria-label` attribute or an `aria-labelledby` attribute to manually to ensure that the `sp-progress-bar` correctly fulfills its responsibilities to visitors of your site of all abilities.
+In rare cases where a visible label is not desired, context is sufficient and an accessibility expert has reviewed the design, be sure to include an `aria-label` attribute or an `aria-labelledby` attribute to manually to ensure that the `sp-progress-bar` correctly fulfills its responsibilities to visitors of your site of all abilities.
