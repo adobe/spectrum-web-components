@@ -58,6 +58,10 @@ export class TextfieldBase extends ManageHelpText(
   @state()
   protected isTruncated = false;
 
+  private resizeObserver = new ResizeObserver(() => {
+    this.refreshTruncationState();
+  });
+
   /**
    * A regular expression outlining the keys that will be allowed to update the value of the form control.
    */
@@ -303,6 +307,14 @@ export class TextfieldBase extends ManageHelpText(
     return this.inputElement.scrollWidth > this.inputElement.clientWidth + 1;
   }
 
+  protected refreshTruncationState(): void {
+    const isTruncated = this.inputElementIsTruncated;
+    if (isTruncated === this.isTruncated) {
+      return;
+    }
+    this.isTruncated = isTruncated;
+  }
+
   // prettier-ignore
   private get renderMultiline(): TemplateResult {
         return html`
@@ -389,6 +401,13 @@ export class TextfieldBase extends ManageHelpText(
     `;
   }
 
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
+    this.resizeObserver.observe(this);
+    this.resizeObserver.observe(this.inputElement);
+    this.refreshTruncationState();
+  }
+
   protected override update(changedProperties: PropertyValues): void {
     if (
       changedProperties.has('value') ||
@@ -399,6 +418,24 @@ export class TextfieldBase extends ManageHelpText(
       });
     }
     super.update(changedProperties);
+    if (
+      changedProperties.has('value') ||
+      changedProperties.has('type') ||
+      changedProperties.has('quiet') ||
+      changedProperties.has('valid') ||
+      changedProperties.has('invalid') ||
+      changedProperties.has('multiline') ||
+      changedProperties.has('size')
+    ) {
+      this.updateComplete.then(() => {
+        this.refreshTruncationState();
+      });
+    }
+  }
+
+  public override disconnectedCallback(): void {
+    this.resizeObserver.disconnect();
+    super.disconnectedCallback();
   }
 
   public checkValidity(): boolean {
