@@ -284,3 +284,52 @@ controlled.parameters = {
     // Disables Chromatic's snapshotting on a global level
     chromatic: { disableSnapshot: true },
 };
+
+/**
+ * Demonstrates the change event providing both value (unique ID) and itemText.
+ * This is useful when options share similar names but have distinct identifiers,
+ * such as contacts with the same name in different departments.
+ */
+export const changeEventWithValueAndItemText = (): TemplateResult => {
+    const contactOptions: ComboboxOption[] = [
+        { value: 'emp-1042', itemText: 'Alex Johnson (Engineering)' },
+        { value: 'emp-2187', itemText: 'Alex Johnson (Marketing)' },
+        { value: 'emp-3301', itemText: 'Sam Chen (Design)' },
+        { value: 'emp-4455', itemText: 'Jordan Lee (Sales)' },
+    ];
+
+    const handleChange = (event: CustomEvent): void => {
+        const { value, itemText } = event.detail;
+
+        // Update the output display
+        const output = document.getElementById('change-event-output');
+        if (output) {
+            output.textContent = `Employee ID: "${value}", Name: "${itemText}"`;
+        }
+    };
+
+    return html`
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+            <sp-field-label for="combobox-contact-test">
+                Select a team member
+            </sp-field-label>
+            <sp-combobox
+                id="combobox-contact-test"
+                .options=${contactOptions}
+                @change=${handleChange}
+                style="width: 280px;"
+            ></sp-combobox>
+            <div>
+                <strong>Selected:</strong>
+                <code id="change-event-output">None yet</code>
+            </div>
+            <p style="color: gray; font-size: 12px;">
+                The change event provides both the unique employee ID (value)
+                and the display name (itemText) for use in your application.
+            </p>
+        </div>
+    `;
+};
+changeEventWithValueAndItemText.swc_vrt = {
+    skip: true,
+};
