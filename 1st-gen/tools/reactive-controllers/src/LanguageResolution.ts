@@ -10,54 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-import type { ReactiveController, ReactiveElement } from 'lit';
-
-import { ProvideLang } from '@spectrum-web-components/theme';
-
-export const languageResolverUpdatedSymbol = Symbol(
-  'language resolver updated'
-);
-
-export class LanguageResolutionController implements ReactiveController {
-  private host: ReactiveElement;
-  language = document.documentElement.lang || navigator.language || 'en-US';
-  private unsubscribe?: () => void;
-
-  constructor(host: ReactiveElement) {
-    this.host = host;
-    this.host.addController(this);
-  }
-
-  public hostConnected(): void {
-    this.resolveLanguage();
-  }
-
-  public hostDisconnected(): void {
-    this.unsubscribe?.();
-  }
-
-  private resolveLanguage(): void {
-    try {
-      Intl.DateTimeFormat.supportedLocalesOf([this.language]);
-    } catch {
-      this.language = 'en-US';
-    }
-    const queryThemeEvent = new CustomEvent<ProvideLang>(
-      'sp-language-context',
-      {
-        bubbles: true,
-        composed: true,
-        detail: {
-          callback: (lang: string, unsubscribe: () => void) => {
-            const previous = this.language;
-            this.language = lang;
-            this.unsubscribe = unsubscribe;
-            this.host.requestUpdate(languageResolverUpdatedSymbol, previous);
-          },
-        },
-        cancelable: true,
-      }
-    );
-    this.host.dispatchEvent(queryThemeEvent);
-  }
-}
+/**
+ * Re-export LanguageResolutionController from core so 1st-gen and 2nd-gen share
+ * the same implementation and do not drift.
+ */
+export {
+  LanguageResolutionController,
+  languageResolverUpdatedSymbol,
+} from '@spectrum-web-components/core/controllers/language-resolution.js';
