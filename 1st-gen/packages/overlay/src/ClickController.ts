@@ -11,44 +11,44 @@
  */
 
 import {
-    InteractionController,
-    InteractionTypes,
+  InteractionController,
+  InteractionTypes,
 } from './InteractionController.js';
 
 export class ClickController extends InteractionController {
-    override type = InteractionTypes.click;
+  override type = InteractionTypes.click;
 
-    /**
-     * An overlay with a `click` interaction should not close on click `triggerElement`.
-     * When a click is initiated (`pointerdown`), apply `preventNextToggle` when the
-     * overlay is `open` to prevent from toggling the overlay when the click event
-     * propagates later in the interaction.
-     */
-    private preventNextToggle = false;
+  /**
+   * An overlay with a `click` interaction should not close on click `triggerElement`.
+   * When a click is initiated (`pointerdown`), apply `preventNextToggle` when the
+   * overlay is `open` to prevent from toggling the overlay when the click event
+   * propagates later in the interaction.
+   */
+  private preventNextToggle = false;
 
-    handleClick(): void {
-        if (!this.preventNextToggle) {
-            this.open = !this.open;
-        }
-        this.preventNextToggle = false;
+  handleClick(): void {
+    if (!this.preventNextToggle) {
+      this.open = !this.open;
     }
+    this.preventNextToggle = false;
+  }
 
-    handlePointerdown(): void {
-        this.preventNextToggle = this.open;
-    }
+  handlePointerdown(): void {
+    this.preventNextToggle = this.open;
+  }
 
-    override init(): void {
-        // Clean up listeners if they've already been bound
-        this.abortController?.abort();
-        this.abortController = new AbortController();
-        const { signal } = this.abortController;
-        this.target.addEventListener('click', () => this.handleClick(), {
-            signal,
-        });
-        this.target.addEventListener(
-            'pointerdown',
-            () => this.handlePointerdown(),
-            { signal }
-        );
-    }
+  override init(): void {
+    // Clean up listeners if they've already been bound
+    this.abortController?.abort();
+    this.abortController = new AbortController();
+    const { signal } = this.abortController;
+    this.target.addEventListener('click', () => this.handleClick(), {
+      signal,
+    });
+    this.target.addEventListener(
+      'pointerdown',
+      () => this.handlePointerdown(),
+      { signal }
+    );
+  }
 }

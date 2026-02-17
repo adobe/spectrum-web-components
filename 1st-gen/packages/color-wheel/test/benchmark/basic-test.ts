@@ -10,10 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/color-wheel/sp-color-wheel.js';
 import { html } from 'lit';
+
+import '@spectrum-web-components/color-wheel/sp-color-wheel.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-color-wheel></sp-color-wheel>
+  <sp-color-wheel></sp-color-wheel>
 `);

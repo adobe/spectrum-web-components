@@ -28,8 +28,8 @@ Import the `PendingStateController` via:
 
 ```typescript
 import {
-    PendingStateController,
-    HostWithPendingState,
+  PendingStateController,
+  HostWithPendingState,
 } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 ```
 
@@ -43,44 +43,44 @@ A simple button component that displays a loading state with an accessible progr
 import { html, LitElement, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 import {
-    PendingStateController,
-    HostWithPendingState,
+  PendingStateController,
+  HostWithPendingState,
 } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 import { when } from 'lit/directives/when.js';
 
 class AsyncButton extends LitElement implements HostWithPendingState {
-    /** Whether the button is currently in a pending state. */
-    @property({ type: Boolean, reflect: true })
-    public pending = false;
+  /** Whether the button is currently in a pending state. */
+  @property({ type: Boolean, reflect: true })
+  public pending = false;
 
-    /** Whether the button is disabled. */
-    @property({ type: Boolean, reflect: true })
-    public disabled = false;
+  /** Whether the button is disabled. */
+  @property({ type: Boolean, reflect: true })
+  public disabled = false;
 
-    /** Label to announce when the button is pending. */
-    @property({ type: String, attribute: 'pending-label' })
-    public pendingLabel = 'Loading';
+  /** Label to announce when the button is pending. */
+  @property({ type: String, attribute: 'pending-label' })
+  public pendingLabel = 'Loading';
 
-    public pendingStateController: PendingStateController<this>;
+  public pendingStateController: PendingStateController<this>;
 
-    constructor() {
-        super();
-        this.pendingStateController = new PendingStateController(this);
-    }
+  constructor() {
+    super();
+    this.pendingStateController = new PendingStateController(this);
+  }
 
-    render(): TemplateResult {
-        return html`
-            <button
-                ?disabled=${this.disabled || this.pending}
-                aria-busy=${this.pending}
-            >
-                <slot></slot>
-                ${when(this.pending, () =>
-                    this.pendingStateController.renderPendingState()
-                )}
-            </button>
-        `;
-    }
+  render(): TemplateResult {
+    return html`
+      <button
+        ?disabled=${this.disabled || this.pending}
+        aria-busy=${this.pending}
+      >
+        <slot></slot>
+        ${when(this.pending, () =>
+          this.pendingStateController.renderPendingState()
+        )}
+      </button>
+    `;
+  }
 }
 
 customElements.define('async-button', AsyncButton);
@@ -102,93 +102,93 @@ Handle asynchronous operations with proper pending state management and success/
 import { html, LitElement, css } from 'lit';
 import { property } from 'lit/decorators.js';
 import {
-    PendingStateController,
-    HostWithPendingState,
+  PendingStateController,
+  HostWithPendingState,
 } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 import { when } from 'lit/directives/when.js';
 
 class SaveButton extends LitElement implements HostWithPendingState {
-    @property({ type: Boolean, reflect: true })
-    public pending = false;
+  @property({ type: Boolean, reflect: true })
+  public pending = false;
 
-    @property({ type: Boolean, reflect: true })
-    public disabled = false;
+  @property({ type: Boolean, reflect: true })
+  public disabled = false;
 
-    @property({ type: String, attribute: 'pending-label' })
-    public pendingLabel = 'Saving';
+  @property({ type: String, attribute: 'pending-label' })
+  public pendingLabel = 'Saving';
 
-    public pendingStateController: PendingStateController<this>;
+  public pendingStateController: PendingStateController<this>;
 
-    static styles = css`
-        :host {
-            display: inline-block;
-        }
+  static styles = css`
+    :host {
+      display: inline-block;
+    }
 
-        button {
-            position: relative;
-            padding: 8px 16px;
-        }
+    button {
+      position: relative;
+      padding: 8px 16px;
+    }
 
-        sp-progress-circle {
-            position: absolute;
-            right: 8px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
+    sp-progress-circle {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  `;
+
+  constructor() {
+    super();
+    this.pendingStateController = new PendingStateController(this);
+  }
+
+  async handleClick() {
+    this.pending = true;
+
+    try {
+      // Simulate async operation
+      await this.saveData();
+
+      // Announce success to screen readers
+      this.dispatchEvent(
+        new CustomEvent('save-success', {
+          detail: { message: 'Data saved successfully' },
+          bubbles: true,
+          composed: true,
+        })
+      );
+    } catch (error) {
+      // Announce error to screen readers
+      this.dispatchEvent(
+        new CustomEvent('save-error', {
+          detail: { message: 'Failed to save data' },
+          bubbles: true,
+          composed: true,
+        })
+      );
+    } finally {
+      this.pending = false;
+    }
+  }
+
+  async saveData(): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, 2000));
+  }
+
+  render() {
+    return html`
+      <button
+        @click=${this.handleClick}
+        ?disabled=${this.disabled || this.pending}
+        aria-busy=${this.pending}
+      >
+        <slot>Save</slot>
+        ${when(this.pending, () =>
+          this.pendingStateController.renderPendingState()
+        )}
+      </button>
     `;
-
-    constructor() {
-        super();
-        this.pendingStateController = new PendingStateController(this);
-    }
-
-    async handleClick() {
-        this.pending = true;
-
-        try {
-            // Simulate async operation
-            await this.saveData();
-
-            // Announce success to screen readers
-            this.dispatchEvent(
-                new CustomEvent('save-success', {
-                    detail: { message: 'Data saved successfully' },
-                    bubbles: true,
-                    composed: true,
-                })
-            );
-        } catch (error) {
-            // Announce error to screen readers
-            this.dispatchEvent(
-                new CustomEvent('save-error', {
-                    detail: { message: 'Failed to save data' },
-                    bubbles: true,
-                    composed: true,
-                })
-            );
-        } finally {
-            this.pending = false;
-        }
-    }
-
-    async saveData(): Promise<void> {
-        return new Promise((resolve) => setTimeout(resolve, 2000));
-    }
-
-    render() {
-        return html`
-            <button
-                @click=${this.handleClick}
-                ?disabled=${this.disabled || this.pending}
-                aria-busy=${this.pending}
-            >
-                <slot>Save</slot>
-                ${when(this.pending, () =>
-                    this.pendingStateController.renderPendingState()
-                )}
-            </button>
-        `;
-    }
+  }
 }
 
 customElements.define('save-button', SaveButton);
@@ -202,74 +202,74 @@ Dynamically update the pending label based on different actions being performed.
 import { html, LitElement, css } from 'lit';
 import { property } from 'lit/decorators.js';
 import {
-    PendingStateController,
-    HostWithPendingState,
+  PendingStateController,
+  HostWithPendingState,
 } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 import { when } from 'lit/directives/when.js';
 
 class ActionButton extends LitElement implements HostWithPendingState {
-    @property({ type: Boolean, reflect: true })
-    public pending = false;
+  @property({ type: Boolean, reflect: true })
+  public pending = false;
 
-    @property({ type: Boolean, reflect: true })
-    public disabled = false;
+  @property({ type: Boolean, reflect: true })
+  public disabled = false;
 
-    @property({ type: String, attribute: 'pending-label' })
-    public pendingLabel = 'Processing';
+  @property({ type: String, attribute: 'pending-label' })
+  public pendingLabel = 'Processing';
 
-    @property({ type: String })
-    public action = '';
+  @property({ type: String })
+  public action = '';
 
-    public pendingStateController: PendingStateController<this>;
+  public pendingStateController: PendingStateController<this>;
 
-    constructor() {
-        super();
-        this.pendingStateController = new PendingStateController(this);
+  constructor() {
+    super();
+    this.pendingStateController = new PendingStateController(this);
+  }
+
+  async performAction(actionType: string) {
+    this.action = actionType;
+    this.pending = true;
+
+    // Update pending label based on action
+    switch (actionType) {
+      case 'save':
+        this.pendingLabel = 'Saving';
+        break;
+      case 'delete':
+        this.pendingLabel = 'Deleting';
+        break;
+      case 'upload':
+        this.pendingLabel = 'Uploading';
+        break;
     }
 
-    async performAction(actionType: string) {
-        this.action = actionType;
-        this.pending = true;
-
-        // Update pending label based on action
-        switch (actionType) {
-            case 'save':
-                this.pendingLabel = 'Saving';
-                break;
-            case 'delete':
-                this.pendingLabel = 'Deleting';
-                break;
-            case 'upload':
-                this.pendingLabel = 'Uploading';
-                break;
-        }
-
-        try {
-            await this.executeAction(actionType);
-        } finally {
-            this.pending = false;
-            this.action = '';
-        }
+    try {
+      await this.executeAction(actionType);
+    } finally {
+      this.pending = false;
+      this.action = '';
     }
+  }
 
-    async executeAction(action: string): Promise<void> {
-        return new Promise((resolve) => setTimeout(resolve, 2000));
-    }
+  async executeAction(action: string): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, 2000));
+  }
 
-    render() {
-        return html`
-            <button
-                @click=${() => this.performAction('save')}
-                ?disabled=${this.disabled || this.pending}
-                aria-busy=${this.pending}
-            >
-                <slot>Perform Action</slot>
-                ${when(this.pending, () =>
-                    this.pendingStateController.renderPendingState()
-                )}
-            </button>
-        `;
-    }
+  render() {
+    return html`
+      <button
+        @click=${() => this.performAction('save')}
+        ?disabled=${this.disabled || this.pending}
+        aria-busy=${this.pending}
+      >
+        <slot>Perform Action</slot>
+        ${when(this.pending, () =>
+          this.pendingStateController.renderPendingState()
+        )}
+      </button>
+    `;
+  }
 }
 
 customElements.define('action-button', ActionButton);

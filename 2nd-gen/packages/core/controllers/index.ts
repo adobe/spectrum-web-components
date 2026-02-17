@@ -11,6 +11,6 @@
  */
 
 export {
-    LanguageResolutionController,
-    languageResolverUpdatedSymbol,
+  LanguageResolutionController,
+  languageResolverUpdatedSymbol,
 } from './language-resolution.js';

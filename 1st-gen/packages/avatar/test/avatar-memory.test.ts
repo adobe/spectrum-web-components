@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { linked } from '../stories/avatar.stories.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
+import { linked } from '../stories/avatar.stories.js';
 
 testForMemoryLeaks(linked());

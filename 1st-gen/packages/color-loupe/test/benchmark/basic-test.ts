@@ -10,10 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
 import { html } from 'lit';
+
+import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-color-loupe open></sp-color-loupe>
+  <sp-color-loupe open></sp-color-loupe>
 `);

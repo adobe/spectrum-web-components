@@ -146,22 +146,22 @@ flowchart TD
 The unified stylesheet splits tokens into two groups:
 
 - non-scaling:
-    - primitive values (`corner-radius-100`)
-    - `light-dark()` eligible color tokens (`blue-800`)
-    - values that never change across size scales
+  - primitive values (`corner-radius-100`)
+  - `light-dark()` eligible color tokens (`blue-800`)
+  - values that never change across size scales
 - scaling
-    - tokens that composite medium and large values
+  - tokens that composite medium and large values
 
 The token groups are segmented into specific selectors in the final unified stylesheet:
 
 ```css
 :root {
-    /* Non-scaling values */
+  /* Non-scaling values */
 }
 
 :root,
 .swc-theme {
-    /* Scaling values */
+  /* Scaling values */
 }
 ```
 
@@ -190,8 +190,8 @@ It acts as a read-only query interface over the processed token map produced by 
 
 - Looks up a token by name after all normalization and alias resolution rules have been applied
 - Returns the final CSS-safe value, which may be:
-    - A resolved primitive (e.g. rgb(0 0 0))
-    - A composed custom property (e.g. var(--swc-gray-700))
+  - A resolved primitive (e.g. rgb(0 0 0))
+  - A composed custom property (e.g. var(--swc-gray-700))
 - Throws an error if the requested token does not exist or is not resolvable
 
 > `lookupToken()` does not perform token parsing, normalization, or resolution itself. It only queries the already-processed token data.

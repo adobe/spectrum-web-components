@@ -12,9 +12,9 @@
 
 import { build } from 'esbuild';
 import { litCssPlugin } from 'esbuild-plugin-lit-css';
+import fs from 'fs-extra';
 import { bundleAsync } from 'lightningcss';
 import path from 'path';
-import fs from 'fs-extra';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

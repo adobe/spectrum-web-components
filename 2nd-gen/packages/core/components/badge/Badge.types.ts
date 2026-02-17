@@ -17,62 +17,62 @@ import type { ElementSize } from '@spectrum-web-components/core/mixins/index.js'
  */
 
 export const FIXED_VALUES = [
-    'block-start',
-    'block-end',
-    'inline-start',
-    'inline-end',
+  'block-start',
+  'block-end',
+  'inline-start',
+  'inline-end',
 ] as const;
 
 export const BADGE_VALID_SIZES = [
-    's',
-    'm',
-    'l',
-    'xl',
+  's',
+  'm',
+  'l',
+  'xl',
 ] as const satisfies ElementSize[];
 
 export const BADGE_VARIANTS_SEMANTIC = [
-    'accent',
-    'informative',
-    'neutral',
-    'positive',
-    'notice',
-    'negative',
+  'accent',
+  'informative',
+  'neutral',
+  'positive',
+  'notice',
+  'negative',
 ] as const;
 
 export const BADGE_VARIANTS_COLOR_S1 = [
-    'fuchsia',
-    'indigo',
-    'magenta',
-    'purple',
-    'seafoam',
-    'yellow',
-    'gray',
-    'red',
-    'orange',
-    'chartreuse',
-    'celery',
-    'green',
-    'cyan',
-    'blue',
+  'fuchsia',
+  'indigo',
+  'magenta',
+  'purple',
+  'seafoam',
+  'yellow',
+  'gray',
+  'red',
+  'orange',
+  'chartreuse',
+  'celery',
+  'green',
+  'cyan',
+  'blue',
 ] as const;
 
 export const BADGE_VARIANTS_COLOR_S2 = [
-    ...BADGE_VARIANTS_COLOR_S1,
-    'pink',
-    'turquoise',
-    'brown',
-    'cinnamon',
-    'silver',
+  ...BADGE_VARIANTS_COLOR_S1,
+  'pink',
+  'turquoise',
+  'brown',
+  'cinnamon',
+  'silver',
 ] as const;
 
 export const BADGE_VARIANTS_S1 = [
-    ...BADGE_VARIANTS_SEMANTIC,
-    ...BADGE_VARIANTS_COLOR_S1,
+  ...BADGE_VARIANTS_SEMANTIC,
+  ...BADGE_VARIANTS_COLOR_S1,
 ] as const;
 
 export const BADGE_VARIANTS_S2 = [
-    ...BADGE_VARIANTS_SEMANTIC,
-    ...BADGE_VARIANTS_COLOR_S2,
+  ...BADGE_VARIANTS_SEMANTIC,
+  ...BADGE_VARIANTS_COLOR_S2,
 ] as const;
 
 export type FixedValues = (typeof FIXED_VALUES)[number];

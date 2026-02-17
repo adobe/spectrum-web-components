@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -17,16 +17,16 @@
  * Begin work around for https://github.com/adobe/spectrum-css/issues/1460
  */
 
-.fill:before {
-    background: var(--spectrum-picked-color, transparent);
+.fill::before {
+  background: var(--spectrum-picked-color, transparent);
 }
 
-:host([border="none"]) .fill:before {
-    background: var(--spectrum-picked-color, transparent);
+:host([border="none"]) .fill::before {
+  background: var(--spectrum-picked-color, transparent);
 }
 
-:host .is-image .fill:before {
-    background: #0000;
+:host .is-image .fill::before {
+  background: #0000;
 }
 
 /**

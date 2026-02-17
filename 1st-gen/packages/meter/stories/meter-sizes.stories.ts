@@ -15,18 +15,18 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/meter/sp-meter.js';
 
 export default {
-    title: 'Meter/Sizes',
-    component: 'sp-meter',
+  title: 'Meter/Sizes',
+  component: 'sp-meter',
 };
 
 export const s = (): TemplateResult => {
-    return html`
-        <sp-meter size="s" progress="50">Storage Space</sp-meter>
-    `;
+  return html`
+    <sp-meter size="s" progress="50">Storage Space</sp-meter>
+  `;
 };
 
 export const l = (): TemplateResult => {
-    return html`
-        <sp-meter size="l" progress="50">Storage Space</sp-meter>
-    `;
+  return html`
+    <sp-meter size="l" progress="50">Storage Space</sp-meter>
+  `;
 };

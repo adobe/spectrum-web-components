@@ -11,123 +11,122 @@
  */
 
 import {
-    CSSResultArray,
-    html,
-    PropertyValues,
-    SizedMixin,
-    SpectrumElement,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  PropertyValues,
+  SizedMixin,
+  SpectrumElement,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import {
-    property,
-    queryAssignedNodes,
+  property,
+  queryAssignedNodes,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusGroupController } from '@spectrum-web-components/reactive-controllers/src/FocusGroup.js';
 
-import { AccordionItem } from './AccordionItem.js';
-
 import styles from './accordion.css.js';
+import { AccordionItem } from './AccordionItem.js';
 
 /**
  * @element sp-accordion
  * @slot - The sp-accordion-item children to display.
  */
 export class Accordion extends SizedMixin(SpectrumElement, {
-    noDefaultSize: true,
+  noDefaultSize: true,
 }) {
-    public static override get styles(): CSSResultArray {
-        return [styles];
+  public static override get styles(): CSSResultArray {
+    return [styles];
+  }
+
+  /**
+   * Allows multiple accordion items to be opened at the same time
+   */
+  @property({ type: Boolean, reflect: true, attribute: 'allow-multiple' })
+  public allowMultiple = false;
+
+  /**
+   * Sets the spacing between the content to borders of an accordion item
+   */
+  @property({ type: String, reflect: true })
+  public density?: 'compact' | 'spacious';
+
+  /**
+   * The heading level (2-6) to use for all accordion item titles.
+   * Defaults to 3.
+   */
+  @property({ type: Number, reflect: true })
+  public level: number = 3;
+
+  @queryAssignedNodes()
+  private defaultNodes!: NodeListOf<AccordionItem>;
+
+  private get items(): AccordionItem[] {
+    return [...(this.defaultNodes || [])].filter(
+      (node: HTMLElement) => typeof node.tagName !== 'undefined'
+    ) as AccordionItem[];
+  }
+
+  focusGroupController = new FocusGroupController<AccordionItem>(this, {
+    direction: 'vertical',
+    elements: () => this.items,
+    isFocusableElement: (el: AccordionItem) => !el.disabled,
+  });
+
+  public override focus(): void {
+    this.focusGroupController.focus();
+  }
+
+  private async onToggle(event: Event): Promise<void> {
+    const target = event.target as AccordionItem;
+    // Let the event pass through the DOM so that it can be
+    // prevented from the outside if a user so desires.
+    await 0;
+    if (this.allowMultiple || event.defaultPrevented) {
+      // No toggling when `allowMultiple` or the user prevents it.
+      return;
     }
-
-    /**
-     * Allows multiple accordion items to be opened at the same time
-     */
-    @property({ type: Boolean, reflect: true, attribute: 'allow-multiple' })
-    public allowMultiple = false;
-
-    /**
-     * Sets the spacing between the content to borders of an accordion item
-     */
-    @property({ type: String, reflect: true })
-    public density?: 'compact' | 'spacious';
-
-    /**
-     * The heading level (2-6) to use for all accordion item titles.
-     * Defaults to 3.
-     */
-    @property({ type: Number, reflect: true })
-    public level: number = 3;
-
-    @queryAssignedNodes()
-    private defaultNodes!: NodeListOf<AccordionItem>;
-
-    private get items(): AccordionItem[] {
-        return [...(this.defaultNodes || [])].filter(
-            (node: HTMLElement) => typeof node.tagName !== 'undefined'
-        ) as AccordionItem[];
+    const items = [...this.items] as AccordionItem[];
+    /* c8 ignore next 3 */
+    if (items && !items.length) {
+      // no toggling when there aren't items.
+      return;
     }
-
-    focusGroupController = new FocusGroupController<AccordionItem>(this, {
-        direction: 'vertical',
-        elements: () => this.items,
-        isFocusableElement: (el: AccordionItem) => !el.disabled,
+    items.forEach((item) => {
+      if (item !== target) {
+        // Close all the items that didn't dispatch the event.
+        item.open = false;
+      }
     });
+  }
 
-    public override focus(): void {
-        this.focusGroupController.focus();
-    }
+  private handleSlotchange(): void {
+    this.focusGroupController.clearElementCache();
+    this.items.forEach((item) => {
+      item.size = this.size;
+      item.level = this.level;
+    });
+  }
 
-    private async onToggle(event: Event): Promise<void> {
-        const target = event.target as AccordionItem;
-        // Let the event pass through the DOM so that it can be
-        // prevented from the outside if a user so desires.
-        await 0;
-        if (this.allowMultiple || event.defaultPrevented) {
-            // No toggling when `allowMultiple` or the user prevents it.
-            return;
-        }
-        const items = [...this.items] as AccordionItem[];
-        /* c8 ignore next 3 */
-        if (items && !items.length) {
-            // no toggling when there aren't items.
-            return;
-        }
-        items.forEach((item) => {
-            if (item !== target) {
-                // Close all the items that didn't dispatch the event.
-                item.open = false;
-            }
-        });
+  protected override updated(changed: PropertyValues<this>): void {
+    super.updated(changed);
+    if (changed.has('size')) {
+      this.items.forEach((item) => {
+        item.size = this.size;
+      });
     }
+    if (changed.has('level')) {
+      this.items.forEach((item) => {
+        item.level = this.level;
+      });
+    }
+  }
 
-    private handleSlotchange(): void {
-        this.focusGroupController.clearElementCache();
-        this.items.forEach((item) => {
-            item.size = this.size;
-            item.level = this.level;
-        });
-    }
-
-    protected override updated(changed: PropertyValues<this>): void {
-        super.updated(changed);
-        if (changed.has('size')) {
-            this.items.forEach((item) => {
-                item.size = this.size;
-            });
-        }
-        if (changed.has('level')) {
-            this.items.forEach((item) => {
-                item.level = this.level;
-            });
-        }
-    }
-
-    protected override render(): TemplateResult {
-        return html`
-            <slot
-                @slotchange=${this.handleSlotchange}
-                @sp-accordion-item-toggle=${this.onToggle}
-            ></slot>
-        `;
-    }
+  protected override render(): TemplateResult {
+    return html`
+      <slot
+        @slotchange=${this.handleSlotchange}
+        @sp-accordion-item-toggle=${this.onToggle}
+      ></slot>
+    `;
+  }
 }

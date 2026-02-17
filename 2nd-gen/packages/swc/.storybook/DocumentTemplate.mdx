@@ -1,24 +1,23 @@
 import {
-    Meta,
-    Title,
-    Primary,
-    Controls,
-    Stories,
-    ArgTypes,
-    Description,
-    Subtitle,
-    useOf,
+  Meta,
+  Title,
+  Primary,
+  Controls,
+  Stories,
+  ArgTypes,
+  Description,
+  Subtitle,
+  useOf,
 } from '@storybook/addon-docs/blocks';
 import { GettingStarted, SpectrumStories, OverviewStory } from './blocks';
 
 export const checkIsSingleStory = () => {
-    const resolvedOf = useOf('meta', ['meta']);
-    const { stories } = resolvedOf.csfFile;
-    const visibleStories = Object.values(stories).filter(
-        (story) =>
-            story.tags?.includes('autodocs') || story.tags?.includes('dev')
-    );
-    return visibleStories.length === 1;
+  const resolvedOf = useOf('meta', ['meta']);
+  const { stories } = resolvedOf.csfFile;
+  const visibleStories = Object.values(stories).filter(
+    (story) => story.tags?.includes('autodocs') || story.tags?.includes('dev')
+  );
+  return visibleStories.length === 1;
 };
 
 export const SingleStoryDescription = () => {

@@ -10,35 +10,35 @@
  * governing permissions and limitations under the License.
  */
 import { elementUpdated, expect, oneEvent } from '@open-wc/testing';
+
 import { AccordionItem } from '@spectrum-web-components/accordion/src/AccordionItem.js';
+
+import {
+  fixture,
+  ignoreResizeObserverLoopError,
+} from '../../../test/testing-helpers.js';
 import { OverlayTrigger } from '../src/OverlayTrigger.js';
 import { accordion } from '../stories/overlay.stories.js';
-import {
-    fixture,
-    ignoreResizeObserverLoopError,
-} from '../../../test/testing-helpers.js';
 
 describe('sp-update-overlays event', () => {
-    ignoreResizeObserverLoopError(before, after);
-    it('updates overlay height', async () => {
-        const el = await fixture<OverlayTrigger>(accordion());
-        const container = el.querySelector('sp-popover') as HTMLElement;
-        const item = el.querySelector(
-            '[label="Other things"]'
-        ) as AccordionItem;
+  ignoreResizeObserverLoopError(before, after);
+  it('updates overlay height', async () => {
+    const el = await fixture<OverlayTrigger>(accordion());
+    const container = el.querySelector('sp-popover') as HTMLElement;
+    const item = el.querySelector('[label="Other things"]') as AccordionItem;
 
-        el.triggeredBy = 'click';
-        await elementUpdated(item);
+    el.triggeredBy = 'click';
+    await elementUpdated(item);
 
-        const opened = oneEvent(el, 'sp-opened');
-        el.open = 'click';
-        await opened;
+    const opened = oneEvent(el, 'sp-opened');
+    el.open = 'click';
+    await opened;
 
-        const height1 = container.getBoundingClientRect().height;
-        item.click();
-        await elementUpdated(item);
+    const height1 = container.getBoundingClientRect().height;
+    item.click();
+    await elementUpdated(item);
 
-        const height2 = container.getBoundingClientRect().height;
-        expect(height1).to.be.lessThan(height2);
-    });
+    const height2 = container.getBoundingClientRect().height;
+    expect(height1).to.be.lessThan(height2);
+  });
 });

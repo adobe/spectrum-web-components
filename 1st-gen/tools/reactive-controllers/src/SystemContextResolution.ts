@@ -10,55 +10,50 @@
  * governing permissions and limitations under the License.
  */
 import type { ReactiveController, ReactiveElement } from 'lit';
+
 import type { SystemVariant } from '@spectrum-web-components/theme';
 
 export const systemResolverUpdatedSymbol = Symbol('system resolver updated');
 
 export type ProvideSystem = {
-    callback: (system: SystemVariant, unsubscribe: () => void) => void;
+  callback: (system: SystemVariant, unsubscribe: () => void) => void;
 };
 
 export class SystemResolutionController implements ReactiveController {
-    private host: ReactiveElement;
-    public system: SystemVariant = 'spectrum';
-    private unsubscribe?: () => void;
+  private host: ReactiveElement;
+  public system: SystemVariant = 'spectrum';
+  private unsubscribe?: () => void;
 
-    constructor(host: ReactiveElement) {
-        this.host = host;
-        this.host.addController(this);
-    }
+  constructor(host: ReactiveElement) {
+    this.host = host;
+    this.host.addController(this);
+  }
 
-    public hostConnected(): void {
-        this.resolveSystem();
-    }
+  public hostConnected(): void {
+    this.resolveSystem();
+  }
 
-    public hostDisconnected(): void {
-        this.unsubscribe?.();
-    }
+  public hostDisconnected(): void {
+    this.unsubscribe?.();
+  }
 
-    private resolveSystem(): void {
-        const querySystemEvent = new CustomEvent<ProvideSystem>(
-            'sp-system-context',
-            {
-                bubbles: true,
-                composed: true,
-                detail: {
-                    callback: (
-                        system: SystemVariant,
-                        unsubscribe: () => void
-                    ) => {
-                        const previous = this.system;
-                        this.system = system;
-                        this.unsubscribe = unsubscribe;
-                        this.host.requestUpdate(
-                            systemResolverUpdatedSymbol,
-                            previous
-                        );
-                    },
-                },
-                cancelable: true,
-            }
-        );
-        this.host.dispatchEvent(querySystemEvent);
-    }
+  private resolveSystem(): void {
+    const querySystemEvent = new CustomEvent<ProvideSystem>(
+      'sp-system-context',
+      {
+        bubbles: true,
+        composed: true,
+        detail: {
+          callback: (system: SystemVariant, unsubscribe: () => void) => {
+            const previous = this.system;
+            this.system = system;
+            this.unsubscribe = unsubscribe;
+            this.host.requestUpdate(systemResolverUpdatedSymbol, previous);
+          },
+        },
+        cancelable: true,
+      }
+    );
+    this.host.dispatchEvent(querySystemEvent);
+  }
 }

@@ -33,29 +33,25 @@ import { Swatch } from '@spectrum-web-components/swatch';
 
 ```html
 <sp-swatch-group selects="multiple">
-    <sp-swatch color="rgb(255 0 0 / 0.7)" size="xs"></sp-swatch>
-    <sp-swatch rounding="none" color="rgb(255 0 0 / 0.7)" size="xs"></sp-swatch>
-    <sp-swatch rounding="full" color="rgb(255 0 0 / 0.7)" size="xs"></sp-swatch>
-    <sp-swatch border="light" color="rgb(255 0 0 / 0.7)" size="xs"></sp-swatch>
-    <sp-swatch border="none" color="rgb(255 0 0 / 0.7)" size="xs"></sp-swatch>
-    <sp-swatch nothing size="xs"></sp-swatch>
-    <sp-swatch
-        shape="rectangle"
-        color="rgb(255 0 0 / 0.7)"
-        size="xs"
-    ></sp-swatch>
-    <sp-swatch
-        shape="rectangle"
-        disabled
-        color="rgb(255 0 0 / 0.7)"
-        size="xs"
-    ></sp-swatch>
-    <sp-swatch
-        rounding="full"
-        shape="rectangle"
-        mixed-value
-        size="xs"
-    ></sp-swatch>
+  <sp-swatch color="rgb(255 0 0 / 0.7)" size="xs"></sp-swatch>
+  <sp-swatch rounding="none" color="rgb(255 0 0 / 0.7)" size="xs"></sp-swatch>
+  <sp-swatch rounding="full" color="rgb(255 0 0 / 0.7)" size="xs"></sp-swatch>
+  <sp-swatch border="light" color="rgb(255 0 0 / 0.7)" size="xs"></sp-swatch>
+  <sp-swatch border="none" color="rgb(255 0 0 / 0.7)" size="xs"></sp-swatch>
+  <sp-swatch nothing size="xs"></sp-swatch>
+  <sp-swatch shape="rectangle" color="rgb(255 0 0 / 0.7)" size="xs"></sp-swatch>
+  <sp-swatch
+    shape="rectangle"
+    disabled
+    color="rgb(255 0 0 / 0.7)"
+    size="xs"
+  ></sp-swatch>
+  <sp-swatch
+    rounding="full"
+    shape="rectangle"
+    mixed-value
+    size="xs"
+  ></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -65,29 +61,20 @@ import { Swatch } from '@spectrum-web-components/swatch';
 
 ```html
 <sp-swatch-group selects="multiple">
-    <sp-swatch color="rgb(255 0 0 / 0.7)" size="s"></sp-swatch>
-    <sp-swatch rounding="none" color="rgb(255 0 0 / 0.7)" size="s"></sp-swatch>
-    <sp-swatch rounding="full" color="rgb(255 0 0 / 0.7)" size="s"></sp-swatch>
-    <sp-swatch border="light" color="rgb(255 0 0 / 0.7)" size="s"></sp-swatch>
-    <sp-swatch border="none" color="rgb(255 0 0 / 0.7)" size="s"></sp-swatch>
-    <sp-swatch nothing size="s"></sp-swatch>
-    <sp-swatch
-        shape="rectangle"
-        color="rgb(255 0 0 / 0.7)"
-        size="s"
-    ></sp-swatch>
-    <sp-swatch
-        shape="rectangle"
-        disabled
-        color="rgb(255 0 0 / 0.7)"
-        size="s"
-    ></sp-swatch>
-    <sp-swatch
-        rounding="full"
-        shape="rectangle"
-        mixed-value
-        size="s"
-    ></sp-swatch>
+  <sp-swatch color="rgb(255 0 0 / 0.7)" size="s"></sp-swatch>
+  <sp-swatch rounding="none" color="rgb(255 0 0 / 0.7)" size="s"></sp-swatch>
+  <sp-swatch rounding="full" color="rgb(255 0 0 / 0.7)" size="s"></sp-swatch>
+  <sp-swatch border="light" color="rgb(255 0 0 / 0.7)" size="s"></sp-swatch>
+  <sp-swatch border="none" color="rgb(255 0 0 / 0.7)" size="s"></sp-swatch>
+  <sp-swatch nothing size="s"></sp-swatch>
+  <sp-swatch shape="rectangle" color="rgb(255 0 0 / 0.7)" size="s"></sp-swatch>
+  <sp-swatch
+    shape="rectangle"
+    disabled
+    color="rgb(255 0 0 / 0.7)"
+    size="s"
+  ></sp-swatch>
+  <sp-swatch rounding="full" shape="rectangle" mixed-value size="s"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -97,29 +84,20 @@ import { Swatch } from '@spectrum-web-components/swatch';
 
 ```html
 <sp-swatch-group selects="multiple">
-    <sp-swatch color="rgb(255 0 0 / 0.7)" size="m"></sp-swatch>
-    <sp-swatch rounding="none" color="rgb(255 0 0 / 0.7)" size="m"></sp-swatch>
-    <sp-swatch rounding="full" color="rgb(255 0 0 / 0.7)" size="m"></sp-swatch>
-    <sp-swatch border="light" color="rgb(255 0 0 / 0.7)" size="m"></sp-swatch>
-    <sp-swatch border="none" color="rgb(255 0 0 / 0.7)" size="m"></sp-swatch>
-    <sp-swatch nothing size="m"></sp-swatch>
-    <sp-swatch
-        shape="rectangle"
-        color="rgb(255 0 0 / 0.7)"
-        size="m"
-    ></sp-swatch>
-    <sp-swatch
-        shape="rectangle"
-        disabled
-        color="rgb(255 0 0 / 0.7)"
-        size="m"
-    ></sp-swatch>
-    <sp-swatch
-        rounding="full"
-        shape="rectangle"
-        mixed-value
-        size="m"
-    ></sp-swatch>
+  <sp-swatch color="rgb(255 0 0 / 0.7)" size="m"></sp-swatch>
+  <sp-swatch rounding="none" color="rgb(255 0 0 / 0.7)" size="m"></sp-swatch>
+  <sp-swatch rounding="full" color="rgb(255 0 0 / 0.7)" size="m"></sp-swatch>
+  <sp-swatch border="light" color="rgb(255 0 0 / 0.7)" size="m"></sp-swatch>
+  <sp-swatch border="none" color="rgb(255 0 0 / 0.7)" size="m"></sp-swatch>
+  <sp-swatch nothing size="m"></sp-swatch>
+  <sp-swatch shape="rectangle" color="rgb(255 0 0 / 0.7)" size="m"></sp-swatch>
+  <sp-swatch
+    shape="rectangle"
+    disabled
+    color="rgb(255 0 0 / 0.7)"
+    size="m"
+  ></sp-swatch>
+  <sp-swatch rounding="full" shape="rectangle" mixed-value size="m"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -129,29 +107,20 @@ import { Swatch } from '@spectrum-web-components/swatch';
 
 ```html
 <sp-swatch-group selects="multiple">
-    <sp-swatch color="rgb(255 0 0 / 0.7)" size="l"></sp-swatch>
-    <sp-swatch rounding="none" color="rgb(255 0 0 / 0.7)" size="l"></sp-swatch>
-    <sp-swatch rounding="full" color="rgb(255 0 0 / 0.7)" size="l"></sp-swatch>
-    <sp-swatch border="light" color="rgb(255 0 0 / 0.7)" size="l"></sp-swatch>
-    <sp-swatch border="none" color="rgb(255 0 0 / 0.7)" size="l"></sp-swatch>
-    <sp-swatch nothing size="l"></sp-swatch>
-    <sp-swatch
-        shape="rectangle"
-        color="rgb(255 0 0 / 0.7)"
-        size="l"
-    ></sp-swatch>
-    <sp-swatch
-        shape="rectangle"
-        disabled
-        color="rgb(255 0 0 / 0.7)"
-        size="l"
-    ></sp-swatch>
-    <sp-swatch
-        rounding="full"
-        shape="rectangle"
-        mixed-value
-        size="l"
-    ></sp-swatch>
+  <sp-swatch color="rgb(255 0 0 / 0.7)" size="l"></sp-swatch>
+  <sp-swatch rounding="none" color="rgb(255 0 0 / 0.7)" size="l"></sp-swatch>
+  <sp-swatch rounding="full" color="rgb(255 0 0 / 0.7)" size="l"></sp-swatch>
+  <sp-swatch border="light" color="rgb(255 0 0 / 0.7)" size="l"></sp-swatch>
+  <sp-swatch border="none" color="rgb(255 0 0 / 0.7)" size="l"></sp-swatch>
+  <sp-swatch nothing size="l"></sp-swatch>
+  <sp-swatch shape="rectangle" color="rgb(255 0 0 / 0.7)" size="l"></sp-swatch>
+  <sp-swatch
+    shape="rectangle"
+    disabled
+    color="rgb(255 0 0 / 0.7)"
+    size="l"
+  ></sp-swatch>
+  <sp-swatch rounding="full" shape="rectangle" mixed-value size="l"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -170,9 +139,9 @@ The `border` attribute/property is not required and when applied accepts the val
 
 ```html
 <sp-swatch-group selects="multiple">
-    <sp-swatch color="rgb(255 0 0 / 0.7)"></sp-swatch>
-    <sp-swatch color="rgb(255 0 0 / 0.7)" border="light"></sp-swatch>
-    <sp-swatch color="rgb(255 0 0 / 0.7)" border="none"></sp-swatch>
+  <sp-swatch color="rgb(255 0 0 / 0.7)"></sp-swatch>
+  <sp-swatch color="rgb(255 0 0 / 0.7)" border="light"></sp-swatch>
+  <sp-swatch color="rgb(255 0 0 / 0.7)" border="none"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -184,9 +153,9 @@ The `color` attribute/property determines the color value that the `<sp-swatch>`
 
 ```html
 <sp-swatch-group selects="multiple">
-    <sp-swatch color="rgb(255 0 0 / 0.7)"></sp-swatch>
-    <sp-swatch color="orange"></sp-swatch>
-    <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
+  <sp-swatch color="rgb(255 0 0 / 0.7)"></sp-swatch>
+  <sp-swatch color="orange"></sp-swatch>
+  <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -198,9 +167,9 @@ The `mixed-value` attribute and `mixedValue` property outline when an `<sp-swatc
 
 ```html
 <sp-swatch-group selects="multiple">
-    <sp-swatch mixed-value></sp-swatch>
-    <sp-swatch mixed-value rounding="full"></sp-swatch>
-    <sp-swatch mixed-value shape="rectangle"></sp-swatch>
+  <sp-swatch mixed-value></sp-swatch>
+  <sp-swatch mixed-value rounding="full"></sp-swatch>
+  <sp-swatch mixed-value shape="rectangle"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -214,9 +183,9 @@ The `nothing` attribute/property outlines that the `<sp-swatch>` represents no c
 
 ```html
 <sp-swatch-group selects="multiple">
-    <sp-swatch nothing></sp-swatch>
-    <sp-swatch nothing rounding="full"></sp-swatch>
-    <sp-swatch nothing shape="rectangle"></sp-swatch>
+  <sp-swatch nothing></sp-swatch>
+  <sp-swatch nothing rounding="full"></sp-swatch>
+  <sp-swatch nothing shape="rectangle"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -228,9 +197,9 @@ The `rounding` attribute/property is not required and when applied accepts the v
 
 ```html
 <sp-swatch-group selects="multiple">
-    <sp-swatch color="rgb(255 0 0 / 0.7)"></sp-swatch>
-    <sp-swatch color="rgb(255 0 0 / 0.7)" rounding="none"></sp-swatch>
-    <sp-swatch color="rgb(255 0 0 / 0.7)" rounding="full"></sp-swatch>
+  <sp-swatch color="rgb(255 0 0 / 0.7)"></sp-swatch>
+  <sp-swatch color="rgb(255 0 0 / 0.7)" rounding="none"></sp-swatch>
+  <sp-swatch color="rgb(255 0 0 / 0.7)" rounding="full"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -242,8 +211,8 @@ The `shape` attribute/property is not required and when applied accepts the valu
 
 ```html
 <sp-swatch-group selects="multiple">
-    <sp-swatch color="rgb(255 0 0 / 0.7)"></sp-swatch>
-    <sp-swatch color="rgb(255 0 0 / 0.7)" shape="rectangle"></sp-swatch>
+  <sp-swatch color="rgb(255 0 0 / 0.7)"></sp-swatch>
+  <sp-swatch color="rgb(255 0 0 / 0.7)" shape="rectangle"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -258,9 +227,9 @@ The `disabled` attribute/property determines prevents interaction on the `<sp-sw
 
 ```html
 <sp-swatch-group selects="multiple">
-    <sp-swatch disabled color="rgb(255 0 0 / 0.7)"></sp-swatch>
-    <sp-swatch disabled color="orange"></sp-swatch>
-    <sp-swatch disabled color="var(--spectrum-magenta-500)"></sp-swatch>
+  <sp-swatch disabled color="rgb(255 0 0 / 0.7)"></sp-swatch>
+  <sp-swatch disabled color="orange"></sp-swatch>
+  <sp-swatch disabled color="var(--spectrum-magenta-500)"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -278,8 +247,8 @@ Without the `selects` property, swatches default to `role="button"` and the swat
 ```html
 <!-- Correct: selects property enables proper selection semantics -->
 <sp-swatch-group selects="multiple" aria-label="Select colors">
-    <sp-swatch color="red" label="Red"></sp-swatch>
-    <sp-swatch color="blue" label="Blue"></sp-swatch>
+  <sp-swatch color="red" label="Red"></sp-swatch>
+  <sp-swatch color="blue" label="Blue"></sp-swatch>
 </sp-swatch-group>
 ```
 

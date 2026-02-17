@@ -1,82 +1,82 @@
 {
-    "name": "@spectrum-web-components/alert-dialog",
-    "version": "1.11.2",
-    "publishConfig": {
-        "access": "public"
+  "name": "@spectrum-web-components/alert-dialog",
+  "version": "1.11.2",
+  "description": "Web component implementation of a Spectrum design AlertDialog",
+  "license": "Apache-2.0",
+  "author": "Adobe",
+  "homepage": "https://adobe.github.io/spectrum-web-components/components/alert-dialog",
+  "repository": {
+    "directory": "1st-gen/packages/alert-dialog",
+    "type": "git",
+    "url": "https://github.com/adobe/spectrum-web-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adobe/spectrum-web-components/issues"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "development": "./src/index.dev.js",
+      "default": "./src/index.js"
     },
-    "description": "Web component implementation of a Spectrum design AlertDialog",
-    "license": "Apache-2.0",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "1st-gen/packages/alert-dialog"
+    "./package.json": "./package.json",
+    "./sp-alert-dialog.js": {
+      "development": "./sp-alert-dialog.dev.js",
+      "default": "./sp-alert-dialog.js"
     },
-    "author": "Adobe",
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/alert-dialog",
-    "bugs": {
-        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    "./src/AlertDialog.js": {
+      "development": "./src/AlertDialog.dev.js",
+      "default": "./src/AlertDialog.js"
     },
-    "main": "./src/index.js",
-    "module": "./src/index.js",
-    "type": "module",
-    "exports": {
-        ".": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
-        },
-        "./package.json": "./package.json",
-        "./src/AlertDialog.js": {
-            "development": "./src/AlertDialog.dev.js",
-            "default": "./src/AlertDialog.js"
-        },
-        "./src/alert-dialog-overrides.css.js": "./src/alert-dialog-overrides.css.js",
-        "./src/alert-dialog.css.js": "./src/alert-dialog.css.js",
-        "./src/index.js": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
-        },
-        "./sp-alert-dialog.js": {
-            "development": "./sp-alert-dialog.dev.js",
-            "default": "./sp-alert-dialog.js"
-        }
-    },
-    "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
-    },
-    "files": [
-        "**/*.d.ts",
-        "**/*.js",
-        "**/*.js.map",
-        "custom-elements.json",
-        "!stories/",
-        "!test/"
-    ],
-    "keywords": [
-        "design-system",
-        "spectrum",
-        "adobe",
-        "adobe-spectrum",
-        "web components",
-        "web-components",
-        "lit-element",
-        "lit-html",
-        "component",
-        "css"
-    ],
-    "dependencies": {
-        "@lit-labs/observers": "2.0.2",
-        "@spectrum-web-components/base": "1.11.2",
-        "@spectrum-web-components/button": "1.11.2",
-        "@spectrum-web-components/button-group": "1.11.2",
-        "@spectrum-web-components/divider": "1.11.2",
-        "@spectrum-web-components/icons-workflow": "1.11.2",
-        "@spectrum-web-components/shared": "1.11.2"
-    },
-    "types": "./src/index.d.ts",
-    "customElements": "custom-elements.json",
-    "sideEffects": [
-        "./sp-*.js",
-        "./**/*.dev.js",
-        "./**/*.dev.js"
-    ]
+    "./src/alert-dialog-overrides.css.js": "./src/alert-dialog-overrides.css.js",
+    "./src/alert-dialog.css.js": "./src/alert-dialog.css.js",
+    "./src/index.js": {
+      "development": "./src/index.dev.js",
+      "default": "./src/index.js"
+    }
+  },
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "files": [
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.js.map",
+    "custom-elements.json",
+    "!stories/",
+    "!test/"
+  ],
+  "scripts": {
+    "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+  },
+  "sideEffects": [
+    "./sp-*.js",
+    "./**/*.dev.js",
+    "./**/*.dev.js"
+  ],
+  "types": "./src/index.d.ts",
+  "dependencies": {
+    "@lit-labs/observers": "2.0.2",
+    "@spectrum-web-components/base": "1.11.2",
+    "@spectrum-web-components/button": "1.11.2",
+    "@spectrum-web-components/button-group": "1.11.2",
+    "@spectrum-web-components/divider": "1.11.2",
+    "@spectrum-web-components/icons-workflow": "1.11.2",
+    "@spectrum-web-components/shared": "1.11.2"
+  },
+  "keywords": [
+    "design-system",
+    "spectrum",
+    "adobe",
+    "adobe-spectrum",
+    "web components",
+    "web-components",
+    "lit-element",
+    "lit-html",
+    "component",
+    "css"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "customElements": "custom-elements.json"
 }

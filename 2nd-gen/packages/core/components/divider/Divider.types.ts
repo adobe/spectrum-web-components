@@ -13,9 +13,9 @@
 import type { ElementSize } from '@spectrum-web-components/core/mixins/index.js';
 
 export const DIVIDER_VALID_SIZES = [
-    's',
-    'm',
-    'l',
+  's',
+  'm',
+  'l',
 ] as const satisfies ElementSize[];
 export const DIVIDER_STATIC_COLORS = ['white', 'black'] as const;
 

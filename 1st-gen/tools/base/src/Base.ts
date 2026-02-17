@@ -11,11 +11,12 @@
  */
 
 import { SpectrumElement as CoreSpectrumElement } from '@spectrum-web-components/core/element/spectrum-element.js';
+
 import { coreVersion, version } from './version.js';
 
 export {
-    type SpectrumInterface,
-    SpectrumMixin,
+  type SpectrumInterface,
+  SpectrumMixin,
 } from '@spectrum-web-components/core/element/spectrum-element.js';
 
 /**
@@ -23,13 +24,13 @@ export {
  * Extends the core SpectrumElement with 1st-gen specific version information.
  */
 export class SpectrumElement extends CoreSpectrumElement {
-    /**
-     * The version of the 1st-gen Spectrum Web Components library.
-     */
-    static override VERSION = version;
+  /**
+   * The version of the 1st-gen Spectrum Web Components library.
+   */
+  static override VERSION = version;
 
-    /**
-     * The version of the core base package.
-     */
-    static override CORE_VERSION = coreVersion;
+  /**
+   * The version of the core base package.
+   */
+  static override CORE_VERSION = coreVersion;
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,11 +11,11 @@
  */
 
 #switch::before {
-    /* This rule includes all of the transitions from spectrum-css before we removed the package as a dependency
+  /* This rule includes all of the transitions from spectrum-css before we removed the package as a dependency
      * except the one for the transform attribute, which causes issue in Edge.
      */
-    transition:
-        background var(--spectrum-animation-duration-100, 0.13s) ease-in-out,
-        border var(--spectrum-animation-duration-100, 0.13s) ease-in-out,
-        box-shadow var(--spectrum-animation-duration-100, 0.13s) ease-in-out;
+  transition:
+    background var(--spectrum-animation-duration-100, 0.13s) ease-in-out,
+    border var(--spectrum-animation-duration-100, 0.13s) ease-in-out,
+    box-shadow var(--spectrum-animation-duration-100, 0.13s) ease-in-out;
 }

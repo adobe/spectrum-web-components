@@ -15,25 +15,25 @@ const esbuild = require('esbuild');
 const path = require('path');
 
 esbuild
-    .build({
-        entryPoints: [path.join(__dirname, 'src', 'client', 'extension.ts')],
-        bundle: true,
-        platform: 'node',
-        target: ['node16'], // match VS Code Electron version
-        outfile: path.join(__dirname, 'out', 'client', 'extension.js'),
-        sourcemap: true,
-        external: ['vscode'], // vscode API must remain external
-    })
-    .catch(() => process.exit(1));
+  .build({
+    entryPoints: [path.join(__dirname, 'src', 'client', 'extension.ts')],
+    bundle: true,
+    platform: 'node',
+    target: ['node16'], // match VS Code Electron version
+    outfile: path.join(__dirname, 'out', 'client', 'extension.js'),
+    sourcemap: true,
+    external: ['vscode'], // vscode API must remain external
+  })
+  .catch(() => process.exit(1));
 
 esbuild
-    .build({
-        entryPoints: [path.join(__dirname, 'src', 'server', 'server.ts')],
-        bundle: true,
-        platform: 'node',
-        target: ['node16'],
-        outfile: path.join(__dirname, 'out', 'server', 'server.js'),
-        sourcemap: true,
-        external: ['vscode'], // LSP server doesn't require vscode module
-    })
-    .catch(() => process.exit(1));
+  .build({
+    entryPoints: [path.join(__dirname, 'src', 'server', 'server.ts')],
+    bundle: true,
+    platform: 'node',
+    target: ['node16'],
+    outfile: path.join(__dirname, 'out', 'server', 'server.js'),
+    sourcemap: true,
+    external: ['vscode'], // LSP server doesn't require vscode module
+  })
+  .catch(() => process.exit(1));

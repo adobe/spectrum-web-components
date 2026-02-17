@@ -1,9 +1,9 @@
 {
-    "extends": "../tsconfig.json",
-    "compilerOptions": {
-        "emitDeclarationOnly": false,
-        "rootDir": "."
-    },
-    "include": ["./plugins/*.ts"],
-    "exclude": []
+  "compilerOptions": {
+    "emitDeclarationOnly": false,
+    "rootDir": "."
+  },
+  "exclude": [],
+  "extends": "../tsconfig.json",
+  "include": ["./plugins/*.ts"]
 }

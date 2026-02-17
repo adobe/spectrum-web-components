@@ -9,13 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { IllustratedMessage } from './src/IllustratedMessage.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { IllustratedMessage } from './src/IllustratedMessage.js';
 
 defineElement('sp-illustrated-message', IllustratedMessage);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-illustrated-message': IllustratedMessage;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-illustrated-message': IllustratedMessage;
+  }
 }

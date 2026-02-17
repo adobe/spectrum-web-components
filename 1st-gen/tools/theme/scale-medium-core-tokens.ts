@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+import './core-tokens.js';
+
 import mediumStyles from './src/scale-medium-core-tokens.css.js';
 import { Theme } from './src/Theme.js';
-import './core-tokens.js';
 
 Theme.registerThemeFragment('medium', 'scale', mediumStyles);

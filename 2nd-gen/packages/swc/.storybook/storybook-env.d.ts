@@ -11,21 +11,21 @@
  */
 
 declare module '*.svg' {
-    const src: string;
-    export default src;
+  const src: string;
+  export default src;
 }
 
 declare module '*.png' {
-    const src: string;
-    export default src;
+  const src: string;
+  export default src;
 }
 
 declare module '*.jpg' {
-    const src: string;
-    export default src;
+  const src: string;
+  export default src;
 }
 
 declare module '*.css' {
-    const content: string;
-    export default content;
+  const content: string;
+  export default content;
 }

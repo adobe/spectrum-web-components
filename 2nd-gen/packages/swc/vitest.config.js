@@ -20,119 +20,113 @@ import viteConfig from './vite.config.ts';
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default mergeConfig(
-    viteConfig,
-    defineConfig({
-        optimizeDeps: {
-            exclude: ['playwright', 'playwright-core', '@playwright/test'],
+  viteConfig,
+  defineConfig({
+    optimizeDeps: {
+      exclude: ['playwright', 'playwright-core', '@playwright/test'],
+    },
+    test: {
+      coverage: {
+        provider: 'v8',
+        reporter: ['text', 'json', 'html'],
+        allowExternal: true,
+        include: [
+          'components/**/*.{ts,js}',
+          '**/packages/core/components/**/*.{ts,js}',
+          '**/packages/core/shared/**/*.{ts,js}',
+        ],
+        exclude: [
+          '**/*.test.ts',
+          '**/*.stories.ts',
+          '**/.storybook/**',
+          '**/utils/**',
+          '**/node_modules/**',
+          '**/dist/**',
+          '**/*.d.ts',
+        ],
+        thresholds: {
+          // Automatically ratchet thresholds upward when coverage improves.
+          // Uses Math.floor to avoid noisy decimal diffs in the config.
+          autoUpdate: (value) => Math.floor(value),
+
+          // SWC component implementations
+          'components/**/*.{ts,js}': {
+            lines: 100,
+            functions: 100,
+            statements: 100,
+          },
+
+          // Core component logic
+          '**/packages/core/components/**/*.{ts,js}': {
+            lines: 100,
+            functions: 100,
+            statements: 100,
+          },
+
+          // Shared utilities (lower bar while starting out)
+          '**/packages/core/shared/**/*.{ts,js}': {
+            lines: 70,
+            functions: 70,
+            statements: 70,
+          },
         },
-        test: {
-            coverage: {
-                provider: 'v8',
-                reporter: ['text', 'json', 'html'],
-                allowExternal: true,
-                include: [
-                    'components/**/*.{ts,js}',
-                    '**/packages/core/components/**/*.{ts,js}',
-                    '**/packages/core/shared/**/*.{ts,js}',
-                ],
-                exclude: [
-                    '**/*.test.ts',
-                    '**/*.stories.ts',
-                    '**/.storybook/**',
-                    '**/utils/**',
-                    '**/node_modules/**',
-                    '**/dist/**',
-                    '**/*.d.ts',
-                ],
-                thresholds: {
-                    // Automatically ratchet thresholds upward when coverage improves.
-                    // Uses Math.floor to avoid noisy decimal diffs in the config.
-                    autoUpdate: (value) => Math.floor(value),
-
-                    // SWC component implementations
-                    'components/**/*.{ts,js}': {
-                        lines: 100,
-                        functions: 100,
-                        statements: 100,
-                    },
-
-                    // Core component logic
-                    '**/packages/core/components/**/*.{ts,js}': {
-                        lines: 100,
-                        functions: 100,
-                        statements: 100,
-                    },
-
-                    // Shared utilities (lower bar while starting out)
-                    '**/packages/core/shared/**/*.{ts,js}': {
-                        lines: 70,
-                        functions: 70,
-                        statements: 70,
-                    },
-                },
+      },
+      projects: [
+        {
+          extends: true,
+          plugins: [
+            storybookTest({
+              configDir: path.join(dirname, '.storybook'),
+              storybookScript: 'yarn storybook --no-open',
+            }),
+          ],
+          resolve: {
+            alias: {
+              // Keep the Vite aliases from `vite.config.ts` for Storybook/Vitest.
+              // Without these, imports can resolve to built output and/or be excluded from coverage.
+              '@spectrum-web-components/core': path.resolve(dirname, '../core'),
+              '@adobe/swc': path.resolve(dirname, './components'),
+              '@adobe/postcss-token': path.resolve(
+                dirname,
+                '../tools/postcss-token'
+              ),
+              '@adobe/swc-tokens': path.resolve(dirname, '../tools/swc-tokens'),
+              // Prevent Vite from trying to bundle Node.js built-ins
+              crypto: false,
+              fs: false,
+              path: false,
+              os: false,
+              util: false,
+              stream: false,
+              buffer: false,
+              events: false,
             },
-            projects: [
-                {
-                    extends: true,
-                    plugins: [
-                        storybookTest({
-                            configDir: path.join(dirname, '.storybook'),
-                            storybookScript: 'yarn storybook --no-open',
-                        }),
-                    ],
-                    resolve: {
-                        alias: {
-                            // Keep the Vite aliases from `vite.config.ts` for Storybook/Vitest.
-                            // Without these, imports can resolve to built output and/or be excluded from coverage.
-                            '@spectrum-web-components/core': path.resolve(
-                                dirname,
-                                '../core'
-                            ),
-                            '@adobe/swc': path.resolve(dirname, './components'),
-                            '@adobe/postcss-token': path.resolve(
-                                dirname,
-                                '../tools/postcss-token'
-                            ),
-                            '@adobe/swc-tokens': path.resolve(
-                                dirname,
-                                '../tools/swc-tokens'
-                            ),
-                            // Prevent Vite from trying to bundle Node.js built-ins
-                            crypto: false,
-                            fs: false,
-                            path: false,
-                            os: false,
-                            util: false,
-                            stream: false,
-                            buffer: false,
-                            events: false,
-                        },
-                    },
-                    optimizeDeps: {
-                        exclude: [
-                            'storybook',
-                            'playwright',
-                            'playwright-core',
-                            '@playwright/test',
-                            'chromium-bidi',
-                        ],
-                    },
-                    test: {
-                        name: 'storybook',
-                        browser: {
-                            enabled: true,
-                            provider: playwright(),
-                            headless: true,
-                            instances: [{ browser: 'chromium' }],
-                        },
-                        globals: true,
-                        setupFiles: ['./.storybook/vitest.setup.ts'],
-                    },
-                },
+          },
+          optimizeDeps: {
+            exclude: [
+              'storybook',
+              'playwright',
+              'playwright-core',
+              '@playwright/test',
+              'chromium-bidi',
             ],
+          },
+          test: {
+            name: 'storybook',
+            browser: {
+              enabled: true,
+              provider: playwright(),
+              headless: true,
+              instances: [{ browser: 'chromium' }],
+            },
+            globals: true,
+            setupFiles: ['./.storybook/vitest.setup.ts'],
+          },
         },
-        compilerOptions: {
-            types: ['@vitest/browser/providers/playwright'],
-        },
-    })
+      ],
+    },
+    compilerOptions: {
+      types: ['@vitest/browser/providers/playwright'],
+    },
+  })
 );
