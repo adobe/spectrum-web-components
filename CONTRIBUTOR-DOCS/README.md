@@ -7,9 +7,10 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-- [About Spectrum Web Components](#about-spectrum-web-components)
-- [About the 1st-gen-to-2nd-gen transition](#about-the-1st-gen-to-2nd-gen-transition)
-- [About these docs](#about-these-docs)
+- [Contributor Documentation](#contributor-documentation)
+  - [About Spectrum Web Components](#about-spectrum-web-components)
+  - [About the 1st-gen-to-2nd-gen transition](#about-the-1st-gen-to-2nd-gen-transition)
+  - [About these docs](#about-these-docs)
 
 </details>
 

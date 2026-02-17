@@ -12,9 +12,9 @@
 export {
     ElementSizes,
     SizedMixin,
-} from '@spectrum-web-components/core/shared/base/sizedMixin.js';
+} from '@spectrum-web-components/core/mixins/sized-mixin.js';
 export type {
     DefaultElementSize,
     ElementSize,
     SizedElementInterface,
-} from '@spectrum-web-components/core/shared/base/sizedMixin.js';
+} from '@spectrum-web-components/core/mixins/sized-mixin.js';

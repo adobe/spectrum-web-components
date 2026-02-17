@@ -13,4 +13,4 @@
 export {
     LanguageResolutionController,
     languageResolverUpdatedSymbol,
-} from './LanguageResolution.js';
+} from './language-resolution.js';

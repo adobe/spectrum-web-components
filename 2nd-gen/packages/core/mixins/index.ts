@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,5 +10,18 @@
  * governing permissions and limitations under the License.
  */
 
-/* import the global stylesheets */
-@import '@spectrum-web-components/styles/all-medium-light.css';
+export {
+    ObserveSlotPresence,
+    type SlotPresenceObservingInterface,
+} from './observe-slot-presence.js';
+export {
+    ObserveSlotText,
+    type SlotTextObservingInterface,
+} from './observe-slot-text.js';
+export { ElementSizes, SizedMixin } from './sized-mixin.js';
+export type {
+    DefaultElementSize,
+    ElementSize,
+    SizedElementConstructor,
+    SizedElementInterface,
+} from './sized-mixin.js';

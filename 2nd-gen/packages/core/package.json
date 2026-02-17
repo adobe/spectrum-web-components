@@ -39,59 +39,77 @@
             "types": "./dist/components/status-light/index.d.ts",
             "import": "./dist/components/status-light/index.js"
         },
-        "./shared/base": {
-            "types": "./dist/shared/base/index.d.ts",
-            "import": "./dist/shared/base/index.js"
+        "./controllers": {
+            "types": "./dist/controllers/index.d.ts",
+            "import": "./dist/controllers/index.js"
         },
-        "./shared/base/index.js": {
-            "types": "./dist/shared/base/index.d.ts",
-            "import": "./dist/shared/base/index.js"
+        "./controllers/index.js": {
+            "types": "./dist/controllers/index.d.ts",
+            "import": "./dist/controllers/index.js"
         },
-        "./shared/base/Base.js": {
-            "types": "./dist/shared/base/Base.d.ts",
-            "import": "./dist/shared/base/Base.js"
+        "./controllers/language-resolution.js": {
+            "types": "./dist/controllers/language-resolution.d.ts",
+            "import": "./dist/controllers/language-resolution.js"
         },
-        "./shared/base/define-element.js": {
-            "types": "./dist/shared/base/define-element.d.ts",
-            "import": "./dist/shared/base/define-element.js"
+        "./element": {
+            "types": "./dist/element/index.d.ts",
+            "import": "./dist/element/index.js"
         },
-        "./shared/base/sizedMixin.js": {
-            "types": "./dist/shared/base/sizedMixin.d.ts",
-            "import": "./dist/shared/base/sizedMixin.js"
+        "./element/define-element.js": {
+            "types": "./dist/element/define-element.d.ts",
+            "import": "./dist/element/define-element.js"
         },
-        "./shared/base/version.js": {
-            "types": "./dist/shared/base/version.d.ts",
-            "import": "./dist/shared/base/version.js"
+        "./element/index.js": {
+            "types": "./dist/element/index.d.ts",
+            "import": "./dist/element/index.js"
         },
-        "./shared/utilities": {
-            "types": "./dist/shared/utilities/index.d.ts",
-            "import": "./dist/shared/utilities/index.js"
+        "./element/spectrum-element.js": {
+            "types": "./dist/element/spectrum-element.d.ts",
+            "import": "./dist/element/spectrum-element.js"
         },
-        "./shared/utilities/index.js": {
-            "types": "./dist/shared/utilities/index.d.ts",
-            "import": "./dist/shared/utilities/index.js"
+        "./element/version.js": {
+            "types": "./dist/element/version.d.ts",
+            "import": "./dist/element/version.js"
         },
-        "./shared/get-label-from-slot.js": {
-            "types": "./dist/shared/get-label-from-slot.d.ts",
-            "import": "./dist/shared/get-label-from-slot.js"
+        "./mixins": {
+            "types": "./dist/mixins/index.d.ts",
+            "import": "./dist/mixins/index.js"
         },
-        "./shared/observe-slot-presence.js": {
-            "types": "./dist/shared/observe-slot-presence.d.ts",
-            "import": "./dist/shared/observe-slot-presence.js"
+        "./mixins/index.js": {
+            "types": "./dist/mixins/index.d.ts",
+            "import": "./dist/mixins/index.js"
         },
-        "./shared/observe-slot-text.js": {
-            "types": "./dist/shared/observe-slot-text.d.ts",
-            "import": "./dist/shared/observe-slot-text.js"
+        "./mixins/observe-slot-presence.js": {
+            "types": "./dist/mixins/observe-slot-presence.d.ts",
+            "import": "./dist/mixins/observe-slot-presence.js"
         },
-        "./shared/reactive-controllers": {
-            "types": "./dist/shared/reactive-controllers/index.d.ts",
-            "import": "./dist/shared/reactive-controllers/index.js"
+        "./mixins/observe-slot-text.js": {
+            "types": "./dist/mixins/observe-slot-text.d.ts",
+            "import": "./dist/mixins/observe-slot-text.js"
         },
-        "./shared/reactive-controllers/index.js": {
-            "types": "./dist/shared/reactive-controllers/index.d.ts",
-            "import": "./dist/shared/reactive-controllers/index.js"
+        "./mixins/sized-mixin.js": {
+            "types": "./dist/mixins/sized-mixin.d.ts",
+            "import": "./dist/mixins/sized-mixin.js"
+        },
+        "./utils": {
+            "types": "./dist/utils/index.d.ts",
+            "import": "./dist/utils/index.js"
+        },
+        "./utils/capitalize.js": {
+            "types": "./dist/utils/capitalize.d.ts",
+            "import": "./dist/utils/capitalize.js"
+        },
+        "./utils/get-label-from-slot.js": {
+            "types": "./dist/utils/get-label-from-slot.d.ts",
+            "import": "./dist/utils/get-label-from-slot.js"
+        },
+        "./utils/index.js": {
+            "types": "./dist/utils/index.d.ts",
+            "import": "./dist/utils/index.js"
         }
     },
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
     "files": [
         "dist/"
     ],
@@ -121,44 +139,56 @@
             "components/status-light": [
                 "dist/components/status-light/index.d.ts"
             ],
-            "shared/base": [
-                "dist/shared/base/index.d.ts"
+            "controllers": [
+                "dist/controllers/index.d.ts"
             ],
-            "shared/base/index.js": [
-                "dist/shared/base/index.d.ts"
+            "controllers/index.js": [
+                "dist/controllers/index.d.ts"
             ],
-            "shared/base/Base.js": [
-                "dist/shared/base/Base.d.ts"
+            "controllers/language-resolution.js": [
+                "dist/controllers/language-resolution.d.ts"
             ],
-            "shared/base/define-element.js": [
-                "dist/shared/base/define-element.d.ts"
+            "element": [
+                "dist/element/index.d.ts"
             ],
-            "shared/base/sizedMixin.js": [
-                "dist/shared/base/sizedMixin.d.ts"
+            "element/define-element.js": [
+                "dist/element/define-element.d.ts"
             ],
-            "shared/base/version.js": [
-                "dist/shared/base/version.d.ts"
+            "element/index.js": [
+                "dist/element/index.d.ts"
             ],
-            "shared/utilities": [
-                "dist/shared/utilities/index.d.ts"
+            "element/spectrum-element.js": [
+                "dist/element/spectrum-element.d.ts"
             ],
-            "shared/utilities/index.js": [
-                "dist/shared/utilities/index.d.ts"
+            "element/version.js": [
+                "dist/element/version.d.ts"
             ],
-            "shared/get-label-from-slot.js": [
-                "dist/shared/get-label-from-slot.d.ts"
+            "mixins": [
+                "dist/mixins/index.d.ts"
             ],
-            "shared/observe-slot-presence.js": [
-                "dist/shared/observe-slot-presence.d.ts"
+            "mixins/index.js": [
+                "dist/mixins/index.d.ts"
             ],
-            "shared/observe-slot-text.js": [
-                "dist/shared/observe-slot-text.d.ts"
+            "mixins/observe-slot-presence.js": [
+                "dist/mixins/observe-slot-presence.d.ts"
             ],
-            "shared/reactive-controllers": [
-                "dist/shared/reactive-controllers/index.d.ts"
+            "mixins/observe-slot-text.js": [
+                "dist/mixins/observe-slot-text.d.ts"
             ],
-            "shared/reactive-controllers/index.js": [
-                "dist/shared/reactive-controllers/index.d.ts"
+            "mixins/sized-mixin.js": [
+                "dist/mixins/sized-mixin.d.ts"
+            ],
+            "utils": [
+                "dist/utils/index.d.ts"
+            ],
+            "utils/capitalize.js": [
+                "dist/utils/capitalize.d.ts"
+            ],
+            "utils/get-label-from-slot.js": [
+                "dist/utils/get-label-from-slot.d.ts"
+            ],
+            "utils/index.js": [
+                "dist/utils/index.d.ts"
             ]
         }
     },
@@ -187,7 +217,5 @@
     ],
     "publishConfig": {
         "access": "public"
-    },
-    "main": "./dist/index.js",
-    "module": "./dist/index.js"
+    }
 }

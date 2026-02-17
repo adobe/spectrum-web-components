@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import type { ElementSize } from '@spectrum-web-components/core/shared/base/index.js';
+import type { ElementSize } from '@spectrum-web-components/core/mixins/index.js';
 
 export const DIVIDER_VALID_SIZES = [
     's',

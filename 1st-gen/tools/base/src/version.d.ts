@@ -9,3 +9,11 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+/**
+ * The version of the 1st-gen Spectrum Web Components library.
+ */
+export declare const version = "1.11.2";
+/**
+ * The version of the core base package.
+ */
+export declare const coreVersion = "0.0.4";

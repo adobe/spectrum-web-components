@@ -14,7 +14,7 @@
     z-index: inherit;
     min-block-size: var(--mod-accordion-item-height, var(--spectrum-accordion-item-height));
     min-inline-size: var(--mod-accordion-item-width, var(--spectrum-accordion-item-width));
-    border-block-end: 1px solid #0000;
+    border-block-end-style: solid;
     border-color: var(--mod-accordion-divider-color, var(--spectrum-accordion-divider-color));
     border-width: var(--mod-accordion-divider-thickness, var(--spectrum-divider-thickness-small));
     margin: 0;
@@ -22,7 +22,7 @@
 }
 
 :host(:first-child) {
-    border-block-start: 1px solid #0000;
+    border-block-start-style: solid;
     border-color: var(--mod-accordion-divider-color, var(--spectrum-accordion-divider-color));
     border-width: var(--mod-accordion-divider-thickness, var(--spectrum-divider-thickness-small));
 }
