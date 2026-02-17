@@ -23,7 +23,6 @@
     text-transform: none;
     vertical-align: top;
     -webkit-appearance: button;
-    appearance: auto;
     transition:
         background var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
         border-color var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
