@@ -2,9 +2,9 @@
 
 Deliver [Spectrum Workflow Icons](https://spectrum.adobe.com/page/icons/) as either:
 
--   Registered custom elements (`<sp-icon-abc>`)
--   Unregistered class definitions (`IconAbc`)
--   Functions with customizable template tags to be used across various frameworks (`AbcIcon()`)
+- Registered custom elements (`<sp-icon-abc>`)
+- Unregistered class definitions (`IconAbc`)
+- Functions with customizable template tags to be used across various frameworks (`AbcIcon()`)
 
 Search a full list of icons to [find an icon](#find-an-icon) for your project or find technical information about [extended use cases](#extended-use-cases), like consuming this package in various UI frameworks below.
 
@@ -147,8 +147,8 @@ What's more, if you're already working with a specific parser in your project, y
 
 ```js
 import {
-    AbcIcon,
-    setCustomTemplateLiteralTag,
+  AbcIcon,
+  setCustomTemplateLiteralTag,
 } from '@spectrum-web-components/icons-workflow/src/icons.js';
 import htm from 'htm';
 import { h } from 'preact';

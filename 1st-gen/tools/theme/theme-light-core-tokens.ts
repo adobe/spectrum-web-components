@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import lightStyles from './src/theme-light-core-tokens.css.js';
-import { Theme } from './src/Theme.js';
 import './core-tokens.js';
+
+import { Theme } from './src/Theme.js';
+import lightStyles from './src/theme-light-core-tokens.css.js';
 
 Theme.registerThemeFragment('light', 'color', lightStyles);

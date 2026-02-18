@@ -10,18 +10,19 @@
  * governing permissions and limitations under the License.
  */
 import { html, TemplateResult } from 'lit';
+
 import '../src/custom-vars-viewer.js';
 
 export default {
-    title: 'CustomVarsViewer',
-    component: 'custom-vars-viewer',
-    argTypes: {
-        title: { control: 'text' },
-        counter: { control: 'number' },
-        textColor: { control: 'color' },
-    },
+  title: 'CustomVarsViewer',
+  component: 'custom-vars-viewer',
+  argTypes: {
+    title: { control: 'text' },
+    counter: { control: 'number' },
+    textColor: { control: 'color' },
+  },
 };
 
 export const Template = (): TemplateResult => html`
-    <custom-vars-viewer></custom-vars-viewer>
+  <custom-vars-viewer></custom-vars-viewer>
 `;

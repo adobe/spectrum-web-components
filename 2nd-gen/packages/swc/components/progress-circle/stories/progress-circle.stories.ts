@@ -26,45 +26,45 @@ const { args, argTypes, template } = getStorybookHelpers('swc-progress-circle');
 
 // @TODO: Blurring the range control seems to cause a catastrophic Storybook render failure, so using number input for now. React spectrum has the range control working, check their implementation for a solution.
 argTypes.progress = {
-    ...argTypes.progress,
-    control: { type: 'number', min: 0, max: 100, step: 1 },
+  ...argTypes.progress,
+  control: { type: 'number', min: 0, max: 100, step: 1 },
 };
 
 argTypes.size = {
-    ...argTypes.size,
-    control: { type: 'select' },
-    options: ProgressCircle.VALID_SIZES,
+  ...argTypes.size,
+  control: { type: 'select' },
+  options: ProgressCircle.VALID_SIZES,
 };
 
 argTypes['static-color'] = {
-    ...argTypes['static-color'],
-    control: { type: 'select' },
-    options: [undefined, ...ProgressCircle.STATIC_COLORS],
+  ...argTypes['static-color'],
+  control: { type: 'select' },
+  options: [undefined, ...ProgressCircle.STATIC_COLORS],
 };
 
 /**
  * They can represent determinate or indeterminate progress.
  */
 const meta: Meta = {
-    title: 'Progress circle',
-    component: 'swc-progress-circle',
-    parameters: {
-        docs: {
-            subtitle: `Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way.`,
-        },
-        design: {
-            type: 'figma',
-            url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13061-181&p=f&t=l8WhfseyuepkVXrl-0',
-        },
-        stackblitz: {
-            url: 'https://stackblitz.com/edit/vitejs-vite-xx1plot6?file=package.json',
-        },
-        flexLayout: 'row-wrap',
+  title: 'Progress circle',
+  component: 'swc-progress-circle',
+  parameters: {
+    docs: {
+      subtitle: `Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way.`,
     },
-    args,
-    argTypes,
-    render: (args) => template(args),
-    tags: ['migrated'],
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13061-181&p=f&t=l8WhfseyuepkVXrl-0',
+    },
+    stackblitz: {
+      url: 'https://stackblitz.com/edit/vitejs-vite-xx1plot6?file=package.json',
+    },
+    flexLayout: 'row-wrap',
+  },
+  args,
+  argTypes,
+  render: (args) => template(args),
+  tags: ['migrated'],
 };
 
 export default meta;
@@ -74,12 +74,12 @@ export default meta;
 // ────────────────────
 
 export const Playground: Story = {
-    tags: ['autodocs', 'dev'],
-    args: {
-        progress: 50,
-        size: 'm',
-        label: 'Uploading document',
-    },
+  tags: ['autodocs', 'dev'],
+  args: {
+    progress: 50,
+    size: 'm',
+    label: 'Uploading document',
+  },
 };
 
 // ──────────────────────────
@@ -87,11 +87,11 @@ export const Playground: Story = {
 // ──────────────────────────
 
 export const Overview: Story = {
-    tags: ['overview'],
-    args: {
-        progress: 50,
-        label: 'Uploading document',
-    },
+  tags: ['overview'],
+  args: {
+    progress: 50,
+    label: 'Uploading document',
+  },
 };
 
 // ──────────────────────────
@@ -110,27 +110,27 @@ export const Overview: Story = {
  * - **Label**: Accessible text describing what is loading or progressing (not visually rendered)
  */
 export const Anatomy: Story = {
-    render: (args) => html`
-        ${template({
-            ...args,
-            progress: 0,
-            size: 'l',
-            label: 'Starting upload',
-        })}
-        ${template({
-            ...args,
-            progress: 50,
-            size: 'l',
-            label: 'Uploading document',
-        })}
-        ${template({
-            ...args,
-            progress: 100,
-            size: 'l',
-            label: 'Upload complete',
-        })}
-    `,
-    tags: ['anatomy'],
+  render: (args) => html`
+    ${template({
+      ...args,
+      progress: 0,
+      size: 'l',
+      label: 'Starting upload',
+    })}
+    ${template({
+      ...args,
+      progress: 50,
+      size: 'l',
+      label: 'Uploading document',
+    })}
+    ${template({
+      ...args,
+      progress: 100,
+      size: 'l',
+      label: 'Upload complete',
+    })}
+  `,
+  tags: ['anatomy'],
 };
 
 // ──────────────────────────
@@ -145,18 +145,18 @@ export const Anatomy: Story = {
  * - **Large (`l`)**: Used for prominent loading states, primary content areas, or full-page loading indicators
  */
 export const Sizes: Story = {
-    render: (args) => html`
-        ${template({ ...args, size: 's', label: 'Processing small item' })}
-        ${template({ ...args, size: 'm', label: 'Processing medium item' })}
-        ${template({ ...args, size: 'l', label: 'Processing large item' })}
-    `,
-    tags: ['options'],
-    args: {
-        progress: 25,
-    },
-    parameters: {
-        'section-order': 1,
-    },
+  render: (args) => html`
+    ${template({ ...args, size: 's', label: 'Processing small item' })}
+    ${template({ ...args, size: 'm', label: 'Processing medium item' })}
+    ${template({ ...args, size: 'l', label: 'Processing large item' })}
+  `,
+  tags: ['options'],
+  args: {
+    progress: 25,
+  },
+  parameters: {
+    'section-order': 1,
+  },
 };
 
 /**
@@ -166,20 +166,22 @@ export const Sizes: Story = {
  * - **black**: Use on light backgrounds for better contrast
  */
 export const StaticColors: Story = {
-    render: (args) => html`
-        ${ProgressCircle.STATIC_COLORS.map(
-            (color) => html`${template({ ...args, 'static-color': color })}`
-        )}
-    `,
-    args: {
-        progress: 60,
-        label: 'Processing media',
-    },
-    tags: ['options'],
-    parameters: {
-        staticColorsDemo: true,
-        'section-order': 2,
-    },
+  render: (args) => html`
+    ${ProgressCircle.STATIC_COLORS.map(
+      (color) => html`
+        ${template({ ...args, 'static-color': color })}
+      `
+    )}
+  `,
+  args: {
+    progress: 60,
+    label: 'Processing media',
+  },
+  tags: ['options'],
+  parameters: {
+    staticColorsDemo: true,
+    'section-order': 2,
+  },
 };
 StaticColors.storyName = 'Static colors';
 
@@ -193,20 +195,20 @@ StaticColors.storyName = 'Static colors';
  * This automatically sets `aria-valuenow` to the provided value for screen readers.
  */
 export const ProgressValues: Story = {
-    render: (args) => html`
-        ${template({ ...args, progress: 0, label: 'Starting download' })}
-        ${template({ ...args, progress: 25, label: 'Downloading (25%)' })}
-        ${template({ ...args, progress: 50, label: 'Downloading (50%)' })}
-        ${template({ ...args, progress: 75, label: 'Downloading (75%)' })}
-        ${template({ ...args, progress: 100, label: 'Download complete' })}
-    `,
-    tags: ['states'],
-    args: {
-        size: 'm',
-    },
-    parameters: {
-        'section-order': 1,
-    },
+  render: (args) => html`
+    ${template({ ...args, progress: 0, label: 'Starting download' })}
+    ${template({ ...args, progress: 25, label: 'Downloading (25%)' })}
+    ${template({ ...args, progress: 50, label: 'Downloading (50%)' })}
+    ${template({ ...args, progress: 75, label: 'Downloading (75%)' })}
+    ${template({ ...args, progress: 100, label: 'Download complete' })}
+  `,
+  tags: ['states'],
+  args: {
+    size: 'm',
+  },
+  parameters: {
+    'section-order': 1,
+  },
 };
 ProgressValues.storyName = 'Progress values';
 
@@ -221,15 +223,15 @@ ProgressValues.storyName = 'Progress values';
  * - Multiple sub-operations are running in parallel
  */
 export const Indeterminate: Story = {
-    tags: ['states'],
-    args: {
-        indeterminate: true,
-        size: 'm',
-        label: 'Processing request',
-    },
-    parameters: {
-        'section-order': 2,
-    },
+  tags: ['states'],
+  args: {
+    indeterminate: true,
+    size: 'm',
+    label: 'Processing request',
+  },
+  parameters: {
+    'section-order': 2,
+  },
 };
 
 // ────────────────────────────────
@@ -274,10 +276,10 @@ export const Indeterminate: Story = {
  * - Avoid updating progress values more frequently than every 1-2 seconds to prevent announcement overload
  */
 export const Accessibility: Story = {
-    tags: ['a11y'],
-    args: {
-        progress: 60,
-        size: 'l',
-        label: 'Uploading presentation slides',
-    },
+  tags: ['a11y'],
+  args: {
+    progress: 60,
+    size: 'l',
+    label: 'Uploading presentation slides',
+  },
 };

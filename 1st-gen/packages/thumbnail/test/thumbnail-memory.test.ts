@@ -11,9 +11,11 @@
  */
 
 import { html } from '@open-wc/testing';
+
 import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
+
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
 testForMemoryLeaks(html`
-    <sp-thumbnail></sp-thumbnail>
+  <sp-thumbnail></sp-thumbnail>
 `);

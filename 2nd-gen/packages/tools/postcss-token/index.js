@@ -16,24 +16,24 @@ import { lookupToken } from '@adobe/swc-tokens/utils.js';
  * @type {import('postcss').PluginCreator}
  */
 export default (opts = { prefix: '' }) => {
-    return {
-        postcssPlugin: 'postcss-token',
+  return {
+    postcssPlugin: 'postcss-token',
 
-        async Declaration(decl) {
-            if (decl.value?.includes('token(')) {
-                const tokenMatch = decl.value.match(
-                    /token\(\s*(['"])([\s\S]*?)\1\s*\)/
-                );
+    async Declaration(decl) {
+      if (decl.value?.includes('token(')) {
+        const tokenMatch = decl.value.match(
+          /token\(\s*(['"])([\s\S]*?)\1\s*\)/
+        );
 
-                if (tokenMatch) {
-                    decl.value = decl.value.replace(
-                        tokenMatch[0],
-                        await lookupToken(tokenMatch[2], opts.prefix)
-                    );
-                }
-            }
-        },
-    };
+        if (tokenMatch) {
+          decl.value = decl.value.replace(
+            tokenMatch[0],
+            await lookupToken(tokenMatch[2], opts.prefix)
+          );
+        }
+      }
+    },
+  };
 };
 
 // Required for PostCSS plugin detection in ESM

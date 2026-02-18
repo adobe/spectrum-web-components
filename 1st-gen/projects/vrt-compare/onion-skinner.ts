@@ -15,7 +15,7 @@ import { OnionSkinner } from './src/OnionSkinner.js';
 customElements.define('onion-skinner', OnionSkinner);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'onion-skinner': OnionSkinner;
-    }
+  interface HTMLElementTagNameMap {
+    'onion-skinner': OnionSkinner;
+  }
 }

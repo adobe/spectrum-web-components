@@ -10,10 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/number-field/sp-number-field.js';
 import { html } from 'lit';
+
+import '@spectrum-web-components/number-field/sp-number-field.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-number-field></sp-number-field>
+  <sp-number-field></sp-number-field>
 `);

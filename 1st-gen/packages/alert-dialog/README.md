@@ -34,29 +34,29 @@ The alert dialog consists of several key parts:
 
 ```html
 <sp-alert-dialog
-    role="alertdialog"
-    aria-labelledby="example-heading"
-    aria-describedby="example-message"
-    variant="confirmation"
+  role="alertdialog"
+  aria-labelledby="example-heading"
+  aria-describedby="example-message"
+  variant="confirmation"
 >
-    <h2 id="example-heading" slot="heading">Important Notice</h2>
-    <p id="example-message">This action requires your confirmation.</p>
-    <sp-button
-        slot="button"
-        variant="secondary"
-        treatment="outline"
-        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-    >
-        Cancel
-    </sp-button>
-    <sp-button
-        slot="button"
-        variant="accent"
-        treatment="fill"
-        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-    >
-        Confirm
-    </sp-button>
+  <h2 id="example-heading" slot="heading">Important Notice</h2>
+  <p id="example-message">This action requires your confirmation.</p>
+  <sp-button
+    slot="button"
+    variant="secondary"
+    treatment="outline"
+    onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+  >
+    Cancel
+  </sp-button>
+  <sp-button
+    slot="button"
+    variant="accent"
+    treatment="fill"
+    onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+  >
+    Confirm
+  </sp-button>
 </sp-alert-dialog>
 ```
 
@@ -67,45 +67,45 @@ Use `slot="button"` to render your action button(s) that allow users to respond
 - An alert dialog must have one primary action button (with `variant="primary"`) with the option to include a secondary action and/or a cancel action.
 - Non-primary action buttons should be `variant="secondary"` and `treatment="outline"`.
 - The three buttons should be rendered in the DOM in the following order:
-    - **Cancel action:** Offers an option to go back and cancel the action.
-    - **Secondary action:** Offers a secondary action. e.g. "Remind me later"
-    - **Primary action:** The first (right-most) button communicates what the button will do if selected, or to acknowledge and dismiss the dialog. Check [variants](#variants) for the correct primary button styling. See also the [Alert Dialog design options](https://spectrum.adobe.com/page/alert-dialog/#Options).
+  - **Cancel action:** Offers an option to go back and cancel the action.
+  - **Secondary action:** Offers a secondary action. e.g. "Remind me later"
+  - **Primary action:** The first (right-most) button communicates what the button will do if selected, or to acknowledge and dismiss the dialog. Check [variants](#variants) for the correct primary button styling. See also the [Alert Dialog design options](https://spectrum.adobe.com/page/alert-dialog/#Options).
 
 ```html
 <sp-alert-dialog
-    role="alertdialog"
-    aria-labelledby="rate-heading"
-    aria-describedby="rate-message"
-    variant="information"
+  role="alertdialog"
+  aria-labelledby="rate-heading"
+  aria-describedby="rate-message"
+  variant="information"
 >
-    <h2 id="rate-heading" slot="heading">Rate this app</h2>
-    <p id="rate-message">
-        If you enjoy our app, would you mind taking a moment to rate it?
-    </p>
-    <sp-button
-        slot="button"
-        variant="secondary"
-        treatment="outline"
-        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-    >
-        No, thanks
-    </sp-button>
-    <sp-button
-        slot="button"
-        variant="secondary"
-        treatment="outline"
-        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-    >
-        Remind me later
-    </sp-button>
-    <sp-button
-        slot="button"
-        variant="primary"
-        treatment="outline"
-        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-    >
-        Rate now
-    </sp-button>
+  <h2 id="rate-heading" slot="heading">Rate this app</h2>
+  <p id="rate-message">
+    If you enjoy our app, would you mind taking a moment to rate it?
+  </p>
+  <sp-button
+    slot="button"
+    variant="secondary"
+    treatment="outline"
+    onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+  >
+    No, thanks
+  </sp-button>
+  <sp-button
+    slot="button"
+    variant="secondary"
+    treatment="outline"
+    onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+  >
+    Remind me later
+  </sp-button>
+  <sp-button
+    slot="button"
+    variant="primary"
+    treatment="outline"
+    onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+  >
+    Rate now
+  </sp-button>
 </sp-alert-dialog>
 ```
 
@@ -123,31 +123,31 @@ Confirmation is the default variant for alert dialogs. Use a confirmation varian
 
 ```html
 <sp-alert-dialog
-    role="alertdialog"
-    aria-labelledby="disclaimer-heading"
-    aria-describedby="disclaimer-message"
-    variant="confirmation"
+  role="alertdialog"
+  aria-labelledby="disclaimer-heading"
+  aria-describedby="disclaimer-message"
+  variant="confirmation"
 >
-    <h2 id="disclaimer-heading" slot="heading">Disclaimer</h2>
-    <p id="disclaimer-message">
-        Smart filters are nondestructive and will preserve your original images.
-    </p>
-    <sp-button
-        slot="button"
-        variant="secondary"
-        treatment="outline"
-        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-    >
-        Cancel
-    </sp-button>
-    <sp-button
-        slot="button"
-        variant="accent"
-        treatment="fill"
-        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-    >
-        Enable
-    </sp-button>
+  <h2 id="disclaimer-heading" slot="heading">Disclaimer</h2>
+  <p id="disclaimer-message">
+    Smart filters are nondestructive and will preserve your original images.
+  </p>
+  <sp-button
+    slot="button"
+    variant="secondary"
+    treatment="outline"
+    onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+  >
+    Cancel
+  </sp-button>
+  <sp-button
+    slot="button"
+    variant="accent"
+    treatment="fill"
+    onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+  >
+    Enable
+  </sp-button>
 </sp-alert-dialog>
 ```
 
@@ -159,32 +159,32 @@ Information alert dialogs communicate important information that a user needs to
 
 ```html
 <sp-alert-dialog
-    role="alertdialog"
-    aria-labelledby="information-heading"
-    aria-describedby="information-message"
-    variant="information"
+  role="alertdialog"
+  aria-labelledby="information-heading"
+  aria-describedby="information-message"
+  variant="information"
 >
-    <h2 id="information-heading" slot="heading">Connect to wifi</h2>
-    <p id="information-message">
-        Please connect to wifi to sync your projects or go to Settings to change
-        your preferences.
-    </p>
-    <sp-button
-        slot="button"
-        variant="secondary"
-        treatment="outline"
-        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-    >
-        Cancel
-    </sp-button>
-    <sp-button
-        slot="button"
-        variant="primary"
-        treatment="outline"
-        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-    >
-        Continue
-    </sp-button>
+  <h2 id="information-heading" slot="heading">Connect to wifi</h2>
+  <p id="information-message">
+    Please connect to wifi to sync your projects or go to Settings to change
+    your preferences.
+  </p>
+  <sp-button
+    slot="button"
+    variant="secondary"
+    treatment="outline"
+    onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+  >
+    Cancel
+  </sp-button>
+  <sp-button
+    slot="button"
+    variant="primary"
+    treatment="outline"
+    onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+  >
+    Continue
+  </sp-button>
 </sp-alert-dialog>
 ```
 
@@ -196,32 +196,32 @@ Warning alert dialogs communicate important information to users in relation to 
 
 ```html
 <sp-alert-dialog
-    role="alertdialog"
-    aria-labelledby="warning-heading"
-    aria-describedby="warning-message"
-    variant="warning"
+  role="alertdialog"
+  aria-labelledby="warning-heading"
+  aria-describedby="warning-message"
+  variant="warning"
 >
-    <h2 id="warning-heading" slot="heading">Unverified format</h2>
-    <p id="warning-message">
-        This format has not been verified and may not be viewable for some
-        users. Do you want to continue publishing?
-    </p>
-    <sp-button
-        slot="button"
-        variant="secondary"
-        treatment="outline"
-        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-    >
-        Cancel
-    </sp-button>
-    <sp-button
-        slot="button"
-        variant="primary"
-        treatment="outline"
-        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-    >
-        Continue
-    </sp-button>
+  <h2 id="warning-heading" slot="heading">Unverified format</h2>
+  <p id="warning-message">
+    This format has not been verified and may not be viewable for some users. Do
+    you want to continue publishing?
+  </p>
+  <sp-button
+    slot="button"
+    variant="secondary"
+    treatment="outline"
+    onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+  >
+    Cancel
+  </sp-button>
+  <sp-button
+    slot="button"
+    variant="primary"
+    treatment="outline"
+    onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+  >
+    Continue
+  </sp-button>
 </sp-alert-dialog>
 ```
 
@@ -233,24 +233,24 @@ Error alert dialogs communicate critical information about an issue that a user 
 
 ```html
 <sp-alert-dialog
-    role="alertdialog"
-    aria-labelledby="error-heading"
-    aria-describedby="error-message"
-    variant="error"
+  role="alertdialog"
+  aria-labelledby="error-heading"
+  aria-describedby="error-message"
+  variant="error"
 >
-    <h2 id="error-heading" slot="heading">Unable to share</h2>
-    <p id="error-message">
-        An error occurred while sharing your project. Please verify the email
-        address and try again.
-    </p>
-    <sp-button
-        slot="button"
-        variant="primary"
-        treatment="outline"
-        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-    >
-        Continue
-    </sp-button>
+  <h2 id="error-heading" slot="heading">Unable to share</h2>
+  <p id="error-message">
+    An error occurred while sharing your project. Please verify the email
+    address and try again.
+  </p>
+  <sp-button
+    slot="button"
+    variant="primary"
+    treatment="outline"
+    onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+  >
+    Continue
+  </sp-button>
 </sp-alert-dialog>
 ```
 
@@ -262,31 +262,31 @@ Destructive alert dialogs are for when a user needs to confirm an action that wi
 
 ```html
 <sp-alert-dialog
-    role="alertdialog"
-    aria-labelledby="destructive-heading"
-    aria-describedby="destructive-message"
-    variant="destructive"
+  role="alertdialog"
+  aria-labelledby="destructive-heading"
+  aria-describedby="destructive-message"
+  variant="destructive"
 >
-    <h2 id="destructive-heading" slot="heading">Delete 3 documents?</h2>
-    <p id="destructive-message">
-        Are you sure you want to delete the 3 selected documents?
-    </p>
-    <sp-button
-        slot="button"
-        variant="secondary"
-        treatment="outline"
-        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-    >
-        Cancel
-    </sp-button>
-    <sp-button
-        slot="button"
-        variant="negative"
-        treatment="outline"
-        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-    >
-        Delete
-    </sp-button>
+  <h2 id="destructive-heading" slot="heading">Delete 3 documents?</h2>
+  <p id="destructive-message">
+    Are you sure you want to delete the 3 selected documents?
+  </p>
+  <sp-button
+    slot="button"
+    variant="secondary"
+    treatment="outline"
+    onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+  >
+    Cancel
+  </sp-button>
+  <sp-button
+    slot="button"
+    variant="negative"
+    treatment="outline"
+    onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+  >
+    Delete
+  </sp-button>
 </sp-alert-dialog>
 ```
 
@@ -306,33 +306,33 @@ An alert dialog should be placed inside a modal [overlay](../overlay/) or a [dia
 ```html
 <sp-button id="trigger">open modal</sp-button>
 <sp-overlay trigger="trigger@click" type="modal" placement="bottom">
-    <sp-popover>
-        <sp-alert-dialog
-            role="alertdialog"
-            aria-labelledby="modal-heading"
-            aria-describedby="modal-message"
-            variant="confirmation"
-        >
-            <h2 id="modal-heading" slot="heading">Important Notice</h2>
-            <p id="modal-message">This action requires your confirmation.</p>
-            <sp-button
-                slot="button"
-                variant="secondary"
-                treatment="outline"
-                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-            >
-                Cancel
-            </sp-button>
-            <sp-button
-                slot="button"
-                variant="accent"
-                treatment="fill"
-                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-            >
-                Confirm
-            </sp-button>
-        </sp-alert-dialog>
-    </sp-popover>
+  <sp-popover>
+    <sp-alert-dialog
+      role="alertdialog"
+      aria-labelledby="modal-heading"
+      aria-describedby="modal-message"
+      variant="confirmation"
+    >
+      <h2 id="modal-heading" slot="heading">Important Notice</h2>
+      <p id="modal-message">This action requires your confirmation.</p>
+      <sp-button
+        slot="button"
+        variant="secondary"
+        treatment="outline"
+        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+      >
+        Cancel
+      </sp-button>
+      <sp-button
+        slot="button"
+        variant="accent"
+        treatment="fill"
+        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+      >
+        Confirm
+      </sp-button>
+    </sp-alert-dialog>
+  </sp-popover>
 </sp-overlay>
 ```
 
@@ -342,34 +342,34 @@ An alert dialog should be placed inside a modal [overlay](../overlay/) or a [dia
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-base underlay slot="click-content">
-        <sp-alert-dialog
-            role="alertdialog"
-            aria-labelledby="modal-heading"
-            aria-describedby="modal-message"
-            variant="confirmation"
-        >
-            <h2 id="modal-heading" slot="heading">Important Notice</h2>
-            <p id="modal-message">This action requires your confirmation.</p>
-            <sp-button
-                slot="button"
-                variant="secondary"
-                treatment="outline"
-                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-            >
-                Cancel
-            </sp-button>
-            <sp-button
-                slot="button"
-                variant="accent"
-                treatment="fill"
-                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-            >
-                Confirm
-            </sp-button>
-        </sp-alert-dialog>
-    </sp-dialog-base>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+  <sp-dialog-base underlay slot="click-content">
+    <sp-alert-dialog
+      role="alertdialog"
+      aria-labelledby="modal-heading"
+      aria-describedby="modal-message"
+      variant="confirmation"
+    >
+      <h2 id="modal-heading" slot="heading">Important Notice</h2>
+      <p id="modal-message">This action requires your confirmation.</p>
+      <sp-button
+        slot="button"
+        variant="secondary"
+        treatment="outline"
+        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+      >
+        Cancel
+      </sp-button>
+      <sp-button
+        slot="button"
+        variant="accent"
+        treatment="fill"
+        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+      >
+        Confirm
+      </sp-button>
+    </sp-alert-dialog>
+  </sp-dialog-base>
+  <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 

@@ -17,64 +17,58 @@ import { __test__ } from '../utils.js';
 const prefix = 'test';
 
 describe('lookupToken', () => {
-    const { lookupToken } = __test__;
+  const { lookupToken } = __test__;
 
-    it('Core color alias', async () => {
-        const result = await lookupToken('black', prefix);
+  it('Core color alias', async () => {
+    const result = await lookupToken('black', prefix);
 
-        expect(result).toBe('rgb(0 0 0)');
-    });
+    expect(result).toBe('rgb(0 0 0)');
+  });
 
-    it('Composite core color alias', async () => {
-        const result = await lookupToken('gray-700', prefix);
+  it('Composite core color alias', async () => {
+    const result = await lookupToken('gray-700', prefix);
 
-        expect(result).toBe(`var(--${prefix}-gray-700)`);
-    });
+    expect(result).toBe(`var(--${prefix}-gray-700)`);
+  });
 
-    it('Basic token alias', async () => {
-        const result = await lookupToken('overlay-color', prefix);
+  it('Basic token alias', async () => {
+    const result = await lookupToken('overlay-color', prefix);
 
-        expect(result).toBe(`var(--${prefix}-black)`);
-    });
+    expect(result).toBe(`var(--${prefix}-black)`);
+  });
 
-    it('Composite scale set', async () => {
-        const result = await lookupToken(
-            'illustrated-message-small-title-font-size',
-            prefix
-        );
+  it('Composite scale set', async () => {
+    const result = await lookupToken(
+      'illustrated-message-small-title-font-size',
+      prefix
+    );
 
-        expect(result).toBe(
-            `var(--${prefix}-illustrated-message-small-title-font-size)`
-        );
-    });
+    expect(result).toBe(
+      `var(--${prefix}-illustrated-message-small-title-font-size)`
+    );
+  });
 
-    it('Aliased typography token', async () => {
-        const result = await lookupToken(
-            'detail-sans-serif-font-family',
-            prefix
-        );
+  it('Aliased typography token', async () => {
+    const result = await lookupToken('detail-sans-serif-font-family', prefix);
 
-        expect(result).toBe(`var(--${prefix}-sans-serif-font-family)`);
-    });
+    expect(result).toBe(`var(--${prefix}-sans-serif-font-family)`);
+  });
 
-    it('Composite color set', async () => {
-        const result = await lookupToken(
-            'accent-background-color-default',
-            prefix
-        );
+  it('Composite color set', async () => {
+    const result = await lookupToken('accent-background-color-default', prefix);
 
-        expect(result).toBe(`var(--${prefix}-accent-background-color-default)`);
-    });
+    expect(result).toBe(`var(--${prefix}-accent-background-color-default)`);
+  });
 
-    it('Returns custom token value', async () => {
-        const result = await lookupToken('animation-duration-300', prefix);
+  it('Returns custom token value', async () => {
+    const result = await lookupToken('animation-duration-300', prefix);
 
-        expect(result).toBe('190ms');
-    });
+    expect(result).toBe('190ms');
+  });
 
-    it('Returns custom token value var() when skipResolution', async () => {
-        const result = await lookupToken('serif-font', prefix);
+  it('Returns custom token value var() when skipResolution', async () => {
+    const result = await lookupToken('serif-font', prefix);
 
-        expect(result).toBe(`var(--${prefix}-serif-font-family-stack)`);
-    });
+    expect(result).toBe(`var(--${prefix}-serif-font-family-stack)`);
+  });
 });

@@ -11,16 +11,16 @@
  */
 
 import {
-    CSSResultArray,
-    html,
-    PropertyValues,
-    SpectrumElement,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  PropertyValues,
+  SpectrumElement,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
-import sidenavItemStyles from './sidenav-item.css.js';
 import sidenavHeadingStyles from './sidenav-heading.css.js';
+import sidenavItemStyles from './sidenav-item.css.js';
 
 /**
  * @element sp-sidenav-heading
@@ -28,31 +28,31 @@ import sidenavHeadingStyles from './sidenav-heading.css.js';
  * @slot - the Sidenav Items to display in association with the heading
  */
 export class SideNavHeading extends SpectrumElement {
-    @property({ reflect: true })
-    public label = '';
+  @property({ reflect: true })
+  public label = '';
 
-    public static override get styles(): CSSResultArray {
-        return [sidenavItemStyles, sidenavHeadingStyles];
-    }
+  public static override get styles(): CSSResultArray {
+    return [sidenavItemStyles, sidenavHeadingStyles];
+  }
 
-    protected override update(changes: PropertyValues): void {
-        if (!this.hasAttribute('slot')) {
-            this.slot = 'descendant';
-        }
-        super.update(changes);
+  protected override update(changes: PropertyValues): void {
+    if (!this.hasAttribute('slot')) {
+      this.slot = 'descendant';
     }
+    super.update(changes);
+  }
 
-    protected override render(): TemplateResult {
-        return html`
-            <h2 id="heading">${this.label}</h2>
-            <div id="list" aria-labelledby="heading" role="list">
-                <slot name="descendant"></slot>
-            </div>
-        `;
-    }
+  protected override render(): TemplateResult {
+    return html`
+      <h2 id="heading">${this.label}</h2>
+      <div id="list" aria-labelledby="heading" role="list">
+        <slot name="descendant"></slot>
+      </div>
+    `;
+  }
 
-    protected override firstUpdated(changed: PropertyValues<this>): void {
-        super.firstUpdated(changed);
-        this.setAttribute('role', 'listitem');
-    }
+  protected override firstUpdated(changed: PropertyValues<this>): void {
+    super.firstUpdated(changed);
+    this.setAttribute('role', 'listitem');
+  }
 }

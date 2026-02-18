@@ -9,13 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { Switch } from './src/Switch.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { Switch } from './src/Switch.js';
 
 defineElement('sp-switch', Switch);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-switch': Switch;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-switch': Switch;
+  }
 }

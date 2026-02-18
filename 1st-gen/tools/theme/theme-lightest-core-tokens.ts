@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import lightestStyles from './src/theme-lightest-core-tokens.css.js';
-import { Theme } from './src/Theme.js';
 import './core-tokens.js';
+
+import { Theme } from './src/Theme.js';
+import lightestStyles from './src/theme-lightest-core-tokens.css.js';
 
 Theme.registerThemeFragment('lightest', 'color', lightestStyles);

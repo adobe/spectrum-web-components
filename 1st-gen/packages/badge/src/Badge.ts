@@ -11,21 +11,19 @@
  */
 
 import {
-    CSSResultArray,
-    html,
-    nothing,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  nothing,
+  TemplateResult,
 } from '@spectrum-web-components/base';
-
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-
 import {
-    BADGE_VARIANTS_COLOR_S1,
-    BADGE_VARIANTS_S1,
-    BadgeBase,
-    type BadgeVariantS1,
-    FIXED_VALUES as FIXED_VALUES_BASE,
-    type FixedValues as FixedValuesBase,
+  BADGE_VARIANTS_COLOR_S1,
+  BADGE_VARIANTS_S1,
+  BadgeBase,
+  type BadgeVariantS1,
+  FIXED_VALUES as FIXED_VALUES_BASE,
+  type FixedValues as FixedValuesBase,
 } from '@spectrum-web-components/core/components/badge';
 
 import styles from './badge.css.js';
@@ -65,47 +63,44 @@ export type FixedValues = FixedValuesBase;
  * @slot icon - Optional icon that appears to the left of the label
  */
 export class Badge extends BadgeBase {
-    // ────────────────────
-    //     API OVERRIDES
-    // ────────────────────
+  // ────────────────────
+  //     API OVERRIDES
+  // ────────────────────
 
-    /**
-     * @internal
-     */
-    static override readonly VARIANTS_COLOR = BADGE_VARIANTS_COLOR_S1;
+  /**
+   * @internal
+   */
+  static override readonly VARIANTS_COLOR = BADGE_VARIANTS_COLOR_S1;
 
-    /**
-     * @internal
-     */
-    static override readonly VARIANTS = BADGE_VARIANTS_S1;
+  /**
+   * @internal
+   */
+  static override readonly VARIANTS = BADGE_VARIANTS_S1;
 
-    /**
-     * The variant of the badge.
-     */
-    @property({ type: String, reflect: true })
-    public override variant: BadgeVariantS1 = 'informative';
+  /**
+   * The variant of the badge.
+   */
+  @property({ type: String, reflect: true })
+  public override variant: BadgeVariantS1 = 'informative';
 
-    // ──────────────────────────────
-    //     RENDERING & STYLING
-    // ──────────────────────────────
+  // ──────────────────────────────
+  //     RENDERING & STYLING
+  // ──────────────────────────────
 
-    public static override get styles(): CSSResultArray {
-        return [styles];
-    }
+  public static override get styles(): CSSResultArray {
+    return [styles];
+  }
 
-    protected override render(): TemplateResult {
-        return html`
-            ${this.hasIcon
-                ? html`
-                      <slot
-                          name="icon"
-                          ?icon-only=${!this.slotHasContent}
-                      ></slot>
-                  `
-                : nothing}
-            <div class="label">
-                <slot></slot>
-            </div>
-        `;
-    }
+  protected override render(): TemplateResult {
+    return html`
+      ${this.hasIcon
+        ? html`
+            <slot name="icon" ?icon-only=${!this.slotHasContent}></slot>
+          `
+        : nothing}
+      <div class="label">
+        <slot></slot>
+      </div>
+    `;
+  }
 }

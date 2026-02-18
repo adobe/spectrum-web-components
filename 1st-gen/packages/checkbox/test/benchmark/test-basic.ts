@@ -10,12 +10,14 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import { html } from 'lit';
+
+import '@spectrum-web-components/checkbox/sp-checkbox.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-checkbox id="checkbox1">Component</sp-checkbox>
-    <sp-checkbox id="checkbox2" checked>Component</sp-checkbox>
-    <sp-checkbox id="checkbox3" indeterminate>Component</sp-checkbox>
+  <sp-checkbox id="checkbox1">Component</sp-checkbox>
+  <sp-checkbox id="checkbox2" checked>Component</sp-checkbox>
+  <sp-checkbox id="checkbox3" indeterminate>Component</sp-checkbox>
 `);

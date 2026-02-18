@@ -1,14 +1,14 @@
 {
-    "compilerOptions": {
-        "composite": true,
-        "rootDir": "./"
-    },
-    "exclude": ["test/*.ts", "stories/*.ts"],
-    "extends": "../../tsconfig.json",
-    "include": ["*.ts", "src/*.ts"],
-    "references": [
-        { "path": "../../tools/base" },
-        { "path": "../textfield" },
-        { "path": "../menu" }
-    ]
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "./"
+  },
+  "exclude": ["test/*.ts", "stories/*.ts"],
+  "extends": "../../tsconfig.json",
+  "include": ["*.ts", "src/*.ts"],
+  "references": [
+    { "path": "../../tools/base" },
+    { "path": "../textfield" },
+    { "path": "../menu" }
+  ]
 }

@@ -15,7 +15,7 @@ import { Grid } from './src/Grid.js';
 customElements.define('sp-grid', Grid);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-grid': Grid;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-grid': Grid;
+  }
 }

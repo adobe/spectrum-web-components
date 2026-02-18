@@ -33,19 +33,19 @@ The dialog wrapper consists of several key parts:
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-wrapper
-        slot="click-content"
-        headline="Dialog title"
-        hero="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII"
-        confirm-label="Confirm"
-        cancel-label="Cancel"
-        secondary-label="Secondary"
-        underlay
-        footer="Content for footer"
-    >
-        Content of the dialog
-    </sp-dialog-wrapper>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+  <sp-dialog-wrapper
+    slot="click-content"
+    headline="Dialog title"
+    hero="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII"
+    confirm-label="Confirm"
+    cancel-label="Cancel"
+    secondary-label="Secondary"
+    underlay
+    footer="Content for footer"
+  >
+    Content of the dialog
+  </sp-dialog-wrapper>
+  <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
@@ -61,18 +61,18 @@ The dialog wrapper supports different sizes via the `size` attribute: `s`, `m`, 
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-wrapper
-        size="s"
-        slot="click-content"
-        headline="Dialog title"
-        dismissable
-        dismiss-label="Close"
-        underlay
-        footer="Content for footer"
-    >
-        Content of the dialog
-    </sp-dialog-wrapper>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+  <sp-dialog-wrapper
+    size="s"
+    slot="click-content"
+    headline="Dialog title"
+    dismissable
+    dismiss-label="Close"
+    underlay
+    footer="Content for footer"
+  >
+    Content of the dialog
+  </sp-dialog-wrapper>
+  <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
@@ -82,18 +82,18 @@ The dialog wrapper supports different sizes via the `size` attribute: `s`, `m`, 
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-wrapper
-        size="m"
-        slot="click-content"
-        headline="Dialog title"
-        dismissable
-        dismiss-label="Close"
-        underlay
-        footer="Content for footer"
-    >
-        Content of the dialog
-    </sp-dialog-wrapper>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+  <sp-dialog-wrapper
+    size="m"
+    slot="click-content"
+    headline="Dialog title"
+    dismissable
+    dismiss-label="Close"
+    underlay
+    footer="Content for footer"
+  >
+    Content of the dialog
+  </sp-dialog-wrapper>
+  <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
@@ -103,18 +103,18 @@ The dialog wrapper supports different sizes via the `size` attribute: `s`, `m`, 
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-wrapper
-        size="l"
-        slot="click-content"
-        headline="Dialog title"
-        dismissable
-        dismiss-label="Close"
-        underlay
-        footer="Content for footer"
-    >
-        Content of the dialog
-    </sp-dialog-wrapper>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+  <sp-dialog-wrapper
+    size="l"
+    slot="click-content"
+    headline="Dialog title"
+    dismissable
+    dismiss-label="Close"
+    underlay
+    footer="Content for footer"
+  >
+    Content of the dialog
+  </sp-dialog-wrapper>
+  <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
@@ -131,17 +131,17 @@ The `underlay` attribute can be used to add an underlay element between the page
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-wrapper
-        slot="click-content"
-        headline="Dialog title"
-        dismissable
-        dismiss-label="Close"
-        underlay
-        footer="Content for footer"
-    >
-        Content of the dialog
-    </sp-dialog-wrapper>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+  <sp-dialog-wrapper
+    slot="click-content"
+    headline="Dialog title"
+    dismissable
+    dismiss-label="Close"
+    underlay
+    footer="Content for footer"
+  >
+    Content of the dialog
+  </sp-dialog-wrapper>
+  <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
@@ -151,16 +151,16 @@ The `underlay` attribute can be used to add an underlay element between the page
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-wrapper
-        slot="click-content"
-        headline="Dialog title"
-        dismissable
-        dismiss-label="Close"
-        footer="Content for footer"
-    >
-        Content of the dialog
-    </sp-dialog-wrapper>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+  <sp-dialog-wrapper
+    slot="click-content"
+    headline="Dialog title"
+    dismissable
+    dismiss-label="Close"
+    footer="Content for footer"
+  >
+    Content of the dialog
+  </sp-dialog-wrapper>
+  <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
@@ -177,17 +177,17 @@ The `dismissable` attribute can be used to add an underlay element between the p
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-wrapper
-        slot="click-content"
-        headline="Dialog title"
-        dismissable
-        dismiss-label="Close"
-        underlay
-        footer="Content for footer"
-    >
-        Content of the dialog
-    </sp-dialog-wrapper>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+  <sp-dialog-wrapper
+    slot="click-content"
+    headline="Dialog title"
+    dismissable
+    dismiss-label="Close"
+    underlay
+    footer="Content for footer"
+  >
+    Content of the dialog
+  </sp-dialog-wrapper>
+  <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
@@ -197,15 +197,15 @@ The `dismissable` attribute can be used to add an underlay element between the p
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-wrapper
-        slot="click-content"
-        headline="Dialog title"
-        underlay
-        footer="Content for footer"
-    >
-        Content of the dialog
-    </sp-dialog-wrapper>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+  <sp-dialog-wrapper
+    slot="click-content"
+    headline="Dialog title"
+    underlay
+    footer="Content for footer"
+  >
+    Content of the dialog
+  </sp-dialog-wrapper>
+  <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
@@ -222,17 +222,17 @@ The dialog wrapper supports different display modes:
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-wrapper
-        slot="click-content"
-        headline="Dialog title"
-        cancel-label="Cancel"
-        underlay
-        footer="Content for footer"
-        mode="fullscreen"
-    >
-        Content of the dialog
-    </sp-dialog-wrapper>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+  <sp-dialog-wrapper
+    slot="click-content"
+    headline="Dialog title"
+    cancel-label="Cancel"
+    underlay
+    footer="Content for footer"
+    mode="fullscreen"
+  >
+    Content of the dialog
+  </sp-dialog-wrapper>
+  <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
@@ -242,17 +242,17 @@ The dialog wrapper supports different display modes:
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-wrapper
-        slot="click-content"
-        headline="Dialog title"
-        cancel-label="Cancel"
-        underlay
-        footer="Content for footer"
-        mode="fullscreenTakeover"
-    >
-        Content of the dialog
-    </sp-dialog-wrapper>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+  <sp-dialog-wrapper
+    slot="click-content"
+    headline="Dialog title"
+    cancel-label="Cancel"
+    underlay
+    footer="Content for footer"
+    mode="fullscreenTakeover"
+  >
+    Content of the dialog
+  </sp-dialog-wrapper>
+  <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
@@ -285,17 +285,17 @@ For accessible dialogs, always use `receives-focus="auto"` or `receives-focus="t
 
 ```html
 <overlay-trigger type="modal" receives-focus="true">
-    <sp-dialog-wrapper
-        slot="click-content"
-        headline="Dialog title"
-        dismissable
-        dismiss-label="Close"
-        underlay
-        footer="Content for footer"
-        mode="fullscreenTakeover"
-    >
-        Content of the dialog
-    </sp-dialog-wrapper>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+  <sp-dialog-wrapper
+    slot="click-content"
+    headline="Dialog title"
+    dismissable
+    dismiss-label="Close"
+    underlay
+    footer="Content for footer"
+    mode="fullscreenTakeover"
+  >
+    Content of the dialog
+  </sp-dialog-wrapper>
+  <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```

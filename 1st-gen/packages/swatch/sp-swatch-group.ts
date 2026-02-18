@@ -9,13 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { SwatchGroup } from './src/SwatchGroup.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { SwatchGroup } from './src/SwatchGroup.js';
 
 defineElement('sp-swatch-group', SwatchGroup);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-swatch-group': SwatchGroup;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-swatch-group': SwatchGroup;
+  }
 }

@@ -11,42 +11,43 @@
  */
 
 import { TemplateResult } from '@spectrum-web-components/base';
+
 import type { Properties } from './index.js';
 import { renderButtons } from './index.js';
 
 export default {
-    component: 'sp-action-button',
-    title: 'Action Button/Emphasized',
+  component: 'sp-action-button',
+  title: 'Action Button/Emphasized',
 };
 
 const emphasized = true;
 
 export const XS = (args: Properties): TemplateResult => renderButtons(args);
 XS.args = {
-    emphasized,
-    size: 'xs',
+  emphasized,
+  size: 'xs',
 };
 
 export const s = (args: Properties): TemplateResult => renderButtons(args);
 s.args = {
-    emphasized,
-    size: 's',
+  emphasized,
+  size: 's',
 };
 
 export const m = (args: Properties): TemplateResult => renderButtons(args);
 m.args = {
-    emphasized,
-    size: 'm',
+  emphasized,
+  size: 'm',
 };
 
 export const l = (args: Properties): TemplateResult => renderButtons(args);
 l.args = {
-    emphasized,
-    size: 'l',
+  emphasized,
+  size: 'l',
 };
 
 export const XL = (args: Properties): TemplateResult => renderButtons(args);
 XL.args = {
-    emphasized,
-    size: 'xl',
+  emphasized,
+  size: 'xl',
 };

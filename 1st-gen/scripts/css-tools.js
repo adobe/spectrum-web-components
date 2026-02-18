@@ -12,44 +12,45 @@
  * governing permissions and limitations under the License.
  */
 
-import path from 'path';
+import { stripIndent } from 'common-tags';
 import fs from 'fs';
 import { bundleAsync } from 'lightningcss';
-import { fileURLToPath } from 'url';
 import { createRequire } from 'node:module';
-import { stripIndent } from 'common-tags';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 import 'colors';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
 
 const log = {
-    success: (message) => console.log(`${'✓'.green}  ${message}`),
-    fail: (message) => console.log(`${'✗'.red}  ${message}`),
+  success: (message) => console.log(`${'✓'.green}  ${message}`),
+  fail: (message) => console.log(`${'✗'.red}  ${message}`),
 };
 
 const getPackagePath = (packageName) => {
-    let filepath;
+  let filepath;
 
-    // Escape hatch for local packages: @spectrum-web-components
-    if (packageName.startsWith('@spectrum-web-components')) {
-        return path.resolve(
-            path.join(__dirname, '..', '..', 'node_modules', packageName)
-        );
-    }
+  // Escape hatch for local packages: @spectrum-web-components
+  if (packageName.startsWith('@spectrum-web-components')) {
+    return path.resolve(
+      path.join(__dirname, '..', '..', 'node_modules', packageName)
+    );
+  }
 
-    try {
-        filepath = require.resolve(packageName);
-    } catch (er) {
-        log.fail(`Could not find ${packageName} installed as a dependency`);
-        return new Error(er);
-    }
+  try {
+    filepath = require.resolve(packageName);
+  } catch (er) {
+    log.fail(`Could not find ${packageName} installed as a dependency`);
+    return new Error(er);
+  }
 
-    return filepath;
+  return filepath;
 };
 
 const wrapCSSResult = (content) => {
-    return stripIndent`
+  return stripIndent`
         import { css } from '@spectrum-web-components/base';
         const styles = css\`
             ${content}
@@ -61,8 +62,8 @@ const wrapCSSResult = (content) => {
 const headerPath = path.resolve(__dirname, '..', 'config', 'HEADER.js');
 let header = '';
 if (fs.existsSync(headerPath)) {
-    header = fs.readFileSync(headerPath, 'utf8');
-    header = header.replace('<%= YEAR %>', new Date().getFullYear());
+  header = fs.readFileSync(headerPath, 'utf8');
+  header = header.replace('<%= YEAR %>', new Date().getFullYear());
 }
 
 /**
@@ -74,35 +75,31 @@ if (fs.existsSync(headerPath)) {
  *
  */
 export const processCSS = async (cssPath) => {
-    return bundleAsync({
-        filename: cssPath,
-        minify: true,
-        errorRecovery: true,
-        resolver: {
-            read(filePath) {
-                const file = fs.readFileSync(filePath, 'utf8');
-                return file;
-            },
-            resolve(specifier, from) {
-                if (specifier.startsWith('./')) {
-                    return path.resolve(from, '..', specifier);
-                } else {
-                    return getPackagePath(specifier);
-                }
-            },
-        },
-    })
-        .then(({ code }) => {
-            log.success(cssPath.yellow + ' bundled successfully');
+  return bundleAsync({
+    filename: cssPath,
+    minify: true,
+    errorRecovery: true,
+    resolver: {
+      read(filePath) {
+        const file = fs.readFileSync(filePath, 'utf8');
+        return file;
+      },
+      resolve(specifier, from) {
+        if (specifier.startsWith('./')) {
+          return path.resolve(from, '..', specifier);
+        } else {
+          return getPackagePath(specifier);
+        }
+      },
+    },
+  })
+    .then(({ code }) => {
+      log.success(cssPath.yellow + ' bundled successfully');
 
-            fs.writeFileSync(
-                `${cssPath}.ts`,
-                header + wrapCSSResult(code),
-                'utf-8'
-            );
-        })
-        .catch((er) => {
-            log.fail(cssPath.yellow + ' failed to bundle');
-            console.error(er);
-        });
+      fs.writeFileSync(`${cssPath}.ts`, header + wrapCSSResult(code), 'utf-8');
+    })
+    .catch((er) => {
+      log.fail(cssPath.yellow + ' failed to bundle');
+      console.error(er);
+    });
 };

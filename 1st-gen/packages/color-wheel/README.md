@@ -71,9 +71,9 @@ The color wheel supports a wide variety of color formats for setting and getting
 
 ```html
 <div style="display: flex; gap: 16px;">
-    <sp-color-wheel color="#7277b5"></sp-color-wheel>
-    <sp-color-wheel color="hsl(96, 84.00%, 49.00%)"></sp-color-wheel>
-    <sp-color-wheel color="red"></sp-color-wheel>
+  <sp-color-wheel color="#7277b5"></sp-color-wheel>
+  <sp-color-wheel color="hsl(96, 84.00%, 49.00%)"></sp-color-wheel>
+  <sp-color-wheel color="red"></sp-color-wheel>
 </div>
 ```
 
@@ -149,15 +149,15 @@ The `step` attribute controls the increment of hue adjustment when using keyboar
 
 ```html
 <div style="display: flex; gap: 16px;">
-    <sp-color-wheel step="1" label="Fine Control (1° per key)"></sp-color-wheel>
-    <sp-color-wheel
-        step="10"
-        label="Medium Control (10° per key)"
-    ></sp-color-wheel>
-    <sp-color-wheel
-        step="45"
-        label="Coarse Control (45° per key)"
-    ></sp-color-wheel>
+  <sp-color-wheel step="1" label="Fine Control (1° per key)"></sp-color-wheel>
+  <sp-color-wheel
+    step="10"
+    label="Medium Control (10° per key)"
+  ></sp-color-wheel>
+  <sp-color-wheel
+    step="45"
+    label="Coarse Control (45° per key)"
+  ></sp-color-wheel>
 </div>
 ```
 
@@ -166,9 +166,9 @@ The step size affects keyboard navigation:
 - Regular arrow keys move by the step value
 - <kbd>Shift</kbd> + arrow keys move by 10× the step value
 - Choose your step size based on your use case:
-    - **step="1"**: Precise color selection, best for professional design tools
-    - **step="10"**: Balanced control, good for general use
-    - **step="45"**: Quick selection between major hues, ideal for simple color pickers
+  - **step="1"**: Precise color selection, best for professional design tools
+  - **step="10"**: Balanced control, good for general use
+  - **step="45"**: Quick selection between major hues, ideal for simple color pickers
 
 ##### Label
 
@@ -192,24 +192,18 @@ The `tabIndex` property controls the tab order of the color wheel within the pag
 
 ```html
 <div style="display: flex; gap: 16px;">
-    <div style="text-align: center;">
-        <div style="font-weight: bold; margin-bottom: 8px;">
-            Default Tab Order
-        </div>
-        <sp-color-wheel></sp-color-wheel>
-    </div>
-    <div style="text-align: center;">
-        <div style="font-weight: bold; margin-bottom: 8px;">
-            Skip in Tab Order
-        </div>
-        <sp-color-wheel tabindex="-1"></sp-color-wheel>
-    </div>
-    <div style="text-align: center;">
-        <div style="font-weight: bold; margin-bottom: 8px;">
-            Custom Tab Order
-        </div>
-        <sp-color-wheel tabindex="5"></sp-color-wheel>
-    </div>
+  <div style="text-align: center;">
+    <div style="font-weight: bold; margin-bottom: 8px;">Default Tab Order</div>
+    <sp-color-wheel></sp-color-wheel>
+  </div>
+  <div style="text-align: center;">
+    <div style="font-weight: bold; margin-bottom: 8px;">Skip in Tab Order</div>
+    <sp-color-wheel tabindex="-1"></sp-color-wheel>
+  </div>
+  <div style="text-align: center;">
+    <div style="font-weight: bold; margin-bottom: 8px;">Custom Tab Order</div>
+    <sp-color-wheel tabindex="5"></sp-color-wheel>
+  </div>
 </div>
 ```
 
@@ -233,7 +227,7 @@ The component exposes CSS custom properties for consistent theming. Both `--mod-
 
 ```html
 <sp-color-wheel
-    style="--mod-colorwheel-width: 250px; --mod-colorwheel-height: 250px;"
+  style="--mod-colorwheel-width: 250px; --mod-colorwheel-height: 250px;"
 ></sp-color-wheel>
 ```
 

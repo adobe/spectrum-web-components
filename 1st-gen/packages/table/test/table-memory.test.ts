@@ -11,7 +11,8 @@
  */
 
 import '@spectrum-web-components/table/sp-table.js';
-import { elements } from '../stories/table-elements.stories.js';
+
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
+import { elements } from '../stories/table-elements.stories.js';
 
 testForMemoryLeaks(elements());

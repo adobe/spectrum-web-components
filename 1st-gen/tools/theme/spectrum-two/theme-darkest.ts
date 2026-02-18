@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+import '../src/spectrum-two/core.js';
+
 import darkStyles from '../src/spectrum-two/theme-dark.css.js';
 import { Theme } from '../src/Theme.js';
-import '../src/spectrum-two/core.js';
 
 Theme.registerThemeFragment('darkest-spectrum-two', 'color', darkStyles);

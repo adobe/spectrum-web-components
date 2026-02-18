@@ -15,7 +15,7 @@ import { ColorField } from './src/ColorField.js';
 customElements.define('sp-color-field', ColorField);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-color-field': ColorField;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-color-field': ColorField;
+  }
 }

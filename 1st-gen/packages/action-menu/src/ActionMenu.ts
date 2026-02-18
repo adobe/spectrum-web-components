@@ -11,21 +11,23 @@
  */
 
 import {
-    CSSResultArray,
-    html,
-    PropertyValues,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  PropertyValues,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import { state } from '@spectrum-web-components/base/src/decorators.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 import { DESCRIPTION_ID, PickerBase } from '@spectrum-web-components/picker';
-import '@spectrum-web-components/action-button/sp-action-button.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
+
+import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
+
 import actionMenuStyles from './action-menu.css.js';
-import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 
 /**
  * @element sp-action-menu
@@ -40,129 +42,123 @@ import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slot
  *   its overlay, use `selects="single" to activate this functionality.
  */
 export class ActionMenu extends ObserveSlotPresence(
-    ObserveSlotText(PickerBase, 'label'),
-    '[slot="label-only"]'
+  ObserveSlotText(PickerBase, 'label'),
+  '[slot="label-only"]'
 ) {
-    public static override get styles(): CSSResultArray {
-        return [actionMenuStyles];
+  public static override get styles(): CSSResultArray {
+    return [actionMenuStyles];
+  }
+
+  @property({ type: String })
+  public override selects: undefined | 'single' = undefined;
+
+  @property({ reflect: true, attribute: 'static-color' })
+  public staticColor?: 'white' | 'black';
+
+  protected override listRole: 'listbox' | 'menu' = 'menu';
+  protected override itemRole = 'menuitem';
+  private get hasLabel(): boolean {
+    return this.slotHasContent;
+  }
+
+  @state()
+  private get labelOnly(): boolean {
+    return this.slotContentIsPresent;
+  }
+
+  public override handleSlottableRequest = (
+    event: SlottableRequestEvent
+  ): void => {
+    this.dispatchEvent(new SlottableRequestEvent(event.name, event.data));
+  };
+
+  protected override get buttonContent(): TemplateResult[] {
+    return [
+      html`
+        ${this.labelOnly
+          ? html``
+          : html`
+              <slot
+                name="icon"
+                slot="icon"
+                ?icon-only=${!this.hasLabel}
+                ?hidden=${this.labelOnly}
+              >
+                <sp-icon-more class="icon" size=${this.size}></sp-icon-more>
+              </slot>
+            `}
+        <slot name="label" ?hidden=${!this.hasLabel}></slot>
+        <slot name="label-only"></slot>
+      `,
+    ];
+  }
+
+  protected override render(): TemplateResult {
+    if (this.tooltipEl) {
+      this.tooltipEl.disabled = this.open;
     }
+    return html`
+      <sp-action-button
+        aria-describedby=${DESCRIPTION_ID}
+        ?quiet=${this.quiet}
+        ?selected=${this.open}
+        static-color=${ifDefined(this.staticColor)}
+        aria-haspopup="true"
+        aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
+        aria-expanded=${this.open ? 'true' : 'false'}
+        aria-label=${ifDefined(this.label || undefined)}
+        id="button"
+        class="button"
+        size=${this.size}
+        @blur=${this.handleButtonBlur}
+        @focus=${this.handleButtonFocus}
+        @keydown=${{
+          handleEvent: this.handleEnterKeydown,
+          capture: true,
+        }}
+        ?disabled=${this.disabled}
+      >
+        ${this.buttonContent}
+      </sp-action-button>
+      <slot name="tooltip" @slotchange=${this.handleTooltipSlotchange}></slot>
+      ${this.renderMenu} ${this.renderDescriptionSlot}
+    `;
+  }
 
-    @property({ type: String })
-    public override selects: undefined | 'single' = undefined;
-
-    @property({ reflect: true, attribute: 'static-color' })
-    public staticColor?: 'white' | 'black';
-
-    protected override listRole: 'listbox' | 'menu' = 'menu';
-    protected override itemRole = 'menuitem';
-    private get hasLabel(): boolean {
-        return this.slotHasContent;
+  protected override update(changedProperties: PropertyValues<this>): void {
+    if (changedProperties.has('invalid')) {
+      this.invalid = false;
     }
+    super.update(changedProperties);
+  }
 
-    @state()
-    private get labelOnly(): boolean {
-        return this.slotContentIsPresent;
-    }
+  protected override hasAccessibleLabel(): boolean {
+    return (
+      !!this.label ||
+      !!this.getAttribute('aria-label') ||
+      !!this.getAttribute('aria-labelledby') ||
+      !!this.appliedLabel ||
+      this.hasLabel ||
+      this.labelOnly
+    );
+  }
 
-    public override handleSlottableRequest = (
-        event: SlottableRequestEvent
-    ): void => {
-        this.dispatchEvent(new SlottableRequestEvent(event.name, event.data));
-    };
-
-    protected override get buttonContent(): TemplateResult[] {
-        return [
-            html`
-                ${this.labelOnly
-                    ? html``
-                    : html`
-                          <slot
-                              name="icon"
-                              slot="icon"
-                              ?icon-only=${!this.hasLabel}
-                              ?hidden=${this.labelOnly}
-                          >
-                              <sp-icon-more
-                                  class="icon"
-                                  size=${this.size}
-                              ></sp-icon-more>
-                          </slot>
-                      `}
-                <slot name="label" ?hidden=${!this.hasLabel}></slot>
-                <slot name="label-only"></slot>
-            `,
-        ];
-    }
-
-    protected override render(): TemplateResult {
-        if (this.tooltipEl) {
-            this.tooltipEl.disabled = this.open;
+  protected override warnNoLabel(): void {
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `<${this.localName}> needs one of the following to be accessible:`,
+        'https://opensource.adobe.com/spectrum-web-components/components/action-menu/#accessibility',
+        {
+          type: 'accessibility',
+          issues: [
+            `an <sp-field-label> element with a \`for\` attribute referencing the \`id\` of the \`<${this.localName}>\`, or`,
+            'value supplied to the "label" attribute, which will be displayed visually as placeholder text',
+            'text content supplied in a <span> with slot="label", or, text content supplied in a <span> with slot="label-only"',
+            'which will also be displayed visually as placeholder text.',
+          ],
         }
-        return html`
-            <sp-action-button
-                aria-describedby=${DESCRIPTION_ID}
-                ?quiet=${this.quiet}
-                ?selected=${this.open}
-                static-color=${ifDefined(this.staticColor)}
-                aria-haspopup="true"
-                aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
-                aria-expanded=${this.open ? 'true' : 'false'}
-                aria-label=${ifDefined(this.label || undefined)}
-                id="button"
-                class="button"
-                size=${this.size}
-                @blur=${this.handleButtonBlur}
-                @focus=${this.handleButtonFocus}
-                @keydown=${{
-                    handleEvent: this.handleEnterKeydown,
-                    capture: true,
-                }}
-                ?disabled=${this.disabled}
-            >
-                ${this.buttonContent}
-            </sp-action-button>
-            <slot
-                name="tooltip"
-                @slotchange=${this.handleTooltipSlotchange}
-            ></slot>
-            ${this.renderMenu} ${this.renderDescriptionSlot}
-        `;
+      );
     }
-
-    protected override update(changedProperties: PropertyValues<this>): void {
-        if (changedProperties.has('invalid')) {
-            this.invalid = false;
-        }
-        super.update(changedProperties);
-    }
-
-    protected override hasAccessibleLabel(): boolean {
-        return (
-            !!this.label ||
-            !!this.getAttribute('aria-label') ||
-            !!this.getAttribute('aria-labelledby') ||
-            !!this.appliedLabel ||
-            this.hasLabel ||
-            this.labelOnly
-        );
-    }
-
-    protected override warnNoLabel(): void {
-        if (window.__swc?.DEBUG) {
-            window.__swc.warn(
-                this,
-                `<${this.localName}> needs one of the following to be accessible:`,
-                'https://opensource.adobe.com/spectrum-web-components/components/action-menu/#accessibility',
-                {
-                    type: 'accessibility',
-                    issues: [
-                        `an <sp-field-label> element with a \`for\` attribute referencing the \`id\` of the \`<${this.localName}>\`, or`,
-                        'value supplied to the "label" attribute, which will be displayed visually as placeholder text',
-                        'text content supplied in a <span> with slot="label", or, text content supplied in a <span> with slot="label-only"',
-                        'which will also be displayed visually as placeholder text.',
-                    ],
-                }
-            );
-        }
-    }
+  }
 }

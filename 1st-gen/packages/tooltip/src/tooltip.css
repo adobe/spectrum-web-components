@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -14,55 +14,55 @@
 @import url("./tooltip-overrides.css");
 
 :host {
-    display: contents;
+  display: contents;
 }
 
 #tooltip {
-    width: fit-content;
-    white-space: initial;
-    max-width: var(--spectrum-tooltip-max-inline-size);
+  width: fit-content;
+  max-width: var(--spectrum-tooltip-max-inline-size);
+  white-space: initial;
 }
 
 #tip {
-    clip-path: polygon(0 -5%, 50% 50%, 100% -5%);
-    width: var(--spectrum-tooltip-tip-inline-size) !important;
-    height: var(--spectrum-tooltip-tip-inline-size) !important;
+  width: var(--spectrum-tooltip-tip-inline-size) !important;
+  height: var(--spectrum-tooltip-tip-inline-size) !important;
+  clip-path: polygon(0 -5%, 50% 50%, 100% -5%);
 }
 
 #tip[style] {
-    transform: none !important;
+  transform: none !important;
 }
 
 :host(:not([placement*="top"])) #tooltip {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 :host([placement*="top"]) #tooltip #tip {
-    inset-block-start: 100%;
+  inset-block-start: 100%;
 }
 
 :host([placement*="bottom"]) #tooltip #tip {
-    inset-block-end: 100%;
-    clip-path: polygon(50% 50%, 0 105%, 100% 105%);
-    top: auto;
+  inset-block-end: 100%;
+  top: auto;
+  clip-path: polygon(50% 50%, 0 105%, 100% 105%);
 }
 
 :host([placement*="left"]) #tooltip #tip,
 :host([placement*="right"]) #tooltip #tip {
-    inset-block-start: 50%;
-    transform: translateY(-50%);
+  inset-block-start: 50%;
+  transform: translateY(-50%);
 }
 
 :host([placement*="right"]) #tooltip #tip {
-    clip-path: polygon(50% 50%, 105% 100%, 105% 0);
-    inset-inline: calc(var(--mod-tooltip-tip-block-size, var(--spectrum-tooltip-tip-block-size)) * -2) 100%;
+  inset-inline: calc(var(--mod-tooltip-tip-block-size, var(--spectrum-tooltip-tip-block-size)) * -2) 100%;
+  clip-path: polygon(50% 50%, 105% 100%, 105% 0);
 }
 
 :host([placement*="left"]) #tooltip #tip {
-    clip-path: polygon(-5% 0, -5% 100%, 50% 50%);
-    inset-inline-start: 100%;
+  inset-inline-start: 100%;
+  clip-path: polygon(-5% 0, -5% 100%, 50% 50%);
 }
 
 sp-overlay:not(:defined) {
-    display: none;
+  display: none;
 }

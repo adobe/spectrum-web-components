@@ -18,22 +18,22 @@ import { Asset } from '@adobe/swc/asset';
 import '@adobe/swc/asset';
 
 import {
-    getComponent,
-    getComponents,
-    withWarningSpy,
+  getComponent,
+  getComponents,
+  withWarningSpy,
 } from '../../../utils/test-utils.js';
 import meta from '../stories/asset.stories.js';
 import { Overview, Variants } from '../stories/asset.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
-    ...meta,
-    title: 'Asset/Tests',
-    parameters: {
-        ...meta.parameters,
-        docs: { disable: true, page: null },
-    },
-    tags: ['!autodocs', 'dev'],
+  ...meta,
+  title: 'Asset/Tests',
+  parameters: {
+    ...meta.parameters,
+    docs: { disable: true, page: null },
+  },
+  tags: ['!autodocs', 'dev'],
 } as Meta;
 
 // ──────────────────────────────────────────────────────────────
@@ -41,20 +41,17 @@ export default {
 // ──────────────────────────────────────────────────────────────
 
 export const OverviewTest: Story = {
-    ...Overview,
-    play: async ({ canvasElement, step }) => {
-        const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
 
-        await step(
-            'renders slotted content when no variant is set',
-            async () => {
-                const img = asset.querySelector('img');
-                expect(asset.variant).toBeUndefined();
-                expect(img).toBeTruthy();
-                expect(img?.getAttribute('alt')?.length).toBeGreaterThan(0);
-            }
-        );
-    },
+    await step('renders slotted content when no variant is set', async () => {
+      const img = asset.querySelector('img');
+      expect(asset.variant).toBeUndefined();
+      expect(img).toBeTruthy();
+      expect(img?.getAttribute('alt')?.length).toBeGreaterThan(0);
+    });
+  },
 };
 
 // ──────────────────────────────────────────────────────────────
@@ -62,35 +59,29 @@ export const OverviewTest: Story = {
 // ──────────────────────────────────────────────────────────────
 
 export const DefaultLabelFallbackTest: Story = {
-    render: () => html`
-        <swc-asset variant="file"></swc-asset>
-        <swc-asset variant="folder"></swc-asset>
-    `,
-    play: async ({ canvasElement, step }) => {
-        const assets = await getComponents<Asset>(canvasElement, 'swc-asset');
+  render: () => html`
+    <swc-asset variant="file"></swc-asset>
+    <swc-asset variant="folder"></swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const assets = await getComponents<Asset>(canvasElement, 'swc-asset');
 
-        await step(
-            'file variant falls back to default aria-label',
-            async () => {
-                const fileAsset = assets.find(
-                    (a) => a.getAttribute('variant') === 'file'
-                ) as Asset;
-                const svg = fileAsset.shadowRoot?.querySelector('svg');
-                expect(svg?.getAttribute('aria-label')).toBe('File');
-            }
-        );
+    await step('file variant falls back to default aria-label', async () => {
+      const fileAsset = assets.find(
+        (a) => a.getAttribute('variant') === 'file'
+      ) as Asset;
+      const svg = fileAsset.shadowRoot?.querySelector('svg');
+      expect(svg?.getAttribute('aria-label')).toBe('File');
+    });
 
-        await step(
-            'folder variant falls back to default aria-label',
-            async () => {
-                const folderAsset = assets.find(
-                    (a) => a.getAttribute('variant') === 'folder'
-                ) as Asset;
-                const svg = folderAsset.shadowRoot?.querySelector('svg');
-                expect(svg?.getAttribute('aria-label')).toBe('Folder');
-            }
-        );
-    },
+    await step('folder variant falls back to default aria-label', async () => {
+      const folderAsset = assets.find(
+        (a) => a.getAttribute('variant') === 'folder'
+      ) as Asset;
+      const svg = folderAsset.shadowRoot?.querySelector('svg');
+      expect(svg?.getAttribute('aria-label')).toBe('Folder');
+    });
+  },
 };
 
 // ──────────────────────────────────────────────────────────────
@@ -98,22 +89,22 @@ export const DefaultLabelFallbackTest: Story = {
 // ──────────────────────────────────────────────────────────────
 
 export const VariantsTest: Story = {
-    ...Variants,
-    play: async ({ canvasElement, step }) => {
-        const assets = await getComponents<Asset>(canvasElement, 'swc-asset');
+  ...Variants,
+  play: async ({ canvasElement, step }) => {
+    const assets = await getComponents<Asset>(canvasElement, 'swc-asset');
 
-        await step('renders file and folder icons with labels', async () => {
-            const fileAsset = assets.find(
-                (item) => item.getAttribute('variant') === 'file'
-            );
-            const folderAsset = assets.find(
-                (item) => item.getAttribute('variant') === 'folder'
-            );
+    await step('renders file and folder icons with labels', async () => {
+      const fileAsset = assets.find(
+        (item) => item.getAttribute('variant') === 'file'
+      );
+      const folderAsset = assets.find(
+        (item) => item.getAttribute('variant') === 'folder'
+      );
 
-            expect(fileAsset).toBeTruthy();
-            expect(folderAsset).toBeTruthy();
-        });
-    },
+      expect(fileAsset).toBeTruthy();
+      expect(folderAsset).toBeTruthy();
+    });
+  },
 };
 
 // ──────────────────────────────────────────────────────────────
@@ -121,36 +112,38 @@ export const VariantsTest: Story = {
 // ──────────────────────────────────────────────────────────────
 
 export const InvalidVariantWarningTest: Story = {
-    render: () => html` <swc-asset></swc-asset> `,
-    play: async ({ canvasElement, step }) => {
-        const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+  render: () => html`
+    <swc-asset></swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
 
-        await step('warns when an invalid variant is set in DEBUG mode', () =>
-            withWarningSpy(async (warnCalls) => {
-                asset.variant = 'not-a-variant' as Asset['variant'];
-                await asset.updateComplete;
+    await step('warns when an invalid variant is set in DEBUG mode', () =>
+      withWarningSpy(async (warnCalls) => {
+        asset.variant = 'not-a-variant' as Asset['variant'];
+        await asset.updateComplete;
 
-                expect(warnCalls.length).toBeGreaterThan(0);
-                expect(String(warnCalls[0]?.[1] || '')).toContain('variant');
-            })
-        );
-    },
+        expect(warnCalls.length).toBeGreaterThan(0);
+        expect(String(warnCalls[0]?.[1] || '')).toContain('variant');
+      })
+    );
+  },
 };
 
 export const ValidVariantNoWarningTest: Story = {
-    render: () => html` <swc-asset variant="file" label="Report"></swc-asset> `,
-    play: async ({ canvasElement, step }) => {
-        const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+  render: () => html`
+    <swc-asset variant="file" label="Report"></swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
 
-        await step(
-            'does not warn when a valid variant is set in DEBUG mode',
-            () =>
-                withWarningSpy(async (warnCalls) => {
-                    asset.variant = 'folder';
-                    await asset.updateComplete;
+    await step('does not warn when a valid variant is set in DEBUG mode', () =>
+      withWarningSpy(async (warnCalls) => {
+        asset.variant = 'folder';
+        await asset.updateComplete;
 
-                    expect(warnCalls.length).toBe(0);
-                })
-        );
-    },
+        expect(warnCalls.length).toBe(0);
+      })
+    );
+  },
 };

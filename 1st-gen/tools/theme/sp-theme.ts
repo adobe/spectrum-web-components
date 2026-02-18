@@ -14,7 +14,7 @@ import { Theme } from './src/Theme.js';
 customElements.define('sp-theme', Theme);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-theme': Theme;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-theme': Theme;
+  }
 }

@@ -40,10 +40,10 @@ The `<sp-top-nav-item>` consists of the following parts:
 
 ```html
 <sp-top-nav>
-    <sp-top-nav-item href="#pam">Pam</sp-top-nav-item>
-    <sp-top-nav-item href="#phyllis">Phyllis</sp-top-nav-item>
-    <sp-top-nav-item href="#angela">Angela</sp-top-nav-item>
-    <sp-top-nav-item href="#meredith">Meredith</sp-top-nav-item>
+  <sp-top-nav-item href="#pam">Pam</sp-top-nav-item>
+  <sp-top-nav-item href="#phyllis">Phyllis</sp-top-nav-item>
+  <sp-top-nav-item href="#angela">Angela</sp-top-nav-item>
+  <sp-top-nav-item href="#meredith">Meredith</sp-top-nav-item>
 </sp-top-nav>
 ```
 
@@ -55,9 +55,9 @@ The `target` property specifies where to display the linked URL, such as in a ne
 
 ```html
 <sp-top-nav>
-    <sp-top-nav-item href="/components/top-nav" target="_blank">
-        The Office
-    </sp-top-nav-item>
+  <sp-top-nav-item href="/components/top-nav" target="_blank">
+    The Office
+  </sp-top-nav-item>
 </sp-top-nav>
 ```
 
@@ -69,9 +69,9 @@ When set, the `download` property causes the browser to treat the linked URL as 
 
 ```html
 <sp-top-nav>
-    <sp-top-nav-item href="/components/top-nav" download>
-        The Office
-    </sp-top-nav-item>
+  <sp-top-nav-item href="/components/top-nav" download>
+    The Office
+  </sp-top-nav-item>
 </sp-top-nav>
 ```
 
@@ -83,9 +83,9 @@ The `rel` property defines the relationship between the current page and the lin
 
 ```html
 <sp-top-nav>
-    <sp-top-nav-item href="/components/top-nav" rel="noreferrer">
-        The Office
-    </sp-top-nav-item>
+  <sp-top-nav-item href="/components/top-nav" rel="noreferrer">
+    The Office
+  </sp-top-nav-item>
 </sp-top-nav>
 ```
 
@@ -97,9 +97,9 @@ Setting `referrer-policy` will control how much referrer information is sent whe
 
 ```html
 <sp-top-nav>
-    <sp-top-nav-item href="/components/top-nav" referrerpolicy="no-referrer">
-        The Office
-    </sp-top-nav-item>
+  <sp-top-nav-item href="/components/top-nav" referrerpolicy="no-referrer">
+    The Office
+  </sp-top-nav-item>
 </sp-top-nav>
 ```
 
@@ -116,10 +116,10 @@ Adding the `disabled` attribute to a top nav item renders it non-interactive.
 
 ```html
 <sp-top-nav>
-    <sp-top-nav-item href="#pam">Pam</sp-top-nav-item>
-    <sp-top-nav-item href="#phyllis">Phyllis</sp-top-nav-item>
-    <sp-top-nav-item href="#angela" disabled>Angela</sp-top-nav-item>
-    <sp-top-nav-item href="#meredith">Meredith</sp-top-nav-item>
+  <sp-top-nav-item href="#pam">Pam</sp-top-nav-item>
+  <sp-top-nav-item href="#phyllis">Phyllis</sp-top-nav-item>
+  <sp-top-nav-item href="#angela" disabled>Angela</sp-top-nav-item>
+  <sp-top-nav-item href="#meredith">Meredith</sp-top-nav-item>
 </sp-top-nav>
 ```
 
@@ -135,17 +135,17 @@ For demonstration purposes only, the `href` value of the selected top nav item b
 
 ```html
 <sp-top-nav
-    selected="https://opensource.adobe.com/spectrum-web-components/components/top-nav-item/"
+  selected="https://opensource.adobe.com/spectrum-web-components/components/top-nav-item/"
 >
-    <sp-top-nav-item href="#michael">Michael</sp-top-nav-item>
-    <sp-top-nav-item
-        href="https://opensource.adobe.com/spectrum-web-components/components/top-nav-item/"
-        selected
-    >
-        Dwight
-    </sp-top-nav-item>
-    <sp-top-nav-item href="#kevin">Kevin</sp-top-nav-item>
-    <sp-top-nav-item href="#jim">Jim</sp-top-nav-item>
+  <sp-top-nav-item href="#michael">Michael</sp-top-nav-item>
+  <sp-top-nav-item
+    href="https://opensource.adobe.com/spectrum-web-components/components/top-nav-item/"
+    selected
+  >
+    Dwight
+  </sp-top-nav-item>
+  <sp-top-nav-item href="#kevin">Kevin</sp-top-nav-item>
+  <sp-top-nav-item href="#jim">Jim</sp-top-nav-item>
 </sp-top-nav>
 ```
 

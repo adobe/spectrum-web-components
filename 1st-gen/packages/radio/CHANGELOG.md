@@ -5,132 +5,132 @@
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.11.2
-    - @spectrum-web-components/shared@1.11.2
-    - @spectrum-web-components/reactive-controllers@1.11.2
-    - @spectrum-web-components/field-group@1.11.2
-    - @spectrum-web-components/help-text@1.11.2
+  - @spectrum-web-components/base@1.11.2
+  - @spectrum-web-components/shared@1.11.2
+  - @spectrum-web-components/reactive-controllers@1.11.2
+  - @spectrum-web-components/field-group@1.11.2
+  - @spectrum-web-components/help-text@1.11.2
 
 ## 1.11.1
 
 ### Patch Changes
 
 - Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
-    - @spectrum-web-components/shared@1.11.1
-    - @spectrum-web-components/base@1.11.1
-    - @spectrum-web-components/help-text@1.11.1
-    - @spectrum-web-components/field-group@1.11.1
-    - @spectrum-web-components/reactive-controllers@1.11.1
+  - @spectrum-web-components/shared@1.11.1
+  - @spectrum-web-components/base@1.11.1
+  - @spectrum-web-components/help-text@1.11.1
+  - @spectrum-web-components/field-group@1.11.1
+  - @spectrum-web-components/reactive-controllers@1.11.1
 
 ## 1.11.0
 
 ### Patch Changes
 
 - Updated dependencies [[`7af5e8f`](https://github.com/adobe/spectrum-web-components/commit/7af5e8fa8cb4142b7e4038e8ffe6e8ea547a397e), [`b95e254`](https://github.com/adobe/spectrum-web-components/commit/b95e25413830825a506b7d4025d6b4d982691771), [`f8bdeec`](https://github.com/adobe/spectrum-web-components/commit/f8bdeecf8a230822122a990fb977d3654649f891), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
-    - @spectrum-web-components/help-text@1.11.0
-    - @spectrum-web-components/reactive-controllers@1.11.0
-    - @spectrum-web-components/shared@1.11.0
-    - @spectrum-web-components/base@1.11.0
-    - @spectrum-web-components/field-group@1.11.0
+  - @spectrum-web-components/help-text@1.11.0
+  - @spectrum-web-components/reactive-controllers@1.11.0
+  - @spectrum-web-components/shared@1.11.0
+  - @spectrum-web-components/base@1.11.0
+  - @spectrum-web-components/field-group@1.11.0
 
 ## 1.10.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.10.0
-    - @spectrum-web-components/field-group@1.10.0
-    - @spectrum-web-components/help-text@1.10.0
-    - @spectrum-web-components/shared@1.10.0
-    - @spectrum-web-components/reactive-controllers@1.10.0
+  - @spectrum-web-components/base@1.10.0
+  - @spectrum-web-components/field-group@1.10.0
+  - @spectrum-web-components/help-text@1.10.0
+  - @spectrum-web-components/shared@1.10.0
+  - @spectrum-web-components/reactive-controllers@1.10.0
 
 ## 1.9.1
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/field-group@1.9.1
-    - @spectrum-web-components/help-text@1.9.1
-    - @spectrum-web-components/base@1.9.1
-    - @spectrum-web-components/reactive-controllers@1.9.1
-    - @spectrum-web-components/shared@1.9.1
+  - @spectrum-web-components/field-group@1.9.1
+  - @spectrum-web-components/help-text@1.9.1
+  - @spectrum-web-components/base@1.9.1
+  - @spectrum-web-components/reactive-controllers@1.9.1
+  - @spectrum-web-components/shared@1.9.1
 
 ## 1.9.0
 
 ### Patch Changes
 
 - Updated dependencies [[`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8), [`72d807c`](https://github.com/adobe/spectrum-web-components/commit/72d807c75d04b0fec1794a8d3e68383ca61d9e4c)]:
-    - @spectrum-web-components/reactive-controllers@1.9.0
-    - @spectrum-web-components/help-text@1.9.0
-    - @spectrum-web-components/field-group@1.9.0
-    - @spectrum-web-components/base@1.9.0
-    - @spectrum-web-components/shared@1.9.0
+  - @spectrum-web-components/reactive-controllers@1.9.0
+  - @spectrum-web-components/help-text@1.9.0
+  - @spectrum-web-components/field-group@1.9.0
+  - @spectrum-web-components/base@1.9.0
+  - @spectrum-web-components/shared@1.9.0
 
 ## 1.8.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/field-group@1.8.0
-    - @spectrum-web-components/help-text@1.8.0
-    - @spectrum-web-components/base@1.8.0
-    - @spectrum-web-components/reactive-controllers@1.8.0
-    - @spectrum-web-components/shared@1.8.0
+  - @spectrum-web-components/field-group@1.8.0
+  - @spectrum-web-components/help-text@1.8.0
+  - @spectrum-web-components/base@1.8.0
+  - @spectrum-web-components/reactive-controllers@1.8.0
+  - @spectrum-web-components/shared@1.8.0
 
 ## 1.7.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/field-group@1.7.0
-    - @spectrum-web-components/help-text@1.7.0
-    - @spectrum-web-components/base@1.7.0
-    - @spectrum-web-components/reactive-controllers@1.7.0
-    - @spectrum-web-components/shared@1.7.0
+  - @spectrum-web-components/field-group@1.7.0
+  - @spectrum-web-components/help-text@1.7.0
+  - @spectrum-web-components/base@1.7.0
+  - @spectrum-web-components/reactive-controllers@1.7.0
+  - @spectrum-web-components/shared@1.7.0
 
 ## 1.6.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/help-text@1.6.0
-    - @spectrum-web-components/field-group@1.6.0
-    - @spectrum-web-components/base@1.6.0
-    - @spectrum-web-components/reactive-controllers@1.6.0
-    - @spectrum-web-components/shared@1.6.0
+  - @spectrum-web-components/help-text@1.6.0
+  - @spectrum-web-components/field-group@1.6.0
+  - @spectrum-web-components/base@1.6.0
+  - @spectrum-web-components/reactive-controllers@1.6.0
+  - @spectrum-web-components/shared@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
 - Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0)]:
-    - @spectrum-web-components/help-text@1.5.0
-    - @spectrum-web-components/field-group@1.5.0
-    - @spectrum-web-components/base@1.5.0
-    - @spectrum-web-components/reactive-controllers@1.5.0
-    - @spectrum-web-components/shared@1.5.0
+  - @spectrum-web-components/help-text@1.5.0
+  - @spectrum-web-components/field-group@1.5.0
+  - @spectrum-web-components/base@1.5.0
+  - @spectrum-web-components/reactive-controllers@1.5.0
+  - @spectrum-web-components/shared@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/field-group@1.4.0
-    - @spectrum-web-components/help-text@1.4.0
-    - @spectrum-web-components/base@1.4.0
-    - @spectrum-web-components/reactive-controllers@1.4.0
-    - @spectrum-web-components/shared@1.4.0
+  - @spectrum-web-components/field-group@1.4.0
+  - @spectrum-web-components/help-text@1.4.0
+  - @spectrum-web-components/base@1.4.0
+  - @spectrum-web-components/reactive-controllers@1.4.0
+  - @spectrum-web-components/shared@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
 - Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)]:
-    - @spectrum-web-components/reactive-controllers@1.3.0
-    - @spectrum-web-components/field-group@1.3.0
-    - @spectrum-web-components/help-text@1.3.0
-    - @spectrum-web-components/base@1.3.0
-    - @spectrum-web-components/shared@1.3.0
+  - @spectrum-web-components/reactive-controllers@1.3.0
+  - @spectrum-web-components/field-group@1.3.0
+  - @spectrum-web-components/help-text@1.3.0
+  - @spectrum-web-components/base@1.3.0
+  - @spectrum-web-components/shared@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

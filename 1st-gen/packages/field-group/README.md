@@ -27,11 +27,11 @@ import { FieldGroup } from '@spectrum-web-components/field-group';
 
 ```html
 <sp-field-group horizontal label="Choose from horizontally placed options">
-    <sp-checkbox>Checkbox 1</sp-checkbox>
-    <sp-checkbox>Checkbox 2</sp-checkbox>
-    <sp-checkbox checked>Checkbox 3</sp-checkbox>
-    <sp-checkbox>Checkbox 4</sp-checkbox>
-    <sp-checkbox>Checkbox 5</sp-checkbox>
+  <sp-checkbox>Checkbox 1</sp-checkbox>
+  <sp-checkbox>Checkbox 2</sp-checkbox>
+  <sp-checkbox checked>Checkbox 3</sp-checkbox>
+  <sp-checkbox>Checkbox 4</sp-checkbox>
+  <sp-checkbox>Checkbox 5</sp-checkbox>
 </sp-field-group>
 ```
 
@@ -41,14 +41,14 @@ A field group must have a label in order to be accessible. A label can be provid
 
 ```html
 <sp-field-label for="horizontal">
-    Choose from horizontally placed options
+  Choose from horizontally placed options
 </sp-field-label>
 <sp-field-group horizontal id="horizontal">
-    <sp-checkbox>Checkbox 1</sp-checkbox>
-    <sp-checkbox>Checkbox 2</sp-checkbox>
-    <sp-checkbox checked>Checkbox 3</sp-checkbox>
-    <sp-checkbox>Checkbox 4</sp-checkbox>
-    <sp-checkbox>Checkbox 5</sp-checkbox>
+  <sp-checkbox>Checkbox 1</sp-checkbox>
+  <sp-checkbox>Checkbox 2</sp-checkbox>
+  <sp-checkbox checked>Checkbox 3</sp-checkbox>
+  <sp-checkbox>Checkbox 4</sp-checkbox>
+  <sp-checkbox>Checkbox 5</sp-checkbox>
 </sp-field-group>
 ```
 
@@ -62,18 +62,18 @@ Help text can be accessibly associated with an `<sp-field-group>` element by usi
 
 ```html
 <sp-field-group horizontal id="self" label="What are your favorite fruits?">
-    <sp-checkbox value="apple">Apple</sp-checkbox>
-    <sp-checkbox
-        value="not-a-fruit"
-        onchange="javascript:this.parentElement.invalid = this.checked"
-    >
-        Lettuce
-    </sp-checkbox>
-    <sp-checkbox value="strawberry" checked>Strawberry</sp-checkbox>
-    <sp-help-text slot="help-text">One of these is not a fruit.</sp-help-text>
-    <sp-help-text slot="negative-help-text" icon>
-        Choose actual fruit(s).
-    </sp-help-text>
+  <sp-checkbox value="apple">Apple</sp-checkbox>
+  <sp-checkbox
+    value="not-a-fruit"
+    onchange="javascript:this.parentElement.invalid = this.checked"
+  >
+    Lettuce
+  </sp-checkbox>
+  <sp-checkbox value="strawberry" checked>Strawberry</sp-checkbox>
+  <sp-help-text slot="help-text">One of these is not a fruit.</sp-help-text>
+  <sp-help-text slot="negative-help-text" icon>
+    Choose actual fruit(s).
+  </sp-help-text>
 </sp-field-group>
 ```
 
@@ -84,20 +84,20 @@ Help text can be accessibly associated with an `<sp-field-group>` element by usi
 ```html
 <sp-field-label for="above">What are your favorite fruits?</sp-field-label>
 <sp-field-group horizontal id="above">
-    <sp-checkbox value="apple">Apple</sp-checkbox>
-    <sp-checkbox
-        value="not-a-fruit"
-        onchange="
+  <sp-checkbox value="apple">Apple</sp-checkbox>
+  <sp-checkbox
+    value="not-a-fruit"
+    onchange="
             const helpText = this.parentElement.querySelector(`[slot='help-text']`);
             helpText.icon = this.checked;
             helpText.textContent = this.checked ? 'Choose actual fruit(s).' : 'One of these is not a fruit.';
             helpText.variant = this.checked ? 'negative' : 'neutral';
         "
-    >
-        Lettuce
-    </sp-checkbox>
-    <sp-checkbox value="strawberry" checked>Strawberry</sp-checkbox>
-    <sp-help-text slot="help-text">One of these is not a fruit.</sp-help-text>
+  >
+    Lettuce
+  </sp-checkbox>
+  <sp-checkbox value="strawberry" checked>Strawberry</sp-checkbox>
+  <sp-help-text slot="help-text">One of these is not a fruit.</sp-help-text>
 </sp-field-group>
 ```
 
@@ -110,14 +110,14 @@ Help text can be accessibly associated with an `<sp-field-group>` element by usi
 
 ```html
 <sp-field-label for="vertical">
-    Choose from vertically placed options
+  Choose from vertically placed options
 </sp-field-label>
 <sp-field-group vertical id="vertical">
-    <sp-checkbox>Checkbox 1</sp-checkbox>
-    <sp-checkbox>Checkbox 2</sp-checkbox>
-    <sp-checkbox>Checkbox 3</sp-checkbox>
-    <sp-checkbox>Checkbox 4</sp-checkbox>
-    <sp-checkbox checked>Checkbox 5</sp-checkbox>
+  <sp-checkbox>Checkbox 1</sp-checkbox>
+  <sp-checkbox>Checkbox 2</sp-checkbox>
+  <sp-checkbox>Checkbox 3</sp-checkbox>
+  <sp-checkbox>Checkbox 4</sp-checkbox>
+  <sp-checkbox checked>Checkbox 5</sp-checkbox>
 </sp-field-group>
 ```
 
@@ -136,12 +136,12 @@ Setting only one creates a sync hazard where either the help text won't display 
 
 ```html
 <sp-field-group vertical label="Required selections" invalid>
-    <sp-checkbox invalid>Option A</sp-checkbox>
-    <sp-checkbox invalid>Option B</sp-checkbox>
-    <sp-checkbox invalid>Option C</sp-checkbox>
-    <sp-help-text slot="negative-help-text" icon>
-        Select at least one option to continue.
-    </sp-help-text>
+  <sp-checkbox invalid>Option A</sp-checkbox>
+  <sp-checkbox invalid>Option B</sp-checkbox>
+  <sp-checkbox invalid>Option C</sp-checkbox>
+  <sp-help-text slot="negative-help-text" icon>
+    Select at least one option to continue.
+  </sp-help-text>
 </sp-field-group>
 ```
 
