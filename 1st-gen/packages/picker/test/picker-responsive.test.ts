@@ -251,11 +251,11 @@ describe('Picker, responsive', () => {
 
       // Wait for menu to be ready.
       if (!el.optionsMenu || el.optionsMenu.childItems.length === 0)
-          await waitUntil(
+          {await waitUntil(
               () =>
                   el.optionsMenu && el.optionsMenu.childItems.length > 0,
               'Menu should be initialized'
-          );
+          );}
 
       // Wait for menu to be fully updated.
       await el.optionsMenu.updateComplete;
