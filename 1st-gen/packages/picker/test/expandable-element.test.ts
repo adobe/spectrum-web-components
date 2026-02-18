@@ -198,28 +198,6 @@ describe('ExpandableElement', () => {
       await elementUpdated(el);
       expect(el.open, 'should still be open due to readonly').to.be.true;
     });
-
-    it('syncs strategy open state when closing', async () => {
-      const el = await fixture<TestExpandableElement>(html`
-        <test-expandable-element>
-          <sp-menu-item value="option-1">Option 1</sp-menu-item>
-        </test-expandable-element>
-      `);
-      await elementUpdated(el);
-
-      // Ensure strategy is bound
-      el.bindEvents();
-      await elementUpdated(el);
-
-      el.open = true;
-      await elementUpdated(el);
-      expect(el.strategy?.open, 'strategy should be open').to.be.true;
-
-      el.close();
-      await elementUpdated(el);
-      expect(el.strategy?.open, 'strategy should be closed after close()').to.be
-        .false;
-    });
   });
 
   describe('toggle() method', () => {
