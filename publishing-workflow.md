@@ -58,17 +58,17 @@ The workflow supports three trigger modes:
 
 ```yaml
 on:
-    workflow_dispatch:
-        inputs:
-            tag:
-                description: 'NPM dist-tag (e.g., latest, beta, snapshot)'
-                required: false
-                default: 'next'
-    pull_request:
-        types: [labeled, synchronize]
-    push:
-        branches:
-            - main
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'NPM dist-tag (e.g., latest, beta, snapshot)'
+        required: false
+        default: 'next'
+  pull_request:
+    types: [labeled, synchronize]
+  push:
+    branches:
+      - main
 ```
 
 **1. Manual dispatch (`workflow_dispatch`)**: Team members can trigger releases directly from the GitHub Actions UI with an optional custom npm dist-tag. The default tag is `next`.
@@ -77,10 +77,10 @@ on:
 
 ```yaml
 if: >-
-    github.event_name == 'workflow_dispatch' ||
-    github.event_name == 'push' ||
-    (github.event_name == 'pull_request' &&
-    contains(github.event.pull_request.labels.*.name, 'snapshot-release'))
+  github.event_name == 'workflow_dispatch' ||
+  github.event_name == 'push' ||
+  (github.event_name == 'pull_request' &&
+  contains(github.event.pull_request.labels.*.name, 'snapshot-release'))
 ```
 
 **3. Push to main (`push`)**: Automatically triggers on pushes to `main` for continuous delivery after PRs are merged.
@@ -99,10 +99,10 @@ The `check-changesets` job only checks out the repository and inspects `.changes
 
 ```yaml
 publish:
-    needs: check-changesets
-    if: needs.check-changesets.outputs.has_changesets == 'true'
-    runs-on: ubuntu-latest
-    environment: npm-publish
+  needs: check-changesets
+  if: needs.check-changesets.outputs.has_changesets == 'true'
+  runs-on: ubuntu-latest
+  environment: npm-publish
 ```
 
 The `publish` job uses a GitHub Environment called `npm-publish` for a critical reason: **security**.
@@ -114,9 +114,9 @@ The `publish` job uses a GitHub Environment called `npm-publish` for a critical 
 2. **Environment-specific secrets**: Tokens required for publishing (such as `ADOBE_BOT_NPM_TOKEN` for the Adobe namespace) can be scoped to this environment, making them accessible only when the workflow runs within the `npm-publish` context.
 
 3. **Deployment protection rules**: GitHub allows configuring rules like:
-    - Limiting which branches can deploy to this environment
-    - Adding wait timers before deployment
-    - Restricting deployment to specific actors
+   - Limiting which branches can deploy to this environment
+   - Adding wait timers before deployment
+   - Restricting deployment to specific actors
 
 4. **Audit trail**: All deployments to protected environments are logged, providing accountability for releases.
 
@@ -153,8 +153,8 @@ Traditional npm publishing requires storing a long-lived npm token as a reposito
 
 ```yaml
 permissions:
-    id-token: write # Required for OIDC trusted publishing
-    contents: write # Required for git push
+  id-token: write # Required for OIDC trusted publishing
+  contents: write # Required for git push
 ```
 
 The `id-token: write` permission is essential—it allows the workflow to request OIDC tokens from GitHub.
@@ -165,17 +165,17 @@ OIDC verification and NPM token configuration are combined into a single step. I
 - name: Verify OIDC token and configure NPM authentication
   id: npm-auth
   env:
-      NPM_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+    NPM_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
   run: |
-      if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
-        echo "✓ OIDC token is available for 1st-gen trusted publishing"
-      else
-        echo "✗ OIDC token NOT available - trusted publishing will fail"
-        exit 1
-      fi
+    if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
+      echo "✓ OIDC token is available for 1st-gen trusted publishing"
+    else
+      echo "✗ OIDC token NOT available - trusted publishing will fail"
+      exit 1
+    fi
 
-      echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-      echo "✓ NPM authentication configured for 2nd-gen (Adobe namespace)"
+    echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+    echo "✓ NPM authentication configured for 2nd-gen (Adobe namespace)"
 ```
 
 The publish step only runs if this combined authentication step succeeds:
@@ -190,12 +190,12 @@ The publish step only runs if this combined authentication step succeeds:
 ```yaml
 - name: Verify npm CLI version for trusted publishing
   run: |
-      echo "Current npm version: $(npm --version)"
-      npx semver -r ">=11.5.1" "$(npm --version)" || {
-        echo "Upgrading npm for trusted publishing support (requires 11.5.1+)"
-        npm install -g npm@latest
-        echo "Upgraded to npm version: $(npm --version)"
-      }
+    echo "Current npm version: $(npm --version)"
+    npx semver -r ">=11.5.1" "$(npm --version)" || {
+      echo "Upgrading npm for trusted publishing support (requires 11.5.1+)"
+      npm install -g npm@latest
+      echo "Upgraded to npm version: $(npm --version)"
+    }
 ```
 
 Trusted publishing requires npm 11.5.1 or later. The workflow uses `npx semver` for precise version comparison and automatically upgrades npm if needed.
@@ -210,18 +210,18 @@ The workflow determines the npm dist-tag through a simple priority system:
 - name: Determine release tag
   id: extract-tag
   env:
-      EVENT_NAME: ${{ github.event_name }}
-      INPUT_TAG: ${{ github.event.inputs.tag }}
+    EVENT_NAME: ${{ github.event_name }}
+    INPUT_TAG: ${{ github.event.inputs.tag }}
   run: |
-      if [ "$EVENT_NAME" == "pull_request" ]; then
-        WORKFLOW_TAG="snapshot-test"
-      elif [ -n "$INPUT_TAG" ]; then
-        WORKFLOW_TAG="$INPUT_TAG"
-      else
-        WORKFLOW_TAG="next"
-      fi
+    if [ "$EVENT_NAME" == "pull_request" ]; then
+      WORKFLOW_TAG="snapshot-test"
+    elif [ -n "$INPUT_TAG" ]; then
+      WORKFLOW_TAG="$INPUT_TAG"
+    else
+      WORKFLOW_TAG="next"
+    fi
 
-      echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
+    echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
 ```
 
 **Tag resolution**:
@@ -240,13 +240,13 @@ An additional safety check prevents publishing `latest` from non-main branches:
 ```yaml
 - name: Validate release tag
   env:
-      TAG: ${{ steps.extract-tag.outputs.tag }}
-      GIT_REF: ${{ github.ref }}
+    TAG: ${{ steps.extract-tag.outputs.tag }}
+    GIT_REF: ${{ github.ref }}
   run: |
-      if [ "$TAG" == "latest" ] && [ "$GIT_REF" != "refs/heads/main" ]; then
-        echo "ERROR: Cannot publish 'latest' from non-main branch"
-        exit 1
-      fi
+    if [ "$TAG" == "latest" ] && [ "$GIT_REF" != "refs/heads/main" ]; then
+      echo "ERROR: Cannot publish 'latest' from non-main branch"
+      exit 1
+    fi
 ```
 
 This ensures production releases (`latest`) can only originate from `main`, preventing accidental stable releases from feature branches.
@@ -259,19 +259,19 @@ The `.changeset/config.json` defines how packages are versioned together:
 
 ```json
 {
-    "fixed": [
-        [
-            "@spectrum-web-components/*",
-            "!@spectrum-web-components/core",
-            "!@spectrum-web-components/1st-gen",
-            "!@spectrum-web-components/2nd-gen"
-        ]
-    ],
-    "linked": [["@adobe/spectrum-wc", "@spectrum-web-components/core"]],
-    "ignore": [
-        "@spectrum-web-components/1st-gen",
-        "@spectrum-web-components/2nd-gen"
+  "fixed": [
+    [
+      "@spectrum-web-components/*",
+      "!@spectrum-web-components/core",
+      "!@spectrum-web-components/1st-gen",
+      "!@spectrum-web-components/2nd-gen"
     ]
+  ],
+  "linked": [["@adobe/spectrum-wc", "@spectrum-web-components/core"]],
+  "ignore": [
+    "@spectrum-web-components/1st-gen",
+    "@spectrum-web-components/2nd-gen"
+  ]
 }
 ```
 

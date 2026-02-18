@@ -86,19 +86,25 @@ const config = {
           name: 'css-hmr',
           handleHotUpdate({ file, modules, server }) {
             if (!file.endsWith('.css') || file.includes('tokens')) {
-              {return;}
+              {
+                return;
+              }
             }
 
             const affected = new Set(modules);
 
             for (const mod of modules) {
               for (const importer of mod.importers) {
-                {affected.add(importer);}
+                {
+                  affected.add(importer);
+                }
               }
             }
 
             for (const mod of affected) {
-              {server.moduleGraph.invalidateModule(mod);}
+              {
+                server.moduleGraph.invalidateModule(mod);
+              }
             }
 
             return [...affected];

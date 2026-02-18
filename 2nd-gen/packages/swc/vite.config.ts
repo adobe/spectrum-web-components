@@ -23,128 +23,118 @@ import dts from 'vite-plugin-dts';
 import litCss from 'vite-plugin-lit-css';
 
 const postcssPlugins = [
-    postcssToken({ prefix: 'swc' }),
-    autoprefixer(),
-    postcssPresetEnv({
-        stage: 2,
-        features: {
-            'nesting-rules': true,
-            'custom-properties': false,
-            'light-dark-function': false,
-            'logical-properties-and-values': false,
-        },
-    }),
+  postcssToken({ prefix: 'swc' }),
+  autoprefixer(),
+  postcssPresetEnv({
+    stage: 2,
+    features: {
+      'nesting-rules': true,
+      'custom-properties': false,
+      'light-dark-function': false,
+      'logical-properties-and-values': false,
+    },
+  }),
 ];
 
 /** Processes stylesheets/ CSS through PostCSS and writes them to dist/. */
 function processStylesheets(): Plugin {
-    return {
-        name: 'process-stylesheets',
-        apply: 'build',
-        async closeBundle() {
-            const processor = postcss(postcssPlugins);
-            for (const file of glob.sync(
-                resolve(__dirname, 'stylesheets/*.css')
-            )) {
-                const dest = resolve(__dirname, 'dist', basename(file));
-                const result = await processor.process(
-                    await readFile(file, 'utf-8'),
-                    { from: file, to: dest }
-                );
-                await writeFile(dest, result.css);
-            }
-        },
-    };
+  return {
+    name: 'process-stylesheets',
+    apply: 'build',
+    async closeBundle() {
+      const processor = postcss(postcssPlugins);
+      for (const file of glob.sync(resolve(__dirname, 'stylesheets/*.css'))) {
+        const dest = resolve(__dirname, 'dist', basename(file));
+        const result = await processor.process(await readFile(file, 'utf-8'), {
+          from: file,
+          to: dest,
+        });
+        await writeFile(dest, result.css);
+      }
+    },
+  };
 }
 
 export default defineConfig({
-    plugins: [
-        litCss({ exclude: ['./stylesheets/*.css'] }),
-        processStylesheets(),
-        dts({
-            include: ['**/*.ts'],
-            exclude: ['**/*.test.ts', '**/*.spec.ts', '**/*.stories.ts'],
-            outDir: 'dist',
-            beforeWriteFile: (filePath, content) => {
-                return {
-                    filePath,
-                    content: content
-                        // @todo: figure out why this is needed (type imports are becoming
-                        // relative instead of targeting the @spectrum-web-components/core package)
-                        // this fixes it e.g. ../../../core/... or ../core/... -> @spectrum-web-components/core/...
-                        .replace(
-                            /(\.\.\/)+core\//g,
-                            '@spectrum-web-components/core/'
-                        ),
-                };
-            },
-        }),
-    ],
-    css: {
-        postcss: {
-            plugins: postcssPlugins,
-        },
+  plugins: [
+    litCss({ exclude: ['./stylesheets/*.css'] }),
+    processStylesheets(),
+    dts({
+      include: ['**/*.ts'],
+      exclude: ['**/*.test.ts', '**/*.spec.ts', '**/*.stories.ts'],
+      outDir: 'dist',
+      beforeWriteFile: (filePath, content) => {
+        return {
+          filePath,
+          content: content
+            // @todo: figure out why this is needed (type imports are becoming
+            // relative instead of targeting the @spectrum-web-components/core package)
+            // this fixes it e.g. ../../../core/... or ../core/... -> @spectrum-web-components/core/...
+            .replace(/(\.\.\/)+core\//g, '@spectrum-web-components/core/'),
+        };
+      },
+    }),
+  ],
+  css: {
+    postcss: {
+      plugins: postcssPlugins,
     },
-    build: {
-        lib: {
-            entry: glob
-                .sync(resolve(__dirname, 'components/*/index.ts'))
-                .reduce(
-                    (entries, file) => {
-                        const name = file
-                            .replace(resolve(__dirname) + '/', '')
-                            .replace('.ts', '');
-                        (entries as Record<string, string>)[name] = file;
-                        return entries;
-                    },
-                    {} as Record<string, string>
-                ),
-            formats: ['es'],
+  },
+  build: {
+    lib: {
+      entry: glob.sync(resolve(__dirname, 'components/*/index.ts')).reduce(
+        (entries, file) => {
+          const name = file
+            .replace(resolve(__dirname) + '/', '')
+            .replace('.ts', '');
+          (entries as Record<string, string>)[name] = file;
+          return entries;
         },
-        rollupOptions: {
-            external: (id) => {
-                return (
-                    id === 'lit' ||
-                    id.startsWith('lit/') ||
-                    id.startsWith('@lit/') ||
-                    id.startsWith('@spectrum-web-components/core/')
-                );
-            },
-            output: {
-                preserveModules: true,
-                preserveModulesRoot: '.',
-                entryFileNames: '[name].js',
-                chunkFileNames: '[name].js',
-            },
-        },
-        target: 'es2018',
-        sourcemap: true,
-        emptyOutDir: true,
-        outDir: 'dist',
+        {} as Record<string, string>
+      ),
+      formats: ['es'],
     },
-    resolve: {
-        // Needed for Storybook to work
-        alias: {
-            '@spectrum-web-components/core': resolve(__dirname, '../core'),
-            '@adobe/spectrum-wc': resolve(__dirname, './components'),
-            '@adobe/postcss-token': resolve(
-                __dirname,
-                '../tools/postcss-token'
-            ),
-            '@adobe/swc-tokens': resolve(__dirname, '../tools/swc-tokens'),
-        },
+    rollupOptions: {
+      external: (id) => {
+        return (
+          id === 'lit' ||
+          id.startsWith('lit/') ||
+          id.startsWith('@lit/') ||
+          id.startsWith('@spectrum-web-components/core/')
+        );
+      },
+      output: {
+        preserveModules: true,
+        preserveModulesRoot: '.',
+        entryFileNames: '[name].js',
+        chunkFileNames: '[name].js',
+      },
     },
-    server: {
-        fs: {
-            // Allow Vite to serve dependencies hoisted to workspace and repo roots.
-            allow: [
-                resolve(__dirname, '..'),
-                resolve(__dirname, '../..'),
-                resolve(__dirname, '../../..'),
-            ],
-        },
+    target: 'es2018',
+    sourcemap: true,
+    emptyOutDir: true,
+    outDir: 'dist',
+  },
+  resolve: {
+    // Needed for Storybook to work
+    alias: {
+      '@spectrum-web-components/core': resolve(__dirname, '../core'),
+      '@adobe/spectrum-wc': resolve(__dirname, './components'),
+      '@adobe/postcss-token': resolve(__dirname, '../tools/postcss-token'),
+      '@adobe/swc-tokens': resolve(__dirname, '../tools/swc-tokens'),
     },
-    esbuild: {
-        target: 'es2018',
+  },
+  server: {
+    fs: {
+      // Allow Vite to serve dependencies hoisted to workspace and repo roots.
+      allow: [
+        resolve(__dirname, '..'),
+        resolve(__dirname, '../..'),
+        resolve(__dirname, '../../..'),
+      ],
     },
+  },
+  esbuild: {
+    target: 'es2018',
+  },
 });
