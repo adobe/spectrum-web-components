@@ -129,6 +129,11 @@ export default defineConfig([
       '1st-gen/packages/**/!(src)/**/*.js',
       '1st-gen/tools/**/!(src)/**/*.js',
       '2nd-gen/packages/**/dist/**',
+      // Icons
+      '1st-gen/packages/icons/**',
+      '1st-gen/packages/iconset/**',
+      '1st-gen/packages/icons-ui/**',
+      '1st-gen/packages/icons-workflow/**',
       // Generated files
       '**/*.css.ts',
       '**/custom-elements.json',
