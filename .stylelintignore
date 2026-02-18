@@ -10,6 +10,7 @@
 **/playwright-report
 **/test-results
 **/task
+**/tokens.css
 
 # Ignore non-CSS files (but not directories starting with .)
 **/*.ts

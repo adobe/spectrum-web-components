@@ -23,7 +23,7 @@
  * 3. Processes each package using a custom configuration file
  * 4. Includes package.json data in the generated manifest
  *
- * @output
+ * @returns
  * - Start: "Updating custom elements JSON files..."
  * - Success: "All custom elements JSON files have been updated successfully."
  * - Error: "Error executing custom-element-json command:" followed by error details
@@ -55,7 +55,6 @@ export function getWorkspacePackages(
     '@spectrum-web-components/opacity-checkerboard',
     '@spectrum-web-components/styles',
     '@spectrum-web-components/custom-vars-viewer',
-    '@spectrum-web-components/eslint-plugin',
     'stylelint-header',
     '@swc-react/*',
     'documentation',

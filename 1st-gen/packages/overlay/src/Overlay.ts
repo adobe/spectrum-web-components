@@ -72,7 +72,7 @@ if (!browserSupportsPopover) {
  * @slot default - The content that will be displayed in the overlay
  *
  * @fires sp-opened - announces that an overlay has completed any entry animations
- * @fires sp-closed - announce that an overlay has compelted any exit animations
+ * @fires sp-closed - announce that an overlay has completed any exit animations
  * @fires slottable-request - requests to add or remove slottable content
  *
  * @attr {string} placement - The placement of the overlay relative to the trigger
@@ -81,7 +81,7 @@ if (!browserSupportsPopover) {
  * @attr {string} receives-focus - How focus should be handled ('true'|'false'|'auto')
  * @attr {boolean} delayed - Whether the overlay should wait for a warm-up period before opening
  * @attr {boolean} open - Whether the overlay is currently open
- * @attr {boolean} allow-outside-click - @deprecated Whether clicks outside the overlay should close it (not recommended for accessibility)
+ * @attr {boolean} allow-outside-click - DEPRECATED: Whether clicks outside the overlay should close it (not recommended for accessibility)
  */
 export class Overlay extends ComputedOverlayBase {
   static override styles = [styles];
@@ -667,7 +667,7 @@ export class Overlay extends ComputedOverlayBase {
     const getAncestors = (): HTMLElement[] => {
       const ancestors: HTMLElement[] = [];
 
-      // eslint-disable-next-line @spectrum-web-components/document-active-element
+      // eslint-disable-next-line swc/document-active-element
       let currentNode = document.activeElement;
 
       // Traverse the shadow DOM to find the active element.
@@ -695,7 +695,7 @@ export class Overlay extends ComputedOverlayBase {
       !!(this.triggerElement as HTMLElement)?.focus &&
       (this.contains((this.getRootNode() as Document).activeElement) ||
         getAncestors().includes(this) ||
-        // eslint-disable-next-line @spectrum-web-components/document-active-element
+        // eslint-disable-next-line swc/document-active-element
         document.activeElement === document.body)
     ) {
       // Return focus to the trigger element.
@@ -930,6 +930,15 @@ export class Overlay extends ComputedOverlayBase {
   }
 
   /**
+   * Handles the 'close' event to update the 'open' property.
+   *
+   * @private
+   */
+  private handleClose(): void {
+    this.open = false;
+  }
+
+  /**
    * Determines whether the overlay should prevent closing.
    *
    * This method checks the `willPreventClose` flag and resets it to `false`.
@@ -958,11 +967,6 @@ export class Overlay extends ComputedOverlayBase {
     // Do not dispatch the same state twice in a row.
     if (this.lastRequestSlottableState === this.open) {
       return;
-    }
-
-    // Force a reflow if the overlay is closing.
-    if (!this.open) {
-      document.body.offsetHeight;
     }
 
     /**
@@ -1196,9 +1200,7 @@ export class Overlay extends ComputedOverlayBase {
     super.connectedCallback();
 
     // Add an event listener to handle the 'close' event and update the 'open' property.
-    this.addEventListener('close', () => {
-      this.open = false;
-    });
+    this.addEventListener('close', this.handleClose);
 
     // Bind events if the component has already updated.
     if (this.hasUpdated) {
@@ -1218,6 +1220,7 @@ export class Overlay extends ComputedOverlayBase {
     this.strategy?.releaseDescription();
     // Update the 'open' property to false.
     this.open = false;
+    this.removeEventListener('close', this.handleClose);
     super.disconnectedCallback();
   }
 }

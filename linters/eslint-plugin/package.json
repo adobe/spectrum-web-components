@@ -1,0 +1,38 @@
+{
+  "name": "@spectrum-web-components/eslint-plugin",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ESLint plugin for Spectrum Web Components (prevent-argument-names, document-active-element)",
+  "license": "Apache-2.0",
+  "author": "Adobe",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "default": "./index.js"
+    }
+  },
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adobe/spectrum-web-components.git",
+    "directory": "linters/eslint-plugin"
+  },
+  "bugs": {
+    "url": "https://github.com/adobe/spectrum-web-components/issues"
+  },
+  "keywords": [
+    "design-system",
+    "spectrum",
+    "adobe",
+    "adobe-spectrum",
+    "web components",
+    "web-components",
+    "lit-element",
+    "lit-html"
+  ],
+  "homepage": "https://opensource.adobe.com/spectrum-web-components/"
+}

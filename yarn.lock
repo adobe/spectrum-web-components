@@ -6046,7 +6046,6 @@ __metadata:
     "@rollup/plugin-json": "npm:6.1.0"
     "@rollup/plugin-node-resolve": "npm:15.3.1"
     "@sindresorhus/slugify": "npm:2.2.1"
-    "@spectrum-web-components/eslint-plugin": "workspace:*"
     "@storybook/addon-a11y": "npm:8.6.14"
     "@storybook/addon-designs": "npm:8.2.1"
     "@storybook/addon-essentials": "npm:8.6.14"
@@ -6640,9 +6639,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/eslint-plugin@workspace:*, @spectrum-web-components/eslint-plugin@workspace:1st-gen/linters/eslint":
+"@spectrum-web-components/eslint-plugin@workspace:*, @spectrum-web-components/eslint-plugin@workspace:linters/eslint-plugin":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/eslint-plugin@workspace:1st-gen/linters/eslint"
+  resolution: "@spectrum-web-components/eslint-plugin@workspace:linters/eslint-plugin"
   languageName: unknown
   linkType: soft
 
@@ -28355,6 +28354,7 @@ __metadata:
     "@commitlint/config-conventional": "npm:19.8.1"
     "@eslint/js": "npm:9.39.2"
     "@playwright/test": "npm:1.53.1"
+    "@spectrum-web-components/eslint-plugin": "workspace:*"
     "@spectrum-web-components/stylelint-header-plugin": "workspace:*"
     "@typescript-eslint/eslint-plugin": "npm:8.54.0"
     "@typescript-eslint/parser": "npm:8.54.0"

@@ -27,76 +27,7 @@ import storybook from 'eslint-plugin-storybook';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import jsoncParser from 'jsonc-eslint-parser';
 import globals from 'globals';
-
-// ────────────────────────────────────────────────────────────────────────────────
-// Custom rules (inlined from @spectrum-web-components/eslint-plugin)
-// ────────────────────────────────────────────────────────────────────────────────
-
-const swcPlugin = {
-  rules: {
-    'prevent-argument-names': {
-      meta: {
-        type: 'suggestion',
-        docs: {
-          description: 'Prevent certain argument names from being used',
-        },
-        schema: [
-          {
-            type: 'array',
-            items: { type: 'string' },
-          },
-        ],
-      },
-      create(context) {
-        const disallowed = context.options[0] || [];
-        return {
-          Identifier(node) {
-            if (
-              node.parent &&
-              (node.parent.type === 'FunctionDeclaration' ||
-                node.parent.type === 'FunctionExpression' ||
-                node.parent.type === 'ArrowFunctionExpression')
-            ) {
-              if (node.parent.params && node.parent.params.includes(node)) {
-                if (disallowed.includes(node.name)) {
-                  context.report({
-                    node,
-                    message: `"${node.name}" shouldn't be used as an argument name`,
-                  });
-                }
-              }
-            }
-          },
-        };
-      },
-    },
-    'document-active-element': {
-      meta: {
-        type: 'problem',
-        docs: {
-          description:
-            'Warn against using document.activeElement which can be incorrect across shadow boundaries',
-        },
-      },
-      create(context) {
-        return {
-          MemberExpression(node) {
-            if (
-              node.object.name === 'document' &&
-              node.property.name === 'activeElement'
-            ) {
-              context.report({
-                node,
-                message:
-                  '"document.activeElement" can be incorrect across shadow boundaries',
-              });
-            }
-          },
-        };
-      },
-    },
-  },
-};
+import { swcPlugin } from '@spectrum-web-components/eslint-plugin';
 
 // ────────────────────────────────────────────────────────────────────────────────
 // Package.json key ordering for jsonc/sort-keys
@@ -201,6 +132,8 @@ export default defineConfig([
       // Generated files
       '**/*.css.ts',
       '**/custom-elements.json',
+      '**/tokens.css',
+      '**/tokens.json',
       // Config and tooling files (Node env; skip lint to avoid needing node globals for many files)
       '**/*.config.js',
       '**/*.config.cjs',
@@ -403,10 +336,6 @@ export default defineConfig([
         'error',
         { argsIgnorePattern: '^_' },
       ],
-      '@typescript-eslint/explicit-function-return-type': [
-        'warn',
-        { allowExpressions: true },
-      ],
     },
   },
 
@@ -418,7 +347,6 @@ export default defineConfig([
       'scripts/**/*',
       '**/scripts/**/*.js',
       '**/scripts/**/*.ts',
-      '1st-gen/linters/**/*.js',
       'linters/**/*.js',
       '.github/**/*.js',
       '1st-gen/test/visual/**/*.js',
@@ -544,11 +472,21 @@ export default defineConfig([
   },
 
   // ────────────────────────────────────────────────────────────────────────────
+  // JSDoc: allow permissive mode
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: ['1st-gen/**/*.ts', '1st-gen/**/*.js'],
+    rules: {
+      'jsdoc/valid-types': 'off',
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
   // JSON files
   // ────────────────────────────────────────────────────────────────────────────
   {
     files: ['**/*.json'],
-    ignores: ['**/package.json', '**/tokens.json'],
+    ignores: ['**/package.json'],
     plugins: {
       jsonc: jsonc,
     },
@@ -587,24 +525,6 @@ export default defineConfig([
           pathPattern: '^(?!exports\\[).*',
         },
       ],
-      'notice/notice': 'off',
-    },
-  },
-
-  // ────────────────────────────────────────────────────────────────────────────
-  // tokens.json: disable sort-keys
-  // ────────────────────────────────────────────────────────────────────────────
-  {
-    files: ['**/tokens.json'],
-    plugins: {
-      jsonc: jsonc,
-    },
-    languageOptions: {
-      parser: jsoncParser,
-    },
-    rules: {
-      ...jsonc.configs['recommended-with-jsonc'].rules,
-      'jsonc/sort-keys': 'off',
       'notice/notice': 'off',
     },
   },

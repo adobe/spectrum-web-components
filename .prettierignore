@@ -9,6 +9,8 @@
 **/.tmp/
 **/playwright-report/
 **/test-results/
+**/tokens.css
+**/tokens.json
 
 # Documentation infrastructure scripts maintained by AI agents
 CONTRIBUTOR-DOCS/
