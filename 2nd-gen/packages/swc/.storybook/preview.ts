@@ -17,8 +17,8 @@ import {
 } from '@wc-toolkit/storybook-helpers';
 
 import customElements from './custom-elements.json';
-import { withFlexLayout, withStaticColorsDemo } from './decorators/index.js';
 import { withContext } from './decorators/contexts.js';
+import { withFlexLayout, withStaticColorsDemo } from './decorators/index.js';
 import { withStaticColorPlayground } from './decorators/static-color-playground.js';
 import DocumentTemplate from './DocumentTemplate.mdx';
 import { FontLoader } from './loaders/font-loader.js';
