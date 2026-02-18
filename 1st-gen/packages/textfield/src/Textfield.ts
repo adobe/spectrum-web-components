@@ -60,7 +60,7 @@ export class TextfieldBase extends ManageHelpText(
   @state()
   protected isTruncated = false;
 
-  private resizeObserver = new ResizeObserver(() => {
+  private truncationResizeObserver = new ResizeObserver(() => {
     this.refreshTruncationState();
   });
 
@@ -415,15 +415,16 @@ export class TextfieldBase extends ManageHelpText(
   protected override render(): TemplateResult {
     return html`
       <div id="textfield">${this.renderField()}</div>
-      ${this.renderTruncatedValueTooltip()}
-      ${this.renderHelpText(this.invalid)}
+      ${this.renderTruncatedValueTooltip()} ${this.renderHelpText(this.invalid)}
     `;
   }
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
-    this.resizeObserver.observe(this);
-    this.resizeObserver.observe(this.inputElement);
+    this.truncationResizeObserver.observe(this);
+    if (this.inputElement) {
+      this.truncationResizeObserver.observe(this.inputElement);
+    }
     this.refreshTruncationState();
   }
 
@@ -453,7 +454,7 @@ export class TextfieldBase extends ManageHelpText(
   }
 
   public override disconnectedCallback(): void {
-    this.resizeObserver.disconnect();
+    this.truncationResizeObserver.disconnect();
     super.disconnectedCallback();
   }
 
