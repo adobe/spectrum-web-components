@@ -10,29 +10,30 @@
  * governing permissions and limitations under the License.
  */
 import { TemplateResult } from '@spectrum-web-components/base';
+
 import { Default, StoryArgs } from './switch.stories.js';
 
 export default {
-    component: 'sp-switch',
-    title: 'Switch/Sizes',
+  component: 'sp-switch',
+  title: 'Switch/Sizes',
 };
 
 export const s = (args: StoryArgs): TemplateResult => Default(args);
 s.args = {
-    size: 's',
+  size: 's',
 };
 
 export const m = (args: StoryArgs): TemplateResult => Default(args);
 m.args = {
-    size: 'm',
+  size: 'm',
 };
 
 export const l = (args: StoryArgs): TemplateResult => Default(args);
 l.args = {
-    size: 'l',
+  size: 'l',
 };
 
 export const XL = (args: StoryArgs): TemplateResult => Default(args);
 XL.args = {
-    size: 'xl',
+  size: 'xl',
 };

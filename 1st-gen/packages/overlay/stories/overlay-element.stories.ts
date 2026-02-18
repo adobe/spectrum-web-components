@@ -10,8 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
+import { Placement } from '@floating-ui/dom';
+
 import { html, render, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
@@ -37,146 +40,145 @@ import '@spectrum-web-components/table/sp-table-head-cell.js';
 import '@spectrum-web-components/table/sp-table-body.js';
 import '@spectrum-web-components/table/sp-table-row.js';
 import '@spectrum-web-components/table/sp-table-cell.js';
-
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-rect-select.js';
-import { Placement } from '@floating-ui/dom';
-import { OverlayTypes } from '../src/overlay-types.js';
-import { notAgain } from '../../dialog/stories/dialog-base.stories.js';
 import './overlay-story-components.js';
+
+import { notAgain } from '../../dialog/stories/dialog-base.stories.js';
+import { OverlayTypes } from '../src/overlay-types.js';
 import {
-    removeSlottableRequest,
-    SlottableRequestEvent,
+  removeSlottableRequest,
+  SlottableRequestEvent,
 } from '../src/slottable-request-event.js';
 
 export default {
-    title: 'Overlay Element',
-    component: 'sp-overlay',
-    args: {
-        open: true,
-        delayed: false,
+  title: 'Overlay Element',
+  component: 'sp-overlay',
+  args: {
+    open: true,
+    delayed: false,
+  },
+  argTypes: {
+    open: {
+      name: 'open',
+      type: { name: 'boolean', required: false },
+      description: 'Whether the second accordion item is open.',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: false },
+      },
+      control: {
+        type: 'boolean',
+      },
     },
-    argTypes: {
-        open: {
-            name: 'open',
-            type: { name: 'boolean', required: false },
-            description: 'Whether the second accordion item is open.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        delayed: {
-            name: 'delayed',
-            type: { name: 'boolean', required: false },
-            description: 'Whether the tooltips are delayed.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
+    delayed: {
+      name: 'delayed',
+      type: { name: 'boolean', required: false },
+      description: 'Whether the tooltips are delayed.',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: false },
+      },
+      control: {
+        type: 'boolean',
+      },
     },
+  },
 };
 
 type WrapperStyleType = 'will-change' | 'container-type';
 
 type Properties = {
-    delayed: boolean;
-    interaction: 'click' | 'hover' | 'longpress';
-    open?: boolean;
-    placement?: Placement;
-    receivesFocus: 'true' | 'false' | 'auto';
-    style?: WrapperStyleType;
-    type?: OverlayTypes;
+  delayed: boolean;
+  interaction: 'click' | 'hover' | 'longpress';
+  open?: boolean;
+  placement?: Placement;
+  receivesFocus: 'true' | 'false' | 'auto';
+  style?: WrapperStyleType;
+  type?: OverlayTypes;
 };
 
 const Template = ({
-    interaction,
-    open,
-    placement,
-    type,
-    delayed,
-    style,
+  interaction,
+  open,
+  placement,
+  type,
+  delayed,
+  style,
 }: Properties): TemplateResult => html`
-    ${style === 'will-change'
-        ? html`
-              <style>
-                  .wrapper {
-                      will-change: transform;
-                  }
-              </style>
-          `
-        : html`
-              <style>
-                  .wrapper {
-                      container-type: size;
-                  }
-              </style>
-          `}
-    <div class="wrapper">
-        <sp-action-button id="trigger">Open the overlay</sp-action-button>
-        <sp-overlay
-            ?open=${open}
-            trigger="trigger@${interaction}"
-            type=${ifDefined(type)}
-            placement=${ifDefined(placement)}
-            offset="-10"
-        >
-            <sp-popover ?delayed=${delayed}>
-                <sp-dialog size="s" no-divider>
-                    <p>
-                        Content goes here.
-                        ${type === 'modal' || type === 'page'
-                            ? html`
-                                  Or, a link,
-                                  <sp-link
-                                      href="https://opensource.adobe.com/spectrum-web-components"
-                                  >
-                                      Spectrum Web Components
-                                  </sp-link>
-                                  .
-                              `
-                            : ''}
-                    </p>
-                </sp-dialog>
-            </sp-popover>
-        </sp-overlay>
-    </div>
+  ${style === 'will-change'
+    ? html`
+        <style>
+          .wrapper {
+            will-change: transform;
+          }
+        </style>
+      `
+    : html`
+        <style>
+          .wrapper {
+            container-type: size;
+          }
+        </style>
+      `}
+  <div class="wrapper">
+    <sp-action-button id="trigger">Open the overlay</sp-action-button>
+    <sp-overlay
+      ?open=${open}
+      trigger="trigger@${interaction}"
+      type=${ifDefined(type)}
+      placement=${ifDefined(placement)}
+      offset="-10"
+    >
+      <sp-popover ?delayed=${delayed}>
+        <sp-dialog size="s" no-divider>
+          <p>
+            Content goes here.
+            ${type === 'modal' || type === 'page'
+              ? html`
+                  Or, a link,
+                  <sp-link
+                    href="https://opensource.adobe.com/spectrum-web-components"
+                  >
+                    Spectrum Web Components
+                  </sp-link>
+                  .
+                `
+              : ''}
+          </p>
+        </sp-dialog>
+      </sp-popover>
+    </sp-overlay>
+  </div>
 `;
 
 export const modal = (args: Properties): TemplateResult => Template(args);
 modal.args = {
-    interaction: 'click',
-    placement: 'right',
-    style: 'will-change',
-    type: 'modal',
+  interaction: 'click',
+  placement: 'right',
+  style: 'will-change',
+  type: 'modal',
 };
 
 export const page = ({
-    interaction,
-    open,
-    placement,
-    type,
+  interaction,
+  open,
+  placement,
+  type,
 }: Properties): TemplateResult => html`
-    <sp-action-button id="trigger">Open the overlay</sp-action-button>
-    <sp-overlay
-        ?open=${open}
-        trigger="trigger@${interaction}"
-        type=${ifDefined(type)}
-        placement=${ifDefined(placement)}
-    >
-        ${notAgain()}
-    </sp-overlay>
+  <sp-action-button id="trigger">Open the overlay</sp-action-button>
+  <sp-overlay
+    ?open=${open}
+    trigger="trigger@${interaction}"
+    type=${ifDefined(type)}
+    placement=${ifDefined(placement)}
+  >
+    ${notAgain()}
+  </sp-overlay>
 `;
 page.args = {
-    interaction: 'click',
-    placement: 'right',
-    type: 'page',
+  interaction: 'click',
+  placement: 'right',
+  type: 'page',
 };
 
 export const complexSlowPage = (): TemplateResult => html`
@@ -248,192 +250,160 @@ export const complexSlowPage = (): TemplateResult => html`
         </span>
 
         ${Array(30)
-            .fill(0)
-            .map(
-                () => html`
-                    <div style="margin-bottom: 20px;">
-                        <sp-table>
-                            <sp-table-head>
-                                <sp-table-head-cell>
-                                    Column Title
-                                </sp-table-head-cell>
-                                <sp-table-head-cell>
-                                    Column Title
-                                </sp-table-head-cell>
-                                <sp-table-head-cell>
-                                    Column Title
-                                </sp-table-head-cell>
-                            </sp-table-head>
-                            <sp-table-body style="height: 200px">
-                                <sp-table-row value="row1" class="row1">
-                                    <sp-table-cell>
-                                        Row Item Alpha
-                                    </sp-table-cell>
-                                    <sp-table-cell>
-                                        Row Item Alpha
-                                    </sp-table-cell>
-                                    <sp-table-cell>
-                                        Row Item Alpha
-                                    </sp-table-cell>
-                                </sp-table-row>
-                                <sp-table-row value="row2" class="row2">
-                                    <sp-table-cell>
-                                        Row Item Bravo
-                                    </sp-table-cell>
-                                    <sp-table-cell>
-                                        Row Item Bravo
-                                    </sp-table-cell>
-                                    <sp-table-cell>
-                                        Row Item Bravo
-                                    </sp-table-cell>
-                                </sp-table-row>
-                                <sp-table-row value="row3" class="row3">
-                                    <sp-table-cell>
-                                        Row Item Charlie
-                                    </sp-table-cell>
-                                    <sp-table-cell>
-                                        Row Item Charlie
-                                    </sp-table-cell>
-                                    <sp-table-cell>
-                                        Row Item Charlie
-                                    </sp-table-cell>
-                                </sp-table-row>
-                                <sp-table-row value="row4" class="row4">
-                                    <sp-table-cell>
-                                        Row Item Delta
-                                    </sp-table-cell>
-                                    <sp-table-cell>
-                                        Row Item Delta
-                                    </sp-table-cell>
-                                    <sp-table-cell>
-                                        Row Item Delta
-                                    </sp-table-cell>
-                                </sp-table-row>
-                                <sp-table-row value="row5" class="row5">
-                                    <sp-table-cell>Row Item Echo</sp-table-cell>
-                                    <sp-table-cell>Row Item Echo</sp-table-cell>
-                                    <sp-table-cell>Row Item Echo</sp-table-cell>
-                                </sp-table-row>
-                            </sp-table-body>
-                        </sp-table>
-                        <sp-action-group>
-                            <sp-action-button>
-                                <sp-icon-anchor-select
-                                    slot="icon"
-                                ></sp-icon-anchor-select>
-                            </sp-action-button>
-                            <sp-action-button>
-                                <sp-icon-polygon-select
-                                    slot="icon"
-                                ></sp-icon-polygon-select>
-                            </sp-action-button>
-                            <sp-slider
-                                value="5"
-                                step="0.5"
-                                min="0"
-                                max="20"
-                                label="Control"
-                            ></sp-slider>
-                        </sp-action-group>
-                        <sp-menu-group>
-                            <span slot="header">Menu Group</span>
-                            <sp-menu-item>Option 1</sp-menu-item>
-                            <sp-menu-item>Option 2</sp-menu-item>
-                            <sp-menu-divider></sp-menu-divider>
-                            <sp-menu-item>Option 3</sp-menu-item>
-                        </sp-menu-group>
-                    </div>
-                `
-            )}
-    </div>
-`;
-
-complexSlowPage.swc_vrt = {
-    skip: true,
-};
-
-complexSlowPage.parameters = {
-    chromatic: { disableSnapshot: true },
-};
-
-export const click = (args: Properties): TemplateResult => Template(args);
-click.args = {
-    interaction: 'click',
-    placement: 'right',
-    style: 'container-type' as WrapperStyleType,
-    type: 'auto',
-};
-
-export const withSlider = (): TemplateResult => html`
-    <sp-button id="triggerEl" variant="primary">Button popover</sp-button>
-    <sp-overlay trigger="triggerEl@click" placement="bottom">
-        <sp-popover tip>
-            <sp-dialog no-divider class="options-popover-content">
-                <p>Try clicking the slider after popover opens</p>
-                <p>It shouldn't close the popover</p>
-                <sp-slider
+          .fill(0)
+          .map(
+            () => html`
+              <div style="margin-bottom: 20px;">
+                <sp-table>
+                  <sp-table-head>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                  </sp-table-head>
+                  <sp-table-body style="height: 200px">
+                    <sp-table-row value="row1" class="row1">
+                      <sp-table-cell>Row Item Alpha</sp-table-cell>
+                      <sp-table-cell>Row Item Alpha</sp-table-cell>
+                      <sp-table-cell>Row Item Alpha</sp-table-cell>
+                    </sp-table-row>
+                    <sp-table-row value="row2" class="row2">
+                      <sp-table-cell>Row Item Bravo</sp-table-cell>
+                      <sp-table-cell>Row Item Bravo</sp-table-cell>
+                      <sp-table-cell>Row Item Bravo</sp-table-cell>
+                    </sp-table-row>
+                    <sp-table-row value="row3" class="row3">
+                      <sp-table-cell>Row Item Charlie</sp-table-cell>
+                      <sp-table-cell>Row Item Charlie</sp-table-cell>
+                      <sp-table-cell>Row Item Charlie</sp-table-cell>
+                    </sp-table-row>
+                    <sp-table-row value="row4" class="row4">
+                      <sp-table-cell>Row Item Delta</sp-table-cell>
+                      <sp-table-cell>Row Item Delta</sp-table-cell>
+                      <sp-table-cell>Row Item Delta</sp-table-cell>
+                    </sp-table-row>
+                    <sp-table-row value="row5" class="row5">
+                      <sp-table-cell>Row Item Echo</sp-table-cell>
+                      <sp-table-cell>Row Item Echo</sp-table-cell>
+                      <sp-table-cell>Row Item Echo</sp-table-cell>
+                    </sp-table-row>
+                  </sp-table-body>
+                </sp-table>
+                <sp-action-group>
+                  <sp-action-button>
+                    <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+                  </sp-action-button>
+                  <sp-action-button>
+                    <sp-icon-polygon-select
+                      slot="icon"
+                    ></sp-icon-polygon-select>
+                  </sp-action-button>
+                  <sp-slider
                     value="5"
                     step="0.5"
                     min="0"
                     max="20"
-                    label="Awesomeness"
-                ></sp-slider>
-                <sp-button>Press me</sp-button>
-            </sp-dialog>
-        </sp-popover>
-    </sp-overlay>
+                    label="Control"
+                  ></sp-slider>
+                </sp-action-group>
+                <sp-menu-group>
+                  <span slot="header">Menu Group</span>
+                  <sp-menu-item>Option 1</sp-menu-item>
+                  <sp-menu-item>Option 2</sp-menu-item>
+                  <sp-menu-divider></sp-menu-divider>
+                  <sp-menu-item>Option 3</sp-menu-item>
+                </sp-menu-group>
+              </div>
+            `
+          )}
+    </div>
+`;
+
+complexSlowPage.swc_vrt = {
+  skip: true,
+};
+
+complexSlowPage.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
+export const click = (args: Properties): TemplateResult => Template(args);
+click.args = {
+  interaction: 'click',
+  placement: 'right',
+  style: 'container-type' as WrapperStyleType,
+  type: 'auto',
+};
+
+export const withSlider = (): TemplateResult => html`
+  <sp-button id="triggerEl" variant="primary">Button popover</sp-button>
+  <sp-overlay trigger="triggerEl@click" placement="bottom">
+    <sp-popover tip>
+      <sp-dialog no-divider class="options-popover-content">
+        <p>Try clicking the slider after popover opens</p>
+        <p>It shouldn't close the popover</p>
+        <sp-slider
+          value="5"
+          step="0.5"
+          min="0"
+          max="20"
+          label="Awesomeness"
+        ></sp-slider>
+        <sp-button>Press me</sp-button>
+      </sp-dialog>
+    </sp-popover>
+  </sp-overlay>
 `;
 withSlider.swc_vrt = {
-    skip: true,
+  skip: true,
 };
 
 withSlider.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
+  // Disables Chromatic's snapshotting on a global level
+  chromatic: { disableSnapshot: true },
 };
 
 export const hover = (args: Properties): TemplateResult => Template(args);
 hover.args = {
-    interaction: 'hover',
-    placement: 'right',
-    style: 'will-change',
+  interaction: 'hover',
+  placement: 'right',
+  style: 'will-change',
 };
 
 export const hoverTooltip = ({
-    interaction,
-    open,
-    placement,
-    type,
+  interaction,
+  open,
+  placement,
+  type,
 }: Properties): TemplateResult => html`
-    <style>
-        .wrapper {
-            will-change: transform;
-        }
-    </style>
-    <div class="wrapper">
-        <sp-action-button id="trigger">Open the overlay</sp-action-button>
-        <sp-overlay
-            ?open=${open}
-            trigger="trigger@${interaction}"
-            type=${ifDefined(type)}
-            placement=${ifDefined(placement)}
-            offset="-10"
-        >
-            <sp-tooltip>Tooltip goes here.</sp-tooltip>
-        </sp-overlay>
-    </div>
+  <style>
+    .wrapper {
+      will-change: transform;
+    }
+  </style>
+  <div class="wrapper">
+    <sp-action-button id="trigger">Open the overlay</sp-action-button>
+    <sp-overlay
+      ?open=${open}
+      trigger="trigger@${interaction}"
+      type=${ifDefined(type)}
+      placement=${ifDefined(placement)}
+      offset="-10"
+    >
+      <sp-tooltip>Tooltip goes here.</sp-tooltip>
+    </sp-overlay>
+  </div>
 `;
 hoverTooltip.args = {
-    interaction: 'hover',
-    placement: 'right',
+  interaction: 'hover',
+  placement: 'right',
 };
 
 export const longpress = (args: Properties): TemplateResult => Template(args);
 longpress.args = {
-    interaction: 'longpress',
-    placement: 'right',
-    style: 'container-type',
-    type: 'auto',
+  interaction: 'longpress',
+  placement: 'right',
+  style: 'container-type',
+  type: 'auto',
 };
 
 /**
@@ -441,590 +411,521 @@ longpress.args = {
  * pass `focus` into a shadow child element.
  */
 export const receivesFocus = ({
-    interaction,
-    open,
-    placement,
-    receivesFocus,
-    type,
+  interaction,
+  open,
+  placement,
+  receivesFocus,
+  type,
 }: Properties): TemplateResult => html`
-    <sp-action-button id="trigger">
-        Open the overlay (with focus)
-    </sp-action-button>
-    <sp-overlay
-        ?open=${open}
-        trigger="trigger@${interaction}"
-        type=${ifDefined(type)}
-        placement=${ifDefined(placement)}
-        .receivesFocus=${receivesFocus}
-    >
-        <sp-popover>
-            <sp-dialog size="s" no-divider>
-                <a href="https://example.com">Click Content</a>
-            </sp-dialog>
-        </sp-popover>
-    </sp-overlay>
+  <sp-action-button id="trigger">
+    Open the overlay (with focus)
+  </sp-action-button>
+  <sp-overlay
+    ?open=${open}
+    trigger="trigger@${interaction}"
+    type=${ifDefined(type)}
+    placement=${ifDefined(placement)}
+    .receivesFocus=${receivesFocus}
+  >
+    <sp-popover>
+      <sp-dialog size="s" no-divider>
+        <a href="https://example.com">Click Content</a>
+      </sp-dialog>
+    </sp-popover>
+  </sp-overlay>
 `;
 receivesFocus.args = {
-    interaction: 'click',
-    placement: 'bottom-start',
-    type: 'auto',
-    receivesFocus: 'true',
+  interaction: 'click',
+  placement: 'bottom-start',
+  type: 'auto',
+  receivesFocus: 'true',
 } as Properties;
 
 export const transformed = (args: Properties): TemplateResult => html`
-    <style>
-        .transformed {
-            transform: translateX(-50%);
-            position: absolute;
-            inset: auto;
-            inset-inline-start: 200px;
-            inset-block-start: 200px;
-            inline-size: 100px;
-            block-size: 50px;
-        }
-    </style>
-    <div class="transformed">${Template(args)}</div>
+  <style>
+    .transformed {
+      transform: translateX(-50%);
+      position: absolute;
+      inset: auto;
+      inset-inline-start: 200px;
+      inset-block-start: 200px;
+      inline-size: 100px;
+      block-size: 50px;
+    }
+  </style>
+  <div class="transformed">${Template(args)}</div>
 `;
 transformed.args = {
-    interaction: 'click',
-    placement: 'right',
-    type: 'auto',
+  interaction: 'click',
+  placement: 'right',
+  type: 'auto',
 };
 
 export const contained = (args: Properties): TemplateResult => html`
-    <style>
-        .contained {
-            contain: strict;
-            position: absolute;
-            inset: auto;
-            inset-inline-start: 200px;
-            inset-block-start: 200px;
-            inline-size: 200px;
-            block-size: 50px;
-            padding-block: 75px;
-            padding-inline-start: 300px;
-        }
-    </style>
-    <div class="contained">${Template(args)}</div>
+  <style>
+    .contained {
+      contain: strict;
+      position: absolute;
+      inset: auto;
+      inset-inline-start: 200px;
+      inset-block-start: 200px;
+      inline-size: 200px;
+      block-size: 50px;
+      padding-block: 75px;
+      padding-inline-start: 300px;
+    }
+  </style>
+  <div class="contained">${Template(args)}</div>
 `;
 contained.args = {
-    interaction: 'click',
-    placement: 'right',
-    type: 'auto',
+  interaction: 'click',
+  placement: 'right',
+  type: 'auto',
 };
 
 export const all = ({ delayed }: Properties): TemplateResult => html`
-    <sp-action-button id="trigger" hold-affordance>
-        Open the overlay
-    </sp-action-button>
-    <sp-overlay trigger="trigger@click" type="auto" placement="right">
-        <sp-popover>
-            <sp-dialog size="s" no-divider>Click content</sp-dialog>
-        </sp-popover>
-    </sp-overlay>
-    <sp-overlay ?delayed=${delayed} trigger="trigger@hover" type="hint">
-        <sp-tooltip>Hover content</sp-tooltip>
-    </sp-overlay>
-    <sp-overlay trigger="trigger@longpress" type="auto" placement="right">
-        <sp-popover>
-            <sp-dialog size="s" no-divider>Longpress content</sp-dialog>
-        </sp-popover>
-    </sp-overlay>
+  <sp-action-button id="trigger" hold-affordance>
+    Open the overlay
+  </sp-action-button>
+  <sp-overlay trigger="trigger@click" type="auto" placement="right">
+    <sp-popover>
+      <sp-dialog size="s" no-divider>Click content</sp-dialog>
+    </sp-popover>
+  </sp-overlay>
+  <sp-overlay ?delayed=${delayed} trigger="trigger@hover" type="hint">
+    <sp-tooltip>Hover content</sp-tooltip>
+  </sp-overlay>
+  <sp-overlay trigger="trigger@longpress" type="auto" placement="right">
+    <sp-popover>
+      <sp-dialog size="s" no-divider>Longpress content</sp-dialog>
+    </sp-popover>
+  </sp-overlay>
 `;
 
 export const actionGroup = ({ delayed }: Properties): TemplateResult => {
-    const popoverOffset = [6, -13] as [number, number];
-    return html`
-        <style>
-            sp-popover sp-action-group {
-                padding: calc(
-                        var(--spectrum-actiongroup-vertical-spacing-regular) *
-                            0.75
-                    )
-                    calc(
-                        var(--spectrum-actiongroup-vertical-spacing-regular) / 2
-                    );
-            }
-            .root {
-                inset-inline-end: 0em;
-                inset-block-start: 3em;
-                padding-block-end: 3em;
-            }
-            .root > sp-action-group > sp-action-button,
-            .root > sp-action-group > sp-action-menu {
-                top: 3em;
-                position: relative;
-            }
-        </style>
-        <sp-popover open class="root">
-            <sp-action-group vertical quiet emphasized selects="single">
-                <sp-action-button id="trigger-1" hold-affordance>
-                    <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
-                </sp-action-button>
-                <sp-action-button id="trigger-2" hold-affordance>
-                    <sp-icon-polygon-select
-                        slot="icon"
-                    ></sp-icon-polygon-select>
-                </sp-action-button>
-                <sp-action-button id="trigger-3" hold-affordance>
-                    <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
-                </sp-action-button>
-                <sp-action-menu label="More Actions" placement="left">
-                    <sp-menu-group id="cms">
-                        <span slot="header">cms</span>
-                        <sp-menu-item value="updateAllSiteContent">
-                            Update All Content
-                        </sp-menu-item>
-                        <sp-menu-item value="refreshAllXDs">
-                            Refresh All XDs
-                        </sp-menu-item>
-                    </sp-menu-group>
-                    <sp-menu-group id="ssg">
-                        <span slot="header">ssg</span>
-                        <sp-menu-item value="clearCache">
-                            Clear Cache
-                        </sp-menu-item>
-                    </sp-menu-group>
-                    <sp-menu-group id="vrt">
-                        <span slot="header">vrt</span>
-                        <sp-menu-item value="vrt-contributions">
-                            Contributions
-                        </sp-menu-item>
-                        <sp-menu-item value="vrt-internal">
-                            Internal
-                        </sp-menu-item>
-                        <sp-menu-item value="vrt-public">Public</sp-menu-item>
-                        <sp-menu-item value="vrt-patterns">
-                            Patterns
-                        </sp-menu-item>
-                        <sp-menu-item value="vrt">All</sp-menu-item>
-                    </sp-menu-group>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-group id="misc">
-                        <sp-menu-item value="logout">Logout</sp-menu-item>
-                    </sp-menu-group>
-                </sp-action-menu>
-            </sp-action-group>
-        </sp-popover>
-        <sp-overlay ?delayed=${delayed} trigger="trigger-1@hover" type="hint">
-            <sp-tooltip>Hover</sp-tooltip>
-        </sp-overlay>
-        <sp-overlay
+  const popoverOffset = [6, -13] as [number, number];
+  return html`
+    <style>
+      sp-popover sp-action-group {
+        padding: calc(
+            var(--spectrum-actiongroup-vertical-spacing-regular) * 0.75
+          )
+          calc(var(--spectrum-actiongroup-vertical-spacing-regular) / 2);
+      }
+      .root {
+        inset-inline-end: 0em;
+        inset-block-start: 3em;
+        padding-block-end: 3em;
+      }
+      .root > sp-action-group > sp-action-button,
+      .root > sp-action-group > sp-action-menu {
+        top: 3em;
+        position: relative;
+      }
+    </style>
+    <sp-popover open class="root">
+      <sp-action-group vertical quiet emphasized selects="single">
+        <sp-action-button id="trigger-1" hold-affordance>
+          <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+        </sp-action-button>
+        <sp-action-button id="trigger-2" hold-affordance>
+          <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+        </sp-action-button>
+        <sp-action-button id="trigger-3" hold-affordance>
+          <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+        </sp-action-button>
+        <sp-action-menu label="More Actions" placement="left">
+          <sp-menu-group id="cms">
+            <span slot="header">cms</span>
+            <sp-menu-item value="updateAllSiteContent">
+              Update All Content
+            </sp-menu-item>
+            <sp-menu-item value="refreshAllXDs">Refresh All XDs</sp-menu-item>
+          </sp-menu-group>
+          <sp-menu-group id="ssg">
+            <span slot="header">ssg</span>
+            <sp-menu-item value="clearCache">Clear Cache</sp-menu-item>
+          </sp-menu-group>
+          <sp-menu-group id="vrt">
+            <span slot="header">vrt</span>
+            <sp-menu-item value="vrt-contributions">Contributions</sp-menu-item>
+            <sp-menu-item value="vrt-internal">Internal</sp-menu-item>
+            <sp-menu-item value="vrt-public">Public</sp-menu-item>
+            <sp-menu-item value="vrt-patterns">Patterns</sp-menu-item>
+            <sp-menu-item value="vrt">All</sp-menu-item>
+          </sp-menu-group>
+          <sp-menu-divider></sp-menu-divider>
+          <sp-menu-group id="misc">
+            <sp-menu-item value="logout">Logout</sp-menu-item>
+          </sp-menu-group>
+        </sp-action-menu>
+      </sp-action-group>
+    </sp-popover>
+    <sp-overlay ?delayed=${delayed} trigger="trigger-1@hover" type="hint">
+      <sp-tooltip>Hover</sp-tooltip>
+    </sp-overlay>
+    <sp-overlay
+      trigger="trigger-1@longpress"
+      type="auto"
+      placement="right-start"
+      .offset=${popoverOffset}
+    >
+      <sp-popover tip>
+        <sp-action-group vertical quiet>
+          <sp-action-button>
+            <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+          </sp-action-button>
+          <sp-action-button>
+            <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+          </sp-action-button>
+          <sp-action-button>
+            <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+          </sp-action-button>
+        </sp-action-group>
+      </sp-popover>
+    </sp-overlay>
+    <sp-overlay ?delayed=${delayed} trigger="trigger-2@hover" type="hint">
+      <sp-tooltip>Hover</sp-tooltip>
+    </sp-overlay>
+    <sp-overlay
+      trigger="trigger-2@longpress"
+      type="auto"
+      placement="right-start"
+      .offset=${popoverOffset}
+    >
+      <sp-popover tip>
+        <sp-action-group vertical quiet>
+          <sp-action-button>
+            <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+          </sp-action-button>
+          <sp-action-button>
+            <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+          </sp-action-button>
+          <sp-action-button>
+            <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+          </sp-action-button>
+        </sp-action-group>
+      </sp-popover>
+    </sp-overlay>
+    <sp-overlay ?delayed=${delayed} trigger="trigger-3@hover" type="hint" open>
+      <sp-tooltip>Hover</sp-tooltip>
+    </sp-overlay>
+    <sp-overlay
+      trigger="trigger-3@longpress"
+      type="auto"
+      placement="right-start"
+      .offset=${popoverOffset}
+    >
+      <sp-popover tip>
+        <sp-action-group vertical quiet>
+          <sp-action-button>
+            <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+          </sp-action-button>
+          <sp-action-button>
+            <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+          </sp-action-button>
+          <sp-action-button>
+            <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+          </sp-action-button>
+        </sp-action-group>
+      </sp-popover>
+    </sp-overlay>
+  `;
+};
+
+export const actionGroupWithFilters = ({
+  delayed,
+}: Properties): TemplateResult => {
+  const popoverOffset = [6, -13] as [number, number];
+  return html`
+    <style>
+      sp-popover sp-action-group {
+        padding: calc(
+            var(--spectrum-actiongroup-vertical-spacing-regular) * 0.75
+          )
+          calc(var(--spectrum-actiongroup-vertical-spacing-regular) / 2);
+      }
+      .root {
+        inset-inline-end: 0em;
+        inset-block-start: 3em;
+        padding-block-end: 3em;
+        overflow: hidden;
+      }
+      .root > sp-action-group > sp-action-button,
+      .root > sp-action-group > sp-action-menu {
+        top: 3em;
+        position: relative;
+      }
+      sp-action-button,
+      sp-action-menu {
+        background-image: linear-gradient(
+          rgba(125, 125, 125, 0.2),
+          rgba(125, 125, 125, 0.2)
+        );
+        background-blend-mode: multiply;
+        filter: brightness(1) saturate(1);
+      }
+    </style>
+    <p>
+      This story outlines some CSS usage that is not yet covered by the
+      placement calculations within the Overlay API.
+    </p>
+    <sp-popover open class="root">
+      <sp-action-group vertical quiet emphasized selects="single">
+        <sp-action-button id="trigger-1" hold-affordance>
+          <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+          <sp-tooltip ?delayed=${delayed} self-managed>Hover</sp-tooltip>
+          <sp-overlay
             trigger="trigger-1@longpress"
             type="auto"
             placement="right-start"
             .offset=${popoverOffset}
-        >
+          >
             <sp-popover tip>
-                <sp-action-group vertical quiet>
-                    <sp-action-button>
-                        <sp-icon-anchor-select
-                            slot="icon"
-                        ></sp-icon-anchor-select>
-                    </sp-action-button>
-                    <sp-action-button>
-                        <sp-icon-polygon-select
-                            slot="icon"
-                        ></sp-icon-polygon-select>
-                    </sp-action-button>
-                    <sp-action-button>
-                        <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
-                    </sp-action-button>
-                </sp-action-group>
-            </sp-popover>
-        </sp-overlay>
-        <sp-overlay ?delayed=${delayed} trigger="trigger-2@hover" type="hint">
-            <sp-tooltip>Hover</sp-tooltip>
-        </sp-overlay>
-        <sp-overlay
-            trigger="trigger-2@longpress"
-            type="auto"
-            placement="right-start"
-            .offset=${popoverOffset}
-        >
-            <sp-popover tip>
-                <sp-action-group vertical quiet>
-                    <sp-action-button>
-                        <sp-icon-anchor-select
-                            slot="icon"
-                        ></sp-icon-anchor-select>
-                    </sp-action-button>
-                    <sp-action-button>
-                        <sp-icon-polygon-select
-                            slot="icon"
-                        ></sp-icon-polygon-select>
-                    </sp-action-button>
-                    <sp-action-button>
-                        <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
-                    </sp-action-button>
-                </sp-action-group>
-            </sp-popover>
-        </sp-overlay>
-        <sp-overlay
-            ?delayed=${delayed}
-            trigger="trigger-3@hover"
-            type="hint"
-            open
-        >
-            <sp-tooltip>Hover</sp-tooltip>
-        </sp-overlay>
-        <sp-overlay
-            trigger="trigger-3@longpress"
-            type="auto"
-            placement="right-start"
-            .offset=${popoverOffset}
-        >
-            <sp-popover tip>
-                <sp-action-group vertical quiet>
-                    <sp-action-button>
-                        <sp-icon-anchor-select
-                            slot="icon"
-                        ></sp-icon-anchor-select>
-                    </sp-action-button>
-                    <sp-action-button>
-                        <sp-icon-polygon-select
-                            slot="icon"
-                        ></sp-icon-polygon-select>
-                    </sp-action-button>
-                    <sp-action-button>
-                        <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
-                    </sp-action-button>
-                </sp-action-group>
-            </sp-popover>
-        </sp-overlay>
-    `;
-};
-
-export const actionGroupWithFilters = ({
-    delayed,
-}: Properties): TemplateResult => {
-    const popoverOffset = [6, -13] as [number, number];
-    return html`
-        <style>
-            sp-popover sp-action-group {
-                padding: calc(
-                        var(--spectrum-actiongroup-vertical-spacing-regular) *
-                            0.75
-                    )
-                    calc(
-                        var(--spectrum-actiongroup-vertical-spacing-regular) / 2
-                    );
-            }
-            .root {
-                inset-inline-end: 0em;
-                inset-block-start: 3em;
-                padding-block-end: 3em;
-                overflow: hidden;
-            }
-            .root > sp-action-group > sp-action-button,
-            .root > sp-action-group > sp-action-menu {
-                top: 3em;
-                position: relative;
-            }
-            sp-action-button,
-            sp-action-menu {
-                background-image: linear-gradient(
-                    rgba(125, 125, 125, 0.2),
-                    rgba(125, 125, 125, 0.2)
-                );
-                background-blend-mode: multiply;
-                filter: brightness(1) saturate(1);
-            }
-        </style>
-        <p>
-            This story outlines some CSS usage that is not yet covered by the
-            placement calculations within the Overlay API.
-        </p>
-        <sp-popover open class="root">
-            <sp-action-group vertical quiet emphasized selects="single">
-                <sp-action-button id="trigger-1" hold-affordance>
-                    <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
-                    <sp-tooltip ?delayed=${delayed} self-managed>
-                        Hover
-                    </sp-tooltip>
-                    <sp-overlay
-                        trigger="trigger-1@longpress"
-                        type="auto"
-                        placement="right-start"
-                        .offset=${popoverOffset}
-                    >
-                        <sp-popover tip>
-                            <sp-action-group vertical quiet>
-                                <sp-action-button>
-                                    <sp-icon-anchor-select
-                                        slot="icon"
-                                    ></sp-icon-anchor-select>
-                                </sp-action-button>
-                                <sp-action-button>
-                                    <sp-icon-polygon-select
-                                        slot="icon"
-                                    ></sp-icon-polygon-select>
-                                </sp-action-button>
-                                <sp-action-button>
-                                    <sp-icon-rect-select
-                                        slot="icon"
-                                    ></sp-icon-rect-select>
-                                </sp-action-button>
-                            </sp-action-group>
-                        </sp-popover>
-                    </sp-overlay>
+              <sp-action-group vertical quiet>
+                <sp-action-button>
+                  <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
                 </sp-action-button>
-                <sp-action-button id="trigger-2" hold-affordance>
-                    <sp-icon-polygon-select
-                        slot="icon"
-                    ></sp-icon-polygon-select>
+                <sp-action-button>
+                  <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
                 </sp-action-button>
-                <sp-action-button id="trigger-3" hold-affordance>
-                    <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
-                    <sp-tooltip ?delayed=${delayed} self-managed>
-                        Hover
-                    </sp-tooltip>
+                <sp-action-button>
+                  <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
                 </sp-action-button>
-                <sp-action-menu label="More Actions">
-                    <sp-menu-group id="cms">
-                        <span slot="header">cms</span>
-                        <sp-menu-item value="updateAllSiteContent">
-                            Update All Content
-                        </sp-menu-item>
-                        <sp-menu-item value="refreshAllXDs">
-                            Refresh All XDs
-                        </sp-menu-item>
-                    </sp-menu-group>
-                    <sp-menu-group id="ssg">
-                        <span slot="header">ssg</span>
-                        <sp-menu-item value="clearCache">
-                            Clear Cache
-                        </sp-menu-item>
-                    </sp-menu-group>
-                    <sp-menu-group id="vrt">
-                        <span slot="header">vrt</span>
-                        <sp-menu-item value="vrt-contributions">
-                            Contributions
-                        </sp-menu-item>
-                        <sp-menu-item value="vrt-internal">
-                            Internal
-                        </sp-menu-item>
-                        <sp-menu-item value="vrt-public">Public</sp-menu-item>
-                        <sp-menu-item value="vrt-patterns">
-                            Patterns
-                        </sp-menu-item>
-                        <sp-menu-item value="vrt">All</sp-menu-item>
-                    </sp-menu-group>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-group id="misc">
-                        <sp-menu-item value="logout">Logout</sp-menu-item>
-                    </sp-menu-group>
-                </sp-action-menu>
-            </sp-action-group>
-        </sp-popover>
-        <sp-overlay ?delayed=${delayed} trigger="trigger-2@hover" type="hint">
-            <sp-tooltip>Hover</sp-tooltip>
-        </sp-overlay>
-        <sp-overlay
-            trigger="trigger-2@longpress"
-            type="auto"
-            placement="right-start"
-            .offset=${popoverOffset}
-        >
-            <sp-popover tip>
-                <sp-action-group vertical quiet>
-                    <sp-action-button>
-                        <sp-icon-anchor-select
-                            slot="icon"
-                        ></sp-icon-anchor-select>
-                    </sp-action-button>
-                    <sp-action-button>
-                        <sp-icon-polygon-select
-                            slot="icon"
-                        ></sp-icon-polygon-select>
-                    </sp-action-button>
-                    <sp-action-button>
-                        <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
-                    </sp-action-button>
-                </sp-action-group>
+              </sp-action-group>
             </sp-popover>
-        </sp-overlay>
-        <sp-overlay
-            trigger="trigger-3@longpress"
-            type="auto"
-            placement="right-start"
-            .offset=${popoverOffset}
-        >
-            <sp-popover tip>
-                <sp-action-group vertical quiet>
-                    <sp-action-button>
-                        <sp-icon-anchor-select
-                            slot="icon"
-                        ></sp-icon-anchor-select>
-                    </sp-action-button>
-                    <sp-action-button>
-                        <sp-icon-polygon-select
-                            slot="icon"
-                        ></sp-icon-polygon-select>
-                    </sp-action-button>
-                    <sp-action-button>
-                        <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
-                    </sp-action-button>
-                </sp-action-group>
-            </sp-popover>
-        </sp-overlay>
-    `;
+          </sp-overlay>
+        </sp-action-button>
+        <sp-action-button id="trigger-2" hold-affordance>
+          <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+        </sp-action-button>
+        <sp-action-button id="trigger-3" hold-affordance>
+          <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+          <sp-tooltip ?delayed=${delayed} self-managed>Hover</sp-tooltip>
+        </sp-action-button>
+        <sp-action-menu label="More Actions">
+          <sp-menu-group id="cms">
+            <span slot="header">cms</span>
+            <sp-menu-item value="updateAllSiteContent">
+              Update All Content
+            </sp-menu-item>
+            <sp-menu-item value="refreshAllXDs">Refresh All XDs</sp-menu-item>
+          </sp-menu-group>
+          <sp-menu-group id="ssg">
+            <span slot="header">ssg</span>
+            <sp-menu-item value="clearCache">Clear Cache</sp-menu-item>
+          </sp-menu-group>
+          <sp-menu-group id="vrt">
+            <span slot="header">vrt</span>
+            <sp-menu-item value="vrt-contributions">Contributions</sp-menu-item>
+            <sp-menu-item value="vrt-internal">Internal</sp-menu-item>
+            <sp-menu-item value="vrt-public">Public</sp-menu-item>
+            <sp-menu-item value="vrt-patterns">Patterns</sp-menu-item>
+            <sp-menu-item value="vrt">All</sp-menu-item>
+          </sp-menu-group>
+          <sp-menu-divider></sp-menu-divider>
+          <sp-menu-group id="misc">
+            <sp-menu-item value="logout">Logout</sp-menu-item>
+          </sp-menu-group>
+        </sp-action-menu>
+      </sp-action-group>
+    </sp-popover>
+    <sp-overlay ?delayed=${delayed} trigger="trigger-2@hover" type="hint">
+      <sp-tooltip>Hover</sp-tooltip>
+    </sp-overlay>
+    <sp-overlay
+      trigger="trigger-2@longpress"
+      type="auto"
+      placement="right-start"
+      .offset=${popoverOffset}
+    >
+      <sp-popover tip>
+        <sp-action-group vertical quiet>
+          <sp-action-button>
+            <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+          </sp-action-button>
+          <sp-action-button>
+            <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+          </sp-action-button>
+          <sp-action-button>
+            <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+          </sp-action-button>
+        </sp-action-group>
+      </sp-popover>
+    </sp-overlay>
+    <sp-overlay
+      trigger="trigger-3@longpress"
+      type="auto"
+      placement="right-start"
+      .offset=${popoverOffset}
+    >
+      <sp-popover tip>
+        <sp-action-group vertical quiet>
+          <sp-action-button>
+            <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+          </sp-action-button>
+          <sp-action-button>
+            <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+          </sp-action-button>
+          <sp-action-button>
+            <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+          </sp-action-button>
+        </sp-action-group>
+      </sp-popover>
+    </sp-overlay>
+  `;
 };
 
 // Test #3795 in browser
 export const transientHover = (): TemplateResult => html`
-    <transient-hover></transient-hover>
+  <transient-hover></transient-hover>
 `;
 transientHover.swc_vrt = {
-    skip: true,
+  skip: true,
 };
 
 transientHover.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
+  // Disables Chromatic's snapshotting on a global level
+  chromatic: { disableSnapshot: true },
 };
 
 export const lazyElements = (): TemplateResult => {
-    const handleSlottableRequest = (event: SlottableRequestEvent): void => {
-        const template =
-            event.data === removeSlottableRequest
-                ? undefined
-                : html`
-                      <sp-popover>
-                          <sp-dialog no-divider>
-                              <sp-slider
-                                  value="5"
-                                  step="0.5"
-                                  min="0"
-                                  max="20"
-                                  label="Awesomeness"
-                              ></sp-slider>
-                              <div id="styled-div">
-                                  The background of this div should be blue
-                              </div>
-                              <sp-button>
-                                  Press Me
-                                  <sp-tooltip self-managed delayed>
-                                      Click to open another popover.
-                                  </sp-tooltip>
-                              </sp-button>
-                          </sp-dialog>
-                      </sp-popover>
-                  `;
-        render(template, event.target as HTMLElement);
-    };
-    return html`
-        <sp-button id="button">Trigger</sp-button>
-        <sp-overlay
-            placement="bottom"
-            type="auto"
-            trigger="button@click"
-            @slottable-request=${handleSlottableRequest}
-        ></sp-overlay>
-    `;
+  const handleSlottableRequest = (event: SlottableRequestEvent): void => {
+    const template =
+      event.data === removeSlottableRequest
+        ? undefined
+        : html`
+            <sp-popover>
+              <sp-dialog no-divider>
+                <sp-slider
+                  value="5"
+                  step="0.5"
+                  min="0"
+                  max="20"
+                  label="Awesomeness"
+                ></sp-slider>
+                <div id="styled-div">
+                  The background of this div should be blue
+                </div>
+                <sp-button>
+                  Press Me
+                  <sp-tooltip self-managed delayed>
+                    Click to open another popover.
+                  </sp-tooltip>
+                </sp-button>
+              </sp-dialog>
+            </sp-popover>
+          `;
+    render(template, event.target as HTMLElement);
+  };
+  return html`
+    <sp-button id="button">Trigger</sp-button>
+    <sp-overlay
+      placement="bottom"
+      type="auto"
+      trigger="button@click"
+      @slottable-request=${handleSlottableRequest}
+    ></sp-overlay>
+  `;
 };
 
 lazyElements.swc_vrt = {
-    skip: true,
+  skip: true,
 };
 
 lazyElements.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
+  // Disables Chromatic's snapshotting on a global level
+  chromatic: { disableSnapshot: true },
 };
 
 export const nestedModalOverlays = (): TemplateResult => html`
-    <div style="padding: 20px;">
-        <sp-button id="outerTrigger" variant="primary">
-            Open Outer Modal
-        </sp-button>
+  <div style="padding: 20px;">
+    <sp-button id="outerTrigger" variant="primary">Open Outer Modal</sp-button>
 
-        <sp-overlay
-            id="outerOverlay"
+    <sp-overlay
+      id="outerOverlay"
+      type="auto"
+      .triggerInteraction=${'click'}
+      trigger="outerTrigger@click"
+    >
+      <sp-popover>
+        <sp-dialog>
+          <p>This is the outer modal content. Press ESC to close it.</p>
+          <sp-button id="innerTrigger" variant="primary">
+            Open Inner Modal
+          </sp-button>
+          <sp-overlay
+            id="innerOverlay"
             type="auto"
             .triggerInteraction=${'click'}
-            trigger="outerTrigger@click"
-        >
+            trigger="innerTrigger@click"
+          >
             <sp-popover>
-                <sp-dialog>
-                    <p>
-                        This is the outer modal content. Press ESC to close it.
-                    </p>
-                    <sp-button id="innerTrigger" variant="primary">
-                        Open Inner Modal
-                    </sp-button>
-                    <sp-overlay
-                        id="innerOverlay"
-                        type="auto"
-                        .triggerInteraction=${'click'}
-                        trigger="innerTrigger@click"
-                    >
-                        <sp-popover>
-                            <sp-dialog>
-                                <p>
-                                    This is the inner modal content. Press ESC
-                                    to close this first, then the outer modal.
-                                </p>
-                            </sp-dialog>
-                        </sp-popover>
-                    </sp-overlay>
-                </sp-dialog>
+              <sp-dialog>
+                <p>
+                  This is the inner modal content. Press ESC to close this
+                  first, then the outer modal.
+                </p>
+              </sp-dialog>
             </sp-popover>
-        </sp-overlay>
-    </div>
+          </sp-overlay>
+        </sp-dialog>
+      </sp-popover>
+    </sp-overlay>
+  </div>
 `;
 
 nestedModalOverlays.swc_vrt = {
-    skip: true,
+  skip: true,
 };
 
 nestedModalOverlays.parameters = {
-    chromatic: { disableSnapshot: true },
+  chromatic: { disableSnapshot: true },
 };
 
 export const modalClickBlocking = (): TemplateResult => html`
-    <div style="padding: 20px;">
-        <h2>Modal Overlay Click Blocking Test</h2>
-        <p>
-            Click "Open overlay" to open a modal overlay. Then try clicking the
-            "External" button. The external button should NOT be clickable when
-            the modal is open.
-        </p>
-        <sp-button id="trigger">Open overlay</sp-button>
+  <div style="padding: 20px;">
+    <h2>Modal Overlay Click Blocking Test</h2>
+    <p>
+      Click "Open overlay" to open a modal overlay. Then try clicking the
+      "External" button. The external button should NOT be clickable when the
+      modal is open.
+    </p>
+    <sp-button id="trigger">Open overlay</sp-button>
 
-        <sp-overlay trigger="trigger@click" type="modal" placement="bottom">
-            <sp-popover style="padding: 10px">
-                <sp-button
-                    onclick="alert('Internal button clicked! This should work.')"
-                >
-                    Add a div
-                </sp-button>
-                <p style="margin-top: 10px;">
-                    This is inside the modal overlay. Clicking the button above
-                    should work.
-                </p>
-            </sp-popover>
-        </sp-overlay>
-
+    <sp-overlay trigger="trigger@click" type="modal" placement="bottom">
+      <sp-popover style="padding: 10px">
         <sp-button
-            id="externalButton"
-            onclick="alert('External button clicked! This should NOT work when modal is open.')"
-            style="margin-top: 20px;"
+          onclick="alert('Internal button clicked! This should work.')"
         >
-            External
+          Add a div
         </sp-button>
-        <p style="margin-top: 10px; color: red;">
-            ⚠️ When the modal is open, clicking "External" should be blocked. If
-            you can click it and see the alert, the fix is not working.
+        <p style="margin-top: 10px;">
+          This is inside the modal overlay. Clicking the button above should
+          work.
         </p>
-    </div>
+      </sp-popover>
+    </sp-overlay>
+
+    <sp-button
+      id="externalButton"
+      onclick="alert('External button clicked! This should NOT work when modal is open.')"
+      style="margin-top: 20px;"
+    >
+      External
+    </sp-button>
+    <p style="margin-top: 10px; color: red;">
+      ⚠️ When the modal is open, clicking "External" should be blocked. If you
+      can click it and see the alert, the fix is not working.
+    </p>
+  </div>
 `;
 
 modalClickBlocking.swc_vrt = {
-    skip: true,
+  skip: true,
 };
 
 modalClickBlocking.parameters = {
-    tags: ['!dev'],
-    chromatic: { disableSnapshot: true },
+  tags: ['!dev'],
+  chromatic: { disableSnapshot: true },
 };

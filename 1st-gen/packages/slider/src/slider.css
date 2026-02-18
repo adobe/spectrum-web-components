@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -18,78 +18,78 @@
  * Removes blue outline from :host when it is being focused.
 */
 :host(:focus) {
-    outline: 0;
+  outline: 0;
 }
 
 :host([editable]) {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-        "label number"
-        "slider number";
+  display: grid;
+  grid-template-areas:
+    "label number"
+    "slider number";
+  grid-template-columns: 1fr auto;
 }
 
 :host([editable]) #label-container {
-    grid-area: label;
+  grid-area: label;
 }
 
 :host([editable]) #label-container + div {
-    grid-area: slider;
+  grid-area: slider;
 }
 
 :host([editable]) sp-number-field {
-    grid-area: number;
-    align-self: flex-end;
-    margin-inline-start: calc(var(--swc-scale-factor) * 16px);
+  grid-area: number;
+  align-self: flex-end;
+  margin-inline-start: calc(var(--swc-scale-factor) * 16px);
 }
 
 :host([editable]) output {
-    border: 0;
-    clip: rect(0, 0, 0, 0);
-    clip-path: inset(50%);
-    height: 1px;
-    margin: 0 -1px -1px 0;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-    white-space: nowrap;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: 0 -1px -1px 0;
+  white-space: nowrap;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
 }
 
 :host([disabled]) {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 :host([dragging]),
 #track {
-    touch-action: none;
-    user-select: none;
+  touch-action: none;
+  user-select: none;
 }
 
 .not-exact.ticks {
-    justify-content: start;
+  justify-content: start;
 }
 
 :host(:dir(ltr)) .not-exact .tick {
-    padding-right: var(--sp-slider-tick-offset);
+  padding-right: var(--sp-slider-tick-offset);
 }
 
 :host(:dir(rtl)) .not-exact .tick {
-    padding-left: var(--sp-slider-tick-offset);
+  padding-left: var(--sp-slider-tick-offset);
 }
 
-:host(:dir(ltr)) .not-exact .tick:after {
-    left: auto;
-    transform: translate(-50%, 0);
+:host(:dir(ltr)) .not-exact .tick::after {
+  left: auto;
+  transform: translate(-50%, 0);
 }
 
-:host(:dir(rtl)) .not-exact .tick:after {
-    right: auto;
-    transform: translate(50%, 0);
+:host(:dir(rtl)) .not-exact .tick::after {
+  right: auto;
+  transform: translate(50%, 0);
 }
 
-:host(:dir(rtl)) .handle:before {
-    transform: translate(50%, -50%);
+:host(:dir(rtl)) .handle::before {
+  transform: translate(50%, -50%);
 }
 
 /*
@@ -97,107 +97,107 @@
  * waits to be addressed at the Spectrum CSS level.
  */
 
-.track:before {
-    background-size: var(--spectrum-slider-track-background-size) !important;
+.track::before {
+  background-size: var(--spectrum-slider-track-background-size) !important;
 }
 
-:host(:dir(ltr)) .track:last-of-type:before {
-    background-position: 100%;
+:host(:dir(ltr)) .track:last-of-type::before {
+  background-position: 100%;
 }
 
-:host(:dir(rtl)) .track:first-of-type:before {
-    background-position: 100%;
+:host(:dir(rtl)) .track:first-of-type::before {
+  background-position: 100%;
 }
 
 :host(:dir(ltr)) .track:not(:first-of-type, :last-of-type) {
-    left: var(--spectrum-slider-track-segment-position);
+  left: var(--spectrum-slider-track-segment-position);
 }
 
 :host(:dir(rtl)) .track:not(:first-of-type, :last-of-type) {
-    right: var(--spectrum-slider-track-segment-position);
+  right: var(--spectrum-slider-track-segment-position);
 }
 
 .visually-hidden {
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
 }
 
 :host([label-visibility="value"]:dir(ltr)) #value {
-    margin-left: auto;
+  margin-left: auto;
 }
 
 :host([label-visibility="value"]:dir(rtl)) #value {
-    margin-right: auto;
+  margin-right: auto;
 }
 
 :host([label-visibility="none"]) #label-container {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 :host([label-visibility="none"]) #track {
-    align-self: flex-end;
+  align-self: flex-end;
 }
 
 .fill {
-    z-index: 2;
+  z-index: 2;
 }
 
 #slider-description {
-    display: none;
+  display: none;
 }
 
 :host([label-visibility="none"]) #label-container + #track {
-    margin-block-start: 0;
+  margin-block-start: 0;
 }
 
 /* Value tooltip for multi-handle sliders when value label is not visible */
 .value-tooltip {
-    position: absolute;
-    bottom: calc(100% + 8px);
-    inset-inline-start: 50%;
-    transform: translateX(-50%);
-    padding-block-start: var(--spectrum-component-top-to-text-75, 4px);
-    padding-block-end: var(--spectrum-component-bottom-to-text-75, 5px);
-    padding-inline: var(--spectrum-component-edge-to-text-75, 9px);
-    background-color: var(--spectrum-gray-900);
-    color: var(--spectrum-gray-50);
-    font-size: var(--spectrum-font-size-75, 12px);
-    line-height: var(--spectrum-line-height-100, 1.3);
-    border-radius: var(--spectrum-corner-radius-100, 4px);
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition:
-        opacity var(--spectrum-animation-duration-100, 130ms) ease-in-out,
-        visibility var(--spectrum-animation-duration-100, 130ms) ease-in-out;
-    pointer-events: none;
-    z-index: 10;
+  visibility: hidden;
+  position: absolute;
+  inset-inline-start: 50%;
+  bottom: calc(100% + 8px);
+  z-index: 10;
+  padding-block-start: var(--spectrum-component-top-to-text-75, 4px);
+  padding-block-end: var(--spectrum-component-bottom-to-text-75, 5px);
+  padding-inline: var(--spectrum-component-edge-to-text-75, 9px);
+  font-size: var(--spectrum-font-size-75, 12px);
+  line-height: var(--spectrum-line-height-100, 1.3);
+  color: var(--spectrum-gray-50);
+  white-space: nowrap;
+  background-color: var(--spectrum-gray-900);
+  border-radius: var(--spectrum-corner-radius-100, 4px);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-50%);
+  transition:
+    opacity var(--spectrum-animation-duration-100, 130ms) ease-in-out,
+    visibility var(--spectrum-animation-duration-100, 130ms) ease-in-out;
 }
 
 :host([dir="rtl"]) .value-tooltip {
-    transform: translateX(50%);
+  transform: translateX(50%);
 }
 
 /* Tooltip arrow/tip */
-.value-tooltip:after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    inset-inline-start: 50%;
-    transform: translateX(-50%);
-    border-width: 4px;
-    border-style: solid;
-    border-color: var(--spectrum-gray-900) transparent transparent;
+.value-tooltip::after {
+  position: absolute;
+  inset-inline-start: 50%;
+  top: 100%;
+  border-color: var(--spectrum-gray-900) transparent transparent;
+  border-style: solid;
+  border-width: 4px;
+  content: "";
+  transform: translateX(-50%);
 }
 
-:host([dir="rtl"]) .value-tooltip:after {
-    transform: translateX(50%);
+:host([dir="rtl"]) .value-tooltip::after {
+  transform: translateX(50%);
 }
 
 /* Show tooltip on hover and focus within handle */
@@ -205,29 +205,29 @@
 .handle.show-value-tooltip:focus-within .value-tooltip,
 .handle.show-value-tooltip.handle-highlight .value-tooltip,
 .handle.show-value-tooltip.dragging .value-tooltip {
-    opacity: 1;
-    visibility: visible;
+  visibility: visible;
+  opacity: 1;
 }
 
 /* High contrast mode support for value tooltip */
 @media (forced-colors: active) {
-    .value-tooltip {
-        background-color: Canvas;
-        color: CanvasText;
-        border: 1px solid CanvasText;
-    }
+  .value-tooltip {
+    color: CanvasText;
+    background-color: Canvas;
+    border: 1px solid CanvasText;
+  }
 
-    .value-tooltip:after {
-        border-color: CanvasText transparent transparent;
-    }
+  .value-tooltip::after {
+    border-color: CanvasText transparent transparent;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .value-tooltip {
-        transition: none;
-    }
+  .value-tooltip {
+    transition: none;
+  }
 }
 
 :host([disabled]) .value-tooltip {
-    display: none;
+  display: none;
 }

@@ -10,61 +10,58 @@
  * governing permissions and limitations under the License.
  */
 
-import {
-    InteractionController,
-    InteractionTypes,
-    SAFARI_FOCUS_RING_CLASS,
-} from './InteractionController.js';
 import { isWebKit } from '@spectrum-web-components/shared';
 
+import {
+  InteractionController,
+  InteractionTypes,
+  SAFARI_FOCUS_RING_CLASS,
+} from './InteractionController.js';
+
 export class MobileController extends InteractionController {
-    override type = InteractionTypes.mobile;
+  override type = InteractionTypes.mobile;
 
-    handleClick(): void {
-        if (this.host.disabled) {
-            return;
-        }
-        if (this.preventNextToggle == 'no') {
-
-            this.host.toggle();
-        }
-        this.preventNextToggle = 'no';
+  handleClick(): void {
+    if (this.host.disabled) {
+      return;
     }
-
-    public override handlePointerdown(): void {
-        this.preventNextToggle = this.open ? 'yes' : 'no';
-        if (isWebKit()) {
-            this.target.classList.add(SAFARI_FOCUS_RING_CLASS);
-        }
+    if (this.preventNextToggle == 'no') {
+      this.host.toggle();
     }
+    this.preventNextToggle = 'no';
+  }
 
-    private handleFocusOut(): void {
-        if (this.host.open) {
-            return;
-        }
-        if (
-            isWebKit() &&
-            this.target.classList.contains(SAFARI_FOCUS_RING_CLASS)
-        ) {
-            this.target.classList.remove(SAFARI_FOCUS_RING_CLASS);
-        }
+  public override handlePointerdown(): void {
+    this.preventNextToggle = this.open ? 'yes' : 'no';
+    if (isWebKit()) {
+      this.target.classList.add(SAFARI_FOCUS_RING_CLASS);
     }
+  }
 
-    override init(): void {
-        // Clean up listeners if they've already been bound
-        this.abortController?.abort();
-        this.abortController = new AbortController();
-        const { signal } = this.abortController;
-        this.target.addEventListener('click', () => this.handleClick(), {
-            signal,
-        });
-        this.target.addEventListener(
-            'pointerdown',
-            () => this.handlePointerdown(),
-            { signal }
-        );
-        this.target.addEventListener('focusout', () => this.handleFocusOut(), {
-            signal,
-        });
+  private handleFocusOut(): void {
+    if (this.host.open) {
+      return;
     }
+    if (isWebKit() && this.target.classList.contains(SAFARI_FOCUS_RING_CLASS)) {
+      this.target.classList.remove(SAFARI_FOCUS_RING_CLASS);
+    }
+  }
+
+  override init(): void {
+    // Clean up listeners if they've already been bound
+    this.abortController?.abort();
+    this.abortController = new AbortController();
+    const { signal } = this.abortController;
+    this.target.addEventListener('click', () => this.handleClick(), {
+      signal,
+    });
+    this.target.addEventListener(
+      'pointerdown',
+      () => this.handlePointerdown(),
+      { signal }
+    );
+    this.target.addEventListener('focusout', () => this.handleFocusOut(), {
+      signal,
+    });
+  }
 }

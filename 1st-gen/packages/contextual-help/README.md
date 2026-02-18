@@ -48,14 +48,14 @@ The default variant is for in-line information using the "info" icon. Use the in
 
 ```html
 <sp-contextual-help>
-    <h2 slot="heading">Permission required</h2>
-    Your admin must grant you permission before you can create a segment.
-    <sp-link
-        slot="link"
-        href="https://opensource.adobe.com/spectrum-web-components/"
-    >
-        Request permission
-    </sp-link>
+  <h2 slot="heading">Permission required</h2>
+  Your admin must grant you permission before you can create a segment.
+  <sp-link
+    slot="link"
+    href="https://opensource.adobe.com/spectrum-web-components/"
+  >
+    Request permission
+  </sp-link>
 </sp-contextual-help>
 ```
 
@@ -67,15 +67,15 @@ Use `variant="help"` for helpful content: more detailed, in-depth guidance about
 
 ```html
 <sp-contextual-help variant="help">
-    <h2 slot="heading">What is a segment?</h2>
-    Segments identify who your visitors are, what devices and services they use,
-    where they navigate from, and much more.
-    <sp-link
-        slot="link"
-        href="https://opensource.adobe.com/spectrum-web-components/"
-    >
-        Learn more about segments
-    </sp-link>
+  <h2 slot="heading">What is a segment?</h2>
+  Segments identify who your visitors are, what devices and services they use,
+  where they navigate from, and much more.
+  <sp-link
+    slot="link"
+    href="https://opensource.adobe.com/spectrum-web-components/"
+  >
+    Learn more about segments
+  </sp-link>
 </sp-contextual-help>
 ```
 
@@ -88,14 +88,14 @@ By default an `<sp-contextual-help>` will render its popover at the `bottom-star
 
 ```html
 <sp-contextual-help placement="top-start">
-    <h2 slot="heading">Permission required</h2>
-    Your admin must grant you permission before you can create a segment.
-    <sp-link
-        slot="link"
-        href="https://opensource.adobe.com/spectrum-web-components/"
-    >
-        Request permission
-    </sp-link>
+  <h2 slot="heading">Permission required</h2>
+  Your admin must grant you permission before you can create a segment.
+  <sp-link
+    slot="link"
+    href="https://opensource.adobe.com/spectrum-web-components/"
+  >
+    Request permission
+  </sp-link>
 </sp-contextual-help>
 ```
 
@@ -107,11 +107,11 @@ Note: Maximum width should not be less than 100px.
 
 ```html
 <sp-contextual-help
-    style="--mod-spectrum-contextual-help-popover-maximum-width: 200px;"
+  style="--mod-spectrum-contextual-help-popover-maximum-width: 200px;"
 >
-    <h2 slot="heading">Custom max width</h2>
-    This is a test of the contextual help component with a custom max width of
-    200px.
+  <h2 slot="heading">Custom max width</h2>
+  This is a test of the contextual help component with a custom max width of
+  200px.
 </sp-contextual-help>
 ```
 

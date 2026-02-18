@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { singleSelect } from '../stories/menu.stories.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
+import { singleSelect } from '../stories/menu.stories.js';
 
 testForMemoryLeaks(singleSelect());

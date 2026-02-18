@@ -10,104 +10,106 @@
  * governing permissions and limitations under the License.
  */
 import {
-    CSSResultArray,
-    html,
-    PropertyValues,
-    SpectrumElement,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  PropertyValues,
+  SpectrumElement,
+  TemplateResult,
 } from '@spectrum-web-components/base';
-import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import {
-    property,
-    query,
+  property,
+  query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import styles from './table-checkbox-cell.css.js';
 import { Checkbox } from '@spectrum-web-components/checkbox';
+
+import '@spectrum-web-components/checkbox/sp-checkbox.js';
+
+import styles from './table-checkbox-cell.css.js';
 
 /**
  * @element sp-table-checkbox-cell
  */
 export class TableCheckboxCell extends SpectrumElement {
-    public static override get styles(): CSSResultArray {
-        return [styles];
+  public static override get styles(): CSSResultArray {
+    return [styles];
+  }
+
+  /**
+   * Whether or not the checkbox cell is in the table head.
+   */
+  @property({ type: Boolean, reflect: true, attribute: 'head-cell' })
+  public headCell = false;
+
+  @property({ reflect: true })
+  public override role = 'gridcell';
+
+  @query('.checkbox')
+  public checkbox!: Checkbox;
+
+  @property({ type: Boolean })
+  public indeterminate = false;
+
+  @property({ type: Boolean })
+  public checked = false;
+
+  @property({ type: Boolean })
+  public disabled = false;
+
+  @property({ type: Boolean, reflect: true, attribute: 'selects-single' })
+  public selectsSingle = false;
+
+  @property({ type: Boolean, reflect: true })
+  public emphasized = false;
+
+  /**
+   * The accessible label for the checkbox. For header rows, this defaults to 'Select All'.
+   * For body rows, this should be set to the text content of the first cell in the row.
+   */
+  @property({ type: String })
+  public label = '';
+
+  public override click(): void {
+    this.checkbox.click();
+  }
+
+  /**
+   * Updates the aria-label on the checkbox's internal input element.
+   */
+  private updateInputAriaLabel(): void {
+    if (this.checkbox?.inputElement && this.label) {
+      this.checkbox.inputElement.setAttribute('aria-label', this.label);
     }
+  }
 
-    /**
-     * Whether or not the checkbox cell is in the table head.
-     */
-    @property({ type: Boolean, reflect: true, attribute: 'head-cell' })
-    public headCell = false;
-
-    @property({ reflect: true })
-    public override role = 'gridcell';
-
-    @query('.checkbox')
-    public checkbox!: Checkbox;
-
-    @property({ type: Boolean })
-    public indeterminate = false;
-
-    @property({ type: Boolean })
-    public checked = false;
-
-    @property({ type: Boolean })
-    public disabled = false;
-
-    @property({ type: Boolean, reflect: true, attribute: 'selects-single' })
-    public selectsSingle = false;
-
-    @property({ type: Boolean, reflect: true })
-    public emphasized = false;
-
-    /**
-     * The accessible label for the checkbox. For header rows, this defaults to 'Select All'.
-     * For body rows, this should be set to the text content of the first cell in the row.
-     */
-    @property({ type: String })
-    public label = '';
-
-    public override click(): void {
-        this.checkbox.click();
+  protected override async updated(changed: PropertyValues): Promise<void> {
+    super.updated(changed);
+    if (changed.has('label')) {
+      // Wait for the checkbox to render before updating aria-label.
+      await this.checkbox?.updateComplete;
+      this.updateInputAriaLabel();
     }
+  }
 
-    /**
-     * Updates the aria-label on the checkbox's internal input element.
-     */
-    private updateInputAriaLabel(): void {
-        if (this.checkbox?.inputElement && this.label) {
-            this.checkbox.inputElement.setAttribute('aria-label', this.label);
-        }
-    }
+  protected override async firstUpdated(
+    changed: PropertyValues
+  ): Promise<void> {
+    super.firstUpdated(changed);
+    // Wait for the checkbox to render before updating aria-label.
+    await this.checkbox?.updateComplete;
+    this.updateInputAriaLabel();
+  }
 
-    protected override async updated(changed: PropertyValues): Promise<void> {
-        super.updated(changed);
-        if (changed.has('label')) {
-            // Wait for the checkbox to render before updating aria-label.
-            await this.checkbox?.updateComplete;
-            this.updateInputAriaLabel();
-        }
-    }
-
-    protected override async firstUpdated(
-        changed: PropertyValues
-    ): Promise<void> {
-        super.firstUpdated(changed);
-        // Wait for the checkbox to render before updating aria-label.
-        await this.checkbox?.updateComplete;
-        this.updateInputAriaLabel();
-    }
-
-    protected override render(): TemplateResult {
-        return html`
-            <sp-checkbox
-                ?checked=${this.checked}
-                ?indeterminate=${this.indeterminate}
-                ?disabled=${this.disabled}
-                ?emphasized=${this.emphasized}
-                aria-hidden=${ifDefined(this.selectsSingle ? true : undefined)}
-                class="checkbox"
-            ></sp-checkbox>
-        `;
-    }
+  protected override render(): TemplateResult {
+    return html`
+      <sp-checkbox
+        ?checked=${this.checked}
+        ?indeterminate=${this.indeterminate}
+        ?disabled=${this.disabled}
+        ?emphasized=${this.emphasized}
+        aria-hidden=${ifDefined(this.selectsSingle ? true : undefined)}
+        class="checkbox"
+      ></sp-checkbox>
+    `;
+  }
 }

@@ -14,7 +14,7 @@ import { Breadcrumbs } from './src/Breadcrumbs.js';
 customElements.define('sp-breadcrumbs', Breadcrumbs);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-breadcrumbs': Breadcrumbs;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-breadcrumbs': Breadcrumbs;
+  }
 }

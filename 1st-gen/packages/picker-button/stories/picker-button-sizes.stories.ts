@@ -11,13 +11,14 @@
  */
 import { TemplateResult } from '@spectrum-web-components/base';
 
-import { argTypes, StoryArgs, Template } from './index.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
 
+import { argTypes, StoryArgs, Template } from './index.js';
+
 export default {
-    title: 'Picker Button/Sizes',
-    component: 'sp-picker-button',
-    ...argTypes,
+  title: 'Picker Button/Sizes',
+  component: 'sp-picker-button',
+  ...argTypes,
 };
 
 export const s = (args: StoryArgs): TemplateResult => Template(args);

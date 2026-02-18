@@ -89,27 +89,27 @@ import '@spectrum-web-components/theme/src/spectrum-two/themes.js'; // spectrum-
 
 ```html
 <style type="text/css">
-    #outer {
-        max-width: 500px;
-        padding: 1em;
-        background-color: var(--spectrum-gray-100);
-        color: var(--spectrum-gray-800);
-    }
+  #outer {
+    max-width: 500px;
+    padding: 1em;
+    background-color: var(--spectrum-gray-100);
+    color: var(--spectrum-gray-800);
+  }
 </style>
 <sp-theme system="spectrum" color="light" scale="medium">
-    <div id="outer">
-        <sp-field-label for="email">Email</sp-field-label>
-        <sp-textfield
-            id="email"
-            type="email"
-            placeholder="you@example.com"
-        ></sp-textfield>
-        <sp-help-text>We’ll only use this to send a receipt.</sp-help-text>
-        <sp-button-group style="margin-top: var(--spectrum-spacing-400)">
-            <sp-button variant="primary">Submit</sp-button>
-            <sp-button variant="secondary">Cancel</sp-button>
-        </sp-button-group>
-    </div>
+  <div id="outer">
+    <sp-field-label for="email">Email</sp-field-label>
+    <sp-textfield
+      id="email"
+      type="email"
+      placeholder="you@example.com"
+    ></sp-textfield>
+    <sp-help-text>We’ll only use this to send a receipt.</sp-help-text>
+    <sp-button-group style="margin-top: var(--spectrum-spacing-400)">
+      <sp-button variant="primary">Submit</sp-button>
+      <sp-button variant="secondary">Cancel</sp-button>
+    </sp-button-group>
+  </div>
 </sp-theme>
 ```
 
@@ -119,19 +119,19 @@ The large scale of `<sp-theme>` will switch to using Spectrum's larger mobile Pl
 
 ```html
 <style type="text/css">
-    #outer {
-        max-width: 500px;
-        padding: 1em;
-        background-color: var(--spectrum-gray-100);
-        color: var(--spectrum-gray-800);
-    }
+  #outer {
+    max-width: 500px;
+    padding: 1em;
+    background-color: var(--spectrum-gray-100);
+    color: var(--spectrum-gray-800);
+  }
 </style>
 <sp-theme system="spectrum" color="dark" scale="large">
-    <div id="outer">
-        <sp-field-label for="volume">Volume</sp-field-label>
-        <sp-slider id="volume" value="50"></sp-slider>
-        <sp-switch>Overdrive</sp-switch>
-    </div>
+  <div id="outer">
+    <sp-field-label for="volume">Volume</sp-field-label>
+    <sp-slider id="volume" value="50"></sp-slider>
+    <sp-switch>Overdrive</sp-switch>
+  </div>
 </sp-theme>
 ```
 
@@ -141,61 +141,61 @@ There are a few cases where it is necessary to embed one theme within another. F
 
 ```html
 <style type="text/css">
-    #outer {
-        max-width: 500px;
-        padding: 1em;
-        background-color: var(--spectrum-gray-100);
-        color: var(--spectrum-gray-800);
-    }
+  #outer {
+    max-width: 500px;
+    padding: 1em;
+    background-color: var(--spectrum-gray-100);
+    color: var(--spectrum-gray-800);
+  }
 
-    #inner {
-        margin-top: 2em;
-        padding: 1em;
-        background-color: var(--spectrum-gray-100);
-        color: var(--spectrum-gray-800);
-    }
+  #inner {
+    margin-top: 2em;
+    padding: 1em;
+    background-color: var(--spectrum-gray-100);
+    color: var(--spectrum-gray-800);
+  }
 
-    #buttons {
-        margin-top: 2em;
-    }
+  #buttons {
+    margin-top: 2em;
+  }
 </style>
 <sp-theme color="dark" dir="ltr">
-    <div id="outer">
+  <div id="outer">
+    <div>
+      <sp-slider
+        value="5"
+        step="1"
+        min="1"
+        max="11"
+        label="Volume"
+        id="volume-slider"
+      ></sp-slider>
+    </div>
+    <div><sp-switch>Overdrive</sp-switch></div>
+    <sp-button-group id="buttons">
+      <sp-button variant="primary">Cancel</sp-button>
+      <sp-button variant="accent">Continue</sp-button>
+    </sp-button-group>
+    <sp-theme color="light" dir="rtl">
+      <div id="inner">
         <div>
-            <sp-slider
-                value="5"
-                step="1"
-                min="1"
-                max="11"
-                label="Volume"
-                id="volume-slider"
-            ></sp-slider>
+          <sp-slider
+            value="5"
+            step="1"
+            min="1"
+            max="11"
+            label="Volume"
+            id="volume-slider"
+          ></sp-slider>
         </div>
         <div><sp-switch>Overdrive</sp-switch></div>
         <sp-button-group id="buttons">
-            <sp-button variant="primary">Cancel</sp-button>
-            <sp-button variant="accent">Continue</sp-button>
+          <sp-button variant="primary">Cancel</sp-button>
+          <sp-button variant="accent">Continue</sp-button>
         </sp-button-group>
-        <sp-theme color="light" dir="rtl">
-            <div id="inner">
-                <div>
-                    <sp-slider
-                        value="5"
-                        step="1"
-                        min="1"
-                        max="11"
-                        label="Volume"
-                        id="volume-slider"
-                    ></sp-slider>
-                </div>
-                <div><sp-switch>Overdrive</sp-switch></div>
-                <sp-button-group id="buttons">
-                    <sp-button variant="primary">Cancel</sp-button>
-                    <sp-button variant="accent">Continue</sp-button>
-                </sp-button-group>
-            </div>
-        </sp-theme>
-    </div>
+      </div>
+    </sp-theme>
+  </div>
 </sp-theme>
 ```
 
@@ -209,14 +209,14 @@ Load only what you need by importing the specific fragments, then lazy-load othe
 const themeEl = document.querySelector('sp-theme');
 
 async function updateTheme(system, color, scale) {
-    const systemBase = system === 'spectrum' ? '' : `${system}/`;
-    await Promise.all([
-        import(`@spectrum-web-components/theme/${systemBase}theme-${color}.js`),
-        import(`@spectrum-web-components/theme/${systemBase}scale-${scale}.js`),
-    ]);
-    themeEl.system = system;
-    themeEl.color = color;
-    themeEl.scale = scale;
+  const systemBase = system === 'spectrum' ? '' : `${system}/`;
+  await Promise.all([
+    import(`@spectrum-web-components/theme/${systemBase}theme-${color}.js`),
+    import(`@spectrum-web-components/theme/${systemBase}scale-${scale}.js`),
+  ]);
+  themeEl.system = system;
+  themeEl.color = color;
+  themeEl.scale = scale;
 }
 
 updateTheme('spectrum', 'light', 'medium');
@@ -231,16 +231,16 @@ Descendants can request the current language by dispatching `sp-language-context
 ```ts
 // in a descendant component
 this.dispatchEvent(
-    new CustomEvent('sp-language-context', {
-        bubbles: true,
-        composed: true,
-        detail: {
-            callback: (lang, unsubscribe) => {
-                this.lang = lang; // use the language value
-                // call unsubscribe() when you no longer need updates
-            },
-        },
-    })
+  new CustomEvent('sp-language-context', {
+    bubbles: true,
+    composed: true,
+    detail: {
+      callback: (lang, unsubscribe) => {
+        this.lang = lang; // use the language value
+        // call unsubscribe() when you no longer need updates
+      },
+    },
+  })
 );
 ```
 

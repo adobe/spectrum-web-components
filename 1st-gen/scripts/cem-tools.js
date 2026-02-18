@@ -13,7 +13,7 @@
  */
 
 /**
- * @fileoverview This task generates and updates custom elements manifest JSON files
+ * @file This task generates and updates custom elements manifest JSON files
  * for all workspace packages using the Custom Elements Manifest analyzer (CEM).
  *
  * @description
@@ -29,14 +29,14 @@
  * - Error: "Error executing custom-element-json command:" followed by error details
  */
 
+import { cli } from '@custom-elements-manifest/analyzer/cli.js';
+import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
-import { execSync } from 'child_process';
-import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-
 import { rimraf } from 'rimraf';
-import { cli } from '@custom-elements-manifest/analyzer/cli.js';
+import { fileURLToPath } from 'url';
+
 import 'colors';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -44,95 +44,91 @@ const rootDir = path.join(__dirname, '..');
 
 // Get a list of all packages except those you want to ignore
 export function getWorkspacePackages(
-    ignoredPackages = [
-        '@spectrum-web-components/base',
-        '@spectrum-web-components/bundle',
-        '@spectrum-web-components/clear-button',
-        '@spectrum-web-components/close-button',
-        '@spectrum-web-components/modal',
-        '@spectrum-web-components/iconset',
-        '@spectrum-web-components/shared',
-        '@spectrum-web-components/opacity-checkerboard',
-        '@spectrum-web-components/styles',
-        '@spectrum-web-components/custom-vars-viewer',
-        '@spectrum-web-components/eslint-plugin',
-        'stylelint-header',
-        '@swc-react/*',
-        'documentation',
-        'example-project-rollup',
-        'example-project-webpack',
-        'swc-templates',
-        '@types/swc',
-    ]
+  ignoredPackages = [
+    '@spectrum-web-components/base',
+    '@spectrum-web-components/bundle',
+    '@spectrum-web-components/clear-button',
+    '@spectrum-web-components/close-button',
+    '@spectrum-web-components/modal',
+    '@spectrum-web-components/iconset',
+    '@spectrum-web-components/shared',
+    '@spectrum-web-components/opacity-checkerboard',
+    '@spectrum-web-components/styles',
+    '@spectrum-web-components/custom-vars-viewer',
+    '@spectrum-web-components/eslint-plugin',
+    'stylelint-header',
+    '@swc-react/*',
+    'documentation',
+    'example-project-rollup',
+    'example-project-webpack',
+    'swc-templates',
+    '@types/swc',
+  ]
 ) {
-    const workspaceInfo = execSync('yarn workspaces list --json').toString();
-    // Parse the JSON lines since yarn 4 outputs one JSON object per line
-    const workspacePackages = workspaceInfo
-        .trim()
-        .split('\n')
-        .map((line) => JSON.parse(line));
-    return workspacePackages
-        .filter(
-            (pkg) =>
-                !ignoredPackages.includes(pkg.name) &&
-                pkg.name !== '@spectrum-web-components/1st-gen' &&
-                pkg.name !== '@spectrum-web-components/2nd-gen' &&
-                // Only include packages in 1st-gen packages/ and tools/ directories
-                (pkg.location.startsWith('1st-gen/packages/') ||
-                    pkg.location.startsWith('1st-gen/tools/'))
-        )
-        .map((pkg) => ({
-            name: pkg.name,
-            // Remove '1st-gen/' prefix since rootDir is already set to 1st-gen
-            path: pkg.location.replace(/^1st-gen\//, ''),
-        }));
+  const workspaceInfo = execSync('yarn workspaces list --json').toString();
+  // Parse the JSON lines since yarn 4 outputs one JSON object per line
+  const workspacePackages = workspaceInfo
+    .trim()
+    .split('\n')
+    .map((line) => JSON.parse(line));
+  return workspacePackages
+    .filter(
+      (pkg) =>
+        !ignoredPackages.includes(pkg.name) &&
+        pkg.name !== '@spectrum-web-components/1st-gen' &&
+        pkg.name !== '@spectrum-web-components/2nd-gen' &&
+        // Only include packages in 1st-gen packages/ and tools/ directories
+        (pkg.location.startsWith('1st-gen/packages/') ||
+          pkg.location.startsWith('1st-gen/tools/'))
+    )
+    .map((pkg) => ({
+      name: pkg.name,
+      // Remove '1st-gen/' prefix since rootDir is already set to 1st-gen
+      path: pkg.location.replace(/^1st-gen\//, ''),
+    }));
 }
 
 export async function customElementJson(
-    pkg,
-    { config = 'custom-elements-manifest.config.js', ...options } = {}
+  pkg,
+  { config = 'custom-elements-manifest.config.js', ...options } = {}
 ) {
-    await rimraf(path.join(pkg.path, 'custom-elements.json'));
-    if (!fs.existsSync(path.join(rootDir, config))) {
-        return Promise.reject(
-            new Error(
-                `Config file ${path.relative(rootDir, config).yellow} does not exist`
-            )
+  await rimraf(path.join(pkg.path, 'custom-elements.json'));
+  if (!fs.existsSync(path.join(rootDir, config))) {
+    return Promise.reject(
+      new Error(
+        `Config file ${path.relative(rootDir, config).yellow} does not exist`
+      )
+    );
+  }
+  return cli({
+    argv: [
+      'analyze',
+      '--config',
+      path.join(rootDir, config),
+      ...Object.entries(options)
+        .filter(
+          ([key, value]) => key !== '_' && key !== '$0' && value !== undefined
+        )
+        .map(([key, value]) => [`--${key}`, value])
+        .flat(),
+    ],
+    cwd: path.join(rootDir, pkg.path),
+  })
+    .then(async () => {
+      const outdir = options.outdir ?? pkg.path;
+      const packageName = pkg.name || pkg.path || 'unknown';
+      // Check if the custom-elements.json file exists
+      if (fs.existsSync(path.join(outdir, 'custom-elements.json'))) {
+        console.log(
+          `${'✓'.green}  ${packageName.cyan} has a custom-elements.json file`
         );
-    }
-    return cli({
-        argv: [
-            'analyze',
-            '--config',
-            path.join(rootDir, config),
-            ...Object.entries(options)
-                .filter(
-                    ([key, value]) =>
-                        key !== '_' && key !== '$0' && value !== undefined
-                )
-                .map(([key, value]) => [`--${key}`, value])
-                .flat(),
-        ],
-        cwd: path.join(rootDir, pkg.path),
+      } else {
+        console.log(
+          `${'❌'.red}  ${packageName.cyan} does not have a custom-elements.json file`
+        );
+      }
     })
-        .then(async () => {
-            const outdir = options.outdir ?? pkg.path;
-            const packageName = pkg.name || pkg.path || 'unknown';
-            // Check if the custom-elements.json file exists
-            if (fs.existsSync(path.join(outdir, 'custom-elements.json'))) {
-                console.log(
-                    `${'✓'.green}  ${packageName.cyan} has a custom-elements.json file`
-                );
-            } else {
-                console.log(
-                    `${'❌'.red}  ${packageName.cyan} does not have a custom-elements.json file`
-                );
-            }
-        })
-        .catch((error) => {
-            console.error(
-                'Error executing custom-element-json command:',
-                error
-            );
-        });
+    .catch((error) => {
+      console.error('Error executing custom-element-json command:', error);
+    });
 }

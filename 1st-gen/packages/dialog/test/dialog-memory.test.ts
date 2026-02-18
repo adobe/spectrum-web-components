@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { small } from '../stories/dialog.stories.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
+import { small } from '../stories/dialog.stories.js';
 
 testForMemoryLeaks(small());

@@ -5,99 +5,99 @@
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.11.2
-    - @spectrum-web-components/shared@1.11.2
-    - @spectrum-web-components/button@1.11.2
-    - @spectrum-web-components/icon@1.11.2
-    - @spectrum-web-components/icons-ui@1.11.2
+  - @spectrum-web-components/base@1.11.2
+  - @spectrum-web-components/shared@1.11.2
+  - @spectrum-web-components/button@1.11.2
+  - @spectrum-web-components/icon@1.11.2
+  - @spectrum-web-components/icons-ui@1.11.2
 
 ## 1.11.1
 
 ### Patch Changes
 
 - Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
-    - @spectrum-web-components/shared@1.11.1
-    - @spectrum-web-components/base@1.11.1
-    - @spectrum-web-components/button@1.11.1
-    - @spectrum-web-components/icon@1.11.1
-    - @spectrum-web-components/icons-ui@1.11.1
+  - @spectrum-web-components/shared@1.11.1
+  - @spectrum-web-components/base@1.11.1
+  - @spectrum-web-components/button@1.11.1
+  - @spectrum-web-components/icon@1.11.1
+  - @spectrum-web-components/icons-ui@1.11.1
 
 ## 1.11.0
 
 ### Patch Changes
 
 - Updated dependencies [[`f8bdeec`](https://github.com/adobe/spectrum-web-components/commit/f8bdeecf8a230822122a990fb977d3654649f891), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
-    - @spectrum-web-components/shared@1.11.0
-    - @spectrum-web-components/base@1.11.0
-    - @spectrum-web-components/button@1.11.0
-    - @spectrum-web-components/icon@1.11.0
-    - @spectrum-web-components/icons-ui@1.11.0
+  - @spectrum-web-components/shared@1.11.0
+  - @spectrum-web-components/base@1.11.0
+  - @spectrum-web-components/button@1.11.0
+  - @spectrum-web-components/icon@1.11.0
+  - @spectrum-web-components/icons-ui@1.11.0
 
 ## 1.10.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.10.0
-    - @spectrum-web-components/button@1.10.0
-    - @spectrum-web-components/icon@1.10.0
-    - @spectrum-web-components/icons-ui@1.10.0
-    - @spectrum-web-components/shared@1.10.0
+  - @spectrum-web-components/base@1.10.0
+  - @spectrum-web-components/button@1.10.0
+  - @spectrum-web-components/icon@1.10.0
+  - @spectrum-web-components/icons-ui@1.10.0
+  - @spectrum-web-components/shared@1.10.0
 
 ## 1.9.1
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/button@1.9.1
-    - @spectrum-web-components/icon@1.9.1
-    - @spectrum-web-components/icons-ui@1.9.1
-    - @spectrum-web-components/base@1.9.1
-    - @spectrum-web-components/shared@1.9.1
+  - @spectrum-web-components/button@1.9.1
+  - @spectrum-web-components/icon@1.9.1
+  - @spectrum-web-components/icons-ui@1.9.1
+  - @spectrum-web-components/base@1.9.1
+  - @spectrum-web-components/shared@1.9.1
 
 ## 1.9.0
 
 ### Patch Changes
 
 - Updated dependencies [[`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8)]:
-    - @spectrum-web-components/button@1.9.0
-    - @spectrum-web-components/icon@1.9.0
-    - @spectrum-web-components/icons-ui@1.9.0
-    - @spectrum-web-components/base@1.9.0
-    - @spectrum-web-components/shared@1.9.0
+  - @spectrum-web-components/button@1.9.0
+  - @spectrum-web-components/icon@1.9.0
+  - @spectrum-web-components/icons-ui@1.9.0
+  - @spectrum-web-components/base@1.9.0
+  - @spectrum-web-components/shared@1.9.0
 
 ## 1.8.0
 
 ### Patch Changes
 
 - Updated dependencies [[`15be17d`](https://github.com/adobe/spectrum-web-components/commit/15be17db91f1140ccf3cad52b1f2ed6c4b9e28ba)]:
-    - @spectrum-web-components/button@1.8.0
-    - @spectrum-web-components/icon@1.8.0
-    - @spectrum-web-components/icons-ui@1.8.0
-    - @spectrum-web-components/base@1.8.0
-    - @spectrum-web-components/shared@1.8.0
+  - @spectrum-web-components/button@1.8.0
+  - @spectrum-web-components/icon@1.8.0
+  - @spectrum-web-components/icons-ui@1.8.0
+  - @spectrum-web-components/base@1.8.0
+  - @spectrum-web-components/shared@1.8.0
 
 ## 1.7.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/button@1.7.0
-    - @spectrum-web-components/icon@1.7.0
-    - @spectrum-web-components/icons-ui@1.7.0
-    - @spectrum-web-components/base@1.7.0
-    - @spectrum-web-components/shared@1.7.0
+  - @spectrum-web-components/button@1.7.0
+  - @spectrum-web-components/icon@1.7.0
+  - @spectrum-web-components/icons-ui@1.7.0
+  - @spectrum-web-components/base@1.7.0
+  - @spectrum-web-components/shared@1.7.0
 
 ## 1.6.0
 
 ### Patch Changes
 
 - Updated dependencies [[`00eb0a8`](https://github.com/adobe/spectrum-web-components/commit/00eb0a889583dff9d964341d9c1c27048be3d19e)]:
-    - @spectrum-web-components/button@1.6.0
-    - @spectrum-web-components/icon@1.6.0
-    - @spectrum-web-components/icons-ui@1.6.0
-    - @spectrum-web-components/base@1.6.0
-    - @spectrum-web-components/shared@1.6.0
+  - @spectrum-web-components/button@1.6.0
+  - @spectrum-web-components/icon@1.6.0
+  - @spectrum-web-components/icons-ui@1.6.0
+  - @spectrum-web-components/base@1.6.0
+  - @spectrum-web-components/shared@1.6.0
 
 ## 1.5.0
 
@@ -105,38 +105,38 @@
 
 - [#5202](https://github.com/adobe/spectrum-web-components/pull/5202) [`fa4be70`](https://github.com/adobe/spectrum-web-components/commit/fa4be70e9ab9dbeff26867edd3bdeb3f41c423e3) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - Updates the picker button component from version 6.0.0-s2-foundations.16 to 6.1.2. The update should bring the background colors for the picker button in line with S2-foundations design specs:
 
-    default state: `gray-50` to `gray-100`
-    hover state: `gray-100` to `gray-200`
-    key-focus state: `gray-100` to `gray-200`
+  default state: `gray-50` to `gray-100`
+  hover state: `gray-100` to `gray-200`
+  key-focus state: `gray-100` to `gray-200`
 
 - Updated dependencies [[`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5)]:
-    - @spectrum-web-components/button@1.5.0
-    - @spectrum-web-components/icon@1.5.0
-    - @spectrum-web-components/icons-ui@1.5.0
-    - @spectrum-web-components/base@1.5.0
-    - @spectrum-web-components/shared@1.5.0
+  - @spectrum-web-components/button@1.5.0
+  - @spectrum-web-components/icon@1.5.0
+  - @spectrum-web-components/icons-ui@1.5.0
+  - @spectrum-web-components/base@1.5.0
+  - @spectrum-web-components/shared@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/button@1.4.0
-    - @spectrum-web-components/icon@1.4.0
-    - @spectrum-web-components/icons-ui@1.4.0
-    - @spectrum-web-components/base@1.4.0
-    - @spectrum-web-components/shared@1.4.0
+  - @spectrum-web-components/button@1.4.0
+  - @spectrum-web-components/icon@1.4.0
+  - @spectrum-web-components/icons-ui@1.4.0
+  - @spectrum-web-components/base@1.4.0
+  - @spectrum-web-components/shared@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/button@1.3.0
-    - @spectrum-web-components/icon@1.3.0
-    - @spectrum-web-components/icons-ui@1.3.0
-    - @spectrum-web-components/base@1.3.0
-    - @spectrum-web-components/shared@1.3.0
+  - @spectrum-web-components/button@1.3.0
+  - @spectrum-web-components/icon@1.3.0
+  - @spectrum-web-components/icons-ui@1.3.0
+  - @spectrum-web-components/base@1.3.0
+  - @spectrum-web-components/shared@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

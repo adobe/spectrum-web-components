@@ -10,13 +10,14 @@
  * governing permissions and limitations under the License.
  */
 
-import { ColorWheel } from './src/ColorWheel.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { ColorWheel } from './src/ColorWheel.js';
 
 defineElement('sp-color-wheel', ColorWheel);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-color-wheel': ColorWheel;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-color-wheel': ColorWheel;
+  }
 }

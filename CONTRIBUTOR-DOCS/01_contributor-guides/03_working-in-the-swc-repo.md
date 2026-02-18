@@ -56,6 +56,16 @@ cd spectrum-web-components
 yarn install
 ```
 
+### Configure git blame ignores (recommended)
+
+To make local `git blame` output ignore repository-wide formatting commits, run:
+
+```bash
+git config blame.ignoreRevsFile .git-blame-ignore-revs
+```
+
+This setting uses the `.git-blame-ignore-revs` file in the repository root.
+
 ## Repository structure
 
 SWC is currently in transition from its first generation (**1st-gen**) to its second generation (**2nd-gen**).

@@ -1,22 +1,20 @@
 {
-    "compilerOptions": {
-        // 1st-gen specific: Build configuration
-        "baseUrl": "./packages",
-        "emitDeclarationOnly": true,
-        "importHelpers": true,
-        "inlineSources": true,
+  "compilerOptions": {
+    // 1st-gen specific: Build configuration
+    "baseUrl": "./packages",
+    "emitDeclarationOnly": true,
+    "importHelpers": true,
+    "inlineSources": true,
 
-        // Cross-generation import mapping
-        "paths": {
-            "@spectrum-web-components/core/*": [
-                "../2nd-gen/packages/core/*/dist"
-            ]
-        },
-        "rootDir": ".",
-
-        // Test framework types
-        "types": ["mocha", "chai", "sinon", "node", "swc"]
+    // Cross-generation import mapping
+    "paths": {
+      "@spectrum-web-components/core/*": ["../2nd-gen/packages/core/*/dist"]
     },
-    "extends": "../tsconfig.base.json",
-    "include": ["./global.d.ts"]
+    "rootDir": ".",
+
+    // Test framework types
+    "types": ["mocha", "chai", "sinon", "node", "swc"]
+  },
+  "extends": "../tsconfig.base.json",
+  "include": ["./global.d.ts"]
 }

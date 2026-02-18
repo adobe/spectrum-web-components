@@ -13,7 +13,7 @@
  */
 
 /**
- * @fileoverview This task generates and updates custom elements manifest JSON files
+ * @file This task generates and updates custom elements manifest JSON files
  * for all workspace packages using the Custom Elements Manifest analyzer (CEM).
  *
  * @description
@@ -31,63 +31,62 @@
 
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-
+import { fileURLToPath } from 'url';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { customElementJson, getWorkspacePackages } from './cem-tools.js';
+
 import 'colors';
+
+import { customElementJson, getWorkspacePackages } from './cem-tools.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = path.join(__dirname, '..');
 
 async function main(options = {}) {
-    const config = path.join(
-        rootDir,
-        options.config ?? 'custom-elements-manifest.config.js'
-    );
+  const config = path.join(
+    rootDir,
+    options.config ?? 'custom-elements-manifest.config.js'
+  );
 
-    // Check that the config file exists, and return an error if it doesn't
-    if (!fs.existsSync(config)) {
-        return Promise.reject(
-            new Error(
-                `Config file ${path.relative(rootDir, config).yellow} does not exist`
-            )
-        );
-    }
-
-    // Log the config file path
-    console.log(
-        `\nLoading config from ${path.relative(rootDir, config).yellow}`
+  // Check that the config file exists, and return an error if it doesn't
+  if (!fs.existsSync(config)) {
+    return Promise.reject(
+      new Error(
+        `Config file ${path.relative(rootDir, config).yellow} does not exist`
+      )
     );
+  }
 
-    const allPackages = getWorkspacePackages();
-    console.log(
-        `Updating custom elements manifest files for ${allPackages.length} packages...\n`
-    );
-    return Promise.all(
-        allPackages.map(async (pkg) => customElementJson(pkg, options))
-    )
-        .then(() => {
-            console.log(
-                `\n${'✓'.green}  All ${allPackages.length} custom elements manifest files have been updated successfully.`
-            );
-        })
-        .catch((error) => {
-            console.error(
-                `${'❌'.red}  Error executing custom-element-json command:`,
-                error
-            );
-        });
+  // Log the config file path
+  console.log(`\nLoading config from ${path.relative(rootDir, config).yellow}`);
+
+  const allPackages = getWorkspacePackages();
+  console.log(
+    `Updating custom elements manifest files for ${allPackages.length} packages...\n`
+  );
+  return Promise.all(
+    allPackages.map(async (pkg) => customElementJson(pkg, options))
+  )
+    .then(() => {
+      console.log(
+        `\n${'✓'.green}  All ${allPackages.length} custom elements manifest files have been updated successfully.`
+      );
+    })
+    .catch((error) => {
+      console.error(
+        `${'❌'.red}  Error executing custom-element-json command:`,
+        error
+      );
+    });
 }
 
 // Import the custom element config from arguments if provided using yargs
 const args = yargs(hideBin(process.argv))
-    .option('config', {
-        type: 'string',
-        description: 'Path to the custom elements manifest config file',
-    })
-    .parse();
+  .option('config', {
+    type: 'string',
+    description: 'Path to the custom elements manifest config file',
+  })
+  .parse();
 
 await main(args);

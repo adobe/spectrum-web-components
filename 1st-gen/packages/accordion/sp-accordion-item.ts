@@ -10,13 +10,14 @@
  * governing permissions and limitations under the License.
  */
 
-import { AccordionItem } from './src/AccordionItem.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { AccordionItem } from './src/AccordionItem.js';
 
 defineElement('sp-accordion-item', AccordionItem);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-accordion-item': AccordionItem;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-accordion-item': AccordionItem;
+  }
 }

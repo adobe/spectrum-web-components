@@ -10,121 +10,119 @@
  * governing permissions and limitations under the License.
  */
 
+import {
+  elementUpdated,
+  expect,
+  fixture,
+  html,
+  nextFrame,
+  oneEvent,
+} from '@open-wc/testing';
+
+import { MenuItem } from '@spectrum-web-components/menu';
+import { Picker } from '@spectrum-web-components/picker';
+
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
-import { Picker } from '@spectrum-web-components/picker';
-import { MenuItem } from '@spectrum-web-components/menu';
-import {
-    elementUpdated,
-    expect,
-    fixture,
-    html,
-    nextFrame,
-    oneEvent,
-} from '@open-wc/testing';
-
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
+
 import type { TestablePicker } from './index.js';
 
 const fixtureElements = async (): Promise<{
-    picker: Picker;
-    before: HTMLDivElement;
-    after: HTMLDivElement;
+  picker: Picker;
+  before: HTMLDivElement;
+  after: HTMLDivElement;
 }> => {
-    const test = await fixture(html`
-        <sp-theme color="light" scale="medium" system="spectrum">
-            <div id="before">
-                <sp-picker
-                    id="picker"
-                    label="I would like to use Spectrum Web Components"
-                >
-                    <sp-menu-item value="0">Immediately</sp-menu-item>
-                    <sp-menu-item value="1">
-                        I'm already using them
-                    </sp-menu-item>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-item value="2">Soon</sp-menu-item>
-                    <sp-menu-item value="3">
-                        As part of my next project
-                    </sp-menu-item>
-                    <sp-menu-item value="4">In the future</sp-menu-item>
-                </sp-picker>
-            </div>
-            <div id="after"></div>
-        </sp-theme>
-    `);
-    const picker = test.querySelector('sp-picker') as Picker;
-    return {
-        picker,
-        before: test.querySelector('#before') as HTMLDivElement,
-        after: test.querySelector('#after') as HTMLDivElement,
-    };
+  const test = await fixture(html`
+    <sp-theme color="light" scale="medium" system="spectrum">
+      <div id="before">
+        <sp-picker
+          id="picker"
+          label="I would like to use Spectrum Web Components"
+        >
+          <sp-menu-item value="0">Immediately</sp-menu-item>
+          <sp-menu-item value="1">I'm already using them</sp-menu-item>
+          <sp-menu-divider></sp-menu-divider>
+          <sp-menu-item value="2">Soon</sp-menu-item>
+          <sp-menu-item value="3">As part of my next project</sp-menu-item>
+          <sp-menu-item value="4">In the future</sp-menu-item>
+        </sp-picker>
+      </div>
+      <div id="after"></div>
+    </sp-theme>
+  `);
+  const picker = test.querySelector('sp-picker') as Picker;
+  return {
+    picker,
+    before: test.querySelector('#before') as HTMLDivElement,
+    after: test.querySelector('#after') as HTMLDivElement,
+  };
 };
 
 describe('Reparented Picker', () => {
-    it('maintains a consistent direction', async () => {
-        const { picker, before, after } = await fixtureElements();
+  it('maintains a consistent direction', async () => {
+    const { picker, before, after } = await fixtureElements();
 
-        expect(getComputedStyle(picker).direction).to.equal('ltr');
+    expect(getComputedStyle(picker).direction).to.equal('ltr');
 
-        after.append(picker);
-        await nextFrame();
+    after.append(picker);
+    await nextFrame();
 
-        expect(getComputedStyle(picker).direction).to.equal('ltr');
+    expect(getComputedStyle(picker).direction).to.equal('ltr');
 
-        before.append(picker);
-        await nextFrame();
+    before.append(picker);
+    await nextFrame();
 
-        expect(getComputedStyle(picker).direction).to.equal('ltr');
-    });
-    it('maintains `value`', async () => {
-        const { picker, before, after } = await fixtureElements();
+    expect(getComputedStyle(picker).direction).to.equal('ltr');
+  });
+  it('maintains `value`', async () => {
+    const { picker, before, after } = await fixtureElements();
 
-        expect(picker.value).to.equal('');
-        picker.id = 'nikki';
+    expect(picker.value).to.equal('');
+    picker.id = 'nikki';
 
-        const item2 = picker.querySelector('[value="2"]') as MenuItem;
-        const item3 = picker.querySelector('[value="3"]') as MenuItem;
-        let opened = oneEvent(picker, 'sp-opened');
-        picker.click();
-        await opened;
-        expect(picker.open).to.be.true;
-        expect(picker.value).to.equal('');
-        let closed = oneEvent(picker, 'sp-closed');
-        item2.click();
-        await closed;
+    const item2 = picker.querySelector('[value="2"]') as MenuItem;
+    const item3 = picker.querySelector('[value="3"]') as MenuItem;
+    let opened = oneEvent(picker, 'sp-opened');
+    picker.click();
+    await opened;
+    expect(picker.open).to.be.true;
+    expect(picker.value).to.equal('');
+    let closed = oneEvent(picker, 'sp-closed');
+    item2.click();
+    await closed;
 
-        expect(picker.value).to.equal('2');
-        expect(picker.open).to.be.false;
+    expect(picker.value).to.equal('2');
+    expect(picker.open).to.be.false;
 
-        after.append(picker);
-        opened = oneEvent(picker, 'sp-opened');
-        picker.click();
-        await opened;
-        expect(picker.open).to.be.true;
-        expect(picker.value).to.equal('2');
-        closed = oneEvent(picker, 'sp-closed');
-        item3.click();
-        await closed;
+    after.append(picker);
+    opened = oneEvent(picker, 'sp-opened');
+    picker.click();
+    await opened;
+    expect(picker.open).to.be.true;
+    expect(picker.value).to.equal('2');
+    closed = oneEvent(picker, 'sp-closed');
+    item3.click();
+    await closed;
 
-        expect(picker.value).to.equal('3');
-        expect(picker.open).to.be.false;
+    expect(picker.value).to.equal('3');
+    expect(picker.open).to.be.false;
 
-        opened = oneEvent(picker, 'sp-opened');
-        picker.click();
-        await opened;
-        await nextFrame();
-        expect(picker.open).to.be.true;
-        expect(picker.value).to.equal('3');
-        opened = oneEvent(picker, 'sp-opened');
-        before.append(picker);
-        await elementUpdated(picker);
+    opened = oneEvent(picker, 'sp-opened');
+    picker.click();
+    await opened;
+    await nextFrame();
+    expect(picker.open).to.be.true;
+    expect(picker.value).to.equal('3');
+    opened = oneEvent(picker, 'sp-opened');
+    before.append(picker);
+    await elementUpdated(picker);
 
-        expect(
-            (picker as unknown as TestablePicker).optionsMenu.value
-        ).to.equal('3');
-        expect(picker.value).to.equal('3');
-    });
+    expect((picker as unknown as TestablePicker).optionsMenu.value).to.equal(
+      '3'
+    );
+    expect(picker.value).to.equal('3');
+  });
 });

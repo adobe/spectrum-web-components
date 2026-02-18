@@ -5,14 +5,14 @@
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.11.2
+  - @spectrum-web-components/base@1.11.2
 
 ## 1.11.1
 
 ### Patch Changes
 
 - Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
-    - @spectrum-web-components/base@1.11.1
+  - @spectrum-web-components/base@1.11.1
 
 ## 1.11.0
 
@@ -20,113 +20,113 @@
 
 - [#5902](https://github.com/adobe/spectrum-web-components/pull/5902) [`7c26e3a`](https://github.com/adobe/spectrum-web-components/commit/7c26e3afa534342f09d956c7f1d1acda7e0da939) Thanks [@pfulton](https://github.com/pfulton)! - Manually adds the s2 static color values from [Spectrum Tokens](https://github.com/adobe/spectrum-tokens/blob/04cf6eb95ece7f3320e0e2babd6a51db8edfc950/packages/tokens/src/color-palette.json#L6491)
 
-    ### Added
-    - `--spectrum-static-blue-900-rgb: 59 99 251;`
-    - `--spectrum-static-blue-900: rgb(var(--spectrum-static-blue-900-rgb));`
-    - `--spectrum-static-blue-1000-rgb: 39 77 234;`
-    - `--spectrum-static-blue-1000: rgb(var(--spectrum-static-blue-1000-rgb));`
-    - `--spectrum-static-fuchsia-400-rgb: 247 181 255;`
-    - `--spectrum-static-fuchsia-400: rgb(var(--spectrum-static-fuchsia-400-rgb));`
-    - `--spectrum-static-fuchsia-600-rgb: 236 105 255;`
-    - `--spectrum-static-fuchsia-600: rgb(var(--spectrum-static-fuchsia-600-rgb));`
-    - `--spectrum-static-fuchsia-800-rgb: 200 68 220;`
-    - `--spectrum-static-fuchsia-800: rgb(var(--spectrum-static-fuchsia-800-rgb));`
-    - `--spectrum-static-fuchsia-900-rgb: 181 57 200;`
-    - `--spectrum-static-fuchsia-900: rgb(var(--spectrum-static-fuchsia-900-rgb));`
-    - `--spectrum-static-fuchsia-1000-rgb: 156 40 175;`
-    - `--spectrum-static-fuchsia-1000: rgb(var(--spectrum-static-fuchsia-1000-rgb));`
-    - `--spectrum-static-indigo-400-rgb: 192 201 255;`
-    - `--spectrum-static-indigo-400: rgb(var(--spectrum-static-indigo-400-rgb));`
-    - `--spectrum-static-indigo-600-rgb: 145 151 254;`
-    - `--spectrum-static-indigo-600: rgb(var(--spectrum-static-indigo-600-rgb));`
-    - `--spectrum-static-indigo-800-rgb: 122 106 253;`
-    - `--spectrum-static-indigo-800: rgb(var(--spectrum-static-indigo-800-rgb));`
-    - `--spectrum-static-indigo-900-rgb: 113 85 250;`
-    - `--spectrum-static-indigo-900: rgb(var(--spectrum-static-indigo-900-rgb));`
-    - `--spectrum-static-indigo-1000-rgb: 99 56 238;`
-    - `--spectrum-static-indigo-1000: rgb(var(--spectrum-static-indigo-1000-rgb));`
-    - `--spectrum-static-magenta-400-rgb: 255 185 208;`
-    - `--spectrum-static-magenta-400: rgb(var(--spectrum-static-magenta-400-rgb));`
-    - `--spectrum-static-magenta-600-rgb: 255 112 159;`
-    - `--spectrum-static-magenta-600: rgb(var(--spectrum-static-magenta-600-rgb));`
-    - `--spectrum-static-magenta-800-rgb: 240 45 110;`
-    - `--spectrum-static-magenta-800: rgb(var(--spectrum-static-magenta-800-rgb));`
-    - `--spectrum-static-magenta-900-rgb: 217 35 97;`
-    - `--spectrum-static-magenta-900: rgb(var(--spectrum-static-magenta-900-rgb));`
-    - `--spectrum-static-magenta-1000-rgb: 186 22 80;`
-    - `--spectrum-static-magenta-1000: rgb(var(--spectrum-static-magenta-1000-rgb));`
-    - `--spectrum-static-red-400-rgb: 255 188 180;`
-    - `--spectrum-static-red-400: rgb(var(--spectrum-static-red-400-rgb));`
-    - `--spectrum-static-red-600-rgb: 255 118 101;`
-    - `--spectrum-static-red-600: rgb(var(--spectrum-static-red-600-rgb));`
-    - `--spectrum-static-red-800-rgb: 240 56 35;`
-    - `--spectrum-static-red-800: rgb(var(--spectrum-static-red-800-rgb));`
-    - `--spectrum-static-red-900-rgb: 215 50 32;`
-    - `--spectrum-static-red-900: rgb(var(--spectrum-static-red-900-rgb));`
-    - `--spectrum-static-red-1000-rgb: 183 40 24;`
-    - `--spectrum-static-red-1000: rgb(var(--spectrum-static-red-1000-rgb));`
-    - `--spectrum-static-cyan-400-rgb: 138 213 255;`
-    - `--spectrum-static-cyan-400: rgb(var(--spectrum-static-cyan-400-rgb));`
-    - `--spectrum-static-cyan-600-rgb: 48 167 254;`
-    - `--spectrum-static-cyan-600: rgb(var(--spectrum-static-cyan-600-rgb));`
-    - `--spectrum-static-cyan-800-rgb: 18 134 205;`
-    - `--spectrum-static-cyan-800: rgb(var(--spectrum-static-cyan-800-rgb));`
-    - `--spectrum-static-chartreuse-400-rgb: 182 219 0;`
-    - `--spectrum-static-chartreuse-400: rgb(var(--spectrum-static-chartreuse-400-rgb));`
-    - `--spectrum-static-chartreuse-600-rgb: 143 172 0;`
-    - `--spectrum-static-chartreuse-600: rgb(var(--spectrum-static-chartreuse-600-rgb));`
-    - `--spectrum-static-chartreuse-800-rgb: 114 137 0;`
-    - `--spectrum-static-chartreuse-800: rgb(var(--spectrum-static-chartreuse-800-rgb));`
-    - `--spectrum-static-green-400-rgb: 107 227 162;`
-    - `--spectrum-static-green-400: rgb(var(--spectrum-static-green-400-rgb));`
-    - `--spectrum-static-green-600-rgb: 18 184 103;`
-    - `--spectrum-static-green-600: rgb(var(--spectrum-static-green-600-rgb));`
-    - `--spectrum-static-green-800-rgb: 7 147 85;`
-    - `--spectrum-static-green-800: rgb(var(--spectrum-static-green-800-rgb));`
-    - `--spectrum-static-orange-400-rgb: 255 193 94;`
-    - `--spectrum-static-orange-400: rgb(var(--spectrum-static-orange-400-rgb));`
-    - `--spectrum-static-orange-600-rgb: 252 125 0;`
-    - `--spectrum-static-orange-600: rgb(var(--spectrum-static-orange-600-rgb));`
-    - `--spectrum-static-orange-800-rgb: 212 91 0;`
-    - `--spectrum-static-orange-800: rgb(var(--spectrum-static-orange-800-rgb));`
-    - `--spectrum-static-purple-400-rgb: 221 193 246;`
-    - `--spectrum-static-purple-400: rgb(var(--spectrum-static-purple-400-rgb));`
-    - `--spectrum-static-purple-600-rgb: 191 138 238;`
-    - `--spectrum-static-purple-600: rgb(var(--spectrum-static-purple-600-rgb));`
-    - `--spectrum-static-purple-800-rgb: 166 92 231;`
-    - `--spectrum-static-purple-800: rgb(var(--spectrum-static-purple-800-rgb));`
-    - `--spectrum-static-turquoise-400-rgb: 111 221 228;`
-    - `--spectrum-static-turquoise-400: rgb(var(--spectrum-static-turquoise-400-rgb));`
-    - `--spectrum-static-turquoise-600-rgb: 15 177 192;`
-    - `--spectrum-static-turquoise-600: rgb(var(--spectrum-static-turquoise-600-rgb));`
-    - `--spectrum-static-turquoise-800-rgb: 10 141 153;`
-    - `--spectrum-static-turquoise-800: rgb(var(--spectrum-static-turquoise-800-rgb));`
+  ### Added
+  - `--spectrum-static-blue-900-rgb: 59 99 251;`
+  - `--spectrum-static-blue-900: rgb(var(--spectrum-static-blue-900-rgb));`
+  - `--spectrum-static-blue-1000-rgb: 39 77 234;`
+  - `--spectrum-static-blue-1000: rgb(var(--spectrum-static-blue-1000-rgb));`
+  - `--spectrum-static-fuchsia-400-rgb: 247 181 255;`
+  - `--spectrum-static-fuchsia-400: rgb(var(--spectrum-static-fuchsia-400-rgb));`
+  - `--spectrum-static-fuchsia-600-rgb: 236 105 255;`
+  - `--spectrum-static-fuchsia-600: rgb(var(--spectrum-static-fuchsia-600-rgb));`
+  - `--spectrum-static-fuchsia-800-rgb: 200 68 220;`
+  - `--spectrum-static-fuchsia-800: rgb(var(--spectrum-static-fuchsia-800-rgb));`
+  - `--spectrum-static-fuchsia-900-rgb: 181 57 200;`
+  - `--spectrum-static-fuchsia-900: rgb(var(--spectrum-static-fuchsia-900-rgb));`
+  - `--spectrum-static-fuchsia-1000-rgb: 156 40 175;`
+  - `--spectrum-static-fuchsia-1000: rgb(var(--spectrum-static-fuchsia-1000-rgb));`
+  - `--spectrum-static-indigo-400-rgb: 192 201 255;`
+  - `--spectrum-static-indigo-400: rgb(var(--spectrum-static-indigo-400-rgb));`
+  - `--spectrum-static-indigo-600-rgb: 145 151 254;`
+  - `--spectrum-static-indigo-600: rgb(var(--spectrum-static-indigo-600-rgb));`
+  - `--spectrum-static-indigo-800-rgb: 122 106 253;`
+  - `--spectrum-static-indigo-800: rgb(var(--spectrum-static-indigo-800-rgb));`
+  - `--spectrum-static-indigo-900-rgb: 113 85 250;`
+  - `--spectrum-static-indigo-900: rgb(var(--spectrum-static-indigo-900-rgb));`
+  - `--spectrum-static-indigo-1000-rgb: 99 56 238;`
+  - `--spectrum-static-indigo-1000: rgb(var(--spectrum-static-indigo-1000-rgb));`
+  - `--spectrum-static-magenta-400-rgb: 255 185 208;`
+  - `--spectrum-static-magenta-400: rgb(var(--spectrum-static-magenta-400-rgb));`
+  - `--spectrum-static-magenta-600-rgb: 255 112 159;`
+  - `--spectrum-static-magenta-600: rgb(var(--spectrum-static-magenta-600-rgb));`
+  - `--spectrum-static-magenta-800-rgb: 240 45 110;`
+  - `--spectrum-static-magenta-800: rgb(var(--spectrum-static-magenta-800-rgb));`
+  - `--spectrum-static-magenta-900-rgb: 217 35 97;`
+  - `--spectrum-static-magenta-900: rgb(var(--spectrum-static-magenta-900-rgb));`
+  - `--spectrum-static-magenta-1000-rgb: 186 22 80;`
+  - `--spectrum-static-magenta-1000: rgb(var(--spectrum-static-magenta-1000-rgb));`
+  - `--spectrum-static-red-400-rgb: 255 188 180;`
+  - `--spectrum-static-red-400: rgb(var(--spectrum-static-red-400-rgb));`
+  - `--spectrum-static-red-600-rgb: 255 118 101;`
+  - `--spectrum-static-red-600: rgb(var(--spectrum-static-red-600-rgb));`
+  - `--spectrum-static-red-800-rgb: 240 56 35;`
+  - `--spectrum-static-red-800: rgb(var(--spectrum-static-red-800-rgb));`
+  - `--spectrum-static-red-900-rgb: 215 50 32;`
+  - `--spectrum-static-red-900: rgb(var(--spectrum-static-red-900-rgb));`
+  - `--spectrum-static-red-1000-rgb: 183 40 24;`
+  - `--spectrum-static-red-1000: rgb(var(--spectrum-static-red-1000-rgb));`
+  - `--spectrum-static-cyan-400-rgb: 138 213 255;`
+  - `--spectrum-static-cyan-400: rgb(var(--spectrum-static-cyan-400-rgb));`
+  - `--spectrum-static-cyan-600-rgb: 48 167 254;`
+  - `--spectrum-static-cyan-600: rgb(var(--spectrum-static-cyan-600-rgb));`
+  - `--spectrum-static-cyan-800-rgb: 18 134 205;`
+  - `--spectrum-static-cyan-800: rgb(var(--spectrum-static-cyan-800-rgb));`
+  - `--spectrum-static-chartreuse-400-rgb: 182 219 0;`
+  - `--spectrum-static-chartreuse-400: rgb(var(--spectrum-static-chartreuse-400-rgb));`
+  - `--spectrum-static-chartreuse-600-rgb: 143 172 0;`
+  - `--spectrum-static-chartreuse-600: rgb(var(--spectrum-static-chartreuse-600-rgb));`
+  - `--spectrum-static-chartreuse-800-rgb: 114 137 0;`
+  - `--spectrum-static-chartreuse-800: rgb(var(--spectrum-static-chartreuse-800-rgb));`
+  - `--spectrum-static-green-400-rgb: 107 227 162;`
+  - `--spectrum-static-green-400: rgb(var(--spectrum-static-green-400-rgb));`
+  - `--spectrum-static-green-600-rgb: 18 184 103;`
+  - `--spectrum-static-green-600: rgb(var(--spectrum-static-green-600-rgb));`
+  - `--spectrum-static-green-800-rgb: 7 147 85;`
+  - `--spectrum-static-green-800: rgb(var(--spectrum-static-green-800-rgb));`
+  - `--spectrum-static-orange-400-rgb: 255 193 94;`
+  - `--spectrum-static-orange-400: rgb(var(--spectrum-static-orange-400-rgb));`
+  - `--spectrum-static-orange-600-rgb: 252 125 0;`
+  - `--spectrum-static-orange-600: rgb(var(--spectrum-static-orange-600-rgb));`
+  - `--spectrum-static-orange-800-rgb: 212 91 0;`
+  - `--spectrum-static-orange-800: rgb(var(--spectrum-static-orange-800-rgb));`
+  - `--spectrum-static-purple-400-rgb: 221 193 246;`
+  - `--spectrum-static-purple-400: rgb(var(--spectrum-static-purple-400-rgb));`
+  - `--spectrum-static-purple-600-rgb: 191 138 238;`
+  - `--spectrum-static-purple-600: rgb(var(--spectrum-static-purple-600-rgb));`
+  - `--spectrum-static-purple-800-rgb: 166 92 231;`
+  - `--spectrum-static-purple-800: rgb(var(--spectrum-static-purple-800-rgb));`
+  - `--spectrum-static-turquoise-400-rgb: 111 221 228;`
+  - `--spectrum-static-turquoise-400: rgb(var(--spectrum-static-turquoise-400-rgb));`
+  - `--spectrum-static-turquoise-600-rgb: 15 177 192;`
+  - `--spectrum-static-turquoise-600: rgb(var(--spectrum-static-turquoise-600-rgb));`
+  - `--spectrum-static-turquoise-800-rgb: 10 141 153;`
+  - `--spectrum-static-turquoise-800: rgb(var(--spectrum-static-turquoise-800-rgb));`
 
 ### Patch Changes
 
 - Updated dependencies [[`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
-    - @spectrum-web-components/base@1.11.0
+  - @spectrum-web-components/base@1.11.0
 
 ## 1.10.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.10.0
+  - @spectrum-web-components/base@1.10.0
 
 ## 1.9.1
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.9.1
+  - @spectrum-web-components/base@1.9.1
 
 ## 1.9.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.9.0
+  - @spectrum-web-components/base@1.9.0
 
 ## 1.8.0
 
@@ -134,25 +134,25 @@
 
 - [#5529](https://github.com/adobe/spectrum-web-components/pull/5529) [`77bdef6`](https://github.com/adobe/spectrum-web-components/commit/77bdef68a40e0f6cd5476271b01b4c0f00531f4f) Thanks [@castastrophe](https://github.com/castastrophe)! - Bring the CJK font alias token fix from CSS [#3883](https://github.com/adobe/spectrum-css/pull/3883) [`4e3a120`](https://github.com/adobe/spectrum-css/commit/4e3a120339a6e7e6d0d19e3f2f7f608ab96621ed).
 
-    The `--spectrum-cjk-font` token was incorrectly mapped to the code font-family stack instead of `--spectrum-cjk-font-family-stack`. Thanks [@byteakp](https://github.com/byteakp)!
+  The `--spectrum-cjk-font` token was incorrectly mapped to the code font-family stack instead of `--spectrum-cjk-font-family-stack`. Thanks [@byteakp](https://github.com/byteakp)!
 
 - [#5320](https://github.com/adobe/spectrum-web-components/pull/5320) [`15be17d`](https://github.com/adobe/spectrum-web-components/commit/15be17db91f1140ccf3cad52b1f2ed6c4b9e28ba) Thanks [@renovate](https://github.com/apps/renovate)! - Clear button styles have been updated to the latest Spectrum CSS version of the clear button. This update includes a major reduction in the number of custom property abstractions needed to support the multiple theming layers (as seen in the `styles` package).
 
-    This update spans the following additional packages:
-    - @spectrum-web-components/button
-    - @spectrum-web-components/styles
+  This update spans the following additional packages:
+  - @spectrum-web-components/button
+  - @spectrum-web-components/styles
 
-    As the updated styles now offer additional styling options, we have added the following API to the clear button component that exists in the `button` package:
-    - `quiet` - when set to true, the button will be rendered as a quiet button. This is useful for cases where you want to use the clear button in a more subtle way.
-    - `disabled` - when set to true, the button will be rendered as a disabled button.
-    - `static-color` - currently this only supports the `white` context color. This is useful for cases where the button appears on a dark background texture. This is a replacement for the previously used `variant="overBackground"` attribute which is deprecated.
+  As the updated styles now offer additional styling options, we have added the following API to the clear button component that exists in the `button` package:
+  - `quiet` - when set to true, the button will be rendered as a quiet button. This is useful for cases where you want to use the clear button in a more subtle way.
+  - `disabled` - when set to true, the button will be rendered as a disabled button.
+  - `static-color` - currently this only supports the `white` context color. This is useful for cases where the button appears on a dark background texture. This is a replacement for the previously used `variant="overBackground"` attribute which is deprecated.
 
-    ### Deprecation
+  ### Deprecation
 
-    The `variant="overBackground"` attribute is deprecated; please use the new `static-color="white"` attribute instead. When this property is used in the component, a deprecation warning will be shown in the console when in debug mode. The `variant` attribute will be removed in a future release.
+  The `variant="overBackground"` attribute is deprecated; please use the new `static-color="white"` attribute instead. When this property is used in the component, a deprecation warning will be shown in the console when in debug mode. The `variant` attribute will be removed in a future release.
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.8.0
+  - @spectrum-web-components/base@1.8.0
 
 ## 1.7.0
 
@@ -161,7 +161,7 @@
 - [#5295](https://github.com/adobe/spectrum-web-components/pull/5295) [`1126cf2`](https://github.com/adobe/spectrum-web-components/commit/1126cf22c0076c8728b86e9c0bf7f67fdd8fde07) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.7.0
+  - @spectrum-web-components/base@1.7.0
 
 ## 1.6.0
 
@@ -169,112 +169,112 @@
 
 - [#5157](https://github.com/adobe/spectrum-web-components/pull/5157) [`9e15a66`](https://github.com/adobe/spectrum-web-components/commit/9e15a66a281745004add414ff977d4a71186aedd) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - # Release Note
 
-    ## Infield Button
+  ## Infield Button
 
-    ### 6.1.2
-    - [#3615](https://github.com/adobe/spectrum-css/pull/3615) [`f09c84a`](https://github.com/adobe/spectrum-css/commit/f09c84ae9922d67b6fe237d693afee0fab53fa67) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - ### Infield button fast follows
-        - Updated infield button disabled border color to use `-spectrum-gray-300` for spectrum-two theme and `-spectrum-gray-200` for other themes.
+  ### 6.1.2
+  - [#3615](https://github.com/adobe/spectrum-css/pull/3615) [`f09c84a`](https://github.com/adobe/spectrum-css/commit/f09c84ae9922d67b6fe237d693afee0fab53fa67) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - ### Infield button fast follows
+    - Updated infield button disabled border color to use `-spectrum-gray-300` for spectrum-two theme and `-spectrum-gray-200` for other themes.
 
-    ### 6.1.1
+  ### 6.1.1
 
-    📝 [#3536](https://github.com/adobe/spectrum-css/pull/3536) [`f77aa72`](https://github.com/adobe/spectrum-css/commit/f77aa72486f98c7b7d4f449c0d54fb6801881b7e) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)!
-    - S2 Foundations fixes
-        - Adjusts the background-color of the infield button components within stepper to use `gray-100` as opposed to `gray-25`.
-            - This corresponds to the background-color updates picker has for S2.
-        - Corrects the border color for the default picker for S2 foundations, using `gray-500` (instead of `gray-800`) to align with other field/form components.
-        - Refactors the `&.is-keyboardFocused&.is-placeholder` selector to `&.is-keyboardFocused.spectrum-Picker-label.is-placeholder` to avoid unexpectedly targeting the nested placeholder class.
+  📝 [#3536](https://github.com/adobe/spectrum-css/pull/3536) [`f77aa72`](https://github.com/adobe/spectrum-css/commit/f77aa72486f98c7b7d4f449c0d54fb6801881b7e) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)!
+  - S2 Foundations fixes
+    - Adjusts the background-color of the infield button components within stepper to use `gray-100` as opposed to `gray-25`.
+      - This corresponds to the background-color updates picker has for S2.
+    - Corrects the border color for the default picker for S2 foundations, using `gray-500` (instead of `gray-800`) to align with other field/form components.
+    - Refactors the `&.is-keyboardFocused&.is-placeholder` selector to `&.is-keyboardFocused.spectrum-Picker-label.is-placeholder` to avoid unexpectedly targeting the nested placeholder class.
 
-    ### 6.1.0
+  ### 6.1.0
 
-    📝 [#3541](https://github.com/adobe/spectrum-css/pull/3541) [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d) Thanks [@castastrophe](https://github.com/castastrophe)!
+  📝 [#3541](https://github.com/adobe/spectrum-css/pull/3541) [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d) Thanks [@castastrophe](https://github.com/castastrophe)!
 
-    Dependency alignment across the project.
-    - Updated dependencies [[`205182b`](https://github.com/adobe/spectrum-css/commit/205182bebcbe82813457aa098d8799b0a23423ee), [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d)]:
-        - @spectrum-css/icon@9.1.0
-        - @spectrum-css/tokens@16.0.1
+  Dependency alignment across the project.
+  - Updated dependencies [[`205182b`](https://github.com/adobe/spectrum-css/commit/205182bebcbe82813457aa098d8799b0a23423ee), [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d)]:
+    - @spectrum-css/icon@9.1.0
+    - @spectrum-css/tokens@16.0.1
 
-    ## Number Field
+  ## Number Field
 
-    Bump @spectrum-css/stepper to 7.1.3
+  Bump @spectrum-css/stepper to 7.1.3
 
-    ### 7.1.3
-    - [#3621](https://github.com/adobe/spectrum-css/pull/3621) [`3aec28a`](https://github.com/adobe/spectrum-css/commit/3aec28aac60bdf32a585fa8ff38559d80b57ff86) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)!
-        - Updates `-spectrum-stepper-buttons-border-color-keyboard-focus` from `gray-900` to `gray-800` to match the rest of the border color on keyboardFocus.
+  ### 7.1.3
+  - [#3621](https://github.com/adobe/spectrum-css/pull/3621) [`3aec28a`](https://github.com/adobe/spectrum-css/commit/3aec28aac60bdf32a585fa8ff38559d80b57ff86) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)!
+    - Updates `-spectrum-stepper-buttons-border-color-keyboard-focus` from `gray-900` to `gray-800` to match the rest of the border color on keyboardFocus.
 
-    ### 7.1.2
+  ### 7.1.2
 
-    📝 [#3594](https://github.com/adobe/spectrum-css/pull/3594) [`6200a63`](https://github.com/adobe/spectrum-css/commit/6200a63f2c7dc1d2b0481c33b17c86427726c0bd) Thanks [@TarunAdobe](https://github.com/TarunAdobe)!
-    - Updates Stepper's key-focus border color (`-spectrum-stepper-border-color-keyboard-focus`) to `-spectrum-gray-800`.
+  📝 [#3594](https://github.com/adobe/spectrum-css/pull/3594) [`6200a63`](https://github.com/adobe/spectrum-css/commit/6200a63f2c7dc1d2b0481c33b17c86427726c0bd) Thanks [@TarunAdobe](https://github.com/TarunAdobe)!
+  - Updates Stepper's key-focus border color (`-spectrum-stepper-border-color-keyboard-focus`) to `-spectrum-gray-800`.
 
-    ### 7.1.1
+  ### 7.1.1
 
-    📝 [#3536](https://github.com/adobe/spectrum-css/pull/3536) [`f77aa72`](https://github.com/adobe/spectrum-css/commit/f77aa72486f98c7b7d4f449c0d54fb6801881b7e) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)!
-    - S2 Foundations fixes
-        - Adjusts the background-color of the infield button components within stepper to use `gray-100` as opposed to `gray-25`.
-            - This corresponds to the background-color updates picker has for S2.
-        - Corrects the border color for the default picker for S2 foundations, using `gray-500` (instead of `gray-800`) to align with other field/form components.
-        - Refactors the `&.is-keyboardFocused&.is-placeholder` selector to `&.is-keyboardFocused.spectrum-Picker-label.is-placeholder` to avoid unexpectedly targeting the nested placeholder class.
+  📝 [#3536](https://github.com/adobe/spectrum-css/pull/3536) [`f77aa72`](https://github.com/adobe/spectrum-css/commit/f77aa72486f98c7b7d4f449c0d54fb6801881b7e) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)!
+  - S2 Foundations fixes
+    - Adjusts the background-color of the infield button components within stepper to use `gray-100` as opposed to `gray-25`.
+      - This corresponds to the background-color updates picker has for S2.
+    - Corrects the border color for the default picker for S2 foundations, using `gray-500` (instead of `gray-800`) to align with other field/form components.
+    - Refactors the `&.is-keyboardFocused&.is-placeholder` selector to `&.is-keyboardFocused.spectrum-Picker-label.is-placeholder` to avoid unexpectedly targeting the nested placeholder class.
 
-    ### 7.1.0
+  ### 7.1.0
 
-    📝 [#3541](https://github.com/adobe/spectrum-css/pull/3541) [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d) Thanks [@castastrophe](https://github.com/castastrophe)!
+  📝 [#3541](https://github.com/adobe/spectrum-css/pull/3541) [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d) Thanks [@castastrophe](https://github.com/castastrophe)!
 
-    Dependency alignment across the project.
-    - Updated dependencies [[`205182b`](https://github.com/adobe/spectrum-css/commit/205182bebcbe82813457aa098d8799b0a23423ee), [`9b108f7`](https://github.com/adobe/spectrum-css/commit/9b108f7e05df1f55ab315dad96736d3ff4757f8c), [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d)]:
-        - @spectrum-css/actionbutton@8.0.0
-        - @spectrum-css/icon@9.1.0
-        - @spectrum-css/infieldbutton@7.0.0
-        - @spectrum-css/textfield@9.0.0
-        - @spectrum-css/tokens@16.0.1
+  Dependency alignment across the project.
+  - Updated dependencies [[`205182b`](https://github.com/adobe/spectrum-css/commit/205182bebcbe82813457aa098d8799b0a23423ee), [`9b108f7`](https://github.com/adobe/spectrum-css/commit/9b108f7e05df1f55ab315dad96736d3ff4757f8c), [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d)]:
+    - @spectrum-css/actionbutton@8.0.0
+    - @spectrum-css/icon@9.1.0
+    - @spectrum-css/infieldbutton@7.0.0
+    - @spectrum-css/textfield@9.0.0
+    - @spectrum-css/tokens@16.0.1
 
-    ## Textfield
+  ## Textfield
 
-    ### 8.1.1
+  ### 8.1.1
 
-    📝 [#3575](https://github.com/adobe/spectrum-css/pull/3575) [`2e17d10`](https://github.com/adobe/spectrum-css/commit/2e17d109ebec3c2745c32a15840af5c636c8dc5d) Thanks [@TarunAdobe](https://github.com/TarunAdobe)!
-    - Updated border color on keyboard focus state for textfield in spectrum-two theme.
+  📝 [#3575](https://github.com/adobe/spectrum-css/pull/3575) [`2e17d10`](https://github.com/adobe/spectrum-css/commit/2e17d109ebec3c2745c32a15840af5c636c8dc5d) Thanks [@TarunAdobe](https://github.com/TarunAdobe)!
+  - Updated border color on keyboard focus state for textfield in spectrum-two theme.
 
-    ### 8.1.0
+  ### 8.1.0
 
-    📝 [#3539](https://github.com/adobe/spectrum-css/pull/3539) [`9b108f7`](https://github.com/adobe/spectrum-css/commit/9b108f7e05df1f55ab315dad96736d3ff4757f8c) Thanks [@rise-erpelding](https://github.com/rise-erpelding)!
-    - Updates invalid icon spacing to be vertically centered for S2.
+  📝 [#3539](https://github.com/adobe/spectrum-css/pull/3539) [`9b108f7`](https://github.com/adobe/spectrum-css/commit/9b108f7e05df1f55ab315dad96736d3ff4757f8c) Thanks [@rise-erpelding](https://github.com/rise-erpelding)!
+  - Updates invalid icon spacing to be vertically centered for S2.
 
-    📝 [#3541](https://github.com/adobe/spectrum-css/pull/3541) [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d) Thanks [@castastrophe](https://github.com/castastrophe)!
-    - Dependency alignment across the project.
+  📝 [#3541](https://github.com/adobe/spectrum-css/pull/3541) [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d) Thanks [@castastrophe](https://github.com/castastrophe)!
+  - Dependency alignment across the project.
 
-    Set component peerDependencies as optional to reduce console warnings on downstream projects.
-    - Updated dependencies [[`205182b`](https://github.com/adobe/spectrum-css/commit/205182bebcbe82813457aa098d8799b0a23423ee), [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d)]:
-        - @spectrum-css/helptext@8.0.0
-        - @spectrum-css/tokens@16.0.1
+  Set component peerDependencies as optional to reduce console warnings on downstream projects.
+  - Updated dependencies [[`205182b`](https://github.com/adobe/spectrum-css/commit/205182bebcbe82813457aa098d8799b0a23423ee), [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d)]:
+    - @spectrum-css/helptext@8.0.0
+    - @spectrum-css/tokens@16.0.1
 
-    ## Search
+  ## Search
 
-    ### 8.1.2
-    - [#3658](https://github.com/adobe/spectrum-css/pull/3658) [`e9fde67`](https://github.com/adobe/spectrum-css/commit/e9fde67bf341798a6ab34f227b2e7a417d1e5da7) Thanks [@rise-erpelding](https://github.com/rise-erpelding)! - Change S2 theme border color to gray-800 on keyfocus per design request in order to align with text field.
+  ### 8.1.2
+  - [#3658](https://github.com/adobe/spectrum-css/pull/3658) [`e9fde67`](https://github.com/adobe/spectrum-css/commit/e9fde67bf341798a6ab34f227b2e7a417d1e5da7) Thanks [@rise-erpelding](https://github.com/rise-erpelding)! - Change S2 theme border color to gray-800 on keyfocus per design request in order to align with text field.
 
-    ### 8.1.1
+  ### 8.1.1
 
-    📝 [#3593](https://github.com/adobe/spectrum-css/pull/3593) [`d829abb`](https://github.com/adobe/spectrum-css/commit/d829abb44f1eaa1874090e52caee553d776684e7) Thanks [@TarunAdobe](https://github.com/TarunAdobe)!
+  📝 [#3593](https://github.com/adobe/spectrum-css/pull/3593) [`d829abb`](https://github.com/adobe/spectrum-css/commit/d829abb44f1eaa1874090e52caee553d776684e7) Thanks [@TarunAdobe](https://github.com/TarunAdobe)!
 
-    Updated `--spectrum-search-background-color-disabled` to `--spectrum-gray-25` and `--spectrum-search-border-color-disabled` to `--spectrum-gray-300` for the S2 foundations contexts.
+  Updated `--spectrum-search-background-color-disabled` to `--spectrum-gray-25` and `--spectrum-search-border-color-disabled` to `--spectrum-gray-300` for the S2 foundations contexts.
 
-    Also defines disabled quiet border and background colors (`--system-search-quiet-background-color-disabled` and `--system-search-quiet-border-color-disabled`) in order to maintain disabled quiet styling.
+  Also defines disabled quiet border and background colors (`--system-search-quiet-background-color-disabled` and `--system-search-quiet-border-color-disabled`) in order to maintain disabled quiet styling.
 
-    ### 8.1.0
+  ### 8.1.0
 
-    📝 [#3541](https://github.com/adobe/spectrum-css/pull/3541) [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d) Thanks [@castastrophe](https://github.com/castastrophe)!
+  📝 [#3541](https://github.com/adobe/spectrum-css/pull/3541) [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d) Thanks [@castastrophe](https://github.com/castastrophe)!
 
-    Dependency alignment across the project.
-    - Updated dependencies [[`205182b`](https://github.com/adobe/spectrum-css/commit/205182bebcbe82813457aa098d8799b0a23423ee), [`9b108f7`](https://github.com/adobe/spectrum-css/commit/9b108f7e05df1f55ab315dad96736d3ff4757f8c), [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d)]:
-        - @spectrum-css/clearbutton@8.0.0
-        - @spectrum-css/icon@9.1.0
-        - @spectrum-css/textfield@9.0.0
-        - @spectrum-css/tokens@16.0.1
+  Dependency alignment across the project.
+  - Updated dependencies [[`205182b`](https://github.com/adobe/spectrum-css/commit/205182bebcbe82813457aa098d8799b0a23423ee), [`9b108f7`](https://github.com/adobe/spectrum-css/commit/9b108f7e05df1f55ab315dad96736d3ff4757f8c), [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d)]:
+    - @spectrum-css/clearbutton@8.0.0
+    - @spectrum-css/icon@9.1.0
+    - @spectrum-css/textfield@9.0.0
+    - @spectrum-css/tokens@16.0.1
 
 - [#5349](https://github.com/adobe/spectrum-web-components/pull/5349) [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.6.0
+  - @spectrum-web-components/base@1.6.0
 
 ## 1.5.0
 
@@ -284,39 +284,39 @@
 
 - [#5363](https://github.com/adobe/spectrum-web-components/pull/5363) [`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5) Thanks [@castastrophe](https://github.com/castastrophe)! - This update aims to simplify `--mod-*` access by ensuring local variants and states aren't hooking into those custom properties for overrides. This updates all local variants and states to override the `--spectrum-button-*` properties instead and adjusts the specificity to ensure no regressions in rendered results.
 
-    From [@spectrum-css/button v14.1.3](https://www.npmjs.com/package/@spectrum-css/button/v/14.1.3): [#3613](https://github.com/adobe/spectrum-css/pull/3613) Thanks [@​rise-erpelding](https://github.com/rise-erpelding)!
+  From [@spectrum-css/button v14.1.3](https://www.npmjs.com/package/@spectrum-css/button/v/14.1.3): [#3613](https://github.com/adobe/spectrum-css/pull/3613) Thanks [@​rise-erpelding](https://github.com/rise-erpelding)!
 
-    Adjusts static color buttons to more closely resemble the S2 specifications. There are no expected changes to non-static button variants in S2, and no expected changes to other themes.
+  Adjusts static color buttons to more closely resemble the S2 specifications. There are no expected changes to non-static button variants in S2, and no expected changes to other themes.
 
-    This PR includes changes to:
-    - Static white primary button (outline variant), static white secondary button (fill variant), static black primary button (outline variant), static black secondary button (fill variant)
-    - Static white secondary button (outline variant) and static black secondary button (outline variant) border and background colors
-    - Static color buttons' content color
-    - Static white primary button (fill variant) and static black primary button (fill variant) background colors
+  This PR includes changes to:
+  - Static white primary button (outline variant), static white secondary button (fill variant), static black primary button (outline variant), static black secondary button (fill variant)
+  - Static white secondary button (outline variant) and static black secondary button (outline variant) border and background colors
+  - Static color buttons' content color
+  - Static white primary button (fill variant) and static black primary button (fill variant) background colors
 
-    From [@spectrum-css/button v14.1.2](https://www.npmjs.com/package/@spectrum-css/button/v/14.1.2): [#​3600](https://github.com/adobe/spectrum-css/pull/3600) Thanks [@​rise-erpelding](https://github.com/rise-erpelding)!
+  From [@spectrum-css/button v14.1.2](https://www.npmjs.com/package/@spectrum-css/button/v/14.1.2): [#​3600](https://github.com/adobe/spectrum-css/pull/3600) Thanks [@​rise-erpelding](https://github.com/rise-erpelding)!
 
-    Adjust border colors for static black and static white outline buttons, primary variant to match S2 specifications.
+  Adjust border colors for static black and static white outline buttons, primary variant to match S2 specifications.
 
 - [#5202](https://github.com/adobe/spectrum-web-components/pull/5202) [`fa4be70`](https://github.com/adobe/spectrum-web-components/commit/fa4be70e9ab9dbeff26867edd3bdeb3f41c423e3) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - Updates the picker button component from version 6.0.0-s2-foundations.16 to 6.1.2. The update should bring the background colors for the picker button in line with S2-foundations design specs:
 
-    default state: `gray-50` to `gray-100`
-    hover state: `gray-100` to `gray-200`
-    key-focus state: `gray-100` to `gray-200`
+  default state: `gray-50` to `gray-100`
+  hover state: `gray-100` to `gray-200`
+  key-focus state: `gray-100` to `gray-200`
 
 - [#5277](https://github.com/adobe/spectrum-web-components/pull/5277) [`daeb11f`](https://github.com/adobe/spectrum-web-components/commit/daeb11f18792cf650518099fd29857139b6380b4) Thanks [@renovate](https://github.com/apps/renovate)! - /Users/cas/Projects/work/spectrum-web-components/yarn.lock
 
 - [#5325](https://github.com/adobe/spectrum-web-components/pull/5325) [`6c58f50`](https://github.com/adobe/spectrum-web-components/commit/6c58f50f7b1f5489c11e0d3484e3f4a9d576f1c8) Thanks [@renovate](https://github.com/apps/renovate)! - [#​3644](https://github.com/adobe/spectrum-css/pull/3644) Thanks [@​marissahuysentruyt](https://github.com/marissahuysentruyt)!
 
-    This patch update fixes support for `--mod-actionbutton-border-radius` to make sure it is accessible by consumers and overwrites the default border radius setting when used.
+  This patch update fixes support for `--mod-actionbutton-border-radius` to make sure it is accessible by consumers and overwrites the default border radius setting when used.
 
 - [#5202](https://github.com/adobe/spectrum-web-components/pull/5202) [`fa4be70`](https://github.com/adobe/spectrum-web-components/commit/fa4be70e9ab9dbeff26867edd3bdeb3f41c423e3) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - Updates the combobox component from version 4.0.0-s2-foundations.21 to 4.1.2. This work also addresses the design feedback for combobox in S2 foundations:
-    - corrects the border colors for several combobox states including focus, keyboardFocus, focus+hover, disabled, read-only for all themes
-    - increases the specificity of the `#textfield:hover .input` selector to `#textfield:hover .input:focus` in order to properly render the focus+hover border color styles (within the `combobox.css` file)
-    - adds an additional selector for disabled comboboxes that correctly renders the border colors based on theme context
+  - corrects the border colors for several combobox states including focus, keyboardFocus, focus+hover, disabled, read-only for all themes
+  - increases the specificity of the `#textfield:hover .input` selector to `#textfield:hover .input:focus` in order to properly render the focus+hover border color styles (within the `combobox.css` file)
+  - adds an additional selector for disabled comboboxes that correctly renders the border colors based on theme context
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.5.0
+  - @spectrum-web-components/base@1.5.0
 
 ## 1.4.0
 
@@ -325,14 +325,14 @@
 - [#5140](https://github.com/adobe/spectrum-web-components/pull/5140) [`3cca7ea`](https://github.com/adobe/spectrum-web-components/commit/3cca7eacf127c3fd759953db38a2b5a561bfb8dc) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Contextual help now supports a custom maximum width to be set using the `--mod-spectrum-contextual-help-popover-maximum-width` custom property.
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.4.0
+  - @spectrum-web-components/base@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.3.0
+  - @spectrum-web-components/base@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

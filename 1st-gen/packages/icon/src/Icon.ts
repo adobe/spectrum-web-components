@@ -12,11 +12,10 @@
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import {
-    property,
-    query,
+  property,
+  query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-
 import { IconsetRegistry } from '@spectrum-web-components/iconset/src/iconset-registry.js';
 
 import { IconBase } from './IconBase.js';
@@ -25,119 +24,119 @@ import { IconBase } from './IconBase.js';
  * @element sp-icon
  */
 export class Icon extends IconBase {
-    @property()
-    public src?: string;
+  @property()
+  public src?: string;
 
-    @property()
-    public name?: string;
+  @property()
+  public name?: string;
 
-    @query('#container')
-    private iconContainer?: HTMLElement;
+  @query('#container')
+  private iconContainer?: HTMLElement;
 
-    private updateIconPromise?: Promise<void>;
+  private updateIconPromise?: Promise<void>;
 
-    public override connectedCallback(): void {
-        super.connectedCallback();
-        window.addEventListener('sp-iconset-added', this.iconsetListener);
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    window.addEventListener('sp-iconset-added', this.iconsetListener);
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    window.removeEventListener('sp-iconset-added', this.iconsetListener);
+  }
+
+  public override firstUpdated(): void {
+    this.updateIconPromise = this.updateIcon();
+  }
+
+  public override attributeChangedCallback(
+    name: string,
+    old: string,
+    value: string
+  ): void {
+    super.attributeChangedCallback(name, old, value);
+    this.updateIconPromise = this.updateIcon(); // any of our attributes change, update our icon
+  }
+
+  private iconsetListener = (event: CustomEvent): void => {
+    if (!this.name) {
+      return;
     }
-
-    public override disconnectedCallback(): void {
-        super.disconnectedCallback();
-        window.removeEventListener('sp-iconset-added', this.iconsetListener);
+    // parse the icon name to get iconset name
+    const icon = this.parseIcon(this.name);
+    if (event.detail.name === icon.iconset) {
+      this.updateIconPromise = this.updateIcon();
     }
+  };
 
-    public override firstUpdated(): void {
-        this.updateIconPromise = this.updateIcon();
+  private announceIconImageSrcError(): void {
+    this.dispatchEvent(
+      new Event('error', {
+        cancelable: false,
+        bubbles: false,
+        composed: false,
+      })
+    );
+  }
+
+  protected override render(): TemplateResult {
+    if (this.name) {
+      return html`
+        <div id="container"></div>
+      `;
+    } else if (this.src) {
+      return html`
+        <img
+          src=${this.src}
+          alt=${ifDefined(this.label)}
+          @error=${this.announceIconImageSrcError}
+        />
+      `;
     }
+    return super.render();
+  }
 
-    public override attributeChangedCallback(
-        name: string,
-        old: string,
-        value: string
-    ): void {
-        super.attributeChangedCallback(name, old, value);
-        this.updateIconPromise = this.updateIcon(); // any of our attributes change, update our icon
+  private async updateIcon(): Promise<void> {
+    if (this.updateIconPromise) {
+      await this.updateIconPromise;
     }
-
-    private iconsetListener = (event: CustomEvent): void => {
-        if (!this.name) {
-            return;
-        }
-        // parse the icon name to get iconset name
-        const icon = this.parseIcon(this.name);
-        if (event.detail.name === icon.iconset) {
-            this.updateIconPromise = this.updateIcon();
-        }
-    };
-
-    private announceIconImageSrcError(): void {
-        this.dispatchEvent(
-            new Event('error', {
-                cancelable: false,
-                bubbles: false,
-                composed: false,
-            })
-        );
+    if (!this.name) {
+      return Promise.resolve();
     }
-
-    protected override render(): TemplateResult {
-        if (this.name) {
-            return html`
-                <div id="container"></div>
-            `;
-        } else if (this.src) {
-            return html`
-                <img
-                    src="${this.src}"
-                    alt=${ifDefined(this.label)}
-                    @error=${this.announceIconImageSrcError}
-                />
-            `;
-        }
-        return super.render();
+    // parse the icon name to get iconset name
+    const icon = this.parseIcon(this.name);
+    // try to retrieve the iconset
+    const iconset = IconsetRegistry.getInstance().getIconset(icon.iconset);
+    if (!iconset) {
+      // we can stop here as there's nothing to be done till we get the iconset
+      return Promise.resolve();
     }
-
-    private async updateIcon(): Promise<void> {
-        if (this.updateIconPromise) {
-            await this.updateIconPromise;
-        }
-        if (!this.name) {
-            return Promise.resolve();
-        }
-        // parse the icon name to get iconset name
-        const icon = this.parseIcon(this.name);
-        // try to retrieve the iconset
-        const iconset = IconsetRegistry.getInstance().getIconset(icon.iconset);
-        if (!iconset) {
-            // we can stop here as there's nothing to be done till we get the iconset
-            return Promise.resolve();
-        }
-        if (!this.iconContainer) {
-            return Promise.resolve();
-        }
-        this.iconContainer.innerHTML = '';
-        return iconset.applyIconToElement(
-            this.iconContainer,
-            icon.icon,
-            this.size || '',
-            this.label ? this.label : ''
-        );
+    if (!this.iconContainer) {
+      return Promise.resolve();
     }
+    this.iconContainer.innerHTML = '';
+    return iconset.applyIconToElement(
+      this.iconContainer,
+      icon.icon,
+      this.size || '',
+      this.label ? this.label : ''
+    );
+  }
 
-    private parseIcon(icon: string): { iconset: string; icon: string } {
-        const iconParts = icon.split(':');
-        let iconsetName = 'default';
-        let iconName = icon;
-        if (iconParts.length > 1) {
-            iconsetName = iconParts[0];
-            iconName = iconParts[1];
-        }
-        return { iconset: iconsetName, icon: iconName };
+  private parseIcon(icon: string): { iconset: string; icon: string } {
+    const iconParts = icon.split(':');
+    let iconsetName = 'default';
+    let iconName = icon;
+    if (iconParts.length > 1) {
+      iconsetName = iconParts[0];
+      iconName = iconParts[1];
     }
+    return { iconset: iconsetName, icon: iconName };
+  }
 
-    protected override async getUpdateComplete(): Promise<boolean> {
-        const complete = (await super.getUpdateComplete()) as boolean;
-        await this.updateIconPromise;
-        return complete;
-    }
+  protected override async getUpdateComplete(): Promise<boolean> {
+    const complete = (await super.getUpdateComplete()) as boolean;
+    await this.updateIconPromise;
+    return complete;
+  }
 }

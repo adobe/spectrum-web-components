@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -14,42 +14,42 @@
 @import url("./tabs-overrides.css");
 
 :host {
-    display: grid;
-    grid-template-columns: 100%;
-    position: relative;
+  display: grid;
+  position: relative;
+  grid-template-columns: 100%;
 }
 
 :host(:not([direction^="vertical"])) {
-    grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr;
 }
 
 :host([direction^="vertical"]) {
-    grid-template-columns: auto 1fr;
+  grid-template-columns: auto 1fr;
 }
 
 #selection-indicator:dir(rtl) {
-    left: 0;
-    right: auto;
+  right: auto;
+  left: 0;
 }
 
 :host([direction="vertical-right"]) #list #selection-indicator {
-    inset-inline: auto 0;
+  inset-inline: auto 0;
 }
 
 #list {
-    justify-content: var(--swc-tabs-list-justify-content);
+  justify-content: var(--swc-tabs-list-justify-content);
 }
 
 :host([disabled]) #list {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 :host([disabled]) #list #selection-indicator {
-    background-color: var(--mod-tabs-color-disabled, var(--spectrum-tabs-color-disabled));
+  background-color: var(--mod-tabs-color-disabled, var(--spectrum-tabs-color-disabled));
 }
 
 :host([disabled]) ::slotted(sp-tab) {
-    color: var(--mod-tabs-color-disabled, var(--spectrum-tabs-color-disabled));
+  color: var(--mod-tabs-color-disabled, var(--spectrum-tabs-color-disabled));
 }
 
 /*
@@ -59,18 +59,18 @@
  */
 :host([direction="vertical-right"]) #list #selection-indicator,
 :host([direction="vertical"]) #list #selection-indicator {
-    inset-block-start: 0;
+  inset-block-start: 0;
 }
 
 #selection-indicator.first-position {
-    transition: none;
+  transition: none;
 }
 
 :host([direction="horizontal"]) #list.scroll {
-    scrollbar-width: none;
-    overflow: auto hidden;
+  overflow: auto hidden;
+  scrollbar-width: none;
 }
 
 :host([direction="horizontal"]) #list.scroll::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
