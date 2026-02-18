@@ -14,6 +14,7 @@ import {
   CSSResultArray,
   DefaultElementSize,
   html,
+  nothing,
   PropertyValues,
   SizedMixin,
   SpectrumElement,
@@ -168,10 +169,10 @@ export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
       <span id="box">
         ${this.checked
           ? checkmarkIcon[this.size as DefaultElementSize]()
-          : html``}
+          : nothing}
         ${this.indeterminate
           ? dashIcon[this.size as DefaultElementSize]()
-          : html``}
+          : nothing}
       </span>
       <label id="label" for="input"><slot></slot></label>
     `;

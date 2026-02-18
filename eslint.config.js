@@ -184,7 +184,6 @@ export default defineConfig([
       '**/node_modules/**',
       '**/dist/**',
       '**/storybook-static/**',
-      '**/.storybook/**',
       '**/coverage/**',
       '**/.wireit/**',
       '**/out/**',
@@ -453,6 +452,7 @@ export default defineConfig([
       '**/benchmark/**/*.ts',
       '**/stories/**/*.ts',
       '**/e2e/**/*.ts',
+      '**/.storybook/**',
     ],
     languageOptions: {
       globals: { ...globals.browser, ...globals.mocha, ...testLibGlobals },
