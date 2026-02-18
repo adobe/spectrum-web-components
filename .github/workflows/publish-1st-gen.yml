@@ -162,6 +162,16 @@ jobs:
             yarn changeset version --snapshot $TAG
           fi
 
+      - name: Capture released versions
+        id: versions
+        run: |
+          CORE_VERSION=$(node -p "require('./2nd-gen/packages/core/package.json').version")
+          BUNDLE_VERSION=$(node -p "require('./1st-gen/tools/bundle/package.json').version")
+          SWC_VERSION=$(node -p "require('./2nd-gen/packages/swc/package.json').version")
+          echo "core=$CORE_VERSION" >> $GITHUB_OUTPUT
+          echo "bundle=$BUNDLE_VERSION" >> $GITHUB_OUTPUT
+          echo "swc=$SWC_VERSION" >> $GITHUB_OUTPUT
+
       - name: Refresh lockfile and rebuild
         run: |
           yarn install --refresh-lockfile
@@ -242,6 +252,9 @@ jobs:
           ACTOR: ${{ github.actor }}
           COMMIT_SHA: ${{ github.sha }}
           AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
+          CORE_VERSION: ${{ steps.versions.outputs.core }}
+          BUNDLE_VERSION: ${{ steps.versions.outputs.bundle }}
+          SWC_VERSION: ${{ steps.versions.outputs.swc }}
         run: |
           echo "## Publish summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
@@ -270,7 +283,17 @@ jobs:
             echo "| **Commit** | \`${COMMIT_SHA}\` |" >> $GITHUB_STEP_SUMMARY
           fi
 
-          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -n "$CORE_VERSION" ] || [ -n "$BUNDLE_VERSION" ] || [ -n "$SWC_VERSION" ]; then
+            echo "## Versions released" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "| Generation | Package | Version |" >> $GITHUB_STEP_SUMMARY
+            echo "|------------|---------|---------|" >> $GITHUB_STEP_SUMMARY
+            [ -n "$CORE_VERSION" ]   && echo "| Core    | \`@spectrum-web-components/core\`   | \`${CORE_VERSION}\`   |" >> $GITHUB_STEP_SUMMARY
+            [ -n "$BUNDLE_VERSION" ] && echo "| 1st gen | \`@spectrum-web-components/bundle\` | \`${BUNDLE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+            [ -n "$SWC_VERSION" ]    && echo "| 2nd gen | \`@adobe/spectrum-wc\`               | \`${SWC_VERSION}\`    |" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
           if [ "$AUTH_OUTCOME" == "success" ]; then
             echo "✅ Publish completed with tag \`${TAG}\`" >> $GITHUB_STEP_SUMMARY
           else
