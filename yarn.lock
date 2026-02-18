@@ -6846,7 +6846,7 @@ __metadata:
     "@spectrum-web-components/switch": "npm:1.11.2"
     "@spectrum-web-components/theme": "npm:1.11.2"
   peerDependencies:
-    "@storybook/preview-api": 8.6.14
+    "@storybook/preview-api": ">=8"
   languageName: unknown
   linkType: soft
 
