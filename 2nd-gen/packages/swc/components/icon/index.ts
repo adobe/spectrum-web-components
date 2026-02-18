@@ -14,7 +14,7 @@ import { defineElement } from '@spectrum-web-components/core/element/index.js';
 import { Icon } from './Icon.js';
 
 export * from './Icon.js';
-export * from './icons/index.js';
+export * from './elements/index.js';
 
 declare global {
   interface HTMLElementTagNameMap {
