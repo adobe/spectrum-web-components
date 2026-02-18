@@ -18,7 +18,8 @@
   ],
   "dependencies": {
     "vscode-languageclient": "^8.1.0",
-    "vscode-languageserver": "^8.1.0"
+    "vscode-languageserver": "^8.1.0",
+    "vscode-languageserver-textdocument": "1.0.12"
   },
   "description": "Autocomplete, hover, and diagnostics for token() values",
   "devDependencies": {

@@ -444,7 +444,9 @@ export default defineConfig([
   {
     files: [
       '**/*.test.ts',
+      '**/*.test.js',
       '**/*.test-vrt.ts',
+      '**/*.test-vrt.js',
       '**/*.stories.ts',
       '**/*.spec.ts',
       '**/test/**/*.ts',
@@ -522,6 +524,21 @@ export default defineConfig([
     files: ['**/scripts/**/*.js', '**/scripts/**/*.ts', 'scripts/**/*'],
     rules: {
       'no-console': 'off',
+      'import/no-extraneous-dependencies': 'off',
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // 1st-gen project and tool files: allow devDependencies imports
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: [
+      '1st-gen/projects/**/*.js',
+      '1st-gen/projects/**/*.ts',
+      '1st-gen/tools/**/*.js',
+      '1st-gen/tools/**/*.ts',
+    ],
+    rules: {
       'import/no-extraneous-dependencies': 'off',
     },
   },

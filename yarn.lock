@@ -30073,6 +30073,7 @@ __metadata:
     vsce: "npm:^2.15.0"
     vscode-languageclient: "npm:^8.1.0"
     vscode-languageserver: "npm:^8.1.0"
+    vscode-languageserver-textdocument: "npm:1.0.12"
   languageName: unknown
   linkType: soft
 
@@ -32272,7 +32273,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vscode-languageserver-textdocument@npm:^1.0.1":
+"vscode-languageserver-textdocument@npm:1.0.12, vscode-languageserver-textdocument@npm:^1.0.1":
   version: 1.0.12
   resolution: "vscode-languageserver-textdocument@npm:1.0.12"
   checksum: 10c0/534349894b059602c4d97615a1147b6c4c031141c2093e59657f54e38570f5989c21b376836f13b9375419869242e9efb4066643208b21ab1e1dee111a0f00fb
