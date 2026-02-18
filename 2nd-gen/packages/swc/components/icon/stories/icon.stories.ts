@@ -14,7 +14,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { AlertIcon, Chevron100Icon } from '@adobe/swc/icon/icons';
+import { AlertIcon, Chevron100Icon } from '@adobe/swc/icon/elements';
 
 import '@adobe/swc/icon';
 
@@ -28,20 +28,20 @@ const { args, argTypes, template } = getStorybookHelpers('swc-icon');
  * **Internal-only component.**
  *
  * The `<swc-icon>` element renders icons from either shared inline SVG templates or an external image source.
- * Use shared templates from `@adobe/swc/icon/icons` for consistent rendering and avoid duplicating SVG markup in each component.
+ * Use shared templates from `@adobe/swc/icon/elements` for consistent rendering and avoid duplicating SVG markup in each component.
  */
 const meta: Meta = {
-    title: 'Icon',
-    component: 'swc-icon',
-    args,
-    argTypes,
-    render: (args) => template(args),
-    parameters: {
-        docs: {
-            subtitle: `Internal icon renderer for shared templates or external image URLs.`,
-        },
+  title: 'Icon',
+  component: 'swc-icon',
+  args,
+  argTypes,
+  render: (args) => template(args),
+  parameters: {
+    docs: {
+      subtitle: `Internal icon renderer for shared templates or external image URLs.`,
     },
-    tags: ['migrated'],
+  },
+  tags: ['migrated'],
 };
 
 export default meta;
@@ -53,22 +53,22 @@ export default meta;
 const iconSvg = Chevron100Icon({ label: 'Chevron' });
 const alertSvg = AlertIcon({ label: 'Alert' });
 const iconSrc =
-    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'><path d='M6.146 3.146a.5.5 0 0 1 .708 0L12.207 8.5a.7.7 0 0 1 0 1l-5.353 5.354a.5.5 0 1 1-.708-.708L11.293 9 6.146 3.854a.5.5 0 0 1 0-.708z'/></svg>";
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'><path d='M6.146 3.146a.5.5 0 0 1 .708 0L12.207 8.5a.7.7 0 0 1 0 1l-5.353 5.354a.5.5 0 1 1-.708-.708L11.293 9 6.146 3.854a.5.5 0 0 1 0-.708z'/></svg>";
 
 // ────────────────────
 //    AUTODOCS STORY
 // ────────────────────
 
 export const Playground: Story = {
-    tags: ['autodocs', 'dev'],
-    render: (args) => html`
-        <swc-icon label=${ifDefined(args.label)} src=${ifDefined(args.src)}>
-            ${args.src ? '' : iconSvg}
-        </swc-icon>
-    `,
-    args: {
-        label: 'Search',
-    },
+  tags: ['autodocs', 'dev'],
+  render: (args) => html`
+    <swc-icon label=${ifDefined(args.label)} src=${ifDefined(args.src)}>
+      ${args.src ? '' : iconSvg}
+    </swc-icon>
+  `,
+  args: {
+    label: 'Search',
+  },
 };
 
 // ────────────────────
@@ -76,15 +76,15 @@ export const Playground: Story = {
 // ────────────────────
 
 export const Overview: Story = {
-    tags: ['overview'],
-    render: (args) => html`
-        <swc-icon label=${ifDefined(args.label)} src=${ifDefined(args.src)}>
-            ${args.src ? '' : iconSvg}
-        </swc-icon>
-    `,
-    args: {
-        label: 'Search',
-    },
+  tags: ['overview'],
+  render: (args) => html`
+    <swc-icon label=${ifDefined(args.label)} src=${ifDefined(args.src)}>
+      ${args.src ? '' : iconSvg}
+    </swc-icon>
+  `,
+  args: {
+    label: 'Search',
+  },
 };
 
 // ──────────────────────────
@@ -102,15 +102,15 @@ export const Overview: Story = {
  * - `src`: Provide an image URL when slot content is not used.
  */
 export const Anatomy: Story = {
-    render: (args) => html`
-        <swc-icon label="Chevron icon">${iconSvg}</swc-icon>
-        <swc-icon label="Alert icon">${alertSvg}</swc-icon>
-        ${template({ ...args, src: iconSrc, label: 'Image source' })}
-    `,
-    tags: ['anatomy'],
-    parameters: {
-        flexLayout: true,
-    },
+  render: (args) => html`
+    <swc-icon label="Chevron icon">${iconSvg}</swc-icon>
+    <swc-icon label="Alert icon">${alertSvg}</swc-icon>
+    ${template({ ...args, src: iconSrc, label: 'Image source' })}
+  `,
+  tags: ['anatomy'],
+  parameters: {
+    flexLayout: true,
+  },
 };
 
 // ──────────────────────────
@@ -120,7 +120,7 @@ export const Anatomy: Story = {
 /**
  * ### Shared templates
  *
- * Import reusable templates from `@adobe/swc/icon/icons` and slot them into `<swc-icon>`.
+ * Import reusable templates from `@adobe/swc/icon/elements` and slot them into `<swc-icon>`.
  * This keeps icon usage centralized and avoids per-component SVG duplication.
  *
  * ### Source fallback
@@ -128,15 +128,15 @@ export const Anatomy: Story = {
  * Use `src` for external assets when inline template rendering is not needed.
  */
 export const Sources: Story = {
-    render: (args) => html`
-        <swc-icon label="Chevron icon">${iconSvg}</swc-icon>
-        <swc-icon label="Alert icon">${alertSvg}</swc-icon>
-        ${template({ ...args, src: iconSrc, label: 'Image source' })}
-    `,
-    tags: ['options'],
-    parameters: {
-        flexLayout: true,
-    },
+  render: (args) => html`
+    <swc-icon label="Chevron icon">${iconSvg}</swc-icon>
+    <swc-icon label="Alert icon">${alertSvg}</swc-icon>
+    ${template({ ...args, src: iconSrc, label: 'Image source' })}
+  `,
+  tags: ['options'],
+  parameters: {
+    flexLayout: true,
+  },
 };
 
 /**
@@ -145,41 +145,39 @@ export const Sources: Story = {
  * Example import:
  *
  * ```ts
- * import { Chevron100Icon } from '@adobe/swc/icon/icons';
+ * import { Chevron100Icon } from '@adobe/swc/icon/elements';
  * ```
  */
 export const SharedTemplates: Story = {
-    render: () => html`
-        <swc-icon label="Chevron"
-            >${Chevron100Icon({ label: 'Chevron' })}</swc-icon
-        >
-        <swc-icon label="Alert">${AlertIcon({ label: 'Alert' })}</swc-icon>
-    `,
-    tags: ['options'],
-    parameters: {
-        flexLayout: true,
-        'section-order': 1,
-    },
+  render: () => html`
+    <swc-icon label="Chevron">${Chevron100Icon({ label: 'Chevron' })}</swc-icon>
+    <swc-icon label="Alert">${AlertIcon({ label: 'Alert' })}</swc-icon>
+  `,
+  tags: ['options'],
+  parameters: {
+    flexLayout: true,
+    'section-order': 1,
+  },
 };
 
 /**
  * Available shared icons in the current internal catalog.
- * Use this story as a quick reference for what can be imported from `@adobe/swc/icon/icons`.
+ * Use this story as a quick reference for what can be imported from `@adobe/swc/icon/elements`.
  */
 export const AvailableIcons: Story = {
-    render: () => {
-        const catalog = [
-            {
-                name: 'Chevron100Icon',
-                icon: Chevron100Icon({ label: 'Chevron' }),
-            },
-            { name: 'AlertIcon', icon: AlertIcon({ label: 'Alert' }) },
-        ];
-        return html`
-            ${catalog.map(
-                (entry) => html`
-                    <div
-                        style="
+  render: () => {
+    const catalog = [
+      {
+        name: 'Chevron100Icon',
+        icon: Chevron100Icon({ label: 'Chevron' }),
+      },
+      { name: 'AlertIcon', icon: AlertIcon({ label: 'Alert' }) },
+    ];
+    return html`
+      ${catalog.map(
+        (entry) => html`
+          <div
+            style="
                             display: inline-flex;
                             flex-direction: column;
                             align-items: center;
@@ -187,19 +185,19 @@ export const AvailableIcons: Story = {
                             min-inline-size: 120px;
                             padding: 8px;
                         "
-                    >
-                        <swc-icon label=${entry.name}>${entry.icon}</swc-icon>
-                        <code>${entry.name}</code>
-                    </div>
-                `
-            )}
-        `;
-    },
-    tags: ['options'],
-    parameters: {
-        flexLayout: true,
-        'section-order': 2,
-    },
+          >
+            <swc-icon label=${entry.name}>${entry.icon}</swc-icon>
+            <code>${entry.name}</code>
+          </div>
+        `
+      )}
+    `;
+  },
+  tags: ['options'],
+  parameters: {
+    flexLayout: true,
+    'section-order': 2,
+  },
 };
 
 // ────────────────────────────────
@@ -227,12 +225,12 @@ export const AvailableIcons: Story = {
  * - Keep labels short and specific (e.g., "Search" instead of "Icon")
  */
 export const Accessibility: Story = {
-    render: (args) => html`
-        <swc-icon label="Search">${iconSvg}</swc-icon>
-        ${template({ ...args, src: iconSrc, label: 'Search' })}
-    `,
-    tags: ['a11y'],
-    parameters: {
-        flexLayout: true,
-    },
+  render: (args) => html`
+    <swc-icon label="Search">${iconSvg}</swc-icon>
+    ${template({ ...args, src: iconSrc, label: 'Search' })}
+  `,
+  tags: ['a11y'],
+  parameters: {
+    flexLayout: true,
+  },
 };

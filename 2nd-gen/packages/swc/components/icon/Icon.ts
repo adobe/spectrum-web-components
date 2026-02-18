@@ -31,29 +31,29 @@ import styles from './icon.css';
  * </swc-icon>
  *
  * @example
- * import { Chevron100Icon } from '@adobe/swc/icon/icons';
+ * import { Chevron100Icon } from '@adobe/swc/icon/elements';
  *
  * html`<swc-icon label="Expand">${Chevron100Icon()}</swc-icon>`;
  */
 export class Icon extends IconBase {
-    // ──────────────────────────────
-    //     RENDERING & STYLING
-    // ──────────────────────────────
+  // ──────────────────────────────
+  //     RENDERING & STYLING
+  // ──────────────────────────────
 
-    public static override get styles(): CSSResultArray {
-        return [styles];
-    }
+  public static override get styles(): CSSResultArray {
+    return [styles];
+  }
 
-    protected override render(): TemplateResult {
-        if (this.src) {
-            return html`
-                <img class="swc-Icon" src=${this.src} alt=${this.label} />
-            `;
-        }
-        return html`
-            <span class="swc-Icon">
-                <slot @slotchange=${this.handleSlotChange}></slot>
-            </span>
-        `;
+  protected override render(): TemplateResult {
+    if (this.src) {
+      return html`
+        <img class="swc-Icon" src=${this.src} alt=${this.label} />
+      `;
     }
+    return html`
+      <span class="swc-Icon">
+        <slot @slotchange=${this.handleSlotChange}></slot>
+      </span>
+    `;
+  }
 }
