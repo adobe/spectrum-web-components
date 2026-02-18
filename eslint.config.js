@@ -513,12 +513,14 @@ export default defineConfig([
   },
 
   // ────────────────────────────────────────────────────────────────────────────
-  // React wrappers: allow any
+  // React wrappers: generated files — relax rules that don't apply
   // ────────────────────────────────────────────────────────────────────────────
   {
     files: ['**/react/**/*.ts'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
+      // Generated wrappers import react/next as peer deps of the consumer project
+      'import/no-extraneous-dependencies': 'off',
     },
   },
 
