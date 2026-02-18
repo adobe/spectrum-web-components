@@ -1,3 +1,15 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
 :host,
 :root {
   --system-accordion-divider-color: var(--spectrum-gray-200);
@@ -609,14 +621,14 @@
   --system-tag-size-small-corner-radius: var(--spectrum-corner-radius-100);
   --system-tag-size-medium-corner-radius: var(--spectrum-corner-radius-100);
   --system-tag-size-large-corner-radius: var(--spectrum-corner-radius-100);
-  --system-tag-border-color: var(--spectrum-gray-700);
-  --system-tag-border-color-hover: var(--spectrum-gray-800);
-  --system-tag-border-color-active: var(--spectrum-gray-900);
-  --system-tag-border-color-focus: var(--spectrum-gray-800);
-  --system-tag-content-color: var(--spectrum-neutral-subdued-content-color-default);
-  --system-tag-content-color-hover: var(--spectrum-neutral-subdued-content-color-hover);
-  --system-tag-content-color-active: var(--spectrum-neutral-subdued-content-color-down);
-  --system-tag-content-color-focus: var(--spectrum-neutral-subdued-content-color-key-focus);
+  --system-tag-border-color: var(--spectrum-neutral-content-color-default);
+  --system-tag-border-color-hover: var(--spectrum-neutral-content-color-hover);
+  --system-tag-border-color-active: var(--spectrum-neutral-content-color-down);
+  --system-tag-border-color-focus: var(--spectrum-neutral-content-color-key-focus);
+  --system-tag-content-color: var(--spectrum-neutral-content-color-default);
+  --system-tag-content-color-hover: var(--spectrum-neutral-content-color-hover);
+  --system-tag-content-color-active: var(--spectrum-neutral-content-color-down);
+  --system-tag-content-color-focus: var(--spectrum-neutral-content-color-key-focus);
   --system-tag-content-color-selected: var(--spectrum-gray-25);
   --system-tag-border-color-selected: var(--spectrum-neutral-subdued-background-color-default);
   --system-tag-border-color-selected-hover: var(--spectrum-neutral-subdued-background-color-hover);
