@@ -17,22 +17,22 @@
     "Stephanie Eckles <5t3ph@users.noreply.github.com>"
   ],
   "dependencies": {
-    "vscode-languageclient": "^8.1.0",
-    "vscode-languageserver": "^8.1.0"
+    "vscode-languageclient": "9.0.1",
+    "vscode-languageserver": "9.0.1"
   },
   "description": "Autocomplete, hover, and diagnostics for token() values",
   "devDependencies": {
     "@adobe/swc-tokens": "workspace:*",
-    "@types/node": "^24.10.2",
-    "@types/vscode": "^1.85.0",
-    "esbuild": "^0.27.1",
+    "@types/node": "25.2.3",
+    "@types/vscode": "1.109.0",
+    "esbuild": "0.27.3",
     "typescript": "5.9.2",
     "vitest": "4.0.15",
-    "vsce": "^2.15.0"
+    "vsce": "2.15.0"
   },
   "displayName": "SWC token() Intellisense",
   "engines": {
-    "vscode": "^1.85.0"
+    "vscode": "1.1.37"
   },
   "homepage": "https://opensource.adobe.com/spectrum-web-components/",
   "icon": "resources/icon.png",

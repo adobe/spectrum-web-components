@@ -29,7 +29,7 @@
     "clean": "echo 'No build output to clean'"
   },
   "peerDependencies": {
-    "stylelint": ">=16"
+    "stylelint": "17.1.1"
   },
   "keywords": [
     "stylelint",
