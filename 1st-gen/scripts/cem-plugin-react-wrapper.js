@@ -286,13 +286,8 @@ ${elements.reduce(
  * @param {object} options options for the react wrapper generator
  * @param {Array} options.exclude array of excluded component class names
  * @param {string} options.outDir root output directory for generated code
- * @param {object} options.prettierConfig prettier library configuration
  */
-export default function genWrappers({
-  exclude = [],
-  outDir = 'legacy',
-  prettierConfig = {},
-} = {}) {
+export default function genWrappers({ exclude = [], outDir = 'legacy' } = {}) {
   return {
     name: 'react-wrapper',
     async packageLinkPhase({ customElementsManifest }) {
