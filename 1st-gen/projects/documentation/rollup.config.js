@@ -219,6 +219,21 @@ export default async () => {
     })
   );
 
+  // Copy llms.txt and static markdown for LLM/docs consumers (deployed to dist)
+  mpaConfig.plugins.push(
+    copy({
+      patterns: [
+        'llms.txt',
+        'getting-started.md',
+        'migrating-to-spectrum2.md',
+        'dev-mode.md',
+        'guides/**/*.md',
+        'components/*.md',
+      ],
+      rootDir: './_site',
+    })
+  );
+
   const {
     default: { default: visualizer },
   } = await import('rollup-plugin-visualizer');
