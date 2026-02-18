@@ -24,29 +24,29 @@ import { allTokens, createLogger, generateCSS } from './src/tokens.js';
 import { generateTypographyCssFile } from './src/typography.js';
 
 const argv = yargs(hideBin(process.argv))
-    .option('out', {
-        alias: 'o',
-        type: 'string',
-        describe: 'Output path for the generated stylesheet',
-    })
-    .option('prefix', {
-        alias: 'p',
-        type: 'string',
-        describe: 'Prefix for CSS custom properties',
-        default: '',
-    })
-    .option('debug', {
-        alias: 'd',
-        type: 'boolean',
-        describe: 'Output token processing debug log',
-        default: false,
-    })
-    .option('outputType', {
-        choices: ['data', 'tokens', 'typography'],
-        describe: 'Command output type',
-        demandOption: true,
-    })
-    .help().argv;
+  .option('out', {
+    alias: 'o',
+    type: 'string',
+    describe: 'Output path for the generated stylesheet',
+  })
+  .option('prefix', {
+    alias: 'p',
+    type: 'string',
+    describe: 'Prefix for CSS custom properties',
+    default: '',
+  })
+  .option('debug', {
+    alias: 'd',
+    type: 'boolean',
+    describe: 'Output token processing debug log',
+    default: false,
+  })
+  .option('outputType', {
+    choices: ['data', 'tokens', 'typography'],
+    describe: 'Command output type',
+    demandOption: true,
+  })
+  .help().argv;
 
 const out = argv.out?.trim();
 const prefix = argv.prefix?.trim();
@@ -55,35 +55,35 @@ const debug = argv.debug;
 const debugFile = 'debug-tokens.txt';
 
 if (out) {
-    fs.mkdirSync(path.dirname(out), { recursive: true });
+  fs.mkdirSync(path.dirname(out), { recursive: true });
 }
 
 const log = debug && createLogger(`./${debugFile}`);
 
 if (outputType === 'tokens') {
-    const prettierConfig = await prettier.resolveConfig(process.cwd());
+  const prettierConfig = await prettier.resolveConfig(process.cwd());
 
-    const css = await generateCSS(prefix, log);
-    const formattedCss = await prettier.format(css, {
-        ...prettierConfig,
-        parser: 'css',
-    });
+  const css = await generateCSS(prefix, log);
+  const formattedCss = await prettier.format(css, {
+    ...prettierConfig,
+    parser: 'css',
+  });
 
-    await fs.promises.writeFile(out, formattedCss, 'utf8');
+  await fs.promises.writeFile(out, formattedCss, 'utf8');
 
-    console.log(`✔ Tokens stylesheet written to ${out}`);
+  console.log(`✔ Tokens stylesheet written to ${out}`);
 } else if (outputType === 'typography') {
-    await generateTypographyCssFile({ prefix, outFile: out });
+  await generateTypographyCssFile({ prefix, outFile: out });
 } else {
-    fs.writeFileSync(
-        out,
-        JSON.stringify(await allTokens(prefix, log), '', 4) + '\n',
-        'utf8'
-    );
+  fs.writeFileSync(
+    out,
+    JSON.stringify(await allTokens(prefix, log), '', 4) + '\n',
+    'utf8'
+  );
 
-    if (debug) {
-        console.log(`✔ Debug log written to ${debugFile}`);
-    }
+  if (debug) {
+    console.log(`✔ Debug log written to ${debugFile}`);
+  }
 
-    console.log(`✔ Token data written to ${out}`);
+  console.log(`✔ Token data written to ${out}`);
 }

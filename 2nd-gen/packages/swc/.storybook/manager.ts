@@ -22,16 +22,16 @@ import './assets/manager.css';
 
 const root = document.body ?? document.documentElement;
 if (root) {
-    root.classList.add('spectrum', 'spectrum--light', 'spectrum--medium');
+  root.classList.add('spectrum', 'spectrum--light', 'spectrum--medium');
 }
 
 addons.setConfig({
-    theme: create({
-        base: 'light',
+  theme: create({
+    base: 'light',
 
-        brandTitle: 'Adobe | Spectrum Web Components',
-        brandUrl: '?path=/docs/about-swc-overview--readme', // TODO: Add the correct URL once we are publishing 2nd-gen
-        brandImage: logo,
-        brandTarget: '_self',
-    }),
+    brandTitle: 'Adobe | Spectrum Web Components',
+    brandUrl: '?path=/docs/about-swc-overview--readme', // TODO: Add the correct URL once we are publishing 2nd-gen
+    brandImage: logo,
+    brandTarget: '_self',
+  }),
 });
