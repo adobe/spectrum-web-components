@@ -1,5 +1,5 @@
 ---
-'@spectrum-web-components/tag': patch
+'@spectrum-web-components/tags': patch
 '@spectrum-web-components/styles': patch
 ---
 
