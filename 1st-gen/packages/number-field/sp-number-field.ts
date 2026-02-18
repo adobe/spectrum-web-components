@@ -10,13 +10,14 @@
  * governing permissions and limitations under the License.
  */
 
-import { NumberField } from './src/NumberField.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { NumberField } from './src/NumberField.js';
 
 defineElement('sp-number-field', NumberField);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-number-field': NumberField;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-number-field': NumberField;
+  }
 }

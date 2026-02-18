@@ -14,6 +14,6 @@ import { DesktopController } from './DesktopController.js';
 import { MobileController } from './MobileController.js';
 
 export const strategies = {
-    desktop: DesktopController,
-    mobile: MobileController,
+  desktop: DesktopController,
+  mobile: MobileController,
 };

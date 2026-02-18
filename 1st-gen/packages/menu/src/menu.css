@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -14,21 +14,21 @@
 @import url("./spectrum-menu.css");
 
 :host {
-    flex-direction: column;
+  flex-direction: column;
 
-    /**
+  /**
      * Allow menu elements to be foreced to width 100% when placed inside of a Tray
      **/
-    width: var(--swc-menu-width);
+  width: var(--swc-menu-width);
 }
 
 :host(:focus) {
-    outline: none;
+  outline: none;
 }
 
 ::slotted(*) {
-    /**
+  /**
      * Remove when Spectrum CSS supports this correctly
      */
-    flex-shrink: 0;
+  flex-shrink: 0;
 }

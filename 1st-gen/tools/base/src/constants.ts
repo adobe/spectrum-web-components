@@ -14,11 +14,11 @@
  * Array of input component tag names for easier iteration and maintenance.
  */
 export const INPUT_COMPONENT_TAGS = [
-    'SP-SEARCH',
-    'SP-TEXTFIELD',
-    'SP-NUMBER-FIELD',
-    'SP-COMBOBOX',
-    'SP-COLOR-FIELD',
+  'SP-SEARCH',
+  'SP-TEXTFIELD',
+  'SP-NUMBER-FIELD',
+  'SP-COMBOBOX',
+  'SP-COLOR-FIELD',
 ] as const;
 
 /**
@@ -26,5 +26,5 @@ export const INPUT_COMPONENT_TAGS = [
  * Used to identify components that should maintain focus during menu interactions.
  */
 export const INPUT_COMPONENT_PATTERN = new RegExp(
-    `^(${INPUT_COMPONENT_TAGS.join('|')})$`
+  `^(${INPUT_COMPONENT_TAGS.join('|')})$`
 );

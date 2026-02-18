@@ -15,39 +15,39 @@
 import matchHelper from 'posthtml-match-helper';
 
 const load = (
-    files = [],
-    { method = 'preload', type = 'script', media, crossorigin }
+  files = [],
+  { method = 'preload', type = 'script', media, crossorigin }
 ) => {
-    return function (tree) {
-        tree.match(matchHelper('head'), (node) => {
-            const fileNodes = files.map((file) => {
-                const node = {
-                    tag: 'link',
-                    attrs: {
-                        rel: method,
-                        href: file,
-                        as: type,
-                    },
-                };
-                if (media) {
-                    node.attrs.media = media;
-                }
-                if (crossorigin) {
-                    node.attrs.crossorigin = crossorigin;
-                }
-                return node;
-            });
-            return {
-                ...node,
-                content: [...node.content, ...fileNodes],
-            };
-        });
-        return tree;
-    };
+  return function (tree) {
+    tree.match(matchHelper('head'), (node) => {
+      const fileNodes = files.map((file) => {
+        const node = {
+          tag: 'link',
+          attrs: {
+            rel: method,
+            href: file,
+            as: type,
+          },
+        };
+        if (media) {
+          node.attrs.media = media;
+        }
+        if (crossorigin) {
+          node.attrs.crossorigin = crossorigin;
+        }
+        return node;
+      });
+      return {
+        ...node,
+        content: [...node.content, ...fileNodes],
+      };
+    });
+    return tree;
+  };
 };
 
 export default load;
 export const preload = (files) => load(files, { method: 'preload' });
 export const modulepreload = (files) =>
-    load(files, { method: 'modulepreload' });
+  load(files, { method: 'modulepreload' });
 export const prefetch = (files) => load(files, { method: 'prefetch' });

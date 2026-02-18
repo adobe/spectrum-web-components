@@ -15,71 +15,65 @@ import * as Lint from 'tslint';
 import * as ts from 'typescript';
 
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING = 'File should contain header';
-    private templateString: string;
+  public static FAILURE_STRING = 'File should contain header';
+  private templateString: string;
 
-    constructor(options: Lint.IOptions) {
-        super(options);
-        if (options.ruleArguments.length === 0) {
-            throw new Error(
-                '[file-should-container-header] Must specify template path as rule option!, e.g. "file-should-container-header: [true, pathToFile]"'
-            );
-        }
-        const templatePath = options.ruleArguments[0] as string;
-        if (!fs.existsSync(templatePath)) {
-            throw new Error(
-                `[file-should-container-header] Template path ${templatePath} does not exist!`
-            );
-        }
-        this.templateString = fs
-            .readFileSync(templatePath, { encoding: 'utf8' })
-            .toString()
-            .trim();
+  constructor(options: Lint.IOptions) {
+    super(options);
+    if (options.ruleArguments.length === 0) {
+      throw new Error(
+        '[file-should-container-header] Must specify template path as rule option!, e.g. "file-should-container-header: [true, pathToFile]"'
+      );
     }
-    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(
-            new NoFileWithoutCopyrightHeader(
-                sourceFile,
-                this.getOptions(),
-                this.templateString
-            )
-        );
+    const templatePath = options.ruleArguments[0] as string;
+    if (!fs.existsSync(templatePath)) {
+      throw new Error(
+        `[file-should-container-header] Template path ${templatePath} does not exist!`
+      );
     }
+    this.templateString = fs
+      .readFileSync(templatePath, { encoding: 'utf8' })
+      .toString()
+      .trim();
+  }
+  public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+    return this.applyWithWalker(
+      new NoFileWithoutCopyrightHeader(
+        sourceFile,
+        this.getOptions(),
+        this.templateString
+      )
+    );
+  }
 }
 
 class NoFileWithoutCopyrightHeader extends Lint.RuleWalker {
-    private templateString: string;
-    constructor(
-        sourceFile: ts.SourceFile,
-        options: Lint.IOptions,
-        templateString: string
-    ) {
-        super(sourceFile, options);
-        this.templateString = templateString;
-    }
-    public visitSourceFile(sourceFile: ts.SourceFile) {
-        if (sourceFile && sourceFile.fileName) {
-            const fullText = sourceFile.getFullText();
-            if (fullText) {
-                // is the file starting with templateString?
-                if (fullText.startsWith(this.templateString)) {
-                    return super.visitSourceFile(sourceFile);
-                }
-
-                // create a fix replacement with the template text
-                const fixer = new Lint.Replacement(
-                    0,
-                    0,
-                    this.templateString + '\n'
-                );
-
-                this.addFailure(
-                    this.createFailure(0, 1, Rule.FAILURE_STRING, fixer)
-                );
-                return super.visitSourceFile(sourceFile);
-            }
+  private templateString: string;
+  constructor(
+    sourceFile: ts.SourceFile,
+    options: Lint.IOptions,
+    templateString: string
+  ) {
+    super(sourceFile, options);
+    this.templateString = templateString;
+  }
+  public visitSourceFile(sourceFile: ts.SourceFile) {
+    if (sourceFile && sourceFile.fileName) {
+      const fullText = sourceFile.getFullText();
+      if (fullText) {
+        // is the file starting with templateString?
+        if (fullText.startsWith(this.templateString)) {
+          return super.visitSourceFile(sourceFile);
         }
 
-        super.visitSourceFile(sourceFile);
+        // create a fix replacement with the template text
+        const fixer = new Lint.Replacement(0, 0, this.templateString + '\n');
+
+        this.addFailure(this.createFailure(0, 1, Rule.FAILURE_STRING, fixer));
+        return super.visitSourceFile(sourceFile);
+      }
     }
+
+    super.visitSourceFile(sourceFile);
+  }
 }

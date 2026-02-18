@@ -11,52 +11,53 @@
  */
 
 import { TemplateResult } from '@spectrum-web-components/base';
-import { AccordionMarkup } from './index.js';
-import { argTypes } from './args.js';
 
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
 import '@spectrum-web-components/link/sp-link.js';
 
+import { argTypes } from './args.js';
+import { AccordionMarkup } from './index.js';
+
 export default {
-    title: 'Accordion',
-    component: 'sp-accordion',
-    args: {
-        open: false,
-        size: 'm',
-        density: undefined,
-    },
-    argTypes,
+  title: 'Accordion',
+  component: 'sp-accordion',
+  args: {
+    open: false,
+    size: 'm',
+    density: undefined,
+  },
+  argTypes,
 };
 
 type Properties = {
-    allowMultiple?: boolean;
-    disabled?: boolean;
-    open?: boolean;
-    density?: 'compact' | 'spacious' | undefined;
-    size?: 's' | 'm' | 'l' | 'xl';
-    level?: number;
+  allowMultiple?: boolean;
+  disabled?: boolean;
+  open?: boolean;
+  density?: 'compact' | 'spacious' | undefined;
+  size?: 's' | 'm' | 'l' | 'xl';
+  level?: number;
 };
 
 export const Default = (args?: Properties): TemplateResult =>
-    AccordionMarkup(args);
+  AccordionMarkup(args);
 
 export const Open = (args?: Properties): TemplateResult =>
-    AccordionMarkup(args);
+  AccordionMarkup(args);
 Open.args = {
-    open: true,
-    allowMultiple: false,
-    disabled: false,
+  open: true,
+  allowMultiple: false,
+  disabled: false,
 };
 
 export const AllowMultiple = (args?: Properties): TemplateResult =>
-    AccordionMarkup(args);
+  AccordionMarkup(args);
 AllowMultiple.args = {
-    allowMultiple: true,
+  allowMultiple: true,
 };
 
 export const Disabled = (args?: Properties): TemplateResult =>
-    AccordionMarkup(args);
+  AccordionMarkup(args);
 Disabled.args = {
-    disabled: true,
+  disabled: true,
 };

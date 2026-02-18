@@ -14,6 +14,7 @@
 
 import chokidar from 'chokidar';
 import debounce from 'debounce';
+
 import { processREADME } from './copy-component-docs.js';
 
 const debounceProcessREADME = debounce(processREADME, 200);
@@ -24,5 +25,5 @@ chokidar
     .on('change', debounceProcessREADME)
     .on('add', debounceProcessREADME);
 
-// eslint-disable-next-line no-console
+ 
 console.log('Listening to MD Files...');

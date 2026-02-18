@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -14,26 +14,26 @@
 @import url("./color-wheel-overrides.css");
 
 :host {
-    touch-action: none;
+  touch-action: none;
 }
 
 :host(:focus) {
-    outline: none;
+  outline: none;
 }
 
 ::slotted([slot="gradient"]) {
-    border-color: var(--mod-colorwheel-border-color, var(--spectrum-colorwheel-border-color));
-    border-radius: 100%;
-    border-style: solid;
-    border-width: var(--_border-width);
-    box-sizing: border-box;
-    block-size: var(--mod-colorwheel-height, var(--spectrum-colorwheel-height));
-    position: relative;
-    inline-size: var(--mod-colorwheel-width, var(--spectrum-colorwheel-width));
-    z-index: 0;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 0;
+  inline-size: var(--mod-colorwheel-width, var(--spectrum-colorwheel-width));
+  block-size: var(--mod-colorwheel-height, var(--spectrum-colorwheel-height));
+  border-color: var(--mod-colorwheel-border-color, var(--spectrum-colorwheel-border-color));
+  border-style: solid;
+  border-width: var(--_border-width);
+  border-radius: 100%;
 }
 
 .wheel:dir(rtl),
 ::slotted([slot="gradient"]:dir(rtl)) {
-    transform: scaleX(-1);
+  transform: scaleX(-1);
 }

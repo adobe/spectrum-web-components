@@ -1,114 +1,114 @@
 {
-    "name": "@spectrum-web-components/picker",
-    "version": "1.11.2",
-    "publishConfig": {
-        "access": "public"
+  "name": "@spectrum-web-components/picker",
+  "version": "1.11.2",
+  "description": "",
+  "license": "Apache-2.0",
+  "author": "Adobe",
+  "homepage": "https://opensource.adobe.com/spectrum-web-components/components/picker",
+  "repository": {
+    "directory": "1st-gen/packages/picker",
+    "type": "git",
+    "url": "https://github.com/adobe/spectrum-web-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adobe/spectrum-web-components/issues"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "development": "./src/index.dev.js",
+      "default": "./src/index.js"
     },
-    "description": "",
-    "license": "Apache-2.0",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "1st-gen/packages/picker"
+    "./package.json": "./package.json",
+    "./sp-picker.js": {
+      "development": "./sp-picker.dev.js",
+      "default": "./sp-picker.js"
     },
-    "author": "Adobe",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/picker",
-    "bugs": {
-        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    "./src/DesktopController.js": {
+      "development": "./src/DesktopController.dev.js",
+      "default": "./src/DesktopController.js"
     },
-    "main": "./src/index.js",
-    "module": "./src/index.js",
-    "type": "module",
-    "exports": {
-        ".": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
-        },
-        "./package.json": "./package.json",
-        "./src/DesktopController.js": {
-            "development": "./src/DesktopController.dev.js",
-            "default": "./src/DesktopController.js"
-        },
-        "./src/InteractionController.js": {
-            "development": "./src/InteractionController.dev.js",
-            "default": "./src/InteractionController.js"
-        },
-        "./src/MobileController.js": {
-            "development": "./src/MobileController.dev.js",
-            "default": "./src/MobileController.js"
-        },
-        "./src/Picker.js": {
-            "development": "./src/Picker.dev.js",
-            "default": "./src/Picker.js"
-        },
-        "./src/index.js": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
-        },
-        "./src/picker-overrides.css.js": "./src/picker-overrides.css.js",
-        "./src/picker.css.js": "./src/picker.css.js",
-        "./src/strategies.js": {
-            "development": "./src/strategies.dev.js",
-            "default": "./src/strategies.js"
-        },
-        "./sync/index.js": {
-            "development": "./sync/index.dev.js",
-            "default": "./sync/index.js"
-        },
-        "./sync/sp-picker.js": {
-            "development": "./sync/sp-picker.dev.js",
-            "default": "./sync/sp-picker.js"
-        },
-        "./sp-picker.js": {
-            "development": "./sp-picker.dev.js",
-            "default": "./sp-picker.js"
-        }
+    "./src/InteractionController.js": {
+      "development": "./src/InteractionController.dev.js",
+      "default": "./src/InteractionController.js"
     },
-    "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    "./src/MobileController.js": {
+      "development": "./src/MobileController.dev.js",
+      "default": "./src/MobileController.js"
     },
-    "files": [
-        "**/*.d.ts",
-        "**/*.js",
-        "**/*.js.map",
-        "custom-elements.json",
-        "!stories/",
-        "!test/"
-    ],
-    "keywords": [
-        "design-system",
-        "spectrum",
-        "adobe",
-        "adobe-spectrum",
-        "web components",
-        "web-components",
-        "lit-element",
-        "lit-html",
-        "component",
-        "css"
-    ],
-    "dependencies": {
-        "@spectrum-web-components/base": "1.11.2",
-        "@spectrum-web-components/button": "1.11.2",
-        "@spectrum-web-components/field-label": "1.11.2",
-        "@spectrum-web-components/icon": "1.11.2",
-        "@spectrum-web-components/icons-ui": "1.11.2",
-        "@spectrum-web-components/icons-workflow": "1.11.2",
-        "@spectrum-web-components/menu": "1.11.2",
-        "@spectrum-web-components/overlay": "1.11.2",
-        "@spectrum-web-components/popover": "1.11.2",
-        "@spectrum-web-components/progress-circle": "1.11.2",
-        "@spectrum-web-components/reactive-controllers": "1.11.2",
-        "@spectrum-web-components/shared": "1.11.2",
-        "@spectrum-web-components/tooltip": "1.11.2",
-        "@spectrum-web-components/tray": "1.11.2"
+    "./src/Picker.js": {
+      "development": "./src/Picker.dev.js",
+      "default": "./src/Picker.js"
     },
-    "types": "./src/index.d.ts",
-    "customElements": "custom-elements.json",
-    "sideEffects": [
-        "./sp-*.js",
-        "./**/*.dev.js",
-        "./sync/index.js",
-        "./sync/sp-*.js"
-    ]
+    "./src/index.js": {
+      "development": "./src/index.dev.js",
+      "default": "./src/index.js"
+    },
+    "./src/picker-overrides.css.js": "./src/picker-overrides.css.js",
+    "./src/picker.css.js": "./src/picker.css.js",
+    "./src/strategies.js": {
+      "development": "./src/strategies.dev.js",
+      "default": "./src/strategies.js"
+    },
+    "./sync/index.js": {
+      "development": "./sync/index.dev.js",
+      "default": "./sync/index.js"
+    },
+    "./sync/sp-picker.js": {
+      "development": "./sync/sp-picker.dev.js",
+      "default": "./sync/sp-picker.js"
+    }
+  },
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "files": [
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.js.map",
+    "custom-elements.json",
+    "!stories/",
+    "!test/"
+  ],
+  "scripts": {
+    "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+  },
+  "sideEffects": [
+    "./sp-*.js",
+    "./**/*.dev.js",
+    "./sync/index.js",
+    "./sync/sp-*.js"
+  ],
+  "types": "./src/index.d.ts",
+  "dependencies": {
+    "@spectrum-web-components/base": "1.11.2",
+    "@spectrum-web-components/button": "1.11.2",
+    "@spectrum-web-components/field-label": "1.11.2",
+    "@spectrum-web-components/icon": "1.11.2",
+    "@spectrum-web-components/icons-ui": "1.11.2",
+    "@spectrum-web-components/icons-workflow": "1.11.2",
+    "@spectrum-web-components/menu": "1.11.2",
+    "@spectrum-web-components/overlay": "1.11.2",
+    "@spectrum-web-components/popover": "1.11.2",
+    "@spectrum-web-components/progress-circle": "1.11.2",
+    "@spectrum-web-components/reactive-controllers": "1.11.2",
+    "@spectrum-web-components/shared": "1.11.2",
+    "@spectrum-web-components/tooltip": "1.11.2",
+    "@spectrum-web-components/tray": "1.11.2"
+  },
+  "keywords": [
+    "design-system",
+    "spectrum",
+    "adobe",
+    "adobe-spectrum",
+    "web components",
+    "web-components",
+    "lit-element",
+    "lit-html",
+    "component",
+    "css"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "customElements": "custom-elements.json"
 }

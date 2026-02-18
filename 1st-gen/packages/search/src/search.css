@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -14,26 +14,26 @@
 @import url("./search-overrides.css");
 
 :host {
-    --mod-textfield-spacing-inline: var(--spectrum-alias-infieldbutton-full-height-m);
+  --mod-textfield-spacing-inline: var(--spectrum-alias-infieldbutton-full-height-m);
 }
 
 input::-webkit-search-cancel-button {
-    display: none;
+  display: none;
 }
 
 :host([size="s"]) #textfield {
-    --spectrum-search-border-radius: var(--system-search-size-s-border-radius);
-    --spectrum-search-edge-to-visual: var(--system-search-size-s-edge-to-visual);
+  --spectrum-search-border-radius: var(--system-search-size-s-border-radius);
+  --spectrum-search-edge-to-visual: var(--system-search-size-s-edge-to-visual);
 }
 
 :host([size="l"]) #textfield {
-    --spectrum-search-border-radius: var(--system-search-size-l-border-radius);
-    --spectrum-search-edge-to-visual: var(--system-search-size-l-edge-to-visual);
+  --spectrum-search-border-radius: var(--system-search-size-l-border-radius);
+  --spectrum-search-edge-to-visual: var(--system-search-size-l-edge-to-visual);
 }
 
 :host([size="xl"]) #textfield {
-    --spectrum-search-border-radius: var(--system-search-size-xl-border-radius);
-    --spectrum-search-edge-to-visual: var(--system-search-size-xl-edge-to-visual);
+  --spectrum-search-border-radius: var(--system-search-size-xl-border-radius);
+  --spectrum-search-edge-to-visual: var(--system-search-size-xl-edge-to-visual);
 }
 
 /**
@@ -41,11 +41,11 @@ input::-webkit-search-cancel-button {
  * cascade when attempting to delivery the Clear Button within the Search UI.
  **/
 @media (forced-colors: active) {
-    sp-clear-button {
-        --spectrum-clearbutton-fill-background-color: transparent;
-        --spectrum-clearbutton-fill-background-color-disabled: transparent;
-        --spectrum-clearbutton-fill-background-color-down: transparent;
-        --spectrum-clearbutton-fill-background-color-hover: transparent;
-        --spectrum-clearbutton-fill-background-color-key-focus: transparent;
-    }
+  sp-clear-button {
+    --spectrum-clearbutton-fill-background-color: transparent;
+    --spectrum-clearbutton-fill-background-color-disabled: transparent;
+    --spectrum-clearbutton-fill-background-color-down: transparent;
+    --spectrum-clearbutton-fill-background-color-hover: transparent;
+    --spectrum-clearbutton-fill-background-color-key-focus: transparent;
+  }
 }

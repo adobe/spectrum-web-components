@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { TemplateResult } from '@spectrum-web-components/base';
+
 import { Properties, renderButtonSet } from './index.js';
 import { args, argTypes } from './index.js';
 
@@ -18,33 +19,33 @@ const treatment = 'outline';
 const pending = true;
 
 export default {
-    component: 'sp-button',
-    title: 'Button/Primary/Outline/Pending',
-    args: {
-        ...args,
-        variant,
-        treatment,
-        pending,
-    },
-    argTypes,
+  component: 'sp-button',
+  title: 'Button/Primary/Outline/Pending',
+  args: {
+    ...args,
+    variant,
+    treatment,
+    pending,
+  },
+  argTypes,
 };
 
 export const s = (args: Properties): TemplateResult => renderButtonSet(args);
 s.args = {
-    size: 's',
+  size: 's',
 };
 
 export const m = (args: Properties): TemplateResult => renderButtonSet(args);
 m.args = {
-    size: 'm',
+  size: 'm',
 };
 
 export const l = (args: Properties): TemplateResult => renderButtonSet(args);
 l.args = {
-    size: 'l',
+  size: 'l',
 };
 
 export const XL = (args: Properties): TemplateResult => renderButtonSet(args);
 XL.args = {
-    size: 'xl',
+  size: 'xl',
 };

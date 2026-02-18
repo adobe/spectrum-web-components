@@ -11,26 +11,27 @@
  */
 
 import { TemplateResult } from '@spectrum-web-components/base';
+
 import { argTypes } from './args';
 import { StoryArgs, Template } from './template';
 
 export default {
-    title: 'Picker/Pending',
-    component: 'sp-picker',
-    argTypes,
-    args: {
-        pending: true,
-    },
+  title: 'Picker/Pending',
+  component: 'sp-picker',
+  argTypes,
+  args: {
+    pending: true,
+  },
 };
 
 export const S = (args: StoryArgs): TemplateResult =>
-    Template({ ...args, size: 's' });
+  Template({ ...args, size: 's' });
 
 export const M = (args: StoryArgs): TemplateResult =>
-    Template({ ...args, size: 'm' });
+  Template({ ...args, size: 'm' });
 
 export const L = (args: StoryArgs): TemplateResult =>
-    Template({ ...args, size: 'l' });
+  Template({ ...args, size: 'l' });
 
 export const XL = (args: StoryArgs): TemplateResult =>
-    Template({ ...args, size: 'xl' });
+  Template({ ...args, size: 'xl' });

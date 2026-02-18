@@ -21,12 +21,12 @@ import type { Locator, Page } from '@playwright/test';
  * @returns Promise that resolves when element is defined
  */
 export async function waitForCustomElement(
-    page: Page,
-    tagName: string
+  page: Page,
+  tagName: string
 ): Promise<void> {
-    await page.evaluate((tag) => {
-        return customElements.whenDefined(tag);
-    }, tagName);
+  await page.evaluate((tag) => {
+    return customElements.whenDefined(tag);
+  }, tagName);
 }
 
 /**
@@ -38,35 +38,35 @@ export async function waitForCustomElement(
  * @returns The located element
  */
 export async function waitForStoryReady(
-    page: Page,
-    elementSelector: string
+  page: Page,
+  elementSelector: string
 ): Promise<Locator> {
-    // Extract tag name from selector (handles 'sp-badge', 'sp-badge.class', etc.)
-    const tagName = elementSelector.split(/[.#\s[\]]/)[0];
+  // Extract tag name from selector (handles 'sp-badge', 'sp-badge.class', etc.)
+  const tagName = elementSelector.split(/[.#\s[\]]/)[0];
 
-    // Step 1: Wait for the custom element to be defined in the registry
-    await waitForCustomElement(page, tagName);
+  // Step 1: Wait for the custom element to be defined in the registry
+  await waitForCustomElement(page, tagName);
 
-    // Step 2: Wait for Storybook's story rendering to complete
-    await page.waitForFunction(() => {
-        // Check if Storybook has finished rendering
-        const root = document.querySelector('#storybook-root');
-        return root && root.children.length > 0;
-    });
+  // Step 2: Wait for Storybook's story rendering to complete
+  await page.waitForFunction(() => {
+    // Check if Storybook has finished rendering
+    const root = document.querySelector('#storybook-root');
+    return root && root.children.length > 0;
+  });
 
-    // Step 3: Locate the element and wait for it to be visible
-    const element = page.locator(elementSelector).first();
-    await element.waitFor({ state: 'visible' });
+  // Step 3: Locate the element and wait for it to be visible
+  const element = page.locator(elementSelector).first();
+  await element.waitFor({ state: 'visible' });
 
-    // Step 4: Wait for Web Component to be fully upgraded (has shadow root if applicable)
-    await element.evaluate(async (el) => {
-        // If it's a custom element, wait for it to be fully upgraded
-        if (el.tagName.includes('-')) {
-            await customElements.whenDefined(el.tagName.toLowerCase());
-        }
-    });
+  // Step 4: Wait for Web Component to be fully upgraded (has shadow root if applicable)
+  await element.evaluate(async (el) => {
+    // If it's a custom element, wait for it to be fully upgraded
+    if (el.tagName.includes('-')) {
+      await customElements.whenDefined(el.tagName.toLowerCase());
+    }
+  });
 
-    return element;
+  return element;
 }
 
 /**
@@ -79,15 +79,15 @@ export async function waitForStoryReady(
  * @returns The located element
  */
 export async function gotoStory(
-    page: Page,
-    storyId: string,
-    elementSelector: string
+  page: Page,
+  storyId: string,
+  elementSelector: string
 ): Promise<Locator> {
-    // Navigate to story (baseURL is set by Playwright project config)
-    await page.goto(`/iframe.html?id=${storyId}&viewMode=story`, {
-        waitUntil: 'domcontentloaded',
-    });
+  // Navigate to story (baseURL is set by Playwright project config)
+  await page.goto(`/iframe.html?id=${storyId}&viewMode=story`, {
+    waitUntil: 'domcontentloaded',
+  });
 
-    // Wait for story to be ready
-    return waitForStoryReady(page, elementSelector);
+  // Wait for story to be ready
+  return waitForStoryReady(page, elementSelector);
 }

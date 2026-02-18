@@ -1,30 +1,30 @@
 {
-    "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
-    "access": "public",
-    "baseBranch": "main",
-    "changelog": [
-        "@changesets/changelog-github",
-        {
-            "repo": "adobe/spectrum-web-components"
-        }
-    ],
-    "commit": false,
-    "fixed": [
-        [
-            "@spectrum-web-components/*",
-            "!@spectrum-web-components/core",
-            "!@spectrum-web-components/1st-gen",
-            "!@spectrum-web-components/2nd-gen"
-        ]
-    ],
-    "ignore": [
-        "@spectrum-web-components/1st-gen",
-        "@spectrum-web-components/2nd-gen"
-    ],
-    "linked": [["@adobe/spectrum-wc", "@spectrum-web-components/core"]],
-    "snapshot": {
-        "prereleaseTemplate": "{tag}.{datetime}",
-        "useCalculatedVersion": true
-    },
-    "updateInternalDependencies": "patch"
+  "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
+  "access": "public",
+  "baseBranch": "main",
+  "changelog": [
+    "@changesets/changelog-github",
+    {
+      "repo": "adobe/spectrum-web-components"
+    }
+  ],
+  "commit": false,
+  "fixed": [
+    [
+      "@spectrum-web-components/*",
+      "!@spectrum-web-components/core",
+      "!@spectrum-web-components/1st-gen",
+      "!@spectrum-web-components/2nd-gen"
+    ]
+  ],
+  "ignore": [
+    "@spectrum-web-components/1st-gen",
+    "@spectrum-web-components/2nd-gen"
+  ],
+  "linked": [["@adobe/swc", "@spectrum-web-components/core"]],
+  "snapshot": {
+    "prereleaseTemplate": "{tag}.{datetime}",
+    "useCalculatedVersion": true
+  },
+  "updateInternalDependencies": "patch"
 }

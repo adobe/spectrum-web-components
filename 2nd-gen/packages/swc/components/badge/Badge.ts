@@ -16,11 +16,11 @@ import { classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';
 
 import {
-    BADGE_VALID_SIZES,
-    BADGE_VARIANTS_COLOR_S2,
-    BADGE_VARIANTS_S2,
-    BadgeBase,
-    type BadgeVariantS2 as BadgeVariant,
+  BADGE_VALID_SIZES,
+  BADGE_VARIANTS_COLOR_S2,
+  BADGE_VARIANTS_S2,
+  BadgeBase,
+  type BadgeVariantS2 as BadgeVariant,
 } from '@spectrum-web-components/core/components/badge';
 
 import styles from './badge.css';
@@ -42,90 +42,88 @@ import styles from './badge.css';
  * </swc-badge>
  */
 export class Badge extends BadgeBase {
-    // ────────────────────
-    //     API OVERRIDES
-    // ────────────────────
+  // ────────────────────
+  //     API OVERRIDES
+  // ────────────────────
 
-    /**
-     * @internal
-     */
-    static override readonly VARIANTS_COLOR = BADGE_VARIANTS_COLOR_S2;
+  /**
+   * @internal
+   */
+  static override readonly VARIANTS_COLOR = BADGE_VARIANTS_COLOR_S2;
 
-    /**
-     * @internal
-     */
-    static override readonly VARIANTS = BADGE_VARIANTS_S2;
+  /**
+   * @internal
+   */
+  static override readonly VARIANTS = BADGE_VARIANTS_S2;
 
-    /**
-     * @internal
-     */
-    static override readonly VALID_SIZES = BADGE_VALID_SIZES;
+  /**
+   * @internal
+   */
+  static override readonly VALID_SIZES = BADGE_VALID_SIZES;
 
-    /**
-     * The variant of the badge.
-     */
-    @property({ type: String, reflect: true })
-    public override variant: BadgeVariant = 'informative';
+  /**
+   * The variant of the badge.
+   */
+  @property({ type: String, reflect: true })
+  public override variant: BadgeVariant = 'informative';
 
-    // ───────────────────
-    //     API ADDITIONS
-    // ───────────────────
+  // ───────────────────
+  //     API ADDITIONS
+  // ───────────────────
 
-    /**
-     * Whether the badge is subtle.
-     *
-     * @todo This can be moved to the base class once we are no longer maintaining 1st-gen.
-     */
-    @property({ type: Boolean, reflect: true })
-    public subtle: boolean = false;
+  /**
+   * Whether the badge is subtle.
+   *
+   * @todo This can be moved to the base class once we are no longer maintaining 1st-gen.
+   */
+  @property({ type: Boolean, reflect: true })
+  public subtle: boolean = false;
 
-    /**
-     * Whether the badge is outlined.
-     *
-     * Can only be used with semantic variants.
-     *
-     * @todo This can be moved to the base class once we are no longer maintaining 1st-gen.
-     */
-    @property({ type: Boolean, reflect: true })
-    public outline: boolean = false;
+  /**
+   * Whether the badge is outlined.
+   *
+   * Can only be used with semantic variants.
+   *
+   * @todo This can be moved to the base class once we are no longer maintaining 1st-gen.
+   */
+  @property({ type: Boolean, reflect: true })
+  public outline: boolean = false;
 
-    // ──────────────────────────────
-    //     RENDERING & STYLING
-    // ──────────────────────────────
+  // ──────────────────────────────
+  //     RENDERING & STYLING
+  // ──────────────────────────────
 
-    public static override get styles(): CSSResultArray {
-        return [styles];
-    }
+  public static override get styles(): CSSResultArray {
+    return [styles];
+  }
 
-    protected override render(): TemplateResult {
-        return html`
+  protected override render(): TemplateResult {
+    return html`
+      <div
+        class=${classMap({
+          ['swc-Badge']: true,
+          [`swc-Badge--${this.variant}`]: typeof this.variant !== 'undefined',
+          [`swc-Badge--subtle`]: this.subtle,
+          [`swc-Badge--outline`]: this.outline,
+          [`swc-Badge--fixed-${this.fixed}`]: typeof this.fixed !== 'undefined',
+        })}
+      >
+        ${when(
+          this.hasIcon,
+          () => html`
             <div
-                class=${classMap({
-                    ['swc-Badge']: true,
-                    [`swc-Badge--${this.variant}`]:
-                        typeof this.variant !== 'undefined',
-                    [`swc-Badge--subtle`]: this.subtle,
-                    [`swc-Badge--outline`]: this.outline,
-                    [`swc-Badge--fixed-${this.fixed}`]:
-                        typeof this.fixed !== 'undefined',
-                })}
+              class=${classMap({
+                [`swc-Badge-icon`]: true,
+              })}
             >
-                ${when(
-                    this.hasIcon,
-                    () => html`
-                        <div
-                            class=${classMap({
-                                [`swc-Badge-icon`]: true,
-                            })}
-                        >
-                            <slot name="icon"></slot>
-                        </div>
-                    `
-                )}
-                <div class="swc-Badge-label">
-                    <slot></slot>
-                </div>
+              <slot name="icon"></slot>
             </div>
-        `;
-    }
+          `
+        )}
+        <div class="swc-Badge-label">
+          <slot></slot>
+        </div>
+      </div>
+    `;
+  }
 }

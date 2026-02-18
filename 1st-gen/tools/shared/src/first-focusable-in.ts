@@ -11,24 +11,25 @@
  */
 
 import type { SpectrumElement } from '@spectrum-web-components/base';
+
 import { userFocusableSelector } from './focusable-selectors.js';
 
 export const firstFocusableIn = (
-    root: HTMLElement | ShadowRoot
+  root: HTMLElement | ShadowRoot
 ): SpectrumElement | null => {
-    const firstFocusable = root.querySelector(
-        userFocusableSelector
-    ) as SpectrumElement;
-    return firstFocusable;
+  const firstFocusable = root.querySelector(
+    userFocusableSelector
+  ) as SpectrumElement;
+  return firstFocusable;
 };
 
 export const firstFocusableSlottedIn = (
-    root: HTMLSlotElement
+  root: HTMLSlotElement
 ): SpectrumElement | null => {
-    const firstFocusable = root
-        .assignedElements()
-        .find((element) =>
-            element.matches(userFocusableSelector)
-        ) as SpectrumElement;
-    return firstFocusable;
+  const firstFocusable = root
+    .assignedElements()
+    .find((element) =>
+      element.matches(userFocusableSelector)
+    ) as SpectrumElement;
+  return firstFocusable;
 };

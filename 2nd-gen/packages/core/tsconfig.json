@@ -1,15 +1,15 @@
 {
-    "compilerOptions": {
-        "allowImportingTsExtensions": false,
-        "composite": true,
-        "noEmit": false,
-        "outDir": "./dist",
-        "paths": {
-            "@spectrum-web-components/core/*": ["./*"]
-        },
-        "rootDir": "./"
+  "compilerOptions": {
+    "allowImportingTsExtensions": false,
+    "composite": true,
+    "noEmit": false,
+    "outDir": "./dist",
+    "paths": {
+      "@spectrum-web-components/core/*": ["./*"]
     },
-    "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.stories.ts"],
-    "extends": "../../tsconfig.json",
-    "include": ["**/*.ts"]
+    "rootDir": "./"
+  },
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.stories.ts"],
+  "extends": "../../tsconfig.json",
+  "include": ["**/*.ts"]
 }

@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+import '../src/spectrum-two/core.js';
+
 import mediumStyles from '../src/spectrum-two/scale-medium.css.js';
 import { Theme } from '../src/Theme.js';
-import '../src/spectrum-two/core.js';
 
 Theme.registerThemeFragment('medium-spectrum-two', 'scale', mediumStyles);

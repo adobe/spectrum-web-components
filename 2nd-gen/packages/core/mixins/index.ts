@@ -11,17 +11,17 @@
  */
 
 export {
-    ObserveSlotPresence,
-    type SlotPresenceObservingInterface,
+  ObserveSlotPresence,
+  type SlotPresenceObservingInterface,
 } from './observe-slot-presence.js';
 export {
-    ObserveSlotText,
-    type SlotTextObservingInterface,
+  ObserveSlotText,
+  type SlotTextObservingInterface,
 } from './observe-slot-text.js';
 export { ElementSizes, SizedMixin } from './sized-mixin.js';
 export type {
-    DefaultElementSize,
-    ElementSize,
-    SizedElementConstructor,
-    SizedElementInterface,
+  DefaultElementSize,
+  ElementSize,
+  SizedElementConstructor,
+  SizedElementInterface,
 } from './sized-mixin.js';

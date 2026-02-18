@@ -9,13 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { Toast } from './src/Toast.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { Toast } from './src/Toast.js';
 
 defineElement('sp-toast', Toast);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-toast': Toast;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-toast': Toast;
+  }
 }

@@ -10,10 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/toast/sp-toast.js';
 import { html } from 'lit';
+
+import '@spectrum-web-components/toast/sp-toast.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-toast>Tip me!</sp-toast>
+  <sp-toast>Tip me!</sp-toast>
 `);

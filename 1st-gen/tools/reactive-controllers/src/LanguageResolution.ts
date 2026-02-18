@@ -11,55 +11,53 @@
  */
 
 import type { ReactiveController, ReactiveElement } from 'lit';
+
 import { ProvideLang } from '@spectrum-web-components/theme';
 
 export const languageResolverUpdatedSymbol = Symbol(
-    'language resolver updated'
+  'language resolver updated'
 );
 
 export class LanguageResolutionController implements ReactiveController {
-    private host: ReactiveElement;
-    language = document.documentElement.lang || navigator.language || 'en-US';
-    private unsubscribe?: () => void;
+  private host: ReactiveElement;
+  language = document.documentElement.lang || navigator.language || 'en-US';
+  private unsubscribe?: () => void;
 
-    constructor(host: ReactiveElement) {
-        this.host = host;
-        this.host.addController(this);
-    }
+  constructor(host: ReactiveElement) {
+    this.host = host;
+    this.host.addController(this);
+  }
 
-    public hostConnected(): void {
-        this.resolveLanguage();
-    }
+  public hostConnected(): void {
+    this.resolveLanguage();
+  }
 
-    public hostDisconnected(): void {
-        this.unsubscribe?.();
-    }
+  public hostDisconnected(): void {
+    this.unsubscribe?.();
+  }
 
-    private resolveLanguage(): void {
-        try {
-            Intl.DateTimeFormat.supportedLocalesOf([this.language]);
-        } catch {
-            this.language = 'en-US';
-        }
-        const queryThemeEvent = new CustomEvent<ProvideLang>(
-            'sp-language-context',
-            {
-                bubbles: true,
-                composed: true,
-                detail: {
-                    callback: (lang: string, unsubscribe: () => void) => {
-                        const previous = this.language;
-                        this.language = lang;
-                        this.unsubscribe = unsubscribe;
-                        this.host.requestUpdate(
-                            languageResolverUpdatedSymbol,
-                            previous
-                        );
-                    },
-                },
-                cancelable: true,
-            }
-        );
-        this.host.dispatchEvent(queryThemeEvent);
+  private resolveLanguage(): void {
+    try {
+      Intl.DateTimeFormat.supportedLocalesOf([this.language]);
+    } catch {
+      this.language = 'en-US';
     }
+    const queryThemeEvent = new CustomEvent<ProvideLang>(
+      'sp-language-context',
+      {
+        bubbles: true,
+        composed: true,
+        detail: {
+          callback: (lang: string, unsubscribe: () => void) => {
+            const previous = this.language;
+            this.language = lang;
+            this.unsubscribe = unsubscribe;
+            this.host.requestUpdate(languageResolverUpdatedSymbol, previous);
+          },
+        },
+        cancelable: true,
+      }
+    );
+    this.host.dispatchEvent(queryThemeEvent);
+  }
 }

@@ -10,7 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/icon/sp-icon.js';
+import { html } from '@spectrum-web-components/base';
+import { setCustomTemplateLiteralTag } from '@spectrum-web-components/icons-ui/src/custom-tag.js';
 import { Arrow75Icon } from '@spectrum-web-components/icons-ui/src/icons/Arrow75.js';
 import { Arrow100Icon } from '@spectrum-web-components/icons-ui/src/icons/Arrow100.js';
 import { Arrow200Icon } from '@spectrum-web-components/icons-ui/src/icons/Arrow200.js';
@@ -59,59 +60,60 @@ import { Dash600Icon } from '@spectrum-web-components/icons-ui/src/icons/Dash600
 import { DoubleGripperIcon } from '@spectrum-web-components/icons-ui/src/icons/DoubleGripper.js';
 import { SingleGripperIcon } from '@spectrum-web-components/icons-ui/src/icons/SingleGripper.js';
 import { TripleGripperIcon } from '@spectrum-web-components/icons-ui/src/icons/TripleGripper.js';
-import { setCustomTemplateLiteralTag } from '@spectrum-web-components/icons-ui/src/custom-tag.js';
-import { html } from '@spectrum-web-components/base';
+
+import '@spectrum-web-components/icon/sp-icon.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 setCustomTemplateLiteralTag(html);
 
 measureFixtureCreation(html`
-    <sp-icon>${Arrow75Icon()}</sp-icon>
-    <sp-icon>${Arrow100Icon()}</sp-icon>
-    <sp-icon>${Arrow200Icon()}</sp-icon>
-    <sp-icon>${Arrow300Icon()}</sp-icon>
-    <sp-icon>${Arrow400Icon()}</sp-icon>
-    <sp-icon>${Arrow500Icon()}</sp-icon>
-    <sp-icon>${Arrow600Icon()}</sp-icon>
-    <sp-icon>${Asterisk75Icon()}</sp-icon>
-    <sp-icon>${Asterisk100Icon()}</sp-icon>
-    <sp-icon>${Asterisk200Icon()}</sp-icon>
-    <sp-icon>${Asterisk300Icon()}</sp-icon>
-    <sp-icon>${Checkmark50Icon()}</sp-icon>
-    <sp-icon>${Checkmark75Icon()}</sp-icon>
-    <sp-icon>${Checkmark100Icon()}</sp-icon>
-    <sp-icon>${Checkmark200Icon()}</sp-icon>
-    <sp-icon>${Checkmark300Icon()}</sp-icon>
-    <sp-icon>${Checkmark400Icon()}</sp-icon>
-    <sp-icon>${Checkmark500Icon()}</sp-icon>
-    <sp-icon>${Checkmark600Icon()}</sp-icon>
-    <sp-icon>${Chevron75Icon()}</sp-icon>
-    <sp-icon>${Chevron100Icon()}</sp-icon>
-    <sp-icon>${Chevron200Icon()}</sp-icon>
-    <sp-icon>${Chevron300Icon()}</sp-icon>
-    <sp-icon>${Chevron400Icon()}</sp-icon>
-    <sp-icon>${Chevron500Icon()}</sp-icon>
-    <sp-icon>${Chevron600Icon()}</sp-icon>
-    <sp-icon>${CornerTriangle75Icon()}</sp-icon>
-    <sp-icon>${CornerTriangle100Icon()}</sp-icon>
-    <sp-icon>${CornerTriangle200Icon()}</sp-icon>
-    <sp-icon>${CornerTriangle300Icon()}</sp-icon>
-    <sp-icon>${Cross75Icon()}</sp-icon>
-    <sp-icon>${Cross100Icon()}</sp-icon>
-    <sp-icon>${Cross200Icon()}</sp-icon>
-    <sp-icon>${Cross300Icon()}</sp-icon>
-    <sp-icon>${Cross400Icon()}</sp-icon>
-    <sp-icon>${Cross500Icon()}</sp-icon>
-    <sp-icon>${Cross600Icon()}</sp-icon>
-    <sp-icon>${Dash50Icon()}</sp-icon>
-    <sp-icon>${Dash75Icon()}</sp-icon>
-    <sp-icon>${Dash100Icon()}</sp-icon>
-    <sp-icon>${Dash200Icon()}</sp-icon>
-    <sp-icon>${Dash300Icon()}</sp-icon>
-    <sp-icon>${Dash400Icon()}</sp-icon>
-    <sp-icon>${Dash500Icon()}</sp-icon>
-    <sp-icon>${Dash600Icon()}</sp-icon>
-    <sp-icon>${DoubleGripperIcon()}</sp-icon>
-    <sp-icon>${SingleGripperIcon()}</sp-icon>
-    <sp-icon>${TripleGripperIcon()}</sp-icon>
+  <sp-icon>${Arrow75Icon()}</sp-icon>
+  <sp-icon>${Arrow100Icon()}</sp-icon>
+  <sp-icon>${Arrow200Icon()}</sp-icon>
+  <sp-icon>${Arrow300Icon()}</sp-icon>
+  <sp-icon>${Arrow400Icon()}</sp-icon>
+  <sp-icon>${Arrow500Icon()}</sp-icon>
+  <sp-icon>${Arrow600Icon()}</sp-icon>
+  <sp-icon>${Asterisk75Icon()}</sp-icon>
+  <sp-icon>${Asterisk100Icon()}</sp-icon>
+  <sp-icon>${Asterisk200Icon()}</sp-icon>
+  <sp-icon>${Asterisk300Icon()}</sp-icon>
+  <sp-icon>${Checkmark50Icon()}</sp-icon>
+  <sp-icon>${Checkmark75Icon()}</sp-icon>
+  <sp-icon>${Checkmark100Icon()}</sp-icon>
+  <sp-icon>${Checkmark200Icon()}</sp-icon>
+  <sp-icon>${Checkmark300Icon()}</sp-icon>
+  <sp-icon>${Checkmark400Icon()}</sp-icon>
+  <sp-icon>${Checkmark500Icon()}</sp-icon>
+  <sp-icon>${Checkmark600Icon()}</sp-icon>
+  <sp-icon>${Chevron75Icon()}</sp-icon>
+  <sp-icon>${Chevron100Icon()}</sp-icon>
+  <sp-icon>${Chevron200Icon()}</sp-icon>
+  <sp-icon>${Chevron300Icon()}</sp-icon>
+  <sp-icon>${Chevron400Icon()}</sp-icon>
+  <sp-icon>${Chevron500Icon()}</sp-icon>
+  <sp-icon>${Chevron600Icon()}</sp-icon>
+  <sp-icon>${CornerTriangle75Icon()}</sp-icon>
+  <sp-icon>${CornerTriangle100Icon()}</sp-icon>
+  <sp-icon>${CornerTriangle200Icon()}</sp-icon>
+  <sp-icon>${CornerTriangle300Icon()}</sp-icon>
+  <sp-icon>${Cross75Icon()}</sp-icon>
+  <sp-icon>${Cross100Icon()}</sp-icon>
+  <sp-icon>${Cross200Icon()}</sp-icon>
+  <sp-icon>${Cross300Icon()}</sp-icon>
+  <sp-icon>${Cross400Icon()}</sp-icon>
+  <sp-icon>${Cross500Icon()}</sp-icon>
+  <sp-icon>${Cross600Icon()}</sp-icon>
+  <sp-icon>${Dash50Icon()}</sp-icon>
+  <sp-icon>${Dash75Icon()}</sp-icon>
+  <sp-icon>${Dash100Icon()}</sp-icon>
+  <sp-icon>${Dash200Icon()}</sp-icon>
+  <sp-icon>${Dash300Icon()}</sp-icon>
+  <sp-icon>${Dash400Icon()}</sp-icon>
+  <sp-icon>${Dash500Icon()}</sp-icon>
+  <sp-icon>${Dash600Icon()}</sp-icon>
+  <sp-icon>${DoubleGripperIcon()}</sp-icon>
+  <sp-icon>${SingleGripperIcon()}</sp-icon>
+  <sp-icon>${TripleGripperIcon()}</sp-icon>
 `);

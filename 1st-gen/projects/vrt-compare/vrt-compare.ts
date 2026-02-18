@@ -15,7 +15,7 @@ import { VrtCompare } from './src/VrtCompare.js';
 customElements.define('vrt-compare', VrtCompare);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'vrt-compare': VrtCompare;
-    }
+  interface HTMLElementTagNameMap {
+    'vrt-compare': VrtCompare;
+  }
 }
