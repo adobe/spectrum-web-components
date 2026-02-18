@@ -24,7 +24,7 @@ import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/shared/src/focus-visible.js';
 
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { Checkbox } from '../';
+import { Checkbox } from '../src/Checkbox.js';
 
 function inputForCheckbox(checkbox: Checkbox): HTMLInputElement {
   if (!checkbox.shadowRoot) {
@@ -352,7 +352,7 @@ describe('Checkbox', () => {
     `);
 
     const getPartialCheckmarkLocalName = (): string => {
-      return (el.shadowRoot.querySelector('#partialCheckmark') as HTMLElement)
+      return (el.shadowRoot.querySelector('#partial-checkmark') as HTMLElement)
         .localName;
     };
 
