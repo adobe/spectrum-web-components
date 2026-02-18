@@ -265,7 +265,11 @@ export const germanDecimals = (args: StoryArgs): TemplateResult => {
     <sp-field-label for="decimals">
       Enter a number with visible decimals
     </sp-field-label>
-    <sp-theme lang="de" dir=${currentDir} system=${currentSystem}>
+    <sp-theme
+      lang="de"
+      dir=${currentDir as 'ltr' | 'rtl' | 'auto'}
+      system=${currentSystem}
+    >
       <sp-number-field
         id="decimals"
         ...=${spreadProps(args)}
@@ -352,7 +356,7 @@ export const pixels = (args: StoryArgs): TemplateResult => {
       .formatOptions=${{
         style: 'unit',
         unit: 'px',
-      }}
+      } as unknown as Intl.NumberFormatOptions}
       ...=${spreadProps(args)}
       @change=${args.onChange}
     ></sp-number-field>
@@ -456,7 +460,6 @@ export const validationIcons = (args: StoryArgs): TemplateResult => {
       invalid
       id="invalidHiddenStepper"
       ...=${spreadProps(args)}
-      invalid
     ></sp-number-field>
     <sp-field-label for="validStepper">
       Valid Number Field with Stepper

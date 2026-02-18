@@ -969,6 +969,13 @@ export class Overlay extends ComputedOverlayBase {
       return;
     }
 
+    // Force the browser to paint if the overlay is closing.
+    if (!this.open) {
+      /** @todo investigate why this is needed and if there is a better way to do this or remove it entirely */
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      document.body.offsetHeight;
+    }
+
     /**
      * @ignore
      */

@@ -427,6 +427,8 @@ export class PlacementController implements ReactiveController {
     this.clearOverlayPosition();
 
     // Force a reflow.
+    /** @todo investigate why this is needed and if there is a better way to do this or remove it entirely */
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this.host.offsetHeight;
     // Recompute the placement.
     this.computePlacement();

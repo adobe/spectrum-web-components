@@ -667,7 +667,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
       /**
        * Always force `selects` to "single" when set.
        *
-       * @todo: Add support functionally and visually for "multiple"
+       * @todo Add support functionally and visually for "multiple"
        */
       this.selects = 'single';
     }
@@ -977,6 +977,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 
   public override disconnectedCallback(): void {
     this.close();
+    this.removeEventListener('focus', this.handleFocus);
     this.strategy?.releaseDescription();
     super.disconnectedCallback();
   }

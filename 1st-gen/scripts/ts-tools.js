@@ -21,7 +21,6 @@ const relativeImportRegex = RegExp(
   'g'
 );
 const relativeDynamicImportRegex = RegExp(
-  // eslint-disable-next-line prettier/prettier
   'import[(]["|\'](?![a-zA-Z@])(..+)(?!.css).js["|\'][)]',
   'g'
 );

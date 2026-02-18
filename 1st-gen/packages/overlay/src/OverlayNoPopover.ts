@@ -57,6 +57,8 @@ export function OverlayNoPopover<T extends Constructor<AbstractOverlay>>(
       _targetOpenState: boolean
     ): Promise<void> {
       // force the browser to paint
+      /** @todo investigate why this is needed and if there is a better way to do this or remove it entirely */
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       document.body.offsetHeight;
     }
 

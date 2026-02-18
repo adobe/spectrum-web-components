@@ -383,6 +383,7 @@ export default defineConfig([
       '**/stories/**/*.ts',
       '**/e2e/**/*.ts',
       '**/.storybook/**',
+      '**/storybook/**',
     ],
     languageOptions: {
       globals: { ...globals.browser, ...globals.mocha, ...testLibGlobals },
@@ -465,6 +466,7 @@ export default defineConfig([
       '1st-gen/projects/**/*.ts',
       '1st-gen/tools/**/*.js',
       '1st-gen/tools/**/*.ts',
+      '1st-gen/rollup.checksize.js',
     ],
     rules: {
       'import/no-extraneous-dependencies': 'off',

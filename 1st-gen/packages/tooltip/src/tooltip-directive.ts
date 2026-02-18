@@ -22,6 +22,7 @@ export const tooltip = function tooltip(
 ): ReturnType<typeof trigger> {
   return trigger(
     () => {
+      // eslint-disable-next-line import/no-extraneous-dependencies
       import('@spectrum-web-components/tooltip/sp-tooltip.js');
       return html`
         <sp-tooltip variant=${ifDefined(options?.variant)}>
