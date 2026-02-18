@@ -341,6 +341,38 @@ The number field works with the following interactions:
 
 The input value incrementally increases or decreases by the value of the `step` attribute. The <kbd>shift</kbd> key can be used to apply steps at 10 times (or the value of the `step-modifier` attribute times) their normal rate.
 
+#### Truncated value tooltip
+
+Like textfield, number field will show a tooltip with the full formatted value when the single-line input content is visually truncated. This supports long formatted content (for example currency values) in constrained widths and supports accessibility when users adjust text spacing (WCAG 1.4.12).
+
+Stepper visibility affects available inline space, so truncation may occur at different widths when `hide-stepper` is toggled. The full value is available on hover and keyboard focus so screen reader users can access it via the control's value.
+
+```html
+<sp-field-label for="truncated-show-stepper">Show stepper</sp-field-label>
+<sp-number-field
+  id="truncated-show-stepper"
+  value="123456"
+  format-options='{
+    "style": "currency",
+    "currency": "EUR",
+    "currencyDisplay": "code",
+    "currencySign": "accounting"
+  }'
+></sp-number-field>
+<sp-field-label for="truncated-hide-stepper">Hide stepper</sp-field-label>
+<sp-number-field
+  id="truncated-hide-stepper"
+  value="123456"
+  hide-stepper
+  format-options='{
+    "style": "currency",
+    "currency": "EUR",
+    "currencyDisplay": "code",
+    "currencySign": "accounting"
+  }'
+></sp-number-field>
+```
+
 #### Default value
 
 The `<sp-number-field>` component doesn't manage a default value by itself. This means that consumers can set the value of the number-field as an empty string by clearing the input. If we want the number-field to reset to a `default-value` when the user clears the input, we can listen for the `change` event on the number-field component and set its value to the desired `default-value` if the input is empty.

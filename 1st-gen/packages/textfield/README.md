@@ -215,6 +215,22 @@ Use the `required` attribute to indicate a textfield value is required. Dictate 
 ></sp-textfield>
 ```
 
+### Behaviors
+
+#### Truncated value tooltip
+
+When a single-line textfield value is visually truncated, a tooltip appears on hover/focus to expose the full value. This helps users review long input content when the control is too narrow to display all characters. This supports accessibility when users adjust text spacing (WCAG 1.4.12).
+
+This behavior applies to single-line inputs and does not apply to multiline textfields. The full value is available on hover and keyboard focus so screen reader users can access it via the control's value. See also the same behavior on [number-field](../number-field).
+
+```html
+<sp-field-label for="truncated-text">Email</sp-field-label>
+<sp-textfield
+  id="truncated-text"
+  value="very.long.email.address@subdomain.example.com"
+></sp-textfield>
+```
+
 ### Accessibility
 
 #### Include a label
