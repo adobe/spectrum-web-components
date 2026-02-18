@@ -346,9 +346,9 @@ export default defineConfig([
         {
           groups: [
             // Lit and external packages
-            ['^lit', '^@lit', '^(?!@adobe/swc|@spectrum-web-components)@?\\w'],
+            ['^lit', '^@lit', '^(?!@adobe/spectrum-wc|@spectrum-web-components)@?\\w'],
             // Internal packages
-            ['^@adobe/swc', '^@spectrum-web-components'],
+            ['^@adobe/spectrum-wc', '^@spectrum-web-components'],
             // Side effect imports
             ['^\\u0000'],
             // Relative imports

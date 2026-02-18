@@ -10,9 +10,10 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
-import { Asset } from '@adobe/spectrum-wc/asset';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+
+import { Asset } from '@adobe/spectrum-wc/asset';
 
 import '@adobe/spectrum-wc/asset';
 

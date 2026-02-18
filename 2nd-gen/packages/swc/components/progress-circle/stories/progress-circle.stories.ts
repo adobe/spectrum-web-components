@@ -11,9 +11,10 @@
  */
 
 import { html } from 'lit';
-import { ProgressCircle } from '@adobe/spectrum-wc/progress-circle';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
+
+import { ProgressCircle } from '@adobe/spectrum-wc/progress-circle';
 
 import '@adobe/spectrum-wc/progress-circle';
 
