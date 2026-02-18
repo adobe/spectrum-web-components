@@ -86,7 +86,7 @@ jobs:
       - name: Use Node LTS version
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24.11.1
           cache: yarn
 
       - name: Enable Corepack
@@ -101,7 +101,7 @@ jobs:
           path: |
             .cache/yarn
             node_modules
-          key: ubuntu-latest-node20-${{ hashFiles('yarn.lock') }}
+          key: ubuntu-latest-node24-${{ hashFiles('yarn.lock') }}
 
       ## --- INSTALL --- ##
       # If statement isn't needed here b/c yarn will leverage the cache if it exists

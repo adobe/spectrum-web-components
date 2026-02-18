@@ -38,7 +38,7 @@ jobs:
       - name: Use Node LTS version
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24.11.1
           cache: yarn
 
       - name: Enable Corepack
@@ -61,7 +61,7 @@ jobs:
           path: |
             .cache/yarn
             node_modules
-          key: ubuntu-latest-node20-${{ hashFiles('yarn.lock', 'package.json') }}
+          key: ubuntu-latest-node24-${{ hashFiles('yarn.lock', 'package.json') }}
 
       ## --- INSTALL & BUILD --- ##
       - name: Install dependencies
