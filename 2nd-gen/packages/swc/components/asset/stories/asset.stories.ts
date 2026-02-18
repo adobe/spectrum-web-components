@@ -11,10 +11,9 @@
  */
 
 import { html } from 'lit';
+import { Asset } from '@adobe/spectrum-wc/asset';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
-
-import { Asset } from '@adobe/spectrum-wc/asset';
 
 import '@adobe/spectrum-wc/asset';
 

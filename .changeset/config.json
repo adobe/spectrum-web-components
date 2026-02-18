@@ -1,5 +1,7 @@
 {
     "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
+    "access": "public",
+    "baseBranch": "main",
     "changelog": [
         "@changesets/changelog-github",
         {
@@ -15,16 +17,14 @@
             "!@spectrum-web-components/2nd-gen"
         ]
     ],
-    "linked": [["@adobe/spectrum-wc", "@spectrum-web-components/core"]],
-    "access": "public",
-    "baseBranch": "main",
-    "updateInternalDependencies": "patch",
     "ignore": [
         "@spectrum-web-components/1st-gen",
         "@spectrum-web-components/2nd-gen"
     ],
+    "linked": [["@adobe/spectrum-wc", "@spectrum-web-components/core"]],
     "snapshot": {
-        "useCalculatedVersion": true,
-        "prereleaseTemplate": "{tag}.{datetime}"
-    }
+        "prereleaseTemplate": "{tag}.{datetime}",
+        "useCalculatedVersion": true
+    },
+    "updateInternalDependencies": "patch"
 }

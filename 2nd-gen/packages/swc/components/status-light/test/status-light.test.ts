@@ -10,14 +10,13 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
+import { StatusLight } from '@adobe/spectrum-wc/status-light';
 import { expect } from '@storybook/test';
 import type {
     Meta,
     StoryContext,
     StoryObj as Story,
 } from '@storybook/web-components';
-
-import { StatusLight } from '@adobe/spectrum-wc/status-light';
 
 import '@adobe/spectrum-wc/status-light';
 

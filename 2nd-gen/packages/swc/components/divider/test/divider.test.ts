@@ -10,10 +10,9 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
+import { Divider } from '@adobe/spectrum-wc/divider';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
-
-import { Divider } from '@adobe/spectrum-wc/divider';
 
 import '@adobe/spectrum-wc/divider';
 

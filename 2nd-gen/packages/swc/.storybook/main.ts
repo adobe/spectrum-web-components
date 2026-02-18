@@ -1,9 +1,20 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+import { readCsf } from '@storybook/core/csf-tools';
+import type { Indexer } from '@storybook/types';
 import { dirname, resolve } from 'path';
+import remarkGfm from 'remark-gfm';
 import { fileURLToPath } from 'url';
 import { mergeConfig } from 'vite';
-import remarkGfm from 'remark-gfm';
-import type { Indexer } from '@storybook/types';
-import { readCsf } from '@storybook/core/csf-tools';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const includeTestStories = process.env.NODE_ENV !== 'production';
@@ -75,17 +86,17 @@ const config = {
                     name: 'css-hmr',
                     handleHotUpdate({ file, modules, server }) {
                         if (!file.endsWith('.css') || file.includes('tokens'))
-                            return;
+                            {return;}
 
                         const affected = new Set(modules);
 
                         for (const mod of modules) {
                             for (const importer of mod.importers)
-                                affected.add(importer);
+                                {affected.add(importer);}
                         }
 
                         for (const mod of affected)
-                            server.moduleGraph.invalidateModule(mod);
+                            {server.moduleGraph.invalidateModule(mod);}
 
                         return [...affected];
                     },

@@ -11,10 +11,9 @@
  */
 
 import { html } from 'lit';
+import { Badge } from '@adobe/spectrum-wc/badge';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
-
-import { Badge } from '@adobe/spectrum-wc/badge';
 
 import '@adobe/spectrum-wc/badge';
 

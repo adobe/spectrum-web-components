@@ -10,10 +10,9 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
+import { Badge } from '@adobe/spectrum-wc/badge';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
-
-import { Badge } from '@adobe/spectrum-wc/badge';
 
 import '@adobe/spectrum-wc/badge';
 

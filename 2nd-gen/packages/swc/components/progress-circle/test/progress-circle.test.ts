@@ -10,10 +10,9 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
+import { ProgressCircle } from '@adobe/spectrum-wc/progress-circle';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
-
-import { ProgressCircle } from '@adobe/spectrum-wc/progress-circle';
 
 import '@adobe/spectrum-wc/progress-circle';
 
