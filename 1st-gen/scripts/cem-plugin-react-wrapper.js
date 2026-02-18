@@ -14,17 +14,15 @@ import Case from 'case';
 import fg from 'fast-glob';
 import { readFile } from 'fs/promises';
 import fsExtra from 'fs-extra';
-import yaml from 'js-yaml';
 import { basename, dirname, resolve } from 'path';
 import prettier from 'prettier';
 import { fileURLToPath } from 'url';
 
-const { existsSync, outputFile, readFileSync, readJSON } = fsExtra;
+const { existsSync, outputFile, readJSON } = fsExtra;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const prettierConfig = yaml.load(
-  readFileSync(resolve(__dirname, '..', '.prettierrc.yaml'))
-);
+const prettierConfig =
+  (await prettier.resolveConfig(resolve(__dirname, '..'))) ?? {};
 
 /* Share =============================================================== */
 
@@ -285,9 +283,10 @@ ${elements.reduce(
 /**
  * CEM package will invoke this callback function.
  *
- * @param {*} exclude array of excluded component class name
- * @param {*} outDir root output directory for generated code
- * @param {*} prettierConfig prettier library configuration
+ * @param {object} options options for the react wrapper generator
+ * @param {Array} options.exclude array of excluded component class names
+ * @param {string} options.outDir root output directory for generated code
+ * @param {object} options.prettierConfig prettier library configuration
  */
 export default function genWrappers({
   exclude = [],
