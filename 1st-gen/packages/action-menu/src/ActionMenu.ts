@@ -61,8 +61,8 @@ import actionMenuStyles from './action-menu.css.js';
  * @attr selects - By default `sp-action-menu` does not manage a selection. If
  * you'd like for a selection to be held by the `sp-menu` that it presents in
  * its overlay, use `selects="single" to activate this functionality.
- * @fires {CustomEvent} sp-opened - Announces that the overlay has been opened
- * @fires {CustomEvent} sp-closed - Announces that the overlay has been closed
+ * @fires sp-opened - Announces that the overlay has been opened
+ * @fires sp-closed - Announces that the overlay has been closed
  */
 export class ActionMenu extends ObserveSlotPresence(
   ObserveSlotText(

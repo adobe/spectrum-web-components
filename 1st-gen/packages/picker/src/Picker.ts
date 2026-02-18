@@ -289,8 +289,8 @@ export class ExpandableElement extends SpectrumElement {
  * @slot tooltip - Tooltip to to be applied to the the Picker Button
  * @slot - menu items to be listed in the Picker
  * @fires change - Announces that the `value` of the element has changed
- * @fires {CustomEvent} sp-opened - Announces that the overlay has been opened
- * @fires {CustomEvent} sp-closed - Announces that the overlay has been closed
+ * @fires sp-opened - Announces that the overlay has been opened
+ * @fires sp-closed - Announces that the overlay has been closed
  * @deprecated This class is deprecated and will be removed in a future major release. Use the ExpandableElement base class instead.
  * @see https://opensource.adobe.com/spectrum-web-components/components/picker/#deprecation
  */
@@ -1258,8 +1258,8 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
  * @slot tooltip - Tooltip to to be applied to the the Picker Button
  * @slot - menu items to be listed in the Picker
  * @fires change - Announces that the `value` of the element has changed
- * @fires {CustomEvent} sp-opened - Announces that the overlay has been opened
- * @fires {CustomEvent} sp-closed - Announces that the overlay has been closed
+ * @fires sp-opened - Announces that the overlay has been opened
+ * @fires sp-closed - Announces that the overlay has been closed
  */
 /**
  * An `<sp-picker>` is a dropdown selection component that allows users to choose
