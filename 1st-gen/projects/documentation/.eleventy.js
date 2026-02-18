@@ -46,6 +46,11 @@ export default function (eleventyConfig) {
     eleventyConfig.addPassthroughCopy('./content/serviceWorker.js');
     eleventyConfig.addPassthroughCopy('./content/images/**/*');
     eleventyConfig.addPassthroughCopy('./content/manifest.webmanifest');
+    eleventyConfig.addPassthroughCopy('./content/llms.txt');
+    eleventyConfig.addPassthroughCopy('./content/getting-started.md');
+    eleventyConfig.addPassthroughCopy('./content/migrating-to-spectrum2.md');
+    eleventyConfig.addPassthroughCopy('./content/dev-mode.md');
+    eleventyConfig.addPassthroughCopy('./content/guides/**/*.md');
     eleventyConfig.addPassthroughCopy('../src/**/*.css');
     eleventyConfig.addPlugin(syntaxHighlight, {
         init: function ({ Prism }) {

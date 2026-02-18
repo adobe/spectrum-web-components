@@ -19,8 +19,10 @@
   "scripts": {
     "build": "wireit",
     "build:assets": "wireit",
+    "build:copy-md": "wireit",
     "build:css": "wireit",
     "build:eleventy": "wireit",
+    "build:llms-txt": "wireit",
     "build:move-css": "wireit",
     "build:production": "wireit",
     "build:search-index": "wireit",
@@ -88,6 +90,9 @@
         },
         {
           "script": "build:search-index"
+        },
+        {
+          "script": "build:copy-md"
         }
       ]
     },
@@ -132,12 +137,30 @@
         "./_site/src/components/fonts.css"
       ]
     },
+    "build:copy-md": {
+      "command": "node scripts/copy-component-markdown.js",
+      "dependencies": [
+        {
+          "script": "build:eleventy"
+        }
+      ],
+      "files": [
+        "scripts/copy-component-markdown.js",
+        "content/components/**/content.md"
+      ],
+      "output": [
+        "_site/components/*.md"
+      ]
+    },
     "build:eleventy": {
       "clean": "if-file-deleted",
       "command": "eleventy --config=.eleventy.js --incremental --quiet",
       "dependencies": [
         {
           "script": "copy-docs"
+        },
+        {
+          "script": "build:llms-txt"
         }
       ],
       "files": [
@@ -151,6 +174,23 @@
         "_site/serviceWorker.js",
         "_site/images/**/*",
         "_site/manifest.webmanifest"
+      ]
+    },
+    "build:llms-txt": {
+      "clean": "if-file-deleted",
+      "command": "node scripts/build-llms-txt.js",
+      "dependencies": [
+        {
+          "script": "copy-docs"
+        }
+      ],
+      "files": [
+        "scripts/build-llms-txt.js",
+        "content/components/**/content.md",
+        "content/guides/**/*.md"
+      ],
+      "output": [
+        "content/llms.txt"
       ]
     },
     "build:move-css": {
