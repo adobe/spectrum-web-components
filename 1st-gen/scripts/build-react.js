@@ -28,6 +28,7 @@ import { buildPackage } from './ts-tools.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.join(__dirname, '..');
+const repoRoot = path.join(__dirname, '..', '..');
 
 async function main() {
   const allPackages = getWorkspacePackages();
@@ -68,7 +69,7 @@ async function main() {
   console.log(`\n🧹  Formatting generated files...`);
   await exec(
     `yarn eslint --fix --quiet ${path.join(rootDir, 'react/**/*.ts')}`,
-    { stdio: 'inherit', cwd: rootDir }
+    { stdio: 'inherit', cwd: repoRoot }
   ).then(({ stdout, stderr }) => {
     if (stderr) {
       console.error(stderr);

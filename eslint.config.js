@@ -10,6 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
+
 import { defineConfig } from 'eslint/config';
 import js from '@eslint/js';
 import tseslint from '@typescript-eslint/eslint-plugin';
@@ -27,6 +30,8 @@ import storybook from 'eslint-plugin-storybook';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import jsoncParser from 'jsonc-eslint-parser';
 import globals from 'globals';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // ────────────────────────────────────────────────────────────────────────────────
 // Custom rules (inlined from @spectrum-web-components/eslint-plugin)
@@ -250,7 +255,7 @@ export default defineConfig([
         'error',
         {
           mustMatch: 'Copyright [0-9]{0,4} Adobe. All rights reserved.',
-          templateFile: 'linters/HEADER.js',
+          templateFile: resolve(__dirname, 'linters/HEADER.js'),
         },
       ],
 
@@ -346,7 +351,11 @@ export default defineConfig([
         {
           groups: [
             // Lit and external packages
-            ['^lit', '^@lit', '^(?!@adobe/spectrum-wc|@spectrum-web-components)@?\\w'],
+            [
+              '^lit',
+              '^@lit',
+              '^(?!@adobe/spectrum-wc|@spectrum-web-components)@?\\w',
+            ],
             // Internal packages
             ['^@adobe/spectrum-wc', '^@spectrum-web-components'],
             // Side effect imports
