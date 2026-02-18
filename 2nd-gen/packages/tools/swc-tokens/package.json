@@ -28,9 +28,9 @@
     "test:watch": "vitest --watch"
   },
   "dependencies": {
-    "@adobe/spectrum-tokens": "^14.0.0",
-    "prettier": "^3.7.4",
-    "yargs": "^18.0.0"
+    "@adobe/spectrum-tokens": "14.1.0",
+    "prettier": "3.8.1",
+    "yargs": "18.0.0"
   },
   "devDependencies": {
     "vitest": "4.0.15"
