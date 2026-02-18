@@ -12,7 +12,6 @@ on:
   push:
     branches:
       - main
-      - SWC-1405
 
 jobs:
   check-changesets:
