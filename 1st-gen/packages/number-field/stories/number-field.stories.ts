@@ -344,6 +344,67 @@ export const units = (args: StoryArgs): TemplateResult => {
   `;
 };
 
+export const TruncatedValueTooltip = (): TemplateResult => {
+  return html`
+    <sp-field-label for="truncated-show-stepper">
+      Truncated value (stepper visible)
+    </sp-field-label>
+    <sp-number-field
+      id="truncated-show-stepper"
+      value="123456"
+      .formatOptions=${{
+        style: 'currency',
+        currency: 'EUR',
+        currencyDisplay: 'code',
+        currencySign: 'accounting',
+      } as unknown as Intl.NumberFormatOptions}
+    ></sp-number-field>
+    <sp-field-label for="truncated-hide-stepper">
+      Truncated value (stepper hidden)
+    </sp-field-label>
+    <sp-number-field
+      id="truncated-hide-stepper"
+      hide-stepper
+      value="123456"
+      .formatOptions=${{
+        style: 'currency',
+        currency: 'EUR',
+        currencyDisplay: 'code',
+        currencySign: 'accounting',
+      } as unknown as Intl.NumberFormatOptions}
+    ></sp-number-field>
+    <sp-field-label for="truncated-show-stepper-valid">
+      Truncated value (stepper visible, valid)
+    </sp-field-label>
+    <sp-number-field
+      id="truncated-show-stepper-valid"
+      value="123456"
+      valid
+      .formatOptions=${{
+        style: 'currency',
+        currency: 'EUR',
+        currencyDisplay: 'code',
+        currencySign: 'accounting',
+      } as unknown as Intl.NumberFormatOptions}
+    ></sp-number-field>
+    <sp-field-label for="truncated-hide-stepper-invalid">
+      Truncated value (stepper hidden, invalid)
+    </sp-field-label>
+    <sp-number-field
+      id="truncated-hide-stepper-invalid"
+      hide-stepper
+      invalid
+      value="123456"
+      .formatOptions=${{
+        style: 'currency',
+        currency: 'EUR',
+        currencyDisplay: 'code',
+        currencySign: 'accounting',
+      } as unknown as Intl.NumberFormatOptions}
+    ></sp-number-field>
+  `;
+};
+
 units.args = {
   value: 24,
 };
@@ -457,7 +518,6 @@ export const validationIcons = (args: StoryArgs): TemplateResult => {
       Invalid Number Field without Stepper
     </sp-field-label>
     <sp-number-field
-      invalid
       id="invalidHiddenStepper"
       ...=${spreadProps(args)}
     ></sp-number-field>
