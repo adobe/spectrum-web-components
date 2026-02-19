@@ -1,0 +1,1 @@
+{"version":3,"file":"swc.BxhIsnH0.js","sources":["../../../packages/picker/sp-picker.js"],"sourcesContent":["\"use strict\";import{defineElement as e}from\"@spectrum-web-components/base/src/define-element.js\";import{Picker as r}from\"./src/Picker.js\";e(\"sp-picker\",r);\n//# sourceMappingURL=sp-picker.js.map\n"],"names":["e","r"],"mappings":"4EAgBAA,EAAc,YAAaC"}
