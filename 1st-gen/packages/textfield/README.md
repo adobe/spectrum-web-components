@@ -223,6 +223,8 @@ When a single-line textfield value is visually truncated, a tooltip appears on h
 
 This behavior applies to single-line inputs and does not apply to multiline textfields. The full value is available on hover and keyboard focus so screen reader users can access it via the control's value. See also the same behavior on [number-field](../number-field).
 
+By default the tooltip uses placement `bottom`. To change where the tooltip appears relative to the field, set the `tooltip-placement` attribute to a valid placement value: `top`, `top-start`, `top-end`, `right`, `right-start`, `right-end`, `bottom`, `bottom-start`, `bottom-end`, `left`, `left-start`, `left-end`. Placement is preferred but may flip (e.g. to the opposite side) when there is insufficient space so the tooltip stays in view.
+
 ```html
 <sp-field-label for="truncated-text">Email</sp-field-label>
 <sp-textfield

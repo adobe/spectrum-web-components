@@ -29,6 +29,7 @@ import {
 } from '@spectrum-web-components/base/src/directives.js';
 import { ManageHelpText } from '@spectrum-web-components/help-text/src/manage-help-text.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
+import type { Placement } from '@spectrum-web-components/overlay';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
@@ -157,6 +158,13 @@ export class TextfieldBase extends ManageHelpText(
    */
   @property({ type: Boolean, reflect: true })
   public readonly = false;
+
+  /**
+   * Placement of the tooltip shown when the value is truncated (e.g. 'bottom', 'top').
+   * Defaults to 'bottom' per Spectrum design.
+   */
+  @property({ attribute: 'tooltip-placement', reflect: true })
+  public truncatedValueTooltipPlacement: Placement = 'bottom';
 
   /**
    * The specific number of rows the form control should provide in the user interface
@@ -403,11 +411,18 @@ export class TextfieldBase extends ManageHelpText(
     return html`
       <sp-overlay
         id="truncated-value-tooltip"
+        aria-hidden="true"
         .triggerElement=${this.inputElement}
         .triggerInteraction=${'hover'}
         type="hint"
+        .placement=${this.truncatedValueTooltipPlacement}
       >
-        <sp-tooltip>${this.displayValue}</sp-tooltip>
+        <sp-tooltip
+          aria-hidden="true"
+          placement=${this.truncatedValueTooltipPlacement}
+        >
+          ${this.displayValue}
+        </sp-tooltip>
       </sp-overlay>
     `;
   }
