@@ -349,12 +349,16 @@ None found for this component.
 
 ### CSS Spectrum 2 changes
 
-**Icon removal:**
+**Variant updates:**
 
 - Variant icons (Info, CheckmarkCircle, Alert) for semantic variants are no longer rendered in the template
 - The `.spectrum-Tooltip-typeIcon` class and associated icon rendering logic were removed
 - Only `neutral`, `info`, and `negative` variants remain in Spectrum 2
 - CSS classes for the positive variant (`.spectrum-Tooltip--positive`) are deprecated
+
+**New feature in Spectrum 2:**
+
+- `.spectrum-Tooltip--noTip` - Optional removal of directional tip placement.
 
 **No structural HTML changes:**
 
