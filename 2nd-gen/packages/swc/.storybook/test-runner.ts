@@ -26,7 +26,7 @@ const config: TestRunnerConfig = {
       .include('#storybook-root')
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
 
-    // Known issue: StatusLight neutral variant has color contrast issue (4.39 vs 4.5:1)
+    // @todo Known issue: StatusLight neutral variant has color contrast issue (4.39 vs 4.5:1)
     // Disable color-contrast rule for this specific story until design team addresses it
     if (context.id === 'components-status-light--semantic-variants') {
       axeBuilder.disableRules(['color-contrast']);
