@@ -1,10 +1,10 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Taggroup / TagGroup migration roadmap
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Tags / Tags migration roadmap
 
 <!-- Document title (editable) -->
 
-# TagGroup migration roadmap
+# Tags migration roadmap
 
 <!-- Generated TOC - DO NOT EDIT -->
 
@@ -243,11 +243,6 @@ None found for `<sp-tags>`.
 - `.spectrum-TagGroup-helpText` class - Optional help text below the tags
 - `--sideLabel` variant - Layout variant for side-positioned labels
 - Size variants (`--sizeS`, `--sizeL`) - Only medium size is supported in WC
-
-**Missing from CSS:**
-
-- Keyboard navigation behavior - The `<sp-tags>` component uses `RovingTabindexController` to manage focus and keyboard navigation between tags
-- Focus management - Automatic focus handling when navigating with arrow keys
 
 ### CSS Spectrum 2 changes
 

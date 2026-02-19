@@ -307,7 +307,6 @@
 | `.spectrum-Tag-itemIcon`                                                             | `icon` slot                             | Implemented                  |
 | `.spectrum-Tag .spectrum-Avatar`                                                     | `avatar` slot                           | Implemented                  |
 | `.spectrum-Tag .spectrum-Thumbnail`                                                  | `thumbnail` slot (needs implementation) | Needed for S2                |
-| `.spectrum-Tag .spectrum-Thumbnail`                                                  |                                         | Missing from WC (new for S2) |
 | `.spectrum-Tag.is-disabled`                                                          | `disabled`                              | Implemented                  |
 | `.spectrum-Tag.is-disabled .spectrum-Avatar`                                         | Disabled state styling for avatar       | Implemented                  |
 | `.spectrum-Tag.is-disabled .spectrum-Thumbnail`                                      | Disabled thumbnail styling              | Needed for S2                |
@@ -333,6 +332,10 @@ To fully support Spectrum 2, the following CSS features need to be implemented i
 - `.spectrum-Thumbnail` - Spectrum 2 adds support for thumbnail images in tags
 - `.is-disabled .spectrum-Thumbnail` - Disabled state styling for thumbnails
 - Add a `thumbnail` slot to display thumbnail images within tags
+
+**Added variant:**
+
+- `is-emphasized` state - `.spectrum-Tag--emphasized` provides a (blue) visual prominence that is optimal for grids of assets, and other situations where a tag needs to be noticed.
 
 **Interactive states:**
 

@@ -285,8 +285,7 @@ None found for this component.
 @@ -1,5 +1,4 @@
  <span class="spectrum-Tooltip">
 -    <svg class="spectrum-Tooltip-typeIcon"></svg>
--    <span class="spectrum-Tooltip-label">[label]</span>
-+    <span class="spectrum-Tooltip-label">Label</span>
+    <span class="spectrum-Tooltip-label">[label]</span>
      <span class="spectrum-Tooltip-tip"></span>
  </span>
 ```
