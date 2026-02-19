@@ -37,64 +37,54 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
  * This JSON mapping should be committed to the repository.
  */
 const saveIconsMapping = async () => {
-    // check if there is file with .csv extension in the bin folder
-    const files = fs.promises.readdir(__dirname);
-    let data = '';
-    try {
-        const fileNames = await files;
-        const csvFile = fileNames.find((file) => file.endsWith('.csv'));
-        if (csvFile) {
-            data = await fs.promises.readFile(
-                path.join(__dirname, csvFile),
-                'utf8'
-            );
-        }
-    } catch (error) {
-        throw new Error(`Error reading the bin directory: ${error.message}`);
+  // check if there is file with .csv extension in the bin folder
+  const files = fs.promises.readdir(__dirname);
+  let data = '';
+  try {
+    const fileNames = await files;
+    const csvFile = fileNames.find((file) => file.endsWith('.csv'));
+    if (csvFile) {
+      data = await fs.promises.readFile(path.join(__dirname, csvFile), 'utf8');
     }
+  } catch (error) {
+    throw new Error(`Error reading the bin directory: ${error.message}`);
+  }
 
-    if (!data) {
-        throw new Error(
-            'No csv file found in the src folder. Please make sure you have the csv file in the "packages/icons-workflow/bin" folder'
-        );
+  if (!data) {
+    throw new Error(
+      'No csv file found in the src folder. Please make sure you have the csv file in the "packages/icons-workflow/bin" folder'
+    );
+  }
+
+  const rows = data.split('\n');
+  const mapping = {};
+  rows.forEach((row) => {
+    const columns = row.split(',');
+    // if the third column says "name change"
+    if (columns.length >= 3 && columns[2] === 'name change') {
+      const oldName = getComponentName(columns[0]);
+      const newName = getComponentName(columns[1]);
+
+      // skip if the old or new name is a number
+      if (!Number.isNaN(Number(oldName)) || !Number.isNaN(Number(newName))) {
+        return;
+      }
+
+      mapping[oldName] = newName;
+      mapping[newName] = oldName;
     }
+  });
 
-    const rows = data.split('\n');
-    const mapping = {};
-    rows.forEach((row) => {
-        const columns = row.split(',');
-        // if the third column says "name change"
-        if (columns.length >= 3 && columns[2] === 'name change') {
-            const oldName = getComponentName(columns[0]);
-            const newName = getComponentName(columns[1]);
+  if (Object.keys(mapping).length === 0) {
+    console.warn('No valid name changes found in the CSV file.');
+  }
 
-            // skip if the old or new name is a number
-            if (
-                !Number.isNaN(Number(oldName)) ||
-                !Number.isNaN(Number(newName))
-            ) {
-                return;
-            }
-
-            mapping[oldName] = newName;
-            mapping[newName] = oldName;
-        }
-    });
-
-    if (Object.keys(mapping).length === 0) {
-        console.warn('No valid name changes found in the CSV file.');
-    }
-
-    const outputPath = path.join(__dirname, './icons-mapping.json');
-    try {
-        await fs.promises.writeFile(
-            outputPath,
-            JSON.stringify(mapping),
-            'utf8'
-        );
-    } catch (error) {
-        throw new Error(`Error saving the icons mapping: ${error.message}`);
-    }
+  const outputPath = path.join(__dirname, './icons-mapping.json');
+  try {
+    await fs.promises.writeFile(outputPath, JSON.stringify(mapping), 'utf8');
+  } catch (error) {
+    throw new Error(`Error saving the icons mapping: ${error.message}`);
+  }
 };
 
 await saveIconsMapping();
