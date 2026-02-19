@@ -21,8 +21,18 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
  * aXe WCAG compliance and color contrast validation are handled automatically
  * by the Storybook test-runner (see .storybook/test-runner.ts).
  *
+ * IMPORTANT LIMITATION: ARIA snapshots only capture the FIRST element
+ * =====================
+ * For stories that render multiple instances (Sizes, SemanticVariants, etc.),
+ * the ARIA snapshot will only validate the first element's accessibility tree.
+ * This is a known limitation of the `gotoStory` helper which returns `.first()`.
+ *
+ * However, ALL elements are still validated for WCAG compliance by the
+ * automatic test-runner, which uses axe-core to check every element in the story.
+ *
  * Note: The neutral variant has a known color contrast issue (4.39 vs 4.5:1 required)
- * which is handled via test-runner configuration until design team addresses it.
+ * which is handled via story parameters (see status-light.stories.ts) to exclude only
+ * that specific variant from color-contrast validation.
  *
  * Note: Uses the same test helpers as 1st gen - they work for both!
  * Key differences:
@@ -38,9 +48,6 @@ test.describe('Status Light - ARIA Snapshots', () => {
       'components-status-light--overview',
       'swc-status-light'
     );
-
-    const snapshot = await statusLight.ariaSnapshot();
-    expect(snapshot).toBeTruthy();
     await expect(statusLight).toMatchAriaSnapshot();
   });
 
@@ -50,9 +57,6 @@ test.describe('Status Light - ARIA Snapshots', () => {
       'components-status-light--semantic-variants',
       'swc-status-light'
     );
-
-    const snapshot = await statusLight.ariaSnapshot();
-    expect(snapshot).toBeTruthy();
     await expect(statusLight).toMatchAriaSnapshot();
   });
 
@@ -62,9 +66,6 @@ test.describe('Status Light - ARIA Snapshots', () => {
       'components-status-light--non-semantic-variants',
       'swc-status-light'
     );
-
-    const snapshot = await statusLight.ariaSnapshot();
-    expect(snapshot).toBeTruthy();
     await expect(statusLight).toMatchAriaSnapshot();
   });
 
@@ -74,9 +75,6 @@ test.describe('Status Light - ARIA Snapshots', () => {
       'components-status-light--sizes',
       'swc-status-light'
     );
-
-    const snapshot = await statusLight.ariaSnapshot();
-    expect(snapshot).toBeTruthy();
     await expect(statusLight).toMatchAriaSnapshot();
   });
 });

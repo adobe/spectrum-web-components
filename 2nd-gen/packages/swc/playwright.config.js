@@ -19,12 +19,10 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 4 : undefined,
   reporter: 'html',
-  timeout: 60_000, // 60 seconds per test
   use: {
     baseURL: 'http://localhost:6006',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
-    navigationTimeout: 30_000, // 30 seconds for navigation
   },
   projects: [
     {
@@ -51,6 +49,5 @@ export default defineConfig({
     command: 'yarn storybook',
     port: 6006,
     reuseExistingServer: !process.env.CI,
-    timeout: 120_000, // 2 minutes for Storybook to start
   },
 });

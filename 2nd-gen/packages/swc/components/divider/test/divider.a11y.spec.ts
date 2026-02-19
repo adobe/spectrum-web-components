@@ -31,7 +31,6 @@ test.describe('Divider - ARIA Snapshots', () => {
       'components-divider--overview',
       'swc-divider'
     );
-    const snapshot = await divider.ariaSnapshot();
 
     expect(snapshot).toBeTruthy();
     await expect(divider).toMatchAriaSnapshot();
@@ -43,7 +42,6 @@ test.describe('Divider - ARIA Snapshots', () => {
       'components-divider--anatomy',
       'swc-divider'
     );
-    const snapshot = await divider.ariaSnapshot();
 
     expect(snapshot).toBeTruthy();
     await expect(divider).toMatchAriaSnapshot();
@@ -55,7 +53,6 @@ test.describe('Divider - ARIA Snapshots', () => {
       'components-divider--sizes',
       'swc-divider'
     );
-    const snapshot = await divider.ariaSnapshot();
 
     expect(snapshot).toBeTruthy();
     await expect(divider).toMatchAriaSnapshot();
@@ -67,7 +64,6 @@ test.describe('Divider - ARIA Snapshots', () => {
       'components-divider--vertical',
       'swc-divider'
     );
-    const snapshot = await divider.ariaSnapshot();
 
     expect(snapshot).toBeTruthy();
     await expect(divider).toMatchAriaSnapshot();
@@ -79,7 +75,6 @@ test.describe('Divider - ARIA Snapshots', () => {
       'components-divider--static-colors',
       'swc-divider'
     );
-    const snapshot = await divider.ariaSnapshot();
 
     expect(snapshot).toBeTruthy();
     await expect(divider).toMatchAriaSnapshot();

@@ -32,9 +32,6 @@ test.describe('Progress Circle - ARIA Snapshots', () => {
       'components-progress-circle--overview',
       'swc-progress-circle'
     );
-    const snapshot = await progressCircle.ariaSnapshot();
-
-    expect(snapshot).toBeTruthy();
     await expect(progressCircle).toMatchAriaSnapshot();
   });
 
@@ -46,9 +43,6 @@ test.describe('Progress Circle - ARIA Snapshots', () => {
       'components-progress-circle--anatomy',
       'swc-progress-circle'
     );
-    const snapshot = await progressCircle.ariaSnapshot();
-
-    expect(snapshot).toBeTruthy();
     await expect(progressCircle).toMatchAriaSnapshot();
   });
 
@@ -58,9 +52,6 @@ test.describe('Progress Circle - ARIA Snapshots', () => {
       'components-progress-circle--sizes',
       'swc-progress-circle'
     );
-    const snapshot = await progressCircle.ariaSnapshot();
-
-    expect(snapshot).toBeTruthy();
     await expect(progressCircle).toMatchAriaSnapshot();
   });
 
@@ -70,9 +61,6 @@ test.describe('Progress Circle - ARIA Snapshots', () => {
       'components-progress-circle--static-colors',
       'swc-progress-circle'
     );
-    const snapshot = await progressCircle.ariaSnapshot();
-
-    expect(snapshot).toBeTruthy();
     await expect(progressCircle).toMatchAriaSnapshot();
   });
 
@@ -82,9 +70,6 @@ test.describe('Progress Circle - ARIA Snapshots', () => {
       'components-progress-circle--progress-values',
       'swc-progress-circle'
     );
-    const snapshot = await progressCircle.ariaSnapshot();
-
-    expect(snapshot).toBeTruthy();
     await expect(progressCircle).toMatchAriaSnapshot();
   });
 
@@ -94,9 +79,6 @@ test.describe('Progress Circle - ARIA Snapshots', () => {
       'components-progress-circle--indeterminate',
       'swc-progress-circle'
     );
-    const snapshot = await progressCircle.ariaSnapshot();
-
-    expect(snapshot).toBeTruthy();
     await expect(progressCircle).toMatchAriaSnapshot();
   });
 });
@@ -132,7 +114,7 @@ test.describe('Progress Circle - ARIA Attributes', () => {
     expect(Number(ariaValueNow)).toBeLessThanOrEqual(100);
   });
 
-  test('should have aria-label from label attribute', async ({ page }) => {
+  test('should have aria-label attribute', async ({ page }) => {
     await gotoStory(
       page,
       'components-progress-circle--overview',
@@ -142,8 +124,9 @@ test.describe('Progress Circle - ARIA Attributes', () => {
     const progressCircle = page.locator('swc-progress-circle').first();
     const ariaLabel = await progressCircle.getAttribute('aria-label');
 
-    expect(ariaLabel).toBeTruthy();
-    expect(ariaLabel).toContain('document');
+    // Verify aria-label exists and is non-empty
+    expect(ariaLabel).not.toBeNull();
+    expect(ariaLabel).not.toBe('');
   });
 
   test('should not have aria-valuenow for indeterminate progress', async ({

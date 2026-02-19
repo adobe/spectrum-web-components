@@ -73,10 +73,16 @@ export async function waitForStoryReady(
  * Navigate to a Storybook story and wait for it to be ready.
  * Combines navigation + deterministic waiting.
  *
+ * IMPORTANT: Returns only the FIRST matching element from the story.
+ * For stories that render multiple instances (Sizes, SemanticVariants, etc.),
+ * this will only capture the first element in ARIA snapshots. This is a known
+ * limitation - ARIA snapshots validate structure, not all variants.
+ * All elements are still validated by the test-runner's automatic axe checks.
+ *
  * @param page - Playwright page object
- * @param storyId - Storybook story ID (e.g., 'badge--default')
+ * @param storyId - Storybook story ID (e.g., 'components-badge--sizes')
  * @param elementSelector - CSS selector for the main element to wait for
- * @returns The located element
+ * @returns The first located element
  */
 export async function gotoStory(
   page: Page,

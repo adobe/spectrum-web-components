@@ -26,10 +26,28 @@ const config: TestRunnerConfig = {
       .include('#storybook-root')
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
 
-    // @todo Known issue: StatusLight neutral variant has color contrast issue (4.39 vs 4.5:1)
-    // Disable color-contrast rule for this specific story until design team addresses it
-    if (context.id === 'components-status-light--semantic-variants') {
-      axeBuilder.disableRules(['color-contrast']);
+    // Handle story-specific axe configuration
+    const a11yConfig = context.parameters?.a11y;
+
+    if (a11yConfig) {
+      // Support disabling entire rules via parameters.a11y.disabledRules
+      if (a11yConfig.disabledRules && Array.isArray(a11yConfig.disabledRules)) {
+        axeBuilder.disableRules(a11yConfig.disabledRules);
+      }
+
+      // Support excluding specific elements from specific rules
+      // via parameters.a11y.exclude: { 'rule-name': ['selector1', 'selector2'] }
+      // @todo Current implementation excludes elements from ALL rules, not just the specified rule.
+      // Need to investigate axe-core options API for true rule-specific exclusions.
+      if (a11yConfig.exclude && typeof a11yConfig.exclude === 'object') {
+        Object.entries(a11yConfig.exclude).forEach(([_rule, selectors]) => {
+          if (Array.isArray(selectors)) {
+            selectors.forEach((selector) => {
+              axeBuilder.exclude(selector);
+            });
+          }
+        });
+      }
     }
 
     const results = await axeBuilder.analyze();

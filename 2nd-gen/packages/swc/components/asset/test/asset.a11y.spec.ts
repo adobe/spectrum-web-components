@@ -31,9 +31,6 @@ test.describe('Asset - ARIA Snapshots', () => {
       'components-asset--overview',
       'swc-asset'
     );
-    const snapshot = await asset.ariaSnapshot();
-
-    expect(snapshot).toBeTruthy();
     await expect(asset).toMatchAriaSnapshot();
   });
 
@@ -45,9 +42,6 @@ test.describe('Asset - ARIA Snapshots', () => {
       'components-asset--anatomy',
       'swc-asset'
     );
-    const snapshot = await asset.ariaSnapshot();
-
-    expect(snapshot).toBeTruthy();
     await expect(asset).toMatchAriaSnapshot();
   });
 
@@ -57,9 +51,6 @@ test.describe('Asset - ARIA Snapshots', () => {
       'components-asset--variants',
       'swc-asset'
     );
-    const snapshot = await asset.ariaSnapshot();
-
-    expect(snapshot).toBeTruthy();
     await expect(asset).toMatchAriaSnapshot();
   });
 });
