@@ -1224,7 +1224,7 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
     if (window.__swc?.DEBUG) {
       window.__swc.warn(
         this,
-        `PickerBase class is deprecated and will be removed a future release. Use a ExpandableElement base class instead.`,
+        `PickerBase class is deprecated and will be removed in a future release. Use the ExpandableElement base class instead.`,
         'https://opensource.adobe.com/spectrum-web-components/components/picker/#deprecation',
         { level: 'deprecation' }
       );
