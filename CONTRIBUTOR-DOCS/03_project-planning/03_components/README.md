@@ -58,6 +58,8 @@
     - [In-field button migration roadmap](infield-button/rendering-and-styling-migration-analysis.md)
 - Infield Progress Circle
     - [In-field progress circle migration roadmap](infield-progress-circle/rendering-and-styling-migration-analysis.md)
+- Link
+    - [Link migration roadmap](link/rendering-and-styling-migration-analysis.md)
 - Meter
     - [Meter migration roadmap](meter/rendering-and-styling-migration-analysis.md)
 - Number Field
@@ -84,10 +86,16 @@
     - [Swatch Group migration roadmap](swatch-group/rendering-and-styling-migration-analysis.md)
 - Switch
     - [Switch migration roadmap](switch/rendering-and-styling-migration-analysis.md)
+- Tag
+    - [Tag migration roadmap](tag/rendering-and-styling-migration-analysis.md)
+- Tags
+    - [Tags migration roadmap](tags/rendering-and-styling-migration-analysis.md)
 - Textfield
     - [Textfield and Textarea migration roadmap](textfield/rendering-and-styling-migration-analysis.md)
 - Thumbnail
     - [Thumbnail migration roadmap](thumbnail/rendering-and-styling-migration-analysis.md)
+- Tooltip
+    - [Tooltip migration roadmap](tooltip/rendering-and-styling-migration-analysis.md)
 
 </details>
 
