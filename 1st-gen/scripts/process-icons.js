@@ -78,7 +78,11 @@ const spectrumIconsPath = path.resolve(
   fs.writeSync(outputFd, HEADER);
   fs.writeSync(
     outputFd,
-    'import { svg } from \'@spectrum-web-components/base\'; export default svg`<svg xmlns="http://www.w3.org/2000/svg">'
+    "import { svg } from '@spectrum-web-components/base';\n"
+  );
+  fs.writeSync(
+    outputFd,
+    'export default svg`<svg xmlns="http://www.w3.org/2000/svg">'
   );
 
   fs.readdirSync(srcPath).forEach((iconFile) => {
@@ -87,7 +91,7 @@ const spectrumIconsPath = path.resolve(
     processIcon(srcIconPath, outputFd);
   });
 
-  fs.writeSync(outputFd, '</svg>`;');
+  fs.writeSync(outputFd, '</svg>`;\n');
   fs.closeSync(outputFd);
 });
 
