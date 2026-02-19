@@ -26,7 +26,6 @@ export const MESSAGES = {
   reportAndSkip: REPORT_AND_SKIP,
 };
 
-const YEAR_REGEXP_SOURCE = '20\\d{2}';
 const ESCAPE = /[-[\]/{}()*+?.\\^$|]/g;
 
 function escapeRegExp(str) {
@@ -62,21 +61,6 @@ export function resolveTemplate(fileName, { templateFile, template }) {
     }
   }
   return null;
-}
-
-/**
- * Build a RegExp that matches the template with the year part as 20XX.
- * Uses <%= YEAR %> as the placeholder in the raw template.
- *
- * @param {string} template - Raw template containing <%= YEAR %>
- * @returns {RegExp} RegExp that matches the template with the year part as 20XX
- */
-function matchRegexFromTemplate(template) {
-  const placeholder = '\u0000YEAR\u0000';
-  const withPlaceholder = template.replace(/<%\s*=\s*YEAR\s*%>/g, placeholder);
-  const escaped = escapeRegExp(withPlaceholder);
-  const source = escaped.replace(placeholder, YEAR_REGEXP_SOURCE);
-  return new RegExp(source);
 }
 
 /**
@@ -120,8 +104,9 @@ export function resolveOptions(options, fileName) {
     mustMatchRegex = mustMatch;
   } else if (typeof mustMatch === 'string') {
     mustMatchRegex = new RegExp(escapeRegExp(mustMatch));
-  } else if (templateStr) {
-    mustMatchRegex = matchRegexFromTemplate(templateStr);
+  } else if (resolvedTemplate) {
+    // Require exact match including current year when no mustMatch is provided.
+    mustMatchRegex = new RegExp(escapeRegExp(resolvedTemplate));
   }
 
   return {

@@ -315,12 +315,15 @@ export default defineConfig([
   },
 
   // ────────────────────────────────────────────────────────────────────────────
-  // Files that may start with shebang (#!/usr/bin/env node): require header
-  // directly under the shebang and fix by inserting it there.
+  // Files that may start with shebang (#!/usr/bin/env node): use swc/notice-
+  // after-shebang (not notice/notice) so the header is required directly under
+  // the shebang and fix inserts or replaces it there.
   // ────────────────────────────────────────────────────────────────────────────
   {
     files: [
+      '.github/scripts/**/*.js',
       'scripts/**/*.js',
+      'scripts/*.js',
       '1st-gen/scripts/**/*.js',
       '1st-gen/projects/**/scripts/**/*.js',
       'CONTRIBUTOR-DOCS/**/*.js',
@@ -331,7 +334,10 @@ export default defineConfig([
       'notice/notice': 'off',
       'swc/notice-after-shebang': [
         'error',
-        { templateFile: 'linters/HEADER.js' },
+        {
+          templateFile: 'linters/HEADER.js',
+          onNonMatchingHeader: 'replace',
+        },
       ],
     },
   },
