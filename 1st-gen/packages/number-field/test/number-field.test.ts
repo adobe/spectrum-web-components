@@ -192,6 +192,41 @@ describe('NumberField', () => {
       );
       expect(tooltipOverlay).to.not.exist;
     });
+    it('uses default placement "bottom" for truncated value tooltip when not set', async () => {
+      const el = await fixture<NumberField>(html`
+        <sp-number-field
+          style="--mod-textfield-width: 56px; --spectrum-textfield-min-width: 0;"
+          hide-stepper
+          value="123456789"
+        ></sp-number-field>
+      `);
+      await elementUpdated(el);
+      await elementUpdated(el);
+
+      const tooltipOverlay = el.shadowRoot?.querySelector(
+        '#truncated-value-tooltip'
+      ) as { placement?: string };
+      expect(tooltipOverlay).to.exist;
+      expect(tooltipOverlay.placement).to.equal('bottom');
+    });
+    it('uses tooltip-placement when set', async () => {
+      const el = await fixture<NumberField>(html`
+        <sp-number-field
+          style="--mod-textfield-width: 56px; --spectrum-textfield-min-width: 0;"
+          hide-stepper
+          value="123456789"
+          tooltip-placement="top"
+        ></sp-number-field>
+      `);
+      await elementUpdated(el);
+      await elementUpdated(el);
+
+      const tooltipOverlay = el.shadowRoot?.querySelector(
+        '#truncated-value-tooltip'
+      ) as { placement?: string };
+      expect(tooltipOverlay).to.exist;
+      expect(tooltipOverlay.placement).to.equal('top');
+    });
   });
   describe('receives input', () => {
     it('without language context', async () => {

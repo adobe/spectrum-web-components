@@ -748,6 +748,41 @@ describe('Textfield', () => {
     );
     expect(tooltipOverlay).to.not.exist;
   });
+  it('uses default placement "bottom" for truncated value tooltip when not set', async () => {
+    const value = 'ThisIsAVeryLongTextfieldValueThatWillBeTruncated';
+    const el = await litFixture<Textfield>(html`
+      <sp-textfield
+        style="--mod-textfield-width: 40px; --spectrum-textfield-min-width: 0;"
+        value=${value}
+      ></sp-textfield>
+    `);
+    await elementUpdated(el);
+    await elementUpdated(el);
+
+    const tooltipOverlay = el.shadowRoot?.querySelector(
+      '#truncated-value-tooltip'
+    ) as { placement?: string };
+    expect(tooltipOverlay).to.exist;
+    expect(tooltipOverlay.placement).to.equal('bottom');
+  });
+  it('uses tooltip-placement when set', async () => {
+    const value = 'ThisIsAVeryLongTextfieldValueThatWillBeTruncated';
+    const el = await litFixture<Textfield>(html`
+      <sp-textfield
+        style="--mod-textfield-width: 40px; --spectrum-textfield-min-width: 0;"
+        value=${value}
+        tooltip-placement="right"
+      ></sp-textfield>
+    `);
+    await elementUpdated(el);
+    await elementUpdated(el);
+
+    const tooltipOverlay = el.shadowRoot?.querySelector(
+      '#truncated-value-tooltip'
+    ) as { placement?: string };
+    expect(tooltipOverlay).to.exist;
+    expect(tooltipOverlay.placement).to.equal('right');
+  });
   it('invalid - multiline - boundary-type assertions', async () => {
     const el = await litFixture<Textfield>(html`
       <sp-textfield

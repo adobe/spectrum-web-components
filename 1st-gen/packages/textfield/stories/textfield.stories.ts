@@ -213,4 +213,10 @@ export const TruncatedValueTooltip = (): TemplateResult => html`
     valid
     value="very.long.email.address@subdomain.example.com"
   ></sp-textfield>
+  <sp-field-label for="truncated-value-right">Truncated value with right tooltip placement</sp-field-label>
+  <sp-textfield
+    id="truncated-value-right"
+    tooltip-placement="right"
+    value="very.long.email.address@subdomain.example.com"
+  ></sp-textfield>
 `;

@@ -345,7 +345,7 @@ The input value incrementally increases or decreases by the value of the `step` 
 
 Like textfield, number field will show a tooltip with the full formatted value when the single-line input content is visually truncated. This supports long formatted content (for example currency values) in constrained widths and supports accessibility when users adjust text spacing (WCAG 1.4.12).
 
-Stepper visibility affects available inline space, so truncation may occur at different widths when `hide-stepper` is toggled. The full value is available on hover and keyboard focus so screen reader users can access it via the control's value.
+Stepper visibility affects available inline space, so truncation may occur at different widths when `hide-stepper` is toggled. The full value is available on hover and keyboard focus so screen reader users can access it via the control's value. As with textfield, the tooltip defaults to placement `bottom`; use the `tooltip-placement` attribute with a valid placement value (e.g. `top`, `right`, `left`). Placement may flip when space is limited so the tooltip stays in view.
 
 ```html
 <sp-field-label for="truncated-show-stepper">Show stepper</sp-field-label>
