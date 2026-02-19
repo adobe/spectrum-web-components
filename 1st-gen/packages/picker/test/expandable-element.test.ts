@@ -10,7 +10,13 @@
  * governing permissions and limitations under the License.
  */
 
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import {
+  elementUpdated,
+  expect,
+  fixture,
+  html,
+  oneEvent,
+} from '@open-wc/testing';
 
 import {
   css,
@@ -198,6 +204,28 @@ describe('ExpandableElement', () => {
       await elementUpdated(el);
       expect(el.open, 'should still be open due to readonly').to.be.true;
     });
+
+    it('opens and closes programmatically', async () => {
+      const el = await fixture<TestExpandableElement>(html`
+        <test-expandable-element>
+          <sp-menu-item value="option-1">Option 1</sp-menu-item>
+        </test-expandable-element>
+      `);
+      await elementUpdated(el);
+
+      // Ensure strategy is bound
+      el.bindEvents();
+      await elementUpdated(el);
+
+      const open = oneEvent(el, 'sp-opened');
+      el.open = true;
+      await open;
+
+      const closed = oneEvent(el, 'sp-closed');
+      el.close();
+      await closed;
+      expect(el.open, 'should be closed').to.be.false;
+    });
   });
 
   describe('toggle() method', () => {
@@ -283,15 +311,17 @@ describe('ExpandableElement', () => {
       el.bindEvents();
       await elementUpdated(el);
 
+      const opened = oneEvent(el, 'sp-opened');
       el.toggle();
-      await elementUpdated(el);
-      expect(el.strategy?.open, 'strategy should be open after toggle').to.be
-        .true;
+      await opened;
+      expect(el.open, 'should open after toggle').to.be.true;
+      expect(el.strategy?.open, 'strategy should be open').to.be.equal(true);
 
+      const closed = oneEvent(el, 'sp-closed');
       el.toggle();
-      await elementUpdated(el);
-      expect(el.strategy?.open, 'strategy should be closed after second toggle')
-        .to.be.false;
+      await closed;
+      expect(el.open, 'should close after second toggle').to.be.false;
+      expect(el.strategy?.open, 'strategy should be open').to.be.equal(false);
     });
   });
 
