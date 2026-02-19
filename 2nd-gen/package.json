@@ -40,7 +40,7 @@
   ],
   "devDependencies": {
     "@storybook/addon-vitest": "10.0.3",
-    "eslint": "8.57.1",
+    "eslint": "9.39.2",
     "eslint-plugin-simple-import-sort": "12.1.1",
     "npm-run-all2": "8.0.4"
   },
