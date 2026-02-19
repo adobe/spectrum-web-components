@@ -44,9 +44,9 @@ The PostHTML plugins outlined in `projects/documentation/src/utils` are used to 
 
 # To-do:
 
--   [ ] "routing" in SW
-    -   .../api pages
--   [ ] use the service worker to cache the smallest amount of HTML required to build the pages of the site
--   [ ] meta in the header - can we capture the Spectrum images for card generation?
--   [ ] build `shell-end.html` and `shell-start.html` without superfluous open/closing tags
--   [ ] apply the "full" CSS to `shell-start.html` to ensure pages build from cache have any styles they might need
+- [ ] "routing" in SW
+  - .../api pages
+- [ ] use the service worker to cache the smallest amount of HTML required to build the pages of the site
+- [ ] meta in the header - can we capture the Spectrum images for card generation?
+- [ ] build `shell-end.html` and `shell-start.html` without superfluous open/closing tags
+- [ ] apply the "full" CSS to `shell-start.html` to ensure pages build from cache have any styles they might need

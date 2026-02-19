@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -14,30 +14,30 @@
 @import url("./progress-bar-overrides.css");
 
 .fill {
-    width: 100%;
-    transform-origin: left;
+  width: 100%;
+  transform-origin: left;
 }
 
 .fill:dir(rtl) {
-    transform-origin: right;
+  transform-origin: right;
 }
 
 @keyframes indeterminate-loop-ltr {
-    0% {
-        transform: translate(-100%);
-    }
+  0% {
+    transform: translate(-100%);
+  }
 
-    100% {
-        transform: translate(var(--spectrum-progressbar-size-default));
-    }
+  100% {
+    transform: translate(var(--spectrum-progressbar-size-default));
+  }
 }
 
 @keyframes indeterminate-loop-rtl {
-    0% {
-        transform: translate(100%);
-    }
+  0% {
+    transform: translate(100%);
+  }
 
-    100% {
-        transform: translate(calc(var(--spectrum-progressbar-size-default) * -1));
-    }
+  100% {
+    transform: translate(calc(var(--spectrum-progressbar-size-default) * -1));
+  }
 }

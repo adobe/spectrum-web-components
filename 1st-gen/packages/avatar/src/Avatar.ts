@@ -11,18 +11,18 @@
  */
 
 import {
-    CSSResultArray,
-    html,
-    PropertyValues,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  PropertyValues,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import {
-    property,
-    query,
+  property,
+  query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 
 import avatarStyles from './avatar.css.js';
 
@@ -34,138 +34,138 @@ const defaultSize = validSizes[2];
  * @element sp-avatar
  */
 export class Avatar extends LikeAnchor(Focusable) {
-    public static override get styles(): CSSResultArray {
-        return [avatarStyles];
+  public static override get styles(): CSSResultArray {
+    return [avatarStyles];
+  }
+
+  @query('#link')
+  anchorElement!: HTMLAnchorElement;
+
+  public override get focusElement(): HTMLElement {
+    return this.anchorElement || this;
+  }
+
+  @property()
+  public src = '';
+
+  /**
+   * When true, marks the avatar as decorative and hides it from screen readers.
+   * The underlying img will have an empty alt attribute (alt="").
+   */
+  @property({ type: Boolean, reflect: true, attribute: 'is-decorative' })
+  public isDecorative = false;
+
+  @property({ type: Number, reflect: true })
+  public get size(): AvatarSize {
+    return this._size;
+  }
+
+  public set size(value: AvatarSize) {
+    const size = value;
+    const validSize = (
+      validSizes.includes(size) ? size : defaultSize
+    ) as AvatarSize;
+    if (validSize) {
+      this.setAttribute('size', `${validSize}`);
+    }
+    if (this._size === validSize) {
+      return;
+    }
+    const oldSize = this._size;
+    this._size = validSize;
+    this.requestUpdate('size', oldSize);
+  }
+
+  private _size = defaultSize;
+
+  /**
+   * Renders the avatar image with appropriate accessibility attributes.
+   * Label takes precedence over isDecorative. When decorative and has href,
+   * aria-hidden is not set so the link remains accessible.
+   */
+  protected override render(): TemplateResult {
+    let altValue = '';
+    let ariaHidden: 'true' | undefined;
+    if (this.label) {
+      altValue = this.label;
+      ariaHidden = undefined;
+    } else if (this.isDecorative) {
+      altValue = '';
+      ariaHidden = this.href ? undefined : 'true';
+    } else {
+      altValue = '';
+      ariaHidden = undefined;
     }
 
-    @query('#link')
-    anchorElement!: HTMLAnchorElement;
-
-    public override get focusElement(): HTMLElement {
-        return this.anchorElement || this;
+    const avatar = html`
+      <img
+        class="image"
+        alt=${altValue}
+        aria-hidden=${ifDefined(ariaHidden)}
+        src=${this.src}
+      />
+    `;
+    if (this.href) {
+      return this.renderAnchor({
+        id: 'link',
+        className: 'link',
+        anchorContent: avatar,
+      });
     }
+    return avatar;
+  }
 
-    @property()
-    public src = '';
-
-    /**
-     * When true, marks the avatar as decorative and hides it from screen readers.
-     * The underlying img will have an empty alt attribute (alt="").
-     */
-    @property({ type: Boolean, reflect: true, attribute: 'is-decorative' })
-    public isDecorative = false;
-
-    @property({ type: Number, reflect: true })
-    public get size(): AvatarSize {
-        return this._size;
+  protected override firstUpdated(changes: PropertyValues): void {
+    super.firstUpdated(changes);
+    if (!this.hasAttribute('size')) {
+      this.setAttribute('size', `${this.size}`);
     }
+    this.warnMissingAlt();
+  }
 
-    public set size(value: AvatarSize) {
-        const size = value;
-        const validSize = (
-            validSizes.includes(size) ? size : defaultSize
-        ) as AvatarSize;
-        if (validSize) {
-            this.setAttribute('size', `${validSize}`);
-        }
-        if (this._size === validSize) {
-            return;
-        }
-        const oldSize = this._size;
-        this._size = validSize;
-        this.requestUpdate('size', oldSize);
+  protected override updated(changes: PropertyValues): void {
+    super.updated(changes);
+    if (
+      changes.has('label') ||
+      changes.has('isDecorative') ||
+      changes.has('href')
+    ) {
+      this.warnMissingAlt();
     }
+  }
 
-    private _size = defaultSize;
-
-    /**
-     * Renders the avatar image with appropriate accessibility attributes.
-     * Label takes precedence over isDecorative. When decorative and has href,
-     * aria-hidden is not set so the link remains accessible.
-     */
-    protected override render(): TemplateResult {
-        let altValue = '';
-        let ariaHidden: 'true' | undefined;
-        if (this.label) {
-            altValue = this.label;
-            ariaHidden = undefined;
-        } else if (this.isDecorative) {
-            altValue = '';
-            ariaHidden = this.href ? undefined : 'true';
-        } else {
-            altValue = '';
-            ariaHidden = undefined;
-        }
-
-        const avatar = html`
-            <img
-                class="image"
-                alt=${altValue}
-                aria-hidden=${ifDefined(ariaHidden)}
-                src=${this.src}
-            />
-        `;
-        if (this.href) {
-            return this.renderAnchor({
-                id: 'link',
-                className: 'link',
-                anchorContent: avatar,
-            });
-        }
-        return avatar;
+  private warnMissingAlt(): void {
+    if (window.__swc?.DEBUG) {
+      // Warn if neither label nor isDecorative is provided
+      if (!this.label && !this.isDecorative) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> needs either a \`label\` attribute or \`is-decorative\` attribute to be accessible.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/avatar/#accessibility',
+          {
+            type: 'accessibility',
+            issues: [
+              'Provide a `label` attribute with meaningful alternative text for the avatar image, or',
+              'Set `is-decorative` attribute to mark the avatar as decorative (hidden from screen readers).',
+            ],
+          }
+        );
+      }
+      // Warn if decorative avatar is used as a link without a label
+      else if (this.isDecorative && this.href && !this.label) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> with \`is-decorative\` and \`href\` requires a \`label\` attribute for the link to be accessible.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/avatar/#accessibility',
+          {
+            type: 'accessibility',
+            issues: [
+              'Provide a `label` attribute to give the link an accessible name.',
+              'Decorative avatars should typically not be interactive links.',
+            ],
+          }
+        );
+      }
     }
-
-    protected override firstUpdated(changes: PropertyValues): void {
-        super.firstUpdated(changes);
-        if (!this.hasAttribute('size')) {
-            this.setAttribute('size', `${this.size}`);
-        }
-        this.warnMissingAlt();
-    }
-
-    protected override updated(changes: PropertyValues): void {
-        super.updated(changes);
-        if (
-            changes.has('label') ||
-            changes.has('isDecorative') ||
-            changes.has('href')
-        ) {
-            this.warnMissingAlt();
-        }
-    }
-
-    private warnMissingAlt(): void {
-        if (window.__swc?.DEBUG) {
-            // Warn if neither label nor isDecorative is provided
-            if (!this.label && !this.isDecorative) {
-                window.__swc.warn(
-                    this,
-                    `<${this.localName}> needs either a \`label\` attribute or \`is-decorative\` attribute to be accessible.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/avatar/#accessibility',
-                    {
-                        type: 'accessibility',
-                        issues: [
-                            'Provide a `label` attribute with meaningful alternative text for the avatar image, or',
-                            'Set `is-decorative` attribute to mark the avatar as decorative (hidden from screen readers).',
-                        ],
-                    }
-                );
-            }
-            // Warn if decorative avatar is used as a link without a label
-            else if (this.isDecorative && this.href && !this.label) {
-                window.__swc.warn(
-                    this,
-                    `<${this.localName}> with \`is-decorative\` and \`href\` requires a \`label\` attribute for the link to be accessible.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/avatar/#accessibility',
-                    {
-                        type: 'accessibility',
-                        issues: [
-                            'Provide a `label` attribute to give the link an accessible name.',
-                            'Decorative avatars should typically not be interactive links.',
-                        ],
-                    }
-                );
-            }
-        }
-    }
+  }
 }

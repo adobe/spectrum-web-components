@@ -49,24 +49,24 @@ In this example, a default `<overlay-trigger>` manages content that is triggered
 
 ```html
 <overlay-trigger placement="top" type="replace">
-    <sp-button slot="trigger">Overlay Trigger</sp-button>
-    <sp-popover slot="click-content" open>
-        <sp-dialog size="s">
-            <h2 slot="heading">Click content</h2>
-            An &lt;overlay-trigger&gt; can be used to manage either or both of
-            the "click" and "hover" content slots that are made available. Here,
-            content is only addressed to
-            <code>slot="click-content"</code>
-            ...
-            <sp-button
-                slot="button"
-                onclick="javascript: this.dispatchEvent(new Event('close', {bubbles: true, composed: true}));"
-            >
-                I understand
-            </sp-button>
-        </sp-dialog>
-    </sp-popover>
-    <sp-tooltip slot="hover-content">Hover content</sp-tooltip>
+  <sp-button slot="trigger">Overlay Trigger</sp-button>
+  <sp-popover slot="click-content" open>
+    <sp-dialog size="s">
+      <h2 slot="heading">Click content</h2>
+      An &lt;overlay-trigger&gt; can be used to manage either or both of the
+      "click" and "hover" content slots that are made available. Here, content
+      is only addressed to
+      <code>slot="click-content"</code>
+      ...
+      <sp-button
+        slot="button"
+        onclick="javascript: this.dispatchEvent(new Event('close', {bubbles: true, composed: true}));"
+      >
+        I understand
+      </sp-button>
+    </sp-dialog>
+  </sp-popover>
+  <sp-tooltip slot="hover-content">Hover content</sp-tooltip>
 </overlay-trigger>
 ```
 
@@ -92,18 +92,18 @@ They should be used when you need to ensure that the user has interacted with th
 
 ```html
 <overlay-trigger type="modal" triggered-by="click">
-    <sp-button slot="trigger">Open modal</sp-button>
-    <sp-dialog-wrapper
-        slot="click-content"
-        headline="Signin form"
-        dismissable
-        underlay
-    >
-        <p>I am a modal type overlay.</p>
-        <sp-field-label>Enter your email</sp-field-label>
-        <sp-textfield placeholder="test@gmail.com"></sp-textfield>
-        <sp-action-button
-            onClick="
+  <sp-button slot="trigger">Open modal</sp-button>
+  <sp-dialog-wrapper
+    slot="click-content"
+    headline="Signin form"
+    dismissable
+    underlay
+  >
+    <p>I am a modal type overlay.</p>
+    <sp-field-label>Enter your email</sp-field-label>
+    <sp-textfield placeholder="test@gmail.com"></sp-textfield>
+    <sp-action-button
+      onClick="
                 this.dispatchEvent(
                     new Event('close', {
                         bubbles: true,
@@ -111,10 +111,10 @@ They should be used when you need to ensure that the user has interacted with th
                     })
                 );
             "
-        >
-            Sign in
-        </sp-action-button>
-    </sp-dialog-wrapper>
+    >
+      Sign in
+    </sp-action-button>
+  </sp-dialog-wrapper>
 </overlay-trigger>
 ```
 
@@ -128,15 +128,15 @@ A page overlay could be used for a full-screen menu on a mobile website. When th
 
 ```html
 <overlay-trigger type="page" triggered-by="click">
-    <sp-button slot="trigger">Open page</sp-button>
-    <sp-dialog-wrapper
-        slot="click-content"
-        headline="Full screen menu"
-        mode="fullscreenTakeover"
-        cancel-label="Close"
-    >
-        <p>I am a page type overlay.</p>
-    </sp-dialog-wrapper>
+  <sp-button slot="trigger">Open page</sp-button>
+  <sp-dialog-wrapper
+    slot="click-content"
+    headline="Full screen menu"
+    mode="fullscreenTakeover"
+    cancel-label="Close"
+  >
+    <p>I am a page type overlay.</p>
+  </sp-dialog-wrapper>
 </overlay-trigger>
 ```
 
@@ -150,11 +150,11 @@ This overlay type does not accept focus and does not interfere with the user's i
 
 ```html
 <overlay-trigger type="hint" triggered-by="hover">
-    <sp-button slot="trigger">Open hint</sp-button>
-    <sp-tooltip slot="click-content">
-        I am a hint type overlay. I am not interactive and will close when the
-        user interacts with the page.
-    </sp-tooltip>
+  <sp-button slot="trigger">Open hint</sp-button>
+  <sp-tooltip slot="click-content">
+    I am a hint type overlay. I am not interactive and will close when the user
+    interacts with the page.
+  </sp-tooltip>
 </overlay-trigger>
 ```
 
@@ -166,13 +166,13 @@ This overlay type does not accept focus and does not interfere with the user's i
 
 ```html
 <overlay-trigger type="auto" triggered-by="click" placement="bottom">
-    <sp-button slot="trigger">Open overlay</sp-button>
-    <sp-popover slot="click-content" dialog>
-        <p>
-            My slider in overlay element:
-            <sp-slider label="Slider Label - Editable" editable></sp-slider>
-        </p>
-    </sp-popover>
+  <sp-button slot="trigger">Open overlay</sp-button>
+  <sp-popover slot="click-content" dialog>
+    <p>
+      My slider in overlay element:
+      <sp-slider label="Slider Label - Editable" editable></sp-slider>
+    </p>
+  </sp-popover>
 </overlay-trigger>
 ```
 
@@ -186,21 +186,21 @@ Note: When a `'manual'` Overlay is at the top of the "overlay stack", it will st
 
 ```html
 <style>
-    .chat-container {
-        position: fixed;
-        bottom: 1em;
-        left: 1em;
-    }
+  .chat-container {
+    position: fixed;
+    bottom: 1em;
+    left: 1em;
+  }
 </style>
 <overlay-trigger type="manual" triggered-by="click">
-    <sp-button slot="trigger">Open manual</sp-button>
-    <sp-popover slot="click-content" class="chat-container">
-        <sp-dialog dismissable>
-            <span slot="heading">Chat Window</span>
-            <sp-textfield placeholder="Enter your message"></sp-textfield>
-            <sp-action-button>Send</sp-action-button>
-        </sp-dialog>
-    </sp-popover>
+  <sp-button slot="trigger">Open manual</sp-button>
+  <sp-popover slot="click-content" class="chat-container">
+    <sp-dialog dismissable>
+      <span slot="heading">Chat Window</span>
+      <sp-textfield placeholder="Enter your message"></sp-textfield>
+      <sp-action-button>Send</sp-action-button>
+    </sp-dialog>
+  </sp-popover>
 </overlay-trigger>
 ```
 
@@ -214,22 +214,22 @@ The `triggered-by` attribute (`triggeredBy` property) allows you to explicitly d
 ```html
 <!-- Only using click and hover overlays -->
 <overlay-trigger triggered-by="click hover">
-    <sp-button slot="trigger">Click and hover trigger</sp-button>
-    <sp-popover slot="click-content" direction="bottom" tip>
-        Click content
-    </sp-popover>
-    <sp-tooltip slot="hover-content">Hover content</sp-tooltip>
+  <sp-button slot="trigger">Click and hover trigger</sp-button>
+  <sp-popover slot="click-content" direction="bottom" tip>
+    Click content
+  </sp-popover>
+  <sp-tooltip slot="hover-content">Hover content</sp-tooltip>
 </overlay-trigger>
 
 <!-- Only using longpress overlay -->
 <overlay-trigger triggered-by="longpress">
-    <sp-button slot="trigger">Longpress trigger</sp-button>
-    <sp-popover slot="longpress-content" direction="bottom" tip>
-        Longpress content
-    </sp-popover>
-    <div slot="longpress-describedby-descriptor">
-        Press and hold to reveal more options
-    </div>
+  <sp-button slot="trigger">Longpress trigger</sp-button>
+  <sp-popover slot="longpress-content" direction="bottom" tip>
+    Longpress content
+  </sp-popover>
+  <div slot="longpress-describedby-descriptor">
+    Press and hold to reveal more options
+  </div>
 </overlay-trigger>
 ```
 

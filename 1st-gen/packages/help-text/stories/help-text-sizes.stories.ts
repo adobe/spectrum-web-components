@@ -15,38 +15,38 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 
 export default {
-    title: 'Help Text/Sizes',
-    component: 'sp-help-text',
+  title: 'Help Text/Sizes',
+  component: 'sp-help-text',
 };
 
 export const s = (): TemplateResult => {
-    return html`
-        <sp-help-text size="s">
-            Passwords must be at least 8 characters.
-        </sp-help-text>
-    `;
+  return html`
+    <sp-help-text size="s">
+      Passwords must be at least 8 characters.
+    </sp-help-text>
+  `;
 };
 
 export const m = (): TemplateResult => {
-    return html`
-        <sp-help-text size="m">
-            Passwords must be at least 8 characters.
-        </sp-help-text>
-    `;
+  return html`
+    <sp-help-text size="m">
+      Passwords must be at least 8 characters.
+    </sp-help-text>
+  `;
 };
 
 export const l = (): TemplateResult => {
-    return html`
-        <sp-help-text size="l">
-            Passwords must be at least 8 characters.
-        </sp-help-text>
-    `;
+  return html`
+    <sp-help-text size="l">
+      Passwords must be at least 8 characters.
+    </sp-help-text>
+  `;
 };
 
 export const XL = (): TemplateResult => {
-    return html`
-        <sp-help-text size="xl">
-            Passwords must be at least 8 characters.
-        </sp-help-text>
-    `;
+  return html`
+    <sp-help-text size="xl">
+      Passwords must be at least 8 characters.
+    </sp-help-text>
+  `;
 };

@@ -13,45 +13,46 @@
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 
 import '@spectrum-web-components/button-group/sp-button-group.js';
+
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { ButtonGroup } from '..';
 import { buttons, buttonsVertical } from '../stories/button-group.stories.js';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Buttongroup', () => {
-    testForLitDevWarnings(
-        async () => await fixture<ButtonGroup>(buttons(buttons.args))
+  testForLitDevWarnings(
+    async () => await fixture<ButtonGroup>(buttons(buttons.args))
+  );
+  it('loads default button-group accessibly with sp-button', async () => {
+    const el = await fixture<ButtonGroup>(buttons(buttons.args));
+
+    await elementUpdated(el);
+
+    await expect(el).to.be.accessible();
+  });
+  it('loads default button-group[vertial] accessibly with sp-button', async () => {
+    const el = await fixture<ButtonGroup>(
+      buttonsVertical(buttonsVertical.args)
     );
-    it('loads default button-group accessibly with sp-button', async () => {
-        const el = await fixture<ButtonGroup>(buttons(buttons.args));
 
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        await expect(el).to.be.accessible();
+    await expect(el).to.be.accessible();
+  });
+  it(`manages its children's size`, async () => {
+    const el = await fixture<ButtonGroup>(buttons(buttons.args));
+    await elementUpdated(el);
+
+    let children = el.querySelectorAll('sp-button');
+    children.forEach((button) => {
+      expect(button.size).to.equal('m');
     });
-    it('loads default button-group[vertial] accessibly with sp-button', async () => {
-        const el = await fixture<ButtonGroup>(
-            buttonsVertical(buttonsVertical.args)
-        );
 
-        await elementUpdated(el);
+    el.size = 's';
+    await elementUpdated(el);
 
-        await expect(el).to.be.accessible();
+    children = el.querySelectorAll('sp-button');
+    children.forEach((button) => {
+      expect(button.size).to.equal('s');
     });
-    it(`manages its children's size`, async () => {
-        const el = await fixture<ButtonGroup>(buttons(buttons.args));
-        await elementUpdated(el);
-
-        let children = el.querySelectorAll('sp-button');
-        children.forEach((button) => {
-            expect(button.size).to.equal('m');
-        });
-
-        el.size = 's';
-        await elementUpdated(el);
-
-        children = el.querySelectorAll('sp-button');
-        children.forEach((button) => {
-            expect(button.size).to.equal('s');
-        });
-    });
+  });
 });

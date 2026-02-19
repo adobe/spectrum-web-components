@@ -37,7 +37,7 @@ The message in its default slot:
 
 ```html
 <sp-toast open>
-    This is important information that you should read, soon.
+  This is important information that you should read, soon.
 </sp-toast>
 ```
 
@@ -47,15 +47,15 @@ An optional action using `slot="action"`:
 
 ```html
 <sp-toast open>
-    This is important information that you should read, soon.
-    <sp-button
-        slot="action"
-        static-color="white"
-        variant="secondary"
-        treatment="outline"
-    >
-        Do something
-    </sp-button>
+  This is important information that you should read, soon.
+  <sp-button
+    slot="action"
+    static-color="white"
+    variant="secondary"
+    treatment="outline"
+  >
+    Do something
+  </sp-button>
 </sp-toast>
 ```
 
@@ -67,15 +67,15 @@ The toast can be constrained to a specific width, and its content will wrap acco
 
 ```html
 <sp-toast open style="width: 300px">
-    This is important information that you should read, soon.
-    <sp-button
-        slot="action"
-        static-color="white"
-        variant="secondary"
-        treatment="outline"
-    >
-        Do something
-    </sp-button>
+  This is important information that you should read, soon.
+  <sp-button
+    slot="action"
+    static-color="white"
+    variant="secondary"
+    treatment="outline"
+  >
+    Do something
+  </sp-button>
 </sp-toast>
 ```
 
@@ -93,7 +93,7 @@ Use `variant="negative"` to show an error or failure.
 
 ```html
 <sp-toast open variant="negative">
-    This is negative information that you should read, soon.
+  This is negative information that you should read, soon.
 </sp-toast>
 ```
 
@@ -105,7 +105,7 @@ Use `variant="positive"` to show a successful action or completion of a task.
 
 ```html
 <sp-toast open variant="positive">
-    This is positive information that you should read, soon.
+  This is positive information that you should read, soon.
 </sp-toast>
 ```
 
@@ -117,7 +117,7 @@ Use `variant="info"` to show an informative message.
 
 ```html
 <sp-toast open variant="info">
-    This is information that you should read.
+  This is information that you should read.
 </sp-toast>
 ```
 
@@ -132,7 +132,7 @@ The toast can be configured to automatically dismiss itself after a specified du
 
 ```html
 <sp-toast open timeout="6000">
-    This message will disappear after 6 seconds.
+  This message will disappear after 6 seconds.
 </sp-toast>
 ```
 
@@ -155,9 +155,9 @@ The `<sp-toast>` element is rendered with a `role` of `alert` to notify screen r
 
 ```html
 <div role="region" aria-label="Toast Notifications">
-    <sp-toast open>
-        This is important information that you should read, soon.
-    </sp-toast>
+  <sp-toast open>
+    This is important information that you should read, soon.
+  </sp-toast>
 </div>
 ```
 
@@ -178,14 +178,14 @@ For example, a message with 240 words should have a timeout of 7000ms, and a mes
 
 ```html
 <sp-toast open variant="negative" icon-label="Warning">
-    This is important information that you should read, soon.
-    <sp-button
-        slot="action"
-        static-color="white"
-        variant="secondary"
-        treatment="outline"
-    >
-        Ignore warning
-    </sp-button>
+  This is important information that you should read, soon.
+  <sp-button
+    slot="action"
+    static-color="white"
+    variant="secondary"
+    treatment="outline"
+  >
+    Ignore warning
+  </sp-button>
 </sp-toast>
 ```

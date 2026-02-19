@@ -10,10 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/color-slider/sp-color-slider.js';
 import { html } from 'lit';
+
+import '@spectrum-web-components/color-slider/sp-color-slider.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-color-slider></sp-color-slider>
+  <sp-color-slider></sp-color-slider>
 `);

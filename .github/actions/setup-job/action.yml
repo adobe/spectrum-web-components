@@ -1,23 +1,23 @@
 name: Setup Job
 description: Common setup for all jobs
 runs:
-    using: 'composite'
-    steps:
-        - name: Enable Corepack
-          shell: bash
-          run: corepack enable
+  using: 'composite'
+  steps:
+    - name: Enable Corepack
+      shell: bash
+      run: corepack enable
 
-        - name: Setup Node 20
-          uses: actions/setup-node@v4
-          with:
-              node-version: '20'
-              cache: 'yarn'
-              registry-url: 'https://registry.npmjs.org'
+    - name: Setup Node 20
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'yarn'
+        registry-url: 'https://registry.npmjs.org'
 
-        - name: Install dependencies
-          shell: bash
-          run: yarn --immutable
+    - name: Install dependencies
+      shell: bash
+      run: yarn --immutable
 
-        - name: Build the project
-          shell: bash
-          run: yarn build
+    - name: Build the project
+      shell: bash
+      run: yarn build

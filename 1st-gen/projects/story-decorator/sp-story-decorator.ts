@@ -15,7 +15,7 @@ import { StoryDecorator } from './src/StoryDecorator.js';
 customElements.define('sp-story-decorator', StoryDecorator);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-story-decorator': StoryDecorator;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-story-decorator': StoryDecorator;
+  }
 }

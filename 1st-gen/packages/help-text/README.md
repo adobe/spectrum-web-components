@@ -34,9 +34,9 @@ import { HelpText } from '@spectrum-web-components/help-text';
 ```html demo
 <sp-field-label size="s" for="size-s">Password</sp-field-label>
 <sp-textfield size="s" id="size-s" type="password">
-    <sp-help-text size="s" slot="help-text">
-        Create a password with at least 8 characters.
-    </sp-help-text>
+  <sp-help-text size="s" slot="help-text">
+    Create a password with at least 8 characters.
+  </sp-help-text>
 </sp-textfield>
 ```
 
@@ -47,9 +47,9 @@ import { HelpText } from '@spectrum-web-components/help-text';
 ```html demo
 <sp-field-label size="m" for="size-m">Password</sp-field-label>
 <sp-textfield size="m" id="size-m" type="password">
-    <sp-help-text size="m" slot="help-text">
-        Create a password with at least 8 characters.
-    </sp-help-text>
+  <sp-help-text size="m" slot="help-text">
+    Create a password with at least 8 characters.
+  </sp-help-text>
 </sp-textfield>
 ```
 
@@ -60,9 +60,9 @@ import { HelpText } from '@spectrum-web-components/help-text';
 ```html
 <sp-field-label size="l" for="size-l">Password</sp-field-label>
 <sp-textfield size="l" id="size-l" type="password">
-    <sp-help-text size="l" slot="help-text">
-        Create a password with at least 8 characters.
-    </sp-help-text>
+  <sp-help-text size="l" slot="help-text">
+    Create a password with at least 8 characters.
+  </sp-help-text>
 </sp-textfield>
 ```
 
@@ -73,9 +73,9 @@ import { HelpText } from '@spectrum-web-components/help-text';
 ```html
 <sp-field-label size="xl" for="size-xl">Password</sp-field-label>
 <sp-textfield size="xl" id="size-xl" type="password">
-    <sp-help-text size="xl" slot="help-text">
-        Create a password with at least 8 characters.
-    </sp-help-text>
+  <sp-help-text size="xl" slot="help-text">
+    Create a password with at least 8 characters.
+  </sp-help-text>
 </sp-textfield>
 ```
 
@@ -97,12 +97,12 @@ For help text, usually the error is related to something that needs to be fixed 
 ```html
 <sp-field-label for="negative">Password</sp-field-label>
 <sp-textfield id="negative" type="password" required invalid>
-    <sp-help-text slot="help-text">
-        Create a password with at least 8 characters.
-    </sp-help-text>
-    <sp-help-text variant="negative" slot="negative-help-text">
-        Passwords must be at least 8 characters
-    </sp-help-text>
+  <sp-help-text slot="help-text">
+    Create a password with at least 8 characters.
+  </sp-help-text>
+  <sp-help-text variant="negative" slot="negative-help-text">
+    Passwords must be at least 8 characters
+  </sp-help-text>
 </sp-textfield>
 ```
 
@@ -112,18 +112,18 @@ When associated with content that does not supply an icon outlining the presence
 
 ```html
 <sp-field-group horizontal id="fruit">
-    <sp-checkbox value="apple">Apple</sp-checkbox>
-    <sp-checkbox
-        value="not-a-fruit"
-        onchange="javascript:this.parentElement.invalid = this.checked"
-    >
-        Lettuce
-    </sp-checkbox>
-    <sp-checkbox value="strawberry" checked>Strawberry</sp-checkbox>
-    <sp-help-text slot="help-text">One of these is not a fruit.</sp-help-text>
-    <sp-help-text icon slot="negative-help-text" icon>
-        Choose actual fruit(s).
-    </sp-help-text>
+  <sp-checkbox value="apple">Apple</sp-checkbox>
+  <sp-checkbox
+    value="not-a-fruit"
+    onchange="javascript:this.parentElement.invalid = this.checked"
+  >
+    Lettuce
+  </sp-checkbox>
+  <sp-checkbox value="strawberry" checked>Strawberry</sp-checkbox>
+  <sp-help-text slot="help-text">One of these is not a fruit.</sp-help-text>
+  <sp-help-text icon slot="negative-help-text" icon>
+    Choose actual fruit(s).
+  </sp-help-text>
 </sp-field-group>
 ```
 
@@ -134,12 +134,12 @@ When the content associated to the element is disabled, use the `disabled` attri
 ```html demo
 <sp-field-label for="color" disabled>Color</sp-field-label>
 <sp-combobox id="color" disabled>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
-    <sp-help-text slot="help-text" disabled>
-        Choose or add at least one color.
-    </sp-help-text>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-help-text slot="help-text" disabled>
+    Choose or add at least one color.
+  </sp-help-text>
 </sp-combobox>
 ```
 

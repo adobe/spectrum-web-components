@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -13,17 +13,17 @@
 @import url("./spectrum-table-body.css");
 
 :host {
-    display: block;
-    flex-grow: 1;
-    overflow: auto;
+  display: block;
+  flex-grow: 1;
+  border-block: var(--mod-table-border-width, var(--spectrum-table-border-width)) solid var(--highcontrast-table-border-color, var(--mod-table-border-color, var(--spectrum-table-border-color)));
+  border-inline: var(--mod-table-outer-border-inline-width, var(--spectrum-table-outer-border-inline-width)) solid var(--highcontrast-table-border-color, var(--mod-table-border-color, var(--spectrum-table-border-color)));
 
-    /* When made scrollable through non table element display properties, the
+  /* When made scrollable through non table element display properties, the
        body needs an additional border around it. */
-    border-radius: var(--mod-table-border-radius, var(--spectrum-table-border-radius));
-    border-inline: var(--mod-table-outer-border-inline-width, var(--spectrum-table-outer-border-inline-width)) solid var(--highcontrast-table-border-color, var(--mod-table-border-color, var(--spectrum-table-border-color)));
-    border-block: var(--mod-table-border-width, var(--spectrum-table-border-width)) solid var(--highcontrast-table-border-color, var(--mod-table-border-color, var(--spectrum-table-border-color)));
+  border-radius: var(--mod-table-border-radius, var(--spectrum-table-border-radius));
+  overflow: auto;
 }
 
 :host(:not([tabindex])) {
-    overflow: visible;
+  overflow: visible;
 }

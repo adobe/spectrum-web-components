@@ -5,105 +5,105 @@
 ### Patch Changes
 
 - Updated dependencies [[`6f5419a`](https://github.com/adobe/spectrum-web-components/commit/6f5419a4de29a1ee440a36c1a57d8c2e1476e2f6)]:
-    - @spectrum-web-components/core@0.0.4
-    - @spectrum-web-components/base@1.11.2
-    - @spectrum-web-components/shared@1.11.2
+  - @spectrum-web-components/core@0.0.4
+  - @spectrum-web-components/base@1.11.2
+  - @spectrum-web-components/shared@1.11.2
 
 ## 1.11.1
 
 ### Patch Changes
 
 - Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
-    - @spectrum-web-components/core@0.0.3
-    - @spectrum-web-components/shared@1.11.1
-    - @spectrum-web-components/base@1.11.1
+  - @spectrum-web-components/core@0.0.3
+  - @spectrum-web-components/shared@1.11.1
+  - @spectrum-web-components/base@1.11.1
 
 ## 1.11.0
 
 ### Patch Changes
 
 - Updated dependencies [[`283f0fe`](https://github.com/adobe/spectrum-web-components/commit/283f0fe07533c464e9fe1a3e7edebecb9128e11f), [`1d76b70`](https://github.com/adobe/spectrum-web-components/commit/1d76b7093d8ff5f9b26f07a69086488341a02650), [`f8bdeec`](https://github.com/adobe/spectrum-web-components/commit/f8bdeecf8a230822122a990fb977d3654649f891), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
-    - @spectrum-web-components/core@0.0.2
-    - @spectrum-web-components/shared@1.11.0
-    - @spectrum-web-components/base@1.11.0
+  - @spectrum-web-components/core@0.0.2
+  - @spectrum-web-components/shared@1.11.0
+  - @spectrum-web-components/base@1.11.0
 
 ## 1.10.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.10.0
-    - @spectrum-web-components/shared@1.10.0
+  - @spectrum-web-components/base@1.10.0
+  - @spectrum-web-components/shared@1.10.0
 
 ## 1.9.1
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.9.1
-    - @spectrum-web-components/shared@1.9.1
+  - @spectrum-web-components/base@1.9.1
+  - @spectrum-web-components/shared@1.9.1
 
 ## 1.9.0
 
 ### Patch Changes
 
 - [#5730](https://github.com/adobe/spectrum-web-components/pull/5730) [`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8) Thanks [@caseyisonit](https://github.com/caseyisonit)! - - **Fixed**: Accessibility warning logic in `<sp-progress-circle>` component.
-    - **Fixed**: Updated accessibility warning logic to only apply when `role="progressbar"` is explicitly set
-    - **Fixed**: Improved label validation for better accessibility compliance
+  - **Fixed**: Updated accessibility warning logic to only apply when `role="progressbar"` is explicitly set
+  - **Fixed**: Improved label validation for better accessibility compliance
 
-    These changes ensure accessibility warnings are only shown when appropriate and improve overall accessibility compliance.
+  These changes ensure accessibility warnings are only shown when appropriate and improve overall accessibility compliance.
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.9.0
-    - @spectrum-web-components/shared@1.9.0
+  - @spectrum-web-components/base@1.9.0
+  - @spectrum-web-components/shared@1.9.0
 
 ## 1.8.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.8.0
-    - @spectrum-web-components/shared@1.8.0
+  - @spectrum-web-components/base@1.8.0
+  - @spectrum-web-components/shared@1.8.0
 
 ## 1.7.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.7.0
-    - @spectrum-web-components/shared@1.7.0
+  - @spectrum-web-components/base@1.7.0
+  - @spectrum-web-components/shared@1.7.0
 
 ## 1.6.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.6.0
-    - @spectrum-web-components/shared@1.6.0
+  - @spectrum-web-components/base@1.6.0
+  - @spectrum-web-components/shared@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.5.0
-    - @spectrum-web-components/shared@1.5.0
+  - @spectrum-web-components/base@1.5.0
+  - @spectrum-web-components/shared@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.4.0
-    - @spectrum-web-components/shared@1.4.0
+  - @spectrum-web-components/base@1.4.0
+  - @spectrum-web-components/shared@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.3.0
-    - @spectrum-web-components/shared@1.3.0
+  - @spectrum-web-components/base@1.3.0
+  - @spectrum-web-components/shared@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

@@ -11,14 +11,14 @@
  */
 
 export default {
-    globs: [
-        'components/**/*.ts',
-        '../core/components/**/*.ts',
-        '../core/shared/**/*.ts',
-    ],
-    exclude: ['**/*.stories.ts', '**/*.test.ts', '**/*.spec.ts'],
-    outdir: '.storybook',
-    litelement: true,
-    dev: false,
-    plugins: [],
+  globs: [
+    'components/**/*.ts',
+    '../core/components/**/*.ts',
+    '../core/shared/**/*.ts',
+  ],
+  exclude: ['**/*.stories.ts', '**/*.test.ts', '**/*.spec.ts'],
+  outdir: '.storybook',
+  litelement: true,
+  dev: false,
+  plugins: [],
 };

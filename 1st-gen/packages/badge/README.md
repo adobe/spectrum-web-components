@@ -35,14 +35,14 @@ Badges can contain either a label, an icon, or both.
 ```html demo
 <sp-badge size="s">Label only</sp-badge>
 <sp-badge size="s">
-    <sp-icon-checkmark-circle
-        label="Icon-only badge"
-        slot="icon"
-    ></sp-icon-checkmark-circle>
+  <sp-icon-checkmark-circle
+    label="Icon-only badge"
+    slot="icon"
+  ></sp-icon-checkmark-circle>
 </sp-badge>
 <sp-badge size="s">
-    <sp-icon-settings slot="icon"></sp-icon-settings>
-    Icon and label
+  <sp-icon-settings slot="icon"></sp-icon-settings>
+  Icon and label
 </sp-badge>
 ```
 
@@ -58,17 +58,17 @@ It is not recommended to make badges interactive. Consider using a different com
 
 ```html demo
 <div style="display: flex; gap: var(--spectrum-spacing-75);">
-    <sp-badge size="s">Label</sp-badge>
-    <sp-badge size="s">
-        <sp-icon-checkmark-circle
-            label="Icon-only badge"
-            slot="icon"
-        ></sp-icon-checkmark-circle>
-    </sp-badge>
-    <sp-badge size="s">
-        <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
-        Icon and label
-    </sp-badge>
+  <sp-badge size="s">Label</sp-badge>
+  <sp-badge size="s">
+    <sp-icon-checkmark-circle
+      label="Icon-only badge"
+      slot="icon"
+    ></sp-icon-checkmark-circle>
+  </sp-badge>
+  <sp-badge size="s">
+    <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
+    Icon and label
+  </sp-badge>
 </div>
 ```
 
@@ -78,17 +78,17 @@ It is not recommended to make badges interactive. Consider using a different com
 
 ```html demo
 <div style="display: flex; gap: var(--spectrum-spacing-75);">
-    <sp-badge size="m">Label</sp-badge>
-    <sp-badge size="m">
-        <sp-icon-checkmark-circle
-            label="Icon-only badge"
-            slot="icon"
-        ></sp-icon-checkmark-circle>
-    </sp-badge>
-    <sp-badge size="m">
-        <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
-        Icon and label
-    </sp-badge>
+  <sp-badge size="m">Label</sp-badge>
+  <sp-badge size="m">
+    <sp-icon-checkmark-circle
+      label="Icon-only badge"
+      slot="icon"
+    ></sp-icon-checkmark-circle>
+  </sp-badge>
+  <sp-badge size="m">
+    <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
+    Icon and label
+  </sp-badge>
 </div>
 ```
 
@@ -98,17 +98,17 @@ It is not recommended to make badges interactive. Consider using a different com
 
 ```html demo
 <div style="display: flex; gap: var(--spectrum-spacing-75);">
-    <sp-badge size="l">Label</sp-badge>
-    <sp-badge size="l">
-        <sp-icon-checkmark-circle
-            label="Icon-only badge"
-            slot="icon"
-        ></sp-icon-checkmark-circle>
-    </sp-badge>
-    <sp-badge size="l">
-        <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
-        Icon and label
-    </sp-badge>
+  <sp-badge size="l">Label</sp-badge>
+  <sp-badge size="l">
+    <sp-icon-checkmark-circle
+      label="Icon-only badge"
+      slot="icon"
+    ></sp-icon-checkmark-circle>
+  </sp-badge>
+  <sp-badge size="l">
+    <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
+    Icon and label
+  </sp-badge>
 </div>
 ```
 
@@ -118,17 +118,17 @@ It is not recommended to make badges interactive. Consider using a different com
 
 ```html demo
 <div style="display: flex; gap: var(--spectrum-spacing-75);">
-    <sp-badge size="xl">Label</sp-badge>
-    <sp-badge size="xl">
-        <sp-icon-checkmark-circle
-            label="Icon-only badge"
-            slot="icon"
-        ></sp-icon-checkmark-circle>
-    </sp-badge>
-    <sp-badge size="xl">
-        <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
-        Icon and label
-    </sp-badge>
+  <sp-badge size="xl">Label</sp-badge>
+  <sp-badge size="xl">
+    <sp-icon-checkmark-circle
+      label="Icon-only badge"
+      slot="icon"
+    ></sp-icon-checkmark-circle>
+  </sp-badge>
+  <sp-badge size="xl">
+    <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
+    Icon and label
+  </sp-badge>
 </div>
 ```
 
@@ -152,12 +152,12 @@ When badges have a semantic meaning, they use semantic colors. Use these variant
 
 ```html demo
 <div style="display: flex; gap: var(--spectrum-spacing-75);">
-    <sp-badge variant="accent">Accent</sp-badge>
-    <sp-badge variant="neutral">Neutral</sp-badge>
-    <sp-badge variant="informative">Informative</sp-badge>
-    <sp-badge variant="positive">Positive</sp-badge>
-    <sp-badge variant="negative">Negative</sp-badge>
-    <sp-badge variant="notice">Notice</sp-badge>
+  <sp-badge variant="accent">Accent</sp-badge>
+  <sp-badge variant="neutral">Neutral</sp-badge>
+  <sp-badge variant="informative">Informative</sp-badge>
+  <sp-badge variant="positive">Positive</sp-badge>
+  <sp-badge variant="negative">Negative</sp-badge>
+  <sp-badge variant="notice">Notice</sp-badge>
 </div>
 ```
 
@@ -169,20 +169,20 @@ When badges are for color-coded categories, they use non-semantic colors. Non-se
 
 ```html demo
 <div style="display: flex; gap: var(--spectrum-spacing-75); flex-wrap:wrap;">
-    <sp-badge variant="seafoam">Seafoam</sp-badge>
-    <sp-badge variant="indigo">Indigo</sp-badge>
-    <sp-badge variant="purple">Purple</sp-badge>
-    <sp-badge variant="fuchsia">Fuchsia</sp-badge>
-    <sp-badge variant="magenta">Magenta</sp-badge>
-    <sp-badge variant="yellow">Yellow</sp-badge>
-    <sp-badge variant="gray">Gray</sp-badge>
-    <sp-badge variant="red">Red</sp-badge>
-    <sp-badge variant="orange">Orange</sp-badge>
-    <sp-badge variant="chartreuse">Chartreuse</sp-badge>
-    <sp-badge variant="celery">Celery</sp-badge>
-    <sp-badge variant="green">Green</sp-badge>
-    <sp-badge variant="cyan">Cyan</sp-badge>
-    <sp-badge variant="blue">Blue</sp-badge>
+  <sp-badge variant="seafoam">Seafoam</sp-badge>
+  <sp-badge variant="indigo">Indigo</sp-badge>
+  <sp-badge variant="purple">Purple</sp-badge>
+  <sp-badge variant="fuchsia">Fuchsia</sp-badge>
+  <sp-badge variant="magenta">Magenta</sp-badge>
+  <sp-badge variant="yellow">Yellow</sp-badge>
+  <sp-badge variant="gray">Gray</sp-badge>
+  <sp-badge variant="red">Red</sp-badge>
+  <sp-badge variant="orange">Orange</sp-badge>
+  <sp-badge variant="chartreuse">Chartreuse</sp-badge>
+  <sp-badge variant="celery">Celery</sp-badge>
+  <sp-badge variant="green">Green</sp-badge>
+  <sp-badge variant="cyan">Cyan</sp-badge>
+  <sp-badge variant="blue">Blue</sp-badge>
 </div>
 ```
 
@@ -195,33 +195,33 @@ When badges are for color-coded categories, they use non-semantic colors. Non-se
 
 ```html
 <div
-    style="position: relative; width: 400px; height: 200px; background: #eee; max-width: 100%"
+  style="position: relative; width: 400px; height: 200px; background: #eee; max-width: 100%"
 >
-    <sp-badge>None</sp-badge>
-    <sp-badge
-        fixed="block-start"
-        style="position: absolute; top: 0; left: 200px;"
-    >
-        block-start
-    </sp-badge>
-    <sp-badge
-        fixed="inline-end"
-        style="position: absolute; right: 0; top: 100px;"
-    >
-        inline-end
-    </sp-badge>
-    <sp-badge
-        fixed="block-end"
-        style="position: absolute; bottom: 0; left: 200px;"
-    >
-        block-end
-    </sp-badge>
-    <sp-badge
-        fixed="inline-start"
-        style="position: absolute; left: 0; top: 100px;"
-    >
-        inline-start
-    </sp-badge>
+  <sp-badge>None</sp-badge>
+  <sp-badge
+    fixed="block-start"
+    style="position: absolute; top: 0; left: 200px;"
+  >
+    block-start
+  </sp-badge>
+  <sp-badge
+    fixed="inline-end"
+    style="position: absolute; right: 0; top: 100px;"
+  >
+    inline-end
+  </sp-badge>
+  <sp-badge
+    fixed="block-end"
+    style="position: absolute; bottom: 0; left: 200px;"
+  >
+    block-end
+  </sp-badge>
+  <sp-badge
+    fixed="inline-start"
+    style="position: absolute; left: 0; top: 100px;"
+  >
+    inline-start
+  </sp-badge>
 </div>
 ```
 
@@ -233,16 +233,16 @@ When a badge's label is too long for the available horizontal space, it wraps to
 
 ```html demo
 <overlay-trigger>
-    <sp-badge style="max-inline-size: 350px;" slot="trigger">
-        Wikipedia is the best thing ever. Anyone in the world can write anything
-        they want about any subject so you know you are getting the best
-        possible information.
-    </sp-badge>
-    <sp-tooltip slot="hover-content">
-        Wikipedia is the best thing ever. Anyone in the world can write anything
-        they want about any subject so you know you are getting the best
-        possible information.
-    </sp-tooltip>
+  <sp-badge style="max-inline-size: 350px;" slot="trigger">
+    Wikipedia is the best thing ever. Anyone in the world can write anything
+    they want about any subject so you know you are getting the best possible
+    information.
+  </sp-badge>
+  <sp-tooltip slot="hover-content">
+    Wikipedia is the best thing ever. Anyone in the world can write anything
+    they want about any subject so you know you are getting the best possible
+    information.
+  </sp-tooltip>
 </overlay-trigger>
 ```
 
@@ -281,16 +281,16 @@ Remember that a tooltip does not replace an accessible label.
 
 ```html demo
 <overlay-trigger>
-    <sp-badge size="m" slot="trigger">
-        <sp-icon-checkmark-circle
-            label="Labels are important"
-            slot="icon"
-        ></sp-icon-checkmark-circle>
-    </sp-badge>
-    <sp-tooltip placement="top" slot="hover-content">
-        <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
-        Labels are important
-    </sp-tooltip>
+  <sp-badge size="m" slot="trigger">
+    <sp-icon-checkmark-circle
+      label="Labels are important"
+      slot="icon"
+    ></sp-icon-checkmark-circle>
+  </sp-badge>
+  <sp-tooltip placement="top" slot="hover-content">
+    <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
+    Labels are important
+  </sp-tooltip>
 </overlay-trigger>
 ```
 

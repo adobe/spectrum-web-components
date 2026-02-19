@@ -11,10 +11,10 @@
  */
 
 import {
-    CSSResultArray,
-    html,
-    SpectrumElement,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  SpectrumElement,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
@@ -26,36 +26,36 @@ import styles from './underlay.css.js';
  * @fires close - When the underlay is "clicked" and the consuming pattern should chose whether to close based on that interaction
  */
 export class Underlay extends SpectrumElement {
-    public static override get styles(): CSSResultArray {
-        return [styles];
+  public static override get styles(): CSSResultArray {
+    return [styles];
+  }
+
+  private canClick = false;
+
+  @property({ type: Boolean, reflect: true })
+  public open = false;
+
+  public override click(): void {
+    this.dispatchEvent(new Event('close'));
+  }
+
+  protected handlePointerdown(): void {
+    this.canClick = true;
+  }
+
+  protected handlePointerup(): void {
+    if (this.canClick) {
+      this.click();
     }
+    this.canClick = false;
+  }
 
-    private canClick = false;
+  protected override render(): TemplateResult {
+    return html``;
+  }
 
-    @property({ type: Boolean, reflect: true })
-    public open = false;
-
-    public override click(): void {
-        this.dispatchEvent(new Event('close'));
-    }
-
-    protected handlePointerdown(): void {
-        this.canClick = true;
-    }
-
-    protected handlePointerup(): void {
-        if (this.canClick) {
-            this.click();
-        }
-        this.canClick = false;
-    }
-
-    protected override render(): TemplateResult {
-        return html``;
-    }
-
-    protected override firstUpdated(): void {
-        this.addEventListener('pointerdown', this.handlePointerdown);
-        this.addEventListener('pointerup', this.handlePointerup);
-    }
+  protected override firstUpdated(): void {
+    this.addEventListener('pointerdown', this.handlePointerdown);
+    this.addEventListener('pointerup', this.handlePointerup);
+  }
 }

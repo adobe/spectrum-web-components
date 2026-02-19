@@ -5,64 +5,64 @@
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.11.2
-    - @spectrum-web-components/overlay@1.11.2
+  - @spectrum-web-components/base@1.11.2
+  - @spectrum-web-components/overlay@1.11.2
 
 ## 1.11.1
 
 ### Patch Changes
 
 - Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
-    - @spectrum-web-components/base@1.11.1
-    - @spectrum-web-components/overlay@1.11.1
+  - @spectrum-web-components/base@1.11.1
+  - @spectrum-web-components/overlay@1.11.1
 
 ## 1.11.0
 
 ### Patch Changes
 
 - Updated dependencies [[`02b2d7d`](https://github.com/adobe/spectrum-web-components/commit/02b2d7d2c7d204d7f0f6501ec075e923f58244c9), [`f07344f`](https://github.com/adobe/spectrum-web-components/commit/f07344f400f64c12f15762e3fedcdab2629e781b), [`1d76b70`](https://github.com/adobe/spectrum-web-components/commit/1d76b7093d8ff5f9b26f07a69086488341a02650), [`cadc39e`](https://github.com/adobe/spectrum-web-components/commit/cadc39ea419f572a79451fc886cd45c8d8821cde), [`4cb0b7b`](https://github.com/adobe/spectrum-web-components/commit/4cb0b7b86ebfaad89f1866916415b8578aa6dbea), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
-    - @spectrum-web-components/overlay@1.11.0
-    - @spectrum-web-components/base@1.11.0
+  - @spectrum-web-components/overlay@1.11.0
+  - @spectrum-web-components/base@1.11.0
 
 ## 1.10.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.10.0
-    - @spectrum-web-components/overlay@1.10.0
+  - @spectrum-web-components/base@1.10.0
+  - @spectrum-web-components/overlay@1.10.0
 
 ## 1.9.1
 
 ### Patch Changes
 
 - Updated dependencies [[`a19cbe3`](https://github.com/adobe/spectrum-web-components/commit/a19cbe3e8b4690d8abd1530e3930e5d48ae43618)]:
-    - @spectrum-web-components/overlay@1.9.1
-    - @spectrum-web-components/base@1.9.1
+  - @spectrum-web-components/overlay@1.9.1
+  - @spectrum-web-components/base@1.9.1
 
 ## 1.9.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/overlay@1.9.0
-    - @spectrum-web-components/base@1.9.0
+  - @spectrum-web-components/overlay@1.9.0
+  - @spectrum-web-components/base@1.9.0
 
 ## 1.8.0
 
 ### Patch Changes
 
 - Updated dependencies [[`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7), [`ee1bae6`](https://github.com/adobe/spectrum-web-components/commit/ee1bae6f9a7401dc31ebc84e4e27f9d39be692d1), [`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7)]:
-    - @spectrum-web-components/overlay@1.8.0
-    - @spectrum-web-components/base@1.8.0
+  - @spectrum-web-components/overlay@1.8.0
+  - @spectrum-web-components/base@1.8.0
 
 ## 1.7.0
 
 ### Patch Changes
 
 - Updated dependencies [[`a646ae8`](https://github.com/adobe/spectrum-web-components/commit/a646ae8b0e652308d359226740d2cb189e492e45)]:
-    - @spectrum-web-components/overlay@1.7.0
-    - @spectrum-web-components/base@1.7.0
+  - @spectrum-web-components/overlay@1.7.0
+  - @spectrum-web-components/base@1.7.0
 
 ## 1.6.0
 
@@ -70,37 +70,37 @@
 
 - [#5341](https://github.com/adobe/spectrum-web-components/pull/5341) [`03a4439`](https://github.com/adobe/spectrum-web-components/commit/03a443946b760aedc668630f33ac660443ff915e) Thanks [@renovate](https://github.com/apps/renovate)! - 📝 #[​3566](https://github.com/adobe/spectrum-css/pull/3566) Thanks [@​aramos-adobe](https://github.com/aramos-adobe)!
 
-    Popover overflow bug on Safari
-    - `translateZ` has been added to the open popover to prevent clipping of the `filter: drop-shadow` when overflow is applied. `translateZ` or `translate3d` on the open state accelerates the component to the GPU layer maintaining any transformations and animations.
-    - `overflow: visible` applied to CSS `*--withTip` so the tip is still visible if overflow is applied to the component.
+  Popover overflow bug on Safari
+  - `translateZ` has been added to the open popover to prevent clipping of the `filter: drop-shadow` when overflow is applied. `translateZ` or `translate3d` on the open state accelerates the component to the GPU layer maintaining any transformations and animations.
+  - `overflow: visible` applied to CSS `*--withTip` so the tip is still visible if overflow is applied to the component.
 
 - Updated dependencies [[`53f3769`](https://github.com/adobe/spectrum-web-components/commit/53f3769f07b6e7853a8a4c0dc63b21fe14cf3d4b)]:
-    - @spectrum-web-components/overlay@1.6.0
-    - @spectrum-web-components/base@1.6.0
+  - @spectrum-web-components/overlay@1.6.0
+  - @spectrum-web-components/base@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
 - Updated dependencies [[`8f8735c`](https://github.com/adobe/spectrum-web-components/commit/8f8735c9ec3eac3b6473424c78257cb46ee17f70)]:
-    - @spectrum-web-components/overlay@1.5.0
-    - @spectrum-web-components/base@1.5.0
+  - @spectrum-web-components/overlay@1.5.0
+  - @spectrum-web-components/base@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
 - Updated dependencies [[`46cd782`](https://github.com/adobe/spectrum-web-components/commit/46cd7828f65491fc08790e5ba0aec412ee89199d), [`70f5f6f`](https://github.com/adobe/spectrum-web-components/commit/70f5f6f3a97b530fb20f9f5ee049e9a8c124b02d)]:
-    - @spectrum-web-components/overlay@1.4.0
-    - @spectrum-web-components/base@1.4.0
+  - @spectrum-web-components/overlay@1.4.0
+  - @spectrum-web-components/base@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
 - Updated dependencies [[`468314f`](https://github.com/adobe/spectrum-web-components/commit/468314f45cf5fedb2e9029da210a5886260abca9)]:
-    - @spectrum-web-components/overlay@1.3.0
-    - @spectrum-web-components/base@1.3.0
+  - @spectrum-web-components/overlay@1.3.0
+  - @spectrum-web-components/base@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

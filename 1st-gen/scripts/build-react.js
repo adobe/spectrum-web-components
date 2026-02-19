@@ -12,79 +12,77 @@
  * governing permissions and limitations under the License.
  */
 
+import { exec as execCallback } from 'child_process';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { exec as execCallback } from 'child_process';
 import { promisify } from 'util';
 const exec = promisify(execCallback);
 
 import fg from 'fast-glob';
+
 import 'colors';
 
-import { buildPackage } from './ts-tools.js';
 import { generateIconWrapper } from './cem-plugin-react-wrapper.js';
 import { getWorkspacePackages } from './cem-tools.js';
+import { buildPackage } from './ts-tools.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.join(__dirname, '..');
 
 async function main() {
-    const allPackages = getWorkspacePackages();
-    console.log(
-        `\nGenerating React wrappers for ${allPackages.length} packages...`
-    );
-    await Promise.all(
-        allPackages.map(async (pkg) => {
-            return exec(
-                `cem analyze --config ${path.join(rootDir, 'cem-react-wrapper.config.js')}`,
-                { stdio: 'inherit', cwd: pkg.path }
-            )
-                .then(({ stderr }) => {
-                    if (stderr) {
-                        console.error(stderr);
-                        return;
-                    }
-
-                    console.log(
-                        `${'✓'.green}  ${`@swc-react/${pkg.path.split(path.sep).pop()}`.cyan}`
-                    );
-                })
-                .catch((error) =>
-                    console.error(
-                        `Error running command in ${pkg.path}:`,
-                        error
-                    )
-                );
-        })
-    );
-
-    await Promise.all([
-        generateIconWrapper('icons-ui').then(() => {
-            console.log(`${'✓'.green}  ${'@swc-react/icons-ui'.cyan}`);
-        }),
-        generateIconWrapper('icons-workflow').then(() => {
-            console.log(`${'✓'.green}  ${'@swc-react/icons-workflow'.cyan}`);
-        }),
-    ]);
-
-    console.log(`\n🧹  Formatting generated files...`);
-    await exec(
-        `yarn eslint --fix --quiet ${path.join(rootDir, 'react/**/*.ts')}`,
-        { stdio: 'inherit', cwd: rootDir }
-    ).then(({ stdout, stderr }) => {
-        if (stderr) {
+  const allPackages = getWorkspacePackages();
+  console.log(
+    `\nGenerating React wrappers for ${allPackages.length} packages...`
+  );
+  await Promise.all(
+    allPackages.map(async (pkg) => {
+      return exec(
+        `cem analyze --config ${path.join(rootDir, 'cem-react-wrapper.config.js')}`,
+        { stdio: 'inherit', cwd: pkg.path }
+      )
+        .then(({ stderr }) => {
+          if (stderr) {
             console.error(stderr);
-        }
-        console.log(stdout, `${'✓'.green}  Clean-up complete.`);
-    });
+            return;
+          }
 
-    const files = await fg(['./react/**/!(*.d).ts']);
-    console.log(`\n🔨  Building ${files.length} assets...`);
-    return buildPackage(files).then(() => {
-        console.log(` ${'✓'.green}  Success`);
-        console.log(`\n🎉  React build complete!`);
-        process.exit(0);
-    });
+          console.log(
+            `${'✓'.green}  ${`@swc-react/${pkg.path.split(path.sep).pop()}`.cyan}`
+          );
+        })
+        .catch((error) =>
+          console.error(`Error running command in ${pkg.path}:`, error)
+        );
+    })
+  );
+
+  await Promise.all([
+    generateIconWrapper('icons-ui').then(() => {
+      console.log(`${'✓'.green}  ${'@swc-react/icons-ui'.cyan}`);
+    }),
+    generateIconWrapper('icons-workflow').then(() => {
+      console.log(`${'✓'.green}  ${'@swc-react/icons-workflow'.cyan}`);
+    }),
+  ]);
+
+  console.log(`\n🧹  Formatting generated files...`);
+  await exec(
+    `yarn eslint --fix --quiet ${path.join(rootDir, 'react/**/*.ts')}`,
+    { stdio: 'inherit', cwd: rootDir }
+  ).then(({ stdout, stderr }) => {
+    if (stderr) {
+      console.error(stderr);
+    }
+    console.log(stdout, `${'✓'.green}  Clean-up complete.`);
+  });
+
+  const files = await fg(['./react/**/!(*.d).ts']);
+  console.log(`\n🔨  Building ${files.length} assets...`);
+  return buildPackage(files).then(() => {
+    console.log(` ${'✓'.green}  Success`);
+    console.log(`\n🎉  React build complete!`);
+    process.exit(0);
+  });
 }
 
 main();

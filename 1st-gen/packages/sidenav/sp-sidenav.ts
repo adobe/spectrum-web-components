@@ -9,13 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { SideNav } from './src/Sidenav.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { SideNav } from './src/Sidenav.js';
 
 defineElement('sp-sidenav', SideNav);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-sidenav': SideNav;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-sidenav': SideNav;
+  }
 }

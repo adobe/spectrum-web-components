@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -15,12 +15,12 @@
 
 :host([horizontal]) slot:not([name])::slotted(*:not(:last-child)),
 :host(:not([vertical])) slot:not([name])::slotted(*:not(:last-child)) {
-    /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item+.spectrum-FieldGroup-item */
-    margin: 0 var(--spectrum-fieldgroup-margin) 0 0;
+  /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item+.spectrum-FieldGroup-item */
+  margin: 0 var(--spectrum-fieldgroup-margin) 0 0;
 }
 
 :host([horizontal]:dir(rtl)) slot:not([name])::slotted(*:not(:last-child)),
 :host(:not([vertical]):dir(rtl)) slot:not([name])::slotted(*:not(:last-child)) {
-    /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item+.spectrum-FieldGroup-item */
-    margin: 0 0 0 var(--spectrum-fieldgroup-margin);
+  /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item+.spectrum-FieldGroup-item */
+  margin: 0 0 0 var(--spectrum-fieldgroup-margin);
 }

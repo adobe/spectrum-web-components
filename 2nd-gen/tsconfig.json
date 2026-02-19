@@ -1,24 +1,24 @@
 {
-    "compilerOptions": {
-        "allowImportingTsExtensions": true,
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
 
-        // 2nd-gen specific: Build configuration
-        "noEmit": true,
+    // 2nd-gen specific: Build configuration
+    "noEmit": true,
 
-        // Additional strictness
-        "noFallthroughCasesInSwitch": true,
-        "outDir": "./dist",
-        "rootDir": "./"
+    // Additional strictness
+    "noFallthroughCasesInSwitch": true,
+    "outDir": "./dist",
+    "rootDir": "./"
+  },
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.stories.ts"],
+  "extends": "../tsconfig.base.json",
+  "include": ["packages/**/*.ts", "**/*.d.ts"],
+  "references": [
+    {
+      "path": "./packages/core"
     },
-    "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.stories.ts"],
-    "extends": "../tsconfig.base.json",
-    "include": ["packages/**/*.ts", "**/*.d.ts"],
-    "references": [
-        {
-            "path": "./packages/core"
-        },
-        {
-            "path": "./packages/swc"
-        }
-    ]
+    {
+      "path": "./packages/swc"
+    }
+  ]
 }

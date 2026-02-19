@@ -14,7 +14,7 @@ import { ContextualHelp } from './src/ContextualHelp.js';
 customElements.define('sp-contextual-help', ContextualHelp);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-contextual-help': ContextualHelp;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-contextual-help': ContextualHelp;
+  }
 }

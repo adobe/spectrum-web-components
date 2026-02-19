@@ -38,9 +38,9 @@ Avatar sizes scale exponentially, based on the Spectrum type scale. These range 
 
 ```html demo
 <sp-avatar
-    size="50"
-    label="Demo User"
-    src="https://picsum.photos/500/500"
+  size="50"
+  label="Demo User"
+  src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -50,9 +50,9 @@ Avatar sizes scale exponentially, based on the Spectrum type scale. These range 
 
 ```html demo
 <sp-avatar
-    size="75"
-    label="Demo User"
-    src="https://picsum.photos/500/500"
+  size="75"
+  label="Demo User"
+  src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -62,9 +62,9 @@ Avatar sizes scale exponentially, based on the Spectrum type scale. These range 
 
 ```html demo
 <sp-avatar
-    size="100"
-    label="Demo User"
-    src="https://picsum.photos/500/500"
+  size="100"
+  label="Demo User"
+  src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -74,9 +74,9 @@ Avatar sizes scale exponentially, based on the Spectrum type scale. These range 
 
 ```html demo
 <sp-avatar
-    size="200"
-    label="Demo User"
-    src="https://picsum.photos/500/500"
+  size="200"
+  label="Demo User"
+  src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -86,9 +86,9 @@ Avatar sizes scale exponentially, based on the Spectrum type scale. These range 
 
 ```html demo
 <sp-avatar
-    size="300"
-    label="Demo User"
-    src="https://picsum.photos/500/500"
+  size="300"
+  label="Demo User"
+  src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -98,9 +98,9 @@ Avatar sizes scale exponentially, based on the Spectrum type scale. These range 
 
 ```html demo
 <sp-avatar
-    size="400"
-    label="Demo User"
-    src="https://picsum.photos/500/500"
+  size="400"
+  label="Demo User"
+  src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -110,9 +110,9 @@ Avatar sizes scale exponentially, based on the Spectrum type scale. These range 
 
 ```html demo
 <sp-avatar
-    size="500"
-    label="Demo User"
-    src="https://picsum.photos/500/500"
+  size="500"
+  label="Demo User"
+  src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -122,9 +122,9 @@ Avatar sizes scale exponentially, based on the Spectrum type scale. These range 
 
 ```html demo
 <sp-avatar
-    size="600"
-    label="Demo User"
-    src="https://picsum.photos/500/500"
+  size="600"
+  label="Demo User"
+  src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -134,9 +134,9 @@ Avatar sizes scale exponentially, based on the Spectrum type scale. These range 
 
 ```html demo
 <sp-avatar
-    size="700"
-    label="Demo User"
-    src="https://picsum.photos/500/500"
+  size="700"
+  label="Demo User"
+  src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -179,9 +179,9 @@ When an avatar has an `href` attribute, it becomes a link and requires an access
 
 ```html demo
 <sp-avatar
-    label="View John Doe's profile"
-    src="https://picsum.photos/500/500"
-    href="https://adobe.com"
+  label="View John Doe's profile"
+  src="https://picsum.photos/500/500"
+  href="https://adobe.com"
 ></sp-avatar>
 ```
 

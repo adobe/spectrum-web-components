@@ -23,9 +23,9 @@ import { Asset } from '@adobe/swc/asset';
 const { events, args, argTypes, template } = getStorybookHelpers('swc-asset');
 
 argTypes.variant = {
-    ...argTypes.variant,
-    control: { type: 'select' },
-    options: [undefined, ...Asset.VARIANTS],
+  ...argTypes.variant,
+  control: { type: 'select' },
+  options: [undefined, ...Asset.VARIANTS],
 };
 
 /**
@@ -33,21 +33,21 @@ argTypes.variant = {
  * Images are contained within the element, growing to the element's full height while centering within the width provided.
  */
 const meta: Meta = {
-    title: 'Asset',
-    component: 'swc-asset',
-    args,
-    argTypes,
-    actions: {
-        handles: events,
+  title: 'Asset',
+  component: 'swc-asset',
+  args,
+  argTypes,
+  actions: {
+    handles: events,
+  },
+  parameters: {
+    docs: {
+      subtitle: `Visually represent files, folders, or images in your application`,
     },
-    parameters: {
-        docs: {
-            subtitle: `Visually represent files, folders, or images in your application`,
-        },
-        flexLayout: 'row-nowrap',
-    },
-    render: (args) => template(args),
-    tags: ['migrated'],
+    flexLayout: 'row-nowrap',
+  },
+  render: (args) => template(args),
+  tags: ['migrated'],
 };
 
 export default meta;
@@ -57,11 +57,11 @@ export default meta;
 // ────────────────────
 
 export const Playground: Story = {
-    args: {
-        label: 'Background',
-        'default-slot': `<img src="https://picsum.photos/id/56/80/80/?blur=2" alt="preview of background" />`,
-    },
-    tags: ['autodocs', 'dev'],
+  args: {
+    label: 'Background',
+    'default-slot': `<img src="https://picsum.photos/id/56/80/80/?blur=2" alt="preview of background" />`,
+  },
+  tags: ['autodocs', 'dev'],
 };
 
 // ────────────────────
@@ -69,11 +69,11 @@ export const Playground: Story = {
 // ────────────────────
 
 export const Overview: Story = {
-    args: {
-        label: 'Background',
-        'default-slot': `<img src="https://picsum.photos/id/56/80/80/?blur=2" alt="preview of background" />`,
-    },
-    tags: ['overview'],
+  args: {
+    label: 'Background',
+    'default-slot': `<img src="https://picsum.photos/id/56/80/80/?blur=2" alt="preview of background" />`,
+  },
+  tags: ['overview'],
 };
 
 // ──────────────────────────
@@ -94,16 +94,16 @@ export const Overview: Story = {
  * - **Label**: Accessible label for screen readers (used as `aria-label` on the icon SVGs)
  */
 export const Anatomy: Story = {
-    render: (args) => html`
-        ${template({ ...args, variant: 'file', label: 'README.md' })}
-        ${template({ ...args, variant: 'folder', label: 'packages/swc/' })}
-        ${template({
-            ...args,
-            label: 'images/profile_sm.png',
-            'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="Headshot of Jenn" />`,
-        })}
-    `,
-    tags: ['anatomy'],
+  render: (args) => html`
+    ${template({ ...args, variant: 'file', label: 'README.md' })}
+    ${template({ ...args, variant: 'folder', label: 'packages/swc/' })}
+    ${template({
+      ...args,
+      label: 'images/profile_sm.png',
+      'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="Headshot of Jenn" />`,
+    })}
+  `,
+  tags: ['anatomy'],
 };
 
 // ──────────────────────────
@@ -119,27 +119,27 @@ export const Anatomy: Story = {
  * When no variant is specified, the asset displays custom content provided via the default slot (typically an image).
  */
 export const Variants: Story = {
-    render: (args) => html`
-        ${template({
-            ...args,
-            variant: 'file',
-            label: 'README.md',
-        })}
-        ${template({
-            ...args,
-            variant: 'folder',
-            label: 'packages/swc/',
-        })}
-        ${template({
-            ...args,
-            label: 'banners/sunset.jpg',
-            'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="sunset over a sandy beach" />`,
-        })}
-    `,
-    parameters: {
-        'section-order': 1,
-    },
-    tags: ['options'],
+  render: (args) => html`
+    ${template({
+      ...args,
+      variant: 'file',
+      label: 'README.md',
+    })}
+    ${template({
+      ...args,
+      variant: 'folder',
+      label: 'packages/swc/',
+    })}
+    ${template({
+      ...args,
+      label: 'banners/sunset.jpg',
+      'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="sunset over a sandy beach" />`,
+    })}
+  `,
+  parameters: {
+    'section-order': 1,
+  },
+  tags: ['options'],
 };
 
 // ────────────────────────────────
@@ -171,22 +171,22 @@ export const Variants: Story = {
  * - Test with screen readers to verify assets are announced appropriately in context
  */
 export const Accessibility: Story = {
-    render: (args) => html`
-        ${template({
-            ...args,
-            variant: 'file',
-            label: 'Project proposal document',
-        })}
-        ${template({
-            ...args,
-            variant: 'folder',
-            label: 'Design assets directory',
-        })}
-        ${template({
-            ...args,
-            label: 'User profile photo',
-            'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="Profile photo of Maria Rodriguez, Senior Designer" />`,
-        })}
-    `,
-    tags: ['a11y'],
+  render: (args) => html`
+    ${template({
+      ...args,
+      variant: 'file',
+      label: 'Project proposal document',
+    })}
+    ${template({
+      ...args,
+      variant: 'folder',
+      label: 'Design assets directory',
+    })}
+    ${template({
+      ...args,
+      label: 'User profile photo',
+      'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="Profile photo of Maria Rodriguez, Senior Designer" />`,
+    })}
+  `,
+  tags: ['a11y'],
 };

@@ -9,13 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { Avatar } from './src/Avatar.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+import { Avatar } from './src/Avatar.js';
 
 defineElement('sp-avatar', Avatar);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-avatar': Avatar;
-    }
+  interface HTMLElementTagNameMap {
+    'sp-avatar': Avatar;
+  }
 }

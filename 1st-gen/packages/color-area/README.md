@@ -43,30 +43,30 @@ You can provide a custom gradient to replace the default color area appearance u
 
 ```html
 <sp-color-area>
-    <div slot="gradient" class="textured-gradient"></div>
+  <div slot="gradient" class="textured-gradient"></div>
 </sp-color-area>
 
 <style>
-    .textured-gradient {
-        width: 100%;
-        height: 100%;
-        background: 
+  .textured-gradient {
+    width: 100%;
+    height: 100%;
+    background: 
         /* Subtle texture overlay */
-            radial-gradient(
-                circle at 20% 80%,
-                rgba(255, 255, 255, 0.1) 0%,
-                transparent 90%
-            ),
-            radial-gradient(
-                circle at 80% 20%,
-                rgba(0, 0, 0, 0.1) 0%,
-                transparent 50%
-            ),
-            /* Standard HSV gradients */
-                linear-gradient(to bottom, transparent 0%, black 100%),
-            linear-gradient(to right, white 0%, transparent 100%),
-            hsl(180, 100%, 50%);
-    }
+      radial-gradient(
+        circle at 20% 80%,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 90%
+      ),
+      radial-gradient(
+        circle at 80% 20%,
+        rgba(0, 0, 0, 0.1) 0%,
+        transparent 50%
+      ),
+      /* Standard HSV gradients */
+      linear-gradient(to bottom, transparent 0%, black 100%),
+      linear-gradient(to right, white 0%, transparent 100%),
+      hsl(180, 100%, 50%);
+  }
 </style>
 ```
 
@@ -138,7 +138,7 @@ The step size affects:
 - Regular arrow key movements (moves by 1× step)
 - <kbd>Shift</kbd>+arrow key combinations (moves by 5× step)
 - <kbd>Page Up</kbd>/<kbd>Page Down</kbd> keys (moves by 10× step vertically)
-- <kbd>Home</kbd>/<kbd>End keys</kbd>  (moves by 10× step horizontally)
+- <kbd>Home</kbd>/<kbd>End keys</kbd> (moves by 10× step horizontally)
 
 A smaller step value provides more precise control but requires more key presses to move across the color area, while a larger step value allows for faster movement at the cost of precision. Choose a step size appropriate for your use case:
 
@@ -160,7 +160,7 @@ An `<sp-color-area>`'s height and width can be customized appropriately for its 
 
 ```html
 <sp-color-area
-    style="
+  style="
         width: 72px; 
         height: 72px"
 ></sp-color-area>
@@ -226,8 +226,8 @@ Specify `label-x` and `label-y` attributes to override these defaults.
 
 ```html
 <sp-color-area
-    label-x="Color intensity"
-    label-y="Color brightness"
+  label-x="Color intensity"
+  label-y="Color brightness"
 ></sp-color-area>
 ```
 
@@ -267,12 +267,12 @@ The component provides comprehensive ARIA support with different behavior for mo
 - **Role**: Uses native `input[type="range"]` elements with implicit "slider" roles for 2D color selection
 - **Role Description**: Announces as "2d slider" on desktop devices (omitted on mobile for better touch screen reader experience)
 - **Labels**:
-    - Mobile: Simple axis labels (e.g., "saturation", "luminosity")
-    - Desktop: Combined labels (e.g., "saturation Color Picker", "luminosity Color Picker")
+  - Mobile: Simple axis labels (e.g., "saturation", "luminosity")
+  - Desktop: Combined labels (e.g., "saturation Color Picker", "luminosity Color Picker")
 - **Orientation**: Explicitly set as "horizontal" for X-axis and "vertical" for Y-axis
 - **Value Text**: Internationalized percentage values
-    - Mobile: Single axis value (e.g., "45%")
-    - Desktop: Comprehensive context including both axes (e.g., "45%, saturation, 78%, luminosity")
+  - Mobile: Single axis value (e.g., "45%")
+  - Desktop: Comprehensive context including both axes (e.g., "45%, saturation, 78%, luminosity")
 - **Fieldset**: Contains both sliders with appropriate labeling for mobile screen readers
 - **Presentation**: Wrapper divs marked with `role="presentation"` to avoid navigation confusion
 

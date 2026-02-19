@@ -1,3 +1,15 @@
+# Build outputs
+**/dist/
+**/storybook-static/
+**/coverage/
+**/.wireit/
+**/out/
+**/out-tsc/
+**/_site/
+**/.tmp/
+**/playwright-report/
+**/test-results/
+
 # Documentation infrastructure scripts maintained by AI agents
 CONTRIBUTOR-DOCS/
-
+templates/
