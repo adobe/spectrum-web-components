@@ -1251,6 +1251,10 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
 }
 
 /**
+ * An `<sp-picker>` is a dropdown selection component that allows users to choose
+ * a single option from a list of menu items. It supports keyboard navigation,
+ * including arrow keys to cycle through options without opening the menu.
+ *
  * @element sp-picker
  *
  * @slot label - The placeholder content for the Picker
@@ -1260,11 +1264,6 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
  * @fires change - Announces that the `value` of the element has changed
  * @fires sp-opened - Announces that the overlay has been opened
  * @fires sp-closed - Announces that the overlay has been closed
- */
-/**
- * An `<sp-picker>` is a dropdown selection component that allows users to choose
- * a single option from a list of menu items. It supports keyboard navigation,
- * including arrow keys to cycle through options without opening the menu.
  */
 export class Picker extends SizedMixin(ExpandableElement, {
   noDefaultSize: true,
