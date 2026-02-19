@@ -188,8 +188,9 @@ export default defineConfig([
       'notice/notice': [
         'error',
         {
-          mustMatch: 'Copyright [0-9]{0,4} Adobe. All rights reserved.',
+          mustMatch: `Copyright ${new Date().getFullYear()} Adobe. All rights reserved.`,
           templateFile: 'linters/HEADER.js',
+          onNonMatchingHeader: 'replace',
         },
       ],
 
@@ -204,7 +205,10 @@ export default defineConfig([
       'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
 
       // Custom SWC rules
-      'swc/prevent-argument-names': ['error', ['e', 'ev', 'evt', 'err']],
+      'swc/prevent-argument-names': [
+        'error',
+        { disallowed: ['e', 'ev', 'evt', 'err'] },
+      ],
       'swc/document-active-element': 'error',
 
       // Import rules
@@ -311,6 +315,38 @@ export default defineConfig([
   },
 
   // ────────────────────────────────────────────────────────────────────────────
+  // Files that may start with shebang (#!/usr/bin/env node): require header
+  // directly under the shebang and fix by inserting it there.
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: [
+      'scripts/**/*.js',
+      '1st-gen/scripts/**/*.js',
+      '1st-gen/projects/**/scripts/**/*.js',
+      'CONTRIBUTOR-DOCS/**/*.js',
+      '2nd-gen/packages/tools/**/*.js',
+    ],
+    plugins: { swc: swcPlugin },
+    rules: {
+      'notice/notice': 'off',
+      'swc/notice-after-shebang': [
+        'error',
+        { templateFile: 'linters/HEADER.js' },
+      ],
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // Header file: disable notice rule
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: ['linters/HEADER.js'],
+    rules: {
+      'notice/notice': 'off',
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
   // TypeScript only: enable type-aware rules (not applied to .js/.mjs/.cjs)
   // no-undef off: TypeScript compiler handles undefined checks and DOM/built-in types.
   // ────────────────────────────────────────────────────────────────────────────
@@ -396,6 +432,7 @@ export default defineConfig([
     rules: {
       'swc/document-active-element': 'off',
       'import/no-extraneous-dependencies': 'off',
+      'import/extensions': 'off',
       'lit-a11y/no-autofocus': 'off',
       'lit-a11y/tabindex-no-positive': 'off',
       // Chai assertions use expressions like expect(x).to.be.true
@@ -475,15 +512,6 @@ export default defineConfig([
     ],
     rules: {
       'import/no-extraneous-dependencies': 'off',
-    },
-  },
-
-  // ────────────────────────────────────────────────────────────────────────────
-  // JSDoc: allow permissive mode
-  // ────────────────────────────────────────────────────────────────────────────
-  {
-    files: ['1st-gen/**/*.ts', '1st-gen/**/*.js'],
-    rules: {
       'jsdoc/valid-types': 'off',
     },
   },
