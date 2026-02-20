@@ -107,8 +107,13 @@ test.describe('Progress Circle - ARIA Attributes', () => {
     );
 
     const progressCircle = page.locator('swc-progress-circle').first();
-    const ariaValueNow = await progressCircle.getAttribute('aria-valuenow');
 
+    // Verify it's determinate (not indeterminate)
+    const isIndeterminate = await progressCircle.getAttribute('indeterminate');
+    expect(isIndeterminate).toBeNull();
+
+    // Determinate progress should have aria-valuenow
+    const ariaValueNow = await progressCircle.getAttribute('aria-valuenow');
     expect(ariaValueNow).toBeTruthy();
     expect(Number(ariaValueNow)).toBeGreaterThanOrEqual(0);
     expect(Number(ariaValueNow)).toBeLessThanOrEqual(100);
@@ -139,8 +144,13 @@ test.describe('Progress Circle - ARIA Attributes', () => {
     );
 
     const progressCircle = page.locator('swc-progress-circle').first();
-    const ariaValueNow = await progressCircle.getAttribute('aria-valuenow');
 
+    // Verify it's indeterminate
+    const isIndeterminate = await progressCircle.getAttribute('indeterminate');
+    expect(isIndeterminate).not.toBeNull();
+
+    // Indeterminate progress should not have aria-valuenow
+    const ariaValueNow = await progressCircle.getAttribute('aria-valuenow');
     expect(ariaValueNow).toBeNull();
   });
 });
