@@ -53,6 +53,15 @@ export const ConditionalSection = ({ tag, title, hideTitle = false }) => {
 
 };
 
+export const ConditionalGettingStarted = () => {
+    const resolvedOf = useOf('meta', ['meta']);
+
+    const tags = resolvedOf?.csfFile?.meta?.tags ?? [];
+
+    return <GettingStarted tags={tags} />;
+
+};
+
 <Meta isTemplate />
 
 <Title />
@@ -60,7 +69,7 @@ export const ConditionalSection = ({ tag, title, hideTitle = false }) => {
 <Description />
 <SingleStoryDescription />
 <OverviewStory />
-<GettingStarted />
+<ConditionalGettingStarted />
 
 <ConditionalSection tag="anatomy" title="Anatomy" hideTitle={true} />
 <ConditionalSection tag="options" title="Options" />

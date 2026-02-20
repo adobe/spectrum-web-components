@@ -54,7 +54,7 @@ const meta: Meta<TypographyTemplateProps> = {
   render: (args) => html`
     ${template(args)}
   `,
-  tags: ['migrated'],
+  tags: ['migrated', 'utility'],
 };
 
 export default meta;
