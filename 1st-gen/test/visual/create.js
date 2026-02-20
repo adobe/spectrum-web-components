@@ -41,9 +41,9 @@ async function createTest(dir) {
  * governing permissions and limitations under the License.
  */
 
-import * as stories from '../stories/${stories}.stories.js';
-import { regressVisuals } from '../../../test/visual/test.js';
 import type { TestsType } from '../../../test/visual/test.js';
+import { regressVisuals } from '../../../test/visual/test.js';
+import * as stories from '../stories/${stories}.stories.js';
 
 regressVisuals('${name}', stories as unknown as TestsType);
 `;
