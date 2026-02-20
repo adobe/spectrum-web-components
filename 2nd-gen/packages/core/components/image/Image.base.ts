@@ -113,12 +113,16 @@ export abstract class ImageBase extends SpectrumElement {
 
     /**
      * When true, shows an error state (e.g. failed to load).
+     * Set automatically when the image fails to load; can also be set manually.
      */
     @property({ type: Boolean, reflect: true })
     public error = false;
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+        if (changes.has('src') || changes.has('srcset')) {
+            this.error = false;
+        }
         if (window.__swc?.DEBUG && this.src && !this.alt) {
             window.__swc.warn(
                 this,
@@ -127,5 +131,13 @@ export abstract class ImageBase extends SpectrumElement {
                 { issues: ['Missing alt text'] }
             );
         }
+    }
+
+    /**
+     * Called when the inner image fails to load. Sets `error` to true so the
+     * component (or parent e.g. swc-asset) can show an error state.
+     */
+    protected handleImageError(): void {
+        this.error = true;
     }
 }

@@ -68,6 +68,7 @@ const meta: Meta = {
             subtitle: `Media wrapper for file/folder icons, error state, or slotted image, video, iframe`,
         },
         flexLayout: 'row-nowrap',
+        styles: { inlineSize: '320px' },
     },
     render: (args) => template(args),
     tags: ['migrated'],
@@ -85,19 +86,15 @@ export const Playground: Story = {
         'default-slot': `<swc-image src="https://picsum.photos/id/1015/400/400" alt="Landscape"></swc-image>`,
     },
     render: (args) => html`
-        <div style="inline-size: 320px;">
-            <swc-asset
-                .aspectRatio=${args['aspect-ratio'] ?? undefined}
-                .label=${args.label ?? ''}
-                .variant=${args.variant}
-                .error=${args.error ?? false}
-                .rounded=${args.rounded ?? false}
-            >
-                ${args['default-slot']
-                    ? unsafeHTML(args['default-slot'])
-                    : nothing}
-            </swc-asset>
-        </div>
+        <swc-asset
+            .aspectRatio=${args['aspect-ratio'] ?? undefined}
+            .label=${args.label ?? ''}
+            .variant=${args.variant}
+            .error=${args.error ?? false}
+            .rounded=${args.rounded ?? false}
+        >
+            ${args['default-slot'] ? unsafeHTML(args['default-slot']) : nothing}
+        </swc-asset>
     `,
     tags: ['autodocs', 'dev'],
 };

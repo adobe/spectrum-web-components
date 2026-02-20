@@ -65,10 +65,12 @@ export abstract class AssetBase extends SpectrumElement {
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
 
-        if (this.aspectRatio) {
-            this.style.aspectRatio = this.aspectRatio;
-        } else {
-            this.style.removeProperty('aspect-ratio');
+        if (changes.has('aspectRatio')) {
+            if (this.aspectRatio) {
+                this.style.aspectRatio = this.aspectRatio;
+            } else {
+                this.style.removeProperty('aspect-ratio');
+            }
         }
 
         if (window.__swc?.DEBUG) {

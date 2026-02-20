@@ -53,6 +53,7 @@ export class Image extends ImageBase {
             <div
                 class=${classMap({
                     ['spectrum-Image']: true,
+                    ['spectrum-Image--error']: this.error,
                 })}
             >
                 <img
@@ -69,6 +70,7 @@ export class Image extends ImageBase {
                     width=${ifDefined(this.width)}
                     height=${ifDefined(this.height)}
                     style=${styleMap(imageStyles)}
+                    @error=${this.handleImageError}
                 />
             </div>
         `;
