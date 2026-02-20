@@ -129,6 +129,9 @@ export default defineConfig([
       '1st-gen/packages/**/!(src)/**/*.js',
       '1st-gen/tools/**/!(src)/**/*.js',
       '1st-gen/projects/**/!(src)/**/*.js',
+      '1st-gen/test/*.js',
+      '1st-gen/test/plugins/*.js',
+      '1st-gen/test/visual/*.js',
       '2nd-gen/packages/**/dist/**',
       // Icons
       '1st-gen/packages/icons/**',
