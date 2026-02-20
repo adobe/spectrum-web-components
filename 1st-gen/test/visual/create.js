@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -30,7 +30,7 @@ async function createTest(dir) {
         })
         .join('') + 'Stories';
     const testString = `/**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -60,6 +60,13 @@ async function main() {
   try {
     await rimraf('**/*-vrt.ts');
   } catch (error) {
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        undefined,
+        `Failed to delete test files: ${JSON.stringify(error)}`,
+        { issues: [error instanceof Error ? error.message : 'Unknown error'] }
+      );
+    }
     process.exit(1);
   }
   await createTest('packages');

@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -234,6 +234,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
   public override focus(options?: FocusOptions): void {
     this.focusElement?.focus(options);
   }
+
   /**
    * @deprecated - Use `focus` instead.
    */
@@ -833,6 +834,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 
   /**
    * when the value changes or the menu slot changes, manage the selection on the next frame, if not already scheduled
+   *
    * @param event
    */
   protected shouldScheduleManageSelection(event?: Event): void {

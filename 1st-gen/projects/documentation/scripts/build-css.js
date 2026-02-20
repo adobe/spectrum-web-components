@@ -21,48 +21,48 @@ import { hideBin } from 'yargs/helpers';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectDir = path.resolve(__dirname, '..');
 const nodeModulesDir = path.resolve(
-    __dirname,
-    '..',
-    '..',
-    '..',
-    '..',
-    'node_modules'
+  __dirname,
+  '..',
+  '..',
+  '..',
+  '..',
+  'node_modules'
 );
 const outDir = path.resolve(projectDir, '_site');
 
 const { files } = yargs(hideBin(process.argv)).argv;
 
 async function bundle(fileName) {
-    let { code, map } = await bundleAsync({
-        filename: fileName,
-        minify: true,
-        errorRecovery: true,
-        resolver: {
-            read(filePath) {
-                const file = fs.readFileSync(filePath, 'utf8');
-                return file;
-            },
-            resolve(specifier, from) {
-                if (specifier.startsWith('./')) {
-                    const resolution = path.resolve(from, '..', specifier);
-                    return resolution;
-                } else {
-                    const resolution = path.resolve(nodeModulesDir, specifier);
-                    return resolution;
-                }
-            },
-        },
-    });
-    return { code, map };
+  let { code, map } = await bundleAsync({
+    filename: fileName,
+    minify: true,
+    errorRecovery: true,
+    resolver: {
+      read(filePath) {
+        const file = fs.readFileSync(filePath, 'utf8');
+        return file;
+      },
+      resolve(specifier, from) {
+        if (specifier.startsWith('./')) {
+          const resolution = path.resolve(from, '..', specifier);
+          return resolution;
+        } else {
+          const resolution = path.resolve(nodeModulesDir, specifier);
+          return resolution;
+        }
+      },
+    },
+  });
+  return { code, map };
 }
 
 async function main() {
-    for await (const cssSource of await fg(`${projectDir}/${files}`)) {
-        const fileName = cssSource.split(path.sep).at(-1);
-        const { code, map } = await bundle(cssSource);
-        await fs.writeFile(path.resolve(outDir, fileName), code);
-    }
-    process.exit(0);
+  for await (const cssSource of await fg(`${projectDir}/${files}`)) {
+    const fileName = cssSource.split(path.sep).at(-1);
+    const { code } = await bundle(cssSource);
+    await fs.writeFile(path.resolve(outDir, fileName), code);
+  }
+  process.exit(0);
 }
 
 main();

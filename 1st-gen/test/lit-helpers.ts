@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -36,6 +36,7 @@ type EventListenerWithOptions = EventListenerOrEventListenerObject &
  *      document.body,
  *    );
  * ```
+ *
  * @todo replace this with a lit-native directive once one is released: https://github.com/lit/lit/pull/1960
  */
 class SpreadDirective extends AsyncDirective {
@@ -142,7 +143,7 @@ class SpreadDirective extends AsyncDirective {
       `@${event.type}`
     ] as () => unknown | EventListenerObject;
     if (typeof value === 'function') {
-      (value as () => unknown).call(this.host, event);
+      (value as (event: Event) => unknown).call(this.host, event);
     } else {
       (value as EventListenerObject).handleEvent(event);
     }

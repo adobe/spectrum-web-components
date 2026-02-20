@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -69,7 +69,7 @@ describe('Breadcrumbs', () => {
   });
   it('should collapse breadcrumbs if max-visible-items < nr. or slotted breadcrumb items', async () => {
     const el = await fixture<Breadcrumbs>(html`
-      <sp-breadcrumbs max-visible-items=${3}>
+      <sp-breadcrumbs max-visible-items="3">
         ${getBreadcrumbs(4)}
       </sp-breadcrumbs>
     `);
@@ -95,7 +95,7 @@ describe('Breadcrumbs', () => {
   });
   it('should respect max-visible-items when adding items dynamically', async () => {
     const el = await fixture<Breadcrumbs>(html`
-      <sp-breadcrumbs max-visible-items=${3}>
+      <sp-breadcrumbs max-visible-items="3">
         ${getBreadcrumbs(4)}
       </sp-breadcrumbs>
     `);
@@ -125,7 +125,7 @@ describe('Breadcrumbs', () => {
   });
   it('should always show the first breadcrumb if slot="root" is populated', async () => {
     const el = await fixture<Breadcrumbs>(html`
-      <sp-breadcrumbs max-visible-items=${3}>
+      <sp-breadcrumbs max-visible-items="3">
         <sp-breadcrumb-item value="Home" slot="root">Home</sp-breadcrumb-item>
         ${getBreadcrumbs(4)}
       </sp-breadcrumbs>
@@ -148,7 +148,7 @@ describe('Breadcrumbs', () => {
 
     const el = await fixture<Breadcrumbs>(html`
       <sp-breadcrumbs
-        max-visible-items=${3}
+        max-visible-items="3"
         @change=${(event: Event & { detail: BreadcrumbSelectDetail }) => {
           changeSpy(event.detail.value);
         }}

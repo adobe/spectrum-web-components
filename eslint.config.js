@@ -259,7 +259,6 @@ export default defineConfig([
       // JSDoc plugin rules (minimal set for consistency)
       // Focus on formatting and accuracy, not requiring docs everywhere.
       'jsdoc/check-alignment': 'error', // Consistent asterisk alignment
-      'jsdoc/check-indentation': 'warn', // Consistent indentation in descriptions
       'jsdoc/check-param-names': 'error', // Param names match function signature
       'jsdoc/check-tag-names': [
         'error',
@@ -282,6 +281,8 @@ export default defineConfig([
       'jsdoc/require-param-description': 'warn', // Params should have descriptions
       'jsdoc/require-returns-description': 'warn', // Returns should have descriptions
       'jsdoc/valid-types': 'warn', // Type expressions are valid (warn for @internal usage)
+      'jsdoc/lines-before-block': 'error',
+      'jsdoc/tag-lines': ['error', 'any', { startLines: 1, endLines: 0 }],
 
       // Import sorting (declaration and member order)
       'simple-import-sort/imports': [
@@ -360,6 +361,7 @@ export default defineConfig([
     files: ['**/*.ts'],
     rules: {
       'no-undef': 'off',
+      'no-redeclare': 'off',
       'no-unused-vars': 'off',
       '@typescript-eslint/no-array-constructor': 'error',
       '@typescript-eslint/no-duplicate-enum-values': 'error',

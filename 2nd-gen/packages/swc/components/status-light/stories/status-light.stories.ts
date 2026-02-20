@@ -182,6 +182,7 @@ export const Sizes: Story = {
   parameters: { 'section-order': 1 },
   tags: ['options'],
 };
+
 /**
  * Semantic variants provide meaning through color:
  *

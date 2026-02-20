@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -26,6 +26,7 @@ const COPYRIGHT_HEADER = fs
 
 /**
  * Generate a version TypeScript file from a package.json
+ *
  * @param {string} packageJsonPath - Path to package.json
  * @param {string} outputPath - Path to output version.ts file
  * @param {object} options - Generation options

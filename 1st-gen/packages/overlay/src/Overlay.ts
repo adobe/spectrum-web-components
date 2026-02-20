@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -418,6 +418,7 @@ export class Overlay extends ComputedOverlayBase {
 
   /**
    * Focus trap to keep focus within the dialog
+   *
    * @private
    */
   private _focusTrap: FocusTrap | null = null;
@@ -536,6 +537,7 @@ export class Overlay extends ComputedOverlayBase {
    *
    * This method handles the necessary steps to open the popover, including managing delays,
    * ensuring the popover is in the DOM, making transitions, and applying focus.
+   *
    * @protected
    * @override
    * @returns {Promise<void>} A promise that resolves when the popover has been fully opened.

@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -32,16 +32,26 @@ import { VirtualTrigger } from './VirtualTrigger.js';
 
 const supportsOverlayAuto = CSS.supports('(overlay: auto)');
 
+/**
+ *
+ * @param el - The element to check if it is open.
+ * @returns True if the element is open, false otherwise.
+ *
+ * @todo Why does this need try/catches? Can't we just use the matches() method directly?
+ * ```ts
+ * return el.matches(':popover-open') || el.matches(':open')
+ * ```
+ */
 function isOpen(el: HTMLElement): boolean {
   let popoverOpen = false;
   try {
     popoverOpen = el.matches(':popover-open');
-    // eslint-disable-next-line no-empty
+    // eslint-disable-next-line no-empty, @typescript-eslint/no-unused-vars
   } catch (error) {}
   let open = false;
   try {
     open = el.matches(':open');
-    // eslint-disable-next-line no-empty
+    // eslint-disable-next-line no-empty, @typescript-eslint/no-unused-vars
   } catch (error) {}
   return popoverOpen || open;
 }
@@ -96,16 +106,23 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
       });
     }
 
+    /**
+     *
+     * @param targetOpenState - The target open state of the overlay.
+     * @returns True if the popover should be shown, false otherwise.
+     *
+     * @todo Why does this need try/catches? Can't we just use the matches() method directly?
+     */
     private shouldShowPopover(targetOpenState: boolean): void {
       let popoverOpen = false;
       try {
         popoverOpen = this.dialogEl.matches(':popover-open');
-        // eslint-disable-next-line no-empty
+        // eslint-disable-next-line no-empty, @typescript-eslint/no-unused-vars
       } catch (error) {}
       let open = false;
       try {
         open = this.dialogEl.matches(':open');
-        // eslint-disable-next-line no-empty
+        // eslint-disable-next-line no-empty, @typescript-eslint/no-unused-vars
       } catch (error) {}
       if (
         targetOpenState &&

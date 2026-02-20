@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -55,10 +55,14 @@ export class ProgressBar extends SizedMixin(
 
   private languageResolver = new LanguageResolutionController(this);
 
+  /**
+   * @deprecated Use "static-color='white'" instead.
+   */
   @property({ type: Boolean, attribute: 'over-background' })
-  public get overBackground(): string {
-    return this._overBackground ? 'over-background' : '';
+  public get overBackground(): boolean {
+    return this._overBackground ? true : false;
   }
+
   public set overBackground(overBackground: boolean) {
     if (overBackground === true) {
       this.removeAttribute('over-background');
@@ -95,12 +99,11 @@ export class ProgressBar extends SizedMixin(
       ${this.slotHasContent || this.label
         ? html`
             <sp-field-label size=${this.size} class="label">
-              ${this.slotHasContent ? html`` : this.label}
-
+              ${this.slotHasContent ? nothing : this.label}
               <slot @slotchange=${this.handleSlotchange}></slot>
             </sp-field-label>
           `
-        : html``}
+        : nothing}
       ${this.label
         ? html`
             ${this.indeterminate
