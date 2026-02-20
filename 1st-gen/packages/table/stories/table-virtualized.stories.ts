@@ -269,7 +269,7 @@ export const virtualizedCustomRow = (args: Properties): TemplateResult => {
       scroller
       style="height: 200px"
       selects=${ifDefined(args.selects)}
-      .selected=${args.selected || []}
+      .selected=${args.selected as string[]}
       @change=${({ target }: Event & { target: Table }) => {
         const next = target.nextElementSibling as HTMLDivElement;
         next.textContent = `Selected: ${JSON.stringify(
@@ -280,7 +280,6 @@ export const virtualizedCustomRow = (args: Properties): TemplateResult => {
         const nextNext = next.nextElementSibling as HTMLDivElement;
         nextNext.textContent = `Selected Count: ${target.selected.length}`;
       }}
-      ?scroller=${false}
       .items=${virtualItems}
       .renderItem=${renderItem}
     >
