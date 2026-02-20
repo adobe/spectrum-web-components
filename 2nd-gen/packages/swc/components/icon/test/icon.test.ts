@@ -32,9 +32,6 @@ export default {
   tags: ['!autodocs', 'dev'],
 } as Meta;
 
-const iconSrc =
-  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z'/></svg>";
-
 // ──────────────────────────────────────────────────────────────
 // TEST: Defaults
 // ──────────────────────────────────────────────────────────────
@@ -45,7 +42,6 @@ export const OverviewTest: Story = {
     const icon = await getComponent<Icon>(canvasElement, 'swc-icon');
 
     await step('renders with expected default properties', async () => {
-      expect(icon.src).toBeUndefined();
       expect(icon.label).toBe('Search');
       expect(icon.shadowRoot).toBeTruthy();
     });
@@ -56,17 +52,21 @@ export const OverviewTest: Story = {
 // TEST: Properties / Attributes
 // ──────────────────────────────────────────────────────────────
 
-export const SrcRenderingTest: Story = {
+export const SizeAttributeTest: Story = {
   render: () => html`
-    <swc-icon src=${iconSrc} label="Search"></swc-icon>
+    <swc-icon size="xl" label="Search">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+        <path
+          d="M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"
+        />
+      </svg>
+    </swc-icon>
   `,
   play: async ({ canvasElement, step }) => {
     const icon = await getComponent<Icon>(canvasElement, 'swc-icon');
 
-    await step('renders image when src is provided', async () => {
-      const img = icon.shadowRoot?.querySelector('img');
-      expect(img).toBeTruthy();
-      expect(img?.getAttribute('alt')).toBe('Search');
+    await step('reflects size attribute on host', async () => {
+      expect(icon.getAttribute('size')).toBe('xl');
     });
   },
 };

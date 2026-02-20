@@ -9,14 +9,12 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export const ICON_VALID_SIZES = [
-  'xxs',
-  'xs',
-  's',
-  'm',
-  'l',
-  'xl',
-  'xxl',
-] as const;
+import { html, TemplateResult } from 'lit';
 
-export type IconSize = (typeof ICON_VALID_SIZES)[number];
+export const Dash100Icon = (): TemplateResult => {
+  return html`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+      <path d="M8.5 6h-7a1 1 0 0 1 0-2h7a1 1 0 0 1 0 2" />
+    </svg>
+  `;
+};
