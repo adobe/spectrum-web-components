@@ -53,12 +53,12 @@ function generateVersion(packageJsonPath, outputPath, options = {}) {
 /**
  * The version of the ${generationName} Spectrum Web Components library.
  */
-export const version = "${version}";
+export const version = '${version}';
 
 /**
  * The version of the core base package.
  */
-export const coreVersion = "${coreVersion || version}";
+export const coreVersion = '${coreVersion || version}';
 `;
 
     fs.writeFileSync(outputPath, content);
