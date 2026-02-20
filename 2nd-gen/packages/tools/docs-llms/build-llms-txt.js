@@ -13,7 +13,7 @@
  * Distinct from the 2nd-gen llms.txt (build-llms-txt-2nd-gen.js).
  *
  * Usage (from 1st-gen docs or repo root):
- *   node build-llms-txt.js --content-dir=<path> --output=<path>
+ * node build-llms-txt.js --content-dir=<path> --output=<path>
  */
 import fs from 'fs';
 import path from 'path';

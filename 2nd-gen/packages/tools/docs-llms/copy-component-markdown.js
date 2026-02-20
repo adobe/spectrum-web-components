@@ -12,7 +12,7 @@
  * Copies 1st-gen component content.md files to a site output dir as <name>.md.
  *
  * Usage:
- *   node copy-component-markdown.js --content-dir=<path> --out-dir=<path>
+ * node copy-component-markdown.js --content-dir=<path> --out-dir=<path>
  */
 import fs from 'fs';
 import path from 'path';

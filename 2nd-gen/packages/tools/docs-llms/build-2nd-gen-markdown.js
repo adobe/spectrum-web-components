@@ -13,7 +13,7 @@
  * options, states, behaviors, accessibility). Output is analogous to 1st-gen component READMEs.
  *
  * Usage:
- *   node build-2nd-gen-markdown.js [--components-dir=<path>] [--out-dir=<path>]
+ * node build-2nd-gen-markdown.js [--components-dir=<path>] [--out-dir=<path>]
  */
 import fs from 'fs';
 import path from 'path';

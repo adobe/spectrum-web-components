@@ -13,7 +13,7 @@
  * files. Distinct from the 1st-gen llms.txt (build-llms-txt.js).
  *
  * Usage:
- *   node build-llms-txt-2nd-gen.js [--components-dir=<path>] [--output=<path>]
+ * node build-llms-txt-2nd-gen.js [--components-dir=<path>] [--output=<path>]
  */
 import fs from 'fs';
 import path from 'path';
