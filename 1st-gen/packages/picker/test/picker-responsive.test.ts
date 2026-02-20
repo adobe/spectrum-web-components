@@ -250,10 +250,12 @@ describe('Picker, responsive', () => {
       await elementUpdated(el);
 
       // Wait for menu to be ready.
-      await waitUntil(
-        () => el.optionsMenu && el.optionsMenu.childItems.length > 0,
-        'Menu should be initialized'
-      );
+      if (!el.optionsMenu || el.optionsMenu.childItems.length === 0)
+          {await waitUntil(
+              () =>
+                  el.optionsMenu && el.optionsMenu.childItems.length > 0,
+              'Menu should be initialized'
+          );}
 
       // Wait for menu to be fully updated.
       await el.optionsMenu.updateComplete;
