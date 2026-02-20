@@ -19,11 +19,16 @@
     ".": {
       "import": "./index.js",
       "default": "./index.js"
+    },
+    "./notice-utils": {
+      "import": "./notice-utils.js",
+      "default": "./notice-utils.js"
     }
   },
   "main": "index.js",
   "files": [
-    "index.js"
+    "index.js",
+    "notice-utils.js"
   ],
   "keywords": [
     "design-system",

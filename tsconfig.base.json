@@ -5,7 +5,7 @@
 
     // Output settings (shared)
     "declaration": true,
-    "esModuleInterop": true,
+    "esModuleInterop": false,
 
     // Decorators (required for Lit)
     "experimentalDecorators": true,

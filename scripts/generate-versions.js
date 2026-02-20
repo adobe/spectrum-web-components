@@ -28,8 +28,6 @@ const COPYRIGHT_HEADER = fs
   .trim()
   .replace(YEAR_PLACEHOLDER, CURRENT_YEAR);
 
-console.log(COPYRIGHT_HEADER);
-
 /**
  * Generate a version TypeScript file from a package.json
  *
@@ -55,12 +53,12 @@ function generateVersion(packageJsonPath, outputPath, options = {}) {
 /**
  * The version of the ${generationName} Spectrum Web Components library.
  */
-export const version = '${version}';
+export const version = "${version}";
 
 /**
  * The version of the core base package.
  */
-export const coreVersion = '${coreVersion || version}';
+export const coreVersion = "${coreVersion || version}";
 `;
 
     fs.writeFileSync(outputPath, content);

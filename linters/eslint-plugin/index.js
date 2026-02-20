@@ -74,7 +74,7 @@ const swcPlugin = {
         ],
       },
       create(context) {
-        const sourceCode = context.getSourceCode();
+        const sourceCode = context.sourceCode;
         const text = sourceCode.getText();
 
         if (!text.startsWith('#!')) {
@@ -88,7 +88,7 @@ const swcPlugin = {
 
         const opts = context.options[0] || {};
         const templateFile = opts.templateFile ?? 'linters/HEADER.js';
-        const fileName = context.getFilename?.() ?? '';
+        const fileName = context.filename ?? '';
         const { resolvedTemplate, mustMatch, onNonMatchingHeader, messages } =
           resolveOptions({ ...opts, templateFile }, fileName);
 
