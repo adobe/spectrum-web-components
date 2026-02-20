@@ -32,7 +32,6 @@ test.describe('Divider - ARIA Snapshots', () => {
       'swc-divider'
     );
 
-    expect(snapshot).toBeTruthy();
     await expect(divider).toMatchAriaSnapshot();
   });
 
@@ -43,7 +42,6 @@ test.describe('Divider - ARIA Snapshots', () => {
       'swc-divider'
     );
 
-    expect(snapshot).toBeTruthy();
     await expect(divider).toMatchAriaSnapshot();
   });
 
@@ -54,7 +52,6 @@ test.describe('Divider - ARIA Snapshots', () => {
       'swc-divider'
     );
 
-    expect(snapshot).toBeTruthy();
     await expect(divider).toMatchAriaSnapshot();
   });
 
@@ -65,7 +62,6 @@ test.describe('Divider - ARIA Snapshots', () => {
       'swc-divider'
     );
 
-    expect(snapshot).toBeTruthy();
     await expect(divider).toMatchAriaSnapshot();
   });
 
@@ -76,7 +72,6 @@ test.describe('Divider - ARIA Snapshots', () => {
       'swc-divider'
     );
 
-    expect(snapshot).toBeTruthy();
     await expect(divider).toMatchAriaSnapshot();
   });
 });
