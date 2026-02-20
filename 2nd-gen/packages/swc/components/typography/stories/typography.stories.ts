@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -26,7 +26,7 @@ import {
  * Modifiers are available to use the serif font stack, and other sub-variants.
  * CJK adjustments are applied based on the `:lang()` selector.
  *
- * Learn more about [loading the expected fonts](/?path=/docs/guides-customization-fonts--readme).
+ * Learn more about [loading the expected fonts](/docs/guides-customization-fonts--readme).
  */
 const meta: Meta<TypographyTemplateProps> = {
   title: 'Typography',
@@ -136,6 +136,23 @@ export const HeadingVariant: Story = {
 };
 
 /**
+ * Heading is also available in a `--heavy` style that sets the font weight to the heaviest of `black`.
+ * Black weight text should only be used in heading type styles, and never below `18px` font-size, to ensure the text remains legible.
+ */
+export const HeadingHeavy: Story = {
+  args: {
+    variant: 'heading',
+    heavy: true,
+    size: 'L',
+    sampleText: 'Adobe Express Uses Heavy Headings',
+  },
+  parameters: {
+    'section-order': 5,
+  },
+  tags: ['options'],
+};
+
+/**
  * Title is used for essential text items on the page, such as wayfinding or context-setting.
  * While the Heading style is for the loudest, most broad message, there are still going to be other important items in an information hierarchy.
  */
@@ -145,7 +162,7 @@ export const TitleVariant: Story = {
     includeMultipleSizes: true,
   },
   parameters: {
-    'section-order': 5,
+    'section-order': 6,
   },
   tags: ['options'],
 };
@@ -159,7 +176,7 @@ export const BodyVariant: Story = {
     variant: 'body',
     includeMultipleSizes: true,
   },
-  parameters: { 'section-order': 6 },
+  parameters: { 'section-order': 7 },
   tags: ['options'],
 };
 
@@ -172,7 +189,7 @@ export const DetailVariant: Story = {
     variant: 'detail',
     includeMultipleSizes: true,
   },
-  parameters: { 'section-order': 7 },
+  parameters: { 'section-order': 8 },
   tags: ['options'],
 };
 
@@ -181,7 +198,7 @@ export const CodeVariant: Story = {
     variant: 'code',
     includeMultipleSizes: true,
   },
-  parameters: { 'section-order': 8 },
+  parameters: { 'section-order': 9 },
   tags: ['options'],
 };
 

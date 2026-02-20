@@ -20,7 +20,7 @@ import prettier from 'prettier';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
-import { allTokens, createLogger, generateCSS } from './src/tokens.js';
+import { allTokens, generateCSS } from './src/tokens.js';
 import { generateTypographyCssFile } from './src/typography.js';
 
 const argv = yargs(hideBin(process.argv))
@@ -58,6 +58,27 @@ if (out) {
   fs.mkdirSync(path.dirname(out), { recursive: true });
 }
 
+/**
+ * Creates a logger that writes to a file.
+ * @param {string|false} debugPath  path to log file OR false for no logging
+ */
+export function createLogger(debugPath) {
+  if (!debugPath) {
+    return () => {};
+  }
+
+  fs.writeFileSync(debugPath, '');
+
+  return (...args) => {
+    fs.appendFileSync(
+      debugPath,
+      args
+        .map((a) => (typeof a === 'string' ? a : JSON.stringify(a, null, 2)))
+        .join(' ') + '\n'
+    );
+  };
+}
+
 const log = debug && createLogger(`./${debugFile}`);
 
 if (outputType === 'tokens') {
@@ -73,7 +94,7 @@ if (outputType === 'tokens') {
 
   console.log(`✔ Tokens stylesheet written to ${out}`);
 } else if (outputType === 'typography') {
-  await generateTypographyCssFile({ prefix, outFile: out });
+  await generateTypographyCssFile({ debug: log, prefix, outFile: out });
 } else {
   fs.writeFileSync(
     out,
@@ -81,9 +102,9 @@ if (outputType === 'tokens') {
     'utf8'
   );
 
-  if (debug) {
-    console.log(`✔ Debug log written to ${debugFile}`);
-  }
-
   console.log(`✔ Token data written to ${out}`);
+}
+
+if (debug) {
+  console.log(`✔ Debug log written to ${debugFile}`);
 }

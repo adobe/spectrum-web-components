@@ -169,20 +169,19 @@ function tokenRefIfExists(tokens, name) {
   return tokenExists(tokens, name) ? `token('${name}')` : null;
 }
 
-function warnMissing(typeVar, what, name) {
-  console.warn(
-    `[typography] ${typeVar}: missing ${what} token "${name}" (skipped)`
-  );
+function warnMissing(typeVar, what, name, debug) {
+  const log = typeof debug === 'function' ? debug : () => {};
+  log(`[typography] ${typeVar}: missing ${what} token "${name}" (skipped)`);
 }
 
 /**
  * Get a token('...') reference by name and warn if missing.
  * Use for non-variant tokens (e.g. derived line-height-*, cjk-line-height-*, etc.)
  */
-function tokenRefOrWarn(tokens, typeVar, what, tokenName) {
+function tokenRefOrWarn(tokens, typeVar, what, tokenName, debug) {
   const ref = tokenRefIfExists(tokens, tokenName);
   if (!ref) {
-    warnMissing(typeVar, what, tokenName);
+    warnMissing(typeVar, what, tokenName, debug);
   }
   return ref;
 }
@@ -190,7 +189,7 @@ function tokenRefOrWarn(tokens, typeVar, what, tokenName) {
 /**
  * Get a token reference for `${typeVar}-${suffix}`, optionally using TOKEN_PATCHES.
  */
-function getVariantTokenRef(tokens, typeVar, suffix) {
+function getVariantTokenRef(tokens, typeVar, suffix, debug) {
   const primaryName = `${typeVar}-${suffix}`;
 
   // 1) overrides always win
@@ -211,7 +210,7 @@ function getVariantTokenRef(tokens, typeVar, suffix) {
   }
 
   // 4) nothing available
-  warnMissing(typeVar, suffix, primaryName);
+  warnMissing(typeVar, suffix, primaryName, debug);
   return null;
 }
 
@@ -339,7 +338,7 @@ function deriveAliasedTokenName(tokenValue, tokenNameForError) {
   return aliased;
 }
 
-function buildCjkNestedDecls({ cpBase, typeVar, cjkOverrides, tokens }) {
+function buildCjkNestedDecls({ cpBase, typeVar, cjkOverrides, tokens, debug }) {
   const decls = {};
 
   if (cjkOverrides.lineHeight) {
@@ -347,7 +346,8 @@ function buildCjkNestedDecls({ cpBase, typeVar, cjkOverrides, tokens }) {
       tokens,
       typeVar,
       'CJK line-height override',
-      cjkOverrides.lineHeight
+      cjkOverrides.lineHeight,
+      debug
     );
     if (lh) {
       decls['line-height'] = `var(--${cpBase}-cjk-line-height, ${lh})`;
@@ -359,7 +359,8 @@ function buildCjkNestedDecls({ cpBase, typeVar, cjkOverrides, tokens }) {
       tokens,
       typeVar,
       'CJK letter-spacing override',
-      cjkOverrides.letterSpacing
+      cjkOverrides.letterSpacing,
+      debug
     );
     if (ls) {
       decls['letter-spacing'] = `var(--${cpBase}-cjk-letter-spacing, ${ls})`;
@@ -369,7 +370,13 @@ function buildCjkNestedDecls({ cpBase, typeVar, cjkOverrides, tokens }) {
   return decls;
 }
 
-function getCjkFontSizeVarDecl({ cpBase, tokens, typeVar, aliasedFontSize }) {
+function getCjkFontSizeVarDecl({
+  cpBase,
+  tokens,
+  typeVar,
+  aliasedFontSize,
+  debug,
+}) {
   const cjkFontSizeTokenName =
     aliasedFontSize && deriveCjkFontSizeTokenName(aliasedFontSize);
 
@@ -380,7 +387,7 @@ function getCjkFontSizeVarDecl({ cpBase, tokens, typeVar, aliasedFontSize }) {
   const cjkFontSizeRef = tokenRefIfExists(tokens, cjkFontSizeTokenName);
 
   if (!cjkFontSizeRef) {
-    warnMissing(typeVar, 'CJK derived font-size', cjkFontSizeTokenName);
+    warnMissing(typeVar, 'CJK derived font-size', cjkFontSizeTokenName, debug);
     return null;
   }
 
@@ -467,8 +474,8 @@ export async function generateTypographyCssString(options = {}) {
     fontTokens = FONT_TOKENS,
     cjkBaseOverridesByVariant = CJK_OVERRIDES,
     selectorAliases = SELECTOR_ALIASES,
+    debug,
   } = options;
-
   const tokens = await loadTypographyJson();
 
   let out = `/**
@@ -511,7 +518,7 @@ export async function generateTypographyCssString(options = {}) {
     const mSizeToken = tokens[mSizeTokenName];
 
     if (!mSizeToken?.value) {
-      warnMissing(typeVar, 'required M size', mSizeTokenName);
+      warnMissing(typeVar, 'required M size', mSizeTokenName, debug);
     }
 
     const aliasedMFontSize = mSizeToken?.value
@@ -526,18 +533,26 @@ export async function generateTypographyCssString(options = {}) {
     const sansWeightRef = getVariantTokenRef(
       tokens,
       typeVar,
-      'sans-serif-font-weight'
+      'sans-serif-font-weight',
+      debug
     );
-    const colorRef = getVariantTokenRef(tokens, typeVar, 'color');
+    const colorRef = getVariantTokenRef(tokens, typeVar, 'color', debug);
 
     // non-variant tokens / derived tokens use tokenRefOrWarn
-    const mSizeRef = tokenRefOrWarn(tokens, typeVar, 'M size', mSizeTokenName);
+    const mSizeRef = tokenRefOrWarn(
+      tokens,
+      typeVar,
+      'M size',
+      mSizeTokenName,
+      debug
+    );
     const mLineHeightRef = mLineHeightTokenName
       ? tokenRefOrWarn(
           tokens,
           typeVar,
           'M derived line-height',
-          mLineHeightTokenName
+          mLineHeightTokenName,
+          debug
         )
       : null;
 
@@ -556,6 +571,7 @@ export async function generateTypographyCssString(options = {}) {
       typeVar,
       cjkOverrides,
       tokens,
+      debug,
     });
 
     const cjkFontSizeVarDecl = cfg.supportsCjkSizeAdjustment
@@ -564,6 +580,7 @@ export async function generateTypographyCssString(options = {}) {
           tokens,
           typeVar,
           aliasedFontSize: aliasedMFontSize,
+          debug,
         })
       : null;
 
@@ -649,7 +666,7 @@ export async function generateTypographyCssString(options = {}) {
 
       const sizeRef = tokenRefIfExists(tokens, sizeTokenName);
       if (!sizeRef) {
-        warnMissing(typeVar, `size ${sizeKey}`, sizeTokenName);
+        warnMissing(typeVar, `size ${sizeKey}`, sizeTokenName, debug);
         continue;
       }
 
@@ -667,7 +684,8 @@ export async function generateTypographyCssString(options = {}) {
         warnMissing(
           typeVar,
           `derived line-height for size ${sizeKey}`,
-          derivedLineHeightTokenName
+          derivedLineHeightTokenName,
+          debug
         );
       }
 
@@ -678,6 +696,7 @@ export async function generateTypographyCssString(options = {}) {
             tokens,
             typeVar,
             aliasedFontSize,
+            debug,
           })
         : null;
 
