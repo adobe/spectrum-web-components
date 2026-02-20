@@ -27,7 +27,7 @@ import '@spectrum-web-components/table/sp-table-body.js';
 import '@spectrum-web-components/table/sp-table-row.js';
 import '@spectrum-web-components/table/sp-table-cell.js';
 
-import { makeItems, Properties, renderItem } from './index.js';
+import { Item, makeItems, Properties, renderItem } from './index.js';
 
 export default {
   title: 'Table/Virtualized',
@@ -151,7 +151,7 @@ export const virtualizedSingle = (args: Properties): TemplateResult => {
       scroller
       style="height: 300px"
       selects=${ifDefined(args.selects)}
-      .selected=${args.selected || []}
+      .selected=${args.selected as string[]}
       @change=${({ target }: Event & { target: Table }) => {
         const next = target.nextElementSibling as HTMLDivElement;
         next.textContent = `Selected: ${JSON.stringify(target.selected)}`;
@@ -192,7 +192,7 @@ export const virtualizedMultiple = (args: Properties): TemplateResult => {
       scroller
       style="height: 200px"
       selects=${ifDefined(args.selects)}
-      .selected=${args.selected || []}
+      .selected=${args.selected as string[]}
       @change=${({ target }: Event & { target: Table }) => {
         const next = target.nextElementSibling as HTMLDivElement;
         next.textContent = `Selected: ${JSON.stringify(
@@ -228,10 +228,11 @@ export const virtualizedCustomValue = (args: Properties): TemplateResult => {
       scroller
       style="height: 200px"
       selects=${ifDefined(args.selects)}
-      .selected=${args.selected || []}
+      .selected=${args.selected as string[]}
       @change=${args.onChange}
       .items=${virtualItems}
-      .itemValue=${(_item: unknown, index: number) => 'applied-' + index}
+      .itemValue=${(item: unknown, _index: number) =>
+        'applied-' + (item as Item).date}
       .renderItem=${renderItem}
     >
       <sp-table-head>
