@@ -10,8 +10,134 @@
  * governing permissions and limitations under the License.
  */
 
-import { makeDecorator, useEffect } from '@storybook/preview-api';
-import { fetchContainers } from './helpers';
+import type {} from '../storybook-env';
+
+import { addons, makeDecorator, useEffect } from '@storybook/preview-api';
+
+const DEFAULT_KIT_ID = 'obc6cux';
+
+let languageListenerAttached = false;
+
+/**
+ * Applies the selected language (lang/dir) to the document and loads the corresponding
+ * Adobe Fonts kit if needed. Safe to call from the decorator or from a toolbar listener
+ * so that font loading works even when the decorator does not re-run (e.g. on some docs pages).
+ */
+function applyLanguageAndFontKit(
+    lang: string | false,
+    isRTL: boolean
+): void {
+    const langAttr = lang ? String(lang) : 'en-US';
+    const root = document.documentElement;
+
+    // Set the language on the document root and track if it has changed
+    let hasChanged = false;
+    if (root.getAttribute('lang') !== langAttr) {
+        root.setAttribute('lang', langAttr);
+        hasChanged = true;
+    }
+    root.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
+
+    // If the fonts are actively loading, do not re-trigger the load
+    if (window.FontsLoading === true) return;
+    // If the language has not changed, do not re-trigger the load
+    if (!hasChanged) return;
+
+    // Resolve kitId from locale: Latin default (obc6cux), CJK kits loaded on-demand
+    // (see preview-head __SWC_FONT_KIT_IDS__).
+    const getKitId =
+        typeof window.getKitIdForLang === 'function'
+            ? window.getKitIdForLang
+            : () => DEFAULT_KIT_ID;
+    const kitId = getKitId(lang);
+    // If the current kit is the same as the new kit, do not re-trigger the load
+    if (window.currentKitId === kitId) return;
+
+    const defaultKitId = getKitId(false) as string;
+
+    // Remove any previously injected Typekit script (from this decorator). The default kit
+    // script is added in preview-head and is not marked, so it stays.
+    const dynamicScripts = document.querySelectorAll(
+        'script[data-swc-typekit-dynamic="true"]'
+    );
+    dynamicScripts.forEach((el) => el.remove());
+
+    // If switching back to default, we're done; the default script is already in the page.
+    if (kitId === defaultKitId) {
+        window.currentKitId = kitId;
+        document.dispatchEvent(
+            new CustomEvent('typekit-loaded', { detail: { kitId } })
+        );
+        return;
+    }
+
+    // Loading a different kit requires injecting the kit's script first, then calling
+    // Typekit.load() to register and activate the fonts.
+    try {
+        window.FontsLoading = true;
+        const script = document.createElement('script');
+        script.setAttribute('data-swc-typekit-dynamic', 'true');
+        script.src = 'https://use.typekit.net/' + kitId + '.js';
+        script.async = true;
+        script.onload = function () {
+            try {
+                window.Typekit?.load({
+                    kitId: kitId,
+                    async: true,
+                    scriptTimeout: 3000,
+                    active: function () {
+                        window.FontsLoading = false;
+                        window.currentKitId = kitId;
+                        document.dispatchEvent(
+                            new CustomEvent('typekit-loaded', {
+                                detail: { kitId },
+                            })
+                        );
+                    },
+                    inactive: function () {
+                        window.FontsLoading = false;
+                    },
+                });
+            } catch (e) {
+                window.FontsLoading = false;
+                console.warn(
+                    'Typekit.load() failed for kit:',
+                    kitId,
+                    e
+                );
+            }
+        };
+        script.onerror = function () {
+            window.FontsLoading = false;
+        };
+        document.head.appendChild(script);
+    } catch (e) {
+        window.FontsLoading = false;
+        console.warn('Typekit failed to load kit:', kitId, e);
+    }
+}
+
+/**
+ * Attaches a one-time listener for Storybook toolbar language changes so that
+ * font loading works even when the decorator does not re-run (e.g. on docs pages).
+ */
+function attachLanguageChangeListener(): void {
+    if (languageListenerAttached || typeof document === 'undefined') return;
+    languageListenerAttached = true;
+    try {
+        const channel = addons.getChannel();
+        channel.on(
+            'globalsUpdated',
+            (payload: { globals?: { lang?: string } }) => {
+                const lang = payload?.globals?.lang ?? 'en-US';
+                const isRTL = ['ar', 'fa', 'he'].includes(lang);
+                applyLanguageAndFontKit(lang, isRTL);
+            }
+        );
+    } catch {
+        // Storybook event bus not available (e.g. in test env); decorator-only path still works.
+    }
+}
 
 /**
  * @type import('@storybook/csf').DecoratorFunction<import('@storybook/web-components').WebComponentsFramework>
@@ -22,102 +148,16 @@ export const withLanguageWrapper = makeDecorator({
     wrapper: (StoryFn, context) => {
         const { globals: { lang = false } = {}, id, viewMode } = context;
 
-        const currentKitId = (window as Window & { currentKitId?: string })
-            .currentKitId;
-
         // Add a textDirection property to the globals for use in the stories
-        const isRTL = ['ar', 'fa', 'he'].includes(lang); // fa/Farsi is currently not included in the storybook toolbar map
+        // fa/Farsi is currently not included in the storybook toolbar map
+        const isRTL = ['ar', 'fa', 'he'].includes(lang);
         context.globals.textDirection = isRTL ? 'rtl' : 'ltr';
 
+        attachLanguageChangeListener();
+
         useEffect(() => {
-            // Set the language on all containers and track if it has changed
-            let hasChanged = false;
-            const langAttr = lang ? String(lang) : 'en-US';
-            for (const container of fetchContainers(id, viewMode === 'docs')) {
-                if (container.getAttribute('lang') !== langAttr) {
-                    container.setAttribute('lang', langAttr);
-                    hasChanged = true;
-                }
-                container.setAttribute('dir', `${!isRTL ? 'ltr' : 'rtl'}`);
-            }
-
-            // If the fonts are actively loading, do not re-trigger the load
-            if (
-                (window as Window & { FontsLoading?: boolean }).FontsLoading ===
-                true
-            )
-                return;
-            // If the language has not changed, do not re-trigger the load
-            if (!hasChanged) return;
-
-            // Resolve kitId from locale: Latin default (obc6cux), CJK kits loaded on-demand (see preview-head __SWC_FONT_KIT_IDS__).
-            const win = window as Window & {
-                getKitIdForLang?: (l: string | false) => string;
-                Typekit?: { load: (c: Record<string, unknown>) => void };
-                FontsLoading?: boolean;
-                currentKitId?: string;
-            };
-
-            console.log(win.currentKitId);
-            // If it is US-language or unset, use the obc6cux Adobe font web project id
-            // (smaller size),
-            // otherwise use the CJK kits with all the language settings (multiple kits; larger size)
-            const kitId =
-                typeof win.getKitIdForLang === 'function'
-                    ? win.getKitIdForLang(lang)
-                    : 'obc6cux';
-
-            // If the current kit is the same as the new kit, do not re-trigger the load
-            if (currentKitId === kitId) return;
-
-            const defaultKitId = (
-                typeof win.getKitIdForLang === 'function'
-                    ? win.getKitIdForLang(false)
-                    : 'obc6cux'
-            ) as string;
-
-            // Remove any previously injected Typekit script (from this decorator). The default kit
-            // script is added in preview-head and is not marked, so it stays.
-            const dynamicScripts = document.querySelectorAll(
-                'script[data-swc-typekit-dynamic="true"]'
-            );
-            dynamicScripts.forEach((el) => el.remove());
-
-            // If switching back to default, we're done; the default script is already in the page.
-            if (kitId === defaultKitId) {
-                win.currentKitId = kitId;
-                document.dispatchEvent(
-                    new CustomEvent('typekit-loaded', { detail: { kitId } })
-                );
-                return;
-            }
-
-            // Loading a different kit requires injecting that kit's script; Typekit.load() alone
-            // does not fetch another kit's JS when the page initially loaded a different kit.
-            try {
-                win.FontsLoading = true;
-                const script = document.createElement('script');
-                script.setAttribute('data-swc-typekit-dynamic', 'true');
-                script.src = 'https://use.typekit.net/' + kitId + '.js';
-                script.async = true;
-                script.onload = function () {
-                    win.FontsLoading = false;
-                    win.currentKitId = kitId;
-                    console.log('Font loaded [id: ' + kitId + ']');
-                    document.dispatchEvent(
-                        new CustomEvent('typekit-loaded', { detail: { kitId } })
-                    );
-                };
-                script.onerror = function () {
-                    win.FontsLoading = false;
-                    console.warn('Typekit failed to load kit:', kitId);
-                };
-                document.head.appendChild(script);
-            } catch (e) {
-                win.FontsLoading = false;
-                console.warn('Typekit failed to load kit:', kitId, e);
-            }
-        }, [lang, id, viewMode, currentKitId]);
+            applyLanguageAndFontKit(lang, isRTL);
+        }, [lang, id, viewMode]);
 
         return StoryFn(context);
     },
