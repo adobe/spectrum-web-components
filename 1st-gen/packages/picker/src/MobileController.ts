@@ -18,9 +18,20 @@ import {
   SAFARI_FOCUS_RING_CLASS,
 } from './InteractionController.js';
 
+/**
+ * Controller for managing picker interactions on mobile/touch devices.
+ * Handles touch events with simplified toggle logic compared to desktop.
+ * Includes workarounds for Safari focus ring visibility issues.
+ */
 export class MobileController extends InteractionController {
+  /** Identifies this as a mobile interaction controller. */
   override type = InteractionTypes.mobile;
 
+  /**
+   * Handles click events on the trigger button.
+   * Toggles the picker unless disabled or toggle is prevented.
+   * Resets the preventNextToggle state after processing.
+   */
   handleClick(): void {
     if (this.host.disabled) {
       return;
@@ -31,6 +42,11 @@ export class MobileController extends InteractionController {
     this.preventNextToggle = 'no';
   }
 
+  /**
+   * Handles pointerdown events on mobile devices.
+   * Sets toggle prevention based on current open state to prevent
+   * double-toggling. Applies Safari focus ring workaround class.
+   */
   public override handlePointerdown(): void {
     this.preventNextToggle = this.open ? 'yes' : 'no';
     if (isWebKit()) {
@@ -38,6 +54,10 @@ export class MobileController extends InteractionController {
     }
   }
 
+  /**
+   * Handles focusout events on the trigger button.
+   * Removes the Safari focus ring workaround class when the picker is closed.
+   */
   private handleFocusOut(): void {
     if (this.host.open) {
       return;
@@ -47,6 +67,11 @@ export class MobileController extends InteractionController {
     }
   }
 
+  /**
+   * Initializes mobile-specific event listeners on the trigger button.
+   * Binds click, pointerdown, and focusout handlers.
+   * Cleans up any existing listeners before binding new ones.
+   */
   override init(): void {
     // Clean up listeners if they've already been bound
     this.abortController?.abort();

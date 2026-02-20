@@ -60,6 +60,7 @@
     "disableable",
     "effectful",
     "focusable",
+    "haspopup",
     "highcontrast",
     "labelledby",
     "longpress",

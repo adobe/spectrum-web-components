@@ -128,6 +128,7 @@ export default defineConfig([
       // Build outputs
       '1st-gen/packages/**/!(src)/**/*.js',
       '1st-gen/tools/**/!(src)/**/*.js',
+      '1st-gen/projects/**/!(src)/**/*.js',
       '2nd-gen/packages/**/dist/**',
       // Icons
       '1st-gen/packages/icons/**',
