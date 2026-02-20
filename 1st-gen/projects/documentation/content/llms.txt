@@ -1,6 +1,8 @@
-# Spectrum Web Components
+# Spectrum Web Components (1st-gen)
 
-> Adobe's web component library implementing the Spectrum design system. Covers both 1st-gen (@spectrum-web-components/) and 2nd-gen (@adobe/swc) packages.
+> 1st-gen (@spectrum-web-components/) component library implementing the Spectrum design system.
+> This index lists getting started, guides, and 1st-gen components.
+
 
 ## Getting started
 
@@ -16,7 +18,7 @@
 - [Styling components](guides/styling-components.md)
 - [Writing changesets](guides/writing-changesets.md)
 
-## Components (1st-gen)
+## Components
 - [Accordion](components/accordion.md): The `<sp-accordion>` element contains a list of items that can be expanded or collapsed to reveal additional content ...
 - [Accordion Item](components/accordion-item.md): The `<sp-accordion-item>` element represents a single item in an [`<sp-accordion>`](../accordion/) parent element. It...
 - [Action Bar](components/action-bar.md): A `<sp-action-bar>` delivers a floating action bar that is a convenient way to deliver stateful actions in cases like...

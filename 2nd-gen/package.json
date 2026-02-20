@@ -17,6 +17,7 @@
   "type": "module",
   "scripts": {
     "build": "yarn workspaces foreach --from '{@spectrum-web-components/core,@adobe/swc}' --recursive run build",
+    "build:docs": "node packages/tools/docs-llms/build-2nd-gen-markdown.js --components-dir=packages/swc/components --out-dir=packages/tools/docs-llms/dist/2nd-gen/components && node packages/tools/docs-llms/build-llms-txt-2nd-gen.js --components-dir=packages/swc/components --output=packages/tools/docs-llms/dist/llms.txt",
     "clean": "yarn workspaces foreach --from '{@spectrum-web-components/core,@adobe/swc}' --recursive run clean",
     "dev:analyze": "yarn workspace @adobe/swc analyze:watch",
     "dev:core": "yarn workspace @spectrum-web-components/core dev",

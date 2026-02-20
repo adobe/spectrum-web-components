@@ -1,0 +1,75 @@
+{# Copy for LLM / View as Markdown / Open in ChatGPT|Claude — non-blocking (React Spectrum MarkdownMenu-style) #}
+<div class="docs-llm-actions" id="docs-llm-actions" role="group" aria-label="Use this page with AI">
+  <style>
+    .docs-llm-actions { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .docs-llm-actions .docs-copy-btn { padding: 0.5rem 0.75rem; cursor: pointer; border: 1px solid var(--spectrum-gray-400, #ccc); border-radius: 4px; background: var(--spectrum-gray-75, #f5f5f5); color: var(--spectrum-gray-800, #333); font-size: 0.875rem; }
+    .docs-llm-actions .docs-copy-btn:hover { background: var(--spectrum-gray-100, #e8e8e8); }
+    .docs-llm-actions .docs-copy-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+    .docs-llm-actions .docs-llm-links { display: flex; gap: 0.5rem; align-items: center; }
+    .docs-llm-actions .docs-llm-links a { font-size: 0.875rem; }
+  </style>
+  <button type="button" class="docs-copy-btn" id="docs-copy-llm" aria-label="Copy page as markdown for use in an LLM">Copy for LLM</button>
+  <span class="docs-llm-links">
+    <a id="docs-view-md" href="#" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+    <span aria-hidden="true">·</span>
+    <a id="docs-open-chatgpt" href="#" target="_blank" rel="noopener noreferrer">Open in ChatGPT</a>
+    <span aria-hidden="true">·</span>
+    <a id="docs-open-claude" href="#" target="_blank" rel="noopener noreferrer">Open in Claude</a>
+  </span>
+</div>
+<script type="module">
+(function () {
+  function getMdUrl() {
+    const p = (typeof location !== 'undefined' && location.pathname) || '';
+    const path = p.replace(/\/index\.html?$/i, '').replace(/\/$/, '') || '/index';
+    return path + (path.endsWith('.md') ? '' : '.md');
+  }
+  function init() {
+    const root = document.getElementById('docs-llm-actions');
+    if (!root) return;
+    const base = typeof location !== 'undefined' ? location.origin : '';
+    const mdPath = getMdUrl();
+    const fullMdUrl = base + mdPath;
+    const pageUrl = typeof location !== 'undefined' ? location.href : '';
+    const library = 'Spectrum Web Components';
+    const aiPrompt = `Answer questions about the following ${library} documentation page: ${pageUrl}\nMarkdown source: ${fullMdUrl}`;
+    const chatGptUrl = 'https://chatgpt.com/?q=' + encodeURIComponent(aiPrompt);
+    const claudeUrl = 'https://claude.ai/new?q=' + encodeURIComponent(aiPrompt);
+
+    const viewMd = root.querySelector('#docs-view-md');
+    const openChatgpt = root.querySelector('#docs-open-chatgpt');
+    const openClaude = root.querySelector('#docs-open-claude');
+    if (viewMd) viewMd.href = fullMdUrl;
+    if (openChatgpt) openChatgpt.href = chatGptUrl;
+    if (openClaude) openClaude.href = claudeUrl;
+
+    const copyBtn = root.querySelector('#docs-copy-llm');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', async () => {
+        if (typeof navigator === 'undefined' || !navigator.clipboard) return;
+        try {
+          copyBtn.disabled = true;
+          copyBtn.textContent = 'Copying…';
+          const res = await fetch(fullMdUrl);
+          if (!res.ok) throw new Error(res.statusText);
+          const text = await res.text();
+          await navigator.clipboard.writeText(text);
+          copyBtn.textContent = 'Copied';
+          setTimeout(() => {
+            copyBtn.textContent = 'Copy for LLM';
+            copyBtn.disabled = false;
+          }, 2000);
+        } catch {
+          copyBtn.textContent = 'Copy for LLM';
+          copyBtn.disabled = false;
+        }
+      });
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>

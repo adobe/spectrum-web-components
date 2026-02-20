@@ -189,6 +189,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@adobe/swc-docs-llms@workspace:2nd-gen/packages/tools/docs-llms":
+  version: 0.0.0-use.local
+  resolution: "@adobe/swc-docs-llms@workspace:2nd-gen/packages/tools/docs-llms"
+  languageName: unknown
+  linkType: soft
+
 "@adobe/swc-tokens@workspace:*, @adobe/swc-tokens@workspace:2nd-gen/packages/tools/swc-tokens":
   version: 0.0.0-use.local
   resolution: "@adobe/swc-tokens@workspace:2nd-gen/packages/tools/swc-tokens"

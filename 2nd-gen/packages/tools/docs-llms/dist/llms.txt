@@ -1,0 +1,12 @@
+# Spectrum Web Components (2nd-gen)
+
+> 2nd-gen (@adobe/swc) component library implementing the Spectrum design system.
+> This index lists components and links to their static documentation.
+
+
+## Components
+- [Asset](2nd-gen/components/asset.md): Visually represent files, folders, or images in your application
+- [Badge](2nd-gen/components/badge.md): Display small amounts of color-categorized metadata to get a user's attention.
+- [Divider](2nd-gen/components/divider.md): Visual separator for grouping and dividing content
+- [Progress Circle](2nd-gen/components/progress-circle.md): Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way.
+- [Status Light](2nd-gen/components/status-light.md): Status lights convey semantic meaning through colored dots accompanied by descriptive text.

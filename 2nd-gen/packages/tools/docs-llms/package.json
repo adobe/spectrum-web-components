@@ -1,0 +1,32 @@
+{
+  "name": "@adobe/swc-docs-llms",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Docs and llms.txt tooling for Spectrum Web Components (1st-gen and 2nd-gen)",
+  "license": "Apache-2.0",
+  "author": "Adobe",
+  "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+  "repository": {
+    "directory": "2nd-gen/packages/tools/docs-llms",
+    "type": "git",
+    "url": "https://github.com/adobe/spectrum-web-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adobe/spectrum-web-components/issues"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "node build-2nd-gen-markdown.js && node build-llms-txt-2nd-gen.js",
+    "build:llms-txt": "node build-llms-txt.js",
+    "build:llms-txt-2nd-gen": "node build-llms-txt-2nd-gen.js",
+    "copy-component-markdown": "node copy-component-markdown.js"
+  },
+  "keywords": [
+    "design-system",
+    "spectrum",
+    "adobe",
+    "2nd-gen",
+    "docs",
+    "llms.txt"
+  ]
+}

@@ -24,8 +24,9 @@ export default {
   ],
   'package.json': () => [
     'node scripts/generate-versions.js',
-    'yarn constraints --fix',
+    // Install before constraints so new workspaces (e.g. 2nd-gen/packages/tools/*) are registered
     'yarn install --refresh-lockfile',
+    'yarn constraints --fix',
     'git add 1st-gen/tools/base/src/version.ts 2nd-gen/packages/core/element/version.ts yarn.lock',
   ],
   '.changeset/*.md': ['node 1st-gen/scripts/escape-changelog-tags.js'],

@@ -229,6 +229,7 @@ export default async () => {
         'dev-mode.md',
         'guides/**/*.md',
         'components/*.md',
+        '2nd-gen/components/*.md',
       ],
       rootDir: './_site',
     })

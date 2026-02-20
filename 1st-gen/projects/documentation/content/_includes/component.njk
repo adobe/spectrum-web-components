@@ -7,6 +7,7 @@ layout: layout.njk
       <div id="title-header">
         <h1 class="spectrum-Heading spectrum-Heading--sizeXXL spectrum-Heading--serif" id="component-name">{{ componentHeading }}</h1>
       </div>
+      {% include "partials/llm-actions.njk" %}
       {% if deprecationNotice %}
       {% include "partials/deprecation.njk" %}
       {% endif %}

@@ -19,6 +19,7 @@
   "scripts": {
     "build": "wireit",
     "build:assets": "wireit",
+    "build:copy-2nd-gen-md": "wireit",
     "build:copy-md": "wireit",
     "build:css": "wireit",
     "build:eleventy": "wireit",
@@ -93,6 +94,9 @@
         },
         {
           "script": "build:copy-md"
+        },
+        {
+          "script": "build:copy-2nd-gen-md"
         }
       ]
     },
@@ -137,15 +141,30 @@
         "./_site/src/components/fonts.css"
       ]
     },
-    "build:copy-md": {
-      "command": "node scripts/copy-component-markdown.js",
+    "build:copy-2nd-gen-md": {
+      "command": "node ../../../2nd-gen/packages/tools/docs-llms/build-2nd-gen-markdown.js --components-dir=../../../2nd-gen/packages/swc/components --out-dir=./_site/2nd-gen/components",
       "dependencies": [
         {
           "script": "build:eleventy"
         }
       ],
       "files": [
-        "scripts/copy-component-markdown.js",
+        "../../../2nd-gen/packages/tools/docs-llms/build-2nd-gen-markdown.js",
+        "../../../2nd-gen/packages/swc/components/**/stories/*.stories.ts"
+      ],
+      "output": [
+        "_site/2nd-gen/components/*.md"
+      ]
+    },
+    "build:copy-md": {
+      "command": "node ../../../2nd-gen/packages/tools/docs-llms/copy-component-markdown.js --content-dir=./content/components --out-dir=./_site/components",
+      "dependencies": [
+        {
+          "script": "build:eleventy"
+        }
+      ],
+      "files": [
+        "../../../2nd-gen/packages/tools/docs-llms/copy-component-markdown.js",
         "content/components/**/content.md"
       ],
       "output": [
@@ -178,14 +197,14 @@
     },
     "build:llms-txt": {
       "clean": "if-file-deleted",
-      "command": "node scripts/build-llms-txt.js",
+      "command": "node ../../../2nd-gen/packages/tools/docs-llms/build-llms-txt.js --content-dir=./content --output=./content/llms.txt",
       "dependencies": [
         {
           "script": "copy-docs"
         }
       ],
       "files": [
-        "scripts/build-llms-txt.js",
+        "../../../2nd-gen/packages/tools/docs-llms/build-llms-txt.js",
         "content/components/**/content.md",
         "content/guides/**/*.md"
       ],
