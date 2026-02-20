@@ -19,10 +19,16 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
 
+const CURRENT_YEAR = new Date().getFullYear();
+const YEAR_PLACEHOLDER = `<%= YEAR %>`;
+
 // Read copyright header from linters/HEADER.js
 const COPYRIGHT_HEADER = fs
   .readFileSync(path.join(root, 'linters/HEADER.js'), 'utf-8')
-  .trim();
+  .trim()
+  .replace(YEAR_PLACEHOLDER, CURRENT_YEAR);
+
+console.log(COPYRIGHT_HEADER);
 
 /**
  * Generate a version TypeScript file from a package.json
