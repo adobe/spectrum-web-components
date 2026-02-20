@@ -10,23 +10,58 @@
  * governing permissions and limitations under the License.
  */
 :host {
-    display: inline-flex;
-    inline-size: var(--swc-icon-inline-size, 1em);
-    block-size: var(--swc-icon-block-size, 1em);
-    color: var(--swc-icon-color, currentColor);
+  display: inline-flex;
+  inline-size: var(--swc-icon-inline-size, 1em);
+  block-size: var(--swc-icon-block-size, 1em);
+  color: var(--swc-icon-color, currentColor);
+}
+
+:host([size="xxs"]) {
+  --swc-icon-inline-size: 10px;
+  --swc-icon-block-size: 10px;
+}
+
+:host([size="xs"]) {
+  --swc-icon-inline-size: 12px;
+  --swc-icon-block-size: 12px;
+}
+
+:host([size="s"]) {
+  --swc-icon-inline-size: 14px;
+  --swc-icon-block-size: 14px;
+}
+
+:host([size="m"]) {
+  --swc-icon-inline-size: 18px;
+  --swc-icon-block-size: 18px;
+}
+
+:host([size="l"]) {
+  --swc-icon-inline-size: 22px;
+  --swc-icon-block-size: 22px;
+}
+
+:host([size="xl"]) {
+  --swc-icon-inline-size: 26px;
+  --swc-icon-block-size: 26px;
+}
+
+:host([size="xxl"]) {
+  --swc-icon-inline-size: 34px;
+  --swc-icon-block-size: 34px;
 }
 
 .swc-Icon {
-    display: block;
-    inline-size: 100%;
-    block-size: 100%;
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
 }
 
 svg,
 .swc-Icon > svg,
 ::slotted(*) {
-    display: block;
-    inline-size: 100%;
-    block-size: 100%;
-    fill: currentcolor;
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  fill: currentcolor;
 }

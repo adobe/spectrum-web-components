@@ -14,11 +14,13 @@ import { property, query } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
+import type { IconSize } from './Icon.types.js';
+
 /**
- * An icon renderer that displays either an external image or slotted SVG markup.
+ * An icon renderer that displays slotted SVG markup.
  *
- * @attribute {string} src - URL to an image file.
  * @attribute {string} label - Accessible label for the icon.
+ * @attribute {string} size - T-shirt icon size.
  */
 export abstract class IconBase extends SpectrumElement {
   // ──────────────────
@@ -26,16 +28,16 @@ export abstract class IconBase extends SpectrumElement {
   // ──────────────────
 
   /**
-   * URL to an image or SVG file.
-   */
-  @property()
-  public src?: string;
-
-  /**
    * Accessible label for the icon.
    */
   @property()
   public label = '';
+
+  /**
+   * Icon t-shirt size.
+   */
+  @property({ reflect: true })
+  public size: IconSize = 'm';
 
   @query('slot')
   private defaultSlot?: HTMLSlotElement;
@@ -47,13 +49,9 @@ export abstract class IconBase extends SpectrumElement {
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
     if (changedProperties.has('label')) {
-      if (this.label) {
-        this.removeAttribute('aria-hidden');
-      } else {
-        this.setAttribute('aria-hidden', 'true');
-      }
       this.updateSlottedIcon();
     }
+    this.updateHostAccessibility();
   }
 
   protected handleSlotChange(): void {
@@ -81,6 +79,14 @@ export abstract class IconBase extends SpectrumElement {
     } else {
       svgElement.setAttribute('aria-hidden', 'true');
       svgElement.removeAttribute('aria-label');
+    }
+  }
+
+  private updateHostAccessibility(): void {
+    if (this.label) {
+      this.removeAttribute('aria-hidden');
+    } else {
+      this.setAttribute('aria-hidden', 'true');
     }
   }
 }

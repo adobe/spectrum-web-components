@@ -16,12 +16,9 @@ import { IconBase } from '@spectrum-web-components/core/components/icon';
 import styles from './icon.css';
 
 /**
- * Minimal icon renderer that accepts a slotted SVG or an image source URL.
+ * Minimal icon renderer that accepts slotted SVG markup.
  *
  * @element swc-icon
- *
- * @example
- * <swc-icon src="https://example.com/icon.svg" label="Search"></swc-icon>
  *
  * @example
  * <swc-icon label="Search">
@@ -45,11 +42,6 @@ export class Icon extends IconBase {
   }
 
   protected override render(): TemplateResult {
-    if (this.src) {
-      return html`
-        <img class="swc-Icon" src=${this.src} alt=${this.label} />
-      `;
-    }
     return html`
       <span class="swc-Icon">
         <slot @slotchange=${this.handleSlotChange}></slot>

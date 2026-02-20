@@ -11,29 +11,11 @@
  */
 import { html, TemplateResult } from 'lit';
 
-export type Chevron100IconOptions = {
-  direction?: 'right' | 'left' | 'up' | 'down';
-};
-
-export const Chevron100Icon = ({
-  direction = 'right',
-}: Chevron100IconOptions = {}): TemplateResult => {
-  const transform =
-    direction === 'up'
-      ? 'rotate(270deg)'
-      : direction === 'down'
-        ? 'rotate(90deg)'
-        : direction === 'left'
-          ? 'rotate(180deg)'
-          : '';
+export const Checkmark100Icon = (): TemplateResult => {
   return html`
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 10 10"
-      style=${transform ? `transform: ${transform};` : ''}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
       <path
-        d="M3 9.95a.875.875 0 0 1-.615-1.498L5.88 5 2.385 1.547A.875.875 0 0 1 3.615.302L7.74 4.377a.876.876 0 0 1 0 1.246L3.615 9.698A.87.87 0 0 1 3 9.95"
+        d="M3.5 9.5a1 1 0 0 1-.774-.368l-2.45-3a1 1 0 1 1 1.548-1.264l1.657 2.028 4.68-6.01A1 1 0 0 1 9.74 2.114l-5.45 7a1 1 0 0 1-.777.386z"
       />
     </svg>
   `;
