@@ -14,7 +14,8 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { AlertIcon, Chevron100Icon } from '@adobe/swc/icon/elements';
+import { Chevron100Icon } from '@adobe/swc/icon/elements';
+import * as iconElements from '@adobe/swc/icon/elements';
 
 import '@adobe/swc/icon';
 
@@ -27,7 +28,7 @@ const { args, argTypes, template } = getStorybookHelpers('swc-icon');
 /**
  * **Internal-only component.**
  *
- * The `<swc-icon>` element renders icons from either shared inline SVG templates or an external image source.
+ * The `<swc-icon>` element renders icons from shared inline SVG templates.
  * Use shared templates from `@adobe/swc/icon/elements` for consistent rendering and avoid duplicating SVG markup in each component.
  */
 const meta: Meta = {
@@ -38,7 +39,7 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
-      subtitle: `Internal icon renderer for shared templates or external image URLs.`,
+      subtitle: `Internal icon renderer for shared SVG templates.`,
     },
   },
   tags: ['migrated'],
@@ -50,10 +51,7 @@ export default meta;
 //    HELPERS
 // ────────────────────
 
-const iconSvg = Chevron100Icon({ label: 'Chevron' });
-const alertSvg = AlertIcon({ label: 'Alert' });
-const iconSrc =
-  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'><path d='M6.146 3.146a.5.5 0 0 1 .708 0L12.207 8.5a.7.7 0 0 1 0 1l-5.353 5.354a.5.5 0 1 1-.708-.708L11.293 9 6.146 3.854a.5.5 0 0 1 0-.708z'/></svg>";
+const iconSvg = Chevron100Icon();
 
 // ────────────────────
 //    AUTODOCS STORY
@@ -62,12 +60,13 @@ const iconSrc =
 export const Playground: Story = {
   tags: ['autodocs', 'dev'],
   render: (args) => html`
-    <swc-icon label=${ifDefined(args.label)} src=${ifDefined(args.src)}>
-      ${args.src ? '' : iconSvg}
+    <swc-icon label=${ifDefined(args.label)} size=${ifDefined(args.size)}>
+      ${iconSvg}
     </swc-icon>
   `,
   args: {
     label: 'Search',
+    size: 'm',
   },
 };
 
@@ -78,12 +77,13 @@ export const Playground: Story = {
 export const Overview: Story = {
   tags: ['overview'],
   render: (args) => html`
-    <swc-icon label=${ifDefined(args.label)} src=${ifDefined(args.src)}>
-      ${args.src ? '' : iconSvg}
+    <swc-icon label=${ifDefined(args.label)} size=${ifDefined(args.size)}>
+      ${iconSvg}
     </swc-icon>
   `,
   args: {
     label: 'Search',
+    size: 'm',
   },
 };
 
@@ -94,18 +94,15 @@ export const Overview: Story = {
 /**
  * An icon consists of:
  *
- * 1. **Rendered graphic** - Either a shared slotted SVG template or an image element
+ * 1. **Rendered graphic** - A shared slotted SVG template
  *
  * ### Content
  *
  * - Default slot: Provide SVG markup to render.
- * - `src`: Provide an image URL when slot content is not used.
  */
 export const Anatomy: Story = {
   render: (args) => html`
-    <swc-icon label="Chevron icon">${iconSvg}</swc-icon>
-    <swc-icon label="Alert icon">${alertSvg}</swc-icon>
-    ${template({ ...args, src: iconSrc, label: 'Image source' })}
+    <swc-icon label="Chevron icon" size=${ifDefined(args.size)}>${iconSvg}</swc-icon>
   `,
   tags: ['anatomy'],
   parameters: {
@@ -122,16 +119,10 @@ export const Anatomy: Story = {
  *
  * Import reusable templates from `@adobe/swc/icon/elements` and slot them into `<swc-icon>`.
  * This keeps icon usage centralized and avoids per-component SVG duplication.
- *
- * ### Source fallback
- *
- * Use `src` for external assets when inline template rendering is not needed.
  */
 export const Sources: Story = {
   render: (args) => html`
-    <swc-icon label="Chevron icon">${iconSvg}</swc-icon>
-    <swc-icon label="Alert icon">${alertSvg}</swc-icon>
-    ${template({ ...args, src: iconSrc, label: 'Image source' })}
+    <swc-icon label="Chevron icon" size=${ifDefined(args.size)}>${iconSvg}</swc-icon>
   `,
   tags: ['options'],
   parameters: {
@@ -150,8 +141,7 @@ export const Sources: Story = {
  */
 export const SharedTemplates: Story = {
   render: () => html`
-    <swc-icon label="Chevron">${Chevron100Icon({ label: 'Chevron' })}</swc-icon>
-    <swc-icon label="Alert">${AlertIcon({ label: 'Alert' })}</swc-icon>
+    <swc-icon label="Chevron">${Chevron100Icon()}</swc-icon>
   `,
   tags: ['options'],
   parameters: {
@@ -166,13 +156,16 @@ export const SharedTemplates: Story = {
  */
 export const AvailableIcons: Story = {
   render: () => {
-    const catalog = [
-      {
-        name: 'Chevron100Icon',
-        icon: Chevron100Icon({ label: 'Chevron' }),
-      },
-      { name: 'AlertIcon', icon: AlertIcon({ label: 'Alert' }) },
-    ];
+    const catalog = Object.entries(iconElements)
+      .filter(
+        ([name, iconFactory]) =>
+          name.endsWith('Icon') && typeof iconFactory === 'function'
+      )
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([name, iconFactory]) => ({
+        name,
+        icon: (iconFactory as () => unknown)(),
+      }));
     return html`
       ${catalog.map(
         (entry) => html`
@@ -214,10 +207,6 @@ export const AvailableIcons: Story = {
  * - Slotted SVGs receive `role="img"` and use `aria-label` when `label` is provided
  * - When no label is provided, slotted SVGs are marked `aria-hidden="true"`
  *
- * #### Image labeling
- *
- * - Images use the `label` value as the `alt` text
- *
  * ### Best practices
  *
  * - Always provide a descriptive `label` for informative icons
@@ -226,8 +215,9 @@ export const AvailableIcons: Story = {
  */
 export const Accessibility: Story = {
   render: (args) => html`
-    <swc-icon label="Search">${iconSvg}</swc-icon>
-    ${template({ ...args, src: iconSrc, label: 'Search' })}
+    <swc-icon label=${ifDefined(args.label)} size=${ifDefined(args.size)}>
+      ${iconSvg}
+    </swc-icon>
   `,
   tags: ['a11y'],
   parameters: {

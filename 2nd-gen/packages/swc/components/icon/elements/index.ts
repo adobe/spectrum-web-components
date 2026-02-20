@@ -10,4 +10,7 @@
  * governing permissions and limitations under the License.
  */
 export * from './AlertIcon.js';
+export * from './Checkmark100Icon.js';
 export * from './Chevron100Icon.js';
+export * from './Cross200Icon.js';
+export * from './Dash100Icon.js';
