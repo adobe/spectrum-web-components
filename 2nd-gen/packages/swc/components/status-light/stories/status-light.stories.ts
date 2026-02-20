@@ -349,6 +349,7 @@ export const Accessibility: Story = {
 // ───────────────────────────────────
 //    INTERNATIONALIZATION STORIES
 // ───────────────────────────────────
+
 /**
  * Wraps content in a div with the optional lang attribute and injects translated
  * textfield.value from translations.json based on context.globals.lang.

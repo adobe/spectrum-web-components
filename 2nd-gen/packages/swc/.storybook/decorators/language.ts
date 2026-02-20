@@ -10,9 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-import type {} from '../storybook-env';
 
 import { addons, makeDecorator, useEffect } from '@storybook/preview-api';
+
+import type {} from '../storybook-env';
 
 const DEFAULT_KIT_ID = 'obc6cux';
 
@@ -39,9 +40,9 @@ function applyLanguageAndFontKit(
     root.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
 
     // If the fonts are actively loading, do not re-trigger the load
-    if (window.FontsLoading === true) return;
+    if (window.FontsLoading === true) { return };
     // If the language has not changed, do not re-trigger the load
-    if (!hasChanged) return;
+    if (!hasChanged) { return };
 
     // Resolve kitId from locale: Latin default (obc6cux), CJK kits loaded on-demand
     // (see preview-head __SWC_FONT_KIT_IDS__).
@@ -51,7 +52,7 @@ function applyLanguageAndFontKit(
             : () => DEFAULT_KIT_ID;
     const kitId = getKitId(lang);
     // If the current kit is the same as the new kit, do not re-trigger the load
-    if (window.currentKitId === kitId) return;
+    if (window.currentKitId === kitId) { return };
 
     const defaultKitId = getKitId(false) as string;
 
@@ -122,7 +123,7 @@ function applyLanguageAndFontKit(
  * font loading works even when the decorator does not re-run (e.g. on docs pages).
  */
 function attachLanguageChangeListener(): void {
-    if (languageListenerAttached || typeof document === 'undefined') return;
+    if (languageListenerAttached || typeof document === 'undefined') { return} ;
     languageListenerAttached = true;
     try {
         const channel = addons.getChannel();

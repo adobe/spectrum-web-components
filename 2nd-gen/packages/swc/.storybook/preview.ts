@@ -19,10 +19,10 @@ import {
 import customElements from './custom-elements.json';
 import { withContext } from './decorators/contexts.js';
 import { withFlexLayout, withStaticColorsDemo } from './decorators/index.js';
+import { withLanguageWrapper } from './decorators/language.js';
 import { withStaticColorPlayground } from './decorators/static-color-playground.js';
 import DocumentTemplate from './DocumentTemplate.mdx';
 import { FontLoader } from './loaders/font-loader.js';
-import { withLanguageWrapper } from './decorators/language.js';
 
 import '../stylesheets/swc.css';
 import '../stylesheets/typography.css';
