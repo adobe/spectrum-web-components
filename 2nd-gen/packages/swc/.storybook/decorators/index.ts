@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 /**
  * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -12,3 +13,4 @@
 export { withFlexLayout } from './flex-layout';
 export { withStaticColorsDemo } from './static-colors-demo';
 export { withStaticColorPlayground } from './static-color-playground';
+export { withPerformanceMonitor } from './performance-monitor';
