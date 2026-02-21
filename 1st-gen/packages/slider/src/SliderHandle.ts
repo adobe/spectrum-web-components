@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -190,6 +190,7 @@ export class SliderHandle extends Focusable {
   protected _numberFormatCache:
     | { numberFormat: NumberFormatter; language: string }
     | undefined;
+
   protected getNumberFormat(): NumberFormatter {
     /* c8 ignore next */
     if (
@@ -205,13 +206,16 @@ export class SliderHandle extends Focusable {
         this._forcedUnit = '';
         // numberFormatter.format(1);
       } catch (error) {
-        const {
-          style,
-          unit,
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          unitDisplay,
-          ...formatOptionsNoUnit
-        } = this.formatOptions || {};
+        if (window.__swc.DEBUG) {
+          window.__swc.warn(
+            this,
+            `Format options include style or unit that is not supported: ${error instanceof Error ? error.message : 'Unknown error'}`,
+            'https://opensource.adobe.com/spectrum-web-components/components/slider-handle/',
+            { level: 'low' }
+          );
+        }
+        const { style, unit, ...formatOptionsNoUnit } =
+          this.formatOptions || {};
         if (style === 'unit') {
           this._forcedUnit = unit as string;
         }
@@ -231,7 +235,7 @@ export class SliderHandle extends Focusable {
 
   public get numberFormat(): NumberFormatter | undefined {
     if (!this.formatOptions) {
-      return;
+      return undefined;
     }
     return this.getNumberFormat();
   }

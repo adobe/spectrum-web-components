@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -370,8 +370,9 @@ export class ColorArea extends SpectrumElement {
 
   /**
    * Returns the value under the cursor
-   * @param: PointerEvent on slider
-   * @return: Slider value that correlates to the position under the pointer
+   *
+   * @param event - PointerEvent on slider
+   * @returns Slider value that correlates to the position under the pointer
    */
   private calculateHandlePosition(event: PointerEvent): [number, number] {
     /* c8 ignore next 3 */

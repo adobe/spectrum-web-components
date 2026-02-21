@@ -76,6 +76,7 @@ const CUSTOM_TOKENS = [
 
 /**
  * Creates a logger that writes to a file.
+ *
  * @param {string|false} debugPath  path to log file OR false for no logging
  */
 export function createLogger(debugPath) {

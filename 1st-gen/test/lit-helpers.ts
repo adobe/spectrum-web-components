@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -18,6 +18,7 @@ type EventListenerWithOptions = EventListenerOrEventListenerObject &
 
 /**
  * Usage:
+ * ```ts
  *    import { html, render } from 'lit-html';
  *    import { spread } from '@open-wc/lit-helpers';
  *
@@ -34,8 +35,9 @@ type EventListenerWithOptions = EventListenerOrEventListenerObject &
  *      `,
  *      document.body,
  *    );
+ * ```
  *
- * @TODO: replace this with a lit-native directive once one is released: https://github.com/lit/lit/pull/1960
+ * @todo replace this with a lit-native directive once one is released: https://github.com/lit/lit/pull/1960
  */
 class SpreadDirective extends AsyncDirective {
   host!: EventTarget | object | Element;
@@ -66,9 +68,9 @@ class SpreadDirective extends AsyncDirective {
         continue;
       }
       const name = key.slice(1);
+      const prevHandler = prevData[key];
       switch (key[0]) {
         case '@': // event listener
-          const prevHandler = prevData[key];
           if (prevHandler) {
             element.removeEventListener(
               name,
@@ -114,11 +116,10 @@ class SpreadDirective extends AsyncDirective {
       if (!data || !(key in data)) {
         switch (key[0]) {
           case '@': // event listener
-            const value = prevData[key];
             element.removeEventListener(
               key.slice(1),
               this,
-              value as EventListenerWithOptions
+              prevData[key] as EventListenerWithOptions
             );
             break;
           case '.': // property
@@ -138,11 +139,11 @@ class SpreadDirective extends AsyncDirective {
   }
 
   handleEvent(event: Event) {
-    const value: Function | EventListenerObject = this.prevData[
+    const value: () => unknown | EventListenerObject = this.prevData[
       `@${event.type}`
-    ] as Function | EventListenerObject;
+    ] as () => unknown | EventListenerObject;
     if (typeof value === 'function') {
-      (value as Function).call(this.host, event);
+      (value as (event: Event) => unknown).call(this.host, event);
     } else {
       (value as EventListenerObject).handleEvent(event);
     }

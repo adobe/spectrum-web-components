@@ -1,3 +1,5 @@
 # Local setup: git config blame.ignoreRevsFile .git-blame-ignore-revs
 # Mass formatting/linting commit to hide in blame.
 5c83d1c53c1c40be5176dc99e84bf62105fd5254
+# Mass formatting/linting commit to hide in blame.
+e8bc6d9bd30350f1b610d49ca7725288d1ebcfb6

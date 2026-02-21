@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -138,6 +138,7 @@ export class ExpandableElement extends SpectrumElement {
 
   /**
    * The preferred placement of the component's overlay relative to the trigger button.
+   *
    * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
    * @attr
    */
@@ -158,6 +159,7 @@ export class ExpandableElement extends SpectrumElement {
 
   /**
    * Focuses the appropriate element (button or menu) based on the picker's state.
+   *
    * @param options - Standard focus options
    */
   public override focus(options?: FocusOptions): void {
@@ -181,6 +183,7 @@ export class ExpandableElement extends SpectrumElement {
   /**
    * Toggles the component's open state.
    * Has no effect when the component is readonly, pending, or disabled.
+   *
    * @param target - Optional explicit open state. If not provided, toggles the current state.
    */
   public toggle(target?: boolean): void {
@@ -198,6 +201,7 @@ export class ExpandableElement extends SpectrumElement {
   /**
    * Handles slottable request events from the overlay.
    * Override in subclasses to customize slottable behavior.
+   *
    * @param _event - The slottable request event
    */
   public handleSlottableRequest = (_event: SlottableRequestEvent): void => {};
@@ -205,6 +209,7 @@ export class ExpandableElement extends SpectrumElement {
   /**
    * Handles the overlay's beforetoggle event.
    * Manages overlay state and prevents unwanted closures during interaction.
+   *
    * @param event - The beforetoggle event with the new state
    */
   protected handleBeforetoggle = (
@@ -426,6 +431,10 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
     this.focused = false;
   }
 
+  public override focus(options?: FocusOptions): void {
+    this.focusElement?.focus(options);
+  }
+
   /**
    * @deprecated Use `focus()` instead.
    * Focuses the picker button and applies focus styling.
@@ -449,6 +458,7 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
   /**
    * Handles change events from the menu, updating the selected value.
    * Dispatches a `change` event that can be prevented to cancel the selection.
+   *
    * @param event - The change event from the menu
    */
   public handleChange(event: Event): void {
@@ -472,6 +482,7 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
 
   /**
    * Handles focus events on the trigger button, delegating to the interaction strategy.
+   *
    * @param event - The focus event
    */
   public handleButtonFocus(event: FocusEvent): void {
@@ -480,6 +491,7 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
 
   /**
    * Handles Escape key press to close the picker overlay.
+   *
    * @param event - The keyboard event
    */
   protected handleEscape = (
@@ -495,6 +507,7 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
   /**
    * Handles keyboard navigation on the picker button.
    * Opens the menu on Arrow keys, Enter, or Space.
+   *
    * @param event - The keyboard event
    */
   protected handleKeydown = (event: KeyboardEvent): void => {
@@ -535,6 +548,7 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
   /**
    * Sets the picker's value from a menu item selection.
    * Dispatches a cancelable `change` event and reverts the selection if prevented.
+   *
    * @param item - The menu item to select
    * @param menuChangeEvent - The original menu change event, if any
    */
@@ -588,6 +602,7 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
 
   /**
    * Updates the selected state of a menu item.
+   *
    * @param item - The menu item to update
    * @param value - Whether the item should be selected
    */
@@ -640,6 +655,7 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
   /**
    * Handles slotchange events for the tooltip slot.
    * Sets up the trigger element for self-managed tooltips.
+   *
    * @param event - The slotchange event
    */
   protected handleTooltipSlotchange(
@@ -661,6 +677,7 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
   /**
    * Renders the label content for the picker button.
    * Shows the selected item's content if available, otherwise renders the placeholder label.
+   *
    * @param content - The content nodes from the selected item
    * @returns The rendered label content
    */
@@ -680,6 +697,7 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
   /**
    * Renders the loading indicator shown during pending state.
    * Dynamically imports the progress-circle component.
+   *
    * @returns The rendered progress circle template
    */
   protected renderLoader(): TemplateResult {
@@ -757,6 +775,7 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
   /**
    * Callback invoked by an associated field label to apply its label value.
    * Sets the applied label and determines label alignment based on the field label's configuration.
+   *
    * @param value - The label text value
    * @param labelElement - The field label element providing the label
    */
@@ -772,6 +791,7 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
    * - `aria-labelledby` attribute
    * - Applied label from a field label
    * - Slotted label content
+   *
    * @returns True if an accessible label is present
    */
   protected hasAccessibleLabel(): boolean {
@@ -816,6 +836,7 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
   /**
    * Renders the overlay element containing the menu.
    * Configures the overlay with appropriate placement, type, and event handlers.
+   *
    * @param menu - The menu template to render inside the overlay
    * @returns The rendered overlay template
    */
@@ -995,6 +1016,7 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
   /**
    * Renders the overlay container (popover or tray) based on device type.
    * On mobile, uses a tray; on desktop, uses a popover.
+   *
    * @param menu - The menu template to wrap in the container
    * @returns The rendered container template
    */
@@ -1093,6 +1115,7 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
    * Schedules selection management for the next animation frame.
    * Called when the value changes or menu slot content changes.
    * Prevents duplicate scheduling if already pending.
+   *
    * @param event - Optional event that triggered the scheduling
    */
   protected shouldScheduleManageSelection(event?: Event): void {
@@ -1191,6 +1214,7 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
    * Handles Enter key events to prevent double-activation of menu items.
    * Tracks keydown state and clears it on keyup.
    * Also prevents Enter from triggering submenus that aren't open.
+   *
    * @param event - The keyboard event
    */
   protected handleEnterKeydown = (event: KeyboardEvent): void => {
@@ -1399,6 +1423,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
   public handleButtonBlur(): void {
     this.focused = false;
   }
+
   /**
    * @deprecated Use `focus()` instead.
    * Focuses the picker button and applies focus styling.
@@ -1422,6 +1447,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
   /**
    * Handles change events from the menu, updating the selected value.
    * Dispatches a `change` event that can be prevented to cancel the selection.
+   *
    * @param event - The change event from the menu
    */
   public handleChange(event: Event): void {
@@ -1445,6 +1471,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
 
   /**
    * Handles focus events on the trigger button, delegating to the interaction strategy.
+   *
    * @param event - The focus event
    */
   public handleButtonFocus(event: FocusEvent): void {
@@ -1453,6 +1480,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
 
   /**
    * Handles Escape key press to close the picker overlay.
+   *
    * @param event - The keyboard event
    */
   protected handleEscape = (
@@ -1468,6 +1496,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
   /**
    * Enhanced keyboard handler that supports arrow key navigation to cycle
    * through options without opening the menu (in addition to base navigation).
+   *
    * @param event - The keyboard event
    */
   protected handleKeydown = (event: KeyboardEvent): void => {
@@ -1542,6 +1571,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
   /**
    * Sets the picker's value from a menu item selection.
    * Dispatches a cancelable `change` event and reverts the selection if prevented.
+   *
    * @param item - The menu item to select
    * @param menuChangeEvent - The original menu change event, if any
    */
@@ -1595,6 +1625,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
 
   /**
    * Updates the selected state of a menu item.
+   *
    * @param item - The menu item to update
    * @param value - Whether the item should be selected
    */
@@ -1649,6 +1680,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
   /**
    * Handles slotchange events for the tooltip slot.
    * Sets up the trigger element for self-managed tooltips.
+   *
    * @param event - The slotchange event
    */
   protected handleTooltipSlotchange(
@@ -1670,6 +1702,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
   /**
    * Renders the label content for the picker button.
    * Shows the selected item's content if available, otherwise renders the placeholder label.
+   *
    * @param content - The content nodes from the selected item
    * @returns The rendered label content
    */
@@ -1689,6 +1722,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
   /**
    * Renders the loading indicator shown during pending state.
    * Dynamically imports the progress-circle component.
+   *
    * @returns The rendered progress circle template
    */
   protected renderLoader(): TemplateResult {
@@ -1766,6 +1800,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
   /**
    * Callback invoked by an associated field label to apply its label value.
    * Sets the applied label and determines label alignment based on the field label's configuration.
+   *
    * @param value - The label text value
    * @param labelElement - The field label element providing the label
    */
@@ -1781,6 +1816,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
    * - `aria-labelledby` attribute
    * - Applied label from a field label
    * - Slotted label content
+   *
    * @returns True if an accessible label is present
    */
   protected hasAccessibleLabel(): boolean {
@@ -1825,6 +1861,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
   /**
    * Renders the overlay element containing the menu.
    * Configures the overlay with appropriate placement, type, and event handlers.
+   *
    * @param menu - The menu template to render inside the overlay
    * @returns The rendered overlay template
    */
@@ -2006,6 +2043,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
   /**
    * Renders the overlay container (popover or tray) based on device type.
    * On mobile, uses a tray; on desktop, uses a popover.
+   *
    * @param menu - The menu template to wrap in the container
    * @returns The rendered container template
    */
@@ -2104,6 +2142,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
    * Schedules selection management for the next animation frame.
    * Called when the value changes or menu slot content changes.
    * Prevents duplicate scheduling if already pending.
+   *
    * @param event - Optional event that triggered the scheduling
    */
   protected shouldScheduleManageSelection(event?: Event): void {
@@ -2202,6 +2241,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
    * Handles Enter key events to prevent double-activation of menu items.
    * Tracks keydown state and clears it on keyup.
    * Also prevents Enter from triggering submenus that aren't open.
+   *
    * @param event - The keyboard event
    */
   protected handleEnterKeydown = (event: KeyboardEvent): void => {

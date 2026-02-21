@@ -27,76 +27,7 @@ import storybook from 'eslint-plugin-storybook';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import jsoncParser from 'jsonc-eslint-parser';
 import globals from 'globals';
-
-// ────────────────────────────────────────────────────────────────────────────────
-// Custom rules (inlined from @spectrum-web-components/eslint-plugin)
-// ────────────────────────────────────────────────────────────────────────────────
-
-const swcPlugin = {
-  rules: {
-    'prevent-argument-names': {
-      meta: {
-        type: 'suggestion',
-        docs: {
-          description: 'Prevent certain argument names from being used',
-        },
-        schema: [
-          {
-            type: 'array',
-            items: { type: 'string' },
-          },
-        ],
-      },
-      create(context) {
-        const disallowed = context.options[0] || [];
-        return {
-          Identifier(node) {
-            if (
-              node.parent &&
-              (node.parent.type === 'FunctionDeclaration' ||
-                node.parent.type === 'FunctionExpression' ||
-                node.parent.type === 'ArrowFunctionExpression')
-            ) {
-              if (node.parent.params && node.parent.params.includes(node)) {
-                if (disallowed.includes(node.name)) {
-                  context.report({
-                    node,
-                    message: `"${node.name}" shouldn't be used as an argument name`,
-                  });
-                }
-              }
-            }
-          },
-        };
-      },
-    },
-    'document-active-element': {
-      meta: {
-        type: 'problem',
-        docs: {
-          description:
-            'Warn against using document.activeElement which can be incorrect across shadow boundaries',
-        },
-      },
-      create(context) {
-        return {
-          MemberExpression(node) {
-            if (
-              node.object.name === 'document' &&
-              node.property.name === 'activeElement'
-            ) {
-              context.report({
-                node,
-                message:
-                  '"document.activeElement" can be incorrect across shadow boundaries',
-              });
-            }
-          },
-        };
-      },
-    },
-  },
-};
+import { swcPlugin } from '@spectrum-web-components/eslint-plugin';
 
 // ────────────────────────────────────────────────────────────────────────────────
 // Package.json key ordering for jsonc/sort-keys
@@ -197,10 +128,21 @@ export default defineConfig([
       // Build outputs
       '1st-gen/packages/**/!(src)/**/*.js',
       '1st-gen/tools/**/!(src)/**/*.js',
+      '1st-gen/projects/**/!(src)/**/*.js',
+      '1st-gen/test/*.js',
+      '1st-gen/test/plugins/*.js',
+      '1st-gen/test/visual/*.js',
       '2nd-gen/packages/**/dist/**',
+      // Icons
+      '1st-gen/packages/icons/**',
+      '1st-gen/packages/iconset/**',
+      '1st-gen/packages/icons-ui/**',
+      '1st-gen/packages/icons-workflow/**',
       // Generated files
       '**/*.css.ts',
       '**/custom-elements.json',
+      '**/tokens.css',
+      '**/tokens.json',
       // Config and tooling files (Node env; skip lint to avoid needing node globals for many files)
       '**/*.config.js',
       '**/*.config.cjs',
@@ -209,6 +151,7 @@ export default defineConfig([
       '**/plopfile.js',
       '**/.eleventy.js',
       '**/web-dev-server.config.*',
+      '**/web-test-runner*.js',
       '**/content/_data/*.js',
       '**/*.hbs',
     ],
@@ -249,8 +192,9 @@ export default defineConfig([
       'notice/notice': [
         'error',
         {
-          mustMatch: 'Copyright [0-9]{0,4} Adobe. All rights reserved.',
+          mustMatch: `Copyright ${new Date().getFullYear()} Adobe. All rights reserved.`,
           templateFile: 'linters/HEADER.js',
+          onNonMatchingHeader: 'replace',
         },
       ],
 
@@ -265,7 +209,10 @@ export default defineConfig([
       'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
 
       // Custom SWC rules
-      'swc/prevent-argument-names': ['error', ['e', 'ev', 'evt', 'err']],
+      'swc/prevent-argument-names': [
+        'error',
+        { disallowed: ['e', 'ev', 'evt', 'err'] },
+      ],
       'swc/document-active-element': 'error',
 
       // Import rules
@@ -316,7 +263,6 @@ export default defineConfig([
       // JSDoc plugin rules (minimal set for consistency)
       // Focus on formatting and accuracy, not requiring docs everywhere.
       'jsdoc/check-alignment': 'error', // Consistent asterisk alignment
-      'jsdoc/check-indentation': 'warn', // Consistent indentation in descriptions
       'jsdoc/check-param-names': 'error', // Param names match function signature
       'jsdoc/check-tag-names': [
         'error',
@@ -339,6 +285,8 @@ export default defineConfig([
       'jsdoc/require-param-description': 'warn', // Params should have descriptions
       'jsdoc/require-returns-description': 'warn', // Returns should have descriptions
       'jsdoc/valid-types': 'warn', // Type expressions are valid (warn for @internal usage)
+      'jsdoc/lines-before-block': 'error',
+      'jsdoc/tag-lines': ['error', 'any', { startLines: 1, endLines: 0 }],
 
       // Import sorting (declaration and member order)
       'simple-import-sort/imports': [
@@ -372,6 +320,44 @@ export default defineConfig([
   },
 
   // ────────────────────────────────────────────────────────────────────────────
+  // Files that may start with shebang (#!/usr/bin/env node): use swc/notice-
+  // after-shebang (not notice/notice) so the header is required directly under
+  // the shebang and fix inserts or replaces it there.
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: [
+      '.github/scripts/**/*.js',
+      'scripts/**/*.js',
+      'scripts/*.js',
+      '1st-gen/scripts/**/*.js',
+      '1st-gen/projects/**/scripts/**/*.js',
+      'CONTRIBUTOR-DOCS/**/*.js',
+      '2nd-gen/packages/tools/**/*.js',
+    ],
+    plugins: { swc: swcPlugin },
+    rules: {
+      'notice/notice': 'off',
+      'swc/notice-after-shebang': [
+        'error',
+        {
+          templateFile: 'linters/HEADER.js',
+          onNonMatchingHeader: 'replace',
+        },
+      ],
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // Header file: disable notice rule
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: ['linters/HEADER.js'],
+    rules: {
+      'notice/notice': 'off',
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
   // TypeScript only: enable type-aware rules (not applied to .js/.mjs/.cjs)
   // no-undef off: TypeScript compiler handles undefined checks and DOM/built-in types.
   // ────────────────────────────────────────────────────────────────────────────
@@ -379,6 +365,7 @@ export default defineConfig([
     files: ['**/*.ts'],
     rules: {
       'no-undef': 'off',
+      'no-redeclare': 'off',
       'no-unused-vars': 'off',
       '@typescript-eslint/no-array-constructor': 'error',
       '@typescript-eslint/no-duplicate-enum-values': 'error',
@@ -402,10 +389,6 @@ export default defineConfig([
         'error',
         { argsIgnorePattern: '^_' },
       ],
-      '@typescript-eslint/explicit-function-return-type': [
-        'warn',
-        { allowExpressions: true },
-      ],
     },
   },
 
@@ -417,7 +400,6 @@ export default defineConfig([
       'scripts/**/*',
       '**/scripts/**/*.js',
       '**/scripts/**/*.ts',
-      '1st-gen/linters/**/*.js',
       'linters/**/*.js',
       '.github/**/*.js',
       '1st-gen/test/visual/**/*.js',
@@ -443,7 +425,9 @@ export default defineConfig([
   {
     files: [
       '**/*.test.ts',
+      '**/*.test.js',
       '**/*.test-vrt.ts',
+      '**/*.test-vrt.js',
       '**/*.stories.ts',
       '**/*.spec.ts',
       '**/test/**/*.ts',
@@ -451,6 +435,8 @@ export default defineConfig([
       '**/benchmark/**/*.ts',
       '**/stories/**/*.ts',
       '**/e2e/**/*.ts',
+      '**/.storybook/**',
+      '**/storybook/**',
     ],
     languageOptions: {
       globals: { ...globals.browser, ...globals.mocha, ...testLibGlobals },
@@ -458,6 +444,7 @@ export default defineConfig([
     rules: {
       'swc/document-active-element': 'off',
       'import/no-extraneous-dependencies': 'off',
+      'import/extensions': 'off',
       'lit-a11y/no-autofocus': 'off',
       'lit-a11y/tabindex-no-positive': 'off',
       // Chai assertions use expressions like expect(x).to.be.true
@@ -525,11 +512,28 @@ export default defineConfig([
   },
 
   // ────────────────────────────────────────────────────────────────────────────
+  // 1st-gen project and tool files: allow devDependencies imports
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: [
+      '1st-gen/projects/**/*.js',
+      '1st-gen/projects/**/*.ts',
+      '1st-gen/tools/**/*.js',
+      '1st-gen/tools/**/*.ts',
+      '1st-gen/rollup.checksize.js',
+    ],
+    rules: {
+      'import/no-extraneous-dependencies': 'off',
+      'jsdoc/valid-types': 'off',
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
   // JSON files
   // ────────────────────────────────────────────────────────────────────────────
   {
     files: ['**/*.json'],
-    ignores: ['**/package.json', '**/tokens.json'],
+    ignores: ['**/package.json'],
     plugins: {
       jsonc: jsonc,
     },
@@ -568,24 +572,6 @@ export default defineConfig([
           pathPattern: '^(?!exports\\[).*',
         },
       ],
-      'notice/notice': 'off',
-    },
-  },
-
-  // ────────────────────────────────────────────────────────────────────────────
-  // tokens.json: disable sort-keys
-  // ────────────────────────────────────────────────────────────────────────────
-  {
-    files: ['**/tokens.json'],
-    plugins: {
-      jsonc: jsonc,
-    },
-    languageOptions: {
-      parser: jsoncParser,
-    },
-    rules: {
-      ...jsonc.configs['recommended-with-jsonc'].rules,
-      'jsonc/sort-keys': 'off',
       'notice/notice': 'off',
     },
   },

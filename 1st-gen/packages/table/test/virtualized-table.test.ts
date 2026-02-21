@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -218,6 +218,9 @@ describe('Virtualized Table', () => {
 
   it('dispatches `change` events', async () => {
     const changeSpy = spy();
+    const handleChange = ({ target }: Event & { target: Table }) => {
+      changeSpy(target);
+    };
     const el = await fixture<Table>(html`
       <sp-table
         .selected=${['0', '22']}
@@ -225,10 +228,8 @@ describe('Virtualized Table', () => {
         style="height: 120px"
         .items=${virtualItems}
         .renderItem=${renderItem}
-        scroller?="true"
-        @change=${({ target }: Event & { target: Table }) => {
-          changeSpy(target);
-        }}
+        ?scroller=${true}
+        @change=${handleChange}
       >
         <sp-table-head>
           <sp-table-head-cell>Column Title</sp-table-head-cell>
@@ -255,6 +256,9 @@ describe('Virtualized Table', () => {
   });
   it('accepts change events dispatched from TableHead `<sp-table-checkbox-cell>`', async () => {
     const changeSpy = spy();
+    const handleChange = ({ target }: Event & { target: Table }) => {
+      changeSpy(target);
+    };
     const el = await fixture<Table>(html`
       <sp-table
         .selected=${['0', '22']}
@@ -262,10 +266,8 @@ describe('Virtualized Table', () => {
         style="height: 120px"
         .items=${virtualItems}
         .renderItem=${renderItem}
-        scroller?="true"
-        @change=${({ target }: Event & { target: Table }) => {
-          changeSpy(target);
-        }}
+        ?scroller=${true}
+        @change=${handleChange}
       >
         <sp-table-head>
           <sp-table-head-cell>Column Title</sp-table-head-cell>
@@ -300,7 +302,7 @@ describe('Virtualized Table', () => {
         style="height: 120px"
         .items=${makeItems(50)}
         .renderItem=${renderItem}
-        scroller?="true"
+        ?scroller=${true}
       >
         <sp-table-head>
           <sp-table-head-cell>Column Title</sp-table-head-cell>
@@ -330,7 +332,9 @@ describe('Virtualized Table', () => {
 
   it('dispatches `visibilityChanged` events on Virtualized Table', async () => {
     const visibilityChangedSpy = spy();
-
+    const handleVisibilityChanged = ({ target }: Event & { target: Table }) => {
+      visibilityChangedSpy(target);
+    };
     const el = await fixture<Table>(html`
       <sp-table
         selects="multiple"
@@ -338,10 +342,8 @@ describe('Virtualized Table', () => {
         style="height: 120px"
         .items=${virtualItems}
         .renderItem=${renderItem}
-        scroller?="true"
-        @visibilityChanged=${({ target }: Event & { target: Table }) => {
-          visibilityChangedSpy(target);
-        }}
+        ?scroller=${true}
+        @visibilityChanged=${handleVisibilityChanged}
       >
         <sp-table-head>
           <sp-table-head-cell>Column Title</sp-table-head-cell>

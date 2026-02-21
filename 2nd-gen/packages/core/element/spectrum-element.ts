@@ -35,7 +35,6 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
     public override shadowRoot!: ShadowRoot;
     public hasVisibleFocusInTree(): boolean {
       const getAncestors = (root: Document = document): HTMLElement[] => {
-        // eslint-disable-next-line @spectrum-web-components/document-active-element
         let currentNode = root.activeElement as HTMLElement;
         while (
           currentNode?.shadowRoot &&
@@ -64,15 +63,10 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
       // selector will throw on the following test (Safari, older things).
       // Some won't throw, but will be focusing item rather than the menu and
       // will rely on the polyfill to know whether focus is "visible" or not.
-      try {
-        return (
-          activeElement.matches(':focus-visible') ||
-          activeElement.matches('.focus-visible')
-        );
-        /* c8 ignore next 3 */
-      } catch (error) {
-        return activeElement.matches('.focus-visible');
-      }
+      return (
+        activeElement.matches(':focus-visible') ||
+        activeElement.matches('.focus-visible')
+      );
     }
   }
   return SpectrumMixinElement;

@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -37,6 +37,16 @@ let hasFocusVisible = true;
 try {
   document.body.querySelector(':focus-visible');
 } catch (error) {
+  if (window.__swc?.DEBUG) {
+    window.__swc.warn(
+      undefined,
+      `The :focus-visible polyfill is not supported in this browser.`,
+      'https://github.com/WICG/focus-visible/pull/196',
+      {
+        issues: [error instanceof Error ? error.message : 'Unknown error'],
+      }
+    );
+  }
   hasFocusVisible = false;
 
   // @ts-ignore
@@ -124,7 +134,7 @@ export const FocusVisiblePolyfillMixin = <
     // Attempt to coordinate with the polyfill when connected to the
     // document:
     override connectedCallback(): void {
-      super.connectedCallback && super.connectedCallback();
+      super.connectedCallback?.();
       if (!hasFocusVisible) {
         requestAnimationFrame(() => {
           if (this[$endPolyfillCoordination] == null) {
@@ -135,7 +145,7 @@ export const FocusVisiblePolyfillMixin = <
     }
 
     override disconnectedCallback(): void {
-      super.disconnectedCallback && super.disconnectedCallback();
+      super.disconnectedCallback?.();
       // It's important to remove the polyfill event listener when we
       // disconnect, otherwise we will leak the whole element via window:
       if (!hasFocusVisible) {

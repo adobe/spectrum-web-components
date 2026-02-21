@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -107,6 +107,10 @@ const waitForFocusEvent = async (
       ),
     ]);
   } catch (error) {
+    console.warn(
+      'Focus event timed out. Falling back to manual verification due to inconsistent focus events:',
+      error instanceof Error ? error.message : 'Unknown error'
+    );
     // Fallback: verify focus manually for browsers with inconsistent focus events
     await waitUntil(
       () => document.activeElement === expectedElement,
@@ -953,7 +957,7 @@ export function runPickerTests(): void {
       await closed;
 
       await waitUntil(() => document.activeElement === el, 'focused', {
-          timeout: 300,
+        timeout: 300,
       });
 
       expect(el.open, 'open?').to.be.false;
@@ -1428,10 +1432,11 @@ export function runPickerTests(): void {
       expect(el.open, 'open?').to.be.false;
     });
     it('manages focus-ring styles', async () => {
-      // @TODO: skipping this test for non-WebKit browsers. Will review in the migration to Spectrum 2.
+      // @todo skipping this test for non-WebKit browsers. Will review in the migration to Spectrum 2.
       if (!isWebKit()) {
         return;
       }
+
       /**
        * This is a hack to set the `isMobile` property to true so that we can test the MobileController
        */
@@ -2214,7 +2219,7 @@ export function runPickerTests(): void {
       this.el = test.querySelector('sp-picker') as Picker;
       await elementUpdated(this.el);
     });
-    // @TODO: skipping this test because it's flaky in CI also flaky in VRT. Will review in the migration to Spectrum 2.
+    // @todo skipping this test because it's flaky in CI also flaky in VRT. Will review in the migration to Spectrum 2.
     it.skip('displays the same icon as the selected menu item', async function () {
       // Delay long enough for the picker to display the selected item.
       // Chromium and Webkit require 2 frames, Firefox requires 3 frames.
@@ -2353,7 +2358,7 @@ export function runPickerTests(): void {
       el.shadowRoot.append(styles);
       await elementUpdated(el);
     });
-    // @TODO: skipping due to flakiness. Will review in the migration to Spectrum 2.
+    // @todo skipping due to flakiness. Will review in the migration to Spectrum 2.
     it.skip('scrolls selected into view on open', async () => {
       await elementUpdated(el);
 

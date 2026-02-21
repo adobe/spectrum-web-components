@@ -82,6 +82,5 @@ sp-popover:not(sp-overlay sp-popover) {
   white-space: nowrap;
   border: 0;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
   clip-path: inset(50%);
 }

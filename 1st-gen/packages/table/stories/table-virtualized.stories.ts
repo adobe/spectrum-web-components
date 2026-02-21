@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,6 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { RangeChangedEvent } from '@lit-labs/virtualizer/events.js';
 
 import {
@@ -16,7 +17,6 @@ import {
   SpectrumElement,
   TemplateResult,
 } from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
 import type { SortedEventDetails, Table } from '@spectrum-web-components/table';
 
 import '@spectrum-web-components/table/sp-table.js';
@@ -56,7 +56,6 @@ export default {
 };
 
 class VirtualTable extends SpectrumElement {
-  @property({ type: Array })
   public items: {
     name: string;
     date: number;
@@ -93,23 +92,23 @@ class VirtualTable extends SpectrumElement {
       }
     };
 
+  onSorted = (event: CustomEvent<SortedEventDetails>): void => {
+    const { sortKey, sortDirection } = event.detail; // leveraged CustomEvent().detail, works across shadow boundaries
+    const items = [...this.items];
+    // depending on the column, sort asc or desc depending on the arrow direction
+    items.sort(this.compareItems(sortKey as 'name' | 'date', sortDirection));
+    this.items = items;
+  };
+
   protected override render(): TemplateResult {
     return html`
       <sp-table
         .items=${this.items}
         .renderItem=${renderItem}
-        size="m"
-        scroller="true"
+        .size=${'m'}
+        scroller
         style="height: 200px"
-        @sorted=${(event: CustomEvent<SortedEventDetails>): void => {
-          const { sortKey, sortDirection } = event.detail; // leveraged CustomEvent().detail, works across shadow boundaries
-          const items = [...this.items];
-          // depending on the column, sort asc or desc depending on the arrow direction
-          items.sort(
-            this.compareItems(sortKey as 'name' | 'date', sortDirection)
-          );
-          this.items = items;
-        }}
+        @sorted=${this.onSorted}
       >
         <sp-table-head>
           <sp-table-head-cell sortable sort-key="name" sort-direction="desc">
@@ -148,11 +147,11 @@ export const virtualizedSingle = (args: Properties): TemplateResult => {
 
   return html`
     <sp-table
-      size="m"
-      scroller="true"
+      .size=${'m'}
+      scroller
       style="height: 300px"
-      selects=${args.selects}
-      .selected=${args.selected}
+      selects=${ifDefined(args.selects)}
+      .selected=${args.selected as string[]}
       @change=${({ target }: Event & { target: Table }) => {
         const next = target.nextElementSibling as HTMLDivElement;
         next.textContent = `Selected: ${JSON.stringify(target.selected)}`;
@@ -189,11 +188,11 @@ virtualizedSingle.args = {
 export const virtualizedMultiple = (args: Properties): TemplateResult => {
   return html`
     <sp-table
-      size="m"
-      scroller="true"
+      .size=${'m'}
+      scroller
       style="height: 200px"
-      selects=${args.selects}
-      .selected=${args.selected}
+      selects=${ifDefined(args.selects)}
+      .selected=${args.selected as string[]}
       @change=${({ target }: Event & { target: Table }) => {
         const next = target.nextElementSibling as HTMLDivElement;
         next.textContent = `Selected: ${JSON.stringify(
@@ -225,14 +224,15 @@ virtualizedMultiple.args = {
 export const virtualizedCustomValue = (args: Properties): TemplateResult => {
   return html`
     <sp-table
-      size="m"
-      scroller="true"
+      .size=${'m'}
+      scroller
       style="height: 200px"
-      selects=${args.selects}
-      .selected=${args.selected}
+      selects=${ifDefined(args.selects)}
+      .selected=${args.selected as string[]}
       @change=${args.onChange}
       .items=${virtualItems}
-      .itemValue=${(item: Item) => 'applied-' + item.date}
+      .itemValue=${(item: unknown, _index: number) =>
+        'applied-' + (item as Item).date}
       .renderItem=${renderItem}
     >
       <sp-table-head>
@@ -266,11 +266,11 @@ export const virtualizedCustomRow = (args: Properties): TemplateResult => {
 
   return html`
     <sp-table
-      size="m"
-      scroller="true"
+      .size=${'m'}
+      scroller
       style="height: 200px"
-      selects=${args.selects}
-      .selected=${args.selected}
+      selects=${ifDefined(args.selects)}
+      .selected=${args.selected as string[]}
       @change=${({ target }: Event & { target: Table }) => {
         const next = target.nextElementSibling as HTMLDivElement;
         next.textContent = `Selected: ${JSON.stringify(
@@ -281,7 +281,6 @@ export const virtualizedCustomRow = (args: Properties): TemplateResult => {
         const nextNext = next.nextElementSibling as HTMLDivElement;
         nextNext.textContent = `Selected Count: ${target.selected.length}`;
       }}
-      scroller?="false"
       .items=${virtualItems}
       .renderItem=${renderItem}
     >

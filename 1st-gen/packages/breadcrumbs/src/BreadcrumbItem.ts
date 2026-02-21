@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -94,7 +94,7 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
       <a
         id="item-link"
         href=${ifDefined(!this.isLastOfType ? this.href : undefined)}
-        tabindex=${0}
+        tabindex="0"
         aria-current=${ifDefined(this.isLastOfType ? 'page' : undefined)}
         @keydown=${this.handleKeyDown}
         @click=${this.handleClick}

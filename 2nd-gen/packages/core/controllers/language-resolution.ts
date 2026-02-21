@@ -91,6 +91,7 @@ export class LanguageResolutionController implements ReactiveController {
   /**
    * Resolves the language from the theme context and validates it against Intl API.
    * Falls back to 'en-US' if the language is not supported.
+   *
    * @private
    */
   private resolveLanguage(): void {
