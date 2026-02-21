@@ -53,4 +53,13 @@ test.describe('Asset - ARIA Snapshots', () => {
     );
     await expect(asset).toMatchAriaSnapshot();
   });
+
+  test('should handle accessibility story', async ({ page }) => {
+    const asset = await gotoStory(
+      page,
+      'components-asset--accessibility',
+      'swc-asset'
+    );
+    await expect(asset).toMatchAriaSnapshot();
+  });
 });
