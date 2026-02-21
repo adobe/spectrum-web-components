@@ -1,3 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable import/extensions */
 /**
  * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -17,7 +19,11 @@ import {
 } from '@wc-toolkit/storybook-helpers';
 
 import customElements from './custom-elements.json';
-import { withFlexLayout, withStaticColorsDemo } from './decorators';
+import {
+  withFlexLayout,
+  withPerformanceMonitor,
+  withStaticColorsDemo,
+} from './decorators';
 import { withContext } from './decorators/contexts';
 import { withStaticColorPlayground } from './decorators/static-color-playground';
 import DocumentTemplate from './DocumentTemplate.mdx';
@@ -83,6 +89,7 @@ const preview = {
     scale: 'medium',
   },
   decorators: [
+    withPerformanceMonitor,
     withContext,
     withStaticColorPlayground,
     withStaticColorsDemo,
