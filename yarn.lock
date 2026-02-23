@@ -6767,6 +6767,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/reactive-controllers@workspace:1st-gen/tools/reactive-controllers"
   dependencies:
+    "@spectrum-web-components/core": "npm:0.0.4"
     "@spectrum-web-components/progress-circle": "npm:1.11.2"
     colorjs.io: "npm:0.5.2"
     lit: "npm:^2.5.0 || ^3.1.3"
