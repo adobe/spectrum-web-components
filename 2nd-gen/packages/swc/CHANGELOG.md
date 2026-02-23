@@ -1,4 +1,4 @@
-# @adobe/swc
+# @adobe/spectrum-wc
 
 ## 0.0.4
 

@@ -14,17 +14,15 @@ import Case from 'case';
 import fg from 'fast-glob';
 import { readFile } from 'fs/promises';
 import fsExtra from 'fs-extra';
-import yaml from 'js-yaml';
 import { basename, dirname, resolve } from 'path';
 import prettier from 'prettier';
 import { fileURLToPath } from 'url';
 
-const { existsSync, outputFile, readFileSync, readJSON } = fsExtra;
+const { existsSync, outputFile, readJSON } = fsExtra;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const prettierConfig = yaml.load(
-  readFileSync(resolve(__dirname, '..', '.prettierrc.yaml'))
-);
+const prettierConfig =
+  (await prettier.resolveConfig(resolve(__dirname, '..'))) ?? {};
 
 /* Share =============================================================== */
 
@@ -60,6 +58,10 @@ function genPackageJson(
         "description": "React and Next.js wrapper of the ${dependencyPkgName} component",
         "license": "Apache-2.0",
         "author": "Adobe",
+        "repository": {
+            "type": "git",
+            "url": "https://github.com/adobe/spectrum-web-components.git"
+        },
         "type": "module",${
           isIconPkg
             ? ''
@@ -284,13 +286,8 @@ ${elements.reduce(
  * @param {object} options - The options for generating the wrappers.
  * @param {string[]} options.exclude - The array of excluded component class names.
  * @param {string} options.outDir - The root output directory for generated code.
- * @param {object} options.prettierConfig - The prettier library configuration.
  */
-export default function genWrappers({
-  exclude = [],
-  outDir = 'legacy',
-  prettierConfig = {},
-} = {}) {
+export default function genWrappers({ exclude = [], outDir = 'legacy' } = {}) {
   return {
     name: 'react-wrapper',
     async packageLinkPhase({ customElementsManifest }) {

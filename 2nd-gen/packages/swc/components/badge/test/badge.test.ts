@@ -13,9 +13,9 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Badge } from '@adobe/swc/badge';
+import { Badge } from '@adobe/spectrum-wc/badge';
 
-import '@adobe/swc/badge';
+import '@adobe/spectrum-wc/badge';
 
 import {
   BADGE_VALID_SIZES,

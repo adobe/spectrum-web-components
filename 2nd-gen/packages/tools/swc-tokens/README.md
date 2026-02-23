@@ -1,6 +1,6 @@
 # @adobe/swc-tokens
 
-This package ingests Spectrum design token source data and converts it into CSS custom properties and a unified stylesheet for use by `@adobe/swc` components.
+This package ingests Spectrum design token source data and converts it into CSS custom properties and a unified stylesheet for use by `@adobe/spectrum-wc` components.
 
 An additional function, `lookupToken()`, is exported for use by `@adobe/postcss-token`. It powers the `token()` CSS function by resolving token names to either computed values or composed custom properties.
 
@@ -22,7 +22,7 @@ Ensure tokens are updated in the dependent packages by running the following com
 yarn tokens:update
 ```
 
-This will first run all token related tests, then update the extension-relative `tokens.json` for `swc-vscode-token` and the library-relative `tokens.css` for `@adobe/swc`.
+This will first run all token related tests, then update the extension-relative `tokens.json` for `swc-vscode-token` and the library-relative `tokens.css` for `@adobe/spectrum-wc`.
 
 If any test fails, the artifacts will not be generated, allowing you to investigate and fix any issues.
 
@@ -238,7 +238,7 @@ The main package provides a CLI to produce either the unified stylesheet `tokens
 
 > For purposes of the main package, those files are git ignored and intended for debugging purposes only.
 
-For the primary consuming package `@adobe/swc`, the following CLI command is used:
+For the primary consuming package `@adobe/spectrum-wc`, the following CLI command is used:
 
 ```bash
 swc-tokens --outputType stylesheet --out ./stylesheets/tokens.css --prefix swc

@@ -17,9 +17,9 @@ import type {
   StoryObj as Story,
 } from '@storybook/web-components';
 
-import { StatusLight } from '@adobe/swc/status-light';
+import { StatusLight } from '@adobe/spectrum-wc/status-light';
 
-import '@adobe/swc/status-light';
+import '@adobe/spectrum-wc/status-light';
 
 import {
   getComponent,
