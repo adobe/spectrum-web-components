@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -15,60 +15,60 @@ import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 
 export default {
-    component: 'sp-textfield',
-    title: 'Textarea',
+  component: 'sp-textfield',
+  title: 'Textarea',
 };
 
 export const Default = (): TemplateResult => {
-    return html`
-        <sp-textfield
-            multiline
-            label="Enter your life story"
-            placeholder="Enter your life story"
-        ></sp-textfield>
-        <sp-textfield
-            multiline
-            label="Enter your life story"
-            disabled
-            placeholder="Enter your life story"
-        ></sp-textfield>
-        <sp-textfield
-            multiline
-            label="Enter your life story"
-            pattern="[\\w\\s]+"
-            required
-            valid
-            value="A valid input"
-            placeholder="Enter your life story"
-        ></sp-textfield>
-        <sp-textfield
-            multiline
-            label="Enter your life story"
-            required
-            valid
-            value="A valid input"
-            disabled
-            placeholder="Enter your life story"
-        ></sp-textfield>
-        <sp-textfield
-            multiline
-            label="Enter your life story"
-            pattern="[\\d]+"
-            required
-            value="Not a valid input"
-            placeholder="Enter your life story"
-        ></sp-textfield>
-        <sp-textfield
-            multiline
-            label="Enter your life story"
-            pattern="[\\d]+"
-            invalid
-            required
-            value="Not a valid input"
-            disabled
-            placeholder="Enter your life story"
-        ></sp-textfield>
-    `;
+  return html`
+    <sp-textfield
+      multiline
+      label="Enter your life story"
+      placeholder="Enter your life story"
+    ></sp-textfield>
+    <sp-textfield
+      multiline
+      label="Enter your life story"
+      disabled
+      placeholder="Enter your life story"
+    ></sp-textfield>
+    <sp-textfield
+      multiline
+      label="Enter your life story"
+      pattern="[\\w\\s]+"
+      required
+      valid
+      value="A valid input"
+      placeholder="Enter your life story"
+    ></sp-textfield>
+    <sp-textfield
+      multiline
+      label="Enter your life story"
+      required
+      valid
+      value="A valid input"
+      disabled
+      placeholder="Enter your life story"
+    ></sp-textfield>
+    <sp-textfield
+      multiline
+      label="Enter your life story"
+      pattern="[\\d]+"
+      required
+      value="Not a valid input"
+      placeholder="Enter your life story"
+    ></sp-textfield>
+    <sp-textfield
+      multiline
+      label="Enter your life story"
+      pattern="[\\d]+"
+      invalid
+      required
+      value="Not a valid input"
+      disabled
+      placeholder="Enter your life story"
+    ></sp-textfield>
+  `;
 };
 
 export const quiet = (): TemplateResult => html`
@@ -153,36 +153,36 @@ export const growsWithLargeWords = (): TemplateResult => html`
 `;
 
 export const readonly = (): TemplateResult => html`
-    <sp-textfield
-        multiline
-        label="Enter your life story"
-        value="A readonly textarea"
-        readonly
-        placeholder="Enter your life story"
-    ></sp-textfield>
+  <sp-textfield
+    multiline
+    label="Enter your life story"
+    value="A readonly textarea"
+    readonly
+    placeholder="Enter your life story"
+  ></sp-textfield>
 `;
 
 export const resizeControls = (): TemplateResult => html`
-    <sp-textfield
-        multiline
-        style="resize: none;"
-        label="No resize control"
-        placeholder="No resize control"
-    ></sp-textfield>
+  <sp-textfield
+    multiline
+    style="resize: none;"
+    label="No resize control"
+    placeholder="No resize control"
+  ></sp-textfield>
 
-    <sp-textfield
-        multiline
-        style="resize: vertical;"
-        label="Vertical resize control"
-        placeholder="Vertical resize control"
-    ></sp-textfield>
+  <sp-textfield
+    multiline
+    style="resize: vertical;"
+    label="Vertical resize control"
+    placeholder="Vertical resize control"
+  ></sp-textfield>
 
-    <sp-textfield
-        multiline
-        style="resize: horizontal;"
-        label="Horizontal resize control"
-        placeholder="Horizontal resize control"
-    ></sp-textfield>
+  <sp-textfield
+    multiline
+    style="resize: horizontal;"
+    label="Horizontal resize control"
+    placeholder="Horizontal resize control"
+  ></sp-textfield>
 `;
 
 export const sized = (): TemplateResult => html`

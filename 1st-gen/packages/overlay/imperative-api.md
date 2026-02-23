@@ -32,15 +32,15 @@ Overlay.open(
 
 ```ts
 (async () => {
-    const content = document.querySelector('#content');
-    const options = {
-        offset: 0,
-        placement: 'bottom',
-        trigger: document.querySelector('#trigger'),
-        type: 'auto',
-    };
-    const overlay = await Overlay.open(content, options);
-    document.body.append(overlay);
+  const content = document.querySelector('#content');
+  const options = {
+    offset: 0,
+    placement: 'bottom',
+    trigger: document.querySelector('#trigger'),
+    type: 'auto',
+  };
+  const overlay = await Overlay.open(content, options);
+  document.body.append(overlay);
 })();
 ```
 
@@ -52,13 +52,13 @@ When leveraging `Overlay.open()`, you can provide an optional second argument of
 
 ```ts
 type OverlayOptions = {
-    delayed?: boolean;
-    notImmediatelyCloseable?: boolean;
-    offset?: number | [number, number];
-    placement?: Placement;
-    receivesFocus?: 'auto' | 'true' | 'false';
-    trigger?: HTMLElement | VirtualTrigger;
-    type?: 'modal' | 'page' | 'hint' | 'auto' | 'manual';
+  delayed?: boolean;
+  notImmediatelyCloseable?: boolean;
+  offset?: number | [number, number];
+  placement?: Placement;
+  receivesFocus?: 'auto' | 'true' | 'false';
+  trigger?: HTMLElement | VirtualTrigger;
+  type?: 'modal' | 'page' | 'hint' | 'auto' | 'manual';
 };
 ```
 

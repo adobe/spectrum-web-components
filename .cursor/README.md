@@ -8,16 +8,16 @@ Rules defined in the `config.json` follow this structure:
 
 ```json
 {
-    "version": 1,
-    "rules": {
-        "category": {
-            "rule_name": {
-                "enabled": true,
-                "pattern": "regex_pattern",
-                "message": "Error message"
-            }
-        }
+  "version": 1,
+  "rules": {
+    "category": {
+      "rule_name": {
+        "enabled": true,
+        "pattern": "regex_pattern",
+        "message": "Error message"
+      }
     }
+  }
 }
 ```
 
@@ -28,14 +28,14 @@ Additional, more specific rules can be found in the `rules` directory in either 
 ### Text formatting
 
 - **heading_case**: Enforces sentence case in headings with specific exceptions
-    - Applies to: `.md`, `.txt`, `.mdx` files
-    - Exceptions: Technical terms and acronyms
+  - Applies to: `.md`, `.txt`, `.mdx` files
+  - Exceptions: Technical terms and acronyms
 
 ### Jira tickets
 
 - **ticket_title**: Validates Jira ticket title format
-    - Optional component in brackets
-    - Max length: 80 characters
+  - Optional component in brackets
+  - Max length: 80 characters
 - **required_sections**: Ensures required sections are present
 - **templates**: Enforces template structure for different ticket types
 - **labels**: Validates that only allowed labels are used

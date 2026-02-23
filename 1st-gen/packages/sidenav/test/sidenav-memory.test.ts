@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,23 +11,19 @@
  */
 
 import { html } from '@open-wc/testing';
+
 import '@spectrum-web-components/radio/sp-radio.js';
 import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-heading.js';
+
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
 testForMemoryLeaks(html`
-    <sp-sidenav>
-        <sp-sidenav-heading label="CATEGORY 1">
-            <sp-sidenav-item
-                value="Section 1"
-                label="Section 1"
-            ></sp-sidenav-item>
-            <sp-sidenav-item
-                value="Section 2"
-                label="Section 2"
-            ></sp-sidenav-item>
-        </sp-sidenav-heading>
-    </sp-sidenav>
+  <sp-sidenav>
+    <sp-sidenav-heading label="CATEGORY 1">
+      <sp-sidenav-item value="Section 1" label="Section 1"></sp-sidenav-item>
+      <sp-sidenav-item value="Section 2" label="Section 2"></sp-sidenav-item>
+    </sp-sidenav-heading>
+  </sp-sidenav>
 `);

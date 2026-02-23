@@ -1,32 +1,20 @@
 {
-    "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
-        "baseUrl": "./packages",
-        "declaration": true,
-        "emitDeclarationOnly": true,
-        "experimentalDecorators": true,
-        "importHelpers": true,
-        "inlineSources": true,
-        "isolatedModules": true,
-        "lib": ["es2018", "dom", "dom.iterable"],
-        "module": "esNext",
-        "moduleResolution": "node",
-        "noImplicitOverride": true,
-        "noImplicitReturns": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "paths": {
-            "@spectrum-web-components/core/*": [
-                "../2nd-gen/packages/core/*/dist"
-            ]
-        },
-        "resolveJsonModule": true,
-        "rootDir": ".",
-        "skipLibCheck": true,
-        "sourceMap": true,
-        "strict": true,
-        "target": "es2018",
-        "types": ["mocha", "chai", "sinon", "node", "swc"]
+  "compilerOptions": {
+    // 1st-gen specific: Build configuration
+    "baseUrl": "./packages",
+    "emitDeclarationOnly": true,
+    "importHelpers": true,
+    "inlineSources": true,
+
+    // Cross-generation import mapping
+    "paths": {
+      "@spectrum-web-components/core/*": ["../2nd-gen/packages/core/*/dist"]
     },
-    "include": ["./global.d.ts"]
+    "rootDir": ".",
+
+    // Test framework types
+    "types": ["mocha", "chai", "sinon", "node", "swc"]
+  },
+  "extends": "../tsconfig.base.json",
+  "include": ["./projects/types/global.d.ts"]
 }

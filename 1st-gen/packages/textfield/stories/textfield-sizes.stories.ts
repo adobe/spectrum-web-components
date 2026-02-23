@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,20 +10,20 @@
  * governing permissions and limitations under the License.
  */
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 export default {
-    component: 'sp-textfield',
-    title: 'Textfield/Sizes',
+  component: 'sp-textfield',
+  title: 'Textfield/Sizes',
 };
 
 const template = ({
-    size,
+  size,
 }: {
-    size?: 's' | 'm' | 'l' | 'xl';
+  size?: 's' | 'm' | 'l' | 'xl';
 } = {}): TemplateResult => {
     return html`
         <sp-textfield id="name" size=${ifDefined(size)} value="Sized Textfield">

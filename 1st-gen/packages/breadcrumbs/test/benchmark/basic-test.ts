@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,30 +9,32 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { html } from '@spectrum-web-components/base';
+
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumbs.js';
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
-import { html } from '@spectrum-web-components/base';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-breadcrumbs>
-        <sp-breadcrumb-item href=${window.location.href}>
-            Breadcrumb 1
-        </sp-breadcrumb-item>
-        <sp-breadcrumb-item href=${window.location.href}>
-            Breadcrumb 2
-        </sp-breadcrumb-item>
-        <sp-breadcrumb-item href=${window.location.href}>
-            Breadcrumb 3
-        </sp-breadcrumb-item>
-        <sp-breadcrumb-item href=${window.location.href}>
-            Breadcrumb 4
-        </sp-breadcrumb-item>
-        <sp-breadcrumb-item href=${window.location.href}>
-            Breadcrumb 5
-        </sp-breadcrumb-item>
-        <sp-breadcrumb-item href=${window.location.href}>
-            Breadcrumb 6
-        </sp-breadcrumb-item>
-    </sp-breadcrumbs>
+  <sp-breadcrumbs>
+    <sp-breadcrumb-item href=${window.location.href}>
+      Breadcrumb 1
+    </sp-breadcrumb-item>
+    <sp-breadcrumb-item href=${window.location.href}>
+      Breadcrumb 2
+    </sp-breadcrumb-item>
+    <sp-breadcrumb-item href=${window.location.href}>
+      Breadcrumb 3
+    </sp-breadcrumb-item>
+    <sp-breadcrumb-item href=${window.location.href}>
+      Breadcrumb 4
+    </sp-breadcrumb-item>
+    <sp-breadcrumb-item href=${window.location.href}>
+      Breadcrumb 5
+    </sp-breadcrumb-item>
+    <sp-breadcrumb-item href=${window.location.href}>
+      Breadcrumb 6
+    </sp-breadcrumb-item>
+  </sp-breadcrumbs>
 `);

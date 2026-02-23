@@ -158,9 +158,9 @@ mutate() {
 
 ```html
 <sp-combobox size="s" label="Color">
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -170,9 +170,9 @@ mutate() {
 
 ```html
 <sp-combobox size="m" label="Color">
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -182,9 +182,9 @@ mutate() {
 
 ```html
 <sp-combobox size="l" label="Color">
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -194,9 +194,9 @@ mutate() {
 
 ```html
 <sp-combobox size="xl" label="Color">
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 

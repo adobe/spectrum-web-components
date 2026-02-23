@@ -356,15 +356,15 @@ The `<sp-number-field>` component doesn't manage a default value by itself. This
 </sp-number-field>
 
 <script type="module">
-    const numberField = document.querySelector('#default');
+  const numberField = document.querySelector('#default');
 
-    numberField.addEventListener('change', (event) => {
-        alert('change');
-        const target = event.target;
-        if (isNaN(target.value)) {
-            target.value = '42';
-        }
-    });
+  numberField.addEventListener('change', (event) => {
+    alert('change');
+    const target = event.target;
+    if (isNaN(target.value)) {
+      target.value = '42';
+    }
+  });
 </script>
 ```
 

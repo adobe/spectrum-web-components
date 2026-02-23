@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -15,8 +15,8 @@ import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 
 export default {
-    component: 'sp-textfield',
-    title: 'Textfield',
+  component: 'sp-textfield',
+  title: 'Textfield',
 };
 
 export const Default = (): TemplateResult => {
@@ -131,39 +131,51 @@ export const allowedKeys = (): TemplateResult => {
 };
 
 export const withNameAttribute = (): TemplateResult => {
-    return html`
-        <sp-textfield
-            name="name"
-            placeholder="Enter your name"
-            allowed-keys="a-z"
-        ></sp-textfield>
-    `;
+  return html`
+    <sp-textfield
+      name="name"
+      placeholder="Enter your name"
+      allowed-keys="a-z"
+    ></sp-textfield>
+  `;
 };
 
 export const readonly = (): TemplateResult => html`
-    <sp-textfield
-        label="Enter your life story"
-        value="A readonly textfield"
-        readonly
-        placeholder="Enter your life story"
-    ></sp-textfield>
+  <sp-textfield
+    label="Enter your life story"
+    value="A readonly textfield"
+    readonly
+    placeholder="Enter your life story"
+  ></sp-textfield>
 `;
 
 export const types = (): TemplateResult => html`
-    <sp-textfield label="Default" placeholder="default (text)"></sp-textfield>
-    <sp-textfield label="Text" type="text" placeholder="text"></sp-textfield>
-    <sp-textfield label="URL" type="url" placeholder="url"></sp-textfield>
-    <sp-textfield label="Tel" type="tel" placeholder="tel"></sp-textfield>
-    <sp-textfield
-        label="E-Mail"
-        type="email"
-        placeholder="email"
-    ></sp-textfield>
-    <sp-textfield
-        label="Password"
-        type="password"
-        placeholder="password"
-    ></sp-textfield>
+  <sp-textfield label="Default" placeholder="default (text)"></sp-textfield>
+  <sp-textfield label="Text" type="text" placeholder="text"></sp-textfield>
+  <sp-textfield
+    label="URL"
+    type="url"
+    placeholder="url"
+    autocomplete="url"
+  ></sp-textfield>
+  <sp-textfield
+    label="Tel"
+    type="tel"
+    placeholder="tel"
+    autocomplete="tel"
+  ></sp-textfield>
+  <sp-textfield
+    label="E-Mail"
+    type="email"
+    placeholder="email"
+    autocomplete="email"
+  ></sp-textfield>
+  <sp-textfield
+    label="Password"
+    type="password"
+    placeholder="password"
+    autocomplete="current-password"
+  ></sp-textfield>
 `;
 
 export const empty = (): TemplateResult => html`

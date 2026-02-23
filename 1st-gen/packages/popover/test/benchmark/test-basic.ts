@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,18 +10,20 @@
  * governing permissions and limitations under the License.
  */
 
+import { html } from 'lit';
+
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
-import { html } from 'lit';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-popover direction="top" open>
-        <sp-dialog>
-            <h3 slot="heading">Popover title</h3>
-            Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels.
-            Icing soufflé chupa chups donut cheesecake. Jelly-o chocolate cake
-            sweet roll cake danish candy biscuit halvah
-        </sp-dialog>
-    </sp-popover>
+  <sp-popover direction="top" open>
+    <sp-dialog>
+      <h3 slot="heading">Popover title</h3>
+      Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels. Icing
+      soufflé chupa chups donut cheesecake. Jelly-o chocolate cake sweet roll
+      cake danish candy biscuit halvah
+    </sp-dialog>
+  </sp-popover>
 `);

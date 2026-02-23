@@ -1,8 +1,0 @@
-{
-    "extends": "../tslint.json",
-    "rules": {
-        "no-implicit-dependencies": [true, "dev"],
-        "max-classes-per-file": false,
-        "no-console": false
-    }
-}

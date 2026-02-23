@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,72 +11,73 @@
  */
 
 import {
-    html,
-    LitElement,
-    TemplateResult,
+  html,
+  LitElement,
+  TemplateResult,
 } from '@spectrum-web-components/base';
+import { query, state } from '@spectrum-web-components/base/src/decorators.js';
+import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { live } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
+
 import { Combobox, ComboboxOption } from '../src/Combobox.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
-import { query, state } from '@spectrum-web-components/base/src/decorators.js';
-import { live } from '@spectrum-web-components/base/src/directives.js';
+import { argTypes } from './args.js';
 import { countries, fruits, StoryArgs } from './index.js';
 import { Template } from './template.js';
-import { argTypes } from './args.js';
 
 export default {
-    title: 'Combobox',
-    component: 'sp-combobox',
-    args: {
-        open: false,
-        disabled: false,
-        invalid: false,
-        pending: false,
-        readonly: false,
-        quiet: false,
-    },
-    argTypes,
+  title: 'Combobox',
+  component: 'sp-combobox',
+  args: {
+    open: false,
+    disabled: false,
+    invalid: false,
+    pending: false,
+    readonly: false,
+    quiet: false,
+  },
+  argTypes,
 };
 
 export const Default = (args: StoryArgs): TemplateResult => Template(args);
 
 export const disabled = (args: StoryArgs): TemplateResult => Template(args);
 disabled.args = {
-    disabled: true,
-    value: 'Azerbaijan',
+  disabled: true,
+  value: 'Azerbaijan',
 };
 
 export const invalid = (args: StoryArgs): TemplateResult => Template(args);
 invalid.args = {
-    invalid: true,
+  invalid: true,
 };
 
 export const pending = (args: StoryArgs): TemplateResult => Template(args);
 pending.args = {
-    pending: true,
+  pending: true,
 };
 
 export const quiet = (args: StoryArgs): TemplateResult => Template(args);
 quiet.args = {
-    quiet: true,
+  quiet: true,
 };
 
 export const readonly = (args: StoryArgs): TemplateResult => Template(args);
 readonly.args = {
-    readonly: true,
-    value: 'Solomon Islands',
+  readonly: true,
+  value: 'Solomon Islands',
 };
 
 export const hasDisabledItems = (args: StoryArgs): TemplateResult => {
-    // let's create a new array from countries and set the disabled property to true if the value is in args.disabledItems
-    const countriesWithDisabledItems = countries.map((country) => ({
-        ...country,
-        disabled: args.disabledItems?.includes(country.itemText),
-    }));
+  // let's create a new array from countries and set the disabled property to true if the value is in args.disabledItems
+  const countriesWithDisabledItems = countries.map((country) => ({
+    ...country,
+    disabled: args.disabledItems?.includes(country.itemText),
+  }));
 
     return html`
         <sp-combobox
@@ -107,23 +108,23 @@ export const hasDisabledItems = (args: StoryArgs): TemplateResult => {
     `;
 };
 hasDisabledItems.args = {
-    disabledItems: [
-        'banana',
-        'lemon',
-        'pear',
-        'Albania',
-        'Azerbaijan',
-        'Solomon Islands',
-    ],
+  disabledItems: [
+    'banana',
+    'lemon',
+    'pear',
+    'Albania',
+    'Azerbaijan',
+    'Solomon Islands',
+  ],
 };
 hasDisabledItems.swc_vrt = {
-    skip: true,
+  skip: true,
 };
 
 export const listAutocomplete = (args: StoryArgs): TemplateResult =>
-    Template(args);
+  Template(args);
 listAutocomplete.args = {
-    autocomplete: 'list',
+  autocomplete: 'list',
 };
 
 export const noAutocomplete = (): TemplateResult => {
@@ -221,19 +222,19 @@ export const withHelpText = (): TemplateResult => {
 };
 
 class ControlledCombo extends LitElement {
-    static ages: ComboboxOption[] = Array.from({ length: 76 - 55 }, (_, n) => {
-        const age = `${n + 55}`;
-        return { value: age, itemText: age };
-    });
+  static ages: ComboboxOption[] = Array.from({ length: 76 - 55 }, (_, n) => {
+    const age = `${n + 55}`;
+    return { value: age, itemText: age };
+  });
 
-    @state()
-    private value = {
-        raw: '',
-        validated: `${ControlledCombo.ages[0].itemText}`,
-    };
+  @state()
+  private value = {
+    raw: '',
+    validated: `${ControlledCombo.ages[0].itemText}`,
+  };
 
-    @query('#age')
-    private combobox!: Combobox;
+  @query('#age')
+  private combobox!: Combobox;
 
     override render(): TemplateResult {
         return html`
@@ -249,25 +250,25 @@ class ControlledCombo extends LitElement {
         `;
     }
 
-    private onChange(): void {
-        this.value = {
-            raw: this.combobox.value,
-            validated: this.combobox.value.replace(/\D/g, '') || '55',
-        };
-    }
+  private onChange(): void {
+    this.value = {
+      raw: this.combobox.value,
+      validated: this.combobox.value.replace(/\D/g, '') || '55',
+    };
+  }
 }
 defineElement('controlled-combo', ControlledCombo);
 
 export const controlled = (): TemplateResult => {
-    return html`
-        <controlled-combo></controlled-combo>
-    `;
+  return html`
+    <controlled-combo></controlled-combo>
+  `;
 };
 controlled.swc_vrt = {
-    skip: true,
+  skip: true,
 };
 
 controlled.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
+  // Disables Chromatic's snapshotting on a global level
+  chromatic: { disableSnapshot: true },
 };

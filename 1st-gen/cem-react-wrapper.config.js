@@ -10,11 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import { readFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
-
-import yaml from 'js-yaml';
 
 import defineElementPlugin from './scripts/define-element-plugin.js';
 import reactWrapperPlugin from './scripts/cem-plugin-react-wrapper.js';
@@ -22,25 +19,22 @@ import reactWrapperPlugin from './scripts/cem-plugin-react-wrapper.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default {
-    globs: ['**/sp-*.ts', '**/overlay-trigger.ts', '**/src/[A-Z]*.ts'],
-    exclude: [
-        '**/sp-icon-*.ts',
-        '**/*.d.ts',
-        '**/stories/**',
-        '**/test/**',
-        'node_modules/*',
-        '**/*.dev.*',
-    ],
-    litelement: true,
-    packagejson: false,
-    plugins: [
-        defineElementPlugin(),
-        reactWrapperPlugin({
-            exclude: ['StoryDecorator', 'TooltipOpenable'],
-            outDir: join(__dirname, 'react'),
-            prettierConfig: yaml.load(
-                readFileSync(join(__dirname, '.prettierrc.yaml'))
-            ),
-        }),
-    ],
+  globs: ['**/sp-*.ts', '**/overlay-trigger.ts', '**/src/[A-Z]*.ts'],
+  exclude: [
+    '**/sp-icon-*.ts',
+    '**/*.d.ts',
+    '**/stories/**',
+    '**/test/**',
+    'node_modules/*',
+    '**/*.dev.*',
+  ],
+  litelement: true,
+  packagejson: false,
+  plugins: [
+    defineElementPlugin(),
+    reactWrapperPlugin({
+      exclude: ['StoryDecorator', 'TooltipOpenable'],
+      outDir: join(__dirname, 'react'),
+    }),
+  ],
 };

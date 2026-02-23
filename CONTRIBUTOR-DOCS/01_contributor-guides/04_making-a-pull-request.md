@@ -69,6 +69,8 @@ Since this project is used by a diverse audience, the accessibility of our produ
 - The use of the expected [keyboard navigation](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/).
 - Sufficient color contrast as recommended in the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/WAI/standards-guidelines/wcag/).
 
+For every PR that affects interactive components, you **must** complete the **Accessibility testing checklist** in the pull request template. This includes **documenting your keyboard testing steps** and **documenting your screen reader testing steps** (what you did, where you tested, and the expected result). Automated tools cannot catch all accessibility issues; manual testing with keyboard and screen reader is required. See [Accessibility testing](09_accessibility-testing.md#manual-testing-required-for-prs) for a keyboard testing guide and screen reader testing guidance.
+
 If you're unsure about an accessibility detail, the [Web Accessibility Initiative (WAI) ARIA Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/) is a good place to start. You can also open a discussion or ask in your PR.
 
 ---
@@ -158,6 +160,7 @@ When creating a pull request, you'll be presented with our template. Complete al
 - Related issues (using proper [GitHub keywords](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/using-keywords-in-issues-and-pull-requests#linking-a-pull-request-to-an-issue) to auto-close issues i.e. `fixes`, `resolves`, or `closes`)
 - Type of change in the PR title (bug fix, feature, breaking change)
 - Steps you took to test your changes that reviewers can follow to also test them
+- **Accessibility testing checklist** completed, including **documented keyboard and screen reader testing steps** (required for PRs that affect interactive components)
 - Checklist of items completed
 - Screenshots/videos for visual changes
 

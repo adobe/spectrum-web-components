@@ -8,13 +8,13 @@
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/textfield?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/textfield)
 [![Try it on Stackblitz](https://img.shields.io/badge/Try%20it%20on-Stackblitz-blue?style=for-the-badge)](https://stackblitz.com/edit/vitejs-vite-wb3tywmy)
 
-```
+```zsh
 yarn add @spectrum-web-components/textfield
 ```
 
 Import the side effectful registration of `<sp-textfield>` via:
 
-```
+```js
 import '@spectrum-web-components/textfield/sp-textfield.js';
 ```
 
@@ -27,7 +27,7 @@ import { Textfield } from '@spectrum-web-components/textfield';
 ### Anatomy
 
 ```html
-<sp-textfield>Name</sp-textfield>
+<sp-textfield>Presentation Title</sp-textfield>
 ```
 
 #### Label
@@ -39,7 +39,7 @@ A text field must have a label in order to be accessible. A label can be provide
 <sp-tab-panel value="slotted">
 
 ```html
-<sp-textfield>Name</sp-textfield>
+<sp-textfield>Employer Name</sp-textfield>
 ```
 
 </sp-tab-panel>
@@ -47,7 +47,7 @@ A text field must have a label in order to be accessible. A label can be provide
 <sp-tab-panel value="attribute">
 
 ```html
-<sp-textfield label="Name"></sp-textfield>
+<sp-textfield label="Employer Name"></sp-textfield>
 ```
 
 </sp-tab-panel>
@@ -60,7 +60,7 @@ Use the `placeholder` attribute to include placeholder text.
 **Note**: Placeholder text should not be used as a replacement for a label or help help text.
 
 ```html
-<sp-textfield placeholder="ex., John Doe">Name</sp-textfield>
+<sp-textfield placeholder="ex., Rover">Pet Name</sp-textfield>
 ```
 
 #### Help text
@@ -117,7 +117,7 @@ See [help text](../help-text) for more information.
 <sp-tab-panel value="s">
 
 ```html
-<sp-textfield size="s" placeholder="Enter your name">Name</sp-textfield>
+<sp-textfield size="s" placeholder="Enter your email address" autocomplete="email">Email</sp-textfield>
 ```
 
 </sp-tab-panel>
@@ -125,7 +125,7 @@ See [help text](../help-text) for more information.
 <sp-tab-panel value="m">
 
 ```html
-<sp-textfield placeholder="Enter your name">Name</sp-textfield>
+<sp-textfield size="m" placeholder="Enter your email address" autocomplete="email">Email</sp-textfield>
 ```
 
 </sp-tab-panel>
@@ -133,7 +133,7 @@ See [help text](../help-text) for more information.
 <sp-tab-panel value="l">
 
 ```html
-<sp-textfield size="l" placeholder="Enter your name">Name</sp-textfield>
+<sp-textfield size="l" placeholder="Enter your email address" autocomplete="email">Email</sp-textfield>
 ```
 
 </sp-tab-panel>
@@ -141,7 +141,7 @@ See [help text](../help-text) for more information.
 <sp-tab-panel value="xl">
 
 ```html
-<sp-textfield size="xl" placeholder="Enter your name">Name</sp-textfield>
+<sp-textfield size="xl" placeholder="Enter your email address" autocomplete="email">Email</sp-textfield>
 ```
 
 </sp-tab-panel>
@@ -159,10 +159,15 @@ user affordances like mobile keyboards and obscured characters:
 - `text` (default)
 
 ```html
-<sp-textfield type="tel" placeholder="Enter your phone number">
-    Telephone
-</sp-textfield>
-<sp-textfield type="password">Password</sp-textfield>
+<sp-textfield
+  type="tel"
+  placeholder="Enter your phone number"
+  autocomplete="tel"
+>Telephone</sp-textfield>
+<sp-textfield
+  type="password"
+  autocomplete="current-password"
+>Password</sp-textfield>
 ```
 
 If the `type` attribute is not specified, or if it does not match any of these values, the default type adopted is "text."
@@ -172,7 +177,11 @@ If the `type` attribute is not specified, or if it does not match any of these v
 The quiet style works best when a clear layout (vertical stack, table, grid) assists in a user's ability to parse the element. Too many quiet components in a small space can be hard to read.
 
 ```html
-<sp-textfield placeholder="Enter your name" quiet>Name (quietly)</sp-textfield>
+<sp-textfield
+  placeholder="Enter your name"
+  quiet
+  autocomplete="name"
+>Name (quietly)</sp-textfield>
 ```
 
 ### States
@@ -180,11 +189,18 @@ The quiet style works best when a clear layout (vertical stack, table, grid) ass
 Use the `required` attribute to indicate a textfield value is required. Dictate the validity or invalidity state of the text entry with the `valid` or `invalid` attributes.
 
 ```html
-<sp-textfield placeholder="Enter your name" valid value="My Name">
-    Name
-</sp-textfield>
+<sp-textfield
+  placeholder="Enter your name"
+  valid
+  value="My Name"
+  autocomplete="name"
+>Name</sp-textfield>
 <br />
-<sp-textfield invalid placeholder="Enter your name">Name</sp-textfield>
+<sp-textfield
+  invalid
+  autocomplete="name"
+  placeholder="Enter your name"
+>Name</sp-textfield>
 ```
 
 ### Accessibility
@@ -208,6 +224,31 @@ Learn more about [using help text](https://spectrum.adobe.com/page/text-field/#U
 Write error messaging in a human-centered way by guiding a user and showing them a solution — don’t simply state what’s wrong and then leave them guessing as to how to resolve it. Ambiguous error messages can be frustrating and even shame-inducing for users. Also, keep in mind that something that a system may deem an error may not actually be perceived as an error to a user.
 
 Learn more about [writing error messages](https://spectrum.adobe.com/page/text-field/#Write-error-text-that-shows-a-solution).
+
+#### Autocomplete
+
+Use the `autocomplete` attribute to help users complete forms faster and with fewer errors, especially on mobile devices. Auto-complete is required only for common input fields that collect an individual’s personal data.
+
+```html
+<sp-textfield id="email-1" type="email" autocomplete="email">Email</sp-textfield>
+<sp-textfield id="phone-1" type="tel" autocomplete="tel">Phone</sp-textfield>
+<sp-textfield id="name-1" type="text" autocomplete="name">Full Name</sp-textfield>
+```
+
+**Common autocomplete values include**:
+
+| Input type        | Autocomplete token                                                       |
+| ----------------- | ------------------------------------------------------------------------ |
+| `type="text"`     | `name` - Full name                                                       |
+| `type="text"`     | `given-name` - First name                                                |
+| `type="text"`     | `family-name` - Last name                                                |
+| `type="email"`    | `email` - Email address                                                  |
+| `type="tel"`      | `tel` - Telephone number                                                 |
+| `type="url"`      | `url` - Website URL                                                      |
+| `type="password"` | `current-password` - Current password for login                          |
+| `type="password"` | `new-password` - New password when creating account or changing password |
+
+See the [MDN autocomplete reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) for the complete list of values.
 
 #### Do not us a placeholder as a replacement for a label or help-text
 

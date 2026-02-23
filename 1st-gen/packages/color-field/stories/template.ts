@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -17,26 +17,26 @@ import '@spectrum-web-components/color-field/sp-color-field.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 
 export interface Properties {
-    quiet?: boolean;
-    readonly?: boolean;
-    disabled?: boolean;
-    viewColor?: boolean;
-    value?: string;
-    label?: string;
-    size?: 's' | 'm' | 'l' | 'xl';
+  quiet?: boolean;
+  readonly?: boolean;
+  disabled?: boolean;
+  viewColor?: boolean;
+  value?: string;
+  label?: string;
+  size?: 's' | 'm' | 'l' | 'xl';
 }
 
 export const ColorFieldMarkup = ({
-    label = 'Color Field',
-    slottedLabel = '',
-    quiet = false,
-    size = 'm',
-    readonly = false,
-    disabled = false,
-    viewColor = false,
-    value = '',
-    helpText = '',
-    sideAligned = '',
+  label = 'Color Field',
+  slottedLabel = '',
+  quiet = false,
+  size = 'm',
+  readonly = false,
+  disabled = false,
+  viewColor = false,
+  value = '',
+  helpText = '',
+  sideAligned = '',
 } = {}): TemplateResult => {
     return html`
         <sp-color-field
@@ -44,9 +44,9 @@ export const ColorFieldMarkup = ({
             size=${size}
             value=${value}
             side-aligned=${ifDefined(
-                sideAligned === 'start' || sideAligned === 'end'
-                    ? sideAligned
-                    : undefined
+              sideAligned === 'start' || sideAligned === 'end'
+                  ? sideAligned
+                  : undefined
             )}
             ?view-color=${viewColor}
             ?quiet=${quiet}
@@ -61,6 +61,17 @@ export const ColorFieldMarkup = ({
                   `}
         </sp-color-field>
     `;
+  return html`
+    <sp-color-field
+      label=${label}
+      size=${size}
+      value=${value}
+      ?view-color=${viewColor}
+      ?quiet=${quiet}
+      ?readonly=${readonly}
+      ?disabled=${disabled}
+    ></sp-color-field>
+  `;
 };
 
 export const Template = ColorFieldMarkup;

@@ -25,8 +25,8 @@ Import the `SystemResolutionController` via:
 
 ```typescript
 import {
-    SystemResolutionController,
-    systemResolverUpdatedSymbol,
+  SystemResolutionController,
+  systemResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/SystemContextResolution.js';
 import type { SystemVariant } from '@spectrum-web-components/theme';
 ```
@@ -43,15 +43,15 @@ import { SystemResolutionController } from '@spectrum-web-components/reactive-co
 import type { SystemVariant } from '@spectrum-web-components/theme';
 
 class SystemAwareComponent extends LitElement {
-    private systemResolver = new SystemResolutionController(this);
+  private systemResolver = new SystemResolutionController(this);
 
-    render() {
-        const system = this.systemResolver.system;
+  render() {
+    const system = this.systemResolver.system;
 
-        return html`
-            <div>Current design system: ${system}</div>
-        `;
-    }
+    return html`
+      <div>Current design system: ${system}</div>
+    `;
+  }
 }
 
 customElements.define('system-aware-component', SystemAwareComponent);
@@ -73,69 +73,69 @@ Detect system changes using the symbol and apply system-specific styles or load 
 import { LitElement, html, css } from 'lit';
 import { property } from 'lit/decorators.js';
 import {
-    SystemResolutionController,
-    systemResolverUpdatedSymbol,
+  SystemResolutionController,
+  systemResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/SystemContextResolution.js';
 import type { SystemVariant } from '@spectrum-web-components/theme';
 
 class AdaptiveComponent extends LitElement {
-    private systemResolver = new SystemResolutionController(this);
+  private systemResolver = new SystemResolutionController(this);
 
-    @property({ type: String, reflect: true })
-    private currentSystem: SystemVariant = 'spectrum';
+  @property({ type: String, reflect: true })
+  private currentSystem: SystemVariant = 'spectrum';
 
-    static styles = css`
-        :host {
-            display: block;
-            padding: 16px;
-        }
+  static styles = css`
+    :host {
+      display: block;
+      padding: 16px;
+    }
 
-        :host([current-system='express']) {
-            /* Express-specific styles */
-            border-left: 3px solid blue;
-        }
+    :host([current-system='express']) {
+      /* Express-specific styles */
+      border-left: 3px solid blue;
+    }
 
-        :host([current-system='spectrum-two']) {
-            /* Spectrum 2-specific styles */
-            border-left: 3px solid green;
-        }
+    :host([current-system='spectrum-two']) {
+      /* Spectrum 2-specific styles */
+      border-left: 3px solid green;
+    }
+  `;
+
+  protected override update(changes: Map<PropertyKey, unknown>): void {
+    if (changes.has(systemResolverUpdatedSymbol)) {
+      this.currentSystem = this.systemResolver.system;
+      console.log('System context changed to:', this.currentSystem);
+
+      // Perform system-specific logic
+      this.handleSystemChange(this.currentSystem);
+    }
+    super.update(changes);
+  }
+
+  private handleSystemChange(system: SystemVariant): void {
+    // Implement system-specific behavior
+    switch (system) {
+      case 'express':
+        // Load Express-specific resources
+        break;
+      case 'spectrum-two':
+        // Load Spectrum 2-specific resources
+        break;
+      case 'spectrum':
+      default:
+        // Load Spectrum resources
+        break;
+    }
+  }
+
+  render() {
+    return html`
+      <div>
+        <h3>Adaptive Component</h3>
+        <p>Currently using: ${this.currentSystem}</p>
+      </div>
     `;
-
-    protected override update(changes: Map<PropertyKey, unknown>): void {
-        if (changes.has(systemResolverUpdatedSymbol)) {
-            this.currentSystem = this.systemResolver.system;
-            console.log('System context changed to:', this.currentSystem);
-
-            // Perform system-specific logic
-            this.handleSystemChange(this.currentSystem);
-        }
-        super.update(changes);
-    }
-
-    private handleSystemChange(system: SystemVariant): void {
-        // Implement system-specific behavior
-        switch (system) {
-            case 'express':
-                // Load Express-specific resources
-                break;
-            case 'spectrum-two':
-                // Load Spectrum 2-specific resources
-                break;
-            case 'spectrum':
-            default:
-                // Load Spectrum resources
-                break;
-        }
-    }
-
-    render() {
-        return html`
-            <div>
-                <h3>Adaptive Component</h3>
-                <p>Currently using: ${this.currentSystem}</p>
-            </div>
-        `;
-    }
+  }
 }
 
 customElements.define('adaptive-component', AdaptiveComponent);
@@ -150,46 +150,46 @@ import { LitElement, html } from 'lit';
 import { SystemResolutionController } from '@spectrum-web-components/reactive-controllers/src/SystemContextResolution.js';
 
 class SystemSpecificContent extends LitElement {
-    private systemResolver = new SystemResolutionController(this);
+  private systemResolver = new SystemResolutionController(this);
 
-    renderExpressContent() {
-        return html`
-            <div class="express-ui">
-                <p>Optimized for high-density enterprise workflows</p>
-                <button>Express Action</button>
-            </div>
-        `;
-    }
+  renderExpressContent() {
+    return html`
+      <div class="express-ui">
+        <p>Optimized for high-density enterprise workflows</p>
+        <button>Express Action</button>
+      </div>
+    `;
+  }
 
-    renderSpectrum2Content() {
-        return html`
-            <div class="spectrum2-ui">
-                <p>Modern Spectrum 2 design</p>
-                <button>Spectrum 2 Action</button>
-            </div>
-        `;
-    }
+  renderSpectrum2Content() {
+    return html`
+      <div class="spectrum2-ui">
+        <p>Modern Spectrum 2 design</p>
+        <button>Spectrum 2 Action</button>
+      </div>
+    `;
+  }
 
-    renderSpectrumContent() {
-        return html`
-            <div class="spectrum-ui">
-                <p>Classic Spectrum design</p>
-                <button>Standard Action</button>
-            </div>
-        `;
-    }
+  renderSpectrumContent() {
+    return html`
+      <div class="spectrum-ui">
+        <p>Classic Spectrum design</p>
+        <button>Standard Action</button>
+      </div>
+    `;
+  }
 
-    render() {
-        switch (this.systemResolver.system) {
-            case 'express':
-                return this.renderExpressContent();
-            case 'spectrum-two':
-                return this.renderSpectrum2Content();
-            case 'spectrum':
-            default:
-                return this.renderSpectrumContent();
-        }
+  render() {
+    switch (this.systemResolver.system) {
+      case 'express':
+        return this.renderExpressContent();
+      case 'spectrum-two':
+        return this.renderSpectrum2Content();
+      case 'spectrum':
+      default:
+        return this.renderSpectrumContent();
     }
+  }
 }
 
 customElements.define('system-specific-content', SystemSpecificContent);
@@ -206,27 +206,27 @@ import { SystemResolutionController } from '@spectrum-web-components/reactive-co
 import type { SystemVariant } from '@spectrum-web-components/theme';
 
 class IconLoader extends LitElement {
-    private systemResolver = new SystemResolutionController(this);
+  private systemResolver = new SystemResolutionController(this);
 
-    @property({ type: String })
-    iconName = '';
+  @property({ type: String })
+  iconName = '';
 
-    private getIconPath(system: SystemVariant): string {
-        return `/assets/icons/${system}/${this.iconName}.svg`;
-    }
+  private getIconPath(system: SystemVariant): string {
+    return `/assets/icons/${system}/${this.iconName}.svg`;
+  }
 
-    render() {
-        const iconSrc = this.getIconPath(this.systemResolver.system);
+  render() {
+    const iconSrc = this.getIconPath(this.systemResolver.system);
 
-        return html`
-            <img
-                src=${iconSrc}
-                alt=${this.iconName}
-                aria-label="Icon for ${this.iconName} in ${this.systemResolver
-                    .system} design system"
-            />
-        `;
-    }
+    return html`
+      <img
+        src=${iconSrc}
+        alt=${this.iconName}
+        aria-label="Icon for ${this.iconName} in ${this.systemResolver
+          .system} design system"
+      />
+    `;
+  }
 }
 
 customElements.define('icon-loader', IconLoader);

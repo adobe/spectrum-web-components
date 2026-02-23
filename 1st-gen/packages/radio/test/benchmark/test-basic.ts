@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,15 +10,17 @@
  * governing permissions and limitations under the License.
  */
 
+import { html } from 'lit';
+
 import '@spectrum-web-components/radio/sp-radio-group.js';
 import '@spectrum-web-components/radio/sp-radio.js';
-import { html } from 'lit';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-radio-group id="test-default">
-        <sp-radio value="first" checked>Option 1</sp-radio>
-        <sp-radio value="second">Option 2</sp-radio>
-        <sp-radio value="third">Option 3</sp-radio>
-    </sp-radio-group>
+  <sp-radio-group id="test-default">
+    <sp-radio value="first" checked>Option 1</sp-radio>
+    <sp-radio value="second">Option 2</sp-radio>
+    <sp-radio value="third">Option 3</sp-radio>
+  </sp-radio-group>
 `);
