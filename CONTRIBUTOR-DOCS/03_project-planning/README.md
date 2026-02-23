@@ -29,11 +29,9 @@
     - Action Button
     - Action Group
     - Alert Banner
-    - Alert Dialog
     - Asset
     - Avatar
     - Badge
-    - Breadcrumbs
     - Button
     - Button Group
     - Checkbox
@@ -61,7 +59,7 @@
     - Swatch Group
     - Switch
     - Tag
-    - Taggroup
+    - Tags
     - Textfield
     - Thumbnail
     - Tooltip
