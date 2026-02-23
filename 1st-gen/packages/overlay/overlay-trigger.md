@@ -244,3 +244,112 @@ When not specified, the component will automatically detect which content types 
 ### Accessibility
 
 When using an `<overlay-trigger>` element, it is important to be sure the that content you project into `slot="trigger"` is "interactive". This means that an element within that branch of DOM will be able to receive focus, and said element will appropriately convert keyboard interactions to `click` events, similar to what you'd find with `<a href="#">Anchors</a>`, `<button>Buttons</button>`, etc. You can find further reading on the subject of accessible keyboard interactions at [https://www.w3.org/WAI/WCAG21/Understanding/keyboard](https://www.w3.org/WAI/WCAG21/Understanding/keyboard).
+
+#### ARIA attributes
+
+The `<overlay-trigger>` element automatically manages several ARIA attributes on the trigger element to ensure screen readers can announce the overlay relationship and state:
+
+- **`aria-expanded`**: Set to `"true"` when the overlay is open and `"false"` when closed. This tells assistive technologies whether the controlled content is currently visible.
+- **`aria-controls`**: Points to the `id` of the overlay content element, establishing the relationship between the trigger and the content it controls.
+- **`aria-haspopup`**: Indicates the type of popup the trigger will open. Automatically set to `"dialog"` for `modal` and `page` types, or `"true"` for other types. You can override this by setting `aria-haspopup` directly on the trigger element.
+
+These attributes are managed automatically for click and longpress interactions. Hover interactions (tooltips) are excluded since they use a different accessibility pattern (`aria-describedby`).
+
+```html
+<overlay-trigger type="modal" triggered-by="click">
+  <sp-button slot="trigger">Open dialog</sp-button>
+  <sp-dialog-wrapper
+    slot="click-content"
+    headline="Confirmation"
+    dismissable
+    underlay
+  >
+    <p>Are you sure you want to proceed?</p>
+  </sp-dialog-wrapper>
+</overlay-trigger>
+```
+
+In this example, the `<overlay-trigger>` will automatically set `aria-expanded="false"`, `aria-haspopup="dialog"`, and `aria-controls` on the `<sp-button>` trigger element. When the overlay opens, `aria-expanded` updates to `"true"`.
+
+When using `<sp-overlay>` directly (without `<overlay-trigger>`), you must set these attributes manually on the trigger element:
+
+```html
+<sp-button
+  id="manual-trigger"
+  aria-haspopup="dialog"
+  aria-expanded="false"
+  aria-controls="my-dialog"
+>
+  Open dialog
+</sp-button>
+<sp-overlay trigger="manual-trigger@click" type="modal">
+  <sp-dialog-wrapper
+    id="my-dialog"
+    headline="Confirmation"
+    dismissable
+    underlay
+  >
+    <p>Are you sure you want to proceed?</p>
+  </sp-dialog-wrapper>
+</sp-overlay>
+```
+
+#### Focus management
+
+The overlay system manages focus to ensure keyboard users can interact with overlay content:
+
+1. **On open**: Focus is transferred to the first focusable element within the overlay content. For `modal` and `page` types, focus is trapped within the overlay so that tabbing cycles through the overlay's interactive elements.
+2. **On close**: Focus is returned to the trigger element that opened the overlay.
+
+The `receives-focus` attribute controls this behavior:
+
+- `auto` (default): Focus moves to the first focusable element in the overlay
+- `true`: Forces focus to move to the overlay content
+- `false`: Prevents focus from moving to the overlay (use with caution, as this may create accessibility issues)
+
+For dialogs, always use `type="modal"` or `type="page"` to ensure proper focus trapping:
+
+```html
+<overlay-trigger type="modal" triggered-by="click">
+  <sp-button slot="trigger">Open modal dialog</sp-button>
+  <sp-dialog-wrapper
+    slot="click-content"
+    headline="Settings"
+    dismissable
+    underlay
+  >
+    <sp-field-label for="email-setting">Email notifications</sp-field-label>
+    <sp-switch id="email-setting">Enable notifications</sp-switch>
+  </sp-dialog-wrapper>
+</overlay-trigger>
+```
+
+#### Keyboard navigation
+
+<sp-table>
+    <sp-table-head>
+        <sp-table-head-cell>Key</sp-table-head-cell>
+        <sp-table-head-cell>Action</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row>
+            <sp-table-cell><kbd>Enter</kbd> / <kbd>Space</kbd></sp-table-cell>
+            <sp-table-cell>Activates the trigger element to open the overlay</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>Escape</kbd></sp-table-cell>
+            <sp-table-cell>Closes the topmost overlay and returns focus to its trigger</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>Tab</kbd> / <kbd>Shift+Tab</kbd></sp-table-cell>
+            <sp-table-cell>Navigates between focusable elements; trapped within modal/page overlays</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+
+#### Screen reader considerations
+
+- Ensure overlay content uses proper heading structure (`<h2 slot="heading">`)
+- For dialogs, the `<sp-dialog>` element automatically sets `role="dialog"` and manages `aria-labelledby` via the heading slot
+- Provide descriptive labels on trigger elements that indicate what action will occur (e.g., "Open settings" rather than just "Open")
+- Use meaningful text for buttons within dialogs (e.g., "Save changes" rather than just "OK")

@@ -24,6 +24,7 @@ import {
   query,
   state,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 /* eslint-disable import/no-extraneous-dependencies */
 import '@spectrum-web-components/overlay/sp-overlay.js';
@@ -141,6 +142,7 @@ export class OverlayTrigger extends SpectrumElement {
     event: Event & { target: HTMLSlotElement }
   ): void {
     this.targetContent = this.getAssignedElementsFromSlot(event.target);
+    this.manageAriaOnTrigger();
   }
 
   private handleSlotContent(event: Event & { target: HTMLSlotElement }): void {
@@ -155,6 +157,7 @@ export class OverlayTrigger extends SpectrumElement {
         this.hoverContent = this.getAssignedElementsFromSlot(event.target);
         break;
     }
+    this.manageAriaOnTrigger();
   }
 
   private handleBeforetoggle(event: BeforetoggleOpenEvent): void {
@@ -174,6 +177,34 @@ export class OverlayTrigger extends SpectrumElement {
       this.open = type;
     } else if (this.open === type) {
       this.open = undefined;
+    }
+    this.manageAriaOnTrigger();
+  }
+
+  private manageAriaOnTrigger(): void {
+    const triggerElement = this.targetContent[0];
+    if (!triggerElement) return;
+
+    const hasClickContent = this.clickContent.length > 0;
+    const hasLongpressContent = this.longpressContent.length > 0;
+
+    if (!hasClickContent && !hasLongpressContent) return;
+
+    const isExpanded = this.open === 'click' || this.open === 'longpress';
+    triggerElement.setAttribute('aria-expanded', String(isExpanded));
+
+    if (!triggerElement.hasAttribute('aria-haspopup')) {
+      const haspopup =
+        this.type === 'modal' || this.type === 'page' ? 'dialog' : 'true';
+      triggerElement.setAttribute('aria-haspopup', haspopup);
+    }
+
+    const content = this.clickContent[0] || this.longpressContent[0];
+    if (content) {
+      if (!content.id) {
+        content.id = `sp-overlay-content-${randomID()}`;
+      }
+      triggerElement.setAttribute('aria-controls', content.id);
     }
   }
 
@@ -338,6 +369,10 @@ export class OverlayTrigger extends SpectrumElement {
     if (this.disabled && changedProperties.has('disabled')) {
       this.open = undefined;
       return;
+    }
+
+    if (changedProperties.has('open') || changedProperties.has('type')) {
+      this.manageAriaOnTrigger();
     }
   }
 
