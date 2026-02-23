@@ -13,6 +13,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   check-changesets:
     runs-on: ubuntu-latest
