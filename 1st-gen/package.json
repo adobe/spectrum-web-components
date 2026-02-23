@@ -80,7 +80,6 @@
     "vrt:preview": "yarn wds --config test/visual/wds-vrt.config.js"
   },
   "workspaces": [
-    "linters/*",
     "packages/*",
     "projects/*",
     "tools/*",
@@ -101,7 +100,6 @@
     "@rollup/plugin-json": "6.1.0",
     "@rollup/plugin-node-resolve": "15.3.1",
     "@sindresorhus/slugify": "2.2.1",
-    "@spectrum-web-components/eslint-plugin": "workspace:*",
     "@storybook/addon-a11y": "8.6.14",
     "@storybook/addon-designs": "8.2.1",
     "@storybook/addon-essentials": "8.6.14",

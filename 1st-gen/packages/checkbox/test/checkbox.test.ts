@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -24,7 +24,7 @@ import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/shared/src/focus-visible.js';
 
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { Checkbox } from '../';
+import { Checkbox } from '../src/Checkbox.js';
 
 function inputForCheckbox(checkbox: Checkbox): HTMLInputElement {
   if (!checkbox.shadowRoot) {
@@ -352,7 +352,7 @@ describe('Checkbox', () => {
     `);
 
     const getPartialCheckmarkLocalName = (): string => {
-      return (el.shadowRoot.querySelector('#partialCheckmark') as HTMLElement)
+      return (el.shadowRoot.querySelector('#partial-checkmark') as HTMLElement)
         .localName;
     };
 

@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -402,9 +402,33 @@ export class ColorController {
         try {
           Color.parse(color);
         } catch (error) {
+          if (window.__swc?.DEBUG) {
+            window.__swc?.warn(
+              this.host,
+              `Failed to parse color: ${color}`,
+              'https://github.com/WICG/color-api/issues/196',
+              {
+                issues: [
+                  error instanceof Error ? error.message : 'Unknown error',
+                ],
+              }
+            );
+          }
           try {
             newColor = new Color(`#${color}`);
           } catch (error) {
+            if (window.__swc?.DEBUG) {
+              window.__swc?.warn(
+                this.host,
+                `Failed to parse color as hex: ${color}`,
+                'https://github.com/WICG/color-api/issues/196',
+                {
+                  issues: [
+                    error instanceof Error ? error.message : 'Unknown error',
+                  ],
+                }
+              );
+            }
             return;
           }
         }
@@ -550,6 +574,20 @@ export class ColorController {
       try {
         ({ spaceId } = new Color(this._colorOrigin as DefaultColorTypes));
       } catch (error) {
+        if (window.__swc?.DEBUG) {
+          window.__swc?.warn(
+            this.host,
+            `Failed to parse color as default color types: ${JSON.stringify(
+              this._colorOrigin
+            )}`,
+            'https://github.com/WICG/color-api/issues/196',
+            {
+              issues: [
+                error instanceof Error ? error.message : 'Unknown error',
+              ],
+            }
+          );
+        }
         const { h, s, l, v, r, g, b } = this._colorOrigin as {
           h: string;
           s: string;

@@ -5879,7 +5879,6 @@ __metadata:
     "@rollup/plugin-json": "npm:6.1.0"
     "@rollup/plugin-node-resolve": "npm:15.3.1"
     "@sindresorhus/slugify": "npm:2.2.1"
-    "@spectrum-web-components/eslint-plugin": "workspace:*"
     "@storybook/addon-a11y": "npm:8.6.14"
     "@storybook/addon-designs": "npm:8.2.1"
     "@storybook/addon-essentials": "npm:8.6.14"
@@ -6314,6 +6313,7 @@ __metadata:
   dependencies:
     "@spectrum-web-components/base": "npm:1.11.2"
     "@spectrum-web-components/color-handle": "npm:1.11.2"
+    "@spectrum-web-components/reactive-controllers": "npm:1.11.2"
     "@spectrum-web-components/textfield": "npm:1.11.2"
   languageName: unknown
   linkType: soft
@@ -6479,9 +6479,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/eslint-plugin@workspace:*, @spectrum-web-components/eslint-plugin@workspace:1st-gen/linters/eslint":
+"@spectrum-web-components/eslint-plugin@workspace:*, @spectrum-web-components/eslint-plugin@workspace:linters/eslint-plugin":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/eslint-plugin@workspace:1st-gen/linters/eslint"
+  resolution: "@spectrum-web-components/eslint-plugin@workspace:linters/eslint-plugin"
   languageName: unknown
   linkType: soft
 
@@ -28096,6 +28096,7 @@ __metadata:
     "@commitlint/config-conventional": "npm:19.8.1"
     "@eslint/js": "npm:9.39.2"
     "@playwright/test": "npm:1.53.1"
+    "@spectrum-web-components/eslint-plugin": "workspace:*"
     "@spectrum-web-components/stylelint-header-plugin": "workspace:*"
     "@typescript-eslint/eslint-plugin": "npm:8.54.0"
     "@typescript-eslint/parser": "npm:8.54.0"
@@ -29814,6 +29815,7 @@ __metadata:
     vsce: "npm:2.15.0"
     vscode-languageclient: "npm:9.0.1"
     vscode-languageserver: "npm:9.0.1"
+    vscode-languageserver-textdocument: "npm:1.0.12"
   languageName: unknown
   linkType: soft
 
@@ -32013,7 +32015,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vscode-languageserver-textdocument@npm:^1.0.1":
+"vscode-languageserver-textdocument@npm:1.0.12, vscode-languageserver-textdocument@npm:^1.0.1":
   version: 1.0.12
   resolution: "vscode-languageserver-textdocument@npm:1.0.12"
   checksum: 10c0/534349894b059602c4d97615a1147b6c4c031141c2093e59657f54e38570f5989c21b376836f13b9375419869242e9efb4066643208b21ab1e1dee111a0f00fb

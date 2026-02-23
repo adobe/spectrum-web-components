@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -229,6 +229,7 @@ export class ActionMenu extends ObserveSlotPresence(
   /**
    * Handles change events from the menu, updating the selected value.
    * Dispatches a `change` event that can be prevented to cancel the selection.
+   *
    * @param event - The change event from the menu
    */
   public handleChange(event: Event): void {
@@ -252,6 +253,7 @@ export class ActionMenu extends ObserveSlotPresence(
 
   /**
    * Handles focus events on the trigger button, delegating to the interaction strategy.
+   *
    * @param event - The focus event
    */
   public handleButtonFocus(event: FocusEvent): void {
@@ -260,6 +262,7 @@ export class ActionMenu extends ObserveSlotPresence(
 
   /**
    * Handles Escape key press to close the picker overlay.
+   *
    * @param event - The keyboard event
    */
   protected handleEscape = (
@@ -275,6 +278,7 @@ export class ActionMenu extends ObserveSlotPresence(
   /**
    * Handles keyboard navigation on the picker button.
    * Opens the menu on Arrow keys, Enter, or Space.
+   *
    * @param event - The keyboard event
    */
   protected handleKeydown = (event: KeyboardEvent): void => {
@@ -315,6 +319,7 @@ export class ActionMenu extends ObserveSlotPresence(
   /**
    * Sets the picker's value from a menu item selection.
    * Dispatches a cancelable `change` event and reverts the selection if prevented.
+   *
    * @param item - The menu item to select
    * @param menuChangeEvent - The original menu change event, if any
    */
@@ -368,6 +373,7 @@ export class ActionMenu extends ObserveSlotPresence(
 
   /**
    * Updates the selected state of a menu item.
+   *
    * @param item - The menu item to update
    * @param value - Whether the item should be selected
    */
@@ -421,6 +427,7 @@ export class ActionMenu extends ObserveSlotPresence(
   /**
    * Handles slotchange events for the tooltip slot.
    * Sets up the trigger element for self-managed tooltips.
+   *
    * @param event - The slotchange event
    */
   protected handleTooltipSlotchange(
@@ -442,6 +449,7 @@ export class ActionMenu extends ObserveSlotPresence(
   /**
    * Renders the label content for the picker button.
    * Shows the selected item's content if available, otherwise renders the placeholder label.
+   *
    * @param content - The content nodes from the selected item
    * @returns The rendered label content
    */
@@ -461,6 +469,7 @@ export class ActionMenu extends ObserveSlotPresence(
   /**
    * Renders the loading indicator shown during pending state.
    * Dynamically imports the progress-circle component.
+   *
    * @returns The rendered progress circle template
    */
   protected renderLoader(): TemplateResult {
@@ -474,6 +483,7 @@ export class ActionMenu extends ObserveSlotPresence(
       ></sp-progress-circle>
     `;
   }
+
   /**
    * Returns the content to render inside the action button.
    * Includes the icon slot (with "more" icon default), label slot, and label-only slot.
@@ -502,6 +512,7 @@ export class ActionMenu extends ObserveSlotPresence(
   /**
    * Callback invoked by an associated field label to apply its label value.
    * Sets the applied label and determines label alignment based on the field label's configuration.
+   *
    * @param value - The label text value
    * @param labelElement - The field label element providing the label
    */
@@ -518,6 +529,7 @@ export class ActionMenu extends ObserveSlotPresence(
    * - `aria-labelledby` attribute
    * - Applied label from a field label
    * - Slotted label content
+   *
    * @returns True if an accessible label is present
    */
   protected hasAccessibleLabel(): boolean {
@@ -557,6 +569,7 @@ export class ActionMenu extends ObserveSlotPresence(
   /**
    * Renders the overlay element containing the menu.
    * Configures the overlay with appropriate placement, type, and event handlers.
+   *
    * @param menu - The menu template to render inside the overlay
    * @returns The rendered overlay template
    */
@@ -596,6 +609,7 @@ export class ActionMenu extends ObserveSlotPresence(
       </div>
     `;
   }
+
   /**
    * Renders the action menu component.
    * Uses an action button as the trigger instead of a standard button.
@@ -635,6 +649,7 @@ export class ActionMenu extends ObserveSlotPresence(
   /**
    * Lifecycle callback before the component updates.
    * Transfers tabIndex from the host element to the internal button.
+   *
    * @param changedProperties - Map of changed property names to previous values
    */
   protected override willUpdate(changedProperties: PropertyValues<this>): void {
@@ -644,10 +659,12 @@ export class ActionMenu extends ObserveSlotPresence(
       this.removeAttribute('tabindex');
     }
   }
+
   /**
    * Handles property updates.
    * Forces the invalid property to always be false since action menus
    * don't support validation states.
+   *
    * @param changedProperties - Map of changed property names to previous values
    */
   protected override update(changedProperties: PropertyValues<this>): void {
@@ -713,6 +730,7 @@ export class ActionMenu extends ObserveSlotPresence(
   /**
    * Lifecycle callback after the component has updated.
    * Ensures the strategy has a reference to the overlay element when opened.
+   *
    * @param changedProperties - Map of changed property names to previous values
    */
   protected override updated(changedProperties: PropertyValues<this>): void {
@@ -729,6 +747,7 @@ export class ActionMenu extends ObserveSlotPresence(
   /**
    * Lifecycle callback after the component's first update.
    * Binds keyboard listeners and initializes the interaction strategy.
+   *
    * @param changedProperties - Map of changed property names to previous values
    */
   protected override async firstUpdated(
@@ -763,6 +782,7 @@ export class ActionMenu extends ObserveSlotPresence(
   /**
    * Renders the overlay container (popover or tray) based on device type.
    * On mobile, uses a tray; on desktop, uses a popover.
+   *
    * @param menu - The menu template to wrap in the container
    * @returns The rendered container template
    */
@@ -861,6 +881,7 @@ export class ActionMenu extends ObserveSlotPresence(
    * Schedules selection management for the next animation frame.
    * Called when the value changes or menu slot content changes.
    * Prevents duplicate scheduling if already pending.
+   *
    * @param event - Optional event that triggered the scheduling
    */
   protected shouldScheduleManageSelection(event?: Event): void {
@@ -970,6 +991,7 @@ export class ActionMenu extends ObserveSlotPresence(
    * Handles Enter key events to prevent double-activation of menu items.
    * Tracks keydown state and clears it on keyup.
    * Also prevents Enter from triggering submenus that aren't open.
+   *
    * @param event - The keyboard event
    */
   protected handleEnterKeydown = (event: KeyboardEvent): void => {
@@ -1026,6 +1048,7 @@ export class ActionMenu extends ObserveSlotPresence(
 
   /**
    * Sets the currently selected menu item and updates the displayed content.
+   *
    * @param selectedItem - The menu item to select, or undefined to clear selection
    */
   public set selectedItem(selectedItem: MenuItem | undefined) {
@@ -1064,6 +1087,7 @@ export class ActionMenu extends ObserveSlotPresence(
   /**
    * Handles slottable request events by re-dispatching them.
    * Allows parent components to intercept overlay content requests.
+   *
    * @param event - The slottable request event
    */
   public override handleSlottableRequest = (

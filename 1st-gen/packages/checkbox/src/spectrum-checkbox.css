@@ -130,8 +130,8 @@
   display: none;
 }
 
-:host([indeterminate]) #box #partialCheckmark,
-:host([indeterminate]) #input:checked + #box #partialCheckmark {
+:host([indeterminate]) #box #partial-checkmark,
+:host([indeterminate]) #input:checked + #box #partial-checkmark {
   display: block;
   opacity: 1;
   transform: scale(1);
@@ -282,7 +282,7 @@
 
 #input:focus-visible + #box::after {
   margin: calc(var(--mod-checkbox-focus-indicator-gap, var(--spectrum-checkbox-focus-indicator-gap)) * -1);
-  box-shadow: 0 0 0 var(--mod-checkbox-focus-indicator-thinkness, var(--spectrum-checkbox-focus-indicator-thickness)) var(--highcontrast-checkbox-focus-indicator-color, var(--mod-checkbox-focus-indicator-color, var(--spectrum-checkbox-focus-indicator-color)));
+  box-shadow: 0 0 0 var(--mod-checkbox-focus-indicator-thickness, var(--spectrum-checkbox-focus-indicator-thickness)) var(--highcontrast-checkbox-focus-indicator-color, var(--mod-checkbox-focus-indicator-color, var(--spectrum-checkbox-focus-indicator-color)));
   forced-color-adjust: none;
 }
 
@@ -343,7 +343,7 @@
 }
 
 #checkmark,
-#partialCheckmark {
+#partial-checkmark {
   color: var(--highcontrast-checkbox-background-color-default, var(--mod-checkbox-checkmark-color, var(--spectrum-checkbox-checkmark-color)));
   opacity: 0;
   transform: scale(0);
@@ -352,7 +352,7 @@
     transform var(--mod-checkbox-animation-duration, var(--spectrum-checkbox-animation-duration)) ease-in-out;
 }
 
-#partialCheckmark {
+#partial-checkmark {
   display: none;
 }
 

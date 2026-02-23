@@ -7,19 +7,19 @@
   },
   "[javascript]": {
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit"
+      "source.fixAll.eslint": "always"
     },
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[json]": {
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit"
+      "source.fixAll.eslint": "always"
     },
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[jsonc]": {
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit"
+      "source.fixAll.eslint": "always"
     },
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -43,7 +43,7 @@
   // ────────────────────────────────────────────────────────────
   "[typescript]": {
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit"
+      "source.fixAll.eslint": "always"
     },
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -56,8 +56,21 @@
     "AUTODOCS",
     "checkmark",
     "coachmark",
+    "describedby",
+    "disableable",
     "effectful",
+    "focusable",
+    "haspopup",
+    "highcontrast",
+    "labelledby",
+    "longpress",
     "minifiers",
+    "nowrap",
+    "rgba",
+    "seafoam",
+    "sidenav",
+    "tabindex",
+    "valuenow",
     "valuetext"
   ],
   "css.validate": false,

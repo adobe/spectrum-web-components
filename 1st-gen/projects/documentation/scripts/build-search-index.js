@@ -32,6 +32,7 @@ const buildIndexPath = path.resolve(buildDir, 'searchIndex.json');
 fs.mkdirSync(localDir, { recursive: true });
 fs.mkdirSync(buildDir, { recursive: true });
 fs.mkdirSync(devDir, { recursive: true });
+
 /**
  * Converts kebab-case names to Title Case with spaces
  * Example: "color-picker" becomes "Color Picker"

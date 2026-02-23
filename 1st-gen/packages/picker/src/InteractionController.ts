@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -117,6 +117,7 @@ export class InteractionController implements ReactiveController {
 
   /**
    * Creates an interaction controller for the given host element.
+   *
    * @param target - The trigger button element
    * @param host - The host element this controller manages
    */
@@ -168,6 +169,7 @@ export class InteractionController implements ReactiveController {
   /**
    * Handles pointerdown events on the trigger button.
    * Override in subclasses for device-specific behavior.
+   *
    * @param _event - The pointer event
    */
   public handlePointerdown(_event: PointerEvent): void {}
@@ -175,6 +177,7 @@ export class InteractionController implements ReactiveController {
   /**
    * Handles focus events on the trigger button.
    * Prevents reopening the menu when focus returns from the menu itself.
+   *
    * @param event - The focus event
    */
   public handleButtonFocus(event: FocusEvent): void {
@@ -194,6 +197,7 @@ export class InteractionController implements ReactiveController {
   /**
    * Handles activation events (click, Enter, Space) on the trigger.
    * Override in subclasses for device-specific behavior.
+   *
    * @param _event - The activation event
    */
   public handleActivate(_event: Event): void {}
