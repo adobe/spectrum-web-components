@@ -143,6 +143,21 @@ flowchart TD
 
 </details>
 
+## Renamed/Deprecated Tokens
+
+Deprecated tokens in the source data have an optional second parameter of `renamed` that when included points to the name of the replacement token.
+
+The token JSON created from `--outputType data` is in the following shape:
+
+```json
+{
+  "tokens": { "...": "..." },
+  "renamed": { "old-token": "new-token" }
+}
+```
+
+The `swc-vscode-token` package uses the `renamed` data for hover diagnostics and suggestions.
+
 ## Token Stylesheet Generation
 
 The unified token stylesheet splits tokens into two groups:
@@ -265,7 +280,7 @@ This outputs the stylesheet into the noted `--out` directory and filename, with 
 Valid `--outputType` values include:
 
 - `tokens` - token stylesheet
-- `data` - token JSON
+- `data` - token JSON, split into `tokens` and `renamed`
 - `typography` - typography stylesheet
 
 ## Commands

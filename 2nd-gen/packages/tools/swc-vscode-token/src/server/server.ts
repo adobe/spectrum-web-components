@@ -15,6 +15,7 @@ import {
   CompletionItem,
   CompletionItemKind,
   createConnection,
+  Diagnostic,
   DiagnosticSeverity,
   TextDocuments,
   TextDocumentSyncKind,
@@ -35,6 +36,19 @@ export {
   isSoloVarValue,
   rangeFromOffsets,
   shouldWrapLocalVar,
+};
+
+type UnknownTokenSuggestion = {
+  token: string;
+  fromRenamed: boolean;
+  replacement?: string;
+};
+
+type CachedDiagnosticEntry = {
+  diagnostic: Diagnostic;
+  unknownToken?: string;
+  renamedTo?: string;
+  suggestions?: UnknownTokenSuggestion[];
 };
 
 /* -------------------------------------------------------------------------- */
@@ -251,6 +265,97 @@ function levenshtein(a: string, b: string): number {
   return dp[aLen][bLen];
 }
 
+function suggestionPrefixScore(query: string, candidate: string): number {
+  if (candidate.startsWith(query)) {
+    return 0;
+  }
+  if (candidate.includes(query)) {
+    return 1;
+  }
+  if (query.includes(candidate)) {
+    return 2;
+  }
+  return 3;
+}
+
+function passesSuggestionPrefilter(query: string, candidate: string): boolean {
+  if (!query) {
+    return true;
+  }
+
+  const lenDelta = Math.abs(query.length - candidate.length);
+  if (lenDelta > 5) {
+    return false;
+  }
+
+  if (candidate.startsWith(query) || candidate.includes(query)) {
+    return true;
+  }
+
+  if (query[0] === candidate[0] && lenDelta <= 3) {
+    return true;
+  }
+
+  return query.length >= 4 && query.includes(candidate.slice(0, 3));
+}
+
+export function buildUnknownTokenSuggestions(
+  unknownToken: string,
+  store: TokenStore,
+  limit = 3
+): UnknownTokenSuggestion[] {
+  const query = unknownToken.trim().toLowerCase();
+  if (query.length < 2) {
+    return [];
+  }
+
+  const candidates = store.candidates();
+  if (!candidates.length) {
+    return [];
+  }
+
+  const shortlisted = candidates.filter((candidate) =>
+    passesSuggestionPrefilter(query, candidate.lower)
+  );
+  const pool = shortlisted.length ? shortlisted : candidates;
+
+  const ranked = pool
+    .map((candidate) => ({
+      candidate,
+      prefixScore: suggestionPrefixScore(query, candidate.lower),
+      editDist: levenshtein(query, candidate.lower),
+      kindScore: candidate.kind === 'token' ? 0 : 1,
+    }))
+    .sort((a, b) =>
+      a.prefixScore !== b.prefixScore
+        ? a.prefixScore - b.prefixScore
+        : a.editDist !== b.editDist
+          ? a.editDist - b.editDist
+          : a.kindScore !== b.kindScore
+            ? a.kindScore - b.kindScore
+            : a.candidate.name.localeCompare(b.candidate.name)
+    );
+
+  const picked = ranked.slice(0, limit).map((entry) => ({
+    token: entry.candidate.name,
+    fromRenamed: entry.candidate.kind === 'renamed',
+    replacement: entry.candidate.replacement,
+  }));
+
+  const deduped: UnknownTokenSuggestion[] = [];
+  const seen = new Set<string>();
+  for (const suggestion of picked) {
+    const key = `${suggestion.token}:${suggestion.replacement ?? ''}`;
+    if (seen.has(key)) {
+      continue;
+    }
+    seen.add(key);
+    deduped.push(suggestion);
+  }
+
+  return deduped;
+}
+
 /* -------------------------------------------------------------------------- */
 /*                                 Completions                                */
 /* -------------------------------------------------------------------------- */
@@ -401,7 +506,7 @@ export function startServer() {
   const store = new TokenStore(path.join(__dirname, '../../tokens.json'));
 
   // Cache diagnostics so hover can reflect them
-  const diagnosticCache = new Map<string, unknown[]>();
+  const diagnosticCache = new Map<string, CachedDiagnosticEntry[]>();
 
   conn.onInitialize(() => ({
     capabilities: {
@@ -440,54 +545,55 @@ export function startServer() {
     }
 
     // Only show hover where diagnostic is under cursor
-    const active = diags.find((d) => {
-      const start = doc.offsetAt(d.range.start);
-      const end = doc.offsetAt(d.range.end);
+    const active = diags.find((entry) => {
+      const start = doc.offsetAt(entry.diagnostic.range.start);
+      const end = doc.offsetAt(entry.diagnostic.range.end);
       return hoverOffset >= start && hoverOffset <= end;
     });
     if (!active) {
       return null;
     }
 
-    const msg = active.message;
-    const tokenMatch = /Unknown token '([\w-]+)'/.exec(msg);
-    if (!tokenMatch) {
-      return { contents: msg };
+    if (active.renamedTo && active.unknownToken) {
+      return {
+        contents: {
+          kind: 'markdown',
+          value: `**Renamed token:** \`${active.unknownToken}\` -> \`${active.renamedTo}\``,
+        },
+      };
     }
 
-    const unknown = tokenMatch[1].trim();
+    const suggestions = active.suggestions ?? [];
+    if (suggestions.length) {
+      const [best, ...rest] = suggestions;
 
-    // Ranking
-    const tokens = store.all();
-    const scored = tokens.map((tok) => ({
-      tok,
-      prefixScore: tok.startsWith(unknown) ? 0 : tok.includes(unknown) ? 1 : 2,
-      editDist: levenshtein(unknown, tok),
-    }));
-    scored.sort((a, b) =>
-      a.prefixScore !== b.prefixScore
-        ? a.prefixScore - b.prefixScore
-        : a.editDist - b.editDist
-    );
-
-    const best = scored[0];
-    const topCandidates = scored.slice(0, 3);
-
-    const bestOpt = best ? best.tok : null;
-    const altLinks =
-      topCandidates.length > 1
-        ? topCandidates
-            .slice(1)
-            .map((c) => c.tok)
-            .join(', ')
+      const bestLine = best.fromRenamed
+        ? `**Did you mean:** \`${best.token}\` (renamed to \`${best.replacement}\`)`
+        : `**Did you mean:** \`${best.token}\``;
+      const useLine =
+        best.fromRenamed && best.replacement
+          ? `**Use:** \`${best.replacement}\``
+          : '';
+      const similarLine = rest.length
+        ? `**Similar:** ${rest
+            .map((candidate) =>
+              candidate.fromRenamed
+                ? `\`${candidate.token}\` -> \`${candidate.replacement}\``
+                : `\`${candidate.token}\``
+            )
+            .join(', ')}`
         : '';
 
+      return {
+        contents: {
+          kind: 'markdown',
+          value: [bestLine, useLine, similarLine].filter(Boolean).join('\n\n'),
+        },
+      };
+    }
+
     const md = [
-      bestOpt
-        ? `**Did you mean:** ${bestOpt}`
-        : `_No similar token found, please check if there is a typo and/or reference the specs_`,
-      '',
-      altLinks ? `**Similar:** ${altLinks}` : '',
+      `_No similar token found, please check if there is a typo and/or reference the specs_`,
     ]
       .filter(Boolean)
       .join('\n');
@@ -509,7 +615,7 @@ export function startServer() {
       return;
     }
 
-    const diagnostics = [];
+    const diagnostics: CachedDiagnosticEntry[] = [];
     const text = d.document.getText();
     const allTokenCalls = /token\(([^)]*)\)/g;
     let match;
@@ -531,9 +637,11 @@ export function startServer() {
 
         if (tokenName !== trimmed) {
           diagnostics.push({
-            severity: DiagnosticSeverity.Warning,
-            range: { start, end },
-            message: `Token name has extra spaces; auto-trimmed.`,
+            diagnostic: {
+              severity: DiagnosticSeverity.Warning,
+              range: { start, end },
+              message: `Token name has extra spaces; auto-trimmed.`,
+            },
           });
 
           // Auto-edit to remove spaces
@@ -549,9 +657,11 @@ export function startServer() {
 
       if (!isQuoted) {
         diagnostics.push({
-          severity: DiagnosticSeverity.Error,
-          range: { start, end },
-          message: `Token name must be quoted: expected token('name')`,
+          diagnostic: {
+            severity: DiagnosticSeverity.Error,
+            range: { start, end },
+            message: `Token name must be quoted: expected token('name')`,
+          },
         });
         continue;
       }
@@ -561,16 +671,44 @@ export function startServer() {
 
       // 2) Detect unknown token
       if (!store.has(tokenName)) {
-        diagnostics.push({
-          severity: DiagnosticSeverity.Error,
-          range: { start, end },
-          message: `Unknown token '${tokenName}'`,
-        });
+        const renamed = store.replacementFor(tokenName);
+        if (renamed) {
+          diagnostics.push({
+            diagnostic: {
+              severity: DiagnosticSeverity.Error,
+              range: { start, end },
+              message: `Deprecated token '${tokenName}'. Token was renamed to '${renamed}'`,
+            },
+            unknownToken: tokenName,
+            renamedTo: renamed,
+          });
+        } else {
+          const suggestions = buildUnknownTokenSuggestions(tokenName, store);
+          const best = suggestions[0];
+          const message = best
+            ? best.fromRenamed && best.replacement
+              ? `Unknown token '${tokenName}'. Did you mean '${best.token}' (renamed to '${best.replacement}')? Use '${best.replacement}'.`
+              : `Unknown token '${tokenName}'. Did you mean '${best.token}'?`
+            : `Unknown token '${tokenName}'`;
+
+          diagnostics.push({
+            diagnostic: {
+              severity: DiagnosticSeverity.Error,
+              range: { start, end },
+              message,
+            },
+            unknownToken: tokenName,
+            suggestions,
+          });
+        }
       }
     }
 
     diagnosticCache.set(uri, diagnostics);
-    conn.sendDiagnostics({ uri, diagnostics });
+    conn.sendDiagnostics({
+      uri,
+      diagnostics: diagnostics.map((entry) => entry.diagnostic),
+    });
   });
 
   docs.listen(conn);
