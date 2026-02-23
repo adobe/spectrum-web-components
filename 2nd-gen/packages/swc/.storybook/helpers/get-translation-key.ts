@@ -15,28 +15,29 @@
  * Use this so toolbar locale matches the translation bundles (en, zh, ar, he, ja, ko, etc.).
  */
 export function getTranslationKey(lang: string | false | undefined): string {
-    if (!lang || typeof lang !== 'string') { return 'en' };
+  if (!lang || typeof lang !== 'string') {
+    return 'en';
+  }
 
-    const langIsNormalized = lang.trim().toLowerCase();
+  const langIsNormalized = lang.trim().toLowerCase();
 
-    if (langIsNormalized === 'en-us' || langIsNormalized === 'en') {
-        return 'en'
-    };
+  if (langIsNormalized === 'en-us' || langIsNormalized === 'en') {
+    return 'en';
+  }
 
-    if (
-        ['zh-hans', 'zh-hant', 'zh-hk', 'zh-cn', 'zh-tw'].includes(
-            langIsNormalized
-        )
-    )
-        { return 'zh' };
+  if (
+    ['zh-hans', 'zh-hant', 'zh-hk', 'zh-cn', 'zh-tw'].includes(langIsNormalized)
+  ) {
+    return 'zh';
+  }
 
-    // ar, he, ja, ko, fa, th, zh exist in translations.json; use as-is
-    const knownKeys = ['ar', 'he', 'ja', 'ko', 'fa', 'th', 'zh'];
-    if (knownKeys.includes(langIsNormalized)) {
-        return langIsNormalized
-    };
+  // ar, he, ja, ko, fa, th, zh exist in translations.json; use as-is
+  const knownKeys = ['ar', 'he', 'ja', 'ko', 'fa', 'th', 'zh'];
+  if (knownKeys.includes(langIsNormalized)) {
+    return langIsNormalized;
+  }
 
-    // Fallback: use base language if present (e.g. ja-JP -> ja)
-    const base = langIsNormalized.split('-')[0];
-    return base || 'en';
+  // Fallback: use base language if present (e.g. ja-JP -> ja)
+  const base = langIsNormalized.split('-')[0];
+  return base || 'en';
 }

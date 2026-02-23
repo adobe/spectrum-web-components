@@ -15,5 +15,5 @@
  * Setting lang on the document element ensures :lang() selectors and font loading apply to the whole preview.
  */
 export function fetchContainers(_storyId: string, _isDocs: boolean): Element[] {
-    return [document.documentElement];
+  return [document.documentElement];
 }

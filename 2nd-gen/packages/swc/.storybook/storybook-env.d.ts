@@ -34,11 +34,11 @@ declare module '*.css' {
 export {};
 
 declare global {
-    interface Window {
-        __SWC_FONT_KIT_IDS__?: Record<string, string>;
-        getKitIdForLang?: (lang: string | false) => string;
-        currentKitId?: string;
-        FontsLoading?: boolean;
-        Typekit?: { load: (config: Record<string, unknown>) => void };
-    }
+  interface Window {
+    __SWC_FONT_KIT_IDS__?: Record<string, string>;
+    getKitIdForLang?: (lang: string | false) => string;
+    currentKitId?: string;
+    FontsLoading?: boolean;
+    Typekit?: { load: (config: Record<string, unknown>) => void };
+  }
 }

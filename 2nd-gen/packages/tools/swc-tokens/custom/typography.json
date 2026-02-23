@@ -20,14 +20,14 @@
   "font-family-ar": {
     "value": "adobe-clean-arabic, 'Adobe Clean Arabic', myriad-arabic,  'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif"
   },
-  "font-family-he": {
-    "value": "adobe-clean-hebrew, 'Adobe Clean Hebrew', myriad-arabic, 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif"
-  },
   "font-family-chinese-simplified": {
     "value": "adobe-clean-han-simplified-c, 'Adobe Clean Han Simplified Chinese'"
   },
   "font-family-chinese-traditional": {
     "value": "adobe-clean-han-traditional, 'Adobe Clean Han Traditional Chinese'"
+  },
+  "font-family-he": {
+    "value": "adobe-clean-hebrew, 'Adobe Clean Hebrew', myriad-arabic, 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif"
   },
   "font-family-hong-kong": {
     "value": "adobe-clean-han-hong-kong, 'Adobe Clean Han Hong Kong'"
