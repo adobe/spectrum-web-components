@@ -28,6 +28,7 @@ import {
   live,
   repeat,
 } from '@spectrum-web-components/base/src/directives.js';
+import { FieldLabelMixin } from '@spectrum-web-components/field-label/src/FieldLabelMixin.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
 import { Textfield } from '@spectrum-web-components/textfield';
@@ -40,9 +41,6 @@ import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
 import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import '@spectrum-web-components/popover/sp-popover.js';
-import { Textfield } from '@spectrum-web-components/textfield';
-import { FieldLabelMixin } from '@spectrum-web-components/field-label/src/FieldLabelMixin.js';
-import type { Tooltip } from '@spectrum-web-components/tooltip';
 
 import styles from './combobox.css.js';
 
@@ -363,27 +361,27 @@ export class Combobox extends FieldLabelMixin(Textfield, 'field-label') {
     super.onBlur(event);
   }
 
-    /**
-     * gets the hidden label for the combobox:
-     * appliedLabel corresponds to `<label for="...">`, which is overridden
-     * if user adds the `label` attribute manually to `<sp-combobox>`.
-     **/
-    protected get visuallyHiddenLabel(): string | undefined {
-        //TODO Deprecate applied label
-        const label = this.label || this.appliedLabel;
-        return label && label.trim().length > 0 ? label : undefined;
-    }
+  /**
+   * gets the hidden label for the combobox:
+   * appliedLabel corresponds to `<label for="...">`, which is overridden
+   * if user adds the `label` attribute manually to `<sp-combobox>`.
+   **/
+  protected get visuallyHiddenLabel(): string | undefined {
+    //TODO Deprecate applied label
+    const label = this.label || this.appliedLabel;
+    return label && label.trim().length > 0 ? label : undefined;
+  }
 
-    protected renderVisuallyHiddenLabels(): TemplateResult {
-      //TODO Deprecate applied label
-      return html`
-        ${this.pending
-          ? html`
-              ${this.renderLoader()}
+  protected renderVisuallyHiddenLabels(): TemplateResult {
+    //TODO Deprecate applied label
+    return html`
+      ${this.pending
+        ? html`
+            ${this.renderLoader()}
           `
-          : nothing}
-      `;
-    }
+        : nothing}
+    `;
+  }
 
   protected renderLoader(): TemplateResult {
     import('@spectrum-web-components/progress-circle/sp-progress-circle.js');
@@ -397,192 +395,174 @@ export class Combobox extends FieldLabelMixin(Textfield, 'field-label') {
     `;
   }
 
-    protected override get _ariaLabel(): string | undefined {
-        const pending = this.pending ? this.pendingLabel : undefined;
-        if (this.appliedLabel && this.appliedLabel.trim().length > 0) {
-            //TODO Deprecate applied label
-            return `${this.appliedLabel}${this.pending ? ` ${this.pendingLabel}` : ''}`;
-        } else if (this.label && this.label.trim().length > 0) {
-            return `${this.label}${this.pending ? ` ${this.pendingLabel}` : ''}`;
-        } else if (this.slotHasContent) {
-            return pending;
-        } else {
-            window.__swc.warn(
-                this,
-                `<${this.localName}> needs a label:`,
-                'https://opensource.adobe.com/spectrum-web-components/components/textfield/#accessibility',
-                {
-                    type: 'accessibility',
-                    issues: [
-                        'value supplied to the default slot, which will be displayed visually as part of the element, or',
-                        'value supplied to the "label" attribute, which will read by assistive technologies',
-                    ],
-                }
-            );
-            return pending;
+  protected override get _ariaLabel(): string | undefined {
+    const pending = this.pending ? this.pendingLabel : undefined;
+    if (this.appliedLabel && this.appliedLabel.trim().length > 0) {
+      //TODO Deprecate applied label
+      return `${this.appliedLabel}${this.pending ? ` ${this.pendingLabel}` : ''}`;
+    } else if (this.label && this.label.trim().length > 0) {
+      return `${this.label}${this.pending ? ` ${this.pendingLabel}` : ''}`;
+    } else if (this.slotHasContent) {
+      return pending;
+    } else {
+      window.__swc.warn(
+        this,
+        `<${this.localName}> needs a label:`,
+        'https://opensource.adobe.com/spectrum-web-components/components/textfield/#accessibility',
+        {
+          type: 'accessibility',
+          issues: [
+            'value supplied to the default slot, which will be displayed visually as part of the element, or',
+            'value supplied to the "label" attribute, which will read by assistive technologies',
+          ],
         }
+      );
+      return pending;
     }
+  }
 
-    protected override renderField(): TemplateResult {
-        return html`
-            ${this.renderStateIcons()}
-            <input
-                aria-activedescendant=${ifDefined(
-                    this.activeDescendant
-                        ? `${this.activeDescendant.value}`
-                        : undefined
-                )}
-                aria-autocomplete=${ifDefined(
-                    this.autocomplete as 'list' | 'none'
-                )}
-                aria-controls=${ifDefined(
-                    this.open ? 'listbox-menu' : undefined
-                )}
-                aria-label=${ifDefined(this._ariaLabel)}
-                aria-labelledby=${ifDefined(
-                    this.slotHasContent ? 'field-label-slot' : undefined
-                )}
-                aria-describedby="${this.helpTextId} tooltip"
-                aria-expanded="${this.open ? 'true' : 'false'}"
-                aria-invalid=${ifDefined(this.invalid || undefined)}
-                autocomplete="off"
-                @click=${this.toggleOpen}
-                @keydown=${this.handleComboboxKeydown}
-                id="input"
-                class="input"
-                role="combobox"
-                type="text"
-                .value=${live(this.displayValue)}
-                tabindex="0"
-                @sp-closed=${this.handleClosed}
-                @sp-opened=${this.handleOpened}
-                maxlength=${ifDefined(
-                    this.maxlength > -1 ? this.maxlength : undefined
-                )}
-                minlength=${ifDefined(
-                    this.minlength > -1 ? this.minlength : undefined
-                )}
-                pattern=${ifDefined(this.pattern)}
-                placeholder=${ifDefined(
-                    this.placeholder?.length > 0 && !this.pending
-                        ? this.placeholder
-                        : undefined
-                )}
-                @change=${this.handleChange}
-                @input=${this.handleInput}
-                @focus=${this.onFocus}
-                @blur=${this.onBlur}
-                ?disabled=${this.disabled}
-                ?required=${this.required}
-                ?readonly=${this.readonly}
-            />
-        `;
-    }
+  protected override renderField(): TemplateResult {
+    return html`
+      ${this.renderStateIcons()}
+      <input
+        aria-activedescendant=${ifDefined(
+          this.activeDescendant ? `${this.activeDescendant.value}` : undefined
+        )}
+        aria-autocomplete=${ifDefined(this.autocomplete as 'list' | 'none')}
+        aria-controls=${ifDefined(this.open ? 'listbox-menu' : undefined)}
+        aria-label=${ifDefined(this._ariaLabel)}
+        aria-labelledby=${ifDefined(
+          this.slotHasContent ? 'field-label-slot' : undefined
+        )}
+        aria-describedby="${this.helpTextId} tooltip"
+        aria-expanded=${this.open ? 'true' : 'false'}
+        aria-invalid=${ifDefined(this.invalid || undefined)}
+        autocomplete="off"
+        @click=${this.toggleOpen}
+        @keydown=${this.handleComboboxKeydown}
+        id="input"
+        class="input"
+        role="combobox"
+        type="text"
+        .value=${live(this.displayValue)}
+        tabindex="0"
+        @sp-closed=${this.handleClosed}
+        @sp-opened=${this.handleOpened}
+        maxlength=${ifDefined(this.maxlength > -1 ? this.maxlength : undefined)}
+        minlength=${ifDefined(this.minlength > -1 ? this.minlength : undefined)}
+        pattern=${ifDefined(this.pattern)}
+        placeholder=${ifDefined(
+          this.placeholder?.length > 0 && !this.pending
+            ? this.placeholder
+            : undefined
+        )}
+        @change=${this.handleChange}
+        @input=${this.handleInput}
+        @focus=${this.onFocus}
+        @blur=${this.onBlur}
+        ?disabled=${this.disabled}
+        ?required=${this.required}
+        ?readonly=${this.readonly}
+      />
+    `;
+  }
 
   protected override render(): TemplateResult {
     if (this.tooltipEl) {
       this.tooltipEl.disabled = this.open;
     }
 
-        return html`
-            ${this.renderFieldLabel('input')}
-            <div id="textfield">${this.renderField()}</div>
-            ${this.renderHelpText(this.invalid)}
-            <sp-picker-button
-                aria-controls="listbox-menu"
-                aria-describedby="${this.helpTextId} tooltip"
-                aria-expanded=${this.open ? 'true' : 'false'}
-                aria-label=${ifDefined(this._ariaLabel)}
-                aria-labelledby=${ifDefined(
-                    this.slotHasContent ? 'field-label-slot' : undefined
-                )}
-                @click=${this.toggleOpen}
-                tabindex="-1"
-                class="button ${this.focused
-                    ? 'focus-visible is-keyboardFocused'
-                    : ''}"
-                ?disabled=${this.disabled}
-                ?focused=${this.focused}
-                ?quiet=${this.quiet}
-                size=${this.size}
-            ></sp-picker-button>
-            <sp-overlay
-                ?open=${this.open}
-                .triggerElement=${this.input}
-                offset="0"
-                placement="bottom-start"
-                .receivesFocus=${'false'}
-                role="presentation"
-            >
-                <sp-popover
-                    id="listbox"
-                    ?open=${this.open}
-                    role="presentation"
-                    ?hidden=${this.availableOptions.length === 0}
-                >
-                    <sp-menu
-                        @change=${this.handleMenuChange}
-                        tabindex="-1"
-                        aria-labelledby="label visually-hidden-label"
-                        aria-label=${ifDefined(this.label || this.appliedLabel)}
-                        id="listbox-menu"
-                        role="listbox"
-                        selects=${ifDefined(
-                            this.autocomplete === 'none' ? 'single' : undefined
-                        )}
-                        .selected=${this.autocomplete === 'none' &&
-                        this.itemValue
-                            ? [this.itemValue]
-                            : []}
-                        style="min-width: ${this.fieldWidth}px;"
-                        size=${this.size}
-                    >
-                        ${this.overlayOpen
-                            ? repeat(
-                                  this.availableOptions,
-                                  (option) => option.value,
-                                  (option) => {
-                                      return html`
-                                          <sp-menu-item
-                                              id="${option.value}"
-                                              ?focused=${this.activeDescendant
-                                                  ?.value === option.value}
-                                              aria-selected=${this
-                                                  .activeDescendant?.value ===
-                                              option.value
-                                                  ? 'true'
-                                                  : 'false'}
-                                              .value=${option.value}
-                                              .selected=${option.value ===
-                                              this.itemValue}
-                                              ?disabled=${option.disabled}
-                                          >
-                                              ${option.itemText}
-                                          </sp-menu-item>
-                                      `;
-                                  }
-                              )
-                            : html``}
-                        <slot
-                            hidden
-                            @slotchange=${this.handleSlotchange}
-                        ></slot>
-                    </sp-menu>
-                </sp-popover>
-            </sp-overlay>
-            ${this.pending
-                ? html`
-                      ${this.renderLoader()}
-                  `
-                : nothing}
-            <slot
-                aria-hidden="true"
-                name="tooltip"
-                id="tooltip"
-                @slotchange=${this.handleTooltipSlotchange}
-            ></slot>
-        `;
-    }
+    return html`
+      ${this.renderFieldLabel('input')}
+      <div id="textfield">${this.renderField()}</div>
+      ${this.renderHelpText(this.invalid)}
+      <sp-picker-button
+        aria-controls="listbox-menu"
+        aria-describedby="${this.helpTextId} tooltip"
+        aria-expanded=${this.open ? 'true' : 'false'}
+        aria-label=${ifDefined(this._ariaLabel)}
+        aria-labelledby=${ifDefined(
+          this.slotHasContent ? 'field-label-slot' : undefined
+        )}
+        @click=${this.toggleOpen}
+        tabindex="-1"
+        class="button ${this.focused ? 'focus-visible is-keyboardFocused' : ''}"
+        ?disabled=${this.disabled}
+        ?focused=${this.focused}
+        ?quiet=${this.quiet}
+        size=${this.size}
+      ></sp-picker-button>
+      <sp-overlay
+        ?open=${this.open}
+        .triggerElement=${this.input}
+        offset="0"
+        placement="bottom-start"
+        .receivesFocus=${'false'}
+        role="presentation"
+      >
+        <sp-popover
+          id="listbox"
+          ?open=${this.open}
+          role="presentation"
+          ?hidden=${this.availableOptions.length === 0}
+        >
+          <sp-menu
+            @change=${this.handleMenuChange}
+            tabindex="-1"
+            aria-labelledby="label visually-hidden-label"
+            aria-label=${ifDefined(this.label || this.appliedLabel)}
+            id="listbox-menu"
+            role="listbox"
+            selects=${ifDefined(
+              this.autocomplete === 'none' ? 'single' : undefined
+            )}
+            .selected=${this.autocomplete === 'none' && this.itemValue
+              ? [this.itemValue]
+              : []}
+            style="min-width: ${this.fieldWidth}px;"
+            size=${this.size}
+          >
+            ${this.overlayOpen
+              ? repeat(
+                  this.availableOptions,
+                  (option) => option.value,
+                  (option) => {
+                    return html`
+                      <sp-menu-item
+                        id=${option.value}
+                        ?focused=${this.activeDescendant?.value ===
+                        option.value}
+                        aria-selected=${this.activeDescendant?.value ===
+                        option.value
+                          ? 'true'
+                          : 'false'}
+                        .value=${option.value}
+                        .selected=${option.value === this.itemValue}
+                        ?disabled=${option.disabled}
+                      >
+                        ${option.itemText}
+                      </sp-menu-item>
+                    `;
+                  }
+                )
+              : html``}
+            <slot hidden @slotchange=${this.handleSlotchange}></slot>
+          </sp-menu>
+        </sp-popover>
+      </sp-overlay>
+      ${this.pending
+        ? html`
+            ${this.renderLoader()}
+          `
+        : nothing}
+      <slot
+        aria-hidden="true"
+        name="tooltip"
+        id="tooltip"
+        @slotchange=${this.handleTooltipSlotchange}
+      ></slot>
+    `;
+  }
 
   applyFocusElementLabel = (value?: string): void => {
     this.appliedLabel = value;

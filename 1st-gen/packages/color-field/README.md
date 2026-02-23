@@ -177,9 +177,9 @@ An RGB color value is specified with: rgb(red, green, blue). Each parameter defi
 
 ```html
 <sp-color-field
-    view-color
-    value="rgb(255,0,0)"
-    label="Text color"
+  view-color
+  value="rgb(255,0,0)"
+  label="Text color"
 ></sp-color-field>
 ```
 
@@ -191,9 +191,9 @@ An RGBA color value is specified with: `rgba(red, green, blue, alpha)`. The `alp
 
 ```html
 <sp-color-field
-    view-color
-    value="rgba(0,255,0,0.3)"
-    label="Text color"
+  view-color
+  value="rgba(0,255,0,0.3)"
+  label="Text color"
 ></sp-color-field>
 ```
 
@@ -205,9 +205,9 @@ An HSL color value is specified with: hsl(hue, saturation, lightness). Hue is a 
 
 ```html
 <sp-color-field
-    view-color
-    value="hsl(234, 70%, 50%)"
-    label="Text color"
+  view-color
+  value="hsl(234, 70%, 50%)"
+  label="Text color"
 ></sp-color-field>
 ```
 
@@ -219,9 +219,9 @@ An HSV color value is specified with: hsv(hue, saturation, value). Hue is a degr
 
 ```html
 <sp-color-field
-    view-color
-    value="hsv(0, 70%, 50%)"
-    label="Text color"
+  view-color
+  value="hsv(0, 70%, 50%)"
+  label="Text color"
 ></sp-color-field>
 ```
 

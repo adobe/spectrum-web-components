@@ -46,12 +46,12 @@ import { FieldLabelMixin } from '@spectrum-web-components/field-label/src/FieldL
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 export class MyInput extends FieldLabelMixin(Focusable) {
-    render() {
-        return html`
-            ${this.renderFieldLabel('my-input-field')}
-            <input id="my-input-field" type="text" />
-        `;
-    }
+  render() {
+    return html`
+      ${this.renderFieldLabel('my-input-field')}
+      <input id="my-input-field" type="text" />
+    `;
+  }
 }
 ```
 
@@ -61,15 +61,15 @@ To use a named slot for the label content, pass the slot name as a parameter to 
 
 ```js
 export class MyCombobox extends FieldLabelMixin(MyBaseClass, 'field-label') {
-    render() {
-        return html`
-            ${this.renderFieldLabel('combo-input')}
-            <div id="textfield">
-                <input id="combo-input" type="text" role="combobox" />
-            </div>
-            <slot name="field-label"></slot>
-        `;
-    }
+  render() {
+    return html`
+      ${this.renderFieldLabel('combo-input')}
+      <div id="textfield">
+        <input id="combo-input" type="text" role="combobox" />
+      </div>
+      <slot name="field-label"></slot>
+    `;
+  }
 }
 ```
 
@@ -77,7 +77,7 @@ This allows consumers to provide label content via:
 
 ```html
 <my-combobox>
-    <span slot="field-label">Choose an option</span>
+  <span slot="field-label">Choose an option</span>
 </my-combobox>
 ```
 
@@ -87,15 +87,15 @@ Use the `sideAligned` property to position labels inline with the form control:
 
 ```js
 export class MyField extends FieldLabelMixin(Focusable) {
-    // The mixin already provides sideAligned property
-    // It can be set via attribute: side-aligned="start" or side-aligned="end"
+  // The mixin already provides sideAligned property
+  // It can be set via attribute: side-aligned="start" or side-aligned="end"
 
-    render() {
-        return html`
-            ${this.renderFieldLabel('field')}
-            <input id="field" type="text" />
-        `;
-    }
+  render() {
+    return html`
+      ${this.renderFieldLabel('field')}
+      <input id="field" type="text" />
+    `;
+  }
 }
 ```
 
@@ -131,13 +131,13 @@ The `disabled` property controls the visual state of the label:
 
 ```js
 export class MyField extends FieldLabelMixin(Focusable) {
-    // The mixin already provides disabled property
+  // The mixin already provides disabled property
 
-    render() {
-        return html`
-            ${this.renderFieldLabel('field')}
-            <input id="field" type="text" ?disabled=${this.disabled} />
-        `;
-    }
+  render() {
+    return html`
+      ${this.renderFieldLabel('field')}
+      <input id="field" type="text" ?disabled=${this.disabled} />
+    `;
+  }
 }
 ```

@@ -30,13 +30,13 @@ A number field consists of an input field for numeric values and optional steppe
 
 ```html
 <sp-number-field
-    format-options='{
+  format-options='{
         "style": "unit",
         "unit": "MPH",
         "unitDisplay": "long"
     }'
 >
-    What is the air-speed velocity of an unladen swallow?
+  What is the air-speed velocity of an unladen swallow?
 </sp-number-field>
 ```
 
@@ -50,13 +50,13 @@ A number field must have a label in order to be accessible. A label can be provi
 
 ```html
 <sp-number-field
-    format-options='{
+  format-options='{
         "style": "unit",
         "unit": "MPH",
         "unitDisplay": "long"
     }'
 >
-    What is the air-speed velocity of an unladen swallow?
+  What is the air-speed velocity of an unladen swallow?
 </sp-number-field>
 ```
 
@@ -66,12 +66,12 @@ A number field must have a label in order to be accessible. A label can be provi
 
 ```html
 <sp-number-field
-    format-options='{
+  format-options='{
         "style": "unit",
         "unit": "MPH",
         "unitDisplay": "long"
     }'
-    label="What is the air-speed velocity of an unladen swallow?"
+  label="What is the air-speed velocity of an unladen swallow?"
 ></sp-number-field>
 ```
 
@@ -131,14 +131,14 @@ The following example uses the `signDisplay` option to include the plus sign for
 
 ```html
 <sp-number-field
-    value="0"
-    format-options='{
+  value="0"
+  format-options='{
         "signDisplay": "exceptZero",
         "minimumFractionDigits": 1,
         "maximumFractionDigits": 2
     }'
 >
-    Adjust exposure
+  Adjust exposure
 </sp-number-field>
 ```
 
@@ -150,12 +150,12 @@ The `style: 'percent'` option can be passed to the `formatOptions` property to t
 
 ```html
 <sp-number-field
-    value="0.05"
-    format-options='{
+  value="0.05"
+  format-options='{
         "style": "percent"
     }'
 >
-    Sales tax
+  Sales tax
 </sp-number-field>
 ```
 
@@ -169,15 +169,15 @@ If you need to allow the user to change the currency, you should include a separ
 
 ```html
 <sp-number-field
-    value="45"
-    format-options='{
+  value="45"
+  format-options='{
         "style": "currency",
         "currency": "EUR",
         "currencyDisplay": "code",
         "currencySign": "accounting"
     }'
 >
-    Transaction amount
+  Transaction amount
 </sp-number-field>
 ```
 
@@ -193,14 +193,14 @@ Note: The unit style is not currently supported in Safari. A [polyfill](https://
 
 ```html
 <sp-number-field
-    value="4"
-    format-options='{
+  value="4"
+  format-options='{
         "style": "unit",
         "unit": "inch",
         "unitDisplay": "long"
     }'
 >
-    Package width
+  Package width
 </sp-number-field>
 ```
 
@@ -212,13 +212,13 @@ While `Intl.NumberFormatOptions` does support a [wide range of units](https://tc
 
 ```html
 <sp-number-field
-    value="500"
-    format-options='{
+  value="500"
+  format-options='{
         "style": "unit",
         "unit": "px"
     }'
 >
-    Document width in pixels
+  Document width in pixels
 </sp-number-field>
 ```
 
@@ -262,13 +262,13 @@ The `invalid` attribute indicates that the number field's value is invalid. When
 
 ```html
 <sp-number-field
-    invalid
-    style="width: 130px"
-    value="10"
-    min="0"
-    max="0.3"
-    step="0.01"
-    format-options='{
+  invalid
+  style="width: 130px"
+  value="10"
+  min="0"
+  max="0.3"
+  step="0.01"
+  format-options='{
         "style": "currency",
         "currency": "USD",
         "currencyDisplay": "code",
@@ -277,10 +277,10 @@ The `invalid` attribute indicates that the number field's value is invalid. When
         "maximumFractionDigits": 2
     }'
 >
-    It's one banana, Michael, how much could it cost?
-    <sp-help-text variant="negative" slot="help-text-negative">
-        Value should be between $0 and $0.3.
-    </sp-help-text>
+  It's one banana, Michael, how much could it cost?
+  <sp-help-text variant="negative" slot="help-text-negative">
+    Value should be between $0 and $0.3.
+  </sp-help-text>
 </sp-number-field>
 ```
 
@@ -290,13 +290,13 @@ The `valid` attribute indicates that the number field's value is valid.
 
 ```html
 <sp-number-field
-    valid
-    style="width: 130px"
-    value="0.23"
-    min="0"
-    max="0.3"
-    step="0.01"
-    format-options='{
+  valid
+  style="width: 130px"
+  value="0.23"
+  min="0"
+  max="0.3"
+  step="0.01"
+  format-options='{
         "style": "currency",
         "currency": "USD",
         "currencyDisplay": "code",
@@ -305,7 +305,7 @@ The `valid` attribute indicates that the number field's value is valid.
         "maximumFractionDigits": 2
     }'
 >
-    It's one banana, Michael, how much could it cost?
+  It's one banana, Michael, how much could it cost?
 </sp-number-field>
 ```
 
@@ -352,7 +352,7 @@ The `<sp-number-field>` component doesn't manage a default value by itself. This
 
 ```html
 <sp-number-field id="default" value="20">
-    Default value of this number field is 42
+  Default value of this number field is 42
 </sp-number-field>
 
 <script type="module">

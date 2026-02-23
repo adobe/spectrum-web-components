@@ -20,114 +20,113 @@ export default {
 };
 
 export const Default = (): TemplateResult => {
-    return html`
-        <sp-textfield label="Name" placeholder="Enter your name"></sp-textfield>
-        <sp-textfield
-            label="Name"
-            placeholder="Enter your name"
-            disabled
-        ></sp-textfield>
-        <sp-textfield
-            label="Name"
-            placeholder="Enter your name"
-            pattern="[\\w\\s]*"
-            required
-            value="A valid input"
-        ></sp-textfield>
-        <sp-textfield
-            label="Name"
-            placeholder="Enter your name"
-            pattern="[\\w\\s]*"
-            required
-            value="A valid input"
-            disabled
-        ></sp-textfield>
-        <sp-textfield
-            label="Name"
-            placeholder="Enter your name"
-            pattern="[\\d]*"
-            value="Not a valid input"
-        ></sp-textfield>
-        <sp-textfield
-            label="Name"
-            placeholder="Enter your name"
-            pattern="^[\\d]$"
-            required
-            value="Not a valid input"
-            disabled
-        ></sp-textfield>
-    `;
+  return html`
+    <sp-textfield label="Name" placeholder="Enter your name"></sp-textfield>
+    <sp-textfield
+      label="Name"
+      placeholder="Enter your name"
+      disabled
+    ></sp-textfield>
+    <sp-textfield
+      label="Name"
+      placeholder="Enter your name"
+      pattern="[\\w\\s]*"
+      required
+      value="A valid input"
+    ></sp-textfield>
+    <sp-textfield
+      label="Name"
+      placeholder="Enter your name"
+      pattern="[\\w\\s]*"
+      required
+      value="A valid input"
+      disabled
+    ></sp-textfield>
+    <sp-textfield
+      label="Name"
+      placeholder="Enter your name"
+      pattern="[\\d]*"
+      value="Not a valid input"
+    ></sp-textfield>
+    <sp-textfield
+      label="Name"
+      placeholder="Enter your name"
+      pattern="^[\\d]$"
+      required
+      value="Not a valid input"
+      disabled
+    ></sp-textfield>
+  `;
 };
 
 export const growsOnly = (): TemplateResult => {
-    return html`
-        <sp-textfield
-            grows
-            id="grows-only"
-            placeholder="Does not grow or display incorrectly"
-            style="--mod-textfield-container-width: 100%;"
-        >
-            This Textfield has the "grows" attribute without the "multiline"
-            attribute
-        </sp-textfield>
-    `;
+  return html`
+    <sp-textfield
+      grows
+      id="grows-only"
+      placeholder="Does not grow or display incorrectly"
+      style="--mod-textfield-container-width: 100%;"
+    >
+      This Textfield has the "grows" attribute without the "multiline" attribute
+    </sp-textfield>
+  `;
 };
 
 export const quiet = (): TemplateResult => {
-    return html`
-        <sp-textfield
-            id="name"
-            placeholder="This Text Field doesn't make much noise"
-            quiet
-        >
-            Enter your name
-        </sp-textfield>
-    `;
+  return html`
+    <sp-textfield
+      id="name"
+      placeholder="This Text Field doesn't make much noise"
+      quiet
+    >
+      Enter your name
+    </sp-textfield>
+  `;
 };
 
 export const defaultAutofocus = (): TemplateResult => {
-    return html`
-        <sp-textfield
-            id="name"
-            placeholder="Include your first and last name"
-            autofocus
-        >
-            Enter your name
-        </sp-textfield>
-    `;
+  return html`
+    <sp-textfield
+      id="name"
+      placeholder="Include your first and last name"
+      autofocus
+    >
+      Enter your name
+    </sp-textfield>
+  `;
 };
 
 export const quietAutofocus = (): TemplateResult => {
-    return html`
-        <sp-textfield
-            id="name"
-            placeholder="Include your first and last name"
-            autofocus
-            quiet
-        >
-            Enter your name
-        </sp-textfield>
-    `;
+  return html`
+    <sp-textfield
+      id="name"
+      placeholder="Include your first and last name"
+      autofocus
+      quiet
+    >
+      Enter your name
+    </sp-textfield>
+  `;
 };
 
 export const notRequiredWithPattern = (): TemplateResult => {
-    return html`
-        <sp-textfield
-            label="Letter z, x, c, or v"
-            placeholder="Enter z, x, c, or v"
-            pattern="[zxcv]+"
-        ></sp-textfield>
-    `;
+  return html`
+    <sp-textfield
+      label="Letter z, x, c, or v"
+      placeholder="Enter z, x, c, or v"
+      pattern="[zxcv]+"
+    ></sp-textfield>
+  `;
 };
 
 export const allowedKeys = (): TemplateResult => {
-    return html`
-        <sp-textfield
-            label="Name"
-            placeholder="Enter your name"
-            allowed-keys="a-z"
-        ></sp-textfield>
-    `;
+  return html`
+    <sp-textfield
+      label="Name"
+      placeholder="Enter your name"
+      allowed-keys="a-z"
+    ></sp-textfield>
+  `;
 };
 
 export const withNameAttribute = (): TemplateResult => {
@@ -179,74 +178,70 @@ export const types = (): TemplateResult => html`
 `;
 
 export const empty = (): TemplateResult => html`
-    <sp-textfield id="empty" placeholder="You can type here">
-        This textfield hasn't been used yet
-        <sp-help-text slot="help-text">
-            Even empty Textfield display correctly while waiting for content.
-        </sp-help-text>
-    </sp-textfield>
+  <sp-textfield id="empty" placeholder="You can type here">
+    This textfield hasn't been used yet
+    <sp-help-text slot="help-text">
+      Even empty Textfield display correctly while waiting for content.
+    </sp-help-text>
+  </sp-textfield>
 `;
 
 export const sized = (): TemplateResult => html`
-    <sp-textfield
-        id="sized"
-        placeholder="You can type here"
-        style="--mod-textfield-width: 400px;"
-    >
-        This textfield hasn't been used yet
-        <sp-help-text slot="help-text">
-            Even empty Textfield display correctly while waiting for content.
-        </sp-help-text>
-    </sp-textfield>
+  <sp-textfield
+    id="sized"
+    placeholder="You can type here"
+    style="--mod-textfield-width: 400px;"
+  >
+    This textfield hasn't been used yet
+    <sp-help-text slot="help-text">
+      Even empty Textfield display correctly while waiting for content.
+    </sp-help-text>
+  </sp-textfield>
 `;
 
 export const sideAligned = (): TemplateResult => html`
-    <div>
-        <sp-textfield
-            id="side-aligned-start"
-            placeholder="You can type here"
-            side-aligned="start"
-        >
-            Side aligned start label with wrapping text
-            <sp-help-text slot="help-text">
-                Side aligned start help text
-            </sp-help-text>
-        </sp-textfield>
-    </div>
-    <div>
-        <sp-textfield
-            id="side-aligned-end"
-            placeholder="You can type here"
-            side-aligned="end"
-        >
-            Side aligned end label with wrapping text
-            <sp-help-text slot="help-text">
-                Side aligned end help text
-            </sp-help-text>
-        </sp-textfield>
-    </div>
-    <div>
-        <sp-textfield
-            id="valid-side-aligned-start"
-            value="Good work"
-            side-aligned="end"
-            valid
-        >
-            Valid textfield
-            <sp-help-text slot="help-text">Valid help text</sp-help-text>
-        </sp-textfield>
-    </div>
-    <div>
-        <sp-textfield
-            id="invalid-side-aligned-start"
-            value="Something isn't right"
-            side-aligned="end"
-            invalid
-        >
-            Invalid textfield
-            <sp-help-text variant="negative" slot="negative-help-text">
-                Invalid help text
-            </sp-help-text>
-        </sp-textfield>
-    </div>
+  <div>
+    <sp-textfield
+      id="side-aligned-start"
+      placeholder="You can type here"
+      side-aligned="start"
+    >
+      Side aligned start label with wrapping text
+      <sp-help-text slot="help-text">Side aligned start help text</sp-help-text>
+    </sp-textfield>
+  </div>
+  <div>
+    <sp-textfield
+      id="side-aligned-end"
+      placeholder="You can type here"
+      side-aligned="end"
+    >
+      Side aligned end label with wrapping text
+      <sp-help-text slot="help-text">Side aligned end help text</sp-help-text>
+    </sp-textfield>
+  </div>
+  <div>
+    <sp-textfield
+      id="valid-side-aligned-start"
+      value="Good work"
+      side-aligned="end"
+      valid
+    >
+      Valid textfield
+      <sp-help-text slot="help-text">Valid help text</sp-help-text>
+    </sp-textfield>
+  </div>
+  <div>
+    <sp-textfield
+      id="invalid-side-aligned-start"
+      value="Something isn't right"
+      side-aligned="end"
+      invalid
+    >
+      Invalid textfield
+      <sp-help-text variant="negative" slot="negative-help-text">
+        Invalid help text
+      </sp-help-text>
+    </sp-textfield>
+  </div>
 `;

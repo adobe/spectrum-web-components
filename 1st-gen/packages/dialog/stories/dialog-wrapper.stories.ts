@@ -179,100 +179,85 @@ export const form = (
   args: StoryArgs = {},
   context: { viewMode?: string } = {}
 ): TemplateResult => {
-    const open = context.viewMode === 'docs' ? undefined : 'click';
-    return html`
-        <overlay-trigger
-            type="modal"
-            @close=${handleClose(args)}
-            open=${ifDefined(open)}
-        >
-            <sp-button slot="trigger" variant="primary">
-                Toggle Dialog
-            </sp-button>
-            <sp-dialog-wrapper
-                id="form-fields"
-                slot="click-content"
-                headline="Add Delivery Address"
-                underlay
-                size="m"
-                confirm-label="Verify Address"
-                secondary-label="Add"
-                cancel-label="Cancel"
-                @close=${handleClose(args)}
-                @confirm=${({ target }: Event & { target: HTMLElement }) => {
-                    target.dispatchEvent(
-                        new Event('close', { bubbles: true, composed: true })
-                    );
-                    handleConfirm(args);
-                }}
-                @secondary=${({ target }: Event & { target: HTMLElement }) => {
-                    target.dispatchEvent(
-                        new Event('close', { bubbles: true, composed: true })
-                    );
-                    handleSecondary(args);
-                }}
-                @cancel=${({ target }: Event & { target: HTMLElement }) => {
-                    target.dispatchEvent(
-                        new Event('close', { bubbles: true, composed: true })
-                    );
-                    handleCancel(args);
-                }}
-            >
-                <style>
-                    .form-container {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: end;
-                        row-gap: calc(var(--swc-scale-factor) * 12px);
-                        --mod-textfield-width: 240px;
-                        --mod-textfield-container-width: 100%;
-                        --mod-textfield-grid-template-columns-side-label: auto
-                            auto;
-                    }
-                    .form-item {
-                        padding-inline-end: calc(
-                            var(--swc-scale-factor) * 24px
-                        );
-                    }
-                </style>
-                <div class="form-container">
-                    <div class="form-item">
-                        <sp-textfield id="street" side-aligned="end" autofocus>
-                            Street:
-                        </sp-textfield>
-                    </div>
-                    <div class="form-item">
-                        <sp-textfield id="city" side-aligned="end">
-                            City:
-                        </sp-textfield>
-                    </div>
-                    <div class="form-item">
-                        <sp-textfield id="state" side-aligned="end">
-                            State:
-                        </sp-textfield>
-                    </div>
-                    <div class="form-item">
-                        <sp-textfield id="zip" side-aligned="end">
-                            Zip:
-                        </sp-textfield>
-                    </div>
-                    <div class="form-item">
-                        <sp-textfield
-                            id="instructions"
-                            side-aligned="end"
-                            multiline
-                        >
-                            Special instructions:
-                            <sp-help-text slot="help-text">
-                                For example, gate code or other information to
-                                help the driver find you
-                            </sp-help-text>
-                        </sp-textfield>
-                    </div>
-                </div>
-            </sp-dialog-wrapper>
-        </overlay-trigger>
-    `;
+  const open = context.viewMode === 'docs' ? undefined : 'click';
+  return html`
+    <overlay-trigger
+      type="modal"
+      @close=${handleClose(args)}
+      open=${ifDefined(open)}
+    >
+      <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+      <sp-dialog-wrapper
+        id="form-fields"
+        slot="click-content"
+        headline="Add Delivery Address"
+        underlay
+        size="m"
+        confirm-label="Verify Address"
+        secondary-label="Add"
+        cancel-label="Cancel"
+        @close=${handleClose(args)}
+        @confirm=${({ target }: Event & { target: HTMLElement }) => {
+          target.dispatchEvent(
+            new Event('close', { bubbles: true, composed: true })
+          );
+          handleConfirm(args);
+        }}
+        @secondary=${({ target }: Event & { target: HTMLElement }) => {
+          target.dispatchEvent(
+            new Event('close', { bubbles: true, composed: true })
+          );
+          handleSecondary(args);
+        }}
+        @cancel=${({ target }: Event & { target: HTMLElement }) => {
+          target.dispatchEvent(
+            new Event('close', { bubbles: true, composed: true })
+          );
+          handleCancel(args);
+        }}
+      >
+        <style>
+          .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: end;
+            row-gap: calc(var(--swc-scale-factor) * 12px);
+            --mod-textfield-width: 240px;
+            --mod-textfield-container-width: 100%;
+            --mod-textfield-grid-template-columns-side-label: auto auto;
+          }
+          .form-item {
+            padding-inline-end: calc(var(--swc-scale-factor) * 24px);
+          }
+        </style>
+        <div class="form-container">
+          <div class="form-item">
+            <sp-textfield id="street" side-aligned="end" autofocus>
+              Street:
+            </sp-textfield>
+          </div>
+          <div class="form-item">
+            <sp-textfield id="city" side-aligned="end">City:</sp-textfield>
+          </div>
+          <div class="form-item">
+            <sp-textfield id="state" side-aligned="end">State:</sp-textfield>
+          </div>
+          <div class="form-item">
+            <sp-textfield id="zip" side-aligned="end">Zip:</sp-textfield>
+          </div>
+          <div class="form-item">
+            <sp-textfield id="instructions" side-aligned="end" multiline>
+              Special instructions:
+              <sp-help-text slot="help-text">
+                For example, gate code or other information to help the driver
+                find you
+              </sp-help-text>
+            </sp-textfield>
+          </div>
+        </div>
+      </sp-dialog-wrapper>
+    </overlay-trigger>
+  `;
 };
 
 form.decorators = [isOverlayOpen];

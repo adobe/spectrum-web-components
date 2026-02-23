@@ -149,13 +149,13 @@
 
 :host([keyboard-focused]:not([disabled])) #textfield,
 :host(:not([disabled])) #textfield:focus-visible {
-    --mod-infield-button-border-color: var(--highcontrast-stepper-border-color-keyboard-focus, var(--mod-stepper-buttons-border-color-keyboard-focus, var(--spectrum-stepper-buttons-border-color-keyboard-focus)));
-    --mod-textfield-focus-indicator-width: 0;
-    --mod-textfield-border-color: var(--highcontrast-stepper-border-color-keyboard-focus, var(--mod-stepper-border-color-keyboard-focus, var(--spectrum-stepper-border-color-keyboard-focus)));
+  --mod-infield-button-border-color: var(--highcontrast-stepper-border-color-keyboard-focus, var(--mod-stepper-buttons-border-color-keyboard-focus, var(--spectrum-stepper-buttons-border-color-keyboard-focus)));
+  --mod-textfield-focus-indicator-width: 0;
+  --mod-textfield-border-color: var(--highcontrast-stepper-border-color-keyboard-focus, var(--mod-stepper-border-color-keyboard-focus, var(--spectrum-stepper-border-color-keyboard-focus)));
 
-    outline: var(--spectrum-stepper-focus-indicator-width) solid;
-    outline-color: var(--spectrum-stepper-focus-indicator-color);
-    outline-offset: var(--spectrum-stepper-focus-indicator-gap);
+  outline: var(--spectrum-stepper-focus-indicator-width) solid;
+  outline-color: var(--spectrum-stepper-focus-indicator-color);
+  outline-offset: var(--spectrum-stepper-focus-indicator-gap);
 }
 
 :host([invalid]) #textfield {
@@ -249,32 +249,32 @@
 }
 
 #textfield {
-    --spectrum-stepper-width: calc(var(--mod-stepper-height, var(--spectrum-stepper-height)) * var(--mod-stepper-min-width-multiplier, var(--spectrum-text-field-minimum-width-multiplier)) + var(--mod-stepper-button-width, var(--spectrum-stepper-button-width)) * 2 + var(--mod-stepper-border-width, var(--spectrum-stepper-border-width)) * 2);
+  --spectrum-stepper-width: calc(var(--mod-stepper-height, var(--spectrum-stepper-height)) * var(--mod-stepper-min-width-multiplier, var(--spectrum-text-field-minimum-width-multiplier)) + var(--mod-stepper-button-width, var(--spectrum-stepper-button-width)) * 2 + var(--mod-stepper-border-width, var(--spectrum-stepper-border-width)) * 2);
 
-    inline-size: var(--mod-stepper-width, var(--spectrum-stepper-width));
-    block-size: var(--spectrum-stepper-height);
-    border-radius: var(--spectrum-stepper-border-radius);
-    flex-flow: row;
-    display: inline-flex;
-    position: relative;
+  display: inline-flex;
+  position: relative;
+  flex-flow: row;
+  inline-size: var(--mod-stepper-width, var(--spectrum-stepper-width));
+  block-size: var(--spectrum-stepper-height);
+  border-radius: var(--spectrum-stepper-border-radius);
 }
 
 :host([hide-stepper]) #textfield {
-    /* calculate stepper width without 2 times button width */
-    --spectrum-stepper-width: calc(var(--mod-stepper-height, var(--spectrum-stepper-height)) * var(--mod-stepper-min-width-multiplier, var(--spectrum-text-field-minimum-width-multiplier)) + var(--mod-stepper-button-width, var(--spectrum-stepper-button-width)) + var(--mod-stepper-border-width, var(--spectrum-stepper-border-width)) * 2);
+  /* calculate stepper width without 2 times button width */
+  --spectrum-stepper-width: calc(var(--mod-stepper-height, var(--spectrum-stepper-height)) * var(--mod-stepper-min-width-multiplier, var(--spectrum-text-field-minimum-width-multiplier)) + var(--mod-stepper-button-width, var(--spectrum-stepper-button-width)) + var(--mod-stepper-border-width, var(--spectrum-stepper-border-width)) * 2);
 
-    inline-size: var(--mod-stepper-width, var(--spectrum-stepper-width));
+  inline-size: var(--mod-stepper-width, var(--spectrum-stepper-width));
 }
 
-#textfield:before {
-    content: "";
+#textfield::before {
+  content: "";
 }
 
 .input {
-    border-inline-end-width: 0;
-    border-start-end-radius: 0;
-    border-end-end-radius: 0;
-    inline-size: 100%;
+  inline-size: 100%;
+  border-inline-end-width: 0;
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
 }
 
 .buttons {

@@ -38,39 +38,28 @@ export const ColorFieldMarkup = ({
   helpText = '',
   sideAligned = '',
 } = {}): TemplateResult => {
-    return html`
-        <sp-color-field
-            label=${label}
-            size=${size}
-            value=${value}
-            side-aligned=${ifDefined(
-              sideAligned === 'start' || sideAligned === 'end'
-                  ? sideAligned
-                  : undefined
-            )}
-            ?view-color=${viewColor}
-            ?quiet=${quiet}
-            ?readonly=${readonly}
-            ?disabled=${disabled}
-        >
-            ${slottedLabel}
-            ${helpText === ''
-                ? html``
-                : html`
-                      <sp-help-text slot="help-text">${helpText}</sp-help-text>
-                  `}
-        </sp-color-field>
-    `;
   return html`
     <sp-color-field
       label=${label}
       size=${size}
       value=${value}
+      side-aligned=${ifDefined(
+        sideAligned === 'start' || sideAligned === 'end'
+          ? sideAligned
+          : undefined
+      )}
       ?view-color=${viewColor}
       ?quiet=${quiet}
       ?readonly=${readonly}
       ?disabled=${disabled}
-    ></sp-color-field>
+    >
+      ${slottedLabel}
+      ${helpText === ''
+        ? html``
+        : html`
+            <sp-help-text slot="help-text">${helpText}</sp-help-text>
+          `}
+    </sp-color-field>
   `;
 };
 

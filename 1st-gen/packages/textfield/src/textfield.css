@@ -14,17 +14,17 @@
 @import url("./textfield-overrides.css");
 
 :host {
-    display: inline-grid;
-    grid-template-rows: auto auto auto;
-    grid-template-columns: 1fr;
-    margin: 0;
-    position: relative;
-    overflow: visible;
+  display: inline-grid;
+  position: relative;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: 1fr;
 
-    /* this allows the container to be set to something larger so that the label and help text can extend past the width of the input */
+  /* this allows the container to be set to something larger so that the label and help text can extend past the width of the input */
 
-    /* max() is used to ensure that the container width is at least as large as the input width */
-    inline-size: max(var(--mod-textfield-container-width, var(--spectrum-textfield-container-width)), var(--mod-textfield-width, var(--spectrum-textfield-width)));
+  /* max() is used to ensure that the container width is at least as large as the input width */
+  inline-size: max(var(--mod-textfield-container-width, var(--spectrum-textfield-container-width)), var(--mod-textfield-width, var(--spectrum-textfield-width)));
+  margin: 0;
+  overflow: visible;
 }
 
 :host([multiline]) {
@@ -37,10 +37,10 @@
 
 :host([side-aligned="start"]),
 :host([side-aligned="end"]) {
-    --spectrum-textfield-grid-template-columns-side-label: minmax(10ch, 1fr) minmax(16ch, 2fr);
+  --spectrum-textfield-grid-template-columns-side-label: minmax(10ch, 1fr) minmax(16ch, 2fr);
 
-    grid-template-rows: auto auto;
-    grid-template-columns: var(--mod-textfield-grid-template-columns-side-label, var(--spectrum-textfield-grid-template-columns-side-label));
+  grid-template-rows: auto auto;
+  grid-template-columns: var(--mod-textfield-grid-template-columns-side-label, var(--spectrum-textfield-grid-template-columns-side-label));
 }
 
 :host([disabled]:focus-visible) {
@@ -48,10 +48,10 @@
 }
 
 #textfield {
-    box-sizing: border-box;
-    position: relative;
-    inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
-    grid-area: 2 / 1 / auto / span 2;
+  box-sizing: border-box;
+  position: relative;
+  grid-area: 2 / 1 / auto / span 2;
+  inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
 }
 
 #textfield,
@@ -61,8 +61,8 @@ textarea {
 
 :host([side-aligned="start"]) #textfield,
 :host([side-aligned="end"]) #textfield {
-    grid-area: 1 / 2 / auto / auto;
-    inline-size: var(--mod-textfield-width, auto);
+  grid-area: 1 / 2 / auto / auto;
+  inline-size: var(--mod-textfield-width, auto);
 }
 
 :host([focused]) .input {
@@ -138,7 +138,7 @@ textarea {
 }
 
 :host([multiline][grows]:not([rows])) .input:not(#sizer) {
-    height: 100%;
-    resize: none;
-    overflow: hidden;
+  height: 100%;
+  overflow: hidden;
+  resize: none;
 }

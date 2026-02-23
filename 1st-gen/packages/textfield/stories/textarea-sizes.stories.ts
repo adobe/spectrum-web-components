@@ -25,19 +25,19 @@ const template = ({
 }: {
   size?: 's' | 'm' | 'l' | 'xl';
 } = {}): TemplateResult => {
-    return html`
-        <sp-textfield
-            id="name"
-            multiline
-            size=${ifDefined(size)}
-            value="Sized Textarea"
-        >
-            Enter your life story
-            <sp-help-text size=${ifDefined(size)} slot="help-text">
-                Spare no expense.
-            </sp-help-text>
-        </sp-textfield>
-    `;
+  return html`
+    <sp-textfield
+      id="name"
+      multiline
+      size=${ifDefined(size)}
+      value="Sized Textarea"
+    >
+      Enter your life story
+      <sp-help-text size=${ifDefined(size)} slot="help-text">
+        Spare no expense.
+      </sp-help-text>
+    </sp-textfield>
+  `;
 };
 
 export const s = (): TemplateResult => template({ size: 's' });

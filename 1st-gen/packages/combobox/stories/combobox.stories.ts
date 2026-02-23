@@ -79,33 +79,31 @@ export const hasDisabledItems = (args: StoryArgs): TemplateResult => {
     disabled: args.disabledItems?.includes(country.itemText),
   }));
 
-    return html`
-        <sp-combobox
-            style="min-width: 80px;--spectrum-textfield-m-min-width:0; width:160px;"
-        >
-            <span slot="field-label">Some fruits are disabled (light DOM)</span>
-            ${fruits.map(
-                (fruit) => html`
-                    <sp-menu-item
-                        id=${fruit.value}
-                        value=${fruit.value}
-                        ?disabled=${args.disabledItems?.includes(fruit.value)}
-                    >
-                        ${fruit.itemText}
-                    </sp-menu-item>
-                `
-            )}
-        </sp-combobox>
-        <sp-combobox
-            side-aligned="start"
-            .options=${countriesWithDisabledItems}
-            .value=${args.value || ''}
-        >
-            <span slot="field-label">
-                Some countries are disabled (shadow DOM)
-            </span>
-        </sp-combobox>
-    `;
+  return html`
+    <sp-combobox
+      style="min-width: 80px;--spectrum-textfield-m-min-width:0; width:160px;"
+    >
+      <span slot="field-label">Some fruits are disabled (light DOM)</span>
+      ${fruits.map(
+        (fruit) => html`
+          <sp-menu-item
+            id=${fruit.value}
+            value=${fruit.value}
+            ?disabled=${args.disabledItems?.includes(fruit.value)}
+          >
+            ${fruit.itemText}
+          </sp-menu-item>
+        `
+      )}
+    </sp-combobox>
+    <sp-combobox
+      side-aligned="start"
+      .options=${countriesWithDisabledItems}
+      .value=${args.value || ''}
+    >
+      <span slot="field-label">Some countries are disabled (shadow DOM)</span>
+    </sp-combobox>
+  `;
 };
 hasDisabledItems.args = {
   disabledItems: [
@@ -128,97 +126,97 @@ listAutocomplete.args = {
 };
 
 export const noAutocomplete = (): TemplateResult => {
-    return html`
-        <sp-combobox
-            .options=${fruits}
-            side-aligned="start"
-            style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
-        >
-            <span slot="field-label">Fruit</span>
-        </sp-combobox>
-        <sp-combobox
-            .options=${countries}
-            side-aligned="start"
-            style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
-        >
-            <span slot="field-label">Countries</span>
-        </sp-combobox>
-    `;
+  return html`
+    <sp-combobox
+      .options=${fruits}
+      side-aligned="start"
+      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
+    >
+      <span slot="field-label">Fruit</span>
+    </sp-combobox>
+    <sp-combobox
+      .options=${countries}
+      side-aligned="start"
+      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
+    >
+      <span slot="field-label">Countries</span>
+    </sp-combobox>
+  `;
 };
 
 export const lightDOM = (): TemplateResult => {
-    return html`
-        <sp-combobox
-            style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
-            side-aligned="start"
-        >
-            <span slot="field-label">Fruit</span>
-            ${fruits.map(
-                (fruit) => html`
-                    <sp-menu-item id=${fruit.value} value=${fruit.value}>
-                        ${fruit.itemText}
-                    </sp-menu-item>
-                `
-            )}
-        </sp-combobox>
-        <sp-combobox
-            side-aligned="start"
-            style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
-        >
-            <span slot="field-label">Countries</span>
-            ${countries.map(
-                (country) => html`
-                    <sp-menu-item id=${country.value} value=${country.value}>
-                        ${country.itemText}
-                    </sp-menu-item>
-                `
-            )}
-        </sp-combobox>
-    `;
+  return html`
+    <sp-combobox
+      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
+      side-aligned="start"
+    >
+      <span slot="field-label">Fruit</span>
+      ${fruits.map(
+        (fruit) => html`
+          <sp-menu-item id=${fruit.value} value=${fruit.value}>
+            ${fruit.itemText}
+          </sp-menu-item>
+        `
+      )}
+    </sp-combobox>
+    <sp-combobox
+      side-aligned="start"
+      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
+    >
+      <span slot="field-label">Countries</span>
+      ${countries.map(
+        (country) => html`
+          <sp-menu-item id=${country.value} value=${country.value}>
+            ${country.itemText}
+          </sp-menu-item>
+        `
+      )}
+    </sp-combobox>
+  `;
 };
 
 export const withTooltip = (): TemplateResult => {
-    return html`
-        <sp-combobox
-            label="Combobox with tooltip"
-            style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
-        >
-            ${countries.map(
-                (option) => html`
-                    <sp-menu-item id=${option.value} value=${option.value}>
-                        ${option.itemText}
-                    </sp-menu-item>
-                `
-            )}
-            <sp-tooltip slot="tooltip" self-managed placement="right" open>
-                This combobox has a tooltip.
-            </sp-tooltip>
-        </sp-combobox>
-    `;
+  return html`
+    <sp-combobox
+      label="Combobox with tooltip"
+      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
+    >
+      ${countries.map(
+        (option) => html`
+          <sp-menu-item id=${option.value} value=${option.value}>
+            ${option.itemText}
+          </sp-menu-item>
+        `
+      )}
+      <sp-tooltip slot="tooltip" self-managed placement="right" open>
+        This combobox has a tooltip.
+      </sp-tooltip>
+    </sp-combobox>
+  `;
 };
 
 export const withFieldLabel = (): TemplateResult => {
-    return html`
-        <sp-combobox .options=${fruits}>
-            <span slot="field-label">Pick a fruit</span>
-        </sp-combobox>
-    `;
+  return html`
+    <sp-combobox .options=${fruits}>
+      <span slot="field-label">Pick a fruit</span>
+    </sp-combobox>
+  `;
 };
 
 export const withLabelAttribute = (): TemplateResult => {
-    return html`
-        <sp-combobox label="Pick a fruit" .options=${fruits}></sp-combobox>
-    `;
+  return html`
+    <sp-combobox label="Pick a fruit" .options=${fruits}></sp-combobox>
+  `;
 };
 
 export const withHelpText = (): TemplateResult => {
-    return html`
-        <sp-combobox label="Pick a fruit" .options=${fruits}>
-            <sp-help-text slot="help-text">
-                These are fruits found in the game "Animal Crossing: New Leaf".
-            </sp-help-text>
-        </sp-combobox>
-    `;
+  return html`
+    <sp-combobox label="Pick a fruit" .options=${fruits}>
+      <sp-help-text slot="help-text">
+        These are fruits found in the game "Animal Crossing: New Leaf".
+      </sp-help-text>
+    </sp-combobox>
+  `;
 };
 
 class ControlledCombo extends LitElement {
@@ -236,19 +234,19 @@ class ControlledCombo extends LitElement {
   @query('#age')
   private combobox!: Combobox;
 
-    override render(): TemplateResult {
-        return html`
-            <sp-combobox
-                .options=${ControlledCombo.ages}
-                .value=${live(this.value.validated)}
-                @change=${this.onChange}
-            >
-                <span slot="field-label">
-                    Retirement age (try entering a non-number)
-                </span>
-            </sp-combobox>
-        `;
-    }
+  override render(): TemplateResult {
+    return html`
+      <sp-combobox
+        .options=${ControlledCombo.ages}
+        .value=${live(this.value.validated)}
+        @change=${this.onChange}
+      >
+        <span slot="field-label">
+          Retirement age (try entering a non-number)
+        </span>
+      </sp-combobox>
+    `;
+  }
 
   private onChange(): void {
     this.value = {

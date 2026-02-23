@@ -6313,6 +6313,7 @@ __metadata:
   dependencies:
     "@spectrum-web-components/base": "npm:1.11.2"
     "@spectrum-web-components/color-handle": "npm:1.11.2"
+    "@spectrum-web-components/field-label": "npm:1.11.2"
     "@spectrum-web-components/reactive-controllers": "npm:1.11.2"
     "@spectrum-web-components/textfield": "npm:1.11.2"
   languageName: unknown
@@ -6366,6 +6367,7 @@ __metadata:
   dependencies:
     "@spectrum-web-components/action-button": "npm:1.11.2"
     "@spectrum-web-components/base": "npm:1.11.2"
+    "@spectrum-web-components/field-label": "npm:1.11.2"
     "@spectrum-web-components/icon": "npm:1.11.2"
     "@spectrum-web-components/icons-ui": "npm:1.11.2"
     "@spectrum-web-components/menu": "npm:1.11.2"
@@ -6374,6 +6376,7 @@ __metadata:
     "@spectrum-web-components/popover": "npm:1.11.2"
     "@spectrum-web-components/progress-circle": "npm:1.11.2"
     "@spectrum-web-components/reactive-controllers": "npm:1.11.2"
+    "@spectrum-web-components/shared": "npm:1.11.2"
     "@spectrum-web-components/textfield": "npm:1.11.2"
   languageName: unknown
   linkType: soft
@@ -6940,6 +6943,7 @@ __metadata:
   resolution: "@spectrum-web-components/textfield@workspace:1st-gen/packages/textfield"
   dependencies:
     "@spectrum-web-components/base": "npm:1.11.2"
+    "@spectrum-web-components/field-label": "npm:1.11.2"
     "@spectrum-web-components/help-text": "npm:1.11.2"
     "@spectrum-web-components/icon": "npm:1.11.2"
     "@spectrum-web-components/icons-ui": "npm:1.11.2"
