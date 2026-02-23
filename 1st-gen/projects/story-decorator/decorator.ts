@@ -68,7 +68,7 @@ export const swcThemeDecorator = (story: StoryFn, context: StoryContext) => {
   }, [system, color, scale, textDirection, reduceMotion, lang]);
 
   const hasAnySetting =
-    system || color || scale || textDirection || reduceMotion;
+    system || color || scale || textDirection || reduceMotion || lang;
 
   return html`
     <style>
