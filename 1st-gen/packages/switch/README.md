@@ -154,7 +154,6 @@ In those cases, you can use CSS to visually hide the text label.
 
 <style>
   .visually-hidden {
-    clip: rect(0 0 0 0);
     clip-path: inset(50%);
     height: 1px;
     overflow: hidden;

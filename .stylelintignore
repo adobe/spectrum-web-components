@@ -10,14 +10,17 @@
 **/playwright-report
 **/test-results
 **/task
+**/tokens.css
 
 # Ignore non-CSS files (but not directories starting with .)
 **/*.ts
 **/*.tsx
+**/*.cjs
 **/*.js
 **/*.jsx
 **/*.json
 **/*.md
+**/*.mdc
 **/*.mdx
 **/*.html
 **/*.yaml
@@ -27,3 +30,7 @@
 1st-gen/projects/example-project/dist
 1st-gen/tools/styles
 1st-gen/spectrum-*.css
+1st-gen/packages/icons
+1st-gen/packages/iconset
+1st-gen/packages/icons-ui
+1st-gen/packages/icons-workflow

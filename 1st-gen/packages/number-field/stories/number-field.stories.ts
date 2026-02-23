@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -265,7 +265,11 @@ export const germanDecimals = (args: StoryArgs): TemplateResult => {
     <sp-field-label for="decimals">
       Enter a number with visible decimals
     </sp-field-label>
-    <sp-theme lang="de" dir=${currentDir} system=${currentSystem}>
+    <sp-theme
+      lang="de"
+      dir=${currentDir as 'ltr' | 'rtl' | 'auto'}
+      system=${currentSystem}
+    >
       <sp-number-field
         id="decimals"
         ...=${spreadProps(args)}
@@ -352,7 +356,7 @@ export const pixels = (args: StoryArgs): TemplateResult => {
       .formatOptions=${{
         style: 'unit',
         unit: 'px',
-      }}
+      } as unknown as Intl.NumberFormatOptions}
       ...=${spreadProps(args)}
       @change=${args.onChange}
     ></sp-number-field>
@@ -456,7 +460,6 @@ export const validationIcons = (args: StoryArgs): TemplateResult => {
       invalid
       id="invalidHiddenStepper"
       ...=${spreadProps(args)}
-      invalid
     ></sp-number-field>
     <sp-field-label for="validStepper">
       Valid Number Field with Stepper

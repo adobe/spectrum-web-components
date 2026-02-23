@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -20,9 +20,11 @@ export type FocusGroupConfig<T> = {
   elements: () => T[];
   isFocusableElement?: (el: T) => boolean;
   listenerScope?: HTMLElement | (() => HTMLElement);
+
   /**
    * When true, arrow key events will stop propagation after being handled.
    * This prevents parent elements from also reacting to arrow keys.
+   *
    * @default false
    */
   stopKeyEventPropagation?: boolean;
@@ -340,6 +342,7 @@ export class FocusGroupController<
 
   /**
    * handleClick - Finds the element that was clicked and sets the tabindex to 0
+   *
    * @returns void
    */
   handleClick = (): void => {

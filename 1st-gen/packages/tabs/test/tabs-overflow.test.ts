@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,8 +9,8 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { repeat } from 'lit/directives/repeat.js';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
 import {
   elementUpdated,
   expect,
@@ -58,7 +58,7 @@ type OverflowProperties = {
   selected?: number;
   labelPrev?: string;
   labelNext?: string;
-  dir?: CSSStyleDeclaration['direction'];
+  dir?: 'ltr' | 'rtl' | 'auto';
 };
 
 const renderTabsOverflow = async ({
@@ -84,7 +84,7 @@ const renderTabsOverflow = async ({
           label-previous=${ifDefined(labelPrev)}
           label-next=${ifDefined(labelNext)}
         >
-          <sp-tabs size=${size} selected=${selected}>
+          <sp-tabs .size=${size} selected=${selected}>
             ${repeat(
               new Array(count),
               (item) => item,

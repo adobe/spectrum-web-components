@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -329,8 +329,9 @@ export class HandleController {
   private _activePointerEventData!: DataFromPointerEvent | undefined;
 
   /**
-   * @description check for defaultvalue(value) property in sp-slider and reset on double click on sliderHandle
-   * @param event
+   * @description check for defaultValue(value) property in sp-slider and reset on double click on sliderHandle
+   * @param event PointerEvent on slider
+   * @returns void
    */
   public handleDoubleClick(event: PointerEvent): void {
     const input = (event.target as Element).querySelector(
@@ -427,6 +428,14 @@ export class HandleController {
         input.matches(':focus-visible') || this.host.matches('.focus-visible');
       /* c8 ignore next 3 */
     } catch (error) {
+      if (window.__swc?.DEBUG) {
+        window.__swc.warn(
+          this.host,
+          `The ":focus-visible" selector is not supported in this browser.`,
+          'https://github.com/WICG/focus-visible/pull/196',
+          { issues: [error instanceof Error ? error.message : 'Unknown error'] }
+        );
+      }
       isFocusVisible = this.host.matches('.focus-visible');
     }
     input.model.handle.highlight = isFocusVisible;
@@ -482,8 +491,10 @@ export class HandleController {
 
   /**
    * Returns the value under the cursor
-   * @param: PointerEvent on slider
-   * @return: Slider value that correlates to the position under the pointer
+   *
+   * @param event PointerEvent or MouseEvent on slider
+   * @param model ModelValue
+   * @returns number Slider value that correlates to the position under the pointer
    */
   private calculateHandlePosition(
     event: PointerEvent | MouseEvent,
@@ -553,7 +564,7 @@ export class HandleController {
           min=${model.clamp.min}
           max=${model.clamp.max}
           step=${model.step}
-          .value=${model.value}
+          .value=${String(model.value)}
           aria-disabled=${ifDefined(this.host.disabled ? 'true' : undefined)}
           tabindex=${ifDefined(this.host.editable ? -1 : undefined)}
           aria-label=${ifDefined(model.ariaLabel)}
@@ -591,6 +602,7 @@ export class HandleController {
   /**
    * Returns a list of track segment [start, end] tuples where the values are
    * normalized to be between 0 and 1.
+   *
    * @returns A list of track segment tuples [start, end]
    */
   public trackSegments(): [number, number][] {

@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -280,7 +280,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
       await expect(el).to.be.accessible();
     });
     it('has menuitems in accessibility tree', async () => {
-      // @TODO: skipping this test because it's flaky in WebKit in CI. Will review in the migration to Spectrum 2.
+      // @todo skipping this test because it's flaky in WebKit in CI. Will review in the migration to Spectrum 2.
       if (isWebKit()) {
         return;
       }
@@ -462,7 +462,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
       expect(el.shadowRoot.activeElement).to.equal(el.focusElement);
     });
     it('manages focus-ring styles', async () => {
-      // @TODO: skipping this test for non-WebKit browsers. Will review in the migration to Spectrum 2.
+      // @todo skipping this test for non-WebKit browsers. Will review in the migration to Spectrum 2.
       if (!isWebKit()) {
         return;
       }
@@ -866,7 +866,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
       expect(openSpy.callCount).to.equal(1);
     });
-    // @TODO: skipping this test because its flaky. Will review in the migration to Spectrum 2.
+    // @todo skipping this test because its flaky. Will review in the migration to Spectrum 2.
     it.skip('opens, then closes, on subsequent clicks', async function () {
       const el = await actionMenuFixture();
       await elementUpdated(el);

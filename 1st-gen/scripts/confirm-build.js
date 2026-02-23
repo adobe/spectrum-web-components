@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -59,7 +59,7 @@ function verifyVersionSync() {
       fs.readFileSync(path.join(rootDir, 'tools/base/package.json'), 'utf8')
     );
   } catch (error) {
-    throw new Error('Failed to read tools/base/package.json');
+    throw new Error(`Failed to read tools/base/package.json: ${error.message}`);
   }
 
   if (version !== basePackageJson.version) {

@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -215,7 +215,8 @@ export class AbstractOverlay extends SpectrumElement {
     document.dispatchEvent(overlayUpdateEvent);
   }
 
-  // @TODO remove this long standing legacy API
+  // @todo remove this long standing legacy API
+
   /**
    * Overloaded imperative API entry point that allows for both the pre-0.37.0
    * argument signature as well as the post-0.37.0 signature. This allows for
@@ -238,7 +239,7 @@ export class AbstractOverlay extends SpectrumElement {
     content?: HTMLElement,
     optionsV1?: OverlayOptionsV1
   ): Promise<Overlay | (() => void)> {
-    // eslint-disable-next-line import/no-extraneous-dependencies
+    /* eslint-disable import/no-extraneous-dependencies */
     await import('@spectrum-web-components/overlay/sp-overlay.js');
     const v2 = arguments.length === 2;
     const overlayContent = content || triggerOrContent;
@@ -259,6 +260,7 @@ export class AbstractOverlay extends SpectrumElement {
       overlay.open = false;
       overlay.dispose = noop;
     };
+
     /**
      * Since content must exist in an <sp-overlay>, we need a way to get it there.
      * The best & most-direct way is to declaratively use an <sp-overlay> element,

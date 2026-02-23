@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -595,21 +595,21 @@ describe('NumberField', () => {
       el.value = 45;
       expect(el.value).to.equal(45);
       el.focus();
-      await sendKeys({ type: '7' }); // Visible text: EUR 45.007
+      await sendKeys({ type: '7' }); // Visible text: EUR 45.007
       expect(el.value).to.equal(45.007);
       expect(inputSpy.calledWith(el.value), 'first input').to.be.true;
-      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-      await sendKeys({ type: '1' }); // Visible text: 1EUR 45.007
-      await sendKeys({ press: 'Enter' }); // Visible text: EUR 145.01
+      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+      await sendKeys({ type: '1' }); // Visible text: 1EUR 45.007
+      await sendKeys({ press: 'Enter' }); // Visible text: EUR 145.01
       expect(el.value).to.equal(145.007);
       expect(inputSpy.calledWith(145.007), 'second input').to.be.true;
       expect(changeSpy.calledWith(145.007), 'change').to.be.true;

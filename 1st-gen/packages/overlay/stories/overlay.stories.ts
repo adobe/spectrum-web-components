@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,7 +9,8 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { render } from 'lit-html';
+
+import { render } from 'lit';
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
@@ -20,6 +21,7 @@ import {
   Overlay,
   OverlayContentTypes,
   OverlayTrigger,
+  OverlayTypes,
   Placement,
   TriggerInteractions,
   VirtualTrigger,
@@ -590,7 +592,7 @@ deep.parameters = {
 export const deepChildTooltip = (): TemplateResult => html`
   <overlay-trigger triggered-by="click">
     <sp-button variant="primary" slot="trigger">Open popover</sp-button>
-    <sp-popover slot="click-content" plaeemenm="bottom" tip>
+    <sp-popover slot="click-content" placement="bottom" tip>
       <sp-dialog no-divider>
         <p>Let us open another overlay here</p>
         <overlay-trigger triggered-by="click">
@@ -620,20 +622,26 @@ export const deepChildTooltip = (): TemplateResult => html`
 
 export const deepNesting = (): TemplateResult => {
   const color = window.__swc_hack_knobs__.defaultColor;
-  const outter = color === 'light' ? 'dark' : 'light';
+  const outer = color === 'light' ? 'dark' : 'light';
   return html`
     ${storyStyles}
     <sp-theme
-      color=${outter}
+      color=${outer}
       system=${window.__swc_hack_knobs__.defaultSystemVariant}
       scale=${window.__swc_hack_knobs__.defaultScale}
-      dir=${window.__swc_hack_knobs__.defaultDirection}
+      dir=${window.__swc_hack_knobs__.defaultDirection as
+        | 'ltr'
+        | 'rtl'
+        | 'auto'}
     >
       <sp-theme
         color=${color}
         system=${window.__swc_hack_knobs__.defaultSystemVariant}
         scale=${window.__swc_hack_knobs__.defaultScale}
-        dir=${window.__swc_hack_knobs__.defaultDirection}
+        dir=${window.__swc_hack_knobs__.defaultDirection as
+          | 'ltr'
+          | 'rtl'
+          | 'auto'}
       >
         <recursive-popover
           tabindex=""
@@ -893,10 +901,16 @@ export const edges = (): TemplateResult => {
   `;
 };
 
+/**
+ * @todo This type is not valid for the type property of the overlay-trigger element.
+ */
 export const inline = (): TemplateResult => {
   const closeEvent = new Event('close', { bubbles: true, composed: true });
   return html`
-    <overlay-trigger type="inline" triggered-by="click">
+    <overlay-trigger
+      type=${'inline' as unknown as OverlayTypes}
+      triggered-by="click"
+    >
       <sp-button slot="trigger">Open</sp-button>
       <sp-popover slot="click-content">
         <sp-button
@@ -1002,7 +1016,9 @@ export const modalNoFocus = (): TemplateResult => {
             @click=${(event: Event & { target: DialogWrapper }) =>
               event.target.dispatchEvent(closeEvent)}
           >
-            ${'Cancel'}
+            ${html`
+              'Cancel'
+            `}
           </sp-button>
           <sp-button
             data-test-id="dialog-override-btn"
@@ -1011,7 +1027,9 @@ export const modalNoFocus = (): TemplateResult => {
             @click=${(event: Event & { target: DialogWrapper }) =>
               event.target.dispatchEvent(closeEvent)}
           >
-            ${'Override'}
+            ${html`
+              'Override'
+            `}
           </sp-button>
         </sp-button-group>
       </sp-dialog-wrapper>
@@ -1056,9 +1074,15 @@ export const modalManaged = (): TemplateResult => {
   `;
 };
 
+/**
+ * @todo This type is not valid for the type property of the overlay-trigger element.
+ */
 export const modalWithinNonModal = (): TemplateResult => {
   return html`
-    <overlay-trigger type="inline" triggered-by="click">
+    <overlay-trigger
+      type=${'inline' as unknown as OverlayTypes}
+      triggered-by="click"
+    >
       <sp-button variant="primary" slot="trigger">
         Open inline overlay
       </sp-button>
@@ -1111,10 +1135,16 @@ export const openHoverContent = (args: Properties): TemplateResult =>
     open: 'hover',
   });
 
+/**
+ * @todo This type is not valid for the type property of the overlay-trigger element.
+ */
 export const replace = (): TemplateResult => {
   const closeEvent = new Event('close', { bubbles: true, composed: true });
   return html`
-    <overlay-trigger type="replace" triggered-by="click">
+    <overlay-trigger
+      type=${'replace' as unknown as OverlayTypes}
+      triggered-by="click"
+    >
       <sp-button slot="trigger">Open</sp-button>
       <sp-popover slot="click-content">
         <sp-button

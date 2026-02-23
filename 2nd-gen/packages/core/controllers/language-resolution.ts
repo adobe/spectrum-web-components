@@ -178,6 +178,7 @@ export class LanguageResolutionController implements ReactiveController {
    * Resolves the language: syncs from document, then queries for a provider
    * (e.g. sp-theme) via 'sp-language-context'. If a provider calls the
    * callback, it becomes the source of truth until disconnected.
+   *
    * @private
    */
   private resolveLanguage(): void {
