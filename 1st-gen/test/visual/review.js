@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 import slugify from '@sindresorhus/slugify';
-import crypto from 'crypto';
 import fg from 'fast-glob';
 import fs from 'fs';
 import pixelmatch from 'pixelmatch';
@@ -19,12 +18,6 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
 const { commit, system, branch } = yargs(hideBin(process.argv)).argv;
-
-const getHash = (context) => {
-  const md5 = crypto.createHash('md5');
-  md5.update(context);
-  return md5.digest('hex');
-};
 
 const getAzureUrl = (combination) => {
   const baseUrl = 'https://swcpreviews.z13.web.core.windows.net';
@@ -165,6 +158,17 @@ async function main() {
           existingTest.diff = diff;
         }
       } catch (error) {
+        if (window.__swc?.DEBUG) {
+          window.__swc.warn(
+            undefined,
+            `Failed to compare images: ${JSON.stringify(error)}`,
+            {
+              issues: [
+                error instanceof Error ? error.message : 'Unknown error',
+              ],
+            }
+          );
+        }
         // This likely means that the two images where of different sizes.
         existingTest.diff = diff;
       }

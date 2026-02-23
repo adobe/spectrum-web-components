@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -79,13 +79,13 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
    * For example, a message with 240 words should have a timeout of 7000ms,
    * and a message with 360 words should have a timeout of 8000ms.
    *
-   * @param {number | null} timeout
+   * @param {number | null} timeout The timeout in milliseconds.
    * @default null
    */
   //TODO(#4939): Align on the timeout minimum with design
   @property({ type: Number })
   public set timeout(timeout: number | null) {
-    const hasTimeout = typeof timeout !== null && (timeout as number) > 0;
+    const hasTimeout = timeout !== null && (timeout as number) > 0;
     const newTimeout = hasTimeout ? Math.max(6000, timeout as number) : null;
     const oldValue = this.timeout;
     if (newTimeout && this.countdownStart) {
@@ -108,7 +108,7 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
    *
    * `variant` attribute is removed when not matching one of the above.
    *
-   * @param {string} variant
+   * @param {string} variant The variant of the toast.
    */
   @property({ type: String })
   public set variant(variant: ToastVariants) {

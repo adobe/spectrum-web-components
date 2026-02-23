@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -91,10 +91,16 @@ const lazyStyleFragment = (
 ): void => {
   const fragmentName = `${name}-${system}`;
   switch (fragmentName) {
-    case 'dark-spectrum' || 'darkest-spectrum':
+    case 'dark-spectrum':
       import('@spectrum-web-components/theme/theme-dark.js');
       break;
-    case 'light-spectrum' || 'lightest-spectrum':
+    case 'darkest-spectrum':
+      import('@spectrum-web-components/theme/theme-dark.js');
+      break;
+    case 'light-spectrum':
+      import('@spectrum-web-components/theme/theme-light.js');
+      break;
+    case 'lightest-spectrum':
       import('@spectrum-web-components/theme/theme-light.js');
       break;
     case 'medium-spectrum':
@@ -103,10 +109,16 @@ const lazyStyleFragment = (
     case 'large-spectrum':
       import('@spectrum-web-components/theme/scale-large.js');
       break;
-    case 'dark-express' || 'darkest-express':
+    case 'dark-express':
       import('@spectrum-web-components/theme/express/theme-dark.js');
       break;
-    case 'light-express' || 'lightest-express':
+    case 'darkest-express':
+      import('@spectrum-web-components/theme/express/theme-dark.js');
+      break;
+    case 'light-express':
+      import('@spectrum-web-components/theme/express/theme-light.js');
+      break;
+    case 'lightest-express':
       import('@spectrum-web-components/theme/express/theme-light.js');
       break;
     case 'medium-express':
@@ -262,6 +274,7 @@ export class LayoutElement extends LitElement {
       this.alerts.set(target, {
         count: 0,
         message: '',
+
         /**
          * <sp-toast> does not allow a `timeout` of less that 6000
          * use this as a cheat to reset the timeout to 6000 for
@@ -426,7 +439,7 @@ export class LayoutElement extends LitElement {
         .color=${this.color}
         .scale=${this.scale}
         .system=${this.system}
-        dir=${this.dir}
+        dir=${this.dir as 'ltr' | 'rtl' | 'auto'}
         id="app"
         @sp-track-theme=${this.handleTrackTheme}
       >
@@ -469,7 +482,8 @@ export class LayoutElement extends LitElement {
         ...this.querySelectorAll('code-example'),
       ] as CodeExample[];
       overview.forEach((example) => {
-        example.codeTheme = this.color;
+        const computedColor = this.color.startsWith('light') ? 'light' : 'dark';
+        example.codeTheme = computedColor;
       });
       (document.querySelector('html') as HTMLHtmlElement).style.colorScheme =
         this.color;

@@ -283,9 +283,9 @@ ${elements.reduce(
 /**
  * CEM package will invoke this callback function.
  *
- * @param {object} options options for the react wrapper generator
- * @param {Array} options.exclude array of excluded component class names
- * @param {string} options.outDir root output directory for generated code
+ * @param {object} options - The options for generating the wrappers.
+ * @param {string[]} options.exclude - The array of excluded component class names.
+ * @param {string} options.outDir - The root output directory for generated code.
  */
 export default function genWrappers({ exclude = [], outDir = 'legacy' } = {}) {
   return {

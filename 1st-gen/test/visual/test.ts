@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -235,6 +235,7 @@ export const test = (
             } else {
               // For rendering differences, try again with a fresh fixture
               test.remove();
+
               /**
                * _Sometimes_ the browser will fail on weird renderings of rounded edges.
                * This retry allows it another change to render the test from scratch before

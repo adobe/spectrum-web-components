@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -45,6 +45,7 @@ export class Dropzone extends SpectrumElement {
 
   /**
    * Controls the feedback (typically visual) the user is given during a drag and drop operation
+   *
    * @attr
    * @type {'copy' | 'move' | 'link' | 'none'}
    */
