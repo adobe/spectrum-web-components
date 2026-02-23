@@ -305,9 +305,9 @@ export class TextfieldBase extends ManageHelpText(
             <textarea
                 name=${ifDefined(this.name || undefined)}
                 aria-describedby=${this.helpTextId}
-                aria-label=${this.label ||
-                this.appliedLabel ||
-                this.placeholder}
+                aria-label=${ifDefined(
+                    this.label || this.appliedLabel || this.placeholder || undefined
+                )}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 class="input"
                 maxlength=${ifDefined(
@@ -340,7 +340,9 @@ export class TextfieldBase extends ManageHelpText(
         name=${ifDefined(this.name || undefined)}
         type=${this.type}
         aria-describedby=${this.helpTextId}
-        aria-label=${this.label || this.appliedLabel || this.placeholder}
+        aria-label=${ifDefined(
+          this.label || this.appliedLabel || this.placeholder || undefined
+        )}
         aria-invalid=${ifDefined(this.invalid || undefined)}
         class="input"
         title=${this.invalid ? '' : nothing}
