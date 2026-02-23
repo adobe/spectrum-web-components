@@ -85,7 +85,7 @@ export default mergeConfig(
               // Keep the Vite aliases from `vite.config.ts` for Storybook/Vitest.
               // Without these, imports can resolve to built output and/or be excluded from coverage.
               '@spectrum-web-components/core': path.resolve(dirname, '../core'),
-              '@adobe/swc': path.resolve(dirname, './components'),
+              '@adobe/spectrum-wc': path.resolve(dirname, './components'),
               '@adobe/postcss-token': path.resolve(
                 dirname,
                 '../tools/postcss-token'

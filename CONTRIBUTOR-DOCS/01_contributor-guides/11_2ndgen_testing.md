@@ -57,9 +57,9 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Badge } from '@adobe/swc/badge';
+import { Badge } from '@adobe/spectrum-wc/badge';
 
-import '@adobe/swc/badge';
+import '@adobe/spectrum-wc/badge';
 
 import { getComponent, setupSwcWarningSpy } from '../../../utils/test-utils.js';
 import { meta } from '../stories/badge.stories.js';
@@ -281,7 +281,7 @@ If you need lower-level control (e.g., checking `swcGlobals` directly), `setupSw
 Coverage is collected via the Storybook Vitest project using the V8 provider. Run it with:
 
 ```sh
-yarn workspace @adobe/swc test:coverage
+yarn workspace @adobe/spectrum-wc test:coverage
 ```
 
 ### Coverage thresholds
@@ -314,17 +314,17 @@ Some components include dedicated Playwright accessibility test files (e.g., `ba
 Run the Storybook test suite with:
 
 ```sh
-yarn workspace @adobe/swc test
+yarn workspace @adobe/spectrum-wc test
 ```
 
 ## Testing command reference
 
 | Purpose | Command | Notes |
 | --- | --- | --- |
-| Run Storybook tests (headless) | `yarn workspace @adobe/swc test` | Runs Storybook tests with aXe checks. |
-| Run tests in UI mode | `yarn workspace @adobe/swc test:ui` | Uses Vitest UI for interactive debugging. |
-| Run tests in a visible browser | `yarn workspace @adobe/swc test:browser` | Launches browser for live debugging. |
-| Run tests with coverage | `yarn workspace @adobe/swc test:coverage` | Generates coverage for Storybook tests. |
+| Run Storybook tests (headless) | `yarn workspace @adobe/spectrum-wc test` | Runs Storybook tests with aXe checks. |
+| Run tests in UI mode | `yarn workspace @adobe/spectrum-wc test:ui` | Uses Vitest UI for interactive debugging. |
+| Run tests in a visible browser | `yarn workspace @adobe/spectrum-wc test:browser` | Launches browser for live debugging. |
+| Run tests with coverage | `yarn workspace @adobe/spectrum-wc test:coverage` | Generates coverage for Storybook tests. |
 
 ## Guidelines
 

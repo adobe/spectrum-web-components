@@ -1,7 +1,6 @@
 {
-  "name": "@adobe/swc",
+  "name": "@adobe/spectrum-wc",
   "version": "0.0.4",
-  "private": true,
   "description": "Spectrum Web Components 2nd generation - rendering implementations",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -24,9 +23,16 @@
       "types": "./dist/components/*/index.d.ts",
       "import": "./dist/components/*/index.js"
     },
+    "./*.css": {
+      "default": "./dist/*.css"
+    },
     "./components/*": {
       "types": "./dist/components/*/index.d.ts",
       "import": "./dist/components/*/index.js"
+    },
+    "./utils/*": {
+      "types": "./dist/utils/*.d.ts",
+      "import": "./dist/utils/*.js"
     }
   },
   "main": "./dist/index.js",
@@ -43,7 +49,7 @@
     "dev:core": "yarn workspace @spectrum-web-components/core dev",
     "storybook": "yarn analyze && storybook dev -p 6006",
     "storybook:build": "yarn analyze && storybook build",
-    "stylesheets": "swc-tokens --outputType stylesheet --out ./stylesheets/tokens.css --prefix swc",
+    "stylesheets": "swc-tokens --outputType stylesheet --out ./dist/tokens.css --prefix swc",
     "test": "vitest --run --project storybook",
     "test:browser": "vitest --project storybook --browser.headless=false",
     "test:coverage": "vitest --coverage --project storybook",
@@ -51,7 +57,6 @@
     "test:watch": "run-p dev:core test:watch:vitest",
     "test:watch:vitest": "vitest --project storybook --watch"
   },
-  "types": "./dist/index.d.ts",
   "dependencies": {
     "@spectrum-web-components/core": "0.0.4",
     "lit": "^2.5.0 || ^3.1.3"
