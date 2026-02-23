@@ -34,11 +34,11 @@ When deciding where something lives in 2nd-gen, ask: **does it depend on the ren
 
 | Category | Rendering-layer dependent? | Web component? | Code location | Docs category | Examples |
 |----------|---------------------------|----------------|---------------|---------------|----------|
-| **Design component** | Yes | Yes | `swc/components/` | Components | Button, Card, Dialog, Badge |
 | **UI-less artifact** | No (same in S1 and S2) | No | `core/` | Tools/Utilities | Reactive controllers, grid logic, truncation logic, pure utility functions, DnD engine |
+| **Design component** | Yes | Yes | `swc/components/` | Components | Button, Card, Dialog, Badge |
 | **UI artifact (WC, not a design component)** | Yes (theme-dependent) | Yes | `swc/components/` (recategorize in docs) | Tools/Utilities | `sp-asset` |
 | **UI artifact (non-WC)** | Yes (style/token dependent) | No | `swc/utils/` | Tools/Utilities | CSS utilities, typography classes, opacity checkerboard, token/style helpers |
-| **Build-time tooling** | No | No | `packages/tools/` | Tools/Utilities | PostCSS plugins, token packages, VS Code extension |
+| **Build-time tooling** | No | No | `tools/` | Tools/Utilities | PostCSS plugins, token packages, VS Code extension |
 
 The key distinction: **UI-less** code goes in `core/` (it works the same regardless of Spectrum version); **UI** code that depends on Spectrum styles goes in `swc/` (even if it's a utility, not a design component).
 
