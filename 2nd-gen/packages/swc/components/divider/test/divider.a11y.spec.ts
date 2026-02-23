@@ -27,52 +27,57 @@ test.describe('Divider - ARIA Snapshots', () => {
   test('should have correct accessibility tree for overview', async ({
     page,
   }) => {
-    const divider = await gotoStory(
+    const root = await gotoStory(
       page,
       'components-divider--overview',
       'swc-divider'
     );
-
-    await expect(divider).toMatchAriaSnapshot();
+    await expect(root).toMatchAriaSnapshot(`
+      - separator
+    `);
   });
 
   test('should handle anatomy story', async ({ page }) => {
-    const divider = await gotoStory(
+    const root = await gotoStory(
       page,
       'components-divider--anatomy',
       'swc-divider'
     );
-
-    await expect(divider).toMatchAriaSnapshot();
+    await expect(root).toMatchAriaSnapshot(`
+      - separator
+    `);
   });
 
   test('should handle different sizes', async ({ page }) => {
-    const divider = await gotoStory(
+    const root = await gotoStory(
       page,
       'components-divider--sizes',
       'swc-divider'
     );
-
-    await expect(divider).toMatchAriaSnapshot();
+    await expect(root).toMatchAriaSnapshot(`
+      - separator
+    `);
   });
 
   test('should handle vertical orientation', async ({ page }) => {
-    const divider = await gotoStory(
+    const root = await gotoStory(
       page,
       'components-divider--vertical',
       'swc-divider'
     );
-
-    await expect(divider).toMatchAriaSnapshot();
+    await expect(root).toMatchAriaSnapshot(`
+      - separator
+    `);
   });
 
   test('should handle static colors', async ({ page }) => {
-    const divider = await gotoStory(
+    const root = await gotoStory(
       page,
       'components-divider--static-colors',
       'swc-divider'
     );
-
-    await expect(divider).toMatchAriaSnapshot();
+    await expect(root).toMatchAriaSnapshot(`
+      - separator
+    `);
   });
 });

@@ -27,40 +27,48 @@ test.describe('Asset - ARIA Snapshots', () => {
   test('should have correct accessibility tree for overview', async ({
     page,
   }) => {
-    const asset = await gotoStory(
+    const root = await gotoStory(
       page,
       'components-asset--overview',
       'swc-asset'
     );
-    await expect(asset).toMatchAriaSnapshot();
+    await expect(root).toMatchAriaSnapshot(`
+      - img "preview of background"
+    `);
   });
 
   test('should handle anatomy story with different content types', async ({
     page,
   }) => {
-    const asset = await gotoStory(
+    const root = await gotoStory(
       page,
       'components-asset--anatomy',
       'swc-asset'
     );
-    await expect(asset).toMatchAriaSnapshot();
+    await expect(root).toMatchAriaSnapshot(`
+      - img "README.md"
+    `);
   });
 
   test('should handle variants', async ({ page }) => {
-    const asset = await gotoStory(
+    const root = await gotoStory(
       page,
       'components-asset--variants',
       'swc-asset'
     );
-    await expect(asset).toMatchAriaSnapshot();
+    await expect(root).toMatchAriaSnapshot(`
+      - img "README.md"
+    `);
   });
 
   test('should handle accessibility story', async ({ page }) => {
-    const asset = await gotoStory(
+    const root = await gotoStory(
       page,
       'components-asset--accessibility',
       'swc-asset'
     );
-    await expect(asset).toMatchAriaSnapshot();
+    await expect(root).toMatchAriaSnapshot(`
+      - img "Project proposal document"
+    `);
   });
 });

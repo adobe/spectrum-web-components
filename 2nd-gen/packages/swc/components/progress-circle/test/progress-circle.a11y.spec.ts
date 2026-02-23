@@ -27,58 +27,76 @@ test.describe('Progress Circle - ARIA Snapshots', () => {
   test('should have correct accessibility tree for overview', async ({
     page,
   }) => {
-    const progressCircle = await gotoStory(
+    const root = await gotoStory(
       page,
       'components-progress-circle--overview',
       'swc-progress-circle'
     );
-    await expect(progressCircle).toMatchAriaSnapshot();
+    await expect(root).toMatchAriaSnapshot(`
+      - progressbar "Uploading document":
+        - img
+    `);
   });
 
   test('should handle anatomy story with different progress values', async ({
     page,
   }) => {
-    const progressCircle = await gotoStory(
+    const root = await gotoStory(
       page,
       'components-progress-circle--anatomy',
       'swc-progress-circle'
     );
-    await expect(progressCircle).toMatchAriaSnapshot();
+    await expect(root).toMatchAriaSnapshot(`
+      - progressbar "Starting upload":
+        - img
+    `);
   });
 
   test('should handle different sizes', async ({ page }) => {
-    const progressCircle = await gotoStory(
+    const root = await gotoStory(
       page,
       'components-progress-circle--sizes',
       'swc-progress-circle'
     );
-    await expect(progressCircle).toMatchAriaSnapshot();
+    await expect(root).toMatchAriaSnapshot(`
+      - progressbar "Processing small item":
+        - img
+    `);
   });
 
   test('should handle static colors', async ({ page }) => {
-    const progressCircle = await gotoStory(
+    const root = await gotoStory(
       page,
       'components-progress-circle--static-colors',
       'swc-progress-circle'
     );
-    await expect(progressCircle).toMatchAriaSnapshot();
+    await expect(root).toMatchAriaSnapshot(`
+      - progressbar "Processing media":
+        - img
+    `);
   });
 
   test('should handle progress values', async ({ page }) => {
-    const progressCircle = await gotoStory(
+    const root = await gotoStory(
       page,
       'components-progress-circle--progress-values',
       'swc-progress-circle'
     );
-    await expect(progressCircle).toMatchAriaSnapshot();
+    await expect(root).toMatchAriaSnapshot(`
+      - progressbar "Starting download":
+        - img
+    `);
   });
 
   test('should handle indeterminate state', async ({ page }) => {
-    const progressCircle = await gotoStory(
+    const root = await gotoStory(
       page,
       'components-progress-circle--indeterminate',
       'swc-progress-circle'
     );
-    await expect(progressCircle).toMatchAriaSnapshot();
+    await expect(root).toMatchAriaSnapshot(`
+      - progressbar "Processing request":
+        - img
+    `);
   });
 });

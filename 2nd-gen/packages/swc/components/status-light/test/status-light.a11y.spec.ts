@@ -25,38 +25,46 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 test.describe('Status Light - ARIA Snapshots', () => {
   test('should have correct accessibility tree structure', async ({ page }) => {
-    const statusLight = await gotoStory(
+    const root = await gotoStory(
       page,
       'components-status-light--overview',
       'swc-status-light'
     );
-    await expect(statusLight).toMatchAriaSnapshot();
+    await expect(root).toMatchAriaSnapshot(`
+      - text: Active
+    `);
   });
 
   test('should handle semantic variants', async ({ page }) => {
-    const statusLight = await gotoStory(
+    const root = await gotoStory(
       page,
       'components-status-light--semantic-variants',
       'swc-status-light'
     );
-    await expect(statusLight).toMatchAriaSnapshot();
+    await expect(root).toMatchAriaSnapshot(`
+      - text: Archived Active Approved Rejected Pending approval
+    `);
   });
 
   test('should handle non-semantic variants', async ({ page }) => {
-    const statusLight = await gotoStory(
+    const root = await gotoStory(
       page,
       'components-status-light--non-semantic-variants',
       'swc-status-light'
     );
-    await expect(statusLight).toMatchAriaSnapshot();
+    await expect(root).toMatchAriaSnapshot(`
+      - text: /Marketing Engineering Design Product Support Operations Quality Documentation Analytics Creative Training Facilities Compliance Version 1\\.\\d+\\.\\d+/
+    `);
   });
 
   test('should reflect different sizes', async ({ page }) => {
-    const statusLight = await gotoStory(
+    const root = await gotoStory(
       page,
       'components-status-light--sizes',
       'swc-status-light'
     );
-    await expect(statusLight).toMatchAriaSnapshot();
+    await expect(root).toMatchAriaSnapshot(`
+      - text: Small Medium Large Extra-large
+    `);
   });
 });
