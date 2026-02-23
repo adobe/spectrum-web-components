@@ -60,6 +60,8 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
   constructor: T
 ): T & Constructor<SpectrumElement> {
   class OverlayWithPopover extends constructor {
+    private popoverPositioningCycle = 0;
+
     protected override async manageDelay(
       targetOpenState: boolean
     ): Promise<void> {
@@ -79,14 +81,27 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
      * A popover should be hidden _after_ it is no longer on top-layer because
      * the position metrics will have changed from when it was originally positioned.
      */
-    private async shouldHidePopover(targetOpenState: boolean): Promise<void> {
+    private async shouldHidePopover(
+      targetOpenState: boolean,
+      cycle: number
+    ): Promise<void> {
       if (targetOpenState && this.open !== targetOpenState) {
         return;
       }
+      const isAutoMenuPopover =
+        this.type === 'auto' &&
+        this.triggerElement instanceof HTMLElement &&
+        this.triggerElement.localName === 'sp-menu-item';
       const update = async ({
         newState,
       }: { newState?: string } = {}): Promise<void> => {
+        if (cycle !== this.popoverPositioningCycle) {
+          return;
+        }
         if (newState === 'open') {
+          return;
+        }
+        if (isAutoMenuPopover) {
           return;
         }
         // When in a parent Overlay, this Overlay may need to position itself
@@ -113,7 +128,10 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
      *
      * @todo Why does this need try/catches? Can't we just use the matches() method directly?
      */
-    private shouldShowPopover(targetOpenState: boolean): void {
+    private async shouldShowPopover(
+      targetOpenState: boolean,
+      cycle: number
+    ): Promise<void> {
       let popoverOpen = false;
       try {
         popoverOpen = this.dialogEl.matches(':popover-open');
@@ -125,6 +143,7 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
         // eslint-disable-next-line no-empty, @typescript-eslint/no-unused-vars
       } catch (error) {}
       if (
+        cycle === this.popoverPositioningCycle &&
         targetOpenState &&
         this.open === targetOpenState &&
         !popoverOpen &&
@@ -132,6 +151,13 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
         this.isConnected
       ) {
         this.dialogEl.showPopover();
+        const isAutoMenuPopover =
+          this.type === 'auto' &&
+          this.triggerElement instanceof HTMLElement &&
+          this.triggerElement.localName === 'sp-menu-item';
+        if (isAutoMenuPopover) {
+          await this.placementController.resetOverlayPosition();
+        }
         this.managePosition();
       }
     }
@@ -139,11 +165,12 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
     protected override async ensureOnDOM(
       targetOpenState: boolean
     ): Promise<void> {
+      const cycle = ++this.popoverPositioningCycle;
       if (!supportsOverlayAuto) {
-        await this.shouldHidePopover(targetOpenState);
+        await this.shouldHidePopover(targetOpenState, cycle);
       }
-      this.shouldShowPopover(targetOpenState);
-      await nextFrame();
+      await this.shouldShowPopover(targetOpenState, cycle);
+      // await nextFrame();
     }
 
     protected override async makeTransition(
