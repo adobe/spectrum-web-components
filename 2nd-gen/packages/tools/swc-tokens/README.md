@@ -24,7 +24,7 @@ Ensure tokens are updated in the dependent packages by running the following com
 yarn tokens:update
 ```
 
-This will first run all token related tests, then update the extension-relative `tokens.json` for `swc-vscode-token` and the library-relative `tokens.css` for `@adobe/swc`.
+This will first run all token related tests, then update the extension-relative `tokens.json` for `swc-vscode-token` and the library-relative `tokens.css` and `typography.css` for `@adobe/swc`.
 
 If any test fails, the artifacts will not be generated, allowing you to investigate and fix any issues.
 
@@ -255,7 +255,7 @@ The main package provides a CLI to produce either the unified stylesheet `tokens
 For the primary consuming package `@adobe/swc`, the following CLI command is used for generating the token stylesheet:
 
 ```bash
-swc-tokens --outputType stylesheet --out ./stylesheets/tokens.css --prefix swc
+swc-tokens --outputType tokens --out ./stylesheets/tokens.css --prefix swc
 ```
 
 This outputs the stylesheet into the noted `--out` directory and filename, with the use of `swc` as a prefix for all custom properties.

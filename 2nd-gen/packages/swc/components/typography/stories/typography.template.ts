@@ -32,7 +32,7 @@ export const SIZES_BY_VARIANT: Record<
   TypographyVariant,
   readonly TypographySize[]
 > = {
-  heading: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'XXXXL'],
+  heading: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'XXXXL'],
   title: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
   body: ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
   detail: ['XS', 'S', 'M', 'L', 'XL'],
