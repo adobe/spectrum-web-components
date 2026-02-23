@@ -20,30 +20,6 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
  * ARIA snapshot tests validate the accessibility tree structure.
  * aXe WCAG compliance and color contrast validation are handled automatically
  * by the Storybook test-runner (see .storybook/test-runner.ts).
- *
- * IMPORTANT LIMITATION: ARIA snapshots only capture the FIRST element
- * =====================
- * For stories that render multiple instances (Sizes, SemanticVariants, etc.),
- * the ARIA snapshot will only validate the first element's accessibility tree.
- * This is a known limitation of the `gotoStory` helper which returns `.first()`.
- *
- * However, ALL elements are still validated for WCAG compliance by the
- * automatic test-runner, which uses axe-core to check every element in the story.
- *
- * ARIA snapshots validate:
- * - Accessibility tree STRUCTURE (roles, hierarchy, attributes)
- * - One representative example per story
- *
- * Test-runner validates:
- * - WCAG 2.0 A/AA and 2.1 A/AA compliance for ALL elements
- * - Color contrast for ALL elements
- * - All variants, sizes, and states in the story
- *
- * Note: Uses the same test helpers as 1st gen - they work for both!
- * Key differences:
- * - Story IDs: 'components-badge--default' (vs 'badge--default' in 1st gen)
- * - Element name: 'swc-badge' (vs 'sp-badge' in 1st gen)
- * - Storybook port: 6006 (vs 8080 in 1st gen) - handled by Playwright projects
  */
 
 test.describe('Badge - ARIA Snapshots', () => {

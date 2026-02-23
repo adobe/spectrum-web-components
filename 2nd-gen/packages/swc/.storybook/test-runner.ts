@@ -9,7 +9,6 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-// eslint-disable-next-line import/no-extraneous-dependencies
 import AxeBuilder from '@axe-core/playwright';
 import type { TestRunnerConfig } from '@storybook/test-runner';
 
