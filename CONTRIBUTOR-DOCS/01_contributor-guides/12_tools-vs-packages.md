@@ -46,10 +46,10 @@ For placement within `core/`, see [packages/core/MIGRATION.md](../../../2nd-gen/
 
 ## 2nd-gen layout
 
-- **`swc/components/`** — All web components we ship, including both design components (Button, Card) and infrastructure WCs (`sp-asset`). Code location reflects what it *is*; docs categorization reflects how consumers *think about it*.
 - **`core/`** — UI-less foundational code: element/, mixins/, controllers/, utils/, and components/ for base classes. No rendering-layer dependency.
+- **`swc/components/`** — All web components we ship, including both design components (Button, Card) and infrastructure WCs (`sp-asset`). Code location reflects what it *is*; docs categorization reflects how consumers *think about it*.
 - **`swc/utils/`** — UI artifacts that are not web components: CSS utilities, typography, style helpers, and SWC-specific test/a11y helpers.
-- **`packages/tools/`** — Build-time and design-token tooling (swc-tokens, postcss-token, swc-vscode-token).
+- **`tools/`** — Build-time and design-token tooling (swc-tokens, postcss-token, swc-vscode-token).
 
 ## Abstraction targets (2nd-gen)
 
