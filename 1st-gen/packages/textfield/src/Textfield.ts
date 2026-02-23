@@ -331,7 +331,9 @@ export class TextfieldBase extends FieldLabelMixin(
                 id="field"
                 name=${ifDefined(this.name || undefined)}
                 aria-describedby=${this.helpTextId}
-                aria-label=${ifDefined(this._ariaLabel)}
+                aria-label=${ifDefined(
+                    this.label || this.appliedLabel || this.placeholder || undefined
+                )}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 class="input"
                 maxlength=${ifDefined(
@@ -365,7 +367,9 @@ export class TextfieldBase extends FieldLabelMixin(
         name=${ifDefined(this.name || undefined)}
         type=${this.type}
         aria-describedby=${this.helpTextId}
-        aria-label=${ifDefined(this._ariaLabel)}
+        aria-label=${ifDefined(
+          this.label || this.appliedLabel || this.placeholder || undefined
+        )}
         aria-invalid=${ifDefined(this.invalid || undefined)}
         class="input"
         title=${this.invalid ? '' : nothing}

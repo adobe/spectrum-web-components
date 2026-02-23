@@ -38,6 +38,7 @@ import {
 } from '@spectrum-web-components/number-field';
 import { isWebKit } from '@spectrum-web-components/shared';
 
+import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/number-field/sp-number-field.js';
 
 import { sendMouse } from '../../../test/plugins/browser.js';
@@ -1761,6 +1762,27 @@ describe('NumberField', () => {
     });
   });
   describe('accessibility model', () => {
+    it('applies a non-empty input label from associated field label text', async () => {
+      const labelText = 'What is the air-speed velocity of an unladen swallow?';
+      const wrapper = await fixture<HTMLDivElement>(html`
+        <div>
+          <sp-field-label for="swallow">${labelText}</sp-field-label>
+          <sp-number-field id="swallow"></sp-number-field>
+        </div>
+      `);
+
+      const el = wrapper.querySelector('sp-number-field') as NumberField;
+      await waitUntil(
+        () =>
+          (el.shadowRoot?.querySelector('.input') as HTMLInputElement | null)
+            ?.ariaLabel === labelText
+      );
+
+      const input = el.shadowRoot?.querySelector('.input') as HTMLInputElement;
+      expect(input.getAttribute('aria-label')).to.equal(labelText);
+      expect(input.getAttribute('aria-label')).to.not.equal('');
+    });
+
     it('increment and decrement buttons cannot receive keyboard focus', async () => {
       // @TODO: skipping this test because it's flaky in WebKit in CI. Will review in the migration to Spectrum 2.
       if (isWebKit()) {

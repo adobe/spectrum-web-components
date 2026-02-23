@@ -1,4 +1,48 @@
+<!-- Generated breadcrumbs - DO NOT EDIT -->
+
+[CONTRIBUTOR-DOCS](../README.md) / [Style guide](README.md) / Linting tools
+
+<!-- Document title (editable) -->
+
 # Linting tools
+
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
+
+- [Overview](#overview)
+- [Tools and configuration](#tools-and-configuration)
+    - [Tooling inventory](#tooling-inventory)
+    - [ESLint plugins](#eslint-plugins)
+    - [Stylelint plugins](#stylelint-plugins)
+- [Running linters](#running-linters)
+    - [Available commands](#available-commands)
+    - [From the command line](#from-the-command-line)
+    - [Linting a specific directory](#linting-a-specific-directory)
+    - [Pre-commit hooks](#pre-commit-hooks)
+- [IDE setup](#ide-setup)
+    - [VS Code / Cursor](#vs-code--cursor)
+    - [Troubleshooting IDE issues](#troubleshooting-ide-issues)
+- [Generation-specific notes](#generation-specific-notes)
+    - [2nd-gen](#2nd-gen)
+    - [1st-gen](#1st-gen)
+- [Common rules and conventions](#common-rules-and-conventions)
+    - [Copyright headers](#copyright-headers)
+    - [Import sorting](#import-sorting)
+    - [CSS property ordering](#css-property-ordering)
+    - [Design tokens (2nd-gen only)](#design-tokens-2nd-gen-only)
+    - [Accessibility (lit-a11y)](#accessibility-lit-a11y)
+- [Disabling rules](#disabling-rules)
+    - [ESLint](#eslint)
+    - [Stylelint](#stylelint)
+    - [When to disable rules](#when-to-disable-rules)
+- [Performance tips](#performance-tips)
+- [Version policy](#version-policy)
+
+</details>
+
+<!-- Document content (editable) -->
 
 This guide covers the linting tools used in the repository and how to work with them as a contributor.
 
