@@ -2335,6 +2335,84 @@ export function runPickerTests(): void {
     expect(overlayTrigger.open, 'modal overlay should be closed after escape')
       .to.be.undefined;
   });
+  it('keeps parent overlay open when scrolling picker menu in modal', async function () {
+    const test = await fixture<HTMLDivElement>(html`
+      <sp-theme scale="medium" color="light" system="spectrum">
+        <overlay-trigger type="modal" id="modal-trigger" placement="top">
+          <sp-button
+            variant="primary"
+            slot="trigger"
+            style="position:absolute;bottom:50px"
+          >
+            Open Modal
+          </sp-button>
+          <sp-popover slot="click-content" tip>
+            <sp-dialog no-divider class="options-popover-content">
+              <sp-picker
+                label="Select a Country"
+                value="item-2"
+                id="picker-value"
+              >
+                ${Array.from(
+                  { length: 30 },
+                  (_, i) => html`
+                    <sp-menu-item value=${`item-${i + 1}`}>
+                      Item ${i + 1}
+                    </sp-menu-item>
+                  `
+                )}
+              </sp-picker>
+            </sp-dialog>
+          </sp-popover>
+        </overlay-trigger>
+      </sp-theme>
+    `);
+
+    const overlayTrigger = test.querySelector(
+      'overlay-trigger'
+    ) as OverlayTrigger;
+    const button = test.querySelector('sp-button') as Button;
+    const picker = test.querySelector('sp-picker') as Picker;
+    const overlayClosedSpy = spy();
+    overlayTrigger.addEventListener('sp-closed', overlayClosedSpy);
+
+    button.click();
+    await elementUpdated(overlayTrigger);
+    await waitUntil(
+      () => overlayTrigger.open === 'click',
+      'overlay should be open'
+    );
+
+    const opened = oneEvent(picker, 'sp-opened');
+    picker.click();
+    await opened;
+    await elementUpdated(picker);
+
+    const menu = picker.optionsMenu as Menu;
+    expect(menu, 'picker menu should be available').to.exist;
+    const menuScrollSpy = spy();
+    menu.addEventListener('scroll', menuScrollSpy);
+
+    // Scroll the real menu content so behavior is exercised end-to-end.
+    menu.style.maxHeight = '80px';
+    menu.style.overflow = 'auto';
+    menu.scrollTop = 60;
+    await waitUntil(() => menu.scrollTop > 0, 'picker menu should scroll');
+    await aTimeout(50);
+
+    expect(
+      overlayClosedSpy.callCount,
+      'parent overlay should not close while scrolling picker menu'
+    ).to.equal(0);
+    expect(overlayTrigger.open, 'parent overlay should remain open').to.equal(
+      'click'
+    );
+    expect(picker.open, 'picker should remain open').to.be.true;
+    expect(
+      menuScrollSpy.callCount,
+      'menu should emit scroll'
+    ).to.be.greaterThan(0);
+  });
   describe('initial value', function () {
     beforeEach(async function () {
       const test = await fixture<HTMLDivElement>(html`
