@@ -15,6 +15,7 @@
 - [Getting started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
+    - [Configure git blame ignores (recommended)](#configure-git-blame-ignores-recommended)
 - [Repository structure](#repository-structure)
 - [Development workflow](#development-workflow)
     - [Developing](#developing)
