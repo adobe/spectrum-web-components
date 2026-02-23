@@ -47,8 +47,7 @@
       return window.__SWC_FONT_KIT_IDS__.default;
     }
     return (
-      window.__SWC_FONT_KIT_IDS__[lang] ||
-      window.__SWC_FONT_KIT_IDS__.default
+      window.__SWC_FONT_KIT_IDS__[lang] || window.__SWC_FONT_KIT_IDS__.default
     );
   };
 
@@ -77,7 +76,7 @@
         active: function () {
           window.FontsLoading = false;
           window.currentKitId = this.kitId;
-          console.log(`Font loaded [id: ${this.kitId}]`);
+          console.log(`Font loaded [id: ${window.currentKitId}]`);
 
           // Fire a custom event to indicate the Adobe Fonts have loaded
           document.dispatchEvent(
