@@ -165,7 +165,7 @@
     "@spectrum-web-components/reactive-controllers": "1.11.2",
     "@spectrum-web-components/shared": "1.11.2",
     "@spectrum-web-components/theme": "1.11.2",
-    "focus-trap": "7.6.5"
+    "focus-trap": "7.8.0"
   },
   "keywords": [
     "design-system",
