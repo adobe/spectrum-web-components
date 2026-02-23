@@ -25,6 +25,7 @@ import {
   state,
 } from '@spectrum-web-components/base/src/decorators.js';
 
+/* eslint-disable import/no-extraneous-dependencies */
 import '@spectrum-web-components/overlay/sp-overlay.js';
 
 import type { BeforetoggleOpenEvent } from './events.js';
