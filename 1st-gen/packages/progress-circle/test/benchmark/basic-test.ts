@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,10 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import { html } from 'lit';
+
+import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-progress-circle indeterminate></sp-progress-circle>
+  <sp-progress-circle indeterminate></sp-progress-circle>
 `);

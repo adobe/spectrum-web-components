@@ -1,6 +1,18 @@
 #!/usr/bin/env node
 
 /**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/**
  * Link verification module for CONTRIBUTOR-DOCS.
  * Validates internal markdown links and anchors.
  */
@@ -83,16 +95,6 @@ function findMarkerPosition(content, marker) {
     }
 }
 
-/**
- * Generate GitHub-style anchor from heading text.
- */
-function makeAnchor(text) {
-    return text
-        .toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9\-]/g, '');
-}
-
 // ============================================================================
 // LINK EXTRACTION
 // ============================================================================
@@ -131,7 +133,7 @@ function extractLinksFromContent(filepath, content) {
         const inCodeBlock = codeBlockRanges.some(
             (range) => linkPos >= range.start && linkPos < range.end
         );
-        if (inCodeBlock) continue;
+        if (inCodeBlock) {continue;}
 
         const linkText = match[1];
         const linkHref = match[2];
@@ -168,7 +170,7 @@ function extractLinksFromContent(filepath, content) {
  * Validate a single link.
  * Returns validation result with error details if invalid.
  */
-function validateLink(sourceFile, link, metadata, docsRoot) {
+function validateLink(sourceFile, link, metadata) {
     const { href } = link;
 
     // Parse link into file path and anchor

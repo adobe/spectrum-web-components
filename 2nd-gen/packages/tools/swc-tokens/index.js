@@ -23,29 +23,29 @@ import { hideBin } from 'yargs/helpers';
 import { allTokens, createLogger, generateCSS } from './utils.js';
 
 const argv = yargs(hideBin(process.argv))
-    .option('out', {
-        alias: 'o',
-        type: 'string',
-        describe: 'Output path for the generated stylesheet',
-    })
-    .option('prefix', {
-        alias: 'p',
-        type: 'string',
-        describe: 'Prefix for CSS custom properties',
-        default: '',
-    })
-    .option('debug', {
-        alias: 'd',
-        type: 'boolean',
-        describe: 'Output token processing debug log',
-        default: false,
-    })
-    .option('outputType', {
-        choices: ['stylesheet', 'tokens'],
-        describe: 'Command output type',
-        demandOption: true,
-    })
-    .help().argv;
+  .option('out', {
+    alias: 'o',
+    type: 'string',
+    describe: 'Output path for the generated stylesheet',
+  })
+  .option('prefix', {
+    alias: 'p',
+    type: 'string',
+    describe: 'Prefix for CSS custom properties',
+    default: '',
+  })
+  .option('debug', {
+    alias: 'd',
+    type: 'boolean',
+    describe: 'Output token processing debug log',
+    default: false,
+  })
+  .option('outputType', {
+    choices: ['stylesheet', 'tokens'],
+    describe: 'Command output type',
+    demandOption: true,
+  })
+  .help().argv;
 
 const out = argv.out?.trim();
 const prefix = argv.prefix?.trim();
@@ -58,27 +58,27 @@ fs.mkdirSync(path.dirname(out), { recursive: true });
 const log = debug && createLogger(`./${debugFile}`);
 
 if (outputType === 'stylesheet') {
-    const prettierConfig = await prettier.resolveConfig(process.cwd());
+  const prettierConfig = await prettier.resolveConfig(process.cwd());
 
-    const css = await generateCSS(prefix, log);
-    const formattedCss = await prettier.format(css, {
-        ...prettierConfig,
-        parser: 'css',
-    });
+  const css = await generateCSS(prefix, log);
+  const formattedCss = await prettier.format(css, {
+    ...prettierConfig,
+    parser: 'css',
+  });
 
-    await fs.promises.writeFile(out, formattedCss, 'utf8');
+  await fs.promises.writeFile(out, formattedCss, 'utf8');
 
-    console.log(`✔ Stylesheet written to ${out}`);
+  console.log(`✔ Stylesheet written to ${out}`);
 } else {
-    fs.writeFileSync(
-        out,
-        JSON.stringify(await allTokens(prefix, log), '', 4) + '\n',
-        'utf8'
-    );
+  fs.writeFileSync(
+    out,
+    JSON.stringify(await allTokens(prefix, log), '', 4) + '\n',
+    'utf8'
+  );
 
-    if (debug) {
-        console.log(`✔ Debug log written to ${debugFile}`);
-    }
+  if (debug) {
+    console.log(`✔ Debug log written to ${debugFile}`);
+  }
 
-    console.log(`✔ Tokens written to ${out}`);
+  console.log(`✔ Tokens written to ${out}`);
 }

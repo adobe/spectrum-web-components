@@ -26,29 +26,29 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
  */
 
 test.describe('Badge - ARIA Snapshots', () => {
-    test('should have correct accessibility tree for default badge', async ({
-        page,
-    }) => {
-        const badge = await gotoStory(
-            page,
-            'components-badge--default',
-            'swc-badge'
-        );
-        const snapshot = await badge.ariaSnapshot();
+  test('should have correct accessibility tree for default badge', async ({
+    page,
+  }) => {
+    const badge = await gotoStory(
+      page,
+      'components-badge--default',
+      'swc-badge'
+    );
+    const snapshot = await badge.ariaSnapshot();
 
-        expect(snapshot).toBeTruthy();
-        await expect(badge).toMatchAriaSnapshot();
-    });
+    expect(snapshot).toBeTruthy();
+    await expect(badge).toMatchAriaSnapshot();
+  });
 
-    test('should handle semantic variants', async ({ page }) => {
-        const badge = await gotoStory(
-            page,
-            'components-badge--semantic-variants',
-            'swc-badge'
-        );
-        const snapshot = await badge.ariaSnapshot();
+  test('should handle semantic variants', async ({ page }) => {
+    const badge = await gotoStory(
+      page,
+      'components-badge--semantic-variants',
+      'swc-badge'
+    );
+    const snapshot = await badge.ariaSnapshot();
 
-        expect(snapshot).toBeTruthy();
-        await expect(badge).toMatchAriaSnapshot();
-    });
+    expect(snapshot).toBeTruthy();
+    await expect(badge).toMatchAriaSnapshot();
+  });
 });

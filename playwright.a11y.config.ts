@@ -14,56 +14,56 @@ import type { PlaywrightTestConfig } from '@playwright/test';
 import { devices } from '@playwright/test';
 
 const config: PlaywrightTestConfig = {
-    timeout: 30 * 1000,
-    fullyParallel: true,
-    forbidOnly: !!process.env.CI,
-    retries: process.env.CI ? 2 : 0,
-    reporter: [
-        ['html', { outputFolder: '2nd-gen/test/playwright-a11y/report' }],
-        ['list'],
-    ],
+  timeout: 30 * 1000,
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  reporter: [
+    ['html', { outputFolder: '2nd-gen/test/playwright-a11y/report' }],
+    ['list'],
+  ],
 
-    use: {
-        trace: 'on-first-retry',
-        screenshot: 'only-on-failure',
-        reducedMotion: 'reduce',
+  use: {
+    trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
+    reducedMotion: 'reduce',
+  },
+
+  projects: [
+    {
+      name: '1st-gen',
+      testDir: './1st-gen/',
+      testMatch: '**/packages/*/test/**/*.a11y.spec.ts',
+      use: {
+        ...devices['Desktop Chrome'],
+        baseURL: 'http://localhost:8080',
+      },
     },
+    {
+      name: '2nd-gen',
+      testDir: './2nd-gen/',
+      testMatch: '**/packages/swc/components/*/test/**/*.a11y.spec.ts',
+      use: {
+        ...devices['Desktop Chrome'],
+        baseURL: 'http://localhost:6006',
+      },
+    },
+  ],
 
-    projects: [
-        {
-            name: '1st-gen',
-            testDir: './1st-gen/',
-            testMatch: '**/packages/*/test/**/*.a11y.spec.ts',
-            use: {
-                ...devices['Desktop Chrome'],
-                baseURL: 'http://localhost:8080',
-            },
-        },
-        {
-            name: '2nd-gen',
-            testDir: './2nd-gen/',
-            testMatch: '**/packages/swc/components/*/test/**/*.a11y.spec.ts',
-            use: {
-                ...devices['Desktop Chrome'],
-                baseURL: 'http://localhost:6006',
-            },
-        },
-    ],
-
-    webServer: [
-        {
-            command: 'cd 1st-gen && yarn storybook',
-            port: 8080,
-            reuseExistingServer: !process.env.CI,
-            timeout: 120 * 1000,
-        },
-        {
-            command: 'cd 2nd-gen/packages/swc && yarn storybook',
-            port: 6006,
-            reuseExistingServer: !process.env.CI,
-            timeout: 120 * 1000,
-        },
-    ],
+  webServer: [
+    {
+      command: 'cd 1st-gen && yarn storybook',
+      port: 8080,
+      reuseExistingServer: !process.env.CI,
+      timeout: 120 * 1000,
+    },
+    {
+      command: 'cd 2nd-gen/packages/swc && yarn storybook',
+      port: 6006,
+      reuseExistingServer: !process.env.CI,
+      timeout: 120 * 1000,
+    },
+  ],
 };
 
 export default config;

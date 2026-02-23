@@ -1,6 +1,6 @@
 # @adobe/swc-tokens
 
-This package ingests Spectrum design token source data and converts it into CSS custom properties and a unified stylesheet for use by `@adobe/swc` components.
+This package ingests Spectrum design token source data and converts it into CSS custom properties and a unified stylesheet for use by `@adobe/spectrum-wc` components.
 
 An additional function, `lookupToken()`, is exported for use by `@adobe/postcss-token`. It powers the `token()` CSS function by resolving token names to either computed values or composed custom properties.
 
@@ -22,7 +22,7 @@ Ensure tokens are updated in the dependent packages by running the following com
 yarn tokens:update
 ```
 
-This will first run all token related tests, then update the extension-relative `tokens.json` for `swc-vscode-token` and the library-relative `tokens.css` for `@adobe/swc`.
+This will first run all token related tests, then update the extension-relative `tokens.json` for `swc-vscode-token` and the library-relative `tokens.css` for `@adobe/spectrum-wc`.
 
 If any test fails, the artifacts will not be generated, allowing you to investigate and fix any issues.
 
@@ -146,22 +146,22 @@ flowchart TD
 The unified stylesheet splits tokens into two groups:
 
 - non-scaling:
-    - primitive values (`corner-radius-100`)
-    - `light-dark()` eligible color tokens (`blue-800`)
-    - values that never change across size scales
+  - primitive values (`corner-radius-100`)
+  - `light-dark()` eligible color tokens (`blue-800`)
+  - values that never change across size scales
 - scaling
-    - tokens that composite medium and large values
+  - tokens that composite medium and large values
 
 The token groups are segmented into specific selectors in the final unified stylesheet:
 
 ```css
 :root {
-    /* Non-scaling values */
+  /* Non-scaling values */
 }
 
 :root,
 .swc-theme {
-    /* Scaling values */
+  /* Scaling values */
 }
 ```
 
@@ -190,8 +190,8 @@ It acts as a read-only query interface over the processed token map produced by 
 
 - Looks up a token by name after all normalization and alias resolution rules have been applied
 - Returns the final CSS-safe value, which may be:
-    - A resolved primitive (e.g. rgb(0 0 0))
-    - A composed custom property (e.g. var(--swc-gray-700))
+  - A resolved primitive (e.g. rgb(0 0 0))
+  - A composed custom property (e.g. var(--swc-gray-700))
 - Throws an error if the requested token does not exist or is not resolvable
 
 > `lookupToken()` does not perform token parsing, normalization, or resolution itself. It only queries the already-processed token data.
@@ -238,7 +238,7 @@ The main package provides a CLI to produce either the unified stylesheet `tokens
 
 > For purposes of the main package, those files are git ignored and intended for debugging purposes only.
 
-For the primary consuming package `@adobe/swc`, the following CLI command is used:
+For the primary consuming package `@adobe/spectrum-wc`, the following CLI command is used:
 
 ```bash
 swc-tokens --outputType stylesheet --out ./stylesheets/tokens.css --prefix swc

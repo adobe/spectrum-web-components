@@ -15,12 +15,12 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import {
-    apiDestinationTemplate,
-    apiPartialTemplate,
-    changelogDestinationTemplate,
-    changelogPartialTemplate,
-    overviewDestinationTemplate,
-    overviewPartialTemplate,
+  apiDestinationTemplate,
+  apiPartialTemplate,
+  changelogDestinationTemplate,
+  changelogPartialTemplate,
+  overviewDestinationTemplate,
+  overviewPartialTemplate,
 } from './component-template-parts.js';
 import { gatherUrls } from './gather-spectrum-urls.js';
 
@@ -28,253 +28,247 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const projectDir = path.resolve(__dirname, '../../../');
 const componentDestinationPath = path.resolve(
-    __dirname,
-    '../content/components'
+  __dirname,
+  '../content/components'
 );
 const toolDestinationPath = path.resolve(__dirname, '../content/tools');
 const partialPath = path.resolve(
-    __dirname,
-    '../content/_includes/partials/components'
+  __dirname,
+  '../content/_includes/partials/components'
 );
 
 const extractFileNameRegExp = /([a-zA-Z-]+)\.md$/;
 const extractPackageNameRegExp = /([^/]+)\/([a-zA-Z-]+)\.md$/;
 
 const customElementJSONPath = path.resolve(
-    projectDir,
-    'projects/documentation/custom-elements.json'
+  projectDir,
+  'projects/documentation/custom-elements.json'
 );
 let rawCustomElementsJSON = fs.readFileSync(customElementJSONPath);
 let customElements = JSON.parse(rawCustomElementsJSON);
 
 const findDeclaration = (customElements, test) => {
-    let declaration;
-    // Capture a specific declaration, inside of a module, not a specific module
-    // with a specific declaration in it.
-    customElements.modules.find((jsModule) => {
-        declaration = jsModule.declarations.find(test);
-        return declaration;
-    });
-
+  let declaration;
+  // Capture a specific declaration, inside of a module, not a specific module
+  // with a specific declaration in it.
+  customElements.modules.find((jsModule) => {
+    declaration = jsModule.declarations.find(test);
     return declaration;
+  });
+
+  return declaration;
 };
 
 const findDeprecationNotice = async function (filePath) {
-    for await (const mdPath of globby.stream(filePath)) {
-        const hasDeprecation = fs.existsSync(mdPath);
-        if (hasDeprecation) {
-            // Using 'with' syntax for import attributes (required in Node.js 20.10+).
-            // The 'assert' keyword was deprecated and replaced with 'with' per TC39 proposal.
-            // See: https://github.com/tc39/proposal-import-attributes
-            const packageJSON = await import(mdPath, {
-                with: { type: 'json' },
-            }).then((packageDefault) => packageDefault.default);
-            return packageJSON.deprecationNotice;
-        }
+  for await (const mdPath of globby.stream(filePath)) {
+    const hasDeprecation = fs.existsSync(mdPath);
+    if (hasDeprecation) {
+      // Using 'with' syntax for import attributes (required in Node.js 20.10+).
+      // The 'assert' keyword was deprecated and replaced with 'with' per TC39 proposal.
+      // See: https://github.com/tc39/proposal-import-attributes
+      const packageJSON = await import(mdPath, {
+        with: { type: 'json' },
+      }).then((packageDefault) => packageDefault.default);
+      return packageJSON.deprecationNotice;
     }
+  }
 };
 
 export async function processChangelog(mdPath) {
-    const fileName = extractFileNameRegExp.exec(mdPath)[0];
+  const fileName = extractFileNameRegExp.exec(mdPath)[0];
 
-    if (fileName !== 'CHANGELOG.md') {
-        return;
+  if (fileName !== 'CHANGELOG.md') {
+    return;
+  }
+  const componentName = extractPackageNameRegExp.exec(mdPath)[1];
+  let changelogContent = fs.readFileSync(mdPath).toString();
+  changelogContent = changelogContent.split('\n').slice(4).join('\n');
+
+  // Replace minor version headings: from double ## to ###
+  changelogContent = changelogContent.replace(
+    /^## \[(\d+\.\d+\.\d+)\]\((.*?)\) \((.*?)\)/gm,
+    '### [$1]($2) ($3)'
+  );
+
+  // Replace major version headings: from single # to ##
+  // Updated to handle optional link
+  changelogContent = changelogContent.replace(
+    /^#\s*(?:\[\s*)?(\d+\.\d+\.\d+)(?:\s*\]\((.*?)\))?\s*\((\d{4}-\d{2}-\d{2})\)/gm,
+    (match, version, link, date) => {
+      // If there's no link, format without it
+      if (!link) {
+        return `## ${version} (${date})`;
+      }
+      // If there is a link, include it in the format
+      return `## [${version}](${link}) (${date})`;
     }
-    const componentName = extractPackageNameRegExp.exec(mdPath)[1];
-    let changelogContent = fs.readFileSync(mdPath).toString();
-    changelogContent = changelogContent.split('\n').slice(4).join('\n');
+  );
+  const isComponent = mdPath.includes('/packages/');
+  const destinationPath = isComponent
+    ? componentDestinationPath
+    : toolDestinationPath;
 
-    // Replace minor version headings: from double ## to ###
-    changelogContent = changelogContent.replace(
-        /^## \[(\d+\.\d+\.\d+)\]\((.*?)\) \((.*?)\)/gm,
-        '### [$1]($2) ($3)'
-    );
+  let componentHeading = componentName;
+  componentHeading = 'sp-' + componentHeading;
 
-    // Replace major version headings: from single # to ##
-    // Updated to handle optional link
-    changelogContent = changelogContent.replace(
-        /^#\s*(?:\[\s*)?(\d+\.\d+\.\d+)(?:\s*\]\((.*?)\))?\s*\((\d{4}-\d{2}-\d{2})\)/gm,
-        (match, version, link, date) => {
-            // If there's no link, format without it
-            if (!link) {
-                return `## ${version} (${date})`;
-            }
-            // If there is a link, include it in the format
-            return `## [${version}](${link}) (${date})`;
-        }
-    );
-    const isComponent = mdPath.includes('/packages/');
-    const destinationPath = isComponent
-        ? componentDestinationPath
-        : toolDestinationPath;
+  const changelogDestinationFile = path.resolve(
+    destinationPath,
+    componentName,
+    'changelog.md'
+  );
 
-    let componentHeading = componentName;
-    componentHeading = 'sp-' + componentHeading;
+  const changelogPartialFile = path.resolve(
+    destinationPath,
+    componentName,
+    'changelog-content.md'
+  );
 
-    const changelogDestinationFile = path.resolve(
-        destinationPath,
-        componentName,
-        'changelog.md'
-    );
-
-    const changelogPartialFile = path.resolve(
-        destinationPath,
-        componentName,
-        'changelog-content.md'
-    );
-
-    const componentPath = path.resolve(destinationPath, componentName);
-    fs.mkdirSync(componentPath, { recursive: true });
-    fs.writeFileSync(
-        changelogDestinationFile,
-        changelogDestinationTemplate(componentName, componentHeading)
-    );
-    fs.writeFileSync(
-        changelogPartialFile,
-        changelogPartialTemplate(
-            componentName,
-            componentHeading,
-            changelogContent
-        )
-    );
+  const componentPath = path.resolve(destinationPath, componentName);
+  fs.mkdirSync(componentPath, { recursive: true });
+  fs.writeFileSync(
+    changelogDestinationFile,
+    changelogDestinationTemplate(componentName, componentHeading)
+  );
+  fs.writeFileSync(
+    changelogPartialFile,
+    changelogPartialTemplate(componentName, componentHeading, changelogContent)
+  );
 }
 
 export async function processREADME(mdPath) {
-    const fileName = extractFileNameRegExp.exec(mdPath)[0];
-    if (fileName === 'CHANGELOG.md' || /node_modules/.test(mdPath)) {
-        return;
-    }
-    const packageName = extractPackageNameRegExp.exec(mdPath)[1];
-    let componentName =
-        fileName !== 'README.md'
-            ? fileName.replace('.md', '')
-            : extractPackageNameRegExp.exec(mdPath)[1];
-    const parent =
-        fileName === 'README.md' ? 'root' : packageName + '-children';
-    let componentHeading = componentName;
-    let tag = findDeclaration(
-        customElements,
-        (declaration) => declaration.tagName === 'sp-' + componentName
+  const fileName = extractFileNameRegExp.exec(mdPath)[0];
+  if (fileName === 'CHANGELOG.md' || /node_modules/.test(mdPath)) {
+    return;
+  }
+  const packageName = extractPackageNameRegExp.exec(mdPath)[1];
+  let componentName =
+    fileName !== 'README.md'
+      ? fileName.replace('.md', '')
+      : extractPackageNameRegExp.exec(mdPath)[1];
+  const parent = fileName === 'README.md' ? 'root' : packageName + '-children';
+  let componentHeading = componentName;
+  let tag = findDeclaration(
+    customElements,
+    (declaration) => declaration.tagName === 'sp-' + componentName
+  );
+  if (componentName === 'sp-overlay') {
+    tag = findDeclaration(
+      customElements,
+      (declaration) => declaration.name === 'OverlayBase'
     );
-    if (componentName === 'sp-overlay') {
-        tag = findDeclaration(
-            customElements,
-            (declaration) => declaration.name === 'OverlayBase'
-        );
-    }
-    if (!tag) {
-        tag = findDeclaration(
-            customElements,
-            (declaration) => declaration.tagName === componentName
-        );
-    } else {
-        componentHeading = 'sp-' + componentHeading;
-    }
-    if (!tag && componentName.startsWith('icons-')) {
-        tag = findDeclaration(
-            customElements,
-            (declaration) => declaration.name === 'IconBase'
-        );
-    }
-    if (!tag && componentName.startsWith('textarea')) {
-        tag = findDeclaration(
-            customElements,
-            (declaration) => declaration.tagName === 'sp-textfield'
-        );
-    }
-    if (!tag && componentName.startsWith('help-text-mixin')) {
-        componentHeading = 'Help Text Mixin';
-        tag = findDeclaration(
-            customElements,
-            (declaration) => declaration.name === 'HelpTextManagedElement'
-        );
-    }
-    const isComponent = mdPath.includes('/packages/');
-    const destinationPath = isComponent
-        ? componentDestinationPath
-        : toolDestinationPath;
-    const componentPath = path.resolve(destinationPath, componentName);
+  }
+  if (!tag) {
+    tag = findDeclaration(
+      customElements,
+      (declaration) => declaration.tagName === componentName
+    );
+  } else {
+    componentHeading = 'sp-' + componentHeading;
+  }
+  if (!tag && componentName.startsWith('icons-')) {
+    tag = findDeclaration(
+      customElements,
+      (declaration) => declaration.name === 'IconBase'
+    );
+  }
+  if (!tag && componentName.startsWith('textarea')) {
+    tag = findDeclaration(
+      customElements,
+      (declaration) => declaration.tagName === 'sp-textfield'
+    );
+  }
+  if (!tag && componentName.startsWith('help-text-mixin')) {
+    componentHeading = 'Help Text Mixin';
+    tag = findDeclaration(
+      customElements,
+      (declaration) => declaration.name === 'HelpTextManagedElement'
+    );
+  }
+  const isComponent = mdPath.includes('/packages/');
+  const destinationPath = isComponent
+    ? componentDestinationPath
+    : toolDestinationPath;
+  const componentPath = path.resolve(destinationPath, componentName);
 
-    fs.mkdirSync(componentPath, { recursive: true });
-    // Support the full page delivery of "Overview" and "API"
-    const exampleDestinationFile = path.resolve(
-        destinationPath,
-        componentName,
-        'index.md'
-    );
-    const apiDestinationFile = path.resolve(
-        destinationPath,
-        componentName,
-        'api.md'
-    );
-    // Create content only pages for each section of an individual elements docs
-    // The next two are not fully leveraged just yet.
-    const overviewPartialFile = path.resolve(
-        destinationPath,
-        componentName,
-        'content.md'
-    );
-    const apiPartialFile = path.resolve(
-        destinationPath,
-        componentName,
-        'api-content.md'
-    );
-    if (tag) {
-        // Read the source markdown file.
-        fs.writeFileSync(
-            apiDestinationFile,
-            apiDestinationTemplate(componentName, componentHeading)
-        );
-        fs.writeFileSync(
-            apiPartialFile,
-            apiPartialTemplate(componentName, componentHeading, tag)
-        );
-    }
-    const tagType = isComponent ? 'component-overview' : 'tool-overview';
-    const body = fs.readFileSync(mdPath);
+  fs.mkdirSync(componentPath, { recursive: true });
+  // Support the full page delivery of "Overview" and "API"
+  const exampleDestinationFile = path.resolve(
+    destinationPath,
+    componentName,
+    'index.md'
+  );
+  const apiDestinationFile = path.resolve(
+    destinationPath,
+    componentName,
+    'api.md'
+  );
+  // Create content only pages for each section of an individual elements docs
+  // The next two are not fully leveraged just yet.
+  const overviewPartialFile = path.resolve(
+    destinationPath,
+    componentName,
+    'content.md'
+  );
+  const apiPartialFile = path.resolve(
+    destinationPath,
+    componentName,
+    'api-content.md'
+  );
+  if (tag) {
+    // Read the source markdown file.
     fs.writeFileSync(
-        exampleDestinationFile,
-        overviewDestinationTemplate(
-            componentName,
-            componentHeading,
-            tagType,
-            parent,
-            packageName
-        )
+      apiDestinationFile,
+      apiDestinationTemplate(componentName, componentHeading)
     );
     fs.writeFileSync(
-        overviewPartialFile,
-        overviewPartialTemplate(componentName, componentHeading, body)
+      apiPartialFile,
+      apiPartialTemplate(componentName, componentHeading, tag)
     );
-    const hasArgs = fs.existsSync(
-        path.resolve(
-            __dirname,
-            '../../../packages',
-            packageName,
-            'stories',
-            'args.js'
-        )
-    );
-    const deprecationNotice = await findDeprecationNotice(
-        `${projectDir}/(packages|tools)/${packageName}/package.json`
-    );
-    const hasTemplate = fs.existsSync(
-        path.resolve(
-            __dirname,
-            '../../../packages',
-            packageName,
-            'stories',
-            'template.js'
-        )
-    );
-    /* eslint-disable prettier/prettier */
-    const data = `${
-        hasArgs
-            ? `import { argTypes } from '../../../../../packages/${packageName}/stories/args.js';
+  }
+  const tagType = isComponent ? 'component-overview' : 'tool-overview';
+  const body = fs.readFileSync(mdPath);
+  fs.writeFileSync(
+    exampleDestinationFile,
+    overviewDestinationTemplate(
+      componentName,
+      componentHeading,
+      tagType,
+      parent,
+      packageName
+    )
+  );
+  fs.writeFileSync(
+    overviewPartialFile,
+    overviewPartialTemplate(componentName, componentHeading, body)
+  );
+  const hasArgs = fs.existsSync(
+    path.resolve(
+      __dirname,
+      '../../../packages',
+      packageName,
+      'stories',
+      'args.js'
+    )
+  );
+  const deprecationNotice = await findDeprecationNotice(
+    `${projectDir}/(packages|tools)/${packageName}/package.json`
+  );
+  const hasTemplate = fs.existsSync(
+    path.resolve(
+      __dirname,
+      '../../../packages',
+      packageName,
+      'stories',
+      'template.js'
+    )
+  );
+  const data = `${
+    hasArgs
+      ? `import { argTypes } from '../../../../../packages/${packageName}/stories/args.js';
 
 `
-            : ''
-    }export default {
+      : ''
+  }export default {
     hasDemoControls: ${hasArgs},
     hasDemoTemplate: ${hasTemplate},
     deprecationNotice: ${JSON.stringify(deprecationNotice)},
@@ -282,29 +276,28 @@ export async function processREADME(mdPath) {
     ${hasArgs ? 'demoControls: Object.values(argTypes),' : ''}
 };
 `;
-    /* eslint-enable prettier/prettier */
-    fs.writeFileSync(
-        path.resolve(
-            destinationPath,
-            componentName,
-            `${componentName}.11tydata.js`
-        ),
-        data
-    );
+  fs.writeFileSync(
+    path.resolve(
+      destinationPath,
+      componentName,
+      `${componentName}.11tydata.js`
+    ),
+    data
+  );
 }
 
 async function main() {
-    gatherUrls();
-    fs.mkdirSync(componentDestinationPath, { recursive: true });
-    fs.mkdirSync(toolDestinationPath, { recursive: true });
-    fs.mkdirSync(partialPath, { recursive: true });
+  gatherUrls();
+  fs.mkdirSync(componentDestinationPath, { recursive: true });
+  fs.mkdirSync(toolDestinationPath, { recursive: true });
+  fs.mkdirSync(partialPath, { recursive: true });
 
-    for await (const mdPath of globby.stream(
-        `${projectDir}/(packages|tools)/**/*.md`
-    )) {
-        processREADME(mdPath);
-        processChangelog(mdPath);
-    }
+  for await (const mdPath of globby.stream(
+    `${projectDir}/(packages|tools)/**/*.md`
+  )) {
+    processREADME(mdPath);
+    processChangelog(mdPath);
+  }
 }
 
 main();

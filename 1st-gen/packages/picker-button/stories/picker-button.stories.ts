@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -12,15 +12,15 @@
 
 import { TemplateResult } from '@spectrum-web-components/base';
 
-import { argTypes, StoryArgs, Template } from './index.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
-
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-add.js';
 
+import { argTypes, StoryArgs, Template } from './index.js';
+
 export default {
-    title: 'Picker Button',
-    component: 'sp-picker-button',
-    ...argTypes,
+  title: 'Picker Button',
+  component: 'sp-picker-button',
+  ...argTypes,
 };
 
 export const active = (args: StoryArgs): TemplateResult => Template(args);
@@ -28,7 +28,7 @@ active.args = { active: true };
 
 export const customIcon = (args: StoryArgs): TemplateResult => Template(args);
 customIcon.args = {
-    icon: `<sp-icon-add slot="icon" class="spectrum-PickerButton-icon spectrum-Icon"></sp-icon-add>`,
+  icon: `<sp-icon-add slot="icon" class="spectrum-PickerButton-icon spectrum-Icon"></sp-icon-add>`,
 };
 
 export const invalid = (args: StoryArgs): TemplateResult => Template(args);
@@ -50,7 +50,7 @@ export const positionLeft = (args: StoryArgs): TemplateResult => Template(args);
 positionLeft.args = { position: 'left' };
 
 export const positionRight = (args: StoryArgs): TemplateResult =>
-    Template(args);
+  Template(args);
 positionRight.args = { position: 'right' };
 
 export const rounded = (args: StoryArgs): TemplateResult => Template(args);
@@ -58,6 +58,6 @@ rounded.args = { rounded: true };
 
 export const roundedLabel = (args: StoryArgs): TemplateResult => Template(args);
 roundedLabel.args = {
-    label: true,
-    rounded: true,
+  label: true,
+  rounded: true,
 };

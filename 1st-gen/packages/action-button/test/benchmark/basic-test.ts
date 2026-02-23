@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,21 +10,23 @@
  * governing permissions and limitations under the License.
  */
 
+import { html } from 'lit';
+
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
-import { html } from 'lit';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-action-button>Edit</sp-action-button>
-    <sp-action-button>
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-        Edit
-    </sp-action-button>
-    <sp-action-button>
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-    </sp-action-button>
-    <sp-action-button hold-affordance>
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-    </sp-action-button>
+  <sp-action-button>Edit</sp-action-button>
+  <sp-action-button>
+    <sp-icon-edit slot="icon"></sp-icon-edit>
+    Edit
+  </sp-action-button>
+  <sp-action-button>
+    <sp-icon-edit slot="icon"></sp-icon-edit>
+  </sp-action-button>
+  <sp-action-button hold-affordance>
+    <sp-icon-edit slot="icon"></sp-icon-edit>
+  </sp-action-button>
 `);

@@ -5,22 +5,22 @@
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.11.2
-    - @spectrum-web-components/shared@1.11.2
-    - @spectrum-web-components/theme@1.11.2
-    - @spectrum-web-components/reactive-controllers@1.11.2
-    - @spectrum-web-components/action-button@1.11.2
+  - @spectrum-web-components/base@1.11.2
+  - @spectrum-web-components/shared@1.11.2
+  - @spectrum-web-components/theme@1.11.2
+  - @spectrum-web-components/reactive-controllers@1.11.2
+  - @spectrum-web-components/action-button@1.11.2
 
 ## 1.11.1
 
 ### Patch Changes
 
 - Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
-    - @spectrum-web-components/shared@1.11.1
-    - @spectrum-web-components/base@1.11.1
-    - @spectrum-web-components/theme@1.11.1
-    - @spectrum-web-components/action-button@1.11.1
-    - @spectrum-web-components/reactive-controllers@1.11.1
+  - @spectrum-web-components/shared@1.11.1
+  - @spectrum-web-components/base@1.11.1
+  - @spectrum-web-components/theme@1.11.1
+  - @spectrum-web-components/action-button@1.11.1
+  - @spectrum-web-components/reactive-controllers@1.11.1
 
 ## 1.11.0
 
@@ -30,35 +30,35 @@
 
 - [#5868](https://github.com/adobe/spectrum-web-components/pull/5868) [`f07344f`](https://github.com/adobe/spectrum-web-components/commit/f07344f400f64c12f15762e3fedcdab2629e781b) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed** issue where picker menus inside overlays could not scroll to the bottom after selecting an item and reopening. The problem was caused by the overlay's placement calculation happening before the menu fully rendered, resulting in incorrect height measurements.
 
-    This fix ensures picker menus maintain proper scrollable height when reopened, regardless of the selected item's position.
+  This fix ensures picker menus maintain proper scrollable height when reopened, regardless of the selected item's position.
 
 - [#5893](https://github.com/adobe/spectrum-web-components/pull/5893) [`1d76b70`](https://github.com/adobe/spectrum-web-components/commit/1d76b7093d8ff5f9b26f07a69086488341a02650) Thanks [@majornista](https://github.com/majornista)! - hover overlays should close with the Esc key when trigger is not focused
 
 - [#5907](https://github.com/adobe/spectrum-web-components/pull/5907) [`cadc39e`](https://github.com/adobe/spectrum-web-components/commit/cadc39ea419f572a79451fc886cd45c8d8821cde) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed**: Modal overlays now properly close when clicking the backdrop, while page overlays correctly remain blocking.
 
-    The `modal-backdrop` click handler now correctly distinguishes between overlay types:
-    - Modal overlays close on backdrop click (light dismiss behavior)
-    - Page overlays remain blocking and do not close on backdrop click
+  The `modal-backdrop` click handler now correctly distinguishes between overlay types:
+  - Modal overlays close on backdrop click (light dismiss behavior)
+  - Page overlays remain blocking and do not close on backdrop click
 
 - [#5964](https://github.com/adobe/spectrum-web-components/pull/5964) [`4cb0b7b`](https://github.com/adobe/spectrum-web-components/commit/4cb0b7b86ebfaad89f1866916415b8578aa6dbea) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Fixed**: Third-level submenus now open correctly on Safari.
   Simplified the WebKit layout timing fix in `computePlacement()` to ensure consistent overlay positioning for deeply nested menus.
 - Updated dependencies [[`b95e254`](https://github.com/adobe/spectrum-web-components/commit/b95e25413830825a506b7d4025d6b4d982691771), [`f8bdeec`](https://github.com/adobe/spectrum-web-components/commit/f8bdeecf8a230822122a990fb977d3654649f891), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
-    - @spectrum-web-components/reactive-controllers@1.11.0
-    - @spectrum-web-components/shared@1.11.0
-    - @spectrum-web-components/base@1.11.0
-    - @spectrum-web-components/theme@1.11.0
-    - @spectrum-web-components/action-button@1.11.0
+  - @spectrum-web-components/reactive-controllers@1.11.0
+  - @spectrum-web-components/shared@1.11.0
+  - @spectrum-web-components/base@1.11.0
+  - @spectrum-web-components/theme@1.11.0
+  - @spectrum-web-components/action-button@1.11.0
 
 ## 1.10.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.10.0
-    - @spectrum-web-components/action-button@1.10.0
-    - @spectrum-web-components/shared@1.10.0
-    - @spectrum-web-components/theme@1.10.0
-    - @spectrum-web-components/reactive-controllers@1.10.0
+  - @spectrum-web-components/base@1.10.0
+  - @spectrum-web-components/action-button@1.10.0
+  - @spectrum-web-components/shared@1.10.0
+  - @spectrum-web-components/theme@1.10.0
+  - @spectrum-web-components/reactive-controllers@1.10.0
 
 ## 1.9.1
 
@@ -67,22 +67,22 @@
 - [#5806](https://github.com/adobe/spectrum-web-components/pull/5806) [`a19cbe3`](https://github.com/adobe/spectrum-web-components/commit/a19cbe3e8b4690d8abd1530e3930e5d48ae43618) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - - **Fixed**: Expanded `<overlay-trigger>` `type` property to accept all overlay types ('auto', 'hint', 'manual', 'modal', 'page') instead of the incorrect, previous restricted subset.
 
 - Updated dependencies []:
-    - @spectrum-web-components/action-button@1.9.1
-    - @spectrum-web-components/base@1.9.1
-    - @spectrum-web-components/reactive-controllers@1.9.1
-    - @spectrum-web-components/shared@1.9.1
-    - @spectrum-web-components/theme@1.9.1
+  - @spectrum-web-components/action-button@1.9.1
+  - @spectrum-web-components/base@1.9.1
+  - @spectrum-web-components/reactive-controllers@1.9.1
+  - @spectrum-web-components/shared@1.9.1
+  - @spectrum-web-components/theme@1.9.1
 
 ## 1.9.0
 
 ### Patch Changes
 
 - Updated dependencies [[`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8)]:
-    - @spectrum-web-components/reactive-controllers@1.9.0
-    - @spectrum-web-components/action-button@1.9.0
-    - @spectrum-web-components/base@1.9.0
-    - @spectrum-web-components/shared@1.9.0
-    - @spectrum-web-components/theme@1.9.0
+  - @spectrum-web-components/reactive-controllers@1.9.0
+  - @spectrum-web-components/action-button@1.9.0
+  - @spectrum-web-components/base@1.9.0
+  - @spectrum-web-components/shared@1.9.0
+  - @spectrum-web-components/theme@1.9.0
 
 ## 1.8.0
 
@@ -90,9 +90,9 @@
 
 - [#5670](https://github.com/adobe/spectrum-web-components/pull/5670) [`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - Added `allow-outside-click` property to `<sp-overlay>` with deprecation notice. This property allows clicks outside the overlay to close it, but is not recommended for accessibility reasons and will be removed in a future version.
 
-    This property is being added as deprecated to support the fallback for `showModal()` which was removed as part of performance optimization. We will no longer support outside clicks for modal overlays as they violate accessibility guidelines.
+  This property is being added as deprecated to support the fallback for `showModal()` which was removed as part of performance optimization. We will no longer support outside clicks for modal overlays as they violate accessibility guidelines.
 
-    The property defaults to `false` and shows deprecation warnings when used. Consider using explicit close buttons or modal/page overlay types instead for better accessibility.
+  The property defaults to `false` and shows deprecation warnings when used. Consider using explicit close buttons or modal/page overlay types instead for better accessibility.
 
 - [#5710](https://github.com/adobe/spectrum-web-components/pull/5710) [`ee1bae6`](https://github.com/adobe/spectrum-web-components/commit/ee1bae6f9a7401dc31ebc84e4e27f9d39be692d1) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed** : Added body scroll prevention for modal and page overlays. Overlay automatically blocks body scroll when modal or page overlays are open and restores the original scroll state when they are closed, improving user experience and accessibility for modal dialogs.
 
@@ -101,11 +101,11 @@
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/theme@1.8.0
-    - @spectrum-web-components/action-button@1.8.0
-    - @spectrum-web-components/base@1.8.0
-    - @spectrum-web-components/reactive-controllers@1.8.0
-    - @spectrum-web-components/shared@1.8.0
+  - @spectrum-web-components/theme@1.8.0
+  - @spectrum-web-components/action-button@1.8.0
+  - @spectrum-web-components/base@1.8.0
+  - @spectrum-web-components/reactive-controllers@1.8.0
+  - @spectrum-web-components/shared@1.8.0
 
 ## 1.7.0
 
@@ -116,11 +116,11 @@
 ### Patch Changes
 
 - Updated dependencies [[`c1669d2`](https://github.com/adobe/spectrum-web-components/commit/c1669d2dc5e1ceeb84486ce49a428f86a3173caa)]:
-    - @spectrum-web-components/action-button@1.7.0
-    - @spectrum-web-components/theme@1.7.0
-    - @spectrum-web-components/base@1.7.0
-    - @spectrum-web-components/reactive-controllers@1.7.0
-    - @spectrum-web-components/shared@1.7.0
+  - @spectrum-web-components/action-button@1.7.0
+  - @spectrum-web-components/theme@1.7.0
+  - @spectrum-web-components/base@1.7.0
+  - @spectrum-web-components/reactive-controllers@1.7.0
+  - @spectrum-web-components/shared@1.7.0
 
 ## 1.6.0
 
@@ -129,11 +129,11 @@
 - [#5392](https://github.com/adobe/spectrum-web-components/pull/5392) [`53f3769`](https://github.com/adobe/spectrum-web-components/commit/53f3769f07b6e7853a8a4c0dc63b21fe14cf3d4b) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Fixed layout issues in Safari when an `sp-tray` is nested inside a dialog-type `sp-overlay`.
 
 - Updated dependencies []:
-    - @spectrum-web-components/action-button@1.6.0
-    - @spectrum-web-components/theme@1.6.0
-    - @spectrum-web-components/base@1.6.0
-    - @spectrum-web-components/reactive-controllers@1.6.0
-    - @spectrum-web-components/shared@1.6.0
+  - @spectrum-web-components/action-button@1.6.0
+  - @spectrum-web-components/theme@1.6.0
+  - @spectrum-web-components/base@1.6.0
+  - @spectrum-web-components/reactive-controllers@1.6.0
+  - @spectrum-web-components/shared@1.6.0
 
 ## 1.5.0
 
@@ -144,11 +144,11 @@
 ### Patch Changes
 
 - Updated dependencies [[`6c58f50`](https://github.com/adobe/spectrum-web-components/commit/6c58f50f7b1f5489c11e0d3484e3f4a9d576f1c8)]:
-    - @spectrum-web-components/action-button@1.5.0
-    - @spectrum-web-components/theme@1.5.0
-    - @spectrum-web-components/base@1.5.0
-    - @spectrum-web-components/reactive-controllers@1.5.0
-    - @spectrum-web-components/shared@1.5.0
+  - @spectrum-web-components/action-button@1.5.0
+  - @spectrum-web-components/theme@1.5.0
+  - @spectrum-web-components/base@1.5.0
+  - @spectrum-web-components/reactive-controllers@1.5.0
+  - @spectrum-web-components/shared@1.5.0
 
 ## 1.4.0
 
@@ -161,11 +161,11 @@
 ### Patch Changes
 
 - Updated dependencies [[`72dbe62`](https://github.com/adobe/spectrum-web-components/commit/72dbe629cddfc57171eaaadf7206df47c19d3c98)]:
-    - @spectrum-web-components/action-button@1.4.0
-    - @spectrum-web-components/theme@1.4.0
-    - @spectrum-web-components/base@1.4.0
-    - @spectrum-web-components/reactive-controllers@1.4.0
-    - @spectrum-web-components/shared@1.4.0
+  - @spectrum-web-components/action-button@1.4.0
+  - @spectrum-web-components/theme@1.4.0
+  - @spectrum-web-components/base@1.4.0
+  - @spectrum-web-components/reactive-controllers@1.4.0
+  - @spectrum-web-components/shared@1.4.0
 
 ## 1.3.0
 
@@ -176,11 +176,11 @@
   sp-overlay with type="manual" should close on pressing ESC key. When the last item is on overlay stack we are triggering the close method on esc key event.
 
 - Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)]:
-    - @spectrum-web-components/reactive-controllers@1.3.0
-    - @spectrum-web-components/action-button@1.3.0
-    - @spectrum-web-components/base@1.3.0
-    - @spectrum-web-components/shared@1.3.0
-    - @spectrum-web-components/theme@1.3.0
+  - @spectrum-web-components/reactive-controllers@1.3.0
+  - @spectrum-web-components/action-button@1.3.0
+  - @spectrum-web-components/base@1.3.0
+  - @spectrum-web-components/shared@1.3.0
+  - @spectrum-web-components/theme@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

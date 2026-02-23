@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { TemplateResult } from '@spectrum-web-components/base';
+
 import { makeOverBackground, Properties, renderButtonSet } from './index.js';
 import { args, argTypes } from './index.js';
 
@@ -17,33 +18,33 @@ const variant = 'white';
 const treatment = 'outline';
 
 export default {
-    component: 'sp-button',
-    title: 'Button/White/Outline/Sizes',
-    decorators: [makeOverBackground()],
-    args: {
-        ...args,
-        variant,
-        treatment,
-    },
-    argTypes,
+  component: 'sp-button',
+  title: 'Button/White/Outline/Sizes',
+  decorators: [makeOverBackground()],
+  args: {
+    ...args,
+    variant,
+    treatment,
+  },
+  argTypes,
 };
 
 export const s = (args: Properties): TemplateResult => renderButtonSet(args);
 s.args = {
-    size: 's',
+  size: 's',
 };
 
 export const m = (args: Properties): TemplateResult => renderButtonSet(args);
 m.args = {
-    size: 'm',
+  size: 'm',
 };
 
 export const l = (args: Properties): TemplateResult => renderButtonSet(args);
 l.args = {
-    size: 'l',
+  size: 'l',
 };
 
 export const XL = (args: Properties): TemplateResult => renderButtonSet(args);
 XL.args = {
-    size: 'xl',
+  size: 'xl',
 };

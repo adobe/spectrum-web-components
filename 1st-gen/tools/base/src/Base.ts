@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,11 +11,12 @@
  */
 
 import { SpectrumElement as CoreSpectrumElement } from '@spectrum-web-components/core/element/spectrum-element.js';
+
 import { coreVersion, version } from './version.js';
 
 export {
-    type SpectrumInterface,
-    SpectrumMixin,
+  type SpectrumInterface,
+  SpectrumMixin,
 } from '@spectrum-web-components/core/element/spectrum-element.js';
 
 /**
@@ -23,13 +24,13 @@ export {
  * Extends the core SpectrumElement with 1st-gen specific version information.
  */
 export class SpectrumElement extends CoreSpectrumElement {
-    /**
-     * The version of the 1st-gen Spectrum Web Components library.
-     */
-    static override VERSION = version;
+  /**
+   * The version of the 1st-gen Spectrum Web Components library.
+   */
+  static override VERSION = version;
 
-    /**
-     * The version of the core base package.
-     */
-    static override CORE_VERSION = coreVersion;
+  /**
+   * The version of the core base package.
+   */
+  static override CORE_VERSION = coreVersion;
 }

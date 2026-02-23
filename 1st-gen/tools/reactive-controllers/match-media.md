@@ -35,21 +35,21 @@ import { html, LitElement } from 'lit';
 import { MatchMediaController } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 
 class ResponsiveElement extends LitElement {
-    orientationLandscape = new MatchMediaController(
-        this,
-        '(orientation: landscape)'
-    );
+  orientationLandscape = new MatchMediaController(
+    this,
+    '(orientation: landscape)'
+  );
 
-    render() {
-        if (this.orientationLandscape.matches) {
-            return html`
-                <p>The orientation is landscape.</p>
-            `;
-        }
-        return html`
-            <p>The orientation is portrait.</p>
-        `;
+  render() {
+    if (this.orientationLandscape.matches) {
+      return html`
+        <p>The orientation is landscape.</p>
+      `;
     }
+    return html`
+      <p>The orientation is portrait.</p>
+    `;
+  }
 }
 
 customElements.define('responsive-element', ResponsiveElement);
@@ -64,48 +64,44 @@ import { html, LitElement, css } from 'lit';
 import { MatchMediaController } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 
 class ResponsiveLayout extends LitElement {
-    isMobile = new MatchMediaController(this, '(max-width: 768px)');
-    isTablet = new MatchMediaController(
-        this,
-        '(min-width: 769px) and (max-width: 1024px)'
-    );
-    isDesktop = new MatchMediaController(this, '(min-width: 1025px)');
+  isMobile = new MatchMediaController(this, '(max-width: 768px)');
+  isTablet = new MatchMediaController(
+    this,
+    '(min-width: 769px) and (max-width: 1024px)'
+  );
+  isDesktop = new MatchMediaController(this, '(min-width: 1025px)');
 
-    static styles = css`
-        :host {
-            display: block;
-            padding: var(--spacing, 16px);
-        }
-
-        .mobile {
-            font-size: 14px;
-        }
-        .tablet {
-            font-size: 16px;
-        }
-        .desktop {
-            font-size: 18px;
-        }
-    `;
-
-    render() {
-        const deviceClass = this.isMobile.matches
-            ? 'mobile'
-            : this.isTablet.matches
-              ? 'tablet'
-              : 'desktop';
-
-        return html`
-            <div
-                class=${deviceClass}
-                role="region"
-                aria-label="Responsive content"
-            >
-                <h1>Current viewport: ${deviceClass}</h1>
-                <p>Content adapts to your screen size.</p>
-            </div>
-        `;
+  static styles = css`
+    :host {
+      display: block;
+      padding: var(--spacing, 16px);
     }
+
+    .mobile {
+      font-size: 14px;
+    }
+    .tablet {
+      font-size: 16px;
+    }
+    .desktop {
+      font-size: 18px;
+    }
+  `;
+
+  render() {
+    const deviceClass = this.isMobile.matches
+      ? 'mobile'
+      : this.isTablet.matches
+        ? 'tablet'
+        : 'desktop';
+
+    return html`
+      <div class=${deviceClass} role="region" aria-label="Responsive content">
+        <h1>Current viewport: ${deviceClass}</h1>
+        <p>Content adapts to your screen size.</p>
+      </div>
+    `;
+  }
 }
 
 customElements.define('responsive-layout', ResponsiveLayout);
@@ -118,51 +114,50 @@ Detect and respond to user's color scheme preference:
 ```typescript
 import { html, LitElement, css } from 'lit';
 import {
-    MatchMediaController,
-    DARK_MODE,
+  MatchMediaController,
+  DARK_MODE,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 
 class ThemeAwareComponent extends LitElement {
-    darkMode = new MatchMediaController(this, DARK_MODE);
+  darkMode = new MatchMediaController(this, DARK_MODE);
 
-    static styles = css`
-        :host {
-            display: block;
-            padding: 20px;
-            transition:
-                background-color 0.3s,
-                color 0.3s;
-        }
-
-        .light-theme {
-            background-color: #ffffff;
-            color: #000000;
-        }
-
-        .dark-theme {
-            background-color: #1a1a1a;
-            color: #ffffff;
-        }
-    `;
-
-    render() {
-        const theme = this.darkMode.matches ? 'dark-theme' : 'light-theme';
-        const themeLabel = this.darkMode.matches ? 'dark mode' : 'light mode';
-
-        return html`
-            <div
-                class=${theme}
-                role="region"
-                aria-label="Theme-aware content in ${themeLabel}"
-            >
-                <h2>Current theme: ${themeLabel}</h2>
-                <p>
-                    This component automatically adapts to your system theme
-                    preference.
-                </p>
-            </div>
-        `;
+  static styles = css`
+    :host {
+      display: block;
+      padding: 20px;
+      transition:
+        background-color 0.3s,
+        color 0.3s;
     }
+
+    .light-theme {
+      background-color: #ffffff;
+      color: #000000;
+    }
+
+    .dark-theme {
+      background-color: #1a1a1a;
+      color: #ffffff;
+    }
+  `;
+
+  render() {
+    const theme = this.darkMode.matches ? 'dark-theme' : 'light-theme';
+    const themeLabel = this.darkMode.matches ? 'dark mode' : 'light mode';
+
+    return html`
+      <div
+        class=${theme}
+        role="region"
+        aria-label="Theme-aware content in ${themeLabel}"
+      >
+        <h2>Current theme: ${themeLabel}</h2>
+        <p>
+          This component automatically adapts to your system theme preference.
+        </p>
+      </div>
+    `;
+  }
 }
 
 customElements.define('theme-aware-component', ThemeAwareComponent);
@@ -175,28 +170,28 @@ Detect mobile devices with touch input:
 ```typescript
 import { html, LitElement } from 'lit';
 import {
-    MatchMediaController,
-    IS_MOBILE,
+  MatchMediaController,
+  IS_MOBILE,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import '@spectrum-web-components/button/sp-button.js';
 
 class TouchOptimizedElement extends LitElement {
-    isMobile = new MatchMediaController(this, IS_MOBILE);
+  isMobile = new MatchMediaController(this, IS_MOBILE);
 
-    render() {
-        const buttonSize = this.isMobile.matches ? 'xl' : 'm';
-        const instructions = this.isMobile.matches
-            ? 'Tap to continue'
-            : 'Click to continue';
+  render() {
+    const buttonSize = this.isMobile.matches ? 'xl' : 'm';
+    const instructions = this.isMobile.matches
+      ? 'Tap to continue'
+      : 'Click to continue';
 
-        return html`
-            <div role="region" aria-label="Touch-optimized interface">
-                <sp-button size=${buttonSize} aria-label="${instructions}">
-                    ${instructions}
-                </sp-button>
-            </div>
-        `;
-    }
+    return html`
+      <div role="region" aria-label="Touch-optimized interface">
+        <sp-button size=${buttonSize} aria-label="${instructions}">
+          ${instructions}
+        </sp-button>
+      </div>
+    `;
+  }
 }
 
 customElements.define('touch-optimized-element', TouchOptimizedElement);

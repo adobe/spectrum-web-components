@@ -13,36 +13,34 @@
 import * as fs from 'fs';
 
 export class TokenStore {
-    private tokens: Record<string, unknown> = {};
+  private tokens: Record<string, unknown> = {};
 
-    constructor(pathOrTokens: string | Record<string, unknown>) {
-        if (typeof pathOrTokens === 'string') {
-            this.load(pathOrTokens);
-        } else {
-            this.tokens = pathOrTokens;
-        }
+  constructor(pathOrTokens: string | Record<string, unknown>) {
+    if (typeof pathOrTokens === 'string') {
+      this.load(pathOrTokens);
+    } else {
+      this.tokens = pathOrTokens;
     }
+  }
 
-    load(path: string) {
-        try {
-            this.tokens = JSON.parse(fs.readFileSync(path, 'utf8'));
-        } catch {
-            this.tokens = {};
-        }
+  load(path: string) {
+    try {
+      this.tokens = JSON.parse(fs.readFileSync(path, 'utf8'));
+    } catch {
+      this.tokens = {};
     }
+  }
 
-    has(k: string) {
-        return k in this.tokens;
-    }
+  has(k: string) {
+    return k in this.tokens;
+  }
 
-    filter(term: string): string[] {
-        const q = term.toLowerCase();
-        return Object.keys(this.tokens).filter((k) =>
-            k.toLowerCase().includes(q)
-        );
-    }
+  filter(term: string): string[] {
+    const q = term.toLowerCase();
+    return Object.keys(this.tokens).filter((k) => k.toLowerCase().includes(q));
+  }
 
-    all() {
-        return Object.keys(this.tokens);
-    }
+  all() {
+    return Object.keys(this.tokens);
+  }
 }

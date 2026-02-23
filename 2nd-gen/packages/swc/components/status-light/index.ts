@@ -15,8 +15,8 @@ import { StatusLight } from './StatusLight.js';
 
 export * from './StatusLight.js';
 declare global {
-    interface HTMLElementTagNameMap {
-        'swc-status-light': StatusLight;
-    }
+  interface HTMLElementTagNameMap {
+    'swc-status-light': StatusLight;
+  }
 }
 defineElement('swc-status-light', StatusLight);

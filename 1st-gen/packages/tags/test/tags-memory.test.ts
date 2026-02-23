@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,14 +11,16 @@
  */
 
 import { html } from '@open-wc/testing';
+
 import '@spectrum-web-components/tags/sp-tag.js';
 import '@spectrum-web-components/tags/sp-tags.js';
+
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
 testForMemoryLeaks(html`
-    <sp-tags>
-        <sp-tag>Tag 1</sp-tag>
-        <sp-tag invalid>Tag 2</sp-tag>
-        <sp-tag disabled>Tag 3</sp-tag>
-    </sp-tags>
+  <sp-tags>
+    <sp-tag>Tag 1</sp-tag>
+    <sp-tag invalid>Tag 2</sp-tag>
+    <sp-tag disabled>Tag 3</sp-tag>
+  </sp-tags>
 `);

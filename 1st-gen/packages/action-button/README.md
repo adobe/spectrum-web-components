@@ -56,8 +56,8 @@ fulfill the accessibility contract of the button.
 
 ```html demo
 <sp-action-button variant="primary">
-    <sp-icon-help slot="icon"></sp-icon-help>
-    Icon + Label
+  <sp-icon-help slot="icon"></sp-icon-help>
+  Icon + Label
 </sp-action-button>
 ```
 
@@ -67,18 +67,18 @@ fulfill the accessibility contract of the button.
 
 ```html demo
 <sp-action-button variant="primary">
-    <svg
-        slot="icon"
-        viewBox="0 0 36 36"
-        focusable="false"
-        aria-hidden="true"
-        role="img"
-    >
-        <path
-            d="M16 36a4.407 4.407 0 0 0 4-4h-8a4.407 4.407 0 0 0 4 4zm9.143-24.615c0-3.437-3.206-4.891-7.143-5.268V3a1.079 1.079 0 0 0-1.143-1h-1.714A1.079 1.079 0 0 0 14 3v3.117c-3.937.377-7.143 1.831-7.143 5.268C6.857 26.8 2 26.111 2 28.154V30h28v-1.846C30 26 25.143 26.8 25.143 11.385z"
-        ></path>
-    </svg>
-    SVG Icon + Label
+  <svg
+    slot="icon"
+    viewBox="0 0 36 36"
+    focusable="false"
+    aria-hidden="true"
+    role="img"
+  >
+    <path
+      d="M16 36a4.407 4.407 0 0 0 4-4h-8a4.407 4.407 0 0 0 4 4zm9.143-24.615c0-3.437-3.206-4.891-7.143-5.268V3a1.079 1.079 0 0 0-1.143-1h-1.714A1.079 1.079 0 0 0 14 3v3.117c-3.937.377-7.143 1.831-7.143 5.268C6.857 26.8 2 26.111 2 28.154V30h28v-1.846C30 26 25.143 26.8 25.143 11.385z"
+    ></path>
+  </svg>
+  SVG Icon + Label
 </sp-action-button>
 ```
 
@@ -88,7 +88,7 @@ fulfill the accessibility contract of the button.
 
 ```html demo
 <sp-action-button variant="primary" label="Icon only">
-    <sp-icon-help slot="icon"></sp-icon-help>
+  <sp-icon-help slot="icon"></sp-icon-help>
 </sp-action-button>
 ```
 
@@ -105,17 +105,17 @@ fulfill the accessibility contract of the button.
 
 ```html demo
 <sp-action-group size="xs">
-    <sp-action-button>Edit</sp-action-button>
-    <sp-action-button>
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-        Edit
-    </sp-action-button>
-    <sp-action-button label="Edit">
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-    </sp-action-button>
-    <sp-action-button label="Edit" hold-affordance>
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-    </sp-action-button>
+  <sp-action-button>Edit</sp-action-button>
+  <sp-action-button>
+    <sp-icon-edit slot="icon"></sp-icon-edit>
+    Edit
+  </sp-action-button>
+  <sp-action-button label="Edit">
+    <sp-icon-edit slot="icon"></sp-icon-edit>
+  </sp-action-button>
+  <sp-action-button label="Edit" hold-affordance>
+    <sp-icon-edit slot="icon"></sp-icon-edit>
+  </sp-action-button>
 </sp-action-group>
 ```
 
@@ -125,17 +125,17 @@ fulfill the accessibility contract of the button.
 
 ```html demo
 <sp-action-group size="s">
-    <sp-action-button>Edit</sp-action-button>
-    <sp-action-button>
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-        Edit
-    </sp-action-button>
-    <sp-action-button label="Edit">
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-    </sp-action-button>
-    <sp-action-button label="Edit" hold-affordance>
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-    </sp-action-button>
+  <sp-action-button>Edit</sp-action-button>
+  <sp-action-button>
+    <sp-icon-edit slot="icon"></sp-icon-edit>
+    Edit
+  </sp-action-button>
+  <sp-action-button label="Edit">
+    <sp-icon-edit slot="icon"></sp-icon-edit>
+  </sp-action-button>
+  <sp-action-button label="Edit" hold-affordance>
+    <sp-icon-edit slot="icon"></sp-icon-edit>
+  </sp-action-button>
 </sp-action-group>
 ```
 
@@ -145,17 +145,17 @@ fulfill the accessibility contract of the button.
 
 ```html demo
 <sp-action-group size="m">
-    <sp-action-button>Edit</sp-action-button>
-    <sp-action-button>
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-        Edit
-    </sp-action-button>
-    <sp-action-button label="Edit">
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-    </sp-action-button>
-    <sp-action-button label="Edit" hold-affordance>
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-    </sp-action-button>
+  <sp-action-button>Edit</sp-action-button>
+  <sp-action-button>
+    <sp-icon-edit slot="icon"></sp-icon-edit>
+    Edit
+  </sp-action-button>
+  <sp-action-button label="Edit">
+    <sp-icon-edit slot="icon"></sp-icon-edit>
+  </sp-action-button>
+  <sp-action-button label="Edit" hold-affordance>
+    <sp-icon-edit slot="icon"></sp-icon-edit>
+  </sp-action-button>
 </sp-action-group>
 ```
 
@@ -165,17 +165,17 @@ fulfill the accessibility contract of the button.
 
 ```html demo
 <sp-action-group size="l">
-    <sp-action-button>Edit</sp-action-button>
-    <sp-action-button>
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-        Edit
-    </sp-action-button>
-    <sp-action-button label="Edit">
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-    </sp-action-button>
-    <sp-action-button label="Edit" hold-affordance>
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-    </sp-action-button>
+  <sp-action-button>Edit</sp-action-button>
+  <sp-action-button>
+    <sp-icon-edit slot="icon"></sp-icon-edit>
+    Edit
+  </sp-action-button>
+  <sp-action-button label="Edit">
+    <sp-icon-edit slot="icon"></sp-icon-edit>
+  </sp-action-button>
+  <sp-action-button label="Edit" hold-affordance>
+    <sp-icon-edit slot="icon"></sp-icon-edit>
+  </sp-action-button>
 </sp-action-group>
 ```
 
@@ -185,17 +185,17 @@ fulfill the accessibility contract of the button.
 
 ```html demo
 <sp-action-group size="xl">
-    <sp-action-button>Edit</sp-action-button>
-    <sp-action-button>
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-        Edit
-    </sp-action-button>
-    <sp-action-button label="Edit">
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-    </sp-action-button>
-    <sp-action-button label="Edit" hold-affordance>
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-    </sp-action-button>
+  <sp-action-button>Edit</sp-action-button>
+  <sp-action-button>
+    <sp-icon-edit slot="icon"></sp-icon-edit>
+    Edit
+  </sp-action-button>
+  <sp-action-button label="Edit">
+    <sp-icon-edit slot="icon"></sp-icon-edit>
+  </sp-action-button>
+  <sp-action-button label="Edit" hold-affordance>
+    <sp-icon-edit slot="icon"></sp-icon-edit>
+  </sp-action-button>
 </sp-action-group>
 ```
 
@@ -212,77 +212,77 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
 
 ```html demo
 <div
-    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 2em;"
+  style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 2em;"
 >
-    <div>
-        <sp-field-label for="standard">Default</sp-field-label>
-        <sp-action-group id="standard">
-            <sp-action-button>Edit</sp-action-button>
-            <sp-action-button>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-                Edit
-            </sp-action-button>
-            <sp-action-button label="Edit">
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button label="Edit" hold-affordance>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-group>
-    </div>
+  <div>
+    <sp-field-label for="standard">Default</sp-field-label>
+    <sp-action-group id="standard">
+      <sp-action-button>Edit</sp-action-button>
+      <sp-action-button>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+        Edit
+      </sp-action-button>
+      <sp-action-button label="Edit">
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+      <sp-action-button label="Edit" hold-affordance>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+    </sp-action-group>
+  </div>
 
-    <div>
-        <sp-field-label for="standard-selected">Selected</sp-field-label>
-        <sp-action-group id="standard-selected">
-            <sp-action-button selected>Edit</sp-action-button>
-            <sp-action-button selected>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-                Edit
-            </sp-action-button>
-            <sp-action-button label="Edit" selected>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button label="Edit" selected hold-affordance>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-group>
-    </div>
+  <div>
+    <sp-field-label for="standard-selected">Selected</sp-field-label>
+    <sp-action-group id="standard-selected">
+      <sp-action-button selected>Edit</sp-action-button>
+      <sp-action-button selected>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+        Edit
+      </sp-action-button>
+      <sp-action-button label="Edit" selected>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+      <sp-action-button label="Edit" selected hold-affordance>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+    </sp-action-group>
+  </div>
 
-    <div>
-        <sp-field-label for="standard-disabled">Disabled</sp-field-label>
-        <sp-action-group id="standard-disabled">
-            <sp-action-button disabled>Edit</sp-action-button>
-            <sp-action-button disabled>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-                Edit
-            </sp-action-button>
-            <sp-action-button label="Edit" disabled>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button label="Edit" disabled hold-affordance>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-group>
-    </div>
+  <div>
+    <sp-field-label for="standard-disabled">Disabled</sp-field-label>
+    <sp-action-group id="standard-disabled">
+      <sp-action-button disabled>Edit</sp-action-button>
+      <sp-action-button disabled>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+        Edit
+      </sp-action-button>
+      <sp-action-button label="Edit" disabled>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+      <sp-action-button label="Edit" disabled hold-affordance>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+    </sp-action-group>
+  </div>
 
-    <div>
-        <sp-field-label for="standard-disabled-selected">
-            Disabled + Selected
-        </sp-field-label>
-        <sp-action-group id="standard-disabled-selected">
-            <sp-action-button disabled selected>Edit</sp-action-button>
-            <sp-action-button disabled selected>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-                Edit
-            </sp-action-button>
-            <sp-action-button label="Edit" disabled selected>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button label="Edit" disabled selected hold-affordance>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-group>
-    </div>
+  <div>
+    <sp-field-label for="standard-disabled-selected">
+      Disabled + Selected
+    </sp-field-label>
+    <sp-action-group id="standard-disabled-selected">
+      <sp-action-button disabled selected>Edit</sp-action-button>
+      <sp-action-button disabled selected>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+        Edit
+      </sp-action-button>
+      <sp-action-button label="Edit" disabled selected>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+      <sp-action-button label="Edit" disabled selected hold-affordance>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+    </sp-action-group>
+  </div>
 </div>
 ```
 
@@ -292,83 +292,77 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
 
 ```html demo
 <div
-    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 2em;"
+  style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 2em;"
 >
-    <div>
-        <sp-field-label for="standard">Default</sp-field-label>
-        <sp-action-group quiet id="standard">
-            <sp-action-button quiet>Edit</sp-action-button>
-            <sp-action-button quiet>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-                Edit
-            </sp-action-button>
-            <sp-action-button label="Edit" quiet>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button label="Edit" quiet hold-affordance>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-group>
-    </div>
+  <div>
+    <sp-field-label for="standard">Default</sp-field-label>
+    <sp-action-group quiet id="standard">
+      <sp-action-button quiet>Edit</sp-action-button>
+      <sp-action-button quiet>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+        Edit
+      </sp-action-button>
+      <sp-action-button label="Edit" quiet>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+      <sp-action-button label="Edit" quiet hold-affordance>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+    </sp-action-group>
+  </div>
 
-    <div>
-        <sp-field-label for="standard-selected">Selected</sp-field-label>
-        <sp-action-group quiet id="standard-selected">
-            <sp-action-button quiet selected>Edit</sp-action-button>
-            <sp-action-button quiet selected>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-                Edit
-            </sp-action-button>
-            <sp-action-button label="Edit" quiet selected>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button label="Edit" quiet selected hold-affordance>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-group>
-    </div>
+  <div>
+    <sp-field-label for="standard-selected">Selected</sp-field-label>
+    <sp-action-group quiet id="standard-selected">
+      <sp-action-button quiet selected>Edit</sp-action-button>
+      <sp-action-button quiet selected>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+        Edit
+      </sp-action-button>
+      <sp-action-button label="Edit" quiet selected>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+      <sp-action-button label="Edit" quiet selected hold-affordance>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+    </sp-action-group>
+  </div>
 
-    <div>
-        <sp-field-label for="standard-disabled">Disabled</sp-field-label>
-        <sp-action-group quiet id="standard-disabled">
-            <sp-action-button quiet disabled>Edit</sp-action-button>
-            <sp-action-button quiet disabled>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-                Edit
-            </sp-action-button>
-            <sp-action-button label="Edit" quiet disabled>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button label="Edit" quiet disabled hold-affordance>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-group>
-    </div>
+  <div>
+    <sp-field-label for="standard-disabled">Disabled</sp-field-label>
+    <sp-action-group quiet id="standard-disabled">
+      <sp-action-button quiet disabled>Edit</sp-action-button>
+      <sp-action-button quiet disabled>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+        Edit
+      </sp-action-button>
+      <sp-action-button label="Edit" quiet disabled>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+      <sp-action-button label="Edit" quiet disabled hold-affordance>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+    </sp-action-group>
+  </div>
 
-    <div>
-        <sp-field-label for="standard-disabled-selected">
-            Disabled + Selected
-        </sp-field-label>
-        <sp-action-group quiet id="standard-disabled-selected">
-            <sp-action-button quiet disabled selected>Edit</sp-action-button>
-            <sp-action-button quiet disabled selected>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-                Edit
-            </sp-action-button>
-            <sp-action-button label="Edit" quiet disabled selected>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button
-                label="Edit"
-                quiet
-                disabled
-                selected
-                hold-affordance
-            >
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-group>
-    </div>
+  <div>
+    <sp-field-label for="standard-disabled-selected">
+      Disabled + Selected
+    </sp-field-label>
+    <sp-action-group quiet id="standard-disabled-selected">
+      <sp-action-button quiet disabled selected>Edit</sp-action-button>
+      <sp-action-button quiet disabled selected>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+        Edit
+      </sp-action-button>
+      <sp-action-button label="Edit" quiet disabled selected>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+      <sp-action-button label="Edit" quiet disabled selected hold-affordance>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+    </sp-action-group>
+  </div>
 </div>
 ```
 
@@ -378,85 +372,83 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
 
 ```html demo
 <div
-    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 2em;"
+  style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 2em;"
 >
-    <div>
-        <sp-field-label for="standard">Default</sp-field-label>
-        <sp-action-group emphasized id="standard">
-            <sp-action-button emphasized>Edit</sp-action-button>
-            <sp-action-button emphasized>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-                Edit
-            </sp-action-button>
-            <sp-action-button label="Edit" emphasized>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button label="Edit" emphasized hold-affordance>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-group>
-    </div>
+  <div>
+    <sp-field-label for="standard">Default</sp-field-label>
+    <sp-action-group emphasized id="standard">
+      <sp-action-button emphasized>Edit</sp-action-button>
+      <sp-action-button emphasized>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+        Edit
+      </sp-action-button>
+      <sp-action-button label="Edit" emphasized>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+      <sp-action-button label="Edit" emphasized hold-affordance>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+    </sp-action-group>
+  </div>
 
-    <div>
-        <sp-field-label for="standard-selected">Selected</sp-field-label>
-        <sp-action-group emphasized id="standard-selected">
-            <sp-action-button emphasized selected>Edit</sp-action-button>
-            <sp-action-button emphasized selected>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-                Edit
-            </sp-action-button>
-            <sp-action-button label="Edit" emphasized selected>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button label="Edit" emphasized selected hold-affordance>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-group>
-    </div>
+  <div>
+    <sp-field-label for="standard-selected">Selected</sp-field-label>
+    <sp-action-group emphasized id="standard-selected">
+      <sp-action-button emphasized selected>Edit</sp-action-button>
+      <sp-action-button emphasized selected>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+        Edit
+      </sp-action-button>
+      <sp-action-button label="Edit" emphasized selected>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+      <sp-action-button label="Edit" emphasized selected hold-affordance>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+    </sp-action-group>
+  </div>
 
-    <div>
-        <sp-field-label for="standard-disabled">Disabled</sp-field-label>
-        <sp-action-group emphasized id="standard-disabled">
-            <sp-action-button emphasized disabled>Edit</sp-action-button>
-            <sp-action-button emphasized disabled>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-                Edit
-            </sp-action-button>
-            <sp-action-button label="Edit" emphasized disabled>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button label="Edit" emphasized disabled hold-affordance>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-group>
-    </div>
+  <div>
+    <sp-field-label for="standard-disabled">Disabled</sp-field-label>
+    <sp-action-group emphasized id="standard-disabled">
+      <sp-action-button emphasized disabled>Edit</sp-action-button>
+      <sp-action-button emphasized disabled>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+        Edit
+      </sp-action-button>
+      <sp-action-button label="Edit" emphasized disabled>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+      <sp-action-button label="Edit" emphasized disabled hold-affordance>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+    </sp-action-group>
+  </div>
 
-    <div>
-        <sp-field-label for="standard-disabled-selected">
-            Disabled + Selected
-        </sp-field-label>
-        <sp-action-group emphasized id="standard-disabled-selected">
-            <sp-action-button emphasized disabled selected>
-                Edit
-            </sp-action-button>
-            <sp-action-button emphasized disabled selected>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-                Edit
-            </sp-action-button>
-            <sp-action-button label="Edit" emphasized disabled selected>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button
-                label="Edit"
-                emphasized
-                disabled
-                selected
-                hold-affordance
-            >
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-group>
-    </div>
+  <div>
+    <sp-field-label for="standard-disabled-selected">
+      Disabled + Selected
+    </sp-field-label>
+    <sp-action-group emphasized id="standard-disabled-selected">
+      <sp-action-button emphasized disabled selected>Edit</sp-action-button>
+      <sp-action-button emphasized disabled selected>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+        Edit
+      </sp-action-button>
+      <sp-action-button label="Edit" emphasized disabled selected>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+      <sp-action-button
+        label="Edit"
+        emphasized
+        disabled
+        selected
+        hold-affordance
+      >
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+    </sp-action-group>
+  </div>
 </div>
 ```
 
@@ -466,98 +458,86 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
 
 ```html demo
 <div
-    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 2em;"
+  style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 2em;"
 >
-    <div>
-        <sp-field-label for="standard">Default</sp-field-label>
-        <sp-action-group emphasized quiet id="standard">
-            <sp-action-button emphasized quiet>Edit</sp-action-button>
-            <sp-action-button emphasized quiet>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-                Edit
-            </sp-action-button>
-            <sp-action-button label="Edit" emphasized quiet>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button label="Edit" emphasized quiet hold-affordance>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-group>
-    </div>
+  <div>
+    <sp-field-label for="standard">Default</sp-field-label>
+    <sp-action-group emphasized quiet id="standard">
+      <sp-action-button emphasized quiet>Edit</sp-action-button>
+      <sp-action-button emphasized quiet>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+        Edit
+      </sp-action-button>
+      <sp-action-button label="Edit" emphasized quiet>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+      <sp-action-button label="Edit" emphasized quiet hold-affordance>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+    </sp-action-group>
+  </div>
 
-    <div>
-        <sp-field-label for="standard-selected">Selected</sp-field-label>
-        <sp-action-group emphasized quiet id="standard-selected">
-            <sp-action-button emphasized quiet selected>Edit</sp-action-button>
-            <sp-action-button emphasized quiet selected>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-                Edit
-            </sp-action-button>
-            <sp-action-button label="Edit" emphasized quiet selected>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button
-                label="Edit"
-                emphasized
-                quiet
-                selected
-                hold-affordance
-            >
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-group>
-    </div>
+  <div>
+    <sp-field-label for="standard-selected">Selected</sp-field-label>
+    <sp-action-group emphasized quiet id="standard-selected">
+      <sp-action-button emphasized quiet selected>Edit</sp-action-button>
+      <sp-action-button emphasized quiet selected>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+        Edit
+      </sp-action-button>
+      <sp-action-button label="Edit" emphasized quiet selected>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+      <sp-action-button label="Edit" emphasized quiet selected hold-affordance>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+    </sp-action-group>
+  </div>
 
-    <div>
-        <sp-field-label for="standard-disabled">Disabled</sp-field-label>
-        <sp-action-group emphasized quiet id="standard-disabled">
-            <sp-action-button emphasized quiet disabled>Edit</sp-action-button>
-            <sp-action-button emphasized quiet disabled>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-                Edit
-            </sp-action-button>
-            <sp-action-button label="Edit" emphasized quiet disabled>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button
-                label="Edit"
-                emphasized
-                quiet
-                disabled
-                hold-affordance
-            >
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-group>
-    </div>
+  <div>
+    <sp-field-label for="standard-disabled">Disabled</sp-field-label>
+    <sp-action-group emphasized quiet id="standard-disabled">
+      <sp-action-button emphasized quiet disabled>Edit</sp-action-button>
+      <sp-action-button emphasized quiet disabled>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+        Edit
+      </sp-action-button>
+      <sp-action-button label="Edit" emphasized quiet disabled>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+      <sp-action-button label="Edit" emphasized quiet disabled hold-affordance>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+    </sp-action-group>
+  </div>
 
-    <div>
-        <sp-field-label for="standard-disabled-selected">
-            Disabled + Selected
-        </sp-field-label>
-        <sp-action-group emphasized quiet id="standard-disabled-selected">
-            <sp-action-button emphasized quiet disabled selected>
-                Edit
-            </sp-action-button>
-            <sp-action-button emphasized quiet disabled selected>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-                Edit
-            </sp-action-button>
-            <sp-action-button label="Edit" emphasized quiet disabled selected>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button
-                label="Edit"
-                emphasized
-                quiet
-                disabled
-                selected
-                hold-affordance
-            >
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-group>
-    </div>
+  <div>
+    <sp-field-label for="standard-disabled-selected">
+      Disabled + Selected
+    </sp-field-label>
+    <sp-action-group emphasized quiet id="standard-disabled-selected">
+      <sp-action-button emphasized quiet disabled selected>
+        Edit
+      </sp-action-button>
+      <sp-action-button emphasized quiet disabled selected>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+        Edit
+      </sp-action-button>
+      <sp-action-button label="Edit" emphasized quiet disabled selected>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+      <sp-action-button
+        label="Edit"
+        emphasized
+        quiet
+        disabled
+        selected
+        hold-affordance
+      >
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+      </sp-action-button>
+    </sp-action-group>
+  </div>
 </div>
 ```
 
@@ -572,41 +552,41 @@ The use of the `hold-affordance` attribute signifies that the `<sp-action-button
 
 ```html demo
 <div
-    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 2em;"
+  style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 2em;"
 >
-    <overlay-trigger placement="bottom-start">
-        <sp-action-button label="Edit" hold-affordance slot="trigger">
-            <sp-icon-edit slot="icon"></sp-icon-edit>
-        </sp-action-button>
-        <sp-popover slot="longpress-content" dialog tip>
-            <p style="color: var(--spectrum-neutral-content-color-default);">
-                This content is triggered by the "longpress" interaction.
-            </p>
-        </sp-popover>
-    </overlay-trigger>
+  <overlay-trigger placement="bottom-start">
+    <sp-action-button label="Edit" hold-affordance slot="trigger">
+      <sp-icon-edit slot="icon"></sp-icon-edit>
+    </sp-action-button>
+    <sp-popover slot="longpress-content" dialog tip>
+      <p style="color: var(--spectrum-neutral-content-color-default);">
+        This content is triggered by the "longpress" interaction.
+      </p>
+    </sp-popover>
+  </overlay-trigger>
 
-    <overlay-trigger placement="top">
-        <sp-action-button hold-affordance quiet slot="trigger">
-            Show Longpress Content
-        </sp-action-button>
-        <sp-popover slot="longpress-content" dialog tip>
-            <p style="color: var(--spectrum-neutral-content-color-default);">
-                This content is triggered by the "longpress" interaction.
-            </p>
-        </sp-popover>
-    </overlay-trigger>
+  <overlay-trigger placement="top">
+    <sp-action-button hold-affordance quiet slot="trigger">
+      Show Longpress Content
+    </sp-action-button>
+    <sp-popover slot="longpress-content" dialog tip>
+      <p style="color: var(--spectrum-neutral-content-color-default);">
+        This content is triggered by the "longpress" interaction.
+      </p>
+    </sp-popover>
+  </overlay-trigger>
 
-    <overlay-trigger placement="top-end">
-        <sp-action-button hold-affordance selected slot="trigger">
-            <sp-icon-edit slot="icon"></sp-icon-edit>
-            Extended Content with Longpress
-        </sp-action-button>
-        <sp-popover slot="longpress-content" dialog tip>
-            <p style="color: var(--spectrum-neutral-content-color-default);">
-                This content is triggered by the "longpress" interaction.
-            </p>
-        </sp-popover>
-    </overlay-trigger>
+  <overlay-trigger placement="top-end">
+    <sp-action-button hold-affordance selected slot="trigger">
+      <sp-icon-edit slot="icon"></sp-icon-edit>
+      Extended Content with Longpress
+    </sp-action-button>
+    <sp-popover slot="longpress-content" dialog tip>
+      <p style="color: var(--spectrum-neutral-content-color-default);">
+        This content is triggered by the "longpress" interaction.
+      </p>
+    </sp-popover>
+  </overlay-trigger>
 </div>
 ```
 
@@ -621,7 +601,7 @@ With the application of the `toggles` attribute, the button will self manage its
 ```html demo
 <sp-action-button toggles id="toggles-default">Toggle button</sp-action-button>
 <sp-action-button toggles selected id="toggles-default">
-    Toggle button
+  Toggle button
 </sp-action-button>
 ```
 
@@ -631,10 +611,10 @@ With the application of the `toggles` attribute, the button will self manage its
 
 ```html demo
 <sp-action-button toggles quiet id="toggles-quiet">
-    Toggle button
+  Toggle button
 </sp-action-button>
 <sp-action-button toggles quiet selected id="toggles-quiet">
-    Toggle button
+  Toggle button
 </sp-action-button>
 ```
 
@@ -644,10 +624,10 @@ With the application of the `toggles` attribute, the button will self manage its
 
 ```html demo
 <sp-action-button toggles emphasized id="toggles-emphasized">
-    Toggle button
+  Toggle button
 </sp-action-button>
 <sp-action-button toggles emphasized selected id="toggles-emphasized">
-    Toggle button
+  Toggle button
 </sp-action-button>
 ```
 
@@ -657,16 +637,16 @@ With the application of the `toggles` attribute, the button will self manage its
 
 ```html demo
 <sp-action-button toggles emphasized quiet id="toggles-emphasized-quiet">
-    Toggle button
+  Toggle button
 </sp-action-button>
 <sp-action-button
-    toggles
-    emphasized
-    quiet
-    selected
-    id="toggles-emphasized-quiet"
+  toggles
+  emphasized
+  quiet
+  selected
+  id="toggles-emphasized-quiet"
 >
-    Toggle button
+  Toggle button
 </sp-action-button>
 ```
 
@@ -680,7 +660,7 @@ Events handlers for clicks and other user actions can be registered on a
 
 ```html
 <sp-button onclick="spAlert(this, '<sp-action-button> clicked!')">
-    Click me
+  Click me
 </sp-button>
 ```
 
@@ -688,10 +668,10 @@ In addition to handling events like a native `<button>` HTML element, one can al
 
 ```html
 <sp-action-button
-    href="https://github.com/adobe/spectrum-web-components"
-    target="_blank"
+  href="https://github.com/adobe/spectrum-web-components"
+  target="_blank"
 >
-    Click me
+  Click me
 </sp-action-button>
 ```
 
@@ -716,8 +696,8 @@ To ensure maximum contrast with the background, use static black for light backg
 
 ```html demo
 <div style="background-color: #ccffee; padding: 20px">
-    <sp-action-button static="black">Click me</sp-action-button>
-    <sp-action-button static="black" selected>Click me</sp-action-button>
+  <sp-action-button static="black">Click me</sp-action-button>
+  <sp-action-button static="black" selected>Click me</sp-action-button>
 </div>
 ```
 
@@ -727,8 +707,8 @@ To ensure maximum contrast with the background, use static black for light backg
 
 ```html demo
 <div style="background-color: #220033; padding: 20px">
-    <sp-action-button static="white">Click me</sp-action-button>
-    <sp-action-button static="white" selected>Click me</sp-action-button>
+  <sp-action-button static="white">Click me</sp-action-button>
+  <sp-action-button static="white" selected>Click me</sp-action-button>
 </div>
 ```
 

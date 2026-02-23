@@ -102,13 +102,13 @@ Pass a `TemplateResult` into the `trigger()` directive, as follows in order to h
 
 The `trigger()` directive accepts two arguments:
 
--   a required method returning the `TemplateResult` defining the content of the open overlay
+- a required method returning the `TemplateResult` defining the content of the open overlay
 
 ```ts
 () => TemplateResult;
 ```
 
--   an optional options object which is shaped as follows:
+- an optional options object which is shaped as follows:
 
 ```ts
 {
@@ -123,7 +123,7 @@ The `trigger()` directive accepts two arguments:
 
 ```ts
 type InsertionOptions = {
-    el: HTMLElement | (() => HTMLElement); // returning a reference to the element the Overlay should be inserted adjacent to
-    where: InsertPosition; // 'afterbegin' | 'afterend' | 'beforebegin' | 'beforeend'
+  el: HTMLElement | (() => HTMLElement); // returning a reference to the element the Overlay should be inserted adjacent to
+  where: InsertPosition; // 'afterbegin' | 'afterend' | 'beforebegin' | 'beforeend'
 };
 ```

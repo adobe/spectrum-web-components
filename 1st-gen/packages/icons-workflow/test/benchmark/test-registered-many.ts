@@ -10,6 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
+import { html } from '@spectrum-web-components/base';
+
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-abc.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-actions.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-display-advert.js';
@@ -46,44 +48,44 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-book.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-bookmark.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-bookmark-single.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-bookmark-single-outline.js';
-import { html } from '@spectrum-web-components/base';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-icon-abc></sp-icon-abc>
-    <sp-icon-actions></sp-icon-actions>
-    <sp-icon-display-advert></sp-icon-display-advert>
-    <sp-icon-print-advert></sp-icon-print-advert>
-    <sp-icon-add></sp-icon-add>
-    <sp-icon-add-circle></sp-icon-add-circle>
-    <sp-icon-add-to></sp-icon-add-to>
-    <sp-icon-add-to-selection></sp-icon-add-to-selection>
-    <sp-icon-aemscreens></sp-icon-aemscreens>
-    <sp-icon-airplane></sp-icon-airplane>
-    <sp-icon-alert></sp-icon-alert>
-    <sp-icon-alert-add></sp-icon-alert-add>
-    <sp-icon-alert-check></sp-icon-alert-check>
-    <sp-icon-alert-circle></sp-icon-alert-circle>
-    <sp-icon-alert-circle-filled></sp-icon-alert-circle-filled>
-    <sp-icon-algorithm></sp-icon-algorithm>
-    <sp-icon-alias></sp-icon-alias>
-    <sp-icon-arrow-left></sp-icon-arrow-left>
-    <sp-icon-align-center></sp-icon-align-center>
-    <sp-icon-align-top></sp-icon-align-top>
-    <sp-icon-align-bottom></sp-icon-align-bottom>
-    <sp-icon-align-left></sp-icon-align-left>
-    <sp-icon-align-right></sp-icon-align-right>
-    <sp-icon-annotate></sp-icon-annotate>
-    <sp-icon-annotate-pen></sp-icon-annotate-pen>
-    <sp-icon-asset></sp-icon-asset>
-    <sp-icon-assets-added></sp-icon-assets-added>
-    <sp-icon-assets-downloaded></sp-icon-assets-downloaded>
-    <sp-icon-assets-expired></sp-icon-assets-expired>
-    <sp-icon-assets-linked-published></sp-icon-assets-linked-published>
-    <sp-icon-assets-modified></sp-icon-assets-modified>
-    <sp-icon-assets-published></sp-icon-assets-published>
-    <sp-icon-book></sp-icon-book>
-    <sp-icon-bookmark></sp-icon-bookmark>
-    <sp-icon-bookmark-single></sp-icon-bookmark-single>
-    <sp-icon-bookmark-single-outline></sp-icon-bookmark-single-outline>
+  <sp-icon-abc></sp-icon-abc>
+  <sp-icon-actions></sp-icon-actions>
+  <sp-icon-display-advert></sp-icon-display-advert>
+  <sp-icon-print-advert></sp-icon-print-advert>
+  <sp-icon-add></sp-icon-add>
+  <sp-icon-add-circle></sp-icon-add-circle>
+  <sp-icon-add-to></sp-icon-add-to>
+  <sp-icon-add-to-selection></sp-icon-add-to-selection>
+  <sp-icon-aemscreens></sp-icon-aemscreens>
+  <sp-icon-airplane></sp-icon-airplane>
+  <sp-icon-alert></sp-icon-alert>
+  <sp-icon-alert-add></sp-icon-alert-add>
+  <sp-icon-alert-check></sp-icon-alert-check>
+  <sp-icon-alert-circle></sp-icon-alert-circle>
+  <sp-icon-alert-circle-filled></sp-icon-alert-circle-filled>
+  <sp-icon-algorithm></sp-icon-algorithm>
+  <sp-icon-alias></sp-icon-alias>
+  <sp-icon-arrow-left></sp-icon-arrow-left>
+  <sp-icon-align-center></sp-icon-align-center>
+  <sp-icon-align-top></sp-icon-align-top>
+  <sp-icon-align-bottom></sp-icon-align-bottom>
+  <sp-icon-align-left></sp-icon-align-left>
+  <sp-icon-align-right></sp-icon-align-right>
+  <sp-icon-annotate></sp-icon-annotate>
+  <sp-icon-annotate-pen></sp-icon-annotate-pen>
+  <sp-icon-asset></sp-icon-asset>
+  <sp-icon-assets-added></sp-icon-assets-added>
+  <sp-icon-assets-downloaded></sp-icon-assets-downloaded>
+  <sp-icon-assets-expired></sp-icon-assets-expired>
+  <sp-icon-assets-linked-published></sp-icon-assets-linked-published>
+  <sp-icon-assets-modified></sp-icon-assets-modified>
+  <sp-icon-assets-published></sp-icon-assets-published>
+  <sp-icon-book></sp-icon-book>
+  <sp-icon-bookmark></sp-icon-bookmark>
+  <sp-icon-bookmark-single></sp-icon-bookmark-single>
+  <sp-icon-bookmark-single-outline></sp-icon-bookmark-single-outline>
 `);

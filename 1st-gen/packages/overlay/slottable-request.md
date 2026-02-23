@@ -31,8 +31,8 @@ For type information and utilities, import:
 
 ```ts
 import {
-    removeSlottableRequest,
-    SlottableRequestEvent,
+  removeSlottableRequest,
+  SlottableRequestEvent,
 } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 ```
 
@@ -136,14 +136,14 @@ import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable
 
 // Use in a lit template
 html`
-    <sp-overlay
-        ${slottableRequest(
-            () => html`
-                <sp-popover>
-                    <p>Lazily rendered content</p>
-                </sp-popover>
-            `
-        )}
-    ></sp-overlay>
+  <sp-overlay
+    ${slottableRequest(
+      () => html`
+        <sp-popover>
+          <p>Lazily rendered content</p>
+        </sp-popover>
+      `
+    )}
+  ></sp-overlay>
 `;
 ```

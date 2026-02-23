@@ -28,14 +28,14 @@ import { Popover } from '@spectrum-web-components/popover';
 
 ```html
 <div
-    style="
+  style="
         position: relative;
         height: 100px;
     "
 >
-    <sp-popover open>
-        Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels.
-    </sp-popover>
+  <sp-popover open>
+    Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels.
+  </sp-popover>
 </div>
 ```
 
@@ -47,20 +47,20 @@ Default popover with no tip and no placement. Popovers will fill up the space of
 
 ```html
 <div
-    style="
+  style="
         position: relative;
         height: 180px;
         max-width: 320px;
     "
 >
-    <sp-popover variant="default" open>
-        <h2>Popover title</h2>
-        <p>
-            Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels.
-            Icing soufflé chupa chups donut cheesecake. Jelly-o chocolate cake
-            sweet roll cake danish candy biscuit halvah
-        </p>
-    </sp-popover>
+  <sp-popover variant="default" open>
+    <h2>Popover title</h2>
+    <p>
+      Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels. Icing
+      soufflé chupa chups donut cheesecake. Jelly-o chocolate cake sweet roll
+      cake danish candy biscuit halvah
+    </p>
+  </sp-popover>
 </div>
 ```
 
@@ -70,20 +70,20 @@ To apply a managed amount of padding within your `<sp-popover>`, you may choose 
 
 ```html
 <div
-    style="
+  style="
         position: relative;
         height: 250px;
         max-width: 320px;
     "
 >
-    <sp-popover open>
-        <sp-dialog>
-            <h3 slot="heading">Popover title</h3>
-            Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels.
-            Icing soufflé chupa chups donut cheesecake. Jelly-o chocolate cake
-            sweet roll cake danish candy biscuit halvah
-        </sp-dialog>
-    </sp-popover>
+  <sp-popover open>
+    <sp-dialog>
+      <h3 slot="heading">Popover title</h3>
+      Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels. Icing
+      soufflé chupa chups donut cheesecake. Jelly-o chocolate cake sweet roll
+      cake danish candy biscuit halvah
+    </sp-dialog>
+  </sp-popover>
 </div>
 ```
 
@@ -97,20 +97,20 @@ The `placement` attribute can be used to customize how the `<sp-popover>` points
 
 ```html demo
 <div
-    style="
+  style="
         position: relative;
         height: 250px;
         max-width: 320px;
     "
 >
-    <sp-popover placement="top" tip open>
-        <sp-dialog>
-            <h3 slot="heading">Popover title</h3>
-            Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels.
-            Icing soufflé chupa chups donut cheesecake. Jelly-o chocolate cake
-            sweet roll cake danish candy biscuit halvah
-        </sp-dialog>
-    </sp-popover>
+  <sp-popover placement="top" tip open>
+    <sp-dialog>
+      <h3 slot="heading">Popover title</h3>
+      Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels. Icing
+      soufflé chupa chups donut cheesecake. Jelly-o chocolate cake sweet roll
+      cake danish candy biscuit halvah
+    </sp-dialog>
+  </sp-popover>
 </div>
 ```
 
@@ -120,20 +120,20 @@ The `placement` attribute can be used to customize how the `<sp-popover>` points
 
 ```html demo
 <div
-    style="
+  style="
         position: relative;
         height: 200px;
         max-width: 320px;
     "
 >
-    <sp-popover placement="right" tip open>
-        <sp-dialog>
-            <h3 slot="heading">Popover title</h3>
-            Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels.
-            Icing soufflé chupa chups donut cheesecake. Jelly-o chocolate cake
-            sweet roll cake danish candy biscuit halvah
-        </sp-dialog>
-    </sp-popover>
+  <sp-popover placement="right" tip open>
+    <sp-dialog>
+      <h3 slot="heading">Popover title</h3>
+      Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels. Icing
+      soufflé chupa chups donut cheesecake. Jelly-o chocolate cake sweet roll
+      cake danish candy biscuit halvah
+    </sp-dialog>
+  </sp-popover>
 </div>
 ```
 
@@ -143,20 +143,20 @@ The `placement` attribute can be used to customize how the `<sp-popover>` points
 
 ```html demo
 <div
-    style="
+  style="
         position: relative;
         height: 200px;
         max-width: 320px;
     "
 >
-    <sp-popover placement="bottom" tip open>
-        <sp-dialog>
-            <h3 slot="heading">Popover title</h3>
-            Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels.
-            Icing soufflé chupa chups donut cheesecake. Jelly-o chocolate cake
-            sweet roll cake danish candy biscuit halvah
-        </sp-dialog>
-    </sp-popover>
+  <sp-popover placement="bottom" tip open>
+    <sp-dialog>
+      <h3 slot="heading">Popover title</h3>
+      Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels. Icing
+      soufflé chupa chups donut cheesecake. Jelly-o chocolate cake sweet roll
+      cake danish candy biscuit halvah
+    </sp-dialog>
+  </sp-popover>
 </div>
 ```
 
@@ -166,20 +166,20 @@ The `placement` attribute can be used to customize how the `<sp-popover>` points
 
 ```html demo
 <div
-    style="
+  style="
         position: relative;
         height: 200px;
         max-width: 320px;
     "
 >
-    <sp-popover placement="left" tip open>
-        <sp-dialog>
-            <h3 slot="heading">Popover title</h3>
-            Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels.
-            Icing soufflé chupa chups donut cheesecake. Jelly-o chocolate cake
-            sweet roll cake danish candy biscuit halvah
-        </sp-dialog>
-    </sp-popover>
+  <sp-popover placement="left" tip open>
+    <sp-dialog>
+      <h3 slot="heading">Popover title</h3>
+      Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels. Icing
+      soufflé chupa chups donut cheesecake. Jelly-o chocolate cake sweet roll
+      cake danish candy biscuit halvah
+    </sp-dialog>
+  </sp-popover>
 </div>
 ```
 

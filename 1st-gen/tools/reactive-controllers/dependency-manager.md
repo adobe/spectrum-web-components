@@ -36,43 +36,42 @@ import { DependencyManagerController } from '@spectrum-web-components/reactive-c
 import '@spectrum-web-components/button/sp-button.js';
 
 class LazyHost extends LitElement {
-    dependencyManager = new DependencyManagerController(this);
+  dependencyManager = new DependencyManagerController(this);
 
-    state = 'initial';
+  state = 'initial';
 
-    forwardState() {
-        this.state = 'heavy';
-        this.requestUpdate();
+  forwardState() {
+    this.state = 'heavy';
+    this.requestUpdate();
+  }
+
+  render() {
+    const isInitialState = this.state === 'initial';
+
+    if (isInitialState || !this.dependencyManager.loaded) {
+      if (!isInitialState) {
+        // When not in the initial state, this element depends on <some-heavy-element>
+        this.dependencyManager.add('some-heavy-element');
+        // Lazily load that element
+        import('./some-heavy-element.js');
+      }
+
+      return html`
+        <sp-button
+          @click=${this.forwardState}
+          ?pending=${!isInitialState && !this.dependencyManager.loaded}
+          aria-live="polite"
+        >
+          ${!isInitialState ? 'Loading...' : 'Go to next state'}
+        </sp-button>
+      `;
+    } else {
+      // <some-heavy-element> has now been loaded and can be rendered
+      return html`
+        <some-heavy-element></some-heavy-element>
+      `;
     }
-
-    render() {
-        const isInitialState = this.state === 'initial';
-
-        if (isInitialState || !this.dependencyManager.loaded) {
-            if (!isInitialState) {
-                // When not in the initial state, this element depends on <some-heavy-element>
-                this.dependencyManager.add('some-heavy-element');
-                // Lazily load that element
-                import('./some-heavy-element.js');
-            }
-
-            return html`
-                <sp-button
-                    @click=${this.forwardState}
-                    ?pending=${!isInitialState &&
-                    !this.dependencyManager.loaded}
-                    aria-live="polite"
-                >
-                    ${!isInitialState ? 'Loading...' : 'Go to next state'}
-                </sp-button>
-            `;
-        } else {
-            // <some-heavy-element> has now been loaded and can be rendered
-            return html`
-                <some-heavy-element></some-heavy-element>
-            `;
-        }
-    }
+  }
 }
 
 customElements.define('lazy-host', LazyHost);
@@ -87,41 +86,37 @@ import { html, LitElement } from 'lit';
 import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 
 class MultiDependencyHost extends LitElement {
-    dependencyManager = new DependencyManagerController(this);
+  dependencyManager = new DependencyManagerController(this);
 
-    connectedCallback() {
-        super.connectedCallback();
+  connectedCallback() {
+    super.connectedCallback();
 
-        // Add multiple dependencies
-        this.dependencyManager.add('sp-button');
-        this.dependencyManager.add('sp-dialog');
-        this.dependencyManager.add('sp-progress-circle');
+    // Add multiple dependencies
+    this.dependencyManager.add('sp-button');
+    this.dependencyManager.add('sp-dialog');
+    this.dependencyManager.add('sp-progress-circle');
 
-        // Lazy load all dependencies
-        import('@spectrum-web-components/button/sp-button.js');
-        import('@spectrum-web-components/dialog/sp-dialog.js');
-        import(
-            '@spectrum-web-components/progress-circle/sp-progress-circle.js'
-        );
+    // Lazy load all dependencies
+    import('@spectrum-web-components/button/sp-button.js');
+    import('@spectrum-web-components/dialog/sp-dialog.js');
+    import('@spectrum-web-components/progress-circle/sp-progress-circle.js');
+  }
+
+  render() {
+    if (!this.dependencyManager.loaded) {
+      return html`
+        <div role="status" aria-live="polite">Loading components...</div>
+      `;
     }
 
-    render() {
-        if (!this.dependencyManager.loaded) {
-            return html`
-                <div role="status" aria-live="polite">
-                    Loading components...
-                </div>
-            `;
-        }
-
-        return html`
-            <sp-button>Open Dialog</sp-button>
-            <sp-dialog open>
-                <h2 slot="heading">Dialog Title</h2>
-                <p>All dependencies loaded successfully!</p>
-            </sp-dialog>
-        `;
-    }
+    return html`
+      <sp-button>Open Dialog</sp-button>
+      <sp-dialog open>
+        <h2 slot="heading">Dialog Title</h2>
+        <p>All dependencies loaded successfully!</p>
+      </sp-dialog>
+    `;
+  }
 }
 
 customElements.define('multi-dependency-host', MultiDependencyHost);
@@ -138,82 +133,82 @@ import { DependencyManagerController } from '@spectrum-web-components/reactive-c
 import '@spectrum-web-components/button/sp-button.js';
 
 class FeatureLoader extends LitElement {
-    dependencyManager = new DependencyManagerController(this);
+  dependencyManager = new DependencyManagerController(this);
 
-    @property({ type: String })
-    activeFeature = '';
+  @property({ type: String })
+  activeFeature = '';
 
-    loadFeature(featureName: string) {
-        this.activeFeature = featureName;
+  loadFeature(featureName: string) {
+    this.activeFeature = featureName;
 
-        switch (featureName) {
-            case 'chart':
-                this.dependencyManager.add('chart-component');
-                import('./features/chart-component.js');
-                break;
-            case 'table':
-                this.dependencyManager.add('table-component');
-                import('./features/table-component.js');
-                break;
-            case 'form':
-                this.dependencyManager.add('form-component');
-                import('./features/form-component.js');
-                break;
-        }
-
-        this.requestUpdate();
+    switch (featureName) {
+      case 'chart':
+        this.dependencyManager.add('chart-component');
+        import('./features/chart-component.js');
+        break;
+      case 'table':
+        this.dependencyManager.add('table-component');
+        import('./features/table-component.js');
+        break;
+      case 'form':
+        this.dependencyManager.add('form-component');
+        import('./features/form-component.js');
+        break;
     }
 
-    renderFeature() {
-        if (!this.dependencyManager.loaded) {
-            return html`
-                <div
-                    role="status"
-                    aria-live="polite"
-                    aria-label="Loading ${this.activeFeature}"
-                >
-                    Loading ${this.activeFeature}...
-                </div>
-            `;
-        }
+    this.requestUpdate();
+  }
 
-        switch (this.activeFeature) {
-            case 'chart':
-                return html`
-                    <chart-component></chart-component>
-                `;
-            case 'table':
-                return html`
-                    <table-component></table-component>
-                `;
-            case 'form':
-                return html`
-                    <form-component></form-component>
-                `;
-            default:
-                return html``;
-        }
+  renderFeature() {
+    if (!this.dependencyManager.loaded) {
+      return html`
+        <div
+          role="status"
+          aria-live="polite"
+          aria-label="Loading ${this.activeFeature}"
+        >
+          Loading ${this.activeFeature}...
+        </div>
+      `;
     }
 
-    render() {
+    switch (this.activeFeature) {
+      case 'chart':
         return html`
-            <nav role="navigation" aria-label="Feature selection">
-                <sp-button @click=${() => this.loadFeature('chart')}>
-                    Load Chart
-                </sp-button>
-                <sp-button @click=${() => this.loadFeature('table')}>
-                    Load Table
-                </sp-button>
-                <sp-button @click=${() => this.loadFeature('form')}>
-                    Load Form
-                </sp-button>
-            </nav>
-
-            <div role="region" aria-label="Feature content">
-                ${this.renderFeature()}
-            </div>
+          <chart-component></chart-component>
         `;
+      case 'table':
+        return html`
+          <table-component></table-component>
+        `;
+      case 'form':
+        return html`
+          <form-component></form-component>
+        `;
+      default:
+        return html``;
     }
+  }
+
+  render() {
+    return html`
+      <nav role="navigation" aria-label="Feature selection">
+        <sp-button @click=${() => this.loadFeature('chart')}>
+          Load Chart
+        </sp-button>
+        <sp-button @click=${() => this.loadFeature('table')}>
+          Load Table
+        </sp-button>
+        <sp-button @click=${() => this.loadFeature('form')}>
+          Load Form
+        </sp-button>
+      </nav>
+
+      <div role="region" aria-label="Feature content">
+        ${this.renderFeature()}
+      </div>
+    `;
+  }
 }
 
 customElements.define('feature-loader', FeatureLoader);
@@ -226,52 +221,52 @@ Use the `dependencyManagerLoadedSymbol` to react to loading state changes:
 ```typescript
 import { html, LitElement, PropertyValues } from 'lit';
 import {
-    DependencyManagerController,
-    dependencyManagerLoadedSymbol,
+  DependencyManagerController,
+  dependencyManagerLoadedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 
 class TrackingHost extends LitElement {
-    dependencyManager = new DependencyManagerController(this);
+  dependencyManager = new DependencyManagerController(this);
 
-    connectedCallback() {
-        super.connectedCallback();
-        this.dependencyManager.add('heavy-component');
-        import('./heavy-component.js');
+  connectedCallback() {
+    super.connectedCallback();
+    this.dependencyManager.add('heavy-component');
+    import('./heavy-component.js');
+  }
+
+  protected override willUpdate(changes: PropertyValues): void {
+    if (changes.has(dependencyManagerLoadedSymbol)) {
+      const wasLoaded = changes.get(dependencyManagerLoadedSymbol);
+
+      if (!wasLoaded && this.dependencyManager.loaded) {
+        // Dependencies just finished loading
+        console.log('All dependencies loaded!');
+
+        // Announce to screen readers
+        const announcement = document.createElement('div');
+        announcement.setAttribute('role', 'status');
+        announcement.setAttribute('aria-live', 'polite');
+        announcement.textContent = 'Components loaded successfully';
+        this.shadowRoot?.appendChild(announcement);
+
+        setTimeout(() => announcement.remove(), 1000);
+      }
     }
+  }
 
-    protected override willUpdate(changes: PropertyValues): void {
-        if (changes.has(dependencyManagerLoadedSymbol)) {
-            const wasLoaded = changes.get(dependencyManagerLoadedSymbol);
-
-            if (!wasLoaded && this.dependencyManager.loaded) {
-                // Dependencies just finished loading
-                console.log('All dependencies loaded!');
-
-                // Announce to screen readers
-                const announcement = document.createElement('div');
-                announcement.setAttribute('role', 'status');
-                announcement.setAttribute('aria-live', 'polite');
-                announcement.textContent = 'Components loaded successfully';
-                this.shadowRoot?.appendChild(announcement);
-
-                setTimeout(() => announcement.remove(), 1000);
-            }
-        }
-    }
-
-    render() {
-        return html`
-            <div>
-                ${this.dependencyManager.loaded
-                    ? html`
-                          <heavy-component></heavy-component>
-                      `
-                    : html`
-                          <p>Loading...</p>
-                      `}
-            </div>
-        `;
-    }
+  render() {
+    return html`
+      <div>
+        ${this.dependencyManager.loaded
+          ? html`
+              <heavy-component></heavy-component>
+            `
+          : html`
+              <p>Loading...</p>
+            `}
+      </div>
+    `;
+  }
 }
 
 customElements.define('tracking-host', TrackingHost);

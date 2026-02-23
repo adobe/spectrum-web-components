@@ -38,9 +38,9 @@ Field labels can also be used to label a group of related inputs:
 ```html demo
 <sp-field-label for="account-type">Account type</sp-field-label>
 <sp-radio-group id="account-type">
-    <sp-radio value="admin">Admin</sp-radio>
-    <sp-radio value="member" checked>Member</sp-radio>
-    <sp-radio value="guest">Guest</sp-radio>
+  <sp-radio value="admin">Admin</sp-radio>
+  <sp-radio value="member" checked>Member</sp-radio>
+  <sp-radio value="guest">Guest</sp-radio>
 </sp-radio-group>
 ```
 
@@ -55,9 +55,9 @@ Field labels can also be used to label a group of related inputs:
 ```html demo
 <sp-field-label for="lifestory-0" size="s">Life Story (Small)</sp-field-label>
 <sp-textfield
-    placeholder="Enter your life story"
-    id="lifestory-0"
-    size="s"
+  placeholder="Enter your life story"
+  id="lifestory-0"
+  size="s"
 ></sp-textfield>
 ```
 
@@ -68,9 +68,9 @@ Field labels can also be used to label a group of related inputs:
 ```html demo
 <sp-field-label for="lifestory-1" size="m">Life Story (Medium)</sp-field-label>
 <sp-textfield
-    placeholder="Enter your life story"
-    id="lifestory-1"
-    size="m"
+  placeholder="Enter your life story"
+  id="lifestory-1"
+  size="m"
 ></sp-textfield>
 ```
 
@@ -81,9 +81,9 @@ Field labels can also be used to label a group of related inputs:
 ```html demo
 <sp-field-label for="lifestory-2" size="l">Life Story (Large)</sp-field-label>
 <sp-textfield
-    placeholder="Enter your life story"
-    id="lifestory-2"
-    size="l"
+  placeholder="Enter your life story"
+  id="lifestory-2"
+  size="l"
 ></sp-textfield>
 ```
 
@@ -93,12 +93,12 @@ Field labels can also be used to label a group of related inputs:
 
 ```html demo
 <sp-field-label for="lifestory-3" size="xl">
-    Life Story (Extra Large)
+  Life Story (Extra Large)
 </sp-field-label>
 <sp-textfield
-    placeholder="Enter your life story"
-    id="lifestory-3"
-    size="xl"
+  placeholder="Enter your life story"
+  id="lifestory-3"
+  size="xl"
 ></sp-textfield>
 ```
 
@@ -128,32 +128,32 @@ Use `side-aligned="start"` to display the `<sp-field-label>` inline and to align
 
 ```html demo
 <sp-field-label for="lifestory-1" side-aligned="start" style="width: 120px">
-    Life Story
+  Life Story
 </sp-field-label>
 <sp-textfield
-    placeholder="Enter your life story"
-    id="lifestory-1"
+  placeholder="Enter your life story"
+  id="lifestory-1"
 ></sp-textfield>
 <br />
 <br />
 <sp-field-label
-    for="birth-place-1"
-    side-aligned="start"
-    required
-    style="width: 120px"
+  for="birth-place-1"
+  side-aligned="start"
+  required
+  style="width: 120px"
 >
-    Birthplace
+  Birthplace
 </sp-field-label>
 <sp-picker id="birth-place-1">
-    <span slot="label">Choose a location:</span>
-    <sp-menu-item>Istanbul</sp-menu-item>
-    <sp-menu-item>London</sp-menu-item>
-    <sp-menu-item>Maputo</sp-menu-item>
-    <sp-menu-item>Melbourne</sp-menu-item>
-    <sp-menu-item>New York</sp-menu-item>
-    <sp-menu-item>San Francisco</sp-menu-item>
-    <sp-menu-item>Santiago</sp-menu-item>
-    <sp-menu-item>Tokyo</sp-menu-item>
+  <span slot="label">Choose a location:</span>
+  <sp-menu-item>Istanbul</sp-menu-item>
+  <sp-menu-item>London</sp-menu-item>
+  <sp-menu-item>Maputo</sp-menu-item>
+  <sp-menu-item>Melbourne</sp-menu-item>
+  <sp-menu-item>New York</sp-menu-item>
+  <sp-menu-item>San Francisco</sp-menu-item>
+  <sp-menu-item>Santiago</sp-menu-item>
+  <sp-menu-item>Tokyo</sp-menu-item>
 </sp-picker>
 ```
 
@@ -165,32 +165,32 @@ Use `side-aligned="end"` to display the `<sp-field-label>` inline and to align t
 
 ```html demo
 <sp-field-label
-    for="lifestory-2"
-    side-aligned="end"
-    required
-    style="width: 120px"
+  for="lifestory-2"
+  side-aligned="end"
+  required
+  style="width: 120px"
 >
-    Life Story
+  Life Story
 </sp-field-label>
 <sp-textfield
-    placeholder="Enter your life story"
-    id="lifestory-2"
+  placeholder="Enter your life story"
+  id="lifestory-2"
 ></sp-textfield>
 <br />
 <br />
 <sp-field-label for="birth-place-2" side-aligned="end" style="width: 120px">
-    Birthplace
+  Birthplace
 </sp-field-label>
 <sp-picker id="birth-place-2">
-    <span slot="label">Choose a location:</span>
-    <sp-menu-item>Istanbul</sp-menu-item>
-    <sp-menu-item>London</sp-menu-item>
-    <sp-menu-item>Maputo</sp-menu-item>
-    <sp-menu-item>Melbourne</sp-menu-item>
-    <sp-menu-item>New York</sp-menu-item>
-    <sp-menu-item>San Francisco</sp-menu-item>
-    <sp-menu-item>Santiago</sp-menu-item>
-    <sp-menu-item>Tokyo</sp-menu-item>
+  <span slot="label">Choose a location:</span>
+  <sp-menu-item>Istanbul</sp-menu-item>
+  <sp-menu-item>London</sp-menu-item>
+  <sp-menu-item>Maputo</sp-menu-item>
+  <sp-menu-item>Melbourne</sp-menu-item>
+  <sp-menu-item>New York</sp-menu-item>
+  <sp-menu-item>San Francisco</sp-menu-item>
+  <sp-menu-item>Santiago</sp-menu-item>
+  <sp-menu-item>Tokyo</sp-menu-item>
 </sp-picker>
 ```
 
@@ -208,9 +208,9 @@ Field labels can indicate whether an input is required or optional. By default, 
 ```html demo
 <sp-field-label for="name-required" required>Full name</sp-field-label>
 <sp-textfield
-    placeholder="Enter your full name"
-    id="name-required"
-    required
+  placeholder="Enter your full name"
+  id="name-required"
+  required
 ></sp-textfield>
 ```
 
@@ -220,11 +220,11 @@ Field labels can indicate whether an input is required or optional. By default, 
 
 ```html demo
 <sp-field-label for="description-optional">
-    Profile description (optional)
+  Profile description (optional)
 </sp-field-label>
 <sp-textfield
-    placeholder="Enter a description"
-    id="description-optional"
+  placeholder="Enter a description"
+  id="description-optional"
 ></sp-textfield>
 ```
 
@@ -240,9 +240,9 @@ When the associated input field is disabled, the field label should also be disa
 ```html demo
 <sp-field-label for="disabled-field" disabled>Country</sp-field-label>
 <sp-textfield
-    placeholder="Enter your country"
-    id="disabled-field"
-    disabled
+  placeholder="Enter your country"
+  id="disabled-field"
+  disabled
 ></sp-textfield>
 ```
 
@@ -254,12 +254,12 @@ When a field label is too long for the available horizontal space, it wraps to f
 
 ```html demo
 <sp-field-label for="seminar-field" style="max-width: 200px">
-    What you're hoping to learn from the seminar and any specific topics you'd
-    like covered
+  What you're hoping to learn from the seminar and any specific topics you'd
+  like covered
 </sp-field-label>
 <sp-textfield
-    placeholder="Enter your expectations"
-    id="seminar-field"
+  placeholder="Enter your expectations"
+  id="seminar-field"
 ></sp-textfield>
 ```
 
