@@ -14,45 +14,51 @@ import type { TestRunnerConfig } from '@storybook/test-runner';
 
 const config: TestRunnerConfig = {
   async postVisit(page, context) {
-    // Skip stories explicitly tagged with !test
     if (context.tags?.includes('!test')) {
       return;
     }
 
-    // Create axe builder with WCAG 2.0 A/AA and WCAG 2.1 A/AA tags
-    // This automatically includes color-contrast validation
     const axeBuilder = new AxeBuilder({ page })
       .include('#storybook-root')
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
 
-    // Handle story-specific axe configuration
     const a11yConfig = context.parameters?.a11y;
 
-    if (a11yConfig) {
-      // Support disabling entire rules via parameters.a11y.disabledRules
-      if (a11yConfig.disabledRules && Array.isArray(a11yConfig.disabledRules)) {
-        axeBuilder.disableRules(a11yConfig.disabledRules);
-      }
-
-      // Support excluding specific elements from specific rules
-      // via parameters.a11y.exclude: { 'rule-name': ['selector1', 'selector2'] }
-      // @todo Current implementation excludes elements from ALL rules, not just the specified rule.
-      // Need to investigate axe-core options API for true rule-specific exclusions.
-      if (a11yConfig.exclude && typeof a11yConfig.exclude === 'object') {
-        Object.entries(a11yConfig.exclude).forEach(([_rule, selectors]) => {
-          if (Array.isArray(selectors)) {
-            selectors.forEach((selector) => {
-              axeBuilder.exclude(selector);
-            });
-          }
-        });
-      }
+    if (a11yConfig?.disabledRules && Array.isArray(a11yConfig.disabledRules)) {
+      axeBuilder.disableRules(a11yConfig.disabledRules);
     }
 
     const results = await axeBuilder.analyze();
 
-    if (results.violations.length > 0) {
-      const details = results.violations
+    // Filter violations using rule-specific exclusions from story parameters.
+    // parameters.a11y.exclude: { 'rule-id': ['selector1', 'selector2'] }
+    // Only the specified rule is affected; all other rules still validate the element.
+    const excludeMap = a11yConfig?.exclude as
+      | Record<string, string[]>
+      | undefined;
+
+    const violations = excludeMap
+      ? results.violations.filter((violation) => {
+          const excludedSelectors = excludeMap[violation.id];
+          if (!excludedSelectors) {
+            return true;
+          }
+
+          violation.nodes = violation.nodes.filter(
+            (node) =>
+              !node.target.some((target) =>
+                excludedSelectors.some((selector) =>
+                  String(target).includes(selector)
+                )
+              )
+          );
+
+          return violation.nodes.length > 0;
+        })
+      : results.violations;
+
+    if (violations.length > 0) {
+      const details = violations
         .map((violation) => {
           const nodes = violation.nodes
             .map((node) => node.target.join(', '))
