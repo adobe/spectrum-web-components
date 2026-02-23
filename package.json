@@ -84,7 +84,7 @@
     "globals": "17.3.0",
     "husky": "9.1.7",
     "jsonc-eslint-parser": "2.4.2",
-    "lint-staged": "16.2.6",
+    "lint-staged": "16.2.7",
     "npm-run-all2": "8.0.4",
     "prettier": "3.8.1",
     "prettier-plugin-package": "1.4.0",
