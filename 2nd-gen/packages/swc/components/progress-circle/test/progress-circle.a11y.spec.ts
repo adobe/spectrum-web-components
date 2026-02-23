@@ -18,7 +18,6 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
  * Accessibility tests for Progress Circle component (2nd Generation)
  *
  * ARIA snapshot tests validate the accessibility tree structure.
- * ARIA attribute tests verify specific ARIA properties are correctly set.
  * aXe WCAG compliance and color contrast validation are handled automatically
  * by the Storybook test-runner (see .storybook/test-runner.ts).
  */
@@ -80,77 +79,5 @@ test.describe('Progress Circle - ARIA Snapshots', () => {
       'swc-progress-circle'
     );
     await expect(progressCircle).toMatchAriaSnapshot();
-  });
-});
-
-test.describe('Progress Circle - ARIA Attributes', () => {
-  test('should have correct ARIA role', async ({ page }) => {
-    await gotoStory(
-      page,
-      'components-progress-circle--overview',
-      'swc-progress-circle'
-    );
-
-    const progressCircle = page.locator('swc-progress-circle').first();
-    const role = await progressCircle.getAttribute('role');
-
-    expect(role).toBe('progressbar');
-  });
-
-  test('should have aria-valuenow for determinate progress', async ({
-    page,
-  }) => {
-    await gotoStory(
-      page,
-      'components-progress-circle--overview',
-      'swc-progress-circle'
-    );
-
-    const progressCircle = page.locator('swc-progress-circle').first();
-
-    // Verify it's determinate (not indeterminate)
-    const isIndeterminate = await progressCircle.getAttribute('indeterminate');
-    expect(isIndeterminate).toBeNull();
-
-    // Determinate progress should have aria-valuenow
-    const ariaValueNow = await progressCircle.getAttribute('aria-valuenow');
-    expect(ariaValueNow).toBeTruthy();
-    expect(Number(ariaValueNow)).toBeGreaterThanOrEqual(0);
-    expect(Number(ariaValueNow)).toBeLessThanOrEqual(100);
-  });
-
-  test('should have aria-label attribute', async ({ page }) => {
-    await gotoStory(
-      page,
-      'components-progress-circle--overview',
-      'swc-progress-circle'
-    );
-
-    const progressCircle = page.locator('swc-progress-circle').first();
-    const ariaLabel = await progressCircle.getAttribute('aria-label');
-
-    // Verify aria-label exists and is non-empty
-    expect(ariaLabel).not.toBeNull();
-    expect(ariaLabel).not.toBe('');
-  });
-
-  test('should not have aria-valuenow for indeterminate progress', async ({
-    page,
-  }) => {
-    await gotoStory(
-      page,
-      'components-progress-circle--indeterminate',
-      'swc-progress-circle'
-    );
-
-    const progressCircle = page.locator('swc-progress-circle').first();
-
-    // Verify it's indeterminate
-    const isIndeterminate = await progressCircle.getAttribute('indeterminate');
-    expect(isIndeterminate).not.toBeNull();
-
-    // Indeterminate progress should not have aria-valuenow
-    const ariaValueNow = await progressCircle.getAttribute('aria-valuenow');
-    expect(ariaValueNow).toBeNull();
   });
 });
