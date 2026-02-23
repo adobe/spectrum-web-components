@@ -31,14 +31,14 @@
   font-weight: var(--swc-heading-font-weight, token("heading-sans-serif-font-weight"));
   line-height: var(--swc-heading-line-height, token("line-height-font-size-500"));
   color: var(--swc-heading-font-color, token("heading-color"));
+  letter-spacing: var(--swc-heading-letter-spacing, normal);
 
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    line-height: var(--swc-heading-cjk-line-height, token("cjk-line-height-100"));
-    letter-spacing: var(--swc-heading-cjk-letter-spacing, token("cjk-letter-spacing"));
-
-    --swc-heading-font-size: token("font-size-400");
+    --swc-heading-line-height: var(--swc-heading-cjk-line-height, token("cjk-line-height-100"));
+    --swc-heading-letter-spacing: var(--swc-heading-cjk-letter-spacing, token("cjk-letter-spacing"));
+    --swc-heading-font-size: var(--swc-heading-cjk-font-size, token("font-size-400"));
   }
 }
 
@@ -58,7 +58,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-heading-font-size: token("font-size-200");
+    --swc-heading-cjk-font-size: token("font-size-200");
   }
 }
 
@@ -69,7 +69,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-heading-font-size: token("font-size-300");
+    --swc-heading-cjk-font-size: token("font-size-300");
   }
 }
 
@@ -81,7 +81,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-heading-font-size: token("font-size-400");
+    --swc-heading-cjk-font-size: token("font-size-400");
   }
 }
 
@@ -92,7 +92,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-heading-font-size: token("font-size-600");
+    --swc-heading-cjk-font-size: token("font-size-600");
   }
 }
 
@@ -103,7 +103,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-heading-font-size: token("font-size-800");
+    --swc-heading-cjk-font-size: token("font-size-800");
   }
 }
 
@@ -114,7 +114,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-heading-font-size: token("font-size-1000");
+    --swc-heading-cjk-font-size: token("font-size-1000");
   }
 }
 
@@ -125,7 +125,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-heading-font-size: token("font-size-1200");
+    --swc-heading-cjk-font-size: token("font-size-1200");
   }
 }
 
@@ -136,7 +136,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-heading-font-size: token("font-size-1400");
+    --swc-heading-cjk-font-size: token("font-size-1400");
   }
 }
 
@@ -160,14 +160,14 @@
   font-weight: var(--swc-title-font-weight, token("title-sans-serif-font-weight"));
   line-height: var(--swc-title-line-height, token("line-height-font-size-200"));
   color: var(--swc-title-font-color, token("title-color"));
+  letter-spacing: var(--swc-title-letter-spacing, normal);
 
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    line-height: var(--swc-title-cjk-line-height, token("cjk-line-height-100"));
-    letter-spacing: var(--swc-title-cjk-letter-spacing, token("cjk-letter-spacing"));
-
-    --swc-title-font-size: token("font-size-100");
+    --swc-title-line-height: var(--swc-title-cjk-line-height, token("cjk-line-height-100"));
+    --swc-title-letter-spacing: var(--swc-title-cjk-letter-spacing, token("cjk-letter-spacing"));
+    --swc-title-font-size: var(--swc-title-cjk-font-size, token("font-size-100"));
   }
 }
 
@@ -187,7 +187,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-title-font-size: token("font-size-50");
+    --swc-title-cjk-font-size: token("font-size-50");
   }
 }
 
@@ -204,7 +204,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-title-font-size: token("font-size-100");
+    --swc-title-cjk-font-size: token("font-size-100");
   }
 }
 
@@ -216,7 +216,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-title-font-size: token("font-size-200");
+    --swc-title-cjk-font-size: token("font-size-200");
   }
 }
 
@@ -228,7 +228,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-title-font-size: token("font-size-300");
+    --swc-title-cjk-font-size: token("font-size-300");
   }
 }
 
@@ -239,7 +239,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-title-font-size: token("font-size-400");
+    --swc-title-cjk-font-size: token("font-size-400");
   }
 }
 
@@ -250,7 +250,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-title-font-size: token("font-size-500");
+    --swc-title-cjk-font-size: token("font-size-500");
   }
 }
 
@@ -270,14 +270,14 @@
   font-weight: var(--swc-body-font-weight, token("body-sans-serif-font-weight"));
   line-height: var(--swc-body-line-height, token("line-height-font-size-200"));
   color: var(--swc-body-font-color, token("body-color"));
+  letter-spacing: var(--swc-body-letter-spacing, normal);
 
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    line-height: var(--swc-body-cjk-line-height, token("cjk-line-height-200"));
-    letter-spacing: var(--swc-body-cjk-letter-spacing, token("cjk-letter-spacing"));
-
-    --swc-body-font-size: token("font-size-100");
+    --swc-body-line-height: var(--swc-body-cjk-line-height, token("cjk-line-height-200"));
+    --swc-body-letter-spacing: var(--swc-body-cjk-letter-spacing, token("cjk-letter-spacing"));
+    --swc-body-font-size: var(--swc-body-cjk-font-size, token("font-size-100"));
   }
 }
 
@@ -297,7 +297,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-body-font-size: token("font-size-25");
+    --swc-body-cjk-font-size: token("font-size-25");
   }
 }
 
@@ -308,7 +308,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-body-font-size: token("font-size-50");
+    --swc-body-cjk-font-size: token("font-size-50");
   }
 }
 
@@ -324,7 +324,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-body-font-size: token("font-size-100");
+    --swc-body-cjk-font-size: token("font-size-100");
   }
 }
 
@@ -335,7 +335,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-body-font-size: token("font-size-200");
+    --swc-body-cjk-font-size: token("font-size-200");
   }
 }
 
@@ -346,7 +346,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-body-font-size: token("font-size-300");
+    --swc-body-cjk-font-size: token("font-size-300");
   }
 }
 
@@ -357,7 +357,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-body-font-size: token("font-size-400");
+    --swc-body-cjk-font-size: token("font-size-400");
   }
 }
 
@@ -368,7 +368,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-body-font-size: token("font-size-500");
+    --swc-body-cjk-font-size: token("font-size-500");
   }
 }
 
@@ -387,12 +387,13 @@
   font-weight: var(--swc-detail-font-weight, token("detail-sans-serif-font-weight"));
   line-height: var(--swc-detail-line-height, token("line-height-font-size-100"));
   color: var(--swc-detail-font-color, token("detail-color"));
+  letter-spacing: var(--swc-detail-letter-spacing, normal);
 
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    line-height: var(--swc-detail-cjk-line-height, token("cjk-line-height-100"));
-    letter-spacing: var(--swc-detail-cjk-letter-spacing, token("cjk-letter-spacing"));
+    --swc-detail-line-height: var(--swc-detail-cjk-line-height, token("cjk-line-height-100"));
+    --swc-detail-letter-spacing: var(--swc-detail-cjk-letter-spacing, token("cjk-letter-spacing"));
   }
 }
 
@@ -411,7 +412,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-detail-font-size: token("font-size-25");
+    --swc-detail-cjk-font-size: token("font-size-25");
   }
 }
 
@@ -422,7 +423,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-detail-font-size: token("font-size-50");
+    --swc-detail-cjk-font-size: token("font-size-50");
   }
 }
 
@@ -438,7 +439,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-detail-font-size: token("font-size-100");
+    --swc-detail-cjk-font-size: token("font-size-100");
   }
 }
 
@@ -449,7 +450,7 @@
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    --swc-detail-font-size: token("font-size-200");
+    --swc-detail-cjk-font-size: token("font-size-200");
   }
 }
 
@@ -468,11 +469,12 @@
   font-weight: var(--swc-monospace-font-weight, token("regular-font-weight"));
   line-height: var(--swc-monospace-line-height, token("line-height-font-size-200"));
   color: var(--swc-monospace-font-color, token("code-color"));
+  letter-spacing: var(--swc-monospace-letter-spacing, normal);
 
   &:lang(zh),
   &:lang(ja),
   &:lang(ko) {
-    line-height: var(--swc-monospace-cjk-line-height, token("line-height-200"));
+    --swc-monospace-line-height: var(--swc-monospace-cjk-line-height, token("line-height-200"));
   }
 }
 

@@ -350,7 +350,8 @@ function buildCjkNestedDecls({ cpBase, typeVar, cjkOverrides, tokens, debug }) {
       debug
     );
     if (lh) {
-      decls['line-height'] = `var(--${cpBase}-cjk-line-height, ${lh})`;
+      decls[`--${cpBase}-line-height`] =
+        `var(--${cpBase}-cjk-line-height, ${lh})`;
     }
   }
 
@@ -363,7 +364,8 @@ function buildCjkNestedDecls({ cpBase, typeVar, cjkOverrides, tokens, debug }) {
       debug
     );
     if (ls) {
-      decls['letter-spacing'] = `var(--${cpBase}-cjk-letter-spacing, ${ls})`;
+      decls[`--${cpBase}-letter-spacing`] =
+        `var(--${cpBase}-cjk-letter-spacing, ${ls})`;
     }
   }
 
@@ -391,7 +393,7 @@ function getCjkFontSizeVarDecl({
     return null;
   }
 
-  return { [`--${cpBase}-font-size`]: cjkFontSizeRef };
+  return { [`--${cpBase}-cjk-font-size`]: cjkFontSizeRef };
 }
 
 function getMarginMultiplierTokens(typeVar) {
@@ -585,9 +587,15 @@ export async function generateTypographyCssString(options = {}) {
       : null;
 
     // One merged nested lang block
+    const baseCjkFontSizeDecl = cjkFontSizeVarDecl
+      ? {
+          [`--${cpBase}-font-size`]: `var(--${cpBase}-cjk-font-size, ${cjkFontSizeVarDecl[`--${cpBase}-cjk-font-size`]})`,
+        }
+      : {};
+
     const mergedBaseCjkDecls = pickValidDecls({
       ...nestedCjkDecls,
-      ...(cjkFontSizeVarDecl ?? {}),
+      ...baseCjkFontSizeDecl,
     });
 
     const baseNestedBlocks = Object.keys(mergedBaseCjkDecls).length
@@ -614,6 +622,7 @@ export async function generateTypographyCssString(options = {}) {
         'line-height': mLineHeightRef
           ? `var(--${cpBase}-line-height, ${mLineHeightRef})`
           : null,
+        'letter-spacing': `var(--${cpBase}-letter-spacing, normal)`,
         'margin-block': `var(--${cpBase}-margin-top, 0) var(--${cpBase}-margin-bottom, 0)`,
       }),
       baseNestedBlocks
