@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -36,7 +36,7 @@ describe('Dropzone', () => {
           </div>
           <div>
             or
-            <sp-link href="http://stock.adobe.com" target="blank">
+            <sp-link href="http://stock.adobe.com" target="_blank">
               Search Adobe Stock
             </sp-link>
           </div>
@@ -80,9 +80,14 @@ describe('Dropzone', () => {
     expect(el.isDragged).to.be.false;
 
     let dataTransfer: DataTransfer | boolean = false;
+
+    /**
+     * @todo Another try/catch weird pattern here...
+     */
     try {
       // Safari doesn't like this...
       dataTransfer = new DataTransfer();
+      // eslint-disable-next-line no-empty, @typescript-eslint/no-unused-vars
     } catch (error) {}
     if (dataTransfer) {
       const dragOverEvent = new DragEvent('dragover', {
@@ -113,9 +118,14 @@ describe('Dropzone', () => {
     expect(el.isDragged).to.be.false;
 
     let dataTransfer: DataTransfer | boolean = false;
+
+    /**
+     * @todo Another try/catch weird pattern here...
+     */
     try {
       // Safari doesn't like this...
       dataTransfer = new DataTransfer();
+      // eslint-disable-next-line no-empty, @typescript-eslint/no-unused-vars
     } catch (error) {}
     if (dataTransfer) {
       const dragOverEvent = new DragEvent('dragover', {

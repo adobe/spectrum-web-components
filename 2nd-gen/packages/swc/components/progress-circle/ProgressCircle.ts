@@ -22,6 +22,7 @@ import {
 import { capitalize } from '@spectrum-web-components/core/utils/index.js';
 
 import progressCircleStyles from './progress-circle.css';
+
 /**
  * Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way.
  * They can represent determinate (with a specific progress value) or indeterminate (loading) progress.

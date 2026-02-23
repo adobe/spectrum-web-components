@@ -35,6 +35,7 @@ const repoUrl = 'https://github.com/adobe/spectrum-web-components';
 
 /**
  * Validates that the current version exists and has a corresponding git tag
+ *
  * @returns {string} The current git tag
  * @throws {Error} If validation fails
  */
@@ -69,6 +70,7 @@ function validateCurrentVersion() {
 
 /**
  * Extracts changes from frontmatter using a pattern and categorizes by type
+ *
  * @param {string} frontmatter - The frontmatter content to parse
  * @param {string} description - The description of the change
  * @param {RegExp} pattern - The regex pattern to match package changes
@@ -97,6 +99,7 @@ function extractChanges(frontmatter, description, pattern, prefix = '') {
 
 /**
  * Processes changeset files and categorizes changes by type and target
+ *
  * @returns {Promise<object>} Object containing categorized changes for both 1st-gen and core
  */
 async function processChangesets() {
@@ -158,6 +161,7 @@ async function processChangesets() {
 
 /**
  * Calculates the next version based on change types
+ *
  * @param {string} currentVersion - Current version string
  * @param {Array} majorChanges - Array of major changes
  * @param {Array} minorChanges - Array of minor changes
@@ -175,6 +179,7 @@ function calculateNextVersion(currentVersion, majorChanges, minorChanges) {
 
 /**
  * Extracts and preserves the header from an existing changelog
+ *
  * @param {string} changelogContent - The existing changelog content
  * @returns {object} Object with headerText and remaining content
  */
@@ -203,6 +208,7 @@ function extractChangelogHeader(changelogContent) {
 
 /**
  * Builds a changelog entry with categorized changes
+ *
  * @param {string} version - Version string
  * @param {string} compareUrl - URL for comparing versions
  * @param {string} date - Date string
@@ -235,6 +241,7 @@ function buildChangelogEntry(
 
 /**
  * Updates a changelog file with a new entry
+ *
  * @param {string} changelogPath - Path to the changelog file
  * @param {string} version - Version string
  * @param {string} compareUrl - URL for comparing versions

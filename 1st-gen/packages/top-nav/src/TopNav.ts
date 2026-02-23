@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -75,6 +75,12 @@ export class TopNav extends SizedMixin(SpectrumElement) {
     this.selectTarget(target);
   };
 
+  private onKeydown = (event: KeyboardEvent): void => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.onClick(event);
+    }
+  };
+
   @property({ reflect: true })
   public set selected(value: string | undefined) {
     const oldValue = this.selected;
@@ -144,7 +150,7 @@ export class TopNav extends SizedMixin(SpectrumElement) {
 
   protected override render(): TemplateResult {
     return html`
-      <div @click=${this.onClick} id="list">
+      <div @click=${this.onClick} @keydown=${this.onKeydown} id="list">
         <slot @slotchange=${this.onSlotChange}></slot>
         <div
           id="selection-indicator"

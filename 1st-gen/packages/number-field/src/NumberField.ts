@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -638,6 +638,14 @@ export class NumberField extends TextfieldBase {
         this._forcedUnit = '';
         this._numberFormatter.format(1);
       } catch (error) {
+        if (window.__swc.DEBUG) {
+          window.__swc.warn(
+            this,
+            `Number Formatter Error: Format options include style === 'unit' but unit is not supported: ${error instanceof Error ? error.message : 'Unknown error'}`,
+            'https://opensource.adobe.com/spectrum-web-components/components/number-field/',
+            { level: 'low' }
+          );
+        }
         if (style === 'unit') {
           this._forcedUnit = unit as string;
         }
@@ -692,6 +700,14 @@ export class NumberField extends TextfieldBase {
         this._forcedUnit = '';
         this._numberParser.parse('0');
       } catch (error) {
+        if (window.__swc.DEBUG) {
+          window.__swc.warn(
+            this,
+            `Number Parser Error: Format options include style === 'unit' but unit is not supported: ${error instanceof Error ? error.message : 'Unknown error'}`,
+            'https://opensource.adobe.com/spectrum-web-components/components/number-field/',
+            { level: 'low' }
+          );
+        }
         if (style === 'unit') {
           this._forcedUnit = unit as string;
         }

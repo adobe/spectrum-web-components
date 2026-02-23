@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -15,9 +15,23 @@ import {
   InteractionTypes,
 } from './InteractionController.js';
 
+/**
+ * Controller for managing picker interactions on desktop devices.
+ * Handles mouse pointer events with sophisticated toggle state management
+ * to properly coordinate pointerdown, pointerup, and click events.
+ */
 export class DesktopController extends InteractionController {
+  /** Identifies this as a desktop interaction controller. */
   override type = InteractionTypes.desktop;
 
+  /**
+   * Handles pointerdown events on the trigger button.
+   * Captures the current open state and sets up cleanup handlers
+   * for pointerup, pointercancel, and click events.
+   * Ignores non-primary buttons and touch events (handled by MobileController).
+   *
+   * @param event - The pointer event
+   */
   public override handlePointerdown(event: PointerEvent): void {
     if (event.button !== 0 || event.pointerType === 'touch') {
       return;
@@ -44,6 +58,12 @@ export class DesktopController extends InteractionController {
     this.handleActivate();
   }
 
+  /**
+   * Handles activation of the picker (via click or keyboard).
+   * Prevents double-toggling when pointerup already changed the state.
+   *
+   * @param event - Optional activation event (click event or undefined for pointerdown)
+   */
   public override handleActivate(event?: Event): void {
     if (this.enterKeydownOn && this.enterKeydownOn !== this.target) {
       return;
@@ -59,6 +79,11 @@ export class DesktopController extends InteractionController {
     this.host.toggle();
   }
 
+  /**
+   * Initializes desktop-specific event listeners on the trigger button.
+   * Binds click, pointerdown, and focus handlers.
+   * Cleans up any existing listeners before binding new ones.
+   */
   override init(): void {
     // Clean up listeners if they've already been bound
     this.abortController?.abort();

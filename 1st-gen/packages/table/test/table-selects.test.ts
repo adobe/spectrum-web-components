@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -155,10 +155,17 @@ describe('Table Selects', () => {
 
     const checkbox = el.querySelector('sp-checkbox');
 
+    /*
+     * @todo this is a false positive test, rather than letting the test fail we allow it to pass. This is not acceptable test behavior.
+     */
     try {
       checkbox?.click();
       expect(changeSpy.callCount).to.equal(1);
     } catch (error) {
+      console.error(
+        'There was an error due to the click:',
+        error instanceof Error ? error.message : 'Unknown error'
+      );
       expect(true, 'There was an error due to the click.').to.be.false;
     }
   });

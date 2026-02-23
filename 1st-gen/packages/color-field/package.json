@@ -55,6 +55,7 @@
   "dependencies": {
     "@spectrum-web-components/base": "1.11.2",
     "@spectrum-web-components/color-handle": "1.11.2",
+    "@spectrum-web-components/reactive-controllers": "1.11.2",
     "@spectrum-web-components/textfield": "1.11.2"
   },
   "keywords": [

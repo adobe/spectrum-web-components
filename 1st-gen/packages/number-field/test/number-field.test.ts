@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -38,6 +38,7 @@ import {
 } from '@spectrum-web-components/number-field';
 import { isWebKit } from '@spectrum-web-components/shared';
 
+import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/number-field/sp-number-field.js';
 
 import { sendMouse } from '../../../test/plugins/browser.js';
@@ -595,21 +596,21 @@ describe('NumberField', () => {
       el.value = 45;
       expect(el.value).to.equal(45);
       el.focus();
-      await sendKeys({ type: '7' }); // Visible text: EUR 45.007
+      await sendKeys({ type: '7' }); // Visible text: EUR 45.007
       expect(el.value).to.equal(45.007);
       expect(inputSpy.calledWith(el.value), 'first input').to.be.true;
-      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-      await sendKeys({ type: '1' }); // Visible text: 1EUR 45.007
-      await sendKeys({ press: 'Enter' }); // Visible text: EUR 145.01
+      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+      await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+      await sendKeys({ type: '1' }); // Visible text: 1EUR 45.007
+      await sendKeys({ press: 'Enter' }); // Visible text: EUR 145.01
       expect(el.value).to.equal(145.007);
       expect(inputSpy.calledWith(145.007), 'second input').to.be.true;
       expect(changeSpy.calledWith(145.007), 'change').to.be.true;
@@ -1761,6 +1762,27 @@ describe('NumberField', () => {
     });
   });
   describe('accessibility model', () => {
+    it('applies a non-empty input label from associated field label text', async () => {
+      const labelText = 'What is the air-speed velocity of an unladen swallow?';
+      const wrapper = await fixture<HTMLDivElement>(html`
+        <div>
+          <sp-field-label for="swallow">${labelText}</sp-field-label>
+          <sp-number-field id="swallow"></sp-number-field>
+        </div>
+      `);
+
+      const el = wrapper.querySelector('sp-number-field') as NumberField;
+      await waitUntil(
+        () =>
+          (el.shadowRoot?.querySelector('.input') as HTMLInputElement | null)
+            ?.ariaLabel === labelText
+      );
+
+      const input = el.shadowRoot?.querySelector('.input') as HTMLInputElement;
+      expect(input.getAttribute('aria-label')).to.equal(labelText);
+      expect(input.getAttribute('aria-label')).to.not.equal('');
+    });
+
     it('increment and decrement buttons cannot receive keyboard focus', async () => {
       // @TODO: skipping this test because it's flaky in WebKit in CI. Will review in the migration to Spectrum 2.
       if (isWebKit()) {

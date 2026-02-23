@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+/* eslint-disable no-console */
+
 /**
  * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -9,16 +12,19 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-#!/usr/bin/env node
 
 /**
  * Regenerate breadcrumbs and table of contents for all CONTRIBUTOR-DOCS files.
  *
  * Usage:
- *   node regenerate-nav.js [docs-root-path]
+ * ```bash
+ * node regenerate-nav.js [docs-root-path]
+ * ```
  *
  * Example:
- *   node regenerate-nav.js ../../
+ * ```bash
+ * node regenerate-nav.js ../../
+ * ```
  */
 
 import fs from 'fs';
@@ -74,6 +80,7 @@ function extractH1(filepath) {
         const match = searchContent.match(/^#\s+(.+)$/m);
         return match ? match[1].trim() : '';
     } catch (err) {
+        console.error(`❌ Error extracting H1 from ${filepath}:`, err.message);
         return '';
     }
 }
@@ -116,6 +123,7 @@ function extractHeadings(filepath) {
                 };
             });
     } catch (err) {
+        console.error(`❌ Error extracting headings from ${filepath}:`, err.message);
         return [];
     }
 }
@@ -124,7 +132,7 @@ function makeAnchor(text) {
     return text
         .toLowerCase()
         .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9\-]/g, '');
+        .replace(/[^a-z0-9-]/g, '');
 }
 
 function stripMarkdownLinks(text) {
@@ -507,7 +515,7 @@ function generateGrandchildren(
 // FILE UPDATE
 // ============================================================================
 
-function updateFile(filePath, metadata, docsRoot) {
+function updateFile(filePath, metadata) {
     const fileMeta = metadata.files[filePath];
     if (!fileMeta) {return false;}
 

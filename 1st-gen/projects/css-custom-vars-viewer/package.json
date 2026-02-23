@@ -1,6 +1,7 @@
 {
   "name": "@spectrum-web-components/custom-vars-viewer",
   "version": "1.11.2",
+  "private": true,
   "description": "Demo app created with Spectrum Web Components, following open-wc guidelines",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -58,8 +59,8 @@
     "@storybook/addon-essentials": "8.6.14",
     "@storybook/addon-links": "8.6.14",
     "@storybook/web-components": "7.6.20",
-    "@typescript-eslint/eslint-plugin": "7.18.0",
-    "@typescript-eslint/parser": "7.18.0",
+    "@typescript-eslint/eslint-plugin": "8.54.0",
+    "@typescript-eslint/parser": "8.54.0",
     "@web/dev-server": "0.4.6",
     "@web/storybook-builder": "0.2.3",
     "@web/storybook-framework-web-components": "0.2.1",

@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -24,6 +24,7 @@ export function copyNode(node: Element): Promise<void> {
   if (!text) {
     return Promise.reject(new Error('Node has no text content'));
   }
+
   /**
    * include import statements both for the element being documented and any other
    * top level elements used that would otherwise not be imported directly in the element.
@@ -53,6 +54,7 @@ export function copyNode(node: Element): Promise<void> {
 
 /**
  * scans the custom elements in the copied text and returns custom-elements array starting with sp
+ *
  * @param text
  * @returns customElements which need to be added to the import statements
  */
@@ -68,6 +70,7 @@ function extractNodeCustomElements(text: string): Set<string> {
 
 /**
  * Function to generate import statements for each element used in the copied text
+ *
  * @param elements
  * @returns list of import statements of each element
  */

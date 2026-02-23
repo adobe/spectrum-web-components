@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -54,7 +54,7 @@ export default {
           '@spectrum-web-components/core': resolve(
             '../2nd-gen/packages/core/dist'
           ),
-          '@adobe/swc': resolve('../2nd-gen/packages/swc/dist'),
+          '@adobe/spectrum-wc': resolve('../2nd-gen/packages/swc/dist'),
         },
       },
     });

@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -32,8 +32,8 @@ import { MouseOptions, PointerPosition } from './plugins/send-mouse-plugin.js';
 
 /**
  * Send a mouse click to a specific DOMRect or HTMLElement
+ *
  * @param target - The DOMRect or HTMLElement to click on
- * @param type - The type of mouse event to send (move, down, up, click, wheel)
  * @param pointerPosition - The position of the pointer relative to the element (center, top-left, outside)
  * @param options - The options for the mouse event ({button: 'left' | 'right' | 'middle', delay: number in ms})
  * @returns The result of the mouse event
@@ -52,6 +52,7 @@ export async function mouseClickOn(
 
 /**
  * Send a mouse click away from a specific DOMRect or HTMLElement
+ *
  * @param target - The DOMRect or HTMLElement to click away from
  * @param options - The options for the mouse event ({button: 'left' | 'right' | 'middle', delay: number in ms})
  * @returns The result of the mouse event
@@ -65,6 +66,7 @@ export async function mouseClickAway(
 
 /**
  * Send a mouse move over a specific DOMRect or HTMLElement
+ *
  * @param target - The DOMRect or HTMLElement to move over
  * @param pointerPosition - The position of the pointer relative to the element (center, top-left, outside)
  * @param options - The options for the mouse event ({button: 'left' | 'right' | 'middle', delay: number in ms})
@@ -84,6 +86,7 @@ export async function mouseMoveOver(
 
 /**
  * Send a mouse move away from a specific DOMRect or HTMLElement
+ *
  * @param target - The DOMRect or HTMLElement to move away from
  * @param options - The options for the mouse event ({button: 'left' | 'right' | 'middle', delay: number in ms})
  * @returns The result of the mouse event
@@ -97,6 +100,7 @@ export async function mouseMoveAway(
 
 /**
  * Send the correct tab key event based on the browser to the active element.
+ *
  * @returns The result of the tab key event
  */
 export async function sendTabKey() {
@@ -106,6 +110,7 @@ export async function sendTabKey() {
 
 /**
  * Send the correct shift tab key event based on the browser to the active element.
+ *
  * @returns The result of the shift tab key event
  */
 export async function sendShiftTabKey() {
@@ -261,7 +266,7 @@ export const arrowUpKeyupEvent = (): KeyboardEvent =>
 export const arrowDownKeyupEvent = (): KeyboardEvent =>
   keyboardEvent('ArrowDown', {}, 'keyup');
 
-// @TODO - SWC-1013 - resolve the uncaught global error in tests
+// @todo - SWC-1013 - resolve the uncaught global error in tests
 export function ignoreResizeObserverLoopError(
   before: HookFunction,
   after: HookFunction
@@ -350,18 +355,30 @@ export async function isOnTopLayer(element: HTMLElement): Promise<boolean> {
       try {
         popoverOpen = closestDialog.matches(':popover-open');
       } catch (error) {
+        console.warn(
+          'Failed to check if popover is open:',
+          error instanceof Error ? error.message : 'Unknown error'
+        );
         // do nothing
       }
       let open = false;
       try {
         open = closestDialog.matches(':open');
       } catch (error) {
+        console.warn(
+          'Failed to check if dialog is open:',
+          error instanceof Error ? error.message : 'Unknown error'
+        );
         // do nothing
       }
       let modal = false;
       try {
         modal = closestDialog.matches(':modal');
       } catch (error) {
+        console.warn(
+          'Failed to check if dialog is modal:',
+          error instanceof Error ? error.message : 'Unknown error'
+        );
         // do nothing
       }
       let polyfill = false;
