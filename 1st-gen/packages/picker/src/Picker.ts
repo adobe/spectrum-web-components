@@ -32,6 +32,8 @@ import {
   styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
 import type { FieldLabel } from '@spectrum-web-components/field-label';
+import { FieldLabelMixin } from '@spectrum-web-components/field-label/src/FieldLabelMixin.js';
+import { ManageHelpText } from '@spectrum-web-components/help-text/src/manage-help-text.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import type {
   Menu,
@@ -1281,7 +1283,8 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
  *
  * @element sp-picker
  *
- * @slot label - The placeholder content for the Picker
+ * @slot label - The placeholder content for the Picker (@deprecated Use `placeholder` instead)
+ * @slot field-label - The visible label for the Picker
  * @slot description - The description content for the Picker
  * @slot tooltip - Tooltip to to be applied to the the Picker Button
  * @slot - menu items to be listed in the Picker
@@ -1289,9 +1292,13 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
  * @fires sp-opened - Announces that the overlay has been opened
  * @fires sp-closed - Announces that the overlay has been closed
  */
-export class Picker extends SizedMixin(ExpandableElement, {
-  noDefaultSize: true,
-}) {
+export class Picker extends FieldLabelMixin(
+  ManageHelpText(
+    SizedMixin(ExpandableElement, {
+      noDefaultSize: true,
+    })
+  )
+) {
   public static override get styles(): CSSResultArray {
     return [pickerStyles, chevronStyles];
   }
@@ -1320,6 +1327,10 @@ export class Picker extends SizedMixin(ExpandableElement, {
   /** The placeholder label displayed when no item is selected. */
   @property()
   public label?: string;
+
+  /** The placeholder text displayed when no item is selected. */
+  @property({ type: String, attribute: 'placeholder' })
+  public placeholder?: string;
 
   /**
    * The selection mode for the picker's menu.
@@ -1908,11 +1919,14 @@ export class Picker extends SizedMixin(ExpandableElement, {
       this.tooltipEl.disabled = this.open;
     }
     return html`
+      ${this.renderFieldLabel('button')}
       <button
+        role="combobox"
         aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
         aria-describedby="tooltip ${DESCRIPTION_ID}"
         aria-expanded=${this.open ? 'true' : 'false'}
         aria-haspopup="true"
+        aria-label=${ifDefined(this.label || undefined)}
         aria-labelledby="icon label applied-label pending-label"
         id="button"
         class=${ifDefined(
@@ -1926,7 +1940,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
         }}
         ?disabled=${this.disabled}
       >
-        ${this.buttonContent}
+        ${this.renderButtonContent()}
       </button>
       <slot
         aria-hidden="true"
@@ -1935,7 +1949,26 @@ export class Picker extends SizedMixin(ExpandableElement, {
         @keydown=${this.handleKeydown}
         @slotchange=${this.handleTooltipSlotchange}
       ></slot>
-      ${this.renderMenu} ${this.renderDescriptionSlot}
+      ${this.renderMenu}${this.renderDescriptionSlot}${this.renderHelpText(this.invalid)}
+    `;
+  }
+
+  protected renderButtonContent(): TemplateResult {
+    return html`
+      <span class="value">
+        ${this.value ? this.selectedItemContent : this.placeholder}
+      </span>
+      <span id="label-slot" slot="label" ?hidden=${!this.slotHasContent || !!this.value}>${this.label}</span>
+
+      ${this.pending
+        ? html`
+            ${this.renderLoader()}
+            <span aria-hidden="true" class="visually-hidden" id="pending-label">
+              ${this.pendingLabel}
+            </span>
+          `
+        : nothing}
+      <sp-icon-chevron100></sp-icon-chevron100>
     `;
   }
 

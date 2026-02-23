@@ -36,16 +36,51 @@ A picker includes a label and a menu.
 
 #### Labels
 
-To render accessibly, an `<sp-picker>` element should be paired with an `<sp-field-label>` element that has the `for` attribute referencing the `id` of the `<sp-picker>` element.
+To render accessibly, an `<sp-picker>` element have a label. Use the `field-label` slot to provide a label.
 
-For an accessible label that renders within the bounds of the picker itself, but still fulfills the accessibility contract, use the `label` attribute or a `<span slot="label">` as a child element of `<sp-picker>`.
+For an accessible label that is not visuble, but still fulfills the accessibility contract, use the `label` attribute.
 
-<sp-tabs selected="sp-field-label" auto label="Label options">
-<sp-tab value="sp-field-label">Uses &lt;sp-field-label&gt;</sp-tab>
+> **⚠️ Deprecation Notice**: The `label` slot and `<sp-field-label>` element are deprecated and will be removed in a future version. Use the `field-label` slot instead.
+
+<sp-tabs selected="field-label-slot" auto label="Label options">
+<sp-tab value="field-label-slot">field-label slot</sp-tab>
+<sp-tab-panel value="field-label-slot">
+
+```html demo
+<sp-picker">
+  <span slot="field-label">Selection type:</span>
+  <sp-menu-item>Deselect</sp-menu-item>
+  <sp-menu-item>Select inverse</sp-menu-item>
+  <sp-menu-item>Feather...</sp-menu-item>
+  <sp-menu-item>Select and mask...</sp-menu-item>
+  <sp-menu-divider></sp-menu-divider>
+  <sp-menu-item>Save selection</sp-menu-item>
+  <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+```
+
+</sp-tab-panel>
+<sp-tab value="label-attribute">label attribute</sp-tab>
+<sp-tab-panel value="label-attribute">
+
+```html demo
+<sp-picker label="Selection type">
+  <sp-menu-item>Deselect</sp-menu-item>
+  <sp-menu-item>Select inverse</sp-menu-item>
+  <sp-menu-item>Feather...</sp-menu-item>
+  <sp-menu-item>Select and mask...</sp-menu-item>
+  <sp-menu-divider></sp-menu-divider>
+  <sp-menu-item>Save selection</sp-menu-item>
+  <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+```
+
+</sp-tab-panel>
+<sp-tab value="sp-field-label">&lt;sp-field-label&gt; (deprecated)</sp-tab>
 <sp-tab-panel value="sp-field-label">
 
 ```html demo
-<sp-field-label for="uses-sp-field-label">Selection type:</sp-field-label>
+<sp-field-label for="uses-sp-field-label"></sp-field-label>
 <sp-picker id="uses-sp-field-label">
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -58,27 +93,11 @@ For an accessible label that renders within the bounds of the picker itself, but
 ```
 
 </sp-tab-panel>
-<sp-tab value="label-attribute">Uses label attribute</sp-tab>
-<sp-tab-panel value="label-attribute">
-
-```html demo
-<sp-picker label="Selection type" id="uses-label-attribute">
-  <sp-menu-item>Deselect</sp-menu-item>
-  <sp-menu-item>Select inverse</sp-menu-item>
-  <sp-menu-item>Feather...</sp-menu-item>
-  <sp-menu-item>Select and mask...</sp-menu-item>
-  <sp-menu-divider></sp-menu-divider>
-  <sp-menu-item>Save selection</sp-menu-item>
-  <sp-menu-item disabled>Make work path</sp-menu-item>
-</sp-picker>
-```
-
-</sp-tab-panel>
-<sp-tab value="label-slot">Uses label slot</sp-tab>
+<sp-tab value="label-slot">Uses label slot (deprecated)</sp-tab>
 <sp-tab-panel value="label-slot">
 
 ```html demo
-<sp-picker id="uses-label-slot">
+<sp-picker">
   <span slot="label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
