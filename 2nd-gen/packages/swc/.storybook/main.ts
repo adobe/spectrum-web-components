@@ -18,11 +18,32 @@ import { mergeConfig } from 'vite';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const includeTestStories = process.env.NODE_ENV !== 'production';
+const isProductionBuild = process.env.NODE_ENV === 'production';
+const excludedProdTag = 'no-prod';
+
+const filterProdExcludedStories = <T extends { tags?: string[] }>(
+  indexInputs: T[]
+): T[] => {
+  if (!isProductionBuild) {
+    return indexInputs;
+  }
+
+  return indexInputs.filter((input) => !input.tags?.includes(excludedProdTag));
+};
+
+const storyFileIndexer: Indexer = {
+  test: /\.stories\.ts$/,
+  createIndex: async (fileName, options) => {
+    const csfFile = await readCsf(fileName, options);
+    return filterProdExcludedStories(csfFile.parse().indexInputs);
+  },
+};
+
 const testStoryIndexer: Indexer = {
   test: /\.test\.ts$/,
   createIndex: async (fileName, options) => {
     const csfFile = await readCsf(fileName, options);
-    return csfFile.parse().indexInputs;
+    return filterProdExcludedStories(csfFile.parse().indexInputs);
   },
 };
 
@@ -55,7 +76,7 @@ if (includeTestStories) {
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
 const config = {
   stories,
-  experimental_indexers: [testStoryIndexer],
+  experimental_indexers: [storyFileIndexer, testStoryIndexer],
   docs: {
     defaultName: 'README',
   },

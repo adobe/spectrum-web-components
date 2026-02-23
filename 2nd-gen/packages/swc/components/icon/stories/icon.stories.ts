@@ -42,7 +42,7 @@ const meta: Meta = {
       subtitle: `Internal icon renderer for shared SVG templates.`,
     },
   },
-  tags: ['migrated'],
+  tags: ['no-prod'],
 };
 
 export default meta;
