@@ -144,7 +144,6 @@ body {
   height: 1px;
   white-space: nowrap;
   overflow: hidden;
-  clip: rect(0 0 0 0);
   clip-path: inset(50%);
 }
 
@@ -326,7 +325,7 @@ sp-sidenav-item:not(:defined) span {
   line-height: var(--mod-sidenav-text-line-height, var(--spectrum-sidenav-text-line-height));
   color: var(--highcontrast-sidenav-content-color-default, var(--mod-sidenav-content-color-default, var(--spectrum-sidenav-content-color-default)));
   hyphens: auto;
-  word-break: break-word;
+  overflow-wrap: break-word;
   text-decoration: none;
   background-color: var(--highcontrast-sidenav-background-default, var(--mod-sidenav-background-default, var(--spectrum-sidenav-background-default)));
   border-radius: var(--mod-sidenav-border-radius, var(--spectrum-sidenav-border-radius));
@@ -516,7 +515,7 @@ article {
 .table-container sp-table-head-cell {
   box-sizing: border-box;
   min-width: calc(var(--swc-scale-factor) * 100px);
-  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 sp-table.attributes sp-table-cell,
@@ -578,7 +577,6 @@ h2[id],
 h3[id],
 h4[id],
 tr[id] {
-  scroll-margin-top: calc(var(--swc-scale-factor) * 96px);
   scroll-margin-top: calc(var(--swc-scale-factor) * 96px);
 }
 

@@ -24,7 +24,7 @@ import '@adobe/swc/progress-circle';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-progress-circle');
 
-// @TODO: Blurring the range control seems to cause a catastrophic Storybook render failure, so using number input for now. React spectrum has the range control working, check their implementation for a solution.
+// @todo Blurring the range control seems to cause a catastrophic Storybook render failure, so using number input for now. React spectrum has the range control working, check their implementation for a solution.
 argTypes.progress = {
   ...argTypes.progress,
   control: { type: 'number', min: 0, max: 100, step: 1 },

@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -34,6 +34,7 @@ import {
   ThemeKindProvider,
 } from './theme-interfaces.js';
 export type { ProvideLang, ThemeFragmentMap, Color, Scale, SystemVariant };
+
 /**
  * @element sp-theme
  * @attr {string} [lang=""] - The language of the content scoped to this `sp-theme` element, see: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang" target="_blank">MDN reference</a>.
@@ -82,6 +83,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
    * The Spectrum system that is applied to the content scoped to this `sp-theme` element.
    *
    * A value is required.
+   *
    * @type {"spectrum" | "express" }
    * @attr
    */
@@ -117,6 +119,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
    * The Spectrum color stops to apply to content scoped by this `sp-theme` element.
    *
    * A value is required.
+   *
    * @type {"lightest" | "light" | "dark" | "darkest" | ""}
    * @attr
    */
@@ -149,6 +152,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
    * The Spectrum platform scale to apply to content scoped by this `sp-theme` element.
    *
    * A value is required.
+   *
    * @type {"medium" | "large" | ""}
    * @attr
    */

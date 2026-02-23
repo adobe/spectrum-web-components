@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -45,6 +45,7 @@ type RoleType = 'group' | 'menu' | 'listbox' | 'none';
 
 /**
  * Spectrum Menu Component
+ *
  * @element sp-menu
  *
  * @slot - menu items to be listed in the menu
@@ -328,6 +329,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
    * this event to announce its presence in the DOM. During the CAPTURE phase the first
    * Menu based element that the event encounters will manage the focus state of the
    * dispatching `<sp-menu-item>` element.
+   *
    * @param event
    */
   private onFocusableItemAddedOrUpdated(
@@ -348,6 +350,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
    * this event to announce its presence in the DOM. During the BUBBLE phase the first
    * Menu based element that the event encounters that does not inherit selection will
    * manage the selection state of the dispatching `<sp-menu-item>` element.
+   *
    * @param event
    */
   private onSelectableItemAddedOrUpdated(
@@ -710,6 +713,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
   /**
    * given a menu item, returns the next focusable menu item before or after it;
    * if no menu item is provided, returns the first focusable menu item
+   *
    * @param menuItem {MenuItem}
    * @param before {boolean} return the item before; default is false
    * @returns {MenuItem}

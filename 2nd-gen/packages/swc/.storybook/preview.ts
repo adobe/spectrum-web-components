@@ -17,11 +17,11 @@ import {
 } from '@wc-toolkit/storybook-helpers';
 
 import customElements from './custom-elements.json';
-import { withFlexLayout, withStaticColorsDemo } from './decorators';
-import { withContext } from './decorators/contexts';
-import { withStaticColorPlayground } from './decorators/static-color-playground';
+import { withContext } from './decorators/contexts.js';
+import { withFlexLayout, withStaticColorsDemo } from './decorators/index.js';
+import { withStaticColorPlayground } from './decorators/static-color-playground.js';
 import DocumentTemplate from './DocumentTemplate.mdx';
-import { FontLoader } from './loaders/font-loader';
+import { FontLoader } from './loaders/font-loader.js';
 
 import '../stylesheets/swc.css';
 import './assets/preview.css';

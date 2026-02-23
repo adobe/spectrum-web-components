@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -19,13 +19,18 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
 
+const CURRENT_YEAR = new Date().getFullYear();
+const YEAR_PLACEHOLDER = `<%= YEAR %>`;
+
 // Read copyright header from linters/HEADER.js
 const COPYRIGHT_HEADER = fs
   .readFileSync(path.join(root, 'linters/HEADER.js'), 'utf-8')
-  .trim();
+  .trim()
+  .replace(YEAR_PLACEHOLDER, CURRENT_YEAR);
 
 /**
  * Generate a version TypeScript file from a package.json
+ *
  * @param {string} packageJsonPath - Path to package.json
  * @param {string} outputPath - Path to output version.ts file
  * @param {object} options - Generation options

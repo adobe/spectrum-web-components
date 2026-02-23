@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -35,6 +35,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
   /**
    * When this control is rendered, focus it automatically
+   *
    * @private
    */
   @property({ type: Boolean })
@@ -305,19 +306,18 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
   public override connectedCallback(): void {
     super.connectedCallback();
     if (this.autofocus) {
-      this.autofocusReady = new Promise(async (res) => {
-        // If at connect time the [autofocus] content is placed within
-        // content that needs to be "hidden" by default, it would need to wait
-        // two rAFs for animations to be triggered on that content in
-        // order for the [autofocus] to become "visisble" and have its
-        // focus() capabilities enabled.
-        //
-        // Await this with `getUpdateComplete` so that the element cannot
-        // become "ready" until `manageFocus` has occured.
+      // If at connect time the [autofocus] content is placed within
+      // content that needs to be "hidden" by default, it would need to wait
+      // two rAFs for animations to be triggered on that content in
+      // order for the [autofocus] to become "visible" and have its
+      // focus() capabilities enabled.
+      //
+      // Await this with `getUpdateComplete` so that the element cannot
+      // become "ready" until `manageFocus` has occurred.
+      this.autofocusReady = (async () => {
         await nextFrame();
         await nextFrame();
-        res();
-      });
+      })();
       this.updateComplete.then(() => {
         this.manageAutoFocus();
       });

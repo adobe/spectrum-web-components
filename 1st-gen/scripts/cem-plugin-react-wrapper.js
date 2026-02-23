@@ -281,9 +281,10 @@ ${elements.reduce(
 /**
  * CEM package will invoke this callback function.
  *
- * @param {*} exclude array of excluded component class name
- * @param {*} outDir root output directory for generated code
- * @param {*} prettierConfig prettier library configuration
+ * @param {object} options - The options for generating the wrappers.
+ * @param {string[]} options.exclude - The array of excluded component class names.
+ * @param {string} options.outDir - The root output directory for generated code.
+ * @param {object} options.prettierConfig - The prettier library configuration.
  */
 export default function genWrappers({
   exclude = [],

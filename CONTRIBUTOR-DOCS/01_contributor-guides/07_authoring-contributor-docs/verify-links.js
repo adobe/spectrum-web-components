@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /**
  * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -9,7 +11,6 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-#!/usr/bin/env node
 
 /**
  * Link verification module for CONTRIBUTOR-DOCS.
@@ -94,16 +95,6 @@ function findMarkerPosition(content, marker) {
     }
 }
 
-/**
- * Generate GitHub-style anchor from heading text.
- */
-function makeAnchor(text) {
-    return text
-        .toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9\-]/g, '');
-}
-
 // ============================================================================
 // LINK EXTRACTION
 // ============================================================================
@@ -179,7 +170,7 @@ function extractLinksFromContent(filepath, content) {
  * Validate a single link.
  * Returns validation result with error details if invalid.
  */
-function validateLink(sourceFile, link, metadata, docsRoot) {
+function validateLink(sourceFile, link, metadata) {
     const { href } = link;
 
     // Parse link into file path and anchor
