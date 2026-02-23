@@ -52,7 +52,7 @@
     "stylesheet:tokens": "swc-tokens --outputType tokens --out ./stylesheets/tokens.css --prefix swc",
     "stylesheet:typography": "swc-tokens --outputType typography --out ./stylesheets/typography.css --prefix swc",
     "test": "vitest --run --project storybook",
-    "test:a11y": "playwright test",
+    "test:a11y": "test-storybook && playwright test",
     "test:a11y:headed": "playwright test --headed",
     "test:a11y:ui": "playwright test --ui",
     "test:a11y:update": "playwright test --update-snapshots",

@@ -48,6 +48,6 @@ export default defineConfig({
   webServer: {
     command: 'yarn storybook',
     port: 6006,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: true,
   },
 });

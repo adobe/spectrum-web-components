@@ -18,8 +18,9 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
  * Accessibility tests for Badge component (2nd Generation)
  *
  * ARIA snapshot tests validate the accessibility tree structure.
- * aXe WCAG compliance and color contrast validation are handled automatically
- * by the Storybook test-runner (see .storybook/test-runner.ts).
+ * aXe WCAG compliance and color contrast validation are run via
+ * test-storybook (see .storybook/test-runner.ts). Both are included
+ * in the `test:a11y` command.
  */
 
 test.describe('Badge - ARIA Snapshots', () => {
