@@ -11,184 +11,201 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-- [Prerequisites](#prerequisites)
-    - [Main successfully builds](#main-successfully-builds)
-    - [The correct version of Node is installed](#the-correct-version-of-node-is-installed)
-    - [Github Token is set up](#github-token-is-set-up)
-    - [Logged in to NPM](#logged-in-to-npm)
-    - [NPM 2FA authenticator app](#npm-2fa-authenticator-app)
-- [Releasing to NPM — the good stuff](#releasing-to-npm--the-good-stuff)
-    - [Troubleshooting](#troubleshooting)
-    - [Custom npm tags](#custom-npm-tags)
-- [Publishing the documentation site manually](#publishing-the-documentation-site-manually)
-    - [From GitHub](#from-github)
-    - [From the terminal](#from-the-terminal)
-    - [References](#references)
+- [Overview](#overview)
+- [Before you release](#before-you-release)
+    - [Make sure changesets are in place](#make-sure-changesets-are-in-place)
+    - [Understand the versioning strategy](#understand-the-versioning-strategy)
+- [Release types](#release-types)
+    - [Snapshot release (for testing a PR)](#snapshot-release-for-testing-a-pr)
+    - [Pre-release (next, beta, rc, etc.)](#pre-release-next-beta-rc-etc)
+    - [Production release (latest)](#production-release-latest)
+- [Approving the publish job](#approving-the-publish-job)
+- [Verifying the release](#verifying-the-release)
+- [Publishing the documentation site](#publishing-the-documentation-site)
+- [Troubleshooting](#troubleshooting)
 
 </details>
 
 <!-- Document content (editable) -->
 
-Users with permissions in the `@spectrum-web-components` organization on NPM can follow these steps to create and publish a new version.
+## Overview
 
-## Prerequisites
+Releases are fully automated through a GitHub Actions workflow (`.github/workflows/publish-1st-gen.yml`). There is no manual command to run locally — you trigger the release from GitHub and the workflow handles building, versioning, and publishing.
 
-### Main successfully builds
+The workflow publishes four package groups:
 
-Merge all pull requests to be included in the release, and wait for the `main` branch to show that it has completed the required Circle CI jobs.
+| Package group | npm namespace | Auth method |
+|---|---|---|
+| 1st-gen components | `@spectrum-web-components/*` | OIDC trusted publishing |
+| Core | `@spectrum-web-components/core` | OIDC trusted publishing |
+| 2nd-gen components | `@adobe/spectrum-wc` | npm token (`ADOBE_BOT_NPM_TOKEN`) |
+| React wrappers | `@swc-react/*` | OIDC trusted publishing |
 
-Check [Circle Ci build for `main`](https://app.circleci.com/pipelines/github/adobe/spectrum-web-components?branch=main) shows a `success` status. 1. If it failed, click `rerun` dropdown and select `rerun from failed`. 2. If it continues to fail, investigate further until you can successfully get the `main` branch building.
-
----
-
-### The correct version of Node is installed
-
-This is important to confirm before next step because differing node versions will cause build issues.
-
-#### Using Node Version Manager
-
-Run `nvm use` (assumes a Node Version Manager install), and confirm you’re on an operable version of Node.
-
-#### Manually checking
-
-1. Run `node --version` to see what version you have installed
-2. Check `.nvmrc` for node version requirements.
-3. If the versions don't match, run `node install [version]`
-
-#### Troubleshooting
-
-If you need to install the correct yarn version and/or have issues with `yarn` command not being recognized, run `corepack enabled`. Yarn 4 uses corepack and needs to be enabled to access the commands.
+> **Note:** React wrappers are only built and published when 1st-gen packages have changesets.
 
 ---
 
-### Github Token is set up
+## Before you release
 
-Check you have a GitHub token set up, run `echo $GITHUB_TOKEN`.
+### Make sure changesets are in place
 
-#### Generate a Github token
+The workflow only publishes if there are pending changesets in `.changeset/*.md`. If no changesets exist, the publish job is skipped automatically.
 
-1. If you do not have one, set it up in [Github settings > Developer settings > Personal access tokens](https://github.com/settings/personal-access-tokens)
-    1. Create a classic token
-        - Note: SWC changeset release token
-        - Set the expiration to a year or less
-        - Scopes:
-            - `repo (all)`
-            - `read:user`
-2. Add generated token to `~/.zshrc` with `export GITHUB_TOKEN='token'`
-    - Make sure there isn't another export with the same name
-3. Close your terminal to reset your profile, open terminal back up
+To check what's pending, look at the `.changeset/` directory (exclude `README.md`). Each changeset file lists the packages it affects and the bump type (`patch`, `minor`, or `major`).
 
----
-
-### Logged in to NPM
-
-Run `npm whoami` ensure that you are logged in with the user account for the public NPM registry.
-
-If not logged in, run `npm login` to sign in to your account.
-
----
-
-### NPM 2FA authenticator app
-
-1. Go to `Account Settings` on NPM
-2. Click `Modify 2FA` in the Two-Factor Authentication section
-3. Follow the instructions to configure the authenticator app (i.e. Google Authenticator) of your choice
-    1. Should be able generate a 6-digit password that updates regularly
-
----
-
-## Releasing to NPM — the good stuff
-
-The publishing workflow is handled by a single unified script (`scripts/publish.js`) that automates the entire process: cleaning, building, versioning, publishing, and git operations.
-
-1. **Prepare your workspace:**
-    - Run `git checkout main && git fetch && git pull` to ensure you have the latest code
-    - Confirm the working directory is clean with `git status`
-2. **Review changesets:**
-    - Scan the `.changeset` directory for pending changes
-    - In your IDE search `': major`, `': minor`, `': patch` to verify the release impact
-        - Exclude files: `.changeset/README.md`
-        - The highest level takes precedence (major > minor > patch)
-    - Confirm the changes match your expectations
-3. **Prepare for publishing:**
-    - Open your authenticator app to have it ready
-    - You'll need to enter a one-time password twice during the process:
-        1. Once for the main SWC packages
-        2. Once for the React wrapper packages
-4. **Run the publish command:**
-    - **Regular release:** `yarn publish`
-        - Creates git tags
-        - Publishes to npm with `latest` tag
-        - Commits changes to `main`
-    - **Snapshot release:** `yarn publish:snapshot`
-        - No git tags
-        - Publishes to npm with `snapshot` tag
-        - No git commits
-    - **Custom tag release:** `node ./scripts/publish.js --tag beta`
-        - No git tags
-        - Publishes to npm with custom tag (e.g., `beta`, `alpha`, `rc`, `nightly`)
-        - No git commits
-5. **What happens during publishing:**
-    1. The script cleans all build artifacts and reinstalls dependencies
-    2. Builds all packages (1st-gen and 2nd-gen)
-    3. Generates custom elements manifests
-    4. Versions packages with changesets
-    5. Publishes to npm (you'll enter your first OTP here)
-    6. Builds React wrapper packages
-    7. Publishes React wrappers to npm (you'll enter your second OTP here)
-    8. For regular releases: commits changes and creates git tags
-6. **Verify the release:**
-    - For regular releases, confirm the build on `main` passes
-    - Check the [tags page](https://github.com/adobe/spectrum-web-components/tags) to verify new tags were created
-    - The docs site will publish automatically if the commit message includes `#publish` and checks pass
-
-### Troubleshooting
-
-If publishing fails with an error:
-
-- Check the [list of tags](https://github.com/adobe/spectrum-web-components/tags) to see if new tags have been released for your publishing attempt.
-- If they were, run `yarn publish` again (or the appropriate command for your release type).
-
-### Custom npm tags
-
-For special releases like beta, alpha, nightly, or release candidates, you can use custom npm tags with the `--tag` flag:
+**If changesets are missing for packages you expected to update**, add them before triggering the release:
 
 ```bash
-# Beta release
-node ./scripts/publish.js --tag beta
-
-# Alpha release
-node ./scripts/publish.js --tag alpha
-
-# Nightly release
-node ./scripts/publish.js --tag nightly
-
-# Release candidate
-node ./scripts/publish.js --tag rc
+yarn changeset
 ```
 
-Users can then install these versions with:
+Follow the prompts to select packages and bump type.
+
+> **Important:** When you modify `@spectrum-web-components/core`, you must **manually add changesets** for any affected 1st-gen components. The `linked` versioning between Core and 2nd-gen handles 2nd-gen automatically, but 1st-gen packages are in a `fixed` group and are not linked to Core.
+
+### Understand the versioning strategy
+
+The `.changeset/config.json` defines how packages version together:
+
+- **Fixed group** – All `@spectrum-web-components/*` packages (except Core) always version together at the same number.
+- **Linked group** – `@adobe/spectrum-wc` and `@spectrum-web-components/core` receive the same bump type when either changes.
+- **Ignored** – The workspace root packages (`@spectrum-web-components/1st-gen`, `@spectrum-web-components/2nd-gen`) are never published.
+
+---
+
+## Release types
+
+### Snapshot release (for testing a PR)
+
+Use this to publish a test version of your changes to npm before merging. This is safe — it publishes under the `snapshot-test` dist-tag and does not affect `latest`.
+
+**How to trigger:**
+
+1. Open your pull request on GitHub.
+2. Add the `snapshot-release` label to the PR.
+3. The workflow triggers automatically. Every subsequent push to the PR also re-triggers it (as long as the label remains).
+
+**What gets published:**
+
+```
+@spectrum-web-components/button@0.0.0-snapshot-test-20260101120000
+@adobe/spectrum-wc@0.0.0-snapshot-test-20260101120000
+```
+
+**Install a snapshot version:**
 
 ```bash
+yarn add @spectrum-web-components/button@snapshot-test
+```
+
+---
+
+### Pre-release (next, beta, rc, etc.)
+
+Use this to publish to a dist-tag other than `latest` — for example, before a new major version is ready, or for nightly builds.
+
+**How to trigger:**
+
+1. Go to the repository on GitHub.
+2. Navigate to **Actions → Publish Packages**.
+3. Click **Run workflow**.
+4. Optionally enter a dist-tag in the **NPM dist-tag** field (e.g., `beta`, `rc`, `next`). If left blank, the default is `next`.
+5. Click **Run workflow**.
+
+> **Note:** Pushes to `main` also automatically trigger a `next` pre-release if changesets are present.
+
+**What gets published:**
+
+```
+@spectrum-web-components/button@1.2.3-next.20260101120000
+```
+
+**Install a pre-release version:**
+
+```bash
+yarn add @spectrum-web-components/button@next
 yarn add @spectrum-web-components/button@beta
-yarn add @spectrum-web-components/button@alpha
-yarn add @spectrum-web-components/button@nightly
-yarn add @spectrum-web-components/button@rc
 ```
 
 ---
 
-## Publishing the documentation site manually
+### Production release (latest)
 
-### From GitHub
+Use this to cut an official release. This publishes to the `latest` dist-tag, commits the version bumps and changelogs back to `main`, and creates a git tag.
 
-1. Navigate to SWC's [Actions](https://github.com/adobe/spectrum-web-components/actions) and click the `Site publish` workflow.
-2. At the top of the table, click the `Run workflow` dropdown — Use workflow from `main` branch, and click the `run workflow` button.
+> ⚠️ **The `latest` tag can only be published from the `main` branch.** If you attempt it from any other branch, the workflow will fail with an error.
 
-### From the terminal
+**How to trigger:**
 
-If you have the [GitHub CLI](https://cli.github.com) installed, you can alternatively run `gh workflow run publish.yml --ref main` from the command line.
+1. Make sure all PRs for the release are merged into `main`.
+2. Go to **Actions → Publish Packages**.
+3. Click **Run workflow**.
+4. Enter `latest` in the **NPM dist-tag** field.
+5. Click **Run workflow**.
 
-### References
+**What the workflow does after publishing:**
 
-[Running manual workflows](https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow), GitHub documentation
+- Commits all version bumps and generated changelogs with the message `chore: release packages #publish`.
+- Pushes the commit to `main`.
+- Creates git tags (e.g., `v1.2.3`) via `1st-gen/scripts/create-git-tag.js`.
+
+---
+
+## Approving the publish job
+
+The `publish` job runs in a protected GitHub Environment called `npm-publish`. Depending on the environment configuration, **a designated reviewer may need to approve the deployment** before the job proceeds.
+
+If approval is required:
+
+1. You will see a **"Waiting for approval"** status on the workflow run.
+2. A reviewer navigates to the workflow run on GitHub and clicks **Review deployments → Approve and deploy**.
+
+This is intentional — it prevents accidental or unauthorized npm publishes.
+
+---
+
+## Verifying the release
+
+After the workflow completes, verify the following:
+
+1. **Workflow summary** – Open the completed workflow run on GitHub Actions. The job summary shows the trigger, branch, npm tag, and whether publishing succeeded.
+2. **npm packages** – Search for the package on [npmjs.com](https://www.npmjs.com) or run:
+    ```bash
+    npm view @spectrum-web-components/button versions --json
+    ```
+3. **Git tags** (production releases only) – Check the [tags page](https://github.com/adobe/spectrum-web-components/tags) for the new version tag.
+4. **`main` branch** (production releases only) – Confirm the version bump commit (`chore: release packages #publish`) is visible in the commit history.
+
+---
+
+## Publishing the documentation site
+
+The documentation site publishes automatically on any push to `main` whose commit message contains `#publish`, `docs:`, or `docs(`. This happens automatically as part of every production release (the version commit uses `#publish`).
+
+To publish the docs site manually:
+
+**From GitHub:**
+1. Navigate to **Actions → Publish Documentation Site**.
+2. Click **Run workflow**, select `main`, and click **Run workflow**.
+
+**From the terminal** (requires [GitHub CLI](https://cli.github.com)):
+
+```bash
+gh workflow run publish-docs-site.yml --ref main
+```
+
+---
+
+## Troubleshooting
+
+- **The publish job was skipped entirely** — The `check-changesets` job found no pending changesets. Add a changeset with `yarn changeset` and push the change.
+
+- **"Cannot publish 'latest' from non-main branch"** — You entered `latest` as the dist-tag but the workflow was triggered from a branch other than `main`. Merge your changes into `main` first, then re-run the workflow from `main`.
+
+- **"OIDC token NOT available – trusted publishing will fail"** — The workflow requires `id-token: write` permissions. Ensure the workflow is running in the `npm-publish` environment and that the repository's GitHub Actions permissions allow OIDC token generation.
+
+- **Publishing succeeded but React wrappers were skipped** — React wrappers are only built and published when 1st-gen packages (`@spectrum-web-components/*`) have changesets. If only Core or 2nd-gen changed, the React wrapper step is intentionally skipped.
+
+- **A React wrapper package failed to publish mid-run** — The workflow retries each package up to 3 times with exponential backoff (2s, 4s). If it still fails after 3 attempts, the workflow exits. Re-triggering the workflow is safe — changeset will skip already-published packages.
+
+- **The workflow ran but versions weren't bumped on `main`** — Version commits and git tags are only created for `latest` releases. Pre-releases (`next`, `beta`, `snapshot-test`, etc.) intentionally skip the commit and tag steps.
