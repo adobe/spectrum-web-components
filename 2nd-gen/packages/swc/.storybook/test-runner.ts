@@ -38,23 +38,25 @@ const config: TestRunnerConfig = {
       | undefined;
 
     const violations = excludeMap
-      ? results.violations.filter((violation) => {
-          const excludedSelectors = excludeMap[violation.id];
-          if (!excludedSelectors) {
-            return true;
-          }
+      ? results.violations
+          .map((violation) => {
+            const excludedSelectors = excludeMap[violation.id];
+            if (!excludedSelectors) {
+              return violation;
+            }
 
-          violation.nodes = violation.nodes.filter(
-            (node) =>
-              !node.target.some((target) =>
-                excludedSelectors.some((selector) =>
-                  String(target).includes(selector)
+            const remainingNodes = violation.nodes.filter(
+              (node) =>
+                !node.target.some((target) =>
+                  excludedSelectors.some((selector) =>
+                    String(target).includes(selector)
+                  )
                 )
-              )
-          );
+            );
 
-          return violation.nodes.length > 0;
-        })
+            return { ...violation, nodes: remainingNodes };
+          })
+          .filter((violation) => violation.nodes.length > 0)
       : results.violations;
 
     if (violations.length > 0) {
