@@ -28,10 +28,11 @@ const postcssPlugins = [
   postcssPresetEnv({
     stage: 2,
     features: {
-      'nesting-rules': true,
+      'nesting-rules': false,
       'custom-properties': false,
       'light-dark-function': false,
       'logical-properties-and-values': false,
+      'is-pseudo-class': false,
     },
   }),
 ];

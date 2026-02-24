@@ -17,6 +17,7 @@
     - [Component CSS PR Checklist](01_css/03_component-css-pr-checklist.md)
     - [Spectrum CSS to SWC Migration](01_css/04_spectrum-swc-migration.md)
     - [Styling Anti-Patterns (What to Avoid)](01_css/05_anti-patterns.md)
+- [Linting tools](02_linting-tools.md)
 
 </details>
 
