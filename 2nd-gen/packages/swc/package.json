@@ -56,7 +56,6 @@
     "test:a11y": "test-storybook && playwright test",
     "test:a11y:headed": "playwright test --headed",
     "test:a11y:ui": "playwright test --ui",
-    "test:a11y:update": "playwright test --update-snapshots",
     "test:browser": "vitest --project storybook --browser.headless=false",
     "test:coverage": "vitest --coverage --project storybook",
     "test:storybook": "test-storybook",
