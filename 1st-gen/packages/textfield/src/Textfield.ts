@@ -310,7 +310,7 @@ export class TextfieldBase extends ManageHelpText(
   }
 
   protected get inputElementIsTruncated(): boolean {
-    if (!this.inputElement || this.multiline) {
+    if (!this.inputElement || this.multiline || this.type === 'password') {
       return false;
     }
     // Add 1 because Safari sometimes rounds by 1px, breaking the calculation otherwise.
@@ -405,7 +405,12 @@ export class TextfieldBase extends ManageHelpText(
   }
 
   protected renderTruncatedValueTooltip(): TemplateResult | typeof nothing {
-    if (!this.isTruncated || this.disabled || !this.inputElement) {
+    if (
+      !this.isTruncated ||
+      this.disabled ||
+      !this.inputElement ||
+      this.type === 'password'
+    ) {
       return nothing;
     }
     return html`

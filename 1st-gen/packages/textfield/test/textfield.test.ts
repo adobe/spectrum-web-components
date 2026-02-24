@@ -748,6 +748,23 @@ describe('Textfield', () => {
     );
     expect(tooltipOverlay).to.not.exist;
   });
+  it('does not render truncated value tooltip when type is password and value is clipped', async () => {
+    const value = 'ThisIsAVeryLongTextfieldValueThatWillBeTruncated';
+    const el = await litFixture<Textfield>(html`
+      <sp-textfield
+        style="--mod-textfield-width: 40px; --spectrum-textfield-min-width: 0;"
+        type="password"
+        value=${value}
+      ></sp-textfield>
+    `);
+    await elementUpdated(el);
+    await elementUpdated(el);
+
+    const tooltipOverlay = el.shadowRoot?.querySelector(
+      '#truncated-value-tooltip'
+    );
+    expect(tooltipOverlay).to.not.exist;
+  });
   it('uses default placement "bottom" for truncated value tooltip when not set', async () => {
     const value = 'ThisIsAVeryLongTextfieldValueThatWillBeTruncated';
     const el = await litFixture<Textfield>(html`
