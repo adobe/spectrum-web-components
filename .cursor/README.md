@@ -242,6 +242,17 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: Implementing any feature or bugfix, before writing implementation code
 - Provides: TDD cycle, verification checklist, good/bad test examples, anti-patterns to avoid
 
+## Using rules and skills in other IDEs
+
+The rules and skills in this directory are set up for **Cursor** and are applied automatically when you use Cursor in this repo. If you use a different AI-enabled IDE (e.g. Windsurf, Zed, or another editor with built-in AI), that tool will not automatically read `.cursor/` — each IDE has its own config locations and formats.
+
+You can still get the same guidance in another IDE:
+
+- **Copy or adapt the contents** of `rules/` and `skills/` into your IDE’s equivalent config (e.g. your IDE’s project rules, instructions, or “AI context” directory). The content is markdown and JSON, so it’s portable; you may need to adjust paths or format to match your IDE’s schema.
+- **Reference the files when prompting** — e.g. “Follow the rules in `.cursor/README.md` and the rules in `.cursor/rules/` when relevant” or “Use the workflow in `.cursor/skills/contributor-docs-nav/SKILL.md` for this task.”
+
+Keeping rules and skills in this repo means everyone can use the same standards; Cursor users get them automatically, and non-Cursor users can copy or point their IDE at the same content.
+
 ## MCPs
 
 When developing for the SWC project, there may be instances where Cursor needs context from external sources. Contributors and maintainers can configure [MCP (Model Context Protocol) servers](https://modelcontextprotocol.io/docs/getting-started/intro) via [Easy MCP](https://wiki.corp.adobe.com/display/assetscollab/Cursor+integration+with+Easy+MCP). Some recommended MCP servers might include:
