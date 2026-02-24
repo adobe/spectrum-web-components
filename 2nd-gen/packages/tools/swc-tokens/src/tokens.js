@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import fs from 'fs';
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 
@@ -69,32 +68,6 @@ const CUSTOM_TOKENS = [
     resolveAliases: true,
   },
 ];
-
-/* -----------------------------------------------------------------------------
- *  Logging
- * -------------------------------------------------------------------------- */
-
-/**
- * Creates a logger that writes to a file.
- *
- * @param {string|false} debugPath  path to log file OR false for no logging
- */
-export function createLogger(debugPath) {
-  if (!debugPath) {
-    return () => {};
-  }
-
-  fs.writeFileSync(debugPath, '');
-
-  return (...args) => {
-    fs.appendFileSync(
-      debugPath,
-      args
-        .map((a) => (typeof a === 'string' ? a : JSON.stringify(a, null, 2)))
-        .join(' ') + '\n'
-    );
-  };
-}
 
 /* -----------------------------------------------------------------------------
  *  String / Alias helpers
@@ -502,7 +475,7 @@ ${scaling.join('\n')}
 
 // Load individual token JSON files
 async function loadTokenJson(file, src) {
-  const base = src === 'spectrum' ? '@adobe/spectrum-tokens/src' : './custom';
+  const base = src === 'spectrum' ? '@adobe/spectrum-tokens/src' : '../custom';
   const filePath = `${base}/${file}.json`;
 
   try {

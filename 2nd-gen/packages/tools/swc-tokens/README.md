@@ -4,6 +4,8 @@ This package ingests Spectrum design token source data and converts it into CSS 
 
 An additional function, `lookupToken()`, is exported for use by `@adobe/postcss-token`. It powers the `token()` CSS function by resolving token names to either computed values or composed custom properties.
 
+A stylesheet with typography classes can also be generated.
+
 ## Terminology
 
 - **Token** – A named design value (e.g. `gray-500`)
@@ -22,7 +24,7 @@ Ensure tokens are updated in the dependent packages by running the following com
 yarn tokens:update
 ```
 
-This will first run all token related tests, then update the extension-relative `tokens.json` for `swc-vscode-token` and the library-relative `tokens.css` for `@adobe/spectrum-wc`.
+This will first run all token related tests, then update the extension-relative `tokens.json` for `swc-vscode-token` and the library-relative `tokens.css` and `typography.css` for `@adobe/spectrum-wc`.
 
 If any test fails, the artifacts will not be generated, allowing you to investigate and fix any issues.
 
@@ -56,7 +58,7 @@ Additional tokens may be added within `./custom` as JSON files in the following 
 
 The `skipResolution` flag indicates that an alias **should remain an alias** and be emitted as a CSS custom property reference, rather than being resolved to its final primitive value.
 
-If a new custom file is added, also include its name and whether to resolve aliases in the `CUSTOM_TOKENS` array in `utils.js`.
+If a new custom file is added, also include its name and whether to resolve aliases in the `CUSTOM_TOKENS` array in `tokens.js`.
 
 ## Token and Alias Resolution
 
@@ -108,7 +110,7 @@ flowchart TD
 
 ### Controlling Alias Resolution
 
-Alias resolution is controlled per source file via configuration in `utils.js`. The `SPECTRUM_TOKENS` and `CUSTOM_TOKENS` lists the source JSON filenames and also flags files to either resolve found aliases or not.
+Alias resolution is controlled per source file via configuration in `tokens.js`. The `SPECTRUM_TOKENS` and `CUSTOM_TOKENS` lists the source JSON filenames and also flags files to either resolve found aliases or not.
 
 Some sources intentionally preserve aliases to ensure correct composition across multiple token layers.
 
@@ -141,9 +143,9 @@ flowchart TD
 
 </details>
 
-## Stylesheet Generation
+## Token Stylesheet Generation
 
-The unified stylesheet splits tokens into two groups:
+The unified token stylesheet splits tokens into two groups:
 
 - non-scaling:
   - primitive values (`corner-radius-100`)
@@ -232,16 +234,28 @@ All of those concerns are handled during the token generation phase.
 
 This keeps runtime usage predictable and avoids re-implementing token logic in downstream tooling.
 
+## Typography Stylesheet
+
+An additional option is to generate a stylesheet with classes for typography styles.
+
+Classes are available for the following type style categories, and include CJK adjustments:
+
+- heading
+- title
+- body
+- detail
+- code
+
 ## CLI Options
 
-The main package provides a CLI to produce either the unified stylesheet `tokens.css` or the dump of processed data as `tokens.json`.
+The main package provides a CLI to produce either the unified stylesheet `tokens.css`, the typography stylesheet `typography.css`, or the dump of processed token data as `tokens.json`.
 
 > For purposes of the main package, those files are git ignored and intended for debugging purposes only.
 
-For the primary consuming package `@adobe/spectrum-wc`, the following CLI command is used:
+For the primary consuming package `@adobe/spectrum-wc`, the following CLI command is used for generating the token stylesheet:
 
 ```bash
-swc-tokens --outputType stylesheet --out ./stylesheets/tokens.css --prefix swc
+swc-tokens --outputType tokens --out ./stylesheets/tokens.css --prefix swc
 ```
 
 This outputs the stylesheet into the noted `--out` directory and filename, with the use of `swc` as a prefix for all custom properties.
@@ -250,8 +264,9 @@ This outputs the stylesheet into the noted `--out` directory and filename, with 
 
 Valid `--outputType` values include:
 
-- `stylesheet`
-- `tokens` - produces JSON
+- `tokens` - token stylesheet
+- `data` - token JSON
+- `typography` - typography stylesheet
 
 ## Commands
 
@@ -266,8 +281,9 @@ yarn debug:tokens
 Generate commands are available to produce outputs like those available to consuming packages.
 
 ```bash
-yarn generate:stylesheet
+yarn generate:data
 yarn generate:tokens
+yarn generate:typography
 ```
 
 ## Testing Changes
