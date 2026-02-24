@@ -100,6 +100,12 @@ These two rules share the same glob (`2nd-gen/**/stories/**`) and work as a pair
 - **comments**: Convert all `<!-- -->` HTML comments to `{/* */}` JSX comments
 - **preserve_content**: Keep all markdown syntax, HTML elements, links, and formatting unchanged
 
+#### Deep understanding
+
+- **always_applied**: At the start of every session and before writing any code, do deep research on the relevant part of the codebase first
+- **action**: Scope → deep read → write persistent report (e.g. research.md) → pause for user review → proceed only after validation. Full workflow in `.cursor/skills/deep-understanding/SKILL.md`
+- **rationale**: The written report is the review surface; wrong research leads to wrong plan and wrong code (garbage in, garbage out)
+
 ### When rules are activated
 
 **Always-applied rules:** Rules use `alwaysApply: true` to activate automatically, or `globs` to activate when matching files are edited.
@@ -125,6 +131,7 @@ These two rules share the same glob (`2nd-gen/**/stories/**`) and work as a pair
 | branch-naming                  |       x        |           |              | —                                 |
 | stories-documentation          |       x        |           |              | `2nd-gen/**/stories/**`           |
 | stories-format                 |       x        |           |              | `2nd-gen/**/stories/**`           |
+| deep-understanding             |       x        |           |              | —                                 |
 | component-readme               |                |     x     |              | `1st-gen/packages/*/README.md`    |
 | contributor-doc-update         |                |     x     |              | `CONTRIBUTOR-DOCS/**`             |
 | github-description             |                |     x     |              | —                                 |
@@ -192,6 +199,13 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - **How to invoke**: Say “create migration analysis for [component]”, “analyze rendering and styling for [component]”, or “rendering and styling migration for [component]”. Also invoked when you refer to the “analyze rendering and styling” step in the 2nd-gen component migration workstream.
 - Use when: On the analyze-rendering-and-styling step for one or more components; creating one markdown file per component at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`
 - Provides: Workflow summary (specs from CSS + SWC, three-way DOM comparison, CSS⇒SWC mapping table, summary). Full instructions in `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_analyze-rendering-and-styling/cursor_prompt.md`
+
+#### Deep understanding
+
+- **purpose**: Require a thorough deep-read of the relevant codebase before planning or implementing; write findings to a persistent markdown file (e.g. `research.md`) so the user can review and correct before any work proceeds
+- **How to invoke**: Enforced by an **always-applied rule** — at session start and before any code writing, the agent does deep research and writes a report; no need to ask. You can still say “read this folder in depth and write research.md” or “study [system] in great detail” to scope or reinforce.
+- Use when: Every session and whenever the task touches non-trivial code; the written report is required before planning or implementation
+- Provides: Workflow (scope → deep read → write report → pause for review → proceed only after validation). Written artifact is the review surface
 
 #### Conventional commits
 
