@@ -47,9 +47,9 @@
 }
 
 a {
+  text-decoration-skip: objects;
   color: var(--highcontrast-link-text-color, var(--mod-link-text-color, var(--mod-link-text-color-primary-default, var(--spectrum-accent-content-color-default))));
   text-decoration: underline;
-  text-decoration-skip-ink: auto;
   background-color: initial;
   cursor: pointer;
   outline: none;
