@@ -15,7 +15,6 @@ import {
   html,
   nextFrame,
   oneEvent,
-  waitUntil,
 } from '@open-wc/testing';
 
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
@@ -284,5 +283,55 @@ describe('Overlay Trigger - ARIA attributes', () => {
     await opened;
 
     expect(trigger.getAttribute('aria-expanded')).to.equal('true');
+  });
+
+  it('does not strip consumer-authored ARIA on hover-only triggers', async () => {
+    const el = await fixture<OverlayTrigger>(html`
+      <overlay-trigger triggered-by="hover">
+        <sp-button
+          slot="trigger"
+          aria-expanded="true"
+          aria-controls="external-panel"
+        >
+          Hover me
+        </sp-button>
+        <sp-tooltip slot="hover-content">Tooltip text</sp-tooltip>
+      </overlay-trigger>
+    `);
+    await elementUpdated(el);
+    await nextFrame();
+
+    const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
+    expect(trigger.getAttribute('aria-expanded')).to.equal('true');
+    expect(trigger.getAttribute('aria-controls')).to.equal('external-panel');
+  });
+
+  it('switches aria-controls to longpress content when longpress is open', async () => {
+    const el = await fixture<OverlayTrigger>(html`
+      <overlay-trigger triggered-by="click longpress">
+        <sp-button slot="trigger">Trigger</sp-button>
+        <sp-popover slot="click-content" id="click-panel">
+          Click content
+        </sp-popover>
+        <sp-popover slot="longpress-content" id="longpress-panel">
+          Longpress content
+        </sp-popover>
+      </overlay-trigger>
+    `);
+    await elementUpdated(el);
+    await nextFrame();
+
+    const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
+    expect(trigger.getAttribute('aria-controls')).to.equal('click-panel');
+
+    el.open = 'longpress';
+    await elementUpdated(el);
+
+    expect(trigger.getAttribute('aria-controls')).to.equal('longpress-panel');
+
+    el.open = 'click';
+    await elementUpdated(el);
+
+    expect(trigger.getAttribute('aria-controls')).to.equal('click-panel');
   });
 });

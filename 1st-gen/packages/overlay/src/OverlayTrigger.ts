@@ -135,10 +135,10 @@ export class OverlayTrigger extends SpectrumElement {
   hoverOverlayElement!: Overlay;
 
   /**
-   * Tracks elements where this component set aria-haspopup,
-   * so consumer-set values are never overwritten.
+   * Tracks elements where this component has taken ownership
+   * of ARIA attributes, so consumer-set values are never removed.
    */
-  private ariaHaspopupManagedElements = new WeakSet<HTMLElement>();
+  private ariaManagedElements = new WeakSet<HTMLElement>();
 
   private previousTriggerElement?: HTMLElement;
 
@@ -187,12 +187,13 @@ export class OverlayTrigger extends SpectrumElement {
   }
 
   private removeAriaFromTrigger(element: HTMLElement): void {
+    if (!this.ariaManagedElements.has(element)) {
+      return;
+    }
     element.removeAttribute('aria-expanded');
     element.removeAttribute('aria-controls');
-    if (this.ariaHaspopupManagedElements.has(element)) {
-      element.removeAttribute('aria-haspopup');
-      this.ariaHaspopupManagedElements.delete(element);
-    }
+    element.removeAttribute('aria-haspopup');
+    this.ariaManagedElements.delete(element);
   }
 
   private manageAriaOnTrigger(): void {
@@ -206,7 +207,9 @@ export class OverlayTrigger extends SpectrumElement {
     }
     this.previousTriggerElement = triggerElement;
 
-    if (!triggerElement) return;
+    if (!triggerElement) {
+      return;
+    }
 
     const hasClickContent = this.clickContent.length > 0;
     const hasLongpressContent = this.longpressContent.length > 0;
@@ -220,14 +223,19 @@ export class OverlayTrigger extends SpectrumElement {
     triggerElement.setAttribute('aria-expanded', String(isExpanded));
 
     if (
-      this.ariaHaspopupManagedElements.has(triggerElement) ||
+      this.ariaManagedElements.has(triggerElement) ||
       !triggerElement.hasAttribute('aria-haspopup')
     ) {
       triggerElement.setAttribute('aria-haspopup', 'dialog');
-      this.ariaHaspopupManagedElements.add(triggerElement);
     }
+    this.ariaManagedElements.add(triggerElement);
 
-    const content = this.clickContent[0] || this.longpressContent[0];
+    const content =
+      this.open === 'longpress'
+        ? this.longpressContent[0]
+        : this.open === 'click'
+          ? this.clickContent[0]
+          : this.clickContent[0] || this.longpressContent[0];
     if (content) {
       if (!content.id) {
         content.id = `sp-overlay-content-${randomID()}`;
