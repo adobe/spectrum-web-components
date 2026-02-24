@@ -174,11 +174,12 @@ The language decorator (`decorators/language.ts`) handles the rest automatically
 
 If you switch to a CJK locale in the Language toolbar but text still renders in a system font:
 
-1. Check `window.currentKitId` in the preview iframe console — it should match the expected kit for that locale
-2. Look for `wf-*-active` classes on the iframe's `<html>` element (e.g. `wf-adobe-clean-han-japanese-n4-active`). If missing, the kit script loaded but `Typekit.load()` may not have been called
-3. Check the browser console for `Typekit.load() failed` warnings
-4. Verify the kit ID in `preview-head.html` (`__SWC_FONT_KIT_IDS__`) is correct and the Adobe Fonts web project is published
-5. Try a hard refresh — `Ctrl+Shift+R` / `Cmd+Shift+R` — to clear cached scripts
+1. Manually inspect the element and check the text elements Computed styles. Inheritance of the `font-family` property value could be interfering.
+2. Check `window.currentKitId` in the preview iframe console — it should match the expected kit for that locale
+3. Look for `wf-*-active` classes on the iframe's `<html>` element (e.g. `wf-adobe-clean-han-japanese-n4-active`). If missing, the kit script loaded but `Typekit.load()` may not have been called
+4. Check the browser console for `Typekit.load() failed` warnings
+5. Verify the kit ID in `preview-head.html` (`__SWC_FONT_KIT_IDS__`) is correct and the Adobe Fonts web project is published
+6. Try a hard refresh — `Ctrl+Shift+R` / `Cmd+Shift+R` — to clear cached scripts
 
 ## Resources
 
