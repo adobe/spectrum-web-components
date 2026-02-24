@@ -687,11 +687,16 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
     if (this.value && this.selectedItem) {
       return content;
     }
+    // @todo the `label` slot is deprecated; remove in a future release.
     return html`
-      <slot name="label" id="label">
-        <span aria-hidden=${ifDefined(this.appliedLabel ? undefined : 'true')}>
-          ${this.label}
-        </span>
+      <slot name="field-label" id="label">
+        <slot name="label" id="label">
+          <span
+            aria-hidden=${ifDefined(this.appliedLabel ? undefined : 'true')}
+          >
+            ${this.label}
+          </span>
+        </slot>
       </slot>
     `;
   }
@@ -1759,6 +1764,7 @@ export class Picker extends FieldLabelMixin(
       label: true,
     };
     const appliedLabel = this.appliedLabel || this.label;
+    // @todo the `label` slot is deprecated; remove in a future release.
     return [
       html`
         <span id="icon" ?hidden=${this.icons === 'none'}>
@@ -1812,12 +1818,19 @@ export class Picker extends FieldLabelMixin(
    * Callback invoked by an associated field label to apply its label value.
    * Sets the applied label and determines label alignment based on the field label's configuration.
    *
+   * @deprecated This method is deprecated and will be removed in a future version. Use the `field-label` slot instead of `<sp-field-label`.
    * @param value - The label text value
    * @param labelElement - The field label element providing the label
    */
   applyFocusElementLabel = (value: string, labelElement: FieldLabel): void => {
     this.appliedLabel = value;
     this.labelAlignment = labelElement.sideAligned ? 'inline' : undefined;
+    window.__swc.warn(
+      this,
+      `The \`applyFocusElementLabel\` method is deprecated and will be removed in a future version. Use the \`field-label\` slot instead of \`<sp-field-label>\`.`,
+      'https://opensource.adobe.com/spectrum-web-components/components/picker/#deprecation',
+      { level: 'deprecation' }
+    );
   };
 
   /**
@@ -1925,7 +1938,7 @@ export class Picker extends FieldLabelMixin(
         aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
         aria-describedby="tooltip ${DESCRIPTION_ID}"
         aria-expanded=${this.open ? 'true' : 'false'}
-        aria-haspopup="true"
+        aria-haspopup="listbox"
         aria-label=${ifDefined(this.label || undefined)}
         aria-labelledby="icon label applied-label pending-label"
         id="button"
@@ -1940,7 +1953,7 @@ export class Picker extends FieldLabelMixin(
         }}
         ?disabled=${this.disabled}
       >
-        ${this.renderButtonContent()}
+        ${this.buttonContent}
       </button>
       <slot
         aria-hidden="true"
@@ -1949,26 +1962,9 @@ export class Picker extends FieldLabelMixin(
         @keydown=${this.handleKeydown}
         @slotchange=${this.handleTooltipSlotchange}
       ></slot>
-      ${this.renderMenu}${this.renderDescriptionSlot}${this.renderHelpText(this.invalid)}
-    `;
-  }
-
-  protected renderButtonContent(): TemplateResult {
-    return html`
-      <span class="value">
-        ${this.value ? this.selectedItemContent : this.placeholder}
-      </span>
-      <span id="label-slot" slot="label" ?hidden=${!this.slotHasContent || !!this.value}>${this.label}</span>
-
-      ${this.pending
-        ? html`
-            ${this.renderLoader()}
-            <span aria-hidden="true" class="visually-hidden" id="pending-label">
-              ${this.pendingLabel}
-            </span>
-          `
-        : nothing}
-      <sp-icon-chevron100></sp-icon-chevron100>
+      ${this.renderMenu}${this.renderDescriptionSlot}${this.renderHelpText(
+        this.invalid
+      )}
     `;
   }
 
