@@ -63,11 +63,12 @@ export const swcThemeDecorator = (story: StoryFn, context: StoryContext) => {
     }
     if (lang) {
       window.__swc_hack_knobs__.defaultLocale = lang;
+      document.documentElement.lang = lang;
     }
   }, [system, color, scale, textDirection, reduceMotion, lang]);
 
   const hasAnySetting =
-    system || color || scale || textDirection || reduceMotion;
+    system || color || scale || textDirection || reduceMotion || lang;
 
   return html`
     <style>

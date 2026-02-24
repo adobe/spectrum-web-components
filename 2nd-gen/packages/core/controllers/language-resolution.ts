@@ -36,14 +36,61 @@ export const languageResolverUpdatedSymbol = Symbol(
   'language resolver updated'
 );
 
+// ────────────────────────────────────────────
+// Shared <html lang> observer (singleton)
+// ────────────────────────────────────────────
+//
+// Instead of each controller instance creating its own MutationObserver on
+// document.documentElement, a single module-scoped observer fans out to every
+// registered callback. The observer is created lazily when the first controller
+// connects and torn down automatically when the last one disconnects.
+
+type LangChangeListener = () => void;
+
+const listeners = new Set<LangChangeListener>();
+let sharedObserver: MutationObserver | undefined;
+
+function addLangListener(listener: LangChangeListener): () => void {
+  listeners.add(listener);
+
+  if (!sharedObserver) {
+    sharedObserver = new MutationObserver(() => {
+      for (const cb of listeners) {
+        cb();
+      }
+    });
+    sharedObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['lang'],
+    });
+  }
+
+  return () => {
+    listeners.delete(listener);
+    if (listeners.size === 0) {
+      sharedObserver?.disconnect();
+      sharedObserver = undefined;
+    }
+  };
+}
+
 /**
  * A reactive controller that manages language/locale resolution for components.
  *
  * This controller:
- * - Automatically detects the document language or falls back to browser/default language
- * - Subscribes to language context changes from parent `<sp-theme>` elements
- * - Triggers host component updates when language changes
- * - Validates locale support using Intl API
+ * - Gets initial language from `<html lang>`, then `navigator.language`, then `'en-US'`
+ * - Optionally subscribes to a provider (e.g. 1st-gen `<sp-theme>`) via the
+ *   `sp-language-context` event; if something up the tree handles it and calls the
+ *   callback, that becomes the source of truth for live updates
+ * - Observes `<html lang>` attribute changes via a shared singleton observer so that
+ *   when the document language changes at runtime (e.g. app-level locale switching),
+ *   the controller updates and the host re-renders (e.g. aria-valuetext reformats)
+ * - Validates locale support using Intl API and falls back to `'en-US'` if unsupported
+ *
+ * In 2nd-gen there is no sp-theme language provider, so live updates come from
+ * `<html lang>` changes. Apps that support locale switching should set
+ * `document.documentElement.lang` when the locale changes; the controller will
+ * pick it up and trigger updates.
  *
  * Components using this controller can access the current language via the `language`
  * property and will automatically re-render when the language context changes.
@@ -71,35 +118,71 @@ export class LanguageResolutionController implements ReactiveController {
    * The currently resolved language/locale code (e.g., 'en-US', 'fr-FR').
    * Defaults to document language, browser language, or 'en-US'.
    */
-  language = document.documentElement.lang || navigator.language || 'en-US';
+  language = this.getDocumentLanguage();
 
+  /** Unsubscribe from the sp-language-context provider (if any). */
   private unsubscribe?: () => void;
+
+  /** Unsubscribe from the shared <html lang> observer. */
+  private removeLangListener?: () => void;
 
   constructor(host: ReactiveElement) {
     this.host = host;
     this.host.addController(this);
   }
 
+  /**
+   * Reads language from document and validates. Used for initial value and
+   * when syncing from `<html lang>` changes.
+   */
+  private getDocumentLanguage(): string {
+    const raw = document.documentElement.lang || navigator.language || 'en-US';
+    try {
+      Intl.DateTimeFormat.supportedLocalesOf([raw]);
+      return raw;
+    } catch {
+      return 'en-US';
+    }
+  }
+
   public hostConnected(): void {
     this.resolveLanguage();
+    this.removeLangListener = addLangListener(this.handleLangChange.bind(this));
   }
 
   public hostDisconnected(): void {
     this.unsubscribe?.();
+    this.unsubscribe = undefined;
+    this.removeLangListener?.();
+    this.removeLangListener = undefined;
   }
 
   /**
-   * Resolves the language from the theme context and validates it against Intl API.
-   * Falls back to 'en-US' if the language is not supported.
+   * Called by the shared observer when `<html lang>` changes.
+   * Skipped when a provider (e.g. sp-theme) is the source of truth.
+   */
+  private handleLangChange(): void {
+    if (this.unsubscribe) {
+      return;
+    }
+    const next = this.getDocumentLanguage();
+    if (next === this.language) {
+      return;
+    }
+    const previous = this.language;
+    this.language = next;
+    this.host.requestUpdate(languageResolverUpdatedSymbol, previous);
+  }
+
+  /**
+   * Resolves the language: syncs from document, then queries for a provider
+   * (e.g. sp-theme) via 'sp-language-context'. If a provider calls the
+   * callback, it becomes the source of truth until disconnected.
    *
    * @private
    */
   private resolveLanguage(): void {
-    try {
-      Intl.DateTimeFormat.supportedLocalesOf([this.language]);
-    } catch {
-      this.language = 'en-US';
-    }
+    this.language = this.getDocumentLanguage();
     const queryThemeEvent = new CustomEvent<ProvideLang>(
       'sp-language-context',
       {

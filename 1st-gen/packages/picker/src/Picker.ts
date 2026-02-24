@@ -2087,12 +2087,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
    * Allows parent components to react to menu scroll events.
    */
   private onScroll(): void {
-    this.dispatchEvent(
-      new Event('scroll', {
-        cancelable: true,
-        composed: true,
-      })
-    );
+    this.dispatchEvent(new Event('scroll'));
   }
 
   /**

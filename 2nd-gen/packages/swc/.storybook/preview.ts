@@ -24,6 +24,7 @@ import DocumentTemplate from './DocumentTemplate.mdx';
 import { FontLoader } from './loaders/font-loader.js';
 
 import '../stylesheets/swc.css';
+import '../stylesheets/typography.css';
 import './assets/preview.css';
 
 const storybookHelperOptions: Options = {
