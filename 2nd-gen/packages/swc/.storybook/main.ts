@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 /**
  * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -79,7 +78,7 @@ const config = {
     '@storybook/addon-a11y',
     '@storybook/addon-designs',
     '@storybook/addon-vitest',
-    '@github-ui/storybook-addon-performance-panel/preset',
+    '@github-ui/storybook-addon-performance-panel/universal',
   ],
   viteFinal: async (config) => {
     return mergeConfig(config, {

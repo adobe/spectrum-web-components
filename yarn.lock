@@ -197,7 +197,7 @@ __metadata:
     "@adobe/swc-tokens": "workspace:*"
     "@axe-core/playwright": "npm:4.10.2"
     "@custom-elements-manifest/analyzer": "npm:0.10.8"
-    "@github-ui/storybook-addon-performance-panel": "npm:^1.0.0"
+    "@github-ui/storybook-addon-performance-panel": "npm:1.0.1-canary.e4e58ab"
     "@spectrum-web-components/core": "npm:0.0.4"
     "@storybook/addon-a11y": "npm:10.2.8"
     "@storybook/addon-designs": "npm:11.1.2"
@@ -3966,15 +3966,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@github-ui/storybook-addon-performance-panel@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@github-ui/storybook-addon-performance-panel@npm:1.0.0"
+"@github-ui/storybook-addon-performance-panel@npm:1.0.1-canary.e4e58ab":
+  version: 1.0.1-canary.e4e58ab
+  resolution: "@github-ui/storybook-addon-performance-panel@npm:1.0.1-canary.e4e58ab"
   peerDependencies:
     "@storybook/icons": ^2.0.0
     "@storybook/react": ^10.0.0
     react: ^19
     storybook: ^10
-  checksum: 10c0/f42360d2ac99c9e239dd4ef9124702db38f13c7ce52bbd7fbe0137e93f6c4fe2196a85988f5e36286b4378f5808d807b764d055e46eb5dabe354ee378838d882
+  peerDependenciesMeta:
+    "@storybook/react":
+      optional: true
+    react:
+      optional: true
+  checksum: 10c0/89344e1a109a04096da623d6e66ea6b74d29c101c5c78eeaffcdd60f3f7f46442c889d1497f26e5e6035eca1d4afef717db550227fa974cc7d1314e28a11f04d
   languageName: node
   linkType: hard
 

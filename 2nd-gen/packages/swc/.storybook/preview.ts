@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 /** @type { import('@storybook/web-components').Preview } */
+import { withPerformanceMonitor } from '@github-ui/storybook-addon-performance-panel/universal';
 import { setCustomElementsManifest } from '@storybook/web-components';
 import {
   type Options,
@@ -18,11 +19,7 @@ import {
 
 import customElements from './custom-elements.json';
 import { withContext } from './decorators/contexts.js';
-import {
-  withFlexLayout,
-  withPerformanceMonitor,
-  withStaticColorsDemo,
-} from './decorators/index.js';
+import { withFlexLayout, withStaticColorsDemo } from './decorators/index.js';
 import { withStaticColorPlayground } from './decorators/static-color-playground.js';
 import DocumentTemplate from './DocumentTemplate.mdx';
 import { FontLoader } from './loaders/font-loader.js';
