@@ -536,10 +536,7 @@ export class ColorArea extends SpectrumElement {
       this.colorController.color.set('s', this.inputX.valueAsNumber * 100);
     }
     if (this.y !== this.inputY.valueAsNumber) {
-      this.colorController.color.set(
-        'v',
-        (1 - this.inputY.valueAsNumber) * 100
-      );
+      this.colorController.color.set('v', this.inputY.valueAsNumber * 100);
     }
     if (changed.has('focused') && this.focused) {
       // Lazily bind the `input[type="range"]` elements in shadow roots
@@ -567,10 +564,8 @@ export class ColorArea extends SpectrumElement {
     ) {
       this.observer = new (
         window as unknown as WithSWCResizeObserver
-      ).ResizeObserver((entries: SWCResizeObserverEntry[]) => {
-        for (const entry of entries) {
-          this.boundingClientRect = entry.contentRect;
-        }
+      ).ResizeObserver((_entries: SWCResizeObserverEntry[]) => {
+        this.boundingClientRect = this.getBoundingClientRect();
         this.requestUpdate();
       });
     }
