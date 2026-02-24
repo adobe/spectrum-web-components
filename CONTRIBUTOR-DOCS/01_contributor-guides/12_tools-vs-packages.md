@@ -37,7 +37,7 @@ When deciding where something lives in 2nd-gen, ask: **does it depend on the ren
 | **UI-less artifact** | No (same in S1 and S2) | No | `core/` | Tools/Utilities | Reactive controllers, grid logic, truncation logic, pure utility functions, DnD engine |
 | **Design component** | Yes | Yes | `swc/components/` | Components | Button, Card, Dialog, Badge |
 | **UI artifact (WC, not a design component)** | Yes (theme-dependent) | Yes | `swc/components/` (recategorize in docs) | Tools/Utilities | `sp-asset` |
-| **UI artifact (non-WC)** | Yes (style/token dependent) | No | `swc/utils/` | Tools/Utilities | CSS utilities, typography classes, opacity checkerboard, token/style helpers |
+| **UI artifact (non-WC)** | Yes (style/token dependent) | No | `swc/utils/`, `swc/stylesheets/`, or `swc/shared/` | Tools/Utilities | CSS utilities, typography classes, opacity checkerboard, token/style helpers |
 | **Build-time tooling** | No | No | `tools/` | Tools/Utilities | PostCSS plugins, token packages, VS Code extension |
 
 The key distinction: **UI-less** code goes in `core/` (it works the same regardless of Spectrum version); **UI** code that depends on Spectrum styles goes in `swc/` (even if it's a utility, not a design component).
@@ -48,7 +48,9 @@ For placement within `core/`, see [packages/core/MIGRATION.md](../../../2nd-gen/
 
 - **`core/`** — UI-less foundational code: element/, mixins/, controllers/, utils/, and components/ for base classes. No rendering-layer dependency.
 - **`swc/components/`** — All web components we ship, including both design components (Button, Card) and infrastructure WCs (`sp-asset`). Code location reflects what it *is*; docs categorization reflects how consumers *think about it*.
-- **`swc/utils/`** — UI artifacts that are not web components: CSS utilities, typography, style helpers, and SWC-specific test/a11y helpers.
+- **`swc/stylesheets/`** — Global CSS shipped outside of any web component: token imports (`tokens.css`), base application styles (`swc.css`), and typography classes (`typography.css`). These are rendering-layer dependent but not tied to a single component.
+- **`swc/shared/`** — Shared rendering-layer-dependent code that is reused across multiple SWC components but is not a standalone component or stylesheet (e.g. shared templates, lit directives, or style fragments). *(Planned — does not exist on disk yet.)*
+- **`swc/utils/`** — SWC-specific helper modules: test utilities, a11y helpers, and other non-component JS/TS that depends on the rendering layer.
 - **`tools/`** — Build-time and design-token tooling (swc-tokens, postcss-token, swc-vscode-token).
 
 ## Abstraction targets (2nd-gen)
