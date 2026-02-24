@@ -18,22 +18,22 @@ import { ScreenReaderPanel } from './components/screen-reader-panel.js';
 
 // Create React wrapper for our Lit component
 const ScreenReaderPanelReact = createComponent({
-    tagName: 'screen-reader-panel',
-    elementClass: ScreenReaderPanel,
-    react: React,
+  tagName: 'screen-reader-panel',
+  elementClass: ScreenReaderPanel,
+  react: React,
 });
 
 const ADDON_ID = 'screenreader';
 const PANEL_ID = `${ADDON_ID}/panel`;
 
 addons.register(ADDON_ID, () => {
-    addons.add(PANEL_ID, {
-        type: types.PANEL,
-        title: 'Screen Reader',
-        render: ({ active }) => (
-            <AddonPanel active={active}>
-                <ScreenReaderPanelReact />
-            </AddonPanel>
-        ),
-    });
+  addons.add(PANEL_ID, {
+    type: types.PANEL,
+    title: 'Screen Reader',
+    render: ({ active }) => (
+      <AddonPanel active={active}>
+        <ScreenReaderPanelReact />
+      </AddonPanel>
+    ),
+  });
 });
