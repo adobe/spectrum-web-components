@@ -126,6 +126,12 @@
   textarea,
   nav {
     font-family: var(--swc-sans-font-family-stack) !important;
+
+    &:lang(zh),
+    &:lang(ja),
+    &:lang(ko) {
+      font-family: var(--swc-cjk-font) !important;
+    }
   }
 
   table,
