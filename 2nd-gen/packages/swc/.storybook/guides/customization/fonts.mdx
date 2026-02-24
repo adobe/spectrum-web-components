@@ -33,7 +33,7 @@ The language decorator also handles text direction. When a right-to-left locale 
 You can verify the font is loaded by:
 
 1. Opening your browser's Network tab and looking for successful requests to `use.typekit.net` (status 200)
-2. Inspecting any component's computed styles to see the font family
+2. Checking the browser's Computed tab to verify the font family is inherited correctly when inspecting any component's individual text elements
 3. Switching the Language toolbar and confirming a new kit script loads (e.g. for Japanese, a request for the Japanese kit)
 
 You can also verify programmatically in the browser console. Inside the Storybook preview iframe:
