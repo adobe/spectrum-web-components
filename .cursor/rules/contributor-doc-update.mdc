@@ -30,6 +30,8 @@ alwaysApply: false
 3. **Fix any link verification errors** reported by the script (fix straightforward cases; consult the user for ambiguous ones).
 4. **Report results** to the user (files updated, link counts, any remaining issues).
 
+**Skill:** For full Operator and Maintainer workflows, use the contributor-docs-nav skill (`.cursor/skills/contributor-docs-nav/SKILL.md`); it points to the full instructions below.
+
 Full instructions: `CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs/01_ai-agent-instructions.md` (Role 1: Operator).
 
 ## If the instructions file is missing
