@@ -241,3 +241,12 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - **How to invoke**: Ask to implement a feature or fix a bug (e.g. “add feature X”, “fix this bug”); the agent may use TDD by default. To invoke explicitly, say “use TDD”, “write tests first”, or “red-green-refactor”.
 - Use when: Implementing any feature or bugfix, before writing implementation code
 - Provides: TDD cycle, verification checklist, good/bad test examples, anti-patterns to avoid
+
+## MCPs
+
+When developing for the SWC project, there may be instances where Cursor needs context from external sources. Contributors and maintainers can configure [MCP (Model Context Protocol) servers](https://modelcontextprotocol.io/docs/getting-started/intro) via [Easy MCP](https://wiki.corp.adobe.com/display/assetscollab/Cursor+integration+with+Easy+MCP). Some recommended MCP servers might include:
+
+- Figma
+- Corp Jira
+- Adobe Wiki Confluence
+- React Spectrum 2
