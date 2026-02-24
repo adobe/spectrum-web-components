@@ -24,6 +24,7 @@
       "import": "./dist/components/*/index.js"
     },
     "./*.css": {
+      "types": "./dist/*.css.d.ts",
       "default": "./dist/*.css"
     },
     "./components/*": {
