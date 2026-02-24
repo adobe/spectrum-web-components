@@ -32,7 +32,8 @@ export const gatherDemoURLs = async () => {
         `../../packages/*/README.md`,
         `../../tools/*/README.md`,
     ])) {
-        const packageName = readmePath.split('/').at(-2);
+        const readmePathParts = readmePath.split('/');
+        const packageName = readmePathParts[readmePathParts.length - 2];
         packageNames.push(packageName);
         const readme = fs.readFileSync(readmePath, 'utf8');
         if (readme === null) {
