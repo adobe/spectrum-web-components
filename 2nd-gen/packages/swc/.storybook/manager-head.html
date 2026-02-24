@@ -1,0 +1,36 @@
+<!-- This preconnect opens the connection for typekit to more quickly load fonts -->
+<link rel="preconnect" href="https://use.typekit.net" crossorigin />
+<link rel="dns-prefetch" href="https://use.typekit.net" />
+<!-- For Adobe Clean Spectrum VF font support in Storybook manager UI -->
+<link rel="stylesheet" href="https://use.typekit.net/obc6cux.css" />
+<script src="https://use.typekit.net/obc6cux.js"></script>
+<script>
+  try {
+    Typekit.load({
+      async: true,
+      events: {
+        active: function () {
+          document.dispatchEvent(new Event('typekit-loaded'));
+        },
+      },
+    });
+  } catch (e) {
+    console.error('Typekit failed to load:', e);
+  }
+</script>
+
+<style>
+  /* Force Adobe Clean Spectrum VF font on all Storybook manager elements */
+  body,
+  #storybook-root,
+  .sidebar-container,
+  .sidebar-header,
+  .sidebar-item,
+  button,
+  input,
+  select,
+  textarea,
+  * {
+    font-family: var(--swc-sans-font-family-stack) !important;
+  }
+</style>

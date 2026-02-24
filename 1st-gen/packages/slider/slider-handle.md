@@ -28,19 +28,19 @@ When two or more sliders are present, the `label` attribute can be used to ident
 
 ```html
 <sp-slider variant="range" step="1" min="0" max="255">
-    Output Levels
-    <sp-slider-handle
-        slot="handle"
-        name="min"
-        label="Minimum"
-        value="5"
-    ></sp-slider-handle>
-    <sp-slider-handle
-        slot="handle"
-        name="max"
-        label="Maximum"
-        value="250"
-    ></sp-slider-handle>
+  Output Levels
+  <sp-slider-handle
+    slot="handle"
+    name="min"
+    label="Minimum"
+    value="5"
+  ></sp-slider-handle>
+  <sp-slider-handle
+    slot="handle"
+    name="max"
+    label="Maximum"
+    value="250"
+  ></sp-slider-handle>
 </sp-slider>
 ```
 
@@ -48,29 +48,29 @@ For slider handles that have the same numeric range, you can specify `min="previ
 
 ```html
 <sp-slider step="1" min="0" max="255">
-    Output Levels
-    <sp-slider-handle
-        slot="handle"
-        name="low"
-        label="Low"
-        value="5"
-        max="next"
-    ></sp-slider-handle>
-    <sp-slider-handle
-        slot="handle"
-        name="mid"
-        label="Mid"
-        value="100"
-        min="previous"
-        max="next"
-    ></sp-slider-handle>
-    <sp-slider-handle
-        slot="handle"
-        name="high"
-        label="High"
-        value="250"
-        min="previous"
-    ></sp-slider-handle>
+  Output Levels
+  <sp-slider-handle
+    slot="handle"
+    name="low"
+    label="Low"
+    value="5"
+    max="next"
+  ></sp-slider-handle>
+  <sp-slider-handle
+    slot="handle"
+    name="mid"
+    label="Mid"
+    value="100"
+    min="previous"
+    max="next"
+  ></sp-slider-handle>
+  <sp-slider-handle
+    slot="handle"
+    name="high"
+    label="High"
+    value="250"
+    min="previous"
+  ></sp-slider-handle>
 </sp-slider>
 ```
 

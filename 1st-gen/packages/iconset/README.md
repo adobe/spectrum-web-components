@@ -18,14 +18,14 @@ import { IconsetSVG } from '@spectrum-web-components/iconset/src/iconset-svg.js'
 import { CustomIconSet } from 'your-icon-set.js';
 
 export class IconsLarge extends IconsetSVG {
-    public constructor() {
-        super();
-        this.name = 'custom-icons'; // default iconset name for these icons
-    }
+  public constructor() {
+    super();
+    this.name = 'custom-icons'; // default iconset name for these icons
+  }
 
-    protected renderDefaultContent(): TemplateResult {
-        return CustomIconSet;
-    }
+  protected renderDefaultContent(): TemplateResult {
+    return CustomIconSet;
+  }
 }
 ```
 

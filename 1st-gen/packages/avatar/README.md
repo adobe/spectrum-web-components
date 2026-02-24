@@ -38,9 +38,9 @@ Avatar sizes scale exponentially, based on the Spectrum type scale. These range 
 
 ```html demo
 <sp-avatar
-    size="50"
-    label="Demo User"
-    src="https://picsum.photos/500/500"
+  size="50"
+  label="Demo User"
+  src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -50,9 +50,9 @@ Avatar sizes scale exponentially, based on the Spectrum type scale. These range 
 
 ```html demo
 <sp-avatar
-    size="75"
-    label="Demo User"
-    src="https://picsum.photos/500/500"
+  size="75"
+  label="Demo User"
+  src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -62,9 +62,9 @@ Avatar sizes scale exponentially, based on the Spectrum type scale. These range 
 
 ```html demo
 <sp-avatar
-    size="100"
-    label="Demo User"
-    src="https://picsum.photos/500/500"
+  size="100"
+  label="Demo User"
+  src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -74,9 +74,9 @@ Avatar sizes scale exponentially, based on the Spectrum type scale. These range 
 
 ```html demo
 <sp-avatar
-    size="200"
-    label="Demo User"
-    src="https://picsum.photos/500/500"
+  size="200"
+  label="Demo User"
+  src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -86,9 +86,9 @@ Avatar sizes scale exponentially, based on the Spectrum type scale. These range 
 
 ```html demo
 <sp-avatar
-    size="300"
-    label="Demo User"
-    src="https://picsum.photos/500/500"
+  size="300"
+  label="Demo User"
+  src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -98,9 +98,9 @@ Avatar sizes scale exponentially, based on the Spectrum type scale. These range 
 
 ```html demo
 <sp-avatar
-    size="400"
-    label="Demo User"
-    src="https://picsum.photos/500/500"
+  size="400"
+  label="Demo User"
+  src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -110,9 +110,9 @@ Avatar sizes scale exponentially, based on the Spectrum type scale. These range 
 
 ```html demo
 <sp-avatar
-    size="500"
-    label="Demo User"
-    src="https://picsum.photos/500/500"
+  size="500"
+  label="Demo User"
+  src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -122,9 +122,9 @@ Avatar sizes scale exponentially, based on the Spectrum type scale. These range 
 
 ```html demo
 <sp-avatar
-    size="600"
-    label="Demo User"
-    src="https://picsum.photos/500/500"
+  size="600"
+  label="Demo User"
+  src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -134,9 +134,9 @@ Avatar sizes scale exponentially, based on the Spectrum type scale. These range 
 
 ```html demo
 <sp-avatar
-    size="700"
-    label="Demo User"
-    src="https://picsum.photos/500/500"
+  size="700"
+  label="Demo User"
+  src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -155,4 +155,34 @@ An avatar in a disabled state shows that an avatar exists, but is not available 
 
 ### Accessibility
 
-The `label` attribute of the `<sp-avatar>` will be passed into the `<img>` element as the `alt` tag for use in defining a textual representation of the image displayed.
+The `<sp-avatar>` component requires proper accessibility attributes to ensure screen readers can appropriately handle the avatar image.
+
+#### Labeled avatars
+
+The `label` attribute of the `<sp-avatar>` will be passed into the `<img>` element as the `alt` attribute for use in defining a textual representation of the image displayed. This is the recommended approach for avatars that convey meaningful information.
+
+```html demo
+<sp-avatar label="John Doe" src="https://picsum.photos/500/500"></sp-avatar>
+```
+
+#### Decorative avatars
+
+When an avatar is purely decorative and does not convey meaningful information, use the `is-decorative` attribute to mark it as decorative. This will hide the avatar from screen readers with `alt=""` and `aria-hidden="true"`.
+
+```html demo
+<sp-avatar is-decorative src="https://picsum.photos/500/500"></sp-avatar>
+```
+
+#### Linked avatars
+
+When an avatar has an `href` attribute, it becomes a link and requires an accessible name. Provide a `label` attribute to give the link meaningful text for screen readers.
+
+```html demo
+<sp-avatar
+  label="View John Doe's profile"
+  src="https://picsum.photos/500/500"
+  href="https://adobe.com"
+></sp-avatar>
+```
+
+**Note**: Decorative avatars should typically not be interactive links. If you need a decorative avatar with a link, you must provide a `label` attribute for accessibility compliance.

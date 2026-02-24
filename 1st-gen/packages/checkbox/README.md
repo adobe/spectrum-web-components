@@ -42,9 +42,9 @@ A checkbox consists of a box that can be checked or unchecked, and a label that 
 
 ```html
 <sp-field-group horizontal label="Small Checkboxes">
-    <sp-checkbox size="s">Small</sp-checkbox>
-    <sp-checkbox size="s" checked>Small Checked</sp-checkbox>
-    <sp-checkbox size="s" indeterminate>Small Indeterminate</sp-checkbox>
+  <sp-checkbox size="s">Small</sp-checkbox>
+  <sp-checkbox size="s" checked>Small Checked</sp-checkbox>
+  <sp-checkbox size="s" indeterminate>Small Indeterminate</sp-checkbox>
 </sp-field-group>
 ```
 
@@ -54,9 +54,9 @@ A checkbox consists of a box that can be checked or unchecked, and a label that 
 
 ```html
 <sp-field-group horizontal label="Medium Checkboxes">
-    <sp-checkbox size="m">Medium</sp-checkbox>
-    <sp-checkbox size="m" checked>Medium Checked</sp-checkbox>
-    <sp-checkbox size="m" indeterminate>Medium Indeterminate</sp-checkbox>
+  <sp-checkbox size="m">Medium</sp-checkbox>
+  <sp-checkbox size="m" checked>Medium Checked</sp-checkbox>
+  <sp-checkbox size="m" indeterminate>Medium Indeterminate</sp-checkbox>
 </sp-field-group>
 ```
 
@@ -66,9 +66,9 @@ A checkbox consists of a box that can be checked or unchecked, and a label that 
 
 ```html demo
 <sp-field-group horizontal label="Large Checkboxes">
-    <sp-checkbox size="l">Large</sp-checkbox>
-    <sp-checkbox size="l" checked>Large Checked</sp-checkbox>
-    <sp-checkbox size="l" indeterminate>Large Indeterminate</sp-checkbox>
+  <sp-checkbox size="l">Large</sp-checkbox>
+  <sp-checkbox size="l" checked>Large Checked</sp-checkbox>
+  <sp-checkbox size="l" indeterminate>Large Indeterminate</sp-checkbox>
 </sp-field-group>
 ```
 
@@ -78,9 +78,9 @@ A checkbox consists of a box that can be checked or unchecked, and a label that 
 
 ```html demo
 <sp-field-group horizontal label="Extra Large Checkboxes">
-    <sp-checkbox size="xl">Extra Large</sp-checkbox>
-    <sp-checkbox size="xl" checked>Extra Large Checked</sp-checkbox>
-    <sp-checkbox size="xl" indeterminate>Extra Large Indeterminate</sp-checkbox>
+  <sp-checkbox size="xl">Extra Large</sp-checkbox>
+  <sp-checkbox size="xl" checked>Extra Large Checked</sp-checkbox>
+  <sp-checkbox size="xl" indeterminate>Extra Large Indeterminate</sp-checkbox>
 </sp-field-group>
 ```
 
@@ -99,26 +99,31 @@ focus to the content.
 
 ```html
 <div style="display: flex; justify-content: space-between;">
-    <div style="display: flex; flex-direction: column;">
-        <h4 class="spectrum-Heading--subtitle1">Default</h4>
-        <sp-checkbox>Web component</sp-checkbox>
-        <sp-checkbox checked>Web component</sp-checkbox>
-        <sp-checkbox indeterminate>Web component</sp-checkbox>
-    </div>
+  <div style="display: flex; flex-direction: column;">
+    <h4 class="spectrum-Heading--subtitle1">Default</h4>
+    <sp-checkbox>Web component</sp-checkbox>
+    <sp-checkbox checked>Web component</sp-checkbox>
+    <sp-checkbox indeterminate>Web component</sp-checkbox>
+  </div>
 
-    <div style="display: flex; flex-direction: column;">
-        <h4 class="spectrum-Heading--subtitle1">Invalid</h4>
-        <sp-checkbox invalid>Web component</sp-checkbox>
-        <sp-checkbox checked invalid>Web component</sp-checkbox>
-        <sp-checkbox indeterminate invalid>Web component</sp-checkbox>
-    </div>
+  <div style="display: flex; flex-direction: column;">
+    <h4 class="spectrum-Heading--subtitle1">Invalid</h4>
+    <sp-field-group vertical label="Select an option" invalid>
+      <sp-checkbox invalid>Web component</sp-checkbox>
+      <sp-checkbox checked invalid>Web component</sp-checkbox>
+      <sp-checkbox indeterminate invalid>Web component</sp-checkbox>
+      <sp-help-text slot="negative-help-text" icon>
+        This selection is invalid.
+      </sp-help-text>
+    </sp-field-group>
+  </div>
 
-    <div style="display: flex; flex-direction: column;">
-        <h4 class="spectrum-Heading--subtitle1">Disabled</h4>
-        <sp-checkbox disabled>Web component</sp-checkbox>
-        <sp-checkbox checked disabled>Web component</sp-checkbox>
-        <sp-checkbox indeterminate disabled>Web component</sp-checkbox>
-    </div>
+  <div style="display: flex; flex-direction: column;">
+    <h4 class="spectrum-Heading--subtitle1">Disabled</h4>
+    <sp-checkbox disabled>Web component</sp-checkbox>
+    <sp-checkbox checked disabled>Web component</sp-checkbox>
+    <sp-checkbox indeterminate disabled>Web component</sp-checkbox>
+  </div>
 </div>
 ```
 
@@ -132,30 +137,31 @@ of assets, etc. where the checkboxes need to be noticed.
 
 ```html
 <div style="display: flex; justify-content: space-between;">
-    <div style="display: flex; flex-direction: column;">
-        <h4 class="spectrum-Heading--subtitle1">Default</h4>
-        <sp-checkbox emphasized>Web component</sp-checkbox>
-        <sp-checkbox emphasized checked>Web component</sp-checkbox>
-        <sp-checkbox emphasized indeterminate>Web component</sp-checkbox>
-    </div>
+  <div style="display: flex; flex-direction: column;">
+    <h4 class="spectrum-Heading--subtitle1">Default</h4>
+    <sp-checkbox emphasized>Web component</sp-checkbox>
+    <sp-checkbox emphasized checked>Web component</sp-checkbox>
+    <sp-checkbox emphasized indeterminate>Web component</sp-checkbox>
+  </div>
 
-    <div style="display: flex; flex-direction: column;">
-        <h4 class="spectrum-Heading--subtitle1">Invalid</h4>
-        <sp-checkbox emphasized invalid>Web component</sp-checkbox>
-        <sp-checkbox emphasized checked invalid>Web component</sp-checkbox>
-        <sp-checkbox emphasized indeterminate invalid>
-            Web component
-        </sp-checkbox>
-    </div>
+  <div style="display: flex; flex-direction: column;">
+    <h4 class="spectrum-Heading--subtitle1">Invalid</h4>
+    <sp-field-group vertical label="Select an option" invalid>
+      <sp-checkbox emphasized invalid>Web component</sp-checkbox>
+      <sp-checkbox emphasized checked invalid>Web component</sp-checkbox>
+      <sp-checkbox emphasized indeterminate invalid>Web component</sp-checkbox>
+      <sp-help-text slot="negative-help-text" icon>
+        This selection is invalid.
+      </sp-help-text>
+    </sp-field-group>
+  </div>
 
-    <div style="display: flex; flex-direction: column;">
-        <h4 class="spectrum-Heading--subtitle1">Disabled</h4>
-        <sp-checkbox emphasized disabled>Web component</sp-checkbox>
-        <sp-checkbox emphasized checked disabled>Web component</sp-checkbox>
-        <sp-checkbox emphasized indeterminate disabled>
-            Web component
-        </sp-checkbox>
-    </div>
+  <div style="display: flex; flex-direction: column;">
+    <h4 class="spectrum-Heading--subtitle1">Disabled</h4>
+    <sp-checkbox emphasized disabled>Web component</sp-checkbox>
+    <sp-checkbox emphasized checked disabled>Web component</sp-checkbox>
+    <sp-checkbox emphasized indeterminate disabled>Web component</sp-checkbox>
+  </div>
 </div>
 ```
 
@@ -168,8 +174,22 @@ of assets, etc. where the checkboxes need to be noticed.
 
 The `invalid` attribute indicates that the checkbox's value is invalid. When set, appropriate ARIA attributes will be automatically applied.
 
+When a checkbox is in an invalid state, provide help text to explain the error and guide the user toward a solution. Wrap the checkbox in an [`<sp-field-group>`](../field-group) to associate the help text with the checkbox. (See [help text](#help-text) for more information.)
+
+**Important:** Both the `<sp-field-group>` and its child `<sp-checkbox>` elements must be marked as `invalid` for the complete invalid state to display correctly:
+
+- The `invalid` attribute on `<sp-field-group>` controls help text visibility (showing the `negative-help-text` slot).
+- The `invalid` attribute on each `<sp-checkbox>` controls the visual invalid styling on the checkbox itself.
+
+Setting only one creates a sync hazard where either the help text won't display or the checkboxes won't show invalid styling.
+
 ```html
-<sp-checkbox invalid>Invalid</sp-checkbox>
+<sp-field-group vertical label="Terms and conditions" invalid>
+  <sp-checkbox invalid>I accept the terms and conditions</sp-checkbox>
+  <sp-help-text slot="negative-help-text" icon>
+    You must accept the terms to continue.
+  </sp-help-text>
+</sp-field-group>
 ```
 
 #### Disabled
@@ -196,6 +216,84 @@ Checkboxes have a `readonly` attribute for when they’re in the disabled state 
 <sp-checkbox readonly>Read-only</sp-checkbox>
 ```
 
+### Help text
+
+Help text can be accessibly associated with checkboxes by using the `help-text` or `negative-help-text` slots on an `<sp-field-group>` element. When using the `negative-help-text` slot, `<sp-field-group>` will self manage the presence of this content based on the value of the `invalid` property on your `<sp-field-group>` element. Content within the `help-text` slot will be shown by default. When your `<sp-field-group>` should receive help text based on state outside of the complexity of `invalid` or not, manage the content addressed to the `help-text` from above to ensure that it displays the right messaging and possesses the right `variant`.
+
+Read more about using [help text](../help-text).
+
+<sp-tabs selected="self" auto label="Help text usage with checkboxes">
+<sp-tab value="self">Self managed</sp-tab>
+<sp-tab-panel value="self">
+
+```html
+<sp-field-group
+  vertical
+  id="self"
+  label="Notification preferences"
+  onchange="
+        const checkboxes = this.querySelectorAll('sp-checkbox');
+        const noneChecked = ![...checkboxes].some(cb => cb.checked);
+        this.invalid = noneChecked;
+    "
+>
+  <sp-checkbox value="email">Email notifications</sp-checkbox>
+  <sp-checkbox value="sms">SMS notifications</sp-checkbox>
+  <sp-checkbox value="push" checked>Push notifications</sp-checkbox>
+  <sp-help-text slot="help-text">
+    Choose how you'd like to be notified.
+  </sp-help-text>
+  <sp-help-text slot="negative-help-text" icon>
+    Select at least one notification method.
+  </sp-help-text>
+</sp-field-group>
+```
+
+</sp-tab-panel>
+<sp-tab value="above">Managed from above</sp-tab>
+<sp-tab-panel value="above">
+
+```html
+<sp-field-label for="above">Notification preferences</sp-field-label>
+<sp-field-group
+  vertical
+  id="above"
+  onchange="
+        const checkboxes = this.querySelectorAll('sp-checkbox');
+        const noneChecked = ![...checkboxes].some(cb => cb.checked);
+        const helpText = this.querySelector(`[slot='help-text']`);
+        helpText.icon = noneChecked;
+        helpText.textContent = noneChecked ? 'Select at least one notification method.' : 'Choose how you\'d like to be notified.';
+        helpText.variant = noneChecked ? 'negative' : 'neutral';
+    "
+>
+  <sp-checkbox value="email">Email notifications</sp-checkbox>
+  <sp-checkbox value="sms">SMS notifications</sp-checkbox>
+  <sp-checkbox value="push" checked>Push notifications</sp-checkbox>
+  <sp-help-text slot="help-text">
+    Choose how you'd like to be notified.
+  </sp-help-text>
+</sp-field-group>
+```
+
+</sp-tab-panel>
+<sp-tab value="single">Single checkbox</sp-tab>
+<sp-tab-panel value="single">
+
+When a single checkbox requires validation, wrap it in an `<sp-field-group>` to associate help text:
+
+```html
+<sp-field-group vertical label="Agreement" invalid>
+  <sp-checkbox invalid>I have read and accept the terms of service</sp-checkbox>
+  <sp-help-text slot="negative-help-text" icon>
+    You must accept the terms of service to continue.
+  </sp-help-text>
+</sp-field-group>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
 ### Behaviors
 
 #### Handling events
@@ -204,10 +302,10 @@ Event handlers for clicks and other user actions can be registered on an `<sp-ch
 
 ```html
 <sp-checkbox
-    id="checkbox-example"
-    onclick="spAlert(this, '<sp-checkbox> clicked!')"
+  id="checkbox-example"
+  onclick="spAlert(this, '<sp-checkbox> clicked!')"
 >
-    Check this box to see an onclick alert.
+  Check this box to see an onclick alert.
 </sp-checkbox>
 ```
 
@@ -226,15 +324,23 @@ Every checkbox must have a label that clearly describes its purpose. The label c
 
 #### Label groups of related checkboxes
 
-Sets of checkboxes should always have a clear label that describes what the list of options represents and guides users what to do. This is important for accessibility, since a screen reader will read the label before each option. (See [field group's label documentation](/field-group/#label) for more information.)
+Sets of checkboxes should always have a clear label that describes what the list of options represents and guides users what to do. This is important for accessibility, since a screen reader will read the label before each option. (See [field group's label documentation](../field-group/#label) for more information.)
 
 ```html
 <sp-field-group label="Select your toppings">
-    <sp-checkbox>Ketchup</sp-checkbox>
-    <sp-checkbox>Mustard</sp-checkbox>
-    <sp-checkbox>Pickles</sp-checkbox>
+  <sp-checkbox>Ketchup</sp-checkbox>
+  <sp-checkbox>Mustard</sp-checkbox>
+  <sp-checkbox>Pickles</sp-checkbox>
 </sp-field-group>
 ```
+
+#### Provide help text in the correct location
+
+Checkbox groups should use help text for error messaging and descriptions. Descriptions are valuable for giving context about a selection or for clarifying the options.
+
+It is [not currently possible](https://w3c.github.io/webcomponents-cg/#cross-root-aria) to provide accessible ARIA references between elements in different shadow roots. To ensure proper association between elements, help text must be included via the `slot="help-text"` or `slot="negative-help-text"` on the parent `<sp-field-group>`.
+
+See [help text](../help-text) for more information.
 
 #### Keyboard Navigation
 

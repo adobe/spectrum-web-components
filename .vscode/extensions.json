@@ -1,3 +1,9 @@
 {
-    "recommendations": ["runem.lit-plugin"]
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "stylelint.vscode-stylelint",
+    "runem.lit-plugin",
+    "bierner.jsdoc-markdown-highlighting"
+  ]
 }

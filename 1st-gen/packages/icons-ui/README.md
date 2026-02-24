@@ -2,9 +2,9 @@
 
 Deliver [Spectrum UI Icons](https://spectrum.adobe.com/page/icons/) as either:
 
--   Registered custom elements (`<sp-icon-arrow75>`)
--   Unregistered class definitions (`IconArrow75`)
--   Functions with customizable template tags to be used across various frameworks (`Arrow75Icon()`)
+- Registered custom elements (`<sp-icon-arrow75>`)
+- Unregistered class definitions (`IconArrow75`)
+- Functions with customizable template tags to be used across various frameworks (`Arrow75Icon()`)
 
 Search a full list of icons to [find an icon](#find-an-icon) for your project or find technical information about [extended use cases](#extended-use-cases), like consuming this package in various UI frameworks below.
 
@@ -144,8 +144,8 @@ What's more, if you're already working with a specific parser in your project, y
 
 ```js
 import {
-    Arrow75Icon,
-    setCustomTemplateLiteralTag,
+  Arrow75Icon,
+  setCustomTemplateLiteralTag,
 } from '@spectrum-web-components/icons-ui/src/icons.js';
 import htm from 'htm';
 import { h } from 'preact';

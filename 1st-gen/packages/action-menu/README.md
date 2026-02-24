@@ -257,20 +257,20 @@ When `selects` is set to `single`, the `<sp-action-menu>` element will maintain 
 
 ```html
 <p>
-    The value of the `&lt;sp-action-menu&gt;` element is:
-    <span id="single-value"></span>
+  The value of the `&lt;sp-action-menu&gt;` element is:
+  <span id="single-value"></span>
 </p>
 <sp-action-menu
-    selects="single"
-    onchange="this.previousElementSibling.querySelector('#single-value').textContent=this.value"
+  selects="single"
+  onchange="this.previousElementSibling.querySelector('#single-value').textContent=this.value"
 >
-    <span slot="label">Available shapes</span>
-    <sp-menu-item value="shape-1-square">Square</sp-menu-item>
-    <sp-menu-item value="shape-2-triangle">Triangle</sp-menu-item>
-    <sp-menu-item value="shape-3-parallelogram">Parallelogram</sp-menu-item>
-    <sp-menu-item value="shape-4-star">Star</sp-menu-item>
-    <sp-menu-item value="shape-5-hexagon">Hexagon</sp-menu-item>
-    <sp-menu-item value="shape-6-circle" disabled>Circle</sp-menu-item>
+  <span slot="label">Available shapes</span>
+  <sp-menu-item value="shape-1-square">Square</sp-menu-item>
+  <sp-menu-item value="shape-2-triangle">Triangle</sp-menu-item>
+  <sp-menu-item value="shape-3-parallelogram">Parallelogram</sp-menu-item>
+  <sp-menu-item value="shape-4-star">Star</sp-menu-item>
+  <sp-menu-item value="shape-5-hexagon">Hexagon</sp-menu-item>
+  <sp-menu-item value="shape-6-circle" disabled>Circle</sp-menu-item>
 </sp-action-menu>
 ```
 
@@ -287,14 +287,14 @@ To see this functionality in action, load this page from your mobile device or u
 
 ```html
 <sp-action-menu force-popover>
-    <span slot="label">Action Menu</span>
-    <sp-menu-item>Deselect</sp-menu-item>
-    <sp-menu-item>Select Inverse</sp-menu-item>
-    <sp-menu-item>Feather...</sp-menu-item>
-    <sp-menu-item>Select and Mask...</sp-menu-item>
-    <sp-menu-divider></sp-menu-divider>
-    <sp-menu-item>Save Selection</sp-menu-item>
-    <sp-menu-item disabled>Make Work Path</sp-menu-item>
+  <span slot="label">Action Menu</span>
+  <sp-menu-item>Deselect</sp-menu-item>
+  <sp-menu-item>Select Inverse</sp-menu-item>
+  <sp-menu-item>Feather...</sp-menu-item>
+  <sp-menu-item>Select and Mask...</sp-menu-item>
+  <sp-menu-divider></sp-menu-divider>
+  <sp-menu-item>Save Selection</sp-menu-item>
+  <sp-menu-item disabled>Make Work Path</sp-menu-item>
 </sp-action-menu>
 ```
 
@@ -304,13 +304,13 @@ Tooltip in action menu can be attached via adding `<sp-tooltip>` and can be cust
 
 ```html
 <sp-action-menu>
-    <sp-tooltip slot="tooltip" self-managed placement="bottom">
-        Content
-    </sp-tooltip>
-    <span slot="label">Available shapes</span>
-    <sp-menu-item value="shape-1-square">Square</sp-menu-item>
-    <sp-menu-item value="shape-2-triangle">Triangle</sp-menu-item>
-    <sp-menu-item value="shape-3-parallelogram">Parallelogram</sp-menu-item>
+  <sp-tooltip slot="tooltip" self-managed placement="bottom">
+    Content
+  </sp-tooltip>
+  <span slot="label">Available shapes</span>
+  <sp-menu-item value="shape-1-square">Square</sp-menu-item>
+  <sp-menu-item value="shape-2-triangle">Triangle</sp-menu-item>
+  <sp-menu-item value="shape-3-parallelogram">Parallelogram</sp-menu-item>
 </sp-action-menu>
 ```
 

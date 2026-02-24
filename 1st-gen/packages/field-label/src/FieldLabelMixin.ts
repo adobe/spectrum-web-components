@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,30 +11,31 @@
  */
 
 import {
-    CSSResultArray,
-    html,
-    nothing,
-    SpectrumElement,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  nothing,
+  SpectrumElement,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import asteriskIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-asterisk.css.js';
+import { ObserveSlotText } from '@spectrum-web-components/shared';
+
 import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk100.js';
 
 import styles from './field-label-mixin.css.js';
-import asteriskIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-asterisk.css.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import { ObserveSlotText } from '@spectrum-web-components/shared';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructor<T> = new (...args: any[]) => T;
 
 export declare class FieldLabelMixinInterface {
-    disabled: boolean;
-    required: boolean;
-    sideAligned?: 'start' | 'end';
-    slotHasContent: boolean;
-    manageTextObservedSlot(): void;
-    public renderFieldLabel(fieldId: string): TemplateResult;
+  disabled: boolean;
+  required: boolean;
+  sideAligned?: 'start' | 'end';
+  slotHasContent: boolean;
+  manageTextObservedSlot(): void;
+  public renderFieldLabel(fieldId: string): TemplateResult;
 }
 
 /**
@@ -55,53 +56,53 @@ export declare class FieldLabelMixinInterface {
  * @slot field-label - Text content of the label.
  */
 export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
-    superClass: T,
-    slotName?: string,
-    excludedSelectors: string[] = []
+  superClass: T,
+  slotName?: string,
+  excludedSelectors: string[] = []
 ): Constructor<FieldLabelMixinInterface> & T => {
-    class FieldLabelMixinClass extends ObserveSlotText(
-        superClass,
-        slotName,
-        excludedSelectors
-    ) {
-        public static get styles(): CSSResultArray {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const parent = Object.getPrototypeOf(this) as any;
-            const parentStyles = (parent.styles || []) as CSSResultArray;
-            return [...parentStyles, styles, asteriskIconStyles];
-        }
-
-        @property({ type: Boolean, reflect: true })
-        public disabled = false;
-
-        @property({ type: Boolean, reflect: true })
-        public required = false;
-
-        @property({ type: String, reflect: true, attribute: 'side-aligned' })
-        public sideAligned?: 'start' | 'end';
-
-        public renderFieldLabel(fieldId: string): TemplateResult {
-            return html`
-                <label
-                    id="${fieldId}-label"
-                    for="${fieldId}"
-                    ?hidden="${!this.slotHasContent}"
-                >
-                    <slot
-                        id="field-label-slot"
-                        name="${ifDefined(slotName)}"
-                        @slotchange=${this.manageTextObservedSlot}
-                    ></slot>
-                    ${this.required
-                        ? html`
-                              <sp-icon-asterisk100
-                                  class="required-icon spectrum-UIIcon-Asterisk100"
-                              ></sp-icon-asterisk100>
-                          `
-                        : nothing}
-                </label>
-            `;
-        }
+  class FieldLabelMixinClass extends ObserveSlotText(
+    superClass,
+    slotName,
+    excludedSelectors
+  ) {
+    public static get styles(): CSSResultArray {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const parent = Object.getPrototypeOf(this) as any;
+      const parentStyles = (parent.styles || []) as CSSResultArray;
+      return [...parentStyles, styles, asteriskIconStyles];
     }
-    return FieldLabelMixinClass as Constructor<FieldLabelMixinInterface> & T;
+
+    @property({ type: Boolean, reflect: true })
+    public disabled = false;
+
+    @property({ type: Boolean, reflect: true })
+    public required = false;
+
+    @property({ type: String, reflect: true, attribute: 'side-aligned' })
+    public sideAligned?: 'start' | 'end';
+
+    public renderFieldLabel(fieldId: string): TemplateResult {
+      return html`
+        <label
+          id="${fieldId}-label"
+          for=${fieldId}
+          ?hidden=${!this.slotHasContent}
+        >
+          <slot
+            id="field-label-slot"
+            name=${ifDefined(slotName)}
+            @slotchange=${this.manageTextObservedSlot}
+          ></slot>
+          ${this.required
+            ? html`
+                <sp-icon-asterisk100
+                  class="required-icon spectrum-UIIcon-Asterisk100"
+                ></sp-icon-asterisk100>
+              `
+            : nothing}
+        </label>
+      `;
+    }
+  }
+  return FieldLabelMixinClass as Constructor<FieldLabelMixinInterface> & T;
 };

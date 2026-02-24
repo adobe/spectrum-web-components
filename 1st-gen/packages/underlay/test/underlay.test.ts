@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,42 +11,44 @@
  */
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-
-import '@spectrum-web-components/underlay/sp-underlay.js';
-import { Underlay } from '@spectrum-web-components/underlay';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { spy } from 'sinon';
 
+import { Underlay } from '@spectrum-web-components/underlay';
+
+import '@spectrum-web-components/underlay/sp-underlay.js';
+
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+
 describe('Underlay', () => {
-    testForLitDevWarnings(
-        async () =>
-            await fixture<Underlay>(html`
-                <sp-underlay></sp-underlay>
-            `)
-    );
-    it('loads default underlay accessibly', async () => {
-        const el = await fixture<Underlay>(html`
-            <sp-underlay></sp-underlay>
-        `);
+  testForLitDevWarnings(
+    async () =>
+      await fixture<Underlay>(html`
+        <sp-underlay></sp-underlay>
+      `)
+  );
+  it('loads default underlay accessibly', async () => {
+    const el = await fixture<Underlay>(html`
+      <sp-underlay></sp-underlay>
+    `);
 
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        await expect(el).to.be.accessible();
-    });
+    await expect(el).to.be.accessible();
+  });
 
-    it('fires a close event when clicked', async () => {
-        const el = await fixture<Underlay>(html`
-            <sp-underlay></sp-underlay>
-        `);
+  it('fires a close event when clicked', async () => {
+    const el = await fixture<Underlay>(html`
+      <sp-underlay></sp-underlay>
+    `);
 
-        await elementUpdated(el);
-        const closeSpy = spy();
-        el.addEventListener('close', () => closeSpy());
-        expect(closeSpy.callCount).to.equal(0);
+    await elementUpdated(el);
+    const closeSpy = spy();
+    el.addEventListener('close', () => closeSpy());
+    expect(closeSpy.callCount).to.equal(0);
 
-        el.dispatchEvent(new PointerEvent('pointerdown', { button: 0 }));
-        el.dispatchEvent(new PointerEvent('pointerup'));
+    el.dispatchEvent(new PointerEvent('pointerdown', { button: 0 }));
+    el.dispatchEvent(new PointerEvent('pointerup'));
 
-        expect(closeSpy.callCount).to.equal(1);
-    });
+    expect(closeSpy.callCount).to.equal(1);
+  });
 });

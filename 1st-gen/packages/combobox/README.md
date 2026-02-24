@@ -35,10 +35,10 @@ A combobox has the following:
 
 ```html
 <sp-combobox>
-    <span slot="field-label">Color</span>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <span slot="field-label">Color</span>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -52,10 +52,10 @@ A combobox must have a label in order to be accessible. A label can be provided 
 
 ```html
 <sp-combobox>
-    <span slot="field-label">Color</span>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <span slot="field-label">Color</span>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -65,9 +65,9 @@ A combobox must have a label in order to be accessible. A label can be provided 
 
 ```html
 <sp-combobox label="Color">
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -82,9 +82,9 @@ Use the `placeholder` attribute to include placeholder text.
 
 ```html
 <sp-combobox label="Color" placeholder="Select a color">
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -100,9 +100,9 @@ You can use the default slot to provide `<sp-menu-item>` children.
 
 ```html
 <sp-combobox label="Color">
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -116,11 +116,11 @@ You can assign an array of `ComboboxOptions` to the `options` property, and `<sp
 <sp-combobox id="color" label="Color"></sp-combobox>
 
 <script>
-    document.getElementById('color').options = [
-        { value: 'red', itemText: 'Red' },
-        { value: 'green', itemText: 'Green' },
-        { value: 'blue', itemText: 'Blue' },
-    ];
+  document.getElementById('color').options = [
+    { value: 'red', itemText: 'Red' },
+    { value: 'green', itemText: 'Green' },
+    { value: 'blue', itemText: 'Blue' },
+  ];
 </script>
 ```
 
@@ -158,9 +158,9 @@ mutate() {
 
 ```html
 <sp-combobox size="s" label="Color">
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -170,9 +170,9 @@ mutate() {
 
 ```html
 <sp-combobox size="m" label="Color">
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -182,9 +182,9 @@ mutate() {
 
 ```html
 <sp-combobox size="l" label="Color">
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -194,9 +194,9 @@ mutate() {
 
 ```html
 <sp-combobox size="xl" label="Color">
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -207,10 +207,10 @@ mutate() {
 
 ```html
 <sp-combobox quiet>
-    <span slot="field-label">Color</span>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <span slot="field-label">Color</span>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -227,10 +227,10 @@ Whenever the currently-typed input exactly matches the `value` of a popup menu i
 
 ```html
 <sp-combobox autocomplete="none">
-    <span slot="field-label">Color</span>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <span slot="field-label">Color</span>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -242,10 +242,10 @@ The popup menu items are filtered to only those completing the currently-input v
 
 ```html
 <sp-combobox autocomplete="list">
-    <span slot="field-label">Color</span>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <span slot="field-label">Color</span>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -257,17 +257,17 @@ The popup menu items are filtered to only those completing the currently-input v
 
 ```html
 <sp-combobox disabled>
-    <span slot="field-label">Color</span>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <span slot="field-label">Color</span>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 <br />
 <sp-combobox>
-    <span slot="field-label">Color</span>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue" disabled>Blue</sp-menu-item>
+  <span slot="field-label">Color</span>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue" disabled>Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -277,13 +277,13 @@ The popup menu items are filtered to only those completing the currently-input v
 
 ```html
 <sp-combobox invalid>
-    <span slot="field-label">Color</span>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
-    <sp-help-text slot="negative-help-text">
-        Choose or add at least one color.
-    </sp-help-text>
+  <span slot="field-label">Color</span>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-help-text slot="negative-help-text">
+    Choose or add at least one color.
+  </sp-help-text>
 </sp-combobox>
 ```
 
@@ -293,10 +293,10 @@ The popup menu items are filtered to only those completing the currently-input v
 
 ```html
 <sp-combobox pending>
-    <span slot="field-label">Color</span>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <span slot="field-label">Color</span>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -313,10 +313,10 @@ For exceptional cases, provide an accessible label via the `label` attribute.
 
 ```html
 <sp-combobox>
-    <span slot="field-label">Color</span>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <span slot="field-label">Color</span>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
@@ -332,11 +332,11 @@ See [help text](../help-text) and [tooltip](../tooltip) for more information.
 
 ```html
 <sp-combobox>
-    <span slot="field-label">Color</span>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
-    <sp-help-text slot="help-text">Enter the name of a color.</sp-help-text>
+  <span slot="field-label">Color</span>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-help-text slot="help-text">Enter the name of a color.</sp-help-text>
 </sp-combobox>
 ```
 
@@ -346,12 +346,12 @@ See [help text](../help-text) and [tooltip](../tooltip) for more information.
 
 ```html
 <sp-combobox required>
-    <span slot="field-label">Color</span>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
-    <sp-help-text slot="help-text">Enter the name of a color.</sp-help-text>
-    <sp-help-text slot="negative-help-text">A color is required.</sp-help-text>
+  <span slot="field-label">Color</span>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
+  <sp-help-text slot="help-text">Enter the name of a color.</sp-help-text>
+  <sp-help-text slot="negative-help-text">A color is required.</sp-help-text>
 </sp-combobox>
 ```
 
@@ -361,13 +361,13 @@ See [help text](../help-text) and [tooltip](../tooltip) for more information.
 
 ```html
 <sp-combobox>
-    <span slot="field-label">Color</span>
-    <sp-tooltip slot="tooltip">
-        Color options, such as red, green, or blue.
-    </sp-tooltip>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
+  <span slot="field-label">Color</span>
+  <sp-tooltip slot="tooltip">
+    Color options, such as red, green, or blue.
+  </sp-tooltip>
+  <sp-menu-item value="red">Red</sp-menu-item>
+  <sp-menu-item value="green">Green</sp-menu-item>
+  <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 

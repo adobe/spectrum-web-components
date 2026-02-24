@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,34 +10,34 @@
  * governing permissions and limitations under the License.
  */
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 export default {
-    component: 'sp-textfield',
-    title: 'Textarea/Sizes',
+  component: 'sp-textfield',
+  title: 'Textarea/Sizes',
 };
 
 const template = ({
-    size,
+  size,
 }: {
-    size?: 's' | 'm' | 'l' | 'xl';
+  size?: 's' | 'm' | 'l' | 'xl';
 } = {}): TemplateResult => {
-    return html`
-        <sp-textfield
-            id="name"
-            multiline
-            size=${ifDefined(size)}
-            value="Sized Textarea"
-        >
-            Enter your life story
-            <sp-help-text size=${ifDefined(size)} slot="help-text">
-                Spare no expense.
-            </sp-help-text>
-        </sp-textfield>
-    `;
+  return html`
+    <sp-textfield
+      id="name"
+      multiline
+      size=${ifDefined(size)}
+      value="Sized Textarea"
+    >
+      Enter your life story
+      <sp-help-text size=${ifDefined(size)} slot="help-text">
+        Spare no expense.
+      </sp-help-text>
+    </sp-textfield>
+  `;
 };
 
 export const s = (): TemplateResult => template({ size: 's' });

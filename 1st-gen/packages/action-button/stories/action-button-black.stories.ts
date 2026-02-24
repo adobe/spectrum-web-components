@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,44 +11,45 @@
  */
 
 import { TemplateResult } from '@spectrum-web-components/base';
+
 import { makeOverBackground } from '../../button/stories/index.js';
 import type { Properties } from './index.js';
 import { renderButtons } from './index.js';
 
 export default {
-    component: 'sp-action-button',
-    title: 'Action Button/Static Black',
-    decorators: [makeOverBackground('black')],
+  component: 'sp-action-button',
+  title: 'Action Button/Static Black',
+  decorators: [makeOverBackground('black')],
 };
 
 const staticColor = 'black';
 
 export const XS = (args: Properties): TemplateResult => renderButtons(args);
 XS.args = {
-    size: 'xs',
-    staticColor,
+  size: 'xs',
+  staticColor,
 };
 
 export const s = (args: Properties): TemplateResult => renderButtons(args);
 s.args = {
-    size: 's',
-    staticColor,
+  size: 's',
+  staticColor,
 };
 
 export const m = (args: Properties): TemplateResult => renderButtons(args);
 m.args = {
-    size: 'm',
-    staticColor,
+  size: 'm',
+  staticColor,
 } as Properties;
 
 export const l = (args: Properties): TemplateResult => renderButtons(args);
 l.args = {
-    size: 'l',
-    staticColor,
+  size: 'l',
+  staticColor,
 };
 
 export const XL = (args: Properties): TemplateResult => renderButtons(args);
 XL.args = {
-    size: 'xl',
-    staticColor,
+  size: 'xl',
+  staticColor,
 };

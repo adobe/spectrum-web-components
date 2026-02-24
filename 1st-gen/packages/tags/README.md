@@ -42,9 +42,9 @@ Tags are created from the following parts:
 
 ```html
 <sp-tags>
-    <sp-tag>Tag 1</sp-tag>
-    <sp-tag invalid>Tag 2</sp-tag>
-    <sp-tag disabled>Tag 3</sp-tag>
+  <sp-tag>Tag 1</sp-tag>
+  <sp-tag invalid>Tag 2</sp-tag>
+  <sp-tag disabled>Tag 3</sp-tag>
 </sp-tags>
 ```
 
@@ -87,18 +87,18 @@ Tags are created from the following parts:
 
 ```html
 <sp-tags>
-    <sp-tag>
-        Tag 1
-        <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
-    </sp-tag>
-    <sp-tag invalid>
-        Tag 2
-        <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
-    </sp-tag>
-    <sp-tag disabled>
-        Tag 3
-        <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
-    </sp-tag>
+  <sp-tag>
+    Tag 1
+    <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+  </sp-tag>
+  <sp-tag invalid>
+    Tag 2
+    <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+  </sp-tag>
+  <sp-tag disabled>
+    Tag 3
+    <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+  </sp-tag>
 </sp-tags>
 ```
 

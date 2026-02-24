@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+import '../src/express/core.js';
+
 import mediumStyles from '../src/express/scale-medium.css.js';
 import { Theme } from '../src/Theme.js';
-import '../src/express/core.js';
 
 Theme.registerThemeFragment('medium-express', 'scale', mediumStyles);

@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,26 +11,27 @@
  */
 
 import { TemplateResult } from '@spectrum-web-components/base';
+
 import { argTypes } from './args';
 import { StoryArgs, Template } from './template';
 
 export default {
-    title: 'Picker/Pending',
-    component: 'sp-picker',
-    argTypes,
-    args: {
-        pending: true,
-    },
+  title: 'Picker/Pending',
+  component: 'sp-picker',
+  argTypes,
+  args: {
+    pending: true,
+  },
 };
 
 export const S = (args: StoryArgs): TemplateResult =>
-    Template({ ...args, size: 's' });
+  Template({ ...args, size: 's' });
 
 export const M = (args: StoryArgs): TemplateResult =>
-    Template({ ...args, size: 'm' });
+  Template({ ...args, size: 'm' });
 
 export const L = (args: StoryArgs): TemplateResult =>
-    Template({ ...args, size: 'l' });
+  Template({ ...args, size: 'l' });
 
 export const XL = (args: StoryArgs): TemplateResult =>
-    Template({ ...args, size: 'xl' });
+  Template({ ...args, size: 'xl' });
