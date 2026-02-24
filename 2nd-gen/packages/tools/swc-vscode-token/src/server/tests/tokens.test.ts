@@ -10,6 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+import * as fs from 'fs';
+import * as os from 'os';
+import * as path from 'path';
 import { describe, expect, it } from 'vitest';
 
 import { TokenStore } from '../tokens.js';
@@ -62,5 +65,26 @@ describe('TokenStore', () => {
         replacement: 'accent-color',
       },
     ]);
+  });
+
+  it('clears suggestion candidates when load fails', () => {
+    const store = new TokenStore({
+      tokens: {
+        'accent-color': 'var(--swc-accent-color)',
+      },
+      renamed: {
+        'legacy-accent': 'accent-color',
+      },
+    });
+
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'token-store-'));
+    const brokenJsonPath = path.join(tmpDir, 'broken.json');
+    fs.writeFileSync(brokenJsonPath, '{invalid-json', 'utf8');
+
+    store.load(brokenJsonPath);
+
+    expect(store.all()).toEqual([]);
+    expect(store.candidates()).toEqual([]);
+    expect(store.replacementFor('legacy-accent')).toBeUndefined();
   });
 });

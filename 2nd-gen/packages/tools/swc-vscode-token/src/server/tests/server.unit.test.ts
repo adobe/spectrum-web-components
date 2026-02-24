@@ -56,6 +56,29 @@ describe('server utilities', () => {
     it('returns no suggestions for very short queries', () => {
       expect(buildUnknownTokenSuggestions('a', store)).toEqual([]);
     });
+
+    it('returns exact match quickly from a large candidate set', () => {
+      const manyTokens = Object.fromEntries(
+        Array.from({ length: 600 }, (_, i) => [
+          `token-candidate-${i}`,
+          `var(--swc-token-candidate-${i})`,
+        ])
+      );
+      const largeStore = new TokenStore({
+        tokens: {
+          ...manyTokens,
+          'target-token': 'var(--swc-target-token)',
+        },
+      });
+
+      expect(buildUnknownTokenSuggestions('target-token', largeStore)).toEqual([
+        {
+          token: 'target-token',
+          fromRenamed: false,
+          replacement: undefined,
+        },
+      ]);
+    });
   });
 
   describe('collectLocalVars', () => {

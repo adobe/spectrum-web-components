@@ -44,6 +44,7 @@ export class TokenStore {
     } catch {
       this.tokens = {};
       this.renamed = {};
+      this.rebuildCandidates();
     }
   }
 

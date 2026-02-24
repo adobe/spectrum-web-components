@@ -51,6 +51,8 @@ type CachedDiagnosticEntry = {
   suggestions?: UnknownTokenSuggestion[];
 };
 
+const MAX_LEVENSHTEIN_CANDIDATES = 250;
+
 /* -------------------------------------------------------------------------- */
 /*                                    Utils                                   */
 /* -------------------------------------------------------------------------- */
@@ -314,13 +316,41 @@ export function buildUnknownTokenSuggestions(
     return [];
   }
 
+  const exactMatch = candidates.find((candidate) => candidate.lower === query);
+  if (exactMatch) {
+    return [
+      {
+        token: exactMatch.name,
+        fromRenamed: exactMatch.kind === 'renamed',
+        replacement: exactMatch.replacement,
+      },
+    ];
+  }
+
   const shortlisted = candidates.filter((candidate) =>
     passesSuggestionPrefilter(query, candidate.lower)
   );
   const pool = shortlisted.length ? shortlisted : candidates;
-
-  const ranked = pool
+  const prefixedPool = pool
     .map((candidate) => ({
+      candidate,
+      prefixScore: suggestionPrefixScore(query, candidate.lower),
+      lenDelta: Math.abs(query.length - candidate.lower.length),
+      kindScore: candidate.kind === 'token' ? 0 : 1,
+    }))
+    .sort((a, b) =>
+      a.prefixScore !== b.prefixScore
+        ? a.prefixScore - b.prefixScore
+        : a.lenDelta !== b.lenDelta
+          ? a.lenDelta - b.lenDelta
+          : a.kindScore !== b.kindScore
+            ? a.kindScore - b.kindScore
+            : a.candidate.name.localeCompare(b.candidate.name)
+    )
+    .slice(0, MAX_LEVENSHTEIN_CANDIDATES);
+
+  const ranked = prefixedPool
+    .map(({ candidate }) => ({
       candidate,
       prefixScore: suggestionPrefixScore(query, candidate.lower),
       editDist: levenshtein(query, candidate.lower),
