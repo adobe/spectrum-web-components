@@ -11,8 +11,8 @@
  */
 
 import { css, html, LitElement } from 'lit';
-import { addons } from '@storybook/manager-api';
 import { STORY_CHANGED } from '@storybook/core-events';
+import { addons } from '@storybook/manager-api';
 
 // Import Spectrum Web Components
 import '@spectrum-web-components/switch/sp-switch.js';
