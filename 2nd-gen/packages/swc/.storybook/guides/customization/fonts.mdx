@@ -117,7 +117,9 @@ Note: `'Adobe Clean Spectrum Serif VF'` appears from the upstream Spectrum token
 CJK (Chinese, Japanese, Korean) font delivery is handled separately from the base Latin fonts. If you need CJK support, ensure you've included Adobe Clean Han in your Adobe Fonts web project or font loading setup.
 
 ```css
-adobe-clean-han-japanese, 'Adobe Clean Han', sans-serif
+/* adobe-clean-han-traditional, "Adobe Clean Han Traditional Chinese", adobe-clean-han-simplified-c, "Adobe Clean Han Simplified Chinese", adobe-clean-han-hong-kong, "Adobe Clean Han Hong Kong", adobe-clean-han-japanese, "Adobe Clean Han Japanese", adobe-clean-han-korean, "Adobe Clean Han Korean", Adobe Clean Han, sans-serif */
+
+font-family: var(--swc-cjk-font-family-stack);
 ```
 
 Note: `Adobe Clean Han` appears from the upstream Spectrum token resolution.
