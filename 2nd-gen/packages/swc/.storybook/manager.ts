@@ -17,6 +17,7 @@ import { create } from '@storybook/theming';
 import logo from './assets/logo.svg';
 
 import '../stylesheets/swc.css';
+import '../stylesheets/typography.css';
 import './assets/manager.css';
 
 const root = document.body ?? document.documentElement;

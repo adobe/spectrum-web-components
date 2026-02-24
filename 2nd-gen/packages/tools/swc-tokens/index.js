@@ -20,7 +20,8 @@ import prettier from 'prettier';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
-import { allTokens, createLogger, generateCSS } from './utils.js';
+import { allTokens, generateCSS } from './src/tokens.js';
+import { generateTypographyCssFile } from './src/typography.js';
 
 const argv = yargs(hideBin(process.argv))
   .option('out', {
@@ -41,7 +42,7 @@ const argv = yargs(hideBin(process.argv))
     default: false,
   })
   .option('outputType', {
-    choices: ['stylesheet', 'tokens'],
+    choices: ['data', 'tokens', 'typography'],
     describe: 'Command output type',
     demandOption: true,
   })
@@ -53,11 +54,35 @@ const outputType = argv.outputType?.trim();
 const debug = argv.debug;
 const debugFile = 'debug-tokens.txt';
 
-fs.mkdirSync(path.dirname(out), { recursive: true });
+if (out) {
+  fs.mkdirSync(path.dirname(out), { recursive: true });
+}
+
+/**
+ * Creates a logger that writes to a file.
+ *
+ * @param {string|false} debugPath  path to log file OR false for no logging
+ */
+export function createLogger(debugPath) {
+  if (!debugPath) {
+    return () => {};
+  }
+
+  fs.writeFileSync(debugPath, '');
+
+  return (...args) => {
+    fs.appendFileSync(
+      debugPath,
+      args
+        .map((a) => (typeof a === 'string' ? a : JSON.stringify(a, null, 2)))
+        .join(' ') + '\n'
+    );
+  };
+}
 
 const log = debug && createLogger(`./${debugFile}`);
 
-if (outputType === 'stylesheet') {
+if (outputType === 'tokens') {
   const prettierConfig = await prettier.resolveConfig(process.cwd());
 
   const css = await generateCSS(prefix, log);
@@ -68,7 +93,9 @@ if (outputType === 'stylesheet') {
 
   await fs.promises.writeFile(out, formattedCss, 'utf8');
 
-  console.log(`✔ Stylesheet written to ${out}`);
+  console.log(`✔ Tokens stylesheet written to ${out}`);
+} else if (outputType === 'typography') {
+  await generateTypographyCssFile({ debug: log, prefix, outFile: out });
 } else {
   fs.writeFileSync(
     out,
@@ -76,9 +103,9 @@ if (outputType === 'stylesheet') {
     'utf8'
   );
 
-  if (debug) {
-    console.log(`✔ Debug log written to ${debugFile}`);
-  }
+  console.log(`✔ Token data written to ${out}`);
+}
 
-  console.log(`✔ Tokens written to ${out}`);
+if (debug) {
+  console.log(`✔ Debug log written to ${debugFile}`);
 }

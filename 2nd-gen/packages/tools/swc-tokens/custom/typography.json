@@ -6,6 +6,10 @@
   "cjk-font-family-stack": {
     "value": "adobe-clean-han-japanese, {cjk-font-family}, sans-serif;"
   },
+  "code-font": {
+    "skipResolution": true,
+    "value": "{code-font-family-stack}"
+  },
   "code-font-family-stack": {
     "value": "'{code-font-family}',  Monaco, monospace"
   },
