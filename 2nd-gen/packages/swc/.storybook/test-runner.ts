@@ -14,14 +14,53 @@ import type { TestRunnerConfig } from '@storybook/test-runner';
 
 const config: TestRunnerConfig = {
   async postVisit(page, context) {
-    // Run aXe validation
-    const results = await new AxeBuilder({ page })
-      .include('#storybook-root')
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-      .analyze();
+    if (context.tags?.includes('!test')) {
+      return;
+    }
 
-    if (results.violations.length > 0) {
-      const details = results.violations
+    const axeBuilder = new AxeBuilder({ page })
+      .include('#storybook-root')
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
+
+    const a11yConfig = context.parameters?.a11y;
+
+    if (a11yConfig?.disabledRules && Array.isArray(a11yConfig.disabledRules)) {
+      axeBuilder.disableRules(a11yConfig.disabledRules);
+    }
+
+    const results = await axeBuilder.analyze();
+
+    // Filter violations using rule-specific exclusions from story parameters.
+    // parameters.a11y.exclude: { 'rule-id': ['selector1', 'selector2'] }
+    // Only the specified rule is affected; all other rules still validate the element.
+    const excludeMap = a11yConfig?.exclude as
+      | Record<string, string[]>
+      | undefined;
+
+    const violations = excludeMap
+      ? results.violations
+          .map((violation) => {
+            const excludedSelectors = excludeMap[violation.id];
+            if (!excludedSelectors) {
+              return violation;
+            }
+
+            const remainingNodes = violation.nodes.filter(
+              (node) =>
+                !node.target.some((target) =>
+                  excludedSelectors.some((selector) =>
+                    String(target).includes(selector)
+                  )
+                )
+            );
+
+            return { ...violation, nodes: remainingNodes };
+          })
+          .filter((violation) => violation.nodes.length > 0)
+      : results.violations;
+
+    if (violations.length > 0) {
+      const details = violations
         .map((violation) => {
           const nodes = violation.nodes
             .map((node) => node.target.join(', '))

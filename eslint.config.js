@@ -128,6 +128,7 @@ export default defineConfig([
       '**/.tmp/**',
       '**/playwright-report/**',
       '**/test-results/**',
+      '**/playwright.config.js',
       '**/*.d.ts',
       '1st-gen/packages/icons/src/icons-*.svg.ts',
       // Build outputs
