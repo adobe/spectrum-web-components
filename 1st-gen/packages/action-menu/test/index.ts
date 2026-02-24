@@ -898,8 +898,11 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
           `
         );
       const handleActionMenuScroll = spy();
+      const onActionMenuScroll = (): void => {
+        handleActionMenuScroll();
+      };
       const el = await fixture<ActionMenu>(html`
-        <sp-action-menu @scroll=${() => handleActionMenuScroll()}>
+        <sp-action-menu @scroll=${onActionMenuScroll}>
           <span slot="label">More Actions</span>
           <sp-menu-item>Deselect</sp-menu-item>
           <sp-menu-item>Select Inverse</sp-menu-item>
@@ -913,9 +916,26 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
       expect(handleActionMenuScroll.called).to.be.false;
 
-      el.dispatchEvent(
-        new Event('scroll', { cancelable: true, composed: true })
-      );
+      const opened = oneEvent(el, 'sp-opened');
+      el.click();
+      await opened;
+      await elementUpdated(el);
+
+      const menu = el.optionsMenu as Menu;
+      expect(menu).to.exist;
+      const menuScrollSpy = spy();
+      menu.addEventListener('scroll', menuScrollSpy);
+
+      menu.style.maxHeight = '60px';
+      menu.style.overflow = 'auto';
+      menu.scrollTop = 40;
+
+      await waitUntil(() => menu.scrollTop > 0, 'menu should scroll');
+      await aTimeout(50);
+      expect(
+        menuScrollSpy.callCount,
+        'menu should emit scroll'
+      ).to.be.greaterThan(0);
       expect(handleActionMenuScroll).to.have.been.called;
     });
   });
