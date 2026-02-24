@@ -30,7 +30,6 @@ import {
 } from '@spectrum-web-components/base/src/directives.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
-/* eslint-disable import/no-extraneous-dependencies */
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder-open.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';

@@ -22,7 +22,6 @@ import {
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 // Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
-/* eslint-disable import/no-extraneous-dependencies */
 import '@spectrum-web-components/menu/sp-menu.js';
 
 import { Menu } from './Menu.js';

@@ -78,6 +78,7 @@ const config = {
     '@storybook/addon-a11y',
     '@storybook/addon-designs',
     '@storybook/addon-vitest',
+    '@github-ui/storybook-addon-performance-panel/universal',
   ],
   viteFinal: async (config) => {
     return mergeConfig(config, {
