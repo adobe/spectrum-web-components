@@ -639,7 +639,7 @@ export function startServer() {
     if (
       uri.endsWith('.test.js') ||
       uri.endsWith('.test.ts') ||
-      uri.includes('/swc-vscode-token/')
+      uri.includes('/tools/')
     ) {
       conn.sendDiagnostics({ uri, diagnostics: [] });
       return;
