@@ -21,8 +21,8 @@
     - [AI agent instructions](07_authoring-contributor-docs/01_ai-agent-instructions.md)
 - [Patching dependencies](08_patching-dependencies.md)
 - [Accessibility testing](09_accessibility-testing.md)
-- [2nd gen testing](11_2ndgen_testing.md)
 - [Maintaining StackBlitz examples for Spectrum Web Components](10_using-stackblitz.md)
+- [2nd gen testing](11_2ndgen_testing.md)
 
 </details>
 

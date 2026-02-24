@@ -60,7 +60,7 @@
     "package": "vsce package --no-dependencies",
     "test": "vitest --run",
     "test:watch": "vitest --watch",
-    "tokens": "swc-tokens --outputType tokens --out ./tokens.json --prefix swc"
+    "tokens": "swc-tokens --outputType data --out ./tokens.json --prefix swc"
   },
   "version": "0.0.1"
 }
