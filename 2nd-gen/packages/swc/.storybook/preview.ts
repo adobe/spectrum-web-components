@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 /** @type { import('@storybook/web-components').Preview } */
-import { withPerformanceMonitor } from '@github-ui/storybook-addon-performance-panel/universal';
 import { setCustomElementsManifest } from '@storybook/web-components';
 import {
   type Options,
@@ -84,7 +83,6 @@ const preview = {
     scale: 'medium',
   },
   decorators: [
-    withPerformanceMonitor,
     withContext,
     withStaticColorPlayground,
     withStaticColorsDemo,
