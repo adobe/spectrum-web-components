@@ -158,3 +158,65 @@ To modify these rules:
 3. Ensure valid regex patterns, where applicable
 4. Include clear error messages
 5. Test changes before committing
+
+## Skills
+
+Skills are used on-demand. When a task matches a skill’s purpose, the agent reads the skill file for workflows, patterns, and guidance. Skills live in the `skills` directory; each has a `SKILL.md` and may include references or scripts.
+
+### Available skills
+
+#### Accessibility compliance
+
+- **purpose**: Implement WCAG 2.2 compliant interfaces with mobile accessibility, inclusive design patterns, and assistive technology support
+- **How to invoke**: Ask for an accessibility audit, ARIA implementation, screen reader support, WCAG compliance, or inclusive UX (e.g. “make this accessible”, “add keyboard nav”). Not tied to a file type; applies to any UI or component work.
+- Use when: Auditing accessibility, implementing ARIA patterns, building for screen readers, or ensuring inclusive user experiences
+- Provides: WCAG checklist, ARIA patterns (e.g. button, dialog, form), contrast requirements, testing tools
+
+#### Ask questions
+
+- **purpose**: Clarify requirements before implementing when the request is underspecified or ambiguous
+- **How to invoke**: Agent-triggered when it detects multiple plausible interpretations or missing key details (scope, constraints, “done”). You can also say “I’m not sure about X” or “clarify before you start” to encourage it.
+- Use when: Multiple plausible interpretations exist, or key details (scope, constraints, “done”) are unclear
+- Workflow: Decide if underspecified → ask must-have questions → pause until answered → confirm then proceed
+
+#### Contributor docs navigation
+
+- **purpose**: Run the CONTRIBUTOR-DOCS nav script to update breadcrumbs and TOCs, and handle link verification
+- **How to invoke**: Say “update contributor docs nav”, “regenerate TOC”, “fix broken links in CONTRIBUTOR-DOCS”, or “run the nav script”. Also invoked when you add, remove, rename, or move files under `CONTRIBUTOR-DOCS/` or change H1/H2/H3 headings (the contributor-doc-update rule may trigger; the skill holds the full workflow).
+- Use when: Updating contributor docs structure, regenerating navigation, or fixing reported broken links
+- Provides: Operator workflow (run script, verify, fix links), Maintainer workflow (when to update script). Full instructions in `CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs/01_ai-agent-instructions.md`
+
+#### Conventional commits
+
+- **purpose**: Create conventional commit messages following the conventional commits specification
+- **How to invoke**: Ask for a commit message when committing (e.g. “write a commit message for these changes”, “commit this”, “suggest a commit message”). Not tied to a file type; applies when you’re about to run `git commit`.
+- Use when: Committing code changes, writing commit messages, or formatting git history
+- Provides: Format (type(scope): subject, body, footer), type list (feat, fix, docs, etc.), examples including breaking changes
+
+#### Documentation
+
+- **purpose**: Follow Adobe content writing standards when writing documentation
+- **How to invoke**: Use when writing or editing docs — e.g. story JSDoc (`.stories.ts`), README/changeset/Jira/PR (`.md`, `.mdx`), or when you say “write the PR description”, “draft the Jira ticket”, “add JSDoc to this story”.
+- Use when: Writing story JSDoc, 1st-gen docs, changesets, Jira tickets, or PR descriptions
+- Provides: Voice and tone, grammar and mechanics, markdown/JSDoc reference, links to Spectrum design system content guidelines
+
+#### Explain code
+
+- **purpose**: Explain code with visual diagrams and analogies
+- **How to invoke**: Ask “how does this work?”, “explain this code”, “walk me through this”, or “what does this do?”. Not tied to a file type; use on any code or file you want explained.
+- Use when: Explaining how code works, teaching about the codebase, or when the user asks “how does this work?”
+- Approach: Analogy → diagram → step-by-step walkthrough → highlight gotchas
+
+#### Session handoff
+
+- **purpose**: Create handoff documents so another agent (or a later session) can continue work with full context
+- **How to invoke**: Say “create handoff”, “save state”, “I need to pause”, “context is getting full”, or “load handoff” / “resume from” / “continue where we left off”. The agent may also suggest a handoff after substantial work (e.g. many file edits, complex debugging).
+- Use when: User requests handoff/save state, context is getting full, major milestone reached, or resuming with “load handoff” / “continue where we left off”
+- Provides: CREATE and RESUME workflows, scripts (create, list, validate, check staleness), handoff chaining
+
+#### Test-driven development
+
+- **purpose**: Write a failing test first, then minimal code to pass, then refactor (red–green–refactor)
+- **How to invoke**: Ask to implement a feature or fix a bug (e.g. “add feature X”, “fix this bug”); the agent may use TDD by default. To invoke explicitly, say “use TDD”, “write tests first”, or “red-green-refactor”.
+- Use when: Implementing any feature or bugfix, before writing implementation code
+- Provides: TDD cycle, verification checklist, good/bad test examples, anti-patterns to avoid
