@@ -15,7 +15,7 @@ import { expect, test } from '@playwright/test';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
- * Accessibility tests for Badge component (2nd Generation)
+ * Accessibility tests for Progress Circle component (2nd Generation)
  *
  * ARIA snapshot tests validate the accessibility tree structure.
  * aXe WCAG compliance and color contrast validation are run via
@@ -23,64 +23,80 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
  * in the `test:a11y` command.
  */
 
-test.describe('Badge - ARIA Snapshots', () => {
-  test('should have correct accessibility tree for default badge', async ({
+test.describe('Progress Circle - ARIA Snapshots', () => {
+  test('should have correct accessibility tree for overview', async ({
     page,
   }) => {
     const root = await gotoStory(
       page,
-      'components-badge--overview',
-      'swc-badge'
+      'components-progress-circle--overview',
+      'swc-progress-circle'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - text: Active
+      - progressbar "Uploading document":
+        - img
     `);
   });
 
-  test('should handle semantic variants', async ({ page }) => {
+  test('should handle anatomy story with different progress values', async ({
+    page,
+  }) => {
     const root = await gotoStory(
       page,
-      'components-badge--semantic-variants',
-      'swc-badge'
+      'components-progress-circle--anatomy',
+      'swc-progress-circle'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - text: New Active Archived Approved Pending approval Rejected
-    `);
-  });
-
-  test('should handle non-semantic variants', async ({ page }) => {
-    const root = await gotoStory(
-      page,
-      'components-badge--non-semantic-variants',
-      'swc-badge'
-    );
-    await expect(root).toMatchAriaSnapshot(`
-      - text: /Marketing Engineering Design Product Support Busy Available Sales Research Quality Documentation Legal Analytics Security Creative Training Facilities Compliance Version 1\\.\\d+\\.\\d+/
+      - progressbar "Starting upload":
+        - img
     `);
   });
 
   test('should handle different sizes', async ({ page }) => {
-    const root = await gotoStory(page, 'components-badge--sizes', 'swc-badge');
-    await expect(root).toMatchAriaSnapshot(`
-      - text: Small Medium Large Extra-large
-    `);
-  });
-
-  test('should handle outline style', async ({ page }) => {
     const root = await gotoStory(
       page,
-      'components-badge--outline',
-      'swc-badge'
+      'components-progress-circle--sizes',
+      'swc-progress-circle'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - text: New Active Archived Approved Pending approval Rejected
+      - progressbar "Processing small item":
+        - img
     `);
   });
 
-  test('should handle subtle style', async ({ page }) => {
-    const root = await gotoStory(page, 'components-badge--subtle', 'swc-badge');
+  test('should handle static colors', async ({ page }) => {
+    const root = await gotoStory(
+      page,
+      'components-progress-circle--static-colors',
+      'swc-progress-circle'
+    );
     await expect(root).toMatchAriaSnapshot(`
-      - text: /New Active Archived Approved Pending approval Rejected Marketing Engineering Design Product Support Busy Available Sales Research Quality Documentation Legal Analytics Security Creative Training Facilities Compliance Version 1\\.\\d+\\.\\d+/
+      - progressbar "Processing media":
+        - img
+    `);
+  });
+
+  test('should handle progress values', async ({ page }) => {
+    const root = await gotoStory(
+      page,
+      'components-progress-circle--progress-values',
+      'swc-progress-circle'
+    );
+    await expect(root).toMatchAriaSnapshot(`
+      - progressbar "Starting download":
+        - img
+    `);
+  });
+
+  test('should handle indeterminate state', async ({ page }) => {
+    const root = await gotoStory(
+      page,
+      'components-progress-circle--indeterminate',
+      'swc-progress-circle'
+    );
+    await expect(root).toMatchAriaSnapshot(`
+      - progressbar "Processing request":
+        - img
     `);
   });
 });
