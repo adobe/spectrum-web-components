@@ -280,10 +280,7 @@ This outputs the stylesheet into the noted `--out` directory and filename, with 
 Valid `--outputType` values include:
 
 - `tokens` - token stylesheet
-  <<<<<<< HEAD
-- # `data` - token JSON, split into `tokens` and `renamed`
-- `data` - token JSON
-  > > > > > > > 39b74852c72da171e5ca6e360410739081de98f0
+- `data` - token JSON, split into `tokens` and `renamed`
 - `typography` - typography stylesheet
 
 ## Commands
