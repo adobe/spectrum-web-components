@@ -14,12 +14,15 @@
 @import url("./combobox-overrides.css");
 
 :host {
-    display: inline-flex;
-    flex-wrap: wrap;
+    display: inline-grid;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: 1fr;
+    position: relative;
 }
 
 :host([label-position="inline-start"]) {
-    flex-wrap: nowrap;
+    grid-template-rows: auto auto;
+    grid-template-columns: minmax(10ch, 1fr) minmax(16ch, 2fr);
 }
 
 :host([readonly]) sp-picker-button {
@@ -27,13 +30,35 @@
     pointer-events: none;
 }
 
-sp-field-label {
+sp-field-label,
+:host > label {
     display: block;
     width: 100%;
+    grid-area: 1 / 1;
+
+    /* Align slotted label with standalone sp-field-label (font-size, colors) */
+    font-size: var(--mod-fieldlabel-font-size, var(--spectrum-field-label-font-size));
+    font-weight: var(--mod-fieldlabel-font-weight, var(--spectrum-regular-font-weight));
+    line-height: var(--mod-fieldlabel-line-height, var(--spectrum-line-height-100));
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    color: var(--highcontrast-field-label-content-color, var(--mod-fieldlabel-color, var(--spectrum-neutral-subdued-content-color-default)));
 }
 
-:host([label-position="inline-start"]) sp-field-label {
+:host([disabled]) :host > label {
+    --mod-fieldlabel-color: var(--mod-disabled-content-color, var(--spectrum-disabled-content-color));
+}
+
+@media (forced-colors: active) {
+    :host([disabled]) :host > label {
+        --highcontrast-field-label-content-color: GrayText;
+    }
+}
+
+:host([label-position="inline-start"]) sp-field-label,
+:host([label-position="inline-start"]) :host > label {
     width: auto;
+    grid-area: 1 / 1 / span 2 / span 1;
 }
 
 sp-popover {
