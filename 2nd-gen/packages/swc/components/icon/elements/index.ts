@@ -10,7 +10,22 @@
  * governing permissions and limitations under the License.
  */
 export * from './AlertIcon.js';
+export * from './Arrow100Icon.js';
+export * from './Asterisk100Icon.js';
+export * from './Checkmark75Icon.js';
 export * from './Checkmark100Icon.js';
+export * from './Checkmark200Icon.js';
+export * from './Checkmark300Icon.js';
+export * from './Chevron50Icon.js';
+export * from './Chevron75Icon.js';
 export * from './Chevron100Icon.js';
+export * from './Chevron200Icon.js';
+export * from './CornerTriangle300Icon.js';
+export * from './Cross75Icon.js';
+export * from './Cross100Icon.js';
 export * from './Cross200Icon.js';
+export * from './Cross300Icon.js';
+export * from './Dash75Icon.js';
 export * from './Dash100Icon.js';
+export * from './Dash200Icon.js';
+export * from './Dash300Icon.js';

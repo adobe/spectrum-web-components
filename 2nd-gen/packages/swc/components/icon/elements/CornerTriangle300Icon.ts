@@ -11,11 +11,11 @@
  */
 import { html, TemplateResult } from 'lit';
 
-export const Dash100Icon = (): TemplateResult => {
+export const CornerTriangle300Icon = (): TemplateResult => {
   return html`
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
       <path
-        d="M8.5 5.75H1.5c-.41406 0-.75-.33594-.75-.75s.33594-.75.75-.75h7c.41406 0 .75.33594.75.75s-.33594.75-.75.75Z"
+        d="M14 8.001v5.249c0 .41421-.33579.75-.75.75h-5.249c-.44545 0-.66854-.53857-.35355-.85355l5.499-5.499c.31498-.31498.85355-.0919.85355.35355Z"
       />
     </svg>
   `;

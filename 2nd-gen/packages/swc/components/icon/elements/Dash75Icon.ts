@@ -11,11 +11,11 @@
  */
 import { html, TemplateResult } from 'lit';
 
-export const Dash100Icon = (): TemplateResult => {
+export const Dash75Icon = (): TemplateResult => {
   return html`
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
       <path
-        d="M8.5 5.75H1.5c-.41406 0-.75-.33594-.75-.75s.33594-.75.75-.75h7c.41406 0 .75.33594.75.75s-.33594.75-.75.75Z"
+        d="M8.125 5.625H1.875c-.34473 0-.625-.28027-.625-.625s.28027-.625.625-.625h6.25c.34473 0 .625.28027.625.625s-.28027.625-.625.625Z"
       />
     </svg>
   `;

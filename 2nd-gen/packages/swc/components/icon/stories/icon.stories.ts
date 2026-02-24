@@ -14,10 +14,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { Chevron100Icon } from '@adobe/swc/icon/elements';
-import * as iconElements from '@adobe/swc/icon/elements';
+import { Chevron100Icon } from '@adobe/spectrum-wc/icon/elements';
+import * as iconElements from '@adobe/spectrum-wc/icon/elements';
 
-import '@adobe/swc/icon';
+import '@adobe/spectrum-wc/icon';
 
 // ────────────────
 //    METADATA
@@ -102,7 +102,9 @@ export const Overview: Story = {
  */
 export const Anatomy: Story = {
   render: (args) => html`
-    <swc-icon label="Chevron icon" size=${ifDefined(args.size)}>${iconSvg}</swc-icon>
+    <swc-icon label="Chevron icon" size=${ifDefined(args.size)}>
+      ${iconSvg}
+    </swc-icon>
   `,
   tags: ['anatomy'],
   parameters: {
@@ -122,7 +124,9 @@ export const Anatomy: Story = {
  */
 export const Sources: Story = {
   render: (args) => html`
-    <swc-icon label="Chevron icon" size=${ifDefined(args.size)}>${iconSvg}</swc-icon>
+    <swc-icon label="Chevron icon" size=${ifDefined(args.size)}>
+      ${iconSvg}
+    </swc-icon>
   `,
   tags: ['options'],
   parameters: {
