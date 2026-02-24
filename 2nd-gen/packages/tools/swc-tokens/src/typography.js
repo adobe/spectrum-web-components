@@ -741,7 +741,7 @@ export async function generateTypographyCssString(options = {}) {
     // Serif modifier (cascade order wins; no compounding)
     if (tokens[serifWeightTokenName]?.value) {
       out += cssBlock(`.${className}--serif`, {
-        [`--${cpBase}-font-family`]: `"${fontTokens.serif}")`,
+        [`--${cpBase}-font-family`]: `token("${fontTokens.serif}")`,
         [`--${cpBase}-font-weight`]: `token("${serifWeightTokenName}")`,
       });
       out += '\n';
