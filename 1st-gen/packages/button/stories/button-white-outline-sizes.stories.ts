@@ -14,7 +14,7 @@ import { TemplateResult } from '@spectrum-web-components/base';
 import { makeOverBackground, Properties, renderButtonSet } from './index.js';
 import { args, argTypes } from './index.js';
 
-const variant = 'white';
+const staticColor = 'white';
 const treatment = 'outline';
 
 export default {
@@ -23,7 +23,7 @@ export default {
   decorators: [makeOverBackground()],
   args: {
     ...args,
-    variant,
+    staticColor,
     treatment,
   },
   argTypes,

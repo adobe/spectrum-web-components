@@ -33,6 +33,8 @@
       "default": "./code.js"
     },
     "./core-global.css": "./core-global.css",
+    "./global-button.css": "./global-button.css",
+    "./global-elements.css": "./global-elements.css",
     "./detail.js": {
       "development": "./detail.dev.js",
       "default": "./detail.js"
