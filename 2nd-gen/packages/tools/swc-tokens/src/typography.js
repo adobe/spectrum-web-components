@@ -498,7 +498,7 @@ export async function generateTypographyCssString(options = {}) {
 
   // Separate :lang() rule once for font-family only
   out += `${langSelectorList({
-    'font-family': `token("${fontTokens.cjk}")`,
+    'font-family': `token("${fontTokens.cjk}") !important`,
   })}\n`;
 
   for (const typeVar of variants) {

@@ -17,7 +17,7 @@
 :lang(zh),
 :lang(ja),
 :lang(ko) {
-  font-family: token("cjk-font");
+  font-family: token("cjk-font") !important;
 }
 
 /* =========================
