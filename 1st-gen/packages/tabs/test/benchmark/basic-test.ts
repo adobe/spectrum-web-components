@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,15 +10,17 @@
  * governing permissions and limitations under the License.
  */
 
+import { html } from 'lit';
+
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
-import { html } from 'lit';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-tabs selected="first">
-        <sp-tab label="Tab 1" value="first" tabindex="1"></sp-tab>
-        <sp-tab label="Tab 2" value="second" tabindex="2"></sp-tab>
-        <sp-tab label="Tab 3" value="third" tabindex="3"></sp-tab>
-    </sp-tabs>
+  <sp-tabs selected="first">
+    <sp-tab label="Tab 1" value="first" tabindex="1"></sp-tab>
+    <sp-tab label="Tab 2" value="second" tabindex="2"></sp-tab>
+    <sp-tab label="Tab 3" value="third" tabindex="3"></sp-tab>
+  </sp-tabs>
 `);

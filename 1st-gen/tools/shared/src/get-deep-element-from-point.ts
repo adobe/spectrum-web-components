@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,20 +11,20 @@
  */
 
 export const getDeepElementFromPoint = (
-    x: number,
-    y: number
+  x: number,
+  y: number
 ): Element | null => {
-    let target = document.elementFromPoint(x, y);
-    while (target?.shadowRoot) {
-        const innerTarget = (
-            target.shadowRoot as unknown as {
-                elementFromPoint: (x: number, y: number) => Element | null;
-            }
-        ).elementFromPoint(x, y);
-        if (!innerTarget || innerTarget === target) {
-            break;
-        }
-        target = innerTarget;
+  let target = document.elementFromPoint(x, y);
+  while (target?.shadowRoot) {
+    const innerTarget = (
+      target.shadowRoot as unknown as {
+        elementFromPoint: (x: number, y: number) => Element | null;
+      }
+    ).elementFromPoint(x, y);
+    if (!innerTarget || innerTarget === target) {
+      break;
     }
-    return target;
+    target = innerTarget;
+  }
+  return target;
 };

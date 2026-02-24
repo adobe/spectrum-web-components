@@ -15,6 +15,7 @@
 - [Getting started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
+    - [Configure git blame ignores (recommended)](#configure-git-blame-ignores-recommended)
 - [Repository structure](#repository-structure)
 - [Development workflow](#development-workflow)
     - [Developing](#developing)
@@ -55,6 +56,16 @@ git clone https://github.com/adobe/spectrum-web-components.git
 cd spectrum-web-components
 yarn install
 ```
+
+### Configure git blame ignores (recommended)
+
+To make local `git blame` output ignore repository-wide formatting commits, run:
+
+```bash
+git config blame.ignoreRevsFile .git-blame-ignore-revs
+```
+
+This setting uses the `.git-blame-ignore-revs` file in the repository root.
 
 ## Repository structure
 

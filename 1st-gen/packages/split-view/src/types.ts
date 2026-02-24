@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -12,22 +12,22 @@
 
 // Opt-in resize observer types
 export interface SWCResizeObserverEntry {
-    contentRect: DOMRectReadOnly;
+  contentRect: DOMRectReadOnly;
 }
 
 export interface SWCResizeObserver {
-    // eslint-disable-next-line @typescript-eslint/no-misused-new
-    new (callback: SWCResizeObserverCallback): SWCResizeObserver;
-    disconnect(): void;
-    observe(target: Element): void;
-    unobserve(target: Element): void;
+  // eslint-disable-next-line @typescript-eslint/no-misused-new
+  new (callback: SWCResizeObserverCallback): SWCResizeObserver;
+  disconnect(): void;
+  observe(target: Element): void;
+  unobserve(target: Element): void;
 }
 
 export interface WithSWCResizeObserver {
-    ResizeObserver: SWCResizeObserver;
+  ResizeObserver: SWCResizeObserver;
 }
 
 export type SWCResizeObserverCallback = (
-    entries: SWCResizeObserverEntry[],
-    observer: SWCResizeObserver
+  entries: SWCResizeObserverEntry[],
+  observer: SWCResizeObserver
 ) => void;

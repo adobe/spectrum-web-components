@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -13,55 +13,55 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
 import {
-    LanguageClient,
-    LanguageClientOptions,
-    ServerOptions,
-    TransportKind,
+  LanguageClient,
+  LanguageClientOptions,
+  ServerOptions,
+  TransportKind,
 } from 'vscode-languageclient/node';
 
 export function activate(ctx: vscode.ExtensionContext) {
-    const serverModule = ctx.asAbsolutePath(
-        path.join('out', 'server', 'server.js')
-    );
+  const serverModule = ctx.asAbsolutePath(
+    path.join('out', 'server', 'server.js')
+  );
 
-    const serverOptions: ServerOptions = {
-        run: { module: serverModule, transport: TransportKind.ipc },
-        debug: { module: serverModule, transport: TransportKind.ipc },
-    };
+  const serverOptions: ServerOptions = {
+    run: { module: serverModule, transport: TransportKind.ipc },
+    debug: { module: serverModule, transport: TransportKind.ipc },
+  };
 
-    const clientOptions: LanguageClientOptions = {
-        documentSelector: [
-            { language: 'css' },
-            { language: 'scss' },
-            { language: 'postcss' },
-            { language: 'javascript' },
-            { language: 'typescript' },
-        ],
-    };
+  const clientOptions: LanguageClientOptions = {
+    documentSelector: [
+      { language: 'css' },
+      { language: 'scss' },
+      { language: 'postcss' },
+      { language: 'javascript' },
+      { language: 'typescript' },
+    ],
+  };
 
-    const client = new LanguageClient(
-        'tokenIntellisense',
-        'Token Intellisense',
-        serverOptions,
-        clientOptions
-    );
+  const client = new LanguageClient(
+    'tokenIntellisense',
+    'Token Intellisense',
+    serverOptions,
+    clientOptions
+  );
 
-    ctx.subscriptions.push(client, {
-        dispose: () => client.stop(),
-    });
+  ctx.subscriptions.push(client, {
+    dispose: () => client.stop(),
+  });
 
-    client.start();
-    // .then(() => {
-    //     console.log('Token LSP client started');
-    // })
-    // .catch((error) => {
-    //     console.error('Token LSP client failed to start', error);
-    // });
+  client.start();
+  // .then(() => {
+  //     console.log('Token LSP client started');
+  // })
+  // .catch((error) => {
+  //     console.error('Token LSP client failed to start', error);
+  // });
 
-    // vscode.workspace.onDidOpenTextDocument((doc) => {
-    //     console.log('Opened document:', doc.languageId, doc.uri.toString());
-    // });
+  // vscode.workspace.onDidOpenTextDocument((doc) => {
+  //     console.log('Opened document:', doc.languageId, doc.uri.toString());
+  // });
 
-    // Optional: restart on config change
-    vscode.workspace.onDidChangeConfiguration(() => client.restart());
+  // Optional: restart on config change
+  vscode.workspace.onDidChangeConfiguration(() => client.restart());
 }

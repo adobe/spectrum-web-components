@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -16,27 +16,27 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 
 export default {
-    component: 'sp-menu-divider',
-    title: 'Menu Divider',
+  component: 'sp-menu-divider',
+  title: 'Menu Divider',
 };
 
 const Template = (size: string): TemplateResult => {
-    return html`
-        <sp-popover open>
-            <sp-menu>
-                <sp-menu-item>Deselect</sp-menu-item>
-                <sp-menu-item>Select Inverse</sp-menu-item>
-                <sp-menu-item>Feather...</sp-menu-item>
-                <sp-menu-divider size=${size}></sp-menu-divider>
-                <sp-menu-item>Select and Mask...</sp-menu-item>
-                <sp-menu-item>Make Work Path</sp-menu-item>
-                <sp-menu-divider size=${size}></sp-menu-divider>
-                <sp-menu-item>Save Selection</sp-menu-item>
-                <sp-menu-divider size=${size}></sp-menu-divider>
-                <sp-menu-item>Create group</sp-menu-item>
-            </sp-menu>
-        </sp-popover>
-    `;
+  return html`
+    <sp-popover open>
+      <sp-menu>
+        <sp-menu-item>Deselect</sp-menu-item>
+        <sp-menu-item>Select Inverse</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-divider size=${size}></sp-menu-divider>
+        <sp-menu-item>Select and Mask...</sp-menu-item>
+        <sp-menu-item>Make Work Path</sp-menu-item>
+        <sp-menu-divider size=${size}></sp-menu-divider>
+        <sp-menu-item>Save Selection</sp-menu-item>
+        <sp-menu-divider size=${size}></sp-menu-divider>
+        <sp-menu-item>Create group</sp-menu-item>
+      </sp-menu>
+    </sp-popover>
+  `;
 };
 
 export const sizeS = (): TemplateResult => Template('s');
