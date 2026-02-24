@@ -1,0 +1,36 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Customization/Global Element Styling" />
+
+# Global element styling
+
+Optional styling is available for "global elements" such as button-styled native links. This is in an effort to retain native semantics and default accessibility benefits.
+
+For global element styles to be fully available to slotted elements, you must include the stylesheet for `@adobe/spectrum-wc/global-elements.css` at the application level.
+
+To use global element styles within the shadow DOM of extended and custom components, ensure their stylesheet also imports the global stylesheet.
+
+Individual stylesheets are also available instead of the comprehensive index as `global-[component].css`.
+
+## Button Styles
+
+You may use button styling for either native links or button elements. Clases use BEM-style naming, and require the `swc-Button` class in addition to any variant classes.
+
+**Note**: button-styled native links do not support disabled or pending states.
+
+{/* prettier-ignore */}
+<a href="#" class="swc-Button">As Link</a>
+{/* prettier-ignore */}
+<button type="button" class="swc-Button">As Button</button>
+
+```html
+<a href="#" class="swc-Button">As Link</a>
+<button type="button" class="swc-Button">As Button</button>
+```
+
+{/* prettier-ignore */}
+<a href="#" class="swc-Button swc-Button--primary">As Link (Primary)</a>
+
+```html
+<a href="#" class="swc-Button--primary">As Link (Primary)</a>
+```
