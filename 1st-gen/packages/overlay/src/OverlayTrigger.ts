@@ -134,6 +134,14 @@ export class OverlayTrigger extends SpectrumElement {
   @query('#hover-overlay', true)
   hoverOverlayElement!: Overlay;
 
+  /**
+   * Tracks elements where this component set aria-haspopup,
+   * so consumer-set values are never overwritten.
+   */
+  private ariaHaspopupManagedElements = new WeakSet<HTMLElement>();
+
+  private previousTriggerElement?: HTMLElement;
+
   private getAssignedElementsFromSlot(slot: HTMLSlotElement): HTMLElement[] {
     return slot.assignedElements({ flatten: true }) as HTMLElement[];
   }
@@ -142,7 +150,6 @@ export class OverlayTrigger extends SpectrumElement {
     event: Event & { target: HTMLSlotElement }
   ): void {
     this.targetContent = this.getAssignedElementsFromSlot(event.target);
-    this.manageAriaOnTrigger();
   }
 
   private handleSlotContent(event: Event & { target: HTMLSlotElement }): void {
@@ -157,7 +164,6 @@ export class OverlayTrigger extends SpectrumElement {
         this.hoverContent = this.getAssignedElementsFromSlot(event.target);
         break;
     }
-    this.manageAriaOnTrigger();
   }
 
   private handleBeforetoggle(event: BeforetoggleOpenEvent): void {
@@ -178,25 +184,47 @@ export class OverlayTrigger extends SpectrumElement {
     } else if (this.open === type) {
       this.open = undefined;
     }
-    this.manageAriaOnTrigger();
+  }
+
+  private removeAriaFromTrigger(element: HTMLElement): void {
+    element.removeAttribute('aria-expanded');
+    element.removeAttribute('aria-controls');
+    if (this.ariaHaspopupManagedElements.has(element)) {
+      element.removeAttribute('aria-haspopup');
+      this.ariaHaspopupManagedElements.delete(element);
+    }
   }
 
   private manageAriaOnTrigger(): void {
     const triggerElement = this.targetContent[0];
+
+    if (
+      this.previousTriggerElement &&
+      this.previousTriggerElement !== triggerElement
+    ) {
+      this.removeAriaFromTrigger(this.previousTriggerElement);
+    }
+    this.previousTriggerElement = triggerElement;
+
     if (!triggerElement) return;
 
     const hasClickContent = this.clickContent.length > 0;
     const hasLongpressContent = this.longpressContent.length > 0;
 
-    if (!hasClickContent && !hasLongpressContent) return;
+    if (!hasClickContent && !hasLongpressContent) {
+      this.removeAriaFromTrigger(triggerElement);
+      return;
+    }
 
     const isExpanded = this.open === 'click' || this.open === 'longpress';
     triggerElement.setAttribute('aria-expanded', String(isExpanded));
 
-    if (!triggerElement.hasAttribute('aria-haspopup')) {
-      const haspopup =
-        this.type === 'modal' || this.type === 'page' ? 'dialog' : 'true';
-      triggerElement.setAttribute('aria-haspopup', haspopup);
+    if (
+      this.ariaHaspopupManagedElements.has(triggerElement) ||
+      !triggerElement.hasAttribute('aria-haspopup')
+    ) {
+      triggerElement.setAttribute('aria-haspopup', 'dialog');
+      this.ariaHaspopupManagedElements.add(triggerElement);
     }
 
     const content = this.clickContent[0] || this.longpressContent[0];
@@ -205,7 +233,17 @@ export class OverlayTrigger extends SpectrumElement {
         content.id = `sp-overlay-content-${randomID()}`;
       }
       triggerElement.setAttribute('aria-controls', content.id);
+    } else {
+      triggerElement.removeAttribute('aria-controls');
     }
+  }
+
+  override disconnectedCallback(): void {
+    if (this.previousTriggerElement) {
+      this.removeAriaFromTrigger(this.previousTriggerElement);
+      this.previousTriggerElement = undefined;
+    }
+    super.disconnectedCallback();
   }
 
   protected override update(changes: PropertyValues): void {
@@ -371,7 +409,13 @@ export class OverlayTrigger extends SpectrumElement {
       return;
     }
 
-    if (changedProperties.has('open') || changedProperties.has('type')) {
+    if (
+      changedProperties.has('open') ||
+      changedProperties.has('type') ||
+      changedProperties.has('targetContent') ||
+      changedProperties.has('clickContent') ||
+      changedProperties.has('longpressContent')
+    ) {
       this.manageAriaOnTrigger();
     }
   }

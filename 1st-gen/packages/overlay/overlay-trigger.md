@@ -251,9 +251,11 @@ The `<overlay-trigger>` element automatically manages several ARIA attributes on
 
 - **`aria-expanded`**: Set to `"true"` when the overlay is open and `"false"` when closed. This tells assistive technologies whether the controlled content is currently visible.
 - **`aria-controls`**: Points to the `id` of the overlay content element, establishing the relationship between the trigger and the content it controls.
-- **`aria-haspopup`**: Indicates the type of popup the trigger will open. Automatically set to `"dialog"` for `modal` and `page` types, or `"true"` for other types. You can override this by setting `aria-haspopup` directly on the trigger element.
+- **`aria-haspopup`**: Set to `"dialog"` to indicate the trigger opens a dialog-like popup. You can override this by setting `aria-haspopup` directly on the trigger element before the overlay-trigger initializes (e.g., `aria-haspopup="menu"` for menu overlays). Once set by the consumer, the component will not overwrite it.
 
 These attributes are managed automatically for click and longpress interactions. Hover interactions (tooltips) are excluded since they use a different accessibility pattern (`aria-describedby`).
+
+When the trigger element changes or the overlay-trigger is removed from the DOM, all managed ARIA attributes are cleaned up from the previous trigger element.
 
 ```html
 <overlay-trigger type="modal" triggered-by="click">
@@ -269,30 +271,9 @@ These attributes are managed automatically for click and longpress interactions.
 </overlay-trigger>
 ```
 
-In this example, the `<overlay-trigger>` will automatically set `aria-expanded="false"`, `aria-haspopup="dialog"`, and `aria-controls` on the `<sp-button>` trigger element. When the overlay opens, `aria-expanded` updates to `"true"`.
+In this example, the `<overlay-trigger>` will automatically set `aria-expanded="false"`, `aria-haspopup="dialog"`, and `aria-controls` on the `<sp-button>` trigger element. When the overlay opens, `aria-expanded` updates to `"true"`. If the content element does not have an `id`, one is auto-generated.
 
-When using `<sp-overlay>` directly (without `<overlay-trigger>`), you must set these attributes manually on the trigger element:
-
-```html
-<sp-button
-  id="manual-trigger"
-  aria-haspopup="dialog"
-  aria-expanded="false"
-  aria-controls="my-dialog"
->
-  Open dialog
-</sp-button>
-<sp-overlay trigger="manual-trigger@click" type="modal">
-  <sp-dialog-wrapper
-    id="my-dialog"
-    headline="Confirmation"
-    dismissable
-    underlay
-  >
-    <p>Are you sure you want to proceed?</p>
-  </sp-dialog-wrapper>
-</sp-overlay>
-```
+When using `<sp-overlay>` directly (without `<overlay-trigger>`), you must manage ARIA attributes yourself via JavaScript, including toggling `aria-expanded` when the overlay opens and closes. See the [overlay accessibility documentation](../overlay/#accessibility) for guidance and examples.
 
 #### Focus management
 
