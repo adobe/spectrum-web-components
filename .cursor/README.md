@@ -186,6 +186,13 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: Updating contributor docs structure, regenerating navigation, or fixing reported broken links
 - Provides: Operator workflow (run script, verify, fix links), Maintainer workflow (when to update script). Full instructions in `CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs/01_ai-agent-instructions.md`
 
+#### Component migration (rendering and styling)
+
+- **purpose**: Create rendering-and-styling migration analysis docs for the “analyze rendering and styling” step of 2nd-gen component migration
+- **How to invoke**: Say “create migration analysis for [component]”, “analyze rendering and styling for [component]”, or “rendering and styling migration for [component]”. Also invoked when you refer to the “analyze rendering and styling” step in the 2nd-gen component migration workstream.
+- Use when: On the analyze-rendering-and-styling step for one or more components; creating one markdown file per component at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`
+- Provides: Workflow summary (specs from CSS + SWC, three-way DOM comparison, CSS⇒SWC mapping table, summary). Full instructions in `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_analyze-rendering-and-styling/cursor_prompt.md`
+
 #### Conventional commits
 
 - **purpose**: Create conventional commit messages following the conventional commits specification
