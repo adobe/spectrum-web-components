@@ -101,7 +101,7 @@ jobs:
           path: |
             .cache/yarn
             node_modules
-          key: ubuntu-latest-${{ hashFiles('.nvmrc', 'yarn.lock') }}
+          key: ubuntu-latest-${{ hashFiles('.nvmrc', 'package.json', 'yarn.lock') }}
 
       ## --- INSTALL --- ##
       # If statement isn't needed here b/c yarn will leverage the cache if it exists
