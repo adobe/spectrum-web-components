@@ -82,6 +82,38 @@ function applyLanguageAndFontKit(lang: string | false, isRTL: boolean): void {
   try {
     window.FontsLoading = true;
 
+    // Signal that fonts are loading (matches official Typekit embed behavior).
+    const root = document.documentElement;
+    root.className =
+      root.className.replace(/\bwf-active\b/g, '').trim() + ' wf-loading';
+
+    // Fallback: if the script never loads, clear the loading state so the page
+    // does not stay in wf-loading indefinitely (mirrors the official embed timeout).
+    const loadingTimeout = setTimeout(() => {
+      root.className =
+        root.className.replace(/\bwf-loading\b/g, '').trim() + ' wf-inactive';
+      observer.disconnect();
+      window.FontsLoading = false;
+    }, 3000);
+
+    // Typekit.load() injects bare <style> elements (no id, class, or data attributes) for
+    // @font-face rules and .tk-* helper classes. A MutationObserver stamps every <style>
+    // Typekit adds with our data attribute so the cleanup selector can remove them on the
+    // next locale switch.
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        for (const node of Array.from(mutation.addedNodes)) {
+          if (
+            node instanceof HTMLStyleElement &&
+            !node.hasAttribute('data-swc-typekit-dynamic')
+          ) {
+            node.setAttribute('data-swc-typekit-dynamic', 'true');
+          }
+        }
+      }
+    });
+    observer.observe(document.head, { childList: true });
+
     // Inject the kit's stylesheet so @font-face rules map font family names to font file URLs.
     const link = document.createElement('link');
     link.rel = 'stylesheet';
@@ -101,6 +133,8 @@ function applyLanguageAndFontKit(lang: string | false, isRTL: boolean): void {
           async: true,
           scriptTimeout: 3000,
           active: function () {
+            clearTimeout(loadingTimeout);
+            observer.disconnect();
             window.FontsLoading = false;
             // eslint-disable-next-line no-console
             console.log(`Current font loaded [id: ${this.kitId}]`);
@@ -111,15 +145,21 @@ function applyLanguageAndFontKit(lang: string | false, isRTL: boolean): void {
             );
           },
           inactive: function () {
+            clearTimeout(loadingTimeout);
+            observer.disconnect();
             window.FontsLoading = false;
           },
         });
       } catch (e) {
+        clearTimeout(loadingTimeout);
+        observer.disconnect();
         window.FontsLoading = false;
         console.warn('Typekit.load() failed for kit:', kitId, e);
       }
     };
     script.onerror = function () {
+      clearTimeout(loadingTimeout);
+      observer.disconnect();
       window.FontsLoading = false;
     };
     document.head.appendChild(script);
