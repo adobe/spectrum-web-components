@@ -61,9 +61,7 @@ export class TextfieldBase extends ManageHelpText(
   @state()
   protected isTruncated = false;
 
-  private truncationResizeObserver = new ResizeObserver(() => {
-    this.refreshTruncationState();
-  });
+  private truncationResizeObserver: ResizeObserver | null = null;
 
   /**
    * A regular expression outlining the keys that will be allowed to update the value of the form control.
@@ -442,6 +440,11 @@ export class TextfieldBase extends ManageHelpText(
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
     if (!this.multiline) {
+      if (!this.truncationResizeObserver) {
+        this.truncationResizeObserver = new ResizeObserver(() => {
+          this.refreshTruncationState();
+        });
+      }
       this.truncationResizeObserver.observe(this);
       if (this.inputElement) {
         this.truncationResizeObserver.observe(this.inputElement);
@@ -468,7 +471,10 @@ export class TextfieldBase extends ManageHelpText(
   }
 
   public override disconnectedCallback(): void {
-    this.truncationResizeObserver.disconnect();
+    if (this.truncationResizeObserver) {
+      this.truncationResizeObserver.disconnect();
+      this.truncationResizeObserver = null;
+    }
     super.disconnectedCallback();
   }
 
