@@ -50,8 +50,8 @@ export abstract class IconBase extends SpectrumElement {
     super.updated(changedProperties);
     if (changedProperties.has('label')) {
       this.updateSlottedIcon();
+      this.updateHostAccessibility();
     }
-    this.updateHostAccessibility();
   }
 
   protected handleSlotChange(): void {
