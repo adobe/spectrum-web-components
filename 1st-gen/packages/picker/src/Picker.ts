@@ -1302,7 +1302,8 @@ export class Picker extends FieldLabelMixin(
     SizedMixin(ExpandableElement, {
       noDefaultSize: true,
     })
-  )
+  ),
+  'field-label'
 ) {
   public static override get styles(): CSSResultArray {
     return [pickerStyles, chevronStyles];
