@@ -163,7 +163,7 @@ export class TextfieldBase extends ManageHelpText(
    * Placement of the tooltip shown when the value is truncated (e.g. 'bottom', 'top').
    * Defaults to 'bottom' per Spectrum design.
    */
-  @property({ attribute: 'tooltip-placement', reflect: true })
+  @property({ attribute: 'tooltip-placement' })
   public truncatedValueTooltipPlacement: Placement = 'bottom';
 
   /**
@@ -441,11 +441,13 @@ export class TextfieldBase extends ManageHelpText(
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
-    this.truncationResizeObserver.observe(this);
-    if (this.inputElement) {
-      this.truncationResizeObserver.observe(this.inputElement);
+    if (!this.multiline) {
+      this.truncationResizeObserver.observe(this);
+      if (this.inputElement) {
+        this.truncationResizeObserver.observe(this.inputElement);
+      }
+      this.refreshTruncationState();
     }
-    this.refreshTruncationState();
   }
 
   protected override update(changedProperties: PropertyValues): void {
@@ -458,15 +460,7 @@ export class TextfieldBase extends ManageHelpText(
       });
     }
     super.update(changedProperties);
-    if (
-      changedProperties.has('value') ||
-      changedProperties.has('type') ||
-      changedProperties.has('quiet') ||
-      changedProperties.has('valid') ||
-      changedProperties.has('invalid') ||
-      changedProperties.has('multiline') ||
-      changedProperties.has('size')
-    ) {
+    if (changedProperties.has('value')) {
       this.updateComplete.then(() => {
         this.refreshTruncationState();
       });
