@@ -27,7 +27,7 @@ import {
   testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
-import { Textfield, TextfieldType } from '../src/index.js';
+import { Textfield, TextfieldType } from '../';
 
 describe('Textfield', () => {
   testForLitDevWarnings(
