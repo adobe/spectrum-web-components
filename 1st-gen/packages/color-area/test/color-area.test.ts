@@ -552,9 +552,23 @@ describe('ColorArea', () => {
       return;
     };
 
-    // Pointer near the bottom of the component → low brightness
+    // pointerdown starts the drag session and captures the bounding rect,
+    // but does NOT update el.y — y is only set on pointermove.
     handle.dispatchEvent(
       new PointerEvent('pointerdown', {
+        pointerId: 1,
+        clientX: 96,
+        clientY: 96,
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      })
+    );
+    await elementUpdated(el);
+
+    // First pointermove near the bottom → low brightness
+    handle.dispatchEvent(
+      new PointerEvent('pointermove', {
         pointerId: 1,
         clientX: 96,
         clientY: 160,
