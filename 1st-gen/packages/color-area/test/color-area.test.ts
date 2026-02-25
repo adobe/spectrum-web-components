@@ -534,6 +534,123 @@ describe('ColorArea', () => {
     expect(el.x).to.equal(0.53);
     expect(el.y).to.equal(0.47);
   });
+  it('moving the pointer upward increases brightness — y must not be inverted', async () => {
+    const el = await fixture<ColorArea>(html`
+      <sp-color-area
+        style="--mod-colorarea-height: 192px; --mod-colorarea-width: 192px;"
+      ></sp-color-area>
+    `);
+
+    await elementUpdated(el);
+    await elementUpdated(el);
+
+    const { handle } = el as unknown as { handle: HTMLElement };
+    handle.setPointerCapture = () => {
+      return;
+    };
+    handle.releasePointerCapture = () => {
+      return;
+    };
+
+    // Pointer near the bottom of the component → low brightness
+    handle.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        pointerId: 1,
+        clientX: 96,
+        clientY: 160,
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      })
+    );
+    await elementUpdated(el);
+
+    const yNearBottom = el.y;
+
+    // Move pointer upward (lower clientY) → brightness should increase
+    handle.dispatchEvent(
+      new PointerEvent('pointermove', {
+        pointerId: 1,
+        clientX: 96,
+        clientY: 30,
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      })
+    );
+    await elementUpdated(el);
+
+    const yNearTop = el.y;
+
+    handle.dispatchEvent(
+      new PointerEvent('pointerup', {
+        pointerId: 1,
+        clientX: 96,
+        clientY: 30,
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      })
+    );
+    await elementUpdated(el);
+
+    // Moving upward (smaller clientY) must INCREASE y (brightness), not decrease it.
+    // Before the fix, (1 - value) in updated() would invert this relationship.
+    expect(
+      yNearTop,
+      'y near top of area should be greater than y near bottom'
+    ).to.be.greaterThan(yNearBottom);
+
+    // Near the top should be close to 1.0 (full brightness)
+    expect(yNearTop, 'y near top should be close to 1.0').to.be.greaterThan(
+      0.8
+    );
+
+    // Near the bottom should be close to 0.0 (no brightness)
+    expect(yNearBottom, 'y near bottom should be close to 0.0').to.be.lessThan(
+      0.2
+    );
+  });
+
+  it('preserves programmatically set y value across update cycles without inversion', async () => {
+    const el = await fixture<ColorArea>(html`
+      <sp-color-area></sp-color-area>
+    `);
+
+    await elementUpdated(el);
+
+    // 0.37 is an arbitrary non-round float. After colorjs stores v=37 and
+    // converts back through its internal representation, this.y (= v/100)
+    // may drift to 0.36999... while inputY.valueAsNumber stays at 0.37.
+    // The updated() drift guard fires when they diverge. Before the fix it
+    // applied (1 - 0.37) * 100 = 63, flipping brightness to ~0.63.
+    el.y = 0.37;
+    await elementUpdated(el);
+    // Extra cycle: ensures any drift-triggered update has fully settled
+    await nextFrame();
+    await elementUpdated(el);
+
+    expect(el.y, 'y should remain close to 0.37').to.be.closeTo(0.37, 0.01);
+
+    // Explicitly confirm the value was NOT inverted to (1 - 0.37) = 0.63
+    expect(el.y, 'y must not be inverted to ~0.63').to.not.be.closeTo(
+      1 - 0.37,
+      0.05
+    );
+
+    // Repeat with a second value to rule out coincidence
+    el.y = 0.72;
+    await elementUpdated(el);
+    await nextFrame();
+    await elementUpdated(el);
+
+    expect(el.y, 'y should remain close to 0.72').to.be.closeTo(0.72, 0.01);
+    expect(el.y, 'y must not be inverted to ~0.28').to.not.be.closeTo(
+      1 - 0.72,
+      0.05
+    );
+  });
+
   it('responds to events on the internal input element', async () => {
     const inputSpy = spy();
     const changeSpy = spy();
