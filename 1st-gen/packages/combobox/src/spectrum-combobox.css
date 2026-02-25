@@ -79,69 +79,69 @@
 
 :host,
 :host([size="m"]) {
-    --spectrum-combobox-block-size: var(--spectrum-component-height-100);
-    --spectrum-combobox-icon-size: var(--spectrum-workflow-icon-size-100);
-    --spectrum-combobox-font-size: var(--spectrum-font-size-100);
+  --spectrum-combobox-block-size: var(--spectrum-component-height-100);
+  --spectrum-combobox-icon-size: var(--spectrum-workflow-icon-size-100);
+  --spectrum-combobox-font-size: var(--spectrum-font-size-100);
 
-    /* Align slotted label with standalone sp-field-label */
-    --spectrum-field-label-font-size: var(--spectrum-font-size-100);
-    --spectrum-field-label-min-height: var(--spectrum-component-height-100);
-    --spectrum-combobox-spacing-inline-icon-to-button: var(--spectrum-combo-box-visual-to-field-button-medium);
-    --spectrum-combobox-block-spacing-edge-to-progress-circle: var(--spectrum-field-top-to-progress-circle-medium);
-    --spectrum-combobox-block-spacing-edge-to-alert: var(--spectrum-field-top-to-alert-icon-medium);
-    --spectrum-combobox-spacing-edge-to-menu: var(--spectrum-component-to-menu-medium);
-    --spectrum-combobox-spacing-block-start-edge-to-text: var(--spectrum-component-top-to-text-100);
-    --spectrum-combobox-spacing-block-end-edge-to-text: var(--spectrum-component-bottom-to-text-100);
-    --spectrum-combobox-spacing-inline-start-edge-to-text: var(--spectrum-component-edge-to-text-100);
-    --spectrum-combobox-spacing-inline-end-edge-to-text: var(--spectrum-component-edge-to-text-100);
+  /* Align slotted label with standalone sp-field-label */
+  --spectrum-field-label-font-size: var(--spectrum-font-size-100);
+  --spectrum-field-label-min-height: var(--spectrum-component-height-100);
+  --spectrum-combobox-spacing-inline-icon-to-button: var(--spectrum-combo-box-visual-to-field-button-medium);
+  --spectrum-combobox-block-spacing-edge-to-progress-circle: var(--spectrum-field-top-to-progress-circle-medium);
+  --spectrum-combobox-block-spacing-edge-to-alert: var(--spectrum-field-top-to-alert-icon-medium);
+  --spectrum-combobox-spacing-edge-to-menu: var(--spectrum-component-to-menu-medium);
+  --spectrum-combobox-spacing-block-start-edge-to-text: var(--spectrum-component-top-to-text-100);
+  --spectrum-combobox-spacing-block-end-edge-to-text: var(--spectrum-component-bottom-to-text-100);
+  --spectrum-combobox-spacing-inline-start-edge-to-text: var(--spectrum-component-edge-to-text-100);
+  --spectrum-combobox-spacing-inline-end-edge-to-text: var(--spectrum-component-edge-to-text-100);
 }
 
 :host([size="s"]) {
-    --spectrum-combobox-block-size: var(--spectrum-component-height-75);
-    --spectrum-combobox-icon-size: var(--spectrum-workflow-icon-size-75);
-    --spectrum-combobox-font-size: var(--spectrum-font-size-75);
-    --spectrum-field-label-font-size: var(--spectrum-font-size-75);
-    --spectrum-field-label-min-height: var(--spectrum-component-height-75);
-    --spectrum-combobox-spacing-inline-icon-to-button: var(--spectrum-combo-box-visual-to-field-button-small);
-    --spectrum-combobox-block-spacing-edge-to-progress-circle: var(--spectrum-field-top-to-progress-circle-small);
-    --spectrum-combobox-block-spacing-edge-to-alert: var(--spectrum-field-top-to-alert-icon-small);
-    --spectrum-combobox-spacing-edge-to-menu: var(--spectrum-component-to-menu-small);
-    --spectrum-combobox-spacing-block-start-edge-to-text: var(--spectrum-component-top-to-text-75);
-    --spectrum-combobox-spacing-block-end-edge-to-text: var(--spectrum-component-bottom-to-text-75);
-    --spectrum-combobox-spacing-inline-start-edge-to-text: var(--spectrum-component-edge-to-text-75);
-    --spectrum-combobox-spacing-inline-end-edge-to-text: var(--spectrum-component-edge-to-text-75);
+  --spectrum-combobox-block-size: var(--spectrum-component-height-75);
+  --spectrum-combobox-icon-size: var(--spectrum-workflow-icon-size-75);
+  --spectrum-combobox-font-size: var(--spectrum-font-size-75);
+  --spectrum-field-label-font-size: var(--spectrum-font-size-75);
+  --spectrum-field-label-min-height: var(--spectrum-component-height-75);
+  --spectrum-combobox-spacing-inline-icon-to-button: var(--spectrum-combo-box-visual-to-field-button-small);
+  --spectrum-combobox-block-spacing-edge-to-progress-circle: var(--spectrum-field-top-to-progress-circle-small);
+  --spectrum-combobox-block-spacing-edge-to-alert: var(--spectrum-field-top-to-alert-icon-small);
+  --spectrum-combobox-spacing-edge-to-menu: var(--spectrum-component-to-menu-small);
+  --spectrum-combobox-spacing-block-start-edge-to-text: var(--spectrum-component-top-to-text-75);
+  --spectrum-combobox-spacing-block-end-edge-to-text: var(--spectrum-component-bottom-to-text-75);
+  --spectrum-combobox-spacing-inline-start-edge-to-text: var(--spectrum-component-edge-to-text-75);
+  --spectrum-combobox-spacing-inline-end-edge-to-text: var(--spectrum-component-edge-to-text-75);
 }
 
 :host([size="l"]) {
-    --spectrum-combobox-block-size: var(--spectrum-component-height-200);
-    --spectrum-combobox-icon-size: var(--spectrum-workflow-icon-size-200);
-    --spectrum-combobox-font-size: var(--spectrum-font-size-200);
-    --spectrum-field-label-font-size: var(--spectrum-font-size-200);
-    --spectrum-field-label-min-height: var(--spectrum-component-height-200);
-    --spectrum-combobox-spacing-inline-icon-to-button: var(--spectrum-combo-box-visual-to-field-button-large);
-    --spectrum-combobox-block-spacing-edge-to-progress-circle: var(--spectrum-field-top-to-progress-circle-large);
-    --spectrum-combobox-block-spacing-edge-to-alert: var(--spectrum-field-top-to-alert-icon-large);
-    --spectrum-combobox-spacing-edge-to-menu: var(--spectrum-component-to-menu-large);
-    --spectrum-combobox-spacing-block-start-edge-to-text: var(--spectrum-component-top-to-text-200);
-    --spectrum-combobox-spacing-block-end-edge-to-text: var(--spectrum-component-bottom-to-text-200);
-    --spectrum-combobox-spacing-inline-start-edge-to-text: var(--spectrum-component-edge-to-text-200);
-    --spectrum-combobox-spacing-inline-end-edge-to-text: var(--spectrum-component-edge-to-text-200);
+  --spectrum-combobox-block-size: var(--spectrum-component-height-200);
+  --spectrum-combobox-icon-size: var(--spectrum-workflow-icon-size-200);
+  --spectrum-combobox-font-size: var(--spectrum-font-size-200);
+  --spectrum-field-label-font-size: var(--spectrum-font-size-200);
+  --spectrum-field-label-min-height: var(--spectrum-component-height-200);
+  --spectrum-combobox-spacing-inline-icon-to-button: var(--spectrum-combo-box-visual-to-field-button-large);
+  --spectrum-combobox-block-spacing-edge-to-progress-circle: var(--spectrum-field-top-to-progress-circle-large);
+  --spectrum-combobox-block-spacing-edge-to-alert: var(--spectrum-field-top-to-alert-icon-large);
+  --spectrum-combobox-spacing-edge-to-menu: var(--spectrum-component-to-menu-large);
+  --spectrum-combobox-spacing-block-start-edge-to-text: var(--spectrum-component-top-to-text-200);
+  --spectrum-combobox-spacing-block-end-edge-to-text: var(--spectrum-component-bottom-to-text-200);
+  --spectrum-combobox-spacing-inline-start-edge-to-text: var(--spectrum-component-edge-to-text-200);
+  --spectrum-combobox-spacing-inline-end-edge-to-text: var(--spectrum-component-edge-to-text-200);
 }
 
 :host([size="xl"]) {
-    --spectrum-combobox-block-size: var(--spectrum-component-height-300);
-    --spectrum-combobox-icon-size: var(--spectrum-workflow-icon-size-300);
-    --spectrum-combobox-font-size: var(--spectrum-font-size-300);
-    --spectrum-field-label-font-size: var(--spectrum-font-size-300);
-    --spectrum-field-label-min-height: var(--spectrum-component-height-300);
-    --spectrum-combobox-spacing-inline-icon-to-button: var(--spectrum-combo-box-visual-to-field-button-extra-large);
-    --spectrum-combobox-block-spacing-edge-to-progress-circle: var(--spectrum-field-top-to-progress-circle-extra-large);
-    --spectrum-combobox-block-spacing-edge-to-alert: var(--spectrum-field-top-to-alert-icon-extra-large);
-    --spectrum-combobox-spacing-edge-to-menu: var(--spectrum-component-to-menu-extra-large);
-    --spectrum-combobox-spacing-block-start-edge-to-text: var(--spectrum-component-top-to-text-300);
-    --spectrum-combobox-spacing-block-end-edge-to-text: var(--spectrum-component-bottom-to-text-300);
-    --spectrum-combobox-spacing-inline-start-edge-to-text: var(--spectrum-component-edge-to-text-300);
-    --spectrum-combobox-spacing-inline-end-edge-to-text: var(--spectrum-component-edge-to-text-300);
+  --spectrum-combobox-block-size: var(--spectrum-component-height-300);
+  --spectrum-combobox-icon-size: var(--spectrum-workflow-icon-size-300);
+  --spectrum-combobox-font-size: var(--spectrum-font-size-300);
+  --spectrum-field-label-font-size: var(--spectrum-font-size-300);
+  --spectrum-field-label-min-height: var(--spectrum-component-height-300);
+  --spectrum-combobox-spacing-inline-icon-to-button: var(--spectrum-combo-box-visual-to-field-button-extra-large);
+  --spectrum-combobox-block-spacing-edge-to-progress-circle: var(--spectrum-field-top-to-progress-circle-extra-large);
+  --spectrum-combobox-block-spacing-edge-to-alert: var(--spectrum-field-top-to-alert-icon-extra-large);
+  --spectrum-combobox-spacing-edge-to-menu: var(--spectrum-component-to-menu-extra-large);
+  --spectrum-combobox-spacing-block-start-edge-to-text: var(--spectrum-component-top-to-text-300);
+  --spectrum-combobox-spacing-block-end-edge-to-text: var(--spectrum-component-bottom-to-text-300);
+  --spectrum-combobox-spacing-inline-start-edge-to-text: var(--spectrum-component-edge-to-text-300);
+  --spectrum-combobox-spacing-inline-end-edge-to-text: var(--spectrum-component-edge-to-text-300);
 }
 
 :host([quiet]) {
@@ -172,18 +172,18 @@
 }
 
 @media (forced-colors: active) {
-    :host {
-        --highcontrast-combobox-border-color-highlight: Highlight;
-        --highcontrast-combobox-border-color-invalid: Highlight;
-        --mod-picker-button-border-color-disabled: GrayText;
-        --mod-picker-button-icon-color-disabled: GrayText;
-        --mod-picker-button-border-color-quiet: none;
-    }
+  :host {
+    --highcontrast-combobox-border-color-highlight: Highlight;
+    --highcontrast-combobox-border-color-invalid: Highlight;
+    --mod-picker-button-border-color-disabled: GrayText;
+    --mod-picker-button-icon-color-disabled: GrayText;
+    --mod-picker-button-border-color-quiet: none;
+  }
 
-    .button.spectrum-PickerButton--quiet .spectrum-PickerButton-fill {
-        border-color: transparent;
-        forced-color-adjust: none;
-    }
+  .button.spectrum-PickerButton--quiet .spectrum-PickerButton-fill {
+    border-color: transparent;
+    forced-color-adjust: none;
+  }
 
   .button.spectrum-PickerButton--quiet .spectrum-PickerButton-icon {
     color: initial;
@@ -191,14 +191,14 @@
 }
 
 :host {
-    inline-size: var(--mod-combobox-inline-size, var(--spectrum-combobox-inline-size));
-    min-inline-size: var(--mod-combobox-min-inline-size, var(--spectrum-combobox-min-inline-size));
-    border-radius: var(--mod-combobox-border-radius, var(--spectrum-combobox-border-radius));
-    margin-block-start: var(--mod-combobox-spacing-label-to-combobox, var(--spectrum-combobox-spacing-label-to-combobox));
-    display: inline-grid;
-    grid-template-rows: auto auto auto;
-    grid-template-columns: 1fr;
-    position: relative;
+  display: inline-grid;
+  position: relative;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: 1fr;
+  inline-size: var(--mod-combobox-inline-size, var(--spectrum-combobox-inline-size));
+  min-inline-size: var(--mod-combobox-min-inline-size, var(--spectrum-combobox-min-inline-size));
+  margin-block-start: var(--mod-combobox-spacing-label-to-combobox, var(--spectrum-combobox-spacing-label-to-combobox));
+  border-radius: var(--mod-combobox-border-radius, var(--spectrum-combobox-border-radius));
 }
 
 .spectrum-Popover.is-open {
@@ -289,15 +289,17 @@
 }
 
 #textfield {
-    grid-area: 2 / 1;
-    position: relative;
-    inline-size: 100%;
-    block-size: var(--mod-combobox-block-size, var(--spectrum-combobox-block-size));
+  position: relative;
+  grid-area: 2 / 1;
+  inline-size: 100%;
+  block-size: var(--mod-combobox-block-size, var(--spectrum-combobox-block-size));
 }
 
 .button,
 .progress-circle {
-    grid-area: 2 / 1;
+  position: relative;
+  grid-area: 2 / 1;
+  justify-content: end;
 }
 
 #input {

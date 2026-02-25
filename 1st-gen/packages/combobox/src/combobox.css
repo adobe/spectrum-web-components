@@ -14,15 +14,16 @@
 @import url("./combobox-overrides.css");
 
 :host {
-    display: inline-grid;
-    grid-template-rows: auto auto auto;
-    grid-template-columns: 1fr;
-    position: relative;
+  display: inline-grid;
+  position: relative;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: 1fr;
 }
 
-:host([label-position="inline-start"]) {
-    grid-template-rows: auto auto;
-    grid-template-columns: minmax(10ch, 1fr) minmax(16ch, 2fr);
+:host([side-aligned="start"]),
+:host([side-aligned="end"]) {
+  grid-template-rows: auto auto;
+  grid-template-columns: minmax(10ch, 1fr) minmax(16ch, 2fr);
 }
 
 :host([readonly]) sp-picker-button {
@@ -32,33 +33,44 @@
 
 sp-field-label,
 :host > label {
-    display: block;
-    width: 100%;
-    grid-area: 1 / 1;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  display: block;
+  grid-area: 1 / 1;
+  width: 100%;
 
-    /* Align slotted label with standalone sp-field-label (font-size, colors) */
-    font-size: var(--mod-fieldlabel-font-size, var(--spectrum-field-label-font-size));
-    font-weight: var(--mod-fieldlabel-font-weight, var(--spectrum-regular-font-weight));
-    line-height: var(--mod-fieldlabel-line-height, var(--spectrum-line-height-100));
-    -webkit-font-smoothing: subpixel-antialiased;
-    -moz-osx-font-smoothing: auto;
-    color: var(--highcontrast-field-label-content-color, var(--mod-fieldlabel-color, var(--spectrum-neutral-subdued-content-color-default)));
+  /* Align slotted label with standalone sp-field-label (font-size, colors) */
+  font-size: var(--mod-fieldlabel-font-size, var(--spectrum-field-label-font-size));
+  font-weight: var(--mod-fieldlabel-font-weight, var(--spectrum-regular-font-weight));
+  line-height: var(--mod-fieldlabel-line-height, var(--spectrum-line-height-100));
+  color: var(--highcontrast-field-label-content-color, var(--mod-fieldlabel-color, var(--spectrum-neutral-subdued-content-color-default)));
 }
 
 :host([disabled]) :host > label {
-    --mod-fieldlabel-color: var(--mod-disabled-content-color, var(--spectrum-disabled-content-color));
+  --mod-fieldlabel-color: var(--mod-disabled-content-color, var(--spectrum-disabled-content-color));
 }
 
 @media (forced-colors: active) {
-    :host([disabled]) :host > label {
-        --highcontrast-field-label-content-color: GrayText;
-    }
+  :host([disabled]) :host > label {
+    --highcontrast-field-label-content-color: GrayText;
+  }
 }
 
-:host([label-position="inline-start"]) sp-field-label,
-:host([label-position="inline-start"]) :host > label {
-    width: auto;
-    grid-area: 1 / 1 / span 2 / span 1;
+:host([side-aligned="start"]) sp-field-label,
+:host([side-aligned="start"]) :host > label,
+:host([side-aligned="end"]) sp-field-label,
+:host([side-aligned="end"]) :host > label {
+  grid-area: 1 / 1 / span 2 / span 1;
+  width: auto;
+}
+
+:host([side-aligned="start"]) #textfield,
+:host([side-aligned="start"]) .button,
+:host([side-aligned="start"]) .progress-circle,
+:host([side-aligned="end"]) #textfield,
+:host([side-aligned="end"]) .button,
+:host([side-aligned="end"]) .progress-circle {
+  grid-area: 1 / 2;
 }
 
 sp-popover {
