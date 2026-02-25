@@ -2,4 +2,4 @@
 '@spectrum-web-components/color-area': patch
 ---
 
-**Fixed**: Corrected the brightness (`v`) value calculation in `ColorArea` — removed the erroneous `(1 - value)` inversion so that dragging the handle now maps correctly to the HSV brightness axis. Also optimized the `ResizeObserver` callback to call `getBoundingClientRect()` directly instead of iterating over entries, ensuring the component always uses an accurate bounding rect after resize. [#6048](https://github.com/adobe/spectrum-web-components/pull/6048)
+**Fixed**: Corrected brightness (v) mapping in `ColorArea` so the drag handle now aligns properly with the HSV brightness axis. Also improved resize handling to ensure accurate layout calculations after component resize. (#6048) [#6048](https://github.com/adobe/spectrum-web-components/pull/6048)
