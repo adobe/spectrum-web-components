@@ -42,7 +42,6 @@ const meta: Meta = {
       subtitle: `Internal icon renderer for shared SVG templates.`,
     },
   },
-  tags: ['no-prod'],
 };
 
 export default meta;
@@ -119,7 +118,7 @@ export const Anatomy: Story = {
 /**
  * ### Shared templates
  *
- * Import reusable templates from `@adobe/swc/icon/elements` and slot them into `<swc-icon>`.
+ * Import reusable templates from `@adobe/spectrum-wc/icon/elements` and slot them into `<swc-icon>`.
  * This keeps icon usage centralized and avoids per-component SVG duplication.
  */
 export const Sources: Story = {
@@ -140,7 +139,7 @@ export const Sources: Story = {
  * Example import:
  *
  * ```ts
- * import { Chevron100Icon } from '@adobe/swc/icon/elements';
+ * import { Chevron100Icon } from '@adobe/spectrum-wc/icon/elements';
  * ```
  */
 export const SharedTemplates: Story = {
@@ -156,7 +155,7 @@ export const SharedTemplates: Story = {
 
 /**
  * Available shared icons in the current internal catalog.
- * Use this story as a quick reference for what can be imported from `@adobe/swc/icon/elements`.
+ * Use this story as a quick reference for what can be imported from `@adobe/spectrum-wc/icon/elements`.
  */
 export const AvailableIcons: Story = {
   render: () => {
