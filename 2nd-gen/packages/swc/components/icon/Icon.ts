@@ -28,7 +28,7 @@ import styles from './icon.css';
  * </swc-icon>
  *
  * @example
- * import { Chevron100Icon } from '@adobe/swc/icon/elements';
+ * import { Chevron100Icon } from '@adobe/spectrum-wc/icon/elements';
  *
  * html`<swc-icon label="Expand">${Chevron100Icon()}</swc-icon>`;
  */

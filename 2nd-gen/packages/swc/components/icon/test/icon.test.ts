@@ -13,13 +13,13 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Icon } from '@adobe/swc/icon';
+import { Icon } from '@adobe/spectrum-wc/icon';
 
-import '@adobe/swc/icon';
+import '@adobe/spectrum-wc/icon';
 
 import { getComponent } from '../../../utils/test-utils.js';
-import meta from '../stories/icon.stories.js';
-import { Overview } from '../stories/icon.stories.js';
+import meta from '../stories/icon.internal.stories.js';
+import { Overview } from '../stories/icon.internal.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
@@ -71,6 +71,10 @@ export const SizeAttributeTest: Story = {
   },
 };
 
+// ──────────────────────────────────────────────────────────────
+// TEST: Accessibility
+// ──────────────────────────────────────────────────────────────
+
 export const SlottedSvgAccessibilityTest: Story = {
   render: () => html`
     <swc-icon label="Search">
@@ -89,6 +93,65 @@ export const SlottedSvgAccessibilityTest: Story = {
       expect(svg).toBeTruthy();
       expect(svg?.getAttribute('role')).toBe('img');
       expect(svg?.getAttribute('aria-label')).toBe('Search');
+    });
+  },
+};
+
+export const NoLabelAriaHiddenTest: Story = {
+  render: () => html`
+    <swc-icon>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+        <path
+          d="M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"
+        />
+      </svg>
+    </swc-icon>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const icon = await getComponent<Icon>(canvasElement, 'swc-icon');
+
+    await step('applies aria-hidden when no label', async () => {
+      const svg = icon.querySelector('svg');
+      expect(svg).toBeTruthy();
+      expect(svg?.getAttribute('aria-hidden')).toBe('true');
+      expect(svg?.hasAttribute('aria-label')).toBe(false);
+      expect(icon.getAttribute('aria-hidden')).toBe('true');
+    });
+  },
+};
+
+export const LabelTogglingTest: Story = {
+  render: () => html`
+    <swc-icon label="x">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+        <path
+          d="M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"
+        />
+      </svg>
+    </swc-icon>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const icon = await getComponent<Icon>(canvasElement, 'swc-icon');
+    const svg = () => icon.querySelector('svg');
+
+    await step('initial label "x" sets aria-label on svg', async () => {
+      expect(svg()).toBeTruthy();
+      expect(svg()?.getAttribute('aria-label')).toBe('x');
+      expect(svg()?.getAttribute('aria-hidden')).toBeNull();
+    });
+
+    await step('clearing label sets aria-hidden on svg', async () => {
+      icon.label = '';
+      await icon.updateComplete;
+      expect(svg()?.getAttribute('aria-hidden')).toBe('true');
+      expect(svg()?.hasAttribute('aria-label')).toBe(false);
+    });
+
+    await step('setting label "y" restores aria-label on svg', async () => {
+      icon.label = 'y';
+      await icon.updateComplete;
+      expect(svg()?.getAttribute('aria-label')).toBe('y');
+      expect(svg()?.getAttribute('aria-hidden')).toBeNull();
     });
   },
 };
