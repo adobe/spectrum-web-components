@@ -24,6 +24,7 @@
       "import": "./dist/components/*/index.js"
     },
     "./*.css": {
+      "types": "./dist/*.css.d.ts",
       "default": "./dist/*.css"
     },
     "./components/*": {
@@ -49,10 +50,15 @@
     "dev:core": "yarn workspace @spectrum-web-components/core dev",
     "storybook": "yarn analyze && storybook dev -p 6006",
     "storybook:build": "yarn analyze && storybook build",
-    "stylesheets": "swc-tokens --outputType stylesheet --out ./dist/tokens.css --prefix swc",
+    "stylesheet:tokens": "swc-tokens --outputType tokens --out ./stylesheets/tokens.css --prefix swc",
+    "stylesheet:typography": "swc-tokens --outputType typography --out ./stylesheets/typography.css --prefix swc",
     "test": "vitest --run --project storybook",
+    "test:a11y": "test-storybook && playwright test",
+    "test:a11y:headed": "playwright test --headed",
+    "test:a11y:ui": "playwright test --ui",
     "test:browser": "vitest --project storybook --browser.headless=false",
     "test:coverage": "vitest --coverage --project storybook",
+    "test:storybook": "test-storybook",
     "test:ui": "vitest --ui --project storybook",
     "test:watch": "run-p dev:core test:watch:vitest",
     "test:watch:vitest": "vitest --project storybook --watch"
@@ -79,12 +85,16 @@
     "@vitest/coverage-v8": "4.0.15",
     "@vitest/ui": "4.0.15",
     "@wc-toolkit/storybook-helpers": "10.0.0",
+    "aria-query": "5.3.0",
     "autoprefixer": "10.4.21",
+    "dom-accessibility-api": "0.7.0",
     "glob": "11.0.3",
     "playwright": "1.53.1",
+    "playwright-core": "1.53.1",
     "postcss": "8.5.6",
     "postcss-preset-env": "10.4.0",
     "prettier": "3.8.1",
+    "query-selector-shadow-dom": "1.0.0",
     "react": "19.1.1",
     "react-dom": "19.1.1",
     "remark-gfm": "4.0.0",

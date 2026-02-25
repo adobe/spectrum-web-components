@@ -12,7 +12,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { __test__ } from '../utils.js';
+import { __test__ } from '../src/tokens.js';
 
 describe('resolveAlias', () => {
   const { resolveAlias } = __test__;

@@ -42,7 +42,7 @@
     "test:a11y:report": "playwright show-report 2nd-gen/test/playwright-a11y/report",
     "test:a11y:ui": "playwright test --config=playwright.a11y.config.ts --ui",
     "tokens:test": "yarn workspace @adobe/swc-tokens test && yarn workspace @adobe/postcss-token test && yarn workspace swc-vscode-token test",
-    "tokens:update": "yarn tokens:test && yarn workspace swc-vscode-token tokens && yarn workspace @adobe/spectrum-wc stylesheets"
+    "tokens:update": "yarn tokens:test && yarn workspace swc-vscode-token tokens && yarn workspace @adobe/spectrum-wc stylesheet:tokens && yarn workspace @adobe/spectrum-wc stylesheet:typography"
   },
   "workspaces": [
     "1st-gen",
