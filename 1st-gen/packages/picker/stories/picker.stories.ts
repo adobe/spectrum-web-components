@@ -10,8 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import { ifDefined } from 'lit/directives/if-defined.js';
-
 import {
   html,
   LitElement,
@@ -81,15 +79,12 @@ export default {
 
 export const Default = (args: StoryArgs): TemplateResult => {
   return html`
-    <sp-field-label for="picker-1" size=${ifDefined(args.size)}>
-      Where do you live?
-    </sp-field-label>
     <sp-picker
-      id="picker-1"
       @change=${handleChange(args)}
-      label="Select a Country with a very long label, too long, in fact"
+      placeholder="Choose a selection type with a very long label, too long, in fact"
       ${spreadProps(args)}
     >
+      <span slot="field-label">Where do you live?Choose a selection type</span>
       <sp-menu-item value="option-1">Deselect</sp-menu-item>
       <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
       <sp-menu-item value="option-3">Feather...</sp-menu-item>
@@ -127,26 +122,17 @@ export const forcePopoverOnMobile = (args: StoryArgs): TemplateResult => {
         <li>Click the Picker 1 and see a tray</li>
         <li>Click the Picker 2 and see a popover</li>
       </ol>
-      <sp-field-label for="picker-1" size=${ifDefined(args.size)}>
-        Do you want to see a tray menu?
-      </sp-field-label>
-      <sp-picker
-        id="picker-1"
-        @change=${handleChange(args)}
-        label="Select an option"
-      >
+      <sp-picker @change=${handleChange(args)} placeholder="Select an option">
+        <span slot="field-label">Do you want to see a tray menu?</span>
         <sp-menu-item value="option-1">Yes</sp-menu-item>
         <sp-menu-item value="option-2">No</sp-menu-item>
       </sp-picker>
-      <sp-field-label for="picker-2" size=${ifDefined(args.size)}>
-        Do you want to see a popover menu?
-      </sp-field-label>
       <sp-picker
-        id="picker-2"
         force-popover
         @change=${handleChange(args)}
-        label="Select an option"
+        placeholder="Select an option"
       >
+        <span slot="field-label">Do you want to see a popover menu?</span>
         <sp-menu-item value="option-1">Yes</sp-menu-item>
         <sp-menu-item value="option-2">No</sp-menu-item>
       </sp-picker>
@@ -173,15 +159,12 @@ invalid.args = {
 export const tooltip = (args: StoryArgs): TemplateResult => {
   const { open, ...rest } = args;
   return html`
-    <sp-field-label for="picker-1" size=${ifDefined(args.size)}>
-      Where do you live?
-    </sp-field-label>
     <sp-picker
-      id="picker-1"
       @change=${handleChange(args)}
-      label="Select a Country with a very long label, too long, in fact"
+      placeholder="Choose a selection type with a very long label, too long, in fact"
       ${spreadProps(rest)}
     >
+      <span slot="field-label">Choose a selection type</span>
       <sp-menu-item value="option-1">Deselect</sp-menu-item>
       <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
       <sp-menu-item value="option-3">Feather...</sp-menu-item>
@@ -208,19 +191,13 @@ tooltip.decorators = [isOverlayOpen];
 
 export const leftSideLabel = (args: StoryArgs): TemplateResult => {
   return html`
-    <sp-field-label
-      side-aligned="start"
-      for="picker-1"
-      size=${ifDefined(args.size)}
-    >
-      Where do you live?
-    </sp-field-label>
     <sp-picker
-      id="picker-1"
       @change=${handleChange(args)}
-      label="Select a Country with a very long label, too long, in fact"
+      placeholder="Choose a selection type with a very long label, too long, in fact"
+      side-aligned="start"
       ${spreadProps(args)}
     >
+      <span slot="field-label">Choose a selection type</span>
       <sp-menu-item value="option-1">Deselect</sp-menu-item>
       <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
       <sp-menu-item value="option-3">Feather...</sp-menu-item>
@@ -242,7 +219,7 @@ export const noVisibleLabel = (args: StoryArgs): TemplateResult => {
   return html`
     <sp-picker
       @change=${handleChange(args)}
-      label="Where do you live?"
+      label="Selection type"
       ${spreadProps(args)}
     >
       <sp-menu-item value="option-1">Deselect</sp-menu-item>
@@ -265,7 +242,7 @@ export const noVisibleLabel = (args: StoryArgs): TemplateResult => {
 export const slottedLabel = (args: StoryArgs): TemplateResult => {
   return html`
     <sp-picker @change=${handleChange(args)} ${spreadProps(args)}>
-      <span slot="label">Where do you live?</span>
+      <span slot="field-label">Where do you live?</span>
       <sp-menu-item value="option-1">Deselect</sp-menu-item>
       <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
       <sp-menu-item value="option-3">Feather...</sp-menu-item>
@@ -285,15 +262,12 @@ export const slottedLabel = (args: StoryArgs): TemplateResult => {
 
 export const quiet = (args: StoryArgs): TemplateResult => {
   return html`
-    <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
-      Where do you live?
-    </sp-field-label>
     <sp-picker
       ${spreadProps(args)}
-      id="picker-quiet"
       @change=${handleChange(args)}
-      label="Pick an item"
+      placeholder="Pick an item"
     >
+      <span slot="field-label">Featured item:</span>
       <sp-menu-item value="1">Item 1</sp-menu-item>
       <sp-menu-item value="2">Item 2</sp-menu-item>
       <sp-menu-item value="3">Item 3</sp-menu-item>
@@ -314,19 +288,13 @@ quiet.args = {
 
 export const quietSideLabel = (args: StoryArgs): TemplateResult => {
   return html`
-    <sp-field-label
-      side-aligned="start"
-      for="picker-quiet-sidelabel"
-      size=${ifDefined(args.size)}
-    >
-      Where do you live?
-    </sp-field-label>
     <sp-picker
       ${spreadProps(args)}
-      id="picker-quiet-sidelabel"
       @change=${handleChange(args)}
       label="Pick an item"
+      side-aligned="start"
     >
+      <span slot="field-label">Featured item:</span>
       <sp-menu-item value="1">Item 1</sp-menu-item>
       <sp-menu-item value="2">Item 2</sp-menu-item>
       <sp-menu-item value="3">Item 3</sp-menu-item>
@@ -343,20 +311,18 @@ export const quietSideLabel = (args: StoryArgs): TemplateResult => {
 };
 quietSideLabel.args = {
   quiet: true,
+  sideAligned: 'start',
 };
 
 export const icons = (args: StoryArgs): TemplateResult => {
   return html`
-    <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
-      Choose an action type...
-    </sp-field-label>
     <sp-picker
       ${spreadProps(args)}
-      id="picker-quiet"
       @change=${handleChange(args)}
-      label="Pick an action"
+      placeholder="Pick an action"
       value="1"
     >
+      <span slot="field-label">Choose an action type...</span>
       <sp-menu-item value="1">
         <sp-icon-edit slot="icon"></sp-icon-edit>
         Edit
@@ -375,17 +341,14 @@ export const icons = (args: StoryArgs): TemplateResult => {
 
 export const iconsNone = (args: StoryArgs): TemplateResult => {
   return html`
-    <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
-      Choose an action type...
-    </sp-field-label>
     <sp-picker
       ${spreadProps(args)}
-      id="picker-quiet"
       @change=${handleChange(args)}
-      label="Pick an action"
+      placeholder="Pick an action"
       value="1"
       icons="none"
     >
+      <span slot="field-label">Choose an action type...</span>
       <sp-menu-item value="1" selected active focused>
         <sp-icon-edit slot="icon"></sp-icon-edit>
         Edit
@@ -411,18 +374,15 @@ iconsNone.swc_vrt = {
 
 export const iconValue = (args: StoryArgs): TemplateResult => {
   return html`
-    <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
-      Choose an action type...
-    </sp-field-label>
     <sp-picker
       ${spreadProps(args)}
-      id="picker-quiet"
       @change=${handleChange(args)}
-      label="Pick an action"
+      placeholder="Pick an action"
       icons="only"
       value="2"
       style="--mod-picker-inline-size: 100px;"
     >
+      <span slot="field-label">Choose an action type...</span>
       <sp-menu-item value="1">
         <sp-icon-edit slot="icon"></sp-icon-edit>
         Edit
@@ -441,17 +401,14 @@ export const iconValue = (args: StoryArgs): TemplateResult => {
 
 export const iconsOnly = (args: StoryArgs): TemplateResult => {
   return html`
-    <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
-      Choose an action type...
-    </sp-field-label>
     <sp-picker
       ${spreadProps(args)}
-      id="picker-quiet"
       @change=${handleChange(args)}
-      label="Pick an action"
+      placeholder="Pick an action"
       value="3"
       style="--mod-picker-inline-size: 100px;"
     >
+      <span slot="field-label">Choose an action type...</span>
       <sp-menu-item value="1">
         <sp-icon-edit slot="icon" label="Edit"></sp-icon-edit>
       </sp-menu-item>
@@ -478,16 +435,13 @@ export const dynamicIcons = (args: StoryArgs): TemplateResult => {
       The icon displayed in the picker should match the icon of the selected
       menu item, even when the icons are updated dynamically.
     </p>
-    <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
-      Choose an action type...
-    </sp-field-label>
     <sp-picker
       ${spreadProps(args)}
-      id="picker-quiet"
       @change=${handleChange(args)}
-      label="Pick an action"
+      placeholder="Pick an action"
       value="2"
     >
+      <span slot="field-label">Choose an action type...</span>
       <sp-menu-item value="1">
         <sp-icon
           slot="icon"
@@ -548,18 +502,12 @@ export const Open = (args: StoryArgs): TemplateResult => {
       }
     </style>
     <fieldset class="backdrop-filter-test">
-      <sp-field-label for="picker-open" size=${ifDefined(args.size)}>
-        Where do you live?
-      </sp-field-label>
       <sp-picker
-        id="picker-open"
-        label="Open picker"
+        placeholder="Choose a selection type"
         ${spreadProps(args)}
         @change=${handleChange(args)}
       >
-        <span slot="label">
-          Select a Country with a very long label, too long, in fact
-        </span>
+        <span slot="field-label">Selection type</span>
         <sp-menu-item>Deselect</sp-menu-item>
         <sp-menu-item>Select Inverse</sp-menu-item>
         <sp-menu-item>Feather...</sp-menu-item>
@@ -569,15 +517,11 @@ export const Open = (args: StoryArgs): TemplateResult => {
       </sp-picker>
     </fieldset>
     <fieldset>
-      <sp-field-label for="picker-closed" size=${ifDefined(args.size)}>
-        Where do you live?
-      </sp-field-label>
       <sp-picker
-        id="picker-closed"
-        label="Picker that displays below the options"
+        placeholder="Picker that displays below the options"
         @change=${handleChange(args)}
       >
-        <span slot="label">Other menu that goes behind the open one</span>
+        <span slot="field-label">Other menu that goes behind the open one</span>
         <sp-menu-item>Not so many options...</sp-menu-item>
       </sp-picker>
     </fieldset>
@@ -627,18 +571,13 @@ export const OpenShowingEdgeCase = (args: StoryArgs): TemplateResult => {
       .
     </p>
     <fieldset class="backdrop-filter-test">
-      <sp-field-label for="picker-open" size=${ifDefined(args.size)}>
-        Where do you live?
-      </sp-field-label>
       <sp-picker
         id="picker-open"
-        label="Open picker"
+        placeholder="Choose a selection type with a very long placeholder, too long, in fact"
         ${spreadProps(args)}
         @change=${handleChange(args)}
       >
-        <span slot="label">
-          Select a Country with a very long label, too long, in fact
-        </span>
+        <span slot="field-label">Selection type:</span>
         <sp-menu-item>Deselect</sp-menu-item>
         <sp-menu-item>Select Inverse</sp-menu-item>
         <sp-menu-item>Feather...</sp-menu-item>
@@ -653,10 +592,10 @@ export const OpenShowingEdgeCase = (args: StoryArgs): TemplateResult => {
       </sp-field-label>
       <sp-picker
         id="picker-closed"
-        label="Picker that displays below the options"
+        placeholder="Picker that displays below the options"
         @change=${handleChange(args)}
       >
-        <span slot="label">Other menu that goes behind the open one</span>
+        <span slot="field-label">Other menu that goes behind the open one</span>
         <sp-menu-item>Not so many options...</sp-menu-item>
       </sp-picker>
     </fieldset>
@@ -677,17 +616,13 @@ OpenShowingEdgeCase.parameters = {
 
 export const initialValue = (args: StoryArgs): TemplateResult => {
   return html`
-    <sp-field-label for="picker-initial" size=${ifDefined(args.size)}>
-      Where do you live?
-    </sp-field-label>
     <sp-picker
-      id="picker-initial"
       @change=${handleChange(args)}
       value="item-2"
       ${spreadProps(args)}
     >
-      <span slot="label">
-        Select a Country with a very long label, too long in fact
+      <span slot="field-label">
+        Choose a selection type with a very long label, too long in fact
       </span>
       <sp-menu-item value="item-1">Deselect</sp-menu-item>
       <sp-menu-item value="item-2">Select Inverse</sp-menu-item>
@@ -707,8 +642,8 @@ export const readonly = (args: StoryArgs): TemplateResult => {
       value="item-2"
       ${spreadProps(args)}
     >
-      <span slot="label">
-        Select a Country with a very long label, too long in fact
+      <span slot="field-label">
+        Choose a selection type with a very long label, too long in fact
       </span>
       <sp-menu-item value="item-1">Deselect</sp-menu-item>
       <sp-menu-item value="item-2">Select Inverse</sp-menu-item>
@@ -723,17 +658,14 @@ export const readonly = (args: StoryArgs): TemplateResult => {
 export const custom = (args: StoryArgs): TemplateResult => {
   const initialState = 'lb1-mo';
   return html`
-    <sp-field-label for="picker-state" size=${ifDefined(args.size)}>
-      What state do you live in?
-    </sp-field-label>
     <sp-picker
       style="width: 400px;"
       @change=${handleChange(args)}
-      id="picker-state"
-      label="Pick a state"
+      placeholder="Pick a state"
       ${spreadProps(args)}
       value=${initialState}
     >
+      <span slot="field-label">What state do you live in?</span>
       ${states.map(
         (state) => html`
           <sp-menu-item
@@ -767,6 +699,7 @@ export const BackgroundClickTest = (): TemplateResult => {
   return html`
     <div style="display: flex; flex-direction: column;">
       <sp-picker size="l">
+        <span slot="field-label">Selection type:</span>
         <sp-menu-item value="option-1">Deselect</sp-menu-item>
         <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
       </sp-picker>
@@ -827,9 +760,8 @@ export const PickerInOverlay = (): TemplateResult => {
           <sp-popover slot="click-content" tip>
             <sp-dialog no-divider class="options-popover-content">
               <sp-picker
-                label="Select a Country with a very long label, too long in fact"
+                placeholder="Choose a selection type with a very long label, too long in fact"
                 value="item-2"
-                id="picker-value"
               >
                 <sp-menu-item value="item-1">Deselect</sp-menu-item>
                 <sp-menu-item value="item-2">Select inverse</sp-menu-item>
@@ -1157,7 +1089,12 @@ class PickerWithDelayedMenuItems extends LitElement {
           <strong>Picker 1</strong>
           (menu-items rendered immediately):
           <br />
-          <sp-picker value="item-2" id="picker-1" style="margin-top: 8px;">
+          <sp-picker
+            value="item-2"
+            id="picker-1"
+            style="margin-top: 8px;"
+            label="Choose an action"
+          >
             <sp-menu-item value="item-1">Save</sp-menu-item>
             <sp-menu-item value="item-2">Finish</sp-menu-item>
             <sp-menu-item value="item-3">Review</sp-menu-item>
@@ -1170,7 +1107,12 @@ class PickerWithDelayedMenuItems extends LitElement {
           <strong>Picker 2</strong>
           (menu-items rendered conditionally):
           <br />
-          <sp-picker value="item-2" id="picker-2" style="margin-top: 8px;">
+          <sp-picker
+            value="item-2"
+            id="picker-2"
+            style="margin-top: 8px;"
+            label="Choose an action"
+          >
             ${when(
               this.hasContent,
               () => html`
@@ -1237,4 +1179,52 @@ delayedMenuItems.swc_vrt = {
 delayedMenuItems.parameters = {
   // Disables Chromatic's snapshotting on a global level
   chromatic: { disableSnapshot: true },
+};
+
+export const DeprecatedSpLabel = (args: StoryArgs): TemplateResult => {
+  return html`
+    <sp-picker
+      @change=${handleChange(args)}
+      placeholder="Choose a selection type with a very long label, too long, in fact"
+      ${spreadProps(args)}
+    >
+      <span slot="field-label">Selection type:</span>
+      <sp-menu-item value="option-1">Deselect</sp-menu-item>
+      <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
+      <sp-menu-item value="option-3">Feather...</sp-menu-item>
+      <sp-menu-item value="option-4">Select and Mask...</sp-menu-item>
+      <sp-menu-item value="option-5">Save Selection</sp-menu-item>
+      <sp-menu-item disabled value="option-6">Make Work Path</sp-menu-item>
+    </sp-picker>
+    <p>This is some text.</p>
+    <p>This is some text.</p>
+    <p>
+      This is a
+      <a href="#anchor">link</a>
+      .
+    </p>
+  `;
+};
+
+export const DeprecatedLabelSlot = (args: StoryArgs): TemplateResult => {
+  return html`
+    <sp-picker id="picker-1" @change=${handleChange(args)} ${spreadProps(args)}>
+      <span slot="label">
+        Choose a selection type with a very long label, too long, in fact
+      </span>
+      <sp-menu-item value="option-1">Deselect</sp-menu-item>
+      <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
+      <sp-menu-item value="option-3">Feather...</sp-menu-item>
+      <sp-menu-item value="option-4">Select and Mask...</sp-menu-item>
+      <sp-menu-item value="option-5">Save Selection</sp-menu-item>
+      <sp-menu-item disabled value="option-6">Make Work Path</sp-menu-item>
+    </sp-picker>
+    <p>This is some text.</p>
+    <p>This is some text.</p>
+    <p>
+      This is a
+      <a href="#anchor">link</a>
+      .
+    </p>
+  `;
 };

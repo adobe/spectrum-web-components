@@ -10,8 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import { ifDefined } from 'lit/directives/if-defined.js';
-
 import {
   ElementSize,
   html,
@@ -47,15 +45,12 @@ export const handleChange =
   };
 
 export const Template = (args: StoryArgs): TemplateResult => html`
-  <sp-field-label for="picker-1" size=${ifDefined(args.size)}>
-    Where do you live?
-  </sp-field-label>
   <sp-picker
-    id="picker-1"
     @change=${handleChange(args)}
-    label="Choose your neighborhood"
+    placeholder="Choose your neighborhood"
     ${spreadProps(args)}
   >
+    <span slot="field-label">Where do you live?</span>
     <sp-menu-item value="option-1">Carol Gardens</sp-menu-item>
     <sp-menu-item value="option-2">Cobble Hill</sp-menu-item>
     <sp-menu-item value="option-3">Ft. Greene</sp-menu-item>
