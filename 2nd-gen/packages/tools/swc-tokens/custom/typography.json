@@ -21,22 +21,22 @@
     "value": "adobe-clean-arabic, 'Adobe Clean Arabic', myriad-arabic,  'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif"
   },
   "font-family-chinese-simplified": {
-    "value": "adobe-clean-han-simplified-c, 'Adobe Clean Han Simplified Chinese'"
+    "value": "adobe-clean-han-simplified-c, 'Adobe Clean Han Chinese (Simplified)', 'Source Han Simplified C', SimSun, 'Heiti SC Light', sans-serif"
   },
   "font-family-chinese-traditional": {
-    "value": "adobe-clean-han-traditional, 'Adobe Clean Han Traditional Chinese'"
+    "value": "adobe-clean-han-traditional, 'Adobe Clean Han Chinese (Traditional)', 'Source Han Traditional', 'MingLiu', 'Heiti TC Light', sans-serif"
   },
   "font-family-he": {
-    "value": "adobe-clean-hebrew, 'Adobe Clean Hebrew', myriad-arabic, 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif"
+    "value": "adobe-clean-hebrew, 'Adobe Clean Hebrew', myriad-hebrew, 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif"
   },
   "font-family-hong-kong": {
-    "value": "adobe-clean-han-hong-kong, 'Adobe Clean Han Hong Kong'"
+    "value": "adobe-clean-han-hong-kong, 'Adobe Clean Han Hong Kong', 'Source Han Hong Kong', 'MingLiu', 'Microsoft JhengHei UI', 'Microsoft JhengHei', 'Heiti TC Light', sans-serif"
   },
   "font-family-japanese": {
-    "value": "adobe-clean-han-japanese, 'Adobe Clean Han Japanese'"
+    "value": "adobe-clean-han-japanese, 'Adobe Clean Han Japanese', 'Source Han Sans JP', 'Source Han Sans', 'ヒラギノ角ゴ ProN W3', '源ノ角ゴシック JP', '源ノ角ゴシック', Osaka, 'Noto Sans JP', 'Noto Sans CJK JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', YuGothic, 'Yu Gothic UI', 'メイリオ',  'ＭＳ Ｐゴシック', 'MS PGothic', '游ゴシック', '游ゴシック体', 'Kozuka Gothic Pr6N', '小塚ゴシック Pr6N', Meiryo, sans-serif"
   },
   "font-family-korean": {
-    "value": "adobe-clean-han-korean, 'Adobe Clean Han Korean'"
+    "value": "adobe-clean-han-korean, 'Adobe Clean Han Korean', 'Source Han Korean', 'Malgun Gothic', 'Apple Gothic', sans-serif"
   },
   "font-size": {
     "value": "{font-size-100}"
