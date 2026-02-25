@@ -17,8 +17,6 @@ To use 2nd-gen SWC in your application, you need two things:
 
 ## Include the stylesheet
 
-{/* TODO: Help needed figuring out how to get this to export post-processing! Open to different name, ex. just `@adobe/spectrum-wc/tokens.css */}
-
 The stylesheet is available via `@adobe/spectrum-wc/swc.css`.
 
 Inclusion will be dependent on your application environment and build pipeline.
@@ -42,9 +40,11 @@ Please note that if you are re-processing the stylesheet through PostCSS and usi
 ```json
 stage: 2,
 features: {
-    'nesting-rules': true,
+    'nesting-rules': false,
     'custom-properties': false,
     'light-dark-function': false,
     'logical-properties-and-values': false,
+    'is-pseudo-class': false,
+    'cascade-layers': false,
 }
 ```
