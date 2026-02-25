@@ -589,6 +589,10 @@ describe('ColorArea', () => {
     await elementUpdated(el);
 
     const yNearBottom = el.y;
+    expect(
+      yNearBottom,
+      'y near bottom should be relatively low'
+    ).to.be.lessThan(0.6);
 
     // The streamingListener throttles pointermove to 1 per animation frame.
     // Without this wait the second pointermove is silently dropped, leaving
@@ -609,6 +613,9 @@ describe('ColorArea', () => {
     await elementUpdated(el);
 
     const yNearTop = el.y;
+    expect(yNearTop, 'y near top should be relatively high').to.be.greaterThan(
+      0.4
+    );
 
     handle.dispatchEvent(
       new PointerEvent('pointerup', {
