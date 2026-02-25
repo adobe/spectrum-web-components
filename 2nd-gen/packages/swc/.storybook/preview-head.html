@@ -127,10 +127,35 @@
   nav {
     font-family: var(--swc-sans-font-family-stack) !important;
 
+    &:lang(ar) {
+      font-family: var(--swc-font-family-arabic) !important;
+    }
+
+    &:lang(he) {
+      font-family: var(--swc-font-family-hebrew) !important;
+    }
+
     &:lang(zh),
-    &:lang(ja),
+    &:lang(zh-Hant) {
+      font-family: var(--swc-font-family-chinese-traditional) !important;
+    }
+
+    &:lang(zh-Hans),
+    &:lang(zh-CN),
+    &:lang(zh-SG) {
+      font-family: var(--swc-font-family-chinese-simplified) !important;
+    }
+
+    &:lang(zh-HK) {
+      font-family: var(--swc-font-family-hong-kong) !important;
+    }
+
+    &:lang(ja) {
+      font-family: var(--swc-font-family-japanese) !important;
+    }
+
     &:lang(ko) {
-      font-family: var(--swc-cjk-font) !important;
+      font-family: var(--swc-font-family-korean) !important;
     }
   }
 

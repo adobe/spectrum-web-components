@@ -79,8 +79,29 @@ const TOKEN_PATCHES = {
 // Centralize CJK language selectors
 const CJK_LANGS = ['zh', 'ja', 'ko'];
 const CJK_NESTED_SELECTOR = CJK_LANGS.map((l) => `&:lang(${l})`).join(', ');
-const CJK_SELECTOR_LIST = CJK_LANGS.map((l) => `:lang(${l})`).join(',\n');
 const CJK_NOT_LIST = CJK_LANGS.map((l) => `:lang(${l})`).join(', ');
+
+// Locale-to-font-token mapping for per-locale font-family rules.
+const LOCALE_FONT_MAP = [
+  { selectors: [':lang(ar)'], fontToken: 'font-family-arabic' },
+  { selectors: [':lang(he)'], fontToken: 'font-family-hebrew' },
+  {
+    selectors: [':lang(zh)', ':lang(zh-Hant)'],
+    fontToken: 'font-family-chinese-traditional',
+  },
+  {
+    selectors: [':lang(zh-Hans)', ':lang(zh-CN)', ':lang(zh-SG)'],
+    fontToken: 'font-family-chinese-simplified',
+  },
+  { selectors: [':lang(zh-HK)'], fontToken: 'font-family-hong-kong' },
+  { selectors: [':lang(ja)'], fontToken: 'font-family-japanese' },
+  { selectors: [':lang(ko)'], fontToken: 'font-family-korean' },
+];
+
+// TODO: determine if we can use this const to disallow certain selectors from the emphasized
+// modifier, like CJK_NOT_LIST (i.e. :not(emphasized))
+// All internationalized locale selectors
+// const INTL_SELECTOR_LIST = LOCALE_FONT_MAP.flatMap(({ selectors }) => selectors).join(', ');
 
 /**
  * Per-variant CJK overrides that should be inherited via the base class.
@@ -284,10 +305,6 @@ function cssBlock(selector, decls, nestedBlocks = []) {
 
 function nestedLangBlock(decls) {
   return `  ${CJK_NESTED_SELECTOR} {\n${cssDecls(decls, '    ')}\n  }`;
-}
-
-function langSelectorList(decls) {
-  return `${CJK_SELECTOR_LIST} {\n${cssDecls(decls)}\n}\n`;
 }
 
 function pickValidDecls(decls) {
@@ -496,10 +513,13 @@ export async function generateTypographyCssString(options = {}) {
 
 /* stylelint-ignore */\n\n`;
 
-  // Separate :lang() rule once for font-family only
-  out += `${langSelectorList({
-    'font-family': `token("${fontTokens.cjk}") !important`,
-  })}\n`;
+  // Per-locale font-family rules
+  for (const { selectors, fontToken } of LOCALE_FONT_MAP) {
+    out += cssBlock(selectors.join(',\n'), {
+      'font-family': `token("${fontToken}") !important`,
+    });
+    out += '\n';
+  }
 
   for (const typeVar of variants) {
     const ctx = makeVariantCtx({ prefix, typeVar });
