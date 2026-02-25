@@ -336,15 +336,15 @@ Events handlers for clicks and other user actions can be registered on a
 <sp-button onclick="spAlert(this, '<sp-button> clicked!')">Click me</sp-button>
 ```
 
-In addition to handling events like a native `<button>` HTML element, one can also use a `<sp-button>` in place of the `<a>` HTML element by using the `href` and optional `target` attribute.
+If you intend to create a link with a `href` attribute, we instead offer CSS classes for creating button-styled links. See more information in the [accessibility section](#accessibility).
 
 ```html demo
-<sp-button
+<a
+  class="spectrum-Button spectrum-Button--accent"
   href="https://github.com/adobe/spectrum-web-components"
-  target="_blank"
 >
-  Click me
-</sp-button>
+  Accent Link Button
+</a>
 ```
 
 #### Autofocus
