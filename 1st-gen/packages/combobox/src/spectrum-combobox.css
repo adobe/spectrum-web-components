@@ -177,7 +177,6 @@
     --highcontrast-combobox-border-color-invalid: Highlight;
     --mod-picker-button-border-color-disabled: GrayText;
     --mod-picker-button-icon-color-disabled: GrayText;
-    --mod-picker-button-border-color-quiet: none;
   }
 
   .button.spectrum-PickerButton--quiet .spectrum-PickerButton-fill {
