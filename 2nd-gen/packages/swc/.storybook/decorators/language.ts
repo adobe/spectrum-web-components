@@ -58,12 +58,13 @@ function applyLanguageAndFontKit(lang: string | false, isRTL: boolean): void {
 
   const defaultKitId = getKitId(false) as string;
 
-  // Remove any previously injected Typekit script (from this decorator). The default kit
-  // script is added in preview-head and is not marked, so it stays.
-  const dynamicScripts = document.querySelectorAll(
-    'script[data-swc-typekit-dynamic="true"]'
+  // Remove any previously injected Typekit script and stylesheet (from this decorator).
+  // The default kit's script and stylesheet are added in preview-head and are not marked,
+  // so they stay.
+  const dynamicElements = document.querySelectorAll(
+    '[data-swc-typekit-dynamic="true"]'
   );
-  dynamicScripts.forEach((el) => el.remove());
+  dynamicElements.forEach((el) => el.remove());
 
   // If switching back to default, we're done; the default script is already in the page.
   if (kitId === defaultKitId) {
@@ -80,6 +81,15 @@ function applyLanguageAndFontKit(lang: string | false, isRTL: boolean): void {
   window.currentKitId = kitId;
   try {
     window.FontsLoading = true;
+
+    // Inject the kit's stylesheet so @font-face rules map font family names to font file URLs.
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://use.typekit.net/' + kitId + '.css';
+    link.setAttribute('data-swc-typekit-dynamic', 'true');
+    document.head.appendChild(link);
+
+    // Inject the kit's script so Typekit.load() can activate fonts and toggle wf-* classes.
     const script = document.createElement('script');
     script.setAttribute('data-swc-typekit-dynamic', 'true');
     script.src = 'https://use.typekit.net/' + kitId + '.js';
