@@ -652,7 +652,9 @@ describe('Menu', () => {
       event.preventDefault();
       const selected: string[] = [];
       if (event.target.selected.length) {
-        selected.push(event.target.selected.at(-1) as string);
+        selected.push(
+          event.target.selected[event.target.selected.length - 1] as string
+        );
       }
       event.target.updateComplete.then(() => {
         event.target.selected = selected;
