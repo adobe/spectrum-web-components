@@ -28,7 +28,6 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { Combobox, ComboboxOption } from '../src/Combobox.js';
 import { argTypes } from './args.js';
-import { argTypes } from './args.js';
 import { countries, fruits, StoryArgs } from './index.js';
 import { Template } from './template.js';
 
@@ -183,6 +182,61 @@ export const withStandaloneFieldLabel = (args: StoryArgs): TemplateResult => {
           .options=${countries}
           .value=${args.value ?? ''}
           style="min-width: 80px; width: 200px;"
+          ${spreadProps(args)}
+        >
+          <sp-field-label
+            slot="field-label"
+            size=${args.size ?? 'm'}
+            ?disabled=${args.disabled}
+          >
+            Where do you live?
+          </sp-field-label>
+        </sp-combobox>
+      </div>
+    </div>
+  `;
+};
+
+/**
+ * Same as With standalone field label but with side-aligned="start" for comparison.
+ */
+export const withStandaloneFieldLabelSideAligned = (
+  args: StoryArgs
+): TemplateResult => {
+  return html`
+    <div style="display: flex; flex-direction: column; gap: 2rem;">
+      <div>
+        <p
+          style="margin: 0 0 0.5rem 0; font-size: 12px; color: var(--spectrum-global-color-gray-600);"
+        >
+          Sibling: sp-field-label outside combobox (side-aligned)
+        </p>
+        <div
+          style="display: flex; align-items: flex-start; gap: var(--spectrum-spacing-200, 8px);"
+        >
+          <sp-field-label size=${args.size ?? 'm'} ?disabled=${args.disabled}>
+            Where do you live?
+          </sp-field-label>
+          <sp-combobox
+            label="Where do you live?"
+            .options=${countries}
+            .value=${args.value ?? ''}
+            style="min-width: 80px; width: 200px;"
+            ${spreadProps(args)}
+          ></sp-combobox>
+        </div>
+      </div>
+      <div>
+        <p
+          style="margin: 0 0 0.5rem 0; font-size: 12px; color: var(--spectrum-global-color-gray-600);"
+        >
+          Slotted: sp-field-label in field-label slot (side-aligned)
+        </p>
+        <sp-combobox
+          side-aligned="start"
+          .options=${countries}
+          .value=${args.value ?? ''}
+          style="min-width: 80px; width: 308px;"
           ${spreadProps(args)}
         >
           <sp-field-label
