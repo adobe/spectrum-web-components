@@ -10,45 +10,39 @@
  * governing permissions and limitations under the License.
  */
 :host {
+  /* Default to size m (workflow-icon-size-100) like 1st-gen */
+  --swc-icon-inline-size: token("workflow-icon-size-100");
+  --swc-icon-block-size: token("workflow-icon-size-100");
+
   display: inline-flex;
-  inline-size: var(--swc-icon-inline-size, 1em);
-  block-size: var(--swc-icon-block-size, 1em);
+  inline-size: var(--swc-icon-inline-size);
+  block-size: var(--swc-icon-block-size);
   color: var(--swc-icon-color, currentColor);
 }
 
-:host([size="xxs"]) {
-  --swc-icon-inline-size: 10px;
-  --swc-icon-block-size: 10px;
-}
-
 :host([size="xs"]) {
-  --swc-icon-inline-size: 12px;
-  --swc-icon-block-size: 12px;
+  --swc-icon-inline-size: token("workflow-icon-size-50");
+  --swc-icon-block-size: token("workflow-icon-size-50");
 }
 
 :host([size="s"]) {
-  --swc-icon-inline-size: 14px;
-  --swc-icon-block-size: 14px;
+  --swc-icon-inline-size: token("workflow-icon-size-75");
+  --swc-icon-block-size: token("workflow-icon-size-75");
 }
 
 :host([size="m"]) {
-  --swc-icon-inline-size: 18px;
-  --swc-icon-block-size: 18px;
+  --swc-icon-inline-size: token("workflow-icon-size-100");
+  --swc-icon-block-size: token("workflow-icon-size-100");
 }
 
 :host([size="l"]) {
-  --swc-icon-inline-size: 22px;
-  --swc-icon-block-size: 22px;
+  --swc-icon-inline-size: token("workflow-icon-size-200");
+  --swc-icon-block-size: token("workflow-icon-size-200");
 }
 
 :host([size="xl"]) {
-  --swc-icon-inline-size: 26px;
-  --swc-icon-block-size: 26px;
-}
-
-:host([size="xxl"]) {
-  --swc-icon-inline-size: 34px;
-  --swc-icon-block-size: 34px;
+  --swc-icon-inline-size: token("workflow-icon-size-300");
+  --swc-icon-block-size: token("workflow-icon-size-300");
 }
 
 .swc-Icon {

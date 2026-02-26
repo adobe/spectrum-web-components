@@ -14,6 +14,7 @@ export default {
   globs: [
     'components/**/*.ts',
     '../core/components/**/*.ts',
+    '../core/mixins/**/*.ts',
     '../core/shared/**/*.ts',
   ],
   exclude: ['**/*.stories.ts', '**/*.test.ts', '**/*.spec.ts'],

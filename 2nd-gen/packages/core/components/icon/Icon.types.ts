@@ -9,14 +9,6 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export const ICON_VALID_SIZES = [
-  'xxs',
-  'xs',
-  's',
-  'm',
-  'l',
-  'xl',
-  'xxl',
-] as const;
+export const ICON_VALID_SIZES = ['xs', 's', 'm', 'l', 'xl'] as const;
 
 export type IconSize = (typeof ICON_VALID_SIZES)[number];
