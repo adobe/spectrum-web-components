@@ -415,6 +415,7 @@ export class TextfieldBase extends ManageHelpText(
       <sp-overlay
         id="truncated-value-tooltip"
         aria-hidden="true"
+        .describeTrigger=${'none'}
         .triggerElement=${this.inputElement}
         .triggerInteraction=${'hover'}
         type="hint"

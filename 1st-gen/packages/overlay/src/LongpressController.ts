@@ -139,6 +139,13 @@ export class LongpressController extends InteractionController {
     ) {
       return;
     }
+    // When describeTrigger is 'none', do not set aria-describedby on the trigger (visual hint only).
+    const overlayWithDescribe = this.overlay as {
+      describeTrigger?: 'auto' | 'none';
+    };
+    if (overlayWithDescribe.describeTrigger === 'none') {
+      return;
+    }
 
     const longpressDescription = document.createElement('div');
     longpressDescription.id = `longpress-describedby-descriptor-${randomID()}`;
