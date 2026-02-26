@@ -19,11 +19,26 @@ import * as iconElements from '@adobe/spectrum-wc/icon/elements';
 
 import '@adobe/spectrum-wc/icon';
 
+import { ICON_VALID_SIZES } from '../../../../core/components/icon/Icon.types.js';
+
 // ────────────────
 //    METADATA
 // ────────────────
 
 const { args, argTypes, template } = getStorybookHelpers('swc-icon');
+
+// Override size argType to provide proper select control
+argTypes.size = {
+  ...argTypes.size,
+  control: { type: 'select' },
+  options: ICON_VALID_SIZES,
+  table: {
+    category: 'attributes',
+    defaultValue: {
+      summary: 'm',
+    },
+  },
+};
 
 /**
  * **Internal-only component.**

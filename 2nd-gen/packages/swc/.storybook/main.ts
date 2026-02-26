@@ -9,19 +9,32 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { readCsf } from '@storybook/core/csf-tools';
+import type { Indexer } from '@storybook/types';
+import type { StorybookConfig } from '@storybook/web-components-vite';
 import { dirname, resolve } from 'path';
 import remarkGfm from 'remark-gfm';
 import { fileURLToPath } from 'url';
 import { mergeConfig } from 'vite';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const includeTestStories = process.env.NODE_ENV !== 'production';
 const isProductionBuild = process.env.NODE_ENV === 'production';
 
-const stories = [
+// Custom indexer to allow .test.ts files to be treated as story files
+const testStoryIndexer: Indexer = {
+  test: /\.test\.ts$/,
+  createIndex: async (fileName, options) => {
+    const csfFile = await readCsf(fileName, options);
+    return csfFile.parse().indexInputs;
+  },
+};
+
+const stories: StorybookConfig['stories'] = [
   {
     directory: '../components',
-    files: isProductionBuild ? '**/!(*.internal).stories.ts' : '**/*.stories.ts',
+    files: isProductionBuild
+      ? '**/!(*.internal).stories.ts'
+      : '**/*.stories.ts',
     titlePrefix: 'Components',
   },
   {
@@ -36,7 +49,8 @@ const stories = [
   },
 ];
 
-if (includeTestStories) {
+// In dev mode, include test stories (*.test.ts files that export Storybook stories)
+if (!isProductionBuild) {
   stories.push({
     directory: '../components',
     files: '**/*.test.ts',
@@ -44,8 +58,7 @@ if (includeTestStories) {
   });
 }
 
-/** @type { import('@storybook/web-components-vite').StorybookConfig } */
-const config = {
+const config: StorybookConfig = {
   stories,
   docs: {
     defaultName: 'README',
@@ -54,6 +67,7 @@ const config = {
   core: {
     disableTelemetry: true,
   },
+  experimental_indexers: [testStoryIndexer],
   addons: [
     {
       name: '@storybook/addon-docs',
@@ -112,7 +126,6 @@ const config = {
   },
   typescript: {
     check: true,
-    reactDocgen: false,
   },
 };
 
