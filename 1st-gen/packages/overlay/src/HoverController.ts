@@ -131,6 +131,13 @@ export class HoverController extends InteractionController {
     if (!this.overlay || !this.overlay.elements.length) {
       return;
     }
+    // When describeTrigger is 'none', do not set aria-describedby on the trigger (visual hint only).
+    const overlayWithDescribe = this.overlay as {
+      describeTrigger?: 'auto' | 'none';
+    };
+    if (overlayWithDescribe.describeTrigger === 'none') {
+      return;
+    }
 
     const triggerRoot = this.target.getRootNode();
     const contentRoot = this.overlay.elements[0].getRootNode();

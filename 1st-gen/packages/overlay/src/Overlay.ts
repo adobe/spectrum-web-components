@@ -400,6 +400,19 @@ export class Overlay extends ComputedOverlayBase {
   triggerInteraction?: TriggerInteraction;
 
   /**
+   * When set to `'none'`, the overlay will not set `aria-describedby` on the
+   * trigger when open, so the trigger is not described by the overlay content.
+   * Use for hint overlays whose content duplicates the trigger (e.g. truncated
+   * value tooltips) to avoid double announcement by screen readers.
+   *
+   * @internal
+   * @type {"auto" | "none"}
+   * @default "auto"
+   */
+  @property({ attribute: false })
+  describeTrigger: 'auto' | 'none' = 'auto';
+
+  /**
    * Configures the open/close heuristics of the Overlay.
    *
    * @type {"auto" | "hint" | "manual" | "modal" | "page"}
