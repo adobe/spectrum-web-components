@@ -317,6 +317,27 @@ export class ColorArea extends SpectrumElement {
   private boundingClientRect!: DOMRect;
   public _pointerDown = false;
 
+  /**
+   * Returns a DOMRect describing the content box of the color area in viewport
+   * coordinates, excluding the element's border. Using the content box ensures
+   * that pointer calculations and handle rendering are aligned to the visible
+   * gradient area rather than to the border edge.
+   */
+  private getContentBoundingRect(): DOMRect {
+    const outer = this.getBoundingClientRect();
+    const style = getComputedStyle(this);
+    const bl = parseFloat(style.borderLeftWidth);
+    const bt = parseFloat(style.borderTopWidth);
+    const br = parseFloat(style.borderRightWidth);
+    const bb = parseFloat(style.borderBottomWidth);
+    return new DOMRect(
+      outer.left + bl,
+      outer.top + bt,
+      outer.width - bl - br,
+      outer.height - bt - bb
+    );
+  }
+
   private handlePointerdown(event: PointerEvent): void {
     if (event.button !== 0) {
       event.preventDefault();
@@ -324,7 +345,7 @@ export class ColorArea extends SpectrumElement {
     }
     this._pointerDown = true;
     this.colorController.savePreviousColor();
-    this.boundingClientRect = this.getBoundingClientRect();
+    this.boundingClientRect = this.getContentBoundingRect();
     (event.target as HTMLElement).setPointerCapture(event.pointerId);
     if (event.pointerType === 'mouse') {
       this.focused = true;
@@ -510,7 +531,7 @@ export class ColorArea extends SpectrumElement {
 
   protected override firstUpdated(changed: PropertyValues): void {
     super.firstUpdated(changed);
-    this.boundingClientRect = this.getBoundingClientRect();
+    this.boundingClientRect = this.getContentBoundingRect();
 
     this.addEventListener('focus', this.handleFocus);
     this.addEventListener('blur', this.handleBlur);
@@ -565,7 +586,7 @@ export class ColorArea extends SpectrumElement {
       this.observer = new (
         window as unknown as WithSWCResizeObserver
       ).ResizeObserver((_entries: SWCResizeObserverEntry[]) => {
-        this.boundingClientRect = this.getBoundingClientRect();
+        this.boundingClientRect = this.getContentBoundingRect();
         this.requestUpdate();
       });
     }
