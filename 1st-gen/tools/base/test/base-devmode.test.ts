@@ -34,10 +34,13 @@ describe('Dev Mode', () => {
     expect(consoleWarnStub.called).to.be.true;
     const spyCall = consoleWarnStub.getCall(0);
     expect(
-      spyCall.args.at(0) as string,
+      spyCall.args[0] as string,
       'confirm "dev mode"-centric message'
     ).to.include('dev mode');
-    expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+    expect(
+      spyCall.args[spyCall.args.length - 1],
+      'confirm `data` shape'
+    ).to.deep.equal({
       data: {
         localName: 'base',
         type: 'default',

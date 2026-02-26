@@ -15,7 +15,7 @@ import { expect, test } from '@playwright/test';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
- * Accessibility tests for Status Light component (2nd Generation)
+ * Accessibility tests for Divider component (2nd Generation)
  *
  * ARIA snapshot tests validate the accessibility tree structure.
  * aXe WCAG compliance and color contrast validation are run via
@@ -23,48 +23,61 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
  * in the `test:a11y` command.
  */
 
-test.describe('Status Light - ARIA Snapshots', () => {
-  test('should have correct accessibility tree structure', async ({ page }) => {
+test.describe('Divider - ARIA Snapshots', () => {
+  test('should have correct accessibility tree for overview', async ({
+    page,
+  }) => {
     const root = await gotoStory(
       page,
-      'components-status-light--overview',
-      'swc-status-light'
+      'components-divider--overview',
+      'swc-divider'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - text: Active
+      - separator
     `);
   });
 
-  test('should handle semantic variants', async ({ page }) => {
+  test('should handle anatomy story', async ({ page }) => {
     const root = await gotoStory(
       page,
-      'components-status-light--semantic-variants',
-      'swc-status-light'
+      'components-divider--anatomy',
+      'swc-divider'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - text: Archived Active Approved Rejected Pending approval
+      - separator
     `);
   });
 
-  test('should handle non-semantic variants', async ({ page }) => {
+  test('should handle different sizes', async ({ page }) => {
     const root = await gotoStory(
       page,
-      'components-status-light--non-semantic-variants',
-      'swc-status-light'
+      'components-divider--sizes',
+      'swc-divider'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - text: /Marketing Engineering Design Product Support Operations Quality Documentation Analytics Creative Training Facilities Compliance Version 1\\.\\d+\\.\\d+/
+      - separator
     `);
   });
 
-  test('should reflect different sizes', async ({ page }) => {
+  test('should handle vertical orientation', async ({ page }) => {
     const root = await gotoStory(
       page,
-      'components-status-light--sizes',
-      'swc-status-light'
+      'components-divider--vertical',
+      'swc-divider'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - text: Small Medium Large Extra-large
+      - separator
+    `);
+  });
+
+  test('should handle static colors', async ({ page }) => {
+    const root = await gotoStory(
+      page,
+      'components-divider--static-colors',
+      'swc-divider'
+    );
+    await expect(root).toMatchAriaSnapshot(`
+      - separator
     `);
   });
 });

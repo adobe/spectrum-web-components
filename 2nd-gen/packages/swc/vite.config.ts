@@ -51,6 +51,7 @@ function processStylesheets(): Plugin {
           to: dest,
         });
         await writeFile(dest, result.css);
+        await writeFile(`${dest}.d.ts`, 'export {};\n');
       }
     },
   };

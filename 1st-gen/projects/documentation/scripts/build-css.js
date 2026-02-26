@@ -58,7 +58,8 @@ async function bundle(fileName) {
 
 async function main() {
   for await (const cssSource of await fg(`${projectDir}/${files}`)) {
-    const fileName = cssSource.split(path.sep).at(-1);
+    const cssSourceParts = cssSource.split(path.sep);
+    const fileName = cssSourceParts[cssSourceParts.length - 1];
     const { code } = await bundle(cssSource);
     await fs.writeFile(path.resolve(outDir, fileName), code);
   }
