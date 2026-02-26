@@ -1715,10 +1715,13 @@ describe('Slider', () => {
       expect(consoleWarnStub.called).to.be.true;
       const spyCall = consoleWarnStub.getCall(0);
       expect(
-        (spyCall.args.at(0) as string).includes('default slot'),
+        (spyCall.args[0] as string).includes('default slot'),
         'confirm "default slot" in message'
       ).to.be.true;
-      expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        'confirm `data` shape'
+      ).to.deep.equal({
         data: {
           localName: 'sp-slider',
           level: 'deprecation',
@@ -1762,10 +1765,13 @@ describe('Slider', () => {
       expect(consoleWarnStub.called).to.be.true;
       const spyCall = consoleWarnStub.getCall(0);
       expect(
-        (spyCall.args.at(0) as string).includes('previous'),
+        (spyCall.args[0] as string).includes('previous'),
         'confirm "previous" in message'
       ).to.be.true;
-      expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        'confirm `data` shape'
+      ).to.deep.equal({
         data: {
           localName: 'sp-slider',
           type: 'api',
@@ -1809,10 +1815,13 @@ describe('Slider', () => {
       expect(consoleWarnStub.called).to.be.true;
       const spyCall = consoleWarnStub.getCall(0);
       expect(
-        (spyCall.args.at(0) as string).includes('next'),
+        (spyCall.args[0] as string).includes('next'),
         'confirm "next" in message'
       ).to.be.true;
-      expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        'confirm `data` shape'
+      ).to.deep.equal({
         data: {
           localName: 'sp-slider',
           type: 'api',
@@ -1842,14 +1851,17 @@ describe('Slider', () => {
       expect(consoleWarnStub.called).to.be.true;
       const spyCall = consoleWarnStub.getCall(0);
       expect(
-        (spyCall.args.at(0) as string).includes('label'),
+        (spyCall.args[0] as string).includes('label'),
         'confirm "label" in message'
       ).to.be.true;
       expect(
-        (spyCall.args.at(0) as string).includes('2 handle(s)'),
+        (spyCall.args[0] as string).includes('2 handle(s)'),
         'confirm handle count in message'
       ).to.be.true;
-      expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        'confirm `data` shape'
+      ).to.deep.equal({
         data: {
           localName: 'sp-slider',
           type: 'api',
@@ -1883,7 +1895,7 @@ describe('Slider', () => {
       const labelWarningCalled = consoleWarnStub
         .getCalls()
         .some((call: { args: string[] }) =>
-          (call.args.at(0) as string).includes('label')
+          (call.args[0] as string).includes('label')
         );
       expect(labelWarningCalled).to.be.false;
     });
@@ -1900,7 +1912,7 @@ describe('Slider', () => {
       const labelWarningCalled = consoleWarnStub
         .getCalls()
         .some((call: { args: string[] }) =>
-          (call.args.at(0) as string).includes('label')
+          (call.args[0] as string).includes('label')
         );
       expect(labelWarningCalled).to.be.false;
     });

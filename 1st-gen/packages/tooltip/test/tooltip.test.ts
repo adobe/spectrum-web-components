@@ -281,10 +281,13 @@ describe('Tooltip', () => {
       expect(consoleWarnStub.called).to.be.true;
       const spyCall = consoleWarnStub.getCall(0);
       expect(
-        (spyCall.args.at(0) as string).includes('Self-managed'),
+        (spyCall.args[0] as string).includes('Self-managed'),
         'confirm dev warning message includes `Self-managed`'
       ).to.be.true;
-      expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        'confirm `data` shape'
+      ).to.deep.equal({
         data: {
           localName: 'sp-tooltip',
           type: 'api',
