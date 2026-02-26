@@ -107,6 +107,10 @@ describe('NumberField', () => {
       await elementUpdated(el);
       await elementUpdated(el);
 
+      await waitUntil(
+        () => el.shadowRoot?.querySelector('#truncated-value-tooltip') != null,
+        'Tooltip overlay (lazy-loaded) should appear when value is truncated'
+      );
       const tooltipOverlay = el.shadowRoot?.querySelector(
         '#truncated-value-tooltip'
       );
@@ -128,6 +132,10 @@ describe('NumberField', () => {
       await elementUpdated(el);
       await elementUpdated(el);
 
+      await waitUntil(
+        () => el.shadowRoot?.querySelector('#truncated-value-tooltip') != null,
+        'Tooltip overlay (lazy-loaded) should appear when value is truncated'
+      );
       const tooltipOverlay = el.shadowRoot?.querySelector(
         '#truncated-value-tooltip'
       );
@@ -150,6 +158,10 @@ describe('NumberField', () => {
       await elementUpdated(el);
       await elementUpdated(el);
 
+      await waitUntil(
+        () => el.shadowRoot?.querySelector('#truncated-value-tooltip') != null,
+        'Tooltip overlay (lazy-loaded) should appear when value is truncated'
+      );
       const tooltipOverlay = el.shadowRoot?.querySelector(
         '#truncated-value-tooltip'
       );
@@ -203,6 +215,10 @@ describe('NumberField', () => {
       await elementUpdated(el);
       await elementUpdated(el);
 
+      await waitUntil(
+        () => el.shadowRoot?.querySelector('#truncated-value-tooltip') != null,
+        'Tooltip overlay (lazy-loaded) should appear when value is truncated'
+      );
       const tooltipOverlay = el.shadowRoot?.querySelector(
         '#truncated-value-tooltip'
       ) as { placement?: string };
@@ -221,6 +237,10 @@ describe('NumberField', () => {
       await elementUpdated(el);
       await elementUpdated(el);
 
+      await waitUntil(
+        () => el.shadowRoot?.querySelector('#truncated-value-tooltip') != null,
+        'Tooltip overlay (lazy-loaded) should appear when value is truncated'
+      );
       const tooltipOverlay = el.shadowRoot?.querySelector(
         '#truncated-value-tooltip'
       ) as { placement?: string };
@@ -705,9 +725,12 @@ describe('NumberField', () => {
     it('has a useful `value` - percent', async () => {
       el.formatOptions = { style: 'percent' };
       el.value = 0.45;
+      await elementUpdated(el);
       expect(el.value).to.equal(0.45);
       el.focus();
+      await elementUpdated(el);
       await sendKeys({ type: '7' }); // Visible text: 45%7
+      await elementUpdated(el);
       expect(inputSpy.calledWith(4.57), 'first input').to.be.true;
       await sendKeys({ press: 'Backspace' }); // Visible text: 45%
       await sendKeys({ press: 'Backspace' }); // Visible text: 45
@@ -727,8 +750,10 @@ describe('NumberField', () => {
       };
       await elementUpdated(el);
       el.value = 45;
+      await elementUpdated(el);
       expect(el.value).to.equal(45);
       el.focus();
+      await elementUpdated(el);
       await sendKeys({ type: '7' }); // Visible text: EUR 45.007
       expect(el.value).to.equal(45.007);
       expect(inputSpy.calledWith(el.value), 'first input').to.be.true;
