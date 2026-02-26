@@ -9,7 +9,13 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { elementUpdated, expect, html, litFixture } from '@open-wc/testing';
+import {
+  elementUpdated,
+  expect,
+  html,
+  litFixture,
+  waitUntil,
+} from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 
 import { HelpText } from '@spectrum-web-components/help-text';
@@ -648,6 +654,10 @@ describe('Textfield', () => {
     await elementUpdated(el);
     await elementUpdated(el);
 
+    await waitUntil(
+      () => el.shadowRoot?.querySelector('#truncated-value-tooltip') != null,
+      'Tooltip overlay (lazy-loaded) should appear when value is truncated'
+    );
     const tooltipOverlay = el.shadowRoot?.querySelector(
       '#truncated-value-tooltip'
     );
@@ -669,6 +679,10 @@ describe('Textfield', () => {
     await elementUpdated(el);
     await elementUpdated(el);
 
+    await waitUntil(
+      () => el.shadowRoot?.querySelector('#truncated-value-tooltip') != null,
+      'Tooltip overlay (lazy-loaded) should appear when value is truncated'
+    );
     const tooltipOverlay = el.shadowRoot?.querySelector(
       '#truncated-value-tooltip'
     );
@@ -690,6 +704,10 @@ describe('Textfield', () => {
     await elementUpdated(el);
     await elementUpdated(el);
 
+    await waitUntil(
+      () => el.shadowRoot?.querySelector('#truncated-value-tooltip') != null,
+      'Tooltip overlay (lazy-loaded) should appear when value is truncated'
+    );
     const tooltipOverlay = el.shadowRoot?.querySelector(
       '#truncated-value-tooltip'
     );
@@ -776,6 +794,10 @@ describe('Textfield', () => {
     await elementUpdated(el);
     await elementUpdated(el);
 
+    await waitUntil(
+      () => el.shadowRoot?.querySelector('#truncated-value-tooltip') != null,
+      'Tooltip overlay (lazy-loaded) should appear when value is truncated'
+    );
     const tooltipOverlay = el.shadowRoot?.querySelector(
       '#truncated-value-tooltip'
     ) as { placement?: string };
@@ -794,6 +816,10 @@ describe('Textfield', () => {
     await elementUpdated(el);
     await elementUpdated(el);
 
+    await waitUntil(
+      () => el.shadowRoot?.querySelector('#truncated-value-tooltip') != null,
+      'Tooltip overlay (lazy-loaded) should appear when value is truncated'
+    );
     const tooltipOverlay = el.shadowRoot?.querySelector(
       '#truncated-value-tooltip'
     ) as { placement?: string };

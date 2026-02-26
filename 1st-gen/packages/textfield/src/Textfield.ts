@@ -34,10 +34,9 @@ import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
 
 import textfieldStyles from './textfield.css.js';
+import { TruncatedValueTooltipMixin } from './TruncatedValueTooltipMixin.js';
 
 const textfieldTypes = ['text', 'url', 'tel', 'email', 'password'] as const;
 export type TextfieldType = (typeof textfieldTypes)[number];
@@ -46,10 +45,12 @@ export type TextfieldType = (typeof textfieldTypes)[number];
  * @fires input - The value of the element has changed.
  * @fires change - An alteration to the value of the element has been committed by the user.
  */
-export class TextfieldBase extends ManageHelpText(
-  SizedMixin(Focusable, {
-    noDefaultSize: true,
-  })
+export class TextfieldBase extends TruncatedValueTooltipMixin(
+  ManageHelpText(
+    SizedMixin(Focusable, {
+      noDefaultSize: true,
+    })
+  )
 ) {
   public static override get styles(): CSSResultArray {
     return [textfieldStyles, checkmarkStyles];
@@ -57,11 +58,6 @@ export class TextfieldBase extends ManageHelpText(
 
   @state()
   protected appliedLabel?: string;
-
-  @state()
-  protected isTruncated = false;
-
-  private truncationResizeObserver: ResizeObserver | null = null;
 
   /**
    * A regular expression outlining the keys that will be allowed to update the value of the form control.
@@ -307,22 +303,6 @@ export class TextfieldBase extends ManageHelpText(
     return this.value.toString();
   }
 
-  protected get inputElementIsTruncated(): boolean {
-    if (!this.inputElement || this.multiline || this.type === 'password') {
-      return false;
-    }
-    // Add 1 because Safari sometimes rounds by 1px, breaking the calculation otherwise.
-    return this.inputElement.scrollWidth > this.inputElement.clientWidth + 1;
-  }
-
-  protected refreshTruncationState(): void {
-    const isTruncated = this.inputElementIsTruncated;
-    if (isTruncated === this.isTruncated) {
-      return;
-    }
-    this.isTruncated = isTruncated;
-  }
-
   // prettier-ignore
   private get renderMultiline(): TemplateResult {
         return html`
@@ -402,56 +382,11 @@ export class TextfieldBase extends ManageHelpText(
     `;
   }
 
-  protected renderTruncatedValueTooltip(): TemplateResult | typeof nothing {
-    if (
-      !this.isTruncated ||
-      this.disabled ||
-      !this.inputElement ||
-      this.type === 'password'
-    ) {
-      return nothing;
-    }
-    return html`
-      <sp-overlay
-        id="truncated-value-tooltip"
-        aria-hidden="true"
-        .describeTrigger=${'none'}
-        .triggerElement=${this.inputElement}
-        .triggerInteraction=${'hover'}
-        type="hint"
-        .placement=${this.truncatedValueTooltipPlacement}
-      >
-        <sp-tooltip
-          aria-hidden="true"
-          placement=${this.truncatedValueTooltipPlacement}
-        >
-          ${this.displayValue}
-        </sp-tooltip>
-      </sp-overlay>
-    `;
-  }
-
   protected override render(): TemplateResult {
     return html`
       <div id="textfield">${this.renderField()}</div>
       ${this.renderTruncatedValueTooltip()} ${this.renderHelpText(this.invalid)}
     `;
-  }
-
-  protected override firstUpdated(changedProperties: PropertyValues): void {
-    super.firstUpdated(changedProperties);
-    if (!this.multiline) {
-      if (!this.truncationResizeObserver) {
-        this.truncationResizeObserver = new ResizeObserver(() => {
-          this.refreshTruncationState();
-        });
-      }
-      this.truncationResizeObserver.observe(this);
-      if (this.inputElement) {
-        this.truncationResizeObserver.observe(this.inputElement);
-      }
-      this.refreshTruncationState();
-    }
   }
 
   protected override update(changedProperties: PropertyValues): void {
@@ -464,19 +399,6 @@ export class TextfieldBase extends ManageHelpText(
       });
     }
     super.update(changedProperties);
-    if (changedProperties.has('value')) {
-      this.updateComplete.then(() => {
-        this.refreshTruncationState();
-      });
-    }
-  }
-
-  public override disconnectedCallback(): void {
-    if (this.truncationResizeObserver) {
-      this.truncationResizeObserver.disconnect();
-      this.truncationResizeObserver = null;
-    }
-    super.disconnectedCallback();
   }
 
   public checkValidity(): boolean {
