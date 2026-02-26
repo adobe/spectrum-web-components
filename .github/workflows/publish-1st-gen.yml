@@ -85,15 +85,6 @@ jobs:
       - name: Setup job and install dependencies
         uses: ./.github/actions/setup-job
 
-      - name: Verify npm CLI version for trusted publishing
-        run: |
-          echo "Current npm version: $(npm --version)"
-          npx semver -r ">=11.5.1" "$(npm --version)" || {
-            echo "Upgrading npm for trusted publishing support (requires 11.5.1+)"
-            npm install -g npm@latest
-            echo "Upgraded to npm version: $(npm --version)"
-          }
-
       - name: Set Git identity
         run: |
           git config --global user.email "support+actions@github.com"

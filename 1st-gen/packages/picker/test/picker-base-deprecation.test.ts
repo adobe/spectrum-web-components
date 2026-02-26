@@ -76,7 +76,7 @@ describe('PickerBase deprecation warning', () => {
     ).to.include('ExpandableElement');
 
     expect(
-      deprecationCall?.args.at(-1),
+      deprecationCall?.args[deprecationCall.args.length - 1],
       'should have deprecation level in data'
     ).to.deep.equal({
       data: {
