@@ -334,4 +334,78 @@ describe('Overlay Trigger - ARIA attributes', () => {
 
     expect(trigger.getAttribute('aria-controls')).to.equal('click-panel');
   });
+
+  it('sets aria-haspopup="dialog" when content has role="dialog"', async () => {
+    const el = await fixture<OverlayTrigger>(html`
+      <overlay-trigger triggered-by="click">
+        <sp-button slot="trigger">Open dialog</sp-button>
+        <div slot="click-content" role="dialog">Dialog content</div>
+      </overlay-trigger>
+    `);
+    await elementUpdated(el);
+    await nextFrame();
+
+    const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
+    expect(trigger.getAttribute('aria-haspopup')).to.equal('dialog');
+  });
+
+  it('sets aria-haspopup="menu" when content has role="menu"', async () => {
+    const el = await fixture<OverlayTrigger>(html`
+      <overlay-trigger triggered-by="click">
+        <sp-button slot="trigger">Open menu</sp-button>
+        <div slot="click-content" role="menu">Menu content</div>
+      </overlay-trigger>
+    `);
+    await elementUpdated(el);
+    await nextFrame();
+
+    const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
+    expect(trigger.getAttribute('aria-haspopup')).to.equal('menu');
+  });
+
+  it('sets aria-haspopup="listbox" when content has role="listbox"', async () => {
+    const el = await fixture<OverlayTrigger>(html`
+      <overlay-trigger triggered-by="click">
+        <sp-button slot="trigger">Open listbox</sp-button>
+        <div slot="click-content" role="listbox">Listbox content</div>
+      </overlay-trigger>
+    `);
+    await elementUpdated(el);
+    await nextFrame();
+
+    const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
+    expect(trigger.getAttribute('aria-haspopup')).to.equal('listbox');
+  });
+
+  it('detects role from first child when content wrapper has no role', async () => {
+    const el = await fixture<OverlayTrigger>(html`
+      <overlay-trigger triggered-by="click">
+        <sp-button slot="trigger">Open</sp-button>
+        <sp-popover slot="click-content">
+          <div role="menu">Menu inside popover</div>
+        </sp-popover>
+      </overlay-trigger>
+    `);
+    await elementUpdated(el);
+    await nextFrame();
+
+    const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
+    expect(trigger.getAttribute('aria-haspopup')).to.equal('menu');
+  });
+
+  it('defaults to "dialog" when content has no recognized role', async () => {
+    const el = await fixture<OverlayTrigger>(html`
+      <overlay-trigger triggered-by="click">
+        <sp-button slot="trigger">Open</sp-button>
+        <sp-popover slot="click-content">
+          <div>Plain content with no role</div>
+        </sp-popover>
+      </overlay-trigger>
+    `);
+    await elementUpdated(el);
+    await nextFrame();
+
+    const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
+    expect(trigger.getAttribute('aria-haspopup')).to.equal('dialog');
+  });
 });

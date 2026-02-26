@@ -186,6 +186,37 @@ export class OverlayTrigger extends SpectrumElement {
     }
   }
 
+  private static readonly VALID_HASPOPUP_ROLES = new Set([
+    'menu',
+    'listbox',
+    'tree',
+    'grid',
+    'dialog',
+  ]);
+
+  private resolveHaspopupValue(): string {
+    const content = this.clickContent[0] || this.longpressContent[0];
+    if (!content) {
+      return 'dialog';
+    }
+    const role = content.getAttribute('role');
+    if (role && OverlayTrigger.VALID_HASPOPUP_ROLES.has(role)) {
+      return role;
+    }
+    const firstChild = content.querySelector(
+      '[role]'
+    ) as HTMLElement | null;
+    if (
+      firstChild &&
+      OverlayTrigger.VALID_HASPOPUP_ROLES.has(
+        firstChild.getAttribute('role')!
+      )
+    ) {
+      return firstChild.getAttribute('role')!;
+    }
+    return 'dialog';
+  }
+
   private removeAriaFromTrigger(element: HTMLElement): void {
     if (!this.ariaManagedElements.has(element)) {
       return;
@@ -226,7 +257,10 @@ export class OverlayTrigger extends SpectrumElement {
       this.ariaManagedElements.has(triggerElement) ||
       !triggerElement.hasAttribute('aria-haspopup')
     ) {
-      triggerElement.setAttribute('aria-haspopup', 'dialog');
+      triggerElement.setAttribute(
+        'aria-haspopup',
+        this.resolveHaspopupValue()
+      );
     }
     this.ariaManagedElements.add(triggerElement);
 

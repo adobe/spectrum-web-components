@@ -251,7 +251,7 @@ The `<overlay-trigger>` element automatically manages several ARIA attributes on
 
 - **`aria-expanded`**: Set to `"true"` when the overlay is open and `"false"` when closed. This tells assistive technologies whether the controlled content is currently visible.
 - **`aria-controls`**: Points to the `id` of the overlay content element, establishing the relationship between the trigger and the content it controls.
-- **`aria-haspopup`**: Set to `"dialog"` to indicate the trigger opens a dialog-like popup. You can override this by setting `aria-haspopup` directly on the trigger element before the overlay-trigger initializes (e.g., `aria-haspopup="menu"` for menu overlays). Once set by the consumer, the component will not overwrite it.
+- **`aria-haspopup`**: Automatically resolved from the content element's role. If the content (or its first child with a `role` attribute) has a recognized popup role (`menu`, `listbox`, `tree`, `grid`, or `dialog`), that value is used. Otherwise, defaults to `"dialog"`. You can override this by setting `aria-haspopup` directly on the trigger element before the overlay-trigger initializes (e.g., `aria-haspopup="listbox"` for picker overlays). Once set by the consumer, the component will not overwrite it.
 
 These attributes are managed automatically for click and longpress interactions. Hover interactions (tooltips) are excluded since they use a different accessibility pattern (`aria-describedby`).
 
