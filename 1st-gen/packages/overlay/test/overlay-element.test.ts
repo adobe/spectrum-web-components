@@ -199,12 +199,15 @@ describe('sp-overlay', () => {
         expect(consoleWarnStub.called).to.be.true;
         const spyCall = consoleWarnStub.getCall(0);
         expect(
-          (spyCall.args.at(0) as string).includes(
+          (spyCall.args[0] as string).includes(
             '`slottable-request` events are experimental'
           ),
           '`slottable-request`-centric message'
         ).to.be.true;
-        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+        expect(
+          spyCall.args[spyCall.args.length - 1],
+          'confirm `data` shape'
+        ).to.deep.equal({
           data: {
             localName: 'base',
             type: 'api',

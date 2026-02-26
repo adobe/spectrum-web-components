@@ -273,10 +273,10 @@ describe('Picker, responsive', () => {
       // Ensure menu is not in scrolling state (which would prevent selection).
       el.optionsMenu.isScrolling = false;
 
-      // Click the menu item.
-      const closed = oneEvent(el, 'sp-closed');
+      // Click the menu item and wait for the change event.
+      const changed = oneEvent(el, 'change');
       menuItem.click();
-      await closed;
+      await changed;
 
       // Verify the change event was dispatched.
       expect(changeSpy.callCount).to.equal(1);
