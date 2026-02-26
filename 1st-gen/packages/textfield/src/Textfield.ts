@@ -36,7 +36,10 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 
 import textfieldStyles from './textfield.css.js';
-import { TruncatedValueTooltipMixin } from './TruncatedValueTooltipMixin.js';
+import {
+  TruncatedValueTooltipMixin,
+  type TruncatedValueTooltipMixinInterface,
+} from './TruncatedValueTooltipMixin.js';
 
 const textfieldTypes = ['text', 'url', 'tel', 'email', 'password'] as const;
 export type TextfieldType = (typeof textfieldTypes)[number];
@@ -385,7 +388,10 @@ export class TextfieldBase extends TruncatedValueTooltipMixin(
   protected override render(): TemplateResult {
     return html`
       <div id="textfield">${this.renderField()}</div>
-      ${this.renderTruncatedValueTooltip()} ${this.renderHelpText(this.invalid)}
+      ${(
+        this as unknown as TruncatedValueTooltipMixinInterface
+      ).renderTruncatedValueTooltip()}
+      ${this.renderHelpText(this.invalid)}
     `;
   }
 

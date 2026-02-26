@@ -41,7 +41,11 @@ export interface TruncatedValueTooltipHost {
   truncatedValueTooltipPlacement: Placement;
 }
 
-/** Methods added by TruncatedValueTooltipMixin. */
+/**
+ * Type for the truncated-value tooltip render method added by the mixin.
+ * Used at the call site (e.g. TextfieldBase.render()) so TypeScript recognizes
+ * the method; the actual method is protected on the mixin class.
+ */
 export interface TruncatedValueTooltipMixinInterface {
   renderTruncatedValueTooltip(): TemplateResult | typeof nothing;
 }
@@ -55,7 +59,7 @@ export interface TruncatedValueTooltipMixinInterface {
  */
 export function TruncatedValueTooltipMixin<
   T extends Constructor<ReactiveElement>,
->(constructor: T): T & Constructor<TruncatedValueTooltipMixinInterface> {
+>(constructor: T): T {
   class TruncatedValueTooltipElement extends constructor {
     @state()
     protected isTruncated = false;
@@ -103,7 +107,7 @@ export function TruncatedValueTooltipMixin<
       this.requestUpdate();
     }
 
-    renderTruncatedValueTooltip(): TemplateResult | typeof nothing {
+    protected renderTruncatedValueTooltip(): TemplateResult | typeof nothing {
       const host = this._host;
       if (
         !this.isTruncated ||
