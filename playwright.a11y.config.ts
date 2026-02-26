@@ -18,10 +18,19 @@ const config: PlaywrightTestConfig = {
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  reporter: [
-    ['html', { outputFolder: '2nd-gen/test/playwright-a11y/report' }],
-    ['list'],
-  ],
+  reporter: process.env.CI
+    ? [
+        ['html', { outputFolder: '2nd-gen/test/playwright-a11y/report' }],
+        [
+          'junit',
+          { outputFile: '2nd-gen/test/playwright-a11y/results/junit.xml' },
+        ],
+        ['list'],
+      ]
+    : [
+        ['html', { outputFolder: '2nd-gen/test/playwright-a11y/report' }],
+        ['list'],
+      ],
 
   use: {
     trace: 'on-first-retry',

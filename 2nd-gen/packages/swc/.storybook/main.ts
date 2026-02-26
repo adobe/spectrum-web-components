@@ -55,7 +55,7 @@ if (includeTestStories) {
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
 const config = {
   stories,
-  experimental_indexers: [testStoryIndexer],
+  experimental_indexers: includeTestStories ? [testStoryIndexer] : [],
   docs: {
     defaultName: 'README',
   },

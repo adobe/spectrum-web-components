@@ -79,6 +79,27 @@ commands:
           key: v4b-wireit-{{ arch }}-{{ checksum "1st-gen/package.json" }}-{{ epoch }}
       - attach_workspace:
           at: /
+  downstream-2ndgen:
+    description: 'Setup and build for 2nd-gen tests'
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+      - run:
+          name: Installing Dependencies
+          command: |
+            corepack enable
+            yarn --immutable
+      - run:
+          name: Build 2nd-gen project
+          command: |
+            yarn build:2nd-gen
+      - save_cache:
+          paths:
+            - ~/.cache/yarn
+            - ~/.cache/ms-playwright
+          key: v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
   run-regressions:
     parameters:
       regression_system:
@@ -284,6 +305,83 @@ jobs:
       - store_test_results:
           path: /root/project/results/
 
+  # 2nd-gen integration tests
+  test-2ndgen:
+    executor: node
+
+    steps:
+      - downstream-2ndgen
+      - run:
+          name: Generate Custom Elements Manifest
+          command: |
+            yarn workspace @adobe/spectrum-wc analyze
+      - run:
+          name: Run 2nd-gen integration tests
+          command: |
+            yarn test:2nd-gen
+      - store_test_results:
+          path: /root/project/2nd-gen/packages/swc/test-results
+
+  # 2nd-gen coverage tests
+  test-2ndgen-coverage:
+    executor: node
+
+    steps:
+      - downstream-2ndgen
+      - run:
+          name: Generate Custom Elements Manifest
+          command: |
+            yarn workspace @adobe/spectrum-wc analyze
+      - run:
+          name: Run 2nd-gen tests with coverage
+          command: |
+            yarn workspace @spectrum-web-components/2nd-gen test:coverage
+      - store_test_results:
+          path: /root/project/2nd-gen/packages/swc/test-results
+      - store_artifacts:
+          path: 2nd-gen/packages/swc/coverage
+
+  # 2nd-gen ARIA snapshot tests (Playwright)
+  # NOTE: Uses full `downstream` because playwright config starts both 1st-gen
+  # and 2nd-gen Storybook servers, even when running only 2nd-gen tests
+  test-2ndgen-a11y:
+    executor: node
+
+    steps:
+      - downstream
+      - run:
+          name: Run 2nd-gen ARIA snapshot tests
+          command: |
+            yarn test:a11y:2nd
+      - store_test_results:
+          path: /root/project/2nd-gen/test/playwright-a11y/results
+      - store_artifacts:
+          path: 2nd-gen/test/playwright-a11y/report
+
+  # 2nd-gen axe-core WCAG tests (Storybook test-runner)
+  # NOTE: Uses full `downstream` because Storybook build has 1st-gen references
+  test-2ndgen-axe:
+    executor: node
+
+    steps:
+      - downstream
+      - run:
+          name: Generate Custom Elements Manifest
+          command: |
+            yarn workspace @adobe/spectrum-wc analyze
+      - run:
+          name: Build 2nd-gen Storybook (production)
+          command: |
+            NODE_ENV=production yarn workspace @adobe/spectrum-wc storybook:build
+      - run:
+          name: Run axe-core WCAG tests
+          command: |
+            npx http-server 2nd-gen/packages/swc/storybook-static -p 6006 --silent &
+            sleep 5
+            yarn workspace @adobe/spectrum-wc test:storybook --url http://127.0.0.1:6006 --index-json --ci --junit
+      - store_test_results:
+          path: /root/project/2nd-gen/packages/swc
+
   beta-docs:
     executor: node
 
@@ -475,6 +573,12 @@ jobs:
 workflows:
   build:
     jobs:
+      # 2nd-gen tests
+      - test-2ndgen
+      - test-2ndgen-coverage
+      - test-2ndgen-a11y
+      - test-2ndgen-axe
+      # 1st-gen tests
       - test-chromium
       - test-chromium-memory
       - test-firefox
