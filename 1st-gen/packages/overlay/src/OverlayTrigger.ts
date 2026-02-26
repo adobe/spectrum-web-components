@@ -203,14 +203,10 @@ export class OverlayTrigger extends SpectrumElement {
     if (role && OverlayTrigger.VALID_HASPOPUP_ROLES.has(role)) {
       return role;
     }
-    const firstChild = content.querySelector(
-      '[role]'
-    ) as HTMLElement | null;
+    const firstChild = content.querySelector('[role]') as HTMLElement | null;
     if (
       firstChild &&
-      OverlayTrigger.VALID_HASPOPUP_ROLES.has(
-        firstChild.getAttribute('role')!
-      )
+      OverlayTrigger.VALID_HASPOPUP_ROLES.has(firstChild.getAttribute('role')!)
     ) {
       return firstChild.getAttribute('role')!;
     }
@@ -257,10 +253,7 @@ export class OverlayTrigger extends SpectrumElement {
       this.ariaManagedElements.has(triggerElement) ||
       !triggerElement.hasAttribute('aria-haspopup')
     ) {
-      triggerElement.setAttribute(
-        'aria-haspopup',
-        this.resolveHaspopupValue()
-      );
+      triggerElement.setAttribute('aria-haspopup', this.resolveHaspopupValue());
     }
     this.ariaManagedElements.add(triggerElement);
 
