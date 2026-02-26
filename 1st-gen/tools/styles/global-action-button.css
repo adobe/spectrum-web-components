@@ -16,7 +16,8 @@
 */
 
 /* Base defaults and host layout */
-.spectrum-ActionButton {
+.spectrum-ActionButton,
+::slotted(.spectrum-ActionButton) {
   --spectrum-actionbutton-background-color-default: var(--system-action-button-background-color-default);
   --spectrum-actionbutton-background-color-hover: var(--system-action-button-background-color-hover);
   --spectrum-actionbutton-background-color-down: var(--system-action-button-background-color-down);
@@ -89,7 +90,8 @@
 }
 
 /* Size variants */
-.spectrum-ActionButton--sizeXS {
+.spectrum-ActionButton--sizeXS,
+::slotted(.spectrum-ActionButton--sizeXS) {
   --spectrum-actionbutton-sized-height: var(--spectrum-component-height-50);
   --spectrum-actionbutton-sized-icon-size: var(--spectrum-workflow-icon-size-50);
   --spectrum-actionbutton-sized-font-size: var(--spectrum-font-size-50);
@@ -104,7 +106,8 @@
   min-width: var(--spectrum-actionbutton-height, 0);
 }
 
-.spectrum-ActionButton--sizeS {
+.spectrum-ActionButton--sizeS,
+::slotted(.spectrum-ActionButton--sizeS) {
   --spectrum-actionbutton-sized-height: var(--spectrum-component-height-75);
   --spectrum-actionbutton-sized-icon-size: var(--spectrum-workflow-icon-size-75);
   --spectrum-actionbutton-sized-font-size: var(--spectrum-font-size-75);
@@ -117,11 +120,13 @@
   --spectrum-actionbutton-border-radius-default: var(--system-action-button-size-s-border-radius-default);
 }
 
-.spectrum-ActionButton--sizeM {
+.spectrum-ActionButton--sizeM,
+::slotted(.spectrum-ActionButton--sizeM) {
   --spectrum-actionbutton-edge-to-visual-only: calc(var(--spectrum-component-edge-to-visual-only-100) - var(--spectrum-actionbutton-border-width));
 }
 
-.spectrum-ActionButton--sizeL {
+.spectrum-ActionButton--sizeL,
+::slotted(.spectrum-ActionButton--sizeL) {
   --spectrum-actionbutton-sized-height: var(--spectrum-component-height-200);
   --spectrum-actionbutton-sized-icon-size: var(--spectrum-workflow-icon-size-200);
   --spectrum-actionbutton-sized-font-size: var(--spectrum-font-size-200);
@@ -134,7 +139,8 @@
   --spectrum-actionbutton-border-radius-default: var(--system-action-button-size-l-border-radius-default);
 }
 
-.spectrum-ActionButton--sizeXL {
+.spectrum-ActionButton--sizeXL,
+::slotted(.spectrum-ActionButton--sizeXL) {
   --spectrum-actionbutton-sized-height: var(--spectrum-component-height-300);
   --spectrum-actionbutton-sized-icon-size: var(--spectrum-workflow-icon-size-300);
   --spectrum-actionbutton-sized-font-size: var(--spectrum-font-size-300);
@@ -148,7 +154,8 @@
 }
 
 /* Variant tokens */
-.spectrum-ActionButton--quiet {
+.spectrum-ActionButton--quiet,
+::slotted(.spectrum-ActionButton--quiet) {
   --spectrum-actionbutton-border-color: transparent;
   --spectrum-actionbutton-background-color-default: var(--system-action-button-quiet-background-color-default);
   --spectrum-actionbutton-background-color-hover: var(--system-action-button-quiet-background-color-hover);
@@ -156,7 +163,8 @@
   --spectrum-actionbutton-background-color-focus: var(--system-action-button-quiet-background-color-focus);
 }
 
-.spectrum-ActionButton--staticBlack {
+.spectrum-ActionButton--staticBlack,
+::slotted(.spectrum-ActionButton--staticBlack) {
   --mod-actionbutton-content-color-default: var(--spectrum-actionbutton-static-black-content-color-default, var(--spectrum-black));
   --mod-actionbutton-content-color-hover: var(--spectrum-actionbutton-static-black-content-color-hover, var(--spectrum-black));
   --mod-actionbutton-content-color-down: var(--spectrum-actionbutton-static-black-content-color-down, var(--spectrum-black));
@@ -176,14 +184,16 @@
   --spectrum-actionbutton-static-black-content-color-focus: var(--system-action-button-static-black-content-color-focus);
 }
 
-.spectrum-ActionButton--staticBlack.spectrum-ActionButton--quiet {
+.spectrum-ActionButton--staticBlack.spectrum-ActionButton--quiet,
+::slotted(.spectrum-ActionButton--staticBlack.spectrum-ActionButton--quiet) {
   --spectrum-actionbutton-background-color-default: var(--system-action-button-static-black-quiet-background-color-default);
   --spectrum-actionbutton-background-color-hover: var(--system-action-button-static-black-quiet-background-color-hover);
   --spectrum-actionbutton-background-color-down: var(--system-action-button-static-black-quiet-background-color-down);
   --spectrum-actionbutton-background-color-focus: var(--system-action-button-static-black-quiet-background-color-focus);
 }
 
-.spectrum-ActionButton--staticWhite {
+.spectrum-ActionButton--staticWhite,
+::slotted(.spectrum-ActionButton--staticWhite) {
   --mod-actionbutton-content-color-default: var(--spectrum-actionbutton-static-white-content-color-default, var(--spectrum-white));
   --mod-actionbutton-content-color-hover: var(--spectrum-actionbutton-static-white-content-color-hover, var(--spectrum-white));
   --mod-actionbutton-content-color-down: var(--spectrum-actionbutton-static-white-content-color-down, var(--spectrum-white));
@@ -203,7 +213,8 @@
   --spectrum-actionbutton-static-white-content-color-focus: var(--system-action-button-static-white-content-color-focus);
 }
 
-.spectrum-ActionButton--staticWhite.spectrum-ActionButton--quiet {
+.spectrum-ActionButton--staticWhite.spectrum-ActionButton--quiet,
+::slotted(.spectrum-ActionButton--staticWhite.spectrum-ActionButton--quiet) {
   --spectrum-actionbutton-background-color-default: var(--system-action-button-static-white-quiet-background-color-default);
   --spectrum-actionbutton-background-color-hover: var(--system-action-button-static-white-quiet-background-color-hover);
   --spectrum-actionbutton-background-color-down: var(--system-action-button-static-white-quiet-background-color-down);
@@ -213,14 +224,16 @@
 /* Interactive state tokens */
 
 @media (hover: hover) {
-  .spectrum-ActionButton:hover {
+  .spectrum-ActionButton:hover,
+  ::slotted(.spectrum-ActionButton:hover) {
     --mod-actionbutton-background-color-default: var(--mod-actionbutton-background-color-hover, var(--spectrum-actionbutton-background-color-hover));
     --mod-actionbutton-border-color-default: var(--mod-actionbutton-border-color-hover, var(--spectrum-actionbutton-border-color-hover));
     --mod-actionbutton-content-color-default: var(--mod-actionbutton-content-color-hover, var(--spectrum-neutral-content-color-hover));
   }
 }
 
-.spectrum-ActionButton:focus-visible {
+.spectrum-ActionButton:focus-visible,
+::slotted(.spectrum-ActionButton:focus-visible) {
   --mod-actionbutton-background-color-default: var(--mod-actionbutton-background-color-focus, var(--spectrum-actionbutton-background-color-focus));
   --mod-actionbutton-border-color-default: var(--mod-actionbutton-border-color-focus, var(--spectrum-actionbutton-border-color-focus));
   --mod-actionbutton-content-color-default: var(--mod-actionbutton-content-color-focus, var(--spectrum-neutral-content-color-key-focus));
@@ -229,18 +242,21 @@
   outline: none;
 }
 
-.spectrum-ActionButton:active {
+.spectrum-ActionButton:active,
+::slotted(.spectrum-ActionButton:active) {
   --mod-actionbutton-background-color-default: var(--mod-actionbutton-background-color-down, var(--spectrum-actionbutton-background-color-down));
   --mod-actionbutton-border-color-default: var(--mod-actionbutton-border-color-down, var(--spectrum-actionbutton-border-color-down));
   --mod-actionbutton-content-color-default: var(--mod-actionbutton-content-color-down, var(--spectrum-neutral-content-color-down));
 }
 
 /* Directionality and structural elements */
-.spectrum-ActionButton:dir(rtl) {
+.spectrum-ActionButton:dir(rtl),
+::slotted(.spectrum-ActionButton:dir(rtl)) {
   --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 
-.spectrum-ActionButton:focus {
+.spectrum-ActionButton:focus,
+::slotted(.spectrum-ActionButton:focus) {
   outline: none;
 }
 
@@ -286,10 +302,6 @@
   pointer-events: none !important;
 }
 
-.spectrum-ActionButton-label:empty {
-  display: none;
-}
-
 .spectrum-ActionButton-holdAffordance {
   position: absolute;
   inset-block-end: calc(var(--spectrum-actionbutton-edge-to-hold-icon) - var(--spectrum-actionbutton-border-width));
@@ -300,7 +312,8 @@
 
 /* Forced colors */
 @media (forced-colors: active) {
-  .spectrum-ActionButton {
+  .spectrum-ActionButton,
+  ::slotted(.spectrum-ActionButton) {
     --highcontrast-actionbutton-focus-indicator-color: ButtonText;
     --highcontrast-actionbutton-content-color: ButtonText;
   }
