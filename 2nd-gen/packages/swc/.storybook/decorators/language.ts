@@ -114,13 +114,6 @@ function applyLanguageAndFontKit(lang: string | false, isRTL: boolean): void {
     });
     observer.observe(document.head, { childList: true });
 
-    // Inject the kit's stylesheet so @font-face rules map font family names to font file URLs.
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://use.typekit.net/' + kitId + '.css';
-    link.setAttribute('data-swc-typekit-dynamic', 'true');
-    document.head.appendChild(link);
-
     // Inject the kit's script so Typekit.load() can activate fonts and toggle wf-* classes.
     const script = document.createElement('script');
     script.setAttribute('data-swc-typekit-dynamic', 'true');
