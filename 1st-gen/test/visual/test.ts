@@ -30,6 +30,7 @@ import { visualDiff } from '@web/test-runner-visual-regression';
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { StoryDecorator } from '@spectrum-web-components/story-decorator';
+import globalElementsStyles from '@spectrum-web-components/styles/global-elements.js';
 import { Color, Scale } from '@spectrum-web-components/theme';
 
 import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
@@ -40,6 +41,18 @@ const GLOBAL_ELEMENTS_STYLES_ID = 'swc-global-elements-styles';
 
 // Suppress ResizeObserver errors which can occur during testing
 ignoreResizeObserverLoopError(before, after);
+
+const ensureGlobalElementsStyles = (): void => {
+  if (document.getElementById(GLOBAL_ELEMENTS_STYLES_ID)) {
+    return;
+  }
+  const style = document.createElement('style');
+  style.id = GLOBAL_ELEMENTS_STYLES_ID;
+  style.textContent = globalElementsStyles.cssText;
+  document.head.append(style);
+};
+
+ensureGlobalElementsStyles();
 
 /**
  * Creates a story decorator element to wrap component tests
@@ -100,22 +113,6 @@ async function testReady(test: StoryDecorator, retry = 0): Promise<void> {
       timeout: 20000,
     }
   );
-}
-
-async function waitForGlobalStyles(): Promise<void> {
-  await waitUntil(
-    () => {
-      const style = document.getElementById(
-        GLOBAL_ELEMENTS_STYLES_ID
-      ) as HTMLStyleElement | null;
-      return !!style && !!style.sheet;
-    },
-    'Wait for StoryDecorator global styles',
-    {
-      timeout: 20000,
-    }
-  );
-  await nextFrame();
 }
 
 /**
@@ -221,7 +218,6 @@ export const test = (
         // Render the story to the test fixture
         render(decoratedStory(), test);
         await testReady(test);
-        await waitForGlobalStyles();
 
         // Ensure component is fully rendered and stable before screenshot
         await ensureComponentStable(test);
@@ -264,7 +260,6 @@ export const test = (
               await elementUpdated(test);
               render(decoratedStory(), test);
               await testReady(test, retry);
-              await waitForGlobalStyles();
 
               // Ensure stability before retrying screenshot
               await ensureComponentStable(test);

@@ -21,7 +21,6 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { Picker } from '@spectrum-web-components/picker';
 import { DARK_MODE } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
-import globalElementsStyles from '@spectrum-web-components/styles/global-elements.js';
 import { Switch } from '@spectrum-web-components/switch';
 import {
   Color,
@@ -89,8 +88,6 @@ const reduceMotionProperties = css`
   --spectrum-coachmark-animation-indicator-ring-duration: 0ms;
   --swc-test-duration: 1ms;
 `;
-
-const GLOBAL_ELEMENTS_STYLES_ID = 'swc-global-elements-styles';
 
 export class StoryDecorator extends SpectrumElement {
   static override get styles() {
@@ -178,21 +175,6 @@ export class StoryDecorator extends SpectrumElement {
   public screenshot = screenshot;
 
   public ready = false;
-
-  private ensureGlobalElementsStyles(): void {
-    if (document.getElementById(GLOBAL_ELEMENTS_STYLES_ID)) {
-      return;
-    }
-    const style = document.createElement('style');
-    style.id = GLOBAL_ELEMENTS_STYLES_ID;
-    style.textContent = globalElementsStyles.cssText;
-    document.head.append(style);
-  }
-
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    this.ensureGlobalElementsStyles();
-  }
 
   private updateTheme({ target }: Event & { target: Picker | Switch }): void {
     const { id } = target;
@@ -306,7 +288,6 @@ export class StoryDecorator extends SpectrumElement {
       setTimeout(() => res());
     });
     await (document.fonts ? document.fonts.ready : Promise.resolve());
-    this.ensureGlobalElementsStyles();
     await new Promise<void>((res) => {
       requestAnimationFrame(() => requestAnimationFrame(() => res()));
     });
