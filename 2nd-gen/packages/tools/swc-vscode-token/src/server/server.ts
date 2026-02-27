@@ -350,11 +350,10 @@ export function buildUnknownTokenSuggestions(
     .slice(0, MAX_LEVENSHTEIN_CANDIDATES);
 
   const ranked = prefixedPool
-    .map(({ candidate }) => ({
-      candidate,
-      prefixScore: suggestionPrefixScore(query, candidate.lower),
-      editDist: levenshtein(query, candidate.lower),
-      kindScore: candidate.kind === 'token' ? 0 : 1,
+    .map((entry) => ({
+      ...entry,
+      // Reuse precomputed scores from prefixedPool; only add edit distance.
+      editDist: levenshtein(query, entry.candidate.lower),
     }))
     .sort((a, b) =>
       a.prefixScore !== b.prefixScore
