@@ -36,6 +36,8 @@ import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
 
 import { ignoreResizeObserverLoopError } from '../testing-helpers.js';
 
+const GLOBAL_ELEMENTS_STYLES_ID = 'swc-global-elements-styles';
+
 // Suppress ResizeObserver errors which can occur during testing
 ignoreResizeObserverLoopError(before, after);
 
@@ -98,6 +100,22 @@ async function testReady(test: StoryDecorator, retry = 0): Promise<void> {
       timeout: 20000,
     }
   );
+}
+
+async function waitForGlobalStyles(): Promise<void> {
+  await waitUntil(
+    () => {
+      const style = document.getElementById(
+        GLOBAL_ELEMENTS_STYLES_ID
+      ) as HTMLStyleElement | null;
+      return !!style && !!style.sheet;
+    },
+    'Wait for StoryDecorator global styles',
+    {
+      timeout: 20000,
+    }
+  );
+  await nextFrame();
 }
 
 /**
@@ -203,6 +221,7 @@ export const test = (
         // Render the story to the test fixture
         render(decoratedStory(), test);
         await testReady(test);
+        await waitForGlobalStyles();
 
         // Ensure component is fully rendered and stable before screenshot
         await ensureComponentStable(test);
@@ -245,6 +264,7 @@ export const test = (
               await elementUpdated(test);
               render(decoratedStory(), test);
               await testReady(test, retry);
+              await waitForGlobalStyles();
 
               // Ensure stability before retrying screenshot
               await ensureComponentStable(test);
