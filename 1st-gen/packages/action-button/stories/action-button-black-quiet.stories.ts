@@ -59,3 +59,11 @@ XL.args = {
   quiet,
   staticColor,
 };
+
+export const href = (args: Properties): TemplateResult => renderButtons(args);
+href.args = {
+  staticColor,
+  quiet,
+  size: 'm',
+  href: '#',
+};
