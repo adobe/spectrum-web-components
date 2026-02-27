@@ -247,6 +247,42 @@ describe('NumberField', () => {
       expect(tooltipOverlay).to.exist;
       expect(tooltipOverlay.placement).to.equal('top');
     });
+
+    it('updates truncated value tooltip text for realtime deletions and insertions while focused', async () => {
+      const el = await fixture<NumberField>(html`
+        <sp-number-field
+          style="--mod-textfield-width: 56px; --spectrum-textfield-min-width: 0;"
+          hide-stepper
+          value="123456789"
+        ></sp-number-field>
+      `);
+      await elementUpdated(el);
+      await elementUpdated(el);
+      await waitUntil(
+        () => el.shadowRoot?.querySelector('#truncated-value-tooltip') != null,
+        'Tooltip overlay (lazy-loaded) should appear when value is truncated'
+      );
+
+      const tooltipText = () =>
+        el.shadowRoot
+          ?.querySelector('#truncated-value-tooltip sp-tooltip')
+          ?.textContent?.trim();
+
+      expect(tooltipText()).to.equal(el.focusElement.value);
+
+      el.focus();
+      await sendKeys({ press: 'Backspace' });
+      await waitUntil(
+        () => tooltipText() === el.focusElement.value,
+        'Tooltip text should update after backspace'
+      );
+
+      await sendKeys({ type: '0' });
+      await waitUntil(
+        () => tooltipText() === el.focusElement.value,
+        'Tooltip text should update after insertion'
+      );
+    });
   });
   describe('receives input', () => {
     it('without language context', async () => {
