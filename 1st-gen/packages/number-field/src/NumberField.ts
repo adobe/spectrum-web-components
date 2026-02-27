@@ -547,6 +547,7 @@ export class NumberField extends TextfieldBase {
       this.inputElement.value = value;
       this.inputElement.setSelectionRange(selectionStart, selectionStart);
       this.syncTruncatedValueTooltipText();
+      this.refreshTruncatedValueTooltipState();
       return;
     } else {
       this.inputElement.value = this.indeterminate
@@ -629,6 +630,21 @@ export class NumberField extends TextfieldBase {
     if (tooltipTextNode) {
       tooltipTextNode.textContent =
         this.inputElement?.value ?? this.displayValue;
+    }
+  }
+
+  private refreshTruncatedValueTooltipState(): void {
+    const mixinApi = this as unknown as {
+      isTruncated?: boolean;
+      refreshTruncationState?: () => void;
+    };
+    const wasTruncated = mixinApi.isTruncated;
+    mixinApi.refreshTruncationState?.call(this);
+    const isTruncated = mixinApi.isTruncated;
+    if (!wasTruncated && isTruncated) {
+      this.updateComplete.then(() => {
+        this.syncTruncatedValueTooltipText();
+      });
     }
   }
 

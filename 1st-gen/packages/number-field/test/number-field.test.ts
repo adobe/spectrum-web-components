@@ -283,6 +283,30 @@ describe('NumberField', () => {
         'Tooltip text should update after insertion'
       );
     });
+
+    it('renders truncated value tooltip when a fitting value grows to overflow during typing', async () => {
+      const el = await fixture<NumberField>(html`
+        <sp-number-field
+          style="--mod-textfield-width: 96px; --spectrum-textfield-min-width: 0;"
+          value="1"
+        ></sp-number-field>
+      `);
+      await elementUpdated(el);
+      await elementUpdated(el);
+
+      expect(
+        el.shadowRoot?.querySelector('#truncated-value-tooltip'),
+        'Tooltip should not render before the value overflows'
+      ).to.not.exist;
+
+      el.focus();
+      await sendKeys({ type: '234567890123456789' });
+
+      await waitUntil(
+        () => el.shadowRoot?.querySelector('#truncated-value-tooltip') != null,
+        'Tooltip should appear when value grows and becomes truncated'
+      );
+    });
   });
   describe('receives input', () => {
     it('without language context', async () => {
