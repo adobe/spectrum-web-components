@@ -106,8 +106,6 @@ const vrtHTML =
             <link rel="dns-prefetch" href="https://use.typekit.net" />
             <!-- For Adobe Clean font support -->
             <link rel="stylesheet" href="https://use.typekit.net/evk7lzt.css" />
-
-            <link rel="stylesheet" href="/tools/styles/global-elements.css" />
             <style>
                 body {
                     margin: 0;

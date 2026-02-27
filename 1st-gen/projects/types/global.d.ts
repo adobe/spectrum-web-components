@@ -48,3 +48,8 @@ interface Window {
     verbose?: boolean;
   };
 }
+
+declare module '*.css' {
+  const content: import('@spectrum-web-components/base').CSSResultGroup;
+  export default content;
+}
