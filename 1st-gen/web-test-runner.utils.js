@@ -14,7 +14,25 @@ import { playwrightLauncher } from '@web/test-runner-playwright';
 import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugin';
 import fs from 'fs';
 import path from 'path';
-import globalElementsStyles from '@spectrum-web-components/styles/global-elements.js';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const inlineCssImports = (cssPath) => {
+  const absolutePath = path.resolve(cssPath);
+  const source = fs.readFileSync(absolutePath, 'utf8');
+  return source.replace(
+    /@import\s+url\((['"]?)(.+?)\1\);/g,
+    (_, __, importPath) => {
+      const nestedPath = path.resolve(path.dirname(absolutePath), importPath);
+      return inlineCssImports(nestedPath);
+    }
+  );
+};
+
+const globalElementsCssText = inlineCssImports(
+  path.resolve(__dirname, 'tools/styles/global-elements.css')
+);
 
 export const chromium = playwrightLauncher({
   product: 'chromium',
@@ -108,7 +126,7 @@ const vrtHTML =
             <!-- For Adobe Clean font support -->
             <link rel="stylesheet" href="https://use.typekit.net/evk7lzt.css" />
             <style>
-                ${globalElementsStyles.cssText}
+                ${globalElementsCssText}
             </style>
             <style>
                 body {
