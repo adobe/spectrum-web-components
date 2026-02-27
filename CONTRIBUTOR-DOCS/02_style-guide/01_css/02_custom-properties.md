@@ -12,6 +12,10 @@
 <summary><strong>In this doc</strong></summary>
 
 - [Naming Conventions](#naming-conventions)
+- [Custom property organization](#custom-property-organization)
+    - [Order within a ruleset](#order-within-a-ruleset)
+    - [When to expose custom properties](#when-to-expose-custom-properties)
+    - [Public vs private (`--_internal`)](#public-vs-private---internal)
 - [Private Properties](#private-properties)
 - [Component Custom Property Exposure](#component-custom-property-exposure)
     - [Internal vs. Exposed vs. Static](#internal-vs-exposed-vs-static)
@@ -38,6 +42,55 @@ This guide explains how to manage **private, internal, and exposed custom proper
 | `token('name')` | Reference to a design token (no prefix) |
 
 > Private properties are “pseudo-private”: defined on nested shadow elements rather than `:host` to prevent accidental overrides.
+
+## Custom property organization
+
+Organize custom properties at the top of each ruleset. This makes it clear what values the component uses and what consumers can override.
+
+### Order within a ruleset
+
+1. **Private properties** (`--_swc-*`): Definitions for internal calculations
+2. **Exposed properties** (`--swc-*`): Used in CSS property values, with `var(--swc-*, token(...))` fallback
+3. **CSS properties**: In [property order](06_property-order-quick-reference.md)
+
+### When to expose custom properties
+
+See the [Decision Tree for Exposure](#decision-tree-for-exposure) and [Exclusions for Custom Property Overrides](#exclusions-for-custom-property-overrides) for detailed guidance.
+
+### Public vs private (`--_internal`)
+
+| Prefix | Purpose | Overrideable |
+|--------|---------|--------------|
+| `--swc-component-name-*` | Public API | Yes, via `:host()` or element selector |
+| `--_swc-component-name-*` | Internal use | No, defined on internal elements |
+
+**Example from [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css)**:
+
+```css
+.swc-Badge {
+  /* Private: internal calculations */
+  --_swc-badge-border-width: token("border-width-200");
+  --_swc-badge-border-width-deduction: calc(var(--_swc-badge-border-width) * 2);
+  --_swc-badge-padding-block: token("component-top-to-text-100") token("component-bottom-to-text-100");
+
+  /* Exposed via var() with token fallback */
+  padding-block: calc(var(--swc-badge-padding-block, var(--_swc-badge-padding-block)) - var(--_swc-badge-border-width-deduction));
+  background: var(--swc-badge-background-color, token("accent-background-color-default"));
+}
+```
+
+**Example from [Status Light](../../../2nd-gen/packages/swc/components/status-light/status-light.css)**:
+
+```css
+.swc-StatusLight {
+  /* Private: passthrough for size variants */
+  --_swc-statuslight-top-to-text: var(--swc-statuslight-top-to-text, token("component-top-to-text-100"));
+  --_swc-statuslight-bottom-to-text: var(--swc-statuslight-bottom-to-text, token("component-bottom-to-text-100"));
+
+  padding-block-start: var(--_swc-statuslight-top-to-text);
+  padding-block-end: var(--_swc-statuslight-bottom-to-text);
+}
+```
 
 ## Private Properties
 

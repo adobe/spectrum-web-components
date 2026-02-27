@@ -51,6 +51,21 @@
     - [Why This Happens](#why-this-happens)
     - [Why This Is a Problem](#why-this-is-a-problem)
     - [✅ Correct Approach](#-correct-approach)
+- [9. Ignoring property order](#9-ignoring-property-order)
+    - [❌ Anti-Pattern](#-anti-pattern)
+    - [Why This Happens](#why-this-happens)
+    - [Why This Is a Problem](#why-this-is-a-problem)
+    - [✅ Correct Approach](#-correct-approach)
+- [10. Using deep descendant selectors](#10-using-deep-descendant-selectors)
+    - [❌ Anti-Pattern](#-anti-pattern)
+    - [Why This Happens](#why-this-happens)
+    - [Why This Is a Problem](#why-this-is-a-problem)
+    - [✅ Correct Approach](#-correct-approach)
+- [Before/after refactoring examples](#beforeafter-refactoring-examples)
+    - [Visual styles on `:host` → base class](#visual-styles-on-host--base-class)
+    - [Specificity escalation → `:where()`](#specificity-escalation--where)
+    - [Size classes in render → `:host([size])`](#size-classes-in-render--hostsize)
+    - [`--mod-*` chain → single property](#--mod--chain--single-property)
 - [Final Reminder](#final-reminder)
 
 </details>
@@ -59,9 +74,9 @@
 
 This appendix lists **common mistakes encountered when adopting the 2nd-gen SWC styling model**, why they happen, and what to do instead.
 
-Each anti-pattern is grounded in real Spectrum source patterns and references the **Badge migration** as the canonical example of correct implementation.
+Each anti-pattern is grounded in real Spectrum source patterns. **Badge** and **Status Light** are reference implementations for correct patterns.
 
-📖 See: *Reference Migration: Badge*
+📖 **Reference implementations**: [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css) · [Status Light](../../../2nd-gen/packages/swc/components/status-light/status-light.css) · [Reference Migration: Badge](04_spectrum-swc-migration.md#reference-migration-badge)
 
 ## 1. Leaving Visual Styles on `:host`
 
@@ -206,8 +221,14 @@ Badge size, variant, subtle, and outline states are all expressed via `:host()` 
 ### ❌ Anti-Pattern
 
 ```css
+/* Multiple compounded classes = (0,3,0) */
 .swc-Badge.swc-Badge--large.swc-Badge--primary {
   padding: 16px;
+}
+
+/* Or stacking to "win" a conflict */
+.swc-StatusLight.swc-StatusLight--yellow.swc-StatusLight--sizeL {
+  font-size: 20px;
 }
 ```
 
@@ -215,12 +236,13 @@ Badge size, variant, subtle, and outline states are all expressed via `:host()` 
 
 - Conflicting migrated rules
 - Attempting to preserve visual parity through selector escalation
+- Copying patterns from other codebases that use high specificity
 
 ### Why This Is a Problem
 
 - Breaks the `(0,1,0)` specificity target
-- Makes overrides brittle
-- Hides ordering or layering issues
+- Makes overrides brittle (e.g. disabled state needs even higher specificity)
+- Hides ordering or layering issues that should be fixed instead
 
 ### ✅ Correct Approach
 
@@ -228,10 +250,22 @@ Badge size, variant, subtle, and outline states are all expressed via `:host()` 
 - Use `:where()` for compounding selectors
 - Introduce cascade layers only when necessary
 
-🔎 **Badge reference:**  
-Badge resolves complex variant/state combinations through rule order and custom property updates—not specificity escalation.
+```css
+/* Before: (0,2,0) */
+.swc-Divider--staticWhite.swc-Divider--sizeL {
+  --swc-divider-background-color: token("transparent-white-800");
+}
 
-📖 See: *Component CSS Style Guide → Managing Specificity*
+/* After: (0,1,0) - rule order determines winner */
+.swc-Divider--staticWhite:where(.swc-Divider--sizeL) {
+  --swc-divider-background-color: token("transparent-white-800");
+}
+```
+
+🔎 **Badge reference:**  
+[badge.css](../../../2nd-gen/packages/swc/components/badge/badge.css) uses `.swc-Badge--subtle:where(.swc-Badge--gray)` for compounded variants. [Divider](../../../2nd-gen/packages/swc/components/divider/divider.css) uses the same pattern for static color + size.
+
+📖 See: *Component CSS Style Guide → [Managing Specificity](01_component-css.md#managing-specificity)*
 
 ## 5. Using `:where()` Inside `:host()` for Custom Property Updates
 
@@ -326,12 +360,15 @@ Badge exposes a minimal, intentional surface and uses `_swc-*` properties for de
 ```css
 @media (forced-colors: active) {
   .swc-Badge {
-    --swc-badge-border-color CanvasText;
+    --swc-badge-border-color: CanvasText;
   }
 }
 ```
 
-📖 See: *Component CSS Style Guide → Forced Colors*
+🔎 **Status Light reference:**  
+[status-light.css](../../../2nd-gen/packages/swc/components/status-light/status-light.css) overrides `--swc-statuslight-content-color` and adds a border to the dot pseudo-element so it stays visible in high-contrast mode.
+
+📖 See: *Component CSS Style Guide → [Forced colors requirements](01_component-css.md#forced-colors-requirements)*
 
 
 ## 8. Leaving Spectrum-Era Classes After Migration
@@ -363,6 +400,108 @@ After migration, Badge relies solely on `.swc-Badge` and attributes.
 
 📖 See: *Spectrum CSS to SWC Migration → Step 6*
 
+## 9. Ignoring property order
+
+### ❌ Anti-Pattern
+
+```css
+.swc-Badge {
+  cursor: default;
+  display: inline-flex;
+  color: var(--swc-badge-label-icon-color, token("white"));
+  min-block-size: var(--swc-badge-height, token("component-height-100"));
+  background: var(--swc-badge-background-color, token("accent-background-color-default"));
+  align-items: center;
+  padding-inline: calc(/* ... */);
+}
+```
+
+### Why This Happens
+
+- Adding properties as they occur during development
+- Copy-pasting from different sources
+
+### Why This Is a Problem
+
+- Harder to scan and find properties
+- Inconsistent across components
+- Increases merge conflicts
+
+### ✅ Correct Approach
+
+Follow the [property order quick reference](06_property-order-quick-reference.md): Display → Flex/Grid → Dimensions → Spacing → Typography → Decoration → Misc. See the [Badge example](06_property-order-quick-reference.md#example-from-badge) for a fully annotated ruleset.
+
+## 10. Using deep descendant selectors
+
+### ❌ Anti-Pattern
+
+```css
+.swc-Badge .swc-Badge-icon + .swc-Badge-label {
+  margin-inline-start: 4px;
+}
+
+.swc-StatusLight .swc-StatusLight-dot {
+  flex-shrink: 0;
+}
+```
+
+### Why This Happens
+
+- Targeting internal structure directly
+- Not aware of `:has()` for conditional styling
+
+### Why This Is a Problem
+
+- Brittle when DOM structure changes
+- Can create unexpected specificity
+- Often unnecessary when layout primitives (flex, gap) handle spacing
+
+### ✅ Correct Approach
+
+Use `:has()` for conditional styling. Prefer layout primitives (flex, gap, align-items) over margin hacks.
+
+```css
+/* Conditional padding when icon is present */
+.swc-Badge:has(.swc-Badge-icon) {
+  --swc-badge-padding-inline: var(--swc-badge-with-icon-padding-inline, token("component-edge-to-visual-100"));
+}
+
+/* Direct child is fine when structure is stable; prefer gap over margin */
+.swc-StatusLight {
+  display: flex;
+  gap: var(--_swc-statuslight-text-to-visual);
+  align-items: flex-start;
+}
+```
+
+🔎 **Badge reference:**  
+[badge.css](../../../2nd-gen/packages/swc/components/badge/badge.css) uses `:has(.swc-Badge-icon)` to adjust padding. [Status Light](../../../2nd-gen/packages/swc/components/status-light/status-light.css) uses flex and gap for layout.
+
+## Before/after refactoring examples
+
+### Visual styles on `:host` → base class
+
+| Before | After |
+|--------|-------|
+| `:host { padding: 8px; background: blue; }` | `:host { display: inline-block; }` + `.swc-Badge { padding: ...; background: ...; }` |
+
+### Specificity escalation → `:where()`
+
+| Before | After |
+|--------|-------|
+| `.swc-Badge--subtle.swc-Badge--gray { }` | `.swc-Badge--subtle:where(.swc-Badge--gray) { }` |
+
+### Size classes in render → `:host([size])`
+
+| Before | After |
+|--------|-------|
+| `class="swc-Badge spectrum-Badge--sizeL"` | `class="swc-Badge"` + `:host([size="l"]) { --swc-badge-height: ...; }` |
+
+### `--mod-*` chain → single property
+
+| Before | After |
+|--------|-------|
+| `var(--mod-badge-height, var(--spectrum-badge-height))` | `var(--swc-badge-height, token('component-height-100'))` |
 
 ## Final Reminder
 

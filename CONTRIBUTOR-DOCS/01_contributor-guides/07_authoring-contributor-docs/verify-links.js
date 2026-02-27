@@ -170,7 +170,7 @@ function extractLinksFromContent(filepath, content) {
  * Validate a single link.
  * Returns validation result with error details if invalid.
  */
-function validateLink(sourceFile, link, metadata) {
+function validateLink(sourceFile, link, metadata, docsRoot) {
     const { href } = link;
 
     // Parse link into file path and anchor
@@ -216,6 +216,16 @@ function validateLink(sourceFile, link, metadata) {
     }
 
     if (!targetFileMeta) {
+        // Target may be outside CONTRIBUTOR-DOCS (e.g. 2nd-gen component files)
+        if (docsRoot) {
+            const fullPath = path.isAbsolute(resolvedPath)
+                ? path.resolve(resolvedPath)
+                : path.resolve(path.dirname(path.join(docsRoot, sourceFile)), linkPath);
+            if (fs.existsSync(fullPath)) {
+                return { valid: true };
+            }
+        }
+
         // File not found - try to find similar files for suggestions
         const targetFilename = path.basename(linkPath, '.md');
         const suggestions = Object.keys(metadata.files)
