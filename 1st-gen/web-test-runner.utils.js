@@ -14,6 +14,7 @@ import { playwrightLauncher } from '@web/test-runner-playwright';
 import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugin';
 import fs from 'fs';
 import path from 'path';
+import globalElementsStyles from '@spectrum-web-components/styles/global-elements.js';
 
 export const chromium = playwrightLauncher({
   product: 'chromium',
@@ -106,6 +107,9 @@ const vrtHTML =
             <link rel="dns-prefetch" href="https://use.typekit.net" />
             <!-- For Adobe Clean font support -->
             <link rel="stylesheet" href="https://use.typekit.net/evk7lzt.css" />
+            <style>
+                ${globalElementsStyles.cssText}
+            </style>
             <style>
                 body {
                     margin: 0;

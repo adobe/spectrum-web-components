@@ -34,8 +34,6 @@ import '@spectrum-web-components/action-bar/sp-action-bar.js';
 import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import '../onion-skinner.js';
 
-import globalElementStyles from '@spectrum-web-components/styles/global-elements.css';
-
 export class VrtCompare extends ObserveSlotPresence(SpectrumElement, [
   '[slot="actual"]',
   '[slot="baseline"]',
@@ -411,6 +409,5 @@ export class VrtCompare extends ObserveSlotPresence(SpectrumElement, [
       }
     `,
     bodyStyles,
-    globalElementStyles,
   ];
 }
