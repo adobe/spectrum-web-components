@@ -1,6 +1,7 @@
 ---
-"@spectrum-web-components/1st-gen": patch
-"@spectrum-web-components/divider": patch
+'@spectrum-web-components/badge': patch
+'@spectrum-web-components/contextual-help': patch
+'@spectrum-web-components/divider': patch
 ---
 
-fix(divider): repair divider package export order
+**Fixed**: Normalized `exports` condition ordering in package.json manifests so `development` appears before `default`.
