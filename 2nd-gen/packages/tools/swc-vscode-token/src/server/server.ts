@@ -740,6 +740,12 @@ export function startServer() {
     });
   });
 
+  docs.onDidClose((d) => {
+    const uri = d.document.uri;
+    diagnosticCache.delete(uri);
+    conn.sendDiagnostics({ uri, diagnostics: [] });
+  });
+
   docs.listen(conn);
   conn.listen();
 }
