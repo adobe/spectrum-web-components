@@ -37,6 +37,7 @@ export interface TruncatedValueTooltipHost {
   multiline: boolean;
   type: string;
   disabled: boolean;
+  focused?: boolean;
   displayValue: string;
   truncatedValueTooltipPlacement: Placement;
 }
@@ -89,6 +90,10 @@ export function TruncatedValueTooltipMixin<
 
     protected refreshTruncationState(): void {
       const isTruncated = this.inputElementIsTruncated;
+      if (this._host.focused && this.isTruncated && !isTruncated) {
+        // Keep tooltip mounted through the active focus session once truncation has occurred.
+        return;
+      }
       if (isTruncated === this.isTruncated) {
         return;
       }
@@ -164,6 +169,11 @@ export function TruncatedValueTooltipMixin<
         this.updateComplete.then(() => {
           this.refreshTruncationState();
         });
+      }
+      if (changedProperties.has('focused')) {
+        if (!this._host.focused) {
+          this.refreshTruncationState();
+        }
       }
     }
 

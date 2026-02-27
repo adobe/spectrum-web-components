@@ -307,6 +307,48 @@ describe('NumberField', () => {
         'Tooltip should appear when value grows and becomes truncated'
       );
     });
+
+    it('keeps tooltip mounted while focused after value shrinks, then removes it on blur when value fits', async () => {
+      const el = await fixture<NumberField>(html`
+        <sp-number-field
+          style="--mod-textfield-width: 56px; --spectrum-textfield-min-width: 0;"
+          hide-stepper
+          value="123456789"
+        ></sp-number-field>
+      `);
+      await elementUpdated(el);
+      await elementUpdated(el);
+      await waitUntil(
+        () => el.shadowRoot?.querySelector('#truncated-value-tooltip') != null,
+        'Tooltip should be rendered for initially truncated value'
+      );
+
+      el.focus();
+      const input = el.focusElement;
+      input.value = '1';
+      input.dispatchEvent(
+        new InputEvent('input', {
+          bubbles: true,
+          composed: true,
+          data: null,
+          inputType: 'deleteContentBackward',
+        })
+      );
+      await elementUpdated(el);
+
+      expect(
+        el.shadowRoot?.querySelector('#truncated-value-tooltip'),
+        'Tooltip should remain mounted while focused even when value now fits'
+      ).to.exist;
+
+      el.blur();
+      await elementUpdated(el);
+
+      expect(
+        el.shadowRoot?.querySelector('#truncated-value-tooltip'),
+        'Tooltip should be removed after blur when value fits'
+      ).to.not.exist;
+    });
   });
   describe('receives input', () => {
     it('without language context', async () => {
