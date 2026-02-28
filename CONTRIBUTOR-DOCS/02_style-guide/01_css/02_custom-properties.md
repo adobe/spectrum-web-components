@@ -35,11 +35,11 @@ This guide explains how to manage **private, internal, and exposed custom proper
 
 ## Naming Conventions
 
-| Prefix | Purpose |
-|--------|---------|
-| `_swc-*` | Private, internal custom property |
-| `--swc-*` | Exposed property available for overrides |
-| `token('name')` | Reference to a design token (no prefix) |
+| Prefix          | Purpose                                  |
+| --------------- | ---------------------------------------- |
+| `_swc-*`        | Private, internal custom property        |
+| `--swc-*`       | Exposed property available for overrides |
+| `token('name')` | Reference to a design token (no prefix)  |
 
 > Private properties are “pseudo-private”: defined on nested shadow elements rather than `:host` to prevent accidental overrides.
 
@@ -59,10 +59,10 @@ See the [Decision Tree for Exposure](#decision-tree-for-exposure) and [Exclusion
 
 ### Public vs private (`--_internal`)
 
-| Prefix | Purpose | Overrideable |
-|--------|---------|--------------|
-| `--swc-component-name-*` | Public API | Yes, via `:host()` or element selector |
-| `--_swc-component-name-*` | Internal use | No, defined on internal elements |
+| Prefix                    | Purpose      | Overrideable                           |
+| ------------------------- | ------------ | -------------------------------------- |
+| `--swc-component-name-*`  | Public API   | Yes, via `:host()` or element selector |
+| `--_swc-component-name-*` | Internal use | No, defined on internal elements       |
 
 **Example from [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css)**:
 
@@ -244,9 +244,9 @@ More examples and further information on how `token()` retrieves and processes t
 
 ### Troubleshooting `token()`
 
-| Error               | Cause                    | Action                                                    |
-| ------------------- | ------------------------ | --------------------------------------------------------- |
-| `token() not found` | Typo, prefix, deprecated | Remove prefix, check spelling, consult `debug-tokens.txt` |
+| Error               | Cause                    | Action                                                             |
+| ------------------- | ------------------------ | ------------------------------------------------------------------ |
+| `token() not found` | Typo, prefix, deprecated | Remove prefix, check spelling, consult `debug-tokens.txt`         |
 | Invalid token value | Cannot resolve to CSS    | Verify against S2 Token Specs; possibly add as custom global token |
 
 - Debug log: `yarn debug:tokens` (from `@adobe/swc-tokens`)

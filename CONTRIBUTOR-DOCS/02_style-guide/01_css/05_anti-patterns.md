@@ -481,26 +481,26 @@ Use `:has()` for conditional styling. Prefer layout primitives (flex, gap, align
 
 ### Visual styles on `:host` → base class
 
-| Before | After |
-|--------|-------|
-| `:host { padding: 8px; background: blue; }` | `:host { display: inline-block; }` + `.swc-Badge { padding: ...; background: ...; }` |
+| Before                                         | After                                                                                 |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `:host { padding: 8px; background: blue; }`   | `:host { display: inline-block; }` + `.swc-Badge { padding: ...; background: ...; }` |
 
 ### Specificity escalation → `:where()`
 
-| Before | After |
-|--------|-------|
+| Before                                    | After                                             |
+| ----------------------------------------- | ------------------------------------------------- |
 | `.swc-Badge--subtle.swc-Badge--gray { }` | `.swc-Badge--subtle:where(.swc-Badge--gray) { }` |
 
 ### Size classes in render → `:host([size])`
 
-| Before | After |
-|--------|-------|
+| Before                                    | After                                                                    |
+| ----------------------------------------- | ------------------------------------------------------------------------ |
 | `class="swc-Badge spectrum-Badge--sizeL"` | `class="swc-Badge"` + `:host([size="l"]) { --swc-badge-height: ...; }` |
 
 ### `--mod-*` chain → single property
 
-| Before | After |
-|--------|-------|
+| Before                                                  | After                                                    |
+| ------------------------------------------------------- | -------------------------------------------------------- |
 | `var(--mod-badge-height, var(--spectrum-badge-height))` | `var(--swc-badge-height, token('component-height-100'))` |
 
 ## Final Reminder

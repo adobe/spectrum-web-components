@@ -11,29 +11,30 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-- [Contributor TL;DR](#contributor-tldr)
-- [Rule Order](#rule-order)
-- [CSS property ordering](#css-property-ordering)
-- [Class naming patterns](#class-naming-patterns)
-- [Comment conventions](#comment-conventions)
-- [Selector patterns](#selector-patterns)
+- [Component CSS](#component-css)
+  - [Contributor TL;DR](#contributor-tldr)
+  - [Rule Order](#rule-order)
+  - [CSS property ordering](#css-property-ordering)
+  - [Class naming patterns](#class-naming-patterns)
+  - [Comment conventions](#comment-conventions)
+  - [Selector patterns](#selector-patterns)
     - [When to use `:host`](#when-to-use-host)
     - [When to use `:host([attribute])`](#when-to-use-hostattribute)
     - [When to use classes vs attributes](#when-to-use-classes-vs-attributes)
     - [Managing specificity with `:where()`](#managing-specificity-with-where)
     - [Avoiding descendant selectors](#avoiding-descendant-selectors)
-- [Variant implementation patterns](#variant-implementation-patterns)
-- [State implementation patterns](#state-implementation-patterns)
-- [Size variant patterns](#size-variant-patterns)
-- [Animation and transition patterns](#animation-and-transition-patterns)
-- [Forced colors requirements](#forced-colors-requirements)
-- [Managing Specificity](#managing-specificity)
+  - [Variant implementation patterns](#variant-implementation-patterns)
+  - [State implementation patterns](#state-implementation-patterns)
+  - [Size variant patterns](#size-variant-patterns)
+  - [Animation and transition patterns](#animation-and-transition-patterns)
+  - [Forced colors requirements](#forced-colors-requirements)
+  - [Managing Specificity](#managing-specificity)
     - [Shadow DOM Specificity and Custom Property Inheritance](#shadow-dom-specificity-and-custom-property-inheritance)
     - [Using Cascade Layers (`@layer`)](#using-cascade-layers-layer)
-- [Component Specs vs. Component Styles](#component-specs-vs-component-styles)
-- [Color Themes](#color-themes)
+  - [Component Specs vs. Component Styles](#component-specs-vs-component-styles)
+  - [Color Themes](#color-themes)
     - [Modifying Non-Color Properties](#modifying-non-color-properties)
-- [Closing Note for Contributors](#closing-note-for-contributors)
+  - [Closing Note for Contributors](#closing-note-for-contributors)
 
 </details>
 
@@ -118,11 +119,11 @@ For the full list and examples, see the [property order quick reference](06_prop
 
 Use these patterns so class names are predictable across components.
 
-| Pattern | Purpose | Example |
-|---------|---------|---------|
-| `.swc-ComponentName` | Base wrapper for the component | `.swc-Badge`, `.swc-StatusLight` |
-| `.swc-ComponentName-part` | Subcomponent or internal part | `.swc-Badge-label`, `.swc-Badge-icon` |
-| `.swc-ComponentName--modifier` | Variant or state modifier | `.swc-Badge--gray`, `.swc-Badge--fixed-inline-start` |
+| Pattern                        | Purpose                       | Example                                              |
+| ------------------------------ | ----------------------------- | ---------------------------------------------------- |
+| `.swc-ComponentName`           | Base wrapper for the component | `.swc-Badge`, `.swc-StatusLight`                    |
+| `.swc-ComponentName-part`      | Subcomponent or internal part | `.swc-Badge-label`, `.swc-Badge-icon`               |
+| `.swc-ComponentName--modifier` | Variant or state modifier     | `.swc-Badge--gray`, `.swc-Badge--fixed-inline-start` |
 
 **Why**: Consistent naming helps contributors find and update styles. The `--` suffix signals a modifier that changes the base appearance.
 
@@ -227,13 +228,13 @@ Prefer direct class selectors over deep descendant chains. Use `:has()` for cond
 
 Variants change how the component looks. Use the right selector based on customization intent.
 
-| Variant type | Selector | Example |
-|--------------|----------|---------|
-| Size | `:host([size="s"])` | Exposes `--swc-badge-height`, etc. |
-| Semantic color | `:host([variant="positive"])` | Exposes `--swc-badge-background-color` |
-| Non-semantic color | `.swc-ComponentName--magenta` | No exposure; implementation detail |
-| Static color | `.swc-ComponentName--staticWhite` | No exposure; ensures contrast |
-| Geometric | `.swc-ComponentName--fixed-inline-start` | No exposure; layout modifier |
+| Variant type       | Selector                                | Example                                |
+| ------------------ | --------------------------------------- | -------------------------------------- |
+| Size               | `:host([size="s"])`                     | Exposes `--swc-badge-height`, etc.     |
+| Semantic color     | `:host([variant="positive"])`           | Exposes `--swc-badge-background-color` |
+| Non-semantic color | `.swc-ComponentName--magenta`           | No exposure; implementation detail     |
+| Static color       | `.swc-ComponentName--staticWhite`       | No exposure; ensures contrast          |
+| Geometric          | `.swc-ComponentName--fixed-inline-start` | No exposure; layout modifier            |
 
 **Example from [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css)**:
 
@@ -251,12 +252,12 @@ Variants change how the component looks. Use the right selector based on customi
 
 States reflect user interaction or component condition. Attach them to `:host` when the host element carries the state.
 
-| State | Selector | Example |
-|-------|----------|---------|
-| Expanded | `:host([aria-expanded])` | Accordion, dropdown |
-| Disabled | `:host([disabled])` or `:host(:disabled)` | Form controls |
-| Focus | `:host:focus-visible` | Keyboard focus ring |
-| Invalid | `:host([invalid])` | Form validation |
+| State    | Selector                                  | Example             |
+| -------- | ----------------------------------------- | ------------------- |
+| Expanded | `:host([aria-expanded])`                  | Accordion, dropdown |
+| Disabled | `:host([disabled])` or `:host(:disabled)` | Form controls       |
+| Focus    | `:host:focus-visible`                     | Keyboard focus ring |
+| Invalid  | `:host([invalid])`                        | Form validation     |
 
 **Why**: States on `:host` let consumers style `swc-badge[disabled]` or `swc-badge:focus-visible`. If the state lives on an internal element, target that element directly.
 

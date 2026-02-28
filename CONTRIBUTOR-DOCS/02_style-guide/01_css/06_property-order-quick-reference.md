@@ -34,20 +34,20 @@ For full context, see [Component CSS](01_component-css.md#rule-order).
 
 Use this order inside each ruleset:
 
-| # | Category | Properties |
-|---|----------|------------|
-| 1 | **Content** | `content` |
-| 2 | **Position** | `position`, `top`, `right`, `bottom`, `left`, `inset`, `z-index` |
-| 3 | **Display** | `display`, `visibility` |
-| 4 | **Flex/Grid** | `flex`, `flex-grow`, `flex-shrink`, `flex-basis`, `flex-direction`, `flex-wrap`, `gap`, `align-items`, `align-self`, `align-content`, `justify-items`, `justify-self`, `justify-content`, `grid`, `grid-template-*`, `place-content`, `place-items`, `place-self` |
-| 5 | **Dimensions** | `width`, `height`, `inline-size`, `block-size`, `min-*`, `max-*` |
-| 6 | **Spacing** | `margin`, `margin-*`, `padding`, `padding-*` |
-| 7 | **Typography** | `font-family`, `font-size`, `font-style`, `font-weight`, `line-height`, `letter-spacing`, `text-align`, `text-decoration`, `text-transform`, `white-space` |
-| 8 | **Decoration** | `background`, `background-*`, `border`, `border-*`, `border-radius`, `outline` |
-| 9 | **Effects** | `box-shadow`, `opacity`, `filter` |
-| 10 | **Transforms** | `transform`, `transform-origin` |
-| 11 | **Transitions/Animations** | `transition`, `animation`, `will-change` |
-| 12 | **Misc** | `cursor`, `pointer-events`, `user-select`, `direction` |
+| #  | Category                       | Properties                                                                                                                                                                                    |
+| -- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1  | **Content**                    | `content`                                                                                                                                                                                     |
+| 2  | **Position**                   | `position`, `top`, `right`, `bottom`, `left`, `inset`, `z-index`                                                                                                                              |
+| 3  | **Display**                    | `display`, `visibility`                                                                                                                                                                       |
+| 4  | **Flex/Grid**                  | `flex`, `flex-grow`, `flex-shrink`, `flex-basis`, `flex-direction`, `flex-wrap`, `gap`, `align-items`, `align-self`, `align-content`, `justify-items`, `justify-self`, `justify-content`, `grid`, `grid-template-*`, `place-content`, `place-items`, `place-self` |
+| 5  | **Dimensions**                 | `width`, `height`, `inline-size`, `block-size`, `min-*`, `max-*`                                                                                                                              |
+| 6  | **Spacing**                    | `margin`, `margin-*`, `padding`, `padding-*`                                                                                                                                                  |
+| 7  | **Typography**                 | `font-family`, `font-size`, `font-style`, `font-weight`, `line-height`, `letter-spacing`, `text-align`, `text-decoration`, `text-transform`, `white-space`                                    |
+| 8  | **Decoration**                 | `background`, `background-*`, `border`, `border-*`, `border-radius`, `outline`                                                                                                                |
+| 9  | **Effects**                    | `box-shadow`, `opacity`, `filter`                                                                                                                                                             |
+| 10 | **Transforms**                 | `transform`, `transform-origin`                                                                                                                                                               |
+| 11 | **Transitions/Animations**     | `transition`, `animation`, `will-change`                                                                                                                                                      |
+| 12 | **Misc**                       | `cursor`, `pointer-events`, `user-select`, `direction`                                                                                                                                        |
 
 ## Example from Badge
 
