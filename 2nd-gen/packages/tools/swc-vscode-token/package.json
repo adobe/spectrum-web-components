@@ -33,7 +33,7 @@
   },
   "displayName": "SWC token() Intellisense",
   "engines": {
-    "vscode": "1.1.37"
+    "vscode": "^1.109.0"
   },
   "homepage": "https://opensource.adobe.com/spectrum-web-components/",
   "icon": "resources/icon.png",
