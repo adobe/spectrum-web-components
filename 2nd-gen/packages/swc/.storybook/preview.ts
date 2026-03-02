@@ -186,6 +186,13 @@ const preview = {
               'Wave toolbar testing',
               'Accessibility resources',
             ],
+            'Customization',
+            [
+              'Getting Started',
+              'Fonts',
+              'Theme and Scales',
+              'Component Styles',
+            ],
           ],
         ],
       },
