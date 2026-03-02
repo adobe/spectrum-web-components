@@ -58,7 +58,8 @@ From [badge.css](../../../2nd-gen/packages/swc/components/badge/badge.css):
   /* Custom properties first (definitions) */
   --_swc-badge-border-width: token("border-width-200");
   --_swc-badge-border-width-deduction: calc(var(--_swc-badge-border-width) * 2);
-  --_swc-badge-padding-block: token("component-top-to-text-100") token("component-bottom-to-text-100");
+  --_swc-badge-padding-block-start: token("component-top-to-text-100");
+  --_swc-badge-padding-block-end: token("component-bottom-to-text-100");
 
   /* Display */
   display: inline-flex;
@@ -68,7 +69,8 @@ From [badge.css](../../../2nd-gen/packages/swc/components/badge/badge.css):
   /* Dimensions */
   min-block-size: var(--swc-badge-height, token("component-height-100"));
   /* Spacing */
-  padding-block: calc(var(--swc-badge-padding-block, var(--_swc-badge-padding-block)) - var(--_swc-badge-border-width-deduction));
+  padding-block-start: calc(var(--swc-badge-padding-block-start, var(--_swc-badge-padding-block-start)) - var(--_swc-badge-border-width-deduction));
+  padding-block-end: calc(var(--swc-badge-padding-block-end, var(--_swc-badge-padding-block-end)) - var(--_swc-badge-border-width-deduction));
   padding-inline: calc(var(--swc-badge-padding-inline, token("component-edge-to-text-100")) - var(--_swc-badge-border-width-deduction));
   /* Typography */
   color: var(--swc-badge-label-icon-color, token("white"));
@@ -80,6 +82,7 @@ From [badge.css](../../../2nd-gen/packages/swc/components/badge/badge.css):
   cursor: default;
 }
 ```
+
 
 ## Example from Status Light
 

@@ -71,10 +71,12 @@ See the [Decision Tree for Exposure](#decision-tree-for-exposure) and [Exclusion
   /* Private: internal calculations */
   --_swc-badge-border-width: token("border-width-200");
   --_swc-badge-border-width-deduction: calc(var(--_swc-badge-border-width) * 2);
-  --_swc-badge-padding-block: token("component-top-to-text-100") token("component-bottom-to-text-100");
+  --_swc-badge-padding-block-start: token("component-top-to-text-100");
+  --_swc-badge-padding-block-end: token("component-bottom-to-text-100");
 
   /* Exposed via var() with token fallback */
-  padding-block: calc(var(--swc-badge-padding-block, var(--_swc-badge-padding-block)) - var(--_swc-badge-border-width-deduction));
+  padding-block-start: calc(var(--swc-badge-padding-block-start, var(--_swc-badge-padding-block-start)) - var(--_swc-badge-border-width-deduction));
+  padding-block-end: calc(var(--swc-badge-padding-block-end, var(--_swc-badge-padding-block-end)) - var(--_swc-badge-border-width-deduction));
   background: var(--swc-badge-background-color, token("accent-background-color-default"));
 }
 ```
