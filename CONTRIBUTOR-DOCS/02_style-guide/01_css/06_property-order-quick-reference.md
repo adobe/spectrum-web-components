@@ -20,7 +20,7 @@
 
 <!-- Document content (editable) -->
 
-Use this guide when writing or reviewing component CSS. Consistent property order makes stylesheets easier to scan and reduces merge conflicts.
+Use this guide when writing or reviewing component CSS. Consistent property order makes stylesheets easier to scan and reduces merge conflicts. This order is enforced via `stylelint-order` and the property groups defined in `linters/stylelint-property-order.js`.
 
 For full context, see [Component CSS](01_component-css.md#rule-order).
 
@@ -37,8 +37,8 @@ Use this order inside each ruleset:
 | #  | Category                       | Properties                                                                                                                                                                                    |
 | -- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1  | **Content**                    | `content`                                                                                                                                                                                     |
-| 2  | **Position**                   | `position`, `top`, `right`, `bottom`, `left`, `inset`, `z-index`                                                                                                                              |
-| 3  | **Display**                    | `display`, `visibility`                                                                                                                                                                       |
+| 2  | **Display**                    | `box-sizing`, `display`, `visibility`                                                                                                                                                         |
+| 3  | **Position**                   | `position`, `top`, `right`, `bottom`, `left`, `inset`, `z-index`                                                                                                                              |
 | 4  | **Flex/Grid**                  | `flex`, `flex-grow`, `flex-shrink`, `flex-basis`, `flex-direction`, `flex-wrap`, `gap`, `align-items`, `align-self`, `align-content`, `justify-items`, `justify-self`, `justify-content`, `grid`, `grid-template-*`, `place-content`, `place-items`, `place-self` |
 | 5  | **Dimensions**                 | `width`, `height`, `inline-size`, `block-size`, `min-*`, `max-*`                                                                                                                              |
 | 6  | **Spacing**                    | `margin`, `margin-*`, `padding`, `padding-*`                                                                                                                                                  |

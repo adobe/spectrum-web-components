@@ -92,7 +92,7 @@ Sizes, variants, and states should primarily modify the component via updating c
 
 Inside each ruleset, order properties in a consistent way. This makes stylesheets easier to scan and reduces merge conflicts.
 
-**Order**: Content → Position → Display → Flex/Grid → Dimensions → Spacing → Typography → Decoration → Effects → Transforms → Transitions/Animations → Misc
+**Order**: Content → Display → Position → Flex/Grid → Dimensions → Spacing → Typography → Decoration → Effects → Transforms → Transitions/Animations → Misc
 
 For the full list and examples, see the [property order quick reference](06_property-order-quick-reference.md).
 
