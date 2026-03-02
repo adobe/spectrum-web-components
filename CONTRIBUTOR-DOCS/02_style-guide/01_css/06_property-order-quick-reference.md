@@ -20,7 +20,7 @@
 
 <!-- Document content (editable) -->
 
-Use this guide when writing or reviewing component CSS. Consistent property order makes stylesheets easier to scan and reduces merge conflicts. This order is enforced via `stylelint-order` and the property groups defined in `linters/stylelint-property-order.js`.
+Use this guide when writing or reviewing component CSS. Consistent property order makes stylesheets easier to scan and reduces merge conflicts. This order is enforced via `stylelint-order` and the property groups defined in [`linters/stylelint-property-order.js`](../../../linters/stylelint-property-order.js). The table below is a condensed summary — see that file for the full list.
 
 For full context, see [Component CSS](01_component-css.md#rule-order).
 
@@ -34,20 +34,24 @@ For full context, see [Component CSS](01_component-css.md#rule-order).
 
 Use this order inside each ruleset:
 
-| #  | Category                       | Properties                                                                                                                                                                                    |
-| -- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1  | **Content**                    | `content`                                                                                                                                                                                     |
-| 2  | **Display**                    | `box-sizing`, `display`, `visibility`                                                                                                                                                         |
-| 3  | **Position**                   | `position`, `top`, `right`, `bottom`, `left`, `inset`, `z-index`                                                                                                                              |
-| 4  | **Flex/Grid**                  | `flex`, `flex-grow`, `flex-shrink`, `flex-basis`, `flex-direction`, `flex-wrap`, `gap`, `align-items`, `align-self`, `align-content`, `justify-items`, `justify-self`, `justify-content`, `grid`, `grid-template-*`, `place-content`, `place-items`, `place-self` |
-| 5  | **Dimensions**                 | `width`, `height`, `inline-size`, `block-size`, `min-*`, `max-*`                                                                                                                              |
-| 6  | **Spacing**                    | `margin`, `margin-*`, `padding`, `padding-*`                                                                                                                                                  |
-| 7  | **Typography**                 | `font-family`, `font-size`, `font-style`, `font-weight`, `line-height`, `letter-spacing`, `text-align`, `text-decoration`, `text-transform`, `white-space`                                    |
-| 8  | **Decoration**                 | `background`, `background-*`, `border`, `border-*`, `border-radius`, `outline`                                                                                                                |
-| 9  | **Effects**                    | `box-shadow`, `opacity`, `filter`                                                                                                                                                             |
-| 10 | **Transforms**                 | `transform`, `transform-origin`                                                                                                                                                               |
-| 11 | **Transitions/Animations**     | `transition`, `animation`, `will-change`                                                                                                                                                      |
-| 12 | **Misc**                       | `cursor`, `pointer-events`, `user-select`, `direction`                                                                                                                                        |
+| #  | Category                   | Common properties                                                                                                                                        |
+| -- | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1  | **Display**                | `box-sizing`, `display`, `visibility`                                                                                                                    |
+| 2  | **Position**               | `position`, `inset`, `top`, `right`, `bottom`, `left`, `z-index`                                                                                         |
+| 3  | **Flex/Grid**              | `flex`, `flex-grow`, `flex-shrink`, `flex-basis`, `flex-direction`, `flex-wrap`, `grid`, `grid-template-*`, `grid-auto-*`                                |
+| 4  | **Alignment**              | `gap`, `place-content`, `place-items`, `place-self`, `align-items`, `align-self`, `justify-content`, `justify-items`, `order`                            |
+| 5  | **Dimensions**             | `inline-size`, `block-size`, `width`, `height`, `min-*`, `max-*`, `aspect-ratio`                                                                         |
+| 6  | **Spacing**                | `padding`, `padding-*`, `margin`, `margin-*`                                                                                                             |
+| 7  | **Typography**             | `font`, `font-family`, `font-size`, `font-style`, `font-weight`, `line-height`, `color`, `text-align`, `text-transform`, `letter-spacing`, `white-space` |
+| 8  | **Decoration**             | `background`, `background-*`, `border`, `border-*`, `border-radius`, `box-shadow`                                                                        |
+| 9  | **Overflow**               | `overflow`, `text-overflow`                                                                                                                              |
+| 10 | **User interface**         | `appearance`, `pointer-events`, `cursor`, `user-select`, `outline`, `outline-*`                                                                          |
+| 11 | **Color adjustment**       | `color-scheme`, `forced-color-adjust`                                                                                                                    |
+| 12 | **Generated content**      | `content`, `quotes`                                                                                                                                      |
+| 13 | **SVG**                    | `fill`, `stroke`, `stroke-width`, `stroke-dasharray`, `stroke-dashoffset`                                                                                |
+| 14 | **Effects**                | `opacity`, `filter`, `backdrop-filter`                                                                                                                   |
+| 15 | **Transforms**             | `transform`, `transform-origin`                                                                                                                          |
+| 16 | **Transitions/Animations** | `transition`, `animation`, `will-change`                                                                                                                 |
 
 ## Example from Badge
 
@@ -63,7 +67,7 @@ From [badge.css](../../../2nd-gen/packages/swc/components/badge/badge.css):
 
   /* Display */
   display: inline-flex;
-  /* Flex/Grid */
+  /* Alignment */
   gap: var(--swc-badge-gap, token("text-to-visual-100"));
   align-items: center;
   /* Dimensions */
@@ -78,7 +82,7 @@ From [badge.css](../../../2nd-gen/packages/swc/components/badge/badge.css):
   background: var(--swc-badge-background-color, token("accent-background-color-default"));
   border: var(--_swc-badge-border-width) solid var(--swc-badge-border-color, transparent);
   border-radius: var(--swc-badge-corner-radius, token("corner-radius-medium-size-medium"));
-  /* Misc */
+  /* User interface */
   cursor: default;
 }
 ```
@@ -90,8 +94,6 @@ From [status-light.css](../../../2nd-gen/packages/swc/components/status-light/st
 
 ```css
 .swc-StatusLight::before {
-  /* Content */
-  content: "";
   /* Display */
   box-sizing: border-box;
   display: inline-block;
@@ -106,6 +108,8 @@ From [status-light.css](../../../2nd-gen/packages/swc/components/status-light/st
   /* Decoration */
   background-color: var(--swc-statuslight-dot-color);
   border-radius: token("corner-radius-full");
+  /* Generated content */
+  content: "";
 }
 ```
 

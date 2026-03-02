@@ -248,7 +248,7 @@ More examples and further information on how `token()` retrieves and processes t
 
 | Error               | Cause                    | Action                                                             |
 | ------------------- | ------------------------ | ------------------------------------------------------------------ |
-| `token() not found` | Typo, prefix, deprecated | Remove prefix, check spelling, consult `debug-tokens.txt`         |
+| `token() not found` | Typo, prefix, deprecated | Remove prefix, check spelling, consult `debug-tokens.txt`          |
 | Invalid token value | Cannot resolve to CSS    | Verify against S2 Token Specs; possibly add as custom global token |
 
 - Debug log: `yarn debug:tokens` (from `@adobe/swc-tokens`)

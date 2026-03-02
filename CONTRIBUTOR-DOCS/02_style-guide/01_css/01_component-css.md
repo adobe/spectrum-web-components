@@ -92,7 +92,7 @@ Sizes, variants, and states should primarily modify the component via updating c
 
 Inside each ruleset, order properties in a consistent way. This makes stylesheets easier to scan and reduces merge conflicts.
 
-**Order**: Content → Display → Position → Flex/Grid → Dimensions → Spacing → Typography → Decoration → Effects → Transforms → Transitions/Animations → Misc
+**Order**: Display → Position → Flex/Grid → Alignment → Dimensions → Spacing → Typography → Decoration → Overflow → User interface → Color adjustment → Generated content → SVG → Effects → Transforms → Transitions/Animations
 
 For the full list and examples, see the [property order quick reference](06_property-order-quick-reference.md).
 
@@ -118,11 +118,11 @@ For the full list and examples, see the [property order quick reference](06_prop
 
 Use these patterns so class names are predictable across components.
 
-| Pattern                        | Purpose                       | Example                                              |
-| ------------------------------ | ----------------------------- | ---------------------------------------------------- |
-| `.swc-ComponentName`           | Base wrapper for the component | `.swc-Badge`, `.swc-StatusLight`                    |
-| `.swc-ComponentName-part`      | Subcomponent or internal part | `.swc-Badge-label`, `.swc-Badge-icon`               |
-| `.swc-ComponentName--modifier` | Variant or state modifier     | `.swc-Badge--gray`, `.swc-Badge--fixed-inline-start` |
+| Pattern                        | Purpose                        | Example                                              |
+| ------------------------------ | ------------------------------ | ---------------------------------------------------- |
+| `.swc-ComponentName`           | Base wrapper for the component | `.swc-Badge`, `.swc-StatusLight`                     |
+| `.swc-ComponentName-part`      | Subcomponent or internal part  | `.swc-Badge-label`, `.swc-Badge-icon`                |
+| `.swc-ComponentName--modifier` | Variant or state modifier      | `.swc-Badge--gray`, `.swc-Badge--fixed-inline-start` |
 
 **Why**: Consistent naming helps contributors find and update styles. The `--` suffix signals a modifier that changes the base appearance.
 
@@ -227,13 +227,13 @@ Prefer direct class selectors over deep descendant chains. Use `:has()` for cond
 
 Variants change how the component looks. Use the right selector based on customization intent.
 
-| Variant type       | Selector                                | Example                                |
-| ------------------ | --------------------------------------- | -------------------------------------- |
-| Size               | `:host([size="s"])`                     | Exposes `--swc-badge-height`, etc.     |
-| Semantic color     | `:host([variant="positive"])`           | Exposes `--swc-badge-background-color` |
-| Non-semantic color | `.swc-ComponentName--magenta`           | No exposure; implementation detail     |
-| Static color       | `.swc-ComponentName--staticWhite`       | No exposure; ensures contrast          |
-| Geometric          | `.swc-ComponentName--fixed-inline-start` | No exposure; layout modifier            |
+| Variant type       | Selector                                 | Example                                |
+| ------------------ | ---------------------------------------- | -------------------------------------- |
+| Size               | `:host([size="s"])`                      | Exposes `--swc-badge-height`, etc.     |
+| Semantic color     | `:host([variant="positive"])`            | Exposes `--swc-badge-background-color` |
+| Non-semantic color | `.swc-ComponentName--magenta`            | No exposure; implementation detail     |
+| Static color       | `.swc-ComponentName--staticWhite`        | No exposure; ensures contrast          |
+| Geometric          | `.swc-ComponentName--fixed-inline-start` | No exposure; layout modifier           |
 
 **Example from [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css)**:
 

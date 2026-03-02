@@ -429,7 +429,7 @@ After migration, Badge relies solely on `.swc-Badge` and attributes.
 
 ### ✅ Correct Approach
 
-Follow the [property order quick reference](06_property-order-quick-reference.md): Display → Flex/Grid → Dimensions → Spacing → Typography → Decoration → Misc. See the [Badge example](06_property-order-quick-reference.md#example-from-badge) for a fully annotated ruleset.
+Follow the [property order quick reference](06_property-order-quick-reference.md): Display → Position → Flex/Grid → Alignment → Dimensions → Spacing → Typography → Decoration → Overflow → User interface → and so on. See the [Badge example](06_property-order-quick-reference.md#example-from-badge) for a fully annotated ruleset.
 
 ## 10. Using deep descendant selectors
 
@@ -481,20 +481,20 @@ Use `:has()` for conditional styling. Prefer layout primitives (flex, gap, align
 
 ### Visual styles on `:host` → base class
 
-| Before                                         | After                                                                                 |
-| ---------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `:host { padding: 8px; background: blue; }`   | `:host { display: inline-block; }` + `.swc-Badge { padding: ...; background: ...; }` |
+| Before                                      | After                                                                                |
+| ------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `:host { padding: 8px; background: blue; }` | `:host { display: inline-block; }` + `.swc-Badge { padding: ...; background: ...; }` |
 
 ### Specificity escalation → `:where()`
 
-| Before                                    | After                                             |
-| ----------------------------------------- | ------------------------------------------------- |
+| Before                                   | After                                            |
+| ---------------------------------------- | ------------------------------------------------ |
 | `.swc-Badge--subtle.swc-Badge--gray { }` | `.swc-Badge--subtle:where(.swc-Badge--gray) { }` |
 
 ### Size classes in render → `:host([size])`
 
-| Before                                    | After                                                                    |
-| ----------------------------------------- | ------------------------------------------------------------------------ |
+| Before                                    | After                                                                  |
+| ----------------------------------------- | ---------------------------------------------------------------------- |
 | `class="swc-Badge spectrum-Badge--sizeL"` | `class="swc-Badge"` + `:host([size="l"]) { --swc-badge-height: ...; }` |
 
 ### `--mod-*` chain → single property
