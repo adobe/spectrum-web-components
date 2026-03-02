@@ -32,11 +32,13 @@
 - [Style guide](02_style-guide/README.md)
     - [2nd-Gen CSS](02_style-guide/01_css/README.md)
     - [Linting tools](02_style-guide/02_linting-tools.md)
+    - [Component types](02_style-guide/03_component-types.md)
 - [Project planning](03_project-planning/README.md)
     - [Objectives and strategy](03_project-planning/01_objectives-and-strategy.md)
     - [Workstreams](03_project-planning/02_workstreams/README.md)
     - [Components](03_project-planning/03_components/README.md)
     - [Milestones](03_project-planning/04_milestones/README.md)
+    - [Research](03_project-planning/05_research/README.md)
 
 </details>
 

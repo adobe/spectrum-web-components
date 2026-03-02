@@ -131,7 +131,9 @@ export abstract class BadgeBase extends SizedMixin(
   // ──────────────────────
 
   /**
-   * @internal Used for rendering gap when the badge has an icon.
+   * Used for rendering gap when the badge has an icon.
+   *
+   * @internal
    */
   protected get hasIcon(): boolean {
     return this.slotContentIsPresent;

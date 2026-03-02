@@ -18,34 +18,33 @@ type Constructor<T = Record<string, unknown>> = {
   prototype: T;
 };
 
-export type ElementSize = 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
-export const ElementSizes: Record<string, ElementSize> = {
-  xxs: 'xxs',
-  xs: 'xs',
-  s: 's',
-  m: 'm',
-  l: 'l',
-  xl: 'xl',
-  xxl: 'xxl',
-};
-export type DefaultElementSize = Exclude<ElementSize, 'xxs' | 'xs' | 'xxl'>;
+export const ELEMENT_SIZES = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl'] as const;
+export type ElementSize = (typeof ELEMENT_SIZES)[number];
+
+export const DEFAULT_ELEMENT_SIZES = [
+  's',
+  'm',
+  'l',
+  'xl',
+] as const satisfies readonly ElementSize[];
+export type DefaultElementSize = (typeof DEFAULT_ELEMENT_SIZES)[number];
 
 export interface SizedElementInterface {
   size: ElementSize;
 }
 
 export interface SizedElementConstructor {
-  readonly VALID_SIZES: ElementSize[];
+  readonly VALID_SIZES: readonly ElementSize[];
 }
 
 export function SizedMixin<T extends Constructor<ReactiveElement>>(
   constructor: T,
   {
-    validSizes = ['s', 'm', 'l', 'xl'],
+    validSizes = [...DEFAULT_ELEMENT_SIZES],
     noDefaultSize,
     defaultSize = 'm',
   }: {
-    validSizes?: ElementSize[];
+    validSizes?: readonly ElementSize[];
     noDefaultSize?: boolean;
     defaultSize?: ElementSize;
   } = {}
@@ -54,7 +53,7 @@ export function SizedMixin<T extends Constructor<ReactiveElement>>(
     /**
      * @internal
      */
-    static readonly VALID_SIZES: ElementSize[] = validSizes;
+    static readonly VALID_SIZES: readonly ElementSize[] = validSizes;
 
     @property({ type: String })
     public get size(): ElementSize {
