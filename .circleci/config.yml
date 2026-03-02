@@ -95,6 +95,10 @@ commands:
           name: Build 2nd-gen project
           command: |
             yarn build:2nd-gen
+      - run:
+          name: Generate Custom Elements Manifest
+          command: |
+            yarn workspace @adobe/spectrum-wc analyze
       - save_cache:
           paths:
             - ~/.cache/yarn
@@ -312,10 +316,6 @@ jobs:
     steps:
       - downstream-2ndgen
       - run:
-          name: Generate Custom Elements Manifest
-          command: |
-            yarn workspace @adobe/spectrum-wc analyze
-      - run:
           name: Run 2nd-gen integration tests
           command: |
             yarn test:2nd-gen
@@ -329,10 +329,6 @@ jobs:
     steps:
       - downstream-2ndgen
       - run:
-          name: Generate Custom Elements Manifest
-          command: |
-            yarn workspace @adobe/spectrum-wc analyze
-      - run:
           name: Run 2nd-gen tests with coverage
           command: |
             yarn workspace @spectrum-web-components/2nd-gen test:coverage
@@ -342,13 +338,11 @@ jobs:
           path: 2nd-gen/packages/swc/coverage
 
   # 2nd-gen ARIA snapshot tests (Playwright)
-  # NOTE: Uses full `downstream` because playwright config starts both 1st-gen
-  # and 2nd-gen Storybook servers, even when running only 2nd-gen tests
   test-2ndgen-a11y:
     executor: node
 
     steps:
-      - downstream
+      - downstream-2ndgen
       - run:
           name: Run 2nd-gen ARIA snapshot tests
           command: |
@@ -365,10 +359,6 @@ jobs:
 
     steps:
       - downstream
-      - run:
-          name: Generate Custom Elements Manifest
-          command: |
-            yarn workspace @adobe/spectrum-wc analyze
       - run:
           name: Build 2nd-gen Storybook (production)
           command: |

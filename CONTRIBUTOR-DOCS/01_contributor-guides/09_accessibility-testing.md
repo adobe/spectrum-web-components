@@ -75,6 +75,7 @@ yarn test:a11y:ui           # Interactive UI mode (great for debugging)
 ```
 
 Tests automatically start the required Storybook instances and run in Chromium.
+`yarn test:a11y:2nd` starts only the 2nd-gen Storybook server.
 
 ## What we test
 
@@ -398,7 +399,7 @@ Received: [
 
 ### Playwright config
 
-`playwright.a11y.config.ts` (at the root) defines two projects:
+The root config `playwright.a11y.config.ts` defines two projects:
 
 ```typescript
 projects: [
@@ -416,6 +417,8 @@ projects: [
 ```
 
 This allows both generations to run against their respective Storybook instances.
+For 2nd-gen-only runs, `playwright.a11y.2ndgen.config.ts` is used by
+`yarn test:a11y:2nd`.
 
 ### Auto-starting Storybook
 
@@ -436,11 +439,22 @@ webServer: [
 ];
 ```
 
+The 2nd-gen-only config starts only the 2nd-gen Storybook server:
+
+```typescript
+webServer: {
+    command: 'cd 2nd-gen/packages/swc && yarn storybook',
+    port: 6006,
+    reuseExistingServer: !process.env.CI,
+};
+```
+
 ## File structure
 
 ```
 spectrum-web-components/
 ├── playwright.a11y.config.ts              # Playwright config (both gens)
+├── playwright.a11y.2ndgen.config.ts       # Playwright config (2nd-gen only)
 ├── CONTRIBUTOR-DOCS/
 │   └── 01_contributor-guides/
 │       └── 09_accessibility-testing.md    # This guide

@@ -30,9 +30,6 @@ export default mergeConfig(
       reporters: process.env.CI
         ? ['default', ['junit', { outputFile: './test-results/junit.xml' }]]
         : ['default'],
-      outputFile: {
-        junit: './test-results/junit.xml',
-      },
       coverage: {
         provider: 'v8',
         reporter: ['text', 'json', 'html'],

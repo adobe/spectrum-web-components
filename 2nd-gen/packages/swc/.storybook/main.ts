@@ -18,6 +18,8 @@ import { mergeConfig } from 'vite';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const includeTestStories = process.env.NODE_ENV !== 'production';
+// Used by 2nd-gen Playwright a11y runs to avoid loading docs/guides that pull 1st-gen artifacts.
+const componentsOnlyMode = process.env.SWC_STORYBOOK_COMPONENTS_ONLY === 'true';
 const testStoryIndexer: Indexer = {
   test: /\.test\.ts$/,
   createIndex: async (fileName, options) => {
@@ -32,17 +34,22 @@ const stories = [
     files: '**/*.stories.ts',
     titlePrefix: 'Components',
   },
-  {
-    directory: 'learn-about-swc',
-    files: '*.mdx',
-    titlePrefix: 'Learn about SWC',
-  },
-  {
-    directory: 'guides',
-    files: '**/!(*documentation).mdx',
-    titlePrefix: 'Guides',
-  },
 ];
+
+if (!componentsOnlyMode) {
+  stories.push(
+    {
+      directory: 'learn-about-swc',
+      files: '*.mdx',
+      titlePrefix: 'Learn about SWC',
+    },
+    {
+      directory: 'guides',
+      files: '**/!(*documentation).mdx',
+      titlePrefix: 'Guides',
+    }
+  );
+}
 
 if (includeTestStories) {
   stories.push({
@@ -50,6 +57,27 @@ if (includeTestStories) {
     files: '**/*.test.ts',
     titlePrefix: 'Components',
   });
+}
+
+const addons = [
+  {
+    name: '@storybook/addon-docs',
+    options: {
+      transcludeMarkdown: true,
+      mdxPluginOptions: {
+        mdxCompileOptions: {
+          remarkPlugins: [remarkGfm],
+        },
+      },
+    },
+  },
+  '@storybook/addon-a11y',
+  '@storybook/addon-designs',
+  '@storybook/addon-vitest',
+];
+
+if (!componentsOnlyMode) {
+  addons.push(resolve(__dirname, './addons/screen-reader-addon'));
 }
 
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
@@ -63,24 +91,7 @@ const config = {
   core: {
     disableTelemetry: true,
   },
-  addons: [
-    {
-      name: '@storybook/addon-docs',
-      options: {
-        transcludeMarkdown: true,
-        mdxPluginOptions: {
-          mdxCompileOptions: {
-            remarkPlugins: [remarkGfm],
-          },
-        },
-      },
-    },
-    '@storybook/addon-a11y',
-    '@storybook/addon-designs',
-    '@storybook/addon-vitest',
-    // Screen reader addon (local).
-    resolve(__dirname, './addons/screen-reader-addon'),
-  ],
+  addons,
   viteFinal: async (config) => {
     return mergeConfig(config, {
       plugins: [
