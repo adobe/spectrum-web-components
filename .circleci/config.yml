@@ -23,10 +23,6 @@ parameters:
   current_golden_images_hash:
     type: string
     default: 18ed38365df0f860c743922352cc49b46c6477c2
-
-  wireit_cache_name:
-    type: string
-    default: wireit
 commands:
   install-azcopy:
     description: 'Install AzCopy and set up authentication'
@@ -57,7 +53,7 @@ commands:
             - cache-deps-yarn-{{ arch }}-{{ checksum "yarn.lock" }}
       - restore_cache:
           keys:
-            - cache-wireit-1st-gen-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "1st-gen/package.json" }}-
+            - cache-wireit-1st-gen-{{ arch }}-{{ checksum "1st-gen/package.json" }}-
       - run:
           name: Installing Dependencies
           command: |
@@ -328,8 +324,12 @@ jobs:
             fi
       - store_test_results:
           path: /root/project/2nd-gen/packages/swc/test-results
-      - store_artifacts:
-          path: 2nd-gen/packages/swc/coverage
+      - when:
+          condition:
+            equal: ['chromium', << parameters.browser >>]
+          steps:
+            - store_artifacts:
+                path: 2nd-gen/packages/swc/coverage
 
   # 2nd-gen ARIA snapshot tests (Playwright)
   test-2ndgen-a11y:

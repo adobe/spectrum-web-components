@@ -443,7 +443,7 @@ The 2nd-gen-only config starts only the 2nd-gen Storybook server:
 
 ```typescript
 webServer: {
-    command: 'cd 2nd-gen/packages/swc && yarn storybook',
+    command: 'cd 2nd-gen/packages/swc && SWC_STORYBOOK_COMPONENTS_ONLY=true yarn storybook',
     port: 6006,
     reuseExistingServer: !process.env.CI,
 };
