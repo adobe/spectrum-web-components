@@ -103,9 +103,11 @@ If you need to self-host the fonts:
 ### Sans-serif (default)
 
 ```css
-adobe-clean-spectrum-vf, 'Adobe Clean Spectrum VF', adobe-clean, 'Adobe Clean',
+/* adobe-clean-spectrum-vf, 'Adobe Clean Spectrum VF', adobe-clean, 'Adobe Clean',
 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif
+Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif */
+
+font-family: var(--swc-sans-font-family-stack);
 ```
 
 Note: `'Adobe Clean Spectrum VF'` appears from the upstream Spectrum token resolution.
@@ -113,8 +115,10 @@ Note: `'Adobe Clean Spectrum VF'` appears from the upstream Spectrum token resol
 ### Serif
 
 ```css
-adobe-clean-spectrum-srf-vf, 'Adobe Clean Spectrum Serif VF', adobe-clean-serif,
-'Adobe Clean Serif', 'Source Serif Pro', Georgia, serif
+/* adobe-clean-spectrum-srf-vf, 'Adobe Clean Spectrum Serif VF', adobe-clean-serif,
+'Adobe Clean Serif', 'Source Serif Pro', Georgia, serif */
+
+font-family: var(--swc-serif-font-family-stack);
 ```
 
 Note: `'Adobe Clean Spectrum Serif VF'` appears from the upstream Spectrum token resolution.
@@ -145,7 +149,7 @@ When `Typekit.load()` runs for a CJK kit, it registers font faces directly via t
 
 ### How to verify CJK fonts are loading correctly
 
-1. Check `wf-*` active classes on `<html>`
+**Check `wf-*` active classes on `<html>`**
 
 After switching to a CJK locale in the Storybook toolbar, open the browser console and run:
 
@@ -162,7 +166,7 @@ wf-active wf-adobe-clean-han-korean-n4-active wf-adobe-clean-han-korean-n5-activ
 
 All four weight variants going active (`n4` = normal, `n5` = 500, `n7` = 700, `n9` = 900) confirms Typekit has fully loaded the kit.
 
-2. Check `document.fonts` for registered `FontFace` objects
+**Check `document.fonts` for registered `FontFace` objects**
 
 ```js
 [...document.fonts].filter((f) => f.family.includes('korean'));
@@ -180,7 +184,7 @@ FontFace { family: 'adobe-clean-han-korean', weight: 'normal', status: 'loaded' 
 
 `status: 'loaded'` confirms the fonts are fully available to the browser. This is the source of truth for CJK font registration.
 
-3. Confirm the font is applied to an element
+**Confirm the font is applied to an element**
 
 ```js
 getComputedStyle(document.body).fontFamily;
@@ -190,7 +194,7 @@ getComputedStyle(document.querySelector('swc-status-light')).fontFamily;
 
 Expected: `adobe-clean-han-korean` (or the appropriate CJK family) appears **first** in the resolved font stack.
 
-4. Verify kit loaded in console
+**Verify kit loaded in console**
 
 The `language.ts` decorator logs:
 
@@ -198,7 +202,7 @@ The `language.ts` decorator logs:
 Current font loaded [id: cbs0ykg] ← Typekit active() callback fired
 ```
 
-5. (Optional) Verify the `typekit-loaded` custom event fired
+**Verify the `typekit-loaded` custom event fired (optional)**
 
 ```js
 document.addEventListener('typekit-loaded', (e) => {
@@ -208,18 +212,15 @@ document.addEventListener('typekit-loaded', (e) => {
 
 Add this before switching locales. The event is dispatched by both `preview-head.html` (for the default kit) and `language.ts` (for CJK kits) when `active()` fires.
 
----
+#### CJK Troubleshooting
 
-## What you will not see and why
-
-| What you might look for                                 | What you'll find                            | Why                                                              |
-| ------------------------------------------------------- | ------------------------------------------- | ---------------------------------------------------------------- |
-| `<style>` element with CJK `@font-face` rules           | Not present                                 | CJK fonts registered via CSS Font Loading API, not DOM injection |
-| `[data-swc-typekit-dynamic]` elements with `@font-face` | Not present                                 | MutationObserver only stamps `.tk-*` helper `<style>` elements   |
-| `<link rel="stylesheet">` to CJK kit CSS                | Not present                                 | CSS URLs return 412; CJK kits are JS-only delivery               |
-| CJK `@font-face` in DevTools Sources/Network            | Present under the JS script, not a CSS file | Delivered via `Typekit.load()` JS execution                      |
-
----
+| What you might look for                                 | What you'll find                            | Why                                                                        |
+| ------------------------------------------------------- | ------------------------------------------- | -------------------------------------------------------------------------- | --- |
+| `<style>` element with CJK `@font-face` rules           | Not present                                 | CJK fonts registered via CSS Font Loading API, not DOM injection           |
+| `[data-swc-typekit-dynamic]` elements with `@font-face` | Not present                                 | MutationObserver only stamps `.tk-*` helper `<style>` elements             |
+| `<link rel="stylesheet">` to CJK kit CSS                | Not present                                 | CSS URLs return 412; CJK kits are JS-only delivery                         |
+| CJK `@font-face` in DevTools Sources/Network            | Present under the JS script, not a CSS file | Delivered via `Typekit.load()` JS execution                                |
+| CJK font-family name present in "Rendered Fonts"        | Numerical font id, not the font-family name | Dyinamic subsetting streams specific glyphs in addition to the font-family |     |
 
 ## Adding a new locale
 
