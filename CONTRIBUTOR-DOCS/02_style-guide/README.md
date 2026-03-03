@@ -24,4 +24,7 @@
 
 <!-- Document content (editable) -->
 
-(Content to be added)
+This section covers the coding conventions and authoring patterns used across Spectrum Web Components. Following these guides keeps the codebase consistent, reviewable, and accessible.
+
+- **[2nd-gen CSS](01_css/README.md)** — Property ordering, class naming, custom properties, selector patterns, and forced-colors requirements for component stylesheets.
+- **[Linting tools](02_linting-tools.md)** — How automated linting enforces these conventions and how to configure or extend the rules.
