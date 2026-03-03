@@ -36,6 +36,12 @@ const stories = [
   },
 ];
 
+/**
+ * Added this intentionally for the 2nd-gen a11y CI mode.
+ * When componentsOnlyMode is enabled, Storybook only loads component stories and skips learn-about-swc / guides MDX content. Those doc trees can pull additional dependencies (including 1st-gen-linked paths), which we don’t need for ARIA snapshot coverage and which were contributing to CI startup/build failures.
+ * This keeps the a11y test Storybook surface minimal and more stable, while normal dev/docs behavior stays unchanged when the flag is off.
+ */
+
 if (!componentsOnlyMode) {
   stories.push(
     {
@@ -58,6 +64,13 @@ if (includeTestStories) {
     titlePrefix: 'Components',
   });
 }
+
+/**
+ * This split is intentional for the 2nd-gen a11y CI mode.
+ * We keep the standard Storybook addons by default, but conditionally disable the local screen-reader-addon when componentsOnlyMode is enabled.
+ * Reason: that addon imports several 1st-gen components (sp-switch, sp-textfield, sp-help-text, sp-field-label), which brings in 1st-gen build artifacts and caused the CI startup failures in the 2nd-gen-only pipeline.
+ * So this keeps normal developer/docs behavior unchanged, while the a11y snapshot run uses a minimal addon surface and avoids unintended 1st-gen coupling.
+ */
 
 const addons = [
   {

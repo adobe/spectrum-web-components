@@ -64,7 +64,7 @@ export const SizesTest: Story = {
   render: () => html`
     ${StatusLight.VALID_SIZES.map(
       (size) => html`
-        <swc-status-light data-test-size=${size} size=${size} variant="info">
+        <swc-status-light size=${size} variant="info">
           ${size}
         </swc-status-light>
       `
@@ -74,11 +74,10 @@ export const SizesTest: Story = {
     await step('renders and reflects each size correctly', async () => {
       StatusLight.VALID_SIZES.forEach((size) => {
         const statusLight = canvasElement.querySelector(
-          `swc-status-light[data-test-size="${size}"]`
-        ) as StatusLight | null;
-        expect(statusLight).toBeTruthy();
-        expect(statusLight?.variant).toBe('info');
-        expect(statusLight?.size).toBe(size);
+          `swc-status-light[size="${size}"]`
+        ) as StatusLight;
+        expect(statusLight.variant).toBe('info');
+        expect(statusLight.size).toBe(size);
       });
     });
   },
