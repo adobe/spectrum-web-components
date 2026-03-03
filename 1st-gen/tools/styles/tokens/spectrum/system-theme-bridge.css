@@ -588,7 +588,14 @@
   --system-switch-handle-border-color-selected-focus: var(--spectrum-gray-800);
   --system-switch-background-color: var(--spectrum-gray-300);
   --system-switch-background-color-disabled: var(--spectrum-gray-300);
-  --system-switch-handle-background-color: var(--spectrum-gray-75);
+  --system-switch-handle-background-color-default: var(--spectrum-gray-75);
+  --system-switch-handle-background-color-hover: var(--spectrum-gray-75);
+  --system-switch-handle-background-color-down: var(--spectrum-gray-75);
+  --system-switch-handle-background-color-focus: var(--spectrum-gray-75);
+  --system-switch-handle-background-color-selected-default: var(--spectrum-gray-75);
+  --system-switch-handle-background-color-selected-hover: var(--spectrum-gray-75);
+  --system-switch-handle-background-color-selected-down: var(--spectrum-gray-75);
+  --system-switch-handle-background-color-selected-focus: var(--spectrum-gray-75);
   --system-table-header-background-color: var(--spectrum-transparent-white-100);
   --system-table-border-color: var(--spectrum-gray-300);
   --system-table-divider-color: var(--spectrum-gray-300);
