@@ -14,15 +14,14 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { Chevron100Icon } from '@adobe/spectrum-wc/icon/elements';
-import * as iconElements from '@adobe/spectrum-wc/icon/elements';
-
 import '@adobe/spectrum-wc/icon';
 
 import {
   ICON_VALID_SIZES,
   type IconSize,
 } from '../../../../core/components/icon/Icon.types.js';
+import { Chevron100Icon } from '../elements/index.js';
+import * as iconElements from '../elements/index.js';
 
 // ────────────────
 //    METADATA
@@ -47,7 +46,7 @@ argTypes.size = {
  * **Internal-only component.**
  *
  * The `<swc-icon>` element renders icons from shared inline SVG templates.
- * Use shared templates from `@adobe/swc/icon/elements` for consistent rendering and avoid duplicating SVG markup in each component.
+ * Use shared templates from `../elements/index.js` for consistent rendering and avoid duplicating SVG markup in each component.
  */
 const meta: Meta = {
   title: 'Icon',
@@ -127,7 +126,10 @@ export const Overview: Story = {
  */
 export const Anatomy: Story = {
   render: (args) => html`
-    <swc-icon label="Chevron icon" size=${ifDefined(args.size)}>
+    <swc-icon
+      label=${ifDefined(args.label || 'Chevron icon')}
+      size=${ifDefined(args.size)}
+    >
       ${iconSvg}
     </swc-icon>
   `,
@@ -153,10 +155,15 @@ export const Anatomy: Story = {
  * All sizes are shown below for comparison.
  */
 export const Sizes: Story = {
-  render: (_args) => html`
+  render: (args) => html`
     ${ICON_VALID_SIZES.map(
       (size) => html`
-        <swc-icon label=${sizeLabels[size]} size=${size}>${iconSvg}</swc-icon>
+        <swc-icon
+          label=${ifDefined(args.label || sizeLabels[size])}
+          size=${size}
+        >
+          ${iconSvg}
+        </swc-icon>
       `
     )}
   `,
@@ -170,12 +177,15 @@ export const Sizes: Story = {
 /**
  * ### Shared templates
  *
- * Import reusable templates from `@adobe/spectrum-wc/icon/elements` and slot them into `<swc-icon>`.
+ * Import reusable templates from `../elements/index.js` and slot them into `<swc-icon>`.
  * This keeps icon usage centralized and avoids per-component SVG duplication.
  */
 export const Sources: Story = {
   render: (args) => html`
-    <swc-icon label="Chevron icon" size=${ifDefined(args.size)}>
+    <swc-icon
+      label=${ifDefined(args.label || 'Chevron icon')}
+      size=${ifDefined(args.size)}
+    >
       ${iconSvg}
     </swc-icon>
   `,
@@ -192,12 +202,17 @@ export const Sources: Story = {
  * Example import:
  *
  * ```ts
- * import { Chevron100Icon } from '@adobe/spectrum-wc/icon/elements';
+ * import { Chevron100Icon } from '../elements/index.js';
  * ```
  */
 export const SharedTemplates: Story = {
-  render: () => html`
-    <swc-icon label="Chevron">${Chevron100Icon()}</swc-icon>
+  render: (args) => html`
+    <swc-icon
+      label=${ifDefined(args.label || 'Chevron')}
+      size=${ifDefined(args.size)}
+    >
+      ${Chevron100Icon()}
+    </swc-icon>
   `,
   tags: ['options'],
   parameters: {
@@ -208,10 +223,10 @@ export const SharedTemplates: Story = {
 
 /**
  * Available shared icons in the current internal catalog.
- * Use this story as a quick reference for what can be imported from `@adobe/spectrum-wc/icon/elements`.
+ * Use this story as a quick reference for what can be imported from `../elements/index.js`.
  */
 export const AvailableIcons: Story = {
-  render: () => {
+  render: (args) => {
     const catalog = Object.entries(iconElements)
       .filter(
         ([name, iconFactory]) =>
@@ -235,7 +250,12 @@ export const AvailableIcons: Story = {
                             padding: 8px;
                         "
           >
-            <swc-icon label=${entry.name}>${entry.icon}</swc-icon>
+            <swc-icon
+              label=${ifDefined(args.label || entry.name)}
+              size=${ifDefined(args.size)}
+            >
+              ${entry.icon}
+            </swc-icon>
             <code>${entry.name}</code>
           </div>
         `
