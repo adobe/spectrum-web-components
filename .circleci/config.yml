@@ -54,10 +54,10 @@ commands:
       - checkout
       - restore_cache:
           keys:
-            - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            - cache-deps-yarn-{{ arch }}-{{ checksum "yarn.lock" }}
       - restore_cache:
           keys:
-            - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "1st-gen/package.json" }}-
+            - cache-wireit-1st-gen-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "1st-gen/package.json" }}-
       - run:
           name: Installing Dependencies
           command: |
@@ -72,11 +72,11 @@ commands:
           paths:
             - ~/.cache/yarn
             - ~/.cache/ms-playwright
-          key: v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+          key: cache-deps-yarn-{{ arch }}-{{ checksum "yarn.lock" }}
       - save_cache:
           paths:
             - 1st-gen/.wireit
-          key: v4b-wireit-{{ arch }}-{{ checksum "1st-gen/package.json" }}-{{ epoch }}
+          key: cache-wireit-1st-gen-{{ arch }}-{{ checksum "1st-gen/package.json" }}-{{ epoch }}
       - attach_workspace:
           at: /
   downstream-2ndgen:
@@ -85,7 +85,7 @@ commands:
       - checkout
       - restore_cache:
           keys:
-            - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            - cache-deps-yarn-{{ arch }}-{{ checksum "yarn.lock" }}
       - run:
           name: Installing Dependencies
           command: |
@@ -103,7 +103,7 @@ commands:
           paths:
             - ~/.cache/yarn
             - ~/.cache/ms-playwright
-          key: v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+          key: cache-deps-yarn-{{ arch }}-{{ checksum "yarn.lock" }}
   run-regressions:
     parameters:
       regression_system:
@@ -319,22 +319,13 @@ jobs:
     steps:
       - downstream-2ndgen
       - run:
-          name: Run 2nd-gen integration tests
+          name: Run 2nd-gen tests (coverage on Chromium)
           command: |
-            VITEST_BROWSER_INSTANCES=<< parameters.browser >> yarn test:2nd-gen
-      - store_test_results:
-          path: /root/project/2nd-gen/packages/swc/test-results
-
-  # 2nd-gen coverage tests
-  test-2ndgen-coverage:
-    executor: node
-
-    steps:
-      - downstream-2ndgen
-      - run:
-          name: Run 2nd-gen tests with coverage
-          command: |
-            yarn workspace @spectrum-web-components/2nd-gen test:coverage
+            if [ "<< parameters.browser >>" = "chromium" ]; then
+              VITEST_BROWSER_INSTANCES=chromium yarn workspace @spectrum-web-components/2nd-gen test:coverage
+            else
+              VITEST_BROWSER_INSTANCES=<< parameters.browser >> yarn test:2nd-gen
+            fi
       - store_test_results:
           path: /root/project/2nd-gen/packages/swc/test-results
       - store_artifacts:
@@ -570,7 +561,6 @@ workflows:
           matrix:
             parameters:
               browser: [chromium, firefox, webkit]
-      - test-2ndgen-coverage
       - test-2ndgen-a11y
       - test-2ndgen-axe
       # 1st-gen tests
