@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -28,6 +28,7 @@ import { buildPackage } from './ts-tools.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.join(__dirname, '..');
+const repoRoot = path.join(__dirname, '..', '..');
 
 async function main() {
   const allPackages = getWorkspacePackages();
@@ -68,7 +69,7 @@ async function main() {
   console.log(`\n🧹  Formatting generated files...`);
   await exec(
     `yarn eslint --fix --quiet ${path.join(rootDir, 'react/**/*.ts')}`,
-    { stdio: 'inherit', cwd: rootDir }
+    { stdio: 'inherit', cwd: repoRoot }
   ).then(({ stdout, stderr }) => {
     if (stderr) {
       console.error(stderr);

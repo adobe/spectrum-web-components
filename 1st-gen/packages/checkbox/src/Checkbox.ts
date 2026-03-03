@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -14,6 +14,7 @@ import {
   CSSResultArray,
   DefaultElementSize,
   html,
+  nothing,
   PropertyValues,
   SizedMixin,
   SpectrumElement,
@@ -74,7 +75,7 @@ const dashIcon = {
   s: () => {
     return html`
       <sp-icon-dash75
-        id="partialCheckmark"
+        id="partial-checkmark"
         class="spectrum-Icon spectrum-UIIcon-Dash75"
       ></sp-icon-dash75>
     `;
@@ -82,7 +83,7 @@ const dashIcon = {
   m: () => {
     return html`
       <sp-icon-dash100
-        id="partialCheckmark"
+        id="partial-checkmark"
         class="spectrum-Icon spectrum-UIIcon-Dash100"
       ></sp-icon-dash100>
     `;
@@ -90,7 +91,7 @@ const dashIcon = {
   l: () => {
     return html`
       <sp-icon-dash200
-        id="partialCheckmark"
+        id="partial-checkmark"
         class="spectrum-Icon spectrum-UIIcon-Dash200"
       ></sp-icon-dash200>
     `;
@@ -98,7 +99,7 @@ const dashIcon = {
   xl: () => {
     return html`
       <sp-icon-dash300
-        id="partialCheckmark"
+        id="partial-checkmark"
         class="spectrum-Icon spectrum-UIIcon-Dash300"
       ></sp-icon-dash300>
     `;
@@ -168,10 +169,10 @@ export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
       <span id="box">
         ${this.checked
           ? checkmarkIcon[this.size as DefaultElementSize]()
-          : html``}
+          : nothing}
         ${this.indeterminate
           ? dashIcon[this.size as DefaultElementSize]()
-          : html``}
+          : nothing}
       </span>
       <label id="label" for="input"><slot></slot></label>
     `;

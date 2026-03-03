@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -107,6 +107,10 @@ const waitForFocusEvent = async (
       ),
     ]);
   } catch (error) {
+    console.warn(
+      'Focus event timed out. Falling back to manual verification due to inconsistent focus events:',
+      error instanceof Error ? error.message : 'Unknown error'
+    );
     // Fallback: verify focus manually for browsers with inconsistent focus events
     await waitUntil(
       () => document.activeElement === expectedElement,
@@ -953,7 +957,7 @@ export function runPickerTests(): void {
       await closed;
 
       await waitUntil(() => document.activeElement === el, 'focused', {
-          timeout: 300,
+        timeout: 300,
       });
 
       expect(el.open, 'open?').to.be.false;
@@ -1428,10 +1432,11 @@ export function runPickerTests(): void {
       expect(el.open, 'open?').to.be.false;
     });
     it('manages focus-ring styles', async () => {
-      // @TODO: skipping this test for non-WebKit browsers. Will review in the migration to Spectrum 2.
+      // @todo skipping this test for non-WebKit browsers. Will review in the migration to Spectrum 2.
       if (!isWebKit()) {
         return;
       }
+
       /**
        * This is a hack to set the `isMobile` property to true so that we can test the MobileController
        */
@@ -1782,10 +1787,13 @@ export function runPickerTests(): void {
       expect(consoleWarnStub.called).to.be.true;
       const spyCall = consoleWarnStub.getCall(0);
       expect(
-        (spyCall.args.at(0) as string).includes('accessible'),
+        (spyCall.args[0] as string).includes('accessible'),
         'confirm accessibility-centric message'
       ).to.be.true;
-      expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        'confirm `data` shape'
+      ).to.deep.equal({
         data: {
           localName: 'sp-picker',
           type: 'accessibility',
@@ -1801,10 +1809,13 @@ export function runPickerTests(): void {
         expect(consoleWarnStub.called).to.be.true;
         const spyCall = consoleWarnStub.getCall(0);
         expect(
-          (spyCall.args.at(0) as string).includes('<sp-menu>'),
+          (spyCall.args[0] as string).includes('<sp-menu>'),
           'confirm <sp-menu>-centric message'
         ).to.be.true;
-        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+        expect(
+          spyCall.args[spyCall.args.length - 1],
+          'confirm `data` shape'
+        ).to.deep.equal({
           data: {
             localName: 'sp-picker',
             type: 'api',
@@ -2214,7 +2225,7 @@ export function runPickerTests(): void {
       this.el = test.querySelector('sp-picker') as Picker;
       await elementUpdated(this.el);
     });
-    // @TODO: skipping this test because it's flaky in CI also flaky in VRT. Will review in the migration to Spectrum 2.
+    // @todo skipping this test because it's flaky in CI also flaky in VRT. Will review in the migration to Spectrum 2.
     it.skip('displays the same icon as the selected menu item', async function () {
       // Delay long enough for the picker to display the selected item.
       // Chromium and Webkit require 2 frames, Firefox requires 3 frames.
@@ -2330,6 +2341,84 @@ export function runPickerTests(): void {
     expect(overlayTrigger.open, 'modal overlay should be closed after escape')
       .to.be.undefined;
   });
+  it('keeps parent overlay open when scrolling picker menu in modal', async function () {
+    const test = await fixture<HTMLDivElement>(html`
+      <sp-theme scale="medium" color="light" system="spectrum">
+        <overlay-trigger type="modal" id="modal-trigger" placement="top">
+          <sp-button
+            variant="primary"
+            slot="trigger"
+            style="position:absolute;bottom:50px"
+          >
+            Open Modal
+          </sp-button>
+          <sp-popover slot="click-content" tip>
+            <sp-dialog no-divider class="options-popover-content">
+              <sp-picker
+                label="Select a Country"
+                value="item-2"
+                id="picker-value"
+              >
+                ${Array.from(
+                  { length: 30 },
+                  (_, i) => html`
+                    <sp-menu-item value=${`item-${i + 1}`}>
+                      Item ${i + 1}
+                    </sp-menu-item>
+                  `
+                )}
+              </sp-picker>
+            </sp-dialog>
+          </sp-popover>
+        </overlay-trigger>
+      </sp-theme>
+    `);
+
+    const overlayTrigger = test.querySelector(
+      'overlay-trigger'
+    ) as OverlayTrigger;
+    const button = test.querySelector('sp-button') as Button;
+    const picker = test.querySelector('sp-picker') as Picker;
+    const overlayClosedSpy = spy();
+    overlayTrigger.addEventListener('sp-closed', overlayClosedSpy);
+
+    button.click();
+    await elementUpdated(overlayTrigger);
+    await waitUntil(
+      () => overlayTrigger.open === 'click',
+      'overlay should be open'
+    );
+
+    const opened = oneEvent(picker, 'sp-opened');
+    picker.click();
+    await opened;
+    await elementUpdated(picker);
+
+    const menu = picker.optionsMenu as Menu;
+    expect(menu, 'picker menu should be available').to.exist;
+    const menuScrollSpy = spy();
+    menu.addEventListener('scroll', menuScrollSpy);
+
+    // Scroll the real menu content so behavior is exercised end-to-end.
+    menu.style.maxHeight = '80px';
+    menu.style.overflow = 'auto';
+    menu.scrollTop = 60;
+    await waitUntil(() => menu.scrollTop > 0, 'picker menu should scroll');
+    await aTimeout(50);
+
+    expect(
+      overlayClosedSpy.callCount,
+      'parent overlay should not close while scrolling picker menu'
+    ).to.equal(0);
+    expect(overlayTrigger.open, 'parent overlay should remain open').to.equal(
+      'click'
+    );
+    expect(picker.open, 'picker should remain open').to.be.true;
+    expect(
+      menuScrollSpy.callCount,
+      'menu should emit scroll'
+    ).to.be.greaterThan(0);
+  });
   describe('initial value', function () {
     beforeEach(async function () {
       const test = await fixture<HTMLDivElement>(html`
@@ -2353,7 +2442,7 @@ export function runPickerTests(): void {
       el.shadowRoot.append(styles);
       await elementUpdated(el);
     });
-    // @TODO: skipping due to flakiness. Will review in the migration to Spectrum 2.
+    // @todo skipping due to flakiness. Will review in the migration to Spectrum 2.
     it.skip('scrolls selected into view on open', async () => {
       await elementUpdated(el);
 

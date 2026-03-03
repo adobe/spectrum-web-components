@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -305,9 +305,9 @@ export class TextfieldBase extends ManageHelpText(
             <textarea
                 name=${ifDefined(this.name || undefined)}
                 aria-describedby=${this.helpTextId}
-                aria-label=${this.label ||
-                this.appliedLabel ||
-                this.placeholder}
+                aria-label=${ifDefined(
+                    this.label || this.appliedLabel || this.placeholder || undefined
+                )}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 class="input"
                 maxlength=${ifDefined(
@@ -340,7 +340,9 @@ export class TextfieldBase extends ManageHelpText(
         name=${ifDefined(this.name || undefined)}
         type=${this.type}
         aria-describedby=${this.helpTextId}
-        aria-label=${this.label || this.appliedLabel || this.placeholder}
+        aria-label=${ifDefined(
+          this.label || this.appliedLabel || this.placeholder || undefined
+        )}
         aria-invalid=${ifDefined(this.invalid || undefined)}
         class="input"
         title=${this.invalid ? '' : nothing}

@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -108,7 +108,7 @@ describe('Clear Button', () => {
 
       await elementUpdated(el);
 
-      const warning = consoleStub.getCall(0).args.at(0);
+      const warning = consoleStub.getCall(0).args[0];
       const expectedContent =
         'The overBackground variant is deprecated. Please use `static-color="white"` instead.';
 
@@ -123,7 +123,7 @@ describe('Clear Button', () => {
 
       await elementUpdated(el);
 
-      const warning = consoleStub.getCall(0).args.at(0);
+      const warning = consoleStub.getCall(0).args[0];
       const expectedContent =
         'The default slot for text content in <sp-clear-button> has been deprecated';
 
@@ -138,7 +138,7 @@ describe('Clear Button', () => {
 
       await elementUpdated(el);
 
-      const warning = consoleStub.getCall(0).args.at(0);
+      const warning = consoleStub.getCall(0).args[0];
       const expectedContent =
         'The "label" attribute is required on <sp-clear-button>';
 

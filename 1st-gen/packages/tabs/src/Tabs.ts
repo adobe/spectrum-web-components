@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -250,6 +250,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
   /**
    * Scrolls through the tabs component, on the X-axis, by a given ammount of pixels/ delta. The given delta is limited to the scrollable area of the tabs component.
+   *
    * @param {number} delta - The ammount of pixels to scroll by. If the value is positive, the tabs will scroll to the right. If the value is negative, the tabs will scroll to the left.
    * @param {ScrollBehavior} behavior - The scroll behavior to use. Defaults to 'smooth'.
    */

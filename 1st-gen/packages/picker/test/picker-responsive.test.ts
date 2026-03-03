@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -184,6 +184,7 @@ describe('Picker, responsive', () => {
     it('sets shouldSupportDragAndSelect to false on touch devices', async () => {
       el = await pickerFixture();
       await elementUpdated(el);
+
       /**
        * This is a hack to set the `isTouchDevice` property to true
        * so that we can test the touch device behavior.
@@ -250,12 +251,12 @@ describe('Picker, responsive', () => {
       await elementUpdated(el);
 
       // Wait for menu to be ready.
-      if (!el.optionsMenu || el.optionsMenu.childItems.length === 0)
-          {await waitUntil(
-              () =>
-                  el.optionsMenu && el.optionsMenu.childItems.length > 0,
-              'Menu should be initialized'
-          );}
+      if (!el.optionsMenu || el.optionsMenu.childItems.length === 0) {
+        await waitUntil(
+          () => el.optionsMenu && el.optionsMenu.childItems.length > 0,
+          'Menu should be initialized'
+        );
+      }
 
       // Wait for menu to be fully updated.
       await el.optionsMenu.updateComplete;
@@ -272,10 +273,10 @@ describe('Picker, responsive', () => {
       // Ensure menu is not in scrolling state (which would prevent selection).
       el.optionsMenu.isScrolling = false;
 
-      // Click the menu item.
-      const closed = oneEvent(el, 'sp-closed');
+      // Click the menu item and wait for the change event.
+      const changed = oneEvent(el, 'change');
       menuItem.click();
-      await closed;
+      await changed;
 
       // Verify the change event was dispatched.
       expect(changeSpy.callCount).to.equal(1);

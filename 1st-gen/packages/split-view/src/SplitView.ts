@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -32,7 +32,7 @@ import { streamingListener } from '@spectrum-web-components/base/src/streaming-l
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 import styles from './split-view.css.js';
-import { WithSWCResizeObserver } from './types';
+import { WithSWCResizeObserver } from './types.js';
 
 const DEFAULT_MAX_SIZE = 3840;
 
@@ -42,7 +42,7 @@ const ARROW_KEY_CHANGE_VALUE = 10;
 
 const PAGEUPDOWN_KEY_CHANGE_VALUE = 50;
 
-const COLLAPSE_THREASHOLD = 50;
+const COLLAPSE_THRESHOLD = 50;
 
 /**
  * @element sp-split-view
@@ -78,7 +78,8 @@ export class SplitView extends SpectrumElement {
   /**
    * The start size of the primary pane, can be a real pixel number|string, percentage or "auto"
    * For example: "100", "120px", "75%" or "auto" are valid values
-   * @type {number | number + "px" | number + "%" | "auto"}
+   *
+   * @type {number | `${number}px` | `${number}%` | "auto"}
    * @attr
    */
   @property({ type: String, attribute: 'primary-size' })
@@ -261,10 +262,10 @@ export class SplitView extends SpectrumElement {
       this.vertical || this.dir === 'ltr'
         ? this.getPosition(event) - this.offset
         : this.offset - this.getPosition(event);
-    if (this.collapsible && pos < this.minPos - COLLAPSE_THREASHOLD) {
+    if (this.collapsible && pos < this.minPos - COLLAPSE_THRESHOLD) {
       pos = 0;
     }
-    if (this.collapsible && pos > this.maxPos + COLLAPSE_THREASHOLD) {
+    if (this.collapsible && pos > this.maxPos + COLLAPSE_THRESHOLD) {
       pos = this.viewSize - this.splitterSize;
     }
     this.updatePosition(pos);

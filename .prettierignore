@@ -9,6 +9,12 @@
 **/.tmp/
 **/playwright-report/
 **/test-results/
+**/tokens.css
+**/tokens.json
+1st-gen/packages/icons/
+1st-gen/packages/iconset/
+1st-gen/packages/icons-ui/
+1st-gen/packages/icons-workflow/
 
 # Documentation infrastructure scripts maintained by AI agents
 CONTRIBUTOR-DOCS/

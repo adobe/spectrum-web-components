@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -153,10 +153,13 @@ describe('Overlay Trigger', () => {
       expect(consoleWarnStub.called).to.be.true;
       const spyCall = consoleWarnStub.getCall(0);
       expect(
-        (spyCall.args.at(0) as string).includes('performance'),
+        (spyCall.args[0] as string).includes('performance'),
         'Performance optimization available'
       ).to.be.true;
-      expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        'confirm `data` shape'
+      ).to.deep.equal({
         data: {
           localName: 'overlay-trigger',
           type: 'api',

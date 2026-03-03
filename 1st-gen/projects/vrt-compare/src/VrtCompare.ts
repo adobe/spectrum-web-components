@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -326,8 +326,6 @@ export class VrtCompare extends ObserveSlotPresence(SpectrumElement, [
 
   protected override updated(changes: PropertyValues) {
     if (changes.has('zoom')) {
-      let zoom = Math.min(this.zoom, 2);
-      zoom = Math.min(zoom, 0.5);
       this.style.setProperty('--zoom-level', `${this.zoom}`);
     }
   }

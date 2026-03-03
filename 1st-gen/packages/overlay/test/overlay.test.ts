@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -167,7 +167,7 @@ describe('Overlays', () => {
         );
         button.insertAdjacentElement(
           'afterend',
-          openOverlays.at(-1) as HTMLElement
+          openOverlays[openOverlays.length - 1] as HTMLElement
         );
         await opened;
         expect(await isInteractive(outerPopover)).to.be.true;
@@ -190,7 +190,7 @@ describe('Overlays', () => {
       );
       button.insertAdjacentElement(
         'afterend',
-        openOverlays.at(-1) as HTMLElement
+        openOverlays[openOverlays.length - 1] as HTMLElement
       );
       await opened;
 
@@ -243,7 +243,7 @@ describe('Overlays', () => {
       );
       button.insertAdjacentElement(
         'afterend',
-        openOverlays.at(-1) as HTMLElement
+        openOverlays[openOverlays.length - 1] as HTMLElement
       );
       await opened;
 
@@ -273,7 +273,7 @@ describe('Overlays', () => {
       );
       button.insertAdjacentElement(
         'afterend',
-        openOverlays.at(-1) as HTMLElement
+        openOverlays[openOverlays.length - 1] as HTMLElement
       );
       await opened;
       const end = performance.now();
@@ -302,7 +302,7 @@ describe('Overlays', () => {
       );
       button.insertAdjacentElement(
         'afterend',
-        openOverlays.at(-1) as HTMLElement
+        openOverlays[openOverlays.length - 1] as HTMLElement
       );
       await opened;
       expect(await isOnTopLayer(hoverOverlay)).to.be.true;
@@ -320,7 +320,7 @@ describe('Overlays', () => {
       );
       button.insertAdjacentElement(
         'afterend',
-        openOverlays.at(-1) as HTMLElement
+        openOverlays[openOverlays.length - 1] as HTMLElement
       );
       await opened;
       await closed;
@@ -354,7 +354,7 @@ describe('Overlays', () => {
       );
       button.insertAdjacentElement(
         'afterend',
-        openOverlays.at(-1) as HTMLElement
+        openOverlays[openOverlays.length - 1] as HTMLElement
       );
       await opened;
       expect(await isOnTopLayer(customOverlay)).to.be.true;
@@ -370,7 +370,7 @@ describe('Overlays', () => {
       );
       button.insertAdjacentElement(
         'afterend',
-        openOverlays.at(-1) as HTMLElement
+        openOverlays[openOverlays.length - 1] as HTMLElement
       );
       await opened;
       expect(await isOnTopLayer(clickOverlay), 'click content open').to.be.true;
@@ -398,7 +398,10 @@ describe('Overlays', () => {
         offset: 10,
       })
     );
-    test.insertAdjacentElement('afterend', openOverlays.at(-1) as HTMLElement);
+    test.insertAdjacentElement(
+      'afterend',
+      openOverlays[openOverlays.length - 1] as HTMLElement
+    );
     await opened;
     expect(await isInteractive(el)).to.be.true;
 
@@ -429,7 +432,10 @@ describe('Overlays', () => {
         offset: 10,
       })
     );
-    test.insertAdjacentElement('afterend', openOverlays.at(-1) as HTMLElement);
+    test.insertAdjacentElement(
+      'afterend',
+      openOverlays[openOverlays.length - 1] as HTMLElement
+    );
     await opened;
     expect(await isInteractive(el)).to.be.true;
 
@@ -471,7 +477,7 @@ describe('Overlays', () => {
     );
     trigger.insertAdjacentElement(
       'afterend',
-      openOverlays.at(-1) as HTMLElement
+      openOverlays[openOverlays.length - 1] as HTMLElement
     );
     await opened;
 
@@ -517,7 +523,7 @@ describe('Overlays', () => {
     );
     trigger.insertAdjacentElement(
       'afterend',
-      openOverlays.at(-1) as HTMLElement
+      openOverlays[openOverlays.length - 1] as HTMLElement
     );
     await open;
 
@@ -615,6 +621,7 @@ describe('Overlay - type="modal"', () => {
     it('closes the first "contextmenu" when opening a second', async () => {
       const closed = oneEvent(document, 'sp-closed');
       const opened = oneEvent(document, 'sp-opened');
+
       /**
        * Right click out of the "context menu" overlay to both close
        * the first overlay and have the event passed to the surfacing page

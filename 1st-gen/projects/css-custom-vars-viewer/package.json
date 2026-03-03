@@ -1,6 +1,7 @@
 {
   "name": "@spectrum-web-components/custom-vars-viewer",
   "version": "1.11.2",
+  "private": true,
   "description": "Demo app created with Spectrum Web Components, following open-wc guidelines",
   "license": "Apache-2.0",
   "author": "Adobe",

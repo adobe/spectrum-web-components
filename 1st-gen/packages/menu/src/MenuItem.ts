@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -391,7 +391,6 @@ export class MenuItem extends LikeAnchor(
         ?disabled=${!this.hasSubmenu}
         ?open=${this.hasSubmenu && this.open && this.dependencyManager.loaded}
         .placement=${this.dir === 'ltr' ? 'right-start' : 'left-start'}
-        receives-focus="false"
         .offset=${[-10, 0] as [number, number]}
         .type=${'auto'}
         @close=${(event: Event) => event.stopPropagation()}
@@ -636,6 +635,7 @@ export class MenuItem extends LikeAnchor(
 
     return false;
   }
+
   /**
    * forward key info from keydown event to parent menu
    */

@@ -1,4 +1,48 @@
+<!-- Generated breadcrumbs - DO NOT EDIT -->
+
+[CONTRIBUTOR-DOCS](../README.md) / [Style guide](README.md) / Linting tools
+
+<!-- Document title (editable) -->
+
 # Linting tools
+
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
+
+- [Overview](#overview)
+- [Tools and configuration](#tools-and-configuration)
+    - [Tooling inventory](#tooling-inventory)
+    - [ESLint plugins](#eslint-plugins)
+    - [Stylelint plugins](#stylelint-plugins)
+- [Running linters](#running-linters)
+    - [Available commands](#available-commands)
+    - [From the command line](#from-the-command-line)
+    - [Linting a specific directory](#linting-a-specific-directory)
+    - [Pre-commit hooks](#pre-commit-hooks)
+- [IDE setup](#ide-setup)
+    - [VS Code / Cursor](#vs-code--cursor)
+    - [Troubleshooting IDE issues](#troubleshooting-ide-issues)
+- [Generation-specific notes](#generation-specific-notes)
+    - [2nd-gen](#2nd-gen)
+    - [1st-gen](#1st-gen)
+- [Common rules and conventions](#common-rules-and-conventions)
+    - [Copyright headers](#copyright-headers)
+    - [Import sorting](#import-sorting)
+    - [CSS property ordering](#css-property-ordering)
+    - [Design tokens (2nd-gen only)](#design-tokens-2nd-gen-only)
+    - [Accessibility (lit-a11y)](#accessibility-lit-a11y)
+- [Disabling rules](#disabling-rules)
+    - [ESLint](#eslint)
+    - [Stylelint](#stylelint)
+    - [When to disable rules](#when-to-disable-rules)
+- [Performance tips](#performance-tips)
+- [Version policy](#version-policy)
+
+</details>
+
+<!-- Document content (editable) -->
 
 This guide covers the linting tools used in the repository and how to work with them as a contributor.
 
@@ -16,11 +60,11 @@ Pre-commit hooks via `lint-staged` run linting and formatting on staged files au
 
 ### Tooling inventory
 
-| Tool      | Config location     | Notes                              |
-| --------- | ------------------- | ---------------------------------- |
-| ESLint    | `eslint.config.js`  | Flat config at root                |
+| Tool      | Config location       | Notes                              |
+| --------- | --------------------- | ---------------------------------- |
+| ESLint    | `eslint.config.js`    | Flat config at root                |
 | Stylelint | `stylelint.config.js` | With custom `swc/header` plugin    |
-| Prettier  | `.prettierrc.yaml`  | Separate formatter (not in ESLint) |
+| Prettier  | `.prettierrc.yaml`    | Separate formatter (not in ESLint) |
 
 ### ESLint plugins
 
@@ -43,7 +87,7 @@ Pre-commit hooks via `lint-staged` run linting and formatting on staged files au
 | Plugin                                             | Purpose                                 |
 | -------------------------------------------------- | --------------------------------------- |
 | `stylelint-config-standard`                        | Baseline CSS rules                      |
-| `stylelint-order`                                  | Logical order property ordering          |
+| `stylelint-order`                                  | Logical order property ordering         |
 | `stylelint-declaration-strict-value`               | Design token enforcement (2nd-gen only) |
 | `@spectrum-web-components/stylelint-header-plugin` | Custom header comment rule              |
 
@@ -51,16 +95,18 @@ Pre-commit hooks via `lint-staged` run linting and formatting on staged files au
 
 ### Available commands
 
-| Command             | Description                        |
-| ------------------- | ---------------------------------- |
-| `yarn lint`         | Check all (ESLint, Stylelint, Prettier) |
-| `yarn lint:eslint`  | Check JavaScript/TypeScript only   |
-| `yarn lint:styles`  | Check CSS only                     |
-| `yarn lint:prettier`| Check formatting only              |
-| `yarn format`       | Fix all (ESLint, Stylelint, Prettier)   |
-| `yarn format:eslint`| Fix JavaScript/TypeScript only     |
-| `yarn format:styles`| Fix CSS only                       |
-| `yarn format:prettier`| Fix formatting only              |
+| Command                | Description                               |
+| ---------------------- | ----------------------------------------- |
+| `yarn lint`            | Check all (ESLint, Stylelint, Prettier)   |
+| `yarn lint:1st-gen`    | Check all on 1st-gen only                 |
+| `yarn lint:2nd-gen`    | Check all on 2nd-gen only                 |
+| `yarn lint:eslint`     | Check JavaScript/TypeScript only          |
+| `yarn lint:styles`     | Check CSS only                            |
+| `yarn lint:prettier`   | Check formatting only                     |
+| `yarn format`          | Fix all (ESLint, Stylelint, Prettier)     |
+| `yarn format:eslint`   | Fix JavaScript/TypeScript only            |
+| `yarn format:styles`   | Fix CSS only                              |
+| `yarn format:prettier` | Fix formatting only                       |
 
 ### From the command line
 
@@ -80,12 +126,32 @@ yarn lint:prettier
 yarn format:eslint
 yarn format:styles
 yarn format:prettier
-
-# Lint specific files directly
-yarn eslint path/to/file.ts
-yarn stylelint "path/to/*.css"
-yarn prettier --check path/to/file.ts
 ```
+
+### Linting a specific directory
+
+Set the `LINT_PATH` environment variable to limit lint or format to a single directory. Omit it to run over the whole repo.
+
+```bash
+# Lint one package or directory
+LINT_PATH=1st-gen/packages/checkbox yarn lint
+LINT_PATH=2nd-gen/packages/swc yarn lint
+
+# Format one package or directory
+LINT_PATH=1st-gen/packages/checkbox yarn format
+
+# Same for individual tools
+LINT_PATH=1st-gen/packages/checkbox yarn lint:eslint
+LINT_PATH=1st-gen/packages/checkbox yarn lint:styles
+LINT_PATH=1st-gen/packages/checkbox yarn format:styles
+```
+
+`LINT_PATH` is a directory path only (e.g. a package folder). All three tools (ESLint, Stylelint, Prettier) use that path when set.
+
+For generation-wide linting without a path, you can also use:
+
+- `yarn lint:1st-gen` — Runs all linters on `1st-gen` only
+- `yarn lint:2nd-gen` — Runs all linters on `2nd-gen` only
 
 ### Pre-commit hooks
 
@@ -241,6 +307,7 @@ const x = something();
 ## Performance tips
 
 - All lint commands use `--cache` by default for faster subsequent runs
+- Use `LINT_PATH=path/to/package yarn lint` to lint only the directory you are changing
 - Use specific commands (`yarn lint:eslint`) instead of `yarn lint` during development
 - Let `lint-staged` handle pre-commit linting automatically
 - Full linting runs in CI as the final gate

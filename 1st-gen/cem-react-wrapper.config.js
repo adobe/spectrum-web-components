@@ -10,11 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import { readFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
-
-import yaml from 'js-yaml';
 
 import defineElementPlugin from './scripts/define-element-plugin.js';
 import reactWrapperPlugin from './scripts/cem-plugin-react-wrapper.js';
@@ -38,9 +35,6 @@ export default {
     reactWrapperPlugin({
       exclude: ['StoryDecorator', 'TooltipOpenable'],
       outDir: join(__dirname, 'react'),
-      prettierConfig: yaml.load(
-        readFileSync(join(__dirname, '.prettierrc.yaml'))
-      ),
     }),
   ],
 };

@@ -52,7 +52,6 @@
   white-space: nowrap;
   border: 0;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
   clip-path: inset(50%);
 }
 
@@ -93,7 +92,7 @@
 }
 
 /*
- * The following three declarationsa required while https://github.com/adobe/spectrum-css/issues/521
+ * The following three declarations are required while https://github.com/adobe/spectrum-css/issues/521
  * waits to be addressed at the Spectrum CSS level.
  */
 
@@ -123,7 +122,6 @@
   height: 1px;
   white-space: nowrap;
   overflow: hidden;
-  clip: rect(0 0 0 0);
   clip-path: inset(50%);
 }
 

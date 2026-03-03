@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -30,6 +30,8 @@ export default {
       : []),
     // https://geometricpanda.github.io/storybook-addon-badges/
     '@geometricpanda/storybook-addon-badges',
+    // Screen reader addon (shared from 2nd-gen).
+    '../../2nd-gen/packages/swc/.storybook/addons/screen-reader-addon',
   ],
   framework: {
     name: '@storybook/web-components-webpack5',
@@ -54,7 +56,7 @@ export default {
           '@spectrum-web-components/core': resolve(
             '../2nd-gen/packages/core/dist'
           ),
-          '@adobe/swc': resolve('../2nd-gen/packages/swc/dist'),
+          '@adobe/spectrum-wc': resolve('../2nd-gen/packages/swc/dist'),
         },
       },
     });

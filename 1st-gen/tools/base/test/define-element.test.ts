@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -190,10 +190,8 @@ describe('define-element', function () {
       expect(this.warn.called, 'should call console.warn()').to.be.true;
       const spyCall = this.warn.getCall(0);
       expect(
-        (spyCall.args.at(0) as string).includes('redefine'),
-        `message should warn about redefining an element, instead got "${spyCall.args.at(
-          0
-        )}"`
+        (spyCall.args[0] as string).includes('redefine'),
+        `message should warn about redefining an element, instead got "${spyCall.args[0]}"`
       ).to.be.true;
     })
   );

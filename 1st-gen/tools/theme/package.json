@@ -19,16 +19,10 @@
       "development": "./src/index.dev.js",
       "default": "./src/index.js"
     },
-    "./src/theme.css.js": "./src/theme.css.js",
-    "./src/themes-core-tokens.js": {
-      "development": "./src/themes-core-tokens.dev.js",
-      "default": "./src/themes-core-tokens.js"
+    "./core.js": {
+      "development": "./core.dev.js",
+      "default": "./core.js"
     },
-    "./src/themes.js": {
-      "development": "./src/themes.dev.js",
-      "default": "./src/themes.js"
-    },
-    "./src/typography.css.js": "./src/typography.css.js",
     "./express/scale-large-core-tokens.js": {
       "development": "./express/scale-large-core-tokens.dev.js",
       "default": "./express/scale-large-core-tokens.js"
@@ -78,6 +72,26 @@
       "default": "./express/theme-lightest.js"
     },
     "./package.json": "./package.json",
+    "./scale-large-core-tokens.js": {
+      "development": "./scale-large-core-tokens.dev.js",
+      "default": "./scale-large-core-tokens.js"
+    },
+    "./scale-large.js": {
+      "development": "./scale-large.dev.js",
+      "default": "./scale-large.js"
+    },
+    "./scale-medium-core-tokens.js": {
+      "development": "./scale-medium-core-tokens.dev.js",
+      "default": "./scale-medium-core-tokens.js"
+    },
+    "./scale-medium.js": {
+      "development": "./scale-medium.dev.js",
+      "default": "./scale-medium.js"
+    },
+    "./sp-theme.js": {
+      "development": "./sp-theme.dev.js",
+      "default": "./sp-theme.js"
+    },
     "./spectrum-two/scale-large-core-tokens.js": {
       "development": "./spectrum-two/scale-large-core-tokens.dev.js",
       "default": "./spectrum-two/scale-large-core-tokens.js"
@@ -203,30 +217,16 @@
     "./src/theme-light.css.js": "./src/theme-light.css.js",
     "./src/theme-lightest-core-tokens.css.js": "./src/theme-lightest-core-tokens.css.js",
     "./src/theme-lightest.css.js": "./src/theme-lightest.css.js",
-    "./core.js": {
-      "development": "./core.dev.js",
-      "default": "./core.js"
+    "./src/theme.css.js": "./src/theme.css.js",
+    "./src/themes-core-tokens.js": {
+      "development": "./src/themes-core-tokens.dev.js",
+      "default": "./src/themes-core-tokens.js"
     },
-    "./sp-theme.js": {
-      "development": "./sp-theme.dev.js",
-      "default": "./sp-theme.js"
+    "./src/themes.js": {
+      "development": "./src/themes.dev.js",
+      "default": "./src/themes.js"
     },
-    "./scale-medium.js": {
-      "development": "./scale-medium.dev.js",
-      "default": "./scale-medium.js"
-    },
-    "./scale-medium-core-tokens.js": {
-      "development": "./scale-medium-core-tokens.dev.js",
-      "default": "./scale-medium-core-tokens.js"
-    },
-    "./scale-large.js": {
-      "development": "./scale-large.dev.js",
-      "default": "./scale-large.js"
-    },
-    "./scale-large-core-tokens.js": {
-      "development": "./scale-large-core-tokens.dev.js",
-      "default": "./scale-large-core-tokens.js"
-    },
+    "./src/typography.css.js": "./src/typography.css.js",
     "./theme-dark-core-tokens.js": {
       "development": "./theme-dark-core-tokens.dev.js",
       "default": "./theme-dark-core-tokens.js"

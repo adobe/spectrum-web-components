@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -71,10 +71,13 @@ describe('Button', () => {
 
       const spyCall = consoleWarnStub.getCall(0);
       expect(
-        (spyCall.args.at(0) as string).includes('deprecated'),
+        (spyCall.args[0] as string).includes('deprecated'),
         'confirm deprecated variant warning'
       ).to.be.true;
-      expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        'confirm `data` shape'
+      ).to.deep.equal({
         data: {
           localName: 'sp-button',
           type: 'api',

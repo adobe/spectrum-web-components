@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -30,6 +30,7 @@ import {
 } from '@spectrum-web-components/base/src/directives.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
+/* eslint-disable import/no-extraneous-dependencies */
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder-open.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';

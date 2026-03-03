@@ -12,7 +12,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { __test__ } from '../utils.js';
+import { __test__ } from '../src/tokens.js';
 
 describe('extractTokenValues', () => {
   const { extractTokenValues } = __test__;
@@ -151,6 +151,32 @@ describe('extractTokenValues', () => {
         light: '#ccc',
         dark: '#ccc',
       },
+    });
+  });
+});
+
+describe('extractRenamedTokenValues', () => {
+  const { extractRenamedTokenValues } = __test__;
+
+  it('collects renamed mapping for deprecated tokens only', () => {
+    const json = {
+      oldToken: {
+        deprecated: true,
+        renamed: 'new-token',
+        value: '1rem',
+      },
+      notDeprecated: {
+        renamed: 'ignored',
+        value: '2rem',
+      },
+      deprecatedWithoutRename: {
+        deprecated: true,
+        value: '3rem',
+      },
+    };
+
+    expect(extractRenamedTokenValues(json)).toEqual({
+      oldToken: 'new-token',
     });
   });
 });

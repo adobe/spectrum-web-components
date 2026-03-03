@@ -18,7 +18,8 @@
   ],
   "dependencies": {
     "vscode-languageclient": "9.0.1",
-    "vscode-languageserver": "9.0.1"
+    "vscode-languageserver": "9.0.1",
+    "vscode-languageserver-textdocument": "1.0.12"
   },
   "description": "Autocomplete, hover, and diagnostics for token() values",
   "devDependencies": {
@@ -32,7 +33,7 @@
   },
   "displayName": "SWC token() Intellisense",
   "engines": {
-    "vscode": "1.1.37"
+    "vscode": "^1.109.0"
   },
   "homepage": "https://opensource.adobe.com/spectrum-web-components/",
   "icon": "resources/icon.png",
@@ -59,7 +60,7 @@
     "package": "vsce package --no-dependencies",
     "test": "vitest --run",
     "test:watch": "vitest --watch",
-    "tokens": "swc-tokens --outputType tokens --out ./tokens.json --prefix swc"
+    "tokens": "swc-tokens --outputType data --out ./tokens.json --prefix swc"
   },
   "version": "0.0.1"
 }
