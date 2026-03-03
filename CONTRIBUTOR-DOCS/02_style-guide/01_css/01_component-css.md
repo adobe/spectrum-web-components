@@ -21,7 +21,6 @@
     - [When to use `:host([attribute])`](#when-to-use-hostattribute)
     - [When to use classes vs attributes](#when-to-use-classes-vs-attributes)
     - [Managing specificity with `:where()`](#managing-specificity-with-where)
-    - [Avoiding descendant selectors](#avoiding-descendant-selectors)
 - [Variant implementation patterns](#variant-implementation-patterns)
 - [State implementation patterns](#state-implementation-patterns)
 - [Size variant patterns](#size-variant-patterns)
@@ -200,20 +199,6 @@ See [variant implementation patterns](#variant-implementation-patterns) for the 
 ### Managing specificity with `:where()`
 
 See [Managing Specificity](#managing-specificity) for full guidance. In short: wrap compounded class selectors in `:where()` to keep specificity at `(0,1,0)`.
-
-### Avoiding descendant selectors
-
-Prefer direct class selectors over deep descendant chains. Use `:has()` for conditional styling when needed.
-
-```css
-/* Prefer */
-.swc-Badge:has(.swc-Badge-icon) {
-  --swc-badge-padding-inline: var(--swc-badge-with-icon-padding-inline, token("component-edge-to-visual-100"));
-}
-
-/* Avoid deep nesting */
-.swc-Badge .swc-Badge-icon ~ .swc-Badge-label { }
-```
 
 ## Variant implementation patterns
 

@@ -56,7 +56,6 @@
     - [Why This Happens](#why-this-happens)
     - [Why This Is a Problem](#why-this-is-a-problem)
     - [✅ Correct Approach](#-correct-approach)
-- [10. Using deep descendant selectors](#10-using-deep-descendant-selectors)
     - [❌ Anti-Pattern](#-anti-pattern)
     - [Why This Happens](#why-this-happens)
     - [Why This Is a Problem](#why-this-is-a-problem)
@@ -430,52 +429,6 @@ After migration, Badge relies solely on `.swc-Badge` and attributes.
 ### ✅ Correct Approach
 
 Follow the [property order quick reference](06_property-order-quick-reference.md): Display → Position → Flex/Grid → Alignment → Dimensions → Spacing → Typography → Decoration → Overflow → User interface → and so on. See the [Badge example](06_property-order-quick-reference.md#example-from-badge) for a fully annotated ruleset.
-
-## 10. Using deep descendant selectors
-
-### ❌ Anti-Pattern
-
-```css
-.swc-Badge .swc-Badge-icon + .swc-Badge-label {
-  margin-inline-start: 4px;
-}
-
-.swc-StatusLight .swc-StatusLight-dot {
-  flex-shrink: 0;
-}
-```
-
-### Why This Happens
-
-- Targeting internal structure directly
-- Not aware of `:has()` for conditional styling
-
-### Why This Is a Problem
-
-- Brittle when DOM structure changes
-- Can create unexpected specificity
-- Often unnecessary when layout primitives (flex, gap) handle spacing
-
-### ✅ Correct Approach
-
-Use `:has()` for conditional styling. Prefer layout primitives (flex, gap, align-items) over margin hacks.
-
-```css
-/* Conditional padding when icon is present */
-.swc-Badge:has(.swc-Badge-icon) {
-  --swc-badge-padding-inline: var(--swc-badge-with-icon-padding-inline, token("component-edge-to-visual-100"));
-}
-
-/* Direct child is fine when structure is stable; prefer gap over margin */
-.swc-StatusLight {
-  display: flex;
-  gap: var(--_swc-statuslight-text-to-visual);
-  align-items: flex-start;
-}
-```
-
-🔎 **Badge reference:**  
-[badge.css](../../../2nd-gen/packages/swc/components/badge/badge.css) uses `:has(.swc-Badge-icon)` to adjust padding. [Status Light](../../../2nd-gen/packages/swc/components/status-light/status-light.css) uses flex and gap for layout.
 
 ## Before/after refactoring examples
 
