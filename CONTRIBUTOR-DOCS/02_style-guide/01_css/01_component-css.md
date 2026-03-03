@@ -59,12 +59,12 @@ Follow this outline for ordering rulesets within component stylesheets. This wil
 
 1. *If applicable*: `@layer` , `@keyframes`
 2. `:host`
-        - Considered as a "container" for the component, and should not directly manage component styles itself. Its only concern is how the web component participates in the layout.
-        - Primarily includes a `display`  property to match the layout flow intent, using either `inline-block` or `block`
-            - Avoid `inline` which would prevent consumers applying reasonable layout properties such as `margin`
-        - May also include "defensive" styles for `inline-block` elements
-            - `place-self: start` to avoid stretch behaviors if they are placed in a flex or grid context
-            - `vertical-align: middle` to keep a vertically centered position next to other `inline-block` elements (ex. a row of badges outside of a flex or grid context)
+    - Considered as a "container" for the component, and should not directly manage component styles itself. Its only concern is how the web component participates in the layout.
+    - Primarily includes a `display` property to match the layout flow intent, using either `inline-block` or `block`
+        - Avoid `inline` which would prevent consumers applying reasonable layout properties such as `margin`
+    - May also include "defensive" styles for `inline-block` elements
+        - `place-self: start` to avoid stretch behaviors if they are placed in a flex or grid context
+        - `vertical-align: middle` to keep a vertically centered position next to other `inline-block` elements (ex. a row of badges outside of a flex or grid context)
 3. `* { box-sizing: border-box; }`
     - Unless there is a strong reason not to, this rule should be included in all components. Expand to pseudo-elements if in use.
     - Required if the component or its descendants set  `padding` and/or `border` to avoid the compounding effect against the element's size.
