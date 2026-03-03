@@ -19,7 +19,10 @@ import * as iconElements from '@adobe/spectrum-wc/icon/elements';
 
 import '@adobe/spectrum-wc/icon';
 
-import { ICON_VALID_SIZES } from '../../../../core/components/icon/Icon.types.js';
+import {
+  ICON_VALID_SIZES,
+  type IconSize,
+} from '../../../../core/components/icon/Icon.types.js';
 
 // ────────────────
 //    METADATA
@@ -66,6 +69,14 @@ export default meta;
 // ────────────────────
 
 const iconSvg = Chevron100Icon();
+
+const sizeLabels = {
+  xs: 'Extra-small',
+  s: 'Small',
+  m: 'Medium',
+  l: 'Large',
+  xl: 'Extra-large',
+} as const satisfies Record<IconSize, string>;
 
 // ────────────────────
 //    AUTODOCS STORY
@@ -131,6 +142,32 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 /**
+ * Icons come in five sizes to fit different layout contexts:
+ *
+ * - **Extra-small (`xs`)**: Dense UIs and compact metadata rows
+ * - **Small (`s`)**: Supporting iconography in constrained spaces
+ * - **Medium (`m`)**: Default size for general component usage
+ * - **Large (`l`)**: Prominent icon usage in larger controls
+ * - **Extra-large (`xl`)**: High-emphasis icon presentation
+ *
+ * All sizes are shown below for comparison.
+ */
+export const Sizes: Story = {
+  render: (_args) => html`
+    ${ICON_VALID_SIZES.map(
+      (size) => html`
+        <swc-icon label=${sizeLabels[size]} size=${size}>${iconSvg}</swc-icon>
+      `
+    )}
+  `,
+  tags: ['options'],
+  parameters: {
+    flexLayout: true,
+    'section-order': 1,
+  },
+};
+
+/**
  * ### Shared templates
  *
  * Import reusable templates from `@adobe/spectrum-wc/icon/elements` and slot them into `<swc-icon>`.
@@ -145,6 +182,7 @@ export const Sources: Story = {
   tags: ['options'],
   parameters: {
     flexLayout: true,
+    'section-order': 2,
   },
 };
 
@@ -164,7 +202,7 @@ export const SharedTemplates: Story = {
   tags: ['options'],
   parameters: {
     flexLayout: true,
-    'section-order': 1,
+    'section-order': 3,
   },
 };
 
@@ -207,7 +245,7 @@ export const AvailableIcons: Story = {
   tags: ['options'],
   parameters: {
     flexLayout: true,
-    'section-order': 2,
+    'section-order': 4,
   },
 };
 
