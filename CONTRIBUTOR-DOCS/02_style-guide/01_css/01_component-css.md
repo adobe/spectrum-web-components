@@ -162,14 +162,6 @@ Use comments to explain non-obvious choices. Keep them short and use sentence ca
 **Example from [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css)**:
 
 ```css
-:host([variant="notice"]),
-:host([variant="celery"]),
-:host([variant="chartreuse"]),
-:host([variant="orange"]),
-:host([variant="yellow"]) {
-  --swc-badge-label-icon-color: token("black");
-}
-
 /* NOTE: `accent` is the default color */
 
 :host([variant="neutral"]) {
