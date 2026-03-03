@@ -12,7 +12,7 @@
 <summary><strong>In this doc</strong></summary>
 
 - [Why property order matters](#why-property-order-matters)
-- [Property order checklist](#property-order-checklist)
+- [Expected property order](#expected-property-order)
 - [Example from Badge](#example-from-badge)
 - [Example from Status Light](#example-from-status-light)
 
@@ -30,7 +30,7 @@ For full context, see [Component CSS](01_component-css.md#rule-order).
 - **Readability**: Related properties stay together
 - **Maintainability**: Changes are easier to spot in code review
 
-## Property order checklist
+## Expected property order
 
 Use this order inside each ruleset:
 
