@@ -217,7 +217,7 @@ Prefer direct class selectors over deep descendant chains. Use `:has()` for cond
 
 ## Variant implementation patterns
 
-Variants change how the component looks. Use the right selector based on customization intent.
+Variants change how the component looks. Use the right selector based on customization intent of [custom property exposure](02_custom-properties.md#component-custom-property-exposure).
 
 | Variant type       | Selector                                 | Example                                |
 | ------------------ | ---------------------------------------- | -------------------------------------- |
