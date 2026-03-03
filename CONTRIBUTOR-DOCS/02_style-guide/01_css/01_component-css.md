@@ -11,28 +11,29 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-- [Contributor TL;DR](#contributor-tldr)
-- [Rule Order](#rule-order)
-- [CSS property ordering](#css-property-ordering)
-- [Class naming patterns](#class-naming-patterns)
-- [Comment conventions](#comment-conventions)
-- [Selector patterns](#selector-patterns)
+- [Component CSS](#component-css)
+  - [Contributor TL;DR](#contributor-tldr)
+  - [Rule Order](#rule-order)
+  - [CSS property ordering](#css-property-ordering)
+  - [Class naming patterns](#class-naming-patterns)
+  - [Comment conventions](#comment-conventions)
+  - [Selector patterns](#selector-patterns)
     - [When to use `:host`](#when-to-use-host)
     - [When to use `:host([attribute])`](#when-to-use-hostattribute)
     - [When to use classes vs attributes](#when-to-use-classes-vs-attributes)
     - [Managing specificity with `:where()`](#managing-specificity-with-where)
-- [Variant implementation patterns](#variant-implementation-patterns)
-- [State implementation patterns](#state-implementation-patterns)
-- [Size variant patterns](#size-variant-patterns)
-- [Animation and transition patterns](#animation-and-transition-patterns)
-- [Forced colors requirements](#forced-colors-requirements)
-- [Managing Specificity](#managing-specificity)
+  - [Variant implementation patterns](#variant-implementation-patterns)
+  - [State implementation patterns](#state-implementation-patterns)
+  - [Size variant patterns](#size-variant-patterns)
+  - [Animation and transition patterns](#animation-and-transition-patterns)
+  - [Forced colors requirements](#forced-colors-requirements)
+  - [Managing Specificity](#managing-specificity)
     - [Shadow DOM Specificity and Custom Property Inheritance](#shadow-dom-specificity-and-custom-property-inheritance)
     - [Using Cascade Layers (`@layer`)](#using-cascade-layers-layer)
-- [Component Specs vs. Component Styles](#component-specs-vs-component-styles)
-- [Color Themes](#color-themes)
+  - [Component Specs vs. Component Styles](#component-specs-vs-component-styles)
+  - [Color Themes](#color-themes)
     - [Modifying Non-Color Properties](#modifying-non-color-properties)
-- [Closing Note for Contributors](#closing-note-for-contributors)
+  - [Closing Note for Contributors](#closing-note-for-contributors)
 
 </details>
 
@@ -89,11 +90,31 @@ Sizes, variants, and states should primarily modify the component via updating c
 
 ## CSS property ordering
 
-Inside each ruleset, order properties in a consistent way. This makes stylesheets easier to scan and reduces merge conflicts.
+Inside each ruleset, order properties in a consistent way. This makes stylesheets easier to scan and reduces merge conflicts. This order is **enforced by the linter** (`stylelint-order`), so you don't need to memorize it.
 
-**Order**: Display → Position → Flex/Grid → Alignment → Dimensions → Spacing → Typography → Decoration → Overflow → User interface → Color adjustment → Generated content → SVG → Effects → Transforms → Transitions/Animations
+<details>
+<summary><strong>Expected property order</strong></summary>
 
-For the full list and examples, see the [property order quick reference](06_property-order-quick-reference.md).
+1. Display
+2. Position
+3. Flex/Grid
+4. Alignment
+5. Dimensions
+6. Spacing
+7. Typography
+8. Decoration
+9. Overflow
+10. User interface
+11. Color adjustment
+12. Generated content
+13. SVG
+14. Effects
+15. Transforms
+16. Transitions/Animations
+
+</details>
+
+For the full list and annotated examples, see the [property order quick reference](06_property-order-quick-reference.md).
 
 **Example from [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css)**:
 
@@ -124,6 +145,8 @@ Use these patterns so class names are predictable across components.
 | `.swc-ComponentName--modifier` | Variant or state modifier      | `.swc-Badge--gray`, `.swc-Badge--fixed-inline-start` |
 
 **Why**: Consistent naming helps contributors find and update styles. The `--` suffix signals a modifier that changes the base appearance.
+
+> **Note**: Classes are not the only way to apply variants and states — attribute selectors (e.g., `:host([variant="positive"])`) are preferred when exposing a customization surface. See [Variant implementation patterns](#variant-implementation-patterns) for guidance on when to use classes vs. attributes.
 
 **Example from [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css)**:
 

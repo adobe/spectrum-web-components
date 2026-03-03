@@ -428,7 +428,7 @@ After migration, Badge relies solely on `.swc-Badge` and attributes.
 
 ### ✅ Correct Approach
 
-Follow the [property order quick reference](06_property-order-quick-reference.md): Display → Position → Flex/Grid → Alignment → Dimensions → Spacing → Typography → Decoration → Overflow → User interface → and so on. See the [Badge example](06_property-order-quick-reference.md#example-from-badge) for a fully annotated ruleset.
+Property order is enforced by the linter — run `yarn format:styles` to sort automatically. See the [property order quick reference](06_property-order-quick-reference.md) for the expected order and the [Badge example](06_property-order-quick-reference.md#example-from-badge) for a fully annotated ruleset.
 
 ## Before/after refactoring examples
 
