@@ -32,7 +32,7 @@ For full context, see [Component CSS](01_component-css.md#rule-order).
 
 ## Property order checklist
 
-Use this order inside each ruleset:
+This is the expected order as enforced by `stylelint-order`:
 
 | #  | Category                   | Common properties                                                                                                                                        |
 | -- | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
