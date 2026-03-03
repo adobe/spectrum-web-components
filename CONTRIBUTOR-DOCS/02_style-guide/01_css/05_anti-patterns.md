@@ -51,7 +51,6 @@
     - [Why This Happens](#why-this-happens)
     - [Why This Is a Problem](#why-this-is-a-problem)
     - [✅ Correct Approach](#-correct-approach)
-- [9. Ignoring property order](#9-ignoring-property-order)
     - [❌ Anti-Pattern](#-anti-pattern)
     - [Why This Happens](#why-this-happens)
     - [Why This Is a Problem](#why-this-is-a-problem)
@@ -398,37 +397,6 @@ Badge exposes a minimal, intentional surface and uses `_swc-*` properties for de
 After migration, Badge relies solely on `.swc-Badge` and attributes.
 
 📖 See: *Spectrum CSS to SWC Migration → [Validation step: removing legacy classes](04_spectrum-swc-migration.md#5-validation-step-removing-legacy-classes)*
-
-## 9. Ignoring property order
-
-### ❌ Anti-Pattern
-
-```css
-.swc-Badge {
-  cursor: default;
-  display: inline-flex;
-  color: var(--swc-badge-label-icon-color, token("white"));
-  min-block-size: var(--swc-badge-height, token("component-height-100"));
-  background: var(--swc-badge-background-color, token("accent-background-color-default"));
-  align-items: center;
-  padding-inline: calc(/* ... */);
-}
-```
-
-### Why This Happens
-
-- Adding properties as they occur during development
-- Copy-pasting from different sources
-
-### Why This Is a Problem
-
-- Harder to scan and find properties
-- Inconsistent across components
-- Increases merge conflicts
-
-### ✅ Correct Approach
-
-Property order is enforced by the linter — run `yarn format:styles` to sort automatically. See the [property order quick reference](06_property-order-quick-reference.md) for the expected order and the [Badge example](06_property-order-quick-reference.md#example-from-badge) for a fully annotated ruleset.
 
 ## Before/after refactoring examples
 
