@@ -16,6 +16,7 @@
 - [Component CSS PR Checklist](03_component-css-pr-checklist.md)
 - [Spectrum CSS to SWC Migration](04_spectrum-swc-migration.md)
 - [Styling Anti-Patterns (What to Avoid)](05_anti-patterns.md)
+- [Property order quick reference](06_property-order-quick-reference.md)
 
 </details>
 
