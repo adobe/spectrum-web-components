@@ -4,7 +4,7 @@
     "value": "{cjk-font-family-stack}"
   },
   "cjk-font-family-stack": {
-    "value": "{adobe-clean-han-japanese, 'Adobe Clean Han', sans-serif;"
+    "value": "adobe-clean-han-japanese, 'Adobe Clean Han', sans-serif"
   },
   "code-font": {
     "skipResolution": true,
