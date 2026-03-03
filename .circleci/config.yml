@@ -312,13 +312,16 @@ jobs:
   # 2nd-gen integration tests
   test-2ndgen:
     executor: node
+    parameters:
+      browser:
+        type: string
 
     steps:
       - downstream-2ndgen
       - run:
           name: Run 2nd-gen integration tests
           command: |
-            yarn test:2nd-gen
+            VITEST_BROWSER_INSTANCES=<< parameters.browser >> yarn test:2nd-gen
       - store_test_results:
           path: /root/project/2nd-gen/packages/swc/test-results
 
@@ -366,9 +369,7 @@ jobs:
       - run:
           name: Run axe-core WCAG tests
           command: |
-            npx http-server 2nd-gen/packages/swc/storybook-static -p 6006 --silent &
-            sleep 5
-            yarn workspace @adobe/spectrum-wc test:storybook --url http://127.0.0.1:6006 --index-json --ci --junit
+            yarn start-server-and-test "npx http-server 2nd-gen/packages/swc/storybook-static -p 6006 --silent" http://127.0.0.1:6006 "yarn workspace @adobe/spectrum-wc test:storybook --url http://127.0.0.1:6006 --index-json --ci --junit"
       - store_test_results:
           path: /root/project/2nd-gen/packages/swc
 
@@ -564,7 +565,11 @@ workflows:
   build:
     jobs:
       # 2nd-gen tests
-      - test-2ndgen
+      - test-2ndgen:
+          name: test-2ndgen-<< matrix.browser >>
+          matrix:
+            parameters:
+              browser: [chromium, firefox, webkit]
       - test-2ndgen-coverage
       - test-2ndgen-a11y
       - test-2ndgen-axe

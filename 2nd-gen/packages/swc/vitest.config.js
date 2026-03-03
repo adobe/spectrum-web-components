@@ -18,6 +18,14 @@ import { defineConfig, mergeConfig } from 'vitest/config';
 import viteConfig from './vite.config.ts';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
+const allowedBrowsers = new Set(['chromium', 'firefox', 'webkit']);
+const browserInstances = (process.env.VITEST_BROWSER_INSTANCES ?? 'chromium')
+  .split(',')
+  .map((browser) => browser.trim().toLowerCase())
+  .filter((browser) => allowedBrowsers.has(browser))
+  .map((browser) => ({ browser }));
+const resolvedBrowserInstances =
+  browserInstances.length > 0 ? browserInstances : [{ browser: 'chromium' }];
 
 export default mergeConfig(
   viteConfig,
@@ -121,7 +129,7 @@ export default mergeConfig(
               enabled: true,
               provider: playwright(),
               headless: true,
-              instances: [{ browser: 'chromium' }],
+              instances: resolvedBrowserInstances,
             },
             globals: true,
             setupFiles: ['./.storybook/vitest.setup.ts'],
