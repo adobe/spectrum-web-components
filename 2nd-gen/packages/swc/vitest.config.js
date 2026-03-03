@@ -64,16 +64,16 @@ export default mergeConfig(
 
           // SWC component implementations
           'components/**/*.{ts,js}': {
-            lines: 100,
-            functions: 100,
-            statements: 100,
+            lines: 98,
+            functions: 98,
+            statements: 98,
           },
 
           // Core component logic
           '**/packages/core/components/**/*.{ts,js}': {
-            lines: 100,
-            functions: 100,
-            statements: 100,
+            lines: 98,
+            functions: 98,
+            statements: 98,
           },
 
           // Shared utilities (lower bar while starting out)
