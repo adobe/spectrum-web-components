@@ -21,5 +21,15 @@
   --spectrum-switch-handle-border-color-selected-focus: var(--system-switch-handle-border-color-selected-focus);
   --spectrum-switch-background-color: var(--system-switch-background-color);
   --spectrum-switch-background-color-disabled: var(--system-switch-background-color-disabled);
-  --spectrum-switch-handle-background-color: var(--system-switch-handle-background-color);
+  --spectrum-switch-handle-background-color-default: var(--system-switch-handle-background-color-default);
+  --spectrum-switch-handle-background-color-hover: var(--system-switch-handle-background-color-hover);
+  --spectrum-switch-handle-background-color-down: var(--system-switch-handle-background-color-down);
+  --spectrum-switch-handle-background-color-focus: var(--system-switch-handle-background-color-focus);
+  --spectrum-switch-handle-background-color-selected-default: var(--system-switch-handle-background-color-selected-default);
+  --spectrum-switch-handle-background-color-selected-hover: var(--system-switch-handle-background-color-selected-hover);
+  --spectrum-switch-handle-background-color-selected-down: var(--system-switch-handle-background-color-selected-down);
+  --spectrum-switch-handle-background-color-selected-focus: var(--system-switch-handle-background-color-selected-focus);
+
+  /* --spectrum-switch-control-width: var(--system-switch-control-width);
+  --spectrum-switch-control-height: var(--system-switch-control-height); */
 }
