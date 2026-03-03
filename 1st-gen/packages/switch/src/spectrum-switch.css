@@ -33,11 +33,11 @@
 :host([emphasized]) {
   --spectrum-switch-background-color-selected-default: var(--spectrum-accent-color-900);
   --spectrum-switch-background-color-selected-hover: var(--spectrum-accent-color-1000);
-  --spectrum-switch-background-color-selected-down: var(--spectrum-accent-color-1100);
+  --spectrum-switch-background-color-selected-down: var(--spectrum-switch-background-color-emphasized-selected-down);
   --spectrum-switch-background-color-selected-focus: var(--spectrum-accent-color-1000);
   --spectrum-switch-handle-border-color-selected-default: var(--spectrum-accent-color-900);
   --spectrum-switch-handle-border-color-selected-hover: var(--spectrum-accent-color-1000);
-  --spectrum-switch-handle-border-color-selected-down: var(--spectrum-accent-color-1100);
+  --spectrum-switch-handle-border-color-selected-down: var(--spectrum-switch-handle-border-color-emphasized-selected-down);
   --spectrum-switch-handle-border-color-selected-focus: var(--spectrum-accent-color-1000);
 }
 

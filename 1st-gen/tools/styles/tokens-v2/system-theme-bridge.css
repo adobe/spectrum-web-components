@@ -607,7 +607,9 @@
   --system-switch-handle-border-color-selected-hover: var(--spectrum-neutral-background-color-selected-hover);
   --system-switch-handle-border-color-selected-down: var(--spectrum-neutral-background-color-selected-down);
   --system-switch-handle-border-color-selected-focus: var(--spectrum-neutral-background-color-selected-key-focus);
+  --spectrum-switch-handle-border-color-emphasized-selected-down: var(--spectrum-accent-color-1000);
   --system-switch-background-color: var(--spectrum-gray-25);
+  --system-switch-background-color-emphasized-selected-down: var(--spectrum-accent-color-1000);
   --system-switch-background-color-disabled: var(--spectrum-disabled-content-color);
   --system-switch-handle-background-color-default: var(--spectrum-neutral-content-color-default);
   --system-switch-handle-background-color-hover: var(--spectrum-neutral-content-color-hover);
