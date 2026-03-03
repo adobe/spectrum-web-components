@@ -158,7 +158,7 @@ function getPatchedTokenName(typeVar, suffix, mode) {
 }
 
 function tokenRefFromName(name) {
-  return name ? `token('${name}')` : null;
+  return name ? `token("${name}")` : null;
 }
 
 function tokenExists(tokens, name) {
@@ -166,7 +166,7 @@ function tokenExists(tokens, name) {
 }
 
 function tokenRefIfExists(tokens, name) {
-  return tokenExists(tokens, name) ? `token('${name}')` : null;
+  return tokenExists(tokens, name) ? `token("${name}")` : null;
 }
 
 function warnMissing(typeVar, what, name, debug) {
@@ -175,7 +175,7 @@ function warnMissing(typeVar, what, name, debug) {
 }
 
 /**
- * Get a token('...') reference by name and warn if missing.
+ * Get a token("...") reference by name and warn if missing.
  * Use for non-variant tokens (e.g. derived line-height-*, cjk-line-height-*, etc.)
  */
 function tokenRefOrWarn(tokens, typeVar, what, tokenName, debug) {
@@ -498,7 +498,7 @@ export async function generateTypographyCssString(options = {}) {
 
   // Separate :lang() rule once for font-family only
   out += `${langSelectorList({
-    'font-family': `token('${fontTokens.cjk}')`,
+    'font-family': `token("${fontTokens.cjk}")`,
   })}\n`;
 
   for (const typeVar of variants) {
@@ -612,10 +612,10 @@ export async function generateTypographyCssString(options = {}) {
       }),
       pickValidDecls({
         color: `var(--${cpBase}-font-color, ${colorRef})`,
-        'font-family': `var(--${cpBase}-font-family, token('${defaultFont}'))`,
+        'font-family': `var(--${cpBase}-font-family, token("${defaultFont}"))`,
         'font-weight': sansWeightRef
           ? `var(--${cpBase}-font-weight, ${sansWeightRef})`
-          : `var(--${cpBase}-font-weight, token('regular-font-weight'))`,
+          : `var(--${cpBase}-font-weight, token("regular-font-weight"))`,
         'font-size': mSizeRef
           ? `var(--${cpBase}-font-size, ${mSizeRef})`
           : null,
@@ -741,8 +741,8 @@ export async function generateTypographyCssString(options = {}) {
     // Serif modifier (cascade order wins; no compounding)
     if (tokens[serifWeightTokenName]?.value) {
       out += cssBlock(`.${className}--serif`, {
-        [`--${cpBase}-font-family`]: `token('${fontTokens.serif}')`,
-        [`--${cpBase}-font-weight`]: `token('${serifWeightTokenName}')`,
+        [`--${cpBase}-font-family`]: `token("${fontTokens.serif}")`,
+        [`--${cpBase}-font-weight`]: `token("${serifWeightTokenName}")`,
       });
       out += '\n';
     }
@@ -750,7 +750,7 @@ export async function generateTypographyCssString(options = {}) {
     // Heavy modifier (optional)
     if (tokens[sansHeavyWeightTokenName]?.value) {
       out += cssBlock(`.${className}--heavy`, {
-        [`--${cpBase}-font-weight`]: `token('${sansHeavyWeightTokenName}')`,
+        [`--${cpBase}-font-weight`]: `token("${sansHeavyWeightTokenName}")`,
       });
       out += '\n';
     }
@@ -762,7 +762,7 @@ export async function generateTypographyCssString(options = {}) {
   out += `/* =========================\n  Modifiers\n  ========================= */\n`;
 
   out += `.${prefix}-Typography--emphasized:not(${CJK_NOT_LIST}) {
-  font-style: token('italic-font-style');
+  font-style: token("italic-font-style");
 }\n`;
 
   return out;

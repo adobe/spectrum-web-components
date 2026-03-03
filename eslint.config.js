@@ -580,6 +580,11 @@ export default defineConfig([
           pathPattern: '^$',
         },
         {
+          hasProperties: ['development', 'default'],
+          order: ['development', 'default'],
+          pathPattern: '^exports\\[[^\\]]+\\]$',
+        },
+        {
           order: { type: 'asc' },
           pathPattern: '^(?!exports\\[).*',
         },
