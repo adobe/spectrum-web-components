@@ -147,17 +147,18 @@ export const noAutocomplete = (): TemplateResult => {
 };
 
 /**
- * Standalone sp-field-label: two patterns.
- * 1) Sibling – label outside the combobox; use combobox `label` for a11y.
- * 2) Slotted – sp-field-label in the field-label slot (compare visually to slotted span).
- * All story args pass through so you can use controls to see disabled, invalid, size, etc.
+ * Standalone sp-field-label: three patterns to compare visually.
+ * 1) Sibling – sp-field-label outside combobox; use combobox `label` for a11y.
+ * 2) Slotted sp-field-label – in the field-label slot.
+ * 3) Slotted native <label> – tests that ::slotted(label) gets the same styles.
+ * Use controls (size, disabled, etc.) to verify all three stay in sync.
  */
 export const withStandaloneFieldLabel = (args: StoryArgs): TemplateResult => {
   return html`
     <div style="display: flex; flex-direction: column; gap: 2rem;">
       <div>
         <p
-          style="margin: 0 0 0.5rem 0; font-size: 12px; color: var(--spectrum-global-color-gray-600);"
+          style="margin: 0 0 0.5rem 0; font-size: 12px; color: var(--spectrum-gray-600);"
         >
           Sibling: sp-field-label outside combobox
         </p>
@@ -174,9 +175,9 @@ export const withStandaloneFieldLabel = (args: StoryArgs): TemplateResult => {
       </div>
       <div>
         <p
-          style="margin: 0 0 0.5rem 0; font-size: 12px; color: var(--spectrum-global-color-gray-600);"
+          style="margin: 0 0 0.5rem 0; font-size: 12px; color: var(--spectrum-gray-600);"
         >
-          Slotted: sp-field-label in field-label slot
+          Slotted: native &lt;label&gt; in field-label slot
         </p>
         <sp-combobox
           .options=${countries}
@@ -184,13 +185,7 @@ export const withStandaloneFieldLabel = (args: StoryArgs): TemplateResult => {
           style="min-width: 80px; width: 200px;"
           ${spreadProps(args)}
         >
-          <sp-field-label
-            slot="field-label"
-            size=${args.size ?? 'm'}
-            ?disabled=${args.disabled}
-          >
-            Where do you live?
-          </sp-field-label>
+          <label slot="field-label">Where do you live?</label>
         </sp-combobox>
       </div>
     </div>
@@ -207,7 +202,7 @@ export const withStandaloneFieldLabelSideAligned = (
     <div style="display: flex; flex-direction: column; gap: 2rem;">
       <div>
         <p
-          style="margin: 0 0 0.5rem 0; font-size: 12px; color: var(--spectrum-global-color-gray-600);"
+          style="margin: 0 0 0.5rem 0; font-size: 12px; color: var(--spectrum-gray-600);"
         >
           Sibling: sp-field-label outside combobox (side-aligned)
         </p>
@@ -228,9 +223,9 @@ export const withStandaloneFieldLabelSideAligned = (
       </div>
       <div>
         <p
-          style="margin: 0 0 0.5rem 0; font-size: 12px; color: var(--spectrum-global-color-gray-600);"
+          style="margin: 0 0 0.5rem 0; font-size: 12px; color: var(--spectrum-gray-600);"
         >
-          Slotted: sp-field-label in field-label slot (side-aligned)
+        Slotted: native &lt;label&gt; in field-label slot (side-aligned)
         </p>
         <sp-combobox
           side-aligned="start"
@@ -239,13 +234,7 @@ export const withStandaloneFieldLabelSideAligned = (
           style="min-width: 80px; width: 308px;"
           ${spreadProps(args)}
         >
-          <sp-field-label
-            slot="field-label"
-            size=${args.size ?? 'm'}
-            ?disabled=${args.disabled}
-          >
-            Where do you live?
-          </sp-field-label>
+        <label slot="field-label">Where do you live?</label>
         </sp-combobox>
       </div>
     </div>

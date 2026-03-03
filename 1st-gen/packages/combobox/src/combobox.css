@@ -33,21 +33,10 @@
 
 sp-field-label,
 :host > label {
-  -webkit-font-smoothing: subpixel-antialiased;
-  -moz-osx-font-smoothing: auto;
   display: block;
   grid-area: 1 / 1;
   width: 100%;
-
-  /* Remove wrapper padding so slotted sp-field-label (which has its own padding) isn’t double-spaced */
-  padding-block: 0;
   padding-inline: 0;
-
-  /* Align slotted label with standalone sp-field-label (font-size, colors) */
-  font-size: var(--mod-fieldlabel-font-size, var(--spectrum-field-label-font-size));
-  font-weight: var(--mod-fieldlabel-font-weight, var(--spectrum-regular-font-weight));
-  line-height: var(--mod-fieldlabel-line-height, var(--spectrum-line-height-100));
-  color: var(--highcontrast-field-label-content-color, var(--mod-fieldlabel-color, var(--spectrum-neutral-subdued-content-color-default)));
 }
 
 :host([disabled]) :host > label {
