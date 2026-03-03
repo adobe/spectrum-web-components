@@ -37,7 +37,6 @@ import {
   Outline,
   Overview,
   SemanticVariants,
-  Sizes,
   Subtle,
 } from '../stories/badge.stories.js';
 
@@ -184,12 +183,20 @@ export const OutlineTest: Story = {
 };
 
 export const SizesTest: Story = {
-  ...Sizes,
+  render: () => html`
+    ${BADGE_VALID_SIZES.map(
+      (size) => html`
+        <swc-badge data-test-size=${size} size=${size} variant="informative">
+          ${size}
+        </swc-badge>
+      `
+    )}
+  `,
   play: async ({ canvasElement, step }) => {
-    await step('reflects size attribute for each valid size', async () => {
+    await step('renders all valid sizes', async () => {
       for (const size of BADGE_VALID_SIZES) {
         const badge = canvasElement.querySelector(
-          `swc-badge[size="${size}"]`
+          `swc-badge[data-test-size="${size}"]`
         ) as Badge | null;
         await badge?.updateComplete;
         expect(badge).toBeTruthy();

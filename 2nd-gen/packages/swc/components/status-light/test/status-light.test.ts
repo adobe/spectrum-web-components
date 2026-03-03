@@ -21,17 +21,9 @@ import { StatusLight } from '@adobe/spectrum-wc/status-light';
 
 import '@adobe/spectrum-wc/status-light';
 
-import {
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
+import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
 import { meta } from '../stories/status-light.stories.js';
-import {
-  Overview,
-  Playground,
-  Sizes,
-} from '../stories/status-light.stories.js';
+import { Overview, Playground } from '../stories/status-light.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
@@ -69,20 +61,24 @@ export const DefaultTest: Story = {
 // ──────────────────────────────────────────────────────────────
 
 export const SizesTest: Story = {
-  ...Sizes,
+  render: () => html`
+    ${StatusLight.VALID_SIZES.map(
+      (size) => html`
+        <swc-status-light data-test-size=${size} size=${size} variant="info">
+          ${size}
+        </swc-status-light>
+      `
+    )}
+  `,
   play: async ({ canvasElement, step }) => {
-    const statusLights = await getComponents<StatusLight>(
-      canvasElement,
-      'swc-status-light'
-    );
-
     await step('renders and reflects each size correctly', async () => {
       StatusLight.VALID_SIZES.forEach((size) => {
-        const statusLight = statusLights.find(
-          (item) => item.getAttribute('size') === size
-        ) as StatusLight;
-        expect(statusLight.variant).toBe('info');
-        expect(statusLight.size).toBe(size);
+        const statusLight = canvasElement.querySelector(
+          `swc-status-light[data-test-size="${size}"]`
+        ) as StatusLight | null;
+        expect(statusLight).toBeTruthy();
+        expect(statusLight?.variant).toBe('info');
+        expect(statusLight?.size).toBe(size);
       });
     });
   },
