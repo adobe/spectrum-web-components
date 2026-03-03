@@ -89,10 +89,9 @@ export const SlottedSvgAccessibilityTest: Story = {
     const icon = await getComponent<Icon>(canvasElement, 'swc-icon');
 
     await step('applies aria attributes to slotted svg', async () => {
-      const svg = icon.querySelector('svg');
-      expect(svg).toBeTruthy();
-      expect(svg?.getAttribute('role')).toBe('img');
-      expect(svg?.getAttribute('aria-label')).toBe('Search');
+      const svg = icon.querySelector('svg')!;
+      expect(svg.getAttribute('role')).toBe('img');
+      expect(svg.getAttribute('aria-label')).toBe('Search');
     });
   },
 };
@@ -111,10 +110,9 @@ export const NoLabelAriaHiddenTest: Story = {
     const icon = await getComponent<Icon>(canvasElement, 'swc-icon');
 
     await step('applies aria-hidden when no label', async () => {
-      const svg = icon.querySelector('svg');
-      expect(svg).toBeTruthy();
-      expect(svg?.getAttribute('aria-hidden')).toBe('true');
-      expect(svg?.hasAttribute('aria-label')).toBe(false);
+      const svg = icon.querySelector('svg')!;
+      expect(svg.getAttribute('aria-hidden')).toBe('true');
+      expect(svg.hasAttribute('aria-label')).toBe(false);
       expect(icon.getAttribute('aria-hidden')).toBe('true');
     });
   },
@@ -132,26 +130,25 @@ export const LabelTogglingTest: Story = {
   `,
   play: async ({ canvasElement, step }) => {
     const icon = await getComponent<Icon>(canvasElement, 'swc-icon');
-    const svg = () => icon.querySelector('svg');
+    const svg = () => icon.querySelector('svg')!;
 
     await step('initial label "x" sets aria-label on svg', async () => {
-      expect(svg()).toBeTruthy();
-      expect(svg()?.getAttribute('aria-label')).toBe('x');
-      expect(svg()?.getAttribute('aria-hidden')).toBeNull();
+      expect(svg().getAttribute('aria-label')).toBe('x');
+      expect(svg().getAttribute('aria-hidden')).toBeNull();
     });
 
     await step('clearing label sets aria-hidden on svg', async () => {
       icon.label = '';
       await icon.updateComplete;
-      expect(svg()?.getAttribute('aria-hidden')).toBe('true');
-      expect(svg()?.hasAttribute('aria-label')).toBe(false);
+      expect(svg().getAttribute('aria-hidden')).toBe('true');
+      expect(svg().hasAttribute('aria-label')).toBe(false);
     });
 
     await step('setting label "y" restores aria-label on svg', async () => {
       icon.label = 'y';
       await icon.updateComplete;
-      expect(svg()?.getAttribute('aria-label')).toBe('y');
-      expect(svg()?.getAttribute('aria-hidden')).toBeNull();
+      expect(svg().getAttribute('aria-label')).toBe('y');
+      expect(svg().getAttribute('aria-hidden')).toBeNull();
     });
   },
 };
