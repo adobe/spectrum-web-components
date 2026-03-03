@@ -30,7 +30,7 @@ For full context, see [Component CSS](01_component-css.md#rule-order).
 - **Readability**: Related properties stay together
 - **Maintainability**: Changes are easier to spot in code review
 
-## Property order checklist
+## Expected property order
 
 This is the expected order as enforced by `stylelint-order`:
 
