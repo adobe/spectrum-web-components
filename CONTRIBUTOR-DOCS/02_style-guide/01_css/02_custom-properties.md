@@ -35,11 +35,11 @@ This guide explains how to manage **private, internal, and exposed custom proper
 
 ## Naming Conventions
 
-| Prefix          | Purpose                                  |
-| --------------- | ---------------------------------------- |
-| `_swc-*`        | Private, internal custom property        |
-| `--swc-*`       | Exposed property available for overrides |
-| `token('name')` | Reference to a design token (no prefix)  |
+| Prefix           | Purpose                                  |
+| ---------------- | ---------------------------------------- |
+| `--_swc-*`       | Private, internal custom property        |
+| `--swc-*`        | Exposed property available for overrides |
+| `token('name')`  | Reference to a design token (no prefix)  |
 
 > Private properties are “pseudo-private”: defined on nested shadow elements rather than `:host` to prevent accidental overrides.
 
