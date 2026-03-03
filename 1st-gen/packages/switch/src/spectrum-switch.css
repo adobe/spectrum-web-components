@@ -188,11 +188,12 @@
 }
 
 #switch::before {
-  background-color: var(--highcontrast-switch-handle-background-color, var(--mod-switch-handle-background-color, var(--spectrum-switch-handle-background-color)));
+  background-color: var(--highcontrast-switch-handle-background-color, var(--mod-switch-handle-background-color-default, var(--spectrum-switch-handle-background-color-default)));
   border-color: var(--highcontrast-switch-handle-border-color-default, var(--mod-switch-handle-border-color-default, var(--spectrum-switch-handle-border-color-default)));
 }
 
 :host(:active) #input + #switch::before {
+  background-color: var(--highcontrast-switch-handle-background-color, var(--mod-switch-handle-background-color-down, var(--spectrum-switch-handle-background-color-down)));
   border-color: var(--highcontrast-switch-handle-border-color-down, var(--mod-switch-handle-border-color-down, var(--spectrum-switch-handle-border-color-down)));
 }
 
@@ -205,6 +206,7 @@
 }
 
 :host(:active[checked]) #input:enabled + #switch::before {
+  background-color: var(--highcontrast-switch-handle-background-color, var(--mod-switch-handle-background-color-selected-down, var(--spectrum-switch-handle-background-color-selected-down)));
   border-color: var(--highcontrast-switch-handle-border-color-selected-down, var(--mod-switch-handle-border-color-selected-down, var(--spectrum-switch-handle-border-color-selected-down)));
 }
 
@@ -221,6 +223,7 @@
 }
 
 :host([checked]) #input:focus-visible + #switch::before {
+  background-color: var(--highcontrast-switch-handle-background-color, var(--mod-switch-handle-background-color-selected-focus, var(--spectrum-switch-handle-background-color-selected-focus)));
   border-color: var(--highcontrast-switch-handle-border-color-selected-focus, var(--mod-switch-handle-border-color-selected-focus, var(--spectrum-switch-handle-border-color-selected-focus)));
 }
 
@@ -230,6 +233,7 @@
 
 @media (hover: hover) {
   :host(:hover) #input + #switch::before {
+    background-color: var(--highcontrast-switch-handle-background-color, var(--mod-switch-handle-background-color-hover, var(--spectrum-switch-handle-background-color-hover)));
     border-color: var(--highcontrast-switch-handle-border-color-hover, var(--mod-switch-handle-border-color-hover, var(--spectrum-switch-handle-border-color-hover)));
     box-shadow: none;
   }
@@ -243,6 +247,7 @@
   }
 
   :host([checked]:hover) #input:enabled + #switch::before {
+    background-color: var(--highcontrast-switch-handle-background-color, var(--mod-switch-handle-background-color-selected-hover, var(--spectrum-switch-handle-background-color-selected-hover)));
     border-color: var(--highcontrast-switch-handle-border-color-selected-hover, var(--mod-switch-handle-border-color-selected-hover, var(--spectrum-switch-handle-border-color-selected-hover)));
   }
 
@@ -302,6 +307,7 @@
 }
 
 :host([checked]) #input + #switch::before {
+  background-color: var(--highcontrast-switch-handle-background-color, var(--mod-switch-handle-background-color-selected-default, var(--spectrum-switch-handle-background-color-selected-default)));
   border-color: var(--highcontrast-switch-handle-border-color-selected-default, var(--mod-switch-handle-border-color-selected-default, var(--spectrum-switch-handle-border-color-selected-default)));
 }
 
