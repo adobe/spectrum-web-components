@@ -10,4 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("global-button.css");
+@layer swc-global-elements, swc-global-element-overrides;
+
+@import url("./global-button.css");

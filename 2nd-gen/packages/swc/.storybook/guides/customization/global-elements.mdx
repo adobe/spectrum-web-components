@@ -12,6 +12,32 @@ To use global element styles within the shadow DOM of extended and custom compon
 
 Individual stylesheets are also available instead of the comprehensive index as `global-[component].css`.
 
+## Customizing global elements
+
+There are two ways to provide style customizations to global elements:
+
+### Custom properties
+
+The preferred method is to pass overrides to the exposed custom properties.
+
+```css
+.swc-Button {
+  --swc-button-min-width: 10ch;
+}
+```
+
+### Overrides cascade layer
+
+If you need to modify properties not exposed through custom properties, you can pass your additions to the global element by including styles within the `swc-global-element-overrides` layer.
+
+```css
+@layer swc-global-element-overrides {
+  .swc-Button {
+    color: blue;
+  }
+}
+```
+
 ## Button Styles
 
 You may use button styling for either native links or button elements. Clases use BEM-style naming, and require the `swc-Button` class in addition to any variant classes.
