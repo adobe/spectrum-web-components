@@ -42,6 +42,7 @@ export default mergeConfig(
         provider: 'v8',
         reporter: ['text', 'json', 'html'],
         allowExternal: true,
+        reportOnFailure: true,
         include: [
           'components/**/*.{ts,js}',
           '**/packages/core/components/**/*.{ts,js}',
