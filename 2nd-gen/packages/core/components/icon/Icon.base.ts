@@ -10,11 +10,12 @@
  * governing permissions and limitations under the License.
  */
 import { PropertyValues } from 'lit';
-import { property, query } from 'lit/decorators.js';
+import { property, queryAssignedElements } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
 
-import type { IconSize } from './Icon.types.js';
+import { ICON_VALID_SIZES } from './Icon.types.js';
 
 /**
  * An icon renderer that displays slotted SVG markup.
@@ -22,7 +23,9 @@ import type { IconSize } from './Icon.types.js';
  * @attribute {string} label - Accessible label for the icon.
  * @attribute {string} size - T-shirt icon size.
  */
-export abstract class IconBase extends SpectrumElement {
+export abstract class IconBase extends SizedMixin(SpectrumElement, {
+  validSizes: [...ICON_VALID_SIZES],
+}) {
   // ──────────────────
   //     SHARED API
   // ──────────────────
@@ -33,18 +36,18 @@ export abstract class IconBase extends SpectrumElement {
   @property()
   public label = '';
 
-  /**
-   * Icon t-shirt size.
-   */
-  @property({ reflect: true })
-  public size: IconSize = 'm';
-
-  @query('slot')
-  private defaultSlot?: HTMLSlotElement;
+  @queryAssignedElements({ flatten: true })
+  private defaultSlotElements!: Element[];
 
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
+
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
+    this.updateSlottedIcon();
+    this.updateHostAccessibility();
+  }
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
@@ -59,11 +62,7 @@ export abstract class IconBase extends SpectrumElement {
   }
 
   private updateSlottedIcon(): void {
-    const slot = this.defaultSlot;
-    if (!slot) {
-      return;
-    }
-    const [slotted] = slot.assignedElements({ flatten: true });
+    const [slotted] = this.defaultSlotElements;
     if (!slotted) {
       return;
     }
