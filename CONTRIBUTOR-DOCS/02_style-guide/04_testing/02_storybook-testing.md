@@ -394,6 +394,16 @@ export const AnatomyTest: Story = {
 };
 ```
 
+To test the default slot, query for child elements that have no `slot` attribute. These are the nodes that go into the unnamed slot:
+
+```typescript
+await step('renders default slot content', async () => {
+  const defaultSlotContent = badge.querySelectorAll(':scope > :not([slot])');
+  expect(defaultSlotContent.length, 'default slot child count').toBeGreaterThan(0);
+  expect(badge.textContent?.trim(), 'default slot text').toBe('Approved');
+});
+```
+
 ### Testing dev mode warnings
 
 Use `withWarningSpy` to capture `__swc.warn` calls. It enables DEBUG mode, runs your callback, and restores the original state automatically:
