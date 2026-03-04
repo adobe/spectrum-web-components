@@ -25,7 +25,7 @@
 - [Testing patterns](#testing-patterns)
     - [Test variant collections](#test-variant-collections)
     - [Testing defaults](#testing-defaults)
-    - [Testing property reflection](#testing-property-reflection)
+    - [Testing attribute reflection](#testing-attribute-reflection)
     - [Testing slots](#testing-slots)
     - [Testing dev mode warnings](#testing-dev-mode-warnings)
     - [Testing composed components](#testing-composed-components)
@@ -354,7 +354,7 @@ export const OverviewTest: Story = {
 };
 ```
 
-### Testing property reflection
+### Testing attribute reflection
 
 Check that property changes reflect to attributes and vice versa:
 
