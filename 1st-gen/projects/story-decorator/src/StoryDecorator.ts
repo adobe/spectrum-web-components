@@ -288,9 +288,6 @@ export class StoryDecorator extends SpectrumElement {
       setTimeout(() => res());
     });
     await (document.fonts ? document.fonts.ready : Promise.resolve());
-    await new Promise<void>((res) => {
-      requestAnimationFrame(() => requestAnimationFrame(() => res()));
-    });
     this.ready = true;
   }
 
