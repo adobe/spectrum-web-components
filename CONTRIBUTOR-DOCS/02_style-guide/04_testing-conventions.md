@@ -72,9 +72,9 @@ Always pass a human-readable message as the second argument to `expect()`. When 
 
 ```typescript
 // Good: failure message tells you exactly what went wrong
-expect(badge.variant, 'default variant').toBe('informative');
-expect(badge.size, 'default size').toBe('m');
-expect(badge.textContent?.trim(), 'slot content').toBeTruthy();
+expect(badge.variant, 'badge default variant').toBe('informative');
+expect(badge.size, 'badge default size').toBe('m');
+expect(badge.textContent?.trim(), 'badge to have slot content').toBeTruthy();
 
 // Bad: failure only shows "expected 'neutral' to be 'informative'"
 expect(badge.variant).toBe('informative');
