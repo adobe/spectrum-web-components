@@ -3,7 +3,7 @@ name: conventional-commit
 description: Create conventional commit messages following best conventions. Use when committing code changes, writing commit messages, or formatting git history. Follows conventional commits specification.
 license: MIT
 metadata:
-    version: '1.0.0'
+  version: '1.0.0'
 ---
 
 # Conventional Commit Messages
@@ -42,20 +42,23 @@ The header is required. Scope is optional. All lines must stay under 100 charact
 
 ## Commit Types
 
-| Type       | Purpose                               |
-| ---------- | ------------------------------------- |
-| `build`    | Build system or CI changes            |
-| `chore`    | Routine maintenance tasks             |
-| `ci`       | Continuous integration configuration  |
-| `deps`     | Dependency updates                    |
-| `docs`     | Documentation changes                 |
-| `feat`     | New feature                           |
-| `fix`      | Bug fix                               |
-| `perf`     | Performance improvement               |
-| `refactor` | Code refactoring (no behavior change) |
-| `revert`   | Revert a previous commit              |
-| `style`    | Code style and formatting             |
-| `test`     | Tests added, updated or improved      |
+Use the types defined in `.cursor/config.json` under `git.types`.
+
+| Type       | Purpose                                       |
+| ---------- | --------------------------------------------- |
+| `build`    | Build system or CI changes                    |
+| `chore`    | Routine maintenance tasks, dependency updates |
+| `ci`       | Continuous integration configuration          |
+| `docs`     | Documentation changes                         |
+| `feat`     | New feature                                   |
+| `fix`      | Bug fix                                       |
+| `perf`     | Performance improvement                       |
+| `refactor` | Code refactoring (no behavior change)         |
+| `revert`   | Revert a previous commit                      |
+| `style`    | Code style and formatting                     |
+| `test`     | Tests added, updated or improved              |
+
+Source list: `.cursor/config.json` → `git.types`.
 
 ## Subject Line Rules
 

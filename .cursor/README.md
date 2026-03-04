@@ -55,6 +55,7 @@ Additional, more specific rules can be found in the `rules` directory in either 
 
 - **branch_format**: Recommends `username/type-description[-swc-XXX]` format
   - Uses conventional commit types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`
+  - Commit type list and validation pattern: `.cursor/config.json` (`git.types`, `validationPattern`). When adding or removing a type, update both `types` and `validationPattern` together.
   - Lowercase letters and numbers only, words separated by dashes
   - Severity: Warning (recommended, not required)
 
