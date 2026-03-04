@@ -265,7 +265,7 @@ export const FixedClearingTest: Story = {
   play: async ({ canvasElement, step }) => {
     const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
 
-    await step('initially has fixed attribute', async () => {
+    await step('applies fixed attribute on initial render', async () => {
       expect(badge.fixed, 'fixed property value').toBe('block-start');
     });
 
@@ -286,7 +286,7 @@ Always destructure `step` from the play function arguments and wrap assertions i
 play: async ({ canvasElement, step }) => {
   const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
 
-  await step('variant reflects to attribute after mutation', async () => {
+  await step('reflects variant to attribute after mutation', async () => {
     badge.variant = 'positive';
     await badge.updateComplete;
     expect(badge.getAttribute('variant'), 'variant attribute').toBe('positive');
@@ -294,13 +294,15 @@ play: async ({ canvasElement, step }) => {
 },
 ```
 
-Write step labels that describe the expected behavior, not the code:
+Start every step label with a verb that describes what the component does or what the test checks. This keeps labels consistent and scannable in test output.
 
 | Good | Bad |
 | --- | --- |
 | `'renders expected default values'` | `'test defaults'` |
-| `'variant reflects to attribute after mutation'` | `'check variant'` |
+| `'reflects variant to attribute after mutation'` | `'variant reflects to attribute'` |
 | `'warns when outline is used with a non-semantic variant'` | `'test warning'` |
+| `'removes fixed attribute when set to undefined'` | `'initially has fixed attribute'` |
+| `'sets aria-selected on the active tab'` | `'aria-selected on active tab'` |
 
 ### Wait for updates
 
@@ -357,13 +359,13 @@ export const OverviewTest: Story = {
 Check that property changes reflect to attributes and vice versa:
 
 ```typescript
-await step('variant reflects to attribute after mutation', async () => {
+await step('reflects variant to attribute after mutation', async () => {
   badge.variant = 'positive';
   await badge.updateComplete;
   expect(badge.getAttribute('variant'), 'variant attribute after mutation').toBe('positive');
 });
 
-await step('subtle reflects to attribute after mutation', async () => {
+await step('reflects subtle to attribute after mutation', async () => {
   badge.subtle = true;
   await badge.updateComplete;
   expect(badge.hasAttribute('subtle'), 'subtle attribute presence').toBe(true);
