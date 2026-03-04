@@ -27,23 +27,26 @@ Determine which mode applies:
 
 ### Step 1: Generate Scaffold
 
-Run the smart scaffold script to create a pre-filled handoff document:
+Run the smart scaffold script **from the project root** so handoffs are created in the project's `.cursor/handoffs/` directory:
 
 ```bash
-python scripts/create_handoff.py [task-slug]
+cd /path/to/spectrum-web-components
+python .cursor/skills/session-handoff/scripts/create_handoff.py [task-slug]
 ```
 
-Example: `python scripts/create_handoff.py implementing-user-auth`
+Example: `python .cursor/skills/session-handoff/scripts/create_handoff.py implementing-user-auth`
 
 **For continuation handoffs** (linking to previous work):
 
 ```bash
-python scripts/create_handoff.py "auth-part-2" --continues-from 2024-01-15-auth.md
+python .cursor/skills/session-handoff/scripts/create_handoff.py "auth-part-2" --continues-from 2024-01-15-auth.md
 ```
+
+The script uses the current working directory as the project path. Running from project root ensures handoffs live at `project-root/.cursor/handoffs/`.
 
 The script will:
 
-- Create `.cursor/handoffs/` directory if needed
+- Create `.cursor/handoffs/` at project root if needed
 - Generate timestamped filename
 - Pre-fill: timestamp, project path, git branch, recent commits, modified files
 - Add handoff chain links if continuing from previous
@@ -62,10 +65,10 @@ Use the template structure in [references/handoff-template.md](references/handof
 
 ### Step 3: Validate the Handoff
 
-Run the validation script to check completeness and security:
+Run the validation script (from project root; pass path to handoff file):
 
 ```bash
-python scripts/validate_handoff.py <handoff-file>
+python .cursor/skills/session-handoff/scripts/validate_handoff.py .cursor/handoffs/<handoff-file>
 ```
 
 The validator checks:
@@ -93,22 +96,23 @@ Report to user:
 
 ### Step 1: Find Available Handoffs
 
-List handoffs in the current project:
+List handoffs (run from project root so the script finds `.cursor/handoffs/`):
 
 ```bash
-python scripts/list_handoffs.py
+cd /path/to/spectrum-web-components
+python .cursor/skills/session-handoff/scripts/list_handoffs.py
 ```
 
 This shows all handoffs with dates, titles, and completion status.
 
-**When Python or the scripts are unavailable:** List handoffs manually from `.cursor/handoffs/` (naming: `YYYY-MM-DD-HHMMSS-[slug].md`), then load and verify context using the resume checklist.
+**When Python or the scripts are unavailable:** List handoffs manually from the project root's `.cursor/handoffs/` (naming: `YYYY-MM-DD-HHMMSS-[slug].md`), then load and verify context using the resume checklist.
 
 ### Step 2: Check Staleness
 
-Before loading, check how current the handoff is:
+Before loading, check how current the handoff is (from project root):
 
 ```bash
-python scripts/check_staleness.py <handoff-file>
+python .cursor/skills/session-handoff/scripts/check_staleness.py .cursor/handoffs/<handoff-file>
 ```
 
 Staleness levels:
@@ -182,7 +186,7 @@ When resuming from a chain, read the most recent handoff first, then reference p
 
 ## Storage Location
 
-Handoffs are stored in: `.cursor/handoffs/`
+Handoffs are stored in the **project root's** `.cursor/handoffs/` directory. Run the create script from project root so new handoffs go there.
 
 Naming convention: `YYYY-MM-DD-HHMMSS-[slug].md`
 
