@@ -163,6 +163,56 @@ Use this table to decide where a test belongs:
 
 ## Writing test stories
 
+### Anatomy of an interaction test
+
+Every interaction test follows three steps: **arrange**, **act**, **assert**. 
+
+```typescript
+play: async ({ canvasElement, step }) => {
+  // Arrange: get the component
+  const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
+
+  await step('removes fixed attribute when set to undefined', async () => {
+    // Act: change something
+    badge.fixed = undefined;
+    await badge.updateComplete;
+
+    // Assert: check the result
+    expect(badge.fixed, 'fixed property value').toBeFalsy();
+    expect(badge.hasAttribute('fixed'), 'fixed attribute presence').toBe(false);
+  });
+},
+```
+
+- **Arrange** — Set up the component and any data you need.
+- **Act** — Do something (change a property, click a button, fire an event).
+- **Assert** — Check that the result matches what you expect.
+
+Keep each step focused on one thing. If your test covers multiple behaviors, use multiple `step` calls.
+
+### Use descriptive text in assertions
+
+Always pass a human-readable message as the second argument to `expect()`. When a test fails, this message appears in the output alongside the expected and received values. Without it, you only see raw values, which makes debugging harder.
+
+```typescript
+// Good: failure message tells you exactly what went wrong
+expect(badge.variant, 'badge default variant').toBe('informative');
+expect(badge.size, 'badge default size').toBe('m');
+expect(badge.textContent?.trim(), 'badge to have slot content').toBeTruthy();
+
+// Bad: failure only shows "expected 'neutral' to be 'informative'"
+expect(badge.variant).toBe('informative');
+```
+
+Keep messages short and specific. Describe the thing being checked, not the expected value:
+
+| Good | Bad |
+| --- | --- |
+| `'default variant'` | `'variant should be informative'` |
+| `'fixed attribute presence'` | `'should have fixed attribute'` |
+| `'icon slot element'` | `'the icon slot should be truthy'` |
+| `'warning count for invalid variant'` | `'expect warnCalls length to be greater than 0'` |
+
 ### Reuse docs stories
 
 Test stories extend existing docs stories. Spread the base story and add a `play` function:
