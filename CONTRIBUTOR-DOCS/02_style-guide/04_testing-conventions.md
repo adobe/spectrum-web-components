@@ -139,8 +139,7 @@ import '@adobe/swc/badge';
 import { getComponent, getComponents, withWarningSpy } from '../../../utils/test-utils.js';
 
 // Story imports
-import { meta } from '../stories/badge.stories.js';
-import { Overview, Sizes } from '../stories/badge.stories.js';
+import { meta, Overview, Sizes } from '../stories/badge.stories.js';
 
 // Meta: reuse main story metadata, hide from docs
 export default {
