@@ -11,68 +11,27 @@
  */
 
 import type { PlaywrightTestConfig } from '@playwright/test';
-import { devices } from '@playwright/test';
+import {
+  a11yReporter,
+  a11yUse,
+  firstGenA11yProject,
+  firstGenStorybookServer,
+  secondGenA11yProject,
+  secondGenComponentsOnlyStorybookServer,
+} from './playwright.a11y.shared.config';
 
 const config: PlaywrightTestConfig = {
   timeout: 30 * 1000,
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  reporter: process.env.CI
-    ? [
-        ['html', { outputFolder: '2nd-gen/test/playwright-a11y/report' }],
-        [
-          'junit',
-          { outputFile: '2nd-gen/test/playwright-a11y/results/junit.xml' },
-        ],
-        ['list'],
-      ]
-    : [
-        ['html', { outputFolder: '2nd-gen/test/playwright-a11y/report' }],
-        ['list'],
-      ],
+  reporter: a11yReporter(!!process.env.CI),
 
-  use: {
-    trace: 'on-first-retry',
-    screenshot: 'only-on-failure',
-    reducedMotion: 'reduce',
-  },
+  use: a11yUse,
 
-  projects: [
-    {
-      name: '1st-gen',
-      testDir: './1st-gen/',
-      testMatch: '**/packages/*/test/**/*.a11y.spec.ts',
-      use: {
-        ...devices['Desktop Chrome'],
-        baseURL: 'http://localhost:8080',
-      },
-    },
-    {
-      name: '2nd-gen',
-      testDir: './2nd-gen/',
-      testMatch: '**/packages/swc/components/*/test/**/*.a11y.spec.ts',
-      use: {
-        ...devices['Desktop Chrome'],
-        baseURL: 'http://localhost:6006',
-      },
-    },
-  ],
+  projects: [firstGenA11yProject, secondGenA11yProject],
 
-  webServer: [
-    {
-      command: 'cd 1st-gen && yarn storybook',
-      port: 8080,
-      reuseExistingServer: !process.env.CI,
-      timeout: 120 * 1000,
-    },
-    {
-      command: 'cd 2nd-gen/packages/swc && yarn storybook',
-      port: 6006,
-      reuseExistingServer: !process.env.CI,
-      timeout: 120 * 1000,
-    },
-  ],
+  webServer: [firstGenStorybookServer, secondGenComponentsOnlyStorybookServer],
 };
 
 export default config;

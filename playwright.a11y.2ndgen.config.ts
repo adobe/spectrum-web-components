@@ -11,51 +11,25 @@
  */
 
 import type { PlaywrightTestConfig } from '@playwright/test';
-import { devices } from '@playwright/test';
+import {
+  a11yReporter,
+  a11yUse,
+  secondGenA11yProject,
+  secondGenComponentsOnlyStorybookServer,
+} from './playwright.a11y.shared.config';
 
 const config: PlaywrightTestConfig = {
   timeout: 30 * 1000,
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  reporter: process.env.CI
-    ? [
-        ['html', { outputFolder: '2nd-gen/test/playwright-a11y/report' }],
-        [
-          'junit',
-          { outputFile: '2nd-gen/test/playwright-a11y/results/junit.xml' },
-        ],
-        ['list'],
-      ]
-    : [
-        ['html', { outputFolder: '2nd-gen/test/playwright-a11y/report' }],
-        ['list'],
-      ],
+  reporter: a11yReporter(!!process.env.CI),
 
-  use: {
-    trace: 'on-first-retry',
-    screenshot: 'only-on-failure',
-  },
+  use: a11yUse,
 
-  projects: [
-    {
-      name: '2nd-gen',
-      testDir: './2nd-gen/',
-      testMatch: '**/packages/swc/components/*/test/**/*.a11y.spec.ts',
-      use: {
-        ...devices['Desktop Chrome'],
-        baseURL: 'http://localhost:6006',
-      },
-    },
-  ],
+  projects: [secondGenA11yProject],
 
-  webServer: {
-    command:
-      'cd 2nd-gen/packages/swc && SWC_STORYBOOK_COMPONENTS_ONLY=true yarn storybook',
-    port: 6006,
-    reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000,
-  },
+  webServer: secondGenComponentsOnlyStorybookServer,
 };
 
 export default config;
