@@ -11,11 +11,11 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-    - [Wait for components to be ready](#wait-for-components-to-be-ready)
-    - [Avoid fixed timeouts](#avoid-fixed-timeouts)
-    - [Handle race conditions](#handle-race-conditions)
-    - [Use deterministic content](#use-deterministic-content)
-    - [Isolate test state](#isolate-test-state)
+- [Wait for components to be ready](#wait-for-components-to-be-ready)
+- [Avoid fixed timeouts](#avoid-fixed-timeouts)
+- [Handle race conditions](#handle-race-conditions)
+- [Use deterministic content](#use-deterministic-content)
+- [Isolate test state](#isolate-test-state)
 
 </details>
 

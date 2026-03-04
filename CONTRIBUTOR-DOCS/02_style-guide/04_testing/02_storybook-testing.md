@@ -17,6 +17,8 @@
 - [Standard sections](#standard-sections)
 - [Section placement guide](#section-placement-guide)
 - [Writing test stories](#writing-test-stories)
+    - [Anatomy of an interaction test](#anatomy-of-an-interaction-test)
+    - [Use descriptive text in assertions](#use-descriptive-text-in-assertions)
     - [Reuse docs stories](#reuse-docs-stories)
     - [Use the `step` function](#use-the-step-function)
     - [Wait for updates](#wait-for-updates)

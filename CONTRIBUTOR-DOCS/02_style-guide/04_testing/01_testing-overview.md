@@ -13,8 +13,6 @@
 
 - [What to test](#what-to-test)
 - [What not to test](#what-not-to-test)
-- [Anatomy of an interaction test](#anatomy-of-an-interaction-test)
-    - [Use descriptive text in assertions](#use-descriptive-text-in-assertions)
 
 </details>
 
