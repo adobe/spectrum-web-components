@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Contributor guides](../README.md) / [Authoring contributor docs](README.md) / AI agent instructions
+[Contributor docs nav skill](../SKILL.md) / AI agent instructions
 
 <!-- Document title (editable) -->
 
@@ -12,22 +12,22 @@
 <summary><strong>In this doc</strong></summary>
 
 - [Role 1: Operator](#role-1-operator)
-    - [When to run](#when-to-run)
-    - [How to run](#how-to-run)
-    - [Responsibilities](#responsibilities)
-    - [Debugging errors](#debugging-errors)
-    - [Debugging output issues](#debugging-output-issues)
-    - [Handling link verification errors](#handling-link-verification-errors)
+  - [When to run](#when-to-run)
+  - [How to run](#how-to-run)
+  - [Responsibilities](#responsibilities)
+  - [Debugging errors](#debugging-errors)
+  - [Debugging output issues](#debugging-output-issues)
+  - [Handling link verification errors](#handling-link-verification-errors)
 - [Role 2: Maintainer](#role-2-maintainer)
-    - [Requirements and specifications](#requirements-and-specifications)
-    - [When to maintain](#when-to-maintain)
-    - [Maintenance process](#maintenance-process)
-    - [Script architecture](#script-architecture)
+  - [Requirements and specifications](#requirements-and-specifications)
+  - [When to maintain](#when-to-maintain)
+  - [Maintenance process](#maintenance-process)
+  - [Script architecture](#script-architecture)
 - [Script behavior details](#script-behavior-details)
-    - [What the script does](#what-the-script-does)
-    - [Breadcrumb format](#breadcrumb-format)
-    - [TOC format](#toc-format)
-    - [Display name derivation](#display-name-derivation)
+  - [What the script does](#what-the-script-does)
+  - [Breadcrumb format](#breadcrumb-format)
+  - [TOC format](#toc-format)
+  - [Display name derivation](#display-name-derivation)
 - [Testing checklist](#testing-checklist)
 
 </details>
@@ -54,8 +54,8 @@ Execute the script when:
 ### How to run
 
 ```bash
-cd CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs
-node update-nav.js ../../
+cd .cursor/skills/contributor-docs-nav/scripts
+node update-nav.js ../../../../CONTRIBUTOR-DOCS
 ```
 
 **Expected time:** ~20-200ms for entire CONTRIBUTOR-DOCS tree (includes automatic link verification)
@@ -82,18 +82,18 @@ If the script fails:
 When the auto-generated navigation appears incorrect or malformed:
 
 1. **First, investigate the script** - Check if the issue can be fixed by updating `update-nav.js`
-    - Read the script to understand how it processes the problematic content
-    - Look for edge cases or patterns it doesn't handle correctly
-    - Consider whether a fix to the script would allow the current document structure to work
+   - Read the script to understand how it processes the problematic content
+   - Look for edge cases or patterns it doesn't handle correctly
+   - Consider whether a fix to the script would allow the current document structure to work
 
 2. **Only suggest content changes as a last resort** - Don't immediately suggest modifying document content
-    - Document authors may have good reasons for their structure choices
-    - Script improvements benefit all documents, not just one
-    - Content changes may limit what authors can express in their docs
+   - Document authors may have good reasons for their structure choices
+   - Script improvements benefit all documents, not just one
+   - Content changes may limit what authors can express in their docs
 
 3. **Example**: If headings with links generate malformed TOC entries:
-    - ✅ Good: Investigate the script's heading extraction, find it doesn't strip link syntax, add a fix
-    - ❌ Bad: Tell the user to remove links from their headings
+   - ✅ Good: Investigate the script's heading extraction, find it doesn't strip link syntax, add a fix
+   - ❌ Bad: Tell the user to remove links from their headings
 
 **Philosophy:** The script should adapt to reasonable document structures, not the other way around.
 
@@ -105,22 +105,22 @@ The script automatically verifies all internal markdown links after updating nav
 
 1. **Analyze each error** - Review the error details provided by the script
 2. **Fix straightforward cases automatically** - Don't ask for human input when the fix is clear:
-    - File was renamed/moved → Find new location in metadata and update link
-    - Anchor was renamed → Find matching or similar anchor in target file
-    - Wrong relative path depth → Recalculate correct relative path
-    - Case sensitivity issues → Fix capitalization
-    - Missing or incorrect file extension → Add `.md` extension if needed
+   - File was renamed/moved → Find new location in metadata and update link
+   - Anchor was renamed → Find matching or similar anchor in target file
+   - Wrong relative path depth → Recalculate correct relative path
+   - Case sensitivity issues → Fix capitalization
+   - Missing or incorrect file extension → Add `.md` extension if needed
 
 3. **Consult human for ambiguous cases** - Ask for guidance when:
-    - Target file was completely removed (need decision on alternative link target)
-    - Multiple possible anchor matches exist with similar names
-    - Link intent is unclear or may need conceptual rethinking
-    - You cannot determine the correct fix with high confidence
+   - Target file was completely removed (need decision on alternative link target)
+   - Multiple possible anchor matches exist with similar names
+   - Link intent is unclear or may need conceptual rethinking
+   - You cannot determine the correct fix with high confidence
 
 4. **Report fixes clearly** - After fixing, summarize:
-    - How many links were broken
-    - What fixes were applied
-    - Any remaining issues that need human review
+   - How many links were broken
+   - What fixes were applied
+   - Any remaining issues that need human review
 
 **Example workflow:**
 
@@ -143,22 +143,22 @@ Review and update the regeneration script when requirements or specifications ch
 The script's behavior is defined by:
 
 1. **Human maintainer instructions** (`human-maintainer-instructions.md`)
-    - File and folder naming conventions
-    - Numbering rules
-    - Document structure requirements
-    - Display name derivation rules
+   - File and folder naming conventions
+   - Numbering rules
+   - Document structure requirements
+   - Display name derivation rules
 
 2. **File structure conventions** (implicit in the codebase)
-    - README.md files as folder overviews
-    - Lowercase kebab-case naming
-    - Optional sequential numbering
-    - HTML comment markers for separating content
+   - README.md files as folder overviews
+   - Lowercase kebab-case naming
+   - Optional sequential numbering
+   - HTML comment markers for separating content
 
 3. **Output format requirements**
-    - Breadcrumb format and linking rules
-    - TOC structure ("In this doc" and "Beneath this doc" sections)
-    - Collapsible `<details>` elements
-    - GitHub-style anchor links
+   - Breadcrumb format and linking rules
+   - TOC structure ("In this doc" and "Beneath this doc" sections)
+   - Collapsible `<details>` elements
+   - GitHub-style anchor links
 
 ### When to maintain
 
@@ -174,29 +174,29 @@ Update the script when:
 ### Maintenance process
 
 1. **Review the change request**
-    - Understand what requirement or specification has changed
-    - Identify which part of the script needs updating
+   - Understand what requirement or specification has changed
+   - Identify which part of the script needs updating
 
 2. **Update the script** (`update-nav.js`)
-    - Modify the relevant functions
-    - Maintain code quality and comments
-    - Preserve existing functionality where applicable
+   - Modify the relevant functions
+   - Maintain code quality and comments
+   - Preserve existing functionality where applicable
 
 3. **Test thoroughly**
-    - Run the script on the entire CONTRIBUTOR-DOCS tree
-    - Verify output matches new requirements
-    - Check that existing functionality still works
-    - Spot-check several files manually
+   - Run the script on the entire CONTRIBUTOR-DOCS tree
+   - Verify output matches new requirements
+   - Check that existing functionality still works
+   - Spot-check several files manually
 
 4. **Update documentation**
-    - Update this file if the operator role changes
-    - Update human maintainer instructions if conventions change
-    - Add comments in the script explaining non-obvious logic
+   - Update this file if the operator role changes
+   - Update human maintainer instructions if conventions change
+   - Add comments in the script explaining non-obvious logic
 
 5. **Report changes**
-    - Summarize what was changed and why
-    - Note any breaking changes or new behaviors
-    - Provide examples of the new output format
+   - Summarize what was changed and why
+   - Note any breaking changes or new behaviors
+   - Provide examples of the new output format
 
 ### Script architecture
 
@@ -267,10 +267,10 @@ For each file:
 <summary><strong>Contents</strong></summary>
 
 - **In this doc**
-    - [Section heading](#section-heading)
+  - [Section heading](#section-heading)
 - **Beneath this doc**
-    - [Child file](./child.md)
-    - [Child folder](./folder/README.md)
+  - [Child file](./child.md)
+  - [Child folder](./folder/README.md)
 
 </details>
 ```
