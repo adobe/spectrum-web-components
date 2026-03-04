@@ -11,7 +11,7 @@ Analyzes:
 
 Usage:
     python check_staleness.py <handoff-file>
-    python check_staleness.py .claude/handoffs/2024-01-15-143022-auth.md
+    python check_staleness.py .cursor/handoffs/2024-01-15-143022-auth.md
 """
 
 import os
@@ -232,7 +232,7 @@ def check_staleness(handoff_path: str) -> dict:
     # Determine project path
     project_path = metadata.get("project_path")
     if not project_path or not Path(project_path).exists():
-        # Fallback: assume handoff is in .claude/handoffs/ within project
+        # Fallback: assume handoff is in .cursor/handoffs/ within project
         project_path = str(path.parent.parent.parent)
 
     # Check if git repo
@@ -364,7 +364,7 @@ def print_report(result: dict):
 def main():
     if len(sys.argv) < 2:
         print("Usage: python check_staleness.py <handoff-file>")
-        print("Example: python check_staleness.py .claude/handoffs/2024-01-15-auth.md")
+        print("Example: python check_staleness.py .cursor/handoffs/2024-01-15-auth.md")
         sys.exit(1)
 
     handoff_path = sys.argv[1]

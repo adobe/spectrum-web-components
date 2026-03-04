@@ -156,7 +156,7 @@ def init_git_repo(path: Path):
 
 def create_sample_handoffs(path: Path):
     """Create sample handoff documents for testing."""
-    handoffs_dir = path / ".claude" / "handoffs"
+    handoffs_dir = path / ".cursor" / "handoffs"
     handoffs_dir.mkdir(parents=True)
 
     # Fresh handoff (today)
@@ -408,7 +408,7 @@ def main():
         print(f"\nTest environment ready at: {args.path}")
         print(f"\nTo test, run:")
         print(f"  cd {args.path}")
-        print(f"  # Then use Claude Code with the session-handoff skill")
+        print(f"  # Then use coding agent with the session-handoff skill")
 
 
 if __name__ == "__main__":

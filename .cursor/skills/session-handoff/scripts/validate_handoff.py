@@ -11,7 +11,7 @@ Checks:
 
 Usage:
     python validate_handoff.py <handoff-file>
-    python validate_handoff.py .claude/handoffs/2024-01-15-143022-auth.md
+    python validate_handoff.py .cursor/handoffs/2024-01-15-143022-auth.md
 """
 
 import os
@@ -203,7 +203,7 @@ def validate_handoff(filepath: str) -> dict:
         return {"error": f"File not found: {filepath}"}
 
     content = path.read_text()
-    base_path = path.parent.parent.parent  # Go up from .claude/handoffs/
+    base_path = path.parent.parent.parent  # Go up from .cursor/handoffs/
 
     # Run checks
     todos_clear, remaining_todos = check_todos(content)
@@ -302,7 +302,7 @@ def print_report(result: dict):
 def main():
     if len(sys.argv) < 2:
         print("Usage: python validate_handoff.py <handoff-file>")
-        print("Example: python validate_handoff.py .claude/handoffs/2024-01-15-auth.md")
+        print("Example: python validate_handoff.py .cursor/handoffs/2024-01-15-auth.md")
         sys.exit(1)
 
     filepath = sys.argv[1]

@@ -92,7 +92,7 @@ def get_git_info(project_path: str) -> dict:
 
 def find_previous_handoffs(project_path: str) -> list[dict]:
     """Find existing handoffs in the project."""
-    handoffs_dir = Path(project_path) / ".claude" / "handoffs"
+    handoffs_dir = Path(project_path) / ".cursor" / "handoffs"
     if not handoffs_dir.exists():
         return []
 
@@ -181,7 +181,7 @@ def generate_handoff(
     filename = f"{file_timestamp}-{slug}.md"
 
     # Create handoffs directory
-    handoffs_dir = Path(project_path) / ".claude" / "handoffs"
+    handoffs_dir = Path(project_path) / ".cursor" / "handoffs"
     handoffs_dir.mkdir(parents=True, exist_ok=True)
 
     filepath = handoffs_dir / filename

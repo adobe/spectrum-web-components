@@ -78,6 +78,8 @@ The validator checks:
 
 **Do not finalize a handoff with secrets detected or score below 70.**
 
+**When Python or the scripts are unavailable:** (a) Create the handoff manually using [references/handoff-template.md](references/handoff-template.md), and/or (b) output a structured handoff in chat for the user to save.
+
 ### Step 4: Confirm Handoff
 
 Report to user:
@@ -98,6 +100,8 @@ python scripts/list_handoffs.py
 ```
 
 This shows all handoffs with dates, titles, and completion status.
+
+**When Python or the scripts are unavailable:** List handoffs manually from `.cursor/handoffs/` (naming: `YYYY-MM-DD-HHMMSS-[slug].md`), then load and verify context using the resume checklist.
 
 ### Step 2: Check Staleness
 
