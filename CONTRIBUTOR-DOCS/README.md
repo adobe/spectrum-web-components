@@ -32,6 +32,7 @@
 - [Style guide](02_style-guide/README.md)
     - [2nd-Gen CSS](02_style-guide/01_css/README.md)
     - [Linting tools](02_style-guide/02_linting-tools.md)
+    - [Testing guide](02_style-guide/04_testing/README.md)
 - [Project planning](03_project-planning/README.md)
     - [Objectives and strategy](03_project-planning/01_objectives-and-strategy.md)
     - [Workstreams](03_project-planning/02_workstreams/README.md)
