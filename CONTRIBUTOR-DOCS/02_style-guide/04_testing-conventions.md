@@ -39,7 +39,7 @@ Test things that users and developers depend on:
 - Third-party library behavior
 - Every possible prop combination (test meaningful ones)
 
-## Anatomy of a test
+## Anatomy of an interaction test
 
 Every test follows three steps: **arrange**, **act**, **assert**.
 
