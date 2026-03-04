@@ -20,7 +20,7 @@ const treatment = 'outline';
 export default {
   component: 'sp-button',
   title: 'Button/White/Outline/Sizes',
-  decorators: [makeOverBackground()],
+  decorators: [makeOverBackground(staticColor)],
   args: {
     ...args,
     staticColor,
