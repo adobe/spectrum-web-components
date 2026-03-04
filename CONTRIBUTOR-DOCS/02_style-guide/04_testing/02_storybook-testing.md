@@ -406,6 +406,16 @@ await step('renders default slot content', async () => {
 
 ### Testing dev mode warnings
 
+Ensure there is a test for **every** dev mode warning in the component's source code. Search the component class and its base class for calls to `window.__swc.warn` to find them all. Common warning categories include, but are not limited to:
+
+- **Deprecation** — a property or attribute has been renamed or replaced
+- **Accessibility** — a required label, `aria-label`, or role is missing
+- **Required slots** — a slot that must contain content is empty
+- **Required properties** — a property that must be set was left at its default
+- **Invalid values** — a property was set to a value outside the allowed set
+
+Each warning should have its own test story so failures pinpoint the exact scenario. Verify both that the warning fires when the condition is met and that it does **not** fire when the component is used correctly.
+
 Use `withWarningSpy` to capture `__swc.warn` calls. It enables DEBUG mode, runs your callback, and restores the original state automatically:
 
 ```typescript
@@ -421,25 +431,6 @@ export const InvalidVariantWarningTest: Story = {
 
         expect(warnCalls.length, 'warning count for invalid variant').toBeGreaterThan(0);
         expect(String(warnCalls[0]?.[1] || ''), 'warning message content').toContain('variant');
-      })
-    );
-  },
-};
-```
-
-Always include a companion test that verifies valid values do not trigger warnings:
-
-```typescript
-export const ValidVariantNoWarningTest: Story = {
-  render: () => html`<swc-badge variant="positive">Approved</swc-badge>`,
-  play: async ({ canvasElement, step }) => {
-    const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
-
-    await step('does not warn when a valid variant is set in DEBUG mode', () =>
-      withWarningSpy(async (warnCalls) => {
-        badge.variant = 'negative';
-        await badge.updateComplete;
-        expect(warnCalls.length, 'warning count for valid variant').toBe(0);
       })
     );
   },
