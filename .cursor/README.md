@@ -102,8 +102,8 @@ These two rules share the same glob (`2nd-gen/**/stories/**`) and work as a pair
 
 #### Deep understanding
 
-- **always_applied**: At the start of every session and before writing any code, do deep research on the relevant part of the codebase first
-- **action**: Scope → deep read → write persistent report (e.g. research.md) → pause for user review → proceed only after validation. Full workflow in `.cursor/skills/deep-understanding/SKILL.md`
+- **apply_intelligently**: Use for non-trivial work (multiple files, new area, complex behavior); do not use for simple, self-contained requests (e.g. creating a regex, one-line fix, single known file) to avoid wasting tokens and overloading context. Before writing non-trivial code, do deep research on the relevant part of the codebase first.
+- **action** (when the rule applies): Scope → deep read → write persistent report (e.g. research.md at repo root) → pause for user review → proceed only after validation. Full workflow in `.cursor/skills/deep-understanding/SKILL.md`
 - **rationale**: The written report is the review surface; wrong research leads to wrong plan and wrong code (garbage in, garbage out)
 
 ### When rules are activated
@@ -131,7 +131,7 @@ These two rules share the same glob (`2nd-gen/**/stories/**`) and work as a pair
 | branch-naming                  |       x        |           |              | —                                 |
 | stories-documentation          |       x        |           |              | `2nd-gen/**/stories/**`           |
 | stories-format                 |       x        |           |              | `2nd-gen/**/stories/**`           |
-| deep-understanding             |       x        |           |              | —                                 |
+| deep-understanding             |                |     x     |              | —                                 |
 | component-readme               |                |     x     |              | `1st-gen/packages/*/README.md`    |
 | contributor-doc-update         |                |     x     |              | `CONTRIBUTOR-DOCS/**`             |
 | github-description             |                |     x     |              | —                                 |
