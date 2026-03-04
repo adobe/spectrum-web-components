@@ -316,11 +316,11 @@ expect(badge.getAttribute('variant'), 'variant attribute').toBe('positive');
 
 ### Test variant collections
 
-When a story renders a list of variants, loop over the expected values and verify each one:
+When a story renders a list of variants, import valid values from the component's types file rather than hardcoding them. This keeps tests in sync with the source of truth. Then loop over the expected values and verify each one:
 
 ```typescript
 await step('renders all semantic variant values', async () => {
-  for (const variant of BADGE_VARIANTS_SEMANTIC) {
+  for (const variant of BADGE_VARIANTS_SEMANTIC) {variant testing
     const badge = canvasElement.querySelector(
       `swc-badge[variant="${variant}"]`
     ) as Badge | null;
@@ -331,7 +331,6 @@ await step('renders all semantic variant values', async () => {
 });
 ```
 
-Import valid values from the component's types file rather than hardcoding them. This keeps tests in sync with the source of truth.
 
 ## Testing patterns
 
