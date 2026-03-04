@@ -1,5 +1,5 @@
 ---
-name: component-migration-rendering-styling
+name: component-migration-analysis
 description: Create rendering-and-styling migration analysis docs for 2nd-gen component migration. Use when on the "analyze rendering and styling" step for one or more components.
 ---
 
@@ -42,6 +42,6 @@ Create comprehensive migration documentation for the **analyze rendering and sty
 
 For the exact document structure, heading levels, collapsible sections, CSS⇒SWC mapping table format (columns, status values, ordering), DOM comparison format, and output format notes, read:
 
-**CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_analyze-rendering-and-styling/cursor_prompt.md**
+**.cursor/skills/component-migration-analysis/references/migration-analysis-prompt.md**
 
 That document is the single source of truth for file organization, component documentation structure, comparison format, summary sections, and resources placeholder.
