@@ -184,12 +184,33 @@ export const OverviewTest: Story = {
 };
 ```
 
-When a base story does not render what you need, provide a custom `render`:
+When a base story is close to what you need but requires different property values, override `args` instead of writing a full `render`:
+
+```typescript
+export const DisabledTest: Story = {
+  ...Overview,
+  args: {
+    ...Overview.args,
+    disabled: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
+
+    await step('renders in a disabled state', async () => {
+      expect(badge.disabled, 'disabled property').toBe(true);
+      expect(badge.hasAttribute('disabled'), 'disabled attribute presence').toBe(true);
+    });
+  },
+};
+```
+
+When a base story does not render what you need even with different property values, provide a custom `render`:
 
 ```typescript
 export const FixedClearingTest: Story = {
   render: () => html`
     <swc-badge fixed="block-start" variant="informative">Pinned</swc-badge>
+    <span>This is a test of the composed component</span>
   `,
   play: async ({ canvasElement, step }) => {
     const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
