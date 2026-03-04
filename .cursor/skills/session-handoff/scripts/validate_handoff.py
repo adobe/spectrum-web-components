@@ -72,7 +72,8 @@ def check_required_sections(content: str) -> tuple[bool, list[str]]:
         else:
             # Check if section has meaningful content (not just placeholder)
             section_start = match.end()
-            next_section = re.search(r'\n##?\s+', content[section_start:])
+            # Next section is any markdown header (one or more #) so content boundary is correct
+            next_section = re.search(r'\n#+\s+', content[section_start:])
             section_end = section_start + next_section.start() if next_section else len(content)
             section_content = content[section_start:section_end].strip()
 
