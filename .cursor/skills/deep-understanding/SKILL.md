@@ -7,7 +7,7 @@ description: Require a thorough deep-read of the relevant codebase before planni
 
 Every meaningful task that touches non-trivial code should start with a **deep-read directive**: thoroughly understand the relevant part of the codebase before doing anything else. Findings must be written into a **persistent markdown file**, never only a verbal summary in chat. That file is the user’s review surface — they can verify understanding and correct misunderstandings before any planning or implementation.
 
-**Enforced by rule:** The deep-understanding rule (`.cursor/rules/deep-understanding.mdc`) is **always applied**. At the start of every session and before writing any code, the agent must do deep research on the relevant area and write a report; it must pause for user review before planning or implementing. This skill documents the full workflow and rationale.
+**Rule:** The deep-understanding rule (`.cursor/rules/deep-understanding.mdc`) is **applied intelligently**. Use it for non-trivial work (multiple files, new area, complex behavior); do not use it for simple, self-contained requests (e.g. creating a regex, one-line fix, single known file) to avoid wasting tokens and overloading context. This skill documents the full workflow and rationale.
 
 ## When to use this skill
 
@@ -18,6 +18,7 @@ Every meaningful task that touches non-trivial code should start with a **deep-r
 
 ## When NOT to use
 
+- Simple, self-contained requests (e.g. creating a regex pattern, one-line fix, single known file, quick question)
 - Trivial, single-file changes where a quick read is enough
 - The user explicitly says to skip research or already has a detailed spec
 - The relevant code is already well understood and documented in context
