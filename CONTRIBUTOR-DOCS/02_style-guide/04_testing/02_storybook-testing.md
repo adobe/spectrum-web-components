@@ -22,8 +22,8 @@
     - [Reuse docs stories](#reuse-docs-stories)
     - [Use the `step` function](#use-the-step-function)
     - [Wait for updates](#wait-for-updates)
-    - [Test variant collections](#test-variant-collections)
 - [Testing patterns](#testing-patterns)
+    - [Test variant collections](#test-variant-collections)
     - [Testing defaults](#testing-defaults)
     - [Testing property reflection](#testing-property-reflection)
     - [Testing slots](#testing-slots)
@@ -316,6 +316,8 @@ await badge.updateComplete;
 expect(badge.getAttribute('variant'), 'variant attribute').toBe('positive');
 ```
 
+## Testing patterns
+
 ### Test variant collections
 
 When a story renders a list of variants, import valid values from the component's types file rather than hardcoding them. This keeps tests in sync with the source of truth. Then loop over the expected values and verify each one:
@@ -332,9 +334,6 @@ await step('renders all semantic variant values', async () => {
   }
 });
 ```
-
-
-## Testing patterns
 
 ### Testing defaults
 
