@@ -51,6 +51,19 @@
     - [Why This Happens](#why-this-happens)
     - [Why This Is a Problem](#why-this-is-a-problem)
     - [✅ Correct Approach](#-correct-approach)
+    - [❌ Anti-Pattern](#-anti-pattern)
+    - [Why This Happens](#why-this-happens)
+    - [Why This Is a Problem](#why-this-is-a-problem)
+    - [✅ Correct Approach](#-correct-approach)
+    - [❌ Anti-Pattern](#-anti-pattern)
+    - [Why This Happens](#why-this-happens)
+    - [Why This Is a Problem](#why-this-is-a-problem)
+    - [✅ Correct Approach](#-correct-approach)
+- [Before/after refactoring examples](#beforeafter-refactoring-examples)
+    - [Visual styles on `:host` → base class](#visual-styles-on-host--base-class)
+    - [Specificity escalation → `:where()`](#specificity-escalation--where)
+    - [Size classes in render → `:host([size])`](#size-classes-in-render--hostsize)
+    - [`--mod-*` chain → single property](#--mod--chain--single-property)
 - [Final Reminder](#final-reminder)
 
 </details>
@@ -59,9 +72,9 @@
 
 This appendix lists **common mistakes encountered when adopting the 2nd-gen SWC styling model**, why they happen, and what to do instead.
 
-Each anti-pattern is grounded in real Spectrum source patterns and references the **Badge migration** as the canonical example of correct implementation.
+Each anti-pattern is grounded in real Spectrum source patterns. **Badge** and **Status Light** are reference implementations for correct patterns.
 
-📖 See: *Reference Migration: Badge*
+📖 **Reference implementations**: [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css) · [Status Light](../../../2nd-gen/packages/swc/components/status-light/status-light.css) · [Reference Migration: Badge](04_spectrum-swc-migration.md#reference-migration-badge)
 
 ## 1. Leaving Visual Styles on `:host`
 
@@ -100,7 +113,7 @@ Each anti-pattern is grounded in real Spectrum source patterns and references th
 🔎 **Badge reference:**  
 See the migrated Badge where `:host` is limited to layout (`display`, `place-self`, `vertical-align`) and all visual styling lives on `.swc-Badge`.
 
-📖 See: *Component CSS Style Guide → Rule Order*
+📖 See: *Component CSS Style Guide → [Rule order](01_component-css.md#rule-order)*
 
 
 ## 2. Preserving `--mod-*` as an Extra Indirection Layer
@@ -162,7 +175,7 @@ min-block-size: var(--swc-mod-badge-height, token('component-height-100'));
 🔎 **Badge reference:**  
 See the Badge migration where all `--mod-* → spectrum → property` chains are collapsed into intentional `--swc-badge-*` properties.
 
-📖 See: *Custom Properties Style Guide → Component Custom Property Exposure*
+📖 See: *Custom Properties Style Guide → [Component custom property exposure](02_custom-properties.md#component-custom-property-exposure)*
 
 
 ## 3. Excess Variant Classes in `render()`
@@ -199,15 +212,21 @@ classMap({
 🔎 **Badge reference:**  
 Badge size, variant, subtle, and outline states are all expressed via `:host()` selectors and custom property updates.
 
-📖 See: *Component CSS Style Guide → Variants and States*
+📖 See: *Component CSS Style Guide → [Variant implementation patterns](01_component-css.md#variant-implementation-patterns)*
 
 ## 4. Increasing Selector Specificity to Force Overrides
 
 ### ❌ Anti-Pattern
 
 ```css
+/* Multiple compounded classes = (0,3,0) */
 .swc-Badge.swc-Badge--large.swc-Badge--primary {
   padding: 16px;
+}
+
+/* Or stacking to "win" a conflict */
+.swc-StatusLight.swc-StatusLight--yellow.swc-StatusLight--sizeL {
+  font-size: 20px;
 }
 ```
 
@@ -215,12 +234,13 @@ Badge size, variant, subtle, and outline states are all expressed via `:host()` 
 
 - Conflicting migrated rules
 - Attempting to preserve visual parity through selector escalation
+- Copying patterns from other codebases that use high specificity
 
 ### Why This Is a Problem
 
 - Breaks the `(0,1,0)` specificity target
-- Makes overrides brittle
-- Hides ordering or layering issues
+- Makes overrides brittle (e.g. disabled state needs even higher specificity)
+- Hides ordering or layering issues that should be fixed instead
 
 ### ✅ Correct Approach
 
@@ -228,10 +248,22 @@ Badge size, variant, subtle, and outline states are all expressed via `:host()` 
 - Use `:where()` for compounding selectors
 - Introduce cascade layers only when necessary
 
-🔎 **Badge reference:**  
-Badge resolves complex variant/state combinations through rule order and custom property updates—not specificity escalation.
+```css
+/* Before: (0,2,0) */
+.swc-Divider--staticWhite.swc-Divider--sizeL {
+  --swc-divider-background-color: token("transparent-white-800");
+}
 
-📖 See: *Component CSS Style Guide → Managing Specificity*
+/* After: (0,1,0) - rule order determines winner */
+.swc-Divider--staticWhite:where(.swc-Divider--sizeL) {
+  --swc-divider-background-color: token("transparent-white-800");
+}
+```
+
+🔎 **Badge reference:**  
+[badge.css](../../../2nd-gen/packages/swc/components/badge/badge.css) uses `.swc-Badge--subtle:where(.swc-Badge--gray)` for compounded variants. [Divider](../../../2nd-gen/packages/swc/components/divider/divider.css) uses the same pattern for static color + size.
+
+📖 See: *Component CSS Style Guide → [Managing Specificity](01_component-css.md#managing-specificity)*
 
 ## 5. Using `:where()` Inside `:host()` for Custom Property Updates
 
@@ -264,7 +296,7 @@ Badge resolves complex variant/state combinations through rule order and custom 
 🔎 **Badge reference:**  
 Badge safely compounds attributes within `:host()` when updating custom properties only.
 
-📖 See: *Component CSS Style Guide → Shadow DOM Specificity and Custom Property Inheritance*
+📖 See: *Component CSS Style Guide → [Shadow DOM specificity and custom property inheritance](01_component-css.md#shadow-dom-specificity-and-custom-property-inheritance)*
 
 ## 6. Exposing Too Many Custom Properties “Just in Case”
 
@@ -295,7 +327,7 @@ Badge safely compounds attributes within `:host()` when updating custom properti
 🔎 **Badge reference:**  
 Badge exposes a minimal, intentional surface and uses `_swc-*` properties for derived calculations.
 
-📖 See: *Custom Properties Style Guide → Private Properties*
+📖 See: *Custom Properties Style Guide → [Private properties](02_custom-properties.md#private-properties)*
 
 ## 7. Treating Forced-Colors as a Variant
 
@@ -326,12 +358,15 @@ Badge exposes a minimal, intentional surface and uses `_swc-*` properties for de
 ```css
 @media (forced-colors: active) {
   .swc-Badge {
-    --swc-badge-border-color CanvasText;
+    --swc-badge-border-color: CanvasText;
   }
 }
 ```
 
-📖 See: *Component CSS Style Guide → Forced Colors*
+🔎 **Status Light reference:**  
+[status-light.css](../../../2nd-gen/packages/swc/components/status-light/status-light.css) overrides `--swc-statuslight-content-color` and adds a border to the dot pseudo-element so it stays visible in high-contrast mode.
+
+📖 See: *Component CSS Style Guide → [Forced colors requirements](01_component-css.md#forced-colors-requirements)*
 
 
 ## 8. Leaving Spectrum-Era Classes After Migration
@@ -361,8 +396,33 @@ Badge exposes a minimal, intentional surface and uses `_swc-*` properties for de
 🔎 **Badge reference:**  
 After migration, Badge relies solely on `.swc-Badge` and attributes.
 
-📖 See: *Spectrum CSS to SWC Migration → Step 6*
+📖 See: *Spectrum CSS to SWC Migration → [Validation step: removing legacy classes](04_spectrum-swc-migration.md#5-validation-step-removing-legacy-classes)*
 
+## Before/after refactoring examples
+
+### Visual styles on `:host` → base class
+
+| Before                                      | After                                                                                |
+| ------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `:host { padding: 8px; background: blue; }` | `:host { display: inline-block; }` + `.swc-Badge { padding: ...; background: ...; }` |
+
+### Specificity escalation → `:where()`
+
+| Before                                   | After                                            |
+| ---------------------------------------- | ------------------------------------------------ |
+| `.swc-Badge--subtle.swc-Badge--gray { }` | `.swc-Badge--subtle:where(.swc-Badge--gray) { }` |
+
+### Size classes in render → `:host([size])`
+
+| Before                                    | After                                                                  |
+| ----------------------------------------- | ---------------------------------------------------------------------- |
+| `class="swc-Badge spectrum-Badge--sizeL"` | `class="swc-Badge"` + `:host([size="l"]) { --swc-badge-height: ...; }` |
+
+### `--mod-*` chain → single property
+
+| Before                                                  | After                                                    |
+| ------------------------------------------------------- | -------------------------------------------------------- |
+| `var(--mod-badge-height, var(--spectrum-badge-height))` | `var(--swc-badge-height, token('component-height-100'))` |
 
 ## Final Reminder
 

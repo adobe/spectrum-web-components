@@ -42,7 +42,7 @@ When deciding where something lives in 2nd-gen, ask: **does it depend on the ren
 
 The key distinction: **UI-less** code goes in `core/` (it works the same regardless of Spectrum version); **UI** code that depends on Spectrum styles goes in `swc/` (even if it's a utility, not a design component).
 
-For placement within `core/`, see [packages/core/MIGRATION.md](../../../2nd-gen/packages/core/MIGRATION.md).
+For placement within `core/`, see [packages/core/MIGRATION.md](../../2nd-gen/packages/core/MIGRATION.md).
 
 ## 2nd-gen layout
 
