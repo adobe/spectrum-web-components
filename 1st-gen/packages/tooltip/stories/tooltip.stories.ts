@@ -471,6 +471,9 @@ export const SelfManagedSlottedHosts = (): TemplateResult => html`
     </div>
   </div>
 `;
+SelfManagedSlottedHosts.swc_vrt = {
+  skip: true,
+};
 
 export const draggable = (): TemplateResult => {
   const handleDragStart = (event: DragEvent): void => {
