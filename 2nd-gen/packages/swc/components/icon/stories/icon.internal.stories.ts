@@ -9,17 +9,18 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { html } from 'lit';
-import { ifDefined } from 'lit/directives/if-defined.js';
+import { html, type TemplateResult } from 'lit';
+import { styleMap } from 'lit/directives/style-map.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
-
-import '@adobe/spectrum-wc/icon';
 
 import {
   ICON_VALID_SIZES,
   type IconSize,
-} from '../../../../core/components/icon/Icon.types.js';
+} from '@spectrum-web-components/core/components/icon';
+
+import '@adobe/spectrum-wc/icon';
+
 import { Chevron100Icon } from '../elements/index.js';
 import * as iconElements from '../elements/index.js';
 
@@ -77,17 +78,39 @@ const sizeLabels = {
   xl: 'Extra-large',
 } as const satisfies Record<IconSize, string>;
 
+const iconCardStyles = {
+  display: 'inline-flex',
+  'flex-direction': 'column',
+  'align-items': 'center',
+  gap: '8px',
+  'min-inline-size': '120px',
+  padding: '8px',
+} as const;
+
+const renderIcon = (
+  args: Record<string, unknown>,
+  {
+    label,
+    size,
+    icon = iconSvg,
+  }: { label?: string; size?: IconSize; icon?: TemplateResult } = {}
+) =>
+  template(
+    {
+      ...args,
+      label: (args.label as string | undefined) || label,
+      size: (args.size as IconSize | undefined) || size,
+    },
+    icon
+  );
+
 // ────────────────────
 //    AUTODOCS STORY
 // ────────────────────
 
 export const Playground: Story = {
   tags: ['autodocs', 'dev'],
-  render: (args) => html`
-    <swc-icon label=${ifDefined(args.label)} size=${ifDefined(args.size)}>
-      ${iconSvg}
-    </swc-icon>
-  `,
+  render: (args) => renderIcon(args),
   args: {
     label: 'Search',
     size: 'm',
@@ -100,11 +123,7 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   tags: ['overview'],
-  render: (args) => html`
-    <swc-icon label=${ifDefined(args.label)} size=${ifDefined(args.size)}>
-      ${iconSvg}
-    </swc-icon>
-  `,
+  render: (args) => renderIcon(args),
   args: {
     label: 'Search',
     size: 'm',
@@ -125,14 +144,7 @@ export const Overview: Story = {
  * - Default slot: Provide SVG markup to render.
  */
 export const Anatomy: Story = {
-  render: (args) => html`
-    <swc-icon
-      label=${ifDefined(args.label || 'Chevron icon')}
-      size=${ifDefined(args.size)}
-    >
-      ${iconSvg}
-    </swc-icon>
-  `,
+  render: (args) => renderIcon(args, { label: 'Chevron icon' }),
   tags: ['anatomy'],
   parameters: {
     flexLayout: true,
@@ -156,15 +168,8 @@ export const Anatomy: Story = {
  */
 export const Sizes: Story = {
   render: (args) => html`
-    ${ICON_VALID_SIZES.map(
-      (size) => html`
-        <swc-icon
-          label=${ifDefined(args.label || sizeLabels[size])}
-          size=${size}
-        >
-          ${iconSvg}
-        </swc-icon>
-      `
+    ${ICON_VALID_SIZES.map((size) =>
+      renderIcon(args, { label: sizeLabels[size], size })
     )}
   `,
   tags: ['options'],
@@ -181,14 +186,7 @@ export const Sizes: Story = {
  * This keeps icon usage centralized and avoids per-component SVG duplication.
  */
 export const Sources: Story = {
-  render: (args) => html`
-    <swc-icon
-      label=${ifDefined(args.label || 'Chevron icon')}
-      size=${ifDefined(args.size)}
-    >
-      ${iconSvg}
-    </swc-icon>
-  `,
+  render: (args) => renderIcon(args, { label: 'Chevron icon' }),
   tags: ['options'],
   parameters: {
     flexLayout: true,
@@ -206,14 +204,8 @@ export const Sources: Story = {
  * ```
  */
 export const SharedTemplates: Story = {
-  render: (args) => html`
-    <swc-icon
-      label=${ifDefined(args.label || 'Chevron')}
-      size=${ifDefined(args.size)}
-    >
-      ${Chevron100Icon()}
-    </swc-icon>
-  `,
+  render: (args) =>
+    renderIcon(args, { label: 'Chevron', icon: Chevron100Icon() }),
   tags: ['options'],
   parameters: {
     flexLayout: true,
@@ -235,27 +227,13 @@ export const AvailableIcons: Story = {
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([name, iconFactory]) => ({
         name,
-        icon: (iconFactory as () => unknown)(),
+        icon: (iconFactory as () => TemplateResult)(),
       }));
     return html`
       ${catalog.map(
         (entry) => html`
-          <div
-            style="
-                            display: inline-flex;
-                            flex-direction: column;
-                            align-items: center;
-                            gap: 8px;
-                            min-inline-size: 120px;
-                            padding: 8px;
-                        "
-          >
-            <swc-icon
-              label=${ifDefined(args.label || entry.name)}
-              size=${ifDefined(args.size)}
-            >
-              ${entry.icon}
-            </swc-icon>
+          <div style=${styleMap(iconCardStyles)}>
+            ${renderIcon(args, { label: entry.name, icon: entry.icon })}
             <code>${entry.name}</code>
           </div>
         `
@@ -290,11 +268,7 @@ export const AvailableIcons: Story = {
  * - Keep labels short and specific (e.g., "Search" instead of "Icon")
  */
 export const Accessibility: Story = {
-  render: (args) => html`
-    <swc-icon label=${ifDefined(args.label)} size=${ifDefined(args.size)}>
-      ${iconSvg}
-    </swc-icon>
-  `,
+  render: (args) => renderIcon(args),
   tags: ['a11y'],
   parameters: {
     flexLayout: true,
