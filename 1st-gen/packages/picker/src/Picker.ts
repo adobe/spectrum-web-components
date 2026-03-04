@@ -665,10 +665,12 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
 
     // Set up trigger element for self-managed tooltips
     if (this.tooltipEl?.selfManaged) {
-      // Wait for the tooltip to be fully initialized
+      if (this.button) {
+        this.tooltipEl.triggerElement = this.button;
+      }
       this.updateComplete.then(() => {
-        if (this.tooltipEl?.overlayElement && this.button) {
-          this.tooltipEl.overlayElement.triggerElement = this.button;
+        if (this.tooltipEl?.selfManaged && this.button) {
+          this.tooltipEl.triggerElement = this.button;
         }
       });
     }
@@ -1690,10 +1692,12 @@ export class Picker extends SizedMixin(ExpandableElement, {
 
     // Set up trigger element for self-managed tooltips
     if (this.tooltipEl?.selfManaged) {
-      // Wait for the tooltip to be fully initialized
+      if (this.button) {
+        this.tooltipEl.triggerElement = this.button;
+      }
       this.updateComplete.then(() => {
-        if (this.tooltipEl?.overlayElement && this.button) {
-          this.tooltipEl.overlayElement.triggerElement = this.button;
+        if (this.tooltipEl?.selfManaged && this.button) {
+          this.tooltipEl.triggerElement = this.button;
         }
       });
     }

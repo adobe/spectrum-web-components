@@ -24,6 +24,10 @@ import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import '@spectrum-web-components/picker/sp-picker.js';
+import '@spectrum-web-components/combobox/sp-combobox.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
@@ -416,6 +420,55 @@ export const selfManagedFieldLabel = (): TemplateResult => html`
       <sp-tooltip self-managed>Edit</sp-tooltip>
     </sp-field-label>
     <sp-textfield id="input"></sp-textfield>
+  </div>
+`;
+
+export const SelfManagedSlottedHosts = (): TemplateResult => html`
+  <div
+    style="display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); align-items: start;"
+  >
+    <div style="display: inline-flex; flex-direction: column; gap: 8px;">
+      <span style="font-size: 12px; color: var(--spectrum-gray-700);">
+        Action menu
+      </span>
+      <sp-action-menu size="m">
+        <span slot="label">More actions</span>
+        <sp-tooltip slot="tooltip" self-managed placement="top">
+          Action menu tooltip
+        </sp-tooltip>
+        <sp-menu-item>Deselect</sp-menu-item>
+        <sp-menu-item>Select inverse</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+      </sp-action-menu>
+    </div>
+
+    <div style="display: inline-flex; flex-direction: column; gap: 8px;">
+      <span style="font-size: 12px; color: var(--spectrum-gray-700);">
+        Picker
+      </span>
+      <sp-picker label="Pick one">
+        <sp-tooltip slot="tooltip" self-managed placement="top">
+          Picker tooltip
+        </sp-tooltip>
+        <sp-menu-item>First option</sp-menu-item>
+        <sp-menu-item>Second option</sp-menu-item>
+        <sp-menu-item>Third option</sp-menu-item>
+      </sp-picker>
+    </div>
+
+    <div style="display: inline-flex; flex-direction: column; gap: 8px;">
+      <span style="font-size: 12px; color: var(--spectrum-gray-700);">
+        Combobox
+      </span>
+      <sp-combobox label="Search options">
+        <sp-tooltip slot="tooltip" self-managed placement="top">
+          Combobox tooltip
+        </sp-tooltip>
+        <sp-menu-item value="alpha">Alpha</sp-menu-item>
+        <sp-menu-item value="beta">Beta</sp-menu-item>
+        <sp-menu-item value="gamma">Gamma</sp-menu-item>
+      </sp-combobox>
+    </div>
   </div>
 `;
 
