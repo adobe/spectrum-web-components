@@ -661,16 +661,17 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
   protected handleTooltipSlotchange(
     event: Event & { target: HTMLSlotElement }
   ): void {
-    this.tooltipEl = event.target.assignedElements()[0] as Tooltip | undefined;
+    const tooltipEl = event.target.assignedElements()[0] as Tooltip | undefined;
+    this.tooltipEl = tooltipEl;
 
     // Set up trigger element for self-managed tooltips
-    if (this.tooltipEl?.selfManaged) {
+    if (tooltipEl?.selfManaged) {
       if (this.button) {
-        this.tooltipEl.triggerElement = this.button;
+        tooltipEl.triggerElement = this.button;
       }
       this.updateComplete.then(() => {
-        if (this.tooltipEl?.selfManaged && this.button) {
-          this.tooltipEl.triggerElement = this.button;
+        if (tooltipEl.selfManaged && this.button) {
+          tooltipEl.triggerElement = this.button;
         }
       });
     }
@@ -1688,16 +1689,17 @@ export class Picker extends SizedMixin(ExpandableElement, {
   protected handleTooltipSlotchange(
     event: Event & { target: HTMLSlotElement }
   ): void {
-    this.tooltipEl = event.target.assignedElements()[0] as Tooltip | undefined;
+    const tooltipEl = event.target.assignedElements()[0] as Tooltip | undefined;
+    this.tooltipEl = tooltipEl;
 
     // Set up trigger element for self-managed tooltips
-    if (this.tooltipEl?.selfManaged) {
+    if (tooltipEl?.selfManaged) {
       if (this.button) {
-        this.tooltipEl.triggerElement = this.button;
+        tooltipEl.triggerElement = this.button;
       }
       this.updateComplete.then(() => {
-        if (this.tooltipEl?.selfManaged && this.button) {
-          this.tooltipEl.triggerElement = this.button;
+        if (tooltipEl.selfManaged && this.button) {
+          tooltipEl.triggerElement = this.button;
         }
       });
     }
