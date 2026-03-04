@@ -23,7 +23,7 @@
 
 Flaky tests fail sometimes and pass other times. They waste time and erode trust in the test suite. Here are common causes and fixes, drawn from real fixes in this repository.
 
-### Wait for components to be ready
+## Wait for components to be ready
 
 Never assert on a component before it finishes rendering. Use `getComponent` or `getComponents` (which call `updateComplete` internally) instead of raw `querySelector`:
 
@@ -35,7 +35,7 @@ const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
 const badge = canvasElement.querySelector('swc-badge') as Badge;
 ```
 
-### Avoid fixed timeouts
+## Avoid fixed timeouts
 
 Do not use `setTimeout` or `sleep` to wait for things to happen. Use deterministic waits:
 
@@ -47,7 +47,7 @@ await badge.updateComplete;
 await new Promise((r) => setTimeout(r, 500));
 ```
 
-### Handle race conditions
+## Handle race conditions
 
 When waiting for async state changes, check the current state first, then wait for events. This pattern from the overlay flaky test fix prevents race conditions:
 
@@ -68,7 +68,7 @@ return await waitUntil(
 );
 ```
 
-### Use deterministic content
+## Use deterministic content
 
 Avoid random data, timestamps, or any content that changes between runs. This especially matters for VRT:
 
@@ -80,6 +80,6 @@ render: () => html`<swc-badge variant="informative">Active</swc-badge>`
 render: () => html`<swc-badge>${Math.random()}</swc-badge>`
 ```
 
-### Isolate test state
+## Isolate test state
 
 Each test should be independent. Use `withWarningSpy` (which handles setup and teardown) rather than sharing state across tests. If you use `setupSwcWarningSpy` directly, always restore in a `finally` block.
