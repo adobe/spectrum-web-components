@@ -12,9 +12,23 @@
 import AxeBuilder from '@axe-core/playwright';
 import type { TestRunnerConfig } from '@storybook/test-runner';
 
+type StorybookA11yConfig = {
+  disabledRules?: string[];
+  exclude?: Record<string, string[]>;
+};
+
+type StorybookTestContext = {
+  tags?: string[];
+  parameters?: {
+    a11y?: StorybookA11yConfig;
+  };
+};
+
 const config: TestRunnerConfig = {
   async postVisit(page, context) {
-    if (context.tags?.includes('!test')) {
+    const storyContext = context as typeof context & StorybookTestContext;
+
+    if (storyContext.tags?.includes('!test')) {
       return;
     }
 
@@ -22,7 +36,7 @@ const config: TestRunnerConfig = {
       .include('#storybook-root')
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
 
-    const a11yConfig = context.parameters?.a11y;
+    const a11yConfig = storyContext.parameters?.a11y;
 
     if (a11yConfig?.disabledRules && Array.isArray(a11yConfig.disabledRules)) {
       axeBuilder.disableRules(a11yConfig.disabledRules);
@@ -33,9 +47,7 @@ const config: TestRunnerConfig = {
     // Filter violations using rule-specific exclusions from story parameters.
     // parameters.a11y.exclude: { 'rule-id': ['selector1', 'selector2'] }
     // Only the specified rule is affected; all other rules still validate the element.
-    const excludeMap = a11yConfig?.exclude as
-      | Record<string, string[]>
-      | undefined;
+    const excludeMap = a11yConfig?.exclude;
 
     const violations = excludeMap
       ? results.violations
@@ -62,12 +74,25 @@ const config: TestRunnerConfig = {
     if (violations.length > 0) {
       const details = violations
         .map((violation) => {
-          const nodes = violation.nodes
-            .map((node) => node.target.join(', '))
-            .join('; ');
-          return `${violation.id}: ${nodes}`;
+          const nodeDetails = violation.nodes
+            .map((node) => {
+              const target = node.target.join(', ');
+              const failureSummary =
+                node.failureSummary?.trim() ?? 'No summary';
+              return `  - Target: ${target}\n    Summary: ${failureSummary}`;
+            })
+            .join('\n');
+
+          return [
+            `${violation.id} (${violation.impact ?? 'unknown impact'})`,
+            `Description: ${violation.description}`,
+            `Help: ${violation.help}`,
+            `More info: ${violation.helpUrl}`,
+            'Nodes:',
+            nodeDetails,
+          ].join('\n');
         })
-        .join('\n');
+        .join('\n\n');
 
       throw new Error(`A11y violations in ${context.id}:\n${details}`);
     }

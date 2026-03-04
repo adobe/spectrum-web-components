@@ -102,6 +102,7 @@ const preview = {
       },
     },
     a11y: {
+      test: 'error',
       config: {
         rules: [
           // Customize axe-core rules if needed
