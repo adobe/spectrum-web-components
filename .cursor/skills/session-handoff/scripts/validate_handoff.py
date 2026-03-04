@@ -64,8 +64,8 @@ def check_required_sections(content: str) -> tuple[bool, list[str]]:
     """Check that required sections exist and have content."""
     missing = []
     for section in REQUIRED_SECTIONS:
-        # Look for section header
-        pattern = rf'(?:^|\n)##?\s*{re.escape(section)}'
+        # Look for section header at any level (#, ##, ###, etc.) to match template
+        pattern = rf'(?:^|\n)#+\s*{re.escape(section)}'
         match = re.search(pattern, content, re.IGNORECASE)
         if not match:
             missing.append(f"{section} (missing)")
