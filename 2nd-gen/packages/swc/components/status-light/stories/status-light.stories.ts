@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -22,6 +23,10 @@ import {
 } from '@spectrum-web-components/core/components/status-light';
 
 import '@adobe/spectrum-wc/status-light';
+
+import { getTranslationKey } from '../../../.storybook/helpers/get-translation-key.js';
+import translations from '../../../.storybook/intl/translations.json';
+type TranslationKey = keyof typeof translations;
 
 // ────────────────
 //    METADATA
@@ -339,4 +344,45 @@ export const Accessibility: Story = {
     },
   },
   tags: ['a11y'],
+};
+
+// ───────────────────────────────────
+//    INTERNATIONALIZATION STORIES
+// ───────────────────────────────────
+
+/**
+ * Wraps content in a div with the optional lang attribute and injects translated
+ * textfield.value from translations.json based on context.globals.lang.
+ * Used by the Fonts guide and for locale/font demos. This story is "docs-only."
+ */
+function withLocaleWrapperRender(
+  args: Record<string, unknown> & { lang?: string; 'default-slot'?: string },
+  context: { globals: { lang?: string } }
+): ReturnType<typeof html> {
+  const contextLang = context.globals?.lang;
+  const lang = args.lang ?? contextLang;
+  const key = getTranslationKey(lang) as TranslationKey;
+  const langTranslations = translations[key] ?? translations.en;
+  // Always use translated label so Language toolbar drives the visible text
+  const labelText = langTranslations['fieldlabel.label'];
+
+  return html`
+    <div lang=${ifDefined(lang ?? undefined)}>
+      ${template({ ...args, 'default-slot': labelText })}
+    </div>
+  `;
+}
+
+/**
+ * Status light with label driven by the Language toolbar and translations.json.
+ * Use this story in the Fonts guide to demonstrate font loading and translated copy.
+ */
+export const WithLocaleWrapper: Story = {
+  render: withLocaleWrapperRender,
+  parameters: {
+    docs: {
+      canvas: { sourceState: 'none' },
+      source: { code: null },
+    },
+  },
 };
