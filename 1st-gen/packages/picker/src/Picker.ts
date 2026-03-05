@@ -308,8 +308,6 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
   @state()
   appliedLabel?: string;
 
-  private deprecatedMenu: Menu | null = null;
-
   /**
    * Controls how icons are displayed in the picker button.
    * - `'only'`: Shows only the icon, hiding the label visually.
@@ -435,16 +433,6 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
 
   public override focus(options?: FocusOptions): void {
     this.focusElement?.focus(options);
-  }
-
-  /**
-   * @deprecated Use `focus()` instead.
-   * Focuses the picker button and applies focus styling.
-   */
-  public handleHelperFocus(): void {
-    // set focused to true here instead of handleButtonFocus so clicks don't flash a focus outline
-    this.focused = true;
-    this.button.focus();
   }
 
   /**
@@ -802,20 +790,43 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
    * @returns True if an accessible label is present
    */
   protected hasAccessibleLabel(): boolean {
-    const slotContent =
-      this.querySelector('[slot="label"]')?.textContent &&
-      this.querySelector('[slot="label"]')?.textContent?.trim() !== '';
-    const slotAlt =
-      this.querySelector('[slot="label"]')?.getAttribute('alt')?.trim() &&
-      this.querySelector('[slot="label"]')?.getAttribute('alt')?.trim() !== '';
+    if (this.hasContentInSlot('label')) {
+      // @todo update once we remove the label slot
+      // this.warnDeprecatedLabelSlot();
+    }
+    if (
+      !!this.getAttribute('aria-label') ||
+      !!this.getAttribute('aria-labelledby')
+    ) {
+      // @todo update once we remove the label slot
+      // this.warnCrossRootAriaIssues();
+    }
     return (
       !!this.label ||
       !!this.getAttribute('aria-label') ||
       !!this.getAttribute('aria-labelledby') ||
       !!this.appliedLabel ||
-      !!slotContent ||
-      !!slotAlt
+      !!this.hasContentInSlot('label') ||
+      !!this.hasContentInSlot('field-label')
     );
+  }
+
+  /**
+   * Checks whether the picker has content in a specific slot.
+   *
+   * @param slotName - The name of the slot to check
+   * @returns True if the slot has content
+   */
+  protected hasContentInSlot(slotName: string): boolean {
+    const slotContent =
+      this.querySelector(`[slot="${slotName}"]`)?.textContent &&
+      this.querySelector(`[slot="${slotName}"]`)?.textContent?.trim() !== '';
+    const slotAlt =
+      this.querySelector(`[slot="${slotName}"]`)?.getAttribute('alt')?.trim() &&
+      this.querySelector(`[slot="${slotName}"]`)
+        ?.getAttribute('alt')
+        ?.trim() !== '';
+    return !!slotContent || !!slotAlt;
   }
 
   /**
@@ -947,32 +958,15 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
       // await the same here.
       this.shouldScheduleManageSelection();
     }
-    // Maybe it's finally time to remove this support?
-    if (!this.hasUpdated) {
-      this.deprecatedMenu = this.querySelector(':scope > sp-menu');
-      this.deprecatedMenu?.toggleAttribute('ignore', true);
-      this.deprecatedMenu?.setAttribute('selects', 'inherit');
-    }
-    if (window.__swc?.DEBUG) {
-      if (!this.hasUpdated && this.querySelector(':scope > sp-menu')) {
-        const { localName } = this;
-        window.__swc.warn(
-          this,
-          `You no longer need to provide an <sp-menu> child to ${localName}. Any styling or attributes on the <sp-menu> will be ignored.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/picker/#sizes',
-          { level: 'deprecation' }
-        );
+    this.updateComplete.then(async () => {
+      // Attributes should be user supplied, making them available before first update.
+      // However, `appliesLabel` is applied by external elements that must be update complete as well to be bound appropriately.
+      await new Promise((res) => requestAnimationFrame(res));
+      await new Promise((res) => requestAnimationFrame(res));
+      if (!this.hasAccessibleLabel()) {
+        this.warnNoLabel();
       }
-      this.updateComplete.then(async () => {
-        // Attributes should be user supplied, making them available before first update.
-        // However, `appliesLabel` is applied by external elements that must be update complete as well to be bound appropriately.
-        await new Promise((res) => requestAnimationFrame(res));
-        await new Promise((res) => requestAnimationFrame(res));
-        if (!this.hasAccessibleLabel()) {
-          this.warnNoLabel();
-        }
-      });
-    }
+    });
     super.update(changes);
   }
 
@@ -1102,10 +1096,7 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
       </sp-menu>
     `;
     this.hasRenderedOverlay =
-      this.hasRenderedOverlay ||
-      this.focused ||
-      this.open ||
-      !!this.deprecatedMenu;
+      this.hasRenderedOverlay || this.focused || this.open;
     if (this.hasRenderedOverlay) {
       if (this.dependencyManager.loaded) {
         this.dependencyManager.add('sp-overlay');
@@ -1312,7 +1303,6 @@ export class Picker extends FieldLabelMixin(
   /** The label applied to the picker, typically from an associated field label. */
   @state()
   appliedLabel?: string;
-  private deprecatedMenu: Menu | null = null;
 
   /**
    * Controls how icons are displayed in the picker button.
@@ -1439,16 +1429,6 @@ export class Picker extends FieldLabelMixin(
    */
   public handleButtonBlur(): void {
     this.focused = false;
-  }
-
-  /**
-   * @deprecated Use `focus()` instead.
-   * Focuses the picker button and applies focus styling.
-   */
-  public handleHelperFocus(): void {
-    // set focused to true here instead of handleButtonFocus so clicks don't flash a focus outline
-    this.focused = true;
-    this.button.focus();
   }
 
   /**
@@ -1764,7 +1744,17 @@ export class Picker extends FieldLabelMixin(
       placeholder: !this.value,
       label: true,
     };
-    const appliedLabel = this.appliedLabel || this.label;
+
+    const hasSelectedItem = !!this.value && !!this.selectedItem;
+    const hasPlaceholder =
+      !!this.placeholder || this.hasContentInSlot('placeholder');
+    const hasVisibleLabel =
+      !!this.appliedLabel || this.hasContentInSlot('field-label');
+
+    // @todo update once we remove the label slot and support for label as placeholder
+    const visuallyHiddenLabel = !hasPlaceholder && !hasSelectedItem;
+    const ariaHiddenLabel = hasVisibleLabel && !visuallyHiddenLabel;
+
     // @todo the `label` slot is deprecated; remove in a future release.
     return [
       html`
@@ -1777,20 +1767,23 @@ export class Picker extends FieldLabelMixin(
         >
           ${this.renderLabelContent(this.selectedItemContent.content)}
         </span>
-        ${this.value && this.selectedItem
+        <span id="placeholder" ?hidden=${hasSelectedItem}>
+          <slot name="placeholder">${this.placeholder}</slot>
+        </span>
+        <span
+          id="label"
+          aria-hidden=${ifDefined(ariaHiddenLabel ? undefined : 'true')}
+          class=${classMap({ 'visually-hidden': visuallyHiddenLabel })}
+        >
+          <slot name="label">${this.label}</slot>
+        </span>
+        ${this.appliedLabel && !this.hasContentInSlot('field-label')
           ? html`
-              <span
-                aria-hidden="true"
-                class="visually-hidden"
-                id="applied-label"
-              >
-                ${appliedLabel}
-                <slot name="label"></slot>
+              <span id="applied-label" class="visually-hidden">
+                ${this.appliedLabel}
               </span>
             `
-          : html`
-              <span hidden id="applied-label">${appliedLabel}</span>
-            `}
+          : nothing}
         ${this.invalid && !this.pending
           ? html`
               <sp-icon-alert class="validation-icon"></sp-icon-alert>
@@ -1845,20 +1838,106 @@ export class Picker extends FieldLabelMixin(
    * @returns True if an accessible label is present
    */
   protected hasAccessibleLabel(): boolean {
-    const slotContent =
+    // @todo update once we remove the label slot
+    const labelSlotContent =
       this.querySelector('[slot="label"]')?.textContent &&
       this.querySelector('[slot="label"]')?.textContent?.trim() !== '';
-    const slotAlt =
+    const labelSlotAlt =
       this.querySelector('[slot="label"]')?.getAttribute('alt')?.trim() &&
       this.querySelector('[slot="label"]')?.getAttribute('alt')?.trim() !== '';
-    return (
-      !!this.label ||
-      !!this.getAttribute('aria-label') ||
-      !!this.getAttribute('aria-labelledby') ||
+    if (!!labelSlotContent || !!labelSlotAlt) {
+      this.warnDeprecatedLabelSlot();
+    }
+
+    const fieldLabelSlotContent =
+      this.querySelector('[slot="label"]')?.textContent &&
+      this.querySelector('[slot="label"]')?.textContent?.trim() !== '';
+    const fieldLabelSlotAlt =
+      this.querySelector('[slot="label"]')?.getAttribute('alt')?.trim() &&
+      this.querySelector('[slot="label"]')?.getAttribute('alt')?.trim() !== '';
+    const placeholderSlotContent =
+      this.querySelector('[slot="placeholder"]')?.textContent &&
+      this.querySelector('[slot="placeholder"]')?.textContent?.trim() !== '';
+    const placeholderSlotAlt =
+      this.querySelector('[slot="placeholder"]')?.getAttribute('alt')?.trim() &&
+      this.querySelector('[slot="placeholder"]')
+        ?.getAttribute('alt')
+        ?.trim() !== '';
+    const hasPlaceholder =
+      !!this.placeholder || !!placeholderSlotContent || !!placeholderSlotAlt;
+
+    // @todo update once we remove `<sp-field-label>` disable label as placeholder functionality
+    const hasVisibleLabel =
       !!this.appliedLabel ||
-      !!slotContent ||
-      !!slotAlt
+      !!fieldLabelSlotContent ||
+      !!fieldLabelSlotAlt ||
+      this.hasAttribute('aria-label') ||
+      this.hasAttribute('aria-labelledby');
+
+    // @todo update once we disable label as placeholder functionality
+    if (!!this.label && hasVisibleLabel && !hasPlaceholder) {
+      this.warnDeprecatedLabelAsPlaceholder();
+    }
+
+    // @todo update once we remove the label slot
+    return (
+      !!this.label || !!labelSlotContent || !!labelSlotAlt || hasVisibleLabel
     );
+  }
+
+  /**
+   * Checks whether the picker has content in a specific slot.
+   *
+   * @param slotName - The name of the slot to check
+   * @returns True if the slot has content
+   */
+  protected hasContentInSlot(slotName: string): boolean {
+    const slotContent =
+      this.querySelector(`[slot="${slotName}"]`)?.textContent &&
+      this.querySelector(`[slot="${slotName}"]`)?.textContent?.trim() !== '';
+    const slotAlt =
+      this.querySelector(`[slot="${slotName}"]`)?.getAttribute('alt')?.trim() &&
+      this.querySelector(`[slot="${slotName}"]`)
+        ?.getAttribute('alt')
+        ?.trim() !== '';
+    return !!slotContent || !!slotAlt;
+  }
+
+  /**
+   * Logs a warning in debug mode when the picker lacks an accessible label.
+   * Provides guidance on how to make the picker accessible.
+   */
+  protected warnDeprecatedLabelAsPlaceholder(): void {
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `<${this.localName}> using the "label" attribute as a placeholder is deprecated and will be removed in a future release. Use the "placeholder" attribute instead. The "label" attribute will continue to be used as a visibly hidden label for the picker.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
+        {
+          level: 'deprecation',
+        }
+      );
+    }
+  }
+
+  /**
+   * Logs a warning in debug mode when the picker lacks an accessible label.
+   * Provides guidance on how to make the picker accessible.
+   */
+  protected warnDeprecatedLabelSlot(): void {
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `<${this.localName}> the "label" slot is deprecated and will be removed in a future release. Use the "label" attribute instead.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
+        {
+          level: 'deprecation',
+          issues: [
+            'the "label" slot is deprecated and will be removed in a future release. Use the "label" attribute instead.',
+          ],
+        }
+      );
+    }
   }
 
   /**
@@ -1866,6 +1945,7 @@ export class Picker extends FieldLabelMixin(
    * Provides guidance on how to make the picker accessible.
    */
   protected warnNoLabel(): void {
+    // @todo update and include that label slot is deprecated
     if (window.__swc?.DEBUG) {
       window.__swc.warn(
         this,
@@ -1874,9 +1954,8 @@ export class Picker extends FieldLabelMixin(
         {
           type: 'accessibility',
           issues: [
-            `an <sp-field-label> element with a \`for\` attribute referencing the \`id\` of the \`<${this.localName}>\`, or`,
-            'value supplied to the "label" attribute, which will be displayed visually as placeholder text, or',
-            'text content supplied in a <span> with slot="label", which will also be displayed visually as placeholder text.',
+            `text content supplied in a <span> with slot="field-label", or`,
+            'value supplied to the "label" attribute.',
           ],
         }
       );
@@ -1940,7 +2019,6 @@ export class Picker extends FieldLabelMixin(
         aria-describedby="tooltip ${DESCRIPTION_ID}"
         aria-expanded=${this.open ? 'true' : 'false'}
         aria-haspopup="listbox"
-        aria-label=${ifDefined(this.label || undefined)}
         aria-labelledby="icon label applied-label pending-label"
         id="button"
         class=${ifDefined(
@@ -1997,22 +2075,7 @@ export class Picker extends FieldLabelMixin(
       // await the same here.
       this.shouldScheduleManageSelection();
     }
-    // Maybe it's finally time to remove this support?
-    if (!this.hasUpdated) {
-      this.deprecatedMenu = this.querySelector(':scope > sp-menu');
-      this.deprecatedMenu?.toggleAttribute('ignore', true);
-      this.deprecatedMenu?.setAttribute('selects', 'inherit');
-    }
     if (window.__swc?.DEBUG) {
-      if (!this.hasUpdated && this.querySelector(':scope > sp-menu')) {
-        const { localName } = this;
-        window.__swc.warn(
-          this,
-          `You no longer need to provide an <sp-menu> child to ${localName}. Any styling or attributes on the <sp-menu> will be ignored.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/picker/#sizes',
-          { level: 'deprecation' }
-        );
-      }
       this.updateComplete.then(async () => {
         // Attributes should be user supplied, making them available before first update.
         // However, `appliesLabel` is applied by external elements that must be update complete as well to be bound appropriately.
@@ -2147,10 +2210,7 @@ export class Picker extends FieldLabelMixin(
       </sp-menu>
     `;
     this.hasRenderedOverlay =
-      this.hasRenderedOverlay ||
-      this.focused ||
-      this.open ||
-      !!this.deprecatedMenu;
+      this.hasRenderedOverlay || this.focused || this.open;
     if (this.hasRenderedOverlay) {
       if (this.dependencyManager.loaded) {
         this.dependencyManager.add('sp-overlay');
