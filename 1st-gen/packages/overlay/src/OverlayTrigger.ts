@@ -24,6 +24,7 @@ import {
   query,
   state,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 /* eslint-disable import/no-extraneous-dependencies */
 import '@spectrum-web-components/overlay/sp-overlay.js';
@@ -133,6 +134,14 @@ export class OverlayTrigger extends SpectrumElement {
   @query('#hover-overlay', true)
   hoverOverlayElement!: Overlay;
 
+  /**
+   * Tracks elements where this component has taken ownership
+   * of ARIA attributes, so consumer-set values are never removed.
+   */
+  private ariaManagedElements = new WeakSet<HTMLElement>();
+
+  private previousTriggerElement?: HTMLElement;
+
   private getAssignedElementsFromSlot(slot: HTMLSlotElement): HTMLElement[] {
     return slot.assignedElements({ flatten: true }) as HTMLElement[];
   }
@@ -175,6 +184,101 @@ export class OverlayTrigger extends SpectrumElement {
     } else if (this.open === type) {
       this.open = undefined;
     }
+  }
+
+  private static readonly VALID_HASPOPUP_ROLES = new Set([
+    'menu',
+    'listbox',
+    'tree',
+    'grid',
+    'dialog',
+  ]);
+
+  private resolveHaspopupValue(): string {
+    const content = this.clickContent[0] || this.longpressContent[0];
+    if (!content) {
+      return 'dialog';
+    }
+    const role = content.getAttribute('role');
+    if (role && OverlayTrigger.VALID_HASPOPUP_ROLES.has(role)) {
+      return role;
+    }
+    const firstChild = content.querySelector('[role]') as HTMLElement | null;
+    if (
+      firstChild &&
+      OverlayTrigger.VALID_HASPOPUP_ROLES.has(firstChild.getAttribute('role')!)
+    ) {
+      return firstChild.getAttribute('role')!;
+    }
+    return 'dialog';
+  }
+
+  private removeAriaFromTrigger(element: HTMLElement): void {
+    if (!this.ariaManagedElements.has(element)) {
+      return;
+    }
+    element.removeAttribute('aria-expanded');
+    element.removeAttribute('aria-controls');
+    element.removeAttribute('aria-haspopup');
+    this.ariaManagedElements.delete(element);
+  }
+
+  private manageAriaOnTrigger(): void {
+    const triggerElement = this.targetContent[0];
+
+    if (
+      this.previousTriggerElement &&
+      this.previousTriggerElement !== triggerElement
+    ) {
+      this.removeAriaFromTrigger(this.previousTriggerElement);
+    }
+    this.previousTriggerElement = triggerElement;
+
+    if (!triggerElement) {
+      return;
+    }
+
+    const hasClickContent = this.clickContent.length > 0;
+    const hasLongpressContent = this.longpressContent.length > 0;
+
+    if (!hasClickContent && !hasLongpressContent) {
+      this.removeAriaFromTrigger(triggerElement);
+      return;
+    }
+
+    const isExpanded = this.open === 'click' || this.open === 'longpress';
+    triggerElement.setAttribute('aria-expanded', String(isExpanded));
+
+    if (
+      this.ariaManagedElements.has(triggerElement) ||
+      !triggerElement.hasAttribute('aria-haspopup')
+    ) {
+      triggerElement.setAttribute('aria-haspopup', this.resolveHaspopupValue());
+    }
+    this.ariaManagedElements.add(triggerElement);
+
+    const content =
+      this.open === 'longpress'
+        ? this.longpressContent[0]
+        : this.open === 'click'
+          ? this.clickContent[0]
+          : this.clickContent[0] || this.longpressContent[0];
+    if (content) {
+      if (!content.id) {
+        content.id = `sp-overlay-content-${randomID()}`;
+      }
+      triggerElement.setAttribute('aria-controls', content.id);
+    } else {
+      triggerElement.removeAttribute('aria-controls');
+    }
+  }
+
+  override disconnectedCallback(): void {
+    if (this.previousTriggerElement) {
+      this.removeAriaFromTrigger(this.previousTriggerElement);
+      this.previousTriggerElement = undefined;
+    }
+    super.disconnectedCallback();
   }
 
   protected override update(changes: PropertyValues): void {
@@ -338,6 +442,16 @@ export class OverlayTrigger extends SpectrumElement {
     if (this.disabled && changedProperties.has('disabled')) {
       this.open = undefined;
       return;
+    }
+
+    if (
+      changedProperties.has('open') ||
+      changedProperties.has('type') ||
+      changedProperties.has('targetContent') ||
+      changedProperties.has('clickContent') ||
+      changedProperties.has('longpressContent')
+    ) {
+      this.manageAriaOnTrigger();
     }
   }
 

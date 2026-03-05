@@ -166,23 +166,14 @@ Use the dialog with an overlay to create a dialog that appears over the current 
 2. Focus management when the dialog opens
 3. Event handling for closing the dialog
 
+The `<overlay-trigger>` element automatically manages `aria-expanded`, `aria-haspopup`, and `aria-controls` on the trigger element. When using `<sp-overlay>` directly, you must manage these attributes yourself via JavaScript (see the [overlay accessibility documentation](../overlay/#accessibility) for details).
+
 ```html
-<sp-button id="trigger">Overlay Trigger</sp-button>
-<sp-overlay trigger="trigger@click" placement="bottom">
-  <sp-popover>
-    <sp-dialog>
-      <h2 slot="heading">Overlay 1</h2>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
-      augue neque gravida. Libero volutpat sed ornare arcu.
-    </sp-dialog>
-  </sp-popover>
-</sp-overlay>
-<overlay-trigger placement="top" type="replace">
-  <sp-button slot="trigger">Overlay Trigger 2</sp-button>
-  <sp-popover slot="click-content" open>
+<overlay-trigger placement="top" type="auto" triggered-by="click">
+  <sp-button slot="trigger">Overlay Trigger</sp-button>
+  <sp-popover slot="click-content">
     <sp-dialog size="s">
-      <h2 slot="heading">Overlay 2</h2>
+      <h2 slot="heading">Overlay content</h2>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
       augue neque gravida. Libero volutpat sed ornare arcu.
