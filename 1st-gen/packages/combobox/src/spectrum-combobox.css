@@ -272,7 +272,14 @@
 
 .button,
 .progress-circle {
+  position: relative;
+  z-index: 1;
   grid-area: 2 / 1;
+  justify-content: end;
+}
+
+.progress-circle {
+  position: absolute;
 }
 
 #input {
