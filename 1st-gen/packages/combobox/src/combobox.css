@@ -14,12 +14,10 @@
 @import url("./combobox-overrides.css");
 
 :host {
-  display: inline-flex;
-  flex-wrap: wrap;
-}
-
-:host([label-position="inline-start"]) {
-  flex-wrap: nowrap;
+  display: inline-grid;
+  position: relative;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: 1fr;
 }
 
 :host([readonly]) sp-picker-button {
@@ -27,13 +25,40 @@
   pointer-events: none;
 }
 
-sp-field-label {
+sp-field-label,
+:host > label {
   display: block;
+  grid-area: 1 / 1;
   width: 100%;
+  padding-inline: 0;
 }
 
-:host([label-position="inline-start"]) sp-field-label {
+:host([disabled]) :host > label {
+  --mod-fieldlabel-color: var(--mod-disabled-content-color, var(--spectrum-disabled-content-color));
+}
+
+@media (forced-colors: active) {
+  :host([disabled]) :host > label {
+    --highcontrast-field-label-content-color: GrayText;
+  }
+}
+
+:host([side-aligned="start"]) sp-field-label,
+:host([side-aligned="start"]) :host > label,
+:host([side-aligned="end"]) sp-field-label,
+:host([side-aligned="end"]) :host > label {
+  grid-area: 1 / 1 / span 2 / span 1;
   width: auto;
+}
+
+:host([side-aligned="start"]) #textfield,
+:host([side-aligned="start"]) .button,
+:host([side-aligned="start"]) .progress-circle,
+:host([side-aligned="end"]) #textfield,
+:host([side-aligned="end"]) .button,
+:host([side-aligned="end"]) .progress-circle {
+  bottom: auto;
+  grid-area: 1 / 2;
 }
 
 sp-popover {
