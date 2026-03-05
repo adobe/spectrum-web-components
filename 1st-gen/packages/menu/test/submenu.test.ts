@@ -1137,7 +1137,7 @@ describe('Submenu', () => {
       expect(menu.currentMobileSubmenu).to.equal(this.rootItem);
 
       const backHeader = menu.shadowRoot!.querySelector(
-        '.mobile-submenu-header'
+        '.spectrum-Menu-back'
       );
       expect(backHeader).to.not.be.null;
     });
@@ -1149,11 +1149,11 @@ describe('Submenu', () => {
       expect(menu.currentMobileSubmenu).to.equal(this.rootItem);
 
       const backHeader = menu.shadowRoot!.querySelector(
-        '.mobile-submenu-header'
-      ) as MenuItem;
+        '.spectrum-Menu-back'
+      ) as HTMLDivElement;
       expect(backHeader).to.not.be.null;
 
-      await mouseClickOn(backHeader);
+      backHeader.click();
       await elementUpdated(menu);
 
       expect(menu.currentMobileSubmenu).to.be.undefined;

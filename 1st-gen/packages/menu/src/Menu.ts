@@ -153,24 +153,75 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
   }
 
   public openMobileSubmenu(item: MenuItem): void {
-    this.projectMobileSubmenu(item);
+    this._projectMobileSubmenu(item);
     this._mobileSubmenuStack = [...this._mobileSubmenuStack, item];
   }
 
   public closeMobileSubmenu(): void {
     const current = this.currentMobileSubmenu;
     if (current) {
-      this.restoreMobileSubmenu(current);
+      this._restoreMobileSubmenu(current);
     }
     this._mobileSubmenuStack = this._mobileSubmenuStack.slice(0, -1);
+
+    const previous = this.currentMobileSubmenu;
+    if (previous?.submenuElement) {
+      previous.submenuElement.setAttribute('slot', 'mobile-submenu');
+    }
   }
 
   public resetMobileSubmenus(): void {
     for (let i = this._mobileSubmenuStack.length - 1; i >= 0; i--) {
-      this.restoreMobileSubmenu(this._mobileSubmenuStack[i]);
+      this._restoreMobileSubmenu(this._mobileSubmenuStack[i]);
     }
     this._mobileSubmenuStack = [];
   }
+
+  /**
+   * Moves the submenu element from its MenuItem parent into this Menu's
+   * light DOM with a `mobile-submenu` slot, so it projects through the
+   * named slot in the shadow DOM. Any previously visible projected submenu
+   * is moved to a non-rendered slot to avoid both showing at once.
+   */
+  private _projectMobileSubmenu(item: MenuItem): void {
+    const submenuEl = item.submenuElement;
+    if (!submenuEl) {
+      return;
+    }
+
+    const currentlyVisible = this.currentMobileSubmenu?.submenuElement;
+    if (currentlyVisible) {
+      currentlyVisible.setAttribute('slot', 'mobile-submenu-stacked');
+    }
+
+    item._mobileSubmenuProjected = true;
+    this._mobileSubmenuOriginalParents.set(submenuEl, submenuEl.parentElement!);
+    submenuEl.setAttribute('slot', 'mobile-submenu');
+    (submenuEl as HTMLElement).style.width = '100%';
+    this.appendChild(submenuEl);
+  }
+
+  /**
+   * Restores the submenu element back to its original MenuItem parent
+   * and resets the slot attribute.
+   */
+  private _restoreMobileSubmenu(item: MenuItem): void {
+    const submenuEl = item.submenuElement;
+    if (!submenuEl) {
+      return;
+    }
+
+    const originalParent = this._mobileSubmenuOriginalParents.get(submenuEl);
+    if (originalParent) {
+      submenuEl.setAttribute('slot', 'submenu');
+      (submenuEl as HTMLElement).style.width = '';
+      originalParent.appendChild(submenuEl);
+      this._mobileSubmenuOriginalParents.delete(submenuEl);
+    }
+    item._mobileSubmenuProjected = false;
+  }
+
+  private _mobileSubmenuOriginalParents = new Map<HTMLElement, HTMLElement>();
 
   /**
    * label of the menu
@@ -1092,72 +1143,51 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     `;
   }
 
-  private renderMobileSubmenu(): TemplateResult {
+  private renderMobileSubmenuHeader(): TemplateResult {
     const current = this.currentMobileSubmenu!;
     return html`
-      <sp-menu-item
-        class="mobile-submenu-header"
+      <div
+        class="spectrum-Menu-back"
+        role="menuitem"
+        tabindex="0"
         @click=${(event: Event) => {
           event.stopPropagation();
           event.preventDefault();
           this.closeMobileSubmenu();
         }}
+        @keydown=${(event: KeyboardEvent) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            this.closeMobileSubmenu();
+          }
+        }}
       >
-        <sp-icon-chevron100
-          slot="icon"
-          class="spectrum-UIIcon-ChevronLeft100"
-          style="transform: rotate(180deg);"
-        ></sp-icon-chevron100>
-        ${current.itemText}
-      </sp-menu-item>
-      <sp-menu-divider></sp-menu-divider>
-      <div class="mobile-submenu-content">
-        <slot name="mobile-submenu"></slot>
+        <button class="spectrum-Menu-backButton" tabindex="-1">
+          <sp-icon-chevron100
+            class="spectrum-Menu-backIcon"
+          ></sp-icon-chevron100>
+        </button>
+        <span class="spectrum-Menu-backHeading">${current.itemText}</span>
       </div>
     `;
   }
 
-  /**
-   * Moves the submenu element from its original parent into the mobile
-   * submenu projection slot and stores the original parent for restoration.
-   */
-  private projectMobileSubmenu(item: MenuItem): void {
-    const submenuEl = item.submenuElement;
-    if (!submenuEl) {
-      return;
-    }
-
-    this._mobileSubmenuOriginalParents.set(submenuEl, submenuEl.parentElement!);
-    submenuEl.removeAttribute('slot');
-    submenuEl.setAttribute('slot', 'mobile-submenu');
-    this.appendChild(submenuEl);
-  }
-
-  /**
-   * Restores the submenu element back to its original parent after
-   * navigating back from the mobile drill-down view.
-   */
-  private restoreMobileSubmenu(item: MenuItem): void {
-    const submenuEl = item.submenuElement;
-    if (!submenuEl) {
-      return;
-    }
-
-    const originalParent = this._mobileSubmenuOriginalParents.get(submenuEl);
-    if (originalParent) {
-      submenuEl.setAttribute('slot', 'submenu');
-      originalParent.appendChild(submenuEl);
-      this._mobileSubmenuOriginalParents.delete(submenuEl);
-    }
-  }
-
-  private _mobileSubmenuOriginalParents = new Map<HTMLElement, HTMLElement>();
-
   public override render(): TemplateResult {
-    if (this.isMobileView && this._mobileSubmenuStack.length > 0) {
-      return this.renderMobileSubmenu();
-    }
-    return this.renderMenuItemSlot();
+    const hasMobileSubmenu =
+      this.isMobileView && this._mobileSubmenuStack.length > 0;
+    return html`
+      ${hasMobileSubmenu ? this.renderMobileSubmenuHeader() : ''}
+      <div
+        class=${hasMobileSubmenu ? 'mobile-slot-hidden' : 'mobile-slot-wrapper'}
+      >
+        ${this.renderMenuItemSlot()}
+      </div>
+      ${hasMobileSubmenu
+        ? html`
+            <slot name="mobile-submenu"></slot>
+          `
+        : ''}
+    `;
   }
 
   protected override firstUpdated(changed: PropertyValues): void {
