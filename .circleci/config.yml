@@ -559,13 +559,7 @@ workflows:
           matrix:
             parameters:
               browser: [chromium, firefox, webkit]
-          filters:
-            branches:
-              only: main
-      - test-2ndgen-coverage:
-          filters:
-            branches:
-              only: main
+      - test-2ndgen-coverage
       - test-2ndgen-a11y
       - test-2ndgen-axe
       # 1st-gen tests
