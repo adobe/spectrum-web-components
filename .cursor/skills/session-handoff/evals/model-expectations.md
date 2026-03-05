@@ -166,22 +166,22 @@ These should always work regardless of model:
 
 1. **Run setup script:**
 
-    ```bash
-    python evals/setup_test_env.py
-    cd /tmp/handoff-eval-project
-    ```
+   ```bash
+   python evals/setup_test_env.py
+   cd /tmp/handoff-eval-project
+   ```
 
 2. **Test each scenario in new conversation**
-    - Start fresh conversation for each scenario
-    - Use exact trigger phrases from test-scenarios.md
-    - Record scores using results template
+   - Start fresh conversation for each scenario
+   - Use exact trigger phrases from test-scenarios.md
+   - Record scores using results template
 
 3. **Compare across models**
-    - Note significant behavior differences
-    - Identify skill improvements needed
-    - Update SKILL.md if Haiku needs more guidance
+   - Note significant behavior differences
+   - Identify skill improvements needed
+   - Update SKILL.md if Haiku needs more guidance
 
 4. **Document findings**
-    - Use results template for each model
-    - Note specific failure modes
-    - Recommend skill adjustments
+   - Use results template for each model
+   - Note specific failure modes
+   - Recommend skill adjustments

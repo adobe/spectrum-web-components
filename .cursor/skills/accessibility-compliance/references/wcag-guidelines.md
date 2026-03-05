@@ -120,20 +120,20 @@ Structure and relationships must be programmatically determinable.
 ```tsx
 // Input with autocomplete for autofill
 <form>
-    <label htmlFor="name">Full Name</label>
-    <input id="name" name="name" autoComplete="name" />
+  <label htmlFor="name">Full Name</label>
+  <input id="name" name="name" autoComplete="name" />
 
-    <label htmlFor="email">Email</label>
-    <input id="email" name="email" type="email" autoComplete="email" />
+  <label htmlFor="email">Email</label>
+  <input id="email" name="email" type="email" autoComplete="email" />
 
-    <label htmlFor="phone">Phone</label>
-    <input id="phone" name="phone" type="tel" autoComplete="tel" />
+  <label htmlFor="phone">Phone</label>
+  <input id="phone" name="phone" type="tel" autoComplete="tel" />
 
-    <label htmlFor="address">Street Address</label>
-    <input id="address" name="address" autoComplete="street-address" />
+  <label htmlFor="address">Street Address</label>
+  <input id="address" name="address" autoComplete="street-address" />
 
-    <label htmlFor="cc">Credit Card Number</label>
-    <input id="cc" name="cc" autoComplete="cc-number" />
+  <label htmlFor="cc">Credit Card Number</label>
+  <input id="cc" name="cc" autoComplete="cc-number" />
 </form>
 ```
 
@@ -170,18 +170,18 @@ Structure and relationships must be programmatically determinable.
 
 /* Good contrast examples */
 .text-on-white {
-    color: #595959; /* 7:1 ratio on white */
+  color: #595959; /* 7:1 ratio on white */
 }
 
 .text-on-dark {
-    color: #ffffff;
-    background: #333333; /* 12.6:1 ratio */
+  color: #ffffff;
+  background: #333333; /* 12.6:1 ratio */
 }
 
 /* Link must be distinguishable from surrounding text */
 .link {
-    color: #0066cc; /* 4.5:1 on white */
-    text-decoration: underline; /* Additional visual cue */
+  color: #0066cc; /* 4.5:1 on white */
+  text-decoration: underline; /* Additional visual cue */
 }
 ```
 
@@ -190,27 +190,27 @@ Structure and relationships must be programmatically determinable.
 ```css
 /* UI components need 3:1 contrast */
 .button {
-    border: 2px solid #767676; /* 3:1 against white */
-    background: white;
+  border: 2px solid #767676; /* 3:1 against white */
+  background: white;
 }
 
 .input {
-    border: 1px solid #767676;
+  border: 1px solid #767676;
 }
 
 .input:focus {
-    outline: 2px solid #0066cc; /* Focus indicator needs 3:1 */
-    outline-offset: 2px;
+  outline: 2px solid #0066cc; /* Focus indicator needs 3:1 */
+  outline-offset: 2px;
 }
 
 /* Custom checkbox */
 .checkbox {
-    border: 2px solid #767676;
+  border: 2px solid #767676;
 }
 
 .checkbox:checked {
-    background: #0066cc;
-    border-color: #0066cc;
+  background: #0066cc;
+  border-color: #0066cc;
 }
 ```
 
@@ -221,16 +221,16 @@ Content must not be lost when user adjusts text spacing.
 ```css
 /* Allow text spacing adjustments without breaking layout */
 .content {
-    /* Use relative units */
-    line-height: 1.5; /* At least 1.5x font size */
-    letter-spacing: 0.12em; /* Support for 0.12em */
-    word-spacing: 0.16em; /* Support for 0.16em */
+  /* Use relative units */
+  line-height: 1.5; /* At least 1.5x font size */
+  letter-spacing: 0.12em; /* Support for 0.12em */
+  word-spacing: 0.16em; /* Support for 0.16em */
 
-    /* Don't use fixed heights on text containers */
-    min-height: auto;
+  /* Don't use fixed heights on text containers */
+  min-height: auto;
 
-    /* Allow wrapping */
-    overflow-wrap: break-word;
+  /* Allow wrapping */
+  overflow-wrap: break-word;
 }
 
 /* Test with these values: */
@@ -245,31 +245,31 @@ Content must not be lost when user adjusts text spacing.
 ```tsx
 // Tooltip pattern
 function Tooltip({ content, children }) {
-    const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
-    return (
+  return (
+    <div
+      onMouseEnter={() => setIsVisible(true)}
+      onMouseLeave={() => setIsVisible(false)}
+      onFocus={() => setIsVisible(true)}
+      onBlur={() => setIsVisible(false)}
+    >
+      {children}
+      {isVisible && (
         <div
-            onMouseEnter={() => setIsVisible(true)}
-            onMouseLeave={() => setIsVisible(false)}
-            onFocus={() => setIsVisible(true)}
-            onBlur={() => setIsVisible(false)}
+          role="tooltip"
+          // Dismissible: user can close without moving pointer
+          onKeyDown={(e) => e.key === 'Escape' && setIsVisible(false)}
+          // Hoverable: content stays visible when pointer moves to it
+          onMouseEnter={() => setIsVisible(true)}
+          onMouseLeave={() => setIsVisible(false)}
+          // Persistent: stays until trigger loses focus/hover
         >
-            {children}
-            {isVisible && (
-                <div
-                    role="tooltip"
-                    // Dismissible: user can close without moving pointer
-                    onKeyDown={(e) => e.key === 'Escape' && setIsVisible(false)}
-                    // Hoverable: content stays visible when pointer moves to it
-                    onMouseEnter={() => setIsVisible(true)}
-                    onMouseLeave={() => setIsVisible(false)}
-                    // Persistent: stays until trigger loses focus/hover
-                >
-                    {content}
-                </div>
-            )}
+          {content}
         </div>
-    );
+      )}
+    </div>
+  );
 }
 ```
 
@@ -286,26 +286,26 @@ All functionality must be operable via keyboard.
 ```tsx
 // Custom interactive element
 function CustomButton({ onClick, children }) {
-    return (
-        <div
-            role="button"
-            tabIndex={0}
-            onClick={onClick}
-            onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    onClick();
-                }
-            }}
-        >
-            {children}
-        </div>
-    );
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick();
+        }
+      }}
+    >
+      {children}
+    </div>
+  );
 }
 
 // Better: just use a button
 function BetterButton({ onClick, children }) {
-    return <button onClick={onClick}>{children}</button>;
+  return <button onClick={onClick}>{children}</button>;
 }
 ```
 
@@ -314,39 +314,39 @@ function BetterButton({ onClick, children }) {
 ```tsx
 // Modal with proper focus management
 function Modal({ isOpen, onClose, children }) {
-    const closeButtonRef = useRef(null);
+  const closeButtonRef = useRef(null);
 
-    // Return focus on close
-    useEffect(() => {
-        if (!isOpen) return;
+  // Return focus on close
+  useEffect(() => {
+    if (!isOpen) return;
 
-        const previousFocus = document.activeElement;
-        closeButtonRef.current?.focus();
+    const previousFocus = document.activeElement;
+    closeButtonRef.current?.focus();
 
-        return () => {
-            (previousFocus as HTMLElement)?.focus();
-        };
-    }, [isOpen]);
+    return () => {
+      (previousFocus as HTMLElement)?.focus();
+    };
+  }, [isOpen]);
 
-    // Allow Escape to close
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') onClose();
-        };
-        document.addEventListener('keydown', handleKeyDown);
-        return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [onClose]);
+  // Allow Escape to close
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
 
-    return (
-        <FocusTrap>
-            <div role="dialog" aria-modal="true">
-                <button ref={closeButtonRef} onClick={onClose}>
-                    Close
-                </button>
-                {children}
-            </div>
-        </FocusTrap>
-    );
+  return (
+    <FocusTrap>
+      <div role="dialog" aria-modal="true">
+        <button ref={closeButtonRef} onClick={onClose}>
+          Close
+        </button>
+        {children}
+      </div>
+    </FocusTrap>
+  );
 }
 ```
 
@@ -357,22 +357,22 @@ function Modal({ isOpen, onClose, children }) {
 ```tsx
 // Skip links
 <body>
-    <a href="#main" className="skip-link">
-        Skip to main content
-    </a>
-    <a href="#nav" className="skip-link">
-        Skip to navigation
-    </a>
+  <a href="#main" className="skip-link">
+    Skip to main content
+  </a>
+  <a href="#nav" className="skip-link">
+    Skip to navigation
+  </a>
 
-    <header>...</header>
+  <header>...</header>
 
-    <nav id="nav" aria-label="Main">
-        ...
-    </nav>
+  <nav id="nav" aria-label="Main">
+    ...
+  </nav>
 
-    <main id="main" tabIndex={-1}>
-        {/* Main content */}
-    </main>
+  <main id="main" tabIndex={-1}>
+    {/* Main content */}
+  </main>
 </body>
 ```
 
@@ -405,21 +405,21 @@ function Modal({ isOpen, onClose, children }) {
 ```css
 /* Always show focus indicator */
 :focus-visible {
-    outline: 2px solid var(--color-focus);
-    outline-offset: 2px;
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
 }
 
 /* Custom focus styles */
 .button:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px var(--color-focus);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-focus);
 }
 
 /* High visibility focus for links */
 .link:focus-visible {
-    outline: 3px solid var(--color-focus);
-    outline-offset: 2px;
-    background: var(--color-focus-bg);
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+  background: var(--color-focus-bg);
 }
 ```
 
@@ -432,21 +432,21 @@ Interactive targets must be at least 24x24 CSS pixels.
 ```css
 /* Minimum target size */
 .interactive {
-    min-width: 24px;
-    min-height: 24px;
+  min-width: 24px;
+  min-height: 24px;
 }
 
 /* Recommended size for touch (44x44) */
 .touch-target {
-    min-width: 44px;
-    min-height: 44px;
+  min-width: 44px;
+  min-height: 44px;
 }
 
 /* Inline links are exempt if they have adequate spacing */
 .link {
-    /* Inline text links don't need minimum size */
-    /* but should have adequate line-height */
-    line-height: 1.5;
+  /* Inline text links don't need minimum size */
+  /* but should have adequate line-height */
+  line-height: 1.5;
 }
 ```
 
@@ -461,12 +461,12 @@ Content and interface must be understandable.
 ```html
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        ...
-    </head>
-    <body>
-        ...
-    </body>
+  <head>
+    ...
+  </head>
+  <body>
+    ...
+  </body>
 </html>
 ```
 
@@ -474,7 +474,7 @@ Content and interface must be understandable.
 
 ```tsx
 <p>
-    The French phrase <span lang="fr">c'est la vie</span> means "that's life."
+  The French phrase <span lang="fr">c'est la vie</span> means "that's life."
 </p>
 ```
 
@@ -503,22 +503,22 @@ Don't automatically change context on input.
 
 ```tsx
 function FormField({ id, label, error, ...props }) {
-    return (
-        <div>
-            <label htmlFor={id}>{label}</label>
-            <input
-                id={id}
-                aria-invalid={!!error}
-                aria-describedby={error ? `${id}-error` : undefined}
-                {...props}
-            />
-            {error && (
-                <p id={`${id}-error`} role="alert" className="text-red-600">
-                    {error}
-                </p>
-            )}
-        </div>
-    );
+  return (
+    <div>
+      <label htmlFor={id}>{label}</label>
+      <input
+        id={id}
+        aria-invalid={!!error}
+        aria-describedby={error ? `${id}-error` : undefined}
+        {...props}
+      />
+      {error && (
+        <p id={`${id}-error`} role="alert" className="text-red-600">
+          {error}
+        </p>
+      )}
+    </div>
+  );
 }
 ```
 
@@ -529,37 +529,37 @@ Don't require users to re-enter previously provided information.
 ```tsx
 // Auto-fill shipping address from billing
 function CheckoutForm() {
-    const [sameAsBilling, setSameAsBilling] = useState(false);
-    const [billing, setBilling] = useState({});
-    const [shipping, setShipping] = useState({});
+  const [sameAsBilling, setSameAsBilling] = useState(false);
+  const [billing, setBilling] = useState({});
+  const [shipping, setShipping] = useState({});
 
-    return (
-        <form>
-            <fieldset>
-                <legend>Billing Address</legend>
-                <AddressFields value={billing} onChange={setBilling} />
-            </fieldset>
+  return (
+    <form>
+      <fieldset>
+        <legend>Billing Address</legend>
+        <AddressFields value={billing} onChange={setBilling} />
+      </fieldset>
 
-            <label>
-                <input
-                    type="checkbox"
-                    checked={sameAsBilling}
-                    onChange={(e) => {
-                        setSameAsBilling(e.target.checked);
-                        if (e.target.checked) setShipping(billing);
-                    }}
-                />
-                Shipping same as billing
-            </label>
+      <label>
+        <input
+          type="checkbox"
+          checked={sameAsBilling}
+          onChange={(e) => {
+            setSameAsBilling(e.target.checked);
+            if (e.target.checked) setShipping(billing);
+          }}
+        />
+        Shipping same as billing
+      </label>
 
-            {!sameAsBilling && (
-                <fieldset>
-                    <legend>Shipping Address</legend>
-                    <AddressFields value={shipping} onChange={setShipping} />
-                </fieldset>
-            )}
-        </form>
-    );
+      {!sameAsBilling && (
+        <fieldset>
+          <legend>Shipping Address</legend>
+          <AddressFields value={shipping} onChange={setShipping} />
+        </fieldset>
+      )}
+    </form>
+  );
 }
 ```
 
@@ -574,36 +574,36 @@ Content must be robust enough for assistive technologies.
 ```tsx
 // Custom components must expose name, role, and value
 function CustomCheckbox({ checked, onChange, label }) {
-    return (
-        <button
-            role="checkbox"
-            aria-checked={checked}
-            aria-label={label}
-            onClick={() => onChange(!checked)}
-        >
-            {checked ? '✓' : '○'} {label}
-        </button>
-    );
+  return (
+    <button
+      role="checkbox"
+      aria-checked={checked}
+      aria-label={label}
+      onClick={() => onChange(!checked)}
+    >
+      {checked ? '✓' : '○'} {label}
+    </button>
+  );
 }
 
 // Custom slider
 function CustomSlider({ value, min, max, label, onChange }) {
-    return (
-        <div
-            role="slider"
-            aria-valuemin={min}
-            aria-valuemax={max}
-            aria-valuenow={value}
-            aria-label={label}
-            tabIndex={0}
-            onKeyDown={(e) => {
-                if (e.key === 'ArrowRight') onChange(Math.min(value + 1, max));
-                if (e.key === 'ArrowLeft') onChange(Math.max(value - 1, min));
-            }}
-        >
-            <div style={{ width: `${((value - min) / (max - min)) * 100}%` }} />
-        </div>
-    );
+  return (
+    <div
+      role="slider"
+      aria-valuemin={min}
+      aria-valuemax={max}
+      aria-valuenow={value}
+      aria-label={label}
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'ArrowRight') onChange(Math.min(value + 1, max));
+        if (e.key === 'ArrowLeft') onChange(Math.max(value - 1, min));
+      }}
+    >
+      <div style={{ width: `${((value - min) / (max - min)) * 100}%` }} />
+    </div>
+  );
 }
 ```
 

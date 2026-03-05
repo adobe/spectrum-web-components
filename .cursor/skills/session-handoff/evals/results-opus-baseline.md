@@ -73,21 +73,21 @@ Sample handoffs: 3 (fresh, stale, incomplete)
 
 1. Set up test environment:
 
-    ```bash
-    python /Users/galihcitta/.claude/skills/session-handoff/evals/setup_test_env.py
-    ```
+   ```bash
+   python /Users/galihcitta/.claude/skills/session-handoff/evals/setup_test_env.py
+   ```
 
 2. Start Claude Code with desired model:
 
-    ```bash
-    claude --model haiku  # or sonnet
-    ```
+   ```bash
+   claude --model haiku  # or sonnet
+   ```
 
 3. Navigate to test project:
 
-    ```bash
-    cd /tmp/handoff-eval-project
-    ```
+   ```bash
+   cd /tmp/handoff-eval-project
+   ```
 
 4. Run scenarios from `test-scenarios.md`
 
