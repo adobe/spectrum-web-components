@@ -186,7 +186,7 @@ If you require a submenu, use and [action menu](./action-menu) instead of a pick
 `<sp-menu-item>`s in an `<sp-picker>` that are provided content addressed to their `icon` slot will be passed to the `<sp-picker>` element when that item is chosen.
 
 ```html
-<sp-picker placeholder="What would you like to do?" value="item-2">
+<sp-picker value="item-2">
   <span slot="field-label">Choose an action...</span>
   <sp-menu-item>
     <sp-icon-save-floppy slot="icon"></sp-icon-save-floppy>
@@ -206,7 +206,7 @@ If you require a submenu, use and [action menu](./action-menu) instead of a pick
 When using `<sp-menu-item>` elements without text content, be sure to use the `value` attribute so that the `<sp-picker>` element can differentiate between the available options. Furthermore, it is important to apply accessible labeling to the `[slot="icon"]` content as follows:
 
 ```html
-<sp-picker placeholder="What would you like to do?" value="item-2">
+<sp-picker value="item-2">
   <span slot="field-label">Choose an action...</span>
   <sp-menu-item value="item-1">
     <sp-icon-save-floppy slot="icon" label="Save"></sp-icon-save-floppy>
@@ -231,7 +231,7 @@ When using `icons="only"` on `<sp-menu-item>` elements that have text content, t
 <sp-tab-panel value="only">
 
 ```html demo
-<sp-picker placeholder="What would you like to do?" value="save" icons="only">
+<sp-picker value="save" icons="only">
   <span slot="field-label">Choose an action...</span>
   <sp-menu-item value="save">
     <sp-icon-save-floppy slot="icon"></sp-icon-save-floppy>
@@ -253,7 +253,7 @@ When using `icons="only"` on `<sp-menu-item>` elements that have text content, t
 <sp-tab-panel value="none">
 
 ```html demo
-<sp-picker placeholder="What would you like to do?" value="save" icons="none">
+<sp-picker value="save" icons="none">
   <span slot="field-label">Choose an action...</span>
   <sp-menu-item value="save">
     <sp-icon-save-floppy slot="icon"></sp-icon-save-floppy>
@@ -282,10 +282,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="matching-value">
 
 ```html demo
-<sp-picker
-  placeholder="Choose a selection type with a very long label, too long in fact"
-  value="item-2"
->
+<sp-picker value="item-2">
   <span slot="field-label">Selection type:</span>
   <sp-menu-item value="item-1">Deselect</sp-menu-item>
   <sp-menu-item value="item-2">Select inverse</sp-menu-item>
@@ -302,10 +299,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="matching-item-text">
 
 ```html demo
-<sp-picker
-  placeholder="Choose a selection type with a very long label, too long in fact"
-  value="Feather..."
->
+<sp-picker value="Feather...">
   <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -329,7 +323,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="s">
 
 ```html demo
-<sp-picker size="s" placeholder="Selection type">
+<sp-picker size="s" placeholder="Choose a selection type">
   <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -341,7 +335,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 </sp-picker>
 <br />
 <br />
-<sp-picker size="s" placeholder="Selection type" quiet>
+<sp-picker size="s" placeholder="Choose a selection type" quiet>
   <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -358,7 +352,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="m">
 
 ```html demo
-<sp-picker size="m" placeholder="Selection type">
+<sp-picker size="m" placeholder="Choose a selection type">
   <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -370,7 +364,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 </sp-picker>
 <br />
 <br />
-<sp-picker size="m" placeholder="Selection type" quiet>
+<sp-picker size="m" placeholder="Choose a selection type" quiet>
   <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -387,7 +381,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="l">
 
 ```html demo
-<sp-picker size="l" placeholder="Selection type">
+<sp-picker size="l" placeholder="Choose a selection type">
   <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -399,7 +393,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 </sp-picker>
 <br />
 <br />
-<sp-picker size="l" placeholder="Selection type" quiet>
+<sp-picker size="l" placeholder="Choose a selection type" quiet>
   <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -416,7 +410,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="xl">
 
 ```html demo
-<sp-picker size="xl" placeholder="Selection type">
+<sp-picker size="xl" placeholder="Choose a selection type">
   <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -428,7 +422,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 </sp-picker>
 <br />
 <br />
-<sp-picker size="xl" placeholder="Selection type" quiet>
+<sp-picker size="xl" placeholder="Choose a selection type" quiet>
   <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -450,7 +444,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="standard-side-label">
 
 ```html
-<sp-picker side-aligned="start" placeholder="Selection type">
+<sp-picker side-aligned="start" placeholder="Choose a selection type">
   <span slot="field-label">Standard:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -467,7 +461,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="quiet-side-label">
 
 ```html demo
-<sp-picker side-aligned="start" placeholder="Selection type" quiet>
+<sp-picker side-aligned="start" placeholder="Choose a selection type" quiet>
   <span slot="field-label">Standard:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -491,7 +485,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="standard-invalid">
 
 ```html demo
-<sp-picker placeholder="Selection type" invalid>
+<sp-picker placeholder="Choose a selection type" invalid>
   <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -508,7 +502,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="quiet-invalid">
 
 ```html demo
-<sp-picker placeholder="Selection type" invalid quiet>
+<sp-picker placeholder="Choose a selection type" invalid quiet>
   <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -530,7 +524,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="standard-disabled">
 
 ```html demo
-<sp-picker placeholder="Selection type" disabled>
+<sp-picker placeholder="Choose a selection type" disabled>
   <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -547,7 +541,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="quiet-disabled">
 
 ```html demo
-<sp-picker placeholder="Selection type" disabled quiet>
+<sp-picker placeholder="Choose a selection type" disabled quiet>
   <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -571,7 +565,7 @@ While in pending state, `<sp-picker>` elements will not respond to click events 
 <sp-tab-panel value="standard-pending">
 
 ```html demo
-<sp-picker placeholder="Selection type" pending>
+<sp-picker placeholder="Choose a selection type" pending>
   <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -588,7 +582,7 @@ While in pending state, `<sp-picker>` elements will not respond to click events 
 <sp-tab-panel value="quiet-pending">
 
 ```html demo
-<sp-picker placeholder="Selection type" pending quiet>
+<sp-picker placeholder="Choose a selection type" pending quiet>
   <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
