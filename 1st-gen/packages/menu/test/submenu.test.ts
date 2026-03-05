@@ -1095,4 +1095,193 @@ describe('Submenu', () => {
       expect(this.rootItem.open, 'should stay closed').to.be.false;
     });
   });
+  describe('mobile view', () => {
+    beforeEach(async function () {
+      this.rootChanged = spy();
+      this.submenuChanged = spy();
+      this.el = await fixture<Menu>(html`
+        <sp-menu
+          is-mobile-view
+          @change=${(event: Event & { target: Menu }) => {
+            this.rootChanged(event.target.value);
+          }}
+        >
+          <sp-menu-item>No submenu</sp-menu-item>
+          <sp-menu-item class="root">
+            Has submenu
+            <sp-menu
+              slot="submenu"
+              @change=${(event: Event & { target: Menu }) => {
+                this.submenuChanged(event.target.value);
+              }}
+            >
+              <sp-menu-item class="submenu-item-1">One</sp-menu-item>
+              <sp-menu-item class="submenu-item-2">Two</sp-menu-item>
+              <sp-menu-item class="submenu-item-3">Three</sp-menu-item>
+            </sp-menu>
+          </sp-menu-item>
+        </sp-menu>
+      `);
+      await elementUpdated(this.el);
+      this.rootItem = this.el.querySelector('.root') as MenuItem;
+      await elementUpdated(this.rootItem);
+    });
+    it('opens submenu via click (drill-down replaces content)', async function () {
+      const menu = this.el as Menu;
+      expect(menu.isMobileView).to.be.true;
+      expect(menu.currentMobileSubmenu).to.be.undefined;
+
+      await mouseClickOn(this.rootItem);
+      await elementUpdated(menu);
+
+      expect(menu.currentMobileSubmenu).to.equal(this.rootItem);
+
+      const backHeader = menu.shadowRoot!.querySelector(
+        '.mobile-submenu-header'
+      );
+      expect(backHeader).to.not.be.null;
+    });
+    it('navigates back via back button', async function () {
+      const menu = this.el as Menu;
+
+      await mouseClickOn(this.rootItem);
+      await elementUpdated(menu);
+      expect(menu.currentMobileSubmenu).to.equal(this.rootItem);
+
+      const backHeader = menu.shadowRoot!.querySelector(
+        '.mobile-submenu-header'
+      ) as MenuItem;
+      expect(backHeader).to.not.be.null;
+
+      await mouseClickOn(backHeader);
+      await elementUpdated(menu);
+
+      expect(menu.currentMobileSubmenu).to.be.undefined;
+    });
+    it('opens submenu via ArrowRight keyboard', async function () {
+      const menu = this.el as Menu;
+      const input = document.createElement('input');
+      menu.insertAdjacentElement('beforebegin', input);
+
+      await sendTabKey();
+      await elementUpdated(input);
+      expect(document.activeElement).to.equal(input);
+      await sendTabKey();
+      await elementUpdated(menu);
+      await waitUntil(
+        () => document.activeElement === menu.children[0],
+        'focuses first menu item after tab'
+      );
+
+      await sendKeys({ press: 'ArrowDown' });
+      await elementUpdated(this.rootItem);
+
+      expect(this.rootItem.focused).to.be.true;
+
+      await sendKeys({ press: 'ArrowRight' });
+      await elementUpdated(menu);
+
+      expect(menu.currentMobileSubmenu).to.equal(this.rootItem);
+    });
+    it('closes submenu via ArrowLeft keyboard', async function () {
+      const menu = this.el as Menu;
+
+      menu.openMobileSubmenu(this.rootItem);
+      await elementUpdated(menu);
+      expect(menu.currentMobileSubmenu).to.equal(this.rootItem);
+
+      await sendKeys({ press: 'ArrowLeft' });
+      await elementUpdated(menu);
+
+      expect(menu.currentMobileSubmenu).to.be.undefined;
+    });
+    it('opens submenu via Enter key', async function () {
+      const menu = this.el as Menu;
+      const input = document.createElement('input');
+      menu.insertAdjacentElement('beforebegin', input);
+
+      await sendTabKey();
+      await elementUpdated(input);
+      await sendTabKey();
+      await elementUpdated(menu);
+      await waitUntil(
+        () => document.activeElement === menu.children[0],
+        'focuses first menu item after tab'
+      );
+
+      await sendKeys({ press: 'ArrowDown' });
+      await elementUpdated(this.rootItem);
+
+      await sendKeys({ press: 'Enter' });
+      await elementUpdated(menu);
+
+      expect(menu.currentMobileSubmenu).to.equal(this.rootItem);
+    });
+    it('resets mobile submenu stack on resetMobileSubmenus', async function () {
+      const menu = this.el as Menu;
+
+      menu.openMobileSubmenu(this.rootItem);
+      await elementUpdated(menu);
+      expect(menu.currentMobileSubmenu).to.equal(this.rootItem);
+
+      menu.resetMobileSubmenus();
+      await elementUpdated(menu);
+
+      expect(menu.currentMobileSubmenu).to.be.undefined;
+    });
+    it('does not open overlay on hover in mobile mode', async function () {
+      expect(this.rootItem.open).to.be.false;
+
+      await mouseMoveOver(this.rootItem);
+      await aTimeout(200);
+
+      expect(this.rootItem.open).to.be.false;
+    });
+    it('supports multi-level drill-down', async function () {
+      const subSubmenuChanged = spy();
+      const el = await fixture<Menu>(html`
+        <sp-menu is-mobile-view>
+          <sp-menu-item class="level1">
+            Level 1
+            <sp-menu slot="submenu">
+              <sp-menu-item class="level2">
+                Level 2
+                <sp-menu
+                  slot="submenu"
+                  @change=${(event: Event & { target: Menu }) => {
+                    subSubmenuChanged(event.target.value);
+                  }}
+                >
+                  <sp-menu-item class="level3-item">Level 3 item</sp-menu-item>
+                </sp-menu>
+              </sp-menu-item>
+            </sp-menu>
+          </sp-menu-item>
+        </sp-menu>
+      `);
+      await elementUpdated(el);
+
+      const level1 = el.querySelector('.level1') as MenuItem;
+      await elementUpdated(level1);
+
+      el.openMobileSubmenu(level1);
+      await elementUpdated(el);
+      expect(el.currentMobileSubmenu).to.equal(level1);
+
+      const level2 = el.querySelector('.level2') as MenuItem;
+      if (level2) {
+        el.openMobileSubmenu(level2);
+        await elementUpdated(el);
+        expect(el.currentMobileSubmenu).to.equal(level2);
+      }
+
+      el.closeMobileSubmenu();
+      await elementUpdated(el);
+      expect(el.currentMobileSubmenu).to.equal(level1);
+
+      el.closeMobileSubmenu();
+      await elementUpdated(el);
+      expect(el.currentMobileSubmenu).to.be.undefined;
+    });
+  });
 });

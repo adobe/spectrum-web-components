@@ -25,6 +25,8 @@ import {
 import type { Overlay } from '@spectrum-web-components/overlay';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
+import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
+
 import menuStyles from './menu.css.js';
 import type {
   MenuItemAddedOrUpdatedEvent,
@@ -146,6 +148,30 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     this.isCurrentlyScrolling = value;
   }
 
+  public get currentMobileSubmenu(): MenuItem | undefined {
+    return this._mobileSubmenuStack[this._mobileSubmenuStack.length - 1];
+  }
+
+  public openMobileSubmenu(item: MenuItem): void {
+    this.projectMobileSubmenu(item);
+    this._mobileSubmenuStack = [...this._mobileSubmenuStack, item];
+  }
+
+  public closeMobileSubmenu(): void {
+    const current = this.currentMobileSubmenu;
+    if (current) {
+      this.restoreMobileSubmenu(current);
+    }
+    this._mobileSubmenuStack = this._mobileSubmenuStack.slice(0, -1);
+  }
+
+  public resetMobileSubmenus(): void {
+    for (let i = this._mobileSubmenuStack.length - 1; i >= 0; i--) {
+      this.restoreMobileSubmenu(this._mobileSubmenuStack[i]);
+    }
+    this._mobileSubmenuStack = [];
+  }
+
   /**
    * label of the menu
    */
@@ -157,6 +183,17 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
    */
   @property({ type: Boolean, reflect: true })
   public ignore = false;
+
+  /**
+   * Enables mobile submenu navigation where tapping a submenu item replaces
+   * the current menu content with the submenu's children (drill-down) instead
+   * of opening a flyout overlay.
+   */
+  @property({ type: Boolean, attribute: 'is-mobile-view', reflect: true })
+  public isMobileView = false;
+
+  @property({ attribute: false })
+  private _mobileSubmenuStack: MenuItem[] = [];
 
   /**
    * how the menu allows selection of its items:
@@ -700,6 +737,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
   }
 
   public handleSubmenuClosed = (event: Event): void => {
+    if (this.isMobileView) {
+      this.resetMobileSubmenus();
+      return;
+    }
     event.stopPropagation();
     const target = event.composedPath()[0] as Overlay;
     target.dispatchEvent(
@@ -847,9 +888,23 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
       (dir === 'rtl' && key === 'ArrowRight') ||
       key === 'Escape';
     const lastFocusedItem = root as MenuItem;
+
+    if (this.isMobileView) {
+      if (shouldOpenSubmenu && lastFocusedItem?.hasSubmenu) {
+        event.stopPropagation();
+        this.openMobileSubmenu(lastFocusedItem);
+        return;
+      }
+      if (shouldCloseSelfAsSubmenu && this._mobileSubmenuStack.length > 0) {
+        event.stopPropagation();
+        this.closeMobileSubmenu();
+        return;
+      }
+      return;
+    }
+
     if (shouldOpenSubmenu) {
       if (lastFocusedItem?.hasSubmenu) {
-        //open submenu and set focus
         event.stopPropagation();
         lastFocusedItem.openOverlay(true);
       }
@@ -885,10 +940,12 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
       return;
     }
     if (openSubmenuKey && root?.hasSubmenu && !root.open) {
-      // Remove focus while opening overlay from keyboard or the visible focus
-      // will slip back to the first item in the menu.
       event.preventDefault();
-      root.openOverlay(true);
+      if (this.isMobileView) {
+        this.openMobileSubmenu(root);
+      } else {
+        root.openOverlay(true);
+      }
       return;
     }
     if (key === ' ' || key === 'Enter') {
@@ -1035,7 +1092,71 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     `;
   }
 
+  private renderMobileSubmenu(): TemplateResult {
+    const current = this.currentMobileSubmenu!;
+    return html`
+      <sp-menu-item
+        class="mobile-submenu-header"
+        @click=${(event: Event) => {
+          event.stopPropagation();
+          event.preventDefault();
+          this.closeMobileSubmenu();
+        }}
+      >
+        <sp-icon-chevron100
+          slot="icon"
+          class="spectrum-UIIcon-ChevronLeft100"
+          style="transform: rotate(180deg);"
+        ></sp-icon-chevron100>
+        ${current.itemText}
+      </sp-menu-item>
+      <sp-menu-divider></sp-menu-divider>
+      <div class="mobile-submenu-content">
+        <slot name="mobile-submenu"></slot>
+      </div>
+    `;
+  }
+
+  /**
+   * Moves the submenu element from its original parent into the mobile
+   * submenu projection slot and stores the original parent for restoration.
+   */
+  private projectMobileSubmenu(item: MenuItem): void {
+    const submenuEl = item.submenuElement;
+    if (!submenuEl) {
+      return;
+    }
+
+    this._mobileSubmenuOriginalParents.set(submenuEl, submenuEl.parentElement!);
+    submenuEl.removeAttribute('slot');
+    submenuEl.setAttribute('slot', 'mobile-submenu');
+    this.appendChild(submenuEl);
+  }
+
+  /**
+   * Restores the submenu element back to its original parent after
+   * navigating back from the mobile drill-down view.
+   */
+  private restoreMobileSubmenu(item: MenuItem): void {
+    const submenuEl = item.submenuElement;
+    if (!submenuEl) {
+      return;
+    }
+
+    const originalParent = this._mobileSubmenuOriginalParents.get(submenuEl);
+    if (originalParent) {
+      submenuEl.setAttribute('slot', 'submenu');
+      originalParent.appendChild(submenuEl);
+      this._mobileSubmenuOriginalParents.delete(submenuEl);
+    }
+  }
+
+  private _mobileSubmenuOriginalParents = new Map<HTMLElement, HTMLElement>();
+
   public override render(): TemplateResult {
+    if (this.isMobileView && this._mobileSubmenuStack.length > 0) {
+      return this.renderMobileSubmenu();
+    }
     return this.renderMenuItemSlot();
   }
 
@@ -1098,6 +1219,8 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     this.selectedItemsMap.clear();
     this.childItemSet.clear();
     this.descendentOverlays = new Map<Overlay, Overlay>();
+    this.resetMobileSubmenus();
+    this._mobileSubmenuOriginalParents.clear();
     super.disconnectedCallback();
   }
 

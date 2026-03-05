@@ -238,7 +238,7 @@ export class MenuItem extends LikeAnchor(
   @query('sp-overlay')
   public overlayElement!: Overlay;
 
-  private submenuElement?: HTMLElement;
+  public submenuElement?: HTMLElement;
 
   /**
    * the focusable element of the menu item
@@ -363,6 +363,10 @@ export class MenuItem extends LikeAnchor(
     this.triggerUpdate();
   }
 
+  private get isMobileView(): boolean {
+    return this.menuData.focusRoot?.isMobileView ?? false;
+  }
+
   protected renderSubmenu(): TemplateResult {
     const slot = html`
       <slot
@@ -380,6 +384,16 @@ export class MenuItem extends LikeAnchor(
     if (!this.hasSubmenu) {
       return slot;
     }
+
+    if (this.isMobileView) {
+      return html`
+        ${slot}
+        <sp-icon-chevron100
+          class="spectrum-UIIcon-ChevronRight100 chevron icon"
+        ></sp-icon-chevron100>
+      `;
+    }
+
     this.dependencyManager.add('sp-overlay');
     this.dependencyManager.add('sp-popover');
     import('@spectrum-web-components/overlay/sp-overlay.js');
@@ -508,6 +522,14 @@ export class MenuItem extends LikeAnchor(
     this._touchAbortController?.abort();
     this._touchHandledViaPointerup = true;
     this._activePointerId = undefined;
+
+    if (this.isMobileView) {
+      this.menuData.focusRoot?.openMobileSubmenu(this);
+      setTimeout(() => {
+        this._touchHandledViaPointerup = false;
+      }, 0);
+      return;
+    }
 
     if (this.open) {
       this.open = false;
@@ -678,6 +700,13 @@ export class MenuItem extends LikeAnchor(
   }
 
   protected handleSubmenuClick(event: Event): void {
+    if (this.isMobileView) {
+      event.stopPropagation();
+      event.preventDefault();
+      this.menuData.focusRoot?.openMobileSubmenu(this);
+      return;
+    }
+
     if (this._touchHandledViaPointerup) {
       event.stopPropagation();
       event.preventDefault();
@@ -712,8 +741,7 @@ export class MenuItem extends LikeAnchor(
   };
 
   protected handlePointerenter(event: PointerEvent): void {
-    // For touch devices, don't open on pointerenter - let click handle it
-    if (event.pointerType === 'touch') {
+    if (event.pointerType === 'touch' || this.isMobileView) {
       return;
     }
 

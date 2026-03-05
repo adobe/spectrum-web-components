@@ -32,3 +32,11 @@
      */
   flex-shrink: 0;
 }
+
+:host([is-mobile-view]) .mobile-submenu-header {
+  font-weight: bold;
+}
+
+:host([is-mobile-view]) .mobile-submenu-content {
+  display: contents;
+}
