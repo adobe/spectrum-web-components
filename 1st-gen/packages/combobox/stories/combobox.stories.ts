@@ -83,7 +83,8 @@ export const hasDisabledItems = (args: StoryArgs): TemplateResult => {
 
   return html`
     <sp-combobox
-      style="min-width: 80px;--spectrum-textfield-m-min-width:0; width:160px;"
+      side-aligned="start"
+      style="--mod-textfield-grid-template-columns-side-label: minmax(12ch, 1fr) minmax(12ch, 2fr);"
     >
       <span slot="field-label">Some fruits are disabled (light DOM)</span>
       ${fruits.map(
@@ -102,6 +103,7 @@ export const hasDisabledItems = (args: StoryArgs): TemplateResult => {
       side-aligned="start"
       .options=${countriesWithDisabledItems}
       .value=${args.value || ''}
+      style="--mod-textfield-grid-template-columns-side-label: minmax(12ch, 1fr) minmax(12ch, 2fr);"
     >
       <span slot="field-label">Some countries are disabled (shadow DOM)</span>
     </sp-combobox>
@@ -132,14 +134,12 @@ export const noAutocomplete = (): TemplateResult => {
     <sp-combobox
       .options=${fruits}
       side-aligned="start"
-      style="min-width: 80px;--spectrum-textfield-m-min-width:0;"
     >
       <span slot="field-label">Fruit</span>
     </sp-combobox>
     <sp-combobox
       .options=${countries}
       side-aligned="start"
-      style="min-width: 80px;--spectrum-textfield-m-min-width:0;"
     >
       <span slot="field-label">Countries</span>
     </sp-combobox>
@@ -244,7 +244,7 @@ export const withStandaloneFieldLabelSideAligned = (
 export const lightDOM = (): TemplateResult => {
   return html`
     <sp-combobox
-      style="min-width: 80px;--spectrum-textfield-m-min-width:0;"
+      style="min-width: 80px;"
       side-aligned="start"
     >
       <span slot="field-label">Fruit</span>
@@ -258,7 +258,7 @@ export const lightDOM = (): TemplateResult => {
     </sp-combobox>
     <sp-combobox
       side-aligned="start"
-      style="min-width: 80px;--spectrum-textfield-m-min-width:0;"
+      style="min-width: 80px;"
     >
       <span slot="field-label">Countries</span>
       ${countries.map(
@@ -276,7 +276,7 @@ export const withTooltip = (): TemplateResult => {
   return html`
     <sp-combobox
       label="Combobox with tooltip"
-      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
+      style="min-width: 80px;width:100px;"
     >
       ${countries.map(
         (option) => html`
