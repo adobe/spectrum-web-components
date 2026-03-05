@@ -262,12 +262,15 @@
   --mod-picker-button-border-color: var(--highcontrast-combobox-border-color-invalid, var(--mod-combobox-border-color-invalid-hover, var(--spectrum-combobox-border-color-invalid-hover)));
 }
 
+:host([quiet]) label {
+  margin-block-end: var(--spectrum-combobox-spacing-label-to-combobox);
+}
+
 #textfield {
   position: relative;
   grid-area: 2 / 1;
   inline-size: 100%;
   block-size: var(--mod-combobox-block-size, var(--spectrum-combobox-block-size));
-  margin-block-start: var(--spectrum-combobox-spacing-label-to-combobox);
 }
 
 .button,
