@@ -87,30 +87,13 @@ const iconCardStyles = {
   padding: '8px',
 } as const;
 
-const renderIcon = (
-  args: Record<string, unknown>,
-  {
-    label,
-    size,
-    icon = iconSvg,
-  }: { label?: string; size?: IconSize; icon?: TemplateResult } = {}
-) =>
-  template(
-    {
-      ...args,
-      label: (args.label as string | undefined) || label,
-      size: (args.size as IconSize | undefined) || size,
-    },
-    icon
-  );
-
 // ────────────────────
 //    AUTODOCS STORY
 // ────────────────────
 
 export const Playground: Story = {
   tags: ['autodocs', 'dev'],
-  render: (args) => renderIcon(args),
+  render: (args) => template(args, iconSvg),
   args: {
     label: 'Search',
     size: 'm',
@@ -123,7 +106,7 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   tags: ['overview'],
-  render: (args) => renderIcon(args),
+  render: (args) => template(args, iconSvg),
   args: {
     label: 'Search',
     size: 'm',
@@ -144,7 +127,8 @@ export const Overview: Story = {
  * - Default slot: Provide SVG markup to render.
  */
 export const Anatomy: Story = {
-  render: (args) => renderIcon(args, { label: 'Chevron icon' }),
+  render: (args) =>
+    template({ ...args, label: args.label || 'Chevron icon' }, iconSvg),
   tags: ['anatomy'],
   parameters: {
     flexLayout: true,
@@ -169,7 +153,10 @@ export const Anatomy: Story = {
 export const Sizes: Story = {
   render: (args) => html`
     ${ICON_VALID_SIZES.map((size) =>
-      renderIcon(args, { label: sizeLabels[size], size })
+      template(
+        { ...args, label: args.label || sizeLabels[size], size },
+        iconSvg
+      )
     )}
   `,
   tags: ['options'],
@@ -186,7 +173,8 @@ export const Sizes: Story = {
  * This keeps icon usage centralized and avoids per-component SVG duplication.
  */
 export const Sources: Story = {
-  render: (args) => renderIcon(args, { label: 'Chevron icon' }),
+  render: (args) =>
+    template({ ...args, label: args.label || 'Chevron icon' }, iconSvg),
   tags: ['options'],
   parameters: {
     flexLayout: true,
@@ -205,7 +193,7 @@ export const Sources: Story = {
  */
 export const SharedTemplates: Story = {
   render: (args) =>
-    renderIcon(args, { label: 'Chevron', icon: Chevron100Icon() }),
+    template({ ...args, label: args.label || 'Chevron' }, Chevron100Icon()),
   tags: ['options'],
   parameters: {
     flexLayout: true,
@@ -233,7 +221,10 @@ export const AvailableIcons: Story = {
       ${catalog.map(
         (entry) => html`
           <div style=${styleMap(iconCardStyles)}>
-            ${renderIcon(args, { label: entry.name, icon: entry.icon })}
+            ${template(
+              { ...args, label: args.label || entry.name },
+              entry.icon
+            )}
             <code>${entry.name}</code>
           </div>
         `
@@ -242,6 +233,11 @@ export const AvailableIcons: Story = {
   },
   tags: ['options'],
   parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'none',
+      },
+    },
     flexLayout: true,
     'section-order': 4,
   },
@@ -268,7 +264,7 @@ export const AvailableIcons: Story = {
  * - Keep labels short and specific (e.g., "Search" instead of "Icon")
  */
 export const Accessibility: Story = {
-  render: (args) => renderIcon(args),
+  render: (args) => template(args, iconSvg),
   tags: ['a11y'],
   parameters: {
     flexLayout: true,
