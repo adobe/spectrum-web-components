@@ -4,6 +4,8 @@
 
 Mobile accessibility ensures apps work for users with disabilities on iOS and Android devices. This includes support for screen readers (VoiceOver, TalkBack), motor impairments, and various visual disabilities.
 
+Web examples in this document use **Lit** (the library used by Spectrum Web Components) so patterns more closely match SWC implementation context.
+
 ## Touch Target Sizing
 
 ### Minimum Sizes
@@ -11,521 +13,311 @@ Mobile accessibility ensures apps work for users with disabilities on iOS and An
 ```css
 /* WCAG 2.2 Level AA: 24x24px minimum */
 .interactive-element {
-    min-width: 24px;
-    min-height: 24px;
+  min-width: 24px;
+  min-height: 24px;
 }
 
 /* WCAG 2.2 Level AAA / Apple HIG / Material Design: 44x44dp */
 .touch-target {
-    min-width: 44px;
-    min-height: 44px;
-}
-
-/* Android Material Design: 48x48dp recommended */
-.android-touch-target {
-    min-width: 48px;
-    min-height: 48px;
+  min-width: 44px;
+  min-height: 44px;
 }
 ```
 
 ### Touch Target Spacing
 
-```tsx
-// Ensure adequate spacing between touch targets
-function ButtonGroup({ buttons }) {
-    return (
-        <div className="flex gap-3">
-            {' '}
-            {/* 12px minimum gap */}
-            {buttons.map((btn) => (
-                <button
-                    key={btn.id}
-                    className="min-w-[44px] min-h-[44px] px-4 py-2"
-                >
-                    {btn.label}
-                </button>
-            ))}
-        </div>
-    );
-}
+```html
+<!-- Ensure adequate spacing between touch targets (e.g. 12px minimum gap) -->
+<div class="button-group" style="display: flex; gap: 12px;">
+  <button type="button" style="min-width: 44px; min-height: 44px;">Save</button>
+  <button type="button" style="min-width: 44px; min-height: 44px;">
+    Cancel
+  </button>
+</div>
+```
 
-// Expanding hit area without changing visual size
-function IconButton({ icon, label, onClick }) {
-    return (
-        <button
-            onClick={onClick}
-            aria-label={label}
-            className="relative p-3" // Creates 44x44 touch area
+```ts
+// Expand hit area without changing visual size (44x44 touch area)
+import { LitElement, html } from 'lit';
+import { property } from 'lit/decorators.js';
+
+export class IconButton extends LitElement {
+  @property() label = '';
+  @property() icon = '';
+
+  override render() {
+    return html`
+      <button
+        type="button"
+        aria-label=${this.label}
+        style="position: relative; padding: 12px; min-width: 44px; min-height: 44px;"
+      >
+        <span
+          aria-hidden="true"
+          style="display: block; width: 20px; height: 20px;"
         >
-            <span className="block w-5 h-5">{icon}</span>
-        </button>
-    );
+          ${this.icon}
+        </span>
+      </button>
+    `;
+  }
 }
 ```
 
-## iOS VoiceOver
+## Screen reader support
 
-### React Native Accessibility Props
+On web, use ARIA attributes and live regions so VoiceOver (iOS Safari) and TalkBack (Android) get the same information.
 
-```tsx
-import { View, Text, TouchableOpacity, AccessibilityInfo } from 'react-native';
+```ts
+import { LitElement, html } from 'lit';
+import { property, state } from 'lit/decorators.js';
 
-// Basic accessible button
-function AccessibleButton({ onPress, title, hint }) {
-    return (
-        <TouchableOpacity
-            onPress={onPress}
-            accessible={true}
-            accessibilityLabel={title}
-            accessibilityHint={hint}
-            accessibilityRole="button"
-        >
-            <Text>{title}</Text>
-        </TouchableOpacity>
-    );
+// Basic accessible button: label + hint
+export class AccessibleButton extends LitElement {
+  @property() title = '';
+  @property() hint = '';
+
+  override render() {
+    return html`
+      <button
+        type="button"
+        aria-label=${this.title}
+        aria-describedby=${this.hint ? 'hint-id' : undefined}
+      >
+        ${this.title}
+      </button>
+      ${this.hint
+        ? html`
+            <span id="hint-id" class="visually-hidden">${this.hint}</span>
+          `
+        : ''}
+    `;
+  }
 }
 
-// Complex component with grouped content
-function ProductCard({ product }) {
-    return (
-        <View
-            accessible={true}
-            accessibilityLabel={`${product.name}, ${product.price}, ${product.rating} stars`}
-            accessibilityRole="button"
-            accessibilityActions={[
-                { name: 'activate', label: 'View details' },
-                { name: 'addToCart', label: 'Add to cart' },
-            ]}
-            onAccessibilityAction={(event) => {
-                switch (event.nativeEvent.actionName) {
-                    case 'addToCart':
-                        addToCart(product);
-                        break;
-                    case 'activate':
-                        viewDetails(product);
-                        break;
-                }
-            }}
-        >
-            <Image source={product.image} accessibilityIgnoresInvertColors />
-            <Text>{product.name}</Text>
-            <Text>{product.price}</Text>
-        </View>
-    );
+// Complex component with grouped content and custom actions
+export class ProductCard extends LitElement {
+  @property({ type: Object }) product!: {
+    name: string;
+    price: string;
+    rating: number;
+  };
+
+  private _onViewDetails() {
+    /* navigate */
+  }
+  private _onAddToCart(e: Event) {
+    e.stopPropagation(); /* add to cart */
+  }
+  private _onKeyDown(e: KeyboardEvent) {
+    if (e.key === 'Enter' || e.key === ' ') this._onViewDetails();
+  }
+
+  override render() {
+    const { name, price, rating } = this.product;
+    return html`
+      <div
+        role="button"
+        tabindex="0"
+        aria-label="${name}, ${price}, ${rating} stars"
+        @click=${this._onViewDetails}
+        @keydown=${this._onKeyDown}
+      >
+        <img src="" alt="" aria-hidden="true" />
+        <span>${name}</span>
+        <span>${price}</span>
+        <a href="#" @click=${this._onAddToCart} aria-label="Add to cart">
+          Add to cart
+        </a>
+      </div>
+    `;
+  }
 }
 
-// Announcing dynamic changes
-function Counter() {
-    const [count, setCount] = useState(0);
+// Announcing dynamic changes (live region)
+export class Counter extends LitElement {
+  @state() private count = 0;
 
-    const increment = () => {
-        setCount((prev) => prev + 1);
-        AccessibilityInfo.announceForAccessibility(`Count is now ${count + 1}`);
-    };
+  private _increment() {
+    this.count += 1;
+    this.announce(`Count is now ${this.count}`);
+  }
 
-    return (
-        <View>
-            <Text accessibilityRole="text" accessibilityLiveRegion="polite">
-                Count: {count}
-            </Text>
-            <TouchableOpacity
-                onPress={increment}
-                accessibilityLabel="Increment"
-                accessibilityHint="Increases the counter by one"
-            >
-                <Text>+</Text>
-            </TouchableOpacity>
-        </View>
-    );
+  private announce(message: string) {
+    const el = document.createElement('div');
+    el.setAttribute('role', 'status');
+    el.setAttribute('aria-live', 'polite');
+    el.className = 'visually-hidden';
+    el.textContent = message;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1000);
+  }
+
+  override render() {
+    return html`
+      <div role="status" aria-live="polite" aria-atomic="true">
+        Count: ${this.count}
+      </div>
+      <button
+        type="button"
+        aria-label="Increment"
+        aria-describedby="counter-hint"
+        @click=${this._increment}
+      >
+        +
+      </button>
+      <span id="counter-hint" class="visually-hidden">
+        Increases the counter by one
+      </span>
+    `;
+  }
 }
-```
-
-### SwiftUI Accessibility
-
-```swift
-import SwiftUI
-
-struct AccessibleButton: View {
-    let title: String
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            Text(title)
-        }
-        .accessibilityLabel(title)
-        .accessibilityHint("Double tap to activate")
-        .accessibilityAddTraits(.isButton)
-    }
-}
-
-struct ProductCard: View {
-    let product: Product
-
-    var body: some View {
-        VStack {
-            AsyncImage(url: product.imageURL)
-                .accessibilityHidden(true) // Image is decorative
-
-            Text(product.name)
-            Text(product.price.formatted(.currency(code: "USD")))
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(product.name), \(product.price.formatted(.currency(code: "USD")))")
-        .accessibilityHint("Double tap to view details")
-        .accessibilityAction(named: "Add to cart") {
-            addToCart(product)
-        }
-    }
-}
-
-// Custom accessibility rotor
-struct DocumentView: View {
-    let sections: [Section]
-
-    var body: some View {
-        ScrollView {
-            ForEach(sections) { section in
-                Text(section.title)
-                    .font(.headline)
-                    .accessibilityAddTraits(.isHeader)
-                Text(section.content)
-            }
-        }
-        .accessibilityRotor("Headings") {
-            ForEach(sections) { section in
-                AccessibilityRotorEntry(section.title, id: section.id)
-            }
-        }
-    }
-}
-```
-
-## Android TalkBack
-
-### Jetpack Compose Accessibility
-
-```kotlin
-import androidx.compose.ui.semantics.*
-
-@Composable
-fun AccessibleButton(
-    onClick: () -> Unit,
-    text: String,
-    enabled: Boolean = true
-) {
-    Button(
-        onClick = onClick,
-        enabled = enabled,
-        modifier = Modifier.semantics {
-            contentDescription = text
-            role = Role.Button
-            if (!enabled) {
-                disabled()
-            }
-        }
-    ) {
-        Text(text)
-    }
-}
-
-@Composable
-fun ProductCard(product: Product) {
-    Card(
-        modifier = Modifier
-            .semantics(mergeDescendants = true) {
-                contentDescription = "${product.name}, ${product.formattedPrice}"
-                customActions = listOf(
-                    CustomAccessibilityAction("Add to cart") {
-                        addToCart(product)
-                        true
-                    }
-                )
-            }
-            .clickable { navigateToDetails(product) }
-    ) {
-        Image(
-            painter = painterResource(product.imageRes),
-            contentDescription = null, // Decorative
-            modifier = Modifier.semantics { invisibleToUser() }
-        )
-        Text(product.name)
-        Text(product.formattedPrice)
-    }
-}
-
-// Live region for dynamic content
-@Composable
-fun Counter() {
-    var count by remember { mutableStateOf(0) }
-
-    Column {
-        Text(
-            text = "Count: $count",
-            modifier = Modifier.semantics {
-                liveRegion = LiveRegionMode.Polite
-            }
-        )
-        Button(onClick = { count++ }) {
-            Text("Increment")
-        }
-    }
-}
-
-// Heading levels
-@Composable
-fun SectionHeader(title: String, level: Int) {
-    Text(
-        text = title,
-        style = MaterialTheme.typography.headlineMedium,
-        modifier = Modifier.semantics {
-            heading()
-            // Custom heading level (not built-in)
-            testTag = "heading-$level"
-        }
-    )
-}
-```
-
-### Android XML Views
-
-```xml
-<!-- Accessible button -->
-<Button
-    android:id="@+id/submit_button"
-    android:layout_width="wrap_content"
-    android:layout_height="48dp"
-    android:minWidth="48dp"
-    android:text="@string/submit"
-    android:contentDescription="@string/submit_form" />
-
-<!-- Grouped content -->
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:importantForAccessibility="yes"
-    android:focusable="true"
-    android:contentDescription="@string/product_description">
-
-    <ImageView
-        android:importantForAccessibility="no"
-        android:src="@drawable/product" />
-
-    <TextView
-        android:text="@string/product_name"
-        android:importantForAccessibility="no" />
-</LinearLayout>
-
-<!-- Live region -->
-<TextView
-    android:id="@+id/status"
-    android:accessibilityLiveRegion="polite" />
-```
-
-```kotlin
-// Kotlin accessibility
-binding.submitButton.apply {
-    contentDescription = getString(R.string.submit_form)
-    accessibilityDelegate = object : View.AccessibilityDelegate() {
-        override fun onInitializeAccessibilityNodeInfo(
-            host: View,
-            info: AccessibilityNodeInfo
-        ) {
-            super.onInitializeAccessibilityNodeInfo(host, info)
-            info.addAction(
-                AccessibilityNodeInfo.AccessibilityAction(
-                    AccessibilityNodeInfo.ACTION_CLICK,
-                    getString(R.string.submit_action)
-                )
-            )
-        }
-    }
-}
-
-// Announce changes
-binding.counter.announceForAccessibility("Count updated to $count")
 ```
 
 ## Gesture Accessibility
 
 ### Alternative Gestures
 
-```tsx
-// React Native: Provide alternatives to complex gestures
-function SwipeableCard({ item, onDelete }) {
-    const [showDelete, setShowDelete] = useState(false);
+On web, provide a visible control for screen reader and keyboard users instead of relying on swipe-only actions.
 
-    return (
-        <View
-            accessible={true}
-            accessibilityActions={[{ name: 'delete', label: 'Delete item' }]}
-            onAccessibilityAction={(event) => {
-                if (event.nativeEvent.actionName === 'delete') {
-                    onDelete(item);
-                }
-            }}
+```ts
+import { LitElement, html } from 'lit';
+import { property } from 'lit/decorators.js';
+
+// Provide alternatives to complex gestures: always-visible delete for a11y
+export class SwipeableCard extends LitElement {
+  @property({ type: Object }) item!: { title: string };
+  @property({ type: Function }) onDelete!: (item: { title: string }) => void;
+
+  override render() {
+    const { item, onDelete } = this;
+    return html`
+      <div class="card" role="listitem">
+        <span class="card-title">${item.title}</span>
+        <button
+          type="button"
+          aria-label="Delete ${item.title}"
+          @click=${() => onDelete(item)}
         >
-            <Swipeable
-                renderRightActions={() => (
-                    <TouchableOpacity
-                        onPress={() => onDelete(item)}
-                        accessibilityLabel="Delete"
-                    >
-                        <Text>Delete</Text>
-                    </TouchableOpacity>
-                )}
-            >
-                <Text>{item.title}</Text>
-            </Swipeable>
-
-            {/* Alternative for screen reader users */}
-            <TouchableOpacity
-                accessibilityLabel={`Delete ${item.title}`}
-                onPress={() => onDelete(item)}
-                style={{ position: 'absolute', right: 0 }}
-            >
-                <Text>Delete</Text>
-            </TouchableOpacity>
-        </View>
-    );
+          Delete
+        </button>
+      </div>
+    `;
+  }
 }
 ```
 
 ### Motion and Animation
 
-```tsx
-// Respect reduced motion preference
-import { AccessibilityInfo } from 'react-native';
+Respect the user's reduced motion preference (e.g. `prefers-reduced-motion: reduce`).
 
-function AnimatedComponent() {
-    const [reduceMotion, setReduceMotion] = useState(false);
+```ts
+import { LitElement, html } from 'lit';
+import { query } from 'lit/decorators.js';
 
-    useEffect(() => {
-        AccessibilityInfo.isReduceMotionEnabled().then(setReduceMotion);
+export class AnimatedComponent extends LitElement {
+  @query('.animated') private animatedEl!: HTMLElement;
 
-        const subscription = AccessibilityInfo.addEventListener(
-            'reduceMotionChanged',
-            setReduceMotion
-        );
+  override connectedCallback() {
+    super.connectedCallback();
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const apply = () => {
+      this.animatedEl?.style.setProperty(
+        'animation',
+        mq.matches ? 'none' : 'slide 0.3s ease'
+      );
+    };
+    mq.addEventListener('change', apply);
+    apply();
+  }
 
-        return () => subscription.remove();
-    }, []);
-
-    return (
-        <Animated.View
-            style={{
-                transform: reduceMotion ? [] : [{ translateX: animatedValue }],
-                opacity: reduceMotion ? 1 : animatedOpacity,
-            }}
-        >
-            <Content />
-        </Animated.View>
-    );
+  override render() {
+    return html`
+      <div class="animated">
+        <slot></slot>
+      </div>
+    `;
+  }
 }
 ```
 
-## Dynamic Type / Text Scaling
+```css
+/* Prefer CSS so reduced motion is automatic */
+.animated {
+  animation: slide 0.3s ease;
+}
 
-### iOS Dynamic Type
-
-```swift
-// SwiftUI
-Text("Hello, World!")
-    .font(.body) // Automatically scales with Dynamic Type
-
-Text("Fixed Size")
-    .font(.system(size: 16, design: .default))
-    .dynamicTypeSize(.large) // Cap at large
-
-// Allow unlimited scaling
-Text("Scalable")
-    .font(.body)
-    .minimumScaleFactor(0.5)
-    .lineLimit(nil)
+@media (prefers-reduced-motion: reduce) {
+  .animated {
+    animation: none;
+  }
+}
 ```
 
-### Android Text Scaling
+## Web text scaling
 
-```xml
-<!-- Use sp for text sizes -->
-<TextView
-    android:textSize="16sp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+Use relative units and avoid fixing font sizes so browser and OS text scaling work.
 
-<!-- In styles.xml -->
-<style name="TextAppearance.Body">
-    <item name="android:textSize">16sp</item>
-    <item name="android:lineHeight">24sp</item>
-</style>
+```html
+<!-- Scalable: use rem or em so text respects user font size -->
+<p style="font-size: 1rem;">Scalable text</p>
+
+<!-- Limit scaling with max() if needed (use sparingly) -->
+<p style="font-size: clamp(1rem, 2vw, 1.5rem);">Limited scaling</p>
 ```
 
-```kotlin
-// Compose: Text automatically scales
-Text(
-    text = "Hello, World!",
-    style = MaterialTheme.typography.bodyLarge
-)
+```css
+/* Prefer rem for body text so it scales with user settings */
+body {
+  font-size: 100%; /* 16px default; user can change */
+}
 
-// Limit scaling if needed
-Text(
-    text = "Limited scaling",
-    fontSize = 16.sp,
-    maxLines = 2,
-    overflow = TextOverflow.Ellipsis
-)
+.component-title {
+  font-size: 1.25rem;
+}
 ```
 
-### React Native Text Scaling
+```ts
+// Text scales with user's default font size
+import { LitElement, html, css } from 'lit';
 
-```tsx
-import { Text, PixelRatio } from 'react-native';
+export class ScalableText extends LitElement {
+  static styles = css`
+    :host {
+      font-size: 1rem;
+    }
+  `;
 
-// Allow text scaling (default)
-<Text allowFontScaling={true}>Scalable text</Text>
-
-// Limit maximum scale
-<Text maxFontSizeMultiplier={1.5}>Limited scaling</Text>
-
-// Disable scaling (use sparingly)
-<Text allowFontScaling={false}>Fixed size</Text>
-
-// Responsive font size
-const scaledFontSize = (size: number) => {
-  const scale = PixelRatio.getFontScale();
-  return size * Math.min(scale, 1.5); // Cap at 1.5x
-};
+  override render() {
+    return html`
+      <slot></slot>
+    `;
+  }
+}
 ```
 
 ## Testing Checklist
 
 ```markdown
-## VoiceOver (iOS) Testing
+## Screen reader testing
 
 - [ ] All interactive elements have labels
-- [ ] Swipe navigation covers all content in logical order
-- [ ] Custom actions available for complex interactions
-- [ ] Announcements made for dynamic content
-- [ ] Headings navigable via rotor
-- [ ] Images have appropriate descriptions or are hidden
-
-## TalkBack (Android) Testing
-
 - [ ] Focus order is logical
-- [ ] Touch exploration works correctly
-- [ ] Custom actions available
-- [ ] Live regions announce updates
-- [ ] Headings properly marked
+- [ ] All content is reachable in logical order
+- [ ] Custom actions available for complex interactions
+- [ ] Dynamic content announced (live regions)
+- [ ] Headings properly marked and navigable via rotor
+- [ ] Images have appropriate descriptions or are hidden
 - [ ] Grouped content read together
 
-## Motor Accessibility
+## Motor accessibility
 
 - [ ] Touch targets at least 44x44 points
 - [ ] Adequate spacing between targets (8dp minimum)
 - [ ] Alternatives to complex gestures
 - [ ] No time-limited interactions
 
-## Visual Accessibility
+## Visual accessibility
 
 - [ ] Text scales to 200% without loss
 - [ ] Content visible in high contrast mode
