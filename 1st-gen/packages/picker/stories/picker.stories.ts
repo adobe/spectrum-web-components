@@ -15,7 +15,10 @@ import {
   LitElement,
   TemplateResult,
 } from '@spectrum-web-components/base';
-import { when } from '@spectrum-web-components/base/src/directives.js';
+import {
+  ifDefined,
+  when,
+} from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
