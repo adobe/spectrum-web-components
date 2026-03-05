@@ -32,69 +32,104 @@ const config: TestRunnerConfig = {
       return;
     }
 
-    const axeBuilder = new AxeBuilder({ page })
-      .include('#storybook-root')
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
-
     const a11yConfig = storyContext.parameters?.a11y;
+    const analyzeView = async (
+      targetPage: typeof page,
+      viewLabel: 'story' | 'docs'
+    ): Promise<string | null> => {
+      const axeBuilder = new AxeBuilder({ page: targetPage })
+        .include('#storybook-root')
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
 
-    if (a11yConfig?.disabledRules && Array.isArray(a11yConfig.disabledRules)) {
-      axeBuilder.disableRules(a11yConfig.disabledRules);
+      if (
+        a11yConfig?.disabledRules &&
+        Array.isArray(a11yConfig.disabledRules)
+      ) {
+        axeBuilder.disableRules(a11yConfig.disabledRules);
+      }
+
+      const results = await axeBuilder.analyze();
+
+      // Filter violations using rule-specific exclusions from story parameters.
+      // parameters.a11y.exclude: { 'rule-id': ['selector1', 'selector2'] }
+      // Only the specified rule is affected; all other rules still validate the element.
+      const excludeMap = a11yConfig?.exclude;
+
+      const violations = excludeMap
+        ? results.violations
+            .map((violation) => {
+              const excludedSelectors = excludeMap[violation.id];
+              if (!excludedSelectors) {
+                return violation;
+              }
+
+              const remainingNodes = violation.nodes.filter(
+                (node) =>
+                  !node.target.some((target) =>
+                    excludedSelectors.some((selector) =>
+                      String(target).includes(selector)
+                    )
+                  )
+              );
+
+              return { ...violation, nodes: remainingNodes };
+            })
+            .filter((violation) => violation.nodes.length > 0)
+        : results.violations;
+
+      if (violations.length > 0) {
+        const details = violations
+          .map((violation) => {
+            const nodeDetails = violation.nodes
+              .map((node) => {
+                const target = node.target.join(', ');
+                const failureSummary =
+                  node.failureSummary?.trim() ?? 'No summary';
+                return `  - Target: ${target}\n    Summary: ${failureSummary}`;
+              })
+              .join('\n');
+
+            return [
+              `${violation.id} (${violation.impact ?? 'unknown impact'})`,
+              `Description: ${violation.description}`,
+              `Help: ${violation.help}`,
+              `More info: ${violation.helpUrl}`,
+              'Nodes:',
+              nodeDetails,
+            ].join('\n');
+          })
+          .join('\n\n');
+
+        return `A11y violations in ${context.id} (${viewLabel} view):\n${details}`;
+      }
+
+      return null;
+    };
+
+    // Storybook test-runner smoke tests default to story view.
+    const failures: string[] = [];
+    const storyFailure = await analyzeView(page, 'story');
+    if (storyFailure) {
+      failures.push(storyFailure);
     }
 
-    const results = await axeBuilder.analyze();
+    // Check docs on a separate page so Storybook test-runner state remains intact.
+    const docsPage = await page.context().newPage();
+    try {
+      const docsUrl = new URL(page.url());
+      docsUrl.searchParams.set('id', context.id);
+      docsUrl.searchParams.set('viewMode', 'docs');
+      await docsPage.goto(docsUrl.toString(), { waitUntil: 'networkidle' });
+      const docsFailure = await analyzeView(docsPage, 'docs');
+      if (docsFailure) {
+        failures.push(docsFailure);
+      }
+    } finally {
+      await docsPage.close();
+    }
 
-    // Filter violations using rule-specific exclusions from story parameters.
-    // parameters.a11y.exclude: { 'rule-id': ['selector1', 'selector2'] }
-    // Only the specified rule is affected; all other rules still validate the element.
-    const excludeMap = a11yConfig?.exclude;
-
-    const violations = excludeMap
-      ? results.violations
-          .map((violation) => {
-            const excludedSelectors = excludeMap[violation.id];
-            if (!excludedSelectors) {
-              return violation;
-            }
-
-            const remainingNodes = violation.nodes.filter(
-              (node) =>
-                !node.target.some((target) =>
-                  excludedSelectors.some((selector) =>
-                    String(target).includes(selector)
-                  )
-                )
-            );
-
-            return { ...violation, nodes: remainingNodes };
-          })
-          .filter((violation) => violation.nodes.length > 0)
-      : results.violations;
-
-    if (violations.length > 0) {
-      const details = violations
-        .map((violation) => {
-          const nodeDetails = violation.nodes
-            .map((node) => {
-              const target = node.target.join(', ');
-              const failureSummary =
-                node.failureSummary?.trim() ?? 'No summary';
-              return `  - Target: ${target}\n    Summary: ${failureSummary}`;
-            })
-            .join('\n');
-
-          return [
-            `${violation.id} (${violation.impact ?? 'unknown impact'})`,
-            `Description: ${violation.description}`,
-            `Help: ${violation.help}`,
-            `More info: ${violation.helpUrl}`,
-            'Nodes:',
-            nodeDetails,
-          ].join('\n');
-        })
-        .join('\n\n');
-
-      throw new Error(`A11y violations in ${context.id}:\n${details}`);
+    if (failures.length > 0) {
+      throw new Error(failures.join('\n\n'));
     }
   },
 };
