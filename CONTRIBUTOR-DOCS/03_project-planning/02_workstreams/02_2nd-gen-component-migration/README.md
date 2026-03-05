@@ -12,6 +12,7 @@
 <summary><strong>Beneath this doc</strong></summary>
 
 - [Status](01_status.md)
+- [Washing machine workflow](washing-machine-workflow.md)
 - Step By Step
     - [Analyze rendering and styling](02_step-by-step/01_analyze-rendering-and-styling/README.md)
     - [Factor rendering out of 1st-gen component](02_step-by-step/02_factor-rendering-out-of-1st-gen-component.md)
