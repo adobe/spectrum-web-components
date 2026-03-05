@@ -90,7 +90,7 @@ fulfill the accessibility contract of the button.
 <sp-tab-panel value="icon-only">
 
 ```html demo
-<sp-button variant="primary" label="Icon only">
+<sp-button variant="primary" icon-only label="Icon only">
   <sp-icon-help slot="icon"></sp-icon-help>
 </sp-button>
 ```
@@ -343,7 +343,7 @@ If you intend to create a link with a `href` attribute, we instead offer CSS cla
   class="spectrum-Button spectrum-Button--accent"
   href="https://github.com/adobe/spectrum-web-components"
 >
-  Accent Link Button
+  Accent link button
 </a>
 ```
 
@@ -399,7 +399,7 @@ To allow button-styled native links in the shadow DOM of extended components, en
   class="spectrum-Button spectrum-Button--accent"
   href="https://github.com/adobe/spectrum-web-components"
 >
-  Accent Link Button
+  Accent link button
 </a>
 <a
   class="spectrum-Button spectrum-Button--secondary spectrum-Button--outline"
@@ -407,7 +407,7 @@ To allow button-styled native links in the shadow DOM of extended components, en
 >
   <!-- Use icon components and continue to define slot="icon" for the best styling support -->
   <sp-icon-help slot="icon"></sp-icon-help>
-  Secondary Outline Link Button
+  Secondary outline link button
 </a>
 ```
 
