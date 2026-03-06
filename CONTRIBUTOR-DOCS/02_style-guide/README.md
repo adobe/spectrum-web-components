@@ -19,6 +19,7 @@
     - [Styling Anti-Patterns (What to Avoid)](01_css/05_anti-patterns.md)
     - [Property order quick reference](01_css/06_property-order-quick-reference.md)
 - [Linting tools](02_linting-tools.md)
+- [Component types](03_component-types.md)
 
 </details>
 

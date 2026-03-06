@@ -10,7 +10,8 @@
  * governing permissions and limitations under the License.
  */
 export {
-  ElementSizes,
+  DEFAULT_ELEMENT_SIZES,
+  ELEMENT_SIZES,
   SizedMixin,
 } from '@spectrum-web-components/core/mixins/sized-mixin.js';
 export type {
@@ -18,3 +19,18 @@ export type {
   ElementSize,
   SizedElementInterface,
 } from '@spectrum-web-components/core/mixins/sized-mixin.js';
+
+import type { ElementSize } from '@spectrum-web-components/core/mixins/sized-mixin.js';
+
+/**
+ * @deprecated Use `ELEMENT_SIZES` instead. This record will be removed in a future release.
+ */
+export const ElementSizes: Record<string, ElementSize> = {
+  xxs: 'xxs',
+  xs: 'xs',
+  s: 's',
+  m: 'm',
+  l: 'l',
+  xl: 'xl',
+  xxl: 'xxl',
+};
