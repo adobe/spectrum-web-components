@@ -64,9 +64,7 @@ export const SizesTest: Story = {
   render: () => html`
     ${StatusLight.VALID_SIZES.map(
       (size) => html`
-        <swc-status-light size=${size} variant="info">
-          ${size}
-        </swc-status-light>
+        <swc-status-light size=${size} variant="info">${size}</swc-status-light>
       `
     )}
   `,

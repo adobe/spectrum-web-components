@@ -185,9 +185,7 @@ export const SizesTest: Story = {
   render: () => html`
     ${BADGE_VALID_SIZES.map(
       (size) => html`
-        <swc-badge size=${size} variant="informative">
-          ${size}
-        </swc-badge>
+        <swc-badge size=${size} variant="informative">${size}</swc-badge>
       `
     )}
   `,
