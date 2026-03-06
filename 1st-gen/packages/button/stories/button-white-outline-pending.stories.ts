@@ -11,19 +11,20 @@
  */
 import { TemplateResult } from '@spectrum-web-components/base';
 
-import { Properties, renderButtonSet } from './index.js';
+import { makeOverBackground, Properties, renderButtonSet } from './index.js';
 import { args, argTypes } from './index.js';
 
-const variant = 'white';
+const staticColor = 'white';
 const treatment = 'outline';
 const pending = true;
 
 export default {
   component: 'sp-button',
   title: 'Button/White/Outline/Pending',
+  decorators: [makeOverBackground(staticColor)],
   args: {
     ...args,
-    variant,
+    staticColor,
     treatment,
     pending,
   },

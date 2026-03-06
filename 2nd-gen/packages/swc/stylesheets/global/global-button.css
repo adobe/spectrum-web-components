@@ -1,0 +1,132 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/* TODO: investigage importing styles from Button once migrated
+ *
+ * If not able to import, will need to match CSS guidelines for custom property exposure and token usage
+ */
+@layer swc-global-elements {
+  .swc-Button {
+    --swc-button-animation-duration: token("animation-duration-100");
+    --swc-button-focus-ring-gap: token("focus-indicator-gap");
+    --swc-button-focus-ring-thickness: token("focus-indicator-thickness");
+    --swc-button-focus-indicator-color: token("focus-indicator-color");
+    --swc-button-min-width: calc(token("component-height-100") * token("button-minimum-width-multiplier"));
+    --swc-button-height: token("component-height-100");
+    --swc-button-border-radius: calc(var(--swc-button-height) / 2);
+    --swc-button-border-width: token("border-width-200");
+    --swc-button-line-height: 1.2;
+    --swc-button-font-weight: token("bold-font-weight");
+    --swc-button-font-size: token("font-size-100");
+    --swc-button-edge-to-visual: calc(token("component-pill-edge-to-visual-100") - var(--swc-button-border-width));
+    --swc-button-edge-to-visual-only: calc(token("component-pill-edge-to-visual-only-100") - var(--swc-button-border-width));
+    --swc-button-edge-to-text: calc(token("component-pill-edge-to-text-100") - var(--swc-button-border-width));
+    --swc-button-padding-label-to-icon: token("text-to-visual-100");
+    --swc-button-top-to-text: token("component-top-to-text-100");
+    --swc-button-bottom-to-text: token("component-bottom-to-text-100");
+    --swc-button-top-to-icon: token("component-top-to-workflow-icon-100");
+    --swc-button-intended-icon-size: token("workflow-icon-size-100");
+    --swc-button-border-color-default: transparent;
+    --swc-button-border-color-hover: transparent;
+    --swc-button-border-color-down: transparent;
+    --swc-button-border-color-focus: transparent;
+    --swc-button-content-color-default: token("white");
+    --swc-button-content-color-hover: token("white");
+    --swc-button-content-color-down: token("white");
+    --swc-button-content-color-focus: token("white");
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
+    display: inline-flex;
+    position: relative;
+    gap: var(--swc-button-padding-label-to-icon);
+    align-items: center;
+    justify-content: center;
+    min-inline-size: var(--swc-button-min-width);
+    min-block-size: var(--swc-button-height);
+    padding-block: 0;
+    padding-inline: var(--swc-button-edge-to-text);
+    margin: 0;
+    font-family: token("sans-serif-font");
+    font-size: var(--swc-button-font-size);
+    font-weight: var(--swc-button-font-weight);
+    line-height: token("line-height-100");
+    vertical-align: top;
+    color: var(--swc-button-content-color-default);
+    text-transform: none;
+    text-decoration: none;
+    background-color: var(--swc-button-background-color-default);
+    border-color: var(--swc-button-border-color-default);
+    border-style: solid;
+    border-width: var(--swc-button-border-width);
+    border-radius: var(--swc-button-border-radius);
+    overflow: visible;
+    cursor: pointer;
+    user-select: none;
+    transition:
+      outline var(--swc-button-animation-duration, token("animation-duration-100")) linear,
+      border-color var(--swc-button-animation-duration, token("animation-duration-100")) linear,
+      color var(--swc-button-animation-duration, token("animation-duration-100")) linear,
+      background var(--swc-button-animation-duration, token("animation-duration-100")) linear;
+  }
+
+  /* Default when no variant class used */
+  .swc-Button,
+  .swc-Button--accent {
+    --swc-button-background-color-default: token("accent-background-color-default");
+    --swc-button-background-color-hover: token("accent-background-color-hover");
+    --swc-button-background-color-down: token("accent-background-color-down");
+    --swc-button-background-color-focus: token("accent-background-color-key-focus");
+  }
+
+  .swc-Button--primary {
+    --swc-button-content-color-default: token("gray-25");
+    --swc-button-content-color-hover: token("gray-25");
+    --swc-button-content-color-down: token("gray-25");
+    --swc-button-content-color-focus: token("gray-25");
+    --swc-button-background-color-default: token("neutral-background-color-default");
+    --swc-button-background-color-hover: token("neutral-background-color-hover");
+    --swc-button-background-color-down: token("neutral-background-color-down");
+    --swc-button-background-color-focus: token("neutral-background-color-key-focus");
+  }
+
+  @media (hover: hover) {
+    .swc-Button:hover {
+      color: var(--swc-button-content-color-hover);
+      background-color: var(--swc-button-background-color-hover);
+      border-color: var(--swc-button-border-color-hover);
+    }
+  }
+
+  .swc-Button:focus-visible {
+    color: var(--swc-button-content-color-focus);
+    background-color: var(--swc-button-background-color-focus);
+    border-color: var(--swc-button-border-color-focus);
+
+    /* Replaces outdated box-shadow method */
+    outline: var(--swc-button-focus-ring-thickness) solid var(--swc-button-focus-indicator-color);
+    outline-offset: var(--swc-button-focus-ring-gap);
+  }
+
+  .swc-Button:active {
+    color: var(--swc-button-content-color-down);
+    background-color: var(--swc-button-background-color-down);
+    border-color: var(--swc-button-border-color-down);
+    transform: translateZ(token("component-size-difference-down"));
+  }
+}
+
+/* Results in encapsulating styles, preventing stronger application selectors from overriding basic properties like `color` */
+.swc-Button {
+  all: revert-layer !important;
+}

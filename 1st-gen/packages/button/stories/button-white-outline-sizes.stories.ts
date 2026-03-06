@@ -14,16 +14,16 @@ import { TemplateResult } from '@spectrum-web-components/base';
 import { makeOverBackground, Properties, renderButtonSet } from './index.js';
 import { args, argTypes } from './index.js';
 
-const variant = 'white';
+const staticColor = 'white';
 const treatment = 'outline';
 
 export default {
   component: 'sp-button',
   title: 'Button/White/Outline/Sizes',
-  decorators: [makeOverBackground()],
+  decorators: [makeOverBackground(staticColor)],
   args: {
     ...args,
-    variant,
+    staticColor,
     treatment,
   },
   argTypes,

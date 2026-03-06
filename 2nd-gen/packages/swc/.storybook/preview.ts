@@ -26,6 +26,7 @@ import { FontLoader } from './loaders/font-loader.js';
 
 import '../stylesheets/swc.css';
 import '../stylesheets/typography.css';
+import '../stylesheets/global/global-elements.css';
 import './assets/preview.css';
 
 const storybookHelperOptions: Options = {
@@ -228,9 +229,10 @@ const preview = {
             'Customization',
             [
               'Getting Started',
-              'Fonts',
               'Theme and Scales',
+              'Fonts',
               'Component Styles',
+              'Global Element Styling',
             ],
           ],
         ],
