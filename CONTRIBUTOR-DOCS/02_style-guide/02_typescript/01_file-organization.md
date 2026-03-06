@@ -11,20 +11,19 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-- [File organization](#file-organization)
-  - [Copyright header](#copyright-header)
-  - [Import grouping and order](#import-grouping-and-order)
+- [Copyright header](#copyright-header)
+- [Import grouping and order](#import-grouping-and-order)
     - [Group 1: Lit and external packages](#group-1-lit-and-external-packages)
     - [Group 2: Internal packages](#group-2-internal-packages)
     - [Group 3: Side-effect imports](#group-3-side-effect-imports)
     - [Group 4: Relative imports](#group-4-relative-imports)
     - [Group 5: Style imports](#group-5-style-imports)
     - [Import extensions](#import-extensions)
-  - [File set per component](#file-set-per-component)
-  - [Export patterns](#export-patterns)
+- [File set per component](#file-set-per-component)
+- [Export patterns](#export-patterns)
     - [Core index.ts](#core-indexts)
     - [SWC index.ts](#swc-indexts)
-  - [Where types files live](#where-types-files-live)
+- [Where types files live](#where-types-files-live)
 
 </details>
 

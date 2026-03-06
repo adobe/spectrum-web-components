@@ -64,11 +64,6 @@
     - Thumbnail
     - Tooltip
 - [Milestones](04_milestones/README.md)
-- [Research](05_research/README.md)
-    - [Full pattern research: 1st-gen vs 2nd-gen](05_research/SWC-1419_research-full-patterns.md)
-    - [2nd-gen component review: patterns and findings](05_research/SWC-1419_research.md)
-    - [Plan: SWC-1420 — TypeScript conventions guide for 2nd-gen](05_research/SWC-1420-plan.md)
-    - [Research: SWC-1420 — TypeScript conventions guide for 2nd-gen](05_research/SWC-1420-research.md)
 
 </details>
 
@@ -93,7 +88,5 @@ The documentation here helps us:
 - **[Components](./03_components/README.md)** - Component-specific planning and status information, offering a component-centric view of how individual components are affected by multiple workstreams.
 
 - **[Milestones](./04_milestones/README.md)** - Information about project milestones and their goals.
-
-- **[Research](./05_research/README.md)** - Research documents including pattern analysis, architecture studies, and technical investigations that inform project decisions.
 
 Together, these views help us manage the project roadmap, ensuring we make progress on strategic objectives while maintaining clarity about the state and evolution of individual components.
