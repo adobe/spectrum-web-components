@@ -106,11 +106,11 @@
 }
 
 :host([checked]) #input + #switch::before {
-  transform: translateX(calc(var(--mod-switch-control-width, var(--spectrum-switch-control-width)) - 100%));
+  transform: translateX(calc(var(--mod-switch-control-width, var(--spectrum-switch-control-width)) - 100% - 2 * var(--mod-switch-border-width-themed, var(--spectrum-switch-border-width-themed))));
 }
 
 :host([checked]) #input + #switch:dir(rtl)::before {
-  transform: translateX(calc((var(--mod-switch-control-width, var(--spectrum-switch-control-width)) - 100%) * -1));
+  transform: translateX(calc((var(--mod-switch-control-width, var(--spectrum-switch-control-width)) - 100% - 2 * var(--mod-switch-border-width-themed, var(--spectrum-switch-border-width-themed))) * -1));
 }
 
 :host([disabled]) #input,
@@ -144,6 +144,7 @@
   margin-block: calc(var(--mod-switch-height, var(--spectrum-switch-min-height)) - var(--mod-switch-control-height, var(--spectrum-switch-control-height)) - var(--mod-switch-spacing-top-to-control, var(--spectrum-switch-spacing-top-to-control)));
   margin-inline: 0;
   vertical-align: middle;
+  border: var(--mod-switch-border-width-themed, var(--spectrum-switch-border-width-themed)) solid var(--spectrum-neutral-content-color-default);
   border-radius: calc(var(--mod-switch-control-height, var(--spectrum-switch-control-height)) / 2);
   transition:
     background var(--mod-animation-duration-100, var(--spectrum-animation-duration-100)) ease-in-out,
@@ -152,10 +153,10 @@
 
 #switch::before {
   box-sizing: border-box;
-  inline-size: var(--mod-switch-control-height, var(--spectrum-switch-control-height));
-  block-size: var(--mod-switch-control-height, var(--spectrum-switch-control-height));
+  inline-size: calc(var(--mod-switch-control-height, var(--spectrum-switch-control-height)) - var(--mod-switch-border-width-themed, var(--spectrum-switch-border-width-themed)) * 2);
+  block-size: calc(var(--mod-switch-control-height, var(--spectrum-switch-control-height)) - var(--mod-switch-border-width-themed, var(--spectrum-switch-border-width-themed)) * 2);
   border-style: solid;
-  border-width: var(--mod-border-width-200, var(--spectrum-border-width-200));
+  border-width: var(--mod-border-width-200, var(--spectrum-border-width-200)); /* this border is purposely set to the global token to ensure consistent styling for S1 & express */
   border-radius: calc(var(--mod-switch-control-height, var(--spectrum-switch-control-height)) / 2);
   transition:
     background var(--mod-animation-duration-100, var(--spectrum-animation-duration-100)) ease-in-out,
@@ -220,6 +221,7 @@
 
 :host([checked]) #input:focus-visible + #switch {
   background-color: var(--highcontrast-switch-background-color-selected-focus, var(--mod-switch-background-color-selected-focus, var(--spectrum-switch-background-color-selected-focus)));
+  border-color: var(--highcontrast-switch-handle-border-color-selected-focus, var(--mod-switch-handle-border-color-selected-focus, var(--spectrum-switch-handle-border-color-selected-focus)));
 }
 
 :host([checked]) #input:focus-visible + #switch::before {
@@ -244,6 +246,7 @@
 
   :host([checked]:hover) #input:enabled + #switch {
     background-color: var(--highcontrast-switch-background-color-selected-hover, var(--mod-switch-background-color-selected-hover, var(--spectrum-switch-background-color-selected-hover)));
+    border-color: var(--mod-switch-handle-border-color-selected-hover, var(--spectrum-switch-handle-border-color-selected-hover));
   }
 
   :host([checked]:hover) #input:enabled + #switch::before {
