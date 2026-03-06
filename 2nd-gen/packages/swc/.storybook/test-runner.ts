@@ -11,6 +11,7 @@
  */
 import AxeBuilder from '@axe-core/playwright';
 import type { TestRunnerConfig } from '@storybook/test-runner';
+import { getStoryContext } from '@storybook/test-runner';
 
 type StorybookA11yConfig = {
   disabledRules?: string[];
@@ -26,7 +27,10 @@ type StorybookTestContext = {
 
 const config: TestRunnerConfig = {
   async postVisit(page, context) {
-    const storyContext = context as typeof context & StorybookTestContext;
+    const storyContext = (await getStoryContext(
+      page,
+      context
+    )) as StorybookTestContext;
 
     if (storyContext.tags?.includes('!test')) {
       return;
