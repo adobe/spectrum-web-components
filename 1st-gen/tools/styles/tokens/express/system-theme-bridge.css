@@ -595,6 +595,10 @@
   --system-switch-handle-border-color-emphasized-selected-hover: var(--spectrum-accent-color-1000);
   --system-switch-handle-border-color-emphasized-selected-down: var(--spectrum-accent-color-1100);
   --system-switch-handle-border-color-emphasized-selected-focus: var(--spectrum-accent-color-1000);
+  --system-switch-handle-border-color-disabled: var(--spectrum-disabled-content-color);
+  --system-switch-handle-border-color-selected-disabled: var(--spectrum-disabled-content-color);
+  --system-switch-handle-background-color-disabled: var(--spectrum-gray-75);
+  --system-switch-handle-background-color-selected-disabled: var(--spectrum-gray-75);
   --system-switch-background-color: var(--spectrum-gray-300);
   --system-switch-background-color-emphasized-selected-down: var(--spectrum-accent-color-1100);
   --system-switch-background-color-disabled: var(--spectrum-gray-300);

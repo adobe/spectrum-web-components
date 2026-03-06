@@ -23,7 +23,6 @@
   --spectrum-switch-background-color-selected-disabled: var(--spectrum-disabled-content-color);
   --spectrum-switch-focus-indicator-thickness: var(--mod-focus-indicator-thickness, var(--spectrum-focus-indicator-thickness));
   --spectrum-switch-focus-indicator-color: var(--spectrum-focus-indicator-color);
-  --spectrum-switch-handle-border-color-disabled: var(--spectrum-disabled-content-color);
   --spectrum-switch-border-color-default: var(--spectrum-neutral-content-color-default);
   --spectrum-switch-border-color-hover: var(--spectrum-neutral-content-color-hover);
   --spectrum-switch-border-color-down: var(--spectrum-neutral-content-color-down);
@@ -37,7 +36,8 @@
 
 :host([disabled]) {
   --spectrum-switch-label-color-default: var(--spectrum-disabled-content-color);
-  --spectrum-switch-border-color-default: var(--spectrum-disabled-border-color);
+  --spectrum-switch-border-color-default: var(--spectrum-disabled-content-color);
+  --spectrum-switch-border-color-selected-default: var(--spectrum-disabled-content-color);
 }
 
 :host([emphasized]) {
@@ -343,11 +343,12 @@
 
 :host([disabled]) #input + #switch,
 :host([disabled]) #input + #switch {
-  background-color: var(--mod-switch-background-color-disabled, var(--spectrum-switch-background-color-disabled));
+  border-color: var(--highcontrast-switch-border-color-default, var(--mod-switch-border-color-default, var(--spectrum-switch-border-color-default)));
 }
 
 :host([disabled]) #input + #switch::before,
 :host([disabled]) #input + #switch::before {
+  background-color: var(--highcontrast-switch-handle-background-color, var(--mod-switch-handle-background-color-disabled, var(--spectrum-switch-handle-background-color-disabled)));
   border-color: var(--highcontrast-switch-handle-border-color-disabled, var(--mod-switch-handle-border-color-disabled, var(--spectrum-switch-handle-border-color-disabled)));
 }
 
@@ -358,7 +359,8 @@
 
 :host([disabled][checked]) #input + #switch::before,
 :host([disabled][checked]) #input + #switch::before {
-  border-color: var(--highcontrast-switch-handle-border-color-disabled, var(--mod-switch-handle-border-color-disabled, var(--spectrum-switch-handle-border-color-disabled)));
+  background-color: var(--highcontrast-switch-handle-background-color, var(--mod-switch-handle-background-color-selected-disabled, var(--spectrum-switch-handle-background-color-selected-disabled)));
+  border-color: var(--highcontrast-switch-handle-border-color-selected-disabled, var(--mod-switch-handle-border-color-selected-disabled, var(--spectrum-switch-handle-border-color-selected-disabled)));
 }
 
 :host([disabled]) #input ~ #label,
