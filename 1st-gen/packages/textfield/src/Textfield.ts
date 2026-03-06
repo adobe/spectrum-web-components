@@ -48,6 +48,11 @@ export class TextfieldBase extends ManageHelpText(
     noDefaultSize: true,
   })
 ) {
+  static override shadowRootOptions = {
+    ...Focusable.shadowRootOptions,
+    referenceTarget: 'input',
+  };
+
   public static override get styles(): CSSResultArray {
     return [textfieldStyles, checkmarkStyles];
   }
@@ -303,6 +308,7 @@ export class TextfieldBase extends ManageHelpText(
                 : nothing}
             <!-- @ts-ignore -->
             <textarea
+                id="input"
                 name=${ifDefined(this.name || undefined)}
                 aria-describedby=${this.helpTextId}
                 aria-label=${ifDefined(
@@ -337,6 +343,7 @@ export class TextfieldBase extends ManageHelpText(
     return html`
       <!-- @ts-ignore -->
       <input
+        id="input"
         name=${ifDefined(this.name || undefined)}
         type=${this.type}
         aria-describedby=${this.helpTextId}

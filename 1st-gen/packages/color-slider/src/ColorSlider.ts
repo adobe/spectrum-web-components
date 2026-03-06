@@ -46,6 +46,11 @@ import styles from './color-slider.css.js';
  * @fires change - An alteration to the value of the Color Slider has been committed by the user.
  */
 export class ColorSlider extends Focusable {
+  static override shadowRootOptions = {
+    ...Focusable.shadowRootOptions,
+    referenceTarget: 'input',
+  };
+
   public static override get styles(): CSSResultArray {
     return [opacityCheckerBoardStyles, styles];
   }
@@ -332,6 +337,7 @@ export class ColorSlider extends Focusable {
         })}
       ></sp-color-handle>
       <input
+        id="input"
         type="range"
         class="slider"
         min="0"

@@ -117,6 +117,7 @@ export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
   static override shadowRootOptions = {
     ...SpectrumElement.shadowRootOptions,
     delegatesFocus: true,
+    referenceTarget: 'input',
   };
 
   /**

@@ -15,6 +15,7 @@ import {
   html,
   PropertyValues,
   SizedMixin,
+  SpectrumElement,
   TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
@@ -30,6 +31,12 @@ import legacyStyles from './switch-legacy.css.js';
  * @fires change - Announces a change in the `checked` property of a Switch
  */
 export class Switch extends SizedMixin(CheckboxBase) {
+  static override shadowRootOptions = {
+    ...SpectrumElement.shadowRootOptions,
+    delegatesFocus: true,
+    referenceTarget: 'input',
+  };
+
   public static override get styles(): CSSResultArray {
     /* c8 ignore next 4 */
     if (Object.prototype.hasOwnProperty.call(window, 'ShadyDOM')) {

@@ -84,6 +84,7 @@ export class ExpandableElement extends SpectrumElement {
   static override shadowRootOptions = {
     ...SpectrumElement.shadowRootOptions,
     delegatesFocus: true,
+    referenceTarget: 'button',
   };
 
   /** Controller that tracks whether the device is mobile. */
