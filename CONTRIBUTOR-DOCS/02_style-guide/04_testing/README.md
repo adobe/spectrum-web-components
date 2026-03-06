@@ -34,4 +34,4 @@ We use three types of tests:
 | --- | --- | --- | --- |
 | Interaction tests | Storybook play functions | `*.test.ts` | Properties, slots, events, warnings |
 | Accessibility tests | Playwright + aXe | `*.a11y.spec.ts` | ARIA tree, WCAG compliance |
-| Visual regression tests | Storybook + Chromatic | Story files | Rendering across browsers and themes |
+| Visual regression tests | Storybook + Chromatic | `*.stories.ts` | Rendering across browsers and themes |
