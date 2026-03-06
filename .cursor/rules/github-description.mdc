@@ -78,7 +78,7 @@ Examples:
 
 ## Labels
 
-Use the following labels to categorize pull requests. Only use labels that exist in the repository:
+Use the following labels to categorize pull requests. Only use labels that exist in the repository. GitHub labels are separate from Jira labels; for Jira tickets use the jira-ticket rule and `config.json`.
 
 ### Priority and release labels
 
