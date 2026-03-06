@@ -25,7 +25,7 @@ while still activating/pressing the switch. Read-only switches should not have t
 }
 
 :host(:active[checked]) #input:enabled + #switch::before {
-  border-color: var(--highcontrast-switch-handle-border-color-selelcted-down, var(--mod-switch-handle-border-color-selected-down, var(--spectrum-switch-handle-border-color-selected-down)));
+  border-color: var(--highcontrast-switch-handle-border-color-selected-down, var(--mod-switch-handle-border-color-selected-down, var(--spectrum-switch-handle-border-color-selected-down)));
 }
 
 :host(:active[checked]) #input:enabled + #switch {
