@@ -410,6 +410,7 @@ export default defineConfig([
       'scripts/**/*',
       '**/scripts/**/*.js',
       '**/scripts/**/*.ts',
+      '**/scripts/**/*.mjs',
       'linters/**/*.js',
       '.github/**/*.js',
       '1st-gen/test/visual/**/*.js',
@@ -516,7 +517,12 @@ export default defineConfig([
   // Scripts: allow console.log and devDependencies imports
   // ────────────────────────────────────────────────────────────────────────────
   {
-    files: ['**/scripts/**/*.js', '**/scripts/**/*.ts', 'scripts/**/*'],
+    files: [
+      '**/scripts/**/*.js',
+      '**/scripts/**/*.ts',
+      '**/scripts/**/*.mjs',
+      'scripts/**/*',
+    ],
     rules: {
       'no-console': 'off',
       'import/no-extraneous-dependencies': 'off',
