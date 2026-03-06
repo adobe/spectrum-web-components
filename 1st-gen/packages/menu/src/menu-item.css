@@ -72,6 +72,10 @@ sp-popover {
   display: block;
 }
 
+.mobile-submenu-slot-hidden {
+  display: none;
+}
+
 /** Host is :focus bt not :focus-visible so we remove the outline */
 :host([focused]:not(:focus-visible)) {
   box-shadow: none;

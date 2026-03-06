@@ -442,3 +442,60 @@ export const customRootSubmenuWithScroll = (): TemplateResult => {
 customRootSubmenu.swc_vrt = {
   skip: true,
 };
+
+export const mobileView = (): TemplateResult => {
+  return html`
+    <style>
+      .mobile-demo {
+        max-width: 320px;
+        border: 1px solid var(--spectrum-gray-300, #e1e1e1);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+    </style>
+    <div class="mobile-demo">
+      <sp-menu is-mobile-view>
+        <sp-menu-item>Home</sp-menu-item>
+        <sp-menu-item>
+          File
+          <sp-menu slot="submenu">
+            <sp-menu-item>New</sp-menu-item>
+            <sp-menu-item>Open</sp-menu-item>
+            <sp-menu-item>Save</sp-menu-item>
+            <sp-menu-item>
+              Export as
+              <sp-menu slot="submenu">
+                <sp-menu-item>PNG</sp-menu-item>
+                <sp-menu-item>JPG</sp-menu-item>
+                <sp-menu-item>SVG</sp-menu-item>
+                <sp-menu-item>PDF</sp-menu-item>
+              </sp-menu>
+            </sp-menu-item>
+          </sp-menu>
+        </sp-menu-item>
+        <sp-menu-item>
+          Edit
+          <sp-menu slot="submenu">
+            <sp-menu-item>Undo</sp-menu-item>
+            <sp-menu-item>Redo</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Cut</sp-menu-item>
+            <sp-menu-item>Copy</sp-menu-item>
+            <sp-menu-item>Paste</sp-menu-item>
+          </sp-menu>
+        </sp-menu-item>
+        <sp-menu-item>
+          View
+          <sp-menu slot="submenu">
+            <sp-menu-item>Zoom in</sp-menu-item>
+            <sp-menu-item>Zoom out</sp-menu-item>
+            <sp-menu-item>Fit to screen</sp-menu-item>
+          </sp-menu>
+        </sp-menu-item>
+        <sp-menu-divider></sp-menu-divider>
+        <sp-menu-item>Settings</sp-menu-item>
+        <sp-menu-item>Help</sp-menu-item>
+      </sp-menu>
+    </div>
+  `;
+};
