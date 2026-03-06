@@ -430,6 +430,20 @@ export default defineConfig([
   },
 
   // ────────────────────────────────────────────────────────────────────────────
+  // Storybook config files: Node globals and tooling imports
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: ['2nd-gen/packages/swc/.storybook/**/*.ts'],
+    languageOptions: {
+      globals: globals.node,
+    },
+    rules: {
+      'import/no-extraneous-dependencies': 'off',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
   // Test and story files: relaxed rules and Mocha globals for .js
   // ────────────────────────────────────────────────────────────────────────────
   {
