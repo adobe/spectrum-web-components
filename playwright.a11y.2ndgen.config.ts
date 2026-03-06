@@ -10,19 +10,26 @@
  * governing permissions and limitations under the License.
  */
 
-export default {
-  globs: [
-    'components/**/*.ts',
-    '../core/components/**/*.ts',
-    '../core/shared/**/*.ts',
-    '../core/controllers/**/*.ts',
-    '../core/element/**/*.ts',
-    '../core/mixins/**/*.ts',
-    '../core/utils/**/*.ts',
-  ],
-  exclude: ['**/*.stories.ts', '**/*.test.ts', '**/*.spec.ts'],
-  outdir: '.storybook',
-  litelement: true,
-  dev: false,
-  plugins: [],
+import type { PlaywrightTestConfig } from '@playwright/test';
+import {
+  a11yReporter,
+  a11yUse,
+  secondGenA11yProject,
+  secondGenComponentsOnlyStorybookServer,
+} from './playwright.a11y.shared.config';
+
+const config: PlaywrightTestConfig = {
+  timeout: 30 * 1000,
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  reporter: a11yReporter(!!process.env.CI),
+
+  use: a11yUse,
+
+  projects: [secondGenA11yProject],
+
+  webServer: secondGenComponentsOnlyStorybookServer,
 };
+
+export default config;

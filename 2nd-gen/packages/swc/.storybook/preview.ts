@@ -141,6 +141,7 @@ const preview = {
       },
     },
     a11y: {
+      test: 'todo',
       config: {
         rules: [
           // Customize axe-core rules if needed
