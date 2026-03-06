@@ -2008,6 +2008,11 @@ export class Picker extends FieldLabelMixin(
   // a helper to throw focus to the button is needed because Safari
   // won't include buttons in the tab order even with tabindex="0"
   protected override render(): TemplateResult {
+    const ariaLabelledBy = this.hasContentInSlot('field-label')
+      ? 'field-label'
+      : this.appliedLabel
+        ? 'applied-label'
+        : 'label';
     if (this.tooltipEl) {
       this.tooltipEl.disabled = this.open;
     }
@@ -2019,7 +2024,7 @@ export class Picker extends FieldLabelMixin(
         aria-describedby="tooltip ${DESCRIPTION_ID}"
         aria-expanded=${this.open ? 'true' : 'false'}
         aria-haspopup="listbox"
-        aria-labelledby="icon label applied-label pending-label"
+        aria-labelledby="icon ${ariaLabelledBy} pending-label"
         id="button"
         class=${ifDefined(
           this.labelAlignment ? `label-${this.labelAlignment}` : undefined
