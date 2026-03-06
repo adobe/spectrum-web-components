@@ -414,7 +414,7 @@ Ensure there is a test for **every** dev mode warning in the component's source 
 - **Required properties** — a property that must be set was left at its default
 - **Invalid values** — a property was set to a value outside the allowed set
 
-Each warning should have its own test story so failures pinpoint the exact scenario. Verify both that the warning fires when the condition is met and that it does **not** fire when the component is used correctly.
+For each warning, use existing tests in that category or add a dedicated test story so failures identify the exact scenario. Verify the warning fires when the condition is met and does **not** fire when the component is used correctly.
 
 Use `withWarningSpy` to capture `__swc.warn` calls. It enables DEBUG mode, runs your callback, and restores the original state automatically:
 
