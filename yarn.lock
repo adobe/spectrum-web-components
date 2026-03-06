@@ -28285,7 +28285,7 @@ __metadata:
     prettier: "npm:3.8.1"
     prettier-plugin-package: "npm:1.4.0"
     replace-in-file: "npm:8.3.0"
-    start-server-and-test: "npm:^2.1.5"
+    start-server-and-test: "npm:2.1.5"
     stylelint: "npm:17.1.1"
     stylelint-config-standard: "npm:40.0.0"
     stylelint-declaration-strict-value: "npm:1.10.11"
@@ -29233,7 +29233,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"start-server-and-test@npm:^2.1.5":
+"start-server-and-test@npm:2.1.5":
   version: 2.1.5
   resolution: "start-server-and-test@npm:2.1.5"
   dependencies:

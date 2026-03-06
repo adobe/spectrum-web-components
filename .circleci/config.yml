@@ -301,7 +301,7 @@ jobs:
           path: /root/project/results/
 
   # 2nd-gen integration tests
-  test-2ndgen:
+  test-2ndgen-browser:
     executor: node
     parameters:
       browser:
@@ -310,24 +310,21 @@ jobs:
     steps:
       - downstream-2ndgen
       - run:
-          name: Run 2nd-gen tests
-          command: VITEST_BROWSER_INSTANCES=<< parameters.browser >> yarn test:2nd-gen
-      - store_test_results:
-          path: /root/project/2nd-gen/packages/swc/test-results
-
-  test-2ndgen-coverage:
-    executor: node
-
-    steps:
-      - downstream-2ndgen
-      - run:
-          name: Run 2nd-gen coverage
+          name: Run 2nd-gen browser tests (coverage on Chromium)
           command: |
-            VITEST_BROWSER_INSTANCES=chromium yarn workspace @spectrum-web-components/2nd-gen test:coverage
+            if [ "<< parameters.browser >>" = "chromium" ]; then
+              VITEST_BROWSER_INSTANCES=chromium yarn workspace @spectrum-web-components/2nd-gen test:coverage
+            else
+              VITEST_BROWSER_INSTANCES=<< parameters.browser >> yarn test:2nd-gen
+            fi
       - store_test_results:
           path: /root/project/2nd-gen/packages/swc/test-results
-      - store_artifacts:
-          path: 2nd-gen/packages/swc/coverage
+      - when:
+          condition:
+            equal: ['chromium', << parameters.browser >>]
+          steps:
+            - store_artifacts:
+                path: 2nd-gen/packages/swc/coverage
 
   # 2nd-gen ARIA snapshot tests (Playwright)
   test-2ndgen-a11y:
@@ -554,12 +551,11 @@ workflows:
   build:
     jobs:
       # 2nd-gen tests
-      - test-2ndgen:
-          name: test-2ndgen-<< matrix.browser >>
+      - test-2ndgen-browser:
+          name: test-2ndgen-browser-<< matrix.browser >>
           matrix:
             parameters:
               browser: [chromium, firefox, webkit]
-      - test-2ndgen-coverage
       - test-2ndgen-a11y
       - test-2ndgen-axe
       # 1st-gen tests
