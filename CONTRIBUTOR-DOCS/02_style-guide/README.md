@@ -17,10 +17,14 @@
     - [Component CSS PR Checklist](01_css/03_component-css-pr-checklist.md)
     - [Spectrum CSS to SWC Migration](01_css/04_spectrum-swc-migration.md)
     - [Styling Anti-Patterns (What to Avoid)](01_css/05_anti-patterns.md)
+    - [Property order quick reference](01_css/06_property-order-quick-reference.md)
 - [Linting tools](02_linting-tools.md)
 
 </details>
 
 <!-- Document content (editable) -->
 
-(Content to be added)
+This section covers the coding conventions and authoring patterns used across Spectrum Web Components. Following these guides keeps the codebase consistent, reviewable, and accessible.
+
+- **[2nd-gen CSS](01_css/README.md)** — Property ordering, class naming, custom properties, selector patterns, and forced-colors requirements for component stylesheets.
+- **[Linting tools](02_linting-tools.md)** — How automated linting enforces these conventions and how to configure or extend the rules.

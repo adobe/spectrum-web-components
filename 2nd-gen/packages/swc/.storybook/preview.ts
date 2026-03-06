@@ -19,6 +19,7 @@ import {
 import customElements from './custom-elements.json';
 import { withContext } from './decorators/contexts.js';
 import { withFlexLayout, withStaticColorsDemo } from './decorators/index.js';
+import { withLanguageWrapper } from './decorators/language.js';
 import { withStaticColorPlayground } from './decorators/static-color-playground.js';
 import DocumentTemplate from './DocumentTemplate.mdx';
 import { FontLoader } from './loaders/font-loader.js';
@@ -79,13 +80,51 @@ const preview = {
         dynamicTitle: true,
       },
     },
+    lang: {
+      name: 'Language',
+      description:
+        'Locale for typography (loads the corresponding Adobe Fonts kit on demand)',
+      defaultValue: 'en-US',
+      type: 'string',
+      toolbar: {
+        title: 'Language',
+        icon: 'globe',
+        items: [
+          { value: 'en-US', title: 'English', right: 'English (US)' },
+          { value: 'he', title: 'Hebrew', right: 'עִברִית' },
+          { value: 'ja', title: 'Japanese', right: '日本語' },
+          { value: 'ko', title: 'Korean', right: '한국어' },
+          { value: 'ar', title: 'Arabic', right: 'عربي' },
+          // { value: "fa", title: "Persian", right: "فارسی" },
+          {
+            value: 'zh-Hans',
+            title: 'Chinese (Simplified)',
+            right: '简体中文',
+          },
+          {
+            value: 'zh-Hant',
+            title: 'Chinese (Traditional)',
+            right: '繁體中文',
+          },
+          {
+            value: 'zh-HK',
+            title: 'Chinese (Hong Kong)',
+            right: '中文（香港）',
+          },
+          // { value: "th", title: "Thai", right: "ไทย" },
+        ],
+        dynamicTitle: true,
+      },
+    },
   },
   initialGlobals: {
     theme: 'light',
     scale: 'medium',
+    lang: 'en-US',
   },
   decorators: [
     withContext,
+    withLanguageWrapper,
     withStaticColorPlayground,
     withStaticColorsDemo,
     withFlexLayout,

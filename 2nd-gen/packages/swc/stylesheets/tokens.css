@@ -1965,16 +1965,34 @@
   --swc-animation-linear: cubic-bezier(0, 0, 1, 1);
   --swc-cjk-font: var(--swc-cjk-font-family-stack);
   --swc-cjk-font-family-stack:
-    adobe-clean-han-japanese, Adobe Clean Han, sans-serif;
+    adobe-clean-han-japanese, 'Adobe Clean Han', sans-serif;
   --swc-code-font: var(--swc-code-font-family-stack);
   --swc-code-font-family-stack: 'Source Code Pro', Monaco, monospace;
   --swc-font-family: var(--swc-sans-font-family-stack);
-  --swc-font-family-ar: 'adobe-clean-arabic, ' Adobe Clean Arabic
+  --swc-font-family-arabic: 'adobe-clean-arabic, ' Adobe Clean Arabic
     ', myriad-arabic,  ' Source Sans Pro ', -apple-system, BlinkMacSystemFont, '
     Segoe UI ', Roboto, Ubuntu, ' Trebuchet MS ', ' Lucida Grande ', sans-serif';
-  --swc-font-family-he: 'adobe-clean-hebrew, ' Adobe Clean Hebrew
-    ', myriad-arabic, ' Source Sans Pro ', -apple-system, BlinkMacSystemFont, '
+  --swc-font-family-chinese-simplified: 'adobe-clean-han-simplified-c, ' Adobe
+    Clean Han Chinese (Simplified) ', ' Source Han Simplified C ', SimSun, '
+    Heiti SC Light ', sans-serif';
+  --swc-font-family-chinese-traditional: 'adobe-clean-han-traditional, ' Adobe
+    Clean Han Chinese (Traditional) ', ' Source Han Traditional ', ' MingLiu
+    ', ' Heiti TC Light ', sans-serif';
+  --swc-font-family-hebrew: 'adobe-clean-hebrew, ' Adobe Clean Hebrew
+    ', myriad-hebrew, ' Source Sans Pro ', -apple-system, BlinkMacSystemFont, '
     Segoe UI ', Roboto, Ubuntu, ' Trebuchet MS ', ' Lucida Grande ', sans-serif';
+  --swc-font-family-hong-kong: 'adobe-clean-han-hong-kong, ' Adobe Clean Han
+    Hong Kong ', ' Source Han Hong Kong ', ' MingLiu ', ' Microsoft JhengHei UI
+    ', ' Microsoft JhengHei ', ' Heiti TC Light ', sans-serif';
+  --swc-font-family-japanese: 'adobe-clean-han-japanese, ' Adobe Clean Han
+    Japanese ', ' Source Han Sans JP ', ' Source Han Sans ', ' ヒラギノ角ゴ ProN
+    W3 ', ' 源ノ角ゴシック JP ', ' 源ノ角ゴシック ', Osaka, ' Noto Sans JP ', '
+    Noto Sans CJK JP ', ' Hiragino Sans ', ' Hiragino Kaku Gothic ProN
+    ', YuGothic, ' Yu Gothic UI ', ' メイリオ ',  ' ＭＳ Ｐゴシック ', ' MS
+    PGothic ', ' 游ゴシック ', ' 游ゴシック体 ', ' Kozuka Gothic Pr6N ', '
+    小塚ゴシック Pr6N ', Meiryo, sans-serif';
+  --swc-font-family-korean: 'adobe-clean-han-korean, ' Adobe Clean Han Korean
+    ', ' Source Han Korean ', ' Malgun Gothic ', ' Apple Gothic ', sans-serif';
   --swc-font-style: normal;
   --swc-sans-font-family-stack:
     adobe-clean-spectrum-vf, 'Adobe Clean Spectrum VF', 'Source Sans Pro',
