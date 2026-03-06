@@ -13,6 +13,8 @@
 
 - [Full pattern research: 1st-gen vs 2nd-gen](SWC-1419_research-full-patterns.md)
 - [2nd-gen component review: patterns and findings](SWC-1419_research.md)
+- [Plan: SWC-1420 — TypeScript conventions guide for 2nd-gen](SWC-1420-plan.md)
+- [Research: SWC-1420 — TypeScript conventions guide for 2nd-gen](SWC-1420-research.md)
 
 </details>
 

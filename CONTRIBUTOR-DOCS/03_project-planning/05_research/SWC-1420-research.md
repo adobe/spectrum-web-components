@@ -1,4 +1,55 @@
+<!-- Generated breadcrumbs - DO NOT EDIT -->
+
+[CONTRIBUTOR-DOCS](../../README.md) / [Project planning](../README.md) / [Research](README.md) / Research: SWC-1420 — TypeScript conventions guide for 2nd-gen
+
+<!-- Document title (editable) -->
+
 # Research: SWC-1420 — TypeScript conventions guide for 2nd-gen
+
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
+
+- [1. Ticket overview](#1-ticket-overview)
+- [2. Acceptance criteria (from ticket)](#2-acceptance-criteria-from-ticket)
+- [3. Topics the guide must cover](#3-topics-the-guide-must-cover)
+    - [3.1 File organization](#31-file-organization)
+    - [3.2 Class structure](#32-class-structure)
+    - [3.3 TypeScript modifier keywords (static, override, public, private, protected)](#33-typescript-modifier-keywords-static-override-public-private-protected)
+    - [3.4 Lit decorators and modifiers](#34-lit-decorators-and-modifiers)
+    - [3.5 Property patterns](#35-property-patterns)
+    - [3.6 Method patterns](#36-method-patterns)
+    - [3.7 JSDoc standards](#37-jsdoc-standards)
+    - [3.8 Type patterns](#38-type-patterns)
+    - [3.9 Base class vs concrete class](#39-base-class-vs-concrete-class)
+    - [3.10 Mixin, controller, directive, and interface](#310-mixin-controller-directive-and-interface)
+    - [3.11 Mixin composition](#311-mixin-composition)
+    - [3.12 Controller composition](#312-controller-composition)
+    - [3.13 Directive composition](#313-directive-composition)
+    - [3.14 Interface composition](#314-interface-composition)
+    - [3.15 When code goes in core vs SWC](#315-when-code-goes-in-core-vs-swc)
+- [4. Reference implementation: Badge](#4-reference-implementation-badge)
+    - [4.1 File layout](#41-file-layout)
+    - [4.2 Badge base class (excerpts)](#42-badge-base-class-excerpts)
+    - [4.3 Badge concrete class (excerpts)](#43-badge-concrete-class-excerpts)
+    - [4.4 Badge.types.ts patterns](#44-badgetypests-patterns)
+- [5. Existing conventions (enforced or documented)](#5-existing-conventions-enforced-or-documented)
+    - [5.1 Import order (ESLint)](#51-import-order-eslint)
+    - [5.2 CONTRIBUTOR-DOCS style guide format](#52-contributor-docs-style-guide-format)
+    - [5.3 Linting (02_linting-tools.md)](#53-linting-02linting-toolsmd)
+- [6. External references](#6-external-references)
+    - [6.1 Baseline TypeScript style (agnostic-ai CODE-STYLE.md)](#61-baseline-typescript-style-agnostic-ai-code-stylemd)
+    - [6.2 Component types (PR 6058)](#62-component-types-pr-6058)
+    - [6.3 Testing docs split (PR 6059)](#63-testing-docs-split-pr-6059)
+- [7. Suggested guide structure (directory `02_typescript/`)](#7-suggested-guide-structure-directory-02typescript)
+- [8. Open questions](#8-open-questions)
+- [9. QA checklist (from ticket)](#9-qa-checklist-from-ticket)
+- [10. Next steps](#10-next-steps)
+
+</details>
+
+<!-- Document content (editable) -->
 
 This document captures findings from the SWC-1420 ticket and from the codebase so the new TypeScript style guide can be written accurately and consistently.
 

@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../README.md) / [Style guide](README.md) / Component types
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-gen TypeScript](README.md) / Component types
 
 <!-- Document title (editable) -->
 
@@ -45,6 +45,8 @@
 <!-- Document content (editable) -->
 
 This guide defines patterns for the `*.types.ts` files in `core/components/*/`. These files contain the shared constants and types that both 1st-gen and 2nd-gen component classes consume.
+
+> **Note:** This guide was migrated from `02_style-guide/03_component-types.md`. The original file has been removed.
 
 ## Purpose
 
