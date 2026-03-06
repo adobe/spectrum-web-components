@@ -28,5 +28,5 @@
 - Keep docs stories in `2nd-gen/packages/swc/components/<component>/stories/<component>.stories.ts`.
 - Add test stories in `2nd-gen/packages/swc/components/<component>/test/<component>.test.ts`.
 - Add accessibility tests in `2nd-gen/packages/swc/components/<component>/test/<component>.a11y.spec.ts`.
-- Reuse the base stories and metadata from the main stories file.
+- Reuse the base stories and metadata from the main doc stories file.
 - Test stories run in development Storybook only and are excluded from `storybook:build`.
