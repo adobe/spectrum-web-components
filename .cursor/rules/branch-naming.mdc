@@ -12,6 +12,8 @@ Suggests the ideal branch naming format for Spectrum Web Components contribution
 ^[a-z0-9]+\/(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)-[a-z0-9-]+(-swc-[0-9]+)?$
 ```
 
+The canonical list of types and the validation pattern are defined in `.cursor/config.json` under `git.types` and `validationPattern`.
+
 ## Message
 Consider following the preferred branch naming format: `<username>/<type>-<description>[-swc-<issue>]`
 
@@ -20,7 +22,7 @@ Username will be automatically pulled from your git config settings.
 ### Guidelines
 - Use lowercase letters and numbers only
 - Separate words with dashes (not camelCase)
-- Use conventional commit types:
+- Use conventional commit types from `.cursor/config.json` (`git.types`). Descriptions below are for quick reference:
   • **feat**: New feature
   • **fix**: Bug fix
   • **docs**: Documentation only
@@ -30,7 +32,7 @@ Username will be automatically pulled from your git config settings.
   • **test**: Adding missing tests or correcting existing tests
   • **build**: Changes that affect the build system or external dependencies
   • **ci**: Changes to CI configuration files and scripts
-  • **chore**: Other changes that don't modify src or test files
+  • **chore**: Other changes that don't modify src or test files, dependency updates
   • **revert**: Reverts a previous commit
 - Optional issue number format: `-swc-XXX`
 

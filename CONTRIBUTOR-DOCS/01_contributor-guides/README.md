@@ -18,7 +18,6 @@
 - [Participating in PR reviews](05_participating-in-pr-reviews.md)
 - [Releasing SWC](06_releasing-swc.md)
 - [Authoring contributor docs](07_authoring-contributor-docs/README.md)
-    - [AI agent instructions](07_authoring-contributor-docs/01_ai-agent-instructions.md)
 - [Patching dependencies](08_patching-dependencies.md)
 - [Accessibility testing](09_accessibility-testing.md)
 - [Maintaining StackBlitz examples for Spectrum Web Components](10_using-stackblitz.md)

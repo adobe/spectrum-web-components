@@ -14,10 +14,35 @@
 
 /* stylelint-ignore */
 
+:lang(ar) {
+  font-family: token("font-family-arabic") !important;
+}
+
+:lang(he) {
+  font-family: token("font-family-hebrew") !important;
+}
+
 :lang(zh),
-:lang(ja),
+:lang(zh-Hant) {
+  font-family: token("font-family-chinese-traditional") !important;
+}
+
+:lang(zh-Hans),
+:lang(zh-CN),
+:lang(zh-SG) {
+  font-family: token("font-family-chinese-simplified") !important;
+}
+
+:lang(zh-HK) {
+  font-family: token("font-family-hong-kong") !important;
+}
+
+:lang(ja) {
+  font-family: token("font-family-japanese") !important;
+}
+
 :lang(ko) {
-  font-family: token("cjk-font");
+  font-family: token("font-family-korean") !important;
 }
 
 /* =========================

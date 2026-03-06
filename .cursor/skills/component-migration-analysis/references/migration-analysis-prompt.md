@@ -1,27 +1,6 @@
-<!-- Generated breadcrumbs - DO NOT EDIT -->
-
-[CONTRIBUTOR-DOCS](../../../../../README.md) / [Project planning](../../../../README.md) / [Workstreams](../../../README.md) / [2nd-gen Component Migration](../../README.md) / Step By Step / [Analyze rendering and styling](README.md) / Spectrum Migration Documentation Prompt
-
-<!-- Document title (editable) -->
+[Component migration analysis skill](../SKILL.md) / Full prompt
 
 # Spectrum Migration Documentation Prompt
-
-<!-- Generated TOC - DO NOT EDIT -->
-
-<details open>
-<summary><strong>In this doc</strong></summary>
-
-- [File Organization](#file-organization)
-- [Component Documentation Structure](#component-documentation-structure)
-    - [1. Component Specifications](#1-component-specifications)
-    - [2. Comparison](#2-comparison)
-    - [3. Summary of changes](#3-summary-of-changes)
-    - [4. Resources section](#4-resources-section)
-- [Output format notes](#output-format-notes)
-
-</details>
-
-<!-- Document content (editable) -->
 
 For the **[COMPONENT_NAME]** component(s), create comprehensive migration documentation in individual markdown files under CONTRIBUTOR-DOCS: one file per component in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`, following this exact structure:
 
