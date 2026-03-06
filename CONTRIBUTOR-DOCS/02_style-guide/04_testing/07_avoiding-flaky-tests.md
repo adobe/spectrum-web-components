@@ -74,11 +74,10 @@ Avoid random data, timestamps, or any content that changes between runs. This es
 
 ```typescript
 // Good: static, predictable content
-render: () => html`<swc-badge variant="informative">Active</swc-badge>`
+render: () => html`<swc-progress-circle progress="50" label="50% progress"></swc-progress-circle>`
 
 // Bad: random content
-render: () => html`<swc-badge>${Math.random()}</swc-badge>`
-```
+render: () => html`<swc-progress-circle progress="${Math.random(100)}" label="In progress"></swc-progress-circle>`
 
 ## Isolate test state
 
