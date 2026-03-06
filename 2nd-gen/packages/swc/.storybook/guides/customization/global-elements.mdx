@@ -6,7 +6,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 Optional styling is available for "global elements" such as button-styled native links. This is in an effort to retain native semantics and default accessibility benefits.
 
-For global element styles to be fully available to slotted elements, you must include the stylesheet for `@adobe/spectrum-wc/global-elements.css` at the application level.
+For global element styles to be fully available to slotted elements, you must include the stylesheet for `@adobe/spectrum-wc/global-elements.css` at the application level and ensure it's processed by your bundler to resolve the relative imports.
 
 To use global element styles within the shadow DOM of extended and custom components, ensure their stylesheet also imports the global stylesheet.
 

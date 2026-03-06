@@ -170,7 +170,7 @@
   --spectrum-button-sized-bottom-to-text: var(--spectrum-button-bottom-to-text-small);
   --spectrum-button-sized-top-to-icon: var(--spectrum-component-top-to-workflow-icon-75);
   --spectrum-button-intended-icon-size: var(--spectrum-workflow-icon-size-75);
-  --spectrum-icon-size: var(--spectrum-workflow-icon-size-75) !important;
+  --spectrum-icon-size: var(--spectrum-workflow-icon-size-75);
 }
 
 .spectrum-Button--sizeL,

@@ -100,10 +100,12 @@
     --swc-button-background-color-focus: token("neutral-background-color-key-focus");
   }
 
-  .swc-Button:hover {
-    color: var(--swc-button-content-color-hover);
-    background-color: var(--swc-button-background-color-hover);
-    border-color: var(--swc-button-border-color-hover);
+  @media (hover: hover) {
+    .swc-Button:hover {
+      color: var(--swc-button-content-color-hover);
+      background-color: var(--swc-button-background-color-hover);
+      border-color: var(--swc-button-border-color-hover);
+    }
   }
 
   .swc-Button:focus-visible {
