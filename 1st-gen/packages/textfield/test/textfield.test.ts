@@ -9,7 +9,13 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { elementUpdated, expect, html, litFixture } from '@open-wc/testing';
+import {
+  elementUpdated,
+  expect,
+  html,
+  litFixture,
+  waitUntil,
+} from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 
 import { HelpText } from '@spectrum-web-components/help-text';
@@ -636,6 +642,189 @@ describe('Textfield', () => {
     const input = el.shadowRoot.querySelector('#invalid');
     expect(input).to.not.be.null;
     expect(el.focusElement).to.have.attribute('title');
+  });
+  it('renders truncated value tooltip when neither valid nor invalid and value is clipped', async () => {
+    const value = 'ThisIsAVeryLongTextfieldValueThatWillBeTruncated';
+    const el = await litFixture<Textfield>(html`
+      <sp-textfield
+        style="--mod-textfield-width: 40px; --spectrum-textfield-min-width: 0;"
+        value=${value}
+      ></sp-textfield>
+    `);
+    await elementUpdated(el);
+    await elementUpdated(el);
+
+    await waitUntil(
+      () => el.shadowRoot?.querySelector('#truncated-value-tooltip') != null,
+      'Tooltip overlay (lazy-loaded) should appear when value is truncated'
+    );
+    const tooltipOverlay = el.shadowRoot?.querySelector(
+      '#truncated-value-tooltip'
+    );
+    expect(tooltipOverlay).to.exist;
+    const tooltip = el.shadowRoot?.querySelector(
+      '#truncated-value-tooltip sp-tooltip'
+    );
+    expect(tooltip?.textContent?.trim()).to.equal(value);
+  });
+  it('renders truncated value tooltip when valid and value is clipped', async () => {
+    const value = 'ThisIsAVeryLongTextfieldValueThatWillBeTruncated';
+    const el = await litFixture<Textfield>(html`
+      <sp-textfield
+        style="--mod-textfield-width: 40px; --spectrum-textfield-min-width: 0;"
+        value=${value}
+        valid
+      ></sp-textfield>
+    `);
+    await elementUpdated(el);
+    await elementUpdated(el);
+
+    await waitUntil(
+      () => el.shadowRoot?.querySelector('#truncated-value-tooltip') != null,
+      'Tooltip overlay (lazy-loaded) should appear when value is truncated'
+    );
+    const tooltipOverlay = el.shadowRoot?.querySelector(
+      '#truncated-value-tooltip'
+    );
+    expect(tooltipOverlay).to.exist;
+    const tooltip = el.shadowRoot?.querySelector(
+      '#truncated-value-tooltip sp-tooltip'
+    );
+    expect(tooltip?.textContent?.trim()).to.equal(value);
+  });
+  it('renders truncated value tooltip when invalid and value is clipped', async () => {
+    const value = 'ThisIsAVeryLongTextfieldValueThatWillBeTruncated';
+    const el = await litFixture<Textfield>(html`
+      <sp-textfield
+        style="--mod-textfield-width: 40px; --spectrum-textfield-min-width: 0;"
+        value=${value}
+        invalid
+      ></sp-textfield>
+    `);
+    await elementUpdated(el);
+    await elementUpdated(el);
+
+    await waitUntil(
+      () => el.shadowRoot?.querySelector('#truncated-value-tooltip') != null,
+      'Tooltip overlay (lazy-loaded) should appear when value is truncated'
+    );
+    const tooltipOverlay = el.shadowRoot?.querySelector(
+      '#truncated-value-tooltip'
+    );
+    expect(tooltipOverlay).to.exist;
+    const tooltip = el.shadowRoot?.querySelector(
+      '#truncated-value-tooltip sp-tooltip'
+    );
+    expect(tooltip?.textContent?.trim()).to.equal(value);
+  });
+  it('does not render truncated value tooltip when value fits', async () => {
+    const el = await litFixture<Textfield>(html`
+      <sp-textfield
+        style="--mod-textfield-width: 400px; --spectrum-textfield-min-width: 0;"
+        value="Short"
+      ></sp-textfield>
+    `);
+    await elementUpdated(el);
+    await elementUpdated(el);
+
+    const tooltipOverlay = el.shadowRoot?.querySelector(
+      '#truncated-value-tooltip'
+    );
+    expect(tooltipOverlay).to.not.exist;
+  });
+  it('does not render truncated value tooltip when disabled and value is clipped', async () => {
+    const value = 'ThisIsAVeryLongTextfieldValueThatWillBeTruncated';
+    const el = await litFixture<Textfield>(html`
+      <sp-textfield
+        style="--mod-textfield-width: 40px; --spectrum-textfield-min-width: 0;"
+        value=${value}
+        disabled
+      ></sp-textfield>
+    `);
+    await elementUpdated(el);
+    await elementUpdated(el);
+
+    const tooltipOverlay = el.shadowRoot?.querySelector(
+      '#truncated-value-tooltip'
+    );
+    expect(tooltipOverlay).to.not.exist;
+  });
+  it('does not render truncated value tooltip when multiline and value is long', async () => {
+    const value = 'ThisIsAVeryLongTextfieldValueThatWillBeTruncated';
+    const el = await litFixture<Textfield>(html`
+      <sp-textfield
+        style="--mod-textfield-width: 40px; --spectrum-textfield-min-width: 0;"
+        value=${value}
+        multiline
+      ></sp-textfield>
+    `);
+    await elementUpdated(el);
+    await elementUpdated(el);
+
+    const tooltipOverlay = el.shadowRoot?.querySelector(
+      '#truncated-value-tooltip'
+    );
+    expect(tooltipOverlay).to.not.exist;
+  });
+  it('does not render truncated value tooltip when type is password and value is clipped', async () => {
+    const value = 'ThisIsAVeryLongTextfieldValueThatWillBeTruncated';
+    const el = await litFixture<Textfield>(html`
+      <sp-textfield
+        style="--mod-textfield-width: 40px; --spectrum-textfield-min-width: 0;"
+        type="password"
+        value=${value}
+      ></sp-textfield>
+    `);
+    await elementUpdated(el);
+    await elementUpdated(el);
+
+    const tooltipOverlay = el.shadowRoot?.querySelector(
+      '#truncated-value-tooltip'
+    );
+    expect(tooltipOverlay).to.not.exist;
+  });
+  it('uses default placement "bottom" for truncated value tooltip when not set', async () => {
+    const value = 'ThisIsAVeryLongTextfieldValueThatWillBeTruncated';
+    const el = await litFixture<Textfield>(html`
+      <sp-textfield
+        style="--mod-textfield-width: 40px; --spectrum-textfield-min-width: 0;"
+        value=${value}
+      ></sp-textfield>
+    `);
+    await elementUpdated(el);
+    await elementUpdated(el);
+
+    await waitUntil(
+      () => el.shadowRoot?.querySelector('#truncated-value-tooltip') != null,
+      'Tooltip overlay (lazy-loaded) should appear when value is truncated'
+    );
+    const tooltipOverlay = el.shadowRoot?.querySelector(
+      '#truncated-value-tooltip'
+    ) as { placement?: string };
+    expect(tooltipOverlay).to.exist;
+    expect(tooltipOverlay.placement).to.equal('bottom');
+  });
+  it('uses tooltip-placement when set', async () => {
+    const value = 'ThisIsAVeryLongTextfieldValueThatWillBeTruncated';
+    const el = await litFixture<Textfield>(html`
+      <sp-textfield
+        style="--mod-textfield-width: 40px; --spectrum-textfield-min-width: 0;"
+        value=${value}
+        tooltip-placement="right"
+      ></sp-textfield>
+    `);
+    await elementUpdated(el);
+    await elementUpdated(el);
+
+    await waitUntil(
+      () => el.shadowRoot?.querySelector('#truncated-value-tooltip') != null,
+      'Tooltip overlay (lazy-loaded) should appear when value is truncated'
+    );
+    const tooltipOverlay = el.shadowRoot?.querySelector(
+      '#truncated-value-tooltip'
+    ) as { placement?: string };
+    expect(tooltipOverlay).to.exist;
+    expect(tooltipOverlay.placement).to.equal('right');
   });
   it('invalid - multiline - boundary-type assertions', async () => {
     const el = await litFixture<Textfield>(html`

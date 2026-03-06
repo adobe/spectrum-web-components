@@ -29,12 +29,17 @@ import {
 } from '@spectrum-web-components/base/src/directives.js';
 import { ManageHelpText } from '@spectrum-web-components/help-text/src/manage-help-text.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
+import type { Placement } from '@spectrum-web-components/overlay';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 
 import textfieldStyles from './textfield.css.js';
+import {
+  TruncatedValueTooltipMixin,
+  type TruncatedValueTooltipMixinInterface,
+} from './TruncatedValueTooltipMixin.js';
 
 const textfieldTypes = ['text', 'url', 'tel', 'email', 'password'] as const;
 export type TextfieldType = (typeof textfieldTypes)[number];
@@ -43,10 +48,12 @@ export type TextfieldType = (typeof textfieldTypes)[number];
  * @fires input - The value of the element has changed.
  * @fires change - An alteration to the value of the element has been committed by the user.
  */
-export class TextfieldBase extends ManageHelpText(
-  SizedMixin(Focusable, {
-    noDefaultSize: true,
-  })
+export class TextfieldBase extends TruncatedValueTooltipMixin(
+  ManageHelpText(
+    SizedMixin(Focusable, {
+      noDefaultSize: true,
+    })
+  )
 ) {
   public static override get styles(): CSSResultArray {
     return [textfieldStyles, checkmarkStyles];
@@ -148,6 +155,13 @@ export class TextfieldBase extends ManageHelpText(
    */
   @property({ type: Boolean, reflect: true })
   public readonly = false;
+
+  /**
+   * Placement of the tooltip shown when the value is truncated (e.g. 'bottom', 'top').
+   * Defaults to 'bottom' per Spectrum design.
+   */
+  @property({ attribute: 'tooltip-placement' })
+  public truncatedValueTooltipPlacement: Placement = 'bottom';
 
   /**
    * The specific number of rows the form control should provide in the user interface
@@ -374,6 +388,9 @@ export class TextfieldBase extends ManageHelpText(
   protected override render(): TemplateResult {
     return html`
       <div id="textfield">${this.renderField()}</div>
+      ${(
+        this as unknown as TruncatedValueTooltipMixinInterface
+      ).renderTruncatedValueTooltip()}
       ${this.renderHelpText(this.invalid)}
     `;
   }
