@@ -130,10 +130,10 @@ Organize the file in this order:
 
 1. **Copyright header**
 2. **Imports** (typically only `ElementSize` from core mixins)
-3. **Shared constants** — sizes, canonical base arrays (semantic variants, color variants), non-variant constants
-4. **S1-only constants** — subset arrays exclusive to 1st-gen, validated against canonical types via `satisfies`
+3. **Shared constants** — sizes (e.g., `BADGE_VALID_SIZES`), canonical base arrays (e.g., `BADGE_VARIANTS_COLOR`, `BADGE_VARIANTS_SEMANTIC`), non-variant constants (e.g., `FIXED_VALUES`)
+4. **S1-only constants** — subset arrays exclusive to 1st-gen, validated against canonical types via `satisfies` (e.g., `BADGE_VARIANTS_COLOR_S1`, `BADGE_VARIANTS_S1`)
 5. **Canonical constants** — composed arrays that spread from shared bases (e.g., `BADGE_VARIANTS`)
-6. **Types** — shared types, then S1-only types, then canonical types
+6. **Types** — shared types (e.g., `BadgeSize`, `BadgeColorVariant`), then S1-only types (e.g., `BadgeVariantS1`), then canonical types (e.g., `BadgeVariant`)
 
 Canonical base arrays (like `BADGE_VARIANTS_COLOR`) belong in the shared section because they define the source-of-truth values that both generations reference. S1 subset arrays validate against the canonical type, and canonical composed arrays spread from the shared bases. This ensures S1 arrays can use `satisfies` against canonical types defined earlier in the file.
 
@@ -313,8 +313,8 @@ Group types at the bottom of the file in this order:
 2. **S1-only types** — mark with an inline comment for removal
 
     ```typescript
-    export type BadgeColorVariantS1 = (typeof BADGE_VARIANTS_COLOR_S1)[number]; // remove with 1st-gen
-    export type BadgeVariantS1 = (typeof BADGE_VARIANTS_S1)[number]; // remove with 1st-gen
+    export type BadgeColorVariantS1 = (typeof BADGE_VARIANTS_COLOR_S1)[number]; // @todo remove with 1st-gen
+    export type BadgeVariantS1 = (typeof BADGE_VARIANTS_S1)[number]; // @todo remove with 1st-gen
     ```
 
 3. **Canonical types** — the clean, unsuffixed names that 2nd-gen consumers use
@@ -434,8 +434,8 @@ export type ComponentSemanticVariant = (typeof COMPONENT_VARIANTS_SEMANTIC)[numb
 export type ComponentColorVariant = (typeof COMPONENT_VARIANTS_COLOR)[number];
 
 // S1-only (remove with 1st-gen)
-export type ComponentColorVariantS1 = (typeof COMPONENT_VARIANTS_COLOR_S1)[number]; // remove with 1st-gen
-export type ComponentVariantS1 = (typeof COMPONENT_VARIANTS_S1)[number]; // remove with 1st-gen
+export type ComponentColorVariantS1 = (typeof COMPONENT_VARIANTS_COLOR_S1)[number]; // @todo remove with 1st-gen
+export type ComponentVariantS1 = (typeof COMPONENT_VARIANTS_S1)[number]; // @todo remove with 1st-gen
 
 // Canonical
 export type ComponentVariant = (typeof COMPONENT_VARIANTS)[number];
@@ -539,7 +539,7 @@ Use this when creating or reviewing a types file:
 - [ ] S1 arrays spread only from shared constants or are self-contained
 - [ ] Sections are separated with ASCII separators (shared, S1-only, canonical, types)
 - [ ] S1-only section is labeled `(remove with 1st-gen)`
-- [ ] S1-only types have an inline `// remove with 1st-gen` comment
+- [ ] S1-only types have an inline `// @todo remove with 1st-gen` comment
 - [ ] Types are derived via `(typeof CONSTANT)[number]` indexed access
 - [ ] No union types combining S1 and S2 (canonical type is sufficient)
 - [ ] `@todo` comment at top of file references S1 removal

@@ -38,6 +38,7 @@
     - [Workstreams](03_project-planning/02_workstreams/README.md)
     - [Components](03_project-planning/03_components/README.md)
     - [Milestones](03_project-planning/04_milestones/README.md)
+    - Research
 
 </details>
 

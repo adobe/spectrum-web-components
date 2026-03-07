@@ -64,6 +64,13 @@
     - Thumbnail
     - Tooltip
 - [Milestones](04_milestones/README.md)
+- Research
+    - [Full pattern research: 1st-gen vs 2nd-gen](05_research/SWC-1419_research-full-patterns.md)
+    - [2nd-gen component review: patterns and findings](05_research/SWC-1419_research.md)
+    - [Plan: SWC-1420 — TypeScript conventions guide for 2nd-gen](05_research/SWC-1420-plan.md)
+    - [SWC-1420: Documentation vs implementation inconsistencies](05_research/SWC-1420-research-inconsistencies.md)
+    - [Research: SWC-1420 — TypeScript conventions guide for 2nd-gen](05_research/SWC-1420-research.md)
+    - [TypeScript guide update plan](05_research/SWC-1420-typescript-guide-update-plan.md)
 
 </details>
 
