@@ -183,8 +183,6 @@ None found for this component.
 2. **Zero-width non-joiner**: Added `&#8288;` (zero-width non-joiner) between label text and required asterisk icon to prevent text wrapping issues in internationalized content
 3. **Static color support**: Added support for `--staticBlack` and `--staticWhite` variants through the `staticColor` parameter
 
-</details>
-
 ### CSS => SWC mapping
 
 | CSS selector                                                                                  | Attribute or slot                       | Status                       |
