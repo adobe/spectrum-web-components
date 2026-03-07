@@ -104,6 +104,10 @@ Use an interface when you need to define the **shape** of an object without addi
 
 ## Decision guide
 
+**Mixin depth limit:**
+
+Components should have a maximum mixin depth of 2. If more behavior is needed, use controllers instead of additional mixins. See [Mixin composition](13_mixin-composition.md#mixin-depth-limit) for the rationale.
+
 Use this flowchart to choose the right pattern:
 
 ```text

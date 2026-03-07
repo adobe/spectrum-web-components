@@ -13,6 +13,8 @@
 
 - [What is a controller](#what-is-a-controller)
 - [How controllers work](#how-controllers-work)
+- [Available controllers](#available-controllers)
+- [Planned controllers](#planned-controllers)
 - [LanguageResolutionController](#languageresolutioncontroller)
 - [Using a controller in a component](#using-a-controller-in-a-component)
 - [Controller vs mixin](#controller-vs-mixin)
@@ -54,9 +56,34 @@ The host component calls these methods at the right time:
 
 To attach a controller, call `host.addController(this)` in the constructor. This tells the host to call the controller's lifecycle methods.
 
+## Available controllers
+
+| Controller | Location | Purpose |
+|-----------|----------|---------|
+| `LanguageResolutionController` | `core/controllers/language-resolution.ts` | Resolve locale for formatting |
+
+## Planned controllers
+
+The following controllers exist in 1st-gen and may be ported to 2nd-gen core:
+
+| Controller | 1st-gen location | Purpose |
+|-----------|-----------------|---------|
+| `RovingTabindexController` | `1st-gen/packages/shared/` | Keyboard navigation |
+| `PlacementController` | `1st-gen/packages/overlay/` | Overlay positioning |
+| `MatchMediaController` | `1st-gen/packages/picker/` | Device-adaptive behavior |
+| `PendingStateController` | `1st-gen/packages/button/` | Loading states |
+| `InteractionController` (base) | `1st-gen/packages/overlay/` | Base for trigger behavior |
+| `ClickController` | `1st-gen/packages/overlay/` | Click-to-open overlay |
+| `HoverController` | `1st-gen/packages/overlay/` | Hover-to-open overlay |
+| `LongpressController` | `1st-gen/packages/overlay/` | Longpress-to-open overlay |
+| `ColorController` | `1st-gen/tools/reactive-controllers/` | Color validation/conversion |
+| `GridController` | `1st-gen/tools/grid/` | Grid layout with virtual scrolling |
+
+See [SWC-1419 research](../../03_project-planning/05_research/SWC-1419_research-full-patterns.md#priority-1-focus-management-infrastructure) for the full infrastructure roadmap.
+
 ## LanguageResolutionController
 
-The only controller currently in 2nd-gen is `LanguageResolutionController`. It resolves the component's language/locale for formatting numbers, dates, and accessibility text.
+The main controller currently in 2nd-gen is `LanguageResolutionController`. It resolves the component's language/locale for formatting numbers, dates, and accessibility text.
 
 **File:** `core/controllers/language-resolution.ts`
 

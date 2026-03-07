@@ -15,6 +15,7 @@
 - [Property and method names](#property-and-method-names)
 - [Type names](#type-names)
 - [Constant names](#constant-names)
+- [CSS class names](#css-class-names)
 - [File names](#file-names)
 - [Custom element tag names](#custom-element-tag-names)
 
@@ -127,6 +128,55 @@ export const STATUSLIGHT_VARIANTS_SEMANTIC = [...] as const;
 
 // ❌ Bad — camelCase
 export const statusLightVariants = [...] as const;
+```
+
+**Critical rule: underscore-separated prefixes**
+
+Multi-word component names always use underscores between words. This ensures constants are greppable and consistent:
+
+```ts
+// ✅ Good — consistent underscore separation
+STATUS_LIGHT_VARIANTS
+PROGRESS_CIRCLE_VALID_SIZES
+ACTION_BUTTON_VARIANTS
+
+// ❌ Bad — merged words
+STATUSLIGHT_VARIANTS
+PROGRESSCIRCLE_VALID_SIZES
+ACTIONBUTTON_VARIANTS
+```
+
+If existing code uses merged prefixes, rename to the underscore-separated form and provide deprecated re-exports for backward compatibility (see [Component types](08_component-types.md#constant-prefixes)).
+
+## CSS class names
+
+CSS classes use the `swc-` prefix with PascalCase component name and optional BEM-style modifiers:
+
+| Pattern | Example |
+|---------|---------|
+| Base class | `swc-Badge`, `swc-Divider`, `swc-StatusLight` |
+| Size modifier | `swc-Badge--sizeS`, `swc-Divider--sizeM` |
+| Variant modifier | `swc-Badge--positive`, `swc-Badge--subtle` |
+| Element (rare) | `swc-Badge-icon`, `swc-Badge-label` |
+
+**Never use the `spectrum-` prefix** — this is reserved for 1st-gen compatibility:
+
+```css
+/* ✅ Good */
+.swc-Badge { }
+.swc-Badge--positive { }
+
+/* ❌ Bad — 1st-gen prefix */
+.spectrum-Badge { }
+.spectrum-Badge--positive { }
+```
+
+**Size modifier format:**
+
+Size modifiers use the size value uppercased: `--sizeS`, `--sizeM`, `--sizeL`, `--sizeXL`:
+
+```ts
+[`swc-Badge--size${this.size?.toUpperCase()}`]: this.size != null
 ```
 
 ## File names

@@ -110,6 +110,22 @@ public label = '';
 public variant = 'informative';
 ```
 
+**Required options:**
+
+Always specify the `type` option, even for string properties. This ensures correct attribute conversion and makes the property's type explicit:
+
+```ts
+// ✅ Good — type is explicit
+@property({ type: String, reflect: true })
+public variant: BadgeVariant = 'informative';
+
+// ❌ Bad — missing type option
+@property({ reflect: true })
+public variant: BadgeVariant = 'informative';
+```
+
+While Lit defaults to `String`, omitting `type` makes it unclear whether the omission was intentional.
+
 For more, see [Lit reactive properties documentation](https://lit.dev/docs/components/properties/).
 
 ## @query()

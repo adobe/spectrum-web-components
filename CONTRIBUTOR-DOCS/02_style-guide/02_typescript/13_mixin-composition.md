@@ -12,6 +12,7 @@
 <summary><strong>In this doc</strong></summary>
 
 - [Mixin pattern](#mixin-pattern)
+- [Mixin depth limit](#mixin-depth-limit)
 - [Composition order](#composition-order)
 - [Options objects](#options-objects)
     - [SizedMixin options](#sizedmixin-options)
@@ -51,6 +52,53 @@ The mixin:
 2. Optionally takes an options object
 3. Returns a new class that extends the constructor
 4. Adds properties, methods, or lifecycle callbacks
+
+## Mixin depth limit
+
+**Target: maximum 2 mixins** (plus `SpectrumElement`)
+
+Complex mixin chains (3+ mixins deep) are harder to debug and understand. If a component needs more than 2 mixins worth of behavior, consider using a controller for some of the cross-cutting concerns.
+
+**Acceptable (depth ≤ 2):**
+
+```ts
+// Depth 2: SizedMixin → ObserveSlotText → SpectrumElement
+export abstract class StatusLightBase extends SizedMixin(
+  ObserveSlotText(SpectrumElement),
+  { noDefaultSize: true }
+) {
+```
+
+**Consider refactoring (depth > 2):**
+
+If adding a 3rd mixin, refactor to use a controller instead:
+
+```ts
+// Depth 3: SizedMixin → ObserveSlotText → ObserveSlotPresence → SpectrumElement
+// @todo review — exceeds target depth of 2
+export abstract class BadgeBase extends SizedMixin(
+  ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), ''),
+  { noDefaultSize: true }
+) {
+```
+
+> BadgeBase currently uses 3 mixins (SizedMixin → ObserveSlotText → ObserveSlotPresence → SpectrumElement). This exceeds the target but works because the mixins are orthogonal. There is a `@todo` in the codebase to review this composition.
+
+**Refactoring example:**
+
+If you need focus management, validation, and locale-aware formatting:
+
+```ts
+// ❌ Too deep — 3 mixins
+FocusableMixin(ValidatableMixin(LocaleMixin(SpectrumElement)))
+
+// ✅ Better — 2 mixins + 1 controller
+export abstract class MyComponentBase extends FocusableMixin(
+  ValidatableMixin(SpectrumElement)
+) {
+  private localeController = new LanguageResolutionController(this);
+}
+```
 
 ## Composition order
 

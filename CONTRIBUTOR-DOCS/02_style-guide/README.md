@@ -28,6 +28,7 @@
     - [Method patterns](02_typescript/06_method-patterns.md)
     - [JSDoc standards](02_typescript/07_jsdoc-standards.md)
     - [Component types](02_typescript/08_component-types.md)
+    - [Rendering patterns](02_typescript/09_rendering-patterns.md)
     - [Naming conventions](02_typescript/10_naming-conventions.md)
     - [Base class vs concrete class](02_typescript/11_base-vs-concrete.md)
     - [Composition patterns](02_typescript/12_composition-patterns.md)
@@ -35,6 +36,7 @@
     - [Controller composition](02_typescript/14_controller-composition.md)
     - [Directive composition](02_typescript/15_directive-composition.md)
     - [Interface composition](02_typescript/16_interface-composition.md)
+    - [Debug and validation](02_typescript/17_debug-validation.md)
 
 </details>
 

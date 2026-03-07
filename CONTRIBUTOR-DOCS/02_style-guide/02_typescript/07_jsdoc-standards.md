@@ -12,6 +12,7 @@
 <summary><strong>In this doc</strong></summary>
 
 - [When JSDoc is required](#when-jsdoc-is-required)
+- [Minimum JSDoc requirements](#minimum-jsdoc-requirements)
 - [Class-level JSDoc](#class-level-jsdoc)
     - [@element](#element)
     - [@slot](#slot)
@@ -44,6 +45,56 @@ This guide explains when and how to write JSDoc comments in 2nd-gen components. 
 | Static readonly members | Yes | Marks as `@internal` and describes the array |
 | Private members | Optional | Useful for complex backing fields or helpers |
 | Lifecycle methods | Optional | Only if the logic is non-obvious |
+
+## Minimum JSDoc requirements
+
+**Base classes must have:**
+
+- Component description
+- `@slot` tags for all slots
+- `@attribute` tags for mixin-provided attributes (e.g., `size` from `SizedMixin`)
+
+**Concrete classes must have:**
+
+- `@element` tag with the custom element tag name
+- At least one `@example` showing basic usage
+- `@slot` tags for any concrete-only slots
+
+**Example — minimum concrete class JSDoc:**
+
+```ts
+/**
+ * @element swc-divider
+ *
+ * @example
+ * <swc-divider></swc-divider>
+ *
+ * @example
+ * <swc-divider vertical></swc-divider>
+ */
+export class Divider extends DividerBase {
+```
+
+**Example — comprehensive concrete class JSDoc:**
+
+```ts
+/**
+ * @element swc-badge
+ *
+ * @property {string} variant - The visual variant of the badge.
+ * @property {boolean} subtle - Whether the badge uses subtle styling.
+ *
+ * @example
+ * <swc-badge variant="positive">New</swc-badge>
+ *
+ * @example
+ * <swc-badge variant="neutral" fixed="fill">
+ *   <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+ *   Verified
+ * </swc-badge>
+ */
+export class Badge extends BadgeBase {
+```
 
 ## Class-level JSDoc
 
@@ -194,18 +245,31 @@ For non-HTML examples (like controller usage), use a fenced code block:
 
 ### @fires
 
-Declares custom events the component dispatches. This tag is not yet used in 2nd-gen components, but it is consumed by CEM and should be used when a component dispatches events.
+Declares custom events the component dispatches. This tag is consumed by CEM and should be used when a component dispatches any custom event.
+
+**When to use:**
+
+- The component dispatches a `CustomEvent` with `dispatchEvent()`
+- The event is part of the component's public API (consumers listen for it)
 
 **Format:** `@fires event-name - Description`
 
-**Example (not yet in codebase, shown for reference):**
+**Example:**
 
 ```ts
 /**
+ * @element swc-alert-banner
+ *
  * @fires close - Dispatched when the banner is dismissed.
- * @fires change - Dispatched when the value changes.
  */
+export class AlertBanner extends AlertBannerBase {
 ```
+
+**Event naming conventions:**
+
+- Use lowercase, kebab-case event names: `close`, `value-change`, `selection-change`
+- Match standard DOM event names where applicable: `change`, `input`
+- Prefix with `swc-` only for events that need namespacing to avoid conflicts
 
 ## Member-level JSDoc
 

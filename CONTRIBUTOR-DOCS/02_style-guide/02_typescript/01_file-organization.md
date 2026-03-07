@@ -19,6 +19,7 @@
     - [Group 4: Relative imports](#group-4-relative-imports)
     - [Group 5: Style imports](#group-5-style-imports)
     - [Import extensions](#import-extensions)
+- [Core utilities](#core-utilities)
 - [File set per component](#file-set-per-component)
 - [Export patterns](#export-patterns)
     - [Core index.ts](#core-indexts)
@@ -84,10 +85,15 @@ import {
 
 ### Group 5: Style imports
 
-CSS imports. These always come last.
+CSS imports. These always come last. Always use `styles` as the import name for consistency:
 
 ```ts
+// ✅ Good
 import styles from './badge.css';
+
+// ❌ Bad — component-specific name
+import progressCircleStyles from './progress-circle.css';
+import badgeStyles from './badge.css';
 ```
 
 ### Import extensions
@@ -146,6 +152,25 @@ import {
 // Group 5: Style imports
 import styles from './badge.css';
 ```
+
+## Core utilities
+
+The core package provides utility functions that concrete classes may import for rendering:
+
+| Utility | Import path | Purpose |
+|---------|------------|---------|
+| `capitalize` | `@spectrum-web-components/core/utils/index.js` | Capitalize a string for CSS class generation |
+
+**Example from Divider.ts:**
+
+```ts
+import { capitalize } from '@spectrum-web-components/core/utils/index.js';
+
+// Used in render
+[`swc-Divider--static${capitalize(this.staticColor)}`]: this.staticColor != null,
+```
+
+When you need additional utilities (e.g., string formatting, value clamping), check if one already exists in `core/utils/` before creating your own.
 
 ## File set per component
 

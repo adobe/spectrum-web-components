@@ -275,8 +275,22 @@ This section holds the component's styles and `render()` method. Every concrete 
 
 **What goes here:**
 
-- The static `styles` getter or property
+- The static `styles` getter
 - The `render()` method
+
+**Styles declaration:**
+
+Always use the getter pattern for styles. This provides consistency with Lit conventions and allows for easier extension:
+
+```ts
+// ✅ Good — getter pattern
+public static override get styles(): CSSResultArray {
+  return [styles];
+}
+
+// ❌ Bad — property pattern (inconsistent)
+public static override styles: CSSResultArray = [styles];
+```
 
 **Example from Badge.ts:**
 
@@ -312,8 +326,47 @@ Rules:
 
 - The top and bottom lines use the `─` character (U+2500, "box drawings light horizontal").
 - The section name is indented with 5 spaces after `//`.
-- The line width varies to roughly match the section name length. It does not need to be exact.
+- The line width should match the section name length consistently.
 - There is a blank line before each section separator.
+
+**Standard section separator widths:**
+
+| Section | Line width (chars) |
+|---------|-------------------|
+| `API TO OVERRIDE` | 25 |
+| `SHARED API` | 18 |
+| `IMPLEMENTATION` | 22 |
+| `API OVERRIDES` | 20 |
+| `API ADDITIONS` | 19 |
+| `RENDERING & STYLING` | 30 |
+
+**Standard formats:**
+
+```ts
+// ─────────────────────────
+//     API TO OVERRIDE
+// ─────────────────────────
+
+// ──────────────────
+//     SHARED API
+// ──────────────────
+
+// ──────────────────────
+//     IMPLEMENTATION
+// ──────────────────────
+
+// ────────────────────
+//     API OVERRIDES
+// ────────────────────
+
+// ───────────────────
+//     API ADDITIONS
+// ───────────────────
+
+// ──────────────────────────────
+//     RENDERING & STYLING
+// ──────────────────────────────
+```
 
 ```ts
 // ✅ Good
@@ -348,3 +401,21 @@ Not every component needs all sections. Omit a section if it would be empty.
 For example, the Divider base class is simple enough that it does not use section separators. The Asset concrete class only has `RENDERING & STYLING` because it has no API overrides or additions.
 
 When a component is simple, section comments are still recommended for consistency, but they are not strictly required if the class has only a few members and no logical grouping.
+
+**Guidance for simple concrete classes:**
+
+For concrete classes with only a `render()` method and styles (no overrides or additions), section separators are optional but recommended for consistency. If omitted, the class should still follow the property/method ordering rules.
+
+**Example — simple component without separators (acceptable):**
+
+```ts
+export class Divider extends DividerBase {
+  public static override get styles(): CSSResultArray {
+    return [styles];
+  }
+
+  protected override render(): TemplateResult {
+    return html`...`;
+  }
+}
+```

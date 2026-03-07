@@ -120,15 +120,33 @@ ${when(
 )}
 ```
 
+**Always prefer `when` over ternary operators** for conditional rendering:
+
 ```ts
-// ✅ Good — when for conditional slot rendering
+// ✅ Good — when directive
 ${when(this.hasIcon, () => html`<slot name="icon"></slot>`)}
 
 // ❌ Bad — ternary with empty string
 ${this.hasIcon ? html`<slot name="icon"></slot>` : ''}
+
+// ❌ Bad — nested ternary
+${this.variant === 'file'
+  ? file(this.label)
+  : this.variant === 'folder'
+    ? folder(this.label)
+    : html`<slot></slot>`}
 ```
 
 Use `when` for cleaner conditional rendering. It is especially useful when the false case is empty (no else branch).
+
+For multiple conditions, use multiple `when` directives or refactor to a helper method:
+
+```ts
+// ✅ Good — multiple when directives
+${when(this.variant === 'file', () => file(this.label))}
+${when(this.variant === 'folder', () => folder(this.label))}
+${when(!['file', 'folder'].includes(this.variant), () => html`<slot></slot>`)}
+```
 
 ### ifDefined
 

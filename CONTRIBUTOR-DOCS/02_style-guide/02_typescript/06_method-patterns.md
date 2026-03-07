@@ -13,6 +13,8 @@
 
 - [Method ordering](#method-ordering)
 - [Lifecycle methods](#lifecycle-methods)
+    - [Lifecycle method selection](#lifecycle-method-selection)
+- [ARIA role assignment](#aria-role-assignment)
 - [The override keyword](#the-override-keyword)
 - [Event handlers](#event-handlers)
 - [Private helpers](#private-helpers)
@@ -58,6 +60,49 @@ Lit components have lifecycle methods that run at specific times. These are the 
 | `render()` | Each render cycle | Return the template |
 | `updated(changes)` | After each render | Post-render DOM work |
 | `disconnectedCallback()` | Element removed from DOM | Clean up listeners, observers |
+
+### Lifecycle method selection
+
+Choose the correct lifecycle method based on what you need to do:
+
+| Task | Method | Reason |
+|------|--------|--------|
+| Validate property values | `update()` | Runs before render; can log warnings before DOM changes |
+| Set ARIA attributes based on properties | `updated()` | Runs after render; DOM is available |
+| One-time ARIA role setup | `firstUpdated()` | Only runs once; role should not change |
+| Pre-render state preparation | `update()` | Prepare state before template is evaluated |
+| Set up mutation observers | `connectedCallback()` | Needs DOM context |
+| Clean up observers | `disconnectedCallback()` | Element leaving DOM |
+
+**Validation in update():**
+
+Debug-mode validation should run in `update()` so warnings appear before the render:
+
+```ts
+protected override update(changedProperties: PropertyValues): void {
+  super.update(changedProperties);
+  if (window.__swc?.DEBUG) {
+    // Validate variant, size, etc.
+  }
+}
+```
+
+**ARIA in updated():**
+
+ARIA attribute changes that depend on property values should run in `updated()`:
+
+```ts
+protected override updated(changed: PropertyValues<this>): void {
+  super.updated(changed);
+  if (changed.has('vertical')) {
+    if (this.vertical) {
+      this.setAttribute('aria-orientation', 'vertical');
+    } else {
+      this.removeAttribute('aria-orientation');
+    }
+  }
+}
+```
 
 **Example — firstUpdated for one-time setup (Divider.base.ts):**
 
@@ -123,6 +168,28 @@ protected override firstUpdated(changed: PropertyValues): void {
   this.setAttribute('role', 'separator');
 }
 ```
+
+## ARIA role assignment
+
+Components should be opinionated about their semantic role. Set the role unconditionally in `firstUpdated()` — do not check for an existing role attribute:
+
+```ts
+// ✅ Good — unconditional role assignment
+protected override firstUpdated(changed: PropertyValues): void {
+  super.firstUpdated(changed);
+  this.setAttribute('role', 'separator');
+}
+
+// ❌ Bad — conditional role assignment
+protected override firstUpdated(changed: PropertyValues): void {
+  super.firstUpdated(changed);
+  if (!this.hasAttribute('role')) {
+    this.setAttribute('role', 'separator');
+  }
+}
+```
+
+**Rationale:** Components should express their semantic purpose clearly. If a consumer needs a different role, they can override it in their own code after the component renders. Checking for an existing role adds complexity and can mask misuse.
 
 ## The override keyword
 

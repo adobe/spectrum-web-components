@@ -66,6 +66,8 @@ Types files serve three goals:
 
 ## Naming conventions
 
+> **See also:** [Naming conventions](10_naming-conventions.md) for the full naming rules, including CSS class names and the rationale for underscore-separated prefixes.
+
 ### Constant prefixes
 
 Use the component name in `UPPER_SNAKE_CASE` with underscores separating words:
