@@ -28,6 +28,11 @@ export interface Properties {
   content?: TemplateResult;
   disabled?: boolean;
   size?: 's' | 'm' | 'l' | 'xl';
+
+  /**
+   * @deprecated Use a native HTML anchor (`<a>`) with the `spectrum-Button`
+   * class and import `@spectrum-web-components/styles/global-elements.css`.
+   */
   href?: string;
   target?: '_blank' | '_parent' | '_self' | '_top';
   noWrap?: boolean;

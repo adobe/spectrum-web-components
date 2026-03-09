@@ -29,6 +29,17 @@ import buttonStyles from './button-base.css.js';
 /**
  * @slot - text content to be displayed in the Button element
  * @slot icon - icon element(s) to display at the start of the button
+ *
+ * The following link-related properties inherited from `LikeAnchor` are
+ * deprecated on button elements and will be removed in a future release.
+ * Use a native HTML anchor (`<a>`) with the `spectrum-Button` class and
+ * import `@spectrum-web-components/styles/global-elements.css` instead:
+ *
+ * - `href` - {@link https://opensource.adobe.com/spectrum-web-components/components/button/#accessibility}
+ * - `target`
+ * - `download`
+ * - `referrerpolicy`
+ * - `rel`
  */
 export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
   'sp-overlay,sp-tooltip',
@@ -228,10 +239,24 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     this.addEventListener('keypress', this.handleKeypress);
   }
 
+  private warnLinkAPIDeprecation(): void {
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `The "href" attribute on <${this.localName}> is deprecated and will be removed in a future release. Use a native HTML anchor (<a>) element with the "spectrum-Button" class instead. Import "@spectrum-web-components/styles/global-elements.css" to enable button styling on native elements.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/button/#accessibility',
+        { level: 'deprecation' }
+      );
+    }
+  }
+
   protected override updated(changed: PropertyValues): void {
     super.updated(changed);
     if (changed.has('href')) {
       this.manageAnchor();
+      if (this.href && this.href.length > 0) {
+        this.warnLinkAPIDeprecation();
+      }
     }
 
     if (changed.has('label')) {

@@ -336,16 +336,38 @@ Events handlers for clicks and other user actions can be registered on a
 <sp-button onclick="spAlert(this, '<sp-button> clicked!')">Click me</sp-button>
 ```
 
-If you intend to create a link with a `href` attribute, we instead offer CSS classes for creating button-styled links. See more information in the [accessibility section](#accessibility).
+##### Link API deprecation
 
-```html demo
+> **Deprecated**: The `href`, `target`, `download`, `referrerpolicy`, and `rel` attributes on `<sp-button>` are deprecated and will be removed in a future release. Use a native HTML anchor (`<a>`) element with the `spectrum-Button` class instead.
+
+Using `<sp-button href="...">` conflates button and link semantics, which creates accessibility issues: screen reader users navigating by form controls will not find link-styled buttons, and vice versa. Native HTML elements provide correct semantics by default.
+
+To migrate, import the global elements stylesheet and apply button classes to native `<a>` elements:
+
+```css
+@import '@spectrum-web-components/styles/global-elements.css';
+```
+
+**Before (deprecated):**
+
+```html
+<sp-button href="https://opensource.adobe.com/spectrum-web-components">
+  Visit docs
+</sp-button>
+```
+
+**After (recommended):**
+
+```html
 <a
   class="spectrum-Button spectrum-Button--accent"
-  href="https://github.com/adobe/spectrum-web-components"
+  href="https://opensource.adobe.com/spectrum-web-components"
 >
-  Accent link button
+  Visit docs
 </a>
 ```
+
+See the [accessibility section](#use-a-static-button-styled-native-link-if-including-href) for the full list of supported styling classes and placement requirements.
 
 #### Autofocus
 
@@ -376,14 +398,16 @@ Do not use custom colors for buttons. The colors of different button variations 
 
 #### Use a static button-styled native link if including href
 
+> **Deprecated**: The `href` attribute and other link-related properties (`target`, `download`, `referrerpolicy`, `rel`) on `<sp-button>` are deprecated and will be removed in a future release.
+
 You may use a native link with classes to style it like a button. Refer to [the Storybook examples](https://opensource.adobe.com/spectrum-web-components/storybook/index.html?path=/story/button/) that include `href` for the appropriate classes to use.
 
 For styles to be fully available to slotted links, you must include the stylesheet for `@spectrum-web-components/styles/global-elements.css`.
 
 To successfully receive button styling, the link must be one of the following:
 
-- a direct child of `<sp-theme>`
-- a slotted child of a component within `<sp-theme>`
+- A direct child of `<sp-theme>`
+- A slotted child of a component within `<sp-theme>`
 
 To allow button-styled native links in the shadow DOM of extended components, ensure their stylesheet also imports `@spectrum-web-components/styles/global-elements.css`.
 
@@ -413,7 +437,7 @@ To allow button-styled native links in the shadow DOM of extended components, en
 
 #### Don't mix href and non-href buttons in a set of buttons
 
-A screen reader user will not encounter href buttons when navigating by buttons or form controls. While they can both be used in the same page problems could occur if mixing the types in close proximity to each other.
+A screen reader user will not encounter href buttons when navigating by buttons or form controls. While they can both be used in the same page, problems could occur if mixing the types in close proximity to each other.
 
 #### Use static black or static white to contrast with backgrounds and images
 
