@@ -37,7 +37,7 @@
 - [5. Existing conventions (enforced or documented)](#5-existing-conventions-enforced-or-documented)
     - [5.1 Import order (ESLint)](#51-import-order-eslint)
     - [5.2 CONTRIBUTOR-DOCS style guide format](#52-contributor-docs-style-guide-format)
-    - [5.3 Linting (02_linting-tools.md)](#53-linting-02linting-toolsmd)
+    - [5.3 Linting (03_linting-tools.md)](#53-linting-02linting-toolsmd)
 - [6. External references](#6-external-references)
     - [6.1 Baseline TypeScript style (agnostic-ai CODE-STYLE.md)](#61-baseline-typescript-style-agnostic-ai-code-stylemd)
     - [6.2 Component types (PR 6058)](#62-component-types-pr-6058)
@@ -278,7 +278,7 @@ Extensions: `.js` always for imports; `.ts` never (config: `js: 'always', ts: 'n
 - **Contributor TL;DR:** Short bullet list at top (see Component CSS doc).
 - **Good/bad examples:** Explicit “good” and “bad” (or “avoid”) where helpful.
 
-### 5.3 Linting (02_linting-tools.md)
+### 5.3 Linting (03_linting-tools.md)
 
 - Copyright headers, import sorting, and JSDoc are mentioned. The new guide should align with ESLint JSDoc rules (e.g. `jsdoc/check-param-names`, `jsdoc/tag-lines`, etc.) without duplicating the full lint doc.
 
