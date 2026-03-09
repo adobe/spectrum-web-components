@@ -214,13 +214,13 @@ Add this before switching locales. The event is dispatched by both `preview-head
 
 #### CJK Troubleshooting
 
-| What you might look for                                 | What you'll find                            | Why                                                                        |
-| ------------------------------------------------------- | ------------------------------------------- | -------------------------------------------------------------------------- | --- |
-| `<style>` element with CJK `@font-face` rules           | Not present                                 | CJK fonts registered via CSS Font Loading API, not DOM injection           |
-| `[data-swc-typekit-dynamic]` elements with `@font-face` | Not present                                 | MutationObserver only stamps `.tk-*` helper `<style>` elements             |
-| `<link rel="stylesheet">` to CJK kit CSS                | Not present                                 | CSS URLs return 412; CJK kits are JS-only delivery                         |
-| CJK `@font-face` in DevTools Sources/Network            | Present under the JS script, not a CSS file | Delivered via `Typekit.load()` JS execution                                |
-| CJK font-family name present in "Rendered Fonts"        | Numerical font id, not the font-family name | Dyinamic subsetting streams specific glyphs in addition to the font-family |     |
+| What you might look for                                 | What you'll find                            | Why                                                                       |
+| ------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------- |
+| `<style>` element with CJK `@font-face` rules           | Not present                                 | CJK fonts registered via CSS Font Loading API, not DOM injection          |
+| `[data-swc-typekit-dynamic]` elements with `@font-face` | Not present                                 | MutationObserver only stamps `.tk-*` helper `<style>` elements            |
+| `<link rel="stylesheet">` to CJK kit CSS                | Not present                                 | CSS URLs return 412; CJK kits are JS-only delivery                        |
+| CJK `@font-face` in DevTools Sources/Network            | Present under the JS script, not a CSS file | Delivered via `Typekit.load()` JS execution                               |
+| CJK font-family name present in "Rendered Fonts"        | Numerical font id, not the font-family name | Dynamic subsetting streams specific glyphs in addition to the font-family |
 
 ## Adding a new locale
 
