@@ -29,17 +29,6 @@ import buttonStyles from './button-base.css.js';
 /**
  * @slot - text content to be displayed in the Button element
  * @slot icon - icon element(s) to display at the start of the button
- *
- * The following link-related properties inherited from `LikeAnchor` are
- * deprecated on button elements and will be removed in a future release.
- * Use a native HTML anchor (`<a>`) with the `spectrum-Button` class and
- * import `@spectrum-web-components/styles/global-elements.css` instead:
- *
- * - `href` - {@link https://opensource.adobe.com/spectrum-web-components/components/button/#accessibility}
- * - `target`
- * - `download`
- * - `referrerpolicy`
- * - `rel`
  */
 export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
   'sp-overlay,sp-tooltip',
