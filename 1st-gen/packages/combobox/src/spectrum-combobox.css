@@ -147,7 +147,7 @@
   --spectrum-combobox-spacing-label-to-combobox: calc(var(--swc-scale-factor) * -6px);
 }
 
-/* Per-size overrides so quiet matches production when token resolution differs (e.g. medium 5.5px, small 2px from design). */
+/* Per-size overrides so quiet matches the standalone field label spacing when token resolution differs (e.g. medium 5.5px, small 2px from design). */
 :host([quiet][size="s"]) {
   --spectrum-combobox-spacing-label-to-combobox: calc(var(--swc-scale-factor) * -2px);
 }
