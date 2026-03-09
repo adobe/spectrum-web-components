@@ -33,6 +33,7 @@ export interface Properties {
   noWrap?: boolean;
   iconOnly?: boolean;
   label?: string;
+  minWidth?: string;
   componentName?: string;
 }
 

@@ -31,6 +31,12 @@
       "types": "./dist/components/*/index.d.ts",
       "import": "./dist/components/*/index.js"
     },
+    "./global-button.css": {
+      "default": "./dist/global-button.css"
+    },
+    "./global-elements.css": {
+      "default": "./dist/global-elements.css"
+    },
     "./utils/*": {
       "types": "./dist/utils/*.d.ts",
       "import": "./dist/utils/*.js"

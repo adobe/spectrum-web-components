@@ -37,6 +37,9 @@ if (typeof window !== 'undefined') {
   }
 }
 
+// Supports global element class-based styles, ex. .spectrum-Button
+import '@spectrum-web-components/styles/global-elements.css';
+
 // const cem = await import('./custom-elements.json', {
 //     assert: { type: 'json' },
 // });
