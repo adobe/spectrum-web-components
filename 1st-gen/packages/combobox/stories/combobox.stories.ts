@@ -20,10 +20,12 @@ import { defineElement } from '@spectrum-web-components/base/src/define-element.
 import { live } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/combobox/sp-combobox.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
+import { spreadProps } from '../../../test/lit-helpers.js';
 import { Combobox, ComboboxOption } from '../src/Combobox.js';
 import { argTypes } from './args.js';
 import { countries, fruits, StoryArgs } from './index.js';
@@ -81,7 +83,8 @@ export const hasDisabledItems = (args: StoryArgs): TemplateResult => {
 
   return html`
     <sp-combobox
-      style="min-width: 80px;--spectrum-textfield-m-min-width:0; width:160px;"
+      side-aligned="start"
+      style="--mod-textfield-grid-template-columns-side-label: minmax(12ch, 1fr) minmax(12ch, 2fr);"
     >
       <span slot="field-label">Some fruits are disabled (light DOM)</span>
       ${fruits.map(
@@ -100,6 +103,7 @@ export const hasDisabledItems = (args: StoryArgs): TemplateResult => {
       side-aligned="start"
       .options=${countriesWithDisabledItems}
       .value=${args.value || ''}
+      style="--mod-textfield-grid-template-columns-side-label: minmax(12ch, 1fr) minmax(12ch, 2fr);"
     >
       <span slot="field-label">Some countries are disabled (shadow DOM)</span>
     </sp-combobox>
@@ -130,24 +134,117 @@ export const noAutocomplete = (): TemplateResult => {
     <sp-combobox
       .options=${fruits}
       side-aligned="start"
-      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
     >
       <span slot="field-label">Fruit</span>
     </sp-combobox>
     <sp-combobox
       .options=${countries}
       side-aligned="start"
-      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
     >
       <span slot="field-label">Countries</span>
     </sp-combobox>
   `;
 };
 
+/**
+ * Standalone sp-field-label: three patterns to compare visually.
+ * 1) Sibling – sp-field-label outside combobox; use combobox `label` for a11y.
+ * 2) Slotted sp-field-label – in the field-label slot.
+ * 3) Slotted native <label> – tests that ::slotted(label) gets the same styles.
+ * Use controls (size, disabled, etc.) to verify all three stay in sync.
+ */
+export const withStandaloneFieldLabel = (args: StoryArgs): TemplateResult => {
+  return html`
+    <div style="display: flex; flex-direction: column; gap: 2rem;">
+      <div>
+        <p
+          style="margin: 0 0 0.5rem 0; font-size: 12px; color: var(--spectrum-gray-600);"
+        >
+          Sibling: sp-field-label outside combobox
+        </p>
+        <sp-field-label size=${args.size ?? 'm'} ?disabled=${args.disabled}>
+          Where do you live?
+        </sp-field-label>
+        <sp-combobox
+          label="Where do you live?"
+          .options=${countries}
+          .value=${args.value ?? ''}
+          style="min-width: 80px; width: 200px;"
+          ${spreadProps(args)}
+        ></sp-combobox>
+      </div>
+      <div>
+        <p
+          style="margin: 0 0 0.5rem 0; font-size: 12px; color: var(--spectrum-gray-600);"
+        >
+          Slotted: native &lt;label&gt; in field-label slot
+        </p>
+        <sp-combobox
+          .options=${countries}
+          .value=${args.value ?? ''}
+          style="min-width: 80px; width: 200px;"
+          ${spreadProps(args)}
+        >
+          <label slot="field-label">Where do you live?</label>
+        </sp-combobox>
+      </div>
+    </div>
+  `;
+};
+
+/**
+ * Same as With standalone field label but with side-aligned="start" for comparison.
+ */
+export const withStandaloneFieldLabelSideAligned = (
+  args: StoryArgs
+): TemplateResult => {
+  return html`
+    <div style="display: flex; flex-direction: column; gap: 2rem;">
+      <div>
+        <p
+          style="margin: 0 0 0.5rem 0; font-size: 12px; color: var(--spectrum-gray-600);"
+        >
+          Sibling: sp-field-label outside combobox (side-aligned)
+        </p>
+        <div
+          style="display: flex; align-items: flex-start; gap: var(--spectrum-spacing-200, 8px);"
+        >
+          <sp-field-label size=${args.size ?? 'm'} ?disabled=${args.disabled}>
+            Where do you live?
+          </sp-field-label>
+          <sp-combobox
+            label="Where do you live?"
+            .options=${countries}
+            .value=${args.value ?? ''}
+            style="min-width: 80px; width: 200px;"
+            ${spreadProps(args)}
+          ></sp-combobox>
+        </div>
+      </div>
+      <div>
+        <p
+          style="margin: 0 0 0.5rem 0; font-size: 12px; color: var(--spectrum-gray-600);"
+        >
+        Slotted: native &lt;label&gt; in field-label slot (side-aligned)
+        </p>
+        <sp-combobox
+          side-aligned="start"
+          .options=${countries}
+          .value=${args.value ?? ''}
+          style="min-width: 80px; width: 308px;"
+          ${spreadProps(args)}
+        >
+        <label slot="field-label">Where do you live?</label>
+        </sp-combobox>
+      </div>
+    </div>
+  `;
+};
+
 export const lightDOM = (): TemplateResult => {
   return html`
     <sp-combobox
-      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
+      style="min-width: 80px;"
       side-aligned="start"
     >
       <span slot="field-label">Fruit</span>
@@ -161,7 +258,7 @@ export const lightDOM = (): TemplateResult => {
     </sp-combobox>
     <sp-combobox
       side-aligned="start"
-      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
+      style="min-width: 80px;"
     >
       <span slot="field-label">Countries</span>
       ${countries.map(
@@ -179,7 +276,7 @@ export const withTooltip = (): TemplateResult => {
   return html`
     <sp-combobox
       label="Combobox with tooltip"
-      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
+      style="min-width: 80px;width:100px;"
     >
       ${countries.map(
         (option) => html`

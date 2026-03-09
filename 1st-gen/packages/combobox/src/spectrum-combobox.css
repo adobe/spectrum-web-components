@@ -78,7 +78,7 @@
 }
 
 :host,
-:host {
+:host([size="m"]) {
   --spectrum-combobox-block-size: var(--spectrum-component-height-100);
   --spectrum-combobox-icon-size: var(--spectrum-workflow-icon-size-100);
   --spectrum-combobox-font-size: var(--spectrum-font-size-100);
@@ -138,23 +138,22 @@
   --spectrum-combobox-min-inline-size: calc(var(--spectrum-combo-box-quiet-minimum-width-multiplier) * var(--spectrum-combobox-block-size));
   --spectrum-combobox-spacing-inline-icon-to-button: var(--spectrum-combo-box-visual-to-field-button-quiet);
   --spectrum-combobox-spacing-inline-start-edge-to-text: var(--spectrum-field-edge-to-text-quiet);
-  --spectrum-combobox-spacing-label-to-combobox: var(--spectrum-field-label-to-component-quiet-medium);
   --spectrum-combobox-button-inline-offset: calc(var(--mod-combobox-block-size, var(--spectrum-combobox-block-size)) / 2 - var(--mod-combobox-icon-size, var(--spectrum-combobox-icon-size)) / 2);
   --mod-textfield-border-color-disabled: var(--mod-combobox-border-color-disabled, initial);
   --mod-picker-button-background-color-quiet: transparent;
   --mod-picker-button-border-color-quiet: transparent;
+
+  /* Flush under label: negative of label's padding-block-end (field-label-bottom-to-text per size) so field sits tight under label. */
+  --spectrum-combobox-spacing-label-to-combobox: calc(var(--swc-scale-factor) * -6px);
 }
 
+/* Per-size overrides so quiet matches the standalone field label spacing when token resolution differs (e.g. medium 5.5px, small 2px from design). */
 :host([quiet][size="s"]) {
-  --spectrum-combobox-spacing-label-to-combobox: var(--spectrum-field-label-to-component-quiet-small);
-}
-
-:host([quiet]) {
-  --spectrum-combobox-spacing-label-to-combobox: var(--spectrum-field-label-to-component-quiet-medium);
+  --spectrum-combobox-spacing-label-to-combobox: calc(var(--swc-scale-factor) * -2px);
 }
 
 :host([quiet][size="l"]) {
-  --spectrum-combobox-spacing-label-to-combobox: var(--spectrum-field-label-to-component-quiet-large);
+  --spectrum-combobox-spacing-label-to-combobox: calc(var(--swc-scale-factor) * -11px);
 }
 
 :host([quiet][size="xl"]) {
@@ -165,25 +164,18 @@
   :host {
     --highcontrast-combobox-border-color-highlight: Highlight;
     --highcontrast-combobox-border-color-invalid: Highlight;
-  }
-
-  .button.spectrum-PickerButton--quiet .spectrum-PickerButton-fill {
-    forced-color-adjust: none;
-  }
-
-  .button.spectrum-PickerButton--quiet .spectrum-PickerButton-icon {
-    color: initial;
+    --mod-picker-button-border-color-disabled: GrayText;
+    --mod-picker-button-icon-color-disabled: GrayText;
   }
 }
 
 :host {
-  display: inline-flex;
+  display: inline-grid;
   position: relative;
-  flex-flow: row;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: 1fr;
   inline-size: var(--mod-combobox-inline-size, var(--spectrum-combobox-inline-size));
   min-inline-size: var(--mod-combobox-min-inline-size, var(--spectrum-combobox-min-inline-size));
-  block-size: var(--mod-combobox-block-size, var(--spectrum-combobox-block-size));
-  margin-block-start: var(--mod-combobox-spacing-label-to-combobox, var(--spectrum-combobox-spacing-label-to-combobox));
   border-radius: var(--mod-combobox-border-radius, var(--spectrum-combobox-border-radius));
 }
 
@@ -274,8 +266,27 @@
   --mod-picker-button-border-color: var(--highcontrast-combobox-border-color-invalid, var(--mod-combobox-border-color-invalid-hover, var(--spectrum-combobox-border-color-invalid-hover)));
 }
 
+:host([quiet]) label {
+  margin-block-end: var(--spectrum-combobox-spacing-label-to-combobox);
+}
+
 #textfield {
+  position: relative;
+  grid-area: 2 / 1;
   inline-size: 100%;
+  block-size: var(--mod-combobox-block-size, var(--spectrum-combobox-block-size));
+}
+
+.button,
+.progress-circle {
+  position: relative;
+  z-index: 1;
+  grid-area: 2 / 1;
+  justify-content: end;
+}
+
+.progress-circle {
+  position: absolute;
 }
 
 #input {
