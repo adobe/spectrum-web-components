@@ -187,10 +187,14 @@ describe('Picker, responsive', () => {
 
       /**
        * This is a hack to set the `isTouchDevice` property to true
-       * so that we can test the touch device behavior.
+       * so that we can test the touch device behavior. We must also
+       * call requestUpdate() to trigger a re-render, since directly
+       * setting matches bypasses the MatchMediaController's onChange
+       * which normally calls requestUpdate.
        */
       el.isTouchDevice.matches = true;
-      await elementUpdated(el);
+      el.requestUpdate();
+      await el.updateComplete;
 
       // Open the picker to initialize the menu.
       const opened = oneEvent(el, 'sp-opened');
@@ -239,24 +243,32 @@ describe('Picker, responsive', () => {
 
       /**
        * This is a hack to set the `isTouchDevice` property to true
-       * so that we can test the iPad/tablet behavior.
+       * so that we can test the iPad/tablet behavior. We must also
+       * call requestUpdate() to trigger a re-render, since directly
+       * setting matches bypasses the MatchMediaController's onChange
+       * which normally calls requestUpdate.
        */
       el.isTouchDevice.matches = true;
-      await elementUpdated(el);
+      el.requestUpdate();
+      await el.updateComplete;
 
       // Open the picker.
       const opened = oneEvent(el, 'sp-opened');
       el.open = true;
       await opened;
-      await elementUpdated(el);
 
-      // Wait for menu to be ready.
-      if (!el.optionsMenu || el.optionsMenu.childItems.length === 0) {
-        await waitUntil(
-          () => el.optionsMenu && el.optionsMenu.childItems.length > 0,
-          'Menu should be initialized'
-        );
-      }
+      // Wait for cascading updates to settle (overlay/popover can trigger
+      // additional update cycles).
+      await el.updateComplete;
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+      await el.updateComplete;
+
+      // Wait for menu to be ready with explicit timeout.
+      await waitUntil(
+        () => el.optionsMenu && el.optionsMenu.childItems.length > 0,
+        'Menu should be initialized',
+        { timeout: 2000 }
+      );
 
       // Wait for menu to be fully updated.
       await el.optionsMenu.updateComplete;
@@ -268,9 +280,23 @@ describe('Picker, responsive', () => {
       // Get the second menu item (value="option-2") from childItems.
       const menuItem = el.optionsMenu.childItems[1] as MenuItem;
       expect(menuItem).to.not.be.null;
+
+      // Wait for menu item to be fully registered with its role and
+      // selectionRoot. This is critical because the menu's click handler
+      // uses role="option" to find the target and selectionRoot to
+      // determine if selection should occur.
+      await waitUntil(
+        () =>
+          menuItem.getAttribute('role') === 'option' &&
+          menuItem.menuData?.selectionRoot === el.optionsMenu,
+        'Menu item should be fully registered with role and selectionRoot',
+        { timeout: 2000 }
+      );
+
       await elementUpdated(menuItem);
 
-      // Ensure menu is not in scrolling state (which would prevent selection).
+      // Ensure menu is not in scrolling state immediately before click
+      // (which would prevent selection).
       el.optionsMenu.isScrolling = false;
 
       // Click the menu item and wait for the change event.
@@ -287,10 +313,16 @@ describe('Picker, responsive', () => {
       el = await pickerFixture();
       await elementUpdated(el);
 
-      // Simulate iPad: isMobile is false but isTouchDevice is true.
+      /**
+       * Simulate iPad: isMobile is false but isTouchDevice is true.
+       * We must also call requestUpdate() to trigger a re-render,
+       * since directly setting matches bypasses the MatchMediaController's
+       * onChange which normally calls requestUpdate.
+       */
       el.isMobile.matches = false;
       el.isTouchDevice.matches = true;
-      await elementUpdated(el);
+      el.requestUpdate();
+      await el.updateComplete;
 
       // Open the picker.
       const opened = oneEvent(el, 'sp-opened');
