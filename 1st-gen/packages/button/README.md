@@ -336,13 +336,13 @@ Events handlers for clicks and other user actions can be registered on a
 <sp-button onclick="spAlert(this, '<sp-button> clicked!')">Click me</sp-button>
 ```
 
-##### Link API deprecation
+#### Link API deprecation
 
 > **Deprecated**: The `href`, `target`, `download`, `referrerpolicy`, and `rel` attributes on `<sp-button>` are deprecated and will be removed in a future release. Use a native HTML anchor (`<a>`) element with the `spectrum-Button` class instead.
 
 Using `<sp-button href="...">` conflates button and link semantics, which creates accessibility issues: screen reader users navigating by form controls will not find link-styled buttons, and vice versa. Native HTML elements provide correct semantics by default.
 
-To migrate, import the global elements stylesheet and apply button classes to native `<a>` elements:
+If you intend to create a link with a `href` attribute, we instead offer CSS classes for creating button-styled links. To migrate, import the global elements stylesheet and apply button classes to native `<a>` elements:
 
 ```css
 @import '@spectrum-web-components/styles/global-elements.css';
@@ -367,7 +367,7 @@ To migrate, import the global elements stylesheet and apply button classes to na
 </a>
 ```
 
-See the [accessibility section](#use-a-static-button-styled-native-link-if-including-href) for the full list of supported styling classes and placement requirements.
+See the [accessibility section](#use-a-static-button-styled-native-link-if-including-href) for more details.
 
 #### Autofocus
 

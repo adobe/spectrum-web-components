@@ -282,22 +282,12 @@ export const renderMinWidthButton = (props: Properties): TemplateResult => {
 
 const href = 'https://github.com/adobe/spectrum-web-components';
 
-/**
- * @deprecated The `href` attribute on `<sp-button>` is deprecated.
- * Use a native HTML anchor (`<a>`) with the `spectrum-Button` class
- * and import `@spectrum-web-components/styles/global-elements.css`.
- */
 export const renderLink = (props: Properties): TemplateResult =>
   renderButtonSet({
     ...props,
     href,
   });
 
-/**
- * @deprecated The `href` and `target` attributes on `<sp-button>` are
- * deprecated. Use a native HTML anchor (`<a>`) with the `spectrum-Button`
- * class and import `@spectrum-web-components/styles/global-elements.css`.
- */
 export const renderLinkWithTarget = (props: Properties): TemplateResult =>
   renderButtonSet({
     ...props,
