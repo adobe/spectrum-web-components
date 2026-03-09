@@ -128,6 +128,7 @@ export default defineConfig([
       '**/.tmp/**',
       '**/playwright-report/**',
       '**/test-results/**',
+      '**/playwright.config.js',
       '**/*.d.ts',
       '1st-gen/packages/icons/src/icons-*.svg.ts',
       // Build outputs
@@ -577,6 +578,11 @@ export default defineConfig([
           hasProperties: ['type'],
           order: packageJsonKeyOrder,
           pathPattern: '^$',
+        },
+        {
+          hasProperties: ['development', 'default'],
+          order: ['development', 'default'],
+          pathPattern: '^exports\\[[^\\]]+\\]$',
         },
         {
           order: { type: 'asc' },

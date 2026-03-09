@@ -10,8 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-/* TODO: investigage importing styles from Button once migrated */
-@layer global-elements {
+/* TODO: investigage importing styles from Button once migrated
+ *
+ * If not able to import, will need to match CSS guidelines for custom property exposure and token usage
+ */
+@layer swc-global-elements {
   .swc-Button {
     --swc-button-animation-duration: token("animation-duration-100");
     --swc-button-focus-ring-gap: token("focus-indicator-gap");
@@ -97,10 +100,12 @@
     --swc-button-background-color-focus: token("neutral-background-color-key-focus");
   }
 
-  .swc-Button:hover {
-    color: var(--swc-button-content-color-hover);
-    background-color: var(--swc-button-background-color-hover);
-    border-color: var(--swc-button-border-color-hover);
+  @media (hover: hover) {
+    .swc-Button:hover {
+      color: var(--swc-button-content-color-hover);
+      background-color: var(--swc-button-background-color-hover);
+      border-color: var(--swc-button-border-color-hover);
+    }
   }
 
   .swc-Button:focus-visible {

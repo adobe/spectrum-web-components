@@ -1,6 +1,6 @@
 {
   "name": "@adobe/swc-tokens",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "description": "Second generation Spectrum Web Components token processing",
   "license": "Apache-2.0",

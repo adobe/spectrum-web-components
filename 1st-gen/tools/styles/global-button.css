@@ -153,8 +153,8 @@
 }
 
 .spectrum-Button:not(.spectrum-Button--iconOnly) :is([slot="icon"], svg, img) {
-  --_icon-size-difference: max(0px, var(--spectrum-button-intended-icon-size) - var(--spectrum-icon-block-size, var(--spectrum-button-intended-icon-size)));
-
+  /* When icon size exceeds button's line-height, add negative margin to prevent icon size increasing height */
+  margin-block: calc((var(--spectrum-icon-block-size) - 1lh) / 2 * -1);
   margin-inline-start: calc(var(--mod-button-edge-to-visual, var(--spectrum-button-edge-to-visual)) - var(--mod-button-edge-to-text, var(--spectrum-button-edge-to-text)));
 }
 
@@ -170,7 +170,7 @@
   --spectrum-button-sized-bottom-to-text: var(--spectrum-button-bottom-to-text-small);
   --spectrum-button-sized-top-to-icon: var(--spectrum-component-top-to-workflow-icon-75);
   --spectrum-button-intended-icon-size: var(--spectrum-workflow-icon-size-75);
-  --spectrum-icon-size: var(--spectrum-workflow-icon-size-75) !important;
+  --spectrum-icon-size: var(--spectrum-workflow-icon-size-75);
 }
 
 .spectrum-Button--sizeL,

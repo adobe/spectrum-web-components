@@ -360,7 +360,13 @@ function extractTokenValues(
 
   for (const [name, token] of Object.entries(json)) {
     if (token?.deprecated) {
-      log(`[DEPRECATED] token '${name}'`);
+      if (token?.renamed) {
+        log(
+          `[RENAMED] deprecated token '${name}' renamed to '${token.renamed}'`
+        );
+      } else {
+        log(`[DEPRECATED] token '${name}'`);
+      }
       continue;
     }
 
@@ -384,6 +390,20 @@ function extractTokenValues(
 
     if (token?.sets) {
       out[name] = normalizeSetGroup(token.sets, lookup, prefix, debug);
+    }
+  }
+
+  return out;
+}
+
+function extractRenamedTokenValues(json, debug = false) {
+  const out = {};
+  const log = typeof debug === 'function' ? debug : () => {};
+
+  for (const [name, token] of Object.entries(json)) {
+    if (token?.deprecated && typeof token?.renamed === 'string') {
+      out[name] = token.renamed;
+      log(`[RENAMED-MAP] '${name}' -> '${token.renamed}'`);
     }
   }
 
@@ -517,8 +537,44 @@ async function loadAllTokens(prefix, debug = false) {
   );
 }
 
+async function loadAllTokenData(prefix, debug = false) {
+  const sources = [
+    ...SPECTRUM_TOKENS.map((t) => ({ ...t, src: 'spectrum' })),
+    ...CUSTOM_TOKENS.map((t) => ({ ...t, src: 'custom' })),
+  ];
+
+  const rawFiles = await Promise.all(
+    sources.map(async (s) => ({
+      ...s,
+      raw: await loadTokenJson(s.file, s.src),
+    }))
+  );
+
+  const globalLookup = Object.assign(
+    {},
+    ...rawFiles.map((f) => buildRawLookup(f.raw))
+  );
+
+  return {
+    tokens: Object.assign(
+      {},
+      ...rawFiles.map((f) =>
+        extractTokenValues(f.raw, f.resolveAliases, prefix, {
+          debug,
+          rawLookupOverride: globalLookup,
+        })
+      )
+    ),
+    renamed: Object.assign(
+      {},
+      ...rawFiles.map((f) => extractRenamedTokenValues(f.raw, debug))
+    ),
+  };
+}
+
 // Cache for loaded tokens (keyed by prefix)
 const tokenCache = new Map();
+const tokenDataCache = new Map();
 
 // Returns combined total token JSON (cached)
 export const allTokens = (prefix, debug = false) => {
@@ -527,6 +583,15 @@ export const allTokens = (prefix, debug = false) => {
     tokenCache.set(cacheKey, loadAllTokens(prefix, debug));
   }
   return tokenCache.get(cacheKey);
+};
+
+// Returns combined token + renamed metadata JSON (cached)
+export const allTokenData = (prefix, debug = false) => {
+  const cacheKey = `${prefix ?? ''}:${debug}`;
+  if (!tokenDataCache.has(cacheKey)) {
+    tokenDataCache.set(cacheKey, loadAllTokenData(prefix, debug));
+  }
+  return tokenDataCache.get(cacheKey);
 };
 
 // Lookup individual token values for use in component styles
@@ -553,5 +618,6 @@ export const __test__ = {
   normalizePrimitive,
   normalizeSetGroup,
   extractTokenValues,
+  extractRenamedTokenValues,
   lookupToken,
 };

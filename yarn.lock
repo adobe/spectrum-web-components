@@ -211,13 +211,17 @@ __metadata:
     "@vitest/coverage-v8": "npm:4.0.15"
     "@vitest/ui": "npm:4.0.15"
     "@wc-toolkit/storybook-helpers": "npm:10.0.0"
+    aria-query: "npm:5.3.0"
     autoprefixer: "npm:10.4.21"
+    dom-accessibility-api: "npm:0.7.0"
     glob: "npm:11.0.3"
     lit: "npm:^2.5.0 || ^3.1.3"
     playwright: "npm:1.53.1"
+    playwright-core: "npm:1.53.1"
     postcss: "npm:8.5.6"
     postcss-preset-env: "npm:10.4.0"
     prettier: "npm:3.8.1"
+    query-selector-shadow-dom: "npm:1.0.0"
     react: "npm:19.1.1"
     react-dom: "npm:19.1.1"
     remark-gfm: "npm:4.0.0"
@@ -5894,7 +5898,7 @@ __metadata:
     "@types/command-line-usage": "npm:5.0.4"
     "@types/common-tags": "npm:1.8.4"
     "@types/mocha": "npm:10.0.10"
-    "@types/node": "npm:20.19.17"
+    "@types/node": "npm:24.10.13"
     "@types/react": "npm:18.3.24"
     "@types/sinon": "npm:17.0.4"
     "@types/webpack": "npm:5.28.5"
@@ -8879,12 +8883,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.19.17":
-  version: 20.19.17
-  resolution: "@types/node@npm:20.19.17"
+"@types/node@npm:24.10.13":
+  version: 24.10.13
+  resolution: "@types/node@npm:24.10.13"
   dependencies:
-    undici-types: "npm:~6.21.0"
-  checksum: 10c0/ab4c5dd8bdeacb1c04c2724c75023eec0ac9469583b39032f5daaf56768a31ee6fa3a0bfcc597e4a3e74eb49744deeb9d5eb760f30e984e25088f6d895e0811d
+    undici-types: "npm:~7.16.0"
+  checksum: 10c0/4ff0b9b060b5477c0fec5b11a176f294be588104ab546295db65b17a92ba0a6077b52ad92dd3c0d2154198c7f9d0021e6c1d42b00c9ac7ebfd85632afbcc48a4
   languageName: node
   linkType: hard
 
@@ -11742,10 +11746,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"basic-ftp@npm:^5.0.2":
-  version: 5.0.5
-  resolution: "basic-ftp@npm:5.0.5"
-  checksum: 10c0/be983a3997749856da87b839ffce6b8ed6c7dbf91ea991d5c980d8add275f9f2926c19f80217ac3e7f353815be879371d636407ca72b038cea8cab30e53928a6
+"basic-ftp@npm:5.2.0":
+  version: 5.2.0
+  resolution: "basic-ftp@npm:5.2.0"
+  checksum: 10c0/a0f85c01deae0723021f9bf4a7be29378186fa8bba41e74ea11832fe74c187ce90c3599c3cc5ec936581cfd150020e79f4a9ed0ee9fb20b2308e69b045f3a059
   languageName: node
   linkType: hard
 
@@ -14235,6 +14239,13 @@ __metadata:
     wireit: "npm:0.14.12"
   languageName: unknown
   linkType: soft
+
+"dom-accessibility-api@npm:0.7.0":
+  version: 0.7.0
+  resolution: "dom-accessibility-api@npm:0.7.0"
+  checksum: 10c0/51d3fe283b0b4882442ba7cd7c76d27aa96b57e1854f0373be62c0abfaa95e89f4c1a1b883712814dc52b0a0853147f6de681fae20467a29d3a485df9b7329d8
+  languageName: node
+  linkType: hard
 
 "dom-accessibility-api@npm:^0.5.9":
   version: 0.5.16
@@ -26786,6 +26797,13 @@ __metadata:
   version: 0.2.11
   resolution: "quansync@npm:0.2.11"
   checksum: 10c0/cb9a1f8ebce074069f2f6a78578873ffedd9de9f6aa212039b44c0870955c04a71c3b1311b5d97f8ac2f2ec476de202d0a5c01160cb12bc0a11b7ef36d22ef56
+  languageName: node
+  linkType: hard
+
+"query-selector-shadow-dom@npm:1.0.0":
+  version: 1.0.0
+  resolution: "query-selector-shadow-dom@npm:1.0.0"
+  checksum: 10c0/55269fe6510288d0c3480413b8487f4f560d3b3d09e6d0785a4d52ac9bc855e74cf0d306222790fa1188717244e5b266da9c5256af89c7ad29192cdd69cfe977
   languageName: node
   linkType: hard
 

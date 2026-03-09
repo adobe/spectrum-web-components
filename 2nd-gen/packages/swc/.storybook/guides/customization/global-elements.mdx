@@ -6,15 +6,41 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 Optional styling is available for "global elements" such as button-styled native links. This is in an effort to retain native semantics and default accessibility benefits.
 
-For global element styles to be fully available to slotted elements, you must include the stylesheet for `@adobe/spectrum-wc/global-elements.css` at the application level.
+For global element styles to be fully available to slotted elements, you must include the stylesheet for `@adobe/spectrum-wc/global-elements.css` at the application level and ensure it's processed by your bundler to resolve the relative imports.
 
 To use global element styles within the shadow DOM of extended and custom components, ensure their stylesheet also imports the global stylesheet.
 
 Individual stylesheets are also available instead of the comprehensive index as `global-[component].css`.
 
+## Customizing global elements
+
+There are two ways to provide style customizations to global elements:
+
+### Custom properties
+
+The preferred method is to pass overrides to the exposed custom properties.
+
+```css
+.swc-Button {
+  --swc-button-min-width: 10ch;
+}
+```
+
+### Overrides cascade layer
+
+If you need to modify properties not exposed through custom properties, you can pass your additions to the global element by including styles within the `swc-global-element-overrides` layer.
+
+```css
+@layer swc-global-element-overrides {
+  .swc-Button {
+    color: blue;
+  }
+}
+```
+
 ## Button Styles
 
-You may use button styling for either native links or button elements. Clases use BEM-style naming, and require the `swc-Button` class in addition to any variant classes.
+You may use button styling for either native links or button elements. Classes use BEM-style naming, and require the `swc-Button` class in addition to any variant classes.
 
 **Note**: button-styled native links do not support disabled or pending states.
 
@@ -32,5 +58,5 @@ You may use button styling for either native links or button elements. Clases us
 <a href="#" class="swc-Button swc-Button--primary">As Link (Primary)</a>
 
 ```html
-<a href="#" class="swc-Button--primary">As Link (Primary)</a>
+<a href="#" class="swc-Button swc-Button--primary">As Link (Primary)</a>
 ```
