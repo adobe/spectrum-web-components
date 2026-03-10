@@ -37,9 +37,15 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 
 import textfieldStyles from './textfield.css.js';
 import {
-  TruncatedValueTooltipMixin,
-  type TruncatedValueTooltipMixinInterface,
-} from './TruncatedValueTooltipMixin.js';
+  TruncatedValueTooltipController,
+  type TruncatedValueTooltipHost,
+} from './TruncatedValueTooltipController.js';
+
+export type { TruncatedValueTooltipHost } from './TruncatedValueTooltipController.js';
+export {
+  TruncatedValueTooltipController,
+  truncatedValueTooltipUpdatedSymbol,
+} from './TruncatedValueTooltipController.js';
 
 const textfieldTypes = ['text', 'url', 'tel', 'email', 'password'] as const;
 export type TextfieldType = (typeof textfieldTypes)[number];
@@ -48,13 +54,15 @@ export type TextfieldType = (typeof textfieldTypes)[number];
  * @fires input - The value of the element has changed.
  * @fires change - An alteration to the value of the element has been committed by the user.
  */
-export class TextfieldBase extends TruncatedValueTooltipMixin(
-  ManageHelpText(
-    SizedMixin(Focusable, {
-      noDefaultSize: true,
-    })
-  )
+export class TextfieldBase extends ManageHelpText(
+  SizedMixin(Focusable, {
+    noDefaultSize: true,
+  })
 ) {
+  protected truncatedValueTooltipController =
+    new TruncatedValueTooltipController(
+      this as unknown as TruncatedValueTooltipHost & typeof this
+    );
   public static override get styles(): CSSResultArray {
     return [textfieldStyles, checkmarkStyles];
   }
@@ -388,9 +396,7 @@ export class TextfieldBase extends TruncatedValueTooltipMixin(
   protected override render(): TemplateResult {
     return html`
       <div id="textfield">${this.renderField()}</div>
-      ${(
-        this as unknown as TruncatedValueTooltipMixinInterface
-      ).renderTruncatedValueTooltip()}
+      ${this.truncatedValueTooltipController.render()}
       ${this.renderHelpText(this.invalid)}
     `;
   }
@@ -405,6 +411,14 @@ export class TextfieldBase extends TruncatedValueTooltipMixin(
       });
     }
     super.update(changedProperties);
+    if (changedProperties.has('value')) {
+      this.updateComplete.then(() => {
+        this.truncatedValueTooltipController.refresh();
+      });
+    }
+    if (changedProperties.has('focused') && !this.focused) {
+      this.truncatedValueTooltipController.refresh();
+    }
   }
 
   public checkValidity(): boolean {
