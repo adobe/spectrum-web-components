@@ -13,13 +13,43 @@
 <!-- This preconnect opens the connection for typekit to more quickly load fonts -->
 <link rel="preconnect" href="https://use.typekit.net" crossorigin />
 <link rel="dns-prefetch" href="https://use.typekit.net" />
-<!-- For Adobe Clean Spectrum VF font support -->
+<!-- For Adobe Clean Spectrum VF font support. CJK kits are loaded on-demand by the language decorator. -->
 <link rel="stylesheet" href="https://use.typekit.net/obc6cux.css" />
 <!-- This is the script that attempts to pre-load the typekit fonts -->
 <script>
   window.global = window;
 
   let isLoading = false;
+
+  /**
+   * Adobe Fonts kit IDs by locale. Used to load the correct font project when the user changes language in Storybook.
+   * Latin/default is loaded in preview-head; CJK kits are loaded on-demand by the language decorator (which injects the
+   * corresponding kit script when the Language toolbar value changes).
+   */
+  window.__SWC_FONT_KIT_IDS__ = {
+    default: 'obc6cux',
+    en: 'obc6cux',
+    'en-US': 'obc6cux',
+    ar: 'obc6cux',
+    he: 'obc6cux',
+    ja: 'fhs4zuy',
+    ko: 'cbs0ykg',
+    'zh-Hant': 'ueg0fjf',
+    'zh-TW': 'ueg0fjf',
+    zh: 'ueg0fjf',
+    'zh-Hans': 'dck3siu',
+    'zh-CN': 'dck3siu',
+    'zh-HK': 'kje4xva',
+  };
+
+  window.getKitIdForLang = function (lang) {
+    if (!lang) {
+      return window.__SWC_FONT_KIT_IDS__.default;
+    }
+    return (
+      window.__SWC_FONT_KIT_IDS__[lang] || window.__SWC_FONT_KIT_IDS__.default
+    );
+  };
 
   const script = document.createElement('script');
   script.src = '//use.typekit.net/obc6cux.js';
@@ -46,7 +76,7 @@
         active: function () {
           window.FontsLoading = false;
           window.currentKitId = this.kitId;
-          console.log(`Font loaded [id: ${this.kitId}]`);
+          console.log(`Font loaded [id: ${window.currentKitId}]`);
 
           // Fire a custom event to indicate the Adobe Fonts have loaded
           document.dispatchEvent(
@@ -96,6 +126,37 @@
   textarea,
   nav {
     font-family: var(--swc-sans-font-family-stack) !important;
+
+    &:lang(ar) {
+      font-family: var(--swc-font-family-arabic) !important;
+    }
+
+    &:lang(he) {
+      font-family: var(--swc-font-family-hebrew) !important;
+    }
+
+    &:lang(zh),
+    &:lang(zh-Hant) {
+      font-family: var(--swc-font-family-chinese-traditional) !important;
+    }
+
+    &:lang(zh-Hans),
+    &:lang(zh-CN),
+    &:lang(zh-SG) {
+      font-family: var(--swc-font-family-chinese-simplified) !important;
+    }
+
+    &:lang(zh-HK) {
+      font-family: var(--swc-font-family-hong-kong) !important;
+    }
+
+    &:lang(ja) {
+      font-family: var(--swc-font-family-japanese) !important;
+    }
+
+    &:lang(ko) {
+      font-family: var(--swc-font-family-korean) !important;
+    }
   }
 
   table,
@@ -191,7 +252,7 @@
 
   .sbdocs-content {
     max-width: 80ch !important;
-    margin: auto !important;
+    margin-inline: auto !important;
   }
 
   .docs-image {

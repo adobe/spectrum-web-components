@@ -44,6 +44,12 @@
     "./express/theme-darkest.css": "./express/theme-darkest.css",
     "./express/theme-light.css": "./express/theme-light.css",
     "./express/theme-lightest.css": "./express/theme-lightest.css",
+    "./global-button.css": "./global-button.css",
+    "./global-elements.css": "./global-elements.css",
+    "./global-elements.js": {
+      "development": "./global-elements.dev.js",
+      "default": "./global-elements.js"
+    },
     "./heading.js": {
       "development": "./heading.dev.js",
       "default": "./heading.js"

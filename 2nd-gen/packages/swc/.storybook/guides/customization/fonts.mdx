@@ -1,4 +1,5 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as StatusLightStories from '../../../components/status-light/stories/status-light.stories';
 
 <Meta title="Customization/Fonts" />
 
@@ -18,13 +19,41 @@ Adobe Clean Spectrum VF is the default typeface for Spectrum 2. While it looks v
 
 ## Font loading in 2nd-gen Storybook
 
-This Storybook automatically loads Adobe Clean Spectrum VF via Adobe Fonts (Typekit) for preview and development purposes. The font is loaded from the `spectrum-web-components-2nd-gen` web project in the SWC Adobe Fonts account.
+Adobe Clean Spectrum VF (and CJK fonts when needed) are loaded via Adobe Fonts (Typekit) for preview and development. The **Language** decorator in the toolbar (globe icon) controls which kit is active:
+
+- **Latin** (e.g. English, Arabic, Hebrew) uses the default kit and loads on first paint.
+- **CJK** (Japanese, Korean, Chinese Simplified, Traditional, Hong Kong) load **on demand**: when you switch the Language toolbar to a CJK locale, the language decorator injects that locale's Adobe Fonts kit script. Only one CJK kit is loaded at a time to keep payloads small.
+
+The default (Latin) kit uses two resources loaded via `preview-head.html`:
+
+1. **CSS link** (`https://use.typekit.net/obc6cux.css`) — static `@font-face` declarations loaded into the page `<head>` as a stylesheet. Provides font registration immediately, even before the JS loads.
+2. **JS script** (`//use.typekit.net/obc6cux.js`) — the Typekit loader. Calling `Typekit.load()` activates fonts and toggles `wf-*` CSS classes on `<html>` for FOUT management.
+
+This is a "belt-and-suspenders" setup: the CSS registers the fonts, the JS manages the visual loading state. This approach differs from [how CJK fonts are delivered](#cjk-font-support).
+
+### RTL text direction
+
+The language decorator also handles text direction. When a right-to-left locale is selected (Arabic or Hebrew), the decorator sets `dir="rtl"` on the document root. This affects layout, alignment, and bidirectional text rendering across all components. Switching back to a left-to-right locale restores `dir="ltr"`.
+
+### Verifying font loading
 
 You can verify the font is loaded by:
 
-1. Opening your browser's Network tab
-2. Looking for successful requests to `use.typekit.net` (status 200)
-3. Inspecting any component's computed styles to see the font family
+1. Opening your browser's Network tab and looking for successful requests to `use.typekit.net` (status 200)
+2. Checking the browser's Computed tab to verify the font family is inherited correctly when inspecting any component's individual text elements
+3. Switching the Language toolbar and confirming a new kit script loads (e.g. for Japanese, a request for the Japanese kit)
+
+You can also verify programmatically in the browser console. Inside the Storybook preview iframe:
+
+- **`document.fonts`** - Lists all registered font faces and their load status. Filter for CJK fonts with `[...document.fonts].filter(f => f.family.includes('han'))`
+- **`document.documentElement.className`** - Typekit adds `wf-*-active` classes for each loaded font weight (e.g. `wf-adobe-clean-han-japanese-n4-active` for Japanese normal weight 400)
+- **`window.currentKitId`** - Shows the currently active Adobe Fonts kit ID
+
+### Try it with translations
+
+Use the **Language** toolbar above to change the locale. The sample below will render in the correct font for the selected language (Latin or the matching CJK kit).
+
+<Canvas of={StatusLightStories.WithLocaleWrapper} />
 
 ## Using fonts in your application
 
@@ -74,9 +103,11 @@ If you need to self-host the fonts:
 ### Sans-serif (default)
 
 ```css
-adobe-clean-spectrum-vf, 'Adobe Clean Spectrum VF', adobe-clean, 'Adobe Clean',
+/* adobe-clean-spectrum-vf, 'Adobe Clean Spectrum VF', adobe-clean, 'Adobe Clean',
 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif
+Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif */
+
+font-family: var(--swc-sans-font-family-stack);
 ```
 
 Note: `'Adobe Clean Spectrum VF'` appears from the upstream Spectrum token resolution.
@@ -84,21 +115,131 @@ Note: `'Adobe Clean Spectrum VF'` appears from the upstream Spectrum token resol
 ### Serif
 
 ```css
-adobe-clean-spectrum-srf-vf, 'Adobe Clean Spectrum Serif VF', adobe-clean-serif,
-'Adobe Clean Serif', 'Source Serif Pro', Georgia, serif
+/* adobe-clean-spectrum-srf-vf, 'Adobe Clean Spectrum Serif VF', adobe-clean-serif,
+'Adobe Clean Serif', 'Source Serif Pro', Georgia, serif */
+
+font-family: var(--swc-serif-font-family-stack);
 ```
 
 Note: `'Adobe Clean Spectrum Serif VF'` appears from the upstream Spectrum token resolution.
 
-### CJK (Chinese, Japanese, Korean)
+## CJK font support
+
+CJK (Chinese, Japanese, Korean) font delivery is handled separately from the base Latin fonts. If you need CJK support, ensure you've included Adobe Clean Han in your Adobe Fonts web project or font loading setup.
+
+Japanese font family token example:
 
 ```css
-adobe-clean-han-japanese, Adobe Clean Han, sans-serif
+/* adobe-clean-han-japanese, 'Adobe Clean Han Japanese', 'Source Han Sans JP', 'Source Han Sans', 'ヒラギノ角ゴ ProN W3', '源ノ角ゴシック JP', '源ノ角ゴシック', Osaka, 'Noto Sans JP', 'Noto Sans CJK JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', YuGothic, 'Yu Gothic UI', 'メイリオ',  'ＭＳ Ｐゴシック', 'MS PGothic', '游ゴシック', '游ゴシック体', 'Kozuka Gothic Pr6N', '小塚ゴシック Pr6N', Meiryo, sans-serif */
+
+font-family: var(--swc-font-family-japanese);
 ```
 
-Note: `Adobe Clean Han` appears from the upstream Spectrum token resolution.
+Note: `'Adobe Clean Han Japanese'` appears from the upstream Spectrum token resolution.
 
 These stacks ensure graceful degradation if the primary fonts are unavailable.
+
+### Dynamic subsetting for CJK fonts
+
+CJK kits do not have a CSS delivery endpoint- they are only delivered via JS (`Typekit.load()`). In Spectrum Web Components, Japanese, Simplified Chinese, Traditional Chinese, Korean, and the Hong Kong Chinese characters are supported with [dynamic subsetting](https://helpx.adobe.com/fonts/using/dynamic-subsetting.html), and therefore CJK `@font-face` rules will **not** appear as `<style>` elements in the DOM.
+
+Attempting to load a CJK font's CSS URL (e.g., `https://use.typekit.net/cbs0ykg.css`) returns `HTTP 412 Precondition Failed`.
+
+When `Typekit.load()` runs for a CJK kit, it registers font faces directly via the browser's [CSS Font Loading API](https://developer.mozilla.org/en-US/docs/Web/API/CSS_Font_Loading_API) — essentially calling `document.fonts.add(new FontFace(...))` internally. The `@font-face` declarations live in `document.fonts`, not in any `<style>` element in the DOM.
+
+### How to verify CJK fonts are loading correctly
+
+**Check `wf-*` active classes on `<html>`**
+
+After switching to a CJK locale in the Storybook toolbar, open the browser console and run:
+
+```js
+document.documentElement.className;
+```
+
+You should see classes like:
+
+```
+wf-loading → (briefly, while loading)
+wf-active wf-adobe-clean-han-korean-n4-active wf-adobe-clean-han-korean-n5-active wf-adobe-clean-han-korean-n7-active wf-adobe-clean-han-korean-n9-active
+```
+
+All four weight variants going active (`n4` = normal, `n5` = 500, `n7` = 700, `n9` = 900) confirms Typekit has fully loaded the kit.
+
+**Check `document.fonts` for registered `FontFace` objects**
+
+```js
+[...document.fonts].filter((f) => f.family.includes('korean'));
+// Replace 'korean' with 'japanese', 'han-simplified', etc. for other CJK locales
+```
+
+Expected output for Korean:
+
+```
+FontFace { family: 'adobe-clean-han-korean', weight: '900', status: 'loaded' }
+FontFace { family: 'adobe-clean-han-korean', weight: '500', status: 'loaded' }
+FontFace { family: 'adobe-clean-han-korean', weight: '700', status: 'loaded' }
+FontFace { family: 'adobe-clean-han-korean', weight: 'normal', status: 'loaded' }
+```
+
+`status: 'loaded'` confirms the fonts are fully available to the browser. This is the source of truth for CJK font registration.
+
+**Confirm the font is applied to an element**
+
+```js
+getComputedStyle(document.body).fontFamily;
+// or target a specific element:
+getComputedStyle(document.querySelector('swc-status-light')).fontFamily;
+```
+
+Expected: `adobe-clean-han-korean` (or the appropriate CJK family) appears **first** in the resolved font stack.
+
+**Verify kit loaded in console**
+
+The `language.ts` decorator logs:
+
+```
+Current font loaded [id: cbs0ykg] ← Typekit active() callback fired
+```
+
+**Verify the `typekit-loaded` custom event fired (optional)**
+
+```js
+document.addEventListener('typekit-loaded', (e) => {
+  console.log('Kit loaded:', e.detail.kitId);
+});
+```
+
+Add this before switching locales. The event is dispatched by both `preview-head.html` (for the default kit) and `language.ts` (for CJK kits) when `active()` fires.
+
+#### CJK Troubleshooting
+
+| What you might look for                                 | What you'll find                            | Why                                                                       |
+| ------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------- |
+| `<style>` element with CJK `@font-face` rules           | Not present                                 | CJK fonts registered via CSS Font Loading API, not DOM injection          |
+| `[data-swc-typekit-dynamic]` elements with `@font-face` | Not present                                 | MutationObserver only stamps `.tk-*` helper `<style>` elements            |
+| `<link rel="stylesheet">` to CJK kit CSS                | Not present                                 | CSS URLs return 412; CJK kits are JS-only delivery                        |
+| CJK `@font-face` in DevTools Sources/Network            | Present under the JS script, not a CSS file | Delivered via `Typekit.load()` JS execution                               |
+| CJK font-family name present in "Rendered Fonts"        | Numerical font id, not the font-family name | Dynamic subsetting streams specific glyphs in addition to the font-family |
+
+## Adding a new locale
+
+To add font support for a new language in Storybook:
+
+1. **Create an Adobe Fonts web project** containing the font family for that language (e.g. Adobe Clean Han for CJK locales). Note the kit ID
+2. **Register the kit ID** in `preview-head.html` by adding an entry to the `__SWC_FONT_KIT_IDS__` mapping:
+
+```js
+window.__SWC_FONT_KIT_IDS__ = {
+  // ...existing entries
+  th: 'your-kit-id',
+};
+```
+
+3. **Add the locale to the Storybook toolbar** so it appears in the Language dropdown. This is configured in the Storybook global types
+4. **Verify** by selecting the new locale in the toolbar, then confirming the kit loads using the programmatic verification steps above
+
+The language decorator (`decorators/language.ts`) handles the rest automatically — it reads the kit ID from `__SWC_FONT_KIT_IDS__`, injects the script, and calls `Typekit.load()` to activate the fonts.
 
 ## Differences from 1st-gen
 
@@ -125,9 +266,16 @@ These stacks ensure graceful degradation if the primary fonts are unavailable.
 3. Verify font files are accessible and loading correctly
 4. Clear browser cache and reload
 
-### CJK font support
+### CJK fonts not rendering
 
-CJK (Chinese, Japanese, Korean) font delivery is handled separately from the base Latin fonts. If you need CJK support, ensure you've included Adobe Clean Han in your Adobe Fonts web project or font loading setup.
+If you switch to a CJK locale in the Language toolbar but text still renders in a system font:
+
+1. Manually inspect the element and check the text elements Computed styles. Inheritance of the `font-family` property value could be interfering.
+2. Check `window.currentKitId` in the preview iframe console — it should match the expected kit for that locale
+3. Look for `wf-*-active` classes on the iframe's `<html>` element (e.g. `wf-adobe-clean-han-japanese-n4-active`). If missing, the kit script loaded but `Typekit.load()` may not have been called
+4. Check the browser console for `Typekit.load() failed` warnings
+5. Verify the kit ID in `preview-head.html` (`__SWC_FONT_KIT_IDS__`) is correct and the Adobe Fonts web project is published
+6. Try a hard refresh — `Ctrl+Shift+R` / `Cmd+Shift+R` — to clear cached scripts
 
 ## Resources
 

@@ -9,6 +9,8 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { classMap } from 'lit/directives/class-map.js';
+
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
@@ -96,6 +98,18 @@ export const argTypes = {
       type: 'text',
     },
   },
+  href: {
+    name: 'href',
+    type: { name: 'string', required: false },
+    description:
+      '**Deprecated.** Use a native HTML anchor (`<a>`) with the `spectrum-Button` class and import `@spectrum-web-components/styles/global-elements.css` instead.',
+    table: {
+      type: { summary: 'string' },
+    },
+    control: {
+      type: 'text',
+    },
+  },
 };
 
 export const makeOverBackground =
@@ -119,6 +133,51 @@ export const makeOverBackground =
   };
 
 export function renderButton(properties: Properties): TemplateResult {
+  const minWidth = properties.minWidth
+    ? `min-inline-size: ${properties.minWidth}`
+    : undefined;
+
+  // Render links as static <a> elements
+  if (properties.href) {
+    // Not supported by static links
+    if (properties.disabled || properties.noWrap || properties.pending) {
+      return html``;
+    }
+
+    const variant =
+      properties.variant && properties.variant === 'cta'
+        ? 'accent'
+        : properties.variant;
+
+    const staticColor =
+      properties.staticColor &&
+      properties.staticColor.charAt(0).toUpperCase() +
+        properties.staticColor.slice(1);
+
+    return html`
+      <a
+        class=${classMap({
+          ['spectrum-Button']: true,
+          [`spectrum-Button--size${properties.size?.toUpperCase()}`]:
+            typeof properties.size !== 'undefined',
+          [`spectrum-Button--${variant}`]:
+            typeof properties.variant !== 'undefined',
+          [`spectrum-Button--${properties.treatment}`]:
+            typeof properties.treatment !== 'undefined',
+          [`spectrum-Button--static${staticColor}`]:
+            typeof properties.staticColor !== 'undefined',
+          ['spectrum-Button--iconOnly']:
+            typeof properties.iconOnly !== 'undefined',
+        })}
+        href=${properties.href}
+        target=${ifDefined(properties.target)}
+        style=${ifDefined(minWidth)}
+      >
+        ${properties.content || 'Link as Button'}
+      </a>
+    `;
+  }
+
   return html`
     <sp-button
       ?disabled=${!!properties.disabled}
@@ -133,6 +192,7 @@ export function renderButton(properties: Properties): TemplateResult {
       variant=${ifDefined(properties.variant)}
       static-color=${ifDefined(properties.staticColor)}
       label=${ifDefined(properties.label)}
+      style=${ifDefined(minWidth)}
     >
       ${properties.content || 'Click Me'}
     </sp-button>
@@ -216,12 +276,7 @@ export const renderWithIconOnly = (props: Properties): TemplateResult => {
 
 export const renderMinWidthButton = (props: Properties): TemplateResult => {
   return html`
-    <style>
-      sp-button {
-        min-width: 300px;
-      }
-    </style>
-    ${renderButtonSet(props)}
+    ${renderButtonSet({ ...props, minWidth: '300px' })}
   `;
 };
 

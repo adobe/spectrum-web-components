@@ -90,7 +90,7 @@ fulfill the accessibility contract of the button.
 <sp-tab-panel value="icon-only">
 
 ```html demo
-<sp-button variant="primary" label="Icon only">
+<sp-button variant="primary" icon-only label="Icon only">
   <sp-icon-help slot="icon"></sp-icon-help>
 </sp-button>
 ```
@@ -336,16 +336,38 @@ Events handlers for clicks and other user actions can be registered on a
 <sp-button onclick="spAlert(this, '<sp-button> clicked!')">Click me</sp-button>
 ```
 
-In addition to handling events like a native `<button>` HTML element, one can also use a `<sp-button>` in place of the `<a>` HTML element by using the `href` and optional `target` attribute.
+#### Link API deprecation
 
-```html demo
-<sp-button
-  href="https://github.com/adobe/spectrum-web-components"
-  target="_blank"
->
-  Click me
+> **Deprecated**: The `href`, `target`, `download`, `referrerpolicy`, and `rel` attributes on `<sp-button>` are deprecated and will be removed in a future release. Use a native HTML anchor (`<a>`) element with the `spectrum-Button` class instead.
+
+Using `<sp-button href="...">` conflates button and link semantics, which creates accessibility issues: screen reader users navigating by form controls will not find link-styled buttons, and vice versa. Native HTML elements provide correct semantics by default.
+
+If you intend to create a link with a `href` attribute, we instead offer CSS classes for creating button-styled links. To migrate, import the global elements stylesheet and apply button classes to native `<a>` elements:
+
+```css
+@import '@spectrum-web-components/styles/global-elements.css';
+```
+
+**Before (deprecated):**
+
+```html
+<sp-button href="https://opensource.adobe.com/spectrum-web-components">
+  Visit docs
 </sp-button>
 ```
+
+**After (recommended):**
+
+```html
+<a
+  class="spectrum-Button spectrum-Button--accent"
+  href="https://opensource.adobe.com/spectrum-web-components"
+>
+  Visit docs
+</a>
+```
+
+See the [accessibility section](#use-a-static-button-styled-native-link-if-including-href) for more details.
 
 #### Autofocus
 
@@ -374,9 +396,48 @@ or on an `<sp-icon*>` element child.
 
 Do not use custom colors for buttons. The colors of different button variations have been designed to be consistent and accessible.
 
+#### Use a static button-styled native link if including href
+
+> **Deprecated**: The `href` attribute and other link-related properties (`target`, `download`, `referrerpolicy`, `rel`) on `<sp-button>` are deprecated and will be removed in a future release.
+
+You may use a native link with classes to style it like a button. Refer to [the Storybook examples](https://opensource.adobe.com/spectrum-web-components/storybook/index.html?path=/story/button/) that include `href` for the appropriate classes to use.
+
+For styles to be fully available to slotted links, you must include the stylesheet for `@spectrum-web-components/styles/global-elements.css`.
+
+To successfully receive button styling, the link must be one of the following:
+
+- A direct child of `<sp-theme>`
+- A slotted child of a component within `<sp-theme>`
+
+To allow button-styled native links in the shadow DOM of extended components, ensure their stylesheet also imports `@spectrum-web-components/styles/global-elements.css`.
+
+**Note**: native button-styled links do not support disabled or pending states.
+
+```html
+<!--
+ Include in your own application stylesheet and extended component styles:
+ @import '@spectrum-web-components/styles/global-elements.css';
+ -->
+
+<a
+  class="spectrum-Button spectrum-Button--accent"
+  href="https://github.com/adobe/spectrum-web-components"
+>
+  Accent link button
+</a>
+<a
+  class="spectrum-Button spectrum-Button--secondary spectrum-Button--outline"
+  href="https://github.com/adobe/spectrum-web-components"
+>
+  <!-- Use icon components and continue to define slot="icon" for the best styling support -->
+  <sp-icon-help slot="icon"></sp-icon-help>
+  Secondary outline link button
+</a>
+```
+
 #### Don't mix href and non-href buttons in a set of buttons
 
-A screen reader user will not encounter href buttons when navigating by buttons or form controls. While they can both be used in the same page problems could occur if mixing the types in close proximity to each other.
+A screen reader user will not encounter href buttons when navigating by buttons or form controls. While they can both be used in the same page, problems could occur if mixing the types in close proximity to each other.
 
 #### Use static black or static white to contrast with backgrounds and images
 
