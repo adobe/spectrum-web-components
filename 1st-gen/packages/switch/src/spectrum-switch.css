@@ -276,7 +276,7 @@
 
   :host([checked]:hover) #input:enabled + #switch {
     background-color: var(--highcontrast-switch-background-color-selected-hover, var(--mod-switch-background-color-selected-hover, var(--spectrum-switch-background-color-selected-hover)));
-    border-color: var(--mod-switch-border-color-selected-hover, var(--spectrum-switch-border-color-selected-hover));
+    border-color: var(--highcontrast-switch-border-color-selected-hover, var(--mod-switch-border-color-selected-hover, var(--spectrum-switch-border-color-selected-hover)));
   }
 
   :host([checked]:hover) #input:enabled + #switch::before {
@@ -392,8 +392,20 @@
     --highcontrast-switch-background-color-selected-focus: Highlight;
     --highcontrast-switch-background-color-selected-disabled: Highlight;
     --highcontrast-switch-focus-indicator-color: ButtonText;
+    --highcontrast-switch-border-color-selected-default: Highlight;
+    --highcontrast-switch-border-color-selected-hover: Highlight;
 
     forced-color-adjust: none;
+  }
+
+  :host([checked]) #input + #switch,
+  :host([checked][emphasized]) #input + #switch {
+    --highcontrast-switch-border-color-selected-default: Highlight;
+  }
+
+  :host([disabled]) #input + #switch,
+  :host([disabled]) #input + #switch {
+    --highcontrast-switch-border-color-default: GrayText;
   }
 
   #input:not(:checked) + #switch {
@@ -402,6 +414,7 @@
 
   @media (hover: hover) {
     :host(:hover) #input:not(:checked) + #switch {
+      border-color: Highlight;
       box-shadow: inset 0 0 0 1px Highlight;
     }
 
