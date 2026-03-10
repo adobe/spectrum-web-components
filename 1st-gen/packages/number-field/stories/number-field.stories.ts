@@ -344,14 +344,19 @@ export const units = (args: StoryArgs): TemplateResult => {
   `;
 };
 
-export const TruncatedValueTooltip = (): TemplateResult => {
+units.args = {
+  value: 24,
+};
+
+export const TruncatedValueTooltip = (args: StoryArgs): TemplateResult => {
+  const value = args.value ?? 123456;
   return html`
     <sp-field-label for="truncated-show-stepper">
       Truncated value (stepper visible)
     </sp-field-label>
     <sp-number-field
       id="truncated-show-stepper"
-      value="123456"
+      .value=${value}
       .formatOptions=${{
         style: 'currency',
         currency: 'EUR',
@@ -365,7 +370,7 @@ export const TruncatedValueTooltip = (): TemplateResult => {
     <sp-number-field
       id="truncated-hide-stepper"
       hide-stepper
-      value="123456"
+      .value=${value}
       .formatOptions=${{
         style: 'currency',
         currency: 'EUR',
@@ -378,7 +383,7 @@ export const TruncatedValueTooltip = (): TemplateResult => {
     </sp-field-label>
     <sp-number-field
       id="truncated-show-stepper-valid"
-      value="123456"
+      .value=${value}
       valid
       .formatOptions=${{
         style: 'currency',
@@ -394,7 +399,7 @@ export const TruncatedValueTooltip = (): TemplateResult => {
       id="truncated-hide-stepper-invalid"
       hide-stepper
       invalid
-      value="123456"
+      .value=${value}
       .formatOptions=${{
         style: 'currency',
         currency: 'EUR',
@@ -405,8 +410,8 @@ export const TruncatedValueTooltip = (): TemplateResult => {
   `;
 };
 
-units.args = {
-  value: 24,
+TruncatedValueTooltip.args = {
+  value: 123456,
 };
 
 export const pixels = (args: StoryArgs): TemplateResult => {
