@@ -6,7 +6,7 @@
 
 **Added**: Added truncated-value tooltip behavior for single-line text inputs.
 
-- `<sp-textfield>` now shows a tooltip with the full value when the displayed value is visually truncated (via `TruncatedValueTooltipMixin`).
+- `<sp-textfield>` now shows a tooltip with the full value when the displayed value is visually truncated (via `TruncatedValueTooltipController`).
 - Tooltip placement can be controlled with the `tooltip-placement` attribute on `<sp-textfield>` or `<sp-number-field>`
 - `<sp-number-field>` inherits the same truncation tooltip behavior from `TextfieldBase`, including formatted numeric/currency values.
 - `type="password"` textfields no longer use ellipsis truncation styling (`text-overflow: clip`) to avoid awkward visual truncation.

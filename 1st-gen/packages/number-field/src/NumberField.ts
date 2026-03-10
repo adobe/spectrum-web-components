@@ -546,8 +546,18 @@ export class NumberField extends TextfieldBase {
       this._trackingValue = value;
       this.inputElement.value = value;
       this.inputElement.setSelectionRange(selectionStart, selectionStart);
-      this.syncTruncatedValueTooltipText();
-      this.refreshTruncatedValueTooltipState();
+      this.truncatedValueTooltipController.syncTooltipText(
+        this.inputElement?.value ?? this.displayValue
+      );
+      const justBecameTruncated =
+        this.truncatedValueTooltipController.refresh();
+      if (justBecameTruncated) {
+        this.updateComplete.then(() => {
+          this.truncatedValueTooltipController.syncTooltipText(
+            this.inputElement?.value ?? this.displayValue
+          );
+        });
+      }
       return;
     } else {
       this.inputElement.value = this.indeterminate
@@ -609,43 +619,6 @@ export class NumberField extends TextfieldBase {
   protected override get displayValue(): string {
     const indeterminateValue = this.focused ? '' : indeterminatePlaceholder;
     return this.indeterminate ? indeterminateValue : this.formattedValue;
-  }
-
-  private syncTruncatedValueTooltipText(): void {
-    const tooltip = this.shadowRoot?.querySelector(
-      '#truncated-value-tooltip sp-tooltip'
-    );
-    if (!tooltip) {
-      return;
-    }
-    const tooltipTextNode =
-      Array.from(tooltip.childNodes).find(
-        (node) =>
-          node.nodeType === Node.TEXT_NODE &&
-          Boolean(node.textContent?.trim().length)
-      ) ??
-      Array.from(tooltip.childNodes).find(
-        (node) => node.nodeType === Node.TEXT_NODE
-      );
-    if (tooltipTextNode) {
-      tooltipTextNode.textContent =
-        this.inputElement?.value ?? this.displayValue;
-    }
-  }
-
-  private refreshTruncatedValueTooltipState(): void {
-    const mixinApi = this as unknown as {
-      isTruncated?: boolean;
-      refreshTruncationState?: () => void;
-    };
-    const wasTruncated = mixinApi.isTruncated;
-    mixinApi.refreshTruncationState?.call(this);
-    const isTruncated = mixinApi.isTruncated;
-    if (!wasTruncated && isTruncated) {
-      this.updateComplete.then(() => {
-        this.syncTruncatedValueTooltipText();
-      });
-    }
   }
 
   protected clearNumberFormatterCache(): void {
