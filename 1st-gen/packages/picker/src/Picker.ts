@@ -50,6 +50,7 @@ import {
   IS_TOUCH_DEVICE,
   MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
+import { isWebKit } from '@spectrum-web-components/shared';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
@@ -1721,7 +1722,14 @@ export class Picker extends FieldLabelMixin(
     };
     return [
       html`
-        <span id="icon" ?hidden=${this.icons === 'none'}>
+        <span
+          aria-hidden=${this.icons === 'none' && isWebKit() ? 'true' : 'false'}
+          id="icon"
+          ?hidden=${this.icons === 'none' && !isWebKit()}
+          class=${classMap({
+            'visually-hidden': this.icons === 'none' && isWebKit(),
+          })}
+        >
           ${this.selectedItemContent.icon}
         </span>
         ${this.appliedLabel
