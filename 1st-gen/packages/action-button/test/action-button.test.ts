@@ -19,7 +19,7 @@ import {
   waitUntil,
 } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 
 import {
   ActionButton,
@@ -39,310 +39,323 @@ describe('ActionButton', () => {
     async () =>
       await fixture<ActionButton>(BlackActionButton(BlackActionButton.args))
   );
-  it('warns in devMode when href is provided', async () => {
-    const el = await fixture<ActionButton>(html`
-      <sp-button href="https://example.com">Link Button</sp-button>
-    `);
-
-    await elementUpdated(el);
-    expect(consoleWarnStub.called).to.be.true;
-
-    const spyCall = consoleWarnStub.getCall(0);
-    expect(
-      (spyCall.args[0] as string).includes('deprecated'),
-      'confirm deprecated href warning'
-    ).to.be.true;
-    expect(
-      (spyCall.args[0] as string).includes('href'),
-      'warning mentions href attribute'
-    ).to.be.true;
-    expect(
-      spyCall.args[spyCall.args.length - 1],
-      'confirm `data` shape'
-    ).to.deep.equal({
-      data: {
-        localName: 'sp-button',
-        type: 'api',
-        level: 'deprecation',
-      },
+  describe('dev mode', () => {
+    let consoleWarnStub!: ReturnType<typeof stub>;
+    before(() => {
+      window.__swc.verbose = true;
+      consoleWarnStub = stub(console, 'warn');
     });
-  });
+    afterEach(() => {
+      consoleWarnStub.resetHistory();
+    });
+    after(() => {
+      window.__swc.verbose = false;
+      consoleWarnStub.restore();
+    });
+    it('warns in devMode when href is provided', async () => {
+      const el = await fixture<ActionButton>(html`
+        <sp-button href="https://example.com">Link Button</sp-button>
+      `);
 
-  it('does not warn when href is not provided', async () => {
-    await fixture<ActionButton>(html`
-      <sp-button>Button</sp-button>
-    `);
+      await elementUpdated(el);
+      expect(consoleWarnStub.called).to.be.true;
 
-    const hrefWarnings = Array.from(
-      { length: consoleWarnStub.callCount },
-      (_, i) => consoleWarnStub.getCall(i)
-    ).filter((call) => (call.args[0] as string).includes('href'));
-
-    expect(hrefWarnings.length).to.equal(0);
-  });
-  it('loads default', async () => {
-    const el = await fixture<ActionButton>(html`
-      <sp-action-button>Button</sp-action-button>
-    `);
-
-    await elementUpdated(el);
-    expect(el).to.not.be.undefined;
-    expect(el.textContent).to.include('Button');
-    await expect(el).to.be.accessible();
-  });
-  it('gardens "value" as a property', async () => {
-    const el = await fixture<ActionButton>(html`
-      <sp-action-button>Button</sp-action-button>
-    `);
-
-    await elementUpdated(el);
-    expect(el.hasAttribute('value')).to.be.false;
-    el.value = 'Value';
-    await elementUpdated(el);
-    expect(el.hasAttribute('value')).to.be.true;
-    el.value = '';
-    await elementUpdated(el);
-    expect(el.hasAttribute('value')).to.be.false;
-  });
-  it('loads [hold-affordance]', async () => {
-    const el = await fixture<ActionButton>(html`
-      <sp-action-button hold-affordance>Button</sp-action-button>
-    `);
-
-    await elementUpdated(el);
-    expect(el).to.not.be.undefined;
-    expect(el.textContent).to.include('Button');
-    await expect(el).to.be.accessible();
-  });
-  it('manages a `tabindex`', async () => {
-    const el = await fixture<ActionButton>(html`
-      <sp-action-button>Button</sp-action-button>
-    `);
-
-    expect(el.tabIndex).to.equal(0);
-    expect(el.disabled).to.be.false;
-
-    el.setAttribute('tabindex', '-1');
-    await elementUpdated(el);
-
-    expect(el.tabIndex).to.equal(-1);
-    expect(el.disabled).to.be.false;
-
-    el.disabled = true;
-    await elementUpdated(el);
-
-    expect(el.tabIndex).to.equal(-1);
-    expect(el.disabled).to.be.true;
-
-    el.disabled = false;
-    await elementUpdated(el);
-
-    expect(el.tabIndex).to.equal(-1);
-    expect(el.disabled).to.be.false;
-  });
-  it('manages a `size` attribute', async () => {
-    const el = await fixture<ActionButton>(html`
-      <sp-action-button size="xl">Button</sp-action-button>
-    `);
-
-    await elementUpdated(el);
-    expect(el.size).to.equal('xl');
-    expect(el.getAttribute('size')).to.equal('xl');
-    el.removeAttribute('size');
-    await elementUpdated(el);
-    expect(el.size).to.equal('m');
-    expect(el.hasAttribute('size')).to.be.false;
-  });
-  it('does not apply a default `size` attribute', async () => {
-    const el = await fixture<ActionButton>(html`
-      <sp-action-button>Button</sp-action-button>
-    `);
-
-    await elementUpdated(el);
-    expect(el.size).to.equal('m');
-    expect(el.hasAttribute('size')).to.be.false;
-  });
-  it('dispatches `longpress` events when [hold-affordance]', async () => {
-    const longpressSpy = spy();
-    const el = await fixture<ActionButton>(html`
-      <sp-action-button hold-affordance @longpress=${() => longpressSpy()}>
-        Button
-      </sp-action-button>
-    `);
-
-    await elementUpdated(el);
-
-    el.focus();
-    await sendKeys({ press: 'Space' });
-
-    expect(longpressSpy.callCount).to.equal(1);
-    await sendKeys({ press: 'Alt+ArrowDown' });
-
-    expect(longpressSpy.callCount).to.equal(2);
-    el.dispatchEvent(new PointerEvent('pointerdown', { button: 0 }));
-    el.dispatchEvent(new PointerEvent('pointerup'));
-    el.dispatchEvent(new PointerEvent('pointerdown', { button: 0 }));
-    await waitUntil(() => longpressSpy.callCount === 3);
-  });
-  it('does not dispatch `longpress` events when "right click"ed', async () => {
-    const longpressSpy = spy();
-    const el = await fixture<ActionButton>(html`
-      <sp-action-button hold-affordance @longpress=${() => longpressSpy()}>
-        Button
-      </sp-action-button>
-    `);
-
-    await elementUpdated(el);
-    expect(longpressSpy.callCount).to.equal(0);
-
-    el.focus();
-    el.dispatchEvent(new PointerEvent('pointerdown', { button: 1 }));
-    await aTimeout(2 * LONGPRESS_DURATION);
-    expect(longpressSpy.callCount).to.equal(0);
-  });
-  it(':not([toggles])', async () => {
-    const el = await fixture<ActionButton>(html`
-      <sp-action-button>Button</sp-action-button>
-    `);
-
-    await elementUpdated(el);
-    const button = el.focusElement;
-
-    expect(el.toggles).to.be.false;
-    expect(el.selected).to.be.false;
-    expect(button.hasAttribute('aria-pressed')).to.be.false;
-
-    el.click();
-    await elementUpdated(el);
-
-    expect(el.toggles).to.be.false;
-    expect(el.selected).to.be.false;
-    expect(button.hasAttribute('aria-pressed')).to.be.false;
-  });
-  it('responds to [selected]', async () => {
-    const el = await fixture<ActionButton>(html`
-      <sp-action-button>Button</sp-action-button>
-    `);
-
-    await elementUpdated(el);
-    const button = el.focusElement;
-
-    expect(el.toggles).to.be.false;
-    expect(el.selected).to.be.false;
-    expect(button.hasAttribute('aria-pressed')).to.be.false;
-
-    el.selected = true;
-    await elementUpdated(el);
-
-    expect(el.toggles).to.be.false;
-    expect(el.selected).to.be.true;
-    expect(button.getAttribute('aria-pressed')).to.equal('true');
-
-    el.selected = false;
-    await elementUpdated(el);
-
-    expect(el.toggles).to.be.false;
-    expect(el.selected).to.be.false;
-    expect(button.hasAttribute('aria-pressed')).to.be.false;
-  });
-  it('toggles', async () => {
-    const el = await fixture<ActionButton>(html`
-      <sp-action-button toggles>Button</sp-action-button>
-    `);
-
-    await elementUpdated(el);
-    const button = el.focusElement;
-
-    expect(el.toggles).to.be.true;
-    expect(el.selected).to.be.false;
-    expect(button.getAttribute('aria-pressed')).to.equal('false');
-
-    el.focus();
-    await sendKeys({ press: 'Space' });
-    await elementUpdated(el);
-
-    expect(el.toggles).to.be.true;
-    expect(el.selected).to.be.true;
-    expect(button.getAttribute('aria-pressed')).to.equal('true');
-
-    el.addEventListener('change', (event: Event) => event.preventDefault());
-    el.click();
-    await elementUpdated(el);
-
-    expect(el.toggles).to.be.true;
-    expect(el.selected).to.be.true;
-    expect(button.getAttribute('aria-pressed')).to.equal('true');
-  });
-  it('toggles [aria-haspopup][aria-expanded]', async () => {
-    const el = await fixture<ActionButton>(html`
-      <sp-action-button toggles aria-haspopup="true" aria-expanded="false">
-        Button
-      </sp-action-button>
-    `);
-
-    await elementUpdated(el);
-    const button = el.focusElement;
-
-    expect(el.toggles).to.be.true;
-    expect(el.selected).to.be.false;
-    expect(button).not.to.have.attribute('aria-pressed');
-    expect(button).to.have.attribute('aria-haspopup', 'true');
-    expect(button).to.have.attribute('aria-expanded', 'false');
-
-    el.focus();
-    await sendKeys({ press: 'Space' });
-    await elementUpdated(el);
-
-    expect(el.toggles).to.be.true;
-    expect(el.selected).to.be.true;
-    expect(button).not.to.have.attribute('aria-pressed');
-    expect(button).to.have.attribute('aria-haspopup', 'true');
-    expect(button).to.have.attribute('aria-expanded', 'true');
-
-    el.addEventListener('change', (event: Event) => event.preventDefault());
-    el.click();
-    await elementUpdated(el);
-
-    expect(el.toggles).to.be.true;
-    expect(el.selected).to.be.true;
-    expect(button).not.to.have.attribute('aria-pressed');
-    expect(button).to.have.attribute('aria-haspopup', 'true');
-    expect(button).to.have.attribute('aria-expanded', 'true');
-  });
-  it('manages a `static-color` attribute', async () => {
-    const el = await fixture<ActionButton>(html`
-      <sp-action-button static-color="black">Button</sp-action-button>
-    `);
-
-    await elementUpdated(el);
-    expect(el.staticColor).to.equal('black');
-    expect(el.getAttribute('static-color')).to.equal('black');
-    el.removeAttribute('static-color');
-    await elementUpdated(el);
-    expect(el.staticColor).to.be.null;
-    expect(el.hasAttribute('static-color')).to.be.false;
-  });
-  it('allows link click', async () => {
-    let clicked = false;
-    const el = await fixture<ActionButton>(html`
-      <sp-action-button href="#top" target="_blank">
-        With Target
-      </sp-action-button>
-    `);
-
-    await elementUpdated(el);
-
-    // prevents browser from activating link but records the proxy click
-    el.shadowRoot
-      ?.querySelector('.anchor')
-      ?.addEventListener('click', (event: Event) => {
-        event.preventDefault();
-        clicked = true;
+      const spyCall = consoleWarnStub.getCall(0);
+      expect(
+        (spyCall.args[0] as string).includes('deprecated'),
+        'confirm deprecated href warning'
+      ).to.be.true;
+      expect(
+        (spyCall.args[0] as string).includes('href'),
+        'warning mentions href attribute'
+      ).to.be.true;
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        'confirm `data` shape'
+      ).to.deep.equal({
+        data: {
+          localName: 'sp-button',
+          type: 'api',
+          level: 'deprecation',
+        },
       });
+    });
+    it('does not warn when href is not provided', async () => {
+      await fixture<ActionButton>(html`
+        <sp-button>Button</sp-button>
+      `);
 
-    // tests mouse click events, and by extension VoiceOver CRTL+Option+Space click
-    await mouseClickOn(el);
-    await elementUpdated(el);
-    expect(clicked).to.be.true;
+      const hrefWarnings = Array.from(
+        { length: consoleWarnStub.callCount },
+        (_, i) => consoleWarnStub.getCall(i)
+      ).filter((call) => (call.args[0] as string).includes('href'));
+
+      expect(hrefWarnings.length).to.equal(0);
+    });
+    it('loads default', async () => {
+      const el = await fixture<ActionButton>(html`
+        <sp-action-button>Button</sp-action-button>
+      `);
+
+      await elementUpdated(el);
+      expect(el).to.not.be.undefined;
+      expect(el.textContent).to.include('Button');
+      await expect(el).to.be.accessible();
+    });
+    it('gardens "value" as a property', async () => {
+      const el = await fixture<ActionButton>(html`
+        <sp-action-button>Button</sp-action-button>
+      `);
+
+      await elementUpdated(el);
+      expect(el.hasAttribute('value')).to.be.false;
+      el.value = 'Value';
+      await elementUpdated(el);
+      expect(el.hasAttribute('value')).to.be.true;
+      el.value = '';
+      await elementUpdated(el);
+      expect(el.hasAttribute('value')).to.be.false;
+    });
+    it('loads [hold-affordance]', async () => {
+      const el = await fixture<ActionButton>(html`
+        <sp-action-button hold-affordance>Button</sp-action-button>
+      `);
+
+      await elementUpdated(el);
+      expect(el).to.not.be.undefined;
+      expect(el.textContent).to.include('Button');
+      await expect(el).to.be.accessible();
+    });
+    it('manages a `tabindex`', async () => {
+      const el = await fixture<ActionButton>(html`
+        <sp-action-button>Button</sp-action-button>
+      `);
+
+      expect(el.tabIndex).to.equal(0);
+      expect(el.disabled).to.be.false;
+
+      el.setAttribute('tabindex', '-1');
+      await elementUpdated(el);
+
+      expect(el.tabIndex).to.equal(-1);
+      expect(el.disabled).to.be.false;
+
+      el.disabled = true;
+      await elementUpdated(el);
+
+      expect(el.tabIndex).to.equal(-1);
+      expect(el.disabled).to.be.true;
+
+      el.disabled = false;
+      await elementUpdated(el);
+
+      expect(el.tabIndex).to.equal(-1);
+      expect(el.disabled).to.be.false;
+    });
+    it('manages a `size` attribute', async () => {
+      const el = await fixture<ActionButton>(html`
+        <sp-action-button size="xl">Button</sp-action-button>
+      `);
+
+      await elementUpdated(el);
+      expect(el.size).to.equal('xl');
+      expect(el.getAttribute('size')).to.equal('xl');
+      el.removeAttribute('size');
+      await elementUpdated(el);
+      expect(el.size).to.equal('m');
+      expect(el.hasAttribute('size')).to.be.false;
+    });
+    it('does not apply a default `size` attribute', async () => {
+      const el = await fixture<ActionButton>(html`
+        <sp-action-button>Button</sp-action-button>
+      `);
+
+      await elementUpdated(el);
+      expect(el.size).to.equal('m');
+      expect(el.hasAttribute('size')).to.be.false;
+    });
+    it('dispatches `longpress` events when [hold-affordance]', async () => {
+      const longpressSpy = spy();
+      const el = await fixture<ActionButton>(html`
+        <sp-action-button hold-affordance @longpress=${() => longpressSpy()}>
+          Button
+        </sp-action-button>
+      `);
+
+      await elementUpdated(el);
+
+      el.focus();
+      await sendKeys({ press: 'Space' });
+
+      expect(longpressSpy.callCount).to.equal(1);
+      await sendKeys({ press: 'Alt+ArrowDown' });
+
+      expect(longpressSpy.callCount).to.equal(2);
+      el.dispatchEvent(new PointerEvent('pointerdown', { button: 0 }));
+      el.dispatchEvent(new PointerEvent('pointerup'));
+      el.dispatchEvent(new PointerEvent('pointerdown', { button: 0 }));
+      await waitUntil(() => longpressSpy.callCount === 3);
+    });
+    it('does not dispatch `longpress` events when "right click"ed', async () => {
+      const longpressSpy = spy();
+      const el = await fixture<ActionButton>(html`
+        <sp-action-button hold-affordance @longpress=${() => longpressSpy()}>
+          Button
+        </sp-action-button>
+      `);
+
+      await elementUpdated(el);
+      expect(longpressSpy.callCount).to.equal(0);
+
+      el.focus();
+      el.dispatchEvent(new PointerEvent('pointerdown', { button: 1 }));
+      await aTimeout(2 * LONGPRESS_DURATION);
+      expect(longpressSpy.callCount).to.equal(0);
+    });
+    it(':not([toggles])', async () => {
+      const el = await fixture<ActionButton>(html`
+        <sp-action-button>Button</sp-action-button>
+      `);
+
+      await elementUpdated(el);
+      const button = el.focusElement;
+
+      expect(el.toggles).to.be.false;
+      expect(el.selected).to.be.false;
+      expect(button.hasAttribute('aria-pressed')).to.be.false;
+
+      el.click();
+      await elementUpdated(el);
+
+      expect(el.toggles).to.be.false;
+      expect(el.selected).to.be.false;
+      expect(button.hasAttribute('aria-pressed')).to.be.false;
+    });
+    it('responds to [selected]', async () => {
+      const el = await fixture<ActionButton>(html`
+        <sp-action-button>Button</sp-action-button>
+      `);
+
+      await elementUpdated(el);
+      const button = el.focusElement;
+
+      expect(el.toggles).to.be.false;
+      expect(el.selected).to.be.false;
+      expect(button.hasAttribute('aria-pressed')).to.be.false;
+
+      el.selected = true;
+      await elementUpdated(el);
+
+      expect(el.toggles).to.be.false;
+      expect(el.selected).to.be.true;
+      expect(button.getAttribute('aria-pressed')).to.equal('true');
+
+      el.selected = false;
+      await elementUpdated(el);
+
+      expect(el.toggles).to.be.false;
+      expect(el.selected).to.be.false;
+      expect(button.hasAttribute('aria-pressed')).to.be.false;
+    });
+    it('toggles', async () => {
+      const el = await fixture<ActionButton>(html`
+        <sp-action-button toggles>Button</sp-action-button>
+      `);
+
+      await elementUpdated(el);
+      const button = el.focusElement;
+
+      expect(el.toggles).to.be.true;
+      expect(el.selected).to.be.false;
+      expect(button.getAttribute('aria-pressed')).to.equal('false');
+
+      el.focus();
+      await sendKeys({ press: 'Space' });
+      await elementUpdated(el);
+
+      expect(el.toggles).to.be.true;
+      expect(el.selected).to.be.true;
+      expect(button.getAttribute('aria-pressed')).to.equal('true');
+
+      el.addEventListener('change', (event: Event) => event.preventDefault());
+      el.click();
+      await elementUpdated(el);
+
+      expect(el.toggles).to.be.true;
+      expect(el.selected).to.be.true;
+      expect(button.getAttribute('aria-pressed')).to.equal('true');
+    });
+    it('toggles [aria-haspopup][aria-expanded]', async () => {
+      const el = await fixture<ActionButton>(html`
+        <sp-action-button toggles aria-haspopup="true" aria-expanded="false">
+          Button
+        </sp-action-button>
+      `);
+
+      await elementUpdated(el);
+      const button = el.focusElement;
+
+      expect(el.toggles).to.be.true;
+      expect(el.selected).to.be.false;
+      expect(button).not.to.have.attribute('aria-pressed');
+      expect(button).to.have.attribute('aria-haspopup', 'true');
+      expect(button).to.have.attribute('aria-expanded', 'false');
+
+      el.focus();
+      await sendKeys({ press: 'Space' });
+      await elementUpdated(el);
+
+      expect(el.toggles).to.be.true;
+      expect(el.selected).to.be.true;
+      expect(button).not.to.have.attribute('aria-pressed');
+      expect(button).to.have.attribute('aria-haspopup', 'true');
+      expect(button).to.have.attribute('aria-expanded', 'true');
+
+      el.addEventListener('change', (event: Event) => event.preventDefault());
+      el.click();
+      await elementUpdated(el);
+
+      expect(el.toggles).to.be.true;
+      expect(el.selected).to.be.true;
+      expect(button).not.to.have.attribute('aria-pressed');
+      expect(button).to.have.attribute('aria-haspopup', 'true');
+      expect(button).to.have.attribute('aria-expanded', 'true');
+    });
+    it('manages a `static-color` attribute', async () => {
+      const el = await fixture<ActionButton>(html`
+        <sp-action-button static-color="black">Button</sp-action-button>
+      `);
+
+      await elementUpdated(el);
+      expect(el.staticColor).to.equal('black');
+      expect(el.getAttribute('static-color')).to.equal('black');
+      el.removeAttribute('static-color');
+      await elementUpdated(el);
+      expect(el.staticColor).to.be.null;
+      expect(el.hasAttribute('static-color')).to.be.false;
+    });
+    it('allows link click', async () => {
+      let clicked = false;
+      const el = await fixture<ActionButton>(html`
+        <sp-action-button href="#top" target="_blank">
+          With Target
+        </sp-action-button>
+      `);
+
+      await elementUpdated(el);
+
+      // prevents browser from activating link but records the proxy click
+      el.shadowRoot
+        ?.querySelector('.anchor')
+        ?.addEventListener('click', (event: Event) => {
+          event.preventDefault();
+          clicked = true;
+        });
+
+      // tests mouse click events, and by extension VoiceOver CRTL+Option+Space click
+      await mouseClickOn(el);
+      await elementUpdated(el);
+      expect(clicked).to.be.true;
+    });
   });
 });
