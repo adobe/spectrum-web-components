@@ -76,5 +76,5 @@
     "access": "public"
   },
   "customElements": "custom-elements.json",
-  "deprecationNotice": "The link API features (href, target, download, referrerpolicy, rel) in @spectrum-web-components/action-button are deprecated and will be removed in a future release. Use a native HTML anchor element with the spectrum-Button class and @spectrum-web-components/styles/global-elements.css instead."
+  "deprecationNotice": "The link API features (href, target, download, referrerpolicy, rel) in @spectrum-web-components/action-button are deprecated and will be removed in a future release. Use a native HTML anchor element with the spectrum-ActionButton class and @spectrum-web-components/styles/global-elements.css instead."
 }
