@@ -301,7 +301,7 @@ export class Overlay extends ComputedOverlayBase {
      * @default false
      */
     @property({ type: Boolean, attribute: 'allow-outside-click' })
-    allowOutsideClick = false;
+    override allowOutsideClick = false;
 
     /**
      * A reference to the slot element within the overlay.
@@ -581,6 +581,7 @@ export class Overlay extends ComputedOverlayBase {
                 escapeDeactivates: false,
                 allowOutsideClick: this.allowOutsideClick,
             });
+
             if (this.type === 'modal' || this.type === 'page') {
                 this._focusTrap.activate();
             }
@@ -727,8 +728,13 @@ export class Overlay extends ComputedOverlayBase {
         event.relatedTarget.dispatchEvent(relationEvent);
     };
 
-    private closeOnCancelEvent = (): void => {
-        this.open = false;
+    private closeOnCancelEvent = (event: Event): void => {
+        // Only close the overlay if the cancel event originated from within this overlay.
+        const path = event.composedPath();
+        const isWithinOverlay = path.some((el) => el === this);
+        if (isWithinOverlay) {
+            this.open = false;
+        }
     };
 
     /**
