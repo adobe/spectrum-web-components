@@ -402,20 +402,21 @@ export class TextfieldBase extends ManageHelpText(
   }
 
   protected override update(changedProperties: PropertyValues): void {
-    if (
+    const valueOrRequiredChanged =
       changedProperties.has('value') ||
-      (changedProperties.has('required') && this.required)
-    ) {
+      (changedProperties.has('required') && this.required);
+
+    if (valueOrRequiredChanged) {
       this.updateComplete.then(() => {
         this.checkValidity();
+        if (changedProperties.has('value')) {
+          this.truncatedValueTooltipController.refresh();
+        }
       });
     }
+
     super.update(changedProperties);
-    if (changedProperties.has('value')) {
-      this.updateComplete.then(() => {
-        this.truncatedValueTooltipController.refresh();
-      });
-    }
+
     if (changedProperties.has('focused') && !this.focused) {
       this.truncatedValueTooltipController.refresh();
     }
