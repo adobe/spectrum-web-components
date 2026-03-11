@@ -87,7 +87,7 @@ export const Default = (args: StoryArgs): TemplateResult => {
       placeholder="Choose a selection type with a very long label, too long, in fact"
       ${spreadProps(args)}
     >
-      <span slot="field-label">Where do you live?Choose a selection type</span>
+      <span slot="field-label">Selection type:</span>
       <sp-menu-item value="option-1">Deselect</sp-menu-item>
       <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
       <sp-menu-item value="option-3">Feather...</sp-menu-item>
@@ -167,7 +167,7 @@ export const tooltip = (args: StoryArgs): TemplateResult => {
       placeholder="Choose a selection type with a very long label, too long, in fact"
       ${spreadProps(rest)}
     >
-      <span slot="field-label">Choose a selection type</span>
+      <span slot="field-label">Selection type:</span>
       <sp-menu-item value="option-1">Deselect</sp-menu-item>
       <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
       <sp-menu-item value="option-3">Feather...</sp-menu-item>
@@ -200,7 +200,7 @@ export const leftSideLabel = (args: StoryArgs): TemplateResult => {
       side-aligned="start"
       ${spreadProps(args)}
     >
-      <span slot="field-label">Choose a selection type</span>
+      <span slot="field-label">Selection type:</span>
       <sp-menu-item value="option-1">Deselect</sp-menu-item>
       <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
       <sp-menu-item value="option-3">Feather...</sp-menu-item>
@@ -245,7 +245,7 @@ export const noVisibleLabel = (args: StoryArgs): TemplateResult => {
 export const slottedLabel = (args: StoryArgs): TemplateResult => {
   return html`
     <sp-picker @change=${handleChange(args)} ${spreadProps(args)}>
-      <span slot="field-label">Where do you live?</span>
+      <span slot="field-label">Selection type:</span>
       <sp-menu-item value="option-1">Deselect</sp-menu-item>
       <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
       <sp-menu-item value="option-3">Feather...</sp-menu-item>
@@ -294,7 +294,7 @@ export const quietSideLabel = (args: StoryArgs): TemplateResult => {
     <sp-picker
       ${spreadProps(args)}
       @change=${handleChange(args)}
-      label="Pick an item"
+      placeholder="Pick an item"
       side-aligned="start"
     >
       <span slot="field-label">Featured item:</span>
@@ -510,7 +510,7 @@ export const Open = (args: StoryArgs): TemplateResult => {
         ${spreadProps(args)}
         @change=${handleChange(args)}
       >
-        <span slot="field-label">Selection type</span>
+        <span slot="field-label">Selection type:</span>
         <sp-menu-item>Deselect</sp-menu-item>
         <sp-menu-item>Select Inverse</sp-menu-item>
         <sp-menu-item>Feather...</sp-menu-item>
@@ -794,7 +794,6 @@ export const PickerIniPadSafari = (): TemplateResult => {
     <sp-picker
       label="What would you like to do?"
       value="item-2"
-      id="picker-icons"
       style="top:150px;position:absolute;"
     >
       <sp-menu-item>
@@ -926,7 +925,6 @@ export const PickerIniPadSafari = (): TemplateResult => {
         <sp-picker
           label="What would you like to do?"
           value="item-2"
-          id="picker-icons"
         >
           <sp-menu-item>
             <sp-icon-triple-gripper slot="icon"></sp-icon-triple-gripper>
@@ -1094,7 +1092,6 @@ class PickerWithDelayedMenuItems extends LitElement {
           <br />
           <sp-picker
             value="item-2"
-            id="picker-1"
             style="margin-top: 8px;"
             label="Choose an action"
           >
@@ -1112,7 +1109,6 @@ class PickerWithDelayedMenuItems extends LitElement {
           <br />
           <sp-picker
             value="item-2"
-            id="picker-2"
             style="margin-top: 8px;"
             label="Choose an action"
           >
@@ -1184,7 +1180,7 @@ delayedMenuItems.parameters = {
   chromatic: { disableSnapshot: true },
 };
 
-export const DeprecatedSpLabel = (args: StoryArgs): TemplateResult => {
+export const DeprecatedSpFieldLabel = (args: StoryArgs): TemplateResult => {
   return html`
     <sp-picker
       @change=${handleChange(args)}
@@ -1211,7 +1207,7 @@ export const DeprecatedSpLabel = (args: StoryArgs): TemplateResult => {
 
 export const DeprecatedLabelSlot = (args: StoryArgs): TemplateResult => {
   return html`
-    <sp-picker id="picker-1" @change=${handleChange(args)} ${spreadProps(args)}>
+    <sp-picker id="debug" @change=${handleChange(args)} ${spreadProps(args)}>
       <span slot="label">
         Choose a selection type with a very long label, too long, in fact
       </span>
@@ -1221,6 +1217,29 @@ export const DeprecatedLabelSlot = (args: StoryArgs): TemplateResult => {
       <sp-menu-item value="option-4">Select and Mask...</sp-menu-item>
       <sp-menu-item value="option-5">Save Selection</sp-menu-item>
       <sp-menu-item disabled value="option-6">Make Work Path</sp-menu-item>
+    </sp-picker>
+    <p>This is some text.</p>
+    <p>This is some text.</p>
+    <p>
+      This is a
+      <a href="#anchor">link</a>
+      .
+    </p>
+  `;
+};
+export const DeprecatedLabelAsPlaceholder = (args: StoryArgs): TemplateResult => {
+  return html`
+    <sp-picker
+      ${spreadProps(args)}
+      @change=${handleChange(args)}
+      label="Pick an item"
+      side-aligned="start"
+    >
+      <span slot="field-label">Featured item:</span>
+      <sp-menu-item value="1">Item 1</sp-menu-item>
+      <sp-menu-item value="2">Item 2</sp-menu-item>
+      <sp-menu-item value="3">Item 3</sp-menu-item>
+      <sp-menu-item value="4">Item 4</sp-menu-item>
     </sp-picker>
     <p>This is some text.</p>
     <p>This is some text.</p>
