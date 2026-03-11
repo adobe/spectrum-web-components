@@ -54,9 +54,6 @@
 
 :host([emphasized][checked]) {
   --spectrum-switch-handle-border-color-selected-default: var(--spectrum-switch-handle-border-color-emphasized-selected-default);
-  --spectrum-switch-handle-border-color-selected-hover: var(--spectrum-switch-handle-border-color-emphasized-selected-hover);
-  --spectrum-switch-handle-border-color-selected-down: var(--spectrum-switch-handle-border-color-emphasized-selected-down);
-  --spectrum-switch-handle-border-color-selected-focus: var(--spectrum-switch-handle-border-color-emphasized-selected-focus);
 }
 
 :host,
@@ -231,7 +228,7 @@
 
 :host(:active[checked]) #input:enabled + #switch::before {
   background-color: var(--highcontrast-switch-handle-background-color, var(--mod-switch-handle-background-color-selected-down, var(--spectrum-switch-handle-background-color-selected-down)));
-  border-color: var(--highcontrast-switch-handle-border-color-selected-down, var(--mod-switch-handle-border-color-selected-down, var(--spectrum-switch-handle-border-color-selected-down)));
+  border-color: var(--highcontrast-switch-handle-border-color-selected-down, var(--mod-switch-handle-border-color-selected-down, var(--spectrum-switch-handle-border-color-selected-default)));
 }
 
 #input:focus-visible + #switch {
@@ -253,7 +250,7 @@
 
 :host([checked]) #input:focus-visible + #switch::before {
   background-color: var(--highcontrast-switch-handle-background-color, var(--mod-switch-handle-background-color-selected-focus, var(--spectrum-switch-handle-background-color-selected-focus)));
-  border-color: var(--highcontrast-switch-handle-border-color-selected-focus, var(--mod-switch-handle-border-color-selected-focus, var(--spectrum-switch-handle-border-color-selected-focus)));
+  border-color: var(--highcontrast-switch-handle-border-color-selected-focus, var(--mod-switch-handle-border-color-selected-focus, var(--spectrum-switch-handle-border-color-selected-default)));
 }
 
 #input:focus-visible ~ #label {
@@ -282,7 +279,7 @@
 
   :host([checked]:hover) #input:enabled + #switch::before {
     background-color: var(--highcontrast-switch-handle-background-color, var(--mod-switch-handle-background-color-selected-hover, var(--spectrum-switch-handle-background-color-selected-hover)));
-    border-color: var(--highcontrast-switch-handle-border-color-selected-hover, var(--mod-switch-handle-border-color-selected-hover, var(--spectrum-switch-handle-border-color-selected-hover)));
+    border-color: var(--highcontrast-switch-handle-border-color-selected-hover, var(--mod-switch-handle-border-color-selected-hover, var(--spectrum-switch-handle-border-color-selected-default)));
   }
 
   :host([disabled]:hover) #input + #switch,
@@ -324,7 +321,7 @@
   }
 
   :host([checked]:hover) #input:focus-visible + #switch::before {
-    border-color: var(--highcontrast-switch-handle-border-color-selected-focus, var(--mod-switch-handle-border-color-selected-focus, var(--spectrum-switch-handle-border-color-selected-focus)));
+    border-color: var(--highcontrast-switch-handle-border-color-selected-focus, var(--mod-switch-handle-border-color-selected-focus, var(--spectrum-switch-handle-border-color-selected-default)));
   }
 
   :host(:hover) #input:focus-visible ~ #label {
