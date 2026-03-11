@@ -251,7 +251,7 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 
 ```html demo
 <sp-button-group
-  style="background: var(--spectrum-seafoam-600); padding: 0.5em; min-width: max-content"
+  style="background: var(--spectrum-docs-static-black-background-color); padding: 0.5em; min-width: max-content"
 >
   <sp-button treatment="outline" static-color="black">Label only</sp-button>
   <sp-button treatment="outline" static-color="black">
@@ -275,7 +275,7 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 
 ```html demo
 <sp-button-group
-  style="background: var(--spectrum-seafoam-600); padding: 0.5em; min-width: max-content"
+  style="background: var(--spectrum-docs-static-white-background-color); padding: 0.5em; min-width: max-content"
 >
   <sp-button treatment="outline" static-color="white">Label only</sp-button>
   <sp-button treatment="outline" static-color="white">
@@ -442,6 +442,8 @@ A screen reader user will not encounter href buttons when navigating by buttons 
 #### Use static black or static white to contrast with backgrounds and images
 
 To ensure maximum contrast with the background, use static black for light backgrounds and images, and static white for dark backgrounds and images. Avoid placing static components on top of busy images with a lot of variance in contrast.
+
+> **Contrast requirement**: When using `treatment="outline"` with `static-color`, the button's text, icons, and border must maintain a minimum **3:1** contrast ratio against the background per [WCAG 1.4.11 Non-text Contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast). Choose background colors carefully to meet this threshold. For example, `--spectrum-seafoam-600` provides only **2.5:1** contrast with white, which fails the requirement.
 
 <sp-tabs selected="black" auto label="Static variants for contrast">
 <sp-tab value="black">Static black on light background</sp-tab>
