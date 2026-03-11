@@ -228,7 +228,6 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     this.addEventListener('keypress', this.handleKeypress);
   }
 
-  // TODO: update message once action button global styling classes are available
   private warnLinkAPIDeprecation(): void {
     if (window.__swc?.DEBUG) {
       window.__swc.warn(
