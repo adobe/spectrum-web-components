@@ -681,7 +681,7 @@ If you intend to create a link with a `href` attribute, we instead offer CSS cla
 
 Using `<sp-action-button href="...">` conflates button and link semantics, which creates accessibility issues: screen reader users navigating by form controls will not find link-styled buttons, and vice versa. Native HTML elements provide correct semantics by default.
 
-If you intend to create a link with a `href` attribute, we instead offer CSS classes for creating button-styled links. To migrate, import the global elements stylesheet and apply button classes to native `<a>` elements:
+If you intend to create a link with a `href` attribute, we instead offer CSS classes for creating button-styled links. To migrate, import the global elements stylesheet and apply action button classes to native `<a>` elements:
 
 ```css
 @import '@spectrum-web-components/styles/global-elements.css';
