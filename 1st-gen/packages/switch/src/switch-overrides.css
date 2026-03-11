@@ -37,7 +37,6 @@
   --spectrum-switch-handle-background-color-selected-hover: var(--system-switch-handle-background-color-selected-hover);
   --spectrum-switch-handle-background-color-selected-down: var(--system-switch-handle-background-color-selected-down);
   --spectrum-switch-handle-background-color-selected-focus: var(--system-switch-handle-background-color-selected-focus);
-  --spectrum-switch-border-width-themed: var(--system-switch-border-width-themed);
   --spectrum-switch-handle-border-color-disabled: var(--system-switch-handle-border-color-disabled);
   --spectrum-switch-handle-background-color-selected-disabled: var(--system-switch-handle-background-color-selected-disabled);
   --spectrum-switch-handle-background-color-disabled: var(--system-switch-handle-background-color-disabled);
