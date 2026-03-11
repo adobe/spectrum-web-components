@@ -581,10 +581,6 @@ export class Overlay extends ComputedOverlayBase {
                 escapeDeactivates: false,
                 allowOutsideClick: this.allowOutsideClick,
             });
-
-            if (this.type === 'modal' || this.type === 'page') {
-                this._focusTrap.activate();
-            }
         }
         // Apply focus to the appropriate element after opening the popover.
         await this.applyFocus(targetOpenState, focusEl);
@@ -1002,7 +998,7 @@ export class Overlay extends ComputedOverlayBase {
 
         // Warn about deprecated allowOutsideClick property
         if (changes.has('allowOutsideClick') && this.allowOutsideClick) {
-            if (window.__swc?.DEBUG) {
+            if (window.__swc?.DEBUG && window.__swc?.warn) {
                 window.__swc.warn(
                     this,
                     `The "allow-outside-click" attribute on <${this.localName}> has been deprecated and will be removed in a future release. We do not recommend using this attribute for accessibility reasons. It allows clicks outside the overlay to close it, which can cause unexpected behavior and accessibility issues.`,
