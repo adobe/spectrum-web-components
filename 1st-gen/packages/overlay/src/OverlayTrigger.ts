@@ -62,6 +62,7 @@ export type TriggeredByType = Combinations<OverlayContentTypes>;
  * @attr {boolean} disabled - Whether the overlay trigger is disabled
  * @attr {string} receives-focus - How focus should be handled ('true'|'false'|'auto')
  * @attr {string} triggered-by - The type of interaction that will trigger the overlay ('click'|'hover'|'longpress')
+ * @attr {boolean} allow-outside-click - Whether clicks outside the overlay should close it (not recommended for accessibility)
  */
 export class OverlayTrigger extends SpectrumElement {
     public static override get styles(): CSSResultArray {
@@ -104,6 +105,9 @@ export class OverlayTrigger extends SpectrumElement {
 
     @property({ attribute: 'receives-focus' })
     public receivesFocus: 'true' | 'false' | 'auto' = 'auto';
+
+    @property({ type: Boolean, attribute: 'allow-outside-click' })
+    public allowOutsideClick = false;
 
     @state()
     private clickContent: HTMLElement[] = [];
@@ -229,6 +233,7 @@ export class OverlayTrigger extends SpectrumElement {
                 .type=${this.type || 'auto'}
                 @beforetoggle=${this.handleBeforetoggle}
                 .receivesFocus=${this.receivesFocus}
+                ?allow-outside-click=${this.allowOutsideClick}
             >
                 ${slot}
             </sp-overlay>
@@ -331,7 +336,7 @@ export class OverlayTrigger extends SpectrumElement {
     protected override updated(changedProperties: PropertyValues): void {
         super.updated(changedProperties);
 
-        if (window.__swc?.DEBUG && !this.triggeredBy) {
+        if (window.__swc?.DEBUG && window.__swc?.warn && !this.triggeredBy) {
             const issues = [
                 'You have not specified the `triggeredBy` property. For optimal performance, consider explicitly declaring which overlay types you plan to use.',
                 'Example: triggered-by="click hover"',
