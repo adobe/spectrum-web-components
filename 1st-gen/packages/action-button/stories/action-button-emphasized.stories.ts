@@ -51,3 +51,10 @@ XL.args = {
   emphasized,
   size: 'xl',
 };
+
+export const href = (args: Properties): TemplateResult => renderButtons(args);
+href.args = {
+  emphasized,
+  size: 'm',
+  href: '#',
+};

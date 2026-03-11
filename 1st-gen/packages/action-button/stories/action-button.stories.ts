@@ -17,7 +17,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 
 import type { Properties } from './index.js';
-import { renderButton } from './index.js';
+import { renderButton, renderButtons } from './index.js';
 
 export default {
   component: 'sp-action-button',
@@ -40,18 +40,15 @@ toggles.args = {
   icon: `<sp-icon-edit hidden slot="icon"></sp-icon-edit>`,
 };
 
-export const href = (args: Properties): TemplateResult =>
-  renderButtonsSelected(args);
+export const href = (args: Properties): TemplateResult => renderButtons(args);
 href.args = {
   href: 'https://github.com/adobe/spectrum-web-components',
-  icon: `<sp-icon-edit hidden slot="icon"></sp-icon-edit>`,
 };
 
-export const hrefWithTarget = (): TemplateResult => html`
-  <sp-action-button
-    href="https://github.com/adobe/spectrum-web-components"
-    target="_blank"
-  >
-    Click me
-  </sp-action-button>
-`;
+export const hrefWithTarget = (args: Properties): TemplateResult =>
+  renderButton(args);
+hrefWithTarget.args = {
+  href: 'https://github.com/adobe/spectrum-web-components',
+  target: '_blank',
+  label: 'Click Me',
+};

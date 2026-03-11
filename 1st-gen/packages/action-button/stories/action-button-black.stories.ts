@@ -53,3 +53,10 @@ XL.args = {
   size: 'xl',
   staticColor,
 };
+
+export const href = (args: Properties): TemplateResult => renderButtons(args);
+href.args = {
+  staticColor,
+  size: 'm',
+  href: '#',
+};
