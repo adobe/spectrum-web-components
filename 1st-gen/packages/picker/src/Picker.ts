@@ -790,17 +790,6 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
    * @returns True if an accessible label is present
    */
   protected hasAccessibleLabel(): boolean {
-    if (this.hasContentInSlot('label')) {
-      // @todo update once we remove the label slot
-      // this.warnDeprecatedLabelSlot();
-    }
-    if (
-      !!this.getAttribute('aria-label') ||
-      !!this.getAttribute('aria-labelledby')
-    ) {
-      // @todo update once we remove the label slot
-      // this.warnCrossRootAriaIssues();
-    }
     return (
       !!this.label ||
       !!this.getAttribute('aria-label') ||
@@ -1697,26 +1686,6 @@ export class Picker extends FieldLabelMixin(
   }
 
   /**
-   * Renders the label content for the picker button.
-   * Shows the selected item's content if available, otherwise renders the placeholder label.
-   *
-   * @param content - The content nodes from the selected item
-   * @returns The rendered label content
-   */
-  protected renderLabelContent(content: Node[]): TemplateResult | Node[] {
-    if (this.value && this.selectedItem) {
-      return content;
-    }
-    return html`
-      <slot name="label" id="label">
-        <span aria-hidden=${ifDefined(this.appliedLabel ? undefined : 'true')}>
-          ${this.label}
-        </span>
-      </slot>
-    `;
-  }
-
-  /**
    * Renders the loading indicator shown during pending state.
    * Dynamically imports the progress-circle component.
    *
@@ -1739,51 +1708,49 @@ export class Picker extends FieldLabelMixin(
    * including the icon, label, validation icon, and chevron.
    */
   protected get buttonContent(): TemplateResult[] {
-    const labelClasses = {
-      'visually-hidden': this.icons === 'only' && !!this.value,
-      placeholder: !this.value,
-      label: true,
-    };
-
-    const hasSelectedItem = !!this.value && !!this.selectedItem;
+    const hasSelection = !!this.value && !!this.selectedItem;
     const hasPlaceholder =
       !!this.placeholder || this.hasContentInSlot('placeholder');
-    const hasVisibleLabel =
-      !!this.appliedLabel || this.hasContentInSlot('field-label');
-
-    // @todo update once we remove the label slot and support for label as placeholder
-    const visuallyHiddenLabel = !hasPlaceholder && !hasSelectedItem;
-    const ariaHiddenLabel = hasVisibleLabel && !visuallyHiddenLabel;
-
-    // @todo the `label` slot is deprecated; remove in a future release.
+    const accessibleLabelClasses = {
+      'visually-hidden': hasSelection || hasPlaceholder,
+      label: true,
+    };
+    const selectionClasses = {
+      'visually-hidden': this.icons === 'only' && !!this.value,
+      label: true,
+    };
     return [
       html`
         <span id="icon" ?hidden=${this.icons === 'none'}>
           ${this.selectedItemContent.icon}
         </span>
-        <span
-          id=${ifDefined(this.value && this.selectedItem ? 'label' : undefined)}
-          class=${classMap(labelClasses)}
-        >
-          ${this.renderLabelContent(this.selectedItemContent.content)}
-        </span>
-        <span id="placeholder" ?hidden=${hasSelectedItem}>
-          <slot name="placeholder">${this.placeholder}</slot>
-        </span>
-        <span
-          id="label"
-          aria-hidden=${ifDefined(ariaHiddenLabel ? undefined : 'true')}
-          class=${classMap({ 'visually-hidden': visuallyHiddenLabel })}
-        >
-          <slot name="label">${this.label}</slot>
-        </span>
-        ${this.appliedLabel && !this.hasContentInSlot('field-label')
+        ${this.appliedLabel
           ? html`
-              <span id="applied-label" class="visually-hidden">
+              <span
+                id="applied-label"
+                aria-hidden="true"
+                class="visually-hidden"
+              >
                 ${this.appliedLabel}
               </span>
             `
           : nothing}
+        <span
+          id="accessible-label"
+          aria-hidden=${hasSelection ? 'true' : 'false'}
+          class=${classMap(accessibleLabelClasses)}
+        >
+          <slot name="label">${this.label}</slot>
+        </span>
+        <span id="placeholder" ?hidden=${hasSelection} class="label">
+          <slot name="placeholder">${this.placeholder}</slot>
+        </span>
+        <span
+          id=${ifDefined(this.value && this.selectedItem ? 'label' : undefined)}
+          class=${classMap(selectionClasses)}
+        >
+          ${this.selectedItemContent.content}
+        </span>
         ${this.invalid && !this.pending
           ? html`
               <sp-icon-alert class="validation-icon"></sp-icon-alert>
@@ -1812,7 +1779,7 @@ export class Picker extends FieldLabelMixin(
    * Callback invoked by an associated field label to apply its label value.
    * Sets the applied label and determines label alignment based on the field label's configuration.
    *
-   * @deprecated This method is deprecated and will be removed in a future version. Use the `field-label` slot instead of `<sp-field-label`.
+   * @deprecated This method is deprecated and will be removed in a future version. Use the `field-label` slot instead of `<sp-field-label>`.
    * @param value - The label text value
    * @param labelElement - The field label element providing the label
    */
@@ -1838,51 +1805,31 @@ export class Picker extends FieldLabelMixin(
    * @returns True if an accessible label is present
    */
   protected hasAccessibleLabel(): boolean {
+    // @todo update once we disable label as placeholder functionality
+    if (this.label) {
+      this.warnDeprecatedLabelAsPlaceholder();
+    }
     // @todo update once we remove the label slot
-    const labelSlotContent =
-      this.querySelector('[slot="label"]')?.textContent &&
-      this.querySelector('[slot="label"]')?.textContent?.trim() !== '';
-    const labelSlotAlt =
-      this.querySelector('[slot="label"]')?.getAttribute('alt')?.trim() &&
-      this.querySelector('[slot="label"]')?.getAttribute('alt')?.trim() !== '';
-    if (!!labelSlotContent || !!labelSlotAlt) {
+    const labelSlot = this.hasContentInSlot('label');
+    const hasLabel = !!this.label || labelSlot;
+    if (labelSlot) {
       this.warnDeprecatedLabelSlot();
     }
 
-    const fieldLabelSlotContent =
-      this.querySelector('[slot="label"]')?.textContent &&
-      this.querySelector('[slot="label"]')?.textContent?.trim() !== '';
-    const fieldLabelSlotAlt =
-      this.querySelector('[slot="label"]')?.getAttribute('alt')?.trim() &&
-      this.querySelector('[slot="label"]')?.getAttribute('alt')?.trim() !== '';
-    const placeholderSlotContent =
-      this.querySelector('[slot="placeholder"]')?.textContent &&
-      this.querySelector('[slot="placeholder"]')?.textContent?.trim() !== '';
-    const placeholderSlotAlt =
-      this.querySelector('[slot="placeholder"]')?.getAttribute('alt')?.trim() &&
-      this.querySelector('[slot="placeholder"]')
-        ?.getAttribute('alt')
-        ?.trim() !== '';
-    const hasPlaceholder =
-      !!this.placeholder || !!placeholderSlotContent || !!placeholderSlotAlt;
+    const fieldLabelSlot = this.hasContentInSlot('field-label');
 
     // @todo update once we remove `<sp-field-label>` disable label as placeholder functionality
     const hasVisibleLabel =
       !!this.appliedLabel ||
-      !!fieldLabelSlotContent ||
-      !!fieldLabelSlotAlt ||
+      !!fieldLabelSlot ||
+      // @todo check this for cross-root aria issues
       this.hasAttribute('aria-label') ||
+      // @todo check this for cross-root aria issues
       this.hasAttribute('aria-labelledby');
-
-    // @todo update once we disable label as placeholder functionality
-    if (!!this.label && hasVisibleLabel && !hasPlaceholder) {
-      this.warnDeprecatedLabelAsPlaceholder();
-    }
-
     // @todo update once we remove the label slot
-    return (
-      !!this.label || !!labelSlotContent || !!labelSlotAlt || hasVisibleLabel
-    );
+    const hasAccessibleLabel = hasLabel || hasVisibleLabel;
+
+    return hasAccessibleLabel;
   }
 
   /**
@@ -1949,7 +1896,7 @@ export class Picker extends FieldLabelMixin(
     if (window.__swc?.DEBUG) {
       window.__swc.warn(
         this,
-        `<${this.localName}> needs one of the following to be accessible:`,
+        `<${this.localName} id="${this.getAttribute('id')}"> needs one of the following to be accessible:`,
         'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
         {
           type: 'accessibility',
@@ -2005,14 +1952,17 @@ export class Picker extends FieldLabelMixin(
       </div>
     `;
   }
+
   // a helper to throw focus to the button is needed because Safari
   // won't include buttons in the tab order even with tabindex="0"
   protected override render(): TemplateResult {
     const ariaLabelledBy = this.hasContentInSlot('field-label')
-      ? 'field-label'
+      ? 'field-label-slot'
       : this.appliedLabel
         ? 'applied-label'
-        : 'label';
+        : !!this.label || this.hasContentInSlot('label')
+          ? 'accessible-label'
+          : 'icon';
     if (this.tooltipEl) {
       this.tooltipEl.disabled = this.open;
     }
@@ -2024,7 +1974,7 @@ export class Picker extends FieldLabelMixin(
         aria-describedby="tooltip ${DESCRIPTION_ID}"
         aria-expanded=${this.open ? 'true' : 'false'}
         aria-haspopup="listbox"
-        aria-labelledby="icon ${ariaLabelledBy} pending-label"
+        aria-labelledby="${ariaLabelledBy} pending-label"
         id="button"
         class=${ifDefined(
           this.labelAlignment ? `label-${this.labelAlignment}` : undefined
