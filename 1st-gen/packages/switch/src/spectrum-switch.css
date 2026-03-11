@@ -134,7 +134,7 @@
 }
 
 #input:focus-visible + #switch::after {
-  margin: calc((var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) + ar(--mod-switch-border-width, var(--spectrum-switch-border-width))) * -1);
+  margin: calc((var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) + var(--mod-switch-border-width, var(--spectrum-switch-border-width))) * -1);
 }
 
 #label {
