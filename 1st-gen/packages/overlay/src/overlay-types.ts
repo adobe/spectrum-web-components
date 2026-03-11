@@ -67,6 +67,7 @@ export type OverlayOptions = {
     receivesFocus?: 'auto' | 'true' | 'false';
     trigger?: HTMLElement | VirtualTrigger;
     type?: 'modal' | 'page' | 'hint' | 'auto' | 'manual';
+    allowOutsideClick?: boolean;
 };
 
 export type OverlayOptionsV1 = {
@@ -78,6 +79,7 @@ export type OverlayOptionsV1 = {
     notImmediatelyClosable?: boolean;
     abortPromise?: Promise<boolean>;
     virtualTrigger?: VirtualTrigger;
+    allowOutsideClick?: boolean;
 };
 
 declare global {

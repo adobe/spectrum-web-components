@@ -201,6 +201,7 @@ export class AbstractOverlay extends SpectrumElement {
     triggerElement!: HTMLElement | VirtualTrigger | null;
     type!: OverlayTypes;
     willPreventClose = false;
+    allowOutsideClick = false;
     /* c8 ignore next 3 */
     public manuallyKeepOpen(): void {
         return;
@@ -335,6 +336,7 @@ export class AbstractOverlay extends SpectrumElement {
         overlay.offset = options.offset ?? 0;
         overlay.placement = options.placement;
         overlay.willPreventClose = !!options.notImmediatelyClosable;
+        overlay.allowOutsideClick = !!options.allowOutsideClick;
     }
 
     override disconnectedCallback(): void {

@@ -301,7 +301,7 @@ export class Overlay extends ComputedOverlayBase {
      * @default false
      */
     @property({ type: Boolean, attribute: 'allow-outside-click' })
-    allowOutsideClick = false;
+    override allowOutsideClick = false;
 
     /**
      * A reference to the slot element within the overlay.
@@ -581,6 +581,7 @@ export class Overlay extends ComputedOverlayBase {
                 escapeDeactivates: false,
                 allowOutsideClick: this.allowOutsideClick,
             });
+
             if (this.type === 'modal' || this.type === 'page') {
                 this._focusTrap.activate();
             }
