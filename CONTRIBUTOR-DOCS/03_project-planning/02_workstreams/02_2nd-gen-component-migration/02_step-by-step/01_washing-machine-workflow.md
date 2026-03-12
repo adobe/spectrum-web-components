@@ -251,7 +251,7 @@ export class Badge extends BadgeBase {
 |--------|----------|
 | Wrong base or mixin | Copy from Badge: `Badge.base.ts` extends `SizedMixin(ObserveSlotText(ObserveSlotPresence(SpectrumElement, ...)))`. |
 | CSS not applied | In SWC class, add `static override get styles(): CSSResultArray { return [styles]; }` and import the CSS module. |
-| Package not exporting | Add the component to the package's public exports (e.g. `@adobe/swc/badge`). |
+| Package not exporting | Add the component to the package's public exports (e.g. `@adobe/spectrum-wc/badge`). |
 
 ### Quality gate
 
@@ -337,10 +337,9 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 
 ### What to do
 
-1. **Copy and adapt 1st-gen CSS** into the SWC `component.css`. Prefer the 2nd-gen style guide (Ticket 8). You can source S2 styles from `spectrum-css` repo, `spectrum-two` branch, component `dist/index.css`.
-2. **Use design tokens:** Replace hard-coded values with `var(--spectrum-*)` or `token(...)` (e.g. `token("border-width-200")`).
-3. **Extract custom properties** for theming (e.g. `--swc-badge-*` in Badge).
-4. **Implement variants with classes:** e.g. `.swc-Badge--positive`, `.swc-Badge--subtle`. Use `classMap()` in `render()` (see Badge).
+1. **Copy and adapt S2 styles** into the SWC `[component-name].css`. Prefer the 2nd-gen style guide (Ticket 8). You can source S2 styles from `spectrum-css` repo, `spectrum-two` branch, component `index.css` (do not use `dist` styles as 2nd-gen applies different pre-processing).
+2. **Use design tokens:** Replace hard-coded values with `token(...)` (e.g. `token("border-width-200")`).
+3. **Follow component CSS guidelines** for [stylesheet organization, selectors, and variant management](CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md) and managing the customization API through [custom properties](CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md).
 5. **Keep specificity low:** Prefer class-based selectors; avoid deep or brittle selectors.
 6. **Add forced-colors support** where needed for high contrast.
 7. **Handle sizing** via size classes or CSS custom properties, consistent with other 2nd-gen components.
@@ -391,7 +390,8 @@ protected override render(): TemplateResult {
 
 - [ ] No inline styles for theme/size; use CSS and classes.
 - [ ] Tokens and custom properties align with Spectrum 2.
-- [ ] Forced-colors and high-contrast are considered.
+- [ ] Follows the [full migration steps](CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md).
+- [ ] Adheres to the [component styling guidelines](CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md).
 
 ### Common problems and solutions
 
