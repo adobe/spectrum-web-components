@@ -25,11 +25,12 @@ while still activating/pressing the switch. Read-only switches should not have t
 }
 
 :host(:active[checked]) #input:enabled + #switch::before {
-  border-color: var(--highcontrast-switch-handle-border-color-selelcted-down, var(--mod-switch-handle-border-color-selected-down, var(--spectrum-switch-handle-border-color-selected-down)));
+  border-color: var(--highcontrast-switch-handle-border-color-selected-default, var(--mod-switch-handle-border-color-selected-default, var(--spectrum-switch-handle-border-color-selected-default)));
 }
 
 :host(:active[checked]) #input:enabled + #switch {
   background-color: var(--highcontrast-switch-background-color-selected-down, var(--mod-switch-background-color-selected-down, var(--spectrum-switch-background-color-selected-down)));
+  border-color: var(--highcontrast-switch-border-color-selected-down, var(--mod-switch-border-color-selected-down, var(--spectrum-switch-border-color-down)));
 }
 
 /* Ensure read-only switches don't show interaction styles */

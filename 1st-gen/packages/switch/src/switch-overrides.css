@@ -11,15 +11,29 @@
  */
 
 :host {
+  --spectrum-switch-border-color-selected-default: var(--system-switch-border-color-selected-default);
+  --spectrum-switch-border-color-selected-hover: var(--system-switch-border-color-selected-hover);
+  --spectrum-switch-border-color-selected-down: var(--system-switch-border-color-selected-down);
+  --spectrum-switch-border-color-selected-focus: var(--system-switch-border-color-selected-focus);
   --spectrum-switch-handle-border-color-default: var(--system-switch-handle-border-color-default);
   --spectrum-switch-handle-border-color-hover: var(--system-switch-handle-border-color-hover);
   --spectrum-switch-handle-border-color-down: var(--system-switch-handle-border-color-down);
   --spectrum-switch-handle-border-color-focus: var(--system-switch-handle-border-color-focus);
   --spectrum-switch-handle-border-color-selected-default: var(--system-switch-handle-border-color-selected-default);
-  --spectrum-switch-handle-border-color-selected-hover: var(--system-switch-handle-border-color-selected-hover);
-  --spectrum-switch-handle-border-color-selected-down: var(--system-switch-handle-border-color-selected-down);
-  --spectrum-switch-handle-border-color-selected-focus: var(--system-switch-handle-border-color-selected-focus);
+  --spectrum-switch-handle-border-color-emphasized-selected-default: var(--system-switch-handle-border-color-emphasized-selected-default);
   --spectrum-switch-background-color: var(--system-switch-background-color);
+  --spectrum-switch-background-color-emphasized-selected-down: var(--system-switch-background-color-emphasized-selected-down);
   --spectrum-switch-background-color-disabled: var(--system-switch-background-color-disabled);
-  --spectrum-switch-handle-background-color: var(--system-switch-handle-background-color);
+  --spectrum-switch-handle-background-color-default: var(--system-switch-handle-background-color-default);
+  --spectrum-switch-handle-background-color-hover: var(--system-switch-handle-background-color-hover);
+  --spectrum-switch-handle-background-color-down: var(--system-switch-handle-background-color-down);
+  --spectrum-switch-handle-background-color-focus: var(--system-switch-handle-background-color-focus);
+  --spectrum-switch-handle-background-color-selected-default: var(--system-switch-handle-background-color-selected-default);
+  --spectrum-switch-handle-background-color-selected-hover: var(--system-switch-handle-background-color-selected-hover);
+  --spectrum-switch-handle-background-color-selected-down: var(--system-switch-handle-background-color-selected-down);
+  --spectrum-switch-handle-background-color-selected-focus: var(--system-switch-handle-background-color-selected-focus);
+  --spectrum-switch-handle-border-color-disabled: var(--system-switch-handle-border-color-disabled);
+  --spectrum-switch-handle-background-color-selected-disabled: var(--system-switch-handle-background-color-selected-disabled);
+  --spectrum-switch-handle-background-color-disabled: var(--system-switch-handle-background-color-disabled);
+  --spectrum-switch-handle-border-color-selected-disabled: var(--system-switch-handle-border-color-selected-disabled);
 }
