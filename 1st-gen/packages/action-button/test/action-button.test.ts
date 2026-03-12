@@ -54,7 +54,9 @@ describe('ActionButton', () => {
     });
     it('warns in devMode when href is provided', async () => {
       const el = await fixture<ActionButton>(html`
-        <sp-button href="https://example.com">Link Button</sp-button>
+        <sp-action-button href="https://example.com">
+          Link Button
+        </sp-action-button>
       `);
 
       await elementUpdated(el);
@@ -74,7 +76,7 @@ describe('ActionButton', () => {
         'confirm `data` shape'
       ).to.deep.equal({
         data: {
-          localName: 'sp-button',
+          localName: 'sp-action-button',
           type: 'api',
           level: 'deprecation',
         },
@@ -82,7 +84,7 @@ describe('ActionButton', () => {
     });
     it('does not warn when href is not provided', async () => {
       await fixture<ActionButton>(html`
-        <sp-button>Button</sp-button>
+        <sp-action-button>Button</sp-action-button>
       `);
 
       const hrefWarnings = Array.from(
