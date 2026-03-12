@@ -19,7 +19,7 @@ import {
   waitUntil,
 } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 
 import {
   ActionButton,
@@ -39,6 +39,62 @@ describe('ActionButton', () => {
     async () =>
       await fixture<ActionButton>(BlackActionButton(BlackActionButton.args))
   );
+  describe('dev mode', () => {
+    let consoleWarnStub!: ReturnType<typeof stub>;
+    before(() => {
+      window.__swc.verbose = true;
+      consoleWarnStub = stub(console, 'warn');
+    });
+    afterEach(() => {
+      consoleWarnStub.resetHistory();
+    });
+    after(() => {
+      window.__swc.verbose = false;
+      consoleWarnStub.restore();
+    });
+    it('warns in devMode when href is provided', async () => {
+      const el = await fixture<ActionButton>(html`
+        <sp-action-button href="https://example.com">
+          Link Button
+        </sp-action-button>
+      `);
+
+      await elementUpdated(el);
+      expect(consoleWarnStub.called).to.be.true;
+
+      const spyCall = consoleWarnStub.getCall(0);
+      expect(
+        (spyCall.args[0] as string).includes('deprecated'),
+        'confirm deprecated href warning'
+      ).to.be.true;
+      expect(
+        (spyCall.args[0] as string).includes('href'),
+        'warning mentions href attribute'
+      ).to.be.true;
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        'confirm `data` shape'
+      ).to.deep.equal({
+        data: {
+          localName: 'sp-action-button',
+          type: 'api',
+          level: 'deprecation',
+        },
+      });
+    });
+    it('does not warn when href is not provided', async () => {
+      await fixture<ActionButton>(html`
+        <sp-action-button>Button</sp-action-button>
+      `);
+
+      const hrefWarnings = Array.from(
+        { length: consoleWarnStub.callCount },
+        (_, i) => consoleWarnStub.getCall(i)
+      ).filter((call) => (call.args[0] as string).includes('href'));
+
+      expect(hrefWarnings.length).to.equal(0);
+    });
+  });
   it('loads default', async () => {
     const el = await fixture<ActionButton>(html`
       <sp-action-button>Button</sp-action-button>

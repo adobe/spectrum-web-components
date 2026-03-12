@@ -13,11 +13,14 @@
 import { TemplateResult } from '@spectrum-web-components/base';
 
 import type { Properties } from './index.js';
-import { renderButtons } from './index.js';
+import { argTypes, renderButtons } from './index.js';
 
 export default {
   component: 'sp-action-button',
   title: 'Action Button/Emphasized',
+  argTypes: {
+    ...argTypes,
+  },
 };
 
 const emphasized = true;
