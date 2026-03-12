@@ -230,10 +230,12 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
 
   private warnLinkAPIDeprecation(): void {
     if (window.__swc?.DEBUG) {
+      const componentSlug =
+        this.localName === 'sp-action-button' ? 'action-button' : 'button';
       window.__swc.warn(
         this,
         `The "href" attribute on <${this.localName}> is deprecated and will be removed in a future release. Use a native HTML anchor (<a>) element with Spectrum global element styling instead. Import "@spectrum-web-components/styles/global-elements.css" to enable button styling on native elements.`,
-        'https://opensource.adobe.com/spectrum-web-components/components/button/#accessibility',
+        `'https://opensource.adobe.com/spectrum-web-components/components/${componentSlug}/#accessibility'`,
         { level: 'deprecation' }
       );
     }
