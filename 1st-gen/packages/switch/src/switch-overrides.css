@@ -11,6 +11,7 @@
  */
 
 :host {
+  --spectrum-switch-border-color-selected-default: var(--system-switch-border-color-selected-default);
   --spectrum-switch-border-color-selected-hover: var(--system-switch-border-color-selected-hover);
   --spectrum-switch-border-color-selected-down: var(--system-switch-border-color-selected-down);
   --spectrum-switch-border-color-selected-focus: var(--system-switch-border-color-selected-focus);

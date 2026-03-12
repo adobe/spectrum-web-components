@@ -28,7 +28,7 @@
   --spectrum-switch-border-color-down: var(--spectrum-neutral-content-color-down);
   --spectrum-switch-border-color-focus: var(--spectrum-neutral-content-color-key-focus);
   --spectrum-switch-border-color-disabled: var(--spectrum-disabled-content-color);
-  --spectrum-switch-border-color-selected-default: var(--spectrum-switch-border-color-default);
+  --spectrum-switch-border-color-selected-default: var(--spectrum-switch-border-color-selected-default);
   --spectrum-switch-border-color-selected-hover: var(--spectrum-switch-border-color-selected-hover);
   --spectrum-switch-border-color-selected-down: var(--spectrum-switch-border-color-selected-down);
   --spectrum-switch-border-color-selected-focus: var(--spectrum-switch-border-color-selected-focus);
@@ -50,10 +50,12 @@
   --spectrum-switch-border-color-selected-hover: var(--spectrum-accent-color-1000);
   --spectrum-switch-border-color-selected-down: var(--spectrum-switch-background-color-emphasized-selected-down);
   --spectrum-switch-border-color-selected-focus: var(--spectrum-accent-color-1000);
+  --spectrum-switch-handle-border-color-selected-down: var(--spectrum-switch-background-color-emphasized-selected-down);
 }
 
 :host([emphasized][checked]) {
   --spectrum-switch-handle-border-color-selected-default: var(--spectrum-switch-handle-border-color-emphasized-selected-default);
+  --spectrum-switch-border-color-down: var(--spectrum-switch-background-color-emphasized-selected-down);
 }
 
 :host,
