@@ -31,6 +31,7 @@ export type TestableCombobox = HTMLElement & {
   options: ComboboxOption[];
   shadowRoot: ShadowRoot;
   value: string;
+  selectedItemValue: string;
   pending: boolean;
 };
 

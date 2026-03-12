@@ -832,6 +832,90 @@ describe('Combobox', () => {
       expect(el.open).to.be.true;
     });
   });
+  describe('selectedItemValue', () => {
+    it('returns the matched option value after keyboard selection', async () => {
+      const el = await comboboxFixture();
+      await elementUpdated(el);
+
+      expect(el.selectedItemValue).to.equal('');
+
+      el.focusElement.focus();
+      const opened = oneEvent(el, 'sp-opened');
+      el.focusElement.dispatchEvent(arrowDownEvent());
+      await opened;
+      await elementUpdated(el);
+
+      const changed = oneEvent(el, 'change');
+      el.focusElement.dispatchEvent(enterEvent());
+      await changed;
+      await elementUpdated(el);
+
+      expect(el.value).to.equal('Apple');
+      expect(el.selectedItemValue).to.equal('apple');
+    });
+    it('returns the matched option value after click selection', async () => {
+      const el = await comboboxFixture();
+      await elementUpdated(el);
+
+      expect(el.selectedItemValue).to.equal('');
+
+      const opened = oneEvent(el, 'sp-opened');
+      el.focusElement.click();
+      await opened;
+
+      const item = el.shadowRoot.querySelector(
+        '[value="cherry"]'
+      ) as HTMLElement;
+
+      const closed = oneEvent(el, 'sp-closed');
+      await mouseClickOn(item);
+      await closed;
+      await elementUpdated(el);
+
+      expect(el.value).to.equal('Cherry');
+      expect(el.selectedItemValue).to.equal('cherry');
+    });
+    it('resolves when value is set programmatically to matching text', async () => {
+      const el = await comboboxFixture();
+      await elementUpdated(el);
+
+      el.value = 'Banana';
+      await elementUpdated(el);
+
+      expect(el.value).to.equal('Banana');
+      expect(el.selectedItemValue).to.equal('banana');
+    });
+    it('returns empty string when value does not match any option', async () => {
+      const el = await comboboxFixture();
+      await elementUpdated(el);
+
+      el.value = 'Pineapple';
+      await elementUpdated(el);
+
+      expect(el.selectedItemValue).to.equal('');
+    });
+    it('returns empty string when value is cleared', async () => {
+      const el = await comboboxFixture();
+      await elementUpdated(el);
+
+      el.value = 'Apple';
+      await elementUpdated(el);
+      expect(el.selectedItemValue).to.equal('apple');
+
+      el.value = '';
+      await elementUpdated(el);
+      expect(el.selectedItemValue).to.equal('');
+    });
+    it('returns empty string for partial text that does not exactly match', async () => {
+      const el = await comboboxFixture();
+      await elementUpdated(el);
+
+      el.value = 'App';
+      await elementUpdated(el);
+
+      expect(el.selectedItemValue).to.equal('');
+    });
+  });
   describe('pending state', () => {
     it('renders a progress circle', async () => {
       const el = await comboboxFixture();

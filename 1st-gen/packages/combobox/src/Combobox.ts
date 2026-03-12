@@ -107,6 +107,21 @@ export class Combobox extends Textfield {
   private itemValue = '';
 
   /**
+   * The `value` of the currently matched menu item, if one exists.
+   * Returns an empty string when the current input text doesn't match
+   * any option's `itemText`.
+   *
+   * Unlike `value` (which always reflects the displayed text),
+   * `selectedItemValue` returns the option's identifier — useful when
+   * menu items have a `value` attribute distinct from their text content.
+   *
+   * @readonly
+   */
+  public get selectedItemValue(): string {
+    return this.itemValue;
+  }
+
+  /**
    * An array of options to present in the Menu provided while typing into the input
    */
   @property({ type: Array })
