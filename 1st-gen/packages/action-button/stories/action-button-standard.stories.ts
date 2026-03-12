@@ -44,3 +44,9 @@ export const XL = (args: Properties): TemplateResult => renderButtons(args);
 XL.args = {
   size: 'xl',
 };
+
+export const href = (args: Properties): TemplateResult => renderButtons(args);
+href.args = {
+  size: 'm',
+  href: '#',
+};

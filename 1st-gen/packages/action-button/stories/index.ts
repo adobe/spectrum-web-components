@@ -10,6 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
+import { classMap } from 'lit/directives/class-map.js';
+
 import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
 import {
   ifDefined,
@@ -42,9 +44,52 @@ export function renderButton({
   label,
   ...properties
 }: Properties): TemplateResult {
+  // Render links as static <a> elements
+  if (properties.href) {
+    // Not supported by static links
+    if (
+      properties.disabled ||
+      properties.selected ||
+      properties.holdAffordance
+    ) {
+      return html``;
+    }
+
+    const staticColor =
+      properties.staticColor &&
+      properties.staticColor.charAt(0).toUpperCase() +
+        properties.staticColor.slice(1);
+
+    return html`
+      <a
+        class=${classMap({
+          ['spectrum-ActionButton']: true,
+          [`spectrum-ActionButton--size${properties.size?.toUpperCase()}`]:
+            typeof properties.size !== 'undefined',
+          [`spectrum-ActionButton--static${staticColor}`]:
+            typeof properties.staticColor !== 'undefined',
+          ['spectrum-ActionButton--iconOnly']:
+            ifDefined(icon) && typeof label === 'undefined',
+          ['spectrum-ActionButton--quiet']:
+            typeof properties.quiet !== 'undefined',
+          ['spectrum-ActionButton--emphasized']:
+            typeof properties.emphasized !== 'undefined',
+        })}
+        href=${properties.href}
+        target=${ifDefined(properties.target)}
+      >
+        ${icon ? unsafeHTML(icon) : nothing}
+        ${typeof label !== 'undefined'
+          ? unsafeHTML(`<span class="spectrum-ActionButton-label">
+          ${label}
+        </span>`)
+          : nothing}
+      </a>
+    `;
+  }
+
   return html`
     <sp-action-button
-      href=${ifDefined(properties.href)}
       ?quiet=${!!properties.quiet}
       ?emphasized=${!!properties.emphasized}
       static-color=${ifDefined(properties.staticColor)}
