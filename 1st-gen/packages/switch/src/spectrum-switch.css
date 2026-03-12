@@ -242,6 +242,7 @@
 }
 
 #input:focus-visible + #switch::before {
+  background-color: var(--highcontrast-switch-handle-background-color, var(--mod-switch-handle-background-color-focus, var(--spectrum-switch-handle-background-color-focus)));
   border-color: var(--highcontrast-switch-handle-border-color-focus, var(--mod-switch-handle-border-color-focus, var(--spectrum-switch-handle-border-color-focus)));
 }
 
