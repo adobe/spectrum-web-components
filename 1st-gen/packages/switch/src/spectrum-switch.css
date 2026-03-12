@@ -381,10 +381,6 @@
     --highcontrast-switch-handle-border-color-down: Highlight;
     --highcontrast-switch-handle-border-color-focus: Highlight;
     --highcontrast-switch-handle-border-color-disabled: Highlight;
-    --highcontrast-switch-handle-border-color-selected-default: Highlight;
-    --highcontrast-switch-handle-border-color-selected-hover: Highlight;
-    --highcontrast-switch-handle-border-color-selected-down: Highlight;
-    --highcontrast-switch-handle-border-color-selected-focus: Highlight;
     --highcontrast-switch-background-color: ButtonFace;
     --highcontrast-switch-background-color-selected-default: Highlight;
     --highcontrast-switch-background-color-selected-hover: Highlight;
@@ -394,13 +390,9 @@
     --highcontrast-switch-focus-indicator-color: ButtonText;
     --highcontrast-switch-border-color-selected-default: Highlight;
     --highcontrast-switch-border-color-selected-hover: Highlight;
+    --highcontrast-switch-border-color-selected-down: Highlight;
 
     forced-color-adjust: none;
-  }
-
-  :host([checked]) #input + #switch,
-  :host([checked][emphasized]) #input + #switch {
-    --highcontrast-switch-border-color-selected-default: Highlight;
   }
 
   :host([disabled]) #input + #switch,
@@ -408,20 +400,14 @@
     --highcontrast-switch-border-color-default: GrayText;
   }
 
-  #input:not(:checked) + #switch {
-    box-shadow: inset 0 0 0 1px ButtonText;
-  }
-
   @media (hover: hover) {
     :host(:hover) #input:not(:checked) + #switch {
       border-color: Highlight;
-      box-shadow: inset 0 0 0 1px Highlight;
     }
 
     :host([disabled][checked]:hover) #input + #switch,
     :host([disabled][checked]:hover) #input + #switch {
       background-color: GrayText;
-      box-shadow: inset 0 0 0 1px GrayText;
     }
 
     :host([disabled][checked]:hover) #input + #switch::before,
@@ -434,7 +420,6 @@
   :host([disabled]) #input:not(:checked) + #switch,
   :host([disabled]) #input:not(:checked) + #switch {
     background-color: ButtonFace;
-    box-shadow: inset 0 0 0 1px GrayText;
   }
 
   :host([disabled]) #input:not(:checked) + #switch::before,
@@ -446,13 +431,11 @@
   :host([disabled][checked]) #input + #switch,
   :host([disabled][checked]) #input + #switch {
     background-color: GrayText;
-    box-shadow: inset 0 0 0 1px GrayText;
   }
 
   :host([disabled][checked]) #input + #switch::before,
   :host([disabled][checked]) #input + #switch::before {
     background-color: ButtonFace;
-    border-color: GrayText;
   }
 
   :host([disabled]) #input ~ #label,
