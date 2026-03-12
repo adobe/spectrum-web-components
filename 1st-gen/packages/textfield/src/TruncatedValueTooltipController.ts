@@ -58,7 +58,7 @@ type HostElement = ReactiveElement & TruncatedValueTooltipHost;
 export class TruncatedValueTooltipController implements ReactiveController {
   private host: HostElement;
 
-  private isTruncated = false;
+  private _isTruncated = false;
 
   private _tooltipDepsLoaded = false;
 
@@ -87,15 +87,15 @@ export class TruncatedValueTooltipController implements ReactiveController {
   private refreshTruncationState(): boolean {
     const host = this.host;
     const currentlyTruncated = this.inputElementIsTruncated;
-    if (host.focused && this.isTruncated && !currentlyTruncated) {
+    if (host.focused && this._isTruncated && !currentlyTruncated) {
       // Keep tooltip mounted through the active focus session once truncation has occurred.
       return false;
     }
-    if (currentlyTruncated === this.isTruncated) {
+    if (currentlyTruncated === this._isTruncated) {
       return false;
     }
-    const previous = this.isTruncated;
-    this.isTruncated = currentlyTruncated;
+    const previous = this._isTruncated;
+    this._isTruncated = currentlyTruncated;
     // Defer so we don't schedule an update during the host's update (Lit warning).
     Promise.resolve().then(() => {
       this.host.requestUpdate(truncatedValueTooltipUpdatedSymbol, previous);
@@ -134,7 +134,7 @@ export class TruncatedValueTooltipController implements ReactiveController {
   public render(): TemplateResult | typeof nothing {
     const host = this.host;
     if (
-      !this.isTruncated ||
+      !this._isTruncated ||
       host.disabled ||
       !host.inputElement ||
       host.type === 'password'
@@ -193,6 +193,10 @@ export class TruncatedValueTooltipController implements ReactiveController {
 
   hostConnected(): void {
     // Defer ResizeObserver setup to hostUpdated so inputElement is in the DOM.
+    // On reconnection, request an update so hostUpdated runs and we re-attach the observer.
+    if (!this._observerInitialized) {
+      this.host.requestUpdate();
+    }
   }
 
   hostUpdated(): void {
@@ -207,6 +211,10 @@ export class TruncatedValueTooltipController implements ReactiveController {
     this._resizeObserver.observe(this.host as unknown as Element);
     if (host.inputElement) {
       this._resizeObserver.observe(host.inputElement);
+    } else {
+      console.warn(
+        'TruncatedValueTooltipController: host.inputElement is null on first hostUpdated, only observing host.'
+      );
     }
     this.refreshTruncationState();
   }

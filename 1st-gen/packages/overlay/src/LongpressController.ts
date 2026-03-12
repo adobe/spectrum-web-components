@@ -22,6 +22,7 @@ import {
   InteractionController,
   InteractionTypes,
 } from './InteractionController.js';
+import type { Overlay } from './Overlay.js';
 
 const LONGPRESS_DURATION = 300;
 export const LONGPRESS_INSTRUCTIONS = {
@@ -140,10 +141,8 @@ export class LongpressController extends InteractionController {
       return;
     }
     // When describeTrigger is 'none', do not set aria-describedby on the trigger (visual hint only).
-    const overlayWithDescribe = this.overlay as {
-      describeTrigger?: 'auto' | 'none';
-    };
-    if (overlayWithDescribe.describeTrigger === 'none') {
+    const overlay = this.overlay as Overlay;
+    if (overlay.describeTrigger === 'none') {
       return;
     }
 

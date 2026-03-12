@@ -546,9 +546,6 @@ export class NumberField extends TextfieldBase {
       this._trackingValue = value;
       this.inputElement.value = value;
       this.inputElement.setSelectionRange(selectionStart, selectionStart);
-      this.truncatedValueTooltipController.syncTooltipText(
-        this.inputElement?.value ?? this.displayValue
-      );
       const justBecameTruncated =
         this.truncatedValueTooltipController.refresh();
       if (justBecameTruncated) {
@@ -557,6 +554,10 @@ export class NumberField extends TextfieldBase {
             this.inputElement?.value ?? this.displayValue
           );
         });
+      } else {
+        this.truncatedValueTooltipController.syncTooltipText(
+          this.inputElement?.value ?? this.displayValue
+        );
       }
       return;
     } else {
