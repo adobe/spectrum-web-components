@@ -29,12 +29,23 @@ import {
 } from '@spectrum-web-components/base/src/directives.js';
 import { ManageHelpText } from '@spectrum-web-components/help-text/src/manage-help-text.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
+import type { Placement } from '@spectrum-web-components/overlay';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 
 import textfieldStyles from './textfield.css.js';
+import {
+  TruncatedValueTooltipController,
+  type TruncatedValueTooltipHost,
+} from './TruncatedValueTooltipController.js';
+
+export type { TruncatedValueTooltipHost } from './TruncatedValueTooltipController.js';
+export {
+  TruncatedValueTooltipController,
+  truncatedValueTooltipUpdatedSymbol,
+} from './TruncatedValueTooltipController.js';
 
 const textfieldTypes = ['text', 'url', 'tel', 'email', 'password'] as const;
 export type TextfieldType = (typeof textfieldTypes)[number];
@@ -48,6 +59,10 @@ export class TextfieldBase extends ManageHelpText(
     noDefaultSize: true,
   })
 ) {
+  protected truncatedValueTooltipController =
+    new TruncatedValueTooltipController(
+      this as unknown as TruncatedValueTooltipHost & typeof this
+    );
   public static override get styles(): CSSResultArray {
     return [textfieldStyles, checkmarkStyles];
   }
@@ -148,6 +163,13 @@ export class TextfieldBase extends ManageHelpText(
    */
   @property({ type: Boolean, reflect: true })
   public readonly = false;
+
+  /**
+   * Placement of the tooltip shown when the value is truncated (e.g. 'bottom', 'top').
+   * Defaults to 'bottom' per Spectrum design.
+   */
+  @property({ attribute: 'tooltip-placement' })
+  public truncatedValueTooltipPlacement: Placement = 'bottom';
 
   /**
    * The specific number of rows the form control should provide in the user interface
@@ -374,20 +396,30 @@ export class TextfieldBase extends ManageHelpText(
   protected override render(): TemplateResult {
     return html`
       <div id="textfield">${this.renderField()}</div>
+      ${this.truncatedValueTooltipController.render()}
       ${this.renderHelpText(this.invalid)}
     `;
   }
 
   protected override update(changedProperties: PropertyValues): void {
-    if (
+    const valueOrRequiredChanged =
       changedProperties.has('value') ||
-      (changedProperties.has('required') && this.required)
-    ) {
+      (changedProperties.has('required') && this.required);
+
+    if (valueOrRequiredChanged) {
       this.updateComplete.then(() => {
         this.checkValidity();
+        if (changedProperties.has('value')) {
+          this.truncatedValueTooltipController.refresh();
+        }
       });
     }
+
     super.update(changedProperties);
+
+    if (changedProperties.has('focused') && !this.focused) {
+      this.truncatedValueTooltipController.refresh();
+    }
   }
 
   public checkValidity(): boolean {

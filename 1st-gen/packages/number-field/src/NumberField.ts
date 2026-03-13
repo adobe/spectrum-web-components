@@ -546,6 +546,19 @@ export class NumberField extends TextfieldBase {
       this._trackingValue = value;
       this.inputElement.value = value;
       this.inputElement.setSelectionRange(selectionStart, selectionStart);
+      const justBecameTruncated =
+        this.truncatedValueTooltipController.refresh();
+      if (justBecameTruncated) {
+        this.updateComplete.then(() => {
+          this.truncatedValueTooltipController.syncTooltipText(
+            this.inputElement?.value ?? this.displayValue
+          );
+        });
+      } else {
+        this.truncatedValueTooltipController.syncTooltipText(
+          this.inputElement?.value ?? this.displayValue
+        );
+      }
       return;
     } else {
       this.inputElement.value = this.indeterminate

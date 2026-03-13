@@ -19,6 +19,7 @@ import {
   InteractionTypes,
   lastInteractionType,
 } from './InteractionController.js';
+import type { Overlay } from './Overlay.js';
 
 export class HoverController extends InteractionController {
   override type = InteractionTypes.hover;
@@ -129,6 +130,11 @@ export class HoverController extends InteractionController {
   override prepareDescription(): void {
     // require "content" to apply relationship
     if (!this.overlay || !this.overlay.elements.length) {
+      return;
+    }
+    // When describeTrigger is 'none', do not set aria-describedby on the trigger (visual hint only).
+    const overlay = this.overlay as Overlay;
+    if (overlay.describeTrigger === 'none') {
       return;
     }
 
