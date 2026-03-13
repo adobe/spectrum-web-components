@@ -160,14 +160,16 @@ Before you start, know the split:
 2. **Read the 1st-gen code:** main class, CSS, stories, tests. Understand purpose and public API.
 3. **Check dependencies:** What does it extend? What mixins or shared modules does it use?
 4. **Review usage:** How is it used in apps or docs? What attributes and slots matter?
-5. **List breaking changes:** What will change for consumers (props, attributes, slots, events)?
-6. **Write a short migration plan:** One or two paragraphs: scope, risks, and order of work.
+5. **List existing bug tickets** How severe are they? Will they require breaking changes? Will they need to be fixed in 1st-gen?
+6. **List breaking changes:** What will change for consumers (props, attributes, slots, events)?
+7. **Write a short migration plan:** One or two paragraphs: scope, risks, and order of work.
 
 **Example (Badge):** For 2nd-gen Badge you would read `1st-gen/packages/badge/src/Badge.ts`, `src/spectrum-badge.css.ts`, `stories/badge.stories.ts`, and `test/badge.test.ts`; then `2nd-gen/packages/core/components/badge/` and `2nd-gen/packages/swc/components/badge/` to see the target structure.
 
 ### What to check
 
 - [ ] I know the full public API (attributes, properties, slots, events).
+- [ ] I know all the bugs that exist for this component in JIRA and am familiar with their severity and potential for breaking changes.
 - [ ] I know which parts are S1-only vs S2-only (if both exist).
 - [ ] I have a list of files to create in core and SWC.
 
@@ -392,26 +394,33 @@ For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheet
 
 ### What to do
 
-1. **Pick the right pattern:** Check [WCAG ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/) for your component type (e.g. button, listbox, combobox).
-2. **Add ARIA attributes:** `role`, `aria-*` as required by the pattern. Prefer semantic HTML where it gives the same behavior.
-3. **Keyboard support:** All actions available via keyboard; focus order and focus management match the pattern.
-4. **Focus management:** For overlays or popups, trap/restore focus as in the APG.
-5. **Screen reader:** Ensure name, state, and value are exposed (e.g. `aria-label`, `aria-expanded`, `aria-selected`).
-6. **Test with assistive tech** where possible (screen reader, keyboard-only).
-7. **Document a11y** in JSDoc and in the guide (how to use the component accessibly).
+1. **Use semantic HTML when posisble (e.g. `<button>` instead of `<div role="button">`
+2. **Refer to existing patterns as guidance:** Check [WCAG ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/) for your component type (e.g. button, listbox, combobox), Heydon Pickering's [Inclusive Components](https://inclusive-components.design/), Deque Univiersity's [Code Library (Beta)](https://dequeuniversity.com/library/). and other component libraries with existing components.
+3. **Add ARIA attributes as needed:** `role`, `aria-*` as required by the pattern. 
+
+> Prefer semantic HTML where it gives the same behavior. 
+> A component's role should be inherent to what it is and what it does, not conditional. For example, a component should not be a `menu` or a `listbox`; we should have two separate components, one menu and one listbox.
+> Be aware the IDREFs, such as `aria-labelledby` or `active-descendant` [cannot cross roots](https://alice.pages.igalia.com/blog/how-shadow-dom-and-accessibility-are-in-conflict/).
+
+5. **Keyboard support:** All actions available via keyboard; focus order and focus management match the pattern, paying attention to complex component navigation and disabled components. (See WAI ARIA APG's (Developing a Keyboard Interface)[https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/].)
+6. **Focus management:** For overlays or popups, trap/restore focus as in the APG.
+7. **Screen reader:** Ensure name, state, and value are exposed (e.g. `aria-label`, `aria-expanded`, `aria-selected`).
+8. **Test with assistive tech** where possible (screen reader, keyboard-only, screenreader click command).
+9. **Document a11y** in JSDoc and in the guide (how to use the component accessibly) ensuring that examples use the component accessbility.
 
 **Example (Badge):** Badge is presentational (no interactive role). It doesn’t need a widget role; the text in the default slot and optional icon slot provide the name. No keyboard behavior is required. For interactive components (e.g. button, combobox), follow the matching APG pattern and add the suggested `role` and `aria-*` attributes.
 
 ### What to check
 
 - [ ] ARIA and semantics match the chosen APG pattern.
+- [ ] Component behaves as expected with screen reader. 
 - [ ] Keyboard and focus behavior are implemented and tested.
 - [ ] No accessibility regressions vs 1st-gen.
 
 ### Common problems and solutions
 
 | Problem | Solution |
-|--------|----------|
+| Unclear which pattern applies | Start from the component's primary role (e.g. "combobox" → Combobox pattern). Consider splitting into more than one component (e.g. "sp-menu" into menu and listbox components |
 | Unclear which pattern applies | Start from the component's primary role (e.g. "combobox" → Combobox pattern). |
 | Focus trap in overlays | Use a shared focus-trap utility if the repo provides one; follow APG for modal/dialog. |
 | Custom controls | Ensure they have roles, names, and keyboard support; avoid div/span without semantics. |
@@ -424,6 +433,10 @@ Prefer native events when they give the right semantics (e.g. `click`). Add cust
 
 ### Quality gate
 
+- [ ] Pattern and example accessible component library examples are identified and linked
+- [ ] Keyboard and ARIA are implemented
+- [ ] Accessibllity tests added or updated
+- [ ] Screenreader testing has been performed
 - [ ] APG pattern is identified and linked; keyboard and ARIA are implemented; a11y tests added or updated.
 
 ---
@@ -607,13 +620,13 @@ Use these when you are not sure how to structure the migration.
 ### How should variants be implemented?
 
 - **Small, fixed set** (e.g. size: S/M/L): Use a **string attribute** and reflect it; use a const array for type and Storybook options.
-- **Many options** (e.g. color): Same approach; consider grouping in Storybook (e.g. semantic vs color).
+- Match the **primary role** of the component (button, listbox, combobox, dialog, etc.) to native HTML or an existing accessible [pattern](https://www.w3.org/WAI/ARIA/apg/patterns/).
 - **Boolean toggles** (e.g. disabled, readonly): Use **boolean attributes** and reflect.
 - **Stop and ask** when the 1st-gen uses a different pattern (e.g. only classes) and you want to change to attributes.
 
 ### What accessibility pattern applies?
 
-- Match the **primary role** of the component (button, listbox, combobox, dialog, etc.) to an [APG pattern](https://www.w3.org/WAI/ARIA/apg/patterns/).
+- Match the **primary role** of the component (button, listbox, combobox, dialog, etc.) to native HTML or an existing accessible [pattern](https://www.w3.org/WAI/ARIA/apg/patterns/).
 - If it composes several roles (e.g. combobox + listbox), follow the **composite** pattern and its keyboard and ARIA requirements.
 
 ---
