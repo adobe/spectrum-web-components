@@ -101,7 +101,7 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
         this._updateScrollState();
     }
 
-    private _updateScrollState(): void {
+    protected _updateScrollState(): void {
         const { scrollContent, overflowState } = this;
 
         if (scrollContent) {

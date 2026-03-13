@@ -14,8 +14,6 @@
     box-sizing: border-box;
     inline-size: 100vw;
     block-size: 100vh;
-    block-size: -webkit-fill-available;
-    block-size: stretch;
     visibility: hidden;
     pointer-events: none;
     z-index: 1;
@@ -26,6 +24,18 @@
     position: fixed;
     inset-block-start: 0;
     inset-inline-start: 0;
+}
+
+@supports (block-size: -webkit-fill-available) {
+    :host {
+        block-size: -webkit-fill-available;
+    }
+}
+
+@supports (block-size: stretch) {
+    :host {
+        block-size: stretch;
+    }
 }
 
 :host([open]) {
