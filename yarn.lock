@@ -14225,7 +14225,7 @@ __metadata:
     markdown-it: "npm:14.1.0"
     markdown-it-anchor: "npm:8.6.7"
     markdown-it-for-inline: "npm:2.0.1"
-    posthtml: "npm:0.16.6"
+    posthtml: "npm:0.16.7"
     posthtml-attrs-parser: "npm:1.1.2"
     posthtml-match-helper: "npm:2.0.3"
     prismjs: "npm:1.30.0"
@@ -26360,17 +26360,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"posthtml@npm:0.16.6":
-  version: 0.16.6
-  resolution: "posthtml@npm:0.16.6"
-  dependencies:
-    posthtml-parser: "npm:^0.11.0"
-    posthtml-render: "npm:^3.0.0"
-  checksum: 10c0/0505cb70ece051206ffa932394181372be6390a974fd2f50e4e6fdd5d11e41feffba9a5f5e22809ca42899f79bd489d53ceac1d7ad0d782db9521b578e5b7f5a
-  languageName: node
-  linkType: hard
-
-"posthtml@npm:^0.16.6":
+"posthtml@npm:0.16.7, posthtml@npm:^0.16.6":
   version: 0.16.7
   resolution: "posthtml@npm:0.16.7"
   dependencies:
