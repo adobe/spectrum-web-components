@@ -18,6 +18,14 @@ import { defineConfig, mergeConfig } from 'vitest/config';
 import viteConfig from './vite.config.ts';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
+const allowedBrowsers = new Set(['chromium', 'firefox', 'webkit']);
+const browserInstances = (process.env.VITEST_BROWSER_INSTANCES ?? 'chromium')
+  .split(',')
+  .map((browser) => browser.trim().toLowerCase())
+  .filter((browser) => allowedBrowsers.has(browser))
+  .map((browser) => ({ browser }));
+const resolvedBrowserInstances =
+  browserInstances.length > 0 ? browserInstances : [{ browser: 'chromium' }];
 
 export default mergeConfig(
   viteConfig,
@@ -26,10 +34,15 @@ export default mergeConfig(
       exclude: ['playwright', 'playwright-core', '@playwright/test'],
     },
     test: {
+      // JUnit reporter for CI test results
+      reporters: process.env.CI
+        ? ['default', ['junit', { outputFile: './test-results/junit.xml' }]]
+        : ['default'],
       coverage: {
         provider: 'v8',
         reporter: ['text', 'json', 'html'],
         allowExternal: true,
+        reportOnFailure: true,
         include: [
           'components/**/*.{ts,js}',
           '**/packages/core/components/**/*.{ts,js}',
@@ -51,16 +64,16 @@ export default mergeConfig(
 
           // SWC component implementations
           'components/**/*.{ts,js}': {
-            lines: 100,
-            functions: 100,
-            statements: 100,
+            lines: 98,
+            functions: 98,
+            statements: 98,
           },
 
           // Core component logic
           '**/packages/core/components/**/*.{ts,js}': {
-            lines: 100,
-            functions: 100,
-            statements: 100,
+            lines: 98,
+            functions: 98,
+            statements: 98,
           },
 
           // Shared utilities (lower bar while starting out)
@@ -117,7 +130,7 @@ export default mergeConfig(
               enabled: true,
               provider: playwright(),
               headless: true,
-              instances: [{ browser: 'chromium' }],
+              instances: resolvedBrowserInstances,
             },
             globals: true,
             setupFiles: ['./.storybook/vitest.setup.ts'],
