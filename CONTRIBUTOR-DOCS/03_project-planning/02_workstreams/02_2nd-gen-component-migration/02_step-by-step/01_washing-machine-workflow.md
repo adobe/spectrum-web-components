@@ -178,7 +178,8 @@ Before you start, know the split:
 | Problem | Solution |
 |--------|----------|
 | No component analysis doc | Use Badge as reference; run the Analyze step Cursor prompt to generate one, or compare 1st-gen vs 2nd-gen structure. |
-| Unclear what is "public" | Prefer the 1st-gen JSDoc and Storybook; treat everything else as internal. |
+| Existing 1st-gen bugs | Consider severity, whether fixes require breaking changes, etc. Before deciding how to proceed. |
+
 | Many variants or modes | Plan decision tree: one component vs several (see Decision trees below). |
 
 <details>
