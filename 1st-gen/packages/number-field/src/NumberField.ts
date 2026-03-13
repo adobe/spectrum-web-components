@@ -157,6 +157,16 @@ export class NumberField extends TextfieldBase {
   @property({ type: Number, reflect: true, attribute: 'step-modifier' })
   public stepModifier = 10;
 
+  /**
+   * When true, triggers haptic feedback on value commit (stepper release, input
+   * change, keyboard step). Same pattern as combobox/slider/picker-button.
+   */
+  @property({ type: Boolean, attribute: 'haptic-feedback', reflect: true })
+  public hapticFeedback = false;
+
+  @query('#haptic-trigger')
+  private hapticTriggerEl?: HTMLInputElement;
+
   @property({ type: Number })
   public override set value(rawValue: number) {
     const value = this.validateInput(rawValue);
@@ -193,8 +203,23 @@ export class NumberField extends TextfieldBase {
     }
 
     this.lastCommitedValue = this.value;
+    this.triggerHapticFeedback();
 
     this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+  }
+
+  public triggerHapticFeedback(): void {
+    if (!this.hapticFeedback) {
+      return;
+    }
+    if ('vibrate' in navigator) {
+      navigator.vibrate(16);
+      return;
+    }
+    const label = this.shadowRoot?.getElementById('haptic-label');
+    if (label) {
+      label.click();
+    }
   }
 
   /**
@@ -728,6 +753,24 @@ export class NumberField extends TextfieldBase {
     this.autocomplete = 'off';
     return html`
       ${super.renderField()}
+      ${this.hapticFeedback
+        ? html`
+            <label
+              id="haptic-label"
+              for="haptic-trigger"
+              class="visually-hidden"
+              aria-hidden="true"
+            ></label>
+            <input
+              style="display: none;"
+              type="checkbox"
+              id="haptic-trigger"
+              class="visually-hidden"
+              aria-hidden="true"
+              tabindex="-1"
+            />
+          `
+        : nothing}
       ${this.hideStepper
         ? nothing
         : html`
@@ -826,6 +869,9 @@ export class NumberField extends TextfieldBase {
   }
 
   protected override updated(changes: PropertyValues<this>): void {
+    if (this.hapticFeedback && this.hapticTriggerEl) {
+      this.hapticTriggerEl.setAttribute('switch', '');
+    }
     if (!this.inputElement || !this.isConnected) {
       // Prevent race conditions if inputElement is removed from DOM while a queued update is still running.
       return;
