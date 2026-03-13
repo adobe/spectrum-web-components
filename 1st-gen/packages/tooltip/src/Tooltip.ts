@@ -167,6 +167,26 @@ export class Tooltip extends SpectrumElement {
   @property({ type: Number })
   public tipPadding?: number;
 
+  private _triggerElement: HTMLElement | null = null;
+
+  /**
+   * Explicit trigger element override for self-managed tooltip usage.
+   *
+   * This is useful when the intended trigger is not an ancestor of the tooltip
+   * in the composed tree (for example, tooltips slotted into components that
+   * render their interactive trigger internally).
+   */
+  public set triggerElement(triggerElement: HTMLElement | null) {
+    this._triggerElement = triggerElement;
+    if (this.overlayElement) {
+      this.overlayElement.triggerElement = triggerElement;
+    }
+  }
+
+  public get triggerElement(): HTMLElement | null {
+    return this._triggerElement || this.resolveSelfManagedTriggerElement();
+  }
+
   /* Ensure that a '' value for `variant` removes the attribute instead of a blank value */
   private _variant = '';
 
@@ -225,7 +245,7 @@ export class Tooltip extends SpectrumElement {
    *
    * @returns The first focusable ancestor element, or null if none found
    */
-  private get triggerElement(): HTMLElement | null {
+  private resolveSelfManagedTriggerElement(): HTMLElement | null {
     // Start from the assigned slot (if tooltip is slotted) or the tooltip itself
     let start: HTMLElement = this.assignedSlot || this;
     let root = start.getRootNode();
