@@ -18,7 +18,7 @@
   box-sizing: border-box;
 }
 
-.spectrum-Asset {
+.swc-Asset {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -34,22 +34,22 @@
   transition: opacity token("animation-duration-100");
 }
 
-.spectrum-Asset-folder,
-.spectrum-Asset-file {
+.swc-Asset-folder,
+.swc-Asset-file {
   inline-size: clamp(48px, 100%, 80px);
   block-size: 100%;
   margin: clamp(2px, 10%, 20px);
 }
 
-.spectrum-Asset-folderBackground {
+.swc-Asset-folderBackground {
   fill: token("gray-200");
 }
 
-.spectrum-Asset-fileBackground {
+.swc-Asset-fileBackground {
   fill: light-dark(token("gray-25"), token("gray-200"));
 }
 
-.spectrum-Asset-folderOutline,
-.spectrum-Asset-fileOutline {
+.swc-Asset-folderOutline,
+.swc-Asset-fileOutline {
   fill: token("gray-500");
 }

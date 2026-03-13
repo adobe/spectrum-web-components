@@ -42,6 +42,11 @@ const stories = [
     files: '**/!(*documentation).mdx',
     titlePrefix: 'Guides',
   },
+  {
+    directory: 'contributor-docs',
+    files: '**/*.mdx',
+    titlePrefix: 'Contributor docs',
+  },
 ];
 
 if (includeTestStories) {
