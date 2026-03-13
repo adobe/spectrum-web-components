@@ -13,3 +13,12 @@
 :host {
   position: relative;
 }
+
+.handle {
+  grid-area: 2 / 1;
+}
+
+:host([side-aligned="start"]) .handle,
+:host([side-aligned="end"]) .handle {
+  grid-area: 1 / 2;
+}

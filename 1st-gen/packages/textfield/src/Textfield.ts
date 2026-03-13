@@ -27,6 +27,7 @@ import {
   ifDefined,
   live,
 } from '@spectrum-web-components/base/src/directives.js';
+import { FieldLabelMixin } from '@spectrum-web-components/field-label/src/FieldLabelMixin.js';
 import { ManageHelpText } from '@spectrum-web-components/help-text/src/manage-help-text.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
@@ -40,16 +41,20 @@ const textfieldTypes = ['text', 'url', 'tel', 'email', 'password'] as const;
 export type TextfieldType = (typeof textfieldTypes)[number];
 
 /**
+ * @slot default - the visual label for the field
  * @fires input - The value of the element has changed.
  * @fires change - An alteration to the value of the element has been committed by the user.
  */
-export class TextfieldBase extends ManageHelpText(
-  SizedMixin(Focusable, {
-    noDefaultSize: true,
-  })
+export class TextfieldBase extends FieldLabelMixin(
+  ManageHelpText(
+    SizedMixin(Focusable, {
+      noDefaultSize: true,
+    })
+  )
 ) {
   public static override get styles(): CSSResultArray {
-    return [textfieldStyles, checkmarkStyles];
+    const styles = (super.styles || []) as CSSResultArray;
+    return [...styles, textfieldStyles, checkmarkStyles];
   }
 
   @state()
@@ -187,12 +192,6 @@ export class TextfieldBase extends ManageHelpText(
   public quiet = false;
 
   /**
-   * Whether the form control will be found to be invalid when it holds no `value`
-   */
-  @property({ type: Boolean, reflect: true })
-  public required = false;
-
-  /**
    * What form of assistance should be provided when attempting to supply a value to the form control
    *
    * Note: combobox overrides `autocomplete` intentionally with `aria-autocomplete` values, which is
@@ -292,6 +291,32 @@ export class TextfieldBase extends ManageHelpText(
     return this.value.toString();
   }
 
+  protected get _ariaLabel(): string | undefined {
+    if (this.label && this.label.length > 0) {
+      return this.label;
+    } else if (this.appliedLabel && this.appliedLabel.length > 0) {
+      return this.appliedLabel;
+    } else if (this.slotHasContent) {
+      return undefined;
+    } else if (this.placeholder && this.placeholder.length > 0) {
+      return this.placeholder;
+    } else {
+      window.__swc.warn(
+        this,
+        `<${this.localName}> needs a label:`,
+        'https://opensource.adobe.com/spectrum-web-components/components/textfield/#accessibility',
+        {
+          type: 'accessibility',
+          issues: [
+            'value supplied to the default slot, which will be displayed visually as part of the element, or',
+            'value supplied to the "label" attribute, which will read by assistive technologies',
+          ],
+        }
+      );
+      return undefined;
+    }
+  }
+
   // prettier-ignore
   private get renderMultiline(): TemplateResult {
         return html`
@@ -303,6 +328,7 @@ export class TextfieldBase extends ManageHelpText(
                 : nothing}
             <!-- @ts-ignore -->
             <textarea
+                id="field"
                 name=${ifDefined(this.name || undefined)}
                 aria-describedby=${this.helpTextId}
                 aria-label=${ifDefined(
@@ -318,7 +344,7 @@ export class TextfieldBase extends ManageHelpText(
                 )}
                 title=${this.invalid ? '' : nothing}
                 pattern=${ifDefined(this.pattern)}
-                placeholder=${this.placeholder}
+                placeholder=${ifDefined(this.placeholder)}
                 .value=${this.displayValue}
                 @change=${this.handleChange}
                 @input=${this.handleInput}
@@ -337,6 +363,7 @@ export class TextfieldBase extends ManageHelpText(
     return html`
       <!-- @ts-ignore -->
       <input
+        id="field"
         name=${ifDefined(this.name || undefined)}
         type=${this.type}
         aria-describedby=${this.helpTextId}
@@ -349,7 +376,7 @@ export class TextfieldBase extends ManageHelpText(
         maxlength=${ifDefined(this.maxlength > -1 ? this.maxlength : undefined)}
         minlength=${ifDefined(this.minlength > -1 ? this.minlength : undefined)}
         pattern=${ifDefined(this.pattern)}
-        placeholder=${this.placeholder}
+        placeholder=${ifDefined(this.placeholder)}
         .value=${live(this.displayValue)}
         @change=${this.handleChange}
         @input=${this.handleInput}
@@ -373,6 +400,7 @@ export class TextfieldBase extends ManageHelpText(
 
   protected override render(): TemplateResult {
     return html`
+      ${this.renderFieldLabel('field')}
       <div id="textfield">${this.renderField()}</div>
       ${this.renderHelpText(this.invalid)}
     `;

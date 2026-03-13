@@ -11,6 +11,7 @@
  */
 import { elementUpdated, expect, html, litFixture } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
+import { spy } from 'sinon';
 
 import { HelpText } from '@spectrum-web-components/help-text';
 import {
@@ -53,6 +54,49 @@ describe('Textfield', () => {
     await elementUpdated(el);
 
     await expect(el).to.be.accessible();
+  });
+  testForLitDevWarnings(
+    async () =>
+      await litFixture<Textfield>(html`
+        <sp-textfield label="Enter Your Name"></sp-textfield>
+      `)
+  );
+  it('loads textfield with slotted label accessibly', async () => {
+    const el = await litFixture<Textfield>(html`
+      <sp-textfield>Enter Your Name</sp-textfield>
+    `);
+
+    await elementUpdated(el);
+
+    await expect(el).to.be.accessible();
+  });
+  it('labels textfield with slotted label correctly', async () => {
+    const el = await litFixture<Textfield>(html`
+      <sp-textfield placeholder="Enter Your Name">Name</sp-textfield>
+    `);
+
+    await elementUpdated(el);
+    const ariaLabel = el.focusElement?.getAttribute('aria-label');
+
+    expect(ariaLabel).not.to.equal('Enter Your Name');
+  });
+
+  it('warns when no accessible label is provided', async () => {
+    const warnSpy: sinon.SinonSpy = spy();
+    window.__swc = window.__swc || { warn: () => {} };
+    const originalWarn = window.__swc.warn;
+    window.__swc.warn = warnSpy;
+
+    const el = await litFixture<Textfield>(html`
+      <sp-textfield></sp-textfield>
+    `);
+
+    await elementUpdated(el);
+
+    expect(warnSpy.called).to.be.true;
+    expect(warnSpy.firstCall.args[0]).to.equal(el);
+    expect(warnSpy.firstCall.args[1]).to.equal('<sp-textfield> needs a label:');
+    window.__swc.warn = originalWarn;
   });
 
   it('manages tabIndex while disabled', async () => {

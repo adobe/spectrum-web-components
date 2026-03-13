@@ -233,11 +233,7 @@ indeterminate.args = {
 
 export const decimals = (args: StoryArgs): TemplateResult => {
   return html`
-    <sp-field-label for="decimals">
-      Enter a number with visible decimals
-    </sp-field-label>
     <sp-number-field
-      id="decimals"
       ...=${spreadProps(args)}
       @change=${args.onChange}
       @input=${args.onInput}
@@ -246,7 +242,9 @@ export const decimals = (args: StoryArgs): TemplateResult => {
         minimumFractionDigits: 1,
         maximumFractionDigits: 2,
       } as unknown as Intl.NumberFormatOptions}
-    ></sp-number-field>
+    >
+      Enter a number with visible decimals
+    </sp-number-field>
   `;
 };
 
@@ -262,16 +260,12 @@ export const germanDecimals = (args: StoryArgs): TemplateResult => {
     currentSystem = window.__swc_hack_knobs__.defaultSystemVariant;
   }
   return html`
-    <sp-field-label for="decimals">
-      Enter a number with visible decimals
-    </sp-field-label>
     <sp-theme
       lang="de"
       dir=${currentDir as 'ltr' | 'rtl' | 'auto'}
       system=${currentSystem}
     >
       <sp-number-field
-        id="decimals"
         ...=${spreadProps(args)}
         @change=${args.onChange}
         @input=${args.onInput}
@@ -280,7 +274,9 @@ export const germanDecimals = (args: StoryArgs): TemplateResult => {
           minimumFractionDigits: 1,
           maximumFractionDigits: 2,
         } as unknown as Intl.NumberFormatOptions}
-      ></sp-number-field>
+      >
+        Enter a number with visible decimals
+      </sp-number-field>
     </sp-theme>
   `;
 };
@@ -291,16 +287,16 @@ germanDecimals.args = {
 
 export const percents = (args: StoryArgs = {}): TemplateResult => {
   return html`
-    <sp-field-label for="percents">Enter a percentage</sp-field-label>
     <sp-number-field
-      id="percents"
       ...=${spreadProps(args)}
       @change=${args.onChange}
       .formatOptions=${{
         style: 'percent',
         unitDisplay: 'narrow',
       } as unknown as Intl.NumberFormatOptions}
-    ></sp-number-field>
+    >
+      Enter a percentage
+    </sp-number-field>
   `;
 };
 
@@ -310,7 +306,6 @@ percents.args = {
 
 export const currency = (args: StoryArgs = {}): TemplateResult => {
   return html`
-    <sp-field-label for="currency">Enter a value in Euros</sp-field-label>
     <sp-number-field
       ...=${spreadProps(args)}
       @change=${args.onChange}
@@ -320,7 +315,9 @@ export const currency = (args: StoryArgs = {}): TemplateResult => {
         currencyDisplay: 'code',
         currencySign: 'accounting',
       } as unknown as Intl.NumberFormatOptions}
-    ></sp-number-field>
+    >
+      Enter a value in Euros
+    </sp-number-field>
   `;
 };
 
@@ -330,9 +327,7 @@ currency.args = {
 
 export const units = (args: StoryArgs): TemplateResult => {
   return html`
-    <sp-field-label for="units">Enter a lengths in inches</sp-field-label>
     <sp-number-field
-      id="units"
       ...=${spreadProps(args)}
       @change=${args.onChange}
       .formatOptions=${{
@@ -340,7 +335,9 @@ export const units = (args: StoryArgs): TemplateResult => {
         unit: 'inch',
         unitDisplay: 'long',
       } as unknown as Intl.NumberFormatOptions}
-    ></sp-number-field>
+    >
+      Enter a lengths in inches
+    </sp-number-field>
   `;
 };
 
@@ -350,16 +347,16 @@ units.args = {
 
 export const pixels = (args: StoryArgs): TemplateResult => {
   return html`
-    <sp-field-label for="units">Enter a lengths in pixels</sp-field-label>
     <sp-number-field
-      id="units"
       .formatOptions=${{
         style: 'unit',
         unit: 'px',
       } as unknown as Intl.NumberFormatOptions}
       ...=${spreadProps(args)}
       @change=${args.onChange}
-    ></sp-number-field>
+    >
+      Enter a lengths in pixels
+    </sp-number-field>
   `;
 };
 
@@ -368,12 +365,9 @@ pixels.args = {
 };
 
 export const minMax = (args: StoryArgs): TemplateResult => html`
-  <sp-field-label for="min-max">Enter a value between 0 and 255</sp-field-label>
-  <sp-number-field
-    id="min-max"
-    ...=${spreadProps(args)}
-    @change=${args.onChange}
-  ></sp-number-field>
+  <sp-number-field ...=${spreadProps(args)} @change=${args.onChange}>
+    Enter a value between 0 and 255
+  </sp-number-field>
 `;
 
 minMax.args = {
@@ -384,14 +378,9 @@ minMax.args = {
 
 export const hideStepper = (args: StoryArgs): TemplateResult => {
   return html`
-    <sp-field-label for="hideStepper">
+    <sp-number-field ...=${spreadProps(args)} @change=${args.onChange}>
       Enter a number without the stepper UI
-    </sp-field-label>
-    <sp-number-field
-      id="hideStepper"
-      ...=${spreadProps(args)}
-      @change=${args.onChange}
-    ></sp-number-field>
+    </sp-number-field>
   `;
 };
 hideStepper.args = {
@@ -400,15 +389,12 @@ hideStepper.args = {
 };
 
 export const hideStepperQuiet = (args: StoryArgs): TemplateResult => {
-  return html`
-    <sp-field-label for="hideStepper">
-      Enter a number without the stepper UI
+  return html`thout the stepper UI
     </sp-field-label>
     <sp-number-field
-      id="hideStepper"
       ...=${spreadProps(args)}
       @change=${args.onChange}
-    ></sp-number-field>
+    >Enter a number without the stepper UI</sp-number-field>
   `;
 };
 hideStepperQuiet.args = {
@@ -419,14 +405,9 @@ hideStepperQuiet.args = {
 
 export const disabled = (args: StoryArgs): TemplateResult => {
   return html`
-    <sp-field-label for="disabled">
+    <sp-number-field ...=${spreadProps(args)} @change=${args.onChange}>
       This Number Field is disabled
-    </sp-field-label>
-    <sp-number-field
-      id="disabled"
-      ...=${spreadProps(args)}
-      @change=${args.onChange}
-    ></sp-number-field>
+    </sp-number-field>
   `;
 };
 disabled.args = {
@@ -436,14 +417,9 @@ disabled.args = {
 
 export const readOnly = (args: StoryArgs): TemplateResult => {
   return html`
-    <sp-field-label for="readonly">
+    <sp-number-field ...=${spreadProps(args)} @change=${args.onChange}>
       You can only read the following value
-    </sp-field-label>
-    <sp-number-field
-      id="readonly"
-      ...=${spreadProps(args)}
-      @change=${args.onChange}
-    ></sp-number-field>
+    </sp-number-field>
   `;
 };
 readOnly.args = {
@@ -453,22 +429,11 @@ readOnly.args = {
 
 export const validationIcons = (args: StoryArgs): TemplateResult => {
   return html`
-    <sp-field-label for="invalidHiddenStepper">
+    <sp-number-field invalid ...=${spreadProps(args)}>
       Invalid Number Field without Stepper
-    </sp-field-label>
-    <sp-number-field
-      invalid
-      id="invalidHiddenStepper"
-      ...=${spreadProps(args)}
-    ></sp-number-field>
-    <sp-field-label for="validStepper">
-      Valid Number Field with Stepper
-    </sp-field-label>
-    <sp-number-field id="validStepper" valid></sp-number-field>
-    <sp-field-label for="invalidStepper">
-      Invalid Number Field with Stepper
-    </sp-field-label>
-    <sp-number-field id="invalidStepper" invalid></sp-number-field>
+    </sp-number-field>
+    <sp-number-field valid>Valid Number Field with Stepper</sp-number-field>
+    <sp-number-field invalid>Invalid Number Field with Stepper</sp-number-field>
   `;
 };
 validationIcons.args = {
@@ -504,15 +469,15 @@ export const ScrollingContainer = (args: StoryArgs = {}): TemplateResult => {
     </style>
     <div class="scroller">
       <div>
-        <sp-field-label for="default">Enter a number</sp-field-label>
         <sp-number-field
-          id="default"
           ...=${spreadProps(args)}
           @input=${(event: Event) =>
             onInput((event.target as NumberField).value)}
           @change=${(event: Event) =>
             onChange((event.target as NumberField).value)}
-        ></sp-number-field>
+        >
+          Enter a number
+        </sp-number-field>
         <p>
           This box should not scroll when the focus is inside the number field
           and field value is changed by using the mouse wheel.
