@@ -9,19 +9,6 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+export const ICON_VALID_SIZES = ['xs', 's', 'm', 'l', 'xl'] as const;
 
-export default {
-  globs: [
-    'components/**/*.ts',
-    '../core/components/**/*.ts',
-    '../core/controllers/**/*.ts',
-    '../core/element/**/*.ts',
-    '../core/mixins/**/*.ts',
-    '../core/utils/**/*.ts',
-  ],
-  exclude: ['**/*.stories.ts', '**/*.test.ts', '**/*.spec.ts'],
-  outdir: '.storybook',
-  litelement: true,
-  dev: false,
-  plugins: [],
-};
+export type IconSize = (typeof ICON_VALID_SIZES)[number];

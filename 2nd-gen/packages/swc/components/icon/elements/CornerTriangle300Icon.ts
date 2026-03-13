@@ -9,19 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { html, TemplateResult } from 'lit';
 
-export default {
-  globs: [
-    'components/**/*.ts',
-    '../core/components/**/*.ts',
-    '../core/controllers/**/*.ts',
-    '../core/element/**/*.ts',
-    '../core/mixins/**/*.ts',
-    '../core/utils/**/*.ts',
-  ],
-  exclude: ['**/*.stories.ts', '**/*.test.ts', '**/*.spec.ts'],
-  outdir: '.storybook',
-  litelement: true,
-  dev: false,
-  plugins: [],
+export const CornerTriangle300Icon = (): TemplateResult => {
+  return html`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
+      <path
+        d="M14 8.001v5.249c0 .41421-.33579.75-.75.75h-5.249c-.44545 0-.66854-.53857-.35355-.85355l5.499-5.499c.31498-.31498.85355-.0919.85355.35355Z"
+      />
+    </svg>
+  `;
 };

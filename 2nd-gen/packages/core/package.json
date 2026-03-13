@@ -31,6 +31,10 @@
       "types": "./dist/components/divider/index.d.ts",
       "import": "./dist/components/divider/index.js"
     },
+    "./components/icon": {
+      "types": "./dist/components/icon/index.d.ts",
+      "import": "./dist/components/icon/index.js"
+    },
     "./components/progress-circle": {
       "types": "./dist/components/progress-circle/index.d.ts",
       "import": "./dist/components/progress-circle/index.js"
@@ -132,6 +136,9 @@
       ],
       "components/divider": [
         "dist/components/divider/index.d.ts"
+      ],
+      "components/icon": [
+        "dist/components/icon/index.d.ts"
       ],
       "components/progress-circle": [
         "dist/components/progress-circle/index.d.ts"
