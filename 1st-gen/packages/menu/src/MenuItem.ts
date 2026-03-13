@@ -238,7 +238,14 @@ export class MenuItem extends LikeAnchor(
   @query('sp-overlay')
   public overlayElement!: Overlay;
 
-  private submenuElement?: HTMLElement;
+  public submenuElement?: HTMLElement;
+
+  /**
+   * Set by the parent Menu when the submenu element is projected to
+   * the mobile-submenu slot. Guards against manageSubmenu clearing
+   * hasSubmenu when the slot appears empty during projection.
+   */
+  public _mobileSubmenuProjected = false;
 
   /**
    * the focusable element of the menu item
@@ -363,6 +370,22 @@ export class MenuItem extends LikeAnchor(
     this.triggerUpdate();
   }
 
+  private get isMobileView(): boolean {
+    return !!this._mobileRootMenu;
+  }
+
+  /**
+   * Returns the root sp-menu with is-mobile-view, traversing up from
+   * either the focusRoot or the DOM tree.
+   */
+  private get _mobileRootMenu(): Menu | null {
+    const focusRoot = this.menuData.focusRoot;
+    if (focusRoot?.isMobileView) {
+      return focusRoot;
+    }
+    return this.closest('sp-menu[is-mobile-view]') as Menu | null;
+  }
+
   protected renderSubmenu(): TemplateResult {
     const slot = html`
       <slot
@@ -380,6 +403,16 @@ export class MenuItem extends LikeAnchor(
     if (!this.hasSubmenu) {
       return slot;
     }
+
+    if (this.isMobileView) {
+      return html`
+        <div class="mobile-submenu-slot-hidden">${slot}</div>
+        <sp-icon-chevron100
+          class="spectrum-UIIcon-ChevronRight100 chevron icon"
+        ></sp-icon-chevron100>
+      `;
+    }
+
     this.dependencyManager.add('sp-overlay');
     this.dependencyManager.add('sp-popover');
     import('@spectrum-web-components/overlay/sp-overlay.js');
@@ -448,12 +481,20 @@ export class MenuItem extends LikeAnchor(
   }
 
   /**
-   * determines if item has a submenu and updates the `aria-haspopup` attribute
+   * Determines if item has a submenu and updates the `aria-haspopup` attribute.
+   * Skips clearing state when the submenu is temporarily projected to the
+   * parent Menu's mobile-submenu slot.
    */
   protected manageSubmenu(event: Event & { target: HTMLSlotElement }): void {
-    this.submenuElement = event.target.assignedElements({
+    const assigned = event.target.assignedElements({
       flatten: true,
-    })[0] as HTMLElement;
+    })[0] as HTMLElement | undefined;
+
+    if (!assigned && this._mobileSubmenuProjected) {
+      return;
+    }
+
+    this.submenuElement = assigned;
     this.hasSubmenu = !!this.submenuElement;
     if (this.hasSubmenu) {
       this.setAttribute('aria-haspopup', 'true');
@@ -508,6 +549,14 @@ export class MenuItem extends LikeAnchor(
     this._touchAbortController?.abort();
     this._touchHandledViaPointerup = true;
     this._activePointerId = undefined;
+
+    if (this.isMobileView) {
+      this._mobileRootMenu?.openMobileSubmenu(this);
+      setTimeout(() => {
+        this._touchHandledViaPointerup = false;
+      }, 0);
+      return;
+    }
 
     if (this.open) {
       this.open = false;
@@ -678,6 +727,13 @@ export class MenuItem extends LikeAnchor(
   }
 
   protected handleSubmenuClick(event: Event): void {
+    if (this.isMobileView) {
+      event.stopPropagation();
+      event.preventDefault();
+      this._mobileRootMenu?.openMobileSubmenu(this);
+      return;
+    }
+
     if (this._touchHandledViaPointerup) {
       event.stopPropagation();
       event.preventDefault();
@@ -712,8 +768,7 @@ export class MenuItem extends LikeAnchor(
   };
 
   protected handlePointerenter(event: PointerEvent): void {
-    // For touch devices, don't open on pointerenter - let click handle it
-    if (event.pointerType === 'touch') {
+    if (event.pointerType === 'touch' || this.isMobileView) {
       return;
     }
 

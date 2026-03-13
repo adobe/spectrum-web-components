@@ -32,3 +32,22 @@
      */
   flex-shrink: 0;
 }
+
+:host([is-mobile-view]) {
+  display: block;
+  inline-size: 100%;
+}
+
+.mobile-slot-wrapper {
+  display: contents;
+}
+
+.mobile-slot-hidden {
+  display: none;
+}
+
+.spectrum-Menu-backIcon {
+  --spectrum-icon-size: var(--spectrum-chevron-icon-size-100);
+
+  transform: rotate(180deg);
+}
