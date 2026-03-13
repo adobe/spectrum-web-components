@@ -41,7 +41,7 @@ workflow:
 
 <!-- Document content (editable) -->
 
-This guide walks you through migrating a Spectrum Web Component from **1st-gen** to **2nd-gen**. Think of it as a washing machine: you put 1st-gen code in and get clean 2nd-gen code out, with better structure and quality along the way.
+This guide walks you through migrating a Spectrum Web Component from **1st-gen** to **2nd-gen**. Think of it as a washing machine: you put 1st-gen code in and get clean 2nd-gen code out, with better structure and quality along the way. (This is the **migration workflow** for this workstream.)
 
 ---
 
@@ -273,7 +273,29 @@ export class Badge extends BadgeBase {
 6. **Implement getter/setter** where you need side effects (e.g. syncing attributes). Prefer simple `@property` when possible.
 7. **Add JSDoc** for all public props and slots; include `@element`, `@slot`, `@attribute` where relevant.
 
-**Example (Badge) — types in core `Badge.types.ts`:**
+### Property migration scenarios
+
+Use this table to decide where each property goes and what to do when the API changes between 1st-gen and 2nd-gen:
+
+| Scenario | Where it goes | Action |
+|----------|---------------|--------|
+| **Same in S1 and S2** | Base (core) | Move as-is. |
+| **Renamed in S2** | Base (core) + deprecation in 1st-gen | Map old → new; in 1st-gen, forward the old attribute to the new prop and emit a deprecation warning if desired. |
+| **Removed in S2** | 1st-gen only | Do not migrate; mark as `@deprecated` in 1st-gen and document the removal. |
+| **New in S2** | SWC (temporary) | Add in the SWC concrete class; add `@todo` to move to base once 1st-gen is no longer maintained. |
+
+<details>
+<summary>**API cleanup during migration**</summary>
+
+When cleaning up the API, consider aligning with Figma option names, [React Spectrum](https://react-spectrum.adobe.com/) naming where it exists, and consistent event prefixes. See TypeScript conventions (Ticket 7) for coding standards; agree with the team on any naming or breaking changes before implementing.
+</details>
+
+### Static readonly and validation
+
+- **Static readonly (e.g. `VARIANTS`, `VALID_SIZES`, `FIXED_VALUES`):** In the base class, declare these as abstract-like statics that the SWC subclass must override with the correct set for that generation. They are used for runtime validation, Storybook `argTypes` options, and tests. See Badge: `Badge.VARIANTS`, `Badge.VALID_SIZES`.
+- **Debug warnings:** Override `update()` in the base (or SWC) and call `window.__swc.warn()` for invalid property combinations (e.g. invalid variant, or `outline` with a non-semantic variant). Every 2nd-gen component should implement this so invalid states are caught in development.
+
+### Example (Badge) — types in core `Badge.types.ts`
 
 ```ts
 export const FIXED_VALUES = ['block-start', 'block-end', 'inline-start', 'inline-end'] as const;
@@ -285,14 +307,14 @@ export type BadgeVariantS2 = (typeof BADGE_VARIANTS_S2)[number];
 export type BadgeVariant = BadgeVariantS1 | BadgeVariantS2;
 ```
 
-**Example (Badge) — base (core) declares property with union type; SWC overrides with narrower type:**
+**Example (Badge) — base (core) declares property with union type; SWC overrides with narrower type and required statics:**
 
 ```ts
 // Core: Badge.base.ts
 @property({ type: String, reflect: true })
 public variant: BadgeVariant = 'informative';
 
-// SWC: Badge.ts — API OVERRIDES + API ADDITIONS
+// SWC: Badge.ts — API OVERRIDES + API ADDITIONS (subclass must override VARIANTS, etc., for validation/Storybook/tests)
 static override readonly VARIANTS = BADGE_VARIANTS_S2;
 
 @property({ type: String, reflect: true })
@@ -333,58 +355,18 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 
 ## Phase 4: Styling
 
-**Goal:** Migrate CSS to 2nd-gen structure and follow the CSS style guide. See [Step 6: Migrate rendering & styles from Spectrum CSS](06_migrate-rendering-and-styles.md) for copying from spectrum-css `spectrum-two` and implementing `render()` with `classMap`.
+**Goal:** Migrate CSS to 2nd-gen structure and follow the CSS style guide. Follow the [full migration steps](CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md); see also [Step 6: Migrate rendering & styles from Spectrum CSS](06_migrate-rendering-and-styles.md) for workstream context.
 
 ### What to do
 
-1. **Copy and adapt S2 styles** into the SWC `[component-name].css`. Prefer the 2nd-gen style guide (Ticket 8). You can source S2 styles from `spectrum-css` repo, `spectrum-two` branch, component `index.css` (do not use `dist` styles as 2nd-gen applies different pre-processing).
+1. **Copy and adapt S2 styles** into the SWC `[component-name].css`. Prefer the 2nd-gen style guide (Ticket 8). Source S2 styles from the `spectrum-css` repo, `spectrum-two` branch, component `index.css` (do not use `dist` styles—2nd-gen applies different pre-processing).
 2. **Use design tokens:** Replace hard-coded values with `token(...)` (e.g. `token("border-width-200")`).
 3. **Follow component CSS guidelines** for [stylesheet organization, selectors, and variant management](CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md) and managing the customization API through [custom properties](CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md).
-5. **Keep specificity low:** Prefer class-based selectors; avoid deep or brittle selectors.
-6. **Add forced-colors support** where needed for high contrast.
-7. **Handle sizing** via size classes or CSS custom properties, consistent with other 2nd-gen components.
+4. **Keep specificity low:** Prefer class-based selectors; avoid deep or brittle selectors.
+5. **Add forced-colors support** where needed for high contrast.
+6. **Handle sizing** via size classes or CSS custom properties, consistent with other 2nd-gen components.
 
-**Example (Badge) — `badge.css` using tokens and custom properties:**
-
-```css
-:host {
-  display: inline-block;
-  place-self: start;
-  vertical-align: middle;
-}
-
-.swc-Badge {
-  --_swc-badge-border-width: token("border-width-200");
-  display: inline-flex;
-  gap: var(--swc-badge-gap, token("text-to-visual-100"));
-  min-block-size: var(--swc-badge-height, token("component-height-100"));
-  background: var(--swc-badge-background-color, token("accent-background-color-default"));
-  border-radius: var(--swc-badge-corner-radius, token("corner-radius-medium-size-medium"));
-}
-```
-
-**Example (Badge) — `render()` with `classMap()` for variants:**
-
-```ts
-protected override render(): TemplateResult {
-  return html`
-    <div
-      class=${classMap({
-        ['swc-Badge']: true,
-        [`swc-Badge--${this.variant}`]: typeof this.variant !== 'undefined',
-        ['swc-Badge--subtle']: this.subtle,
-        ['swc-Badge--outline']: this.outline,
-        [`swc-Badge--fixed-${this.fixed}`]: typeof this.fixed !== 'undefined',
-      })}
-    >
-      ${when(this.hasIcon, () => html`
-        <div class="swc-Badge-icon"><slot name="icon"></slot></div>
-      `)}
-      <div class="swc-Badge-label"><slot></slot></div>
-    </div>
-  `;
-}
-```
+For detailed examples (tokens, custom properties, variant classes, `render()` with `classMap()`), see the [full migration steps](CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md) and [component CSS guidelines](CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md).
 
 ### What to check
 
@@ -395,15 +377,12 @@ protected override render(): TemplateResult {
 
 ### Common problems and solutions
 
-| Problem | Solution |
-|--------|----------|
-| 1st-gen uses Constructable Stylesheets / `.css.js` | 2nd-gen uses plain `.css` imported as a module; Lit resolves it. |
-| Too many variant classes | Use a single class per variant (e.g. `--${variant}`) and drive from props. |
-| Size and density | Use shared size mixin and BEM-style classes (e.g. `--sizeM`). |
+For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheets vs plain `.css`, variant classes, size/density), see the [full migration steps](CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md) and [component styling guidelines](CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md).
 
 ### Quality gate
 
-- [ ] Styles follow the CSS style guide; tokens used; variants and sizes work in Storybook.
+- [ ] Follows the [full migration steps](CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md).
+- [ ] Adheres to the [component styling guidelines](CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md).
 
 ---
 
@@ -749,4 +728,3 @@ Use Badge as the reference implementation:
 - **WCAG APG:** [https://www.w3.org/WAI/ARIA/apg/patterns/](https://www.w3.org/WAI/ARIA/apg/patterns/)
 - **Component analysis:** [03_components/](../../03_components/)
 - **2nd-gen guides (Storybook):** `2nd-gen/packages/swc/.storybook/guides/`
-
