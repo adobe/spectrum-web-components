@@ -101,7 +101,8 @@ export const argTypes = {
   href: {
     name: 'href',
     type: { name: 'string', required: false },
-    description: 'If provided, will render a native link with button styling',
+    description:
+      '**Deprecated.** Use a native HTML anchor (`<a>`) with the `spectrum-Button` class and import `@spectrum-web-components/styles/global-elements.css` instead.',
     table: {
       type: { summary: 'string' },
     },
