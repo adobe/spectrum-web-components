@@ -17,11 +17,14 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 
 import type { Properties } from './index.js';
-import { renderButton, renderButtons } from './index.js';
+import { argTypes, renderButton, renderButtons } from './index.js';
 
 export default {
   component: 'sp-action-button',
   title: 'Action Button',
+  argTypes: {
+    ...argTypes,
+  },
 };
 
 function renderButtonsSelected(args: Properties): TemplateResult {
