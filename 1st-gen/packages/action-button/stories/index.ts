@@ -138,6 +138,21 @@ function renderGroup(properties: Properties): TemplateResult {
   `;
 }
 
+export const argTypes = {
+  href: {
+    name: 'href',
+    type: { name: 'string', required: false },
+    description:
+      '**Deprecated.** Use a native HTML anchor (`<a>`) with the `spectrum-ActionButton` class and import `@spectrum-web-components/styles/global-elements.css` instead.',
+    table: {
+      type: { summary: 'string' },
+    },
+    control: {
+      type: 'text',
+    },
+  },
+};
+
 export function renderButtons(properties: Properties): TemplateResult {
   return html`
     <div
