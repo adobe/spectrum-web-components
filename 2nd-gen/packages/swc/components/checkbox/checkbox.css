@@ -1,0 +1,430 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ *
+ *
+ */
+
+/* stylelint-disable no-descending-specificity -- Selectors grouped by state (invalid, emphasized, indeterminate, readonly, disabled) for maintainability; strict specificity order would scatter related rules. */
+
+:host {
+  --swc-checkbox-control-size: var(--swc-checkbox-control-size-medium, 16px);
+  --swc-checkbox-top-to-control: var(--swc-checkbox-top-to-control-medium, 8px);
+  --swc-checkbox-text-to-control: var(--swc-text-to-control-100, 10px);
+  --swc-checkbox-top-to-text: var(--swc-component-top-to-text-100, 6px);
+  --swc-checkbox-bottom-to-text: var(--swc-component-bottom-to-text-100, 9px);
+  --swc-checkbox-height: var(--swc-component-height-100, 32px);
+  --swc-checkbox-spacing: calc(var(--swc-checkbox-height) - var(--swc-checkbox-control-size));
+  --swc-checkbox-font-size: var(--swc-font-size-100, 14px);
+  --swc-checkbox-line-height: var(--swc-line-height-100, 1.3);
+  --swc-checkbox-line-height-cjk: var(--swc-cjk-line-height-100, 1.5);
+  --swc-checkbox-border-width: 2px;
+  --swc-checkbox-control-corner-radius: var(--swc-corner-radius-small-size-medium, 4px);
+  --swc-checkbox-animation-duration: var(--swc-animation-duration-100, 0.15s);
+  --swc-checkbox-focus-indicator-gap: var(--swc-focus-indicator-gap, 2px);
+  --swc-checkbox-focus-indicator-thickness: var(--swc-focus-indicator-thickness, 2px);
+  --swc-checkbox-focus-indicator-color: var(--swc-focus-indicator-color, currentColor);
+  --swc-checkbox-checkmark-color: var(--swc-gray-25, currentColor);
+
+  /* S2 Control (selected, non emphasized) – neutral-background-color-selected-* */
+  --swc-checkbox-control-selected-color-default: var(--swc-neutral-background-color-selected-default, currentColor);
+  --swc-checkbox-control-selected-color-hover: var(--swc-neutral-background-color-selected-hover, currentColor);
+  --swc-checkbox-control-selected-color-focus: var(--swc-neutral-background-color-selected-key-focus, currentColor);
+  --swc-checkbox-control-selected-color-down: var(--swc-neutral-background-color-selected-down, currentColor);
+
+  display: inline-flex;
+  gap: var(--swc-checkbox-text-to-control);
+  align-items: flex-start;
+  min-block-size: var(--swc-checkbox-height);
+  vertical-align: top;
+}
+
+:host([size="s"]) {
+  --swc-checkbox-control-size: var(--swc-checkbox-control-size-small, 14px);
+  --swc-checkbox-top-to-control: var(--swc-checkbox-top-to-control-small, 5px);
+  --swc-checkbox-text-to-control: var(--swc-text-to-control-75, 9px);
+  --swc-checkbox-top-to-text: var(--swc-component-top-to-text-75, 4px);
+  --swc-checkbox-bottom-to-text: var(--swc-component-bottom-to-text-75, 5px);
+  --swc-checkbox-control-corner-radius: var(--swc-corner-radius-small-size-small, 3px);
+  --swc-checkbox-font-size: var(--swc-font-size-75, 12px);
+  --swc-checkbox-height: var(--swc-component-height-75, 24px);
+}
+
+:host([size="m"]) {
+  --swc-checkbox-control-size: var(--swc-checkbox-control-size-medium, 16px);
+  --swc-checkbox-top-to-control: var(--swc-checkbox-top-to-control-medium, 8px);
+  --swc-checkbox-text-to-control: var(--swc-text-to-control-100, 10px);
+  --swc-checkbox-top-to-text: var(--swc-component-top-to-text-100, 6px);
+  --swc-checkbox-bottom-to-text: var(--swc-component-bottom-to-text-100, 9px);
+  --swc-checkbox-control-corner-radius: var(--swc-corner-radius-small-size-medium, 4px);
+  --swc-checkbox-font-size: var(--swc-font-size-100, 14px);
+  --swc-checkbox-height: var(--swc-component-height-100, 32px);
+}
+
+:host([size="l"]) {
+  --swc-checkbox-control-size: var(--swc-checkbox-control-size-large, 18px);
+  --swc-checkbox-top-to-control: var(--swc-checkbox-top-to-control-large, 11px);
+  --swc-checkbox-text-to-control: var(--swc-text-to-control-200, 11px);
+  --swc-checkbox-top-to-text: var(--swc-component-top-to-text-200, 9px);
+  --swc-checkbox-bottom-to-text: var(--swc-component-bottom-to-text-200, 11px);
+  --swc-checkbox-control-corner-radius: var(--swc-corner-radius-small-size-large, 5px);
+  --swc-checkbox-font-size: var(--swc-font-size-200, 16px);
+  --swc-checkbox-height: var(--swc-component-height-200, 40px);
+}
+
+:host([size="xl"]) {
+  --swc-checkbox-control-size: var(--swc-checkbox-control-size-extra-large, 20px);
+  --swc-checkbox-top-to-control: var(--swc-checkbox-top-to-control-extra-large, 14px);
+  --swc-checkbox-text-to-control: var(--swc-text-to-control-300, 13px);
+  --swc-checkbox-top-to-text: var(--swc-component-top-to-text-300, 12px);
+  --swc-checkbox-bottom-to-text: var(--swc-component-bottom-to-text-300, 14px);
+  --swc-checkbox-control-corner-radius: var(--swc-corner-radius-small-size-extra-large, 6px);
+  --swc-checkbox-font-size: var(--swc-font-size-300, 18px);
+  --swc-checkbox-height: var(--swc-component-height-300, 48px);
+}
+
+:host(:focus) {
+  outline: none;
+}
+
+:host([disabled]) {
+  pointer-events: none;
+}
+
+/* Label: font-size/line-height from tokens; component-top/bottom-to-text as padding-block */
+.swc-Checkbox-label {
+  font-size: var(--swc-checkbox-font-size);
+  line-height: var(--swc-checkbox-line-height);
+  color: var(--swc-checkbox-content-color-default, currentColor);
+  cursor: pointer;
+  transition: color var(--swc-checkbox-animation-duration) ease-in-out;
+}
+
+/* Language-specific: CJK line-height per S2 (line-height-cjk-100 token) */
+.swc-Checkbox-label:lang(ja),
+.swc-Checkbox-label:lang(ko),
+.swc-Checkbox-label:lang(zh) {
+  line-height: var(--swc-checkbox-line-height-cjk);
+}
+
+:host(:empty) .swc-Checkbox-label {
+  display: none;
+}
+
+.swc-Checkbox {
+  display: inline-flex;
+  position: relative;
+  gap: var(--swc-checkbox-text-to-control);
+  align-items: center;
+  cursor: pointer;
+}
+
+.swc-Checkbox-input {
+  position: absolute;
+  z-index: 1;
+  inline-size: 100%;
+  block-size: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.swc-Checkbox-input:disabled {
+  cursor: default;
+}
+
+/* Box container and visible control (::before) share same inline/block size */
+.swc-Checkbox-box,
+.swc-Checkbox-box::before {
+  box-sizing: border-box;
+  inline-size: var(--swc-checkbox-control-size);
+  block-size: var(--swc-checkbox-control-size);
+}
+
+/* Vertical alignment: spectrum-css approach – center control in row (margin = spacing/2) */
+.swc-Checkbox-box {
+  display: flex;
+  position: relative;
+  flex-grow: 0;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  margin-block: calc(var(--swc-checkbox-spacing) / 2);
+  transition: transform var(--swc-checkbox-animation-duration) ease-out;
+}
+
+.swc-Checkbox-box::before {
+  display: block;
+  position: absolute;
+  z-index: 0;
+  background-color: transparent;
+  border: var(--swc-checkbox-border-width) solid var(--swc-checkbox-control-color-default, currentColor);
+  border-radius: var(--swc-checkbox-control-corner-radius);
+  content: "";
+  transition:
+    border-color var(--swc-checkbox-animation-duration) ease-in-out,
+    background-color var(--swc-checkbox-animation-duration) ease-in-out,
+    box-shadow var(--swc-checkbox-animation-duration) ease-in-out;
+}
+
+/* Focus ring: same block/inline size as control plus focus-indicator-gap on each side (spectrum-two) */
+.swc-Checkbox-box::after {
+  display: block;
+  position: absolute;
+  inset: calc(var(--swc-checkbox-focus-indicator-gap) * -1);
+  border-radius: calc(var(--swc-checkbox-control-corner-radius) + var(--swc-checkbox-focus-indicator-gap));
+  content: "";
+  transition: box-shadow var(--swc-checkbox-animation-duration) ease-out;
+}
+
+.swc-Checkbox-box .swc-Checkbox-checkmark,
+.swc-Checkbox-box .swc-Checkbox-partialCheckmark {
+  position: relative;
+  z-index: 1;
+  color: var(--swc-checkbox-checkmark-color, currentColor);
+  pointer-events: none;
+}
+
+/* Checked: fill box ::before */
+.swc-Checkbox-input:checked + .swc-Checkbox-box::before {
+  background-color: var(--swc-checkbox-control-selected-color-default, currentColor);
+  border-color: var(--swc-checkbox-control-selected-color-default, currentColor);
+}
+
+/* Focus-visible: border and ring */
+.swc-Checkbox-input:focus-visible + .swc-Checkbox-box::before {
+  border-color: var(--swc-checkbox-control-color-focus, currentColor);
+}
+
+.swc-Checkbox-input:focus-visible + .swc-Checkbox-box::after {
+  box-shadow: 0 0 0 var(--swc-checkbox-focus-indicator-thickness) var(--swc-checkbox-focus-indicator-color);
+}
+
+.swc-Checkbox-input:focus-visible ~ .swc-Checkbox-label {
+  color: var(--swc-checkbox-content-color-focus, var(--swc-checkbox-content-color-default, currentColor));
+}
+
+/* Invalid: S2 negative colors for box::before (border + selected fill) */
+:host([invalid]) {
+  --swc-checkbox-invalid-color-default: var(--swc-negative-border-color-default, var(--swc-negative-visual-color, red));
+  --swc-checkbox-invalid-color-hover: var(--swc-negative-border-color-hover, var(--swc-negative-visual-color, red));
+  --swc-checkbox-invalid-color-down: var(--swc-negative-border-color-down, var(--swc-negative-visual-color, red));
+  --swc-checkbox-invalid-color-focus: var(--swc-negative-border-color-key-focus, var(--swc-negative-visual-color, red));
+  --swc-checkbox-invalid-background-default: var(--swc-negative-background-color-default, var(--swc-negative-visual-color, red));
+  --swc-checkbox-invalid-background-hover: var(--swc-negative-background-color-hover, var(--swc-negative-visual-color, red));
+  --swc-checkbox-invalid-background-down: var(--swc-negative-background-color-down, var(--swc-negative-visual-color, red));
+  --swc-checkbox-invalid-background-focus: var(--swc-negative-background-color-key-focus, var(--swc-negative-visual-color, red));
+}
+
+:host([invalid]) .swc-Checkbox-box::before {
+  border-color: var(--swc-checkbox-invalid-color-default);
+}
+
+:host([invalid]) .swc-Checkbox-input:checked + .swc-Checkbox-box::before,
+:host([invalid][indeterminate]) .swc-Checkbox-box::before,
+:host([invalid][indeterminate]) .swc-Checkbox-input:checked + .swc-Checkbox-box::before {
+  background-color: var(--swc-checkbox-invalid-background-default);
+  border-color: var(--swc-checkbox-invalid-color-default);
+}
+
+:host([invalid]) .swc-Checkbox-input:focus-visible + .swc-Checkbox-box::before {
+  border-color: var(--swc-checkbox-invalid-color-focus);
+}
+
+:host([invalid]) .swc-Checkbox-input:focus-visible:checked + .swc-Checkbox-box::before,
+:host([invalid][indeterminate]) .swc-Checkbox-input:focus-visible + .swc-Checkbox-box::before {
+  background-color: var(--swc-checkbox-invalid-background-focus);
+  border-color: var(--swc-checkbox-invalid-color-focus);
+}
+
+/* Emphasized (accent when checked/indeterminate): S2 accent-content-color for box::before selected state */
+:host([emphasized]) {
+  --swc-checkbox-emphasized-color-default: var(--swc-accent-content-color-default, currentColor);
+  --swc-checkbox-emphasized-color-hover: var(--swc-accent-content-color-hover, currentColor);
+  --swc-checkbox-emphasized-color-down: var(--swc-accent-content-color-down, currentColor);
+  --swc-checkbox-emphasized-color-focus: var(--swc-accent-content-color-key-focus, currentColor);
+}
+
+:host([emphasized]) .swc-Checkbox-input:checked + .swc-Checkbox-box::before,
+:host([emphasized][indeterminate]) .swc-Checkbox-box::before,
+:host([emphasized][indeterminate]) .swc-Checkbox-input:checked + .swc-Checkbox-box::before {
+  background-color: var(--swc-checkbox-emphasized-color-default, currentColor);
+  border-color: var(--swc-checkbox-emphasized-color-default, currentColor);
+}
+
+:host([emphasized]) .swc-Checkbox-input:focus-visible:checked + .swc-Checkbox-box::before,
+:host([emphasized][indeterminate]) .swc-Checkbox-input:focus-visible + .swc-Checkbox-box::before {
+  background-color: var(--swc-checkbox-emphasized-color-focus, currentColor);
+  border-color: var(--swc-checkbox-emphasized-color-focus, currentColor);
+}
+
+/* Indeterminate: same as checked for box ::before */
+:host([indeterminate]) .swc-Checkbox-box::before,
+:host([indeterminate]) .swc-Checkbox-input:checked + .swc-Checkbox-box::before {
+  background-color: var(--swc-checkbox-control-selected-color-default, currentColor);
+  border-color: var(--swc-checkbox-control-selected-color-default, currentColor);
+}
+
+:host([indeterminate]) .swc-Checkbox-input:focus-visible + .swc-Checkbox-box::before {
+  border-color: var(--swc-checkbox-control-selected-color-focus, var(--swc-checkbox-control-selected-color-default, currentColor));
+}
+
+/* Active / pressed (S2 down-state: perspective shift per spectrum-two) */
+:host(:active:not([disabled])) .swc-Checkbox-box {
+  transform: translateZ(var(--swc-component-size-difference-down, -2px));
+}
+
+:host(:active:not([disabled])) .swc-Checkbox-box::before {
+  border-color: var(--swc-checkbox-control-color-down, currentColor);
+}
+
+:host(:active:not([disabled])) .swc-Checkbox-input:checked + .swc-Checkbox-box::before {
+  background-color: var(--swc-checkbox-control-selected-color-down, currentColor);
+  border-color: var(--swc-checkbox-control-selected-color-down, currentColor);
+}
+
+:host(:active:not([disabled])) .swc-Checkbox-label {
+  color: var(--swc-checkbox-content-color-down, currentColor);
+}
+
+/* Readonly: unchecked = border neutral-content-color, fill gray-25; checked = neutral-content-color */
+:host([readonly]) .swc-Checkbox-input:disabled + .swc-Checkbox-box::before {
+  background-color: var(--swc-gray-25, currentColor);
+  border-color: var(--swc-neutral-content-color-default, currentColor);
+}
+
+:host([readonly]) .swc-Checkbox-input:checked:disabled + .swc-Checkbox-box::before {
+  background-color: var(--swc-neutral-content-color-default, currentColor);
+  border-color: var(--swc-neutral-content-color-default, currentColor);
+}
+
+:host([readonly]) .swc-Checkbox-input:disabled ~ .swc-Checkbox-label {
+  color: var(--swc-checkbox-content-color-default, currentColor);
+}
+
+/* Disabled: border uses disabled-content-color; unchecked fill uses gray-25 */
+.swc-Checkbox-input:disabled + .swc-Checkbox-box::before {
+  background-color: var(--swc-gray-25, currentColor);
+  border-color: var(--swc-disabled-content-color, currentColor);
+  cursor: default;
+}
+
+.swc-Checkbox-input:checked:disabled + .swc-Checkbox-box::before {
+  background-color: var(--swc-disabled-content-color, currentColor);
+  border-color: var(--swc-disabled-content-color, currentColor);
+}
+
+.swc-Checkbox-input:focus-visible:checked + .swc-Checkbox-box::before {
+  border-color: var(--swc-checkbox-control-selected-color-focus, var(--swc-checkbox-control-selected-color-default, currentColor));
+}
+
+/* Disabled indeterminate: box::before uses disabled-content-color for border and fill */
+:host([indeterminate][disabled]) .swc-Checkbox-input:disabled + .swc-Checkbox-box::before {
+  background-color: var(--swc-disabled-content-color, currentColor);
+  border-color: var(--swc-disabled-content-color, currentColor);
+}
+
+.swc-Checkbox-input:disabled ~ .swc-Checkbox-label {
+  color: var(--swc-disabled-content-color, currentColor);
+  cursor: default;
+}
+
+/* Hover (when not disabled) */
+@media (hover: hover) {
+  :host(:hover:not([disabled])) .swc-Checkbox-box::before {
+    border-color: var(--swc-checkbox-control-color-hover, currentColor);
+  }
+
+  :host(:hover:not([disabled])) .swc-Checkbox-input:checked + .swc-Checkbox-box::before {
+    background-color: var(--swc-checkbox-control-selected-color-hover, currentColor);
+    border-color: var(--swc-checkbox-control-selected-color-hover, currentColor);
+  }
+
+  :host(:hover:not([disabled])) .swc-Checkbox-label {
+    color: var(--swc-checkbox-content-color-hover, currentColor);
+  }
+}
+
+@media (hover: hover) {
+  :host([indeterminate]:hover:not([disabled])) .swc-Checkbox-box::before,
+  :host([indeterminate]:hover:not([disabled])) .swc-Checkbox-input:checked + .swc-Checkbox-box::before {
+    background-color: var(--swc-checkbox-control-selected-color-hover, currentColor);
+    border-color: var(--swc-checkbox-control-selected-color-hover, currentColor);
+  }
+
+  :host([indeterminate]:active:not([disabled])) .swc-Checkbox-box::before,
+  :host([indeterminate]:active:not([disabled])) .swc-Checkbox-input:checked + .swc-Checkbox-box::before {
+    background-color: var(--swc-checkbox-control-selected-color-down, currentColor);
+    border-color: var(--swc-checkbox-control-selected-color-down, currentColor);
+  }
+}
+
+@media (hover: hover) {
+  :host([invalid]:active:not([disabled])) .swc-Checkbox-box::before {
+    border-color: var(--swc-checkbox-invalid-color-down);
+  }
+
+  :host([invalid][indeterminate]:active:not([disabled])) .swc-Checkbox-box::before {
+    border-color: var(--swc-checkbox-invalid-color-down);
+  }
+
+  :host([invalid]:active:not([disabled])) .swc-Checkbox-input:checked + .swc-Checkbox-box::before,
+  :host([invalid][indeterminate]:active:not([disabled])) .swc-Checkbox-input:checked + .swc-Checkbox-box::before {
+    background-color: var(--swc-checkbox-invalid-background-down);
+    border-color: var(--swc-checkbox-invalid-color-down);
+  }
+
+  :host([invalid]:hover:not([disabled])) .swc-Checkbox-box::before {
+    border-color: var(--swc-checkbox-invalid-color-hover);
+  }
+
+  :host([invalid][indeterminate]:hover:not([disabled])) .swc-Checkbox-box::before {
+    border-color: var(--swc-checkbox-invalid-color-hover);
+  }
+
+  :host([invalid]:hover:not([disabled])) .swc-Checkbox-input:checked + .swc-Checkbox-box::before,
+  :host([invalid][indeterminate]:hover:not([disabled])) .swc-Checkbox-input:checked + .swc-Checkbox-box::before {
+    background-color: var(--swc-checkbox-invalid-background-hover);
+    border-color: var(--swc-checkbox-invalid-color-hover);
+  }
+}
+
+@media (hover: hover) {
+  :host([emphasized]:hover:not([disabled])) .swc-Checkbox-input:checked + .swc-Checkbox-box::before,
+  :host([emphasized][indeterminate]:hover:not([disabled])) .swc-Checkbox-input:checked + .swc-Checkbox-box::before {
+    background-color: var(--swc-checkbox-emphasized-color-hover, currentColor);
+    border-color: var(--swc-checkbox-emphasized-color-hover, currentColor);
+  }
+
+  :host([emphasized][indeterminate]:active:not([disabled])) .swc-Checkbox-box::before {
+    background-color: var(--swc-checkbox-emphasized-color-down, currentColor);
+    border-color: var(--swc-checkbox-emphasized-color-down, currentColor);
+  }
+
+  :host([emphasized]:active:not([disabled])) .swc-Checkbox-input:checked + .swc-Checkbox-box::before,
+  :host([emphasized][indeterminate]:active:not([disabled])) .swc-Checkbox-input:checked + .swc-Checkbox-box::before {
+    background-color: var(--swc-checkbox-emphasized-color-down, currentColor);
+    border-color: var(--swc-checkbox-emphasized-color-down, currentColor);
+  }
+}
+
+/* Forced colors / high contrast (--mod-checkbox-focus-indicator-*) */
+@media (forced-colors: active) {
+  .swc-Checkbox-input:focus-visible + .swc-Checkbox-box {
+    outline: var(--swc-checkbox-focus-indicator-thickness) solid CanvasText;
+    outline-offset: var(--swc-checkbox-focus-indicator-gap);
+  }
+
+  .swc-Checkbox-input:focus-visible + .swc-Checkbox-box::after {
+    box-shadow: none;
+  }
+}
