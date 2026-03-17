@@ -355,7 +355,7 @@ jobs:
       - run:
           name: Build 2nd-gen Storybook (production)
           command: |
-            NODE_ENV=production yarn workspace @adobe/spectrum-wc storybook:build
+            NODE_ENV=production SWC_STORYBOOK_MODE=ci-a11y yarn workspace @adobe/spectrum-wc storybook:build
       - run:
           name: Run axe-core WCAG tests
           command: |

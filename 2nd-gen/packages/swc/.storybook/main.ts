@@ -18,10 +18,18 @@ import { fileURLToPath } from 'url';
 import { mergeConfig } from 'vite';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const isProductionBuild = process.env.NODE_ENV === 'production';
-const includeTestStories = !isProductionBuild;
-// Used by 2nd-gen a11y CI runs to avoid docs/addons that pull 1st-gen artifacts.
-const componentsOnlyMode = process.env.SWC_STORYBOOK_COMPONENTS_ONLY === 'true';
+type StorybookMode = 'dev' | 'build' | 'ci-a11y';
+
+// Modes:
+// - dev: full local Storybook, including docs and test stories
+// - build: production Storybook build, excluding internal and test stories
+// - ci-a11y: minimal component-only Storybook used by CI accessibility checks
+const storybookMode: StorybookMode =
+  process.env.SWC_STORYBOOK_MODE === 'ci-a11y'
+    ? 'ci-a11y'
+    : process.env.NODE_ENV === 'production'
+      ? 'build'
+      : 'dev';
 
 // Custom indexer to allow .test.ts files to be treated as story files.
 const testStoryIndexer: Indexer = {
@@ -35,19 +43,20 @@ const testStoryIndexer: Indexer = {
 const stories: StorybookConfig['stories'] = [
   {
     directory: '../components',
-    // Production Storybook excludes internal-only stories; local/dev keeps the full set.
-    files: isProductionBuild
-      ? '**/!(*.internal).stories.ts'
-      : '**/*.stories.ts',
+    // Production-style builds exclude internal-only stories; local/dev keeps the full set.
+    files:
+      storybookMode === 'build'
+        ? '**/!(*.internal).stories.ts'
+        : '**/*.stories.ts',
     titlePrefix: 'Components',
   },
 ];
 
 /**
- * Components-only mode is for the 2nd-gen a11y CI path: it trims docs/guides
+ * The CI a11y mode trims docs/guides
  * that can pull in 1st-gen-linked dependencies the test build does not need.
  */
-if (!componentsOnlyMode) {
+if (storybookMode !== 'ci-a11y') {
   stories.push(
     {
       directory: 'learn-about-swc',
@@ -63,7 +72,7 @@ if (!componentsOnlyMode) {
 }
 
 // Test stories are dev-only fixtures and should not ship in production Storybook.
-if (includeTestStories) {
+if (storybookMode === 'dev') {
   stories.push({
     directory: '../components',
     files: '**/*.test.ts',
@@ -73,7 +82,7 @@ if (includeTestStories) {
 
 /**
  * The local screen-reader addon is useful in normal Storybook, but it imports
- * 1st-gen components we intentionally avoid in components-only CI mode.
+ * 1st-gen components we intentionally avoid in CI a11y mode.
  */
 const addons: StorybookConfig['addons'] = [
   {
@@ -92,7 +101,7 @@ const addons: StorybookConfig['addons'] = [
   '@storybook/addon-vitest',
 ];
 
-if (!componentsOnlyMode) {
+if (storybookMode !== 'ci-a11y') {
   addons.push(resolve(__dirname, './addons/screen-reader-addon'));
 }
 
@@ -106,7 +115,7 @@ const config: StorybookConfig = {
     disableTelemetry: true,
   },
   addons,
-  experimental_indexers: includeTestStories ? [testStoryIndexer] : [],
+  experimental_indexers: storybookMode === 'dev' ? [testStoryIndexer] : [],
   viteFinal: async (config) => {
     return mergeConfig(config, {
       plugins: [

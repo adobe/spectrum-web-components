@@ -62,7 +62,7 @@ export const firstGenStorybookServer: PlaywrightTestConfig['webServer'][number] 
 export const secondGenComponentsOnlyStorybookServer: PlaywrightTestConfig['webServer'][number] =
   {
     command:
-      'cd 2nd-gen/packages/swc && SWC_STORYBOOK_COMPONENTS_ONLY=true yarn storybook',
+      'cd 2nd-gen/packages/swc && SWC_STORYBOOK_MODE=ci-a11y yarn storybook',
     port: 6006,
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
