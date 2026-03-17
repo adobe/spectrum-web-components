@@ -59,9 +59,9 @@ This guide walks you through migrating a Spectrum Web Component from **1st-gen**
 - [ ] Move base class to core
 - [ ] Create SWC component
 - [ ] Migrate public API
-- [ ] Migrate CSS
+- [ ] Migrate CSS (and run stylelint—property order, no-descending-specificity, tokens; see Phase 4)
 - [ ] Implement accessibility
-- [ ] Add tests
+- [ ] Add tests (test stories + a11y spec; see Phase 6)
 - [ ] Add stories
 - [ ] Open PR
 
@@ -204,7 +204,7 @@ Use the decision tree under **Decision trees** below. If the answer is "split," 
 2. **Core files:** `Component.base.ts`, `Component.types.ts`, `index.ts` (export base + types). If you followed the refactor path, the base may already be in core from Step 3.
 3. **SWC package:** Create `2nd-gen/packages/swc/components/<name>/`.
 4. **SWC files:** `Component.ts`, `component.css`, `index.ts`.
-5. **Tests:** `test/component.test.ts`, `test/component.a11y.spec.ts` (can be stubs at first).
+5. **Tests:** `test/component.test.ts` (test stories with play functions), `test/component.a11y.spec.ts` (Playwright ARIA snapshots). Can be stubs at first; see **Phase 6: Testing** for the full structure (Link, Badge, Divider, Asset).
 6. **Stories:** `stories/component.stories.ts`.
 7. **Wire up package exports** in the right `index`/`package.json` so the new component is importable.
 
@@ -222,6 +222,7 @@ Use the decision tree under **Decision trees** below. If the answer is "split," 
   index.ts
   stories/badge.stories.ts
   test/badge.test.ts
+  test/badge.a11y.spec.ts
 ```
 
 **Example (Badge) — SWC class extends base and adds styles:**
@@ -343,6 +344,7 @@ public outline: boolean = false;
 | S1 vs S2 different options | Define S1 and S2 const arrays and types in `Component.types.ts`; base uses a union; SWC overrides with the correct set (see Badge `VARIANTS`, `VARIANTS_COLOR`). |
 | Complex getter/setter | Only use when you need attribute sync or validation; otherwise use `@property`. |
 | Deprecated 1st-gen exports | In 1st-gen, re-export from core and mark `@deprecated`; do not duplicate logic. |
+| Component wraps native `<input>` (e.g. checkbox) | **Base:** Define an abstract getter for the input element (e.g. `abstract get inputElement(): HTMLInputElement`). Implement `handleChange()` that reads from the input, updates state (e.g. `checked`), dispatches a cancelable `change` event, and reverts state if `event.defaultPrevented`. **SWC:** Use `@query('#input')` to provide the input element; call `this.handleChange()` from the input's `@change` handler. Optionally set `static shadowRootOptions = { delegatesFocus: true }` so host focus delegates to the input. See `Checkbox.base.ts` and `Checkbox.ts`. |
 
 <details>
 <summary>**Stop and ask:** Breaking API changes</summary>
@@ -362,14 +364,27 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 
 ### What to do
 
-1. **Copy and adapt S2 styles** into the SWC `[component-name].css`. Prefer the 2nd-gen style guide (Ticket 8). Source S2 styles from the `spectrum-css` repo, `spectrum-two` branch, component `index.css` (do not use `dist` styles—2nd-gen applies different pre-processing).
-2. **Use design tokens:** Replace hard-coded values with `token(...)` (e.g. `token("border-width-200")`).
-3. **Follow component CSS guidelines** for [stylesheet organization, selectors, and variant management](CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md) and managing the customization API through [custom properties](CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md).
-4. **Keep specificity low:** Prefer class-based selectors; avoid deep or brittle selectors.
-5. **Add forced-colors support** where needed for high contrast.
-6. **Handle sizing** via size classes or CSS custom properties, consistent with other 2nd-gen components.
+1. **Use the CSS migration guide:** Follow [Step 6: Migrate rendering & styles from Spectrum CSS](06_migrate-rendering-and-styles.md) and the [full migration steps](CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md). For token and design reference while implementing, add the Figma file from the token/component specs to your Cursor context or component folder so token names and options stay aligned with Spectrum 2.
+2. **Use [03_components/](../../03_components/) for spectrum-two alignment:** The component analysis (e.g. `03_components/checkbox/rendering-and-styling-migration-analysis.md`) documents DOM structure, modifiers, and CSS→SWC mapping from the **spectrum-css spectrum-two** branch. Use it together with the spectrum-css `spectrum-two` component and theme files to ensure 2nd-gen uses the same token names and patterns (e.g. `--spectrum-*` theme variables, checkmark/dash icon size tokens). When the analysis lists spectrum-two class names or modifiers, match those to the corresponding tokens in spectrum-css (e.g. `Checkmark75`/`Dash75` → `checkmark-icon-size-75` / `dash-icon-size-75`).
+3. **Copy and adapt S2 styles** into the SWC `[component-name].css`. Prefer the 2nd-gen style guide (Ticket 8). Source S2 styles from the `spectrum-css` repo, `spectrum-two` branch, component `index.css` (do not use `dist` styles—2nd-gen applies different pre-processing).
+4. **Use design tokens:** Replace hard-coded values with `token(...)` (e.g. `token("border-width-200")`). Where the theme exposes `--spectrum-*` variables (e.g. `--spectrum-corner-radius-small-size-medium`), reference them with a fallback so 2nd-gen participates in theme theming: `var(--spectrum-corner-radius-small-size-medium, token("corner-radius-small-size-medium"))`.
+5. **Follow component CSS guidelines** for [stylesheet organization, selectors, and variant management](CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md) and managing the customization API through [custom properties](CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md).
+6. **Keep specificity low:** Prefer class-based selectors; avoid deep or brittle selectors.
+7. **Add forced-colors support** where needed for high contrast.
+8. **Handle sizing** via size classes or CSS custom properties, consistent with other 2nd-gen components.
+9. **Run and fix 2nd-gen CSS linting (stylelint):** After writing or updating `2nd-gen/packages/swc/components/<component>/<component>.css`, run the project stylelint (e.g. `nx run swc:lint` or the repo’s CSS lint script) and fix all reported errors. The 2nd-gen stylelint config applies to `2nd-gen/**/*.css` and enforces:
+   - **Property order** (`order/properties-order`): Declarations must follow the project’s logical order (display/position/flex/box model/font/color/backgrounds/overflow/pointer-events/content/opacity/transition, etc.). See `linters/stylelint-property-order.js`.
+   - **No descending specificity** (`no-descending-specificity`): Selectors with lower specificity must appear before selectors with higher specificity that could match the same element (e.g. `:host([disabled])` before `:host([checked][disabled])`).
+   - **Declaration empty line** (`declaration-empty-line-before`): Add an empty line before declarations when required by the config (e.g. between property groups).
+   - **Token usage** (2nd-gen override): For `2nd-gen/**/*.css`, `scale-unlimited/declaration-strict-value` requires design tokens (e.g. `token("...")` or CSS custom properties) for color, font-size, and related properties instead of hard-coded values.
+
+   Fixing these as part of Phase 4 keeps the CSS consistent and avoids lint failures at review time.
 
 For detailed examples (tokens, custom properties, variant classes, `render()` with `classMap()`), see the [full migration steps](CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md) and [component CSS guidelines](CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md).
+
+**Template and render review:** Implement `render()` (e.g. from spectrum-css `stories/template.js` or from 1st-gen), then confirm in Storybook that the component renders correctly. Keep the **original slot structure** from 1st-gen unless the component analysis or Spectrum 2 design requires a change. Prefer **modern HTML** where it improves semantics or accessibility (e.g. native form controls, `<button>`, `<input type="checkbox">`). See [Step 6](06_migrate-rendering-and-styles.md) for using the spectrum-css template as a starting point.
+
+**Icons:** If the component needs an icon (e.g. checkmark, dash) and 2nd-gen has no icon package, use **inline SVG** in the template or iconography via CSS (e.g. `::before` with a background or inline SVG in the component). See `2nd-gen/packages/swc/components/checkbox/Checkbox.ts` for inline SVG checkmark and dash.
 
 ### What to check
 
@@ -377,25 +392,33 @@ For detailed examples (tokens, custom properties, variant classes, `render()` wi
 - [ ] Tokens and custom properties align with Spectrum 2.
 - [ ] Follows the [full migration steps](CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md).
 - [ ] Adheres to the [component styling guidelines](CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md).
+- [ ] **2nd-gen CSS passes stylelint:** No `order/properties-order`, `no-descending-specificity`, `declaration-empty-line-before`, or token-usage errors in the component’s `.css` file (run `nx run swc:lint` or the repo’s lint command).
 
 ### Common problems and solutions
 
 For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheets vs plain `.css`, variant classes, size/density), see the [full migration steps](CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md) and [component styling guidelines](CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md).
 
+| Problem | Solution |
+|--------|----------|
+| `order/properties-order` errors | Reorder declarations to match `linters/stylelint-property-order.js` (e.g. display → position → flex → box sizing → margin → font → overflow → pointer-events → content → opacity → transition). |
+| `no-descending-specificity` errors | Place lower-specificity selectors before higher-specificity ones (e.g. `:host([disabled])` before `:host([checked][disabled])`; single-attribute or single-pseudo before compound selectors). Split rule blocks if needed so order is consistent. |
+| Token / `declaration-strict-value` | Replace hard-coded colors, font-size, etc. with `token("...")` or the theme variable with fallback (e.g. `var(--spectrum-*, token("..."))`). |
+
 ### Quality gate
 
 - [ ] Follows the [full migration steps](CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md).
 - [ ] Adheres to the [component styling guidelines](CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md).
+- [ ] Stylelint passes for the component’s CSS (no 2nd-gen CSS lint errors).
 
 ---
 
 ## Phase 5: Accessibility
 
-**Goal:** Implement WCAG-aligned behavior and document it.
+**Goal:** Implement WCAG-aligned behavior and document it. Follow the repo’s [Accessibility testing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/01_contributor-guides/09_accessibility-testing.md) guide and the PR template’s accessibility checklist; for public-facing usage, refer to the [public docs site](https://opensource.adobe.com/spectrum-web-components/) accessibility guidance where applicable.
 
 ### What to do
 
-1. **Use semantic HTML when posisble (e.g. `<button>` instead of `<div role="button">`
+1. **Use semantic HTML when possible** (e.g. `<button>` instead of `<div role="button">`)
 2. **Refer to existing patterns as guidance:** Check [WCAG ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/) for your component type (e.g. button, listbox, combobox), Heydon Pickering's [Inclusive Components](https://inclusive-components.design/), Deque Univiersity's [Code Library (Beta)](https://dequeuniversity.com/library/). and other component libraries with existing components.
 3. **Add ARIA attributes as needed:** `role`, `aria-*` as required by the pattern. 
 
@@ -410,6 +433,8 @@ For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheet
 9. **Document a11y** in JSDoc and in the guide (how to use the component accessibly) ensuring that examples use the component accessbility.
 
 **Example (Badge):** Badge is presentational (no interactive role). It doesn’t need a widget role; the text in the default slot and optional icon slot provide the name. No keyboard behavior is required. For interactive components (e.g. button, combobox), follow the matching APG pattern and add the suggested `role` and `aria-*` attributes.
+
+**Native vs custom controls:** If the component wraps a **native form control** (e.g. `<input type="checkbox">`), semantics and keyboard support come from the native element; set `delegatesFocus: true` on the SWC's `shadowRootOptions` so host focus delegates to the control. If the component is a **custom control** (e.g. radio implemented with a div), set `role` and `aria-*` on the host (or the interactive element) and manage focus and keyboard in the SWC. See Checkbox (native input) and Radio (custom control with `role="radio"`).
 
 ### What to check
 
@@ -453,6 +478,17 @@ Prefer native events when they give the right semantics (e.g. `click`). Add cust
 3. **Storybook play functions:** Add play functions where they help (e.g. open state, keyboard). Use for visual and a11y coverage.
 4. **Coverage:** Test main props, variants, and user actions; aim for good coverage of the public API.
 
+**Test stories and a11y spec structure**
+
+Use the same two-file layout as other migrated components so behavior and accessibility are covered in a consistent way:
+
+| File | Purpose |
+|------|--------|
+| `test/<component>.test.ts` | **Test stories** — Dev-only Storybook stories (under *Component/Tests*) that reuse the main stories and add `play` functions to assert defaults, props, slots, and mutations. Use `getComponent` / `getComponents` from `utils/test-utils.js` and `expect` / `step` from `@storybook/test`. Spread the main `meta`, set `title: 'Component/Tests'`, `docs: { disable: true }`, and `tags: ['!autodocs', 'dev']`. |
+| `test/<component>.a11y.spec.ts` | **A11y spec** — Playwright tests that load Storybook stories via `gotoStory` (from `utils/a11y-helpers.js`) and assert the accessibility tree with `toMatchAriaSnapshot`. Story IDs follow the pattern `components-<name>--<story-name>` (e.g. `components-link--overview`). Story names are kebab-case (e.g. `GroupExample` → `group-example`). |
+
+**Reference implementations:** `link/test/`, `checkbox/test/`, `radio/test/`, `badge/test/`, `divider/test/`, and `asset/test/` in `2nd-gen/packages/swc/components/` show the full pattern: test stories that spread main story exports and add `play` assertions, plus an a11y spec that covers overview, variants, and accessibility stories.
+
 **Example (Badge) — Storybook test story with play function:**
 
 ```ts
@@ -472,6 +508,7 @@ export const OverviewTest: Story = {
 
 ### What to check
 
+- [ ] `test/<component>.test.ts` and `test/<component>.a11y.spec.ts` are present and follow the structure described above (test stories under *Component/Tests*, a11y spec with `gotoStory` and `toMatchAriaSnapshot`).
 - [ ] Unit tests pass; a11y tests pass.
 - [ ] Critical paths (render, props, slots, events) are covered.
 - [ ] Tests follow the project testing conventions (Ticket 10).
@@ -497,9 +534,13 @@ export const OverviewTest: Story = {
 ### What to do
 
 1. **JSDoc:** Every public prop, slot, event, and the element itself. Include `@example` where it helps. Use `@internal` for non-public API.
-2. **Storybook stories:** Default story plus stories for variants, sizes, and key states. Use `getStorybookHelpers` and standard arg/argTypes (see Badge stories). Add section headers: METADATA, STORIES, HELPER FUNCTIONS (if needed). Use `tags: ['!dev']` on non-default stories.
-3. **Usage docs:** Short "how to use" in the guide or in Storybook docs; link to Spectrum design spec if available.
-4. **Migration notes:** If the API changed from 1st-gen, document the mapping (old prop → new prop, or breaking change).
+2. **Storybook stories:** Follow the **autodocs/story template** used in 2nd-gen Badge, Divider, and similar components: `getStorybookHelpers`, METADATA (args, argTypes, meta), default story plus stories for variants, sizes, and key states. Add section headers: METADATA, STORIES, HELPER FUNCTIONS (if needed). Use `tags: ['!dev']` on non-default stories. Reference `2nd-gen/packages/swc/components/badge/stories/badge.stories.ts` and `2nd-gen/packages/swc/components/divider/stories/divider.stories.ts` for structure.
+3. **Wire size and variant controls (if applicable):** For components with **size** or other variant attributes (e.g. `size`, `variant`, `static-color`), ensure Storybook controls actually drive the component so changing the control updates the canvas.
+   - **Storybook args and argTypes:** (a) set a default in meta `args` (e.g. `args: { ...args, size: 'm' }`) so the control has an initial value; (b) configure `argTypes` for the attribute with `control: { type: 'select' }`, `options` from the component (e.g. `Component.VALID_SIZES`), and optionally `table: { defaultValue: { summary: 'm' } }` for the docs table; (c) include the attribute in the Playground story `args` so the control is visible and applies.
+   - **Custom Elements Manifest (CEM) and mixin attributes:** The Storybook helpers apply only attributes that appear in the component’s Custom Elements Manifest. If the attribute comes from a **mixin** on the base class (e.g. `size` from `SizedMixin`), the CEM analyzer may not merge it into the SWC element’s manifest, so the template never sets it and the control has no effect. **Fix:** Declare the property explicitly on the **SWC component class** (e.g. in `Radio.ts`) with `@property({ type: String, reflect: true }) public override size: ElementSize = 'm';` so the CEM includes it and the attribute is reflected for CSS (e.g. `:host([size="s"])`). Then run **`yarn analyze`** in the SWC package to regenerate `.storybook/custom-elements.json` before verifying that Storybook controls drive the component. See `Radio.ts`, `Checkbox.ts`, and their stories for the full pattern.
+4. **Review stories:** Confirm in Storybook that every variant, size, and important state has a story; control labels and argTypes are correct; **size and variant controls change the component when adjusted**; and the component renders as expected.
+5. **Usage docs:** Short "how to use" in the guide or in Storybook docs; link to Spectrum design spec if available.
+6. **Migration notes:** If the API changed from 1st-gen, document the mapping (old prop → new prop, or breaking change).
 
 **Example (Badge) — JSDoc with `@element` and `@example`:**
 
@@ -546,6 +587,7 @@ export const Overview: Story = {
 ### What to check
 
 - [ ] All public API has JSDoc; Storybook shows the main use cases.
+- [ ] For components with size/variant: controls change the component in the canvas; if the attribute comes from a mixin, the SWC class declares it (and CEM was regenerated with `yarn analyze`) so the template applies it.
 - [ ] Migration notes exist when the API is not a direct port.
 
 ### Common problems and solutions
@@ -554,6 +596,7 @@ export const Overview: Story = {
 |--------|----------|
 | Too many story variants | Use `argTypes.options` from the component (e.g. `Badge.VARIANTS`); one story can cover many variants. |
 | Missing examples | Add at least one `@example` in JSDoc and one default Storybook story. |
+| Size or variant control doesn't change the component | The Storybook template only applies attributes that are in the Custom Elements Manifest. If the attribute comes from a mixin on the base (e.g. `SizedMixin`), the CEM may not list it for the SWC element. Declare the property on the SWC class with `@property({ reflect: true })` so the CEM includes it, then run `yarn analyze` to regenerate the manifest. See Radio (SWC) for an example. |
 
 ### Quality gate
 
@@ -568,7 +611,7 @@ export const Overview: Story = {
 ### What to do
 
 1. **Run the full checklist** (copy below).
-2. **Lint:** Fix any lint errors in the touched files.
+2. **Lint:** Run the project linter and fix any errors in the touched files (e.g. `nx run swc:lint` or the repo’s standard lint command). For 2nd-gen component CSS, this runs **stylelint** on `2nd-gen/**/*.css` and enforces property order, no-descending-specificity, declaration empty lines, and token usage—ensure these are fixed in Phase 4 (Styling) and re-check here (see [Phase 4: 2nd-gen CSS linting](#phase-4-styling)).
 3. **Tests:** Run the full test suite for the affected packages.
 4. **Build:** Ensure build succeeds.
 5. **Storybook:** Load the component in Storybook; click through stories and variants.
@@ -580,7 +623,7 @@ export const Overview: Story = {
 - [ ] Phase 1: Migration plan done; API and breaking changes understood.
 - [ ] Phase 2: All files created; build passes; component importable.
 - [ ] Phase 3: API in base/SWC; types in core; JSDoc and @internal set.
-- [ ] Phase 4: CSS follows style guide; tokens and variants work.
+- [ ] Phase 4: CSS follows style guide; tokens and variants work; **stylelint passes** for 2nd-gen component CSS (property order, no-descending-specificity, tokens).
 - [ ] Phase 5: WCAG pattern applied; keyboard and ARIA done; a11y tests pass.
 - [ ] Phase 6: Unit and a11y tests pass; coverage is reasonable.
 - [ ] Phase 7: JSDoc and stories complete; migration notes if needed.
@@ -632,87 +675,6 @@ Use these when you are not sure how to structure the migration.
 
 ---
 
-## Epics and tickets
-
-Use one **Epic** per component migration and create **standard tickets** aligned to the 8 washing machine phases. This keeps scope clear, makes progress visible, and gives a consistent structure for planning and review.
-
-### Rationale
-
-- **One Epic per component:** One migration = one Epic. All phase-level work is linked under it, so backlogs and boards stay easy to filter and report on.
-- **Tickets aligned to phases:** Each phase becomes a ticket (or a small set). Acceptance criteria map to the phase’s “What to do” and quality gate, so the guide and the tickets stay in sync.
-- **Consistent naming:** Same ticket titles across components (e.g. “Migrate [Component] — API”) so teams know what to expect and can reuse templates.
-
-### Epic template
-
-**Title:** `[Migration] 2nd-gen [Component]`
-
-**Description:**
-
-- Migrate [Component] from 1st-gen to 2nd-gen following the [washing machine workflow](01_washing-machine-workflow.md).
-- Scope: core base + types, SWC component, styles, a11y, tests, stories, and PR.
-- Reference: 2nd-gen Badge (`2nd-gen/packages/core/components/badge/`, `2nd-gen/packages/swc/components/badge/`).
-
-**Child issues:** Link the 8 phase tickets (or combined tickets) as subtasks or “is blocked by” / “blocks” as appropriate.
-
-### Ticket list
-
-Create one ticket per phase (or combine where it makes sense; see guidance below):
-
-| # | Ticket title | Aligned phase |
-|---|---------------|----------------|
-| 1 | Migrate [Component] — Preparation | Phase 1: Preparation |
-| 2 | Migrate [Component] — Setup | Phase 2: Setup |
-| 3 | Migrate [Component] — API migration | Phase 3: API migration |
-| 4 | Migrate [Component] — Styling | Phase 4: Styling |
-| 5 | Migrate [Component] — Accessibility | Phase 5: Accessibility |
-| 6 | Migrate [Component] — Testing | Phase 6: Testing |
-| 7 | Migrate [Component] — Documentation | Phase 7: Documentation |
-| 8 | Migrate [Component] — Review & PR | Phase 8: Review |
-
-Copy the corresponding phase’s “What to do,” “What to check,” and “Quality gate” from this guide into each ticket’s description or acceptance criteria.
-
-### Mapping: tickets to phases
-
-| Ticket | Phase | Key deliverables |
-|--------|--------|-------------------|
-| Preparation | 1 | Migration plan; component analysis read or created; breaking changes listed. |
-| Setup | 2 | Core and SWC folders and files created; build passes; component importable. |
-| API migration | 3 | Types in core; base and SWC API; JSDoc and @internal. |
-| Styling | 4 | CSS migrated; tokens and variants; render() with classMap. |
-| Accessibility | 5 | APG pattern applied; ARIA and keyboard; a11y tests. |
-| Testing | 6 | Unit and a11y tests pass; coverage in place. |
-| Documentation | 7 | JSDoc; Storybook stories; migration notes if needed. |
-| Review & PR | 8 | Checklist done; status table updated; PR opened. |
-
-### Badge example
-
-- **Epic:** `[Migration] 2nd-gen Badge`
-- **Tickets:** “Migrate Badge — Preparation,” “Migrate Badge — Setup,” … “Migrate Badge — Review & PR.”
-- Link each ticket to this guide and to the Badge paths (core and SWC). Use the [Reference: Badge migration](#reference-badge-migration) table and code examples in the phase sections as acceptance-criteria references.
-
-### When to split or combine tickets
-
-- **Split a phase** when the work is large or done by different people (e.g. “Migrate [Component] — Styling (tokens)” and “Migrate [Component] — Styling (variants & render)”). Link the sub-tickets to the same phase in the guide and keep the phase quality gate as the overall exit condition.
-- **Combine phases** only when scope is small and one ticket is clearer (e.g. “Migrate [Component] — Documentation & review” for a trivial component). In the combined ticket, list acceptance criteria from both phases and still run both quality gates before closing.
-- **Keep Preparation and Review separate:** Do not merge Phase 1 or Phase 8 into others; they bookend the migration and should stay visible.
-
-### Tracking recommendation
-
-- **Board/view:** Filter by the migration Epic so all phase tickets for one component appear together.
-- **Status:** Use the [status table](../01_status.md) to mark steps (Analyze, Factor, Move to Core, etc.); use ticket status for phase-level “To Do / In progress / Done.”
-- **Done definition:** A phase ticket is done when its quality gate in this guide is met and the work is merged (or in the same PR as the following phase, if combined).
-
-### Quality gate checklist (for Epic closure)
-
-Before closing the migration Epic, confirm:
-
-- [ ] All 8 phase tickets (or their combined equivalents) are done.
-- [ ] Phase 8 (Review) checklist is complete; PR is merged.
-- [ ] Component row in the [status table](../01_status.md) is updated with checkmarks for all steps.
-- [ ] No open blocking issues or follow-ups that belong to the same migration.
-
----
-
 ## Reference: Badge migration
 
 Use Badge as the reference implementation:
@@ -724,13 +686,19 @@ Use Badge as the reference implementation:
 | **Types** | Inline / re-export | `Badge.types.ts` (VARIANTS_*, FixedValues, BadgeVariant) | Imports from core |
 | **CSS** | `badge.css.ts` (Constructable) | — | `badge.css` (plain CSS module) |
 | **Stories** | `stories/badge.stories.ts` | — | `stories/badge.stories.ts` (getStorybookHelpers, argTypes from component) |
-| **Tests** | `test/badge.test.ts`, `badge.a11y.spec.ts` | — | Same layout under `test/` |
+| **Tests** | `test/badge.test.ts`, `badge.a11y.spec.ts` | — | `test/badge.test.ts`, `test/badge.a11y.spec.ts` |
 
 **Paths:**
 
 - 1st-gen: `1st-gen/packages/badge/`
 - 2nd-gen core: `2nd-gen/packages/core/components/badge/`
 - 2nd-gen SWC: `2nd-gen/packages/swc/components/badge/`
+
+**Other reference components (by concern):**
+
+- **Link** — Variant and static-color attributes; test stories and a11y spec structure.
+- **Radio** — Size from `SizedMixin`: declare `size` on SWC for CEM; custom control with `role="radio"`, no native input.
+- **Checkbox** — Native `<input type="checkbox">`: base with abstract `inputElement`, `handleChange` with revert on preventDefault; SWC with `delegatesFocus`, inline SVG for checkmark/dash; size from mixin (declare on SWC); indeterminate state.
 
 ---
 
