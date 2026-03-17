@@ -31,6 +31,19 @@ jobs:
       - name: Build Storybook
         run: yarn workspace @spectrum-web-components/1st-gen storybook:build
 
+      - name: Generate 2nd-gen Custom Elements Manifest
+        run: yarn workspace @adobe/swc analyze
+
+      - name: Build 2nd-gen Storybook
+        env:
+          STORYBOOK_BASE_PATH: /spectrum-web-components/v2/
+        run: yarn workspace @adobe/swc storybook:build
+
+      - name: Copy 2nd-gen Storybook to deployment directory
+        run: |
+          mkdir -p 1st-gen/projects/documentation/dist/v2
+          cp -r 2nd-gen/packages/swc/storybook-static/* 1st-gen/projects/documentation/dist/v2/
+
       - name: Add redirects to documentation
         run: echo '/*    /index.html   200' > 1st-gen/projects/documentation/dist/_redirects
 

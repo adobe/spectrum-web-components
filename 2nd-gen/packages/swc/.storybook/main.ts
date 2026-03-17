@@ -83,6 +83,7 @@ const config = {
   ],
   viteFinal: async (config) => {
     return mergeConfig(config, {
+      base: process.env.STORYBOOK_BASE_PATH || '/',
       plugins: [
         {
           name: 'css-hmr',
