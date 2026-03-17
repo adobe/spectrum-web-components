@@ -1263,7 +1263,7 @@ describe('NumberField', () => {
     });
     it('manages currency', async () => {
       const el = await getElFrom(currency({ value: 234.21 }));
-      expect(el.formattedValue).to.equal('EUR\u00a0234.21');
+      expect(el.formattedValue).to.equal('EUR 234.21');
       expect(el.valueAsString).to.equal('234.21');
       expect(el.value).to.equal(234.21);
     });
