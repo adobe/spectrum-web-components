@@ -96,7 +96,10 @@ export class TruncatedValueTooltipController implements ReactiveController {
     }
     const previous = this._isTruncated;
     this._isTruncated = currentlyTruncated;
-    // Defer so we don't schedule an update during the host's update (Lit warning).
+    // Defer so we don't schedule an update during the host's update (Lit warning). This creates an
+    // intentional multi-phase update: first render (value in DOM) → measure here → microtask →
+    // requestUpdate → second render (tooltip in DOM). We need the second render to show the
+    // tooltip; the brief delay before it appears is expected.
     Promise.resolve().then(() => {
       this.host.requestUpdate(truncatedValueTooltipUpdatedSymbol, previous);
     });

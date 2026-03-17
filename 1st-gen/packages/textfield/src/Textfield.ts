@@ -410,6 +410,11 @@ export class TextfieldBase extends ManageHelpText(
       this.updateComplete.then(() => {
         this.checkValidity();
         if (changedProperties.has('value')) {
+          // Truncation tooltip uses an intentional multi-phase update: (1) first render puts value in
+          // DOM, (2) after updateComplete we measure and set truncation state, (3) controller defers
+          // requestUpdate to a microtask so a second render shows the tooltip. We cannot show the
+          // tooltip in the first render because we must measure after layout. This can cause a brief
+          // delay before the tooltip appears; that is expected.
           this.truncatedValueTooltipController.refresh();
         }
       });
