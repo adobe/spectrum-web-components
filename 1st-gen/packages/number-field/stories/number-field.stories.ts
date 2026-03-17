@@ -523,29 +523,24 @@ export const validationIcons = (args: StoryArgs): TemplateResult => {
       Invalid Number Field without Stepper
     </sp-field-label>
     <sp-number-field
+      invalid
       id="invalidHiddenStepper"
-      ...=${spreadProps({ ...args, hideStepper: true })}
+      ...=${spreadProps(args)}
     ></sp-number-field>
     <sp-field-label for="validStepper">
       Valid Number Field with Stepper
     </sp-field-label>
-    <sp-number-field
-      id="validStepper"
-      ...=${spreadProps({ ...args, invalid: false, valid: true })}
-    ></sp-number-field>
+    <sp-number-field id="validStepper" valid></sp-number-field>
     <sp-field-label for="invalidStepper">
       Invalid Number Field with Stepper
     </sp-field-label>
-    <sp-number-field
-      id="invalidStepper"
-      ...=${spreadProps(args)}
-    ></sp-number-field>
+    <sp-number-field id="invalidStepper" invalid></sp-number-field>
   `;
 };
 validationIcons.args = {
-  value: 15,
   invalid: true,
-  hideStepper: false,
+  value: '15',
+  hideStepper: true,
 };
 
 export const ScrollingContainer = (args: StoryArgs = {}): TemplateResult => {
