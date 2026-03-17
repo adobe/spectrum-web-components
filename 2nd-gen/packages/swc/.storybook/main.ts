@@ -11,15 +11,19 @@
  */
 import { readCsf } from '@storybook/core/csf-tools';
 import type { Indexer } from '@storybook/types';
+import type { StorybookConfig } from '@storybook/web-components-vite';
 import { dirname, resolve } from 'path';
 import remarkGfm from 'remark-gfm';
 import { fileURLToPath } from 'url';
 import { mergeConfig } from 'vite';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const includeTestStories = process.env.NODE_ENV !== 'production';
-// Used by 2nd-gen Playwright a11y runs to avoid loading docs/guides that pull 1st-gen artifacts.
+const isProductionBuild = process.env.NODE_ENV === 'production';
+const includeTestStories = !isProductionBuild;
+// Used by 2nd-gen a11y CI runs to avoid docs/addons that pull 1st-gen artifacts.
 const componentsOnlyMode = process.env.SWC_STORYBOOK_COMPONENTS_ONLY === 'true';
+
+// Custom indexer to allow .test.ts files to be treated as story files.
 const testStoryIndexer: Indexer = {
   test: /\.test\.ts$/,
   createIndex: async (fileName, options) => {
@@ -28,20 +32,21 @@ const testStoryIndexer: Indexer = {
   },
 };
 
-const stories = [
+const stories: StorybookConfig['stories'] = [
   {
     directory: '../components',
-    files: '**/*.stories.ts',
+    // Production Storybook excludes internal-only stories; local/dev keeps the full set.
+    files: isProductionBuild
+      ? '**/!(*.internal).stories.ts'
+      : '**/*.stories.ts',
     titlePrefix: 'Components',
   },
 ];
 
 /**
- * Added this intentionally for the 2nd-gen a11y CI mode.
- * When componentsOnlyMode is enabled, Storybook only loads component stories and skips learn-about-swc / guides MDX content. Those doc trees can pull additional dependencies (including 1st-gen-linked paths), which we don’t need for ARIA snapshot coverage and which were contributing to CI startup/build failures.
- * This keeps the a11y test Storybook surface minimal and more stable, while normal dev/docs behavior stays unchanged when the flag is off.
+ * Components-only mode is for the 2nd-gen a11y CI path: it trims docs/guides
+ * that can pull in 1st-gen-linked dependencies the test build does not need.
  */
-
 if (!componentsOnlyMode) {
   stories.push(
     {
@@ -57,6 +62,7 @@ if (!componentsOnlyMode) {
   );
 }
 
+// Test stories are dev-only fixtures and should not ship in production Storybook.
 if (includeTestStories) {
   stories.push({
     directory: '../components',
@@ -66,13 +72,10 @@ if (includeTestStories) {
 }
 
 /**
- * This split is intentional for the 2nd-gen a11y CI mode.
- * We keep the standard Storybook addons by default, but conditionally disable the local screen-reader-addon when componentsOnlyMode is enabled.
- * Reason: that addon imports several 1st-gen components (sp-switch, sp-textfield, sp-help-text, sp-field-label), which brings in 1st-gen build artifacts and caused the CI startup failures in the 2nd-gen-only pipeline.
- * So this keeps normal developer/docs behavior unchanged, while the a11y snapshot run uses a minimal addon surface and avoids unintended 1st-gen coupling.
+ * The local screen-reader addon is useful in normal Storybook, but it imports
+ * 1st-gen components we intentionally avoid in components-only CI mode.
  */
-
-const addons = [
+const addons: StorybookConfig['addons'] = [
   {
     name: '@storybook/addon-docs',
     options: {
@@ -93,10 +96,8 @@ if (!componentsOnlyMode) {
   addons.push(resolve(__dirname, './addons/screen-reader-addon'));
 }
 
-/** @type { import('@storybook/web-components-vite').StorybookConfig } */
-const config = {
+const config: StorybookConfig = {
   stories,
-  experimental_indexers: includeTestStories ? [testStoryIndexer] : [],
   docs: {
     defaultName: 'README',
   },
@@ -105,6 +106,7 @@ const config = {
     disableTelemetry: true,
   },
   addons,
+  experimental_indexers: includeTestStories ? [testStoryIndexer] : [],
   viteFinal: async (config) => {
     return mergeConfig(config, {
       plugins: [
