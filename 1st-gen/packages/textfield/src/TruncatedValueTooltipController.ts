@@ -196,18 +196,16 @@ export class TruncatedValueTooltipController implements ReactiveController {
     if (host.multiline || this._observerInitialized) {
       return;
     }
+    // Defer full setup until inputElement is in the DOM so we can observe it for truncation.
+    if (!host.inputElement) {
+      return;
+    }
     this._observerInitialized = true;
     this._resizeObserver = new ResizeObserver(() => {
       this.refreshTruncationState();
     });
     this._resizeObserver.observe(this.host as unknown as Element);
-    if (host.inputElement) {
-      this._resizeObserver.observe(host.inputElement);
-    } else {
-      console.warn(
-        'TruncatedValueTooltipController: host.inputElement is null on first hostUpdated, only observing host.'
-      );
-    }
+    this._resizeObserver.observe(host.inputElement);
     this.refreshTruncationState();
   }
 
@@ -217,5 +215,6 @@ export class TruncatedValueTooltipController implements ReactiveController {
       this._resizeObserver = null;
     }
     this._observerInitialized = false;
+    this._isTruncated = false;
   }
 }
