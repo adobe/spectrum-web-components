@@ -1,0 +1,99 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: inline;
+}
+
+:host(:focus) {
+  outline: none;
+}
+
+:host([disabled]) {
+  pointer-events: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.swc-Link {
+  --_swc-link-color: var(--swc-link-color, token("accent-content-color-default"));
+  --_swc-link-color-hover: var(--swc-link-color-hover, token("accent-content-color-hover"));
+  --_swc-link-color-active: var(--swc-link-color-active, token("accent-content-color-down"));
+  --_swc-link-color-focus: var(--swc-link-color-focus, token("accent-content-color-key-focus"));
+
+  color: var(--highcontrast-link-text-color, var(--_swc-link-color));
+  text-decoration: underline;
+  text-decoration-skip-ink: auto;
+  background-color: initial;
+  cursor: pointer;
+  outline: none;
+  transition: color var(--swc-link-transition-duration, token("animation-duration-100")) ease-in-out;
+}
+
+.swc-Link:active {
+  --_swc-link-color: var(--swc-link-color-active, token("accent-content-color-down"));
+}
+
+.swc-Link--quiet {
+  text-decoration: none;
+}
+
+.swc-Link:focus-visible,
+.swc-Link--quiet:focus-visible {
+  --_swc-link-color: var(--swc-link-color-focus, token("accent-content-color-key-focus"));
+
+  text-decoration: underline double;
+  text-decoration-color: inherit;
+}
+
+@media (hover: hover) {
+  .swc-Link:hover {
+    --_swc-link-color: var(--swc-link-color-hover, token("accent-content-color-hover"));
+  }
+
+  .swc-Link--quiet:hover {
+    text-decoration: underline;
+  }
+}
+
+:host([variant="secondary"]) .swc-Link {
+  --_swc-link-color: var(--swc-link-color, token("neutral-content-color-default"));
+  --_swc-link-color-hover: var(--swc-link-color-hover, token("neutral-content-color-hover"));
+  --_swc-link-color-active: var(--swc-link-color-active, token("neutral-content-color-down"));
+  --_swc-link-color-focus: var(--swc-link-color-focus, token("neutral-content-color-key-focus"));
+}
+
+:host([static-color="white"]) .swc-Link {
+  --_swc-link-color: token("white");
+  --_swc-link-color-hover: token("white");
+  --_swc-link-color-active: token("white");
+  --_swc-link-color-focus: token("white");
+}
+
+:host([static-color="black"]) .swc-Link {
+  --_swc-link-color: token("black");
+  --_swc-link-color-hover: token("black");
+  --_swc-link-color-active: token("black");
+  --_swc-link-color-focus: token("black");
+}
+
+:host([href]) .swc-Link:focus-visible {
+  text-decoration: underline double;
+}
+
+@media (forced-colors: active) {
+  :host {
+    --highcontrast-link-text-color: LinkText;
+  }
+}

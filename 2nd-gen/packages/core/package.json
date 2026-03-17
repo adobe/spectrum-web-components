@@ -31,6 +31,18 @@
       "types": "./dist/components/divider/index.d.ts",
       "import": "./dist/components/divider/index.js"
     },
+    "./components/link": {
+      "types": "./dist/components/link/index.d.ts",
+      "import": "./dist/components/link/index.js"
+    },
+    "./components/checkbox": {
+      "types": "./dist/components/checkbox/index.d.ts",
+      "import": "./dist/components/checkbox/index.js"
+    },
+    "./components/radio": {
+      "types": "./dist/components/radio/index.d.ts",
+      "import": "./dist/components/radio/index.js"
+    },
     "./components/progress-circle": {
       "types": "./dist/components/progress-circle/index.d.ts",
       "import": "./dist/components/progress-circle/index.js"
@@ -132,6 +144,15 @@
       ],
       "components/divider": [
         "dist/components/divider/index.d.ts"
+      ],
+      "components/link": [
+        "dist/components/link/index.d.ts"
+      ],
+      "components/checkbox": [
+        "dist/components/checkbox/index.d.ts"
+      ],
+      "components/radio": [
+        "dist/components/radio/index.d.ts"
       ],
       "components/progress-circle": [
         "dist/components/progress-circle/index.d.ts"

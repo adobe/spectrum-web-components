@@ -1,0 +1,276 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  --_swc-radio-control-size: var(--swc-radio-control-size, token("workflow-icon-size-100"));
+  --_swc-radio-border-width: var(--swc-radio-border-width, token("border-width-200"));
+  --_swc-radio-text-to-control: var(--swc-radio-text-to-control, token("text-to-visual-100"));
+  --_swc-radio-label-color: var(--swc-radio-label-color, token("neutral-content-color-default"));
+  --_swc-radio-button-border: var(--swc-radio-button-border, token("gray-400"));
+  --_swc-radio-button-bg: var(--swc-radio-button-bg, token("background-layer-1-color"));
+  --_swc-radio-focus-color: var(--swc-radio-focus-color, token("focus-indicator-color"));
+
+  display: inline-flex;
+  position: relative;
+  align-items: flex-start;
+  max-inline-size: 100%;
+  min-block-size: var(--swc-radio-height, token("component-height-100"));
+  vertical-align: top;
+}
+
+:host(:focus) {
+  outline: none;
+}
+
+:host([disabled]) {
+  pointer-events: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Invisible overlay for hit area */
+.swc-Radio-input {
+  position: absolute;
+  z-index: 1;
+  inline-size: 100%;
+  block-size: 100%;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: var(--swc-radio-input-font-size, 100%);
+  line-height: var(--swc-radio-line-height, token("line-height-100"));
+  overflow: visible;
+  cursor: pointer;
+  opacity: 0;
+}
+
+:host([disabled]) .swc-Radio-input {
+  cursor: default;
+}
+
+/* Visual circle (::before on button) and focus ring (::after) live on .swc-Radio-button */
+.swc-Radio-button {
+  position: relative;
+  flex-grow: 0;
+  flex-shrink: 0;
+  inline-size: var(--_swc-radio-control-size);
+  block-size: var(--_swc-radio-control-size);
+  margin-block-start: var(--swc-radio-button-top, token("component-top-to-text-100"));
+}
+
+.swc-Radio-button::before {
+  display: block;
+  position: absolute;
+  inset: 0;
+  background-color: var(--_swc-radio-button-bg);
+  border: var(--_swc-radio-border-width) solid var(--_swc-radio-button-border);
+  border-radius: token("corner-radius-full");
+  content: "";
+  transition:
+    border-color var(--swc-radio-transition-duration, token("animation-duration-100")) ease-in-out,
+    border-width var(--swc-radio-transition-duration, token("animation-duration-100")) ease-in-out;
+}
+
+.swc-Radio-button::after {
+  display: block;
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: 0;
+  block-size: 0;
+  border: var(--swc-radio-focus-width, token("focus-indicator-thickness")) solid var(--_swc-radio-focus-color);
+  border-radius: token("corner-radius-full");
+  content: "";
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity var(--swc-radio-transition-duration, token("animation-duration-100")) ease-out;
+}
+
+.swc-Radio-label {
+  margin-block-start: var(--swc-radio-label-top, token("component-top-to-text-100"));
+  margin-block-end: var(--swc-radio-label-bottom, token("component-bottom-to-text-100"));
+  margin-inline-start: var(--_swc-radio-text-to-control);
+  font-size: var(--swc-radio-font-size, token("font-size-100"));
+  line-height: var(--swc-radio-line-height, token("line-height-100"));
+  color: var(--_swc-radio-label-color);
+  text-align: start;
+  transition: color var(--swc-radio-transition-duration, token("animation-duration-100")) ease-in-out;
+}
+
+.swc-Radio-label:lang(ja),
+.swc-Radio-label:lang(ko),
+.swc-Radio-label:lang(zh) {
+  line-height: var(--swc-radio-line-height-cjk, token("cjk-line-height-100"));
+}
+
+/* Checked: circle shows selection (thicker border / inner dot effect via border-width) */
+:host([checked]) .swc-Radio-button::before {
+  --_swc-radio-button-border: var(--swc-radio-checked-border, token("gray-800"));
+
+  border-width: calc(var(--_swc-radio-control-size) / 2 - 2px);
+}
+
+/* RTL focus ring (before :host(:focus-visible) .swc-Radio-button::after for no-descending-specificity) */
+.swc-Radio-button:dir(rtl)::after {
+  transform: translate(50%, -50%);
+}
+
+/* Button ::before: lower specificity before higher (no-descending-specificity) */
+:host(:active) .swc-Radio-button::before {
+  --_swc-radio-button-border: var(--swc-radio-button-border-down, token("gray-600"));
+}
+
+:host(:focus-visible) .swc-Radio-button::before {
+  --_swc-radio-button-border: var(--swc-radio-button-border-focus, token("gray-600"));
+}
+
+:host([disabled]) .swc-Radio-button::before {
+  --_swc-radio-button-border: var(--swc-radio-disabled-border, token("gray-300"));
+}
+
+:host([checked]:active) .swc-Radio-button::before {
+  --_swc-radio-button-border: var(--swc-radio-checked-down, token("gray-1000"));
+}
+
+:host([checked]:focus-visible) .swc-Radio-button::before {
+  --_swc-radio-button-border: var(--swc-radio-checked-focus, token("gray-1000"));
+}
+
+:host([checked][disabled]) .swc-Radio-button::before {
+  --_swc-radio-button-border: var(--swc-radio-disabled-border, token("gray-300"));
+}
+
+:host(:active) .swc-Radio-label {
+  --_swc-radio-label-color: var(--swc-radio-label-color-down, token("neutral-content-color-down"));
+}
+
+:host(:focus-visible) .swc-Radio-button::after {
+  inline-size: calc(var(--_swc-radio-control-size) + 2 * token("focus-indicator-gap"));
+  block-size: calc(var(--_swc-radio-control-size) + 2 * token("focus-indicator-gap"));
+  opacity: 1;
+}
+
+:host(:focus-visible) .swc-Radio-label {
+  --_swc-radio-label-color: var(--swc-radio-label-color-focus, token("neutral-content-color-key-focus"));
+}
+
+/* Label: single-attribute before compound (no-descending-specificity) */
+:host([disabled]) .swc-Radio-label {
+  --_swc-radio-label-color: var(--swc-radio-disabled-label, token("gray-400"));
+}
+
+:host([readonly]) .swc-Radio-label {
+  --_swc-radio-label-color: var(--swc-radio-label-color, token("neutral-content-color-default"));
+
+  margin-inline-start: 0;
+}
+
+:host([checked][disabled]) .swc-Radio-label {
+  --_swc-radio-label-color: var(--swc-radio-disabled-label, token("gray-400"));
+}
+
+:host([readonly][disabled]) .swc-Radio-label {
+  --_swc-radio-label-color: var(--swc-radio-label-color, token("neutral-content-color-default"));
+
+  margin-inline-start: 0;
+}
+
+/* Emphasized checked: accent color (after less specific selectors) */
+:host([emphasized][checked]) .swc-Radio-button::before {
+  --_swc-radio-button-border: var(--swc-radio-emphasized-checked, token("accent-content-color-default"));
+}
+
+/* Hover */
+@media (hover: hover) {
+  :host(:hover) .swc-Radio-button::before {
+    --_swc-radio-button-border: var(--swc-radio-button-border-hover, token("gray-500"));
+  }
+
+  :host([checked]:hover) .swc-Radio-button::before {
+    --_swc-radio-button-border: var(--swc-radio-checked-hover, token("gray-900"));
+  }
+
+  :host([emphasized][checked]:hover) .swc-Radio-button::before {
+    --_swc-radio-button-border: var(--swc-radio-emphasized-hover, token("accent-content-color-hover"));
+  }
+
+  :host(:hover) .swc-Radio-label {
+    --_swc-radio-label-color: var(--swc-radio-label-color-hover, token("neutral-content-color-hover"));
+  }
+}
+
+:host([emphasized][checked]:active) .swc-Radio-button::before {
+  --_swc-radio-button-border: var(--swc-radio-emphasized-down, token("accent-content-color-down"));
+}
+
+:host([emphasized][checked]:focus-visible) .swc-Radio-button::before {
+  --_swc-radio-button-border: var(--swc-radio-emphasized-focus, token("accent-content-color-key-focus"));
+}
+
+/* Readonly: hide the visual button, show label only */
+:host([readonly]) .swc-Radio-button {
+  position: fixed;
+  inset-block-end: 100%;
+  inset-inline-end: 100%;
+  clip-path: inset(50%);
+}
+
+:host([readonly]) .swc-Radio-input {
+  cursor: auto;
+}
+
+/* Sizes (default is m) */
+:host([size="s"]) {
+  --swc-radio-height: token("component-height-75");
+  --_swc-radio-control-size: token("workflow-icon-size-75");
+  --_swc-radio-text-to-control: token("text-to-visual-75");
+  --swc-radio-font-size: token("font-size-75");
+  --swc-radio-label-top: token("component-top-to-text-75");
+  --swc-radio-label-bottom: token("component-bottom-to-text-75");
+  --swc-radio-button-top: token("component-top-to-text-75");
+}
+
+:host([size="l"]) {
+  --swc-radio-height: token("component-height-200");
+  --_swc-radio-control-size: token("workflow-icon-size-200");
+  --_swc-radio-text-to-control: token("text-to-visual-200");
+  --swc-radio-font-size: token("font-size-200");
+  --swc-radio-label-top: token("component-top-to-text-200");
+  --swc-radio-label-bottom: token("component-bottom-to-text-200");
+  --swc-radio-button-top: token("component-top-to-text-200");
+}
+
+:host([size="xl"]) {
+  --swc-radio-height: token("component-height-300");
+  --_swc-radio-control-size: token("workflow-icon-size-300");
+  --_swc-radio-text-to-control: token("text-to-visual-300");
+  --swc-radio-font-size: token("font-size-300");
+  --swc-radio-label-top: token("component-top-to-text-300");
+  --swc-radio-label-bottom: token("component-bottom-to-text-300");
+  --swc-radio-button-top: token("component-top-to-text-300");
+}
+
+@media (forced-colors: active) {
+  :host {
+    --_swc-radio-label-color: CanvasText;
+    --_swc-radio-button-border: ButtonText;
+    --_swc-radio-focus-color: CanvasText;
+  }
+
+  .swc-Radio-button::after {
+    forced-color-adjust: none;
+  }
+}

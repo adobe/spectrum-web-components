@@ -103,4 +103,6 @@ This section provides a **component-centric view** of individual components and 
 
 Each component has its own folder (kebab-case). Inside you'll find analysis and planning docs for that component—for example, **rendering-and-styling-migration-analysis.md** for Spectrum 2 CSS-to-SWC migration. The same structure is intended for future peer docs (e.g. a11y analysis, comparative API analysis).
 
+**Using these docs for 2nd-gen and spectrum-two tokens:** The rendering-and-styling analyses describe the **spectrum-css spectrum-two** branch (DOM structure, modifiers, CSS→SWC mapping). When implementing 2nd-gen styling, use the component analysis together with the spectrum-css `spectrum-two` component and theme files so 2nd-gen uses the same token names and patterns (e.g. theme variables like `--spectrum-*`, icon size tokens like `checkmark-icon-size-75` / `dash-icon-size-75`). The analysis does not list every token by name; cross-reference spectrum-css spectrum-two source for the exact token/variable names.
+
 For a workstream-centric view of the same work, see [Workstreams](../02_workstreams/README.md). For how the two views fit together, see the [Project planning overview](../README.md).
