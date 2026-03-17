@@ -46,7 +46,10 @@ export default mergeConfig(
         include: [
           'components/**/*.{ts,js}',
           '**/packages/core/components/**/*.{ts,js}',
-          '**/packages/core/shared/**/*.{ts,js}',
+          '**/packages/core/controllers/*.{ts,js}',
+          '**/packages/core/element/*.{ts,js}',
+          '**/packages/core/mixins/*.{ts,js}',
+          '**/packages/core/utils/*.{ts,js}',
         ],
         exclude: [
           '**/*.test.ts',
@@ -77,7 +80,22 @@ export default mergeConfig(
           },
 
           // Shared utilities (lower bar while starting out)
-          '**/packages/core/shared/**/*.{ts,js}': {
+          '**/packages/core/controllers/*.{ts,js}': {
+            lines: 70,
+            functions: 70,
+            statements: 70,
+          },
+          '**/packages/core/element/*.{ts,js}': {
+            lines: 70,
+            functions: 70,
+            statements: 70,
+          },
+          '**/packages/core/mixins/*.{ts,js}': {
+            lines: 70,
+            functions: 70,
+            statements: 70,
+          },
+          '**/packages/core/utils/*.{ts,js}': {
             lines: 70,
             functions: 70,
             statements: 70,
