@@ -51,8 +51,8 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Build 2nd-gen
-        run: yarn build:2nd-gen
+      - name: Build all generations
+        run: yarn build
 
       - name: Build 2nd-gen Storybook
         run: yarn workspace @spectrum-web-components/2nd-gen storybook:build
