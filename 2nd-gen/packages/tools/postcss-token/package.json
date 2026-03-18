@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "postcss": "8.5.6",
-    "vitest": "4.0.15"
+    "vitest": "4.1.0"
   },
   "keywords": [
     "design-system",
