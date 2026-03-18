@@ -1,0 +1,12 @@
+diff --git a/dist/index.js b/dist/index.js
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -727,7 +727,7 @@ function syncControls(component) {
+   setArgObserver(component);
+   setTimeout(() => {
+     const selectedComponent = document.querySelector(component.tagName);
+-    if (selectedComponent && argsObserver) {
++    if (selectedComponent && argObserver) {
+       argObserver.observe(selectedComponent, {
+         attributes: true
+       });

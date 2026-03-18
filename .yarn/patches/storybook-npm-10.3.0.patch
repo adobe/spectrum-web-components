@@ -1,0 +1,24 @@
+diff --git a/dist/_browser-chunks/chunk-SZQXB3JV.js b/dist/_browser-chunks/chunk-SZQXB3JV.js
+--- a/dist/_browser-chunks/chunk-SZQXB3JV.js
++++ b/dist/_browser-chunks/chunk-SZQXB3JV.js
+@@ -1771,7 +1771,7 @@
+       }, onUnhandledRejection = (event) => {
+         event.reason && unhandledErrors.add(event.reason);
+       };
+-      if (this.renderOptions.autoplay && forceRemount && playFunction && this.phase !== "errored") {
++      if (this.renderOptions.autoplay && (initial ? this.story?.parameters?.autoplay ?? false : true) && forceRemount && playFunction && this.phase !== "errored") {
+         window?.addEventListener?.("error", onError), window?.addEventListener?.("unhandledrejection", onUnhandledRejection), this.disableKeyListeners = !0;
+         try {
+           if (isMountDestructured ? await playFunction(context) : (context.mount = async () => {
+diff --git a/dist/preview/runtime.js b/dist/preview/runtime.js
+--- a/dist/preview/runtime.js
++++ b/dist/preview/runtime.js
+@@ -34023,7 +34023,7 @@
+       }, onUnhandledRejection = (event) => {
+         event.reason && unhandledErrors.add(event.reason);
+       };
+-      if (this.renderOptions.autoplay && forceRemount && playFunction && this.phase !== "errored") {
++      if (this.renderOptions.autoplay && (initial ? this.story?.parameters?.autoplay ?? false : true) && forceRemount && playFunction && this.phase !== "errored") {
+         window?.addEventListener?.("error", onError), window?.addEventListener?.("unhandledrejection", onUnhandledRejection), this.disableKeyListeners = !0;
+         try {
+           if (isMountDestructured ? await playFunction(context) : (context.mount = async () => {
