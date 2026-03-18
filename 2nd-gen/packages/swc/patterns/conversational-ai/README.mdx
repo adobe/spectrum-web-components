@@ -1,0 +1,33 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Conversational AI/README" />
+
+# Conversational AI
+
+Starter pattern area for conversational AI building blocks and composition in 2nd-gen.
+
+## Included building blocks
+
+- `prompt-field`: input surface for entering or reviewing a prompt
+- `user-message`: message bubble for user-authored content in a conversation thread
+
+## Current scope
+
+This is intentionally minimal. The goal right now is to establish the folder structure, Storybook visibility, and token-based styling approach before the pattern grows into a fuller API.
+
+## Pattern structure
+
+```text
+patterns/
+  conversational-ai/
+    README.mdx
+    conversational-ai.stories.ts
+    prompt-field/
+    user-message/
+```
+
+## Next steps
+
+- add richer prompt-field states like disabled, loading, and multi-line growth
+- add additional conversation roles such as assistant/system responses
+- decide whether pattern-level exports should ship from the package build

@@ -9,20 +9,16 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { defineElement } from '@spectrum-web-components/core/element/index.js';
 
-export default {
-  globs: [
-    'components/**/*.ts',
-    'patterns/**/*.ts',
-    '../core/components/**/*.ts',
-    '../core/controllers/**/*.ts',
-    '../core/element/**/*.ts',
-    '../core/mixins/**/*.ts',
-    '../core/utils/**/*.ts',
-  ],
-  exclude: ['**/*.stories.ts', '**/*.test.ts', '**/*.spec.ts'],
-  outdir: '.storybook',
-  litelement: true,
-  dev: false,
-  plugins: [],
-};
+import { PromptField } from './PromptField.js';
+
+export * from './PromptField.js';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'swc-prompt-field': PromptField;
+  }
+}
+
+defineElement('swc-prompt-field', PromptField);

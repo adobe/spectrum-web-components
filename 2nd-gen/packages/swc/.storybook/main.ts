@@ -50,6 +50,16 @@ const stories: StorybookConfig['stories'] = [
         : '**/*.stories.ts',
     titlePrefix: 'Components',
   },
+  {
+    directory: '../patterns',
+    files: '**/*.stories.ts',
+    titlePrefix: 'Patterns',
+  },
+  {
+    directory: '../patterns',
+    files: '**/*.mdx',
+    titlePrefix: 'Patterns',
+  },
 ];
 
 /**

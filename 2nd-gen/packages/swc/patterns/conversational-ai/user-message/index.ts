@@ -9,20 +9,16 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { defineElement } from '@spectrum-web-components/core/element/index.js';
 
-export default {
-  globs: [
-    'components/**/*.ts',
-    'patterns/**/*.ts',
-    '../core/components/**/*.ts',
-    '../core/controllers/**/*.ts',
-    '../core/element/**/*.ts',
-    '../core/mixins/**/*.ts',
-    '../core/utils/**/*.ts',
-  ],
-  exclude: ['**/*.stories.ts', '**/*.test.ts', '**/*.spec.ts'],
-  outdir: '.storybook',
-  litelement: true,
-  dev: false,
-  plugins: [],
-};
+import { UserMessage } from './UserMessage.js';
+
+export * from './UserMessage.js';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'swc-user-message': UserMessage;
+  }
+}
+
+defineElement('swc-user-message', UserMessage);

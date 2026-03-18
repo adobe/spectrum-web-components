@@ -1,0 +1,48 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: block;
+  max-inline-size: var(--swc-user-message-max-inline-size, 536px);
+}
+
+:host([modality="split-right-rail"]) {
+  --swc-user-message-max-inline-size: 440px;
+}
+
+:host([modality="panel"]) {
+  --swc-user-message-max-inline-size: 360px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.swc-UserMessage {
+  padding-block: token("component-top-to-text-100") token("component-bottom-to-text-100");
+  padding-inline: token("component-edge-to-text-100");
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-200");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-200");
+  color: token("gray-800");
+  background: token("gray-50");
+  border-radius: token("corner-radius-medium-size-medium");
+}
+
+/* Card content uses tighter padding to frame the card thumbnail/metadata */
+:host([content="card"]) .swc-UserMessage {
+  padding-block: token("component-top-to-text-75") token("component-bottom-to-text-75");
+  padding-inline: token("component-edge-to-text-75");
+}
