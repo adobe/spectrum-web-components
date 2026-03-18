@@ -196,7 +196,7 @@ __metadata:
     "@adobe/postcss-token": "workspace:*"
     "@adobe/swc-tokens": "workspace:*"
     "@axe-core/playwright": "npm:4.10.2"
-    "@chromatic-com/storybook": "npm:^5.0.1"
+    "@chromatic-com/storybook": "npm:5.0.1"
     "@custom-elements-manifest/analyzer": "npm:0.10.8"
     "@spectrum-web-components/core": "npm:0.0.4"
     "@storybook/addon-a11y": "npm:10.2.8"
@@ -2153,7 +2153,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chromatic-com/storybook@npm:^5.0.1":
+"@chromatic-com/storybook@npm:5.0.1":
   version: 5.0.1
   resolution: "@chromatic-com/storybook@npm:5.0.1"
   dependencies:
