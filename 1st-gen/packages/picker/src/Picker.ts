@@ -687,7 +687,6 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
     if (this.value && this.selectedItem) {
       return content;
     }
-
     return html`
       <slot name="label" id="label">
         <span aria-hidden=${ifDefined(this.appliedLabel ? undefined : 'true')}>
@@ -739,11 +738,7 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
         </span>
         ${this.value && this.selectedItem
           ? html`
-              <span
-                aria-hidden="true"
-                class="visually-hidden"
-                id="applied-label"
-              >
+              <span hidden id="applied-label">
                 ${appliedLabel}
                 <slot name="label"></slot>
               </span>
