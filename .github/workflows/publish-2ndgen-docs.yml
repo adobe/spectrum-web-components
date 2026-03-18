@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - main
-      - ruben/deploy-docs-website
 
 permissions:
   contents: read
