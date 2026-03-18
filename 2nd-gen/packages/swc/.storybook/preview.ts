@@ -31,15 +31,15 @@ import './assets/preview.css';
 
 const storybookHelperOptions: Options = {
   categoryOrder: [
-    'attributes',
     'properties',
+    'attributes',
     'slots',
     'cssProps',
     'cssParts',
     'events',
     'methods',
   ],
-  hideArgRef: true,
+  hideArgRef: false,
   renderDefaultValues: true,
 };
 

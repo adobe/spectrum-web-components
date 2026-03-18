@@ -29,12 +29,6 @@ import progressCircleStyles from './progress-circle.css';
  *
  * @element swc-progress-circle
  *
- * @property {string} static-color - Static color variant for use on different backgrounds.
- * @property {number} progress - Progress value between 0 and 100.
- * @property {boolean} indeterminate - Indeterminate state for loading.
- * @property {string} size - Size of the component.
- * @property {string} label - Label for the component.
- *
  * @example
  * <swc-progress-circle progress="75" label="Loading progress"></swc-progress-circle>
  *
