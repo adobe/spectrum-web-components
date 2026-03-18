@@ -50,7 +50,6 @@ import {
   IS_TOUCH_DEVICE,
   MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
-import { isWebKit } from '@spectrum-web-components/shared';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
@@ -1723,11 +1722,10 @@ export class Picker extends FieldLabelMixin(
     return [
       html`
         <span
-          aria-hidden=${this.icons === 'none' && isWebKit() ? 'true' : 'false'}
           id="icon"
-          ?hidden=${this.icons === 'none' && !isWebKit()}
+          aria-hidden="true"
           class=${classMap({
-            'visually-hidden': this.icons === 'none' && isWebKit(),
+            'visually-hidden': this.icons === 'none',
           })}
         >
           ${this.selectedItemContent.icon}
@@ -1838,6 +1836,16 @@ export class Picker extends FieldLabelMixin(
     const hasAccessibleLabel = hasLabel || hasVisibleLabel;
 
     return hasAccessibleLabel;
+  }
+
+  /**
+   * Checks whether the menu item has text content.
+   *
+   * @param item - The menu item to check
+   * @returns True if the item has text content
+   */
+  protected itemHasTextContent(item: MenuItem): boolean {
+    return !!(item.textContent && item.textContent.trim() !== '');
   }
 
   /**
@@ -2075,6 +2083,7 @@ export class Picker extends FieldLabelMixin(
     this.bindEvents();
 
     await this.updateComplete;
+    this.manageSelection();
     if (this.overlayElement && !this.strategy.overlay) {
       this.strategy.overlay = this.overlayElement;
     }

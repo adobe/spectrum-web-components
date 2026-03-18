@@ -70,6 +70,9 @@ import {
 } from '../../../test/testing-helpers.js';
 import {
   Default,
+  DeprecatedLabelAsPlaceholder,
+  DeprecatedLabelSlot,
+  DeprecatedSpFieldLabel,
   disabled,
   dynamicIcons,
   iconsOnly,
@@ -144,14 +147,35 @@ const openPickerAndWait = async (picker: Picker): Promise<void> => {
   await waitForElementReady(picker);
   await waitUntil(() => picker.open === true, 'Picker should be open');
 };
+const trimmedValue = (value: unknown): string | undefined => {
+  return (value as string)?.trim() || undefined;
+};
+
+type NamedNode = { name: string };
+
+type RoleNode = {
+  role?: string;
+  name?: string;
+  value?: unknown;
+  description?: string;
+};
+
+const findComboboxNode = (
+  snapshot: NamedNode & { children: NamedNode[] }
+): RoleNode | null => {
+  return findAccessibilityNode<RoleNode>(
+    snapshot,
+    (node) => (node as RoleNode).role === 'combobox'
+  );
+};
 
 export function runPickerTests(): void {
   let el: Picker;
   const pickerFixture = async (): Promise<Picker> => {
     const test = await fixture<HTMLDivElement>(html`
       <sp-theme scale="medium" color="light" system="spectrum">
-        <sp-field-label for="picker">Where do you live?</sp-field-label>
-        <sp-picker id="picker" label="Where do you live?">
+        <sp-picker placeholder="Choose a selection type">
+          <span slot="field-label">Selection type:</span>
           <sp-menu-item>Deselect</sp-menu-item>
           <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
           <sp-menu-item>Feather...</sp-menu-item>
@@ -168,7 +192,7 @@ export function runPickerTests(): void {
     it('accessible with "<sp-field-label>"', async function () {
       const test = await fixture<HTMLDivElement>(html`
         <div>
-          ${Default({
+          ${DeprecatedSpFieldLabel({
             onChange: () => {
               return;
             },
@@ -176,21 +200,25 @@ export function runPickerTests(): void {
         </div>
       `);
       const el = test.querySelector('sp-picker') as Picker;
-
-      type NamedNode = { name: string };
       let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
         children: NamedNode[];
       };
 
+      let comboboxNode = findComboboxNode(snapshot);
+      expect(comboboxNode, '`role` is combobox').to.not.be.null;
       expect(
-        findAccessibilityNode<NamedNode>(
-          snapshot,
-          (node) =>
-            node.name ===
-            'Select a Country with a very long label, too long, in fact Where do you live?'
-        ),
-        '`name` is the label text'
-      ).to.not.be.null;
+        trimmedValue(comboboxNode?.name),
+        '`name` is the field label text'
+      ).to.equal('Selection type:');
+      // WebKit does not support the placeholder text as a value in the accessibility tree
+      if (!isWebKit()) {
+        expect(
+          trimmedValue(comboboxNode?.value),
+          '`value` is the placeholder text'
+        ).to.equal(
+          'Choose a selection type with a very long label, too long, in fact'
+        );
+      }
 
       el.value = 'option-2';
       await elementUpdated(el);
@@ -201,13 +229,16 @@ export function runPickerTests(): void {
         children: NamedNode[];
       };
 
+      comboboxNode = findComboboxNode(snapshot);
+      expect(comboboxNode, '`role` is combobox').to.not.be.null;
       expect(
-        findAccessibilityNode<NamedNode>(
-          snapshot,
-          (node) => node.name === 'Select Inverse Where do you live?'
-        ),
-        '`name` is the the selected item text plus the label text'
-      ).to.not.be.null;
+        trimmedValue(comboboxNode?.name),
+        '`name` is the field label text'
+      ).to.equal('Selection type:');
+      expect(
+        trimmedValue(comboboxNode?.value),
+        '`value` is the selected item text'
+      ).to.equal('Select Inverse');
     });
     it('accessible with "label" attribute', async () => {
       const test = await fixture<HTMLDivElement>(html`
@@ -221,18 +252,22 @@ export function runPickerTests(): void {
       `);
       const el = test.querySelector('sp-picker') as Picker;
 
-      type NamedNode = { name: string };
       let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
         children: NamedNode[];
       };
-
+      let comboboxNode = findComboboxNode(snapshot);
+      expect(comboboxNode, '`role` is combobox').to.not.be.null;
       expect(
-        findAccessibilityNode<NamedNode>(
-          snapshot,
-          (node) => node.name === 'Where do you live?'
-        ),
+        trimmedValue(comboboxNode?.name),
         '`name` is the label text'
-      ).to.not.be.null;
+      ).to.equal('Selection type');
+      // WebKit does not support the placeholder text as a value in the accessibility tree
+      if (!isWebKit()) {
+        expect(
+          trimmedValue(comboboxNode?.value),
+          '`value` is the selected item text'
+        ).to.equal('Selection type');
+      }
 
       el.value = 'option-2';
       await elementUpdated(el);
@@ -243,15 +278,18 @@ export function runPickerTests(): void {
         children: NamedNode[];
       };
 
+      comboboxNode = findComboboxNode(snapshot);
+      expect(comboboxNode, '`role` is combobox').to.not.be.null;
       expect(
-        findAccessibilityNode<NamedNode>(
-          snapshot,
-          (node) => node.name === 'Select Inverse Where do you live?'
-        ),
-        '`name` is the the selected item text plus the label text'
-      ).to.not.be.null;
+        trimmedValue(comboboxNode?.name),
+        '`name` is the field label text'
+      ).to.equal('Selection type');
+      expect(
+        trimmedValue(comboboxNode?.value),
+        '`value` is the selected item text'
+      ).to.equal('Select Inverse');
     });
-    it('accessible with "label" slot', async function () {
+    it('accessible with "field-label" slot', async function () {
       const test = await fixture<HTMLDivElement>(html`
         <div>
           ${slottedLabel({
@@ -270,18 +308,19 @@ export function runPickerTests(): void {
       let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
         children: NamedNode[];
       };
-
-      let name = 'Where do you live?';
-
-      let node = findAccessibilityNode<NamedNode>(
-        snapshot,
-        (node) => node.name === name
-      );
-
+      let comboboxNode = findComboboxNode(snapshot);
+      expect(comboboxNode, '`role` is combobox').to.not.be.null;
       expect(
-        node,
-        `node not available: ${JSON.stringify(snapshot, null, '  ')}`
-      ).to.not.be.null;
+        trimmedValue(comboboxNode?.name),
+        '`name` is the field label text'
+      ).to.equal('Selection type:');
+      // WebKit does not support the placeholder text as a value in the accessibility tree
+      if (!isWebKit()) {
+        expect(
+          trimmedValue(comboboxNode?.value),
+          '`value` is the placeholder text'
+        ).to.equal(undefined);
+      }
 
       el.value = 'option-2';
       await elementUpdated(el);
@@ -292,17 +331,129 @@ export function runPickerTests(): void {
         children: NamedNode[];
       };
 
-      name = 'Select Inverse Where do you live?';
-
-      node = findAccessibilityNode<NamedNode>(
-        snapshot,
-        (node) => node.name === name
-      );
-
+      comboboxNode = findComboboxNode(snapshot);
+      expect(comboboxNode, '`role` is combobox').to.not.be.null;
       expect(
-        node,
-        `node not available: ${JSON.stringify(snapshot, null, '  ')}`
-      ).to.not.be.null;
+        trimmedValue(comboboxNode?.name),
+        '`name` is the field label text'
+      ).to.equal('Selection type:');
+      expect(
+        trimmedValue(comboboxNode?.value),
+        '`value` is the selected item text'
+      ).to.equal('Select Inverse');
+    });
+    it('accessible with "placeholder" slot', async function () {
+      const test = await fixture<HTMLDivElement>(html`
+        <div>
+          ${Default({
+            onChange: () => {
+              return;
+            },
+          })}
+        </div>
+      `);
+      const el = test.querySelector('sp-picker') as Picker;
+      await elementUpdated(el);
+      await nextFrame();
+      await nextFrame();
+
+      type NamedNode = { name: string; description: string };
+      let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+        children: NamedNode[];
+      };
+      let comboboxNode = findComboboxNode(snapshot);
+      expect(comboboxNode, '`role` is combobox').to.not.be.null;
+      expect(
+        trimmedValue(comboboxNode?.name),
+        '`name` is the field label text'
+      ).to.equal('Selection type:');
+      // WebKit does not support the placeholder text as a value in the accessibility tree
+      if (!isWebKit()) {
+        expect(
+          trimmedValue(comboboxNode?.value),
+          '`value` is the placeholder text'
+        ).to.equal(
+          'Choose a selection type with a very long label, too long, in fact'
+        );
+      }
+
+      el.value = 'option-2';
+      await elementUpdated(el);
+      // Allow the snapshot to settle.
+      await nextFrame();
+      await nextFrame();
+      snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+        children: NamedNode[];
+      };
+
+      comboboxNode = findComboboxNode(snapshot);
+      expect(comboboxNode, '`role` is combobox').to.not.be.null;
+      expect(
+        trimmedValue(comboboxNode?.name),
+        '`name` is the field label text'
+      ).to.equal('Selection type:');
+      expect(
+        trimmedValue(comboboxNode?.value),
+        '`value` is the selected item text'
+      ).to.equal('Select Inverse');
+    });
+    it('accessible with deprecated "label" slot', async function () {
+      const test = await fixture<HTMLDivElement>(html`
+        <div>
+          ${DeprecatedLabelSlot({
+            onChange: () => {
+              return;
+            },
+          })}
+        </div>
+      `);
+      const el = test.querySelector('sp-picker') as Picker;
+      await elementUpdated(el);
+      await nextFrame();
+      await nextFrame();
+
+      type NamedNode = { name: string; description: string };
+      let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+        children: NamedNode[];
+      };
+      let comboboxNode = findComboboxNode(snapshot);
+      expect(comboboxNode, '`role` is combobox').to.not.be.null;
+      expect(
+        trimmedValue(comboboxNode?.name),
+        '`name` is the field label text'
+      ).to.equal(
+        'Choose a selection type with a very long label, too long, in fact'
+      );
+      if (!isWebKit()) {
+        expect(
+          trimmedValue(comboboxNode?.value),
+          '`value` is the placeholder text'
+        ).to.equal(
+          'Choose a selection type with a very long label, too long, in fact'
+        );
+      }
+
+      el.value = 'option-2';
+      await elementUpdated(el);
+      // Allow the snapshot to settle.
+      await nextFrame();
+      await nextFrame();
+      snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+        children: NamedNode[];
+      };
+
+      comboboxNode = findComboboxNode(snapshot);
+      expect(comboboxNode, '`role` is combobox').to.not.be.null;
+      expect(
+        trimmedValue(comboboxNode?.name),
+        '`name` is the field label text'
+      ).to.equal(
+        'Choose a selection type with a very long label, too long, in fact'
+      );
+      expect(
+        trimmedValue(comboboxNode?.value),
+        '`value` is the selected item text'
+      ).to.equal('Select Inverse');
     });
   });
   describe('standard', () => {
@@ -476,12 +627,7 @@ export function runPickerTests(): void {
       // Create a picker with value set but no menu-items initially
       const pickerWithoutItems = await fixture<HTMLDivElement>(html`
         <sp-theme scale="medium" color="light" system="spectrum">
-          <sp-field-label for="picker-delayed">Test Picker</sp-field-label>
-          <sp-picker
-            id="picker-delayed"
-            label="Test Picker"
-            value="item-2"
-          ></sp-picker>
+          <sp-picker label="Test Picker" value="item-2"></sp-picker>
         </sp-theme>
       `);
       const delayedPicker = pickerWithoutItems.querySelector(
@@ -554,18 +700,22 @@ export function runPickerTests(): void {
     });
     it('manages its "name" value in the accessibility tree', async () => {
       await nextFrame();
-      type NamedNode = { name: string };
       let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
         children: NamedNode[];
       };
-
+      let comboboxNode = findComboboxNode(snapshot);
+      expect(comboboxNode, '`role` is combobox').to.not.be.null;
       expect(
-        findAccessibilityNode<NamedNode>(
-          snapshot,
-          (node) => node.name === 'Where do you live?'
-        ),
-        '`name` is the label text'
-      ).to.not.be.null;
+        trimmedValue(comboboxNode?.name),
+        '`name` is the field label text'
+      ).to.equal('Selection type:');
+      // WebKit does not support the placeholder text as a value in the accessibility tree
+      if (!isWebKit()) {
+        expect(
+          trimmedValue(comboboxNode?.value),
+          '`value` is the placeholder text'
+        ).to.equal('Choose a selection type');
+      }
 
       el.value = 'option-2';
       await elementUpdated(el);
@@ -574,14 +724,16 @@ export function runPickerTests(): void {
       snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
         children: NamedNode[];
       };
-
+      comboboxNode = findComboboxNode(snapshot);
+      expect(comboboxNode, '`role` is combobox').to.not.be.null;
       expect(
-        findAccessibilityNode<NamedNode>(
-          snapshot,
-          (node) => node.name === 'Select Inverse Where do you live?'
-        ),
-        '`name` is the selected item text plus the label text'
-      ).to.not.be.null;
+        trimmedValue(comboboxNode?.name),
+        '`name` is the field label text'
+      ).to.equal('Selection type:');
+      expect(
+        trimmedValue(comboboxNode?.value),
+        '`value` is the selected item text'
+      ).to.equal('Select Inverse');
     });
     it('renders invalid accessibly', async () => {
       el.invalid = true;
@@ -1173,10 +1325,14 @@ export function runPickerTests(): void {
         'ArrowRight event should not propagate'
       ).to.equal(0);
 
+      //@nikki
+
       // Enter key SHOULD propagate (opens picker, but event bubbles)
-      const opened = oneEvent(picker, 'sp-opened');
+      expect(el.open).to.be.false;
+      let opened = oneEvent(el, 'sp-opened');
       await sendKeys({ press: 'Enter' });
       await opened;
+
       await elementUpdated(picker);
 
       expect(
@@ -1668,13 +1824,48 @@ export function runPickerTests(): void {
       expect(item.selected).to.be.true;
     });
   });
+  describe('slotted field-label', () => {
+    const pickerFixture = async (): Promise<Picker> => {
+      const test = await fixture<Picker>(html`
+        <div>
+          <sp-picker>
+            <span slot="field-label">Country:</span>
+            <span slot="label">
+              Select a Country with a very long label, too long in fact
+            </span>
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and Mask...</sp-menu-item>
+            <sp-menu-item>Save Selection</sp-menu-item>
+            <sp-menu-item disabled>Make Work Path</sp-menu-item>
+          </sp-picker>
+        </div>
+      `);
+
+      return test.querySelector('sp-picker') as Picker;
+    };
+    beforeEach(async () => {
+      el = await pickerFixture();
+      await elementUpdated(el);
+      await nextFrame();
+    });
+    afterEach(async () => {
+      if (el && el.open) {
+        const closed = oneEvent(el, 'sp-closed');
+        el.open = false;
+        await closed;
+      }
+    });
+
+    it('loads accessibly w/ slotted label', async () => {
+      await expect(el).to.be.accessible();
+    });
+  });
   describe('slotted label', () => {
     const pickerFixture = async (): Promise<Picker> => {
       const test = await fixture<Picker>(html`
         <div>
-          <sp-field-label for="picker-slotted">
-            Where do you live?
-          </sp-field-label>
           <sp-picker id="picker-slotted">
             <span slot="label">
               Select a Country with a very long label, too long in fact
@@ -1754,8 +1945,8 @@ export function runPickerTests(): void {
     it('does not warn in Dev Mode when accessible elements leveraged', async () => {
       const test = await fixture<Picker>(html`
         <div>
-          <sp-field-label for="test">Test label</sp-field-label>
-          <sp-picker id="test">
+          <sp-picker>
+            <span slot="field-label">Test label</span>
             <sp-menu-item>Feather...</sp-menu-item>
             <sp-menu-item>Select and Mask...</sp-menu-item>
             <sp-menu-item>Save Selection</sp-menu-item>
@@ -1799,15 +1990,53 @@ export function runPickerTests(): void {
       });
     });
     describe('deprecated', () => {
-      it('warns in Dev Mode of deprecated `<sp-menu>` usage', async () => {
-        el = await pickerFixture();
-        await elementUpdated(el);
+      it('warns in Dev Mode when `label` slot is used', async function () {
+        this.retries(0);
+        el = await fixture<Picker>(
+          DeprecatedLabelSlot({
+            onChange: () => {
+              return;
+            },
+          })
+        );
 
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
         expect(consoleWarnStub.called).to.be.true;
-        const spyCall = consoleWarnStub.getCall(0);
+        const callCount = consoleWarnStub.getCalls().length;
+        const spyCall = consoleWarnStub.getCall(callCount - 1);
         expect(
-          (spyCall.args.at(0) as string).includes('<sp-menu>'),
-          'confirm <sp-menu>-centric message'
+          (spyCall.args.at(0) as string).includes('"label" slot is deprecated'),
+          `Includes "label" slot is deprecated: ${spyCall.args.at(0)}`
+        ).to.be.true;
+        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+          data: {
+            localName: 'sp-picker',
+            type: 'api',
+            level: 'deprecation',
+          },
+        });
+      });
+      it('warns in Dev Mode when `label` is used as a placeholer', async function () {
+        this.retries(0);
+        el = await fixture<Picker>(
+          DeprecatedLabelAsPlaceholder({
+            onChange: () => {
+              return;
+            },
+          })
+        );
+
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+        expect(consoleWarnStub.called).to.be.true;
+        const callCount = consoleWarnStub.getCalls().length;
+        const spyCall = consoleWarnStub.getCall(callCount - 1);
+        expect(
+          (spyCall.args.at(0) as string).includes('placeholder'),
+          `Includes "using the "label" attribute as a placeholder is deprecated': ${spyCall.args.at(0)}`
         ).to.be.true;
         expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
           data: {
@@ -1864,26 +2093,32 @@ export function runPickerTests(): void {
     });
   });
   testForLitDevWarnings(async () => await pickerFixture());
-  it('manages its "name" value in the accessibility tree when [icons-only]', async () => {
+  it('manages its "name" and "value" in the accessibility tree when [icons-only]', async () => {
     const test = await fixture<HTMLDivElement>(html`
       <div>${iconsOnly({})}</div>
     `);
     const el = test.querySelector('sp-picker') as Picker;
 
     await elementUpdated(el);
+    const picker = el.querySelector('sp-picker') as Picker;
+    if (picker) {
+      picker.icons = undefined;
+    }
+    await elementUpdated(picker);
     await nextFrame();
-    type NamedNode = { name: string };
     let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
       children: NamedNode[];
     };
-
+    let comboboxNode = findComboboxNode(snapshot);
+    expect(comboboxNode, '`role` is combobox').to.not.be.null;
     expect(
-      findAccessibilityNode<NamedNode>(
-        snapshot,
-        (node) => node.name === 'Delete Choose an action type...'
-      ),
-      '`name` is the label text'
-    ).to.not.be.null;
+      trimmedValue(comboboxNode?.name),
+      '`name` is the field label text'
+    ).to.equal('Choose an action type...');
+    expect(
+      trimmedValue(comboboxNode?.value),
+      '`value` is the the selected item text'
+    ).to.equal('Delete');
 
     el.value = '2';
     await elementUpdated(el);
@@ -1893,14 +2128,16 @@ export function runPickerTests(): void {
     snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
       children: NamedNode[];
     };
-
+    comboboxNode = findComboboxNode(snapshot);
+    expect(comboboxNode, '`role` is combobox').to.not.be.null;
     expect(
-      findAccessibilityNode<NamedNode>(
-        snapshot,
-        (node) => node.name === 'Copy Choose an action type...'
-      ),
-      '`name` is the label text plus the selected item text'
-    ).to.not.be.null;
+      trimmedValue(comboboxNode?.name),
+      '`name` is the field label text'
+    ).to.equal('Choose an action type...');
+    expect(
+      trimmedValue(comboboxNode?.value),
+      '`value` is the the selected item text'
+    ).to.equal('Copy');
   });
   it('toggles between pickers', async () => {
     const el1 = await pickerFixture();
@@ -2136,11 +2373,11 @@ export function runPickerTests(): void {
       const test = await fixture(html`
         <div>${disabled(disabled.args)}</div>
       `);
-      this.label = test.querySelector('sp-field-label') as FieldLabel;
+      this.label = test.querySelector('[slot="field-label"]') as FieldLabel;
       this.el = test.querySelector('sp-picker') as Picker;
       await elementUpdated(this.el);
     });
-    it('does not recieve focus from an `<sp-field-label>`', async function () {
+    it('does not recieve focus from an `field-label` slot', async function () {
       expect(this.el.disabled, 'this.el disabled?').to.be.true;
       expect(this.el.focused, 'this.el focused?').to.be.false;
 
@@ -2177,11 +2414,11 @@ export function runPickerTests(): void {
       const test = await fixture(html`
         <div>${pending({ pending: true })}</div>
       `);
-      this.label = test.querySelector('sp-field-label') as FieldLabel;
+      this.label = test.querySelector('[slot="field-label"]') as FieldLabel;
       this.el = test.querySelector('sp-picker') as Picker;
       await elementUpdated(this.el);
     });
-    it('receives focus from an `<sp-field-label>`', async function () {
+    it('receives focus from an `field-label` slot', async function () {
       expect(this.el.focused, 'this.el focused?').to.be.false;
 
       this.label.click();
@@ -2202,13 +2439,20 @@ export function runPickerTests(): void {
       const snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
         children: NamedNode[];
       };
-      expect(
-        findAccessibilityNode<NamedNode>(snapshot, (node) => {
-          return (
-            node.name === 'Choose your neighborhood Where do you live? Pending'
-          );
-        })
-      ).to.not.be.null;
+      const comboboxNode = findComboboxNode(snapshot);
+      expect(comboboxNode, '`role` is combobox').to.not.be.null;
+      // WebKit places the pending text in the description of the accessibility tree
+      if (isWebKit()) {
+        expect(
+          trimmedValue(comboboxNode?.description),
+          '`name` is the field label text plus the pending text'
+        ).to.equal('Where do you live? Pending');
+      } else {
+        expect(
+          trimmedValue(comboboxNode?.name),
+          '`name` is the field label text plus the pending text'
+        ).to.equal('Where do you live? Pending');
+      }
     });
   });
   describe('dynamic icons', function () {
@@ -2504,11 +2748,14 @@ export function runPickerTests(): void {
       await elementUpdated(el);
 
       const iconSpan = el.shadowRoot.querySelector('#icon') as HTMLElement;
-      expect(iconSpan).to.not.be.null;
-      expect(iconSpan.hidden, 'icon span should be hidden').to.be.true;
+      expect(iconSpan, 'icon should exist').to.not.be.null;
+      expect(
+        iconSpan.classList.contains('visually-hidden'),
+        'icon span should be hidden'
+      ).to.be.true;
 
-      // Verify the label is still visible
-      const labelSpan = el.shadowRoot.querySelector('.label') as HTMLElement;
+      // Verify the selectected item text is still visible
+      const labelSpan = el.shadowRoot.querySelector('#label') as HTMLElement;
       expect(labelSpan).to.not.be.null;
       expect(
         labelSpan.classList.contains('visually-hidden'),
@@ -2547,9 +2794,10 @@ export function runPickerTests(): void {
       });
     });
 
-    it('hides label text when icons="only" and has value', async () => {
+    it('shows selected item text when icons="only" and has value', async () => {
       const el = await fixture<Picker>(html`
-        <sp-picker label="Choose an action" value="1" icons="only">
+        <sp-picker icons="only" placeholder="Choose an action" value="1">
+          <span slot="field-label">Action</span>
           <sp-menu-item value="1">
             <sp-icon-edit slot="icon" label="Edit"></sp-icon-edit>
             Edit
@@ -2562,22 +2810,28 @@ export function runPickerTests(): void {
       `);
       await elementUpdated(el);
 
-      const labelSpan = el.shadowRoot.querySelector('.label') as HTMLElement;
-      expect(labelSpan).to.not.be.null;
+      // Verify selected item text is visually hidden
+      const label = el.shadowRoot.querySelector('#label') as HTMLElement;
+
+      expect(label, 'label should exist').to.not.be.null;
       expect(
-        labelSpan.classList.contains('visually-hidden'),
-        'label should be visually hidden when icons="only" and has value'
+        label.classList.contains('visually-hidden'),
+        'selected items text should be visually hidden'
       ).to.be.true;
 
       // Verify icon is still visible
       const iconSpan = el.shadowRoot.querySelector('#icon') as HTMLElement;
-      expect(iconSpan).to.not.be.null;
-      expect(iconSpan.hidden, 'icon should be visible').to.be.false;
+      expect(iconSpan, 'icon should exist').to.not.be.null;
+      expect(
+        !iconSpan.classList.contains('visually-hidden'),
+        'icon should be visible'
+      ).to.be.true;
     });
 
-    it('shows label text when icons="only" but no value selected', async () => {
+    it('shows placeholder text when icons="only" but no value selected', async () => {
       const el = await fixture<Picker>(html`
-        <sp-picker label="Choose an action" icons="only">
+        <sp-picker icons="only" placeholder="Choose an action">
+          <span slot="field-label">Action</span>
           <sp-menu-item value="1">
             <sp-icon-edit slot="icon" label="Edit"></sp-icon-edit>
             Edit
@@ -2590,56 +2844,83 @@ export function runPickerTests(): void {
       `);
       await elementUpdated(el);
 
-      const labelSpan = el.shadowRoot.querySelector('.label') as HTMLElement;
-      expect(labelSpan).to.not.be.null;
-      expect(
-        labelSpan.classList.contains('visually-hidden'),
-        'label should be visible when no value selected'
-      ).to.be.false;
-      expect(
-        labelSpan.classList.contains('placeholder'),
-        'label should have placeholder class'
-      ).to.be.true;
+      const placeholder = el.shadowRoot.querySelector(
+        '#placeholder'
+      ) as HTMLElement;
+      expect(placeholder, 'selected item text should exist').to.not.be.null;
+      expect(!placeholder.hidden, 'placeholder should be visible').to.be.true;
     });
 
     it('updates icon visibility when icons attribute changes', async () => {
       const el = await fixture<Picker>(html`
-        <sp-picker label="Choose an action" value="1">
+        <sp-picker icons="only" placeholder="Choose an action" value="1">
+          <span slot="field-label">Action</span>
           <sp-menu-item value="1">
-            <sp-icon-edit slot="icon"></sp-icon-edit>
+            <sp-icon-edit slot="icon" label="Edit"></sp-icon-edit>
             Edit
+          </sp-menu-item>
+          <sp-menu-item value="2">
+            <sp-icon-copy slot="icon" label="Copy"></sp-icon-copy>
+            Copy
           </sp-menu-item>
         </sp-picker>
       `);
       await elementUpdated(el);
 
+      // Verify icon is still visible
       let iconSpan = el.shadowRoot.querySelector('#icon') as HTMLElement;
-      expect(iconSpan.hidden, 'icon should be visible initially').to.be.false;
+      expect(iconSpan, 'icon should exist').to.not.be.null;
+      expect(
+        !iconSpan.classList.contains('visually-hidden'),
+        'icon should be visible'
+      ).to.be.true;
+
+      // Verify selected item text is visually hidden
+      let label = el.shadowRoot.querySelector('#label') as HTMLElement;
+      expect(label, 'selected item text should exist').to.not.be.null;
+      expect(
+        label.classList.contains('visually-hidden'),
+        'selected items text should be visually hidden'
+      ).to.be.true;
 
       // Change to icons="none"
       el.icons = 'none';
       await elementUpdated(el);
 
+      // Verify icon is hidden
       iconSpan = el.shadowRoot.querySelector('#icon') as HTMLElement;
+      expect(iconSpan, 'icon should exist').to.not.be.null;
       expect(
-        iconSpan.hidden,
+        iconSpan.classList.contains('visually-hidden'),
         'icon should be hidden after setting icons="none"'
+      ).to.be.true;
+
+      // Verify selected item text is visible
+      label = el.shadowRoot.querySelector('#label') as HTMLElement;
+      expect(label, 'selected item text should exist').to.not.be.null;
+      expect(
+        !label.classList.contains('visually-hidden'),
+        'selected items text should be visible'
       ).to.be.true;
 
       // Change to icons="only"
       el.icons = 'only';
       await elementUpdated(el);
 
+      // Verify icon is visible again
       iconSpan = el.shadowRoot.querySelector('#icon') as HTMLElement;
+      expect(iconSpan, 'icon should exist').to.not.be.null;
       expect(
-        iconSpan.hidden,
-        'icon should be visible after setting icons="only"'
-      ).to.be.false;
+        !iconSpan.classList.contains('visually-hidden'),
+        'icon should be visible again'
+      ).to.be.true;
 
-      const labelSpan = el.shadowRoot.querySelector('.label') as HTMLElement;
+      // Verify selected item text is visually hidden
+      label = el.shadowRoot.querySelector('#label') as HTMLElement;
+      expect(label, 'selected item text should exist').to.not.be.null;
       expect(
-        labelSpan.classList.contains('visually-hidden'),
-        'label should be hidden with icons="only"'
+        label.classList.contains('visually-hidden'),
+        'selected items text should be visually hidden'
       ).to.be.true;
     });
   });
