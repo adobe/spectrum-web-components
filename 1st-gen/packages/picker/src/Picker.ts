@@ -308,6 +308,8 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
   @state()
   appliedLabel?: string;
 
+  private deprecatedMenu: Menu | null = null;
+
   /**
    * Controls how icons are displayed in the picker button.
    * - `'only'`: Shows only the icon, hiding the label visually.
@@ -433,6 +435,16 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
 
   public override focus(options?: FocusOptions): void {
     this.focusElement?.focus(options);
+  }
+
+  /**
+   * @deprecated Use `focus()` instead.
+   * Focuses the picker button and applies focus styling.
+   */
+  public handleHelperFocus(): void {
+    // set focused to true here instead of handleButtonFocus so clicks don't flash a focus outline
+    this.focused = true;
+    this.button.focus();
   }
 
   /**
@@ -675,16 +687,12 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
     if (this.value && this.selectedItem) {
       return content;
     }
-    // @todo the `label` slot is deprecated; remove in a future release.
+
     return html`
-      <slot name="field-label" id="label">
-        <slot name="label" id="label">
-          <span
-            aria-hidden=${ifDefined(this.appliedLabel ? undefined : 'true')}
-          >
-            ${this.label}
-          </span>
-        </slot>
+      <slot name="label" id="label">
+        <span aria-hidden=${ifDefined(this.appliedLabel ? undefined : 'true')}>
+          ${this.label}
+        </span>
       </slot>
     `;
   }
@@ -790,32 +798,20 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
    * @returns True if an accessible label is present
    */
   protected hasAccessibleLabel(): boolean {
+    const slotContent =
+      this.querySelector('[slot="label"]')?.textContent &&
+      this.querySelector('[slot="label"]')?.textContent?.trim() !== '';
+    const slotAlt =
+      this.querySelector('[slot="label"]')?.getAttribute('alt')?.trim() &&
+      this.querySelector('[slot="label"]')?.getAttribute('alt')?.trim() !== '';
     return (
       !!this.label ||
       !!this.getAttribute('aria-label') ||
       !!this.getAttribute('aria-labelledby') ||
       !!this.appliedLabel ||
-      !!this.hasContentInSlot('label') ||
-      !!this.hasContentInSlot('field-label')
+      !!slotContent ||
+      !!slotAlt
     );
-  }
-
-  /**
-   * Checks whether the picker has content in a specific slot.
-   *
-   * @param slotName - The name of the slot to check
-   * @returns True if the slot has content
-   */
-  protected hasContentInSlot(slotName: string): boolean {
-    const slotContent =
-      this.querySelector(`[slot="${slotName}"]`)?.textContent &&
-      this.querySelector(`[slot="${slotName}"]`)?.textContent?.trim() !== '';
-    const slotAlt =
-      this.querySelector(`[slot="${slotName}"]`)?.getAttribute('alt')?.trim() &&
-      this.querySelector(`[slot="${slotName}"]`)
-        ?.getAttribute('alt')
-        ?.trim() !== '';
-    return !!slotContent || !!slotAlt;
   }
 
   /**
@@ -947,15 +943,32 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
       // await the same here.
       this.shouldScheduleManageSelection();
     }
-    this.updateComplete.then(async () => {
-      // Attributes should be user supplied, making them available before first update.
-      // However, `appliesLabel` is applied by external elements that must be update complete as well to be bound appropriately.
-      await new Promise((res) => requestAnimationFrame(res));
-      await new Promise((res) => requestAnimationFrame(res));
-      if (!this.hasAccessibleLabel()) {
-        this.warnNoLabel();
+    // Maybe it's finally time to remove this support?
+    if (!this.hasUpdated) {
+      this.deprecatedMenu = this.querySelector(':scope > sp-menu');
+      this.deprecatedMenu?.toggleAttribute('ignore', true);
+      this.deprecatedMenu?.setAttribute('selects', 'inherit');
+    }
+    if (window.__swc?.DEBUG) {
+      if (!this.hasUpdated && this.querySelector(':scope > sp-menu')) {
+        const { localName } = this;
+        window.__swc.warn(
+          this,
+          `You no longer need to provide an <sp-menu> child to ${localName}. Any styling or attributes on the <sp-menu> will be ignored.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/picker/#sizes',
+          { level: 'deprecation' }
+        );
       }
-    });
+      this.updateComplete.then(async () => {
+        // Attributes should be user supplied, making them available before first update.
+        // However, `appliesLabel` is applied by external elements that must be update complete as well to be bound appropriately.
+        await new Promise((res) => requestAnimationFrame(res));
+        await new Promise((res) => requestAnimationFrame(res));
+        if (!this.hasAccessibleLabel()) {
+          this.warnNoLabel();
+        }
+      });
+    }
     super.update(changes);
   }
 
@@ -1085,7 +1098,10 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
       </sp-menu>
     `;
     this.hasRenderedOverlay =
-      this.hasRenderedOverlay || this.focused || this.open;
+      this.hasRenderedOverlay ||
+      this.focused ||
+      this.open ||
+      !!this.deprecatedMenu;
     if (this.hasRenderedOverlay) {
       if (this.dependencyManager.loaded) {
         this.dependencyManager.add('sp-overlay');
