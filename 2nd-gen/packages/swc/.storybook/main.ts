@@ -99,6 +99,7 @@ const addons: StorybookConfig['addons'] = [
   '@storybook/addon-a11y',
   '@storybook/addon-designs',
   '@storybook/addon-vitest',
+  '@chromatic-com/storybook',
 ];
 
 if (storybookMode !== 'ci-a11y') {
@@ -113,6 +114,14 @@ const config: StorybookConfig = {
   framework: '@storybook/web-components-vite',
   core: {
     disableTelemetry: true,
+  },
+  build: {
+    test: {
+      // Chromatic's addon sets SB_TESTBUILD=true which disables addon-docs,
+      // breaking our custom DocumentTemplate.mdx. Keep it enabled.
+      // See: https://github.com/storybookjs/storybook/issues/31699
+      disabledAddons: [],
+    },
   },
   addons,
   experimental_indexers: storybookMode === 'dev' ? [testStoryIndexer] : [],
