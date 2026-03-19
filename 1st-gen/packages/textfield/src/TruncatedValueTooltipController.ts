@@ -169,9 +169,19 @@ export class TruncatedValueTooltipController implements ReactiveController {
   }
 
   /**
-   * Updates the tooltip's text node directly (no requestUpdate). Used by NumberField
-   * from handleInput() so the tooltip shows the current input value while typing
-   * without triggering re-renders that would affect formatting or selection.
+   * Updates the tooltip label text without requestUpdate. Used by NumberField from
+   * handleInput() so the tooltip shows the current input value while typing without
+   * triggering re-renders that would affect formatting or selection.
+   *
+   * We mutate an existing text node under `<sp-tooltip>` instead of assigning
+   * `tooltip.textContent`. Clearing `textContent` on the host removes all light-DOM
+   * children, which ejects Lit's marker nodes for `${host.displayValue}` in
+   * `render()` and causes "ChildPart has no parentNode" on the next update.
+   *
+   * Trade-off: this couples to our own light-DOM shape: `render()` must keep a
+   * direct text child of `<sp-tooltip>` (or update this lookup if we wrap the label
+   * in an element, e.g. a dedicated `<span id="…">`). This does not depend on
+   * `sp-tooltip`'s internal shadow DOM.
    */
   public syncTooltipText(text: string): void {
     const tooltip = this.host.shadowRoot?.querySelector(
@@ -180,6 +190,7 @@ export class TruncatedValueTooltipController implements ReactiveController {
     if (!tooltip) {
       return;
     }
+    // Find the Lit-bound text node; do not replace all children (see JSDoc above).
     const tooltipTextNode =
       Array.from(tooltip.childNodes).find(
         (node) =>
