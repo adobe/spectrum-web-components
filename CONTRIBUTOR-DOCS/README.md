@@ -7,9 +7,10 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-- [About Spectrum Web Components](#about-spectrum-web-components)
-- [About the 1st-gen-to-2nd-gen transition](#about-the-1st-gen-to-2nd-gen-transition)
-- [About these docs](#about-these-docs)
+- [Contributor Documentation](#contributor-documentation)
+  - [About Spectrum Web Components](#about-spectrum-web-components)
+  - [About the 1st-gen-to-2nd-gen transition](#about-the-1st-gen-to-2nd-gen-transition)
+  - [About these docs](#about-these-docs)
 
 </details>
 
@@ -31,13 +32,15 @@
     - [Tools vs packages: where code lives](01_contributor-guides/12_tools-vs-packages.md)
 - [Style guide](02_style-guide/README.md)
     - [2nd-Gen CSS](02_style-guide/01_css/README.md)
-    - [Linting tools](02_style-guide/02_linting-tools.md)
+    - [Linting tools](02_style-guide/03_linting-tools.md)
+    - [2nd-gen TypeScript](02_style-guide/02_typescript/README.md)
     - [Testing guide](02_style-guide/04_testing/README.md)
 - [Project planning](03_project-planning/README.md)
     - [Objectives and strategy](03_project-planning/01_objectives-and-strategy.md)
     - [Workstreams](03_project-planning/02_workstreams/README.md)
     - [Components](03_project-planning/03_components/README.md)
     - [Milestones](03_project-planning/04_milestones/README.md)
+    - Research
 
 </details>
 
