@@ -216,6 +216,7 @@ const preview = {
           'Learn about SWC',
           ['Overview', 'When to use SWC', '1st-gen vs 2nd-gen'],
           'Components',
+          'Labs',
           'Guides',
           [
             'Accessibility guides',

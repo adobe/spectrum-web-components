@@ -1,0 +1,100 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: inline-flex;
+}
+
+.swc-ExampleLab {
+  display: inline-flex;
+  flex-direction: column;
+  gap: token("text-to-visual-100");
+  align-items: center;
+}
+
+.swc-ExampleLab-swatch {
+  inline-size: var(--swc-example-lab-swatch-size, token("component-height-200"));
+  block-size: var(--swc-example-lab-swatch-size, token("component-height-200"));
+  background: var(--swc-example-lab-color, token("accent-background-color-default"));
+  border-radius: token("corner-radius-medium-size-medium");
+}
+
+.swc-ExampleLab-label {
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-75");
+  font-weight: token("medium-font-weight");
+  line-height: token("line-height-100");
+  color: token("gray-800");
+  text-align: center;
+}
+
+/* ── Sizes ── */
+
+:host([size="s"]) {
+  --swc-example-lab-swatch-size: token("component-height-100");
+}
+
+:host([size="m"]) {
+  --swc-example-lab-swatch-size: token("component-height-200");
+}
+
+:host([size="l"]) {
+  --swc-example-lab-swatch-size: token("component-height-300");
+}
+
+/* ── Semantic colors ── */
+
+:host([color="accent"]) {
+  --swc-example-lab-color: token("accent-background-color-default");
+}
+
+:host([color="informative"]) {
+  --swc-example-lab-color: token("informative-background-color-default");
+}
+
+:host([color="positive"]) {
+  --swc-example-lab-color: token("positive-background-color-default");
+}
+
+:host([color="negative"]) {
+  --swc-example-lab-color: token("negative-background-color-default");
+}
+
+:host([color="notice"]) {
+  --swc-example-lab-color: token("notice-background-color-default");
+}
+
+:host([color="neutral"]) {
+  --swc-example-lab-color: token("neutral-subdued-background-color-default");
+}
+
+/* ── Non-semantic colors ── */
+
+:host([color="fuchsia"]) {
+  --swc-example-lab-color: token("fuchsia-background-color-default");
+}
+
+:host([color="indigo"]) {
+  --swc-example-lab-color: token("indigo-background-color-default");
+}
+
+:host([color="seafoam"]) {
+  --swc-example-lab-color: token("seafoam-background-color-default");
+}
+
+:host([color="purple"]) {
+  --swc-example-lab-color: token("purple-background-color-default");
+}
+
+:host([color="magenta"]) {
+  --swc-example-lab-color: token("magenta-background-color-default");
+}

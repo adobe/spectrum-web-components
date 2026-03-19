@@ -18,18 +18,21 @@ import { fileURLToPath } from 'url';
 import { mergeConfig } from 'vite';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-type StorybookMode = 'dev' | 'build' | 'ci-a11y';
+type StorybookMode = 'dev' | 'build' | 'ci-a11y' | 'labs';
 
 // Modes:
 // - dev: full local Storybook, including docs and test stories
 // - build: production Storybook build, excluding internal and test stories
 // - ci-a11y: minimal component-only Storybook used by CI accessibility checks
+// - labs: same as dev, plus designer prototypes from labs/
 const storybookMode: StorybookMode =
   process.env.SWC_STORYBOOK_MODE === 'ci-a11y'
     ? 'ci-a11y'
-    : process.env.NODE_ENV === 'production'
-      ? 'build'
-      : 'dev';
+    : process.env.SWC_STORYBOOK_MODE === 'labs'
+      ? 'labs'
+      : process.env.NODE_ENV === 'production'
+        ? 'build'
+        : 'dev';
 
 // Custom indexer to allow .test.ts files to be treated as story files.
 const testStoryIndexer: Indexer = {
@@ -72,11 +75,20 @@ if (storybookMode !== 'ci-a11y') {
 }
 
 // Test stories are dev-only fixtures and should not ship in production Storybook.
-if (storybookMode === 'dev') {
+if (storybookMode === 'dev' || storybookMode === 'labs') {
   stories.push({
     directory: '../components',
     files: '**/*.test.ts',
     titlePrefix: 'Components',
+  });
+}
+
+// Labs stories are only included in labs mode.
+if (storybookMode === 'labs') {
+  stories.push({
+    directory: '../labs',
+    files: '**/*.stories.ts',
+    titlePrefix: 'Labs',
   });
 }
 
@@ -115,7 +127,10 @@ const config: StorybookConfig = {
     disableTelemetry: true,
   },
   addons,
-  experimental_indexers: storybookMode === 'dev' ? [testStoryIndexer] : [],
+  experimental_indexers:
+    storybookMode === 'dev' || storybookMode === 'labs'
+      ? [testStoryIndexer]
+      : [],
   viteFinal: async (config) => {
     return mergeConfig(config, {
       plugins: [

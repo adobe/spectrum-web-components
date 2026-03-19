@@ -56,6 +56,7 @@
     "dev:core": "yarn workspace @spectrum-web-components/core dev",
     "storybook": "yarn analyze && storybook dev -p 6006",
     "storybook:build": "yarn analyze && storybook build",
+    "storybook:labs": "yarn analyze && SWC_STORYBOOK_MODE=labs storybook dev -p 6006",
     "stylesheet:tokens": "swc-tokens --outputType tokens --out ./stylesheets/tokens.css --prefix swc",
     "stylesheet:typography": "swc-tokens --outputType typography --out ./stylesheets/typography.css --prefix swc",
     "test": "vitest --run --project storybook",

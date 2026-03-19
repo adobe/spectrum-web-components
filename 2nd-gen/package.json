@@ -24,6 +24,8 @@
     "start": "run-p dev:core dev:analyze storybook",
     "storybook": "yarn workspace @adobe/spectrum-wc storybook",
     "storybook:build": "yarn workspace @adobe/spectrum-wc storybook:build",
+    "storybook:labs": "yarn workspace @adobe/spectrum-wc storybook:labs",
+    "start:labs": "run-p dev:core dev:analyze storybook:labs",
     "test": "yarn workspace @adobe/spectrum-wc test",
     "test:a11y": "playwright test --config=../playwright.a11y.config.ts",
     "test:a11y:1st": "playwright test --config=../playwright.a11y.config.ts --project=1st-gen",
