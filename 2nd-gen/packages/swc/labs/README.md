@@ -17,3 +17,9 @@ First time only — run inside Claude Code:
 3. Click **Allow Access** in the browser
 
 Then paste any Figma link into your prompt and Claude will translate the design into a component.
+
+## Visual comparison
+
+With Storybook running, Claude can screenshot your component in the browser and compare it against the Figma design. Just ask:
+
+> "Open my component in Storybook and compare it to this Figma frame: [link]"

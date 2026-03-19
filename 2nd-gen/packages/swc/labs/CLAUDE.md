@@ -300,13 +300,19 @@ Each designer needs to authenticate once:
 4. A browser window opens — click **Allow Access** to authorize with your Figma account
 5. You'll see "Authentication successful. Connected to figma"
 
+### Comparing designs with screenshots
+
+This project also has the Playwright MCP server configured. When Storybook is running
+(`yarn start:labs`), you can ask Claude to screenshot your component in the browser
+and compare it against the Figma design — then iterate until they match.
+
 ### Example workflow
 
 > "Here's my Figma design: https://www.figma.com/design/...
-> Create a lab component that matches this frame. Use Spectrum tokens for all values."
+> Create a lab component that matches this frame. Use Spectrum tokens for all values.
+> Then open it in Storybook at localhost:6006 and screenshot it to compare."
 
-Claude will read the design and generate a component with the correct tokens, sizing,
-and colors — no manual translation needed.
+Claude will read the design, generate a component, and visually verify the result.
 
 ## Tips for prompting
 
