@@ -121,6 +121,27 @@ in CSS. The build tooling resolves `token()` calls to the correct CSS custom pro
 - Subtle variants: `accent-subtle-background-color-default`
 - Visual (border) colors: `accent-visual-color`, `negative-visual-color`
 
+### Verifying tokens before using them
+
+**Not all size suffixes exist for every token category.** For example, `line-height` only
+has `100` and `200` — there is no `line-height-75`. Figma designs may reference values
+(like `--line-height/75`) that don't map to an actual token.
+
+**Always verify a token exists** before using it. The source of truth is:
+
+```
+2nd-gen/packages/swc/stylesheets/tokens.css
+```
+
+Search for the token name with the `--swc-` prefix:
+
+```bash
+grep "swc-line-height" 2nd-gen/packages/swc/stylesheets/tokens.css
+```
+
+If the token doesn't exist, pick the closest available one. When in doubt, use the
+`100` variant — it's the base/default for most categories.
+
 ## How to write styles
 
 ### Use `:host` for the outer element
