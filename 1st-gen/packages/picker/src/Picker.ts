@@ -1656,11 +1656,11 @@ export class Picker extends FieldLabelMixin(
    * Used to render the selected item's display in the picker button.
    */
   @state()
-  protected get selectedItemContent(): MenuItemChildren {
+  public get selectedItemContent(): MenuItemChildren {
     return this._selectedItemContent || { icon: [], content: [] };
   }
 
-  protected set selectedItemContent(
+  public set selectedItemContent(
     selectedItemContent: MenuItemChildren | undefined
   ) {
     if (selectedItemContent === this.selectedItemContent) {
@@ -1726,8 +1726,35 @@ export class Picker extends FieldLabelMixin(
       'visually-hidden': hasSelection || hasPlaceholder,
       label: true,
     };
+
+    // Firefox and WebKit don't populate the accessbility tree with labels and alt text of the selected item,
+    // so we use the item content if it has content or derive the value from the icon content
+    const itemContent = this.selectedItemContent?.content
+      ?.map((node) => this.nodeContent(node))
+      .join('');
+    const iconContent = this.selectedItemContent?.icon
+      ?.map((node) => this.nodeContent(node))
+      .join('');
+    const selectedItemContent =
+      itemContent.length > 0 ? itemContent : iconContent;
+
+    // visually hide the selection if it has no text content or the icons are not only
+    const hasItemContent = this.selectedItemContent?.content
+      ?.map((node) => node.textContent?.trim() || '')
+      .join('');
+
+    // Chrome adds labels and alt text to the icon content, so we need to remove them
+    // since we're already capturing them as text for Firefox and WebKit
+    // and otherwise our fix for Firefox and Safari would cause the label to be read twice
+    const icon = this.selectedItemContent?.icon?.map((node) => {
+      const clone = node.cloneNode(true) as HTMLElement;
+      clone.removeAttribute('label');
+      clone.removeAttribute('alt');
+      return clone;
+    });
     const selectionClasses = {
-      'visually-hidden': this.icons === 'only' && !!this.value,
+      'visually-hidden':
+        (this.icons === 'only' || !hasItemContent) && !!this.value,
       label: true,
     };
     return [
@@ -1739,7 +1766,7 @@ export class Picker extends FieldLabelMixin(
             'visually-hidden': this.icons === 'none',
           })}
         >
-          ${this.selectedItemContent.icon}
+          ${icon}
         </span>
         ${this.appliedLabel
           ? html`
@@ -1766,7 +1793,7 @@ export class Picker extends FieldLabelMixin(
           id=${ifDefined(this.value && this.selectedItem ? 'label' : undefined)}
           class=${classMap(selectionClasses)}
         >
-          ${this.selectedItemContent.content}
+          ${selectedItemContent}
         </span>
         ${this.invalid && !this.pending
           ? html`
@@ -1875,6 +1902,49 @@ export class Picker extends FieldLabelMixin(
         ?.getAttribute('alt')
         ?.trim() !== '';
     return !!slotContent || !!slotAlt;
+  }
+
+  /**
+   * Gets text content of a node from its text content, attributes, or child nodes.
+   *
+   * @param node - The node to get the content from
+   * @returns The content of the node
+   */
+  protected nodeContent(node: Node): string {
+    const attributeValue = (attributeName: string) => {
+      if (!(node instanceof HTMLElement)) {
+        return '';
+      }
+      const nodeAttribute =
+        (node as HTMLElement)?.getAttribute(attributeName)?.trim() || '';
+      const nodeChildAttribute =
+        (node as HTMLElement)
+          ?.querySelector(`[${attributeName}]`)
+          ?.getAttribute(attributeName)
+          ?.trim() || '';
+      const nodeShadowRootAttribute =
+        (node as HTMLElement)?.shadowRoot
+          ?.querySelector(`[${attributeName}]`)
+          ?.getAttribute(attributeName)
+          ?.trim() || '';
+      return nodeAttribute.length > 0
+        ? nodeAttribute
+        : nodeChildAttribute.length > 0
+          ? nodeChildAttribute
+          : nodeShadowRootAttribute?.length > 0
+            ? nodeShadowRootAttribute
+            : '';
+    };
+    const textContent = node.textContent?.trim() || '';
+    return textContent?.length > 0
+      ? textContent
+      : attributeValue('alt')?.length > 0
+        ? attributeValue('alt')
+        : attributeValue('label')?.length > 0
+          ? attributeValue('label')
+          : attributeValue('aria-label')?.length > 0
+            ? attributeValue('aria-label')
+            : '';
   }
 
   /**
@@ -1987,9 +2057,7 @@ export class Picker extends FieldLabelMixin(
       ? 'field-label-slot'
       : this.appliedLabel
         ? 'applied-label'
-        : !!this.label || this.hasContentInSlot('label')
-          ? 'accessible-label'
-          : 'icon';
+        : 'accessible-label';
     if (this.tooltipEl) {
       this.tooltipEl.disabled = this.open;
     }

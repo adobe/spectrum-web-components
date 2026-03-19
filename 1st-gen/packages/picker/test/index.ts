@@ -2103,7 +2103,7 @@ export function runPickerTests(): void {
   testForLitDevWarnings(async () => await pickerFixture());
   it('manages its "name" and "value" in the accessibility tree when [icons-only]', async () => {
     const test = await fixture<HTMLDivElement>(html`
-      <div>${iconsOnly({})}</div>
+      <div id="debug">${iconsOnly({})}</div>
     `);
     const el = test.querySelector('sp-picker') as Picker;
 
@@ -2125,7 +2125,7 @@ export function runPickerTests(): void {
     ).to.equal('Choose an action type...');
     expect(
       trimmedValue(comboboxNode?.value),
-      '`value` is the the selected item text'
+      '`value` is the the selected item text' + JSON.stringify(comboboxNode)
     ).to.equal('Delete');
 
     el.value = '2';
