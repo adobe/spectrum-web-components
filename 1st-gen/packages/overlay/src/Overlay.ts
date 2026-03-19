@@ -103,7 +103,8 @@ export class Overlay extends ComputedOverlayBase {
    */
   @property({ type: Boolean })
   override get delayed(): boolean {
-    return this.elements.at(-1)?.hasAttribute('delayed') || this._delayed;
+    const lastElement = this.elements[this.elements.length - 1];
+    return lastElement?.hasAttribute('delayed') || this._delayed;
   }
 
   override set delayed(delayed: boolean) {

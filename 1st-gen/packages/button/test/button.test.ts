@@ -71,10 +71,13 @@ describe('Button', () => {
 
       const spyCall = consoleWarnStub.getCall(0);
       expect(
-        (spyCall.args.at(0) as string).includes('deprecated'),
+        (spyCall.args[0] as string).includes('deprecated'),
         'confirm deprecated variant warning'
       ).to.be.true;
-      expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        'confirm `data` shape'
+      ).to.deep.equal({
         data: {
           localName: 'sp-button',
           type: 'api',

@@ -315,10 +315,13 @@ describe('Dialog Wrapper', () => {
       expect(consoleWarnStub.called, 'console.warn called').to.be.true;
       const spyCall = consoleWarnStub.getCall(0);
       expect(
-        spyCall.args.at(0).includes('accessible'),
+        spyCall.args[0].includes('accessible'),
         'confirm accessibility-centric message'
       ).to.be.true;
-      expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        'confirm `data` shape'
+      ).to.deep.equal({
         data: {
           localName: 'sp-dialog-wrapper',
           type: 'accessibility',

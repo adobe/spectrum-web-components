@@ -59,6 +59,7 @@ export class ColorField extends TextfieldBase {
       ? html`
           <sp-color-handle
             size="m"
+            class="handle"
             color=${this.colorController.getColor('srgb').toString()}
           ></sp-color-handle>
         `

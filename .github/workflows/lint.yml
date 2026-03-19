@@ -83,10 +83,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Use Node LTS version
+      - name: Use Node version from .nvmrc
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version-file: '.nvmrc'
           cache: yarn
 
       - name: Enable Corepack
@@ -101,7 +101,7 @@ jobs:
           path: |
             .cache/yarn
             node_modules
-          key: ubuntu-latest-node20-${{ hashFiles('yarn.lock') }}
+          key: ubuntu-latest-${{ hashFiles('.nvmrc', 'package.json', 'yarn.lock') }}
 
       ## --- INSTALL --- ##
       # If statement isn't needed here b/c yarn will leverage the cache if it exists

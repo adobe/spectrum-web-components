@@ -28,6 +28,7 @@
     - [Accessibility testing](01_contributor-guides/09_accessibility-testing.md)
     - [Maintaining StackBlitz examples for Spectrum Web Components](01_contributor-guides/10_using-stackblitz.md)
     - [2nd gen testing](01_contributor-guides/11_2ndgen_testing.md)
+    - [Tools vs packages: where code lives](01_contributor-guides/12_tools-vs-packages.md)
 - [Style guide](02_style-guide/README.md)
     - [2nd-Gen CSS](02_style-guide/01_css/README.md)
     - [Linting tools](02_style-guide/02_linting-tools.md)

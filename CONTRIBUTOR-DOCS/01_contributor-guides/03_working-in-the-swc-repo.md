@@ -88,6 +88,8 @@ Reflecting the side-by-side strategy, the repository is organized into two top-l
 
     - The 2nd-gen SWC library (`packages/swc/`).
 
+Within both 1st-gen and 2nd-gen, the repo separates **components** (user-facing UI that matches Spectrum design) from **tools/utilities** (base classes, theme, grid, tokens, reactive controllers, etc.). For how we decide where new or existing code belongs, see [Tools vs packages](12_tools-vs-packages.md).
+
 During this transition, depending on what you're trying to accomplish, you may end up working in `[1st-gen](/1st-gen/README.md)`, `[2nd-gen](/2nd-gen/README.md)`, or both. If you have any questions, [please ask](./01_getting-involved.md#community--support)—we're happy to help.
 
 ## Development workflow
