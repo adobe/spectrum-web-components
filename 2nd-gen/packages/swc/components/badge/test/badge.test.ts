@@ -19,8 +19,8 @@ import '@adobe/spectrum-wc/badge';
 
 import {
   BADGE_VALID_SIZES,
-  BADGE_VARIANTS_COLOR_S2,
-  BADGE_VARIANTS_S2,
+  BADGE_VARIANTS,
+  BADGE_VARIANTS_COLOR,
   BADGE_VARIANTS_SEMANTIC,
   FIXED_VALUES,
 } from '../../../../core/components/badge/Badge.types.js';
@@ -37,6 +37,7 @@ import {
   Outline,
   Overview,
   SemanticVariants,
+  Sizes,
   Subtle,
 } from '../stories/badge.stories.js';
 
@@ -155,9 +156,10 @@ export const SemanticVariantsTest: Story = {
       for (const variant of BADGE_VARIANTS_SEMANTIC) {
         const badge = canvasElement.querySelector(
           `swc-badge[variant="${variant}"]`
-        ) as Badge;
-        await badge.updateComplete;
-        expect(badge.variant).toBe(variant);
+        ) as Badge | null;
+        await badge?.updateComplete;
+        expect(badge).toBeTruthy();
+        expect(badge?.variant).toBe(variant);
       }
     });
   },
@@ -172,9 +174,9 @@ export const OutlineTest: Story = {
         for (const variant of BADGE_VARIANTS_SEMANTIC) {
           const badge = canvasElement.querySelector(
             `swc-badge[variant="${variant}"]`
-          ) as Badge;
-          await badge.updateComplete;
-          expect(badge.hasAttribute('outline')).toBe(true);
+          ) as Badge | null;
+          await badge?.updateComplete;
+          expect(badge?.hasAttribute('outline')).toBe(true);
         }
       }
     );
@@ -182,21 +184,16 @@ export const OutlineTest: Story = {
 };
 
 export const SizesTest: Story = {
-  render: () => html`
-    ${BADGE_VALID_SIZES.map(
-      (size) => html`
-        <swc-badge size=${size} variant="informative">${size}</swc-badge>
-      `
-    )}
-  `,
+  ...Sizes,
   play: async ({ canvasElement, step }) => {
-    await step('renders all valid sizes', async () => {
+    await step('reflects size attribute for each valid size', async () => {
       for (const size of BADGE_VALID_SIZES) {
         const badge = canvasElement.querySelector(
           `swc-badge[size="${size}"]`
-        ) as Badge;
-        await badge.updateComplete;
-        expect(badge.size).toBe(size);
+        ) as Badge | null;
+        await badge?.updateComplete;
+        expect(badge).toBeTruthy();
+        expect(badge?.size).toBe(size);
       }
     });
   },
@@ -206,12 +203,12 @@ export const SubtleTest: Story = {
   ...Subtle,
   play: async ({ canvasElement, step }) => {
     await step('reflects subtle attribute on all variants', async () => {
-      for (const variant of BADGE_VARIANTS_S2) {
+      for (const variant of BADGE_VARIANTS) {
         const badge = canvasElement.querySelector(
           `swc-badge[variant="${variant}"]`
-        ) as Badge;
-        await badge.updateComplete;
-        expect(badge.hasAttribute('subtle')).toBe(true);
+        ) as Badge | null;
+        await badge?.updateComplete;
+        expect(badge?.hasAttribute('subtle')).toBe(true);
       }
     });
   },
@@ -224,9 +221,10 @@ export const FixedTest: Story = {
       for (const value of FIXED_VALUES) {
         const badge = canvasElement.querySelector(
           `swc-badge[fixed="${value}"]`
-        ) as Badge;
-        await badge.updateComplete;
-        expect(badge.fixed).toBe(value);
+        ) as Badge | null;
+        await badge?.updateComplete;
+        expect(badge).toBeTruthy();
+        expect(badge?.fixed).toBe(value);
       }
     });
   },
@@ -237,7 +235,7 @@ export const NonSemanticVariantsTest: Story = {
   play: async ({ canvasElement, step }) => {
     await step('renders all color variant values', async () => {
       await Promise.all(
-        BADGE_VARIANTS_COLOR_S2.map(async (variant) => {
+        BADGE_VARIANTS_COLOR.map(async (variant) => {
           const badge = canvasElement.querySelector(
             `swc-badge[variant="${variant}"]`
           ) as Badge;
