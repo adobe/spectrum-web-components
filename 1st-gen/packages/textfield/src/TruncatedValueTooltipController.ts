@@ -169,12 +169,9 @@ export class TruncatedValueTooltipController implements ReactiveController {
   }
 
   /**
-   * Updates the tooltip's displayed text without requestUpdate. Used by NumberField
+   * Updates the tooltip's text node directly (no requestUpdate). Used by NumberField
    * from handleInput() so the tooltip shows the current input value while typing
    * without triggering re-renders that would affect formatting or selection.
-   * Sets tooltip.textContent so we do not depend on the tooltip's internal DOM structure.
-   * Assumes tooltip content is a single plain-text value; adding more (e.g. icon + text)
-   * would require a different approach since textContent replaces all light-DOM children.
    */
   public syncTooltipText(text: string): void {
     const tooltip = this.host.shadowRoot?.querySelector(
@@ -183,7 +180,18 @@ export class TruncatedValueTooltipController implements ReactiveController {
     if (!tooltip) {
       return;
     }
-    tooltip.textContent = text;
+    const tooltipTextNode =
+      Array.from(tooltip.childNodes).find(
+        (node) =>
+          node.nodeType === Node.TEXT_NODE &&
+          Boolean((node.textContent ?? '').trim().length)
+      ) ??
+      Array.from(tooltip.childNodes).find(
+        (node) => node.nodeType === Node.TEXT_NODE
+      );
+    if (tooltipTextNode) {
+      tooltipTextNode.textContent = text;
+    }
   }
 
   hostConnected(): void {
