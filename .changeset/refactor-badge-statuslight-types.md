@@ -1,7 +1,7 @@
 ---
-"@spectrum-web-components/core": minor
-"@adobe/spectrum-wc": patch
-"@spectrum-web-components/base": patch
+'@spectrum-web-components/core': minor
+'@adobe/spectrum-wc': patch
+'@spectrum-web-components/base': patch
 ---
 
 - **Refactored**: Reorganized Badge types to remove `S2` suffix from exports (`BADGE_VARIANTS_S2` -> `BADGE_VARIANTS`, `BADGE_VARIANTS_COLOR_S2` -> `BADGE_VARIANTS_COLOR`, `BadgeVariantS2` -> `BadgeVariant`, `BadgeColorVariantS2` -> `BadgeColorVariant`). Types file now uses SHARED/S1-ONLY/CANONICAL section organization for clearer S1 removal path.
