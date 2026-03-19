@@ -32,20 +32,55 @@ import { Picker } from '@spectrum-web-components/picker';
 
 ### Anatomy
 
-A picker includes a label and a menu.
+A picker includes a label, optional placeholder text, and a menu.
 
-#### Labels
+#### Label
 
-To render accessibly, an `<sp-picker>` element should be paired with an `<sp-field-label>` element that has the `for` attribute referencing the `id` of the `<sp-picker>` element.
+To render accessibly, an `<sp-picker>` element have a label. Use the `field-label` slot to provide a label.
 
-For an accessible label that renders within the bounds of the picker itself, but still fulfills the accessibility contract, use the `label` attribute or a `<span slot="label">` as a child element of `<sp-picker>`.
+For an accessible label that is not visible, but still fulfills the accessibility contract, use the `label` attribute.
 
-<sp-tabs selected="sp-field-label" auto label="Label options">
-<sp-tab value="sp-field-label">Uses &lt;sp-field-label&gt;</sp-tab>
+> **⚠️ Deprecation Notice**: The `<sp-field-label>` element and the `label` slot are deprecated and will be removed in a future version. Use the `field-label` slot instead.
+
+<sp-tabs selected="field-label-slot" auto label="Label options">
+<sp-tab value="field-label-slot">field-label slot</sp-tab>
+<sp-tab-panel value="field-label-slot">
+
+```html demo
+<sp-picker>
+  <span slot="field-label">Selection type:</span>
+  <sp-menu-item>Deselect</sp-menu-item>
+  <sp-menu-item>Select inverse</sp-menu-item>
+  <sp-menu-item>Feather...</sp-menu-item>
+  <sp-menu-item>Select and mask...</sp-menu-item>
+  <sp-menu-divider></sp-menu-divider>
+  <sp-menu-item>Save selection</sp-menu-item>
+  <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+```
+
+</sp-tab-panel>
+<sp-tab value="label-attribute">label attribute</sp-tab>
+<sp-tab-panel value="label-attribute">
+
+```html demo
+<sp-picker label="Selection type">
+  <sp-menu-item>Deselect</sp-menu-item>
+  <sp-menu-item>Select inverse</sp-menu-item>
+  <sp-menu-item>Feather...</sp-menu-item>
+  <sp-menu-item>Select and mask...</sp-menu-item>
+  <sp-menu-divider></sp-menu-divider>
+  <sp-menu-item>Save selection</sp-menu-item>
+  <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+```
+
+</sp-tab-panel>
+<sp-tab value="sp-field-label">&lt;sp-field-label&gt; (deprecated)</sp-tab>
 <sp-tab-panel value="sp-field-label">
 
 ```html demo
-<sp-field-label for="uses-sp-field-label">Selection type:</sp-field-label>
+<sp-field-label for="uses-sp-field-label"></sp-field-label>
 <sp-picker id="uses-sp-field-label">
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -58,11 +93,12 @@ For an accessible label that renders within the bounds of the picker itself, but
 ```
 
 </sp-tab-panel>
-<sp-tab value="label-attribute">Uses label attribute</sp-tab>
-<sp-tab-panel value="label-attribute">
+<sp-tab value="label-slot">Uses label slot (deprecated)</sp-tab>
+<sp-tab-panel value="label-slot">
 
 ```html demo
-<sp-picker label="Selection type" id="uses-label-attribute">
+<sp-picker>
+  <span slot="label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
   <sp-menu-item>Feather...</sp-menu-item>
@@ -74,12 +110,38 @@ For an accessible label that renders within the bounds of the picker itself, but
 ```
 
 </sp-tab-panel>
-<sp-tab value="label-slot">Uses label slot</sp-tab>
+</sp-tabs>
+
+#### Placeholder
+
+Optional placeholder text is displayed when no item is selected. It can be set with the `placeholder` attribute.
+
+> **⚠️ Deprecation Notice**: The `label` attribute will no longer be used as a placeholder in a future version. Use the `placeholder` attribute for placeholders instead. The `label` attribute will continue to be used as a visibly hidden label for the picker.
+
+<sp-tabs selected="field-label-slot" auto label="Placeholder options">
+<sp-tab value="label-attribute">placeholder attribute</sp-tab>
+<sp-tab-panel value="label-attribute">
+
+```html demo
+<sp-picker placeholder="Choose a selection type">
+  <span slot="field-label">Selection type:</span>
+  <sp-menu-item>Deselect</sp-menu-item>
+  <sp-menu-item>Select inverse</sp-menu-item>
+  <sp-menu-item>Feather...</sp-menu-item>
+  <sp-menu-item>Select and mask...</sp-menu-item>
+  <sp-menu-divider></sp-menu-divider>
+  <sp-menu-item>Save selection</sp-menu-item>
+  <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+```
+
+</sp-tab-panel>
+<sp-tab value="label-slot">Uses "label" slot (deprecated)</sp-tab>
 <sp-tab-panel value="label-slot">
 
 ```html demo
-<sp-picker id="uses-label-slot">
-  <span slot="label">Selection type:</span>
+<sp-picker label="Choose a selection type">
+  <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
   <sp-menu-item>Feather...</sp-menu-item>
@@ -124,8 +186,8 @@ If you require a submenu, use and [action menu](./action-menu) instead of a pick
 `<sp-menu-item>`s in an `<sp-picker>` that are provided content addressed to their `icon` slot will be passed to the `<sp-picker>` element when that item is chosen.
 
 ```html
-<sp-field-label for="picker-icons">Choose an action...</sp-field-label>
-<sp-picker label="What would you like to do?" value="item-2" id="picker-icons">
+<sp-picker value="item-2">
+  <span slot="field-label">Choose an action...</span>
   <sp-menu-item>
     <sp-icon-save-floppy slot="icon"></sp-icon-save-floppy>
     Save
@@ -144,12 +206,8 @@ If you require a submenu, use and [action menu](./action-menu) instead of a pick
 When using `<sp-menu-item>` elements without text content, be sure to use the `value` attribute so that the `<sp-picker>` element can differentiate between the available options. Furthermore, it is important to apply accessible labeling to the `[slot="icon"]` content as follows:
 
 ```html
-<sp-field-label for="picker-icons-only">Choose an action...</sp-field-label>
-<sp-picker
-  label="What would you like to do?"
-  value="item-2"
-  id="picker-icons-only"
->
+<sp-picker value="item-2">
+  <span slot="field-label">Choose an action...</span>
   <sp-menu-item value="item-1">
     <sp-icon-save-floppy slot="icon" label="Save"></sp-icon-save-floppy>
   </sp-menu-item>
@@ -173,13 +231,8 @@ When using `icons="only"` on `<sp-menu-item>` elements that have text content, t
 <sp-tab-panel value="only">
 
 ```html demo
-<sp-field-label for="picker-icons-value">Choose an action...</sp-field-label>
-<sp-picker
-  label="What would you like to do?"
-  value="save"
-  id="picker-icons-value"
-  icons="only"
->
+<sp-picker value="save" icons="only">
+  <span slot="field-label">Choose an action...</span>
   <sp-menu-item value="save">
     <sp-icon-save-floppy slot="icon"></sp-icon-save-floppy>
     Save
@@ -200,13 +253,8 @@ When using `icons="only"` on `<sp-menu-item>` elements that have text content, t
 <sp-tab-panel value="none">
 
 ```html demo
-<sp-field-label for="picker-icons-none">Choose an action...</sp-field-label>
-<sp-picker
-  label="What would you like to do?"
-  value="save"
-  id="picker-icons-none"
-  icons="none"
->
+<sp-picker value="save" icons="none">
+  <span slot="field-label">Choose an action...</span>
   <sp-menu-item value="save">
     <sp-icon-save-floppy slot="icon"></sp-icon-save-floppy>
     Save
@@ -234,12 +282,8 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="matching-value">
 
 ```html demo
-<sp-field-label for="picker-value">Selection type:</sp-field-label>
-<sp-picker
-  label="Select a Country with a very long label, too long in fact"
-  value="item-2"
-  id="picker-value"
->
+<sp-picker value="item-2">
+  <span slot="field-label">Selection type:</span>
   <sp-menu-item value="item-1">Deselect</sp-menu-item>
   <sp-menu-item value="item-2">Select inverse</sp-menu-item>
   <sp-menu-item value="item-3">Feather...</sp-menu-item>
@@ -255,12 +299,8 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="matching-item-text">
 
 ```html demo
-<sp-field-label for="picker-item-text">Selection type:</sp-field-label>
-<sp-picker
-  label="Select a Country with a very long label, too long in fact"
-  value="Feather..."
-  id="picker-item-text"
->
+<sp-picker value="Feather...">
+  <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
   <sp-menu-item>Feather...</sp-menu-item>
@@ -283,8 +323,8 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="s">
 
 ```html demo
-<sp-field-label for="picker-s" size="s">Selection type:</sp-field-label>
-<sp-picker id="picker-s" size="s" label="Selection type">
+<sp-picker size="s" placeholder="Choose a selection type">
+  <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
   <sp-menu-item>Feather...</sp-menu-item>
@@ -295,8 +335,8 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 </sp-picker>
 <br />
 <br />
-<sp-field-label for="picker-s-quiet" size="s">Selection type:</sp-field-label>
-<sp-picker id="picker-s-quiet" quiet size="s" label="Selection type">
+<sp-picker size="s" placeholder="Choose a selection type" quiet>
+  <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
   <sp-menu-item>Feather...</sp-menu-item>
@@ -312,8 +352,8 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="m">
 
 ```html demo
-<sp-field-label for="picker-m" size="m">Selection type:</sp-field-label>
-<sp-picker id="picker-m" size="m" label="Selection type">
+<sp-picker size="m" placeholder="Choose a selection type">
+  <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
   <sp-menu-item>Feather...</sp-menu-item>
@@ -324,8 +364,8 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 </sp-picker>
 <br />
 <br />
-<sp-field-label for="picker-m-quiet" size="m">Selection type:</sp-field-label>
-<sp-picker id="picker-m-quiet" quiet size="m" label="Selection type">
+<sp-picker size="m" placeholder="Choose a selection type" quiet>
+  <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
   <sp-menu-item>Feather...</sp-menu-item>
@@ -341,7 +381,8 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="l">
 
 ```html demo
-<sp-picker id="picker-l" size="l" label="Selection type">
+<sp-picker size="l" placeholder="Choose a selection type">
+  <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
   <sp-menu-item>Feather...</sp-menu-item>
@@ -352,8 +393,8 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 </sp-picker>
 <br />
 <br />
-<sp-field-label for="picker-l-quiet" size="l">Selection type:</sp-field-label>
-<sp-picker id="picker-l-quiet" quiet size="l" label="Selection type">
+<sp-picker size="l" placeholder="Choose a selection type" quiet>
+  <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
   <sp-menu-item>Feather...</sp-menu-item>
@@ -369,8 +410,8 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="xl">
 
 ```html demo
-<sp-field-label for="picker-xl" size="xl">Selection type:</sp-field-label>
-<sp-picker id="picker-xl" size="xl" label="Selection type">
+<sp-picker size="xl" placeholder="Choose a selection type">
+  <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
   <sp-menu-item>Feather...</sp-menu-item>
@@ -381,8 +422,8 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 </sp-picker>
 <br />
 <br />
-<sp-field-label for="picker-xl-quiet" size="xl">Selection type:</sp-field-label>
-<sp-picker id="picker-xl-quiet" quiet size="xl" label="Selection type">
+<sp-picker size="xl" placeholder="Choose a selection type" quiet>
+  <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
   <sp-menu-item>Feather...</sp-menu-item>
@@ -403,13 +444,8 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="standard-side-label">
 
 ```html
-<sp-field-label side-aligned="start" for="picker-sideLabel">
-  Standard:
-</sp-field-label>
-<sp-picker
-  label="Select a Country with a very long label, too long in fact"
-  id="picker-sideLabel"
->
+<sp-picker side-aligned="start" placeholder="Choose a selection type">
+  <span slot="field-label">Standard:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
   <sp-menu-item>Feather...</sp-menu-item>
@@ -425,14 +461,8 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="quiet-side-label">
 
 ```html demo
-<sp-field-label side-aligned="start" for="picker-sideLabel-quiet">
-  Quiet:
-</sp-field-label>
-<sp-picker
-  label="Select a Country with a very long label, too long in fact"
-  quiet
-  id="picker-sideLabel-quiet"
->
+<sp-picker side-aligned="start" placeholder="Choose a selection type" quiet>
+  <span slot="field-label">Standard:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
   <sp-menu-item>Feather...</sp-menu-item>
@@ -455,12 +485,8 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="standard-invalid">
 
 ```html demo
-<sp-field-label for="picker-invalid">Standard:</sp-field-label>
-<sp-picker
-  label="Select a Country with a very long label, too long in fact"
-  invalid
-  id="picker-invalid"
->
+<sp-picker placeholder="Choose a selection type" invalid>
+  <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
   <sp-menu-item>Feather...</sp-menu-item>
@@ -476,13 +502,8 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="quiet-invalid">
 
 ```html demo
-<sp-field-label for="picker-invalid-quiet">Quiet:</sp-field-label>
-<sp-picker
-  label="Select a Country with a very long label, too long in fact"
-  invalid
-  quiet
-  id="picker-invalid-quiet"
->
+<sp-picker placeholder="Choose a selection type" invalid quiet>
+  <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
   <sp-menu-item>Feather...</sp-menu-item>
@@ -503,12 +524,8 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="standard-disabled">
 
 ```html demo
-<sp-field-label for="picker-disabled">Standard:</sp-field-label>
-<sp-picker
-  label="Select a Country with a very long label, too long in fact"
-  disabled
-  id="picker-disabled"
->
+<sp-picker placeholder="Choose a selection type" disabled>
+  <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
   <sp-menu-item>Feather...</sp-menu-item>
@@ -524,13 +541,8 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 <sp-tab-panel value="quiet-disabled">
 
 ```html demo
-<sp-field-label for="picker-disabled-quiet">Quiet:</sp-field-label>
-<sp-picker
-  label="Select a Country with a very long label, too long in fact"
-  disabled
-  quiet
-  id="picker-disabled-quiet"
->
+<sp-picker placeholder="Choose a selection type" disabled quiet>
+  <span slot="field-label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
   <sp-menu-item>Feather...</sp-menu-item>
@@ -553,17 +565,15 @@ While in pending state, `<sp-picker>` elements will not respond to click events 
 <sp-tab-panel value="standard-pending">
 
 ```html demo
-<sp-field-label for="picker-loading">Standard:</sp-field-label>
-<sp-picker
-  id="picker-loading"
-  label="Loading blending modes..."
-  pending
-  pending-label="loading options"
->
-  <sp-menu-item>Pass through</sp-menu-item>
-  <sp-menu-item>Normal</sp-menu-item>
-  <sp-menu-item>Multiply</sp-menu-item>
-  <sp-menu-item>Screen</sp-menu-item>
+<sp-picker placeholder="Choose a selection type" pending>
+  <span slot="field-label">Selection type:</span>
+  <sp-menu-item>Deselect</sp-menu-item>
+  <sp-menu-item>Select inverse</sp-menu-item>
+  <sp-menu-item>Feather...</sp-menu-item>
+  <sp-menu-item>Select and mask...</sp-menu-item>
+  <sp-menu-divider></sp-menu-divider>
+  <sp-menu-item>Save selection</sp-menu-item>
+  <sp-menu-item disabled>Make work path</sp-menu-item>
 </sp-picker>
 ```
 
@@ -572,17 +582,15 @@ While in pending state, `<sp-picker>` elements will not respond to click events 
 <sp-tab-panel value="quiet-pending">
 
 ```html demo
-<sp-field-label for="picker-loading-quiet">Quiet:</sp-field-label>
-<sp-picker
-  id="picker-loading-quiet"
-  label="Loading blending modes..."
-  pending
-  quiet
->
-  <sp-menu-item>Pass through</sp-menu-item>
-  <sp-menu-item>Normal</sp-menu-item>
-  <sp-menu-item>Multiply</sp-menu-item>
-  <sp-menu-item>Screen</sp-menu-item>
+<sp-picker placeholder="Choose a selection type" pending quiet>
+  <span slot="field-label">Selection type:</span>
+  <sp-menu-item>Deselect</sp-menu-item>
+  <sp-menu-item>Select inverse</sp-menu-item>
+  <sp-menu-item>Feather...</sp-menu-item>
+  <sp-menu-item>Select and mask...</sp-menu-item>
+  <sp-menu-divider></sp-menu-divider>
+  <sp-menu-item>Save selection</sp-menu-item>
+  <sp-menu-item disabled>Make work path</sp-menu-item>
 </sp-picker>
 ```
 
@@ -603,18 +611,14 @@ Usage Guidance:
 To see this functionality in action, load this page from your mobile device or use Chrome DevTools (or equivalent) and select a mobile device once the Device Toolbar (the phone/tablet icon) is active.
 
 ```html
-<sp-field-label for="picker-tray">
-  Do you want to see a tray menu?
-</sp-field-label>
-<sp-picker id="picker-tray" label="Select an option">
+<sp-picker placeholder="Select an option">
+  <span slot="field-label">Do you want to see a tray menu?</span>
   <sp-menu-item value="option-1">Yes</sp-menu-item>
   <sp-menu-item value="option-2">No</sp-menu-item>
 </sp-picker>
 <br />
-<sp-field-label for="picker-popover">
-  Do you want to see a popover menu?
-</sp-field-label>
-<sp-picker id="picker-popover" label="Select an option" force-popover>
+<sp-picker placeholder="Select an option" force-popover>
+  <span slot="field-label">Do you want to see a popover menu?</span>
   <sp-menu-item value="option-1">Yes</sp-menu-item>
   <sp-menu-item value="option-2">No</sp-menu-item>
 </sp-picker>
@@ -624,7 +628,15 @@ To see this functionality in action, load this page from your mobile device or u
 
 #### Include a visible label
 
-Every picker should have a label. A picker without a label is ambiguous and not accessible.
+Every picker should have a label. A picker without a label is ambiguous and not accessible. This can be done with the `field-label` slot or the `label` attribute.
+
+```html
+<sp-picker placeholder="Select an option">
+  <span slot="field-label">Do you want to see a tray menu?</span>
+  <sp-menu-item value="option-1">Yes</sp-menu-item>
+  <sp-menu-item value="option-2">No</sp-menu-item>
+</sp-picker>
+```
 
 #### Use help text to show context
 
@@ -647,15 +659,16 @@ Use [`<sp-help-text>`](../help-text/) to add help text and error text:
 <sp-tab-panel value="help-text-demo">
 
 ```html demo
-<sp-field-label for="text">Preferred contact method:</sp-field-label>
-<sp-picker id="text" label="Select contact method" aria-describedby="help-text">
+<sp-picker placeholder="Select contact method" aria-describedby="help-text">
+  <span slot="field-label">Preferred contact method:</span>
   <sp-menu-item>Phone</sp-menu-item>
   <sp-menu-item>Text</sp-menu-item>
   <sp-menu-item>Email</sp-menu-item>
+  <sp-help-text id="help-text" slot="help-text">
+    Choose the best way to contact you in case there's an issue with your
+    account.
+  </sp-help-text>
 </sp-picker>
-<sp-help-text id="help-text">
-  Choose the best way to contact you in case there's an issue with your account.
-</sp-help-text>
 ```
 
 </sp-tab-panel>
@@ -663,23 +676,24 @@ Use [`<sp-help-text>`](../help-text/) to add help text and error text:
 <sp-tab-panel value="error-text-demo">
 
 ```html demo
-<sp-field-label for="error-text" required invalid>
-  Preferred contact method:
-</sp-field-label>
 <sp-picker
-  id="error-text"
+  placeholder="Select contact method"
   invalid
-  label="Select contact method"
   required
   aria-describedby="error-help-text"
 >
+  <span slot="field-label">Preferred contact method:</span>
   <sp-menu-item>Phone</sp-menu-item>
   <sp-menu-item>Text</sp-menu-item>
   <sp-menu-item>Email</sp-menu-item>
+  <sp-help-text
+    id="error-help-text"
+    slot="negative-help-text"
+    variant="negative"
+  >
+    Select a contact method.
+  </sp-help-text>
 </sp-picker>
-<sp-help-text id="error-help-text" variant="negative">
-  Select a contact method.
-</sp-help-text>
 ```
 
 </sp-tab-panel>

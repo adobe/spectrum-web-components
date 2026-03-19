@@ -70,9 +70,6 @@ const picker = ({
   open: boolean;
 }): TemplateResult => {
   return html`
-    <sp-field-label for="picker-${size}" size=${size}>
-      Where do you live?
-    </sp-field-label>
     <sp-picker
       id="picker-${size}"
       size=${size}
@@ -80,11 +77,12 @@ const picker = ({
         const picker = event.target as Picker;
         onChange(picker.value);
       }}
-      label="Select a Country with a very long label, too long, in fact"
+      placeholder="Choose a selection type with a very long label, too long, in fact"
       ?pending=${pending}
       ?invalid=${invalid}
       ?open=${open}
     >
+      <span slot="field-label">Selection type:</span>
       <sp-menu-item>Deselect</sp-menu-item>
       <sp-menu-item>Select Inverse</sp-menu-item>
       <sp-menu-item>Feather...</sp-menu-item>

@@ -29,6 +29,23 @@ export const argTypes = {
     },
     options: ['s', 'm', 'l', 'xl'],
   },
+  sideAligned: {
+    name: 'side-aligned',
+    type: { name: 'string', required: false },
+    description: 'The alignment of the label relative to the picker.',
+    table: {
+      defaultValue: { summary: 'undefined' },
+    },
+    control: {
+      labels: {
+        undefined: 'start',
+        start: 'start',
+        end: 'end',
+      },
+      type: 'select',
+    },
+    options: ['undefined', 'start', 'end'],
+  },
   quiet: {
     name: 'quiet',
     type: { name: 'boolean', required: false },

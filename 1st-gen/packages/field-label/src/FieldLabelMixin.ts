@@ -81,9 +81,11 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
     @property({ type: String, reflect: true, attribute: 'side-aligned' })
     public sideAligned?: 'start' | 'end';
 
+    /* eslint-disable lit-a11y/click-events-have-key-events */
     public renderFieldLabel(fieldId: string): TemplateResult {
       return html`
         <label
+          @click=${this.handleFieldLabelClick}
           id="${fieldId}-label"
           for=${fieldId}
           ?hidden=${!this.slotHasContent}
@@ -102,6 +104,21 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
             : nothing}
         </label>
       `;
+    }
+    /* eslint-enable lit-a11y/click-events-have-key-events */
+
+    /**
+     * Handles the click event on the field label.
+     *
+     * @param event - The click event.
+     */
+    private handleFieldLabelClick(event: Event): void {
+      event.preventDefault();
+      event.stopPropagation();
+      if (this.disabled) {
+        return;
+      }
+      this.focus();
     }
   }
   return FieldLabelMixinClass as Constructor<FieldLabelMixinInterface> & T;
