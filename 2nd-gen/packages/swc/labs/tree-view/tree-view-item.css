@@ -1,0 +1,100 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: block;
+}
+
+.swc-TreeViewItem-row {
+  display: flex;
+  align-items: center;
+  min-block-size: token("component-height-100");
+  padding-inline-end: token("text-to-visual-100");
+  border-radius: token("corner-radius-medium-size-small");
+  cursor: pointer;
+  user-select: none;
+}
+
+.swc-TreeViewItem-row:hover {
+  background: token("gray-200");
+}
+
+:host([selected]) .swc-TreeViewItem-row {
+  color: token("white");
+  background: token("informative-background-color-default");
+}
+
+:host([disabled]) .swc-TreeViewItem-row {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.4;
+}
+
+.swc-TreeViewItem-indent {
+  flex-shrink: 0;
+}
+
+.swc-TreeViewItem-chevron {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  inline-size: token("component-height-100");
+  block-size: token("component-height-100");
+  padding: 0;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transform: rotate(0deg);
+  transition: transform 0.13s ease;
+}
+
+.swc-TreeViewItem-chevron--expanded {
+  transform: rotate(90deg);
+}
+
+.swc-TreeViewItem-chevron--hidden {
+  visibility: hidden;
+}
+
+.swc-TreeViewItem-icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  padding-inline-end: token("text-to-visual-100");
+}
+
+.swc-TreeViewItem-label {
+  flex: 1;
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-100");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-100");
+  color: token("gray-800");
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:host([selected]) .swc-TreeViewItem-label {
+  color: token("white");
+}
+
+.swc-TreeViewItem-children {
+  display: block;
+}
+
+.swc-TreeViewItem-children--collapsed {
+  display: none;
+}
