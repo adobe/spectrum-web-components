@@ -1,0 +1,140 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: block;
+}
+
+.swc-ListViewItem-row {
+  display: flex;
+  align-items: center;
+  min-block-size: token("component-height-200");
+  padding-block: token("component-padding-vertical-75");
+  padding-inline-start: token("component-padding-vertical-75");
+  padding-inline-end: token("component-edge-to-text-75");
+  cursor: pointer;
+  user-select: none;
+  border-block-end: token("border-width-100") solid token("gray-300");
+}
+
+:host(:last-child) .swc-ListViewItem-row {
+  border-block-end: none;
+}
+
+.swc-ListViewItem-row:hover {
+  background: token("gray-100");
+}
+
+:host([selected]) .swc-ListViewItem-row {
+  background: token("gray-100");
+}
+
+:host([disabled]) .swc-ListViewItem-row {
+  cursor: default;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Checkbox */
+
+.swc-ListViewItem-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: token("workflow-icon-size-100");
+  block-size: token("workflow-icon-size-100");
+  flex-shrink: 0;
+  margin-inline-start: token("component-padding-vertical-75");
+  margin-inline-end: token("component-padding-vertical-75");
+  border: token("border-width-200") solid token("gray-800");
+  border-radius: token("corner-radius-medium-size-small");
+  box-sizing: border-box;
+  color: token("white");
+}
+
+.swc-ListViewItem-checkbox--checked {
+  background: token("neutral-background-color-default");
+  border-color: token("neutral-background-color-default");
+}
+
+.swc-ListViewItem-checkbox swc-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Icon slot */
+
+.swc-ListViewItem-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding-inline-end: token("component-edge-to-text-75");
+  color: token("neutral-subdued-content-color-default");
+}
+
+.swc-ListViewItem-icon::slotted(*) {
+  inline-size: token("workflow-icon-size-200");
+  block-size: token("workflow-icon-size-200");
+}
+
+/* Text frame */
+
+.swc-ListViewItem-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-inline-size: 0;
+  padding-block-start: token("component-padding-vertical-75");
+  padding-block-end: token("component-padding-vertical-75");
+  padding-inline-end: token("component-edge-to-text-75");
+}
+
+.swc-ListViewItem-label {
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-100");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-100");
+  color: token("neutral-subdued-content-color-default");
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:host([selected]) .swc-ListViewItem-label {
+  color: token("neutral-content-color-default");
+}
+
+.swc-ListViewItem-description {
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-75");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-100");
+  color: token("neutral-subdued-content-color-default");
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Navigation chevron */
+
+.swc-ListViewItem-chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  block-size: token("component-height-100");
+  flex-shrink: 0;
+  padding-inline-start: token("component-padding-vertical-75");
+  color: token("neutral-subdued-content-color-default");
+  transform: rotate(0deg);
+}
