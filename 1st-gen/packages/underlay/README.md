@@ -31,40 +31,40 @@ When using an `<sp-underlay>` with overlay content, place it as a sibling elemen
 
 ```html
 <style>
-    sp-underlay:not([open]) + sp-dialog {
-        display: none;
-    }
-    sp-underlay + sp-dialog {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 1;
-        background: var(--spectrum-gray-100);
-    }
+  sp-underlay:not([open]) + sp-dialog {
+    display: none;
+  }
+  sp-underlay + sp-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    background: var(--spectrum-gray-100);
+  }
 </style>
 
 <sp-button
-    onclick="
+  onclick="
         console.log(this.nextElementSibling);
         this.nextElementSibling.open = true;
     "
 >
-    Open dialog with underlay element
+  Open dialog with underlay element
 </sp-button>
 
 <sp-underlay></sp-underlay>
 <sp-dialog size="s">
-    <h1 slot="heading">Hello, I'm an overlay!</h1>
-    <p>Enjoy your day...</p>
-    <sp-button
-        slot="button"
-        onclick="
+  <h1 slot="heading">Hello, I'm an overlay!</h1>
+  <p>Enjoy your day...</p>
+  <sp-button
+    slot="button"
+    onclick="
             this.parentElement.previousElementSibling.open = false;
         "
-    >
-        Close
-    </sp-button>
+  >
+    Close
+  </sp-button>
 </sp-dialog>
 ```
 
@@ -74,19 +74,19 @@ To ensure proper layering of your overlay content with the underlay, use appropr
 
 ```html
 <style>
-    /* Hide overlay content when underlay is closed */
-    sp-underlay:not([open]) + sp-dialog {
-        display: none;
-    }
+  /* Hide overlay content when underlay is closed */
+  sp-underlay:not([open]) + sp-dialog {
+    display: none;
+  }
 
-    /* Position overlay content above the underlay */
-    sp-underlay + sp-dialog {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 1;
-    }
+  /* Position overlay content above the underlay */
+  sp-underlay + sp-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
 </style>
 ```
 

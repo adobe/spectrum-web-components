@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -13,8 +13,8 @@
 @import url("./spectrum-status-light.css");
 
 /* Force cascade position of [disabled] styling */
-:host([disabled]):before {
-    /* .spectrum-StatusLight.is-disabled:before,
+:host([disabled])::before {
+  /* .spectrum-StatusLight.is-disabled:before,
    * .spectrum-StatusLight[disabled]:before */
-    background-color: var(--spectrum-statuslight-dot-color-disabled, var(--spectrum-gray-400));
+  background-color: var(--spectrum-statuslight-dot-color-disabled, var(--spectrum-gray-400));
 }

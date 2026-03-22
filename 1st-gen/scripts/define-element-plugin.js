@@ -16,31 +16,24 @@ import { resolveModuleOrPackageSpecifier } from '@custom-elements-manifest/analy
  * Resolve the use of `defineElement()` as if it were `customElements.define()`
  */
 export default function defineElementPlugin() {
-    return {
-        name: 'define-element-plugin',
-        analyzePhase({ node, moduleDoc, context }) {
-            if (node.expression?.text === 'defineElement') {
-                const className = node.arguments[1].text;
-                const tagName = node.arguments[0].text;
+  return {
+    name: 'define-element-plugin',
+    analyzePhase({ node, moduleDoc, context }) {
+      if (node.expression?.text === 'defineElement') {
+        const className = node.arguments[1].text;
+        const tagName = node.arguments[0].text;
 
-                const definitionDoc = {
-                    kind: 'custom-element-definition',
-                    name: tagName,
-                    declaration: {
-                        name: className,
-                        ...resolveModuleOrPackageSpecifier(
-                            moduleDoc,
-                            context,
-                            className
-                        ),
-                    },
-                };
+        const definitionDoc = {
+          kind: 'custom-element-definition',
+          name: tagName,
+          declaration: {
+            name: className,
+            ...resolveModuleOrPackageSpecifier(moduleDoc, context, className),
+          },
+        };
 
-                moduleDoc.exports = [
-                    ...(moduleDoc.exports || []),
-                    definitionDoc,
-                ];
-            }
-        },
-    };
+        moduleDoc.exports = [...(moduleDoc.exports || []), definitionDoc];
+      }
+    },
+  };
 }

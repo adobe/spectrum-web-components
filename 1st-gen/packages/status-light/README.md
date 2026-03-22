@@ -82,14 +82,14 @@ Status lights come in various semantic and non-semantic variants to convey diffe
 ```html
 <sp-status-light variant="neutral">use for default state</sp-status-light>
 <sp-status-light variant="positive">
-    use for success or approval
+  use for success or approval
 </sp-status-light>
 <sp-status-light variant="negative">use for error or rejection</sp-status-light>
 <sp-status-light variant="notice">
-    use for warning or attention needed
+  use for warning or attention needed
 </sp-status-light>
 <sp-status-light variant="info">
-    use for information or neutral state
+  use for information or neutral state
 </sp-status-light>
 ```
 

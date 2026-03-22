@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,21 +11,21 @@
  */
 
 export type CoachmarkItem = {
-    id?: string;
-    heading: string;
-    shortcutKey?: string;
-    modifierKeys?: string[];
-    content: string;
-    src?: string;
-    imageAlt?: string;
-    mediaType?: string;
-    currentStep?: number;
-    totalSteps?: number;
-    primaryCTA?: string;
-    secondaryCTA?: string;
+  id?: string;
+  heading: string;
+  shortcutKey?: string;
+  modifierKeys?: string[];
+  content: string;
+  src?: string;
+  imageAlt?: string;
+  mediaType?: string;
+  currentStep?: number;
+  totalSteps?: number;
+  primaryCTA?: string;
+  secondaryCTA?: string;
 };
 
 export enum MediaType {
-    IMAGE = 'image',
-    VIDEO = 'video',
+  IMAGE = 'image',
+  VIDEO = 'video',
 }

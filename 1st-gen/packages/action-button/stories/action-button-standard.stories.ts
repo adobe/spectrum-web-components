@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,35 +11,45 @@
  */
 
 import { TemplateResult } from '@spectrum-web-components/base';
+
 import type { Properties } from './index.js';
-import { renderButtons } from './index.js';
+import { argTypes, renderButtons } from './index.js';
 
 export default {
-    component: 'sp-action-button',
-    title: 'Action Button/Standard',
+  component: 'sp-action-button',
+  title: 'Action Button/Standard',
+  argTypes: {
+    ...argTypes,
+  },
 };
 
 export const XS = (args: Properties): TemplateResult => renderButtons(args);
 XS.args = {
-    size: 'xs',
+  size: 'xs',
 };
 
 export const s = (args: Properties): TemplateResult => renderButtons(args);
 s.args = {
-    size: 's',
+  size: 's',
 };
 
 export const m = (args: Properties): TemplateResult => renderButtons(args);
 m.args = {
-    size: 'm',
+  size: 'm',
 };
 
 export const l = (args: Properties): TemplateResult => renderButtons(args);
 l.args = {
-    size: 'l',
+  size: 'l',
 };
 
 export const XL = (args: Properties): TemplateResult => renderButtons(args);
 XL.args = {
-    size: 'xl',
+  size: 'xl',
+};
+
+export const href = (args: Properties): TemplateResult => renderButtons(args);
+href.args = {
+  size: 'm',
+  href: '#',
 };

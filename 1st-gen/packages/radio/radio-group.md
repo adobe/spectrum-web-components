@@ -30,10 +30,10 @@ import { Radio, RadioGroup } from '@spectrum-web-components/radio';
 
 ```html
 <sp-radio-group label="Choose an option" name="anatomy">
-    <sp-radio value="first">Option 1</sp-radio>
-    <sp-radio value="second">Option 2</sp-radio>
-    <sp-radio value="third">Option 3</sp-radio>
-    <sp-radio value="fourth">Option 4</sp-radio>
+  <sp-radio value="first">Option 1</sp-radio>
+  <sp-radio value="second">Option 2</sp-radio>
+  <sp-radio value="third">Option 3</sp-radio>
+  <sp-radio value="fourth">Option 4</sp-radio>
 </sp-radio-group>
 ```
 
@@ -47,10 +47,10 @@ The `<sp-radio-group>` element can be labeled with the `label` attribute or with
 
 ```html
 <sp-radio-group label="Choose an option" name="anatomy">
-    <sp-radio value="first">Option 1</sp-radio>
-    <sp-radio value="second">Option 2</sp-radio>
-    <sp-radio value="third">Option 3</sp-radio>
-    <sp-radio value="fourth">Option 4</sp-radio>
+  <sp-radio value="first">Option 1</sp-radio>
+  <sp-radio value="second">Option 2</sp-radio>
+  <sp-radio value="third">Option 3</sp-radio>
+  <sp-radio value="fourth">Option 4</sp-radio>
 </sp-radio-group>
 ```
 
@@ -61,10 +61,10 @@ The `<sp-radio-group>` element can be labeled with the `label` attribute or with
 ```html
 <sp-field-label for="options">Choose an option</sp-field-label>
 <sp-radio-group id="options" name="anatomy">
-    <sp-radio value="first">Option 1</sp-radio>
-    <sp-radio value="second">Option 2</sp-radio>
-    <sp-radio value="third">Option 3</sp-radio>
-    <sp-radio value="fourth">Option 4</sp-radio>
+  <sp-radio value="first">Option 1</sp-radio>
+  <sp-radio value="second">Option 2</sp-radio>
+  <sp-radio value="third">Option 3</sp-radio>
+  <sp-radio value="fourth">Option 4</sp-radio>
 </sp-radio-group>
 ```
 
@@ -83,22 +83,22 @@ Read more about using [help text](../help-text).
 
 ```html
 <sp-field-label for="self">
-    What is your favorite ice cream flavor?
+  What is your favorite ice cream flavor?
 </sp-field-label>
 <sp-radio-group
-    id="self"
-    onchange="
+  id="self"
+  onchange="
         this.invalid = this.selected === 'fourth';
     "
 >
-    <sp-radio value="first">Vanilla</sp-radio>
-    <sp-radio value="second">Chocolate</sp-radio>
-    <sp-radio value="third">Strawberry</sp-radio>
-    <sp-radio value="fourth">I don't like ice cream</sp-radio>
-    <sp-help-text slot="help-text">Everyone likes ice cream.</sp-help-text>
-    <sp-help-text slot="negative-help-text" icon>
-        You can't not like ice cream.
-    </sp-help-text>
+  <sp-radio value="first">Vanilla</sp-radio>
+  <sp-radio value="second">Chocolate</sp-radio>
+  <sp-radio value="third">Strawberry</sp-radio>
+  <sp-radio value="fourth">I don't like ice cream</sp-radio>
+  <sp-help-text slot="help-text">Everyone likes ice cream.</sp-help-text>
+  <sp-help-text slot="negative-help-text" icon>
+    You can't not like ice cream.
+  </sp-help-text>
 </sp-radio-group>
 ```
 
@@ -108,11 +108,11 @@ Read more about using [help text](../help-text).
 
 ```html
 <sp-field-label for="managed">
-    What is your favorite ice cream flavor?
+  What is your favorite ice cream flavor?
 </sp-field-label>
 <sp-radio-group
-    id="managed"
-    onchange="
+  id="managed"
+  onchange="
         const helpText = this.querySelector(`[slot='help-text']`);
         const isInvalid = this.selected === 'fourth';
         helpText.icon = isInvalid;
@@ -120,11 +120,11 @@ Read more about using [help text](../help-text).
         helpText.variant = isInvalid ? 'negative' : 'neutral';
     "
 >
-    <sp-radio value="first">Vanilla</sp-radio>
-    <sp-radio value="second">Chocolate</sp-radio>
-    <sp-radio value="third">Strawberry</sp-radio>
-    <sp-radio value="fourth">I don't like ice cream</sp-radio>
-    <sp-help-text slot="help-text">Everyone likes ice cream.</sp-help-text>
+  <sp-radio value="first">Vanilla</sp-radio>
+  <sp-radio value="second">Chocolate</sp-radio>
+  <sp-radio value="third">Strawberry</sp-radio>
+  <sp-radio value="fourth">I don't like ice cream</sp-radio>
+  <sp-help-text slot="help-text">Everyone likes ice cream.</sp-help-text>
 </sp-radio-group>
 ```
 
@@ -143,25 +143,25 @@ Standard radio buttons are the default style for radio buttons. They are optimal
 
 ```html
 <div style="display: flex; justify-content: space-between;">
-    <div style="display: flex; flex-direction: column;">
-        <sp-field-label for="example-1" size="l">
-            <h5 class="spectrum-Heading--subtitle1">Standard</h5>
-        </sp-field-label>
-        <sp-radio-group id="example-1" name="example" vertical>
-            <sp-radio value="kittens">Kittens</sp-radio>
-            <sp-radio value="puppies" checked>Puppies</sp-radio>
-        </sp-radio-group>
-    </div>
+  <div style="display: flex; flex-direction: column;">
+    <sp-field-label for="example-1" size="l">
+      <h5 class="spectrum-Heading--subtitle1">Standard</h5>
+    </sp-field-label>
+    <sp-radio-group id="example-1" name="example" vertical>
+      <sp-radio value="kittens">Kittens</sp-radio>
+      <sp-radio value="puppies" checked>Puppies</sp-radio>
+    </sp-radio-group>
+  </div>
 
-    <div style="display: flex; flex-direction: column;">
-        <sp-field-label for="example-a" size="l">
-            <h5 class="spectrum-Heading--subtitle1">Emphasized</h5>
-        </sp-field-label>
-        <sp-radio-group id="example-a" name="example" vertical>
-            <sp-radio emphasized value="kittens">Kittens</sp-radio>
-            <sp-radio emphasized value="puppies" checked>Puppies</sp-radio>
-        </sp-radio-group>
-    </div>
+  <div style="display: flex; flex-direction: column;">
+    <sp-field-label for="example-a" size="l">
+      <h5 class="spectrum-Heading--subtitle1">Emphasized</h5>
+    </sp-field-label>
+    <sp-radio-group id="example-a" name="example" vertical>
+      <sp-radio emphasized value="kittens">Kittens</sp-radio>
+      <sp-radio emphasized value="puppies" checked>Puppies</sp-radio>
+    </sp-radio-group>
+  </div>
 </div>
 ```
 
@@ -171,33 +171,31 @@ Standard radio buttons are the default style for radio buttons. They are optimal
 
 ```html
 <div style="display: flex; justify-content: space-around;">
-    <div style="display: flex; flex-direction: column;">
-        <sp-field-label for="example-2" size="l">
-            <h5 class="spectrum-Heading--subtitle1">Standard</h5>
-        </sp-field-label>
-        <sp-radio-group invalid id="example-2" name="example" vertical>
-            <sp-radio invalid value="kittens">Kittens</sp-radio>
-            <sp-radio invalid value="puppies" checked>Puppies</sp-radio>
-            <sp-help-text slot="negative-help-text" icon>
-                This selection is invalid.
-            </sp-help-text>
-        </sp-radio-group>
-    </div>
+  <div style="display: flex; flex-direction: column;">
+    <sp-field-label for="example-2" size="l">
+      <h5 class="spectrum-Heading--subtitle1">Standard</h5>
+    </sp-field-label>
+    <sp-radio-group invalid id="example-2" name="example" vertical>
+      <sp-radio invalid value="kittens">Kittens</sp-radio>
+      <sp-radio invalid value="puppies" checked>Puppies</sp-radio>
+      <sp-help-text slot="negative-help-text" icon>
+        This selection is invalid.
+      </sp-help-text>
+    </sp-radio-group>
+  </div>
 
-    <div style="display: flex; flex-direction: column;">
-        <sp-field-label for="example-b" size="l">
-            <h5 class="spectrum-Heading--subtitle1">Emphasized</h5>
-        </sp-field-label>
-        <sp-radio-group invalid id="example-b" name="example" vertical>
-            <sp-radio emphasized invalid value="kittens">Kittens</sp-radio>
-            <sp-radio emphasized invalid value="puppies" checked>
-                Puppies
-            </sp-radio>
-            <sp-help-text slot="negative-help-text" icon>
-                This selection is invalid.
-            </sp-help-text>
-        </sp-radio-group>
-    </div>
+  <div style="display: flex; flex-direction: column;">
+    <sp-field-label for="example-b" size="l">
+      <h5 class="spectrum-Heading--subtitle1">Emphasized</h5>
+    </sp-field-label>
+    <sp-radio-group invalid id="example-b" name="example" vertical>
+      <sp-radio emphasized invalid value="kittens">Kittens</sp-radio>
+      <sp-radio emphasized invalid value="puppies" checked>Puppies</sp-radio>
+      <sp-help-text slot="negative-help-text" icon>
+        This selection is invalid.
+      </sp-help-text>
+    </sp-radio-group>
+  </div>
 </div>
 ```
 
@@ -240,14 +238,14 @@ Event handlers for changes can be registered on an `<sp-radio-group>` element.
 
 ```html
 <sp-radio-group
-    label="Choose an option"
-    name="onchange"
-    onchange="spAlert(this, '<sp-radio-group> changes!')"
+  label="Choose an option"
+  name="onchange"
+  onchange="spAlert(this, '<sp-radio-group> changes!')"
 >
-    <sp-radio value="first">Option 1</sp-radio>
-    <sp-radio value="second" checked>Option 2</sp-radio>
-    <sp-radio value="third">Option 3</sp-radio>
-    <sp-radio value="fourth">Option 4</sp-radio>
+  <sp-radio value="first">Option 1</sp-radio>
+  <sp-radio value="second" checked>Option 2</sp-radio>
+  <sp-radio value="third">Option 3</sp-radio>
+  <sp-radio value="fourth">Option 4</sp-radio>
 </sp-radio-group>
 ```
 

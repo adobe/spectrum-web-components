@@ -106,8 +106,8 @@ While disabled, the `<sp-clear-button>` element will not respond to click events
 
 ```html
 <sp-button-group>
-    <sp-clear-button label="Clear"></sp-clear-button>
-    <sp-clear-button label="Clear" disabled></sp-clear-button>
+  <sp-clear-button label="Clear"></sp-clear-button>
+  <sp-clear-button label="Clear" disabled></sp-clear-button>
 </sp-button-group>
 ```
 
@@ -120,8 +120,8 @@ Events handlers for clicks and other user actions can be registered on a
 
 ```html
 <sp-clear-button
-    label="Click me"
-    onclick="spAlert(this, '<sp-clear-button> clicked!')"
+  label="Click me"
+  onclick="spAlert(this, '<sp-clear-button> clicked!')"
 ></sp-clear-button>
 ```
 
@@ -134,10 +134,10 @@ popover or dialog opens.
 ```html
 <sp-button id="trigger">Open</sp-button>
 <sp-overlay trigger="trigger@click" placement="bottom">
-    <sp-popover>
-        <!-- Button will autofocus when open -->
-        <sp-clear-button label="Clear" autofocus></sp-clear-button>
-    </sp-popover>
+  <sp-popover>
+    <!-- Button will autofocus when open -->
+    <sp-clear-button label="Clear" autofocus></sp-clear-button>
+  </sp-popover>
 </sp-overlay>
 ```
 

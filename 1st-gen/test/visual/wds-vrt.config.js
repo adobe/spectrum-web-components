@@ -10,13 +10,13 @@
  * governing permissions and limitations under the License.
  */
 export default {
-    nodeResolve: {
-        exportConditions: ['browser', 'development'],
-        moduleDirectories: ['node_modules', 'packages', 'projects', 'tools'],
-    },
-    http2: true,
-    open: true,
-    watch: true,
-    rootDir: '../../',
-    appIndex: 'test/visual/index.html',
+  nodeResolve: {
+    exportConditions: ['browser', 'development'],
+    moduleDirectories: ['node_modules', 'packages', 'projects', 'tools'],
+  },
+  http2: true,
+  open: true,
+  watch: true,
+  rootDir: '../../',
+  appIndex: 'test/visual/index.html',
 };

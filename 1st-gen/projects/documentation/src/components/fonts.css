@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,105 +11,105 @@
  */
 
 @font-face {
-    font-family: 'adobe-clean';
-    src: url('typekit/adobe-clean-normal-400.woff2') format('woff2');
-    font-display: swap;
-    font-style: normal;
-    font-weight: 400;
+  font-family: adobe-clean;
+  font-style: normal;
+  font-weight: 400;
+  src: url("typekit/adobe-clean-normal-400.woff2") format("woff2");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'adobe-clean';
-    src: url('typekit/adobe-clean-italic-400.woff2') format('woff2');
-    font-display: swap;
-    font-style: italic;
-    font-weight: 400;
+  font-family: adobe-clean;
+  font-style: italic;
+  font-weight: 400;
+  src: url("typekit/adobe-clean-italic-400.woff2") format("woff2");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'adobe-clean';
-    src: url('typekit/adobe-clean-normal-700.woff2') format('woff2');
-    font-display: swap;
-    font-style: normal;
-    font-weight: 700;
+  font-family: adobe-clean;
+  font-style: normal;
+  font-weight: 700;
+  src: url("typekit/adobe-clean-normal-700.woff2") format("woff2");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'adobe-clean';
-    src: url('typekit/adobe-clean-normal-700.woff2') format('woff2');
-    font-display: swap;
-    font-style: italic;
-    font-weight: 700;
+  font-family: adobe-clean;
+  font-style: italic;
+  font-weight: 700;
+  src: url("typekit/adobe-clean-normal-700.woff2") format("woff2");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'adobe-clean';
-    src: url('typekit/adobe-clean-normal-300.woff2') format('woff2');
-    font-display: swap;
-    font-style: normal;
-    font-weight: 300;
+  font-family: adobe-clean;
+  font-style: normal;
+  font-weight: 300;
+  src: url("typekit/adobe-clean-normal-300.woff2") format("woff2");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'adobe-clean';
-    src: url('typekit/adobe-clean-normal-700.woff2') format('woff2');
-    font-display: swap;
-    font-style: normal;
-    font-weight: 800;
+  font-family: adobe-clean;
+  font-style: normal;
+  font-weight: 800;
+  src: url("typekit/adobe-clean-normal-700.woff2") format("woff2");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'adobe-clean';
-    src: url('typekit/adobe-clean-normal-700.woff2') format('woff2');
-    font-display: swap;
-    font-style: normal;
-    font-weight: 900;
+  font-family: adobe-clean;
+  font-style: normal;
+  font-weight: 900;
+  src: url("typekit/adobe-clean-normal-700.woff2") format("woff2");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'adobe-clean';
-    src: url('typekit/adobe-clean-normal-700.woff2') format('woff2');
-    font-display: swap;
-    font-style: italic;
-    font-weight: 900;
+  font-family: adobe-clean;
+  font-style: italic;
+  font-weight: 900;
+  src: url("typekit/adobe-clean-normal-700.woff2") format("woff2");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'adobe-clean';
-    src: url('typekit/adobe-clean-normal-700.woff2') format('woff2');
-    font-display: swap;
-    font-style: italic;
-    font-weight: 800;
+  font-family: adobe-clean;
+  font-style: italic;
+  font-weight: 800;
+  src: url("typekit/adobe-clean-normal-700.woff2") format("woff2");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'adobe-clean';
-    src: url('typekit/adobe-clean-italic-400.woff2') format('woff2');
-    font-display: swap;
-    font-style: italic;
-    font-weight: 300;
+  font-family: adobe-clean;
+  font-style: italic;
+  font-weight: 300;
+  src: url("typekit/adobe-clean-italic-400.woff2") format("woff2");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'adobe-clean';
-    src: url('typekit/adobe-clean-normal-400.woff2') format('woff2');
-    font-display: swap;
-    font-style: normal;
-    font-weight: 500;
+  font-family: adobe-clean;
+  font-style: normal;
+  font-weight: 500;
+  src: url("typekit/adobe-clean-normal-400.woff2") format("woff2");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'adobe-clean-semilight';
-    src: url('typekit/adobe-clean-normal-400.woff2') format('woff2');
-    font-display: swap;
-    font-style: normal;
-    font-weight: 300;
+  font-family: adobe-clean-semilight;
+  font-style: normal;
+  font-weight: 300;
+  src: url("typekit/adobe-clean-normal-400.woff2") format("woff2");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'adobe-clean-semilight';
-    src: url('typekit/adobe-clean-normal-300.woff2') format('woff2');
-    font-display: swap;
-    font-style: italic;
-    font-weight: 300;
+  font-family: adobe-clean-semilight;
+  font-style: italic;
+  font-weight: 300;
+  src: url("typekit/adobe-clean-normal-300.woff2") format("woff2");
+  font-display: swap;
 }

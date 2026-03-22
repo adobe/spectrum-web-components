@@ -32,15 +32,15 @@ A text area consists of an area for the user to enter text and optional placehol
 ```html
 <sp-field-label for="story-0">Background</sp-field-label>
 <sp-textfield
-    id="story-0"
-    multiline
-    placeholder="Enter your life story"
-    pattern="[\s\S]{0,1000}"
+  id="story-0"
+  multiline
+  placeholder="Enter your life story"
+  pattern="[\s\S]{0,1000}"
 >
-    <sp-help-text slot="help-text">1000 character limit</sp-help-text>
-    <sp-help-text slot="negative-help-text">
-        Exceeded 1000 character limit
-    </sp-help-text>
+  <sp-help-text slot="help-text">1000 character limit</sp-help-text>
+  <sp-help-text slot="negative-help-text">
+    Exceeded 1000 character limit
+  </sp-help-text>
 </sp-textfield>
 ```
 
@@ -50,9 +50,9 @@ A textarea must have a label in order to be accessible. A label can be provided 
 
 ```html
 <sp-textfield
-    label="questions"
-    multiline
-    placeholder="Do you have any questions?"
+  label="questions"
+  multiline
+  placeholder="Do you have any questions?"
 ></sp-textfield>
 
 <sp-field-label for="comments">Comments</sp-field-label>
@@ -66,10 +66,10 @@ Help text can be accessibly associated with an `<sp-textfield multiline>` elemen
 ```html
 <sp-field-label for="feedback">Feedback</sp-field-label>
 <sp-textfield id="feedback" multiline pattern=".{0,500}">
-    <sp-help-text slot="help-text">500 character limit</sp-help-text>
-    <sp-help-text slot="negative-help-text">
-        Exceeded character limit
-    </sp-help-text>
+  <sp-help-text slot="help-text">500 character limit</sp-help-text>
+  <sp-help-text slot="negative-help-text">
+    Exceeded character limit
+  </sp-help-text>
 </sp-textfield>
 ```
 
@@ -80,9 +80,9 @@ Use the `placeholder` attribute to include placeholder text. **Note**: Placehold
 ```html
 <sp-field-label for="goal">Professional goal</sp-field-label>
 <sp-textfield
-    id="goal"
-    multiline
-    placeholder="I would like to..."
+  id="goal"
+  multiline
+  placeholder="I would like to..."
 ></sp-textfield>
 ```
 
@@ -97,15 +97,15 @@ Use the `placeholder` attribute to include placeholder text. **Note**: Placehold
 ```html
 <sp-field-label size="s" for="story-s">Background</sp-field-label>
 <sp-textfield
-    size="s"
-    id="story-s"
-    multiline
-    placeholder="Enter your life story"
+  size="s"
+  id="story-s"
+  multiline
+  placeholder="Enter your life story"
 >
-    <sp-help-text slot="help-text">1000 character limit</sp-help-text>
-    <sp-help-text slot="negative-help-text">
-        Exceeded 1000 character limit
-    </sp-help-text>
+  <sp-help-text slot="help-text">1000 character limit</sp-help-text>
+  <sp-help-text slot="negative-help-text">
+    Exceeded 1000 character limit
+  </sp-help-text>
 </sp-textfield>
 ```
 
@@ -116,10 +116,10 @@ Use the `placeholder` attribute to include placeholder text. **Note**: Placehold
 ```html
 <sp-field-label for="story-m">Background</sp-field-label>
 <sp-textfield id="story-m" multiline placeholder="Enter your life story">
-    <sp-help-text slot="help-text">1000 character limit</sp-help-text>
-    <sp-help-text slot="negative-help-text">
-        Exceeded 1000 character limit
-    </sp-help-text>
+  <sp-help-text slot="help-text">1000 character limit</sp-help-text>
+  <sp-help-text slot="negative-help-text">
+    Exceeded 1000 character limit
+  </sp-help-text>
 </sp-textfield>
 ```
 
@@ -130,15 +130,15 @@ Use the `placeholder` attribute to include placeholder text. **Note**: Placehold
 ```html
 <sp-field-label size="l" for="story-l">Background</sp-field-label>
 <sp-textfield
-    size="l"
-    id="story-l"
-    multiline
-    placeholder="Enter your life story"
+  size="l"
+  id="story-l"
+  multiline
+  placeholder="Enter your life story"
 >
-    <sp-help-text slot="help-text">1000 character limit</sp-help-text>
-    <sp-help-text slot="negative-help-text">
-        Exceeded 1000 character limit
-    </sp-help-text>
+  <sp-help-text slot="help-text">1000 character limit</sp-help-text>
+  <sp-help-text slot="negative-help-text">
+    Exceeded 1000 character limit
+  </sp-help-text>
 </sp-textfield>
 ```
 
@@ -149,15 +149,15 @@ Use the `placeholder` attribute to include placeholder text. **Note**: Placehold
 ```html
 <sp-field-label size="xl" for="story-xl">Background</sp-field-label>
 <sp-textfield
-    size="xl"
-    id="story-xl"
-    multiline
-    placeholder="Enter your life story"
+  size="xl"
+  id="story-xl"
+  multiline
+  placeholder="Enter your life story"
 >
-    <sp-help-text slot="help-text">1000 character limit</sp-help-text>
-    <sp-help-text slot="negative-help-text">
-        Exceeded 1000 character limit
-    </sp-help-text>
+  <sp-help-text slot="help-text">1000 character limit</sp-help-text>
+  <sp-help-text slot="negative-help-text">
+    Exceeded 1000 character limit
+  </sp-help-text>
 </sp-textfield>
 ```
 
@@ -173,10 +173,10 @@ The quiet style works best when a clear layout (vertical stack, table, grid) ass
 ```html
 <sp-field-label for="story-3">Message</sp-field-label>
 <sp-textfield
-    id="message"
-    multiline
-    placeholder="Write your message..."
-    quiet
+  id="message"
+  multiline
+  placeholder="Write your message..."
+  quiet
 ></sp-textfield>
 ```
 
@@ -186,23 +186,23 @@ By default the text area has a fixed height and will scroll when text entry goes
 
 ```html
 <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-    <div style="overflow: scroll">
-        <sp-field-label for="pinocchio-1">Tell me a story</sp-field-label>
-        <sp-textfield
-            id="pinocchio-1"
-            multiline
-            value="Pinocchio eats sugar, but refuses to take medicine. When the undertakers
+  <div style="overflow: scroll">
+    <sp-field-label for="pinocchio-1">Tell me a story</sp-field-label>
+    <sp-textfield
+      id="pinocchio-1"
+      multiline
+      value="Pinocchio eats sugar, but refuses to take medicine. When the undertakers
 come for him, he drinks the medicine and feels better. Afterwards he
 tells a lie and, in punishment, his nose grows longer and longer."
-        ></sp-textfield>
-    </div>
-    <div>
-        <sp-field-label for="pinocchio-2">Tell me a story</sp-field-label>
-        <sp-textfield
-            id="pinocchio-2"
-            grows
-            multiline
-            value="Pinocchio eats sugar, but refuses to take medicine. When the undertakers
+    ></sp-textfield>
+  </div>
+  <div>
+    <sp-field-label for="pinocchio-2">Tell me a story</sp-field-label>
+    <sp-textfield
+      id="pinocchio-2"
+      grows
+      multiline
+      value="Pinocchio eats sugar, but refuses to take medicine. When the undertakers
 come for him, he drinks the medicine and feels better. Afterwards he
 tells a lie and, in punishment, his nose grows longer and longer.
 
@@ -210,15 +210,15 @@ tells a lie and, in punishment, his nose grows longer and longer.
 As soon as the three doctors had left the room, the Fairy went to
 Pinocchio’s bed and, touching him on the forehead, noticed that he was
 burning with fever."
-        ></sp-textfield>
-    </div>
-    <div>
-        <sp-field-label for="pinocchio-3">Tell me a story</sp-field-label>
-        <sp-textfield
-            id="pinocchio-3"
-            grows
-            multiline
-            value="Pinocchio eats sugar, but refuses to take medicine. When the undertakers
+    ></sp-textfield>
+  </div>
+  <div>
+    <sp-field-label for="pinocchio-3">Tell me a story</sp-field-label>
+    <sp-textfield
+      id="pinocchio-3"
+      grows
+      multiline
+      value="Pinocchio eats sugar, but refuses to take medicine. When the undertakers
 come for him, he drinks the medicine and feels better. Afterwards he
 tells a lie and, in punishment, his nose grows longer and longer.
 
@@ -226,9 +226,9 @@ tells a lie and, in punishment, his nose grows longer and longer.
 As soon as the three doctors had left the room, the Fairy went to
 Pinocchio’s bed and, touching him on the forehead, noticed that he was
 burning with fever."
-            quiet
-        ></sp-textfield>
-    </div>
+      quiet
+    ></sp-textfield>
+  </div>
 </div>
 ```
 
@@ -240,7 +240,7 @@ Dictate the validity state of the text entry with the `valid` attribute.
 
 ```html
 <sp-field-label for="description-1" required>
-    Product description
+  Product description
 </sp-field-label>
 <sp-textfield id="description-1" multiline valid></sp-textfield>
 ```
@@ -251,7 +251,7 @@ Dictate the invalidity state of the text entry with the `invalid` attribute.
 
 ```html
 <sp-field-label for="description-2" required>
-    Product description
+  Product description
 </sp-field-label>
 <sp-textfield id="description-2" multiline invalid></sp-textfield>
 ```
@@ -274,15 +274,15 @@ Textareas support standard form input behaviors:
 ```html
 <sp-field-label for="e-words-0">Words that start with "E"</sp-field-label>
 <sp-textfield
-    multiline
-    id="e-words-0"
-    pattern="[Ee]\w+(\s[Ee]\w+)*$"
-    value="Elephant Engineer Echo"
+  multiline
+  id="e-words-0"
+  pattern="[Ee]\w+(\s[Ee]\w+)*$"
+  value="Elephant Engineer Echo"
 >
-    <sp-help-text slot="help-text">Words can be space-separated.</sp-help-text>
-    <sp-help-text slot="negative-help-text">
-        Words must start with the letter "E".
-    </sp-help-text>
+  <sp-help-text slot="help-text">Words can be space-separated.</sp-help-text>
+  <sp-help-text slot="negative-help-text">
+    Words must start with the letter "E".
+  </sp-help-text>
 </sp-textfield>
 ```
 
@@ -293,11 +293,11 @@ Textareas support standard form input behaviors:
 ```html
 <sp-field-label for="e-words-1">Words that start with "E"</sp-field-label>
 <sp-textfield
-    multiline
-    id="e-words-1"
-    pattern="[Ee]\w+(\s[Ee]\w+)*$"
-    value="Elephant Engineer Echo"
-    oninput='
+  multiline
+  id="e-words-1"
+  pattern="[Ee]\w+(\s[Ee]\w+)*$"
+  value="Elephant Engineer Echo"
+  oninput='
         const helpText = this.querySelector(`[slot="help-text"]`);
         const val = this.value;
         const notE = val.match(/\s[^Ee]\w*/) || val.match(/^[^Ee]\w+\s/);
@@ -317,7 +317,7 @@ Textareas support standard form input behaviors:
         }
     '
 >
-    <sp-help-text slot="help-text">Words can be space-separated.</sp-help-text>
+  <sp-help-text slot="help-text">Words can be space-separated.</sp-help-text>
 </sp-textfield>
 ```
 

@@ -26,9 +26,9 @@ Whether you chose to start with the bundle or a selection of components (you'll 
 -->
 
 <sp-theme scale="large" color="dark">
-    <!-- Insert content requiring theme application here. -->
-    <sp-button onclick="alert('I was clicked');">Click me!</sp-button>
-    <!-- End content requiring theme application. -->
+  <!-- Insert content requiring theme application here. -->
+  <sp-button onclick="alert('I was clicked');">Click me!</sp-button>
+  <!-- End content requiring theme application. -->
 </sp-theme>
 ```
 

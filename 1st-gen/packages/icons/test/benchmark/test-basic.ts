@@ -10,10 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/icons/sp-icons-medium.js';
 import { html } from 'lit';
+
+import '@spectrum-web-components/icons/sp-icons-medium.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-icons-medium></sp-icons-medium>
+  <sp-icons-medium></sp-icons-medium>
 `);

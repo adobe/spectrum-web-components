@@ -58,7 +58,7 @@ Reviewers will check for:
 - Adherence to code style and component patterns
 - Proper test coverage
 - Documentation completeness
-- Accessibility compliance
+- **Accessibility compliance:** The PR author has completed the [Accessibility testing checklist](https://github.com/adobe/spectrum-web-components/blob/main/.github/PULL_REQUEST_TEMPLATE.md#accessibility-testing-checklist) in the pull request template. For PRs that affect interactive components, verify that **keyboard testing steps** and **screen reader testing steps** are documented (where tested, what was done, expected result). When in doubt, re-run key steps to confirm behavior. See [Accessibility testing — Manual testing required for PRs](09_accessibility-testing.md#manual-testing-required-for-prs) for guidelines.
 - Visual regression test coverage
 - Performance considerations
 

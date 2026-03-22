@@ -44,9 +44,9 @@ When using the `href` attribute instead of the `value` attribute, the breadcrumb
 
 ```html
 <sp-breadcrumbs>
-    <sp-breadcrumb-item value="home">Home</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="assets">March 2019 Assets</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="home">Home</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="assets">March 2019 Assets</sp-breadcrumb-item>
 </sp-breadcrumbs>
 ```
 
@@ -56,9 +56,9 @@ When using the `href` attribute instead of the `value` attribute, the breadcrumb
 
 ```html
 <sp-breadcrumbs>
-    <sp-breadcrumb-item href="/home">Home</sp-breadcrumb-item>
-    <sp-breadcrumb-item href="/trend">Trend</sp-breadcrumb-item>
-    <sp-breadcrumb-item href="/assets">March 2019 Assets</sp-breadcrumb-item>
+  <sp-breadcrumb-item href="/home">Home</sp-breadcrumb-item>
+  <sp-breadcrumb-item href="/trend">Trend</sp-breadcrumb-item>
+  <sp-breadcrumb-item href="/assets">March 2019 Assets</sp-breadcrumb-item>
 </sp-breadcrumbs>
 ```
 
@@ -71,14 +71,14 @@ When breadcrumbs overflow, `<sp-breadcrumbs>` will create an `<sp-breadcrumb-ite
 
 ```html
 <sp-breadcrumbs max-visible-items="2">
-    <sp-breadcrumb-item slot="root" value="your_stuff">
-        Your stuff
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item value="team">Files</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="winter">Winter</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="assets">Assets</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="18x24">18x24</sp-breadcrumb-item>
+  <sp-breadcrumb-item slot="root" value="your_stuff">
+    Your stuff
+  </sp-breadcrumb-item>
+  <sp-breadcrumb-item value="team">Files</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="winter">Winter</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="assets">Assets</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="18x24">18x24</sp-breadcrumb-item>
 </sp-breadcrumbs>
 ```
 
@@ -90,9 +90,9 @@ An `sp-breadcrumb-item` can have a `disabled` state which disables the events fr
 
 ```html
 <sp-breadcrumbs>
-    <sp-breadcrumb-item disabled value="home">Home</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
-    <sp-breadcrumb-item value="assets">March 2019 Assets</sp-breadcrumb-item>
+  <sp-breadcrumb-item disabled value="home">Home</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
+  <sp-breadcrumb-item value="assets">March 2019 Assets</sp-breadcrumb-item>
 </sp-breadcrumbs>
 ```
 

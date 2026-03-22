@@ -21,21 +21,21 @@ The `ColorController` is a comprehensive [reactive controller](https://lit.dev/d
 - **`validateColorString(color: string): ColorValidationResult`**:  
   Validates a color string and returns the validation result, including the color space, coordinates, alpha value, and validity.
 
-    **Returns:** `ColorValidationResult` object with:
-    - `spaceId` (string | null): The color space identifier ('srgb', 'hsl', or 'hsv')
-    - `coords` (number[]): Array of numeric values representing the color coordinates
-    - `alpha` (number): The alpha value of the color (0 to 1)
-    - `isValid` (boolean): Whether the color string is valid
+  **Returns:** `ColorValidationResult` object with:
+  - `spaceId` (string | null): The color space identifier ('srgb', 'hsl', or 'hsv')
+  - `coords` (number[]): Array of numeric values representing the color coordinates
+  - `alpha` (number): The alpha value of the color (0 to 1)
+  - `isValid` (boolean): Whether the color string is valid
 
 - **`getColor(format: string | ColorSpace): ColorObject`**:  
   Converts the current color to the specified format. Throws an error if the format is not valid.
 
-    **Returns:** `ColorObject` - The color object in the specified format
+  **Returns:** `ColorObject` - The color object in the specified format
 
 - **`getHslString(): string`**:  
   Returns the current color in HSL string format.
 
-    **Returns:** string - HSL representation of the current color
+  **Returns:** string - HSL representation of the current color
 
 - **`savePreviousColor(): void`**:  
   Saves the current color as the previous color.
@@ -68,35 +68,35 @@ import { property } from 'lit/decorators.js';
 import { ColorController } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 
 class ColorPickerElement extends LitElement {
-    /**
-     * Gets the current color value from the color controller.
-     */
-    @property({ type: String })
-    public get color(): ColorTypes {
-        return this.colorController.colorValue;
-    }
+  /**
+   * Gets the current color value from the color controller.
+   */
+  @property({ type: String })
+  public get color(): ColorTypes {
+    return this.colorController.colorValue;
+  }
 
-    /**
-     * Sets the color for the color controller.
-     */
-    public set color(color: ColorTypes) {
-        this.colorController.color = color;
-    }
+  /**
+   * Sets the color for the color controller.
+   */
+  public set color(color: ColorTypes) {
+    this.colorController.color = color;
+  }
 
-    // Initialize the controller to manage colors in HSV color space
-    private colorController = new ColorController(this, { manageAs: 'hsv' });
+  // Initialize the controller to manage colors in HSV color space
+  private colorController = new ColorController(this, { manageAs: 'hsv' });
 
-    render() {
-        return html`
-            <div
-                style="background-color: ${this.color}"
-                role="img"
-                aria-label="Color preview: ${this.color}"
-            >
-                Current color: ${this.color}
-            </div>
-        `;
-    }
+  render() {
+    return html`
+      <div
+        style="background-color: ${this.color}"
+        role="img"
+        aria-label="Color preview: ${this.color}"
+      >
+        Current color: ${this.color}
+      </div>
+    `;
+  }
 }
 
 customElements.define('color-picker-element', ColorPickerElement);
@@ -111,21 +111,21 @@ import { LitElement } from 'lit';
 import { ColorController } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 
 class ColorPickerElement extends LitElement {
-    @property({ type: String })
-    public get color(): ColorTypes {
-        return this.colorController.colorValue;
-    }
+  @property({ type: String })
+  public get color(): ColorTypes {
+    return this.colorController.colorValue;
+  }
 
-    public set color(color: ColorTypes) {
-        this.colorController.color = color;
-    }
+  public set color(color: ColorTypes) {
+    this.colorController.color = color;
+  }
 
-    private colorController: ColorController;
+  private colorController: ColorController;
 
-    constructor() {
-        super();
-        this.colorController = new ColorController(this, { manageAs: 'hsv' });
-    }
+  constructor() {
+    super();
+    this.colorController = new ColorController(this, { manageAs: 'hsv' });
+  }
 }
 ```
 
@@ -137,41 +137,37 @@ Validate color strings before using them:
 import { ColorController } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 
 class ColorInputElement extends LitElement {
-    private colorController = new ColorController(this);
+  private colorController = new ColorController(this);
 
-    handleColorInput(event: InputEvent) {
-        const input = event.target as HTMLInputElement;
-        const validation = this.colorController.validateColorString(
-            input.value
-        );
+  handleColorInput(event: InputEvent) {
+    const input = event.target as HTMLInputElement;
+    const validation = this.colorController.validateColorString(input.value);
 
-        if (validation.isValid) {
-            this.colorController.color = input.value;
-            // Announce successful color change for screen readers
-            this.setAttribute('aria-live', 'polite');
-            this.setAttribute('aria-label', `Color changed to ${input.value}`);
-        } else {
-            // Provide error feedback
-            input.setAttribute('aria-invalid', 'true');
-            input.setAttribute('aria-describedby', 'color-error');
-        }
+    if (validation.isValid) {
+      this.colorController.color = input.value;
+      // Announce successful color change for screen readers
+      this.setAttribute('aria-live', 'polite');
+      this.setAttribute('aria-label', `Color changed to ${input.value}`);
+    } else {
+      // Provide error feedback
+      input.setAttribute('aria-invalid', 'true');
+      input.setAttribute('aria-describedby', 'color-error');
     }
+  }
 
-    render() {
-        return html`
-            <label for="color-input">Choose a color</label>
-            <input
-                id="color-input"
-                type="text"
-                @input=${this.handleColorInput}
-                aria-describedby="color-help"
-            />
-            <span id="color-help">
-                Enter a color in hex, RGB, HSL, or HSV format
-            </span>
-            <span id="color-error" role="alert"></span>
-        `;
-    }
+  render() {
+    return html`
+      <label for="color-input">Choose a color</label>
+      <input
+        id="color-input"
+        type="text"
+        @input=${this.handleColorInput}
+        aria-describedby="color-help"
+      />
+      <span id="color-help">Enter a color in hex, RGB, HSL, or HSV format</span>
+      <span id="color-error" role="alert"></span>
+    `;
+  }
 }
 ```
 
@@ -188,48 +184,48 @@ import '@spectrum-web-components/color-area/sp-color-area.js';
 import '@spectrum-web-components/color-slider/sp-color-slider.js';
 
 class CompleteColorPicker extends LitElement {
-    private colorController = new ColorController(this, { manageAs: 'hsv' });
+  private colorController = new ColorController(this, { manageAs: 'hsv' });
 
-    @property({ type: String })
-    public get color(): ColorTypes {
-        return this.colorController.colorValue;
-    }
+  @property({ type: String })
+  public get color(): ColorTypes {
+    return this.colorController.colorValue;
+  }
 
-    public set color(color: ColorTypes) {
-        const oldColor = this.color;
-        this.colorController.color = color;
-        this.requestUpdate('color', oldColor);
-    }
+  public set color(color: ColorTypes) {
+    const oldColor = this.color;
+    this.colorController.color = color;
+    this.requestUpdate('color', oldColor);
+  }
 
-    handleColorChange(event: Event) {
-        const target = event.target as any;
-        this.color = target.color;
-    }
+  handleColorChange(event: Event) {
+    const target = event.target as any;
+    this.color = target.color;
+  }
 
-    render() {
-        return html`
-            <div role="group" aria-labelledby="picker-label">
-                <sp-field-label id="picker-label" for="color-area">
-                    Color picker
-                </sp-field-label>
-                <sp-help-text>
-                    Choose a color from the picker or enter a value manually
-                </sp-help-text>
+  render() {
+    return html`
+      <div role="group" aria-labelledby="picker-label">
+        <sp-field-label id="picker-label" for="color-area">
+          Color picker
+        </sp-field-label>
+        <sp-help-text>
+          Choose a color from the picker or enter a value manually
+        </sp-help-text>
 
-                <sp-color-area
-                    id="color-area"
-                    .color=${this.color}
-                    @change=${this.handleColorChange}
-                ></sp-color-area>
+        <sp-color-area
+          id="color-area"
+          .color=${this.color}
+          @change=${this.handleColorChange}
+        ></sp-color-area>
 
-                <sp-color-slider
-                    .color=${this.color}
-                    @change=${this.handleColorChange}
-                    aria-label="Hue slider"
-                ></sp-color-slider>
-            </div>
-        `;
-    }
+        <sp-color-slider
+          .color=${this.color}
+          @change=${this.handleColorChange}
+          aria-label="Hue slider"
+        ></sp-color-slider>
+      </div>
+    `;
+  }
 }
 ```
 
@@ -243,51 +239,48 @@ import { ColorController } from '@spectrum-web-components/reactive-controllers/s
 import '@spectrum-web-components/button/sp-button.js';
 
 class ColorPickerWithUndo extends LitElement {
-    private colorController = new ColorController(this, { manageAs: 'hsv' });
+  private colorController = new ColorController(this, { manageAs: 'hsv' });
 
-    @property({ type: String })
-    public get color(): ColorTypes {
-        return this.colorController.colorValue;
-    }
+  @property({ type: String })
+  public get color(): ColorTypes {
+    return this.colorController.colorValue;
+  }
 
-    public set color(color: ColorTypes) {
-        // Save the current color before changing
-        this.colorController.savePreviousColor();
-        this.colorController.color = color;
-    }
+  public set color(color: ColorTypes) {
+    // Save the current color before changing
+    this.colorController.savePreviousColor();
+    this.colorController.color = color;
+  }
 
-    handleUndo() {
-        this.colorController.restorePreviousColor();
-        this.requestUpdate();
-        // Announce undo action for screen readers
-        this.dispatchEvent(
-            new CustomEvent('color-restored', {
-                detail: { color: this.color },
-                bubbles: true,
-                composed: true,
-            })
-        );
-    }
+  handleUndo() {
+    this.colorController.restorePreviousColor();
+    this.requestUpdate();
+    // Announce undo action for screen readers
+    this.dispatchEvent(
+      new CustomEvent('color-restored', {
+        detail: { color: this.color },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
 
-    render() {
-        return html`
-            <div>
-                <input
-                    type="color"
-                    .value=${this.color}
-                    @change=${(e: Event) =>
-                        (this.color = (e.target as HTMLInputElement).value)}
-                    aria-label="Color picker"
-                />
-                <sp-button
-                    @click=${this.handleUndo}
-                    aria-label="Undo color change"
-                >
-                    Undo
-                </sp-button>
-            </div>
-        `;
-    }
+  render() {
+    return html`
+      <div>
+        <input
+          type="color"
+          .value=${this.color}
+          @change=${(e: Event) =>
+            (this.color = (e.target as HTMLInputElement).value)}
+          aria-label="Color picker"
+        />
+        <sp-button @click=${this.handleUndo} aria-label="Undo color change">
+          Undo
+        </sp-button>
+      </div>
+    `;
+  }
 }
 ```
 

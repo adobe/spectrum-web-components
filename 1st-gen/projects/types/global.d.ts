@@ -17,34 +17,34 @@ type WarningType = 'default' | 'accessibility' | 'api';
 type WarningLevel = 'default' | 'low' | 'medium' | 'high' | 'deprecation';
 
 type SWCWarningOptions = {
-    type?: WarningType;
-    level?: WarningLevel;
-    issues?: string[];
+  type?: WarningType;
+  level?: WarningLevel;
+  issues?: string[];
 };
 
 type BrandedSWCWarningID = `${ElementLocalName}:${WarningType}:${WarningLevel}`;
 
 interface Window {
-    __swc: {
-        DEBUG: boolean;
-        /**
-         * Dispatch a Dev Mode warning into the console.
-         *
-         * @param id {string:string:string} - the id of the warning, a `:` joined string of the component directory, the warning type, and the warning level
-         * @param warning {string} - the primary message to delivery to the developer
-         * @param url {string} - a URL at which more infromation, or the standard documentation, can be found
-         * @param issues {string[]} - an optional array of issues to format into the message
-         */
-        warn(
-            element: HTMLElement | undefined,
-            message: string,
-            url: string,
-            options?: SWCWarningOptions
-        ): void;
-        issuedWarnings: Set<BrandedSWCWarningID>;
-        ignoreWarningTypes: Record<WarningType, boolean>;
-        ignoreWarningLevels: Record<WarningLevel, boolean>;
-        ignoreWarningLocalNames: Record<ElementLocalName, boolean>;
-        verbose?: boolean;
-    };
+  __swc: {
+    DEBUG: boolean;
+    /**
+     * Dispatch a Dev Mode warning into the console.
+     *
+     * @param id {string:string:string} - the id of the warning, a `:` joined string of the component directory, the warning type, and the warning level
+     * @param warning {string} - the primary message to delivery to the developer
+     * @param url {string} - a URL at which more infromation, or the standard documentation, can be found
+     * @param issues {string[]} - an optional array of issues to format into the message
+     */
+    warn(
+      element: HTMLElement | undefined,
+      message: string,
+      url: string,
+      options?: SWCWarningOptions
+    ): void;
+    issuedWarnings: Set<BrandedSWCWarningID>;
+    ignoreWarningTypes: Record<WarningType, boolean>;
+    ignoreWarningLevels: Record<WarningLevel, boolean>;
+    ignoreWarningLocalNames: Record<ElementLocalName, boolean>;
+    verbose?: boolean;
+  };
 }

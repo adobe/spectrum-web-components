@@ -12,37 +12,103 @@
 
 import * as fs from 'fs';
 
+type TokenDataPayload = {
+  tokens?: Record<string, unknown>;
+  renamed?: Record<string, unknown>;
+};
+
+export type TokenSuggestionCandidate = {
+  kind: 'token' | 'renamed';
+  name: string;
+  lower: string;
+  replacement?: string;
+};
+
 export class TokenStore {
-    private tokens: Record<string, unknown> = {};
+  private tokens: Record<string, unknown> = {};
+  private renamed: Record<string, string> = {};
+  private suggestionCandidates: TokenSuggestionCandidate[] = [];
 
-    constructor(pathOrTokens: string | Record<string, unknown>) {
-        if (typeof pathOrTokens === 'string') {
-            this.load(pathOrTokens);
-        } else {
-            this.tokens = pathOrTokens;
-        }
+  constructor(pathOrTokens: string | Record<string, unknown>) {
+    if (typeof pathOrTokens === 'string') {
+      this.load(pathOrTokens);
+    } else {
+      this.setStore(pathOrTokens);
+    }
+  }
+
+  load(path: string) {
+    try {
+      const parsed = JSON.parse(fs.readFileSync(path, 'utf8'));
+      this.setStore(parsed);
+    } catch {
+      this.tokens = {};
+      this.renamed = {};
+      this.rebuildCandidates();
+    }
+  }
+
+  has(k: string) {
+    return k in this.tokens;
+  }
+
+  filter(term: string): string[] {
+    const q = term.toLowerCase();
+    return Object.keys(this.tokens).filter((k) => k.toLowerCase().includes(q));
+  }
+
+  all() {
+    return Object.keys(this.tokens);
+  }
+
+  replacementFor(k: string) {
+    return this.renamed[k];
+  }
+
+  candidates() {
+    return this.suggestionCandidates;
+  }
+
+  private setStore(source: Record<string, unknown>) {
+    const payload = source as TokenDataPayload;
+    if (payload.tokens && typeof payload.tokens === 'object') {
+      this.tokens = payload.tokens;
+      this.renamed = this.normalizeRenamed(payload.renamed);
+      this.rebuildCandidates();
+      return;
     }
 
-    load(path: string) {
-        try {
-            this.tokens = JSON.parse(fs.readFileSync(path, 'utf8'));
-        } catch {
-            this.tokens = {};
-        }
+    this.tokens = source;
+    this.renamed = {};
+    this.rebuildCandidates();
+  }
+
+  private normalizeRenamed(source?: Record<string, unknown>) {
+    if (!source || typeof source !== 'object') {
+      return {};
     }
 
-    has(k: string) {
-        return k in this.tokens;
-    }
+    return Object.fromEntries(
+      Object.entries(source).filter(([, value]) => typeof value === 'string')
+    );
+  }
 
-    filter(term: string): string[] {
-        const q = term.toLowerCase();
-        return Object.keys(this.tokens).filter((k) =>
-            k.toLowerCase().includes(q)
-        );
-    }
+  private rebuildCandidates() {
+    const tokenCandidates = Object.keys(this.tokens).map((name) => ({
+      kind: 'token' as const,
+      name,
+      lower: name.toLowerCase(),
+    }));
 
-    all() {
-        return Object.keys(this.tokens);
-    }
+    const renamedCandidates = Object.entries(this.renamed).map(
+      ([name, replacement]) => ({
+        kind: 'renamed' as const,
+        name,
+        lower: name.toLowerCase(),
+        replacement,
+      })
+    );
+
+    this.suggestionCandidates = [...tokenCandidates, ...renamedCandidates];
+  }
 }

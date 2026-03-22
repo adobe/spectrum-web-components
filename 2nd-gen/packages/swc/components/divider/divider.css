@@ -11,65 +11,62 @@
  */
 
 :host {
-    display: block;
+  display: block;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .swc-Divider {
-    --_swc-divider-thickness: var(
-        --swc-divider-thickness,
-        token('divider-thickness-medium')
-    );
+  --_swc-divider-thickness: var(--swc-divider-thickness, token("divider-thickness-medium"));
 
-    border: none;
-    border-radius: var(--_swc-divider-thickness);
-    background-color: var(--swc-divider-background-color, token('gray-200'));
-    block-size: var(--_swc-divider-thickness);
-    inline-size: 100%;
+  inline-size: 100%;
+  block-size: var(--_swc-divider-thickness);
+  background-color: var(--swc-divider-background-color, token("gray-200"));
+  border: none;
+  border-radius: var(--_swc-divider-thickness);
 }
 
 .swc-Divider:not(.swc-Divider--vertical) {
-    min-inline-size: token('divider-horizontal-minimum-width');
+  min-inline-size: token("divider-horizontal-minimum-width");
 }
 
 .swc-Divider--vertical {
-    inline-size: var(--_swc-divider-thickness);
-    min-block-size: token('divider-vertical-minimum-height');
-    margin-block: 0;
-    block-size: 100%;
-    align-self: flex-start;
+  align-self: flex-start;
+  inline-size: var(--_swc-divider-thickness);
+  block-size: 100%;
+  min-block-size: token("divider-vertical-minimum-height");
+  margin-block: 0;
 }
 
-:host([size='s']) {
-    --swc-divider-thickness: token('divider-thickness-small');
+:host([size="s"]) {
+  --swc-divider-thickness: token("divider-thickness-small");
 }
 
-:host([size='l']) {
-    --swc-divider-thickness: token('divider-thickness-large');
-    --swc-divider-background-color: token('gray-800');
+:host([size="l"]) {
+  --swc-divider-thickness: token("divider-thickness-large");
+  --swc-divider-background-color: token("gray-800");
 }
 
 .swc-Divider--staticWhite {
-    --swc-divider-background-color: token('transparent-white-200');
+  --swc-divider-background-color: token("transparent-white-200");
 }
 
 .swc-Divider--staticWhite:where(.swc-Divider--sizeL) {
-    --swc-divider-background-color: token('transparent-white-800');
+  --swc-divider-background-color: token("transparent-white-800");
 }
 
 .swc-Divider--staticBlack {
-    --swc-divider-background-color: token('transparent-black-200');
+  --swc-divider-background-color: token("transparent-black-200");
 }
 
 .swc-Divider--staticBlack:where(.swc-Divider--sizeL) {
-    --swc-divider-background-color: token('transparent-black-800');
+  --swc-divider-background-color: token("transparent-black-800");
 }
 
 @media (forced-colors: active) {
-    .swc-Divider {
-        --swc-divider-background-color: CanvasText;
-    }
+  .swc-Divider {
+    --swc-divider-background-color: CanvasText;
+  }
 }

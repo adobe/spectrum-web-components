@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.2](https://github.com/adobe/spectrum-web-components/compare/v1.11.1...v1.11.2) (2026-02-03)
+
+## Patch Changes
+
+**sp-alert-banner**: **Fixed** missing export for `alert-banner` from `@spectrum-web-components/core`, which could cause build failures in certain environments.
+
+**sp-core**: **Fixed** missing export for `alert-banner` from `@spectrum-web-components/core`, which could cause build failures in certain environments.
+
+**sp-picker**: **Fixed** issue where Picker component doesn't show label when value is set before menu-items are rendered. When menu-items are added later (e.g., conditionally rendered with Lit's `when()` directive or lazy loaded), the Picker now preserves the value and correctly displays the label once menu-items become available.
+
+This fix ensures the value is preserved when `manageSelection()` runs before menu-items exist or when items exist but don't have values yet (e.g., during async custom element upgrade). The value is only cleared when menu-items with meaningful values exist but none match the picker's value.
+
+# [1.11.1](https://github.com/adobe/spectrum-web-components/compare/v1.11.0...v1.11.1) (2026-02-02)
+
+## Patch Changes
+
+**sp-core**: - **Fixed**: Replaced wildcard exports from `@spectrum-web-components/core` with explicit named exports for better bundler compatibility
+
+- **Fixed**: Changed build target from ES2022 to ES2018 to support Vitest and other consumer environments
+- **Fixed**: Added `@spectrum-web-components/core` as direct dependency to `@spectrum-web-components/shared` to resolve module resolution issues in strict dependency environments
+- **Fixed**: Added `@lit-labs/observers` as dependency and externalized it in Vite build config
+
+**sp-shared**: - **Fixed**: Replaced wildcard exports from `@spectrum-web-components/core` with explicit named exports for better bundler compatibility
+
+- **Fixed**: Changed build target from ES2022 to ES2018 to support Vitest and other consumer environments
+- **Fixed**: Added `@spectrum-web-components/core` as direct dependency to `@spectrum-web-components/shared` to resolve module resolution issues in strict dependency environments
+- **Fixed**: Added `@lit-labs/observers` as dependency and externalized it in Vite build config
+
+**sp-base**: - **Fixed**: Replaced wildcard exports from `@spectrum-web-components/core` with explicit named exports for better bundler compatibility
+
+- **Fixed**: Changed build target from ES2022 to ES2018 to support Vitest and other consumer environments
+- **Fixed**: Added `@spectrum-web-components/core` as direct dependency to `@spectrum-web-components/shared` to resolve module resolution issues in strict dependency environments
+- **Fixed**: Added `@lit-labs/observers` as dependency and externalized it in Vite build config
+
+**sp-table**: **Fixed**: Fixed accessibility violation (WCAG 4.1.2) where table checkbox inputs were missing accessible labels. The axe DevTools "Form elements must have labels" error is now resolved. The fix sets `aria-label` directly on the checkbox's internal input element.
+
 # [1.11.0](https://github.com/adobe/spectrum-web-components/compare/v1.10.0...v1.11.0) (2026-01-27)
 
 ## Minor Changes
@@ -419,17 +455,17 @@ Updates documentation site to reflect this as well.
 ### 6.1.2
 
 - [#3615](https://github.com/adobe/spectrum-css/pull/3615) [`f09c84a`](https://github.com/adobe/spectrum-css/commit/f09c84ae9922d67b6fe237d693afee0fab53fa67) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - ### Infield button fast follows
-    - Updated infield button disabled border color to use `-spectrum-gray-300` for spectrum-two theme and `-spectrum-gray-200` for other themes.
+  - Updated infield button disabled border color to use `-spectrum-gray-300` for spectrum-two theme and `-spectrum-gray-200` for other themes.
 
 ### 6.1.1
 
 📝 [#3536](https://github.com/adobe/spectrum-css/pull/3536) [`f77aa72`](https://github.com/adobe/spectrum-css/commit/f77aa72486f98c7b7d4f449c0d54fb6801881b7e) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)!
 
 - S2 Foundations fixes
-    - Adjusts the background-color of the infield button components within stepper to use `gray-100` as opposed to `gray-25`.
-        - This corresponds to the background-color updates picker has for S2.
-    - Corrects the border color for the default picker for S2 foundations, using `gray-500` (instead of `gray-800`) to align with other field/form components.
-    - Refactors the `&.is-keyboardFocused&.is-placeholder` selector to `&.is-keyboardFocused.spectrum-Picker-label.is-placeholder` to avoid unexpectedly targeting the nested placeholder class.
+  - Adjusts the background-color of the infield button components within stepper to use `gray-100` as opposed to `gray-25`.
+    - This corresponds to the background-color updates picker has for S2.
+  - Corrects the border color for the default picker for S2 foundations, using `gray-500` (instead of `gray-800`) to align with other field/form components.
+  - Refactors the `&.is-keyboardFocused&.is-placeholder` selector to `&.is-keyboardFocused.spectrum-Picker-label.is-placeholder` to avoid unexpectedly targeting the nested placeholder class.
 
 ### 6.1.0
 
@@ -438,8 +474,8 @@ Updates documentation site to reflect this as well.
 Dependency alignment across the project.
 
 - Updated dependencies [[`205182b`](https://github.com/adobe/spectrum-css/commit/205182bebcbe82813457aa098d8799b0a23423ee), [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d)]:
-    - @spectrum-css/icon@9.1.0
-    - @spectrum-css/tokens@16.0.1
+  - @spectrum-css/icon@9.1.0
+  - @spectrum-css/tokens@16.0.1
 
 ## Number Field
 
@@ -448,7 +484,7 @@ Bump @spectrum-css/stepper to 7.1.3
 ### 7.1.3
 
 - [#3621](https://github.com/adobe/spectrum-css/pull/3621) [`3aec28a`](https://github.com/adobe/spectrum-css/commit/3aec28aac60bdf32a585fa8ff38559d80b57ff86) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)!
-    - Updates `-spectrum-stepper-buttons-border-color-keyboard-focus` from `gray-900` to `gray-800` to match the rest of the border color on keyboardFocus.
+  - Updates `-spectrum-stepper-buttons-border-color-keyboard-focus` from `gray-900` to `gray-800` to match the rest of the border color on keyboardFocus.
 
 ### 7.1.2
 
@@ -461,10 +497,10 @@ Bump @spectrum-css/stepper to 7.1.3
 📝 [#3536](https://github.com/adobe/spectrum-css/pull/3536) [`f77aa72`](https://github.com/adobe/spectrum-css/commit/f77aa72486f98c7b7d4f449c0d54fb6801881b7e) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)!
 
 - S2 Foundations fixes
-    - Adjusts the background-color of the infield button components within stepper to use `gray-100` as opposed to `gray-25`.
-        - This corresponds to the background-color updates picker has for S2.
-    - Corrects the border color for the default picker for S2 foundations, using `gray-500` (instead of `gray-800`) to align with other field/form components.
-    - Refactors the `&.is-keyboardFocused&.is-placeholder` selector to `&.is-keyboardFocused.spectrum-Picker-label.is-placeholder` to avoid unexpectedly targeting the nested placeholder class.
+  - Adjusts the background-color of the infield button components within stepper to use `gray-100` as opposed to `gray-25`.
+    - This corresponds to the background-color updates picker has for S2.
+  - Corrects the border color for the default picker for S2 foundations, using `gray-500` (instead of `gray-800`) to align with other field/form components.
+  - Refactors the `&.is-keyboardFocused&.is-placeholder` selector to `&.is-keyboardFocused.spectrum-Picker-label.is-placeholder` to avoid unexpectedly targeting the nested placeholder class.
 
 ### 7.1.0
 
@@ -473,11 +509,11 @@ Bump @spectrum-css/stepper to 7.1.3
 Dependency alignment across the project.
 
 - Updated dependencies [[`205182b`](https://github.com/adobe/spectrum-css/commit/205182bebcbe82813457aa098d8799b0a23423ee), [`9b108f7`](https://github.com/adobe/spectrum-css/commit/9b108f7e05df1f55ab315dad96736d3ff4757f8c), [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d)]:
-    - @spectrum-css/actionbutton@8.0.0
-    - @spectrum-css/icon@9.1.0
-    - @spectrum-css/infieldbutton@7.0.0
-    - @spectrum-css/textfield@9.0.0
-    - @spectrum-css/tokens@16.0.1
+  - @spectrum-css/actionbutton@8.0.0
+  - @spectrum-css/icon@9.1.0
+  - @spectrum-css/infieldbutton@7.0.0
+  - @spectrum-css/textfield@9.0.0
+  - @spectrum-css/tokens@16.0.1
 
 ## Textfield
 
@@ -500,8 +536,8 @@ Dependency alignment across the project.
 Set component peerDependencies as optional to reduce console warnings on downstream projects.
 
 - Updated dependencies [[`205182b`](https://github.com/adobe/spectrum-css/commit/205182bebcbe82813457aa098d8799b0a23423ee), [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d)]:
-    - @spectrum-css/helptext@8.0.0
-    - @spectrum-css/tokens@16.0.1
+  - @spectrum-css/helptext@8.0.0
+  - @spectrum-css/tokens@16.0.1
 
 ## Search
 
@@ -524,10 +560,10 @@ Also defines disabled quiet border and background colors (`--system-search-quiet
 Dependency alignment across the project.
 
 - Updated dependencies [[`205182b`](https://github.com/adobe/spectrum-css/commit/205182bebcbe82813457aa098d8799b0a23423ee), [`9b108f7`](https://github.com/adobe/spectrum-css/commit/9b108f7e05df1f55ab315dad96736d3ff4757f8c), [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d)]:
-    - @spectrum-css/clearbutton@8.0.0
-    - @spectrum-css/icon@9.1.0
-    - @spectrum-css/textfield@9.0.0
-    - @spectrum-css/tokens@16.0.1
+  - @spectrum-css/clearbutton@8.0.0
+  - @spectrum-css/icon@9.1.0
+  - @spectrum-css/textfield@9.0.0
+  - @spectrum-css/tokens@16.0.1
 
 **sp-close-button**: Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
 

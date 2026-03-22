@@ -1,0 +1,26 @@
+diff --git a/dist/_browser-chunks/chunk-2N4WE3KZ.js b/dist/_browser-chunks/chunk-2N4WE3KZ.js
+index 9b09cad2689865e94445bf8e35191a38a3016caf..3f4c4bd100790615a6fae6e59c920dd8fbc17911 100644
+--- a/dist/_browser-chunks/chunk-2N4WE3KZ.js
++++ b/dist/_browser-chunks/chunk-2N4WE3KZ.js
+@@ -1758,7 +1758,7 @@ var StoryRender = class {
+       }, onUnhandledRejection = (event) => {
+         event.reason && unhandledErrors.add(event.reason);
+       };
+-      if (this.renderOptions.autoplay && forceRemount && playFunction && this.phase !== "errored") {
++      if (this.renderOptions.autoplay && (initial ? this.story?.parameters?.autoplay ?? false : true) && forceRemount && playFunction && this.phase !== "errored") {
+         window?.addEventListener?.("error", onError), window?.addEventListener?.("unhandledrejection", onUnhandledRejection), this.disableKeyListeners = !0;
+         try {
+           if (isMountDestructured ? await playFunction(context) : (context.mount = async () => {
+diff --git a/dist/preview/runtime.js b/dist/preview/runtime.js
+index 4db3972f6b5077c992467ce50923e0157e1b186e..89b9e35866e84cfb742046d6832bf63215b53af8 100644
+--- a/dist/preview/runtime.js
++++ b/dist/preview/runtime.js
+@@ -36000,7 +36000,7 @@ var StoryRender = class {
+       }, onUnhandledRejection = (event) => {
+         event.reason && unhandledErrors.add(event.reason);
+       };
+-      if (this.renderOptions.autoplay && forceRemount && playFunction && this.phase !== "errored") {
++      if (this.renderOptions.autoplay && (initial ? this.story?.parameters?.autoplay ?? false : true) && forceRemount && playFunction && this.phase !== "errored") {
+         window?.addEventListener?.("error", onError), window?.addEventListener?.("unhandledrejection", onUnhandledRejection), this.disableKeyListeners = !0;
+         try {
+           if (isMountDestructured ? await playFunction(context) : (context.mount = async () => {

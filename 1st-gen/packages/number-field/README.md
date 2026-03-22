@@ -30,11 +30,11 @@ A number field consists of an input field for numeric values and optional steppe
 
 ```html
 <sp-field-label>
-    What is the air-speed velocity of an unladen swallow?
+  What is the air-speed velocity of an unladen swallow?
 </sp-field-label>
 <sp-number-field
-    id="anatomy"
-    format-options='{
+  id="anatomy"
+  format-options='{
         "style": "unit",
         "unit": "MPH",
         "unitDisplay": "long"
@@ -96,9 +96,9 @@ The following example uses the `signDisplay` option to include the plus sign for
 ```html
 <sp-field-label for="decimals">Adjust exposure</sp-field-label>
 <sp-number-field
-    id="decimals"
-    value="0"
-    format-options='{
+  id="decimals"
+  value="0"
+  format-options='{
         "signDisplay": "exceptZero",
         "minimumFractionDigits": 1,
         "maximumFractionDigits": 2
@@ -115,9 +115,9 @@ The `style: 'percent'` option can be passed to the `formatOptions` property to t
 ```html
 <sp-field-label for="percents">Sales tax</sp-field-label>
 <sp-number-field
-    id="percents"
-    value="0.05"
-    format-options='{
+  id="percents"
+  value="0.05"
+  format-options='{
         "style": "percent"
     }'
 ></sp-number-field>
@@ -134,9 +134,9 @@ If you need to allow the user to change the currency, you should include a separ
 ```html
 <sp-field-label for="currency">Transaction amount</sp-field-label>
 <sp-number-field
-    id="currency"
-    value="45"
-    format-options='{
+  id="currency"
+  value="45"
+  format-options='{
         "style": "currency",
         "currency": "EUR",
         "currencyDisplay": "code",
@@ -158,9 +158,9 @@ Note: The unit style is not currently supported in Safari. A [polyfill](https://
 ```html
 <sp-field-label for="units">Package width</sp-field-label>
 <sp-number-field
-    id="units"
-    value="4"
-    format-options='{
+  id="units"
+  value="4"
+  format-options='{
         "style": "unit",
         "unit": "inch",
         "unitDisplay": "long"
@@ -177,9 +177,9 @@ While `Intl.NumberFormatOptions` does support a [wide range of units](https://tc
 ```html
 <sp-field-label for="units">Document width in pixels</sp-field-label>
 <sp-number-field
-    id="units"
-    value="500"
-    format-options='{
+  id="units"
+  value="500"
+  format-options='{
         "style": "unit",
         "unit": "px"
     }'
@@ -250,17 +250,17 @@ The `invalid` attribute indicates that the number field's value is invalid. When
 
 ```html
 <sp-field-label for="invalid">
-    It's one banana, Michael, how much could it cost?
+  It's one banana, Michael, how much could it cost?
 </sp-field-label>
 <sp-number-field
-    id="invalid"
-    invalid
-    style="width: 130px"
-    value="10"
-    min="0"
-    max="0.3"
-    step="0.01"
-    format-options='{
+  id="invalid"
+  invalid
+  style="width: 130px"
+  value="10"
+  min="0"
+  max="0.3"
+  step="0.01"
+  format-options='{
         "style": "currency",
         "currency": "USD",
         "currencyDisplay": "code",
@@ -270,7 +270,7 @@ The `invalid` attribute indicates that the number field's value is invalid. When
     }'
 ></sp-number-field>
 <sp-help-text variant="negative">
-    Value should be between $0 and $0.3.
+  Value should be between $0 and $0.3.
 </sp-help-text>
 ```
 
@@ -280,17 +280,17 @@ The `valid` attribute indicates that the number field's value is valid.
 
 ```html
 <sp-field-label for="valid">
-    It's one banana, Michael, how much could it cost?
+  It's one banana, Michael, how much could it cost?
 </sp-field-label>
 <sp-number-field
-    id="valid"
-    valid
-    style="width: 130px"
-    value="0.23"
-    min="0"
-    max="0.3"
-    step="0.01"
-    format-options='{
+  id="valid"
+  valid
+  style="width: 130px"
+  value="0.23"
+  min="0"
+  max="0.3"
+  step="0.01"
+  format-options='{
         "style": "currency",
         "currency": "USD",
         "currencyDisplay": "code",
@@ -347,20 +347,20 @@ The `<sp-number-field>` component doesn't manage a default value by itself. This
 
 ```html
 <sp-field-label for="default">
-    Default value of this number field is 42
+  Default value of this number field is 42
 </sp-field-label>
 <sp-number-field id="default" value="20"></sp-number-field>
 
 <script type="module">
-    const numberField = document.querySelector('#default');
+  const numberField = document.querySelector('#default');
 
-    numberField.addEventListener('change', (event) => {
-        alert('change');
-        const target = event.target;
-        if (isNaN(target.value)) {
-            target.value = '42';
-        }
-    });
+  numberField.addEventListener('change', (event) => {
+    alert('change');
+    const target = event.target;
+    if (isNaN(target.value)) {
+      target.value = '42';
+    }
+  });
 </script>
 ```
 

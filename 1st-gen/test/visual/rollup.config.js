@@ -17,29 +17,29 @@ import replace from '@rollup/plugin-replace';
 import path from 'path';
 
 export default {
-    input: 'test/visual/src/index.html',
-    preserveEntrySignatures: false,
-    output: { dir: 'test/visual/review' },
-    plugins: [
-        nodeResolve({
-            exportConditions: ['browser', 'production'],
-        }),
-        alias({
-            entries: [
-                {
-                    find: /^@spectrum-web-components\/core\/(.*)$/,
-                    replacement: path.resolve(
-                        process.cwd(),
-                        '../2nd-gen/packages/core/dist/$1'
-                    ),
-                },
-            ],
-        }),
-        replace({
-            'process.env.NODE_ENV': JSON.stringify('production'),
-            preventAssignment: true,
-        }),
-        html(),
-        copy({ patterns: '**/*.json', rootDir: 'test/visual/src' }),
-    ],
+  input: 'test/visual/src/index.html',
+  preserveEntrySignatures: false,
+  output: { dir: 'test/visual/review' },
+  plugins: [
+    nodeResolve({
+      exportConditions: ['browser', 'production'],
+    }),
+    alias({
+      entries: [
+        {
+          find: /^@spectrum-web-components\/core\/(.*)$/,
+          replacement: path.resolve(
+            process.cwd(),
+            '../2nd-gen/packages/core/dist/$1'
+          ),
+        },
+      ],
+    }),
+    replace({
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      preventAssignment: true,
+    }),
+    html(),
+    copy({ patterns: '**/*.json', rootDir: 'test/visual/src' }),
+  ],
 };

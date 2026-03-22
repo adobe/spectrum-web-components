@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -12,20 +12,21 @@
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
+
 import { illustration } from '../../dropzone/test/test-svg.js';
 
 export default {
-    component: 'sp-illustrated-message',
-    title: 'IllustratedMessage',
+  component: 'sp-illustrated-message',
+  title: 'IllustratedMessage',
 };
 
 export const Default = (): TemplateResult => {
-    return html`
-        <sp-illustrated-message
-            heading="Drag and Drop Your File"
-            description="Additional descriptive text"
-        >
-            ${illustration}
-        </sp-illustrated-message>
-    `;
+  return html`
+    <sp-illustrated-message
+      heading="Drag and Drop Your File"
+      description="Additional descriptive text"
+    >
+      ${illustration}
+    </sp-illustrated-message>
+  `;
 };

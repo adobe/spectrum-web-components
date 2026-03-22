@@ -66,8 +66,8 @@ Horizontal is the default orientation for the split view and does not require an
 
 ```html demo
 <sp-split-view>
-    <div>Left panel</div>
-    <div>Right panel</div>
+  <div>Left panel</div>
+  <div>Right panel</div>
 </sp-split-view>
 ```
 
@@ -77,26 +77,25 @@ Horizontal is the default orientation for the split view and does not require an
 
 ```html demo
 <sp-split-view
-    resizable
-    primary-min="50"
-    secondary-min="50"
-    primary-size="100"
-    label="Resize the horizontal panels"
+  resizable
+  primary-min="50"
+  secondary-min="50"
+  primary-size="100"
+  label="Resize the horizontal panels"
 >
-    <div>
-        <h1>Left panel</h1>
-        <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-        </p>
-    </div>
-    <div>
-        <h2>Right panel</h2>
-        <p>
-            It is a long established fact that a reader will be distracted by
-            the readable content of a page when looking at its layout.
-        </p>
-    </div>
+  <div>
+    <h1>Left panel</h1>
+    <p>
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+    </p>
+  </div>
+  <div>
+    <h2>Right panel</h2>
+    <p>
+      It is a long established fact that a reader will be distracted by the
+      readable content of a page when looking at its layout.
+    </p>
+  </div>
 </sp-split-view>
 ```
 
@@ -106,24 +105,23 @@ Horizontal is the default orientation for the split view and does not require an
 
 ```html demo
 <sp-split-view
-    resizable
-    collapsible
-    label="Resize the horizontal collapsible panels"
+  resizable
+  collapsible
+  label="Resize the horizontal collapsible panels"
 >
-    <div>
-        <h1>Left panel</h1>
-        <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-        </p>
-    </div>
-    <div>
-        <h2>Right panel</h2>
-        <p>
-            It is a long established fact that a reader will be distracted by
-            the readable content of a page when looking at its layout.
-        </p>
-    </div>
+  <div>
+    <h1>Left panel</h1>
+    <p>
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+    </p>
+  </div>
+  <div>
+    <h2>Right panel</h2>
+    <p>
+      It is a long established fact that a reader will be distracted by the
+      readable content of a page when looking at its layout.
+    </p>
+  </div>
 </sp-split-view>
 ```
 
@@ -140,8 +138,8 @@ Vertical split view requires the `vertical` attribute to be set.
 
 ```html demo
 <sp-split-view vertical>
-    <div>Top panel</div>
-    <div>Bottom panel</div>
+  <div>Top panel</div>
+  <div>Bottom panel</div>
 </sp-split-view>
 ```
 
@@ -151,27 +149,26 @@ Vertical split view requires the `vertical` attribute to be set.
 
 ```html demo
 <sp-split-view
-    vertical
-    resizable
-    primary-min="50"
-    primary-max="150"
-    secondary-min="50"
-    label="Resize the vertical panels"
+  vertical
+  resizable
+  primary-min="50"
+  primary-max="150"
+  secondary-min="50"
+  label="Resize the vertical panels"
 >
-    <div>
-        <h1>Top panel</h1>
-        <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-        </p>
-    </div>
-    <div>
-        <h2>Bottom panel</h2>
-        <p>
-            It is a long established fact that a reader will be distracted by
-            the readable content of a page when looking at its layout.
-        </p>
-    </div>
+  <div>
+    <h1>Top panel</h1>
+    <p>
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+    </p>
+  </div>
+  <div>
+    <h2>Bottom panel</h2>
+    <p>
+      It is a long established fact that a reader will be distracted by the
+      readable content of a page when looking at its layout.
+    </p>
+  </div>
 </sp-split-view>
 ```
 
@@ -181,26 +178,25 @@ Vertical split view requires the `vertical` attribute to be set.
 
 ```html demo
 <sp-split-view
-    vertical
-    resizable
-    collapsible
-    style="height: 300px;"
-    label="Resize the vertical collapsible panels"
+  vertical
+  resizable
+  collapsible
+  style="height: 300px;"
+  label="Resize the vertical collapsible panels"
 >
-    <div>
-        <h1>Top panel</h1>
-        <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-        </p>
-    </div>
-    <div>
-        <h2>Bottom panel</h2>
-        <p>
-            It is a long established fact that a reader will be distracted by
-            the readable content of a page when looking at its layout.
-        </p>
-    </div>
+  <div>
+    <h1>Top panel</h1>
+    <p>
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+    </p>
+  </div>
+  <div>
+    <h2>Bottom panel</h2>
+    <p>
+      It is a long established fact that a reader will be distracted by the
+      readable content of a page when looking at its layout.
+    </p>
+  </div>
 </sp-split-view>
 ```
 
@@ -211,48 +207,47 @@ Vertical split view requires the `vertical` attribute to be set.
 
 ```html demo
 <sp-split-view
-    resizable
-    primary-min="50"
-    primary-max="200"
-    secondary-min="50"
-    style="height: 400px; width: 600px;"
+  resizable
+  primary-min="50"
+  primary-max="200"
+  secondary-min="50"
+  style="height: 400px; width: 600px;"
 >
-    <div>
-        <h1>First panel - Level 1</h1>
+  <div>
+    <h1>First panel - Level 1</h1>
+    <p>
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+      Lorem Ipsum has been the industry's standard dummy text ever since the
+      1500s, when an unknown printer took a galley of type and scrambled it to
+      make a type specimen book.
+    </p>
+  </div>
+  <div>
+    <h2>Second panel - Level 1</h2>
+    <sp-split-view
+      vertical
+      resizable
+      primary-min="50"
+      primary-size="100"
+      secondary-min="50"
+      style="height: 300px;"
+    >
+      <div>
+        <h3>First panel - Level 2</h3>
         <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry.
         </p>
-    </div>
-    <div>
-        <h2>Second panel - Level 1</h2>
-        <sp-split-view
-            vertical
-            resizable
-            primary-min="50"
-            primary-size="100"
-            secondary-min="50"
-            style="height: 300px;"
-        >
-            <div>
-                <h3>First panel - Level 2</h3>
-                <p>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry.
-                </p>
-            </div>
-            <div>
-                <h4>Second panel - Level 2</h4>
-                <p>
-                    It is a long established fact that a reader will be
-                    distracted by the readable content of a page when looking at
-                    its layout.
-                </p>
-            </div>
-        </sp-split-view>
-    </div>
+      </div>
+      <div>
+        <h4>Second panel - Level 2</h4>
+        <p>
+          It is a long established fact that a reader will be distracted by the
+          readable content of a page when looking at its layout.
+        </p>
+      </div>
+    </sp-split-view>
+  </div>
 </sp-split-view>
 ```
 

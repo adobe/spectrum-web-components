@@ -45,13 +45,13 @@ The `<sp-top-nav>` component consists of the following parts:
 
 ```html
 <sp-top-nav>
-    <sp-top-nav-item href="#">Site Name</sp-top-nav-item>
-    <sp-top-nav-item href="#page-1" style="margin-inline-start: auto;">
-        Page 1
-    </sp-top-nav-item>
-    <sp-top-nav-item href="#page-2">Page 2</sp-top-nav-item>
-    <sp-top-nav-item href="#page-3">Page 3</sp-top-nav-item>
-    <sp-top-nav-item href="#page-4">Page with really long name</sp-top-nav-item>
+  <sp-top-nav-item href="#">Site Name</sp-top-nav-item>
+  <sp-top-nav-item href="#page-1" style="margin-inline-start: auto;">
+    Page 1
+  </sp-top-nav-item>
+  <sp-top-nav-item href="#page-2">Page 2</sp-top-nav-item>
+  <sp-top-nav-item href="#page-3">Page 3</sp-top-nav-item>
+  <sp-top-nav-item href="#page-4">Page with really long name</sp-top-nav-item>
 </sp-top-nav>
 ```
 
@@ -63,24 +63,24 @@ Other web components, like action menus and/or buttons, can be included in the `
 
 ```html
 <sp-top-nav>
-    <sp-top-nav-item href="#">Site Name</sp-top-nav-item>
-    <sp-top-nav-item href="#page-1" style="margin-inline-start: auto;">
-        Page 1
-    </sp-top-nav-item>
-    <sp-top-nav-item href="#page-2">Page 2</sp-top-nav-item>
-    <sp-top-nav-item href="#page-3">Page 3</sp-top-nav-item>
-    <sp-action-menu
-        label="Account"
-        placement="bottom-end"
-        style="margin-inline-start: auto;"
-        quiet
-    >
-        <sp-menu-item>Account settings</sp-menu-item>
-        <sp-menu-item>My profile</sp-menu-item>
-        <sp-menu-divider></sp-menu-divider>
-        <sp-menu-item>Help</sp-menu-item>
-        <sp-menu-item>Sign out</sp-menu-item>
-    </sp-action-menu>
+  <sp-top-nav-item href="#">Site Name</sp-top-nav-item>
+  <sp-top-nav-item href="#page-1" style="margin-inline-start: auto;">
+    Page 1
+  </sp-top-nav-item>
+  <sp-top-nav-item href="#page-2">Page 2</sp-top-nav-item>
+  <sp-top-nav-item href="#page-3">Page 3</sp-top-nav-item>
+  <sp-action-menu
+    label="Account"
+    placement="bottom-end"
+    style="margin-inline-start: auto;"
+    quiet
+  >
+    <sp-menu-item>Account settings</sp-menu-item>
+    <sp-menu-item>My profile</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Help</sp-menu-item>
+    <sp-menu-item>Sign out</sp-menu-item>
+  </sp-action-menu>
 </sp-top-nav>
 ```
 
@@ -95,19 +95,19 @@ For demonstration purposes only, the `href` value of the selected top nav item i
 
 ```html
 <sp-top-nav
-    selected="https://opensource.adobe.com/spectrum-web-components/components/top-nav/"
+  selected="https://opensource.adobe.com/spectrum-web-components/components/top-nav/"
 >
-    <sp-top-nav-item href="#">Site Name</sp-top-nav-item>
-    <sp-top-nav-item href="#home" style="margin-inline-start: auto;">
-        Home
-    </sp-top-nav-item>
-    <sp-top-nav-item href="#services">Services</sp-top-nav-item>
-    <sp-top-nav-item
-        href="https://opensource.adobe.com/spectrum-web-components/components/top-nav/"
-        selected
-    >
-        About
-    </sp-top-nav-item>
+  <sp-top-nav-item href="#">Site Name</sp-top-nav-item>
+  <sp-top-nav-item href="#home" style="margin-inline-start: auto;">
+    Home
+  </sp-top-nav-item>
+  <sp-top-nav-item href="#services">Services</sp-top-nav-item>
+  <sp-top-nav-item
+    href="https://opensource.adobe.com/spectrum-web-components/components/top-nav/"
+    selected
+  >
+    About
+  </sp-top-nav-item>
 </sp-top-nav>
 ```
 
@@ -119,8 +119,8 @@ If implementations wish to ignore certain URL parts when matching for selection,
 
 ```html
 <sp-top-nav ignore-url-parts="search hash">
-    <sp-top-nav-item href="/page1">Page 1</sp-top-nav-item>
-    <sp-top-nav-item href="/page2">Page 2</sp-top-nav-item>
+  <sp-top-nav-item href="/page1">Page 1</sp-top-nav-item>
+  <sp-top-nav-item href="/page2">Page 2</sp-top-nav-item>
 </sp-top-nav>
 ```
 
@@ -132,8 +132,8 @@ The `quiet` property renders the top navigation component without the bottom bor
 
 ```html
 <sp-top-nav quiet>
-    <sp-top-nav-item href="#">Home</sp-top-nav-item>
-    <sp-top-nav-item href="/products">Products</sp-top-nav-item>
+  <sp-top-nav-item href="#">Home</sp-top-nav-item>
+  <sp-top-nav-item href="/products">Products</sp-top-nav-item>
 </sp-top-nav>
 ```
 
@@ -148,13 +148,13 @@ The `quiet` property renders the top navigation component without the bottom bor
 
 ```html
 <sp-top-nav size="s">
-    <sp-top-nav-item href="#">Site Name</sp-top-nav-item>
-    <sp-top-nav-item href="#page-1" style="margin-inline-start: auto;">
-        Page 1
-    </sp-top-nav-item>
-    <sp-top-nav-item href="#page-2">Page 2</sp-top-nav-item>
-    <sp-top-nav-item href="#page-3">Page 3</sp-top-nav-item>
-    <sp-top-nav-item href="#page-4">Page with really long name</sp-top-nav-item>
+  <sp-top-nav-item href="#">Site Name</sp-top-nav-item>
+  <sp-top-nav-item href="#page-1" style="margin-inline-start: auto;">
+    Page 1
+  </sp-top-nav-item>
+  <sp-top-nav-item href="#page-2">Page 2</sp-top-nav-item>
+  <sp-top-nav-item href="#page-3">Page 3</sp-top-nav-item>
+  <sp-top-nav-item href="#page-4">Page with really long name</sp-top-nav-item>
 </sp-top-nav>
 ```
 
@@ -164,13 +164,13 @@ The `quiet` property renders the top navigation component without the bottom bor
 
 ```html
 <sp-top-nav size="m">
-    <sp-top-nav-item href="#">Site Name</sp-top-nav-item>
-    <sp-top-nav-item href="#page-1" style="margin-inline-start: auto;">
-        Page 1
-    </sp-top-nav-item>
-    <sp-top-nav-item href="#page-2">Page 2</sp-top-nav-item>
-    <sp-top-nav-item href="#page-3">Page 3</sp-top-nav-item>
-    <sp-top-nav-item href="#page-4">Page with really long name</sp-top-nav-item>
+  <sp-top-nav-item href="#">Site Name</sp-top-nav-item>
+  <sp-top-nav-item href="#page-1" style="margin-inline-start: auto;">
+    Page 1
+  </sp-top-nav-item>
+  <sp-top-nav-item href="#page-2">Page 2</sp-top-nav-item>
+  <sp-top-nav-item href="#page-3">Page 3</sp-top-nav-item>
+  <sp-top-nav-item href="#page-4">Page with really long name</sp-top-nav-item>
 </sp-top-nav>
 ```
 
@@ -180,13 +180,13 @@ The `quiet` property renders the top navigation component without the bottom bor
 
 ```html
 <sp-top-nav size="l">
-    <sp-top-nav-item href="#">Site Name</sp-top-nav-item>
-    <sp-top-nav-item href="#page-1" style="margin-inline-start: auto;">
-        Page 1
-    </sp-top-nav-item>
-    <sp-top-nav-item href="#page-2">Page 2</sp-top-nav-item>
-    <sp-top-nav-item href="#page-3">Page 3</sp-top-nav-item>
-    <sp-top-nav-item href="#page-4">Page with really long name</sp-top-nav-item>
+  <sp-top-nav-item href="#">Site Name</sp-top-nav-item>
+  <sp-top-nav-item href="#page-1" style="margin-inline-start: auto;">
+    Page 1
+  </sp-top-nav-item>
+  <sp-top-nav-item href="#page-2">Page 2</sp-top-nav-item>
+  <sp-top-nav-item href="#page-3">Page 3</sp-top-nav-item>
+  <sp-top-nav-item href="#page-4">Page with really long name</sp-top-nav-item>
 </sp-top-nav>
 ```
 
@@ -196,13 +196,13 @@ The `quiet` property renders the top navigation component without the bottom bor
 
 ```html
 <sp-top-nav size="xl">
-    <sp-top-nav-item href="#">Site Name</sp-top-nav-item>
-    <sp-top-nav-item href="#page-1" style="margin-inline-start: auto;">
-        Page 1
-    </sp-top-nav-item>
-    <sp-top-nav-item href="#page-2">Page 2</sp-top-nav-item>
-    <sp-top-nav-item href="#page-3">Page 3</sp-top-nav-item>
-    <sp-top-nav-item href="#page-4">Page with really long name</sp-top-nav-item>
+  <sp-top-nav-item href="#">Site Name</sp-top-nav-item>
+  <sp-top-nav-item href="#page-1" style="margin-inline-start: auto;">
+    Page 1
+  </sp-top-nav-item>
+  <sp-top-nav-item href="#page-2">Page 2</sp-top-nav-item>
+  <sp-top-nav-item href="#page-3">Page 3</sp-top-nav-item>
+  <sp-top-nav-item href="#page-4">Page with really long name</sp-top-nav-item>
 </sp-top-nav>
 ```
 

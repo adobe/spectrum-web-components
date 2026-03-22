@@ -99,8 +99,8 @@ A search field can have help text below the field to give extra context or instr
 
 ```html demo
 <sp-search>
-    <sp-help-text slot="help-text">Enter a search term.</sp-help-text>
-    <sp-help-text slot="negative-help-text">Invalid search term.</sp-help-text>
+  <sp-help-text slot="help-text">Enter a search term.</sp-help-text>
+  <sp-help-text slot="negative-help-text">Invalid search term.</sp-help-text>
 </sp-search>
 ```
 

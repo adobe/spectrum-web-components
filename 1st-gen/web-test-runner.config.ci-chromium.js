@@ -14,7 +14,7 @@ import standard from './web-test-runner.config.ci.js';
 import { chromium } from './web-test-runner.utils.js';
 
 export default {
-    ...standard,
-    browsers: [chromium],
-    concurrency: 1,
+  ...standard,
+  browsers: [chromium],
+  concurrency: 1,
 };

@@ -15,15 +15,15 @@ import { LitElement, html } from 'lit';
 import { MatchMediaController } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 
 class MyComponent extends LitElement {
-    // Create controller instance
-    darkMode = new MatchMediaController(this, '(prefers-color-scheme: dark)');
+  // Create controller instance
+  darkMode = new MatchMediaController(this, '(prefers-color-scheme: dark)');
 
-    render() {
-        // Use controller state in render
-        return html`
-            <div class=${this.darkMode.matches ? 'dark' : 'light'}>Content</div>
-        `;
-    }
+  render() {
+    // Use controller state in render
+    return html`
+      <div class=${this.darkMode.matches ? 'dark' : 'light'}>Content</div>
+    `;
+  }
 }
 ```
 
@@ -46,21 +46,21 @@ You can create custom reactive controllers by implementing the `ReactiveControll
 import { ReactiveController, ReactiveElement } from 'lit';
 
 export class MyController implements ReactiveController {
-    private host: ReactiveElement;
+  private host: ReactiveElement;
 
-    constructor(host: ReactiveElement) {
-        this.host = host;
-        // Register this controller with the host
-        this.host.addController(this);
-    }
+  constructor(host: ReactiveElement) {
+    this.host = host;
+    // Register this controller with the host
+    this.host.addController(this);
+  }
 
-    hostConnected() {
-        // Called when host is connected to DOM
-    }
+  hostConnected() {
+    // Called when host is connected to DOM
+  }
 
-    hostDisconnected() {
-        // Called when host is disconnected from DOM
-    }
+  hostDisconnected() {
+    // Called when host is disconnected from DOM
+  }
 }
 ```
 

@@ -49,26 +49,26 @@ Use an [`sp-popover`](./popover) when:
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-base underlay slot="click-content">
-        <sp-dialog>
-            <h2 slot="heading">A thing is about to happen</h2>
-            <p>Something that might happen a lot is about to happen.</p>
-            <p>
-                The click events for the "OK" button are bound to the story not
-                to the components in specific.
-            </p>
-            <sp-button
-                variant="secondary"
-                treatment="fill"
-                slot="button"
-                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-            >
-                Ok
-            </sp-button>
-            <sp-checkbox slot="footer">Don't show me this again</sp-checkbox>
-        </sp-dialog>
-    </sp-dialog-base>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+  <sp-dialog-base underlay slot="click-content">
+    <sp-dialog>
+      <h2 slot="heading">A thing is about to happen</h2>
+      <p>Something that might happen a lot is about to happen.</p>
+      <p>
+        The click events for the "OK" button are bound to the story not to the
+        components in specific.
+      </p>
+      <sp-button
+        variant="secondary"
+        treatment="fill"
+        slot="button"
+        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+      >
+        Ok
+      </sp-button>
+      <sp-checkbox slot="footer">Don't show me this again</sp-checkbox>
+    </sp-dialog>
+  </sp-dialog-base>
+  <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
@@ -84,21 +84,21 @@ The `underlay` attribute can be used to add an underlay element between the page
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-base underlay slot="click-content">
-        <sp-dialog>
-            <h2 slot="heading">A thing is about to happen</h2>
-            <p>Something that might happen a lot is about to happen.</p>
-            <sp-button
-                variant="secondary"
-                treatment="fill"
-                slot="button"
-                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-            >
-                Ok
-            </sp-button>
-        </sp-dialog>
-    </sp-dialog-base>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+  <sp-dialog-base underlay slot="click-content">
+    <sp-dialog>
+      <h2 slot="heading">A thing is about to happen</h2>
+      <p>Something that might happen a lot is about to happen.</p>
+      <sp-button
+        variant="secondary"
+        treatment="fill"
+        slot="button"
+        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+      >
+        Ok
+      </sp-button>
+    </sp-dialog>
+  </sp-dialog-base>
+  <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
@@ -108,21 +108,21 @@ The `underlay` attribute can be used to add an underlay element between the page
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-base slot="click-content">
-        <sp-dialog>
-            <h2 slot="heading">A thing is about to happen</h2>
-            <p>Something that might happen a lot is about to happen.</p>
-            <sp-button
-                variant="secondary"
-                treatment="fill"
-                slot="button"
-                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-            >
-                Ok
-            </sp-button>
-        </sp-dialog>
-    </sp-dialog-base>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+  <sp-dialog-base slot="click-content">
+    <sp-dialog>
+      <h2 slot="heading">A thing is about to happen</h2>
+      <p>Something that might happen a lot is about to happen.</p>
+      <sp-button
+        variant="secondary"
+        treatment="fill"
+        slot="button"
+        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+      >
+        Ok
+      </sp-button>
+    </sp-dialog>
+  </sp-dialog-base>
+  <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
@@ -139,13 +139,13 @@ The `dismissable` attribute can be used to add an underlay element between the p
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-base dismissable slot="click-content">
-        <sp-dialog>
-            <h2 slot="heading">A thing is about to happen</h2>
-            <p>Something that might happen a lot is about to happen.</p>
-        </sp-dialog>
-    </sp-dialog-base>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+  <sp-dialog-base dismissable slot="click-content">
+    <sp-dialog>
+      <h2 slot="heading">A thing is about to happen</h2>
+      <p>Something that might happen a lot is about to happen.</p>
+    </sp-dialog>
+  </sp-dialog-base>
+  <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
@@ -155,21 +155,21 @@ The `dismissable` attribute can be used to add an underlay element between the p
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-base underlay slot="click-content">
-        <sp-dialog>
-            <h2 slot="heading">A thing is about to happen</h2>
-            <p>Something that might happen a lot is about to happen.</p>
-            <sp-button
-                variant="secondary"
-                treatment="fill"
-                slot="button"
-                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-            >
-                Ok
-            </sp-button>
-        </sp-dialog>
-    </sp-dialog-base>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+  <sp-dialog-base underlay slot="click-content">
+    <sp-dialog>
+      <h2 slot="heading">A thing is about to happen</h2>
+      <p>Something that might happen a lot is about to happen.</p>
+      <sp-button
+        variant="secondary"
+        treatment="fill"
+        slot="button"
+        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+      >
+        Ok
+      </sp-button>
+    </sp-dialog>
+  </sp-dialog-base>
+  <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
@@ -186,21 +186,21 @@ The dialog base supports different display modes: `fullscreen` and `fullscreenTa
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-base mode="fullscreen" slot="click-content">
-        <sp-dialog>
-            <h2 slot="heading">A thing is about to happen</h2>
-            <p>Something that might happen a lot is about to happen.</p>
-            <sp-button
-                variant="secondary"
-                treatment="fill"
-                slot="button"
-                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-            >
-                Ok
-            </sp-button>
-        </sp-dialog>
-    </sp-dialog-base>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+  <sp-dialog-base mode="fullscreen" slot="click-content">
+    <sp-dialog>
+      <h2 slot="heading">A thing is about to happen</h2>
+      <p>Something that might happen a lot is about to happen.</p>
+      <sp-button
+        variant="secondary"
+        treatment="fill"
+        slot="button"
+        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+      >
+        Ok
+      </sp-button>
+    </sp-dialog>
+  </sp-dialog-base>
+  <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
@@ -210,21 +210,21 @@ The dialog base supports different display modes: `fullscreen` and `fullscreenTa
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-base mode="fullscreenTakeover" slot="click-content">
-        <sp-dialog>
-            <h2 slot="heading">A thing is about to happen</h2>
-            <p>Something that might happen a lot is about to happen.</p>
-            <sp-button
-                variant="secondary"
-                treatment="fill"
-                slot="button"
-                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-            >
-                Ok
-            </sp-button>
-        </sp-dialog>
-    </sp-dialog-base>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+  <sp-dialog-base mode="fullscreenTakeover" slot="click-content">
+    <sp-dialog>
+      <h2 slot="heading">A thing is about to happen</h2>
+      <p>Something that might happen a lot is about to happen.</p>
+      <sp-button
+        variant="secondary"
+        treatment="fill"
+        slot="button"
+        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+      >
+        Ok
+      </sp-button>
+    </sp-dialog>
+  </sp-dialog-base>
+  <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
@@ -284,20 +284,20 @@ The `receives-focus` attribute on `overlay-trigger` has three possible values:
 
 ```html
 <overlay-trigger type="modal" receives-focus="true">
-    <sp-dialog-base mode="fullscreenTakeover" slot="click-content">
-        <sp-dialog>
-            <h2 slot="heading">A thing is about to happen</h2>
-            <p>Something that might happen a lot is about to happen.</p>
-            <sp-button
-                variant="secondary"
-                treatment="fill"
-                slot="button"
-                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-            >
-                Ok
-            </sp-button>
-        </sp-dialog>
-    </sp-dialog-base>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+  <sp-dialog-base mode="fullscreenTakeover" slot="click-content">
+    <sp-dialog>
+      <h2 slot="heading">A thing is about to happen</h2>
+      <p>Something that might happen a lot is about to happen.</p>
+      <sp-button
+        variant="secondary"
+        treatment="fill"
+        slot="button"
+        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+      >
+        Ok
+      </sp-button>
+    </sp-dialog>
+  </sp-dialog-base>
+  <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```

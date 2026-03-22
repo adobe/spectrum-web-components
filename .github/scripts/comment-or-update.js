@@ -11,30 +11,30 @@
  */
 
 export const commentOrUpdate = (github, context, title, body) => {
-    github.rest.issues
-        .listComments({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: context.issue.number,
-        })
-        .then(({ data }) => {
-            const priorComment = data.find((comment) =>
-                comment.body.startsWith(title)
-            );
-            if (priorComment) {
-                github.rest.issues.updateComment({
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    comment_id: priorComment.id,
-                    body,
-                });
-            } else {
-                github.rest.issues.createComment({
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    issue_number: context.issue.number,
-                    body,
-                });
-            }
+  github.rest.issues
+    .listComments({
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      issue_number: context.issue.number,
+    })
+    .then(({ data }) => {
+      const priorComment = data.find((comment) =>
+        comment.body.startsWith(title)
+      );
+      if (priorComment) {
+        github.rest.issues.updateComment({
+          owner: context.repo.owner,
+          repo: context.repo.repo,
+          comment_id: priorComment.id,
+          body,
         });
+      } else {
+        github.rest.issues.createComment({
+          owner: context.repo.owner,
+          repo: context.repo.repo,
+          issue_number: context.issue.number,
+          body,
+        });
+      }
+    });
 };

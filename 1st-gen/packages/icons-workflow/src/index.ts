@@ -11,6 +11,7 @@
  */
 
 import { html } from '@spectrum-web-components/base';
+
 import { setCustomTemplateLiteralTag } from './custom-tag.js';
 
 setCustomTemplateLiteralTag(html);

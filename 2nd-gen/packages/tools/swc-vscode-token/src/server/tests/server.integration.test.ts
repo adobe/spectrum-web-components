@@ -31,64 +31,64 @@ import { TokenStore } from '../tokens.js';
 /* -------------------------------------------------------------------------- */
 
 function makeDoc(text: string) {
-    return TextDocument.create('file:///test.css', 'css', 1, text);
+  return TextDocument.create('file:///test.css', 'css', 1, text);
 }
 
 // Mimics IDE replacement behavior
 function applyTextEdit(doc: TextDocument, edit: TextEdit) {
-    const start = doc.offsetAt(edit.range.start);
-    const end = doc.offsetAt(edit.range.end);
-    return (
-        doc.getText().slice(0, start) + edit.newText + doc.getText().slice(end)
-    );
+  const start = doc.offsetAt(edit.range.start);
+  const end = doc.offsetAt(edit.range.end);
+  return (
+    doc.getText().slice(0, start) + edit.newText + doc.getText().slice(end)
+  );
 }
 
 function normalizeExpectedLabel(select: string): string {
-    const tokenMatch = select.match(/token\(['"](.+)['"]\)/);
-    return tokenMatch ? tokenMatch[1] : select;
+  const tokenMatch = select.match(/token\(['"](.+)['"]\)/);
+  return tokenMatch ? tokenMatch[1] : select;
 }
 
 function runCase({
-    input,
-    select,
-    expected,
-    localVars = ['--my-var', '--bar', '--baz', '--spacing-small'],
+  input,
+  select,
+  expected,
+  localVars = ['--my-var', '--bar', '--baz', '--spacing-small'],
 }: {
-    input: string;
-    select: string;
-    expected: string;
-    localVars?: string[];
+  input: string;
+  select: string;
+  expected: string;
+  localVars?: string[];
 }) {
-    const cursor = input.indexOf('│');
-    const text = input.slice(0, cursor) + input.slice(cursor + 1); // remove marker
-    const doc = makeDoc(text);
+  const cursor = input.indexOf('│');
+  const text = input.slice(0, cursor) + input.slice(cursor + 1); // remove marker
+  const doc = makeDoc(text);
 
-    const store = new TokenStore({
-        'accent-color': 'var(--swc-accent)',
-        'spacing-small': '4px',
-    });
+  const store = new TokenStore({
+    'accent-color': 'var(--swc-accent)',
+    'spacing-small': '4px',
+  });
 
-    const completions = getCompletions(doc, cursor, store, localVars);
-    const expectedLabel = normalizeExpectedLabel(select);
+  const completions = getCompletions(doc, cursor, store, localVars);
+  const expectedLabel = normalizeExpectedLabel(select);
 
-    const item = completions.find((c) => {
-        const label = c.label;
-        const replacement = c.textEdit?.newText;
-        return (
-            label === expectedLabel ||
-            replacement === select ||
-            replacement === `token('${expectedLabel}')`
-        );
-    });
+  const item = completions.find((c) => {
+    const label = c.label;
+    const replacement = c.textEdit?.newText;
+    return (
+      label === expectedLabel ||
+      replacement === select ||
+      replacement === `token('${expectedLabel}')`
+    );
+  });
 
-    if (!item) {
-        throw new Error(
-            `Completion "${select}" not found.\nAvailable: ${completions.map((c) => c.label).join(', ')}`
-        );
-    }
+  if (!item) {
+    throw new Error(
+      `Completion "${select}" not found.\nAvailable: ${completions.map((c) => c.label).join(', ')}`
+    );
+  }
 
-    const result = applyTextEdit(doc, item.textEdit!);
-    expect(result).toBe(expected);
+  const result = applyTextEdit(doc, item.textEdit!);
+  expect(result).toBe(expected);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -96,69 +96,69 @@ function runCase({
 /* -------------------------------------------------------------------------- */
 
 describe('CSS completions (integration)', () => {
-    const cases = [
-        // Test token() specific replacement
-        // Requirements for `input`
-        // - placment of | to mimic cursor position, located after trigger characters
-        // - balanced parentheses for CSS functions to correctly mimic real IDE behavior
-        {
-            input: 'color: token(│)',
-            select: 'accent-color',
-            expected: "color: token('accent-color')",
-        },
-        {
-            input: `color: token('│)`,
-            select: 'accent-color',
-            expected: "color: token('accent-color')",
-        },
-        {
-            input: 'padding: calc(1rem + token(│))',
-            select: 'spacing-small',
-            expected: "padding: calc(1rem + token('spacing-small'))",
-        },
-        {
-            input: 'padding: var(--my-var, token(│))',
-            select: 'spacing-small',
-            expected: "padding: var(--my-var, token('spacing-small'))",
-        },
-        // Resume completions while typing inside quotes
-        {
-            input: "color: token('accent-│')",
-            select: 'accent-color',
-            expected: "color: token('accent-color')",
-        },
-        {
-            input: "padding: calc(token('spacing-│'))",
-            select: 'spacing-small',
-            expected: "padding: calc(token('spacing-small'))",
-        },
-        {
-            input: "padding: var(--my-var, token('spacing-│'))",
-            select: 'spacing-small',
-            expected: "padding: var(--my-var, token('spacing-small'))",
-        },
-        // Validate extension doesn't clobber regular custom property replacement
-        // Ensure any `select` values are included in the `localVars` arr
-        {
-            input: 'background: --│',
-            select: '--my-var',
-            expected: 'background: var(--my-var)',
-        },
-        {
-            input: 'padding: calc(--│)',
-            select: '--spacing-small',
-            expected: 'padding: calc(var(--spacing-small))',
-        },
-        {
-            input: 'padding: calc(1rem + --│)',
-            select: '--spacing-small',
-            expected: 'padding: calc(1rem + var(--spacing-small))',
-        },
-    ];
+  const cases = [
+    // Test token() specific replacement
+    // Requirements for `input`
+    // - placment of | to mimic cursor position, located after trigger characters
+    // - balanced parentheses for CSS functions to correctly mimic real IDE behavior
+    {
+      input: 'color: token(│)',
+      select: 'accent-color',
+      expected: "color: token('accent-color')",
+    },
+    {
+      input: `color: token('│)`,
+      select: 'accent-color',
+      expected: "color: token('accent-color')",
+    },
+    {
+      input: 'padding: calc(1rem + token(│))',
+      select: 'spacing-small',
+      expected: "padding: calc(1rem + token('spacing-small'))",
+    },
+    {
+      input: 'padding: var(--my-var, token(│))',
+      select: 'spacing-small',
+      expected: "padding: var(--my-var, token('spacing-small'))",
+    },
+    // Resume completions while typing inside quotes
+    {
+      input: "color: token('accent-│')",
+      select: 'accent-color',
+      expected: "color: token('accent-color')",
+    },
+    {
+      input: "padding: calc(token('spacing-│'))",
+      select: 'spacing-small',
+      expected: "padding: calc(token('spacing-small'))",
+    },
+    {
+      input: "padding: var(--my-var, token('spacing-│'))",
+      select: 'spacing-small',
+      expected: "padding: var(--my-var, token('spacing-small'))",
+    },
+    // Validate extension doesn't clobber regular custom property replacement
+    // Ensure any `select` values are included in the `localVars` arr
+    {
+      input: 'background: --│',
+      select: '--my-var',
+      expected: 'background: var(--my-var)',
+    },
+    {
+      input: 'padding: calc(--│)',
+      select: '--spacing-small',
+      expected: 'padding: calc(var(--spacing-small))',
+    },
+    {
+      input: 'padding: calc(1rem + --│)',
+      select: '--spacing-small',
+      expected: 'padding: calc(1rem + var(--spacing-small))',
+    },
+  ];
 
-    cases.forEach((test) => {
-        it(`${test.input} → ${test.expected}`, () => {
-            runCase(test);
-        });
+  cases.forEach((test) => {
+    it(`${test.input} → ${test.expected}`, () => {
+      runCase(test);
     });
+  });
 });

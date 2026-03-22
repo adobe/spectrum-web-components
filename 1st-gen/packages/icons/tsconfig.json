@@ -1,10 +1,10 @@
 {
-    "extends": "../../tsconfig.json",
-    "compilerOptions": {
-        "composite": true,
-        "rootDir": "./"
-    },
-    "include": ["*.ts", "src/*.ts"],
-    "exclude": ["test/*.ts", "stories/*.ts"],
-    "references": [{ "path": "../icon" }, { "path": "../iconset" }]
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "./"
+  },
+  "exclude": ["test/*.ts", "stories/*.ts"],
+  "extends": "../../tsconfig.json",
+  "include": ["*.ts", "src/*.ts"],
+  "references": [{ "path": "../icon" }, { "path": "../iconset" }]
 }

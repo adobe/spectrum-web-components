@@ -38,18 +38,18 @@ Use a single level side navigation with headings when needing to group navigatio
 
 ```html
 <sp-sidenav>
-    <sp-sidenav-heading label="Docs heading">
-        <sp-sidenav-item
-            value="new-docs"
-            label="New docs"
-            href="/components/sidenav"
-        ></sp-sidenav-item>
-        <sp-sidenav-item
-            value="old-docs"
-            label="Old docs"
-            href="/components/sidenav"
-        ></sp-sidenav-item>
-    </sp-sidenav-heading>
+  <sp-sidenav-heading label="Docs heading">
+    <sp-sidenav-item
+      value="new-docs"
+      label="New docs"
+      href="/components/sidenav"
+    ></sp-sidenav-item>
+    <sp-sidenav-item
+      value="old-docs"
+      label="Old docs"
+      href="/components/sidenav"
+    ></sp-sidenav-item>
+  </sp-sidenav-heading>
 </sp-sidenav>
 ```
 
@@ -61,26 +61,26 @@ In multi-level side navigation, headings can only be used at the first level of 
 
 ```html
 <sp-sidenav variant="multilevel">
-    <sp-sidenav-heading label="Styles">
-        <sp-sidenav-item value="Color" label="Color"></sp-sidenav-item>
-        <sp-sidenav-item value="Grid" label="Grid"></sp-sidenav-item>
-        <sp-sidenav-heading label="Heading styles">
-            <sp-sidenav-item value="Typography" label="Typography" expanded>
-                <sp-sidenav-item
-                    value="Display"
-                    label="Display headings"
-                ></sp-sidenav-item>
-                <sp-sidenav-item value="H1" label="H1"></sp-sidenav-item>
-                <sp-sidenav-item value="H2" label="H2"></sp-sidenav-item>
-            </sp-sidenav-item>
-        </sp-sidenav-heading>
-
-        <sp-sidenav-heading label="Font styles">
-            <sp-sidenav-item value="Body" label="Body copy"></sp-sidenav-item>
-            <sp-sidenav-item value="Details" label="Details"></sp-sidenav-item>
-            <sp-sidenav-item value="Code" label="Code"></sp-sidenav-item>
-        </sp-sidenav-heading>
+  <sp-sidenav-heading label="Styles">
+    <sp-sidenav-item value="Color" label="Color"></sp-sidenav-item>
+    <sp-sidenav-item value="Grid" label="Grid"></sp-sidenav-item>
+    <sp-sidenav-heading label="Heading styles">
+      <sp-sidenav-item value="Typography" label="Typography" expanded>
+        <sp-sidenav-item
+          value="Display"
+          label="Display headings"
+        ></sp-sidenav-item>
+        <sp-sidenav-item value="H1" label="H1"></sp-sidenav-item>
+        <sp-sidenav-item value="H2" label="H2"></sp-sidenav-item>
+      </sp-sidenav-item>
     </sp-sidenav-heading>
+
+    <sp-sidenav-heading label="Font styles">
+      <sp-sidenav-item value="Body" label="Body copy"></sp-sidenav-item>
+      <sp-sidenav-item value="Details" label="Details"></sp-sidenav-item>
+      <sp-sidenav-item value="Code" label="Code"></sp-sidenav-item>
+    </sp-sidenav-heading>
+  </sp-sidenav-heading>
 </sp-sidenav>
 ```
 

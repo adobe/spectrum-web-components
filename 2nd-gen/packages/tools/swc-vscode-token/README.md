@@ -7,7 +7,9 @@ VS Code extension providing autocomplete and diagnostics for `token('...')` valu
 - Partial, case‑insensitive autocomplete for `token('...')`
 - Quote balancing and automatic trimming of trailing whitespace
 - Completions resume after editing inside an existing token
-- Hover message for unknown tokens with suggestions
+- Deprecated token detection with "renamed to..." diagnostics
+- Hover guidance that shows replacement tokens
+- Improved unknown-token suggestions that can include renamed-token candidates
 - Diagnostic messages as displayed on hover and in "Problems"
 
 ### Supported file types/languages
@@ -63,7 +65,7 @@ Deploy to build and package updated VSIX file required for VSCode to load the ex
 yarn deploy
 ```
 
-Post-build, will require uninstalling and re-installing the extension to see changes take affect.
+Post-build, will require uninstalling and re-installing the extension to see changes take effect.
 
 ### Updating extension logic
 

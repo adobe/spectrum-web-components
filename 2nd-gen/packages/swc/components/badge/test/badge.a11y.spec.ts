@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
 import { gotoStory } from '../../../utils/a11y-helpers.js';
@@ -18,70 +17,70 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
 /**
  * Accessibility tests for Badge component (2nd Generation)
  *
- * Tests both ARIA snapshot structure and aXe WCAG compliance
- *
- * Note: Uses the same test helpers as 1st gen - they work for both!
- * Key differences:
- * - Story IDs: 'components-badge--default' (vs 'badge--default' in 1st gen)
- * - Element name: 'swc-badge' (vs 'sp-badge' in 1st gen)
- * - Storybook port: 6006 (vs 8080 in 1st gen) - handled by Playwright projects
+ * ARIA snapshot tests validate the accessibility tree structure.
+ * aXe WCAG compliance and color contrast validation are run via
+ * test-storybook (see .storybook/test-runner.ts). Both are included
+ * in the `test:a11y` command.
  */
 
 test.describe('Badge - ARIA Snapshots', () => {
-    test('should have correct accessibility tree for default badge', async ({
-        page,
-    }) => {
-        const badge = await gotoStory(
-            page,
-            'components-badge--default',
-            'swc-badge'
-        );
-        const snapshot = await badge.ariaSnapshot();
+  test('should have correct accessibility tree for default badge', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-badge--overview',
+      'swc-badge'
+    );
+    await expect(root).toMatchAriaSnapshot(`
+      - text: Active
+    `);
+  });
 
-        expect(snapshot).toBeTruthy();
-        await expect(badge).toMatchAriaSnapshot();
-    });
+  test('should handle semantic variants', async ({ page }) => {
+    const root = await gotoStory(
+      page,
+      'components-badge--semantic-variants',
+      'swc-badge'
+    );
+    await expect(root).toMatchAriaSnapshot(`
+      - text: New Active Archived Approved Pending approval Rejected
+    `);
+  });
 
-    test('should handle semantic variants', async ({ page }) => {
-        const badge = await gotoStory(
-            page,
-            'components-badge--semantic-variants',
-            'swc-badge'
-        );
-        const snapshot = await badge.ariaSnapshot();
+  test('should handle non-semantic variants', async ({ page }) => {
+    const root = await gotoStory(
+      page,
+      'components-badge--non-semantic-variants',
+      'swc-badge'
+    );
+    await expect(root).toMatchAriaSnapshot(`
+      - text: /Marketing Engineering Design Product Support Busy Available Sales Research Quality Documentation Legal Analytics Security Creative Training Facilities Compliance Version 1\\.\\d+\\.\\d+/
+    `);
+  });
 
-        expect(snapshot).toBeTruthy();
-        await expect(badge).toMatchAriaSnapshot();
-    });
-});
+  test('should handle different sizes', async ({ page }) => {
+    const root = await gotoStory(page, 'components-badge--sizes', 'swc-badge');
+    await expect(root).toMatchAriaSnapshot(`
+      - text: Small Medium Large Extra-large
+    `);
+  });
 
-test.describe('Badge - aXe Validation', () => {
-    test('should not have accessibility violations - default', async ({
-        page,
-    }) => {
-        await gotoStory(page, 'components-badge--default', 'swc-badge');
+  test('should handle outline style', async ({ page }) => {
+    const root = await gotoStory(
+      page,
+      'components-badge--outline',
+      'swc-badge'
+    );
+    await expect(root).toMatchAriaSnapshot(`
+      - text: New Active Archived Approved Pending approval Rejected
+    `);
+  });
 
-        const results = await new AxeBuilder({ page })
-            .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-            .analyze();
-
-        expect(results.violations).toEqual([]);
-    });
-
-    test('should not have violations - semantic variants', async ({ page }) => {
-        await gotoStory(
-            page,
-            'components-badge--semantic-variants',
-            'swc-badge'
-        );
-
-        // Wait for any ongoing axe runs to complete
-        await page.waitForLoadState('networkidle');
-
-        const results = await new AxeBuilder({ page })
-            .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-            .analyze();
-
-        expect(results.violations).toEqual([]);
-    });
+  test('should handle subtle style', async ({ page }) => {
+    const root = await gotoStory(page, 'components-badge--subtle', 'swc-badge');
+    await expect(root).toMatchAriaSnapshot(`
+      - text: /New Active Archived Approved Pending approval Rejected Marketing Engineering Design Product Support Busy Available Sales Research Quality Documentation Legal Analytics Security Creative Training Facilities Compliance Version 1\\.\\d+\\.\\d+/
+    `);
+  });
 });

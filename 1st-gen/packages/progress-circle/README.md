@@ -34,8 +34,8 @@ A progress circle consists of several key parts:
 
 ```html
 <sp-progress-circle
-    label="Download progress"
-    progress="75"
+  label="Download progress"
+  progress="75"
 ></sp-progress-circle>
 ```
 
@@ -51,9 +51,9 @@ Progress circles come in three sizes to fit various contexts:
 
 ```html demo
 <sp-progress-circle
-    size="s"
-    label="Small progress indicator"
-    progress="42"
+  size="s"
+  label="Small progress indicator"
+  progress="42"
 ></sp-progress-circle>
 ```
 
@@ -63,8 +63,8 @@ Progress circles come in three sizes to fit various contexts:
 
 ```html demo
 <sp-progress-circle
-    label="Medium progress indicator"
-    progress="67"
+  label="Medium progress indicator"
+  progress="67"
 ></sp-progress-circle>
 ```
 
@@ -74,9 +74,9 @@ Progress circles come in three sizes to fit various contexts:
 
 ```html demo
 <sp-progress-circle
-    size="l"
-    label="Large progress indicator"
-    progress="89"
+  size="l"
+  label="Large progress indicator"
+  progress="89"
 ></sp-progress-circle>
 ```
 
@@ -89,11 +89,11 @@ When displaying over images or colored backgrounds, use the `static-color` attri
 
 ```html demo
 <div style="background-color: rgb(15, 15, 15); padding: 20px;">
-    <sp-progress-circle
-        label="Progress on dark background"
-        progress="50"
-        static-color="white"
-    ></sp-progress-circle>
+  <sp-progress-circle
+    label="Progress on dark background"
+    progress="50"
+    static-color="white"
+  ></sp-progress-circle>
 </div>
 ```
 
@@ -111,12 +111,12 @@ The `<sp-progress-circle>` element implements several accessibility features:
 
 1. **ARIA Role**: Automatically sets `role="progressbar"` for proper semantic meaning
 2. **Labeling**:
-    - Uses the `label` attribute value as `aria-label`
-    - When determinate, adds `aria-valuenow` with the current progress
-    - Includes `aria-valuemin="0"` and `aria-valuemax="100"` for the progress range
+   - Uses the `label` attribute value as `aria-label`
+   - When determinate, adds `aria-valuenow` with the current progress
+   - Includes `aria-valuemin="0"` and `aria-valuemax="100"` for the progress range
 3. **Status Communication**:
-    - Screen readers announce progress updates
-    - Indeterminate state is properly conveyed to assistive technologies
+   - Screen readers announce progress updates
+   - Indeterminate state is properly conveyed to assistive technologies
 
 #### Best Practices
 
@@ -129,13 +129,13 @@ The `<sp-progress-circle>` element implements several accessibility features:
 ```html
 <!-- Example with good accessibility -->
 <sp-progress-circle
-    label="Downloading report.pdf - 24 MB of 50 MB"
-    progress="48"
+  label="Downloading report.pdf - 24 MB of 50 MB"
+  progress="48"
 ></sp-progress-circle>
 
 <!-- For unknown duration operations -->
 <sp-progress-circle
-    label="Connecting to server"
-    indeterminate
+  label="Connecting to server"
+  indeterminate
 ></sp-progress-circle>
 ```

@@ -9,14 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { defineElement } from '@spectrum-web-components/core/shared/base';
+import { defineElement } from '@spectrum-web-components/core/element/index.js';
 
 import { Divider } from './Divider.js';
 
 export * from './Divider.js';
 declare global {
-    interface HTMLElementTagNameMap {
-        'swc-divider': Divider;
-    }
+  interface HTMLElementTagNameMap {
+    'swc-divider': Divider;
+  }
 }
 defineElement('swc-divider', Divider);

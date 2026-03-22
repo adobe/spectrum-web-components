@@ -10,11 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/icon/sp-icon.js';
+import { html } from '@spectrum-web-components/base';
+import { setCustomTemplateLiteralTag } from '@spectrum-web-components/icons-workflow/src/custom-tag.js';
 import { AbcIcon } from '@spectrum-web-components/icons-workflow/src/icons/ABC.js';
 import { ActionsIcon } from '@spectrum-web-components/icons-workflow/src/icons/Actions.js';
-import { DisplayAdvertIcon } from '@spectrum-web-components/icons-workflow/src/icons/DisplayAdvert.js';
-import { PrintAdvertIcon } from '@spectrum-web-components/icons-workflow/src/icons/PrintAdvert.js';
 import { AddIcon } from '@spectrum-web-components/icons-workflow/src/icons/Add.js';
 import { AddCircleIcon } from '@spectrum-web-components/icons-workflow/src/icons/AddCircle.js';
 import { AddToIcon } from '@spectrum-web-components/icons-workflow/src/icons/AddTo.js';
@@ -28,14 +27,14 @@ import { AlertCircleIcon } from '@spectrum-web-components/icons-workflow/src/ico
 import { AlertCircleFilledIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlertCircleFilled.js';
 import { AlgorithmIcon } from '@spectrum-web-components/icons-workflow/src/icons/Algorithm.js';
 import { AliasIcon } from '@spectrum-web-components/icons-workflow/src/icons/Alias.js';
-import { ArrowLeftIcon } from '@spectrum-web-components/icons-workflow/src/icons/ArrowLeft.js';
-import { AlignCenterIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignCenter.js';
-import { AlignTopIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignTop.js';
 import { AlignBottomIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignBottom.js';
+import { AlignCenterIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignCenter.js';
 import { AlignLeftIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignLeft.js';
 import { AlignRightIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignRight.js';
+import { AlignTopIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignTop.js';
 import { AnnotateIcon } from '@spectrum-web-components/icons-workflow/src/icons/Annotate.js';
 import { AnnotatePenIcon } from '@spectrum-web-components/icons-workflow/src/icons/AnnotatePen.js';
+import { ArrowLeftIcon } from '@spectrum-web-components/icons-workflow/src/icons/ArrowLeft.js';
 import { AssetIcon } from '@spectrum-web-components/icons-workflow/src/icons/Asset.js';
 import { AssetsAddedIcon } from '@spectrum-web-components/icons-workflow/src/icons/AssetsAdded.js';
 import { AssetsDownloadedIcon } from '@spectrum-web-components/icons-workflow/src/icons/AssetsDownloaded.js';
@@ -47,47 +46,50 @@ import { BookIcon } from '@spectrum-web-components/icons-workflow/src/icons/Book
 import { BookmarkIcon } from '@spectrum-web-components/icons-workflow/src/icons/Bookmark.js';
 import { BookmarkSingleIcon } from '@spectrum-web-components/icons-workflow/src/icons/BookmarkSingle.js';
 import { BookmarkSingleOutlineIcon } from '@spectrum-web-components/icons-workflow/src/icons/BookmarkSingleOutline.js';
-import { setCustomTemplateLiteralTag } from '@spectrum-web-components/icons-workflow/src/custom-tag.js';
-import { html } from '@spectrum-web-components/base';
+import { DisplayAdvertIcon } from '@spectrum-web-components/icons-workflow/src/icons/DisplayAdvert.js';
+import { PrintAdvertIcon } from '@spectrum-web-components/icons-workflow/src/icons/PrintAdvert.js';
+
+import '@spectrum-web-components/icon/sp-icon.js';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 setCustomTemplateLiteralTag(html);
 
 measureFixtureCreation(html`
-    <sp-icon>${AbcIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${ActionsIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${DisplayAdvertIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${PrintAdvertIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AddIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AddCircleIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AddToIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AddToSelectionIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AEMScreensIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AirplaneIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AlertIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AlertAddIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AlertCheckIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AlertCircleIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AlertCircleFilledIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AlgorithmIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AliasIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${ArrowLeftIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AlignCenterIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AlignTopIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AlignBottomIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AlignLeftIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AlignRightIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AnnotateIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AnnotatePenIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AssetIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AssetsAddedIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AssetsDownloadedIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AssetsExpiredIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AssetsLinkedPublishedIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AssetsModifiedIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AssetsPublishedIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${BookIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${BookmarkIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${BookmarkSingleIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${BookmarkSingleOutlineIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AbcIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${ActionsIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${DisplayAdvertIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${PrintAdvertIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AddIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AddCircleIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AddToIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AddToSelectionIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AEMScreensIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AirplaneIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AlertIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AlertAddIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AlertCheckIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AlertCircleIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AlertCircleFilledIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AlgorithmIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AliasIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${ArrowLeftIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AlignCenterIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AlignTopIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AlignBottomIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AlignLeftIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AlignRightIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AnnotateIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AnnotatePenIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AssetIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AssetsAddedIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AssetsDownloadedIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AssetsExpiredIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AssetsLinkedPublishedIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AssetsModifiedIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${AssetsPublishedIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${BookIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${BookmarkIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${BookmarkSingleIcon({ hidden: true })}</sp-icon>
+  <sp-icon>${BookmarkSingleOutlineIcon({ hidden: true })}</sp-icon>
 `);

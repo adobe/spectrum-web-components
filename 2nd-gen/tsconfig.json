@@ -1,35 +1,24 @@
 {
-    "compilerOptions": {
-        "allowImportingTsExtensions": true,
-        "allowSyntheticDefaultImports": true,
-        "declaration": true,
-        "experimentalDecorators": true,
-        "forceConsistentCasingInFileNames": true,
-        "isolatedModules": true,
-        "lib": ["ES2022", "DOM", "DOM.Iterable"],
-        "module": "ESNext",
-        "moduleResolution": "bundler",
-        "noEmit": true,
-        "noFallthroughCasesInSwitch": true,
-        "noImplicitReturns": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "outDir": "./dist",
-        "resolveJsonModule": true,
-        "rootDir": "./",
-        "skipLibCheck": true,
-        "strict": true,
-        "target": "ES2022",
-        "useDefineForClassFields": false
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+
+    // 2nd-gen specific: Build configuration
+    "noEmit": true,
+
+    // Additional strictness
+    "noFallthroughCasesInSwitch": true,
+    "outDir": "./dist",
+    "rootDir": "./"
+  },
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.stories.ts"],
+  "extends": "../tsconfig.base.json",
+  "include": ["packages/**/*.ts", "**/*.d.ts"],
+  "references": [
+    {
+      "path": "./packages/core"
     },
-    "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.stories.ts"],
-    "include": ["packages/**/*.ts", "**/*.d.ts"],
-    "references": [
-        {
-            "path": "./packages/core"
-        },
-        {
-            "path": "./packages/swc"
-        }
-    ]
+    {
+      "path": "./packages/swc"
+    }
+  ]
 }

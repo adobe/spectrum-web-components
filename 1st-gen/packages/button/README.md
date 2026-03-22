@@ -59,8 +59,8 @@ fulfill the accessibility contract of the button.
 
 ```html demo
 <sp-button variant="primary">
-    <sp-icon-help slot="icon"></sp-icon-help>
-    Icon + Label
+  <sp-icon-help slot="icon"></sp-icon-help>
+  Icon + Label
 </sp-button>
 ```
 
@@ -70,18 +70,18 @@ fulfill the accessibility contract of the button.
 
 ```html demo
 <sp-button variant="primary">
-    <svg
-        slot="icon"
-        viewBox="0 0 36 36"
-        focusable="false"
-        aria-hidden="true"
-        role="img"
-    >
-        <path
-            d="M16 36a4.407 4.407 0 0 0 4-4h-8a4.407 4.407 0 0 0 4 4zm9.143-24.615c0-3.437-3.206-4.891-7.143-5.268V3a1.079 1.079 0 0 0-1.143-1h-1.714A1.079 1.079 0 0 0 14 3v3.117c-3.937.377-7.143 1.831-7.143 5.268C6.857 26.8 2 26.111 2 28.154V30h28v-1.846C30 26 25.143 26.8 25.143 11.385z"
-        ></path>
-    </svg>
-    SVG Icon + Label
+  <svg
+    slot="icon"
+    viewBox="0 0 36 36"
+    focusable="false"
+    aria-hidden="true"
+    role="img"
+  >
+    <path
+      d="M16 36a4.407 4.407 0 0 0 4-4h-8a4.407 4.407 0 0 0 4 4zm9.143-24.615c0-3.437-3.206-4.891-7.143-5.268V3a1.079 1.079 0 0 0-1.143-1h-1.714A1.079 1.079 0 0 0 14 3v3.117c-3.937.377-7.143 1.831-7.143 5.268C6.857 26.8 2 26.111 2 28.154V30h28v-1.846C30 26 25.143 26.8 25.143 11.385z"
+    ></path>
+  </svg>
+  SVG Icon + Label
 </sp-button>
 ```
 
@@ -90,8 +90,8 @@ fulfill the accessibility contract of the button.
 <sp-tab-panel value="icon-only">
 
 ```html demo
-<sp-button variant="primary" label="Icon only">
-    <sp-icon-help slot="icon"></sp-icon-help>
+<sp-button variant="primary" icon-only label="Icon only">
+  <sp-icon-help slot="icon"></sp-icon-help>
 </sp-button>
 ```
 
@@ -148,14 +148,14 @@ attribute defaults to `accent`, but also accepts the following value: `accent`, 
 
 ```html demo
 <sp-button-group style="min-width: max-content">
-    <sp-button variant="accent">Label only</sp-button>
-    <sp-button variant="accent">
-        <sp-icon-help slot="icon"></sp-icon-help>
-        Icon + Label
-    </sp-button>
-    <sp-button variant="accent" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
+  <sp-button variant="accent">Label only</sp-button>
+  <sp-button variant="accent">
+    <sp-icon-help slot="icon"></sp-icon-help>
+    Icon + Label
+  </sp-button>
+  <sp-button variant="accent" label="Icon only" icon-only>
+    <sp-icon-help slot="icon"></sp-icon-help>
+  </sp-button>
 </sp-button-group>
 ```
 
@@ -165,14 +165,14 @@ attribute defaults to `accent`, but also accepts the following value: `accent`, 
 
 ```html demo
 <sp-button-group style="min-width: max-content">
-    <sp-button variant="primary">Label only</sp-button>
-    <sp-button variant="primary">
-        <sp-icon-help slot="icon"></sp-icon-help>
-        Icon + Label
-    </sp-button>
-    <sp-button variant="primary" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
+  <sp-button variant="primary">Label only</sp-button>
+  <sp-button variant="primary">
+    <sp-icon-help slot="icon"></sp-icon-help>
+    Icon + Label
+  </sp-button>
+  <sp-button variant="primary" label="Icon only" icon-only>
+    <sp-icon-help slot="icon"></sp-icon-help>
+  </sp-button>
 </sp-button-group>
 ```
 
@@ -182,14 +182,14 @@ attribute defaults to `accent`, but also accepts the following value: `accent`, 
 
 ```html demo
 <sp-button-group style="min-width: max-content">
-    <sp-button variant="secondary">Label only</sp-button>
-    <sp-button variant="secondary">
-        <sp-icon-help slot="icon"></sp-icon-help>
-        Icon + Label
-    </sp-button>
-    <sp-button variant="secondary" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
+  <sp-button variant="secondary">Label only</sp-button>
+  <sp-button variant="secondary">
+    <sp-icon-help slot="icon"></sp-icon-help>
+    Icon + Label
+  </sp-button>
+  <sp-button variant="secondary" label="Icon only" icon-only>
+    <sp-icon-help slot="icon"></sp-icon-help>
+  </sp-button>
 </sp-button-group>
 ```
 
@@ -199,14 +199,14 @@ attribute defaults to `accent`, but also accepts the following value: `accent`, 
 
 ```html demo
 <sp-button-group style="min-width: max-content">
-    <sp-button variant="negative">Label only</sp-button>
-    <sp-button variant="negative">
-        <sp-icon-help slot="icon"></sp-icon-help>
-        Icon + Label
-    </sp-button>
-    <sp-button variant="negative" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
+  <sp-button variant="negative">Label only</sp-button>
+  <sp-button variant="negative">
+    <sp-icon-help slot="icon"></sp-icon-help>
+    Icon + Label
+  </sp-button>
+  <sp-button variant="negative" label="Icon only" icon-only>
+    <sp-icon-help slot="icon"></sp-icon-help>
+  </sp-button>
 </sp-button-group>
 ```
 
@@ -223,9 +223,9 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 
 ```html demo
 <sp-button-group style="min-width: max-content">
-    <sp-button treatment="fill" variant="primary">Primary, Fill</sp-button>
-    <sp-button treatment="fill" variant="secondary">Secondary, Fill</sp-button>
-    <sp-button treatment="fill" variant="negative">Negative, Fill</sp-button>
+  <sp-button treatment="fill" variant="primary">Primary, Fill</sp-button>
+  <sp-button treatment="fill" variant="secondary">Secondary, Fill</sp-button>
+  <sp-button treatment="fill" variant="negative">Negative, Fill</sp-button>
 </sp-button-group>
 ```
 
@@ -235,15 +235,13 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 
 ```html demo
 <sp-button-group style="min-width: max-content">
-    <sp-button treatment="outline" variant="primary">
-        Primary, Outline
-    </sp-button>
-    <sp-button treatment="outline" variant="secondary">
-        Secondary, Outline
-    </sp-button>
-    <sp-button treatment="outline" variant="negative">
-        Negative, Outline
-    </sp-button>
+  <sp-button treatment="outline" variant="primary">Primary, Outline</sp-button>
+  <sp-button treatment="outline" variant="secondary">
+    Secondary, Outline
+  </sp-button>
+  <sp-button treatment="outline" variant="negative">
+    Negative, Outline
+  </sp-button>
 </sp-button-group>
 ```
 
@@ -253,21 +251,21 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 
 ```html demo
 <sp-button-group
-    style="background: var(--spectrum-seafoam-600); padding: 0.5em; min-width: max-content"
+  style="background: var(--spectrum-docs-static-black-background-color); padding: 0.5em; min-width: max-content"
 >
-    <sp-button treatment="outline" static-color="black">Label only</sp-button>
-    <sp-button treatment="outline" static-color="black">
-        <sp-icon-help slot="icon"></sp-icon-help>
-        Icon + Label
-    </sp-button>
-    <sp-button
-        treatment="outline"
-        static-color="black"
-        label="Icon only"
-        icon-only
-    >
-        <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
+  <sp-button treatment="outline" static-color="black">Label only</sp-button>
+  <sp-button treatment="outline" static-color="black">
+    <sp-icon-help slot="icon"></sp-icon-help>
+    Icon + Label
+  </sp-button>
+  <sp-button
+    treatment="outline"
+    static-color="black"
+    label="Icon only"
+    icon-only
+  >
+    <sp-icon-help slot="icon"></sp-icon-help>
+  </sp-button>
 </sp-button-group>
 ```
 
@@ -277,21 +275,21 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 
 ```html demo
 <sp-button-group
-    style="background: var(--spectrum-seafoam-600); padding: 0.5em; min-width: max-content"
+  style="background: var(--spectrum-docs-static-white-background-color); padding: 0.5em; min-width: max-content"
 >
-    <sp-button treatment="outline" static-color="white">Label only</sp-button>
-    <sp-button treatment="outline" static-color="white">
-        <sp-icon-help slot="icon"></sp-icon-help>
-        Icon + Label
-    </sp-button>
-    <sp-button
-        treatment="outline"
-        static-color="white"
-        label="Icon only"
-        icon-only
-    >
-        <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
+  <sp-button treatment="outline" static-color="white">Label only</sp-button>
+  <sp-button treatment="outline" static-color="white">
+    <sp-icon-help slot="icon"></sp-icon-help>
+    Icon + Label
+  </sp-button>
+  <sp-button
+    treatment="outline"
+    static-color="white"
+    label="Icon only"
+    icon-only
+  >
+    <sp-icon-help slot="icon"></sp-icon-help>
+  </sp-button>
 </sp-button-group>
 ```
 
@@ -308,8 +306,8 @@ While disabled, `<sp-button>` elements will not respond to click events and will
 
 ```html
 <sp-button-group>
-    <sp-button variant="primary">Normal</sp-button>
-    <sp-button variant="primary" disabled>Disabled</sp-button>
+  <sp-button variant="primary">Normal</sp-button>
+  <sp-button variant="primary" disabled>Disabled</sp-button>
 </sp-button-group>
 ```
 
@@ -322,8 +320,8 @@ Note: The pending state of the `<sp-button>` element is applied after a 1s delay
 
 ```html
 <sp-button-group>
-    <sp-button variant="primary">Normal</sp-button>
-    <sp-button variant="primary" pending>Pending</sp-button>
+  <sp-button variant="primary">Normal</sp-button>
+  <sp-button variant="primary" pending>Pending</sp-button>
 </sp-button-group>
 ```
 
@@ -338,16 +336,38 @@ Events handlers for clicks and other user actions can be registered on a
 <sp-button onclick="spAlert(this, '<sp-button> clicked!')">Click me</sp-button>
 ```
 
-In addition to handling events like a native `<button>` HTML element, one can also use a `<sp-button>` in place of the `<a>` HTML element by using the `href` and optional `target` attribute.
+#### Link API deprecation
 
-```html demo
-<sp-button
-    href="https://github.com/adobe/spectrum-web-components"
-    target="_blank"
->
-    Click me
+> **Deprecated**: The `href`, `target`, `download`, `referrerpolicy`, and `rel` attributes on `<sp-button>` are deprecated and will be removed in a future release. Use a native HTML anchor (`<a>`) element with the `spectrum-Button` class instead.
+
+Using `<sp-button href="...">` conflates button and link semantics, which creates accessibility issues: screen reader users navigating by form controls will not find link-styled buttons, and vice versa. Native HTML elements provide correct semantics by default.
+
+If you intend to create a link with a `href` attribute, we instead offer CSS classes for creating button-styled links. To migrate, import the global elements stylesheet and apply button classes to native `<a>` elements:
+
+```css
+@import '@spectrum-web-components/styles/global-elements.css';
+```
+
+**Before (deprecated):**
+
+```html
+<sp-button href="https://opensource.adobe.com/spectrum-web-components">
+  Visit docs
 </sp-button>
 ```
+
+**After (recommended):**
+
+```html
+<a
+  class="spectrum-Button spectrum-Button--accent"
+  href="https://opensource.adobe.com/spectrum-web-components"
+>
+  Visit docs
+</a>
+```
+
+See the [accessibility section](#use-a-static-button-styled-native-link-if-including-href) for more details.
 
 #### Autofocus
 
@@ -358,10 +378,10 @@ popover or dialog opens.
 ```html
 <sp-button id="trigger">Open</sp-button>
 <sp-overlay trigger="trigger@click" placement="bottom">
-    <sp-popover>
-        <!-- Button will autofocus when open -->
-        <sp-button autofocus>Confirm</sp-button>
-    </sp-popover>
+  <sp-popover>
+    <!-- Button will autofocus when open -->
+    <sp-button autofocus>Confirm</sp-button>
+  </sp-popover>
 </sp-overlay>
 ```
 
@@ -376,13 +396,54 @@ or on an `<sp-icon*>` element child.
 
 Do not use custom colors for buttons. The colors of different button variations have been designed to be consistent and accessible.
 
+#### Use a static button-styled native link if including href
+
+> **Deprecated**: The `href` attribute and other link-related properties (`target`, `download`, `referrerpolicy`, `rel`) on `<sp-button>` are deprecated and will be removed in a future release.
+
+You may use a native link with classes to style it like a button. Refer to [the Storybook examples](https://opensource.adobe.com/spectrum-web-components/storybook/index.html?path=/story/button/) that include `href` for the appropriate classes to use.
+
+For styles to be fully available to slotted links, you must include the stylesheet for `@spectrum-web-components/styles/global-elements.css`.
+
+To successfully receive button styling, the link must be one of the following:
+
+- A direct child of `<sp-theme>`
+- A slotted child of a component within `<sp-theme>`
+
+To allow button-styled native links in the shadow DOM of extended components, ensure their stylesheet also imports `@spectrum-web-components/styles/global-elements.css`.
+
+**Note**: native button-styled links do not support disabled or pending states.
+
+```html
+<!--
+ Include in your own application stylesheet and extended component styles:
+ @import '@spectrum-web-components/styles/global-elements.css';
+ -->
+
+<a
+  class="spectrum-Button spectrum-Button--accent"
+  href="https://github.com/adobe/spectrum-web-components"
+>
+  Accent link button
+</a>
+<a
+  class="spectrum-Button spectrum-Button--secondary spectrum-Button--outline"
+  href="https://github.com/adobe/spectrum-web-components"
+>
+  <!-- Use icon components and continue to define slot="icon" for the best styling support -->
+  <sp-icon-help slot="icon"></sp-icon-help>
+  Secondary outline link button
+</a>
+```
+
 #### Don't mix href and non-href buttons in a set of buttons
 
-A screen reader user will not encounter href buttons when navigating by buttons or form controls. While they can both be used in the same page problems could occur if mixing the types in close proximity to each other.
+A screen reader user will not encounter href buttons when navigating by buttons or form controls. While they can both be used in the same page, problems could occur if mixing the types in close proximity to each other.
 
 #### Use static black or static white to contrast with backgrounds and images
 
 To ensure maximum contrast with the background, use static black for light backgrounds and images, and static white for dark backgrounds and images. Avoid placing static components on top of busy images with a lot of variance in contrast.
+
+> **Contrast requirement**: When using `treatment="outline"` with `static-color`, the button's text, icons, and border must maintain a minimum **3:1** contrast ratio against the background per [WCAG 1.4.11 Non-text Contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast). Choose background colors carefully to meet this threshold. For example, `--spectrum-seafoam-600` provides only **2.5:1** contrast with white, which fails the requirement.
 
 <sp-tabs selected="black" auto label="Static variants for contrast">
 <sp-tab value="black">Static black on light background</sp-tab>
@@ -390,10 +451,10 @@ To ensure maximum contrast with the background, use static black for light backg
 
 ```html demo
 <div
-    style="background-color: var(--spectrum-docs-static-black-background-color); padding: 20px"
+  style="background-color: var(--spectrum-docs-static-black-background-color); padding: 20px"
 >
-    <sp-button static-color="black">Click me</sp-button>
-    <sp-button static-color="black" treatment="outline">Click me</sp-button>
+  <sp-button static-color="black">Click me</sp-button>
+  <sp-button static-color="black" treatment="outline">Click me</sp-button>
 </div>
 ```
 
@@ -403,10 +464,10 @@ To ensure maximum contrast with the background, use static black for light backg
 
 ```html demo
 <div
-    style="background-color: var(--spectrum-docs-static-white-background-color); padding: 20px"
+  style="background-color: var(--spectrum-docs-static-white-background-color); padding: 20px"
 >
-    <sp-button static-color="white">Click me</sp-button>
-    <sp-button static-color="white" treatment="outline">Click me</sp-button>
+  <sp-button static-color="white">Click me</sp-button>
+  <sp-button static-color="white" treatment="outline">Click me</sp-button>
 </div>
 ```
 

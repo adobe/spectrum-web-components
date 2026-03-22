@@ -51,30 +51,30 @@ For a complete list of supported color formats, see the [ColorController documen
 
 ```html
 <div style="display: flex; gap: 16px; align-items: center; margin: 16px 0;">
-    <!-- Hex color -->
-    <div style="position: relative; height: 20px; margin: 20px;">
-        <sp-color-handle color="#ff0000"></sp-color-handle>
-    </div>
+  <!-- Hex color -->
+  <div style="position: relative; height: 20px; margin: 20px;">
+    <sp-color-handle color="#ff0000"></sp-color-handle>
+  </div>
 
-    <!-- RGB format -->
-    <div style="position: relative; height: 20px; margin: 20px;">
-        <sp-color-handle color="rgb(255, 0, 0)"></sp-color-handle>
-    </div>
+  <!-- RGB format -->
+  <div style="position: relative; height: 20px; margin: 20px;">
+    <sp-color-handle color="rgb(255, 0, 0)"></sp-color-handle>
+  </div>
 
-    <!-- RGBA format with transparency -->
-    <div style="position: relative; height: 20px; margin: 20px;">
-        <sp-color-handle color="rgba(255, 0, 0, 0.5)"></sp-color-handle>
-    </div>
+  <!-- RGBA format with transparency -->
+  <div style="position: relative; height: 20px; margin: 20px;">
+    <sp-color-handle color="rgba(255, 0, 0, 0.5)"></sp-color-handle>
+  </div>
 
-    <!-- HSL format -->
-    <div style="position: relative; height: 20px; margin: 20px;">
-        <sp-color-handle color="hsl(0, 100%, 50%)"></sp-color-handle>
-    </div>
+  <!-- HSL format -->
+  <div style="position: relative; height: 20px; margin: 20px;">
+    <sp-color-handle color="hsl(0, 100%, 50%)"></sp-color-handle>
+  </div>
 
-    <!-- Named colors -->
-    <div style="position: relative; height: 20px; margin: 20px;">
-        <sp-color-handle color="red"></sp-color-handle>
-    </div>
+  <!-- Named colors -->
+  <div style="position: relative; height: 20px; margin: 20px;">
+    <sp-color-handle color="red"></sp-color-handle>
+  </div>
 </div>
 ```
 
