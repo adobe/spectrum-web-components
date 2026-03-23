@@ -81,29 +81,29 @@ if (storybookMode === 'dev') {
 }
 
 /**
- * The local screen-reader addon is useful in normal Storybook, but it imports
- * 1st-gen components we intentionally avoid in CI a11y mode.
+ * ci-a11y mode only needs the a11y addon; everything else (docs, designs,
+ * vitest, chromatic, screen-reader) is unnecessary overhead for CI checks.
  */
-const addons: StorybookConfig['addons'] = [
-  {
-    name: '@storybook/addon-docs',
-    options: {
-      transcludeMarkdown: true,
-      mdxPluginOptions: {
-        mdxCompileOptions: {
-          remarkPlugins: [remarkGfm],
+const addons: StorybookConfig['addons'] = ['@storybook/addon-a11y'];
+
+if (storybookMode !== 'ci-a11y') {
+  addons.push(
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        transcludeMarkdown: true,
+        mdxPluginOptions: {
+          mdxCompileOptions: {
+            remarkPlugins: [remarkGfm],
+          },
         },
       },
     },
-  },
-  '@storybook/addon-a11y',
-  '@storybook/addon-designs',
-  '@storybook/addon-vitest',
-  '@chromatic-com/storybook',
-];
-
-if (storybookMode !== 'ci-a11y') {
-  addons.push(resolve(__dirname, './addons/screen-reader-addon'));
+    '@storybook/addon-designs',
+    '@storybook/addon-vitest',
+    '@chromatic-com/storybook',
+    resolve(__dirname, './addons/screen-reader-addon')
+  );
 }
 
 const config: StorybookConfig = {

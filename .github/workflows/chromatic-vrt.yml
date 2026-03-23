@@ -6,9 +6,11 @@ on:
       - main
     paths:
       - '2nd-gen/**'
+      - '.github/workflows/chromatic-vrt.yml'
   pull_request:
     paths:
       - '2nd-gen/**'
+      - '.github/workflows/chromatic-vrt.yml'
   workflow_dispatch:
   workflow_call:
     inputs:
@@ -50,7 +52,7 @@ jobs:
 
       - name: Publish to Chromatic
         id: chromatic
-        uses: chromaui/action@latest
+        uses: chromaui/action@v15
         with:
           projectToken: ${{ secrets.CHROMATIC_TOKEN }}
           workingDir: 2nd-gen/packages/swc
