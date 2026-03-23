@@ -17,13 +17,13 @@ import { SpectrumElement } from '@spectrum-web-components/core/element/index.js'
 
 import '@adobe/spectrum-wc/icon';
 
+import { AlertIcon } from '../../../components/icon/elements/index.js';
 import {
-  AlertIcon,
-  Arrow100Icon,
-  Asterisk100Icon,
-  Cross100Icon,
-  Dash100Icon,
-} from '../../../components/icon/elements/index.js';
+  ChevronUpIcon,
+  CrossIcon,
+  PlusIcon,
+  StopIcon,
+} from '../utils/icons/index.js';
 
 import styles from './prompt-field.css';
 
@@ -114,7 +114,7 @@ export class PromptField extends SpectrumElement {
           aria-label="Remove attachment"
           @click=${this._handleArtifactDismiss}
         >
-          <swc-icon label="Remove">${Cross100Icon()}</swc-icon>
+          <swc-icon label="Remove">${CrossIcon()}</swc-icon>
         </button>
       </div>
     `;
@@ -128,7 +128,7 @@ export class PromptField extends SpectrumElement {
         aria-label="Send"
         @click=${this._handleSendClick}
       >
-        <swc-icon label="Send">${Arrow100Icon()}</swc-icon>
+        <swc-icon label="Send">${ChevronUpIcon()}</swc-icon>
       </button>
     `;
   }
@@ -140,7 +140,7 @@ export class PromptField extends SpectrumElement {
         aria-label="Stop generating"
         @click=${this._handleStopClick}
       >
-        <swc-icon label="Stop">${Dash100Icon()}</swc-icon>
+        <swc-icon label="Stop">${StopIcon()}</swc-icon>
       </button>
     `;
   }
@@ -173,7 +173,7 @@ export class PromptField extends SpectrumElement {
               aria-label="Add attachment"
               @click=${this._handleUploadClick}
             >
-              <swc-icon label="Add">${Asterisk100Icon()}</swc-icon>
+              <swc-icon label="Add">${PlusIcon()}</swc-icon>
             </button>
 
             ${showStop ? this._renderStopButton() : this._renderSendButton()}

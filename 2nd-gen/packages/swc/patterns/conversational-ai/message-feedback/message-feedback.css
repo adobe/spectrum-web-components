@@ -12,15 +12,6 @@
 
 :host {
   display: inline-block;
-  max-inline-size: var(--swc-user-message-max-inline-size, 536px);
-}
-
-:host([modality="split-right-rail"]) {
-  --swc-user-message-max-inline-size: 440px;
-}
-
-:host([modality="panel"]) {
-  --swc-user-message-max-inline-size: 360px;
 }
 
 *,
@@ -29,20 +20,39 @@
   box-sizing: border-box;
 }
 
-.swc-UserMessage {
-  padding-block: 8px;
-  padding-inline: 16px;
-  font-family: token("sans-serif-font");
-  font-size: token("font-size-200");
-  font-weight: token("regular-font-weight");
-  line-height: token("line-height-200");
-  color: token("gray-800");
-  background: token("gray-50");
-  border-radius: 10px;
+.swc-MessageFeedback {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
-/* Card content uses tighter padding to frame the card thumbnail/metadata */
-:host([content="card"]) .swc-UserMessage {
-  padding-block: 4px;
-  padding-inline: 8px;
+.swc-MessageFeedback-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 28px;
+  block-size: 28px;
+  padding: 0;
+  color: token("gray-700");
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition:
+    background 130ms ease,
+    color 130ms ease;
+}
+
+.swc-MessageFeedback-button:hover {
+  background: token("gray-100");
+  color: token("gray-800");
+}
+
+.swc-MessageFeedback-button[data-selected] {
+  color: token("gray-25");
+  background: token("gray-800");
+}
+
+.swc-MessageFeedback-button[data-selected]:hover {
+  background: token("gray-700");
 }

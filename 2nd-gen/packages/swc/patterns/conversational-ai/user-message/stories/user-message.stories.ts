@@ -15,6 +15,9 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '../index.js';
+import '@adobe/spectrum-wc/icon';
+
+import { ThreeDotsIcon } from '../../utils/icons/index.js';
 
 // ────────────────
 //    METADATA
@@ -52,6 +55,13 @@ const meta: Meta = {
   args,
   argTypes,
   render: (args) => template(args),
+  decorators: [
+    (story) => html`
+      <div style="display:flex;flex-direction:column;align-items:flex-end;">
+        ${story()}
+      </div>
+    `,
+  ],
   parameters: {
     docs: {
       subtitle: 'User-submitted message rendered in the thread.',
@@ -124,7 +134,7 @@ export const Anatomy: Story = {
 export const Modality: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
-      <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
         <swc-user-message modality="full-screen" content="copy">
           Can you help me create a 45-minute presentation, with animations, for
           an executive update?
@@ -135,7 +145,7 @@ export const Modality: Story = {
           Full screen
         </span>
       </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
         <swc-user-message modality="split-right-rail" content="copy">
           Can you help me create a 45-minute presentation, with animations, for
           an executive update?
@@ -146,7 +156,7 @@ export const Modality: Story = {
           Split / Right rail
         </span>
       </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
         <swc-user-message modality="panel" content="copy">
           Can you help me create a 45-minute presentation, with animations, for
           an executive update?
@@ -173,7 +183,7 @@ export const Modality: Story = {
 export const Content: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
-      <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
         <swc-user-message content="copy">
           Can you help me create a 45-minute presentation, with animations, for
           an executive update?
@@ -184,7 +194,7 @@ export const Content: Story = {
           Copy
         </span>
       </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
         <swc-user-message content="card">
           <div
             style="display:flex;gap:16px;align-items:center;padding:16px;background:var(--swc-gray-75);border-radius:8px;"
@@ -192,7 +202,7 @@ export const Content: Story = {
             <div
               style="width:32px;height:32px;border-radius:3px;background:var(--swc-gray-200);flex-shrink:0;"
             ></div>
-            <div>
+            <div style="flex:1;min-width:0;">
               <div
                 style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-100);font-weight:700;color:var(--swc-gray-900);"
               >
@@ -204,6 +214,14 @@ export const Content: Story = {
                 2026
               </div>
             </div>
+            <button
+              style="display:inline-flex;align-items:center;justify-content:center;padding:0;background:transparent;border:none;cursor:pointer;color:var(--swc-gray-700);flex-shrink:0;"
+              aria-label="More options"
+            >
+              <swc-icon label="More options" style="--swc-icon-inline-size:20px;--swc-icon-block-size:20px;">
+                ${ThreeDotsIcon()}
+              </swc-icon>
+            </button>
           </div>
         </swc-user-message>
         <span
@@ -212,7 +230,7 @@ export const Content: Story = {
           Card
         </span>
       </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
         <swc-user-message content="image">
           <div style="display:flex;flex-direction:column;gap:8px;width:200px;">
             <div
@@ -222,15 +240,27 @@ export const Content: Story = {
                 style="width:100%;height:100%;background:linear-gradient(135deg,#a78bfa,#f472b6);"
               ></div>
             </div>
-            <div
-              style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-100);font-weight:700;color:var(--swc-gray-900);"
-            >
-              Hilton commercial assets
-            </div>
-            <div
-              style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-            >
-              2026
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;">
+              <div>
+                <div
+                  style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-100);font-weight:700;color:var(--swc-gray-900);"
+                >
+                  Hilton commercial assets
+                </div>
+                <div
+                  style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
+                >
+                  2026
+                </div>
+              </div>
+              <button
+                style="display:inline-flex;align-items:center;justify-content:center;padding:0;background:transparent;border:none;cursor:pointer;color:var(--swc-gray-700);flex-shrink:0;"
+                aria-label="More options"
+              >
+                <swc-icon label="More options" style="--swc-icon-inline-size:20px;--swc-icon-block-size:20px;">
+                  ${ThreeDotsIcon()}
+                </swc-icon>
+              </button>
             </div>
           </div>
         </swc-user-message>

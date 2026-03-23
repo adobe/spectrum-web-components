@@ -65,8 +65,6 @@
 .swc-PromptField-artifact {
   position: relative;
   block-size: 68px;
-  border-radius: token("corner-radius-medium-size-medium");
-  overflow: hidden;
 }
 
 :host([uploaded-artifact="image"]) .swc-PromptField-artifact {
@@ -76,26 +74,27 @@
 .swc-PromptField-artifact-dismiss {
   display: flex;
   position: absolute;
-  inset-block-start: 4px;
-  inset-inline-end: 4px;
+  inset-block-start: -12px;
+  inset-inline-end: -12px;
   align-items: center;
   justify-content: center;
   inline-size: 24px;
   block-size: 24px;
   padding: 0;
-  color: token("gray-25");
-  background: token("gray-900");
+  color: token("gray-800");
+  background: token("gray-200");
   border: none;
   border-radius: 50%;
   cursor: pointer;
 }
 
 .swc-PromptField-artifact-dismiss:hover {
-  background: token("gray-800");
+  background: token("gray-300");
 }
 
 .swc-PromptField-artifact-dismiss swc-icon {
-  --swc-icon-size: 10px;
+  --swc-icon-inline-size: 10px;
+  --swc-icon-block-size: 10px;
 }
 
 /* ─────────────────────────────────────
@@ -171,7 +170,8 @@
 }
 
 .swc-PromptField-upload swc-icon {
-  --swc-icon-size: 18px;
+  --swc-icon-inline-size: 18px;
+  --swc-icon-block-size: 18px;
 }
 
 /* Send button (filled circle, right side) */
@@ -202,7 +202,8 @@
 }
 
 .swc-PromptField-send swc-icon {
-  --swc-icon-size: 14px;
+  --swc-icon-inline-size: 14px;
+  --swc-icon-block-size: 14px;
 }
 
 /* Stop button (filled black circle, right side) */
@@ -227,7 +228,8 @@
 }
 
 .swc-PromptField-stop swc-icon {
-  --swc-icon-size: 14px;
+  --swc-icon-inline-size: 14px;
+  --swc-icon-block-size: 14px;
 }
 
 /* ─────────────────────────────────────
