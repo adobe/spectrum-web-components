@@ -81,24 +81,26 @@ if (storybookMode === 'dev') {
 }
 
 /**
- * ci-a11y mode only needs the a11y addon; everything else (docs, designs,
- * vitest, chromatic, screen-reader) is unnecessary overhead for CI checks.
+ * ci-a11y mode needs docs (for MDX parsing) and a11y; everything else
+ * (designs, vitest, chromatic, screen-reader) is unnecessary overhead.
  */
-const addons: StorybookConfig['addons'] = ['@storybook/addon-a11y'];
-
-if (storybookMode !== 'ci-a11y') {
-  addons.push(
-    {
-      name: '@storybook/addon-docs',
-      options: {
-        transcludeMarkdown: true,
-        mdxPluginOptions: {
-          mdxCompileOptions: {
-            remarkPlugins: [remarkGfm],
-          },
+const addons: StorybookConfig['addons'] = [
+  {
+    name: '@storybook/addon-docs',
+    options: {
+      transcludeMarkdown: true,
+      mdxPluginOptions: {
+        mdxCompileOptions: {
+          remarkPlugins: [remarkGfm],
         },
       },
     },
+  },
+  '@storybook/addon-a11y',
+];
+
+if (storybookMode !== 'ci-a11y') {
+  addons.push(
     '@storybook/addon-designs',
     '@storybook/addon-vitest',
     '@chromatic-com/storybook',
