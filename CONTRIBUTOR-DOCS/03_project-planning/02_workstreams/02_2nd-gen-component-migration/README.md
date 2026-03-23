@@ -13,6 +13,7 @@
 
 - [Status](01_status.md)
 - [Washing machine workflow](02_step-by-step/01_washing-machine-workflow.md)
+- [Migration project planning — Epics and tickets](03_migration-project-planning.md)
 - Step By Step
     - [Analyze rendering and styling](02_step-by-step/01_analyze-rendering-and-styling/README.md)
     - [Factor rendering out of 1st-gen component](02_step-by-step/02_factor-rendering-out-of-1st-gen-component.md)
