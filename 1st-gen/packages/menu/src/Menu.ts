@@ -1180,8 +1180,12 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             class="spectrum-Menu-backIcon"
           ></sp-icon-chevron100>
         </button>
-        <span class="spectrum-Menu-backHeading">${current.itemText}</span>
+        <span class="spectrum-Menu-backHeading">Back</span>
       </div>
+      <hr class="mobile-submenu-divider" />
+      <span class="spectrum-Menu-sectionHeading mobile-submenu-title">
+        ${current.itemText}
+      </span>
     `;
   }
 
