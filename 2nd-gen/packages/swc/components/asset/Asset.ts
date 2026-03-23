@@ -85,10 +85,16 @@ export class Asset extends AssetBase {
           ['swc-Asset']: true,
         })}
       >
-        ${choose(this.variant, [
-          ['file', () => file(this.label)],
-          ['folder', () => folder(this.label)],
-        ], () => html`<slot></slot>`)}
+        ${choose(
+          this.variant,
+          [
+            ['file', () => file(this.label)],
+            ['folder', () => folder(this.label)],
+          ],
+          () => html`
+            <slot></slot>
+          `
+        )}
       </div>
     `;
   }
