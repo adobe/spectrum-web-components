@@ -36,6 +36,7 @@
 :host([is-mobile-view]) {
   display: block;
   inline-size: 100%;
+  overflow: hidden;
 }
 
 .mobile-slot-wrapper {
@@ -50,4 +51,36 @@
   --spectrum-icon-size: var(--spectrum-chevron-icon-size-100);
 
   transform: rotate(180deg);
+}
+
+@keyframes mobile-slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(30%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes mobile-slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-30%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+:host([mobile-transition="forward"]) {
+  animation: mobile-slide-in-right 200ms ease-out;
+}
+
+:host([mobile-transition="back"]) {
+  animation: mobile-slide-in-left 200ms ease-out;
 }

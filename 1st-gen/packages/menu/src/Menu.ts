@@ -155,6 +155,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
   public openMobileSubmenu(item: MenuItem): void {
     this._projectMobileSubmenu(item);
     this._mobileSubmenuStack = [...this._mobileSubmenuStack, item];
+    this._triggerMobileTransition('forward');
   }
 
   public closeMobileSubmenu(): void {
@@ -168,7 +169,19 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     if (previous?.submenuElement) {
       previous.submenuElement.setAttribute('slot', 'mobile-submenu');
     }
+    this._triggerMobileTransition('back');
   }
+
+  private _triggerMobileTransition(direction: 'forward' | 'back'): void {
+    this.removeAttribute('mobile-transition');
+    requestAnimationFrame(() => {
+      this.setAttribute('mobile-transition', direction);
+    });
+  }
+
+  private _handleTransitionEnd = (): void => {
+    this.removeAttribute('mobile-transition');
+  };
 
   public resetMobileSubmenus(): void {
     for (let i = this._mobileSubmenuStack.length - 1; i >= 0; i--) {
@@ -1237,6 +1250,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
       this.setAttribute('role', this.ownRole);
     }
     this.updateComplete.then(() => this.updateItemFocus());
+    this.addEventListener('animationend', this._handleTransitionEnd);
   }
 
   private isFocusableElement(el: MenuItem): boolean {
@@ -1244,6 +1258,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
   }
 
   public override disconnectedCallback(): void {
+    this.removeEventListener('animationend', this._handleTransitionEnd);
     this.cachedChildItems = undefined;
     this.selectedItems = [];
     this.selectedItemsMap.clear();
