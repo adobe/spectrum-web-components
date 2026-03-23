@@ -11,13 +11,27 @@
  */
 import { readCsf } from '@storybook/core/csf-tools';
 import type { Indexer } from '@storybook/types';
+import type { StorybookConfig } from '@storybook/web-components-vite';
 import { dirname, resolve } from 'path';
 import remarkGfm from 'remark-gfm';
 import { fileURLToPath } from 'url';
 import { mergeConfig } from 'vite';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const includeTestStories = process.env.NODE_ENV !== 'production';
+type StorybookMode = 'dev' | 'build' | 'ci-a11y';
+
+// Modes:
+// - dev: full local Storybook, including docs and test stories
+// - build: production Storybook build, excluding internal and test stories
+// - ci-a11y: minimal component-only Storybook used by CI accessibility checks
+const storybookMode: StorybookMode =
+  process.env.SWC_STORYBOOK_MODE === 'ci-a11y'
+    ? 'ci-a11y'
+    : process.env.NODE_ENV === 'production'
+      ? 'build'
+      : 'dev';
+
+// Custom indexer to allow .test.ts files to be treated as story files.
 const testStoryIndexer: Indexer = {
   test: /\.test\.ts$/,
   createIndex: async (fileName, options) => {
@@ -26,30 +40,44 @@ const testStoryIndexer: Indexer = {
   },
 };
 
-const stories = [
+const stories: StorybookConfig['stories'] = [
   {
     directory: '../components',
-    files: '**/*.stories.ts',
+    // Production-style builds exclude internal-only stories; local/dev keeps the full set.
+    files:
+      storybookMode === 'build'
+        ? '**/!(*.internal).stories.ts'
+        : '**/*.stories.ts',
     titlePrefix: 'Components',
-  },
-  {
-    directory: 'learn-about-swc',
-    files: '*.mdx',
-    titlePrefix: 'Learn about SWC',
-  },
-  {
-    directory: 'guides',
-    files: '**/!(*documentation).mdx',
-    titlePrefix: 'Guides',
-  },
-  {
-    directory: 'contributor-docs',
-    files: '**/*.mdx',
-    titlePrefix: 'Contributor docs',
   },
 ];
 
-if (includeTestStories) {
+/**
+ * The CI a11y mode trims docs/guides
+ * that can pull in 1st-gen-linked dependencies the test build does not need.
+ */
+if (storybookMode !== 'ci-a11y') {
+  stories.push(
+    {
+      directory: 'learn-about-swc',
+      files: '*.mdx',
+      titlePrefix: 'Learn about SWC',
+    },
+    {
+      directory: 'guides',
+      files: '**/!(*documentation).mdx',
+      titlePrefix: 'Guides',
+    },
+    {
+      directory: 'contributor-docs',
+      files: '**/*.mdx',
+      titlePrefix: 'Contributor docs',
+    }
+  );
+}
+
+// Test stories are dev-only fixtures and should not ship in production Storybook.
+if (storybookMode === 'dev') {
   stories.push({
     directory: '../components',
     files: '**/*.test.ts',
@@ -57,10 +85,33 @@ if (includeTestStories) {
   });
 }
 
-/** @type { import('@storybook/web-components-vite').StorybookConfig } */
-const config = {
+/**
+ * The local screen-reader addon is useful in normal Storybook, but it imports
+ * 1st-gen components we intentionally avoid in CI a11y mode.
+ */
+const addons: StorybookConfig['addons'] = [
+  {
+    name: '@storybook/addon-docs',
+    options: {
+      transcludeMarkdown: true,
+      mdxPluginOptions: {
+        mdxCompileOptions: {
+          remarkPlugins: [remarkGfm],
+        },
+      },
+    },
+  },
+  '@storybook/addon-a11y',
+  '@storybook/addon-designs',
+  '@storybook/addon-vitest',
+];
+
+if (storybookMode !== 'ci-a11y') {
+  addons.push(resolve(__dirname, './addons/screen-reader-addon'));
+}
+
+const config: StorybookConfig = {
   stories,
-  experimental_indexers: [testStoryIndexer],
   docs: {
     defaultName: 'README',
   },
@@ -68,24 +119,8 @@ const config = {
   core: {
     disableTelemetry: true,
   },
-  addons: [
-    {
-      name: '@storybook/addon-docs',
-      options: {
-        transcludeMarkdown: true,
-        mdxPluginOptions: {
-          mdxCompileOptions: {
-            remarkPlugins: [remarkGfm],
-          },
-        },
-      },
-    },
-    '@storybook/addon-a11y',
-    '@storybook/addon-designs',
-    '@storybook/addon-vitest',
-    // Screen reader addon (local).
-    resolve(__dirname, './addons/screen-reader-addon'),
-  ],
+  addons,
+  experimental_indexers: storybookMode === 'dev' ? [testStoryIndexer] : [],
   viteFinal: async (config) => {
     return mergeConfig(config, {
       plugins: [

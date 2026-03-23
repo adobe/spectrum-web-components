@@ -9,19 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { html, TemplateResult } from 'lit';
 
-export default {
-  globs: [
-    'components/**/*.ts',
-    '../core/components/**/*.ts',
-    '../core/controllers/**/*.ts',
-    '../core/element/**/*.ts',
-    '../core/mixins/**/*.ts',
-    '../core/utils/**/*.ts',
-  ],
-  exclude: ['**/*.stories.ts', '**/*.test.ts', '**/*.spec.ts'],
-  outdir: '.storybook',
-  litelement: true,
-  dev: false,
-  plugins: [],
+export const Dash300Icon = (): TemplateResult => {
+  return html`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
+      <path
+        d="M11.5 8H2.5c-.55273 0-1-.44727-1-1s.44727-1 1-1h9c.55273 0 1 .44727 1 1s-.44727 1-1 1Z"
+      />
+    </svg>
+  `;
 };

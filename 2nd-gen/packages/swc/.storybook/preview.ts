@@ -142,6 +142,8 @@ const preview = {
       },
     },
     a11y: {
+      // CI enforces a11y via the custom Storybook test-runner; keep addon-a11y non-blocking here.
+      test: 'todo',
       config: {
         rules: [
           // Customize axe-core rules if needed
