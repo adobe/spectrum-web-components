@@ -105,7 +105,7 @@ export abstract class BadgeBase extends SizedMixin(
    *
    * @todo The purpose of the bespoke getter and setter is unclear, as it
    * looks like they may be behaving just like a standard Lit reactive
-   * property. Explore replacing after the Barebones milestone.
+   * property. Explore replacing after milestone 2.
    */
   @property({ reflect: true })
   public get fixed(): FixedValues | undefined {

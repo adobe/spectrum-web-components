@@ -11,8 +11,8 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
+import { choose } from 'lit/directives/choose.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { when } from 'lit/directives/when.js';
 
 import { AssetBase } from '@spectrum-web-components/core/components/asset';
 
@@ -85,14 +85,10 @@ export class Asset extends AssetBase {
           ['swc-Asset']: true,
         })}
       >
-        ${when(this.variant === 'file', () => file(this.label))}
-        ${when(this.variant === 'folder', () => folder(this.label))}
-        ${when(
-          this.variant !== 'file' && this.variant !== 'folder',
-          () => html`
-            <slot></slot>
-          `
-        )}
+        ${choose(this.variant, [
+          ['file', () => file(this.label)],
+          ['folder', () => folder(this.label)],
+        ], () => html`<slot></slot>`)}
       </div>
     `;
   }

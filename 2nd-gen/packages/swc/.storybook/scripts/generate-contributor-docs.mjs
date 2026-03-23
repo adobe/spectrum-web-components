@@ -39,6 +39,9 @@ const CONTRIBUTOR_DOCS_DIR = resolve(
 );
 const OUTPUT_DIR = resolve(STORYBOOK_DIR, 'contributor-docs');
 const PREVIEW_FILE = resolve(STORYBOOK_DIR, 'preview.ts');
+const REPO_ROOT = resolve(STORYBOOK_DIR, '../../../..');
+const GITHUB_REPO_URL =
+  'https://github.com/adobe/spectrum-web-components/blob/main';
 
 // Markers for the auto-generated sort order in preview.ts
 const SORT_ORDER_START_MARKER =
@@ -303,7 +306,26 @@ function sanitizeHtmlForMdx(content) {
 }
 
 /**
- * Rewrite internal .md links to Storybook doc paths.
+ * Source file extensions that should be converted to GitHub links.
+ */
+const SOURCE_FILE_EXTENSIONS = [
+  '.ts',
+  '.tsx',
+  '.js',
+  '.jsx',
+  '.mjs',
+  '.cjs',
+  '.css',
+  '.scss',
+  '.json',
+  '.yaml',
+  '.yml',
+];
+
+/**
+ * Rewrite internal links to appropriate destinations:
+ * - .md files -> Storybook doc paths
+ * - Source files (.ts, .js, .css, etc.) -> GitHub URLs
  *
  * @param {string} content - Markdown content
  * @param {string} currentFile - Absolute path of the current file
@@ -322,33 +344,68 @@ function rewriteLinks(content, currentFile, linkMap) {
       return match;
     }
 
-    if (!href.includes('.md')) {
-      return match;
-    }
-
     let [linkPath, anchor] = href.split('#');
 
-    const absolutePath = resolve(currentDir, linkPath);
-    const relativeToDocs = relative(CONTRIBUTOR_DOCS_DIR, absolutePath);
+    // Handle .md files
+    if (href.includes('.md')) {
+      const absolutePath = resolve(currentDir, linkPath);
+      const relativeToDocs = relative(CONTRIBUTOR_DOCS_DIR, absolutePath);
 
-    if (relativeToDocs.startsWith('..')) {
+      // If within CONTRIBUTOR-DOCS, convert to Storybook doc path
+      if (!relativeToDocs.startsWith('..')) {
+        const docInfo = linkMap.get(relativeToDocs);
+        if (!docInfo) {
+          console.warn(
+            `Warning: Could not resolve link "${href}" in ${relative(CONTRIBUTOR_DOCS_DIR, currentFile)}`
+          );
+          return match;
+        }
+
+        let storybookUrl = `/docs/${docInfo.docId}`;
+        if (anchor) {
+          storybookUrl += `#${anchor}`;
+        }
+
+        return `[${text}](${storybookUrl})`;
+      }
+
+      // If outside CONTRIBUTOR-DOCS but within repo, convert to GitHub URL
+      const relativeToRepo = relative(REPO_ROOT, absolutePath);
+      if (!relativeToRepo.startsWith('..')) {
+        let githubUrl = `${GITHUB_REPO_URL}/${relativeToRepo}`;
+        if (anchor) {
+          githubUrl += `#${anchor}`;
+        }
+
+        return `[${text}](${githubUrl})`;
+      }
+
+      // Outside the repo - leave unchanged
       return match;
     }
 
-    const docInfo = linkMap.get(relativeToDocs);
-    if (!docInfo) {
-      console.warn(
-        `Warning: Could not resolve link "${href}" in ${relative(CONTRIBUTOR_DOCS_DIR, currentFile)}`
-      );
-      return match;
+    // Handle source files -> GitHub URLs
+    const isSourceFile = SOURCE_FILE_EXTENSIONS.some((ext) =>
+      linkPath.endsWith(ext)
+    );
+    if (isSourceFile) {
+      const absolutePath = resolve(currentDir, linkPath);
+      const relativeToRepo = relative(REPO_ROOT, absolutePath);
+
+      // Only convert if the path is within the repo (doesn't start with ..)
+      if (relativeToRepo.startsWith('..')) {
+        return match;
+      }
+
+      let githubUrl = `${GITHUB_REPO_URL}/${relativeToRepo}`;
+      if (anchor) {
+        githubUrl += `#${anchor}`;
+      }
+
+      return `[${text}](${githubUrl})`;
     }
 
-    let storybookUrl = `/docs/${docInfo.docId}`;
-    if (anchor) {
-      storybookUrl += `#${anchor}`;
-    }
-
-    return `[${text}](${storybookUrl})`;
+    return match;
   });
 }
 
