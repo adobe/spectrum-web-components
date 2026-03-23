@@ -11,6 +11,12 @@ workflow:
     a11y); this file sequences work and points there. Badge is the reference
     paths/table, not repeated code samples per phase. Jira epic/ticket guidance
     is in contributor_docs.migration_project_planning.
+  prerequisites:
+    - >
+      Keep spectrum-web-components (this repo) and spectrum-css in the same workspace
+      (e.g. sibling checkouts under one parent folder). Analysis, copying S2 styles
+      from the spectrum-css spectrum-two branch, and AI-assisted migration flows all
+      assume both trees are available locally for comparison and context.
   reference_component: badge
   paths:
     first_gen: "1st-gen/packages/<component>/"
@@ -51,12 +57,17 @@ workflow:
 
 This guide **orchestrates** migrating a Spectrum Web Component from **1st-gen** to **2nd-gen**: eight phases with checklists and quality gates, and links to the step-by-step docs and style guides for how to implement each part. It does not duplicate those guides—it sequences **what** to do and **when**. (Team shorthand: **washing machine**—1st-gen in, structured 2nd-gen out.)
 
+### Workspace setup
+
+Keep **spectrum-web-components** (this repo) and **[spectrum-css](https://github.com/adobe/spectrum-css)** in the **same workspace**—typically as **sibling folders** under one parent directory (e.g. `~/dev/spectrum-web-components` and `~/dev/spectrum-css`). Step 1 analysis, Phase 4 styling (S2 source from the spectrum-css **`spectrum-two`** branch), and AI-assisted migration prompts all work best when both trees are available locally for comparison, copy-from-source, and editor/IDE context.
+
 ---
 
 ## Quick Migration Checklist
 
 **Before starting a migration:**
 
+- [ ] **spectrum-css** is in the same workspace as this repo (sibling checkout; use **`spectrum-two`** for S2 CSS) → [Workspace setup](#workspace-setup)
 - [ ] Component analysis exists → [Phase 1: Preparation](#phase-1-preparation)
 - [ ] Breaking changes documented → [Phase 1: Preparation](#phase-1-preparation)
 - [ ] Core folder created → [Phase 2: Setup](#phase-2-setup)
@@ -171,7 +182,7 @@ Before you start, know the split:
 
 ### What to do
 
-1. **Read or generate the component analysis** — See [Step 1: Analyze rendering and styling](01_analyze-rendering-and-styling/README.md). Analysis docs live under [03_components/](../../03_components/) (e.g. `badge/rendering-and-styling-migration-analysis.md`). **Optional (AI-assisted):** If you use Cursor, the **component-migration-analysis** skill (when available in your setup) can be used together with Step 1’s [Cursor prompt](01_analyze-rendering-and-styling/cursor_prompt.md) to produce or update the analysis; still follow Step 1 QA before treating the doc as final.
+1. **Read or generate the component analysis** — See [Step 1: Analyze rendering and styling](01_analyze-rendering-and-styling/README.md). Analysis docs live under [03_components/](../../03_components/) (e.g. `badge/rendering-and-styling-migration-analysis.md`). Have **spectrum-css** in the [same workspace](#workspace-setup) so comparisons to Spectrum 2 source are practical. **Optional (AI-assisted):** If you use Cursor, the **component-migration-analysis** skill (when available in your setup) can be used together with Step 1’s [Cursor prompt](01_analyze-rendering-and-styling/cursor_prompt.md) to produce or update the analysis; still follow Step 1 QA before treating the doc as final.
 2. **Read the 1st-gen code** and dependencies (mixins, shared modules).
 3. **List breaking changes** and existing bug tickets; consider severity and whether fixes require breaking changes.
 4. **Write a short migration plan** — scope, risks, order of work.
@@ -311,11 +322,11 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 
 ## Phase 4: Styling
 
-**Goal:** Migrate CSS to 2nd-gen structure and follow the CSS style guide. Follow the [full migration steps](CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md); see also [Step 6: Migrate rendering & styles from Spectrum CSS](06_migrate-rendering-and-styles.md) for workstream context.
+**Goal:** Migrate CSS to 2nd-gen structure and follow the CSS style guide. Follow the [full migration steps](CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md); see also [Step 6: Migrate rendering & styles from Spectrum CSS](06_migrate-rendering-and-styles.md) for workstream context. Requires a local **spectrum-css** checkout next to this repo—see [Workspace setup](#workspace-setup).
 
 ### What to do
 
-1. **Follow the migration steps** — [Step 6](06_migrate-rendering-and-styles.md) and the [full migration steps](CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md). Use [03_components/](../../03_components/) for spectrum-two alignment. Copy S2 styles from spectrum-css `spectrum-two` branch, `index.css` (not `dist`).
+1. **Follow the migration steps** — [Step 6](06_migrate-rendering-and-styles.md) and the [full migration steps](CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md). Use [03_components/](../../03_components/) for spectrum-two alignment. Copy S2 styles from your **spectrum-css** clone, **`spectrum-two`** branch, component `index.css` (not `dist`).
 2. **Use tokens** — Replace hard-coded values with `token(...)`. Follow [component CSS](CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md) and [custom properties](CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md).
 3. **Run stylelint** — After updating CSS, run `nx run swc:lint`. Fix all errors. The 2nd-gen config enforces: **property order** (see `linters/stylelint-property-order.js`); **no descending specificity** (e.g. `:host([disabled])` before `:host([checked][disabled])`); **declaration empty line** (empty line between groups); **token usage** (`token("...")` for color, font-size, etc.).
 
@@ -553,6 +564,7 @@ Use Badge as the reference implementation:
 
 ## Style guides and resources
 
+- **Workspace:** [spectrum-css](https://github.com/adobe/spectrum-css) cloned **next to** this repo—see [Workspace setup](#workspace-setup).
 - **TypeScript:** Team conventions (Ticket 7); for 2nd-gen API patterns (static `readonly`, `window.__swc.warn`, deprecating Gen1 exports), see Phase 3 [API patterns](#api-patterns-statics-warnings-and-1st-gen-exports) and 2nd-gen Badge (`core` + `swc` + 1st-gen `badge/src/Badge.ts`).
 - **CSS:** Conventions (Ticket 8)
 - **Testing:** [2nd gen testing conventions](../../../../01_contributor-guides/11_2ndgen_testing.md) (Ticket 10)
