@@ -45,7 +45,7 @@ This section covers the TypeScript coding conventions for **2nd-gen** component 
 
 The guides are written for both human contributors and AI agents. They use simple language, clear examples, and consistent formatting so anyone can follow them.
 
-> **Reference implementation:** The [Badge](../../../2nd-gen/packages/core/components/badge/Badge.base.ts) component is the primary example throughout these guides. Other 2nd-gen components (Status Light, Progress Circle, Divider, Asset, Alert Banner) are used where they show different patterns.
+> **Reference implementation:** The [Badge](../../../2nd-gen/packages/core/components/badge/Badge.base.ts) component is the primary example throughout these guides. Other 2nd-gen components (Status Light, Progress Circle, Divider, Asset) are used where they show different patterns.
 
 ## Guides
 
@@ -71,7 +71,6 @@ The guides are written for both human contributors and AI agents. They use simpl
 
 - [TypeScript documentation](https://www.typescriptlang.org/docs/)
 - [Lit documentation](https://lit.dev/docs/)
-- [Lit — Documenting components](https://lit.dev/docs/components/documenting/)
 - [Lit — Reactive properties](https://lit.dev/docs/components/properties/)
 - [Lit — Decorators](https://lit.dev/docs/components/decorators/)
 - [Lit — Controllers](https://lit.dev/docs/composition/controllers/)

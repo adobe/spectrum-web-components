@@ -15,6 +15,7 @@
 - [Built-in directives used in 2nd-gen](#built-in-directives-used-in-2nd-gen)
     - [classMap](#classmap)
     - [when](#when)
+    - [choose](#choose)
     - [ifDefined](#ifdefined)
     - [styleMap](#stylemap)
 - [Custom directives](#custom-directives)
@@ -38,7 +39,8 @@ Directives are imported from `lit/directives/*.js` and used directly in template
 | Directive | Import | Used in | Purpose |
 |-----------|--------|---------|---------|
 | `classMap` | `lit/directives/class-map.js` | All concrete classes | Dynamic CSS class names |
-| `when` | `lit/directives/when.js` | Badge | Conditional rendering |
+| `when` | `lit/directives/when.js` | Badge | Conditional rendering in place of ternary with `nothing` |
+| `choose` | `lit/directives/choose.js` | Asset | Switch-case style rendering based on a value |
 | `ifDefined` | `lit/directives/if-defined.js` | Stories, templates | Skip attribute if undefined |
 | `styleMap` | `lit/directives/style-map.js` | Storybook decorators | Dynamic inline styles |
 
@@ -129,6 +131,48 @@ ${when(this.hasIcon, () => html`<slot name="icon"></slot>`)}
 // ❌ Bad — ternary with empty string
 ${this.hasIcon ? html`<slot name="icon"></slot>` : ''}
 
+// ❌ Bad — ternary with nothing
+${this.hasIcon ? html`<slot name="icon"></slot>` : nothing}
+```
+
+Use `when` for cleaner conditional rendering. It is especially useful when the false case is empty (no else branch).
+
+For multiple discrete values, use [`choose`](#choose) instead of multiple `when` directives.
+
+### choose
+
+Renders content based on matching a value against a set of cases, similar to a switch statement. Takes a value, an array of case-template pairs, and an optional default template.
+
+**Import:**
+
+```ts
+import { choose } from 'lit/directives/choose.js';
+```
+
+**Example from Asset.ts:**
+
+```ts
+protected override render(): TemplateResult {
+  return html`
+    <div class=${classMap({ ['spectrum-Asset']: true })}>
+      ${choose(this.variant, [
+        ['file', () => file(this.label)],
+        ['folder', () => folder(this.label)],
+      ], () => html`<slot></slot>`)}
+    </div>
+  `;
+}
+```
+
+**Always prefer `choose` over nested ternaries** when selecting between multiple discrete values:
+
+```ts
+// ✅ Good — choose directive
+${choose(this.variant, [
+  ['file', () => file(this.label)],
+  ['folder', () => folder(this.label)],
+], () => html`<slot></slot>`)}
+
 // ❌ Bad — nested ternary
 ${this.variant === 'file'
   ? file(this.label)
@@ -137,15 +181,21 @@ ${this.variant === 'file'
     : html`<slot></slot>`}
 ```
 
-Use `when` for cleaner conditional rendering. It is especially useful when the false case is empty (no else branch).
+**When to use `choose` vs `when`:**
 
-For multiple conditions, use multiple `when` directives or refactor to a helper method:
+- Use `choose` when selecting between multiple discrete values (like a switch statement)
+- Use `when` for simple boolean conditions or presence checks
 
 ```ts
-// ✅ Good — multiple when directives
-${when(this.variant === 'file', () => file(this.label))}
-${when(this.variant === 'folder', () => folder(this.label))}
-${when(!['file', 'folder'].includes(this.variant), () => html`<slot></slot>`)}
+// ✅ Good — choose for variant selection
+${choose(this.variant, [
+  ['primary', () => html`<span class="primary">Primary</span>`],
+  ['secondary', () => html`<span class="secondary">Secondary</span>`],
+  ['tertiary', () => html`<span class="tertiary">Tertiary</span>`],
+])}
+
+// ✅ Good — when for boolean condition
+${when(this.hasIcon, () => html`<slot name="icon"></slot>`)}
 ```
 
 ### ifDefined

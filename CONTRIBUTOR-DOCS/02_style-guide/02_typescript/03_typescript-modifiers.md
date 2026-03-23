@@ -243,7 +243,7 @@ protected _fixed?: FixedValues;
 
 Modifiers can be combined. The order is:
 
-```
+```ts
 [public | protected | private] [static] [abstract | override] [readonly] name
 ```
 
@@ -253,12 +253,12 @@ Common combinations in 2nd-gen:
 |-------------|-------|
 | `public static override get styles()` | Concrete class styles |
 | `static override readonly VARIANTS` | Concrete class static overrides |
-| `static readonly VARIANTS` | Base class static declarations |
 | `public override variant` | Concrete class property override |
 | `protected override render()` | Concrete class render method |
 | `protected override update()` | Base or concrete lifecycle override |
-| `private _fixed` | Backing field for getter/setter |
+| `static readonly VARIANTS` | Base class static declarations |
 | `protected abstract renderIcon()` | Abstract method in base class |
+| `private _fixed` | Backing field for getter/setter |
 
 ```ts
 // ✅ Good — correct modifier order

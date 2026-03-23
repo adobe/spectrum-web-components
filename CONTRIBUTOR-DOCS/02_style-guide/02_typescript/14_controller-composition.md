@@ -79,8 +79,6 @@ The following controllers exist in 1st-gen and may be ported to 2nd-gen core:
 | `ColorController` | `1st-gen/tools/reactive-controllers/` | Color validation/conversion |
 | `GridController` | `1st-gen/tools/grid/` | Grid layout with virtual scrolling |
 
-See [SWC-1419 research](../../03_project-planning/05_research/SWC-1419_research-full-patterns.md#priority-1-focus-management-infrastructure) for the full infrastructure roadmap.
-
 ## LanguageResolutionController
 
 The main controller currently in 2nd-gen is `LanguageResolutionController`. It resolves the component's language/locale for formatting numbers, dates, and accessibility text.

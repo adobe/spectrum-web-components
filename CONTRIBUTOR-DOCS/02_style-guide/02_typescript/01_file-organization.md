@@ -21,10 +21,10 @@
     - [Import extensions](#import-extensions)
 - [Core utilities](#core-utilities)
 - [File set per component](#file-set-per-component)
+- [Where types files live](#where-types-files-live)
 - [Export patterns](#export-patterns)
     - [Core index.ts](#core-indexts)
     - [SWC index.ts](#swc-indexts)
-- [Where types files live](#where-types-files-live)
 
 </details>
 
@@ -198,6 +198,23 @@ The core package also lives at `2nd-gen/packages/core/components/<name>/` and th
 | `badge.css` | `swc/components/badge/badge.css` |
 | `index.ts` | `swc/components/badge/index.ts` |
 
+## Where types files live
+
+Types files always live in the **core** package, not in swc. This is because types are shared between 1st-gen and 2nd-gen.
+
+```text
+2nd-gen/packages/core/components/badge/Badge.types.ts     ✅ Correct
+2nd-gen/packages/swc/components/badge/Badge.types.ts      ❌ Wrong location
+```
+
+The concrete class in swc imports types from core through the package path:
+
+```ts
+import {
+  type BadgeVariant,
+} from '@spectrum-web-components/core/components/badge';
+```
+
 ## Export patterns
 
 ### Core index.ts
@@ -229,23 +246,6 @@ declare global {
   }
 }
 defineElement('swc-badge', Badge);
-```
-
-## Where types files live
-
-Types files always live in the **core** package, not in swc. This is because types are shared between 1st-gen and 2nd-gen.
-
-```text
-2nd-gen/packages/core/components/badge/Badge.types.ts     ✅ Correct
-2nd-gen/packages/swc/components/badge/Badge.types.ts      ❌ Wrong location
-```
-
-The concrete class in swc imports types from core through the package path:
-
-```ts
-import {
-  type BadgeVariant,
-} from '@spectrum-web-components/core/components/badge';
 ```
 
 For more on type file patterns (naming, structure, S1/S2 split), see [Component types](08_component-types.md).
