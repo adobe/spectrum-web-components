@@ -1,5 +1,6 @@
 # logging / private config
 .cursor/mcp.json
+.cursor/handoffs
 yarn-error.log
 build-storybook.log
 .DS_STORE

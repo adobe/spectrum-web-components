@@ -659,21 +659,58 @@ Events handlers for clicks and other user actions can be registered on a
 `<sp-action-button>` as on a standard HTML `<button>` element.
 
 ```html
-<sp-button onclick="spAlert(this, '<sp-action-button> clicked!')">
-  Click me
-</sp-button>
-```
-
-In addition to handling events like a native `<button>` HTML element, one can also use a `<sp-action-button>` in place of the `<a>` HTML element by using the `href` and optional `target` attribute.
-
-```html
-<sp-action-button
-  href="https://github.com/adobe/spectrum-web-components"
-  target="_blank"
->
+<sp-action-button onclick="spAlert(this, '<sp-action-button> clicked!')">
   Click me
 </sp-action-button>
 ```
+
+If you intend to create a link with a `href` attribute, we instead offer CSS classes for creating button-styled links. See more information in the [accessibility section](#accessibility).
+
+```html demo
+<a
+  class="spectrum-ActionButton"
+  href="https://github.com/adobe/spectrum-web-components"
+>
+  Link action button
+</a>
+```
+
+#### Link API deprecation
+
+> **Deprecated**: The `href`, `target`, `download`, `referrerpolicy`, and `rel` attributes on `<sp-action-button>` are deprecated and will be removed in a future release. Use a native HTML anchor (`<a>`) element with the `spectrum-ActionButton` class instead.
+
+Using `<sp-action-button href="...">` conflates button and link semantics, which creates accessibility issues: screen reader users navigating by form controls will not find link-styled buttons, and vice versa. Native HTML elements provide correct semantics by default.
+
+If you intend to create a link with a `href` attribute, we instead offer CSS classes for creating button-styled links. To migrate, import the global elements stylesheet and apply action button classes to native `<a>` elements:
+
+```css
+@import '@spectrum-web-components/styles/global-elements.css';
+```
+
+**Before (deprecated):**
+
+```html
+<sp-action-button
+  href="https://opensource.adobe.com/spectrum-web-components"
+  target="_blank"
+>
+  Visit docs
+</sp-action-button>
+```
+
+**After (recommended):**
+
+```html
+<a
+  class="spectrum-ActionButton spectrum-ActionButton--quiet"
+  href="/docs"
+  target="_blank"
+>
+  Visit docs
+</a>
+```
+
+See the [accessibility section](#use-a-static-button-styled-native-link-if-including-href) for more details.
 
 ### Accessibility
 
@@ -685,6 +722,49 @@ or on an `<sp-icon*>` element child.
 #### Don't override color
 
 Do not use custom colors for buttons. The colors of different button variations have been designed to be consistent and accessible.
+
+#### Use a static button-styled native link if including href
+
+> **Deprecated**: The `href` attribute and other link-related properties (`target`, `download`, `referrerpolicy`, `rel`) on `<sp-action-button>` are deprecated and will be removed in a future release.
+
+You may use a native link with classes to style it like a button. Refer to [the Storybook examples](https://opensource.adobe.com/spectrum-web-components/storybook/index.html?path=/story/action-button/) that include `href` for the appropriate classes to use.
+
+For styles to be fully available to slotted links, you must include the stylesheet for `@spectrum-web-components/styles/global-elements.css`.
+
+To successfully receive button styling, the link must be one of the following:
+
+- A direct child of `<sp-theme>`
+- A slotted child of a component within `<sp-theme>`
+
+To allow button-styled native links in the shadow DOM of extended components, ensure their stylesheet also imports `@spectrum-web-components/styles/global-elements.css`.
+
+**Note**: native button-styled links do not support disabled or pending states, or hold affordances.
+
+```html
+<!--
+ Include in your own application stylesheet and extended component styles:
+ @import '@spectrum-web-components/styles/global-elements.css';
+ -->
+
+<a
+  class="spectrum-ActionButton"
+  href="https://github.com/adobe/spectrum-web-components"
+>
+  Link action button
+</a>
+<a
+  class="spectrum-ActionButton spectrum-ActionButton--quiet"
+  href="https://github.com/adobe/spectrum-web-components"
+>
+  <!-- Use icon components and continue to define slot="icon" for the best styling support -->
+  <sp-icon-help slot="icon"></sp-icon-help>
+  Quiet link action button
+</a>
+```
+
+#### Don't mix href and non-href buttons in a set of buttons
+
+A screen reader user will not encounter href buttons when navigating by buttons or form controls. While they can both be used in the same page, problems could occur if mixing the types in close proximity to each other.
 
 #### Use static black or static white to contrast with backgrounds and images
 

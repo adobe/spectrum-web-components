@@ -13,11 +13,14 @@
 import { TemplateResult } from '@spectrum-web-components/base';
 
 import type { Properties } from './index.js';
-import { renderButtons } from './index.js';
+import { argTypes, renderButtons } from './index.js';
 
 export default {
   component: 'sp-action-button',
   title: 'Action Button/Emphasized Quiet',
+  argTypes: {
+    ...argTypes,
+  },
 };
 
 const emphasized = true;
@@ -56,4 +59,12 @@ XL.args = {
   emphasized,
   size: 'xl',
   quiet,
+};
+
+export const href = (args: Properties): TemplateResult => renderButtons(args);
+href.args = {
+  emphasized,
+  quiet,
+  size: 'm',
+  href: '#',
 };

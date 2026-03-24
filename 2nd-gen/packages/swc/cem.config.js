@@ -14,7 +14,10 @@ export default {
   globs: [
     'components/**/*.ts',
     '../core/components/**/*.ts',
-    '../core/shared/**/*.ts',
+    '../core/controllers/**/*.ts',
+    '../core/element/**/*.ts',
+    '../core/mixins/**/*.ts',
+    '../core/utils/**/*.ts',
   ],
   exclude: ['**/*.stories.ts', '**/*.test.ts', '**/*.spec.ts'],
   outdir: '.storybook',
