@@ -1031,12 +1031,8 @@ export class ActionMenu extends ObserveSlotPresence(
   public override connectedCallback(): void {
     super.connectedCallback();
     this.updateComplete.then(() => {
-      if (!this.tooltipEl?.selfManaged) {
-        return;
-      }
-      const overlayElement = this.tooltipEl.overlayElement;
-      if (overlayElement) {
-        overlayElement.triggerElement = this.button;
+      if (this.tooltipEl?.selfManaged && this.button) {
+        this.tooltipEl.triggerElement = this.button;
       }
     });
 

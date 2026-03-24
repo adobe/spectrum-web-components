@@ -1258,12 +1258,8 @@ export class PickerBase extends SizedMixin(ExpandableElement, {
     }
     super.connectedCallback();
     this.updateComplete.then(() => {
-      if (!this.tooltipEl?.selfManaged) {
-        return;
-      }
-      const overlayElement = this.tooltipEl.overlayElement;
-      if (overlayElement) {
-        overlayElement.triggerElement = this.button;
+      if (this.tooltipEl?.selfManaged && this.button) {
+        this.tooltipEl.triggerElement = this.button;
       }
     });
 
@@ -2275,12 +2271,8 @@ export class Picker extends SizedMixin(ExpandableElement, {
   public override connectedCallback(): void {
     super.connectedCallback();
     this.updateComplete.then(() => {
-      if (!this.tooltipEl?.selfManaged) {
-        return;
-      }
-      const overlayElement = this.tooltipEl.overlayElement;
-      if (overlayElement) {
-        overlayElement.triggerElement = this.button;
+      if (this.tooltipEl?.selfManaged && this.button) {
+        this.tooltipEl.triggerElement = this.button;
       }
     });
 
