@@ -73,6 +73,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     return this.slot === 'submenu';
   }
 
+  private get _mobileViewRoot(): Menu | null {
+    if (this.slot === 'mobile-submenu') {
+      return this.parentElement as Menu | null;
+    }
+    return null;
+  }
+
   protected rovingTabindexController?: RovingTabindexController<MenuItem>;
 
   /**
@@ -156,20 +163,47 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     this._projectMobileSubmenu(item);
     this._mobileSubmenuStack = [...this._mobileSubmenuStack, item];
     this._triggerMobileTransition('forward');
+    this._focusProjectedSubmenu(item);
   }
 
   public closeMobileSubmenu(): void {
-    const current = this.currentMobileSubmenu;
-    if (current) {
-      this._restoreMobileSubmenu(current);
+    const closedItem = this.currentMobileSubmenu;
+    if (closedItem) {
+      this._restoreMobileSubmenu(closedItem);
     }
     this._mobileSubmenuStack = this._mobileSubmenuStack.slice(0, -1);
 
     const previous = this.currentMobileSubmenu;
     if (previous?.submenuElement) {
       previous.submenuElement.setAttribute('slot', 'mobile-submenu');
+      this._focusProjectedSubmenu(previous);
+    } else if (closedItem) {
+      this.updateComplete.then(() => {
+        closedItem.focus();
+      });
     }
     this._triggerMobileTransition('back');
+  }
+
+  private _focusProjectedSubmenu(item: MenuItem): void {
+    const submenu = item.submenuElement as Menu | undefined;
+    if (!submenu) {
+      return;
+    }
+    submenu.updateComplete.then(() => {
+      const items = submenu.childItems;
+      if (!items.length) {
+        return;
+      }
+      const first = items.find((el) => !el.disabled);
+      if (first) {
+        items.forEach((el) => {
+          el.tabIndex = -1;
+        });
+        first.tabIndex = 0;
+        first.focus();
+      }
+    });
   }
 
   private _triggerMobileTransition(direction: 'forward' | 'back'): void {
@@ -209,9 +243,16 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
     item._mobileSubmenuProjected = true;
     this._mobileSubmenuOriginalParents.set(submenuEl, submenuEl.parentElement!);
+
+    const submenu = submenuEl as unknown as Menu;
+    const savedChildItems = new Set(submenu.childItemSet);
+
     submenuEl.setAttribute('slot', 'mobile-submenu');
     (submenuEl as HTMLElement).style.width = '100%';
     this.appendChild(submenuEl);
+
+    this._restoreSubmenuChildState(submenu, savedChildItems);
+    this._addMobileArrowUpInterceptor(submenu);
   }
 
   /**
@@ -224,14 +265,81 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
       return;
     }
 
+    const submenu = submenuEl as unknown as Menu;
+    this._removeMobileArrowUpInterceptor(submenu);
+
     const originalParent = this._mobileSubmenuOriginalParents.get(submenuEl);
     if (originalParent) {
+      const savedChildItems = new Set(submenu.childItemSet);
+
       submenuEl.setAttribute('slot', 'submenu');
       (submenuEl as HTMLElement).style.width = '';
       originalParent.appendChild(submenuEl);
       this._mobileSubmenuOriginalParents.delete(submenuEl);
+
+      this._restoreSubmenuChildState(submenu, savedChildItems);
     }
     item._mobileSubmenuProjected = false;
+  }
+
+  private _mobileArrowUpInterceptors = new Map<
+    HTMLElement,
+    (event: KeyboardEvent) => void
+  >();
+
+  private _addMobileArrowUpInterceptor(submenu: Menu): void {
+    this._removeMobileArrowUpInterceptor(submenu);
+    const handler = (event: KeyboardEvent): void => {
+      if (event.key !== 'ArrowUp') {
+        return;
+      }
+      const items = submenu.childItems;
+      const firstFocusable = items.find((el) => !el.disabled);
+      if (!firstFocusable) {
+        return;
+      }
+      const active =
+        submenu.shadowRoot?.activeElement ||
+        (submenu.getRootNode() as Document).activeElement;
+      if (
+        active !== firstFocusable &&
+        !firstFocusable.contains(active as Node)
+      ) {
+        return;
+      }
+      event.preventDefault();
+      event.stopPropagation();
+      const backButton = this.shadowRoot?.querySelector(
+        '.spectrum-Menu-back'
+      ) as HTMLElement | null;
+      if (backButton) {
+        backButton.focus();
+      }
+    };
+    (submenu as HTMLElement).addEventListener('keydown', handler, true);
+    this._mobileArrowUpInterceptors.set(
+      submenu as unknown as HTMLElement,
+      handler
+    );
+  }
+
+  private _removeMobileArrowUpInterceptor(submenu: Menu): void {
+    const existing = this._mobileArrowUpInterceptors.get(
+      submenu as unknown as HTMLElement
+    );
+    if (existing) {
+      (submenu as HTMLElement).removeEventListener('keydown', existing, true);
+      this._mobileArrowUpInterceptors.delete(submenu as unknown as HTMLElement);
+    }
+  }
+
+  private _restoreSubmenuChildState(
+    submenu: Menu,
+    savedChildItems: Set<MenuItem>
+  ): void {
+    savedChildItems.forEach((child) => submenu.childItemSet.add(child));
+    submenu.cachedChildItems = undefined;
+    submenu.rovingTabindexController?.clearElementCache();
   }
 
   private _mobileSubmenuOriginalParents = new Map<HTMLElement, HTMLElement>();
@@ -967,6 +1075,21 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
       return;
     }
 
+    const mobileRoot = this._mobileViewRoot;
+    if (mobileRoot) {
+      if (shouldOpenSubmenu && lastFocusedItem?.hasSubmenu) {
+        event.stopPropagation();
+        mobileRoot.openMobileSubmenu(lastFocusedItem);
+        return;
+      }
+      if (shouldCloseSelfAsSubmenu) {
+        event.stopPropagation();
+        mobileRoot.closeMobileSubmenu();
+        return;
+      }
+      return;
+    }
+
     if (shouldOpenSubmenu) {
       if (lastFocusedItem?.hasSubmenu) {
         event.stopPropagation();
@@ -981,6 +1104,20 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
   public handleKeydown(event: Event): void {
     if (event.defaultPrevented || !this.rovingTabindexController) {
+      return;
+    }
+    if (this.isMobileView && this._mobileSubmenuStack.length > 0) {
+      const { key } = event as MenuItemKeydownEvent;
+      const dir = this.dir;
+      const shouldClose =
+        (dir === 'ltr' && key === 'ArrowLeft') ||
+        (dir === 'rtl' && key === 'ArrowRight') ||
+        key === 'Escape';
+      if (shouldClose) {
+        event.stopPropagation();
+        event.preventDefault();
+        this.closeMobileSubmenu();
+      }
       return;
     }
     const { key, root, shiftKey, target } = event as MenuItemKeydownEvent;
@@ -1005,8 +1142,11 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
     if (openSubmenuKey && root?.hasSubmenu && !root.open) {
       event.preventDefault();
+      const mobileRoot = this._mobileViewRoot;
       if (this.isMobileView) {
         this.openMobileSubmenu(root);
+      } else if (mobileRoot) {
+        mobileRoot.openMobileSubmenu(root);
       } else {
         root.openOverlay(true);
       }
@@ -1156,6 +1296,33 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     `;
   }
 
+  private _handleBackClick = (event: Event): void => {
+    event.stopPropagation();
+    event.preventDefault();
+    this.closeMobileSubmenu();
+  };
+
+  private _handleBackKeydown = (event: KeyboardEvent): void => {
+    const { key } = event;
+    if (
+      key === 'Enter' ||
+      key === ' ' ||
+      key === 'ArrowLeft' ||
+      key === 'Escape'
+    ) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.closeMobileSubmenu();
+    } else if (key === 'ArrowDown') {
+      event.preventDefault();
+      event.stopPropagation();
+      const current = this.currentMobileSubmenu;
+      if (current) {
+        this._focusProjectedSubmenu(current);
+      }
+    }
+  };
+
   private renderMobileSubmenuHeader(): TemplateResult {
     const current = this.currentMobileSubmenu!;
     return html`
@@ -1163,17 +1330,8 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         class="spectrum-Menu-back"
         role="menuitem"
         tabindex="0"
-        @click=${(event: Event) => {
-          event.stopPropagation();
-          event.preventDefault();
-          this.closeMobileSubmenu();
-        }}
-        @keydown=${(event: KeyboardEvent) => {
-          if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            this.closeMobileSubmenu();
-          }
-        }}
+        @click=${this._handleBackClick}
+        @keydown=${this._handleBackKeydown}
       >
         <button class="spectrum-Menu-backButton" tabindex="-1">
           <sp-icon-chevron100
