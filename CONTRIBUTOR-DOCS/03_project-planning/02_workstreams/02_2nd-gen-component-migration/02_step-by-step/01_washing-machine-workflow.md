@@ -5,12 +5,15 @@ workflow:
   slug: washing-machine
   audience: [human, ai-agent]
   description: >
-    Thin orchestrator for migrations: eight phases (preparation → review) with
-    checklists and quality gates. Implementation detail lives in linked
-    step-by-step docs and style guides (CSS migration, component CSS, testing,
-    a11y); this file sequences work and points there. Badge is the reference
-    paths/table, not repeated code samples per phase. Jira epic/ticket guidance
-    is in contributor_docs.migration_project_planning.
+    Thin orchestrator for migrating an existing 1st-gen component to 2nd-gen
+    (or when 1st-gen is the deliberate migration target): eight phases
+    (preparation → review) with checklists and quality gates. Not for
+    greenfield-only 2nd-gen; see migration_project_planning for greenfield TODO.
+    Implementation detail lives
+    in linked step-by-step docs and style guides (CSS migration, component CSS,
+    testing, a11y); this file sequences work and points there. Badge is the
+    reference paths/table, not repeated code samples per phase. Jira epic/ticket
+    guidance is in contributor_docs.migration_project_planning.
   prerequisites:
     - >
       Keep spectrum-web-components (this repo) and spectrum-css in the same workspace
@@ -51,11 +54,13 @@ workflow:
 
 <!-- Document title (editable) -->
 
-# Washing machine: 1st-gen to 2nd-gen migration guide
+# Washing machine: migrating an existing 1st-gen component to 2nd-gen
 
 <!-- Document content (editable) -->
 
-This guide **orchestrates** migrating a Spectrum Web Component from **1st-gen** to **2nd-gen**: eight phases with checklists and quality gates, and links to the step-by-step docs and style guides for how to implement each part. It does not duplicate those guides—it sequences **what** to do and **when**. (Team shorthand: **washing machine**—1st-gen in, structured 2nd-gen out.)
+**Scope:** This guide applies **only** when a **1st-gen Spectrum Web Component already exists** (or 1st-gen is explicitly the package you are migrating—you refactor that surface, move shared logic to core, then add 2nd-gen). **Greenfield / net-new** 2nd-gen (no 1st-gen counterpart) is **out of scope** here; see [TODO: Greenfield 2nd-gen contributor guide](../03_migration-project-planning.md#todo-greenfield-2nd-gen-contributor-guide) in [Migration project planning](../03_migration-project-planning.md).
+
+It **orchestrates** the migration: eight phases with checklists and quality gates, plus links to the step-by-step docs and style guides for implementation detail. It does not duplicate those guides—it sequences **what** to do and **when**. (Team shorthand: **washing machine**—1st-gen in, structured 2nd-gen out.)
 
 ### Workspace setup
 
@@ -99,7 +104,7 @@ This guide **orchestrates** the migration: it sequences the 8 phases and links t
 | Washing machine phase | Step-by-step doc(s) |
 |----------------------|---------------------------|
 | **1. Preparation** | Uses output of **Step 1: Analyze rendering and styling** (read the component analysis). Plan breaking changes and scope. |
-| **2. Setup** | **Steps 2–3** (factor rendering out of 1st-gen, move base to core) if you follow the refactor path; or create 2nd-gen files from scratch. |
+| **2. Setup** | **Steps 2–3** — factor rendering out of 1st-gen, move base to core — then create 2nd-gen core/SWC layout per Phase 2. |
 | **3. API migration** | **Step 4: Formalize Spectrum data model** + **Step 5: Add 2nd-gen SWC** (API overrides/additions). |
 | **4. Styling** | **Step 6: Migrate rendering & styles from Spectrum CSS**. |
 | **5. Accessibility** | (No dedicated step — this guide adds it.) |
@@ -107,7 +112,7 @@ This guide **orchestrates** the migration: it sequences the 8 phases and links t
 | **7. Documentation** | **Step 7: Add stories for 2nd-gen component** + JSDoc and usage docs. |
 | **8. Review** | (No dedicated step — this guide adds checklist and PR.) |
 
-When you're **refactoring an existing 1st-gen component** (base moves to core, then 2nd-gen is added), follow the **Refactor path** in [Choose your migration path](#choose-your-migration-path) and use the step-by-step docs for the details. When you're **creating a new 2nd-gen component** or working mainly in 2nd-gen, use this guide's phases as the main sequence.
+Follow [Refactor path (1st-gen required)](#refactor-path-1st-gen-required) and the linked step-by-step docs for Steps 2–3. If those steps are **already** done, start **Phase 2** at SWC package setup and the Phase 2 “What to do” list.
 
 ---
 
@@ -116,7 +121,7 @@ When you're **refactoring an existing 1st-gen component** (base moves to core, t
 ```mermaid
 flowchart LR
     subgraph Input
-        A[1st-gen component]
+        A[Existing 1st-gen component]
     end
     subgraph Phases
         B[1. Preparation]
@@ -136,16 +141,9 @@ flowchart LR
 
 ---
 
-## Choose your migration path
+## Refactor path (1st-gen required)
 
-**Pick this first** — it determines everything downstream.
-
-| Path | When to use |
-|------|-------------|
-| **Refactor existing 1st-gen** | The component exists in 1st-gen; you will factor rendering out, move the base to core, then add 2nd-gen SWC. |
-| **Create new 2nd-gen** | No 1st-gen equivalent, or you're creating 2nd-gen from scratch. Skip the refactor steps and start at Phase 2 (Setup). |
-
-**Refactor path (1st-gen in place):** If you chose "Refactor existing 1st-gen," do this **before** or as part of **Phase 2 (Setup)**:
+This workflow assumes a **1st-gen package** (`1st-gen/packages/<component>/` or equivalent) is in place and is what you are migrating. Do the following **before** or as part of **Phase 2 (Setup)**:
 
 1. **Factor rendering out of 1st-gen** — [Step 2](02_factor-rendering-out-of-1st-gen-component.md): Rename to `[Component].base.ts`, create new `[Component].ts` that extends the base, move `render()` and `styles` to the concrete class. Confirm tests still pass.
 2. **Move base class to 2nd-gen core** — [Step 3](03_move-base-class-to-2nd-gen-core.md): Create `core/components/<name>/`, move the base and types there, update 1st-gen to import from core. Confirm tests still pass.

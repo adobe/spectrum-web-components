@@ -1,14 +1,36 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Workstreams](../README.md) / [2nd-gen Component Migration](README.md) / Migration project planning
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Workstreams](../README.md) / [2nd-gen Component Migration](README.md) / Migration project planning (Epics and tickets)
 
 <!-- Document title (editable) -->
 
 # Migration project planning (Epics and tickets)
 
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
+
+- [TODO: Greenfield 2nd-gen contributor guide](#todo-greenfield-2nd-gen-contributor-guide)
+- [Epics and tickets](#epics-and-tickets)
+    - [Rationale](#rationale)
+    - [Epic template](#epic-template)
+    - [Ticket list](#ticket-list)
+    - [Mapping: tickets to phases](#mapping-tickets-to-phases)
+    - [Badge example](#badge-example)
+    - [When to split or combine tickets](#when-to-split-or-combine-tickets)
+    - [Tracking recommendation](#tracking-recommendation)
+    - [Quality gate checklist (for Epic closure)](#quality-gate-checklist-for-epic-closure)
+
+</details>
+
 <!-- Document content (editable) -->
 
 This doc is **project-management guidance** for tracking a component migration in Jira (or similar). For the technical sequence, quality gates, and phase checklists, use the [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md).
+
+## TODO: Greenfield 2nd-gen contributor guide
+
+> **Planned:** A separate contributor guide for **new** 2nd-gen components **without** a 1st-gen counterpart is not written yet (Rise outlined this track). The [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md) applies only when a 1st-gen package exists or is the migration target. **Add the Jira epic or ticket link here** when it is filed.
 
 ---
 
