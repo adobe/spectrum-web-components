@@ -97,3 +97,31 @@ export const RightInput = (args?: Properties): TemplateResult =>
 RightInput.args = {
   value: '#a8323a',
 };
+
+export const WithLabelsAndHelpText = (args?: Properties): TemplateResult => {
+  return html`
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      ${ColorFieldMarkup({
+        ...args,
+        slottedLabel: 'Top label',
+        value: '#8774eb',
+      })}
+      ${ColorFieldMarkup({
+        ...args,
+        sideAligned: 'end',
+        slottedLabel: 'Side aligned end label',
+        value: '#d72b2e',
+      })}
+      ${ColorFieldMarkup({
+        ...args,
+        sideAligned: 'start',
+        slottedLabel: 'Side aligned start label',
+        value: '#f457dd',
+      })}
+    </div>
+  `;
+};
+WithLabelsAndHelpText.args = {
+  viewColor: true,
+  helpText: 'Enter a color value',
+};

@@ -13,7 +13,6 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/textfield/sp-textfield.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 
 export default {
@@ -27,15 +26,13 @@ const template = ({
   size?: 's' | 'm' | 'l' | 'xl';
 } = {}): TemplateResult => {
   return html`
-    <sp-field-label for="name" size=${ifDefined(size)}>
-      Enter your life story
-    </sp-field-label>
     <sp-textfield
       id="name"
       multiline
       size=${ifDefined(size)}
       value="Sized Textarea"
     >
+      Enter your life story
       <sp-help-text size=${ifDefined(size)} slot="help-text">
         Spare no expense.
       </sp-help-text>

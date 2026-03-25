@@ -46,7 +46,7 @@ describe('Combobox accessibility', () => {
     await elementUpdated(el);
     await expect(el).to.be.accessible();
   });
-  it('renders accessibly with <sp-field-label>', async () => {
+  it('renders accessibly with slotted label', async () => {
     const test = await fixture<HTMLDivElement>(html`
       <div>${withFieldLabel()}</div>
     `);
@@ -66,7 +66,7 @@ describe('Combobox accessibility', () => {
 
     await expect(el).to.be.accessible();
   });
-  it('manages its "name" value with <sp-field-label>', async () => {
+  it('manages its "name" value with slotted label', async () => {
     const test = await fixture<HTMLDivElement>(html`
       <div>${withFieldLabel()}</div>
     `);
@@ -85,9 +85,7 @@ describe('Combobox accessibility', () => {
     const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
       snapshot,
       (node) =>
-        node.name === 'Pick something' &&
-        !node.value &&
-        node.role === 'combobox'
+        node.name === 'Pick a fruit' && !node.value && node.role === 'combobox'
     );
     // by default, is there a combobox that has `name` as the label?
     expect(a11yNode, '`name` is the label text').to.not.be.null;
@@ -101,7 +99,7 @@ describe('Combobox accessibility', () => {
     const node = findAccessibilityNode<AccessibleNamedNode>(
       snapshot,
       (node) =>
-        node.name === 'Pick something' &&
+        node.name === 'Pick a fruit' &&
         node.value === 'Banana' &&
         node.role === 'combobox'
     );

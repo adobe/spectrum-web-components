@@ -25,6 +25,7 @@ import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
+import { spreadProps } from '../../../test/lit-helpers.js';
 import { Combobox, ComboboxOption } from '../src/Combobox.js';
 import { argTypes } from './args.js';
 import { countries, fruits, StoryArgs } from './index.js';
@@ -81,13 +82,11 @@ export const hasDisabledItems = (args: StoryArgs): TemplateResult => {
   }));
 
   return html`
-    <sp-field-label side-aligned="start" for="combobox-disabled-items">
-      Some fruits are disabled (light DOM)
-    </sp-field-label>
     <sp-combobox
-      id="combobox-disabled-items"
-      style="min-width: 80px;--spectrum-textfield-m-min-width:0; width:160px;"
+      side-aligned="start"
+      style="--mod-textfield-grid-template-columns-side-label: minmax(12ch, 1fr) minmax(12ch, 2fr);"
     >
+      <span slot="field-label">Some fruits are disabled (light DOM)</span>
       ${fruits.map(
         (fruit) => html`
           <sp-menu-item
@@ -100,14 +99,14 @@ export const hasDisabledItems = (args: StoryArgs): TemplateResult => {
         `
       )}
     </sp-combobox>
-    <sp-field-label side-aligned="start" for="combobox-disabled-countries">
-      Some countries are disabled (shadow DOM)
-    </sp-field-label>
     <sp-combobox
-      id="combobox-disabled-countries"
+      side-aligned="start"
       .options=${countriesWithDisabledItems}
       .value=${args.value || ''}
-    ></sp-combobox>
+      style="--mod-textfield-grid-template-columns-side-label: minmax(12ch, 1fr) minmax(12ch, 2fr);"
+    >
+      <span slot="field-label">Some countries are disabled (shadow DOM)</span>
+    </sp-combobox>
   `;
 };
 hasDisabledItems.args = {
@@ -132,30 +131,123 @@ listAutocomplete.args = {
 
 export const noAutocomplete = (): TemplateResult => {
   return html`
-    <sp-field-label side-aligned="start" for="combobox-3">Fruit</sp-field-label>
     <sp-combobox
-      id="combobox-3"
       .options=${fruits}
-      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
-    ></sp-combobox>
-    <sp-field-label side-aligned="start" for="combobox-4">
-      Countries
-    </sp-field-label>
+      side-aligned="start"
+    >
+      <span slot="field-label">Fruit</span>
+    </sp-combobox>
     <sp-combobox
-      id="combobox-4"
       .options=${countries}
-      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
-    ></sp-combobox>
+      side-aligned="start"
+    >
+      <span slot="field-label">Countries</span>
+    </sp-combobox>
+  `;
+};
+
+/**
+ * Standalone sp-field-label: three patterns to compare visually.
+ * 1) Sibling – sp-field-label outside combobox; use combobox `label` for a11y.
+ * 2) Slotted sp-field-label – in the field-label slot.
+ * 3) Slotted native <label> – tests that ::slotted(label) gets the same styles.
+ * Use controls (size, disabled, etc.) to verify all three stay in sync.
+ */
+export const withStandaloneFieldLabel = (args: StoryArgs): TemplateResult => {
+  return html`
+    <div style="display: flex; flex-direction: column; gap: 2rem;">
+      <div>
+        <p
+          style="margin: 0 0 0.5rem 0; font-size: 12px; color: var(--spectrum-gray-600);"
+        >
+          Sibling: sp-field-label outside combobox
+        </p>
+        <sp-field-label size=${args.size ?? 'm'} ?disabled=${args.disabled}>
+          Where do you live?
+        </sp-field-label>
+        <sp-combobox
+          label="Where do you live?"
+          .options=${countries}
+          .value=${args.value ?? ''}
+          style="min-width: 80px; width: 200px;"
+          ${spreadProps(args)}
+        ></sp-combobox>
+      </div>
+      <div>
+        <p
+          style="margin: 0 0 0.5rem 0; font-size: 12px; color: var(--spectrum-gray-600);"
+        >
+          Slotted: native &lt;label&gt; in field-label slot
+        </p>
+        <sp-combobox
+          .options=${countries}
+          .value=${args.value ?? ''}
+          style="min-width: 80px; width: 200px;"
+          ${spreadProps(args)}
+        >
+          <label slot="field-label">Where do you live?</label>
+        </sp-combobox>
+      </div>
+    </div>
+  `;
+};
+
+/**
+ * Same as With standalone field label but with side-aligned="start" for comparison.
+ */
+export const withStandaloneFieldLabelSideAligned = (
+  args: StoryArgs
+): TemplateResult => {
+  return html`
+    <div style="display: flex; flex-direction: column; gap: 2rem;">
+      <div>
+        <p
+          style="margin: 0 0 0.5rem 0; font-size: 12px; color: var(--spectrum-gray-600);"
+        >
+          Sibling: sp-field-label outside combobox (side-aligned)
+        </p>
+        <div
+          style="display: flex; align-items: flex-start; gap: var(--spectrum-spacing-200, 8px);"
+        >
+          <sp-field-label size=${args.size ?? 'm'} ?disabled=${args.disabled}>
+            Where do you live?
+          </sp-field-label>
+          <sp-combobox
+            label="Where do you live?"
+            .options=${countries}
+            .value=${args.value ?? ''}
+            style="min-width: 80px; width: 200px;"
+            ${spreadProps(args)}
+          ></sp-combobox>
+        </div>
+      </div>
+      <div>
+        <p
+          style="margin: 0 0 0.5rem 0; font-size: 12px; color: var(--spectrum-gray-600);"
+        >
+        Slotted: native &lt;label&gt; in field-label slot (side-aligned)
+        </p>
+        <sp-combobox
+          side-aligned="start"
+          .options=${countries}
+          .value=${args.value ?? ''}
+          style="min-width: 80px; width: 308px;"
+          ${spreadProps(args)}
+        >
+        <label slot="field-label">Where do you live?</label>
+        </sp-combobox>
+      </div>
+    </div>
   `;
 };
 
 export const lightDOM = (): TemplateResult => {
   return html`
-    <sp-field-label side-aligned="start" for="combobox-5">Fruit</sp-field-label>
     <sp-combobox
-      id="combobox-5"
-      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
+      style="min-width: 80px;"
+      side-aligned="start"
     >
+      <span slot="field-label">Fruit</span>
       ${fruits.map(
         (fruit) => html`
           <sp-menu-item id=${fruit.value} value=${fruit.value}>
@@ -164,13 +256,11 @@ export const lightDOM = (): TemplateResult => {
         `
       )}
     </sp-combobox>
-    <sp-field-label side-aligned="start" for="combobox-6">
-      Countries
-    </sp-field-label>
     <sp-combobox
-      id="combobox-6"
-      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
+      side-aligned="start"
+      style="min-width: 80px;"
     >
+      <span slot="field-label">Countries</span>
       ${countries.map(
         (country) => html`
           <sp-menu-item id=${country.value} value=${country.value}>
@@ -185,9 +275,8 @@ export const lightDOM = (): TemplateResult => {
 export const withTooltip = (): TemplateResult => {
   return html`
     <sp-combobox
-      id="combobox-6"
       label="Combobox with tooltip"
-      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
+      style="min-width: 80px;width:100px;"
     >
       ${countries.map(
         (option) => html`
@@ -205,24 +294,21 @@ export const withTooltip = (): TemplateResult => {
 
 export const withFieldLabel = (): TemplateResult => {
   return html`
-    <sp-field-label for="combobox-7">Pick something</sp-field-label>
-    <sp-combobox id="combobox-7" .options=${fruits}></sp-combobox>
+    <sp-combobox .options=${fruits}>
+      <span slot="field-label">Pick a fruit</span>
+    </sp-combobox>
   `;
 };
 
 export const withLabelAttribute = (): TemplateResult => {
   return html`
-    <sp-combobox
-      id="combobox-7"
-      label="Pick something"
-      .options=${fruits}
-    ></sp-combobox>
+    <sp-combobox label="Pick a fruit" .options=${fruits}></sp-combobox>
   `;
 };
 
 export const withHelpText = (): TemplateResult => {
   return html`
-    <sp-combobox id="combobox-7" label="Pick something" .options=${fruits}>
+    <sp-combobox label="Pick a fruit" .options=${fruits}>
       <sp-help-text slot="help-text">
         These are fruits found in the game "Animal Crossing: New Leaf".
       </sp-help-text>
@@ -247,15 +333,15 @@ class ControlledCombo extends LitElement {
 
   override render(): TemplateResult {
     return html`
-      <sp-field-label for="age">
-        Retirement age (try entering a non-number)
-      </sp-field-label>
       <sp-combobox
-        id="age"
         .options=${ControlledCombo.ages}
         .value=${live(this.value.validated)}
         @change=${this.onChange}
-      ></sp-combobox>
+      >
+        <span slot="field-label">
+          Retirement age (try entering a non-number)
+        </span>
+      </sp-combobox>
     `;
   }
 
