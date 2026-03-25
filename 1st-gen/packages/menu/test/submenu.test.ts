@@ -412,21 +412,18 @@ describe('Submenu', () => {
     beforeEach(async function () {
       this.rootChanged = spy();
       this.submenuChanged = spy();
+      const handleRootChange = (event: Event & { target: Menu }): void => {
+        this.rootChanged(event.target.value);
+      };
+      const handleSubmenuChange = (event: Event & { target: Menu }): void => {
+        this.submenuChanged(event.target.value);
+      };
       this.el = await fixture<Menu>(html`
-        <sp-menu
-          @change=${(event: Event & { target: Menu }) => {
-            this.rootChanged(event.target.value);
-          }}
-        >
+        <sp-menu @change=${handleRootChange}>
           <sp-menu-item>No submenu</sp-menu-item>
           <sp-menu-item class="root">
             Has submenu
-            <sp-menu
-              slot="submenu"
-              @change=${(event: Event & { target: Menu }) => {
-                this.submenuChanged(event.target.value);
-              }}
-            >
+            <sp-menu slot="submenu" @change=${handleSubmenuChange}>
               ${renderSubmenu()}
             </sp-menu>
           </sp-menu-item>
@@ -454,20 +451,20 @@ describe('Submenu', () => {
     beforeEach(async function () {
       this.rootChanged = spy();
       this.submenuChanged = spy();
+      const handleRootChange = (event: Event & { target: Menu }): void => {
+        this.rootChanged(event.target.value);
+      };
+      const handleSubmenuChange = (event: Event & { target: Menu }): void => {
+        this.submenuChanged(event.target.value);
+      };
       this.el = await fixture<Menu>(html`
-        <sp-menu
-          @change=${(event: Event & { target: Menu }) => {
-            this.rootChanged(event.target.value);
-          }}
-        >
+        <sp-menu @change=${handleRootChange}>
           <sp-menu-item>No submenu</sp-menu-item>
           <sp-menu-item class="root">
             Has submenu
             <sp-menu
               slot="submenu"
-              @change=${(event: Event & { target: Menu }) => {
-                this.submenuChanged(event.target.value);
-              }}
+              @change=${handleSubmenuChange}
               ${slottableRequest(renderSubmenu)}
             ></sp-menu>
           </sp-menu-item>
@@ -495,29 +492,26 @@ describe('Submenu', () => {
     const rootChanged = spy();
     const submenuChanged = spy();
     const subSubmenuChanged = spy();
+    const handleRootChange = (event: Event & { target: Menu }): void => {
+      rootChanged(event.target.value);
+    };
+    const handleSubmenuChange = (event: Event & { target: Menu }): void => {
+      submenuChanged(event.target.value);
+    };
+    const handleSubSubmenuChange = (
+      event: Event & { target: Menu }
+    ): void => {
+      subSubmenuChanged(event.target.value);
+    };
     const el = await fixture<Menu>(html`
-      <sp-menu
-        @change=${(event: Event & { target: Menu }) => {
-          rootChanged(event.target.value);
-        }}
-      >
+      <sp-menu @change=${handleRootChange}>
         <sp-menu-item class="root">
           Has submenu
-          <sp-menu
-            slot="submenu"
-            @change=${(event: Event & { target: Menu }) => {
-              submenuChanged(event.target.value);
-            }}
-          >
+          <sp-menu slot="submenu" @change=${handleSubmenuChange}>
             <sp-menu-item class="submenu-item-1">One</sp-menu-item>
             <sp-menu-item class="submenu-item-2">
               Two
-              <sp-menu
-                slot="submenu"
-                @change=${(event: Event & { target: Menu }) => {
-                  subSubmenuChanged(event.target.value);
-                }}
-              >
+              <sp-menu slot="submenu" @change=${handleSubSubmenuChange}>
                 <sp-menu-item class="sub-submenu-item-1">A</sp-menu-item>
                 <sp-menu-item class="sub-submenu-item-2">B</sp-menu-item>
                 <sp-menu-item class="sub-submenu-item-3">C</sp-menu-item>
@@ -1099,22 +1093,18 @@ describe('Submenu', () => {
     beforeEach(async function () {
       this.rootChanged = spy();
       this.submenuChanged = spy();
+      const handleRootChange = (event: Event & { target: Menu }): void => {
+        this.rootChanged(event.target.value);
+      };
+      const handleSubmenuChange = (event: Event & { target: Menu }): void => {
+        this.submenuChanged(event.target.value);
+      };
       this.el = await fixture<Menu>(html`
-        <sp-menu
-          is-mobile-view
-          @change=${(event: Event & { target: Menu }) => {
-            this.rootChanged(event.target.value);
-          }}
-        >
+        <sp-menu is-mobile-view @change=${handleRootChange}>
           <sp-menu-item>No submenu</sp-menu-item>
           <sp-menu-item class="root">
             Has submenu
-            <sp-menu
-              slot="submenu"
-              @change=${(event: Event & { target: Menu }) => {
-                this.submenuChanged(event.target.value);
-              }}
-            >
+            <sp-menu slot="submenu" @change=${handleSubmenuChange}>
               <sp-menu-item class="submenu-item-1">One</sp-menu-item>
               <sp-menu-item class="submenu-item-2">Two</sp-menu-item>
               <sp-menu-item class="submenu-item-3">Three</sp-menu-item>
@@ -1136,10 +1126,10 @@ describe('Submenu', () => {
 
       expect(menu.currentMobileSubmenu).to.equal(this.rootItem);
 
-      const backHeader = menu.shadowRoot!.querySelector(
-        '.spectrum-Menu-back'
-      );
-      expect(backHeader).to.not.be.null;
+      const backItem = this.rootItem.submenuElement?.querySelector(
+        '[data-mobile-back]'
+      ) as MenuItem;
+      expect(backItem).to.not.be.null;
     });
     it('navigates back via back button', async function () {
       const menu = this.el as Menu;
@@ -1148,12 +1138,12 @@ describe('Submenu', () => {
       await elementUpdated(menu);
       expect(menu.currentMobileSubmenu).to.equal(this.rootItem);
 
-      const backHeader = menu.shadowRoot!.querySelector(
-        '.spectrum-Menu-back'
-      ) as HTMLDivElement;
-      expect(backHeader).to.not.be.null;
+      const backItem = this.rootItem.submenuElement?.querySelector(
+        '[data-mobile-back]'
+      ) as MenuItem;
+      expect(backItem).to.not.be.null;
 
-      backHeader.click();
+      await mouseClickOn(backItem);
       await elementUpdated(menu);
 
       expect(menu.currentMobileSubmenu).to.be.undefined;
@@ -1239,6 +1229,11 @@ describe('Submenu', () => {
     });
     it('supports multi-level drill-down', async function () {
       const subSubmenuChanged = spy();
+      const handleSubSubmenuChange = (
+        event: Event & { target: Menu }
+      ): void => {
+        subSubmenuChanged(event.target.value);
+      };
       const el = await fixture<Menu>(html`
         <sp-menu is-mobile-view>
           <sp-menu-item class="level1">
@@ -1246,12 +1241,7 @@ describe('Submenu', () => {
             <sp-menu slot="submenu">
               <sp-menu-item class="level2">
                 Level 2
-                <sp-menu
-                  slot="submenu"
-                  @change=${(event: Event & { target: Menu }) => {
-                    subSubmenuChanged(event.target.value);
-                  }}
-                >
+                <sp-menu slot="submenu" @change=${handleSubSubmenuChange}>
                   <sp-menu-item class="level3-item">Level 3 item</sp-menu-item>
                 </sp-menu>
               </sp-menu-item>

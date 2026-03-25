@@ -25,7 +25,7 @@ import {
 import type { Overlay } from '@spectrum-web-components/overlay';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow100.js';
 
 import menuStyles from './menu.css.js';
 import type {
@@ -185,25 +185,27 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     this._triggerMobileTransition('back');
   }
 
-  private _focusProjectedSubmenu(item: MenuItem): void {
-    const submenu = item.submenuElement as Menu | undefined;
-    if (!submenu) {
+  private async _focusProjectedSubmenu(item: MenuItem): Promise<void> {
+    const submenuEl = item.submenuElement;
+    if (!submenuEl) {
       return;
     }
-    submenu.updateComplete.then(() => {
-      const items = submenu.childItems;
-      if (!items.length) {
-        return;
-      }
-      const first = items.find((el) => !el.disabled);
-      if (first) {
-        items.forEach((el) => {
-          el.tabIndex = -1;
-        });
-        first.tabIndex = 0;
-        first.focus();
-      }
+    const backElements = this._mobileBackElements.get(submenuEl);
+    if (!backElements) {
+      return;
+    }
+    const backItem = backElements[0] as MenuItem;
+    await backItem.updateComplete;
+    const submenu = submenuEl as unknown as Menu;
+    await submenu.updateComplete;
+
+    submenu.childItems.forEach((child) => {
+      child.tabIndex = -1;
+      child.focused = false;
     });
+    backItem.tabIndex = 0;
+    backItem.focused = true;
+    backItem.focus();
   }
 
   private _triggerMobileTransition(direction: 'forward' | 'back'): void {
@@ -248,11 +250,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     const savedChildItems = new Set(submenu.childItemSet);
 
     submenuEl.setAttribute('slot', 'mobile-submenu');
-    (submenuEl as HTMLElement).style.width = '100%';
     this.appendChild(submenuEl);
 
     this._restoreSubmenuChildState(submenu, savedChildItems);
-    this._addMobileArrowUpInterceptor(submenu);
+    this._injectMobileBackElements(submenuEl);
   }
 
   /**
@@ -265,15 +266,14 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
       return;
     }
 
-    const submenu = submenuEl as unknown as Menu;
-    this._removeMobileArrowUpInterceptor(submenu);
+    this._removeMobileBackElements(submenuEl);
 
+    const submenu = submenuEl as unknown as Menu;
     const originalParent = this._mobileSubmenuOriginalParents.get(submenuEl);
     if (originalParent) {
       const savedChildItems = new Set(submenu.childItemSet);
 
       submenuEl.setAttribute('slot', 'submenu');
-      (submenuEl as HTMLElement).style.width = '';
       originalParent.appendChild(submenuEl);
       this._mobileSubmenuOriginalParents.delete(submenuEl);
 
@@ -282,54 +282,41 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     item._mobileSubmenuProjected = false;
   }
 
-  private _mobileArrowUpInterceptors = new Map<
-    HTMLElement,
-    (event: KeyboardEvent) => void
-  >();
+  private _mobileBackElements = new Map<HTMLElement, HTMLElement[]>();
 
-  private _addMobileArrowUpInterceptor(submenu: Menu): void {
-    this._removeMobileArrowUpInterceptor(submenu);
-    const handler = (event: KeyboardEvent): void => {
-      if (event.key !== 'ArrowUp') {
-        return;
-      }
-      const items = submenu.childItems;
-      const firstFocusable = items.find((el) => !el.disabled);
-      if (!firstFocusable) {
-        return;
-      }
-      const active =
-        submenu.shadowRoot?.activeElement ||
-        (submenu.getRootNode() as Document).activeElement;
-      if (
-        active !== firstFocusable &&
-        !firstFocusable.contains(active as Node)
-      ) {
-        return;
-      }
-      event.preventDefault();
+  private _injectMobileBackElements(submenuEl: HTMLElement): void {
+    this._removeMobileBackElements(submenuEl);
+
+    const backItem = document.createElement('sp-menu-item') as MenuItem;
+    backItem.setAttribute('data-mobile-back', '');
+    backItem.textContent = 'Back';
+
+    const icon = document.createElement('sp-icon-arrow100');
+    icon.slot = 'icon';
+    icon.style.transform = 'rotate(180deg)';
+    backItem.prepend(icon);
+
+    backItem.addEventListener('click', (event: Event) => {
       event.stopPropagation();
-      const backButton = this.shadowRoot?.querySelector(
-        '.spectrum-Menu-back'
-      ) as HTMLElement | null;
-      if (backButton) {
-        backButton.focus();
-      }
-    };
-    (submenu as HTMLElement).addEventListener('keydown', handler, true);
-    this._mobileArrowUpInterceptors.set(
-      submenu as unknown as HTMLElement,
-      handler
-    );
+      event.preventDefault();
+      this.closeMobileSubmenu();
+    });
+
+    const divider = document.createElement('sp-menu-divider');
+    divider.setAttribute('data-mobile-back', '');
+
+    const firstChild = submenuEl.firstChild;
+    submenuEl.insertBefore(divider, firstChild);
+    submenuEl.insertBefore(backItem, divider);
+
+    this._mobileBackElements.set(submenuEl, [backItem, divider]);
   }
 
-  private _removeMobileArrowUpInterceptor(submenu: Menu): void {
-    const existing = this._mobileArrowUpInterceptors.get(
-      submenu as unknown as HTMLElement
-    );
-    if (existing) {
-      (submenu as HTMLElement).removeEventListener('keydown', existing, true);
-      this._mobileArrowUpInterceptors.delete(submenu as unknown as HTMLElement);
+  private _removeMobileBackElements(submenuEl: HTMLElement): void {
+    const elements = this._mobileBackElements.get(submenuEl);
+    if (elements) {
+      elements.forEach((el) => el.remove());
+      this._mobileBackElements.delete(submenuEl);
     }
   }
 
@@ -1296,62 +1283,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     `;
   }
 
-  private _handleBackClick = (event: Event): void => {
-    event.stopPropagation();
-    event.preventDefault();
-    this.closeMobileSubmenu();
-  };
-
-  private _handleBackKeydown = (event: KeyboardEvent): void => {
-    const { key } = event;
-    if (
-      key === 'Enter' ||
-      key === ' ' ||
-      key === 'ArrowLeft' ||
-      key === 'Escape'
-    ) {
-      event.preventDefault();
-      event.stopPropagation();
-      this.closeMobileSubmenu();
-    } else if (key === 'ArrowDown') {
-      event.preventDefault();
-      event.stopPropagation();
-      const current = this.currentMobileSubmenu;
-      if (current) {
-        this._focusProjectedSubmenu(current);
-      }
-    }
-  };
-
-  private renderMobileSubmenuHeader(): TemplateResult {
-    const current = this.currentMobileSubmenu!;
-    return html`
-      <div
-        class="spectrum-Menu-back"
-        role="menuitem"
-        tabindex="0"
-        @click=${this._handleBackClick}
-        @keydown=${this._handleBackKeydown}
-      >
-        <button class="spectrum-Menu-backButton" tabindex="-1">
-          <sp-icon-chevron100
-            class="spectrum-Menu-backIcon"
-          ></sp-icon-chevron100>
-        </button>
-        <span class="spectrum-Menu-backHeading">Back</span>
-      </div>
-      <hr class="mobile-submenu-divider" />
-      <span class="spectrum-Menu-sectionHeading mobile-submenu-title">
-        ${current.itemText}
-      </span>
-    `;
-  }
-
   public override render(): TemplateResult {
     const hasMobileSubmenu =
       this.isMobileView && this._mobileSubmenuStack.length > 0;
     return html`
-      ${hasMobileSubmenu ? this.renderMobileSubmenuHeader() : ''}
       <div
         class=${hasMobileSubmenu ? 'mobile-slot-hidden' : 'mobile-slot-wrapper'}
       >

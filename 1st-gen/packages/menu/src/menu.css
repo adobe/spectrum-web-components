@@ -39,33 +39,16 @@
   overflow: hidden;
 }
 
+:host([is-mobile-view]) ::slotted([slot="mobile-submenu"]) {
+  inline-size: 100%;
+}
+
 .mobile-slot-wrapper {
   display: contents;
 }
 
 .mobile-slot-hidden {
   display: none;
-}
-
-.spectrum-Menu-backIcon {
-  --spectrum-icon-size: var(--spectrum-chevron-icon-size-100);
-
-  transform: rotate(180deg);
-}
-
-.mobile-submenu-divider {
-  margin-block: var(--spectrum-spacing-75);
-  margin-inline: var(--spectrum-menu-item-label-inline-edge-to-content);
-  border: none;
-  border-block-end: 1px solid var(--spectrum-gray-300);
-}
-
-.mobile-submenu-title {
-  grid-area: unset;
-  padding-block-start: var(--spectrum-spacing-200);
-  padding-block-end: var(--spectrum-spacing-100);
-  font-size: var(--spectrum-heading-size-s);
-  font-weight: var(--spectrum-bold-font-weight);
 }
 
 @keyframes mobile-slide-in-right {
