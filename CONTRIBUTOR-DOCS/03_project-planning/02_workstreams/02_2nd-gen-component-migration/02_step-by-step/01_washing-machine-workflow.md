@@ -1,53 +1,3 @@
----
-# Washing machine migration workflow – structured data for AI parsing
-workflow:
-  name: "1st-gen to 2nd-gen component migration"
-  slug: washing-machine
-  audience: [human, ai-agent]
-  description: >
-    Thin orchestrator for migrating an existing 1st-gen component to 2nd-gen
-    (or when 1st-gen is the deliberate migration target): eight phases
-    (preparation → review) with checklists and quality gates. Not for
-    greenfield-only 2nd-gen; see migration_project_planning for greenfield TODO.
-    Implementation detail lives
-    in linked step-by-step docs and style guides (CSS migration, component CSS,
-    testing, a11y); this file sequences work and points there. Badge is the
-    reference paths/table, not repeated code samples per phase. Jira epic/ticket
-    guidance is in contributor_docs.migration_project_planning.
-  prerequisites:
-    - >
-      Keep spectrum-web-components (this repo) and spectrum-css in the same workspace
-      (e.g. sibling checkouts under one parent folder). Analysis, copying S2 styles
-      from the spectrum-css spectrum-two branch, and AI-assisted migration flows all
-      assume both trees are available locally for comparison and context.
-  reference_component: badge
-  paths:
-    first_gen: "1st-gen/packages/<component>/"
-    core: "2nd-gen/packages/core/components/<component>/"
-    swc: "2nd-gen/packages/swc/components/<component>/"
-  phases:
-    - preparation
-    - setup
-    - api-migration
-    - styling
-    - accessibility
-    - testing
-    - documentation
-    - review
-  style_guides:
-    typescript: "Ticket 7"
-    css: "Ticket 8"
-    testing: "Ticket 10"
-  external_links:
-    wcag_apg: "https://www.w3.org/WAI/ARIA/apg/patterns/"
-  contributor_docs:
-    workstream: "CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/"
-    status: "CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/01_status.md"
-    analyze: "CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_analyze-rendering-and-styling/"
-    component_analysis_output: "CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/rendering-and-styling-migration-analysis.md"
-    migration_project_planning: "CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/03_migration-project-planning.md"
----
-
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
 [CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Workstreams](../README.md) / [2nd-gen Component Migration](../README.md) / Washing machine workflow
@@ -57,6 +7,8 @@ workflow:
 # Washing machine: migrating an existing 1st-gen component to 2nd-gen
 
 <!-- Document content (editable) -->
+
+**Machine-readable workflow:** Structured `workflow` data (phases, paths, contributor-doc pointers) for tools and agents lives in [`01_washing-machine-workflow.meta.yaml`](01_washing-machine-workflow.meta.yaml) alongside this file. Update both when those fields change.
 
 **Scope:** This guide applies **only** when a **1st-gen Spectrum Web Component already exists** (or 1st-gen is explicitly the package you are migrating—you refactor that surface, move shared logic to core, then add 2nd-gen). **Greenfield / net-new** 2nd-gen (no 1st-gen counterpart) is **out of scope** here; see [TODO: Greenfield 2nd-gen contributor guide](../03_migration-project-planning.md#todo-greenfield-2nd-gen-contributor-guide) in [Migration project planning](../03_migration-project-planning.md).
 
