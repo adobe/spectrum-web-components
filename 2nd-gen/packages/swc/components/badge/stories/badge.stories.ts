@@ -12,7 +12,6 @@
 
 import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
-import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Badge } from '@adobe/spectrum-wc/badge';
 
@@ -29,12 +28,13 @@ import {
   FIXED_VALUES,
   type FixedValues,
 } from '../../../../core/components/badge/Badge.types.js';
+import { getStoryHelpers } from '../../../.storybook/helpers/index.js';
 
 // ────────────────
 //    METADATA
 // ────────────────
 
-const { args, argTypes, template } = getStorybookHelpers('swc-badge');
+const { args, argTypes, template } = getStoryHelpers('swc-badge');
 
 // @todo: Carry the args table defaultValue pattern to all argTypes in all components. Explore how to get our custom types to properly reflect with this new pattern.
 argTypes.variant = {
@@ -42,7 +42,7 @@ argTypes.variant = {
   control: { type: 'select' },
   options: Badge.VARIANTS,
   table: {
-    category: 'attributes',
+    category: 'properties',
     defaultValue: {
       summary: 'informative',
     },
@@ -54,7 +54,7 @@ argTypes.fixed = {
   control: { type: 'select' },
   options: ['', ...Badge.FIXED_VALUES],
   table: {
-    category: 'attributes',
+    category: 'properties',
     defaultValue: {
       summary: '',
     },
@@ -66,7 +66,7 @@ argTypes.size = {
   control: { type: 'select' },
   options: Badge.VALID_SIZES,
   table: {
-    category: 'attributes',
+    category: 'properties',
     defaultValue: {
       summary: 'm',
     },

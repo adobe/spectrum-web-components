@@ -32,14 +32,14 @@ import './assets/preview.css';
 const storybookHelperOptions: Options = {
   categoryOrder: [
     'properties',
-    'attributes',
+    'attributes', // included so wc-toolkit still emits these args; getStoryHelpers() merges them into 'properties'
     'slots',
     'cssProps',
     'cssParts',
     'events',
     'methods',
   ],
-  hideArgRef: false,
+  hideArgRef: true,
   renderDefaultValues: true,
 };
 

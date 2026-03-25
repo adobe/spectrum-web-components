@@ -11,3 +11,4 @@
  */
 
 export { formatComponentName } from './format-component-name.js';
+export { getStoryHelpers } from './get-story-helpers.js';
