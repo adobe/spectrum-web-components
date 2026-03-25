@@ -60,7 +60,7 @@ workflow:
 
 **Scope:** This guide applies **only** when a **1st-gen Spectrum Web Component already exists** (or 1st-gen is explicitly the package you are migrating—you refactor that surface, move shared logic to core, then add 2nd-gen). **Greenfield / net-new** 2nd-gen (no 1st-gen counterpart) is **out of scope** here; see [TODO: Greenfield 2nd-gen contributor guide](../03_migration-project-planning.md#todo-greenfield-2nd-gen-contributor-guide) in [Migration project planning](../03_migration-project-planning.md).
 
-It **orchestrates** the migration: eight phases with checklists and quality gates, plus links to the step-by-step docs and style guides for implementation detail. It does not duplicate those guides—it sequences **what** to do and **when**. (Team shorthand: **washing machine**—1st-gen in, structured 2nd-gen out.)
+It **orchestrates** the migration: eight phases with checklists and quality gates, plus links to the step-by-step docs and style guides for implementation detail. It does not duplicate those guides—it sequences **what** to do and **when**.
 
 ### Workspace setup
 
@@ -93,7 +93,7 @@ Keep **spectrum-web-components** (this repo) and **[spectrum-css](https://github
 
 ## Relationship to this workstream
 
-This guide **orchestrates** the migration: it sequences the 8 phases and links to the step-by-step docs and style guides for implementation details. Use this doc for **what order** to do things and **what to check**; use the linked docs for **how to do** each phase.
+Use this doc for **what order** to do things and **what to check**; use the linked docs for **how to do** each phase.
 
 - **Workstream:** [2nd-gen Component Migration](../README.md) — README, status table, and **7 step-by-step docs** that describe the refactor-first path (factor 1st-gen, move base to core, then add 2nd-gen).
 - **Status table:** [01_status.md](../01_status.md) — use it to see which components have completed which steps and to **update progress** when you finish a migration.
@@ -390,7 +390,10 @@ Prefer native events when they give the right semantics (e.g. `click`). Add cust
 
 ### Quality gate
 
-- [ ] APG pattern identified and linked; keyboard and ARIA implemented; a11y tests added; screen reader testing performed.
+- [ ] APG pattern identified and linked
+- [ ] Keyboard and ARIA implemented
+- [ ] a11y tests added
+- [ ] Screen reader testing performed
 
 ---
 
@@ -469,7 +472,7 @@ See [Step 7](07_add-stories-for-2nd-gen-component.md) for structure and examples
 ### What to do
 
 1. **Run the full checklist** (copy below).
-2. **Lint:** Run the project linter and fix any errors in the touched files (e.g. `nx run swc:lint` or the repo’s standard lint command). For 2nd-gen component CSS, this runs **stylelint** on `2nd-gen/**/*.css` and enforces property order, no-descending-specificity, declaration empty lines, and token usage—ensure these are fixed in Phase 4 (Styling) and re-check here (see [Phase 4: 2nd-gen CSS linting](#phase-4-styling)).
+2. **Lint:** From the repo root, run **`yarn lint:2nd-gen`** (or equivalent) and fix issues in touched files. That runs **ESLint** on TypeScript, JavaScript, and JSON under `2nd-gen`; **Stylelint** on `2nd-gen/**/*.css` (property order, no-descending-specificity, declaration empty lines, token usage, etc.); and **Prettier** in check mode. CSS should already be clean from Phase 4—re-check here (see [Phase 4: 2nd-gen CSS linting](#phase-4-styling)).
 3. **Tests:** Run the full test suite for the affected packages.
 4. **Build:** Ensure build succeeds.
 5. **Storybook:** Load the component in Storybook; click through stories and variants.
@@ -563,9 +566,10 @@ Use Badge as the reference implementation:
 ## Style guides and resources
 
 - **Workspace:** [spectrum-css](https://github.com/adobe/spectrum-css) cloned **next to** this repo—see [Workspace setup](#workspace-setup).
-- **TypeScript:** Team conventions (Ticket 7); for 2nd-gen API patterns (static `readonly`, `window.__swc.warn`, deprecating Gen1 exports), see Phase 3 [API patterns](#api-patterns-statics-warnings-and-1st-gen-exports) and 2nd-gen Badge (`core` + `swc` + 1st-gen `badge/src/Badge.ts`).
-- **CSS:** Conventions (Ticket 8)
-- **Testing:** [2nd gen testing conventions](../../../../01_contributor-guides/11_2ndgen_testing.md) (Ticket 10)
+- **TypeScript:** Team conventions; for 2nd-gen API patterns (static `readonly`, `window.__swc.warn`, deprecating Gen1 exports), see Phase 3 [API patterns](#api-patterns-statics-warnings-and-1st-gen-exports) and 2nd-gen Badge (`core` + `swc` + 1st-gen `badge/src/Badge.ts`).
+- **CSS:** Conventions
+- **Testing:** [2nd gen testing conventions](../../../../01_contributor-guides/11_2ndgen_testing.md)
 - **WCAG APG:** [https://www.w3.org/WAI/ARIA/apg/patterns/](https://www.w3.org/WAI/ARIA/apg/patterns/)
-- **Component analysis:** [03_components/](../../03_components/) — Step 1 [Cursor prompt](01_analyze-rendering-and-styling/cursor_prompt.md); optional **component-migration-analysis** Cursor skill alongside that flow.
-- **2nd-gen Storybook guides:** `2nd-gen/packages/swc/.storybook/guides/` — **Accessibility:** `2nd-gen/packages/swc/.storybook/guides/accessibility-guides/`
+- **Component analysis:** [03_components/](../../03_components/) — Step 1 [Cursor prompt](01_analyze-rendering-and-styling/README.md); optional **component-migration-analysis** Cursor skill alongside that flow.
+- **2nd-gen Storybook guides:** `2nd-gen/packages/swc/.storybook/guides/`
+- **Accessibility:** `2nd-gen/packages/swc/.storybook/guides/accessibility-guides/`

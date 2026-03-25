@@ -13,6 +13,7 @@
 
 - [TODO: Greenfield 2nd-gen contributor guide](#todo-greenfield-2nd-gen-contributor-guide)
 - [Epics and tickets](#epics-and-tickets)
+    - [Branch and PR model](#branch-and-pr-model)
     - [Rationale](#rationale)
     - [Epic template](#epic-template)
     - [Ticket list](#ticket-list)
@@ -28,15 +29,17 @@
 
 This doc is **project-management guidance** for tracking a component migration in Jira (or similar). For the technical sequence, quality gates, and phase checklists, use the [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md).
 
-## TODO: Greenfield 2nd-gen contributor guide
-
-> **Planned:** A separate contributor guide for **new** 2nd-gen components **without** a 1st-gen counterpart is not written yet (Rise outlined this track). The [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md) applies only when a 1st-gen package exists or is the migration target. **Add the Jira epic or ticket link here** when it is filed.
-
 ---
 
 ## Epics and tickets
 
 Use one **Epic** per component migration and create **standard tickets** aligned to the 8 washing machine phases. This keeps scope clear, makes progress visible, and gives a consistent structure for planning and review.
+
+### Branch and PR model
+
+- **One feature branch per Epic** (e.g. `2nd-gen/migrate-<component>`). All migration work lands there first—not on `main` until the Epic is finished.
+- **Tickets 1–7:** Each ticket is delivered as a **PR merged into that feature branch**. Close the ticket when the PR is merged; the branch should always carry the integrated result of completed phases.
+- **Ticket 8 (Phase 8: Review):** After **all seven** prior phase PRs are merged into the feature branch, run **final Q&A** on the full integration (lint, tests, Storybook, checklist, status table—see the [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md) Phase 8). Then **merge the feature branch to `main`** (or your repo’s default integration branch). Phase 8 is the last gate before that merge.
 
 ### Rationale
 
@@ -52,13 +55,14 @@ Use one **Epic** per component migration and create **standard tickets** aligned
 
 - Migrate [Component] from 1st-gen to 2nd-gen following the [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md).
 - Scope: core base + types, SWC component, styles, a11y, tests, stories, and PR.
+- Branching: use a **dedicated feature branch** for this Epic; **tickets 1–7** merge via PR into that branch; **ticket 8** is final Q&A on the integrated branch, then **merge the feature branch to `main`**.
 - Reference: 2nd-gen Badge (`2nd-gen/packages/core/components/badge/`, `2nd-gen/packages/swc/components/badge/`).
 
-**Child issues:** Link the 8 phase tickets (or combined tickets) as subtasks or “is blocked by” / “blocks” as appropriate.
+**Child issues:** Link the 8 phase tickets (or combined tickets) as subtasks or “is blocked by” / “blocks” as appropriate. Ticket 8 should depend on tickets 1–7 being merged into the feature branch.
 
 ### Ticket list
 
-Create one ticket per phase (or combine where it makes sense; see guidance below):
+Create one ticket per phase (or combine where it makes sense; see guidance below). Treat **each ticket as one PR** that merges into the Epic’s **feature branch**—except that **ticket 8** is the **final Q&A on that branch** and ends with **merging the feature branch to `main`**.
 
 | # | Ticket title | Aligned phase |
 |---|---------------|----------------|
@@ -69,7 +73,7 @@ Create one ticket per phase (or combine where it makes sense; see guidance below
 | 5 | Migrate [Component] — Accessibility | Phase 5: Accessibility |
 | 6 | Migrate [Component] — Testing | Phase 6: Testing |
 | 7 | Migrate [Component] — Documentation | Phase 7: Documentation |
-| 8 | Migrate [Component] — Review & PR | Phase 8: Review |
+| 8 | Migrate [Component] — Review & PR | Phase 8: Review (final Q&A → merge feature branch to `main`) |
 
 Copy the corresponding phase’s “What to do,” “What to check,” and “Quality gate” from the [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md) into each ticket’s description or acceptance criteria.
 
@@ -84,7 +88,7 @@ Copy the corresponding phase’s “What to do,” “What to check,” and “Q
 | Accessibility | 5 | APG pattern applied; ARIA and keyboard; a11y tests. |
 | Testing | 6 | Unit and a11y tests pass; coverage in place. |
 | Documentation | 7 | JSDoc; Storybook stories; migration notes if needed. |
-| Review & PR | 8 | Checklist done; status table updated; PR opened. |
+| Review & PR | 8 | Final Q&A on feature branch with phases 1–7 merged; checklist and status table done; **feature branch merged to `main`**. |
 
 ### Badge example
 
@@ -102,13 +106,13 @@ Copy the corresponding phase’s “What to do,” “What to check,” and “Q
 
 - **Board/view:** Filter by the migration Epic so all phase tickets for one component appear together.
 - **Status:** Use the [status table](01_status.md) to mark steps (Analyze, Factor, Move to Core, etc.); use ticket status for phase-level “To Do / In progress / Done.”
-- **Done definition:** A phase ticket is done when its quality gate in the [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md) is met and the work is merged (or in the same PR as the following phase, if combined).
+- **Done definition:** For **tickets 1–7**, the ticket is done when its quality gate in the [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md) is met and the **PR is merged into the migration feature branch**. For **ticket 8**, done when **final Q&A** on that branch is complete and the **feature branch is merged to `main`** (or in the same PR as the following phase when phases are combined—still land on the feature branch first until the final merge to `main`).
 
 ### Quality gate checklist (for Epic closure)
 
 Before closing the migration Epic, confirm:
 
-- [ ] All 8 phase tickets (or their combined equivalents) are done.
-- [ ] Phase 8 (Review) checklist is complete; PR is merged.
+- [ ] Tickets 1–7 are done: each phase’s PR merged into the **migration feature branch**.
+- [ ] Phase 8 (Review) is complete: **final Q&A** on the integrated feature branch; **feature branch merged to `main`**.
 - [ ] Component row in the [status table](01_status.md) is updated with checkmarks for all steps.
 - [ ] No open blocking issues or follow-ups that belong to the same migration.
