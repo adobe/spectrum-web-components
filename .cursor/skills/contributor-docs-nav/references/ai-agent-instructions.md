@@ -53,9 +53,10 @@ Execute the script when:
 
 ### How to run
 
+From the repository root (recommended). With no arguments, the script uses `CONTRIBUTOR-DOCS` at the repo root (fixed path relative to the script). Pass one argument if your docs root lives elsewhere (path is resolved relative to the script directory).
+
 ```bash
-cd .cursor/skills/contributor-docs-nav/scripts
-node update-nav.js ../../../../CONTRIBUTOR-DOCS
+node .cursor/skills/contributor-docs-nav/scripts/update-nav.js
 ```
 
 **Expected time:** ~20-200ms for entire CONTRIBUTOR-DOCS tree (includes automatic link verification)
@@ -254,7 +255,7 @@ For each file:
 
 **Rules:**
 
-- Root is always `CONTRIBUTOR-DOCS` linking to root README.md
+- Root segment uses the documentation root folder name (typically `CONTRIBUTOR-DOCS`) linking to root README.md
 - Parent folders link to their README.md (if it exists)
 - Folders without README show as plain text (no link)
 - Current page is plain text (not linked)

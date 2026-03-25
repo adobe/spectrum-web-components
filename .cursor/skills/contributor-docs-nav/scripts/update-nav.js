@@ -13,16 +13,19 @@
  */
 
 /**
- * Regenerate breadcrumbs and table of contents for all CONTRIBUTOR-DOCS files.
+ * Regenerate breadcrumbs and table of contents for markdown under a documentation root.
+ *
+ * Default docs root is `CONTRIBUTOR-DOCS` at the repository root (path resolved relative
+ * to this script). Pass an optional argument to use a different root.
  *
  * Usage:
  * ```bash
- * node regenerate-nav.js [docs-root-path]
+ * node update-nav.js [docs-root-path]
  * ```
  *
- * Example:
+ * Example from repository root:
  * ```bash
- * node regenerate-nav.js ../../
+ * node .cursor/skills/contributor-docs-nav/scripts/update-nav.js
  * ```
  */
 
@@ -53,6 +56,9 @@ const MARKER_CONTENT = '<!-- Document content (editable) -->';
 // 2 = show children and grandchildren (one level of indentation)
 // 3 = show children, grandchildren, and great-grandchildren (two levels of indentation)
 const MAX_BENEATH_DOC_DEPTH = 2;
+
+/** Default docs root relative to this script (repo root / CONTRIBUTOR-DOCS). */
+const DEFAULT_DOCS_ROOT_REL = '../../../../CONTRIBUTOR-DOCS';
 
 // ============================================================================
 // UTILITY FUNCTIONS
@@ -250,7 +256,7 @@ function walkTree(dir, baseDir = dir, parentPath = null) {
     result.folders['.'] = {
       name: path.basename(dir),
       hasReadme: fs.existsSync(path.join(dir, 'README.md')),
-      displayName: 'CONTRIBUTOR-DOCS',
+      displayName: path.basename(dir),
       parent: null,
       children,
     };
@@ -312,8 +318,10 @@ function generateBreadcrumb(filePath, metadata) {
   }
 
   // Add root
+  const rootFolder = metadata.folders['.'];
+  const rootLabel = rootFolder?.displayName ?? 'CONTRIBUTOR-DOCS';
   const rootRelPath = path.relative(path.dirname(filePath), './README.md');
-  segments.unshift({ name: 'CONTRIBUTOR-DOCS', link: rootRelPath });
+  segments.unshift({ name: rootLabel, link: rootRelPath });
 
   // Add current page (no link)
   segments.push({ name: fileMeta.displayName, link: null });
@@ -622,10 +630,21 @@ function updateFile(filePath, metadata) {
 // ============================================================================
 
 function main() {
-  const docsRoot = process.argv[2] || '../../';
-  const docsPath = path.resolve(__dirname, docsRoot);
+  const docsRootArg = process.argv[2];
+  const docsPath = path.resolve(
+    __dirname,
+    docsRootArg || DEFAULT_DOCS_ROOT_REL
+  );
 
-  console.log('📚 Regenerating CONTRIBUTOR-DOCS navigation...\n');
+  if (!fs.existsSync(docsPath) || !fs.statSync(docsPath).isDirectory()) {
+    console.error(
+      `❌ Documentation root is not a directory: ${docsPath}\n` +
+        '   Pass a path relative to this script, e.g. ../../../../CONTRIBUTOR-DOCS\n'
+    );
+    process.exit(1);
+  }
+
+  console.log('📚 Regenerating documentation navigation...\n');
   console.log(`   Root: ${docsPath}\n`);
 
   // Step 1: Extract metadata
