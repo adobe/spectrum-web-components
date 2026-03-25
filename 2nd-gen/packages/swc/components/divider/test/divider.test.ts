@@ -47,7 +47,7 @@ export const OverviewTest: Story = {
 
     await step('renders a separator with expected attributes', async () => {
       expect(divider.getAttribute('role')).toBe('separator');
-      expect(divider.getAttribute('size')).toBe('m');
+      expect(divider.size).toBe('m');
     });
   },
 };

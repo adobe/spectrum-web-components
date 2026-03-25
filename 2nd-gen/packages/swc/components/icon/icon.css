@@ -1,0 +1,61 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+:host {
+  /* Default to size m (workflow-icon-size-100) like 1st-gen */
+  --swc-icon-inline-size: token("workflow-icon-size-100");
+  --swc-icon-block-size: token("workflow-icon-size-100");
+
+  display: inline-flex;
+  inline-size: var(--swc-icon-inline-size);
+  block-size: var(--swc-icon-block-size);
+  color: var(--swc-icon-color, currentColor);
+}
+
+:host([size="xs"]) {
+  --swc-icon-inline-size: token("workflow-icon-size-50");
+  --swc-icon-block-size: token("workflow-icon-size-50");
+}
+
+:host([size="s"]) {
+  --swc-icon-inline-size: token("workflow-icon-size-75");
+  --swc-icon-block-size: token("workflow-icon-size-75");
+}
+
+:host([size="m"]) {
+  --swc-icon-inline-size: token("workflow-icon-size-100");
+  --swc-icon-block-size: token("workflow-icon-size-100");
+}
+
+:host([size="l"]) {
+  --swc-icon-inline-size: token("workflow-icon-size-200");
+  --swc-icon-block-size: token("workflow-icon-size-200");
+}
+
+:host([size="xl"]) {
+  --swc-icon-inline-size: token("workflow-icon-size-300");
+  --swc-icon-block-size: token("workflow-icon-size-300");
+}
+
+.swc-Icon {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+svg,
+.swc-Icon > svg,
+::slotted(*) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  fill: currentcolor;
+}

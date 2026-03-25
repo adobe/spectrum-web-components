@@ -32,13 +32,6 @@
 
 </details>
 
-<details open>
-<summary><strong>Beneath this doc</strong></summary>
-
-- [Spectrum Migration Documentation Prompt](cursor_prompt.md)
-
-</details>
-
 <!-- Document content (editable) -->
 
 This step contains comprehensive migration documentation for 2nd generation Spectrum Web Components based on the implementation of Spectrum 2 components that were previously migrated in [Spectrum CSS](https://github.com/adobe/spectrum-css/tree/spectrum-two). It helps engineers understand what needs to be implemented, updated, or aligned between the two systems to guide development of 2nd generation web components.
@@ -172,8 +165,8 @@ Set up a Cursor workspace with both repositories:
 
 **Model recommendation**: This type of detailed migration analysis is better handled by slower but more advanced thinking models like Claude or GPT-5, which can provide more thorough analysis and better understand complex component relationships.
 
-1. **Load the prompt**: Reference `cursor_prompt.md` in this step folder
-2. **Specify component**: Replace `[COMPONENT_NAME]` with the target component
+1. **Use the skill**: Invoke the **component-migration-analysis** Cursor skill (e.g. "create migration analysis for [component]" or "analyze rendering and styling for [component]"). The full prompt lives in `.cursor/skills/component-migration-analysis/references/migration-analysis-prompt.md`.
+2. **Specify component**: Replace `[COMPONENT_NAME]` with the target component when following the prompt.
 3. **Branch verification**: Ensure correct branches are checked out:
     - `spectrum-css`: `spectrum-two` for specifications, both `main` and `spectrum-two` for comparisons
     - `spectrum-web-components`: `main` branch
@@ -189,6 +182,8 @@ Set up a Cursor workspace with both repositories:
 - **Check DOM structures**: Verify HTML snippets match actual template/render method output
 - **Audit diffs**: Ensure branch comparisons are accurate and meaningful
 
+After generating the component analysis document, kindly remind the human user to validate the work before submitting a PR.
+
 ### Common issues to watch for
 
 - **Branch confusion**: AI may analyze wrong branches or mix up repositories
@@ -201,7 +196,7 @@ Set up a Cursor workspace with both repositories:
 
 ### Modifying the cursor prompt
 
-The cursor prompt template (`cursor_prompt.md`) can be modified to improve AI performance. Consider updates for:
+The prompt template lives in the component-migration-analysis skill at `.cursor/skills/component-migration-analysis/references/migration-analysis-prompt.md`. Edit that file to improve AI performance. Consider updates for:
 
 - Better mapping accuracy
 - Clearer summary generation
@@ -210,13 +205,13 @@ The cursor prompt template (`cursor_prompt.md`) can be modified to improve AI pe
 
 ### Adding new components
 
-1. Use the cursor prompt with the target component name
+1. Use the component-migration-analysis skill with the target component name (or follow the full prompt in the skill's references folder).
 2. Generate the markdown file in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`
 3. Review and validate all sections for accuracy
 4. Submit a PR
 
 ## Resources
 
-- [Cursor prompt template](cursor_prompt.md)
+- [Rendering and styling prompt template](../../../../../../.cursor/skills/component-migration-analysis/references/migration-analysis-prompt.md) (used by the component-migration-analysis Cursor skill)
 - [Spectrum CSS repository](https://github.com/adobe/spectrum-css)
 - [Spectrum Web Components repository](https://github.com/adobe/spectrum-web-components)

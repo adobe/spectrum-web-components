@@ -18,6 +18,7 @@
 @import url("@spectrum-web-components/styles/src/spectrum-body.css");
 @import url("@spectrum-web-components/styles/src/spectrum-code.css");
 @import url("@spectrum-web-components/opacity-checkerboard/src/spectrum-opacity-checkerboard.css");
+@import url("@spectrum-web-components/styles/global-elements.css");
 @import url("./inline-alert.css");
 @import url("./fonts.css");
 

@@ -18,6 +18,7 @@ import logo from './assets/logo.svg';
 
 import '../stylesheets/swc.css';
 import '../stylesheets/typography.css';
+import '../stylesheets/global/global-elements.css';
 import './assets/manager.css';
 
 const root = document.body ?? document.documentElement;
