@@ -1,0 +1,51 @@
+{
+  "name": "@spectrum-web-components/mcp",
+  "version": "0.1.0",
+  "description": "MCP server for Spectrum Web Components — exposes component APIs to AI tools",
+  "license": "Apache-2.0",
+  "author": "Adobe",
+  "type": "module",
+  "bin": {
+    "swc-mcp": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.0",
+    "node-html-parser": "^7.0.1",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "typescript": "5.9.2",
+    "vitest": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adobe/spectrum-web-components.git",
+    "directory": "tools/mcp-server"
+  },
+  "bugs": {
+    "url": "https://github.com/adobe/spectrum-web-components/issues"
+  },
+  "keywords": [
+    "design-system",
+    "spectrum",
+    "adobe",
+    "adobe-spectrum",
+    "web components",
+    "web-components",
+    "lit-element",
+    "lit-html"
+  ],
+  "homepage": "https://opensource.adobe.com/spectrum-web-components/"
+}

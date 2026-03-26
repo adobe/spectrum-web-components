@@ -115,6 +115,7 @@ test-results
 packages/*
 projects/*
 tools/*
+!tools/mcp-server/
 test/*
 
 # vitest browser test screenshots
