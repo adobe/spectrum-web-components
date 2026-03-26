@@ -17,51 +17,50 @@ import type { ComponentExample } from './types.js';
  * from code blocks marked as ```html demo.
  */
 export function parseReadmeExamples(content: string): ComponentExample[] {
-    const examples: ComponentExample[] = [];
-    const lines = content.split('\n');
+  const examples: ComponentExample[] = [];
+  const lines = content.split('\n');
 
-    let lastHeading = '';
-    let insideCodeBlock = false;
-    let isHtmlDemo = false;
-    let codeLines: string[] = [];
+  let lastHeading = '';
+  let insideCodeBlock = false;
+  let isHtmlDemo = false;
+  let codeLines: string[] = [];
 
-    for (const line of lines) {
-        // Track headings
-        const headingMatch = line.match(/^#{1,6}\s+(.+)/);
-        if (headingMatch && !insideCodeBlock) {
-            lastHeading = headingMatch[1].trim();
-            continue;
-        }
-
-        // Check for code block boundaries
-        if (line.startsWith('```')) {
-            if (!insideCodeBlock) {
-                // Opening a code block
-                insideCodeBlock = true;
-                const lang = line.slice(3).trim();
-                isHtmlDemo =
-                    lang === 'html demo' || lang === 'html-demo';
-                codeLines = [];
-            } else {
-                // Closing a code block
-                if (isHtmlDemo) {
-                    examples.push({
-                        title: lastHeading,
-                        html: codeLines.join('\n'),
-                        source: 'readme',
-                    });
-                }
-                insideCodeBlock = false;
-                isHtmlDemo = false;
-            }
-            continue;
-        }
-
-        // Accumulate lines inside a code block
-        if (insideCodeBlock) {
-            codeLines.push(line);
-        }
+  for (const line of lines) {
+    // Track headings
+    const headingMatch = line.match(/^#{1,6}\s+(.+)/);
+    if (headingMatch && !insideCodeBlock) {
+      lastHeading = headingMatch[1].trim();
+      continue;
     }
 
-    return examples;
+    // Check for code block boundaries
+    if (line.startsWith('```')) {
+      if (!insideCodeBlock) {
+        // Opening a code block
+        insideCodeBlock = true;
+        const lang = line.slice(3).trim();
+        isHtmlDemo = lang === 'html demo' || lang === 'html-demo';
+        codeLines = [];
+      } else {
+        // Closing a code block
+        if (isHtmlDemo) {
+          examples.push({
+            title: lastHeading,
+            html: codeLines.join('\n'),
+            source: 'readme',
+          });
+        }
+        insideCodeBlock = false;
+        isHtmlDemo = false;
+      }
+      continue;
+    }
+
+    // Accumulate lines inside a code block
+    if (insideCodeBlock) {
+      codeLines.push(line);
+    }
+  }
+
+  return examples;
 }
