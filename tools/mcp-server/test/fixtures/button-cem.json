@@ -1,0 +1,174 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/Button.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "Button",
+          "description": "An sp-button represents an action a user can take.",
+          "tagName": "sp-button",
+          "customElement": true,
+          "superclass": {
+            "name": "SizedMixin(ButtonBase)",
+            "module": "src/ButtonBase.js"
+          },
+          "mixins": [
+            { "name": "SizedMixin", "package": "@spectrum-web-components/shared" },
+            { "name": "ObserveSlotText", "package": "@spectrum-web-components/shared" }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": { "text": "'accent' | 'primary' | 'secondary' | 'negative'" },
+              "default": "'accent'",
+              "description": "The visual variant of the button.",
+              "attribute": "variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "treatment",
+              "type": { "text": "'fill' | 'outline'" },
+              "default": "'fill'",
+              "description": "The visual treatment of the button.",
+              "attribute": "treatment",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "quiet",
+              "type": { "text": "boolean" },
+              "default": "false",
+              "description": "Whether the button is quiet (minimal chrome).",
+              "attribute": "quiet",
+              "reflects": true,
+              "deprecated": "Use treatment='outline' instead."
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": { "text": "boolean" },
+              "default": "false",
+              "description": "Whether the button is disabled.",
+              "attribute": "disabled",
+              "reflects": true,
+              "inheritedFrom": { "name": "Focusable", "module": "src/Focusable.js" }
+            },
+            {
+              "kind": "field",
+              "name": "pending",
+              "type": { "text": "boolean" },
+              "default": "false",
+              "description": "Whether the button is in a pending state.",
+              "attribute": "pending",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "_isActive",
+              "type": { "text": "boolean" },
+              "default": "false",
+              "description": "Internal active state tracker.",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "description": "Moves focus to the button.",
+              "parameters": [
+                {
+                  "name": "options",
+                  "type": { "text": "FocusOptions" },
+                  "description": "Focus options."
+                }
+              ],
+              "return": { "type": { "text": "void" } }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "variant",
+              "type": { "text": "'accent' | 'primary' | 'secondary' | 'negative'" },
+              "default": "'accent'",
+              "description": "The visual variant of the button.",
+              "fieldName": "variant"
+            },
+            {
+              "name": "treatment",
+              "type": { "text": "'fill' | 'outline'" },
+              "default": "'fill'",
+              "description": "The visual treatment of the button.",
+              "fieldName": "treatment"
+            },
+            {
+              "name": "quiet",
+              "type": { "text": "boolean" },
+              "default": "false",
+              "description": "Whether the button is quiet.",
+              "fieldName": "quiet"
+            },
+            {
+              "name": "disabled",
+              "type": { "text": "boolean" },
+              "default": "false",
+              "description": "Whether the button is disabled.",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "pending",
+              "type": { "text": "boolean" },
+              "default": "false",
+              "description": "Whether the button is in a pending state.",
+              "fieldName": "pending"
+            }
+          ],
+          "events": [
+            {
+              "name": "click",
+              "type": { "text": "MouseEvent" },
+              "description": "Fired when the button is clicked."
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Text label of the button."
+            },
+            {
+              "name": "icon",
+              "description": "An icon to display in the button."
+            }
+          ],
+          "cssProperties": [
+            {
+              "name": "--spectrum-button-border-radius",
+              "description": "The border radius of the button."
+            },
+            {
+              "name": "--spectrum-button-min-width",
+              "description": "Minimum width of the button.",
+              "default": "72px"
+            }
+          ],
+          "cssParts": [
+            {
+              "name": "button",
+              "description": "The native button element."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-button",
+          "declaration": { "name": "Button", "module": "src/Button.js" }
+        }
+      ]
+    }
+  ]
+}

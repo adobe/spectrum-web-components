@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/Badge.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "Badge",
+          "description": "An sp-badge displays a small amount of color-categorized metadata.",
+          "tagName": "sp-badge",
+          "customElement": true,
+          "superclass": {
+            "name": "SpectrumElement",
+            "module": "src/SpectrumElement.js"
+          },
+          "members": [
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": { "text": "'informative' | 'neutral' | 'positive' | 'negative'" },
+              "default": "'informative'",
+              "description": "The visual variant of the badge.",
+              "attribute": "variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": { "text": "'s' | 'm' | 'l' | 'xl'" },
+              "default": "'m'",
+              "description": "The size of the badge.",
+              "attribute": "size",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "variant",
+              "type": { "text": "'informative' | 'neutral' | 'positive' | 'negative'" },
+              "default": "'informative'",
+              "description": "The visual variant of the badge.",
+              "fieldName": "variant"
+            },
+            {
+              "name": "size",
+              "type": { "text": "'s' | 'm' | 'l' | 'xl'" },
+              "default": "'m'",
+              "description": "The size of the badge.",
+              "fieldName": "size"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Text label of the badge."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-badge",
+          "declaration": { "name": "Badge", "module": "src/Badge.js" }
+        }
+      ]
+    }
+  ]
+}
