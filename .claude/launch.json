@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "1st-gen Storybook",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["start:1st-gen"],
+      "port": 8080
+    },
+    {
+      "name": "2nd-gen Storybook",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["start:2nd-gen"],
+      "port": 6006
+    },
+    {
+      "name": "Documentation Site",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["workspace", "documentation", "serve", "--watch"],
+      "port": 8000
+    }
+  ]
+}
