@@ -1,0 +1,92 @@
+---
+description: Jira ticket template for accessibility recommendations during 2nd-gen component migration
+alwaysApply: false
+---
+# Accessibility recommendations ticket for 2nd-gen migration
+
+When prompted to create an accessibility recommendation Jira ticket for a component migration, generate a ticket using the format below. The component name must appear in both the title and the labels.
+
+## Prerequisites
+
+Before drafting the ticket, identify the component name in kebab-case and determine the applicable WAI-ARIA design pattern. The acceptance criteria and overview should be tailored to the specific component's functionality.
+
+## Title format
+
+```
+[A11y({component-name})] Accessibility recommendations for 2nd-gen migration
+```
+
+Use the component's kebab-case name (e.g., `action-button`, `color-slider`, `picker`).
+
+## Labels
+
+Always include these labels, replacing `{component-name}` with the actual component name:
+
+- `a11y`
+- `spectrum2`
+- `{component-name}`
+
+Add any of these if applicable:
+
+- `VoiceOver` — If there are known VoiceOver-specific issues
+- `iOS` — If there are known iOS accessibility issues
+- `mobile` — If touch/mobile accessibility is in scope
+- `research` — If significant investigation is needed before recommendations can be made
+
+## Issue type
+
+Story
+
+## Severity
+
+SEV3 (Medium) — Adjust based on the component's usage frequency and severity of known issues.
+
+## Template
+
+Output the following in Jira syntax so it can be copied directly into Jira:
+
+```
+h2. Acceptance criteria
+
+ - Documented recommendations for ARIA roles, states, and properties for the {{swc-{component-name}}} 2nd-gen component
+ - Shadow DOM and cross-root ARIA considerations documented, including any limitations or required workarounds (e.g., {{ElementInternals}}, cross-root ARIA delegation)
+ - Accessibility tree expectations documented, including expected node roles, names, states, and hierarchy
+ - Keyboard interaction model fully specified, covering focus management, key bindings, roving tabindex or active-descendant patterns, and focus trapping where applicable
+ - Testing requirements defined, including unit tests, integration tests, and manual screen reader testing matrix (JAWS, NVDA, VoiceOver)
+ - Known 1st-gen accessibility issues cataloged with disposition (fix in 2nd-gen, defer, or won't fix) and linked to any open GitHub issues or bugs
+ - Applicable WAI-ARIA design pattern identified with relevant ARIA roles documented
+ - 1st-gen component analysis completed, covering current ARIA implementation, keyboard handling, existing test coverage, and known issues with dispositions
+
+h2. Overview
+
+This ticket requests accessibility recommendations for the *{{swc-{component-name}}}* component as part of its migration from 1st-gen to 2nd-gen. The recommendations should produce a comprehensive set of accessibility requirements that the engineering team will use as the specification for the 2nd-gen implementation.
+
+The 2nd-gen migration is an opportunity to address known accessibility gaps, align with the latest WAI-ARIA Authoring Practices, and ensure the component meets WCAG 2.2 AA compliance.
+
+h2. QA
+
+The recommendations should cover the following areas:
+
+ - ARIA roles, states, and properties
+ - Shadow DOM and cross-root ARIA considerations
+ - Accessibility tree
+ - Keyboard interaction
+ - Testing requirements
+ - Known 1st-gen issues
+```
+
+## Filling in the template
+
+When generating the ticket:
+
+1. Replace all `{component-name}` placeholders with the actual component name in kebab-case.
+2. Adjust severity based on:
+   - SEV2 if the component is widely used and has critical accessibility gaps
+   - SEV3 for most components (default)
+   - SEV4 if the component has minor or no known issues
+
+## Example title and labels
+
+**Title:** `[A11y(picker)] Accessibility recommendations for 2nd-gen migration`
+
+**Labels:** `a11y`, `spectrum2`, `picker`, `VoiceOver`
