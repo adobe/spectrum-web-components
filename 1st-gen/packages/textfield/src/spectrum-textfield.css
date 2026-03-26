@@ -275,6 +275,10 @@
   appearance: textfield;
 }
 
+:host([type="password"]) .input {
+  text-overflow: clip;
+}
+
 :host([type="number"]) .input::-webkit-inner-spin-button,
 :host([type="number"]) .input::-webkit-outer-spin-button {
   margin: 0;
