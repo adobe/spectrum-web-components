@@ -55,6 +55,53 @@ export function parseCEM(
   return components;
 }
 
+/**
+ * Parse a monolithic CEM (single file containing all packages) into ComponentAPI objects.
+ * Derives package names from module paths like "packages/button/sp-button.js".
+ */
+export function parseMonolithicCEM(
+  manifest: CEMManifest,
+  generation: 'gen-1' | 'gen-2'
+): ComponentAPI[] {
+  const components: ComponentAPI[] = [];
+
+  for (const module of manifest.modules) {
+    if (!module.declarations) {
+      continue;
+    }
+
+    const packageName = derivePackageName(module.path);
+
+    for (const declaration of module.declarations) {
+      if (
+        declaration.kind !== 'class' ||
+        !declaration.customElement ||
+        !declaration.tagName
+      ) {
+        continue;
+      }
+
+      components.push(parseDeclaration(declaration, packageName, generation));
+    }
+  }
+
+  return components;
+}
+
+/**
+ * Derive package name from a CEM module path.
+ * "packages/button/sp-button.js" → "@spectrum-web-components/button"
+ * "packages/action-bar/sp-action-bar.js" → "@spectrum-web-components/action-bar"
+ * "tools/shared/src/focusable.js" → "@spectrum-web-components/shared"
+ */
+function derivePackageName(modulePath: string): string {
+  const match = modulePath.match(/^(?:packages|tools)\/([^/]+)\//);
+  if (match) {
+    return `@spectrum-web-components/${match[1]}`;
+  }
+  return '@spectrum-web-components/unknown';
+}
+
 function parseDeclaration(
   decl: CEMDeclaration,
   packageName: string,
