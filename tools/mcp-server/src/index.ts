@@ -20,12 +20,13 @@ import { parseCEM, parseMonolithicCEM } from './cem-parser.js';
 import {
   componentNameToGen2Package,
   componentNameToTagName,
+  MIGRATION_STEPS,
   parseMigrationStatus,
 } from './migration-parser.js';
 import { parseReadmeExamples } from './readme-parser.js';
 import { ComponentRegistry } from './registry.js';
 import { createMCPServer } from './server.js';
-import type { CEMManifest, MigrationInfo, MigrationStep } from './types.js';
+import type { CEMManifest, MigrationInfo } from './types.js';
 
 // ── Helpers ──────────────────────────────────────────────────────────
 
@@ -179,16 +180,6 @@ async function main(): Promise<void> {
       const migrationContent = readFileSync(migrationPath, 'utf-8');
       const entries = parseMigrationStatus(migrationContent);
 
-      const allSteps: MigrationStep[] = [
-        'analyze',
-        'factor-component',
-        'move-to-core',
-        'add-data-model',
-        'add-2nd-gen',
-        'render-and-style',
-        'add-stories',
-      ];
-
       for (const entry of entries) {
         const tagName = componentNameToTagName(entry.component);
         const gen2Package = componentNameToGen2Package(entry.component);
@@ -197,7 +188,7 @@ async function main(): Promise<void> {
           gen1TagName: tagName,
           gen2Package: entry.status !== 'not-started' ? gen2Package : null,
           migrationStatus: entry.status,
-          steps: allSteps,
+          steps: MIGRATION_STEPS,
           completedSteps: entry.completedSteps,
           breakingChanges: [],
           apiDiff: {

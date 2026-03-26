@@ -18,7 +18,7 @@ export interface MigrationStatusEntry {
   completedSteps: MigrationStep[];
 }
 
-const MIGRATION_STEPS: MigrationStep[] = [
+export const MIGRATION_STEPS: MigrationStep[] = [
   'analyze',
   'factor-component',
   'move-to-core',

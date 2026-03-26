@@ -86,7 +86,17 @@ export function createMCPServer(deps: ServerDeps): McpServer {
         .string()
         .describe('The custom element tag name, e.g. "sp-button"'),
       sections: z
-        .array(z.string())
+        .array(
+          z.enum([
+            'properties',
+            'attributes',
+            'events',
+            'slots',
+            'css-properties',
+            'css-parts',
+            'methods',
+          ])
+        )
         .optional()
         .describe(
           'Optional list of API sections to include (properties, attributes, events, slots, css-properties, css-parts, methods)'
@@ -177,17 +187,22 @@ export function createMCPServer(deps: ServerDeps): McpServer {
     {
       query: z.string().describe('The search query string'),
       searchIn: z
-        .array(z.string())
+        .array(
+          z.enum([
+            'properties',
+            'events',
+            'slots',
+            'description',
+            'css-properties',
+          ])
+        )
         .optional()
         .describe(
           'Optional list of sections to search in (properties, events, slots, description, css-properties)'
         ),
     },
     async ({ query, searchIn }) => {
-      const sections = searchIn as
-        | import('./types.js').SearchSection[]
-        | undefined;
-      const results = registry.search(query, sections);
+      const results = registry.search(query, searchIn);
       return {
         content: [
           {
