@@ -140,6 +140,13 @@ export interface TypeChange {
   gen2Type: string;
 }
 
+export type SearchSection =
+    | 'properties'
+    | 'events'
+    | 'slots'
+    | 'description'
+    | 'css-properties';
+
 export interface SearchResult {
   tagName: string;
   matchType: 'property' | 'event' | 'slot' | 'description' | 'css-property';
