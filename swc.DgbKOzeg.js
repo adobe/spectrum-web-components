@@ -49,4 +49,4 @@ import{i as o}from"./swc.CZZTz5mk.js";import{c as r}from"./swc.DWyl-PQ5.js";impo
         ?open=${this.open&&!this.disabled}
       ></sp-color-loupe>
     `}firstUpdated(o){super.firstUpdated(o),this.addEventListener("pointerdown",this.handlePointerdown),this.addEventListener("pointerup",this.handlePointerup),this.addEventListener("pointercancel",this.handlePointerup)}}h([t({type:Boolean,reflect:!0})],m.prototype,"disabled"),h([t({type:Boolean,reflect:!0})],m.prototype,"focused"),h([t({type:Boolean,reflect:!0})],m.prototype,"open"),h([t({type:String})],m.prototype,"color"),c("sp-color-handle",m);
-//# sourceMappingURL=swc.ByCMp7gp.js.map
+//# sourceMappingURL=swc.DmANe3wo.js.map

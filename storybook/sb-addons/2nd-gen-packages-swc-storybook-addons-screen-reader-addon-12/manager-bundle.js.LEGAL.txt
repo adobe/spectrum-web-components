@@ -1,15 +1,5 @@
 Bundled license information:
 
-@lit/react/create-component.js:
-lit-html/directives/if-defined.js:
-lit-html/directives/class-map.js:
-lit-html/directives/style-map.js:
-  /**
-   * @license
-   * Copyright 2018 Google LLC
-   * SPDX-License-Identifier: BSD-3-Clause
-   */
-
 @lit/reactive-element/css-tag.js:
   /**
    * @license
@@ -57,6 +47,16 @@ lit-html/directives/join.js:
    * SPDX-License-Identifier: BSD-3-Clause
    */
 
+lit-html/directives/if-defined.js:
+lit-html/directives/class-map.js:
+lit-html/directives/style-map.js:
+@lit/react/create-component.js:
+  /**
+   * @license
+   * Copyright 2018 Google LLC
+   * SPDX-License-Identifier: BSD-3-Clause
+   */
+
 lit-html/directive-helpers.js:
 lit-html/directives/live.js:
 lit-html/directives/ref.js:
@@ -65,3 +65,15 @@ lit-html/directives/ref.js:
    * Copyright 2020 Google LLC
    * SPDX-License-Identifier: BSD-3-Clause
    */
+
+tabbable/dist/index.esm.js:
+  /*!
+  * tabbable 6.3.0
+  * @license MIT, https://github.com/focus-trap/tabbable/blob/master/LICENSE
+  */
+
+focus-trap/dist/focus-trap.esm.js:
+  /*!
+  * focus-trap 7.6.5
+  * @license MIT, https://github.com/focus-trap/focus-trap/blob/master/LICENSE
+  */
