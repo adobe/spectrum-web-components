@@ -433,14 +433,17 @@ export class ActionMenu extends ObserveSlotPresence(
   protected handleTooltipSlotchange(
     event: Event & { target: HTMLSlotElement }
   ): void {
-    this.tooltipEl = event.target.assignedElements()[0] as Tooltip | undefined;
+    const tooltipEl = event.target.assignedElements()[0] as Tooltip | undefined;
+    this.tooltipEl = tooltipEl;
 
     // Set up trigger element for self-managed tooltips
-    if (this.tooltipEl?.selfManaged) {
-      // Wait for the tooltip to be fully initialized
+    if (tooltipEl?.selfManaged) {
+      if (this.button) {
+        tooltipEl.triggerElement = this.button;
+      }
       this.updateComplete.then(() => {
-        if (this.tooltipEl?.overlayElement && this.button) {
-          this.tooltipEl.overlayElement.triggerElement = this.button;
+        if (tooltipEl.selfManaged && this.button) {
+          tooltipEl.triggerElement = this.button;
         }
       });
     }
@@ -1028,12 +1031,8 @@ export class ActionMenu extends ObserveSlotPresence(
   public override connectedCallback(): void {
     super.connectedCallback();
     this.updateComplete.then(() => {
-      if (!this.tooltipEl?.selfManaged) {
-        return;
-      }
-      const overlayElement = this.tooltipEl.overlayElement;
-      if (overlayElement) {
-        overlayElement.triggerElement = this.button;
+      if (this.tooltipEl?.selfManaged && this.button) {
+        this.tooltipEl.triggerElement = this.button;
       }
     });
 
