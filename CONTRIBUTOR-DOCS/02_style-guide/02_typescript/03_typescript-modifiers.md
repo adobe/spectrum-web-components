@@ -120,7 +120,7 @@ Abstract methods are rare in 2nd-gen. Most base classes use the `API TO OVERRIDE
 
 ```ts
 // ✅ Good — override tells TypeScript this must match the base class
-static override readonly VARIANTS_COLOR = BADGE_VARIANTS_COLOR_S2;
+static override readonly VARIANTS_COLOR = BADGE_VARIANTS_COLOR;
 
 @property({ type: String, reflect: true })
 public override variant: BadgeVariant = 'informative';
@@ -132,7 +132,7 @@ protected override render(): TemplateResult {
 
 ```ts
 // ❌ Bad — forgetting override hides the parent member silently
-static readonly VARIANTS_COLOR = BADGE_VARIANTS_COLOR_S2;
+static readonly VARIANTS_COLOR = BADGE_VARIANTS_COLOR;
 
 @property({ type: String, reflect: true })
 public variant: BadgeVariant = 'informative';

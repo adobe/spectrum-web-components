@@ -73,8 +73,8 @@ protected handleKeydown(event: KeyboardEvent): void { }
 // ❌ Bad — snake_case
 public static_color?: ProgressCircleStaticColor;
 
-// ❌ Bad — underscore on non-backing field
-private _isOpen = false; // should be: private isOpen = false;
+// ❌ Bad — underscore on a public field
+public _isOpen = false; // should be: private _isOpen = false;
 ```
 
 The one exception for underscores is backing fields that pair with a custom getter/setter (see [Property patterns](05_property-patterns.md#backing-fields)).

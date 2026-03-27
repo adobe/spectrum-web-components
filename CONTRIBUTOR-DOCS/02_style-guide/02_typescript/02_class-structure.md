@@ -217,12 +217,12 @@ This section sets the values that the base class declared in `API TO OVERRIDE`. 
 /**
  * @internal
  */
-static override readonly VARIANTS_COLOR = BADGE_VARIANTS_COLOR_S2;
+static override readonly VARIANTS_COLOR = BADGE_VARIANTS_COLOR;
 
 /**
  * @internal
  */
-static override readonly VARIANTS = BADGE_VARIANTS_S2;
+static override readonly VARIANTS = BADGE_VARIANTS;
 
 /**
  * @internal

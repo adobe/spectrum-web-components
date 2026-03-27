@@ -76,7 +76,7 @@ The concrete class lives in `swc/components/<name>/Component.ts`. It handles:
 | Responsibility | Example |
 |----------------|---------|
 | **Overriding statics** | Setting `VARIANTS_COLOR` to the S2 value set |
-| **Overriding property types** | Narrowing `variant` to `BadgeVariantS2` |
+| **Overriding property types** | Narrowing `variant` to `BadgeVariant` |
 | **Generation-specific properties** | `subtle`, `outline` (S2-only) |
 | **Styles** | Returning `[styles]` from `get styles()` |
 | **Rendering** | The `render()` method with the HTML template |

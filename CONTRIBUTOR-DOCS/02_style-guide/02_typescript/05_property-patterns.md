@@ -86,7 +86,7 @@ In concrete classes, static overrides use `static override readonly`:
 
 ```ts
 // ✅ Good
-static override readonly VARIANTS_COLOR = BADGE_VARIANTS_COLOR_S2;
+static override readonly VARIANTS_COLOR = BADGE_VARIANTS_COLOR;
 ```
 
 ## Reactive properties with @property()
@@ -95,7 +95,7 @@ Use the `@property()` decorator for properties that are part of the component's 
 
 Key rules:
 
-- Use `reflect: true` when the property should appear as an HTML attribute because it causes a visual effect in DOM when present or updated.
+- Use `reflect: true` when the property should appear as an HTML attribute because it causes a visual effect in the DOM when present or updated.  
 - Use the `type` option to tell Lit how to convert the attribute value.
 - Use the `attribute` option when the HTML attribute name differs from the property name (e.g. `static-color` → `staticColor`).
 
