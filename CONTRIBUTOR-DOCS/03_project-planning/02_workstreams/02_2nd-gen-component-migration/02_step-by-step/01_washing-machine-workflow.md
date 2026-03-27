@@ -179,7 +179,7 @@ Before you start, know the split:
 - **Types:** In core (e.g. `Badge.types.ts`) so both 1st-gen and 2nd-gen can share or extend.
 
 <details>
-<summary>**File layout**</summary>
+<summary>File layout</summary>
 
 - Core: `Component.base.ts`, `Component.types.ts`, `index.ts`
 - SWC: `Component.ts`, `component.css`, `index.ts`, `stories/`, `test/`
@@ -391,6 +391,7 @@ For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheet
 ### Common problems and solutions
 
 | Problem | Solution |
+|--------|----------|
 | Unclear which pattern applies | Start from the component's primary role (e.g. "combobox" → Combobox pattern). Consider splitting into more than one component (e.g. "sp-menu" into menu and listbox components). |
 | Focus trap in overlays | Use a shared focus-trap utility if the repo provides one; follow APG for modal/dialog. |
 | Custom controls | Ensure they have roles, names, and keyboard support; avoid div/span without semantics. |
@@ -580,9 +581,9 @@ Use Badge as the reference implementation:
 
 - **Workspace:** [spectrum-css](https://github.com/adobe/spectrum-css) cloned **next to** this repo—see [Workspace setup](#workspace-setup).
 - **TypeScript:** Team conventions; for 2nd-gen API patterns (static `readonly`, `window.__swc.warn`, deprecating Gen1 exports), see Phase 3 [API patterns](#api-patterns-statics-warnings-and-1st-gen-exports) and 2nd-gen Badge (`core` + `swc` + 1st-gen `badge/src/Badge.ts`).
-- **CSS:** Conventions
+- **CSS:** [2nd-gen CSS style guide (CONTRIBUTOR-DOCS)](../../../../02_style-guide/01_css/README.md) — component CSS, custom properties, Spectrum→SWC migration, anti-patterns, property order
 - **Testing:** [2nd gen testing conventions](../../../../01_contributor-guides/11_2ndgen_testing.md)
 - **WCAG APG:** [https://www.w3.org/WAI/ARIA/apg/patterns/](https://www.w3.org/WAI/ARIA/apg/patterns/)
 - **Component analysis:** [03_components/](../../../03_components/) — Step 1 [Cursor prompt](01_analyze-rendering-and-styling/README.md); optional **component-migration-analysis** Cursor skill alongside that flow.
-- **2nd-gen Storybook guides:** `2nd-gen/packages/swc/.storybook/guides/`
-- **Accessibility:** `2nd-gen/packages/swc/.storybook/guides/accessibility-guides/`
+- **2nd-gen Storybook guides:** [2nd-gen/packages/swc/.storybook/guides/](../../../../../2nd-gen/packages/swc/.storybook/guides/)
+- **Accessibility:** [2nd-gen/packages/swc/.storybook/guides/accessibility-guides/](../../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/)

@@ -13,7 +13,6 @@
 
 - [TODO: Greenfield 2nd-gen contributor guide](#todo-greenfield-2nd-gen-contributor-guide)
 - [Epics and tickets](#epics-and-tickets)
-    - [Branch and PR model](#branch-and-pr-model)
     - [Rationale](#rationale)
     - [Epic template](#epic-template)
     - [Ticket list](#ticket-list)
@@ -39,7 +38,7 @@ This doc is **project-management guidance** for tracking a component migration i
 
 Use one **Epic** per component migration and create **standard tickets** aligned to the 8 washing machine phases. This keeps scope clear, makes progress visible, and gives a consistent structure for planning and review.
 
-### Branch and PR model
+- **Ticket 8 (Phase 8: Review):** After **all seven** prior phase PRs are merged into the feature branch, run **final QA** on the full integration (lint, tests, Storybook, checklist, status table—see the [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md) Phase 8). Then **merge the feature branch to `main`**. Phase 8 is the last gate before that merge.
 
 - **One feature branch per Epic** (e.g. `2nd-gen/migrate-<component>`). All migration work lands there first—not on `main` until the Epic is finished.
 - **Tickets 1–7:** Each ticket is delivered as a **PR merged into that feature branch**. Close the ticket when the PR is merged; the branch should always carry the integrated result of completed phases.
@@ -55,7 +54,7 @@ Use one **Epic** per component migration and create **standard tickets** aligned
 
 **Title:** `[Migration] 2nd-gen [Component]`
 
-**Description:**
+- Branching: use a **dedicated feature branch** for this Epic; **tickets 1–7** merge via PR into that branch; **ticket 8** is final QA on the integrated branch, then **merge the feature branch to `main`**.
 
 - Migrate [Component] from 1st-gen to 2nd-gen following the [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md).
 - Scope: core base + types, SWC component, styles, a11y, tests, stories, and PR.
