@@ -6994,7 +6994,9 @@ __metadata:
     "@spectrum-web-components/icon": "npm:1.11.2"
     "@spectrum-web-components/icons-ui": "npm:1.11.2"
     "@spectrum-web-components/icons-workflow": "npm:1.11.2"
+    "@spectrum-web-components/overlay": "npm:1.11.2"
     "@spectrum-web-components/shared": "npm:1.11.2"
+    "@spectrum-web-components/tooltip": "npm:1.11.2"
   languageName: unknown
   linkType: soft
 

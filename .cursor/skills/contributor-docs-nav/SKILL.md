@@ -26,8 +26,8 @@ Run the regeneration script to update breadcrumbs and TOCs in CONTRIBUTOR-DOCS, 
 1. **When to run**: File/folder add/remove/rename/move; heading changes; folder structure changes; or user request.
 2. **How to run** (from project root):
    ```bash
-   cd .cursor/skills/contributor-docs-nav/scripts
-   node update-nav.js ../../../../CONTRIBUTOR-DOCS
+   cd CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs
+   node update-nav.js
    ```
 3. **After running**: Verify success, report results (files updated, link counts). Fix straightforward link errors automatically; ask the user when the fix is ambiguous (e.g. target file removed, multiple anchor matches).
 

@@ -13,7 +13,6 @@
 
 - [Overview](#overview)
 - [Where to put tests](#where-to-put-tests)
-- [Quick reference](#quick-reference)
 
 </details>
 
