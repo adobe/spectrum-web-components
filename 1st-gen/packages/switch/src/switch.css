@@ -17,26 +17,49 @@
   pointer-events: none;
 }
 
-/* the handle's border in the down/active state remains the same if a user moves their cursor 
-while still activating/pressing the switch. Read-only switches should not have this behavior. */
-:host(:hover:active) #input + #switch::before,
-:host([emphasized]:hover:active) #input + #switch::before {
-  border-color: var(--highcontrast-switch-handle-border-color-down, var(--mod-switch-handle-border-color-down, var(--spectrum-switch-handle-border-color-down)));
+/* Ensure read-only switches don't show interaction styles in any elements */
+:host([readonly]) #input + #switch,
+:host([readonly]:hover) #input + #switch,
+:host([readonly]:active) #input + #switch,
+:host([readonly]:hover:active) #input + #switch {
+  background-color: var(--highcontrast-switch-background-color, var(--mod-switch-background-color, var(--spectrum-switch-background-color)));
+  border-color: var(--highcontrast-switch-border-color-default, var(--mod-switch-border-color-default, var(--spectrum-switch-border-color-default)));
 }
 
-:host(:active[checked]) #input:enabled + #switch::before {
-  border-color: var(--highcontrast-switch-handle-border-color-selected-down, var(--mod-switch-handle-border-color-selected-down, var(--spectrum-switch-handle-border-color-selected-down)));
+:host([readonly][checked]) #input + #switch,
+:host([readonly][checked]:hover) #input + #switch,
+:host([readonly][checked]:active) #input + #switch,
+:host([readonly][checked]:hover:active) #input + #switch {
+  background-color: var(--highcontrast-switch-background-color-selected-default, var(--mod-switch-background-color-selected-default, var(--spectrum-switch-background-color-selected-default)));
+  border-color: var(--highcontrast-switch-border-color-selected-default, var(--mod-switch-border-color-selected-default, var(--spectrum-switch-border-color-selected-default)));
 }
 
-:host(:active[checked]) #input:enabled + #switch {
-  background-color: var(--highcontrast-switch-background-color-selected-down, var(--mod-switch-background-color-selected-down, var(--spectrum-switch-background-color-selected-down)));
+:host([readonly]) #input + #switch::before,
+:host([readonly]:hover) #input + #switch::before,
+:host([readonly]:active) #input + #switch::before,
+:host([readonly]:hover:active) #input + #switch::before {
+  background-color: var(--highcontrast-switch-handle-background-color, var(--mod-switch-handle-background-color-hover, var(--spectrum-switch-handle-background-color-default)));
+  border-color: var(--highcontrast-switch-handle-border-color-default, var(--mod-switch-handle-border-color-default, var(--spectrum-switch-handle-border-color)));
 }
 
-/* Ensure read-only switches don't show interaction styles */
-:host([readonly]) #input + #switch::before {
-  border-color: var(--highcontrast-switch-handle-border-color-default, var(--mod-switch-handle-border-color-default, var(--spectrum-switch-handle-border-color-default))) !important;
+:host([readonly][checked]) #input + #switch::before,
+:host([readonly][checked]:hover) #input + #switch::before,
+:host([readonly][checked]:active) #input + #switch::before,
+:host([readonly][checked]:hover:active) #input + #switch::before {
+  background-color: var(--highcontrast-switch-handle-background-color, var(--mod-switch-handle-background-color-selected-hover, var(--spectrum-switch-handle-background-color-selected)));
+  border-color: var(--highcontrast-switch-handle-border-color-selected-default, var(--mod-switch-handle-border-color-selected-default, var(--spectrum-switch-handle-border-color-selected)));
 }
 
-:host([readonly][checked]) #input + #switch::before {
-  border-color: var(--highcontrast-switch-handle-border-color-selected-default, var(--mod-switch-handle-border-color-selected-default, var(--spectrum-switch-handle-border-color-selected-default))) !important;
+:host([readonly]) #input ~ #label,
+:host([readonly]:hover) #input ~ #label,
+:host([readonly]:active) #input ~ #label,
+:host([readonly]:hover:active) #input ~ #label {
+  color: var(--highcontrast-switch-label-color-default, var(--mod-switch-label-color-default, var(--spectrum-switch-label-color-default)));
+}
+
+:host([readonly][checked]) #input ~ #label,
+:host([readonly][checked]:hover) #input ~ #label,
+:host([readonly][checked]:active) #input ~ #label,
+:host([readonly][checked]:hover:active) #input ~ #label {
+  color: var(--highcontrast-switch-label-color-default, var(--mod-switch-label-color-default, var(--spectrum-switch-label-color-default)));
 }

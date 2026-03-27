@@ -546,6 +546,22 @@ export class NumberField extends TextfieldBase {
       this._trackingValue = value;
       this.inputElement.value = value;
       this.inputElement.setSelectionRange(selectionStart, selectionStart);
+      // Controller uses an intentional multi-phase update (see TruncatedValueTooltipController):
+      // refresh() may queue a second render so the tooltip appears; we sync tooltip text after
+      // updateComplete so the tooltip DOM exists.
+      const justBecameTruncated =
+        this.truncatedValueTooltipController.refresh();
+      if (justBecameTruncated) {
+        this.updateComplete.then(() => {
+          this.truncatedValueTooltipController.syncTooltipText(
+            this.inputElement?.value ?? this.displayValue
+          );
+        });
+      } else {
+        this.truncatedValueTooltipController.syncTooltipText(
+          this.inputElement?.value ?? this.displayValue
+        );
+      }
       return;
     } else {
       this.inputElement.value = this.indeterminate

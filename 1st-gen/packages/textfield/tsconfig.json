@@ -11,6 +11,8 @@
     { "path": "../icon" },
     { "path": "../icons-ui" },
     { "path": "../icons-workflow" },
+    { "path": "../overlay" },
+    { "path": "../tooltip" },
     { "path": "../../tools/shared" }
   ]
 }
