@@ -192,7 +192,7 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - **purpose**: Run the CONTRIBUTOR-DOCS nav script to update breadcrumbs and TOCs, and handle link verification
 - **How to invoke**: Say “update contributor docs nav”, “regenerate TOC”, “fix broken links in CONTRIBUTOR-DOCS”, or “run the nav script”. Also invoked when you add, remove, rename, or move files under `CONTRIBUTOR-DOCS/` or change H1/H2/H3 headings (the contributor-doc-update rule may trigger; the skill holds the full workflow).
 - Use when: Updating contributor docs structure, regenerating navigation, or fixing reported broken links
-- Provides: Operator workflow (run script, verify, fix links), Maintainer workflow (when to update script). Full instructions in `CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs/01_ai-agent-instructions.md`
+- Provides: Operator workflow (run script, verify, fix links), Maintainer workflow (when to update script). Full instructions in `.cursor/skills/contributor-docs-nav/references/ai-agent-instructions.md`
 
 #### Component migration (rendering and styling)
 
@@ -200,6 +200,12 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - **How to invoke**: Say “create migration analysis for [component]”, “analyze rendering and styling for [component]”, or “rendering and styling migration for [component]”. Also invoked when you refer to the “analyze rendering and styling” step in the 2nd-gen component migration workstream.
 - Use when: On the analyze-rendering-and-styling step for one or more components; creating one markdown file per component at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`
 - Provides: Workflow summary (specs from CSS + SWC, three-way DOM comparison, CSS⇒SWC mapping table, summary). Full instructions in `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_analyze-rendering-and-styling/cursor_prompt.md`
+
+#### Washing machine migration workflow
+
+- **purpose**: End-to-end 1st-gen → 2nd-gen migration sequence (phases, checklists, links to step docs and style guides)
+- **Doc**: `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md`
+- Use when: Planning or executing a component migration in the 2nd-gen component migration workstream
 
 #### Deep understanding
 
