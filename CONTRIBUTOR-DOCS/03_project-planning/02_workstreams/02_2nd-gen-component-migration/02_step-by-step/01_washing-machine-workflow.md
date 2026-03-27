@@ -1,14 +1,75 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Workstreams](../README.md) / [2nd-gen Component Migration](../README.md) / Washing machine workflow
+[CONTRIBUTOR-DOCS](../../../../README.md) / [Project planning](../../../README.md) / [Workstreams](../../README.md) / [2nd-gen Component Migration](../README.md) / Step By Step / Washing machine: migrating an existing 1st-gen component to 2nd-gen
 
 <!-- Document title (editable) -->
 
 # Washing machine: migrating an existing 1st-gen component to 2nd-gen
 
-<!-- Document content (editable) -->
+<!-- Generated TOC - DO NOT EDIT -->
 
-**Machine-readable workflow:** Structured `workflow` data (phases, paths, contributor-doc pointers) for tools and agents lives in [`01_washing-machine-workflow.meta.yaml`](01_washing-machine-workflow.meta.yaml) alongside this file. Update both when those fields change.
+<details open>
+<summary><strong>In this doc</strong></summary>
+
+    - [Workspace setup](#workspace-setup)
+- [Quick Migration Checklist](#quick-migration-checklist)
+- [Relationship to this workstream](#relationship-to-this-workstream)
+- [Workflow overview](#workflow-overview)
+- [Refactor path (1st-gen required)](#refactor-path-1st-gen-required)
+- [Core vs SWC: where does code go?](#core-vs-swc-where-does-code-go)
+- [Phase 1: Preparation](#phase-1-preparation)
+    - [What to do](#what-to-do)
+    - [What to check](#what-to-check)
+    - [Common problems and solutions](#common-problems-and-solutions)
+    - [Quality gate](#quality-gate)
+- [Phase 2: Setup](#phase-2-setup)
+    - [What to do](#what-to-do)
+    - [What to check](#what-to-check)
+    - [Common problems and solutions](#common-problems-and-solutions)
+    - [Quality gate](#quality-gate)
+- [Phase 3: API migration](#phase-3-api-migration)
+    - [What to do](#what-to-do)
+    - [Property migration scenarios](#property-migration-scenarios)
+    - [API patterns (statics, warnings, and 1st-gen exports)](#api-patterns-statics-warnings-and-1st-gen-exports)
+    - [What to check](#what-to-check)
+    - [Common problems and solutions](#common-problems-and-solutions)
+    - [Quality gate](#quality-gate)
+- [Phase 4: Styling](#phase-4-styling)
+    - [What to do](#what-to-do)
+    - [What to check](#what-to-check)
+    - [Common problems and solutions](#common-problems-and-solutions)
+    - [Quality gate](#quality-gate)
+- [Phase 5: Accessibility](#phase-5-accessibility)
+    - [What to do](#what-to-do)
+    - [What to check](#what-to-check)
+    - [Common problems and solutions](#common-problems-and-solutions)
+    - [Quality gate](#quality-gate)
+- [Phase 6: Testing](#phase-6-testing)
+    - [What to do](#what-to-do)
+    - [What to check](#what-to-check)
+    - [Common problems and solutions](#common-problems-and-solutions)
+    - [Quality gate](#quality-gate)
+- [Phase 7: Documentation](#phase-7-documentation)
+    - [What to do](#what-to-do)
+    - [What to check](#what-to-check)
+    - [Common problems and solutions](#common-problems-and-solutions)
+    - [Quality gate](#quality-gate)
+- [Phase 8: Review](#phase-8-review)
+    - [What to do](#what-to-do)
+    - [Final checklist (copy and use)](#final-checklist-copy-and-use)
+    - [Quality gate](#quality-gate)
+- [Decision trees](#decision-trees)
+    - [Should this component be split into multiple components?](#should-this-component-be-split-into-multiple-components)
+    - [Should this component be combined with another?](#should-this-component-be-combined-with-another)
+    - [What shared utilities can be extracted?](#what-shared-utilities-can-be-extracted)
+    - [How should variants be implemented?](#how-should-variants-be-implemented)
+    - [What accessibility pattern applies?](#what-accessibility-pattern-applies)
+- [Reference: Badge migration](#reference-badge-migration)
+- [Style guides and resources](#style-guides-and-resources)
+
+</details>
+
+<!-- Document content (editable) -->
 
 **Scope:** This guide applies **only** when a **1st-gen Spectrum Web Component already exists** (or 1st-gen is explicitly the package you are migrating—you refactor that surface, move shared logic to core, then add 2nd-gen). **Greenfield / net-new** 2nd-gen (no 1st-gen counterpart) is **out of scope** here; see [TODO: Greenfield 2nd-gen contributor guide](../03_migration-project-planning.md#todo-greenfield-2nd-gen-contributor-guide) in [Migration project planning](../03_migration-project-planning.md).
 
@@ -132,7 +193,7 @@ Before you start, know the split:
 
 ### What to do
 
-1. **Read or generate the component analysis** — See [Step 1: Analyze rendering and styling](01_analyze-rendering-and-styling/README.md). Analysis docs live under [03_components/](../../03_components/) (e.g. `badge/rendering-and-styling-migration-analysis.md`). Have **spectrum-css** in the [same workspace](#workspace-setup) so comparisons to Spectrum 2 source are practical. **Optional (AI-assisted):** If you use Cursor, the **component-migration-analysis** skill (when available in your setup) can be used together with Step 1’s [Cursor prompt](01_analyze-rendering-and-styling/cursor_prompt.md) to produce or update the analysis; still follow Step 1 QA before treating the doc as final.
+1. **Read or generate the component analysis** — See [Step 1: Analyze rendering and styling](01_analyze-rendering-and-styling/README.md). Analysis docs live under [03_components/](../../../03_components/) (e.g. `badge/rendering-and-styling-migration-analysis.md`). Have **spectrum-css** in the [same workspace](#workspace-setup) so comparisons to Spectrum 2 source are practical. **Optional (AI-assisted):** If you use Cursor, the **component-migration-analysis** skill (when available in your setup) can be used together with Step 1’s [Cursor prompt](01_analyze-rendering-and-styling/README.md#using-the-cursor-prompt) to produce or update the analysis; still follow Step 1 QA before treating the doc as final.
 2. **Read the 1st-gen code** and dependencies (mixins, shared modules).
 3. **List breaking changes** and existing bug tickets; consider severity and whether fixes require breaking changes.
 4. **Write a short migration plan** — scope, risks, order of work.
@@ -272,27 +333,27 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 
 ## Phase 4: Styling
 
-**Goal:** Migrate CSS to 2nd-gen structure and follow the CSS style guide. Follow the [full migration steps](CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md); see also [Step 6: Migrate rendering & styles from Spectrum CSS](06_migrate-rendering-and-styles.md) for workstream context. Requires a local **spectrum-css** checkout next to this repo—see [Workspace setup](#workspace-setup).
+**Goal:** Migrate CSS to 2nd-gen structure and follow the CSS style guide. Follow the [full migration steps](../../../../02_style-guide/01_css/04_spectrum-swc-migration.md); see also [Step 6: Migrate rendering & styles from Spectrum CSS](06_migrate-rendering-and-styles.md) for workstream context. Requires a local **spectrum-css** checkout next to this repo—see [Workspace setup](#workspace-setup).
 
 ### What to do
 
-1. **Follow the migration steps** — [Step 6](06_migrate-rendering-and-styles.md) and the [full migration steps](CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md). Use [03_components/](../../03_components/) for spectrum-two alignment. Copy S2 styles from your **spectrum-css** clone, **`spectrum-two`** branch, component `index.css` (not `dist`).
-2. **Use tokens** — Replace hard-coded values with `token(...)`. Follow [component CSS](CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md) and [custom properties](CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md).
+1. **Follow the migration steps** — [Step 6](06_migrate-rendering-and-styles.md) and the [full migration steps](../../../../02_style-guide/01_css/04_spectrum-swc-migration.md). Use [03_components/](../../../03_components/) for spectrum-two alignment. Copy S2 styles from your **spectrum-css** clone, **`spectrum-two`** branch, component `index.css` (not `dist`).
+2. **Use tokens** — Replace hard-coded values with `token(...)`. Follow [component CSS](../../../../02_style-guide/01_css/01_component-css.md) and [custom properties](../../../../02_style-guide/01_css/02_custom-properties.md).
 3. **Run stylelint** — After updating CSS, run `nx run swc:lint`. Fix all errors. The 2nd-gen config enforces: **property order** (see `linters/stylelint-property-order.js`); **no descending specificity** (e.g. `:host([disabled])` before `:host([checked][disabled])`); **declaration empty line** (empty line between groups); **token usage** (`token("...")` for color, font-size, etc.).
 
-For templates, `render()`, icons (inline SVG), and detailed examples, see [Step 6](06_migrate-rendering-and-styles.md) and the [full migration steps](CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md).
+For templates, `render()`, icons (inline SVG), and detailed examples, see [Step 6](06_migrate-rendering-and-styles.md) and the [full migration steps](../../../../02_style-guide/01_css/04_spectrum-swc-migration.md).
 
 ### What to check
 
 - [ ] No inline styles for theme/size; use CSS and classes.
 - [ ] Tokens and custom properties align with Spectrum 2.
-- [ ] Follows the [full migration steps](CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md).
-- [ ] Adheres to the [component styling guidelines](CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md).
+- [ ] Follows the [full migration steps](../../../../02_style-guide/01_css/04_spectrum-swc-migration.md).
+- [ ] Adheres to the [component styling guidelines](../../../../02_style-guide/01_css/01_component-css.md).
 - [ ] **2nd-gen CSS passes stylelint:** No `order/properties-order`, `no-descending-specificity`, `declaration-empty-line-before`, or token-usage errors in the component’s `.css` file (run `nx run swc:lint` or the repo’s lint command).
 
 ### Common problems and solutions
 
-For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheets vs plain `.css`, variant classes, size/density), see the [full migration steps](CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md) and [component styling guidelines](CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md).
+For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheets vs plain `.css`, variant classes, size/density), see the [full migration steps](../../../../02_style-guide/01_css/04_spectrum-swc-migration.md) and [component styling guidelines](../../../../02_style-guide/01_css/01_component-css.md).
 
 | Problem | Solution |
 |--------|----------|
@@ -302,8 +363,8 @@ For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheet
 
 ### Quality gate
 
-- [ ] Follows the [full migration steps](CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md).
-- [ ] Adheres to the [component styling guidelines](CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md).
+- [ ] Follows the [full migration steps](../../../../02_style-guide/01_css/04_spectrum-swc-migration.md).
+- [ ] Adheres to the [component styling guidelines](../../../../02_style-guide/01_css/01_component-css.md).
 - [ ] Stylelint passes for the component’s CSS (no 2nd-gen CSS lint errors).
 
 ---
@@ -522,6 +583,6 @@ Use Badge as the reference implementation:
 - **CSS:** Conventions
 - **Testing:** [2nd gen testing conventions](../../../../01_contributor-guides/11_2ndgen_testing.md)
 - **WCAG APG:** [https://www.w3.org/WAI/ARIA/apg/patterns/](https://www.w3.org/WAI/ARIA/apg/patterns/)
-- **Component analysis:** [03_components/](../../03_components/) — Step 1 [Cursor prompt](01_analyze-rendering-and-styling/README.md); optional **component-migration-analysis** Cursor skill alongside that flow.
+- **Component analysis:** [03_components/](../../../03_components/) — Step 1 [Cursor prompt](01_analyze-rendering-and-styling/README.md); optional **component-migration-analysis** Cursor skill alongside that flow.
 - **2nd-gen Storybook guides:** `2nd-gen/packages/swc/.storybook/guides/`
 - **Accessibility:** `2nd-gen/packages/swc/.storybook/guides/accessibility-guides/`

@@ -14,7 +14,7 @@
 - [Status](01_status.md)
 - Step By Step
     - [Analyze rendering and styling](02_step-by-step/01_analyze-rendering-and-styling/README.md)
-    - [Washing machine: 1st-gen to 2nd-gen migration guide](02_step-by-step/01_washing-machine-workflow.md)
+    - [Washing machine: migrating an existing 1st-gen component to 2nd-gen](02_step-by-step/01_washing-machine-workflow.md)
     - [Factor rendering out of 1st-gen component](02_step-by-step/02_factor-rendering-out-of-1st-gen-component.md)
     - [Move base class to 2nd-gen core](02_step-by-step/03_move-base-class-to-2nd-gen-core.md)
     - [Formalize Spectrum data model](02_step-by-step/04_formalize-spectrum-data-model.md)

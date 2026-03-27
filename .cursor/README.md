@@ -201,12 +201,11 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: On the analyze-rendering-and-styling step for one or more components; creating one markdown file per component at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`
 - Provides: Workflow summary (specs from CSS + SWC, three-way DOM comparison, CSS⇒SWC mapping table, summary). Full instructions in `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_analyze-rendering-and-styling/cursor_prompt.md`
 
-#### Washing machine migration (structured spec)
+#### Washing machine migration workflow
 
-- **purpose**: Load phases, repo paths, and contributor-doc links for the 2nd-gen **washing machine** migration workflow without parsing markdown frontmatter
-- **Machine-readable file**: `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.meta.yaml`
-- **Narrative guide**: `.../02_step-by-step/01_washing-machine-workflow.md` (checklists and prose only)
-- Use when: You need `workflow.slug`, `workflow.phases`, `workflow.paths`, `workflow.contributor_docs`, or related fields for automation or prompts
+- **purpose**: End-to-end 1st-gen → 2nd-gen migration sequence (phases, checklists, links to step docs and style guides)
+- **Doc**: `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md`
+- Use when: Planning or executing a component migration in the 2nd-gen component migration workstream
 
 #### Deep understanding
 
