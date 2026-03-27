@@ -186,3 +186,48 @@ export const sized = (): TemplateResult => html`
     </sp-help-text>
   </sp-textfield>
 `;
+
+export const TruncatedValueTooltip = (): TemplateResult => html`
+  <sp-field-label for="truncated-value">Truncated value</sp-field-label>
+  <sp-textfield
+    id="truncated-value"
+    value="very.long.email.address@subdomain.example.com"
+  ></sp-textfield>
+  <sp-field-label for="fitted-value">
+    Not truncated value (no tooltip)
+  </sp-field-label>
+  <sp-textfield id="fitted-value" value="short@example.com"></sp-textfield>
+  <sp-field-label for="invalid-truncated-value">
+    Invalid truncated value
+  </sp-field-label>
+  <sp-textfield
+    id="invalid-truncated-value"
+    invalid
+    value="very.long.email.address@subdomain.example.com"
+  ></sp-textfield>
+  <sp-field-label for="valid-truncated-value">
+    Valid truncated value
+  </sp-field-label>
+  <sp-textfield
+    id="valid-truncated-value"
+    valid
+    value="very.long.email.address@subdomain.example.com"
+  ></sp-textfield>
+  <sp-field-label for="truncated-value-right">
+    Truncated value with right tooltip placement
+  </sp-field-label>
+  <sp-textfield
+    id="truncated-value-right"
+    tooltip-placement="right"
+    value="very.long.email.address@subdomain.example.com"
+  ></sp-textfield>
+  <sp-field-label for="password-truncated-no-tooltip">
+    Password field (truncated value, no tooltip for security)
+  </sp-field-label>
+  <sp-textfield
+    id="password-truncated-no-tooltip"
+    type="password"
+    style="--mod-textfield-width: 80px; --spectrum-textfield-min-width: 0;"
+    value="very.long.email.address@subdomain.example.com"
+  ></sp-textfield>
+`;

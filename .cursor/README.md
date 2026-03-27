@@ -192,7 +192,7 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - **purpose**: Run the CONTRIBUTOR-DOCS nav script to update breadcrumbs and TOCs, and handle link verification
 - **How to invoke**: Say “update contributor docs nav”, “regenerate TOC”, “fix broken links in CONTRIBUTOR-DOCS”, or “run the nav script”. Also invoked when you add, remove, rename, or move files under `CONTRIBUTOR-DOCS/` or change H1/H2/H3 headings (the contributor-doc-update rule may trigger; the skill holds the full workflow).
 - Use when: Updating contributor docs structure, regenerating navigation, or fixing reported broken links
-- Provides: Operator workflow (run script, verify, fix links), Maintainer workflow (when to update script). Full instructions in `CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs/01_ai-agent-instructions.md`
+- Provides: Operator workflow (run script, verify, fix links), Maintainer workflow (when to update script). Full instructions in `.cursor/skills/contributor-docs-nav/references/ai-agent-instructions.md`
 
 #### Component migration (rendering and styling)
 

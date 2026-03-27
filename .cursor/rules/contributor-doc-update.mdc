@@ -21,10 +21,10 @@ alwaysApply: false
 
 ## What to do
 
-1. **Run the nav script** from the contributor-docs-nav skill scripts folder (from project root):
+1. **Run the nav script** from the contributor docs script folder (from project root):
    ```bash
-   cd .cursor/skills/contributor-docs-nav/scripts
-   node update-nav.js ../../../../CONTRIBUTOR-DOCS
+   cd CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs
+   node update-nav.js
    ```
 2. **Confirm** the script completes without errors.
 3. **Fix any link verification errors** reported by the script (fix straightforward cases; consult the user for ambiguous ones).

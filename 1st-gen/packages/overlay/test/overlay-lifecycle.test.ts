@@ -20,10 +20,11 @@ import {
 } from '@open-wc/testing';
 import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
 
-import { OverlayTrigger } from '@spectrum-web-components/overlay';
+import { Overlay, OverlayTrigger } from '@spectrum-web-components/overlay';
 import { Tooltip } from '@spectrum-web-components/tooltip';
 
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 
@@ -168,5 +169,75 @@ describe('Overlay Trigger - accessible hover content management', () => {
     await closed;
 
     expect(trigger.getAttribute('aria-describedby')).to.equal(tooltip.id);
+  });
+
+  describe('describeTrigger escape hatch', () => {
+    it('does not set aria-describedby on trigger when describeTrigger is "none" (hover)', async () => {
+      const el = await fixture<HTMLDivElement>(html`
+        <div>
+          <input id="focus-sentinel" type="text" />
+          <sp-action-button id="hover-trigger">Hover me</sp-action-button>
+          <sp-overlay
+            id="hover-overlay"
+            type="hint"
+            .describeTrigger=${'none'}
+            .triggerInteraction=${'hover'}
+          >
+            <sp-tooltip>Tooltip content</sp-tooltip>
+          </sp-overlay>
+        </div>
+      `);
+
+      const trigger = el.querySelector('#hover-trigger') as HTMLElement;
+      const overlay = el.querySelector('#hover-overlay') as Overlay;
+      overlay.triggerElement = trigger;
+
+      await elementUpdated(overlay);
+      await nextFrame();
+      await nextFrame();
+
+      const sentinel = el.querySelector('#focus-sentinel') as HTMLInputElement;
+      sentinel.focus();
+
+      const opened = oneEvent(overlay, 'sp-opened');
+      await sendTabKey();
+      await opened;
+
+      expect(trigger.getAttribute('aria-describedby')).to.be.null;
+    });
+
+    it('does not set aria-describedby on trigger when describeTrigger is "none" (longpress)', async () => {
+      const el = await fixture<HTMLDivElement>(html`
+        <div>
+          <sp-action-button id="longpress-trigger" hold-affordance>
+            Longpress me
+          </sp-action-button>
+          <sp-overlay
+            id="longpress-overlay"
+            type="hint"
+            .describeTrigger=${'none'}
+            .triggerInteraction=${'longpress'}
+          >
+            <sp-tooltip>Longpress content</sp-tooltip>
+          </sp-overlay>
+        </div>
+      `);
+
+      const trigger = el.querySelector('#longpress-trigger') as HTMLElement;
+      const overlay = el.querySelector('#longpress-overlay') as Overlay;
+      overlay.triggerElement = trigger;
+
+      await elementUpdated(overlay);
+      await nextFrame();
+      await nextFrame();
+
+      const opened = oneEvent(overlay, 'sp-opened');
+      trigger.dispatchEvent(
+        new CustomEvent('longpress', { bubbles: true, composed: true })
+      );
+      await opened;
+
+      expect(trigger.getAttribute('aria-describedby')).to.be.null;
+    });
   });
 });
