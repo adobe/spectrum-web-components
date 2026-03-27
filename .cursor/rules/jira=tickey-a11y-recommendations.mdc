@@ -13,20 +13,25 @@ Before drafting the ticket, identify the component name in kebab-case and determ
 ## Title format
 
 ```
-[Migration({sprint-ending-date})] Accessibility recommendations for 2nd-gen migration
+[A11y({component-name})] Accessibility recommendations for 2nd-gen migration
 ```
 
-Use the component's yyyy-mm-dd sprint ending date.
+Use the component's kebab-case name (e.g., `action-button`, `color-slider`, `picker`).
 
 ## Labels
 
-Always include these labels, replacing `{component-name}` with the actual component name for each component in the sprint:
+Always include these labels, replacing `{component-name}` with the actual component name:
 
 - `a11y`
 - `spectrum2`
 - `{component-name}`
-- `{component-name}`
-- `{component-name}`
+
+Add any of these if applicable:
+
+- `VoiceOver` — If there are known VoiceOver-specific issues
+- `iOS` — If there are known iOS accessibility issues
+- `mobile` — If touch/mobile accessibility is in scope
+- `research` — If significant investigation is needed before recommendations can be made
 
 ## Issue type
 
