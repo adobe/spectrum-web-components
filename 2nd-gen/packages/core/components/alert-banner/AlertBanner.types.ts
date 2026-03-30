@@ -10,18 +10,18 @@
  * governing permissions and limitations under the License.
  */
 
-import type { ElementSize } from '@spectrum-web-components/core/mixins/index.js';
-
-export const DIVIDER_VALID_SIZES = [
-  's',
-  'm',
-  'l',
-] as const satisfies ElementSize[];
-export const DIVIDER_STATIC_COLORS = [
-  'white',
-  'black',
+export const ALERT_BANNER_VALID_VARIANTS = [
+  'neutral',
+  'info',
+  'negative',
 ] as const satisfies readonly string[];
 
-export type DividerStaticColor = (typeof DIVIDER_STATIC_COLORS)[number];
+export type AlertBannerVariant =
+  | (typeof ALERT_BANNER_VALID_VARIANTS)[number]
+  | '';
 
-export type DividerSize = (typeof DIVIDER_VALID_SIZES)[number];
+/**
+ * @deprecated Use `AlertBannerVariant` instead.
+ * Kept as `string` for backward compatibility with 1st-gen.
+ */
+export type AlertBannerVariants = string;

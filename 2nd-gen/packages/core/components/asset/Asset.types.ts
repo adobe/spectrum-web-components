@@ -10,6 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-export const ASSET_VARIANTS = ['file', 'folder'] as const;
+export const ASSET_VARIANTS = [
+  'file',
+  'folder',
+] as const satisfies readonly string[];
 
 export type AssetVariant = (typeof ASSET_VARIANTS)[number];

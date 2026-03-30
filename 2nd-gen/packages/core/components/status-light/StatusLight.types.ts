@@ -15,7 +15,7 @@
  */
 import type { ElementSize } from '@spectrum-web-components/core/mixins/index.js';
 
-export const STATUSLIGHT_VALID_SIZES: ElementSize[] = [
+export const STATUSLIGHT_VALID_SIZES = [
   's',
   'm',
   'l',

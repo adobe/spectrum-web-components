@@ -32,7 +32,7 @@ import styles from './status-light.css';
  * @example
  * <swc-status-light variant="positive">Approved</swc-status-light>
  *
- *  @example
+ * @example
  * <swc-status-light variant="silver">Supported in Edge</swc-status-light>
  */
 export class StatusLight extends StatusLightBase {
