@@ -23,6 +23,7 @@
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
     - [Accessibility tree expectations](#accessibility-tree-expectations)
     - [Keyboard and focus](#keyboard-and-focus)
+- [Known 1st-gen issues](#known-1st-gen-issues)
 - [Testing](#testing)
     - [Automated tests](#automated-tests)
 - [Summary checklist](#summary-checklist)
@@ -107,6 +108,12 @@ None
 ### Keyboard and focus
 
 **Not focusable.** Keyboard navigation should skip this component and move to the next focusable element.
+
+---
+
+## Known 1st-gen issues
+
+None
 
 ---
 

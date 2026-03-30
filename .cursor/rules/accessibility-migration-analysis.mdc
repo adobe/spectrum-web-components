@@ -32,9 +32,10 @@ Use this **H2** order. **Do not** skip sections that apply; omit only what truly
 1. `## Overview`
 2. `## ARIA and WCAG context`
 3. `## Recommendations: \`<swc-component-name>\``
-4. `## Testing` with `### Automated tests`
-5. `## Summary checklist`
-6. `## References`
+4. `## Known 1st-gen issues`
+5. `## Testing` with `### Automated tests`
+6. `## Summary checklist`
+7. `## References`
 
 Under **`## Recommendations`**, use these **`###` subsections** in order:
 
@@ -44,7 +45,15 @@ Under **`## Recommendations`**, use these **`###` subsections** in order:
 4. **Optional (when product guidance needs it):** e.g. `### Assistive technology, live regions`—place **after** accessibility tree expectations and **before** keyboard and focus. For **motion** (WCAG 2.2.2, reduced motion, Spectrum tokens), add rows to **Guidelines that apply** and the **Recommendations** table instead of a separate `### Motion` section—see **`progress-circle/accessibility-migration-analysis.md`**.
 5. `### Keyboard and focus`
 
-Separate major sections with a horizontal rule (`---`) where existing docs use it (after Overview, after ARIA and WCAG context, after Recommendations block before Testing).
+Separate major sections with a horizontal rule (`---`) where existing docs use it (after Overview, after ARIA and WCAG context, after Recommendations block, after Known 1st-gen issues, before Testing).
+
+## Known 1st-gen issues
+
+Always include **`## Known 1st-gen issues`** as its own **H2** **after** the **`## Recommendations`** block (ending with **`### Keyboard and focus`**) and **before** **`## Testing`**.
+
+- **Purpose:** Capture **accessibility gaps** in **1st-gen** (`<sp-*>`) that **2nd-gen** should fix or cover with regression tests—ideally with pointers to **Jira** (or the project’s issue tracker) **accessibility** issues when they exist.
+- **When there is nothing to list:** If there are **no** **Jira** accessibility issues for the component **and** no other **1st-gen** accessibility gaps the team is tracking here, the **entire body** of the section must be a **single line**: **`None.`** (no subsections, no bullets). This matches the minimal **`None`** pattern used under **Shadow DOM and cross-root ARIA Issues**; a **trailing period** is **required** for this section so it reads as a deliberate “nothing to report.”
+- **When there are gaps:** Use **`###` subheadings** and/or bullets (WCAG criterion, wrong copy in dev warnings, visual/contrast behavior, etc.). Link **Jira** tickets when applicable. See **`progress-bar/accessibility-migration-analysis.md`** and **`progress-circle/accessibility-migration-analysis.md`** for examples with substantive content.
 
 ## Overview
 

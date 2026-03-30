@@ -24,6 +24,8 @@
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
     - [Accessibility tree expectations](#accessibility-tree-expectations)
     - [Keyboard and focus](#keyboard-and-focus)
+- [Known 1st-gen issues](#known-1st-gen-issues)
+    - [Non-text contrast at 0% (WCAG 1.4.11)](#non-text-contrast-at-0-wcag-1411)
 - [Testing](#testing)
     - [Automated tests](#automated-tests)
 - [Summary checklist](#summary-checklist)
@@ -114,6 +116,17 @@ None
 ### Keyboard and focus
 
 **Not focusable.** Keyboard navigation should skip this component and move to the next focusable element.
+
+---
+
+## Known 1st-gen issues
+
+Gaps in **1st-gen** **`<sp-progress-circle>`** that **2nd-gen** **`swc-progress-circle`** should fix or cover with regression tests.
+
+### Non-text contrast at 0% (WCAG 1.4.11)
+
+- At **`progress` = 0**, the UI often shows **only** a **track** or **no** meaningful **filled** arc. If the **track** (or remaining ring detail) does **not** meet **at least 3:1** contrast with **adjacent** colors, the control can **violate** [**WCAG 2.2 Success Criterion 1.4.11** (Non-text contrast, Level AA)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast)—users with low vision may not see that a **progress** indicator is present.
+- Treat this as a **known 1st-gen** risk unless a product build already mitigates it. **2nd-gen** should follow the **0% appearance** row under **Recommendations** and run **contrast** checks on **0%** stories (including **`static-color`** and busy backgrounds).
 
 ---
 
