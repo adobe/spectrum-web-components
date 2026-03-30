@@ -108,7 +108,7 @@ None
 
 ## Known 1st-gen issues
 
-None
+None.
 
 ---
 
