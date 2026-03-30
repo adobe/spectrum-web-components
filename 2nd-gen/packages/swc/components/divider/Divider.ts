@@ -22,9 +22,9 @@ import styles from './divider.css';
  * @element swc-divider
  */
 export class Divider extends DividerBase {
-  // ────────────────────
+  // ──────────────────────────────
   //     RENDERING & STYLING
-  // ────────────────────
+  // ──────────────────────────────
 
   public static override get styles(): CSSResultArray {
     return [styles];

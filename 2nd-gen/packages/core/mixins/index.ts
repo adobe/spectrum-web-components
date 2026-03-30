@@ -18,7 +18,11 @@ export {
   ObserveSlotText,
   type SlotTextObservingInterface,
 } from './observe-slot-text.js';
-export { ElementSizes, SizedMixin } from './sized-mixin.js';
+export {
+  DEFAULT_ELEMENT_SIZES,
+  ELEMENT_SIZES,
+  SizedMixin,
+} from './sized-mixin.js';
 export type {
   DefaultElementSize,
   ElementSize,
