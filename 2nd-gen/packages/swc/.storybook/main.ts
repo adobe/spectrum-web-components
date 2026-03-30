@@ -120,9 +120,14 @@ const config: StorybookConfig = {
   build: {
     test: {
       // Chromatic's addon sets SB_TESTBUILD=true which disables addon-docs,
-      // breaking our custom DocumentTemplate.mdx. Keep it enabled.
+      // breaking our custom DocumentTemplate.mdx. Keep docs enabled but
+      // disable addons that are not needed for visual regression testing.
       // See: https://github.com/storybookjs/storybook/issues/31699
-      disabledAddons: [],
+      disabledAddons: [
+        '@storybook/addon-a11y',
+        '@storybook/addon-designs',
+        '@storybook/addon-vitest',
+      ],
     },
   },
   addons,

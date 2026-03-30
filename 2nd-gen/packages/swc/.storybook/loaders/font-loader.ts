@@ -10,16 +10,22 @@
  * governing permissions and limitations under the License.
  */
 export const FontLoader = async () => ({
-  fonts: new Promise((resolve) => {
+  fonts: new Promise<void>((resolve) => {
+    const waitForFonts = async () => {
+      await document.fonts.ready;
+      resolve();
+    };
+
     // First check if the fonts are already loaded
     if (typeof window.Typekit !== 'undefined') {
-      resolve();
+      waitForFonts();
+      return;
     }
 
     // Listen for a custom event indicating the Adobe Fonts have loaded
     document.addEventListener('typekit-loaded', () => {
       if (typeof window.Typekit !== 'undefined') {
-        resolve();
+        waitForFonts();
       }
     });
   }),
