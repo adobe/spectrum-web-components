@@ -48,6 +48,8 @@ Output the following in Jira syntax so it can be copied directly into Jira:
 ```
 h2. Acceptance criteria
 
+In spectrum-web-components/CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/accessibility-migration-analysis.md:
+
  - Documented recommendations for ARIA roles, states, and properties for the {{swc-{component-name}}} 2nd-gen component
  - Shadow DOM and cross-root ARIA considerations documented, including any limitations or required workarounds (e.g., {{ElementInternals}}, cross-root ARIA delegation)
  - Accessibility tree expectations documented, including expected node roles, names, states, and hierarchy
