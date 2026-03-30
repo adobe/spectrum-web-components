@@ -200,6 +200,13 @@ export default async () => {
 
   mpaConfig.plugins.push(
     copy({
+      patterns: ['llms*.txt', 'sitemap.xml', 'robots.txt', 'reference/**'],
+      rootDir: './_site',
+    })
+  );
+
+  mpaConfig.plugins.push(
+    copy({
       patterns: ['images/**/*', 'manifest.webmanifest'],
       rootDir: './_site',
     })
