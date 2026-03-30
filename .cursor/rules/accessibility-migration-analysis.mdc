@@ -41,7 +41,8 @@ Under **`## Recommendations`**, use these **`###` subsections** in order:
 1. `### ARIA roles, states, and properties`
 2. `### Shadow DOM and cross-root ARIA Issues`
 3. `### Accessibility tree expectations`
-4. `### Keyboard and focus`
+4. **Optional (when product guidance needs it):** e.g. `### Assistive technology, live regions`—place **after** accessibility tree expectations and **before** keyboard and focus. For **motion** (WCAG 2.2.2, reduced motion, Spectrum tokens), add rows to **Guidelines that apply** and the **Recommendations** table instead of a separate `### Motion` section—see **`progress-circle/accessibility-migration-analysis.md`**.
+5. `### Keyboard and focus`
 
 Separate major sections with a horizontal rule (`---`) where existing docs use it (after Overview, after ARIA and WCAG context, after Recommendations block before Testing).
 
@@ -85,6 +86,16 @@ Then add rows for **name**, **states**, **properties**, **visual-only props**, *
 - **Heading text must be exactly:** `### Shadow DOM and cross-root ARIA Issues` (word **Issues** capitalized).
 - **If** the component has **no** cross-root ARIA concerns (no reliance on **ID references** that must resolve across shadow boundaries, e.g. `aria-labelledby` / `aria-describedby` pointing at shadow-only IDs) **and** it is **not** a **form-associated** control (or otherwise dependent on cross-root labeling in ways that need a written plan), the **entire body** of the subsection should be a single word: **`None`** (no extra sentences).
 - **Otherwise** describe the concrete issues and expectations (e.g. `ElementInternals`, `aria-*` delegation, proposed ID strategies).
+
+## Live regions and announcements (progress, loading, status)
+
+When the component or its docs touch **live regions** or **frequent** status updates:
+
+- Call out **over-announcing** as a risk: docs should **warn** authors not to flood screen reader users.
+- **Never** recommend **`aria-live="assertive"`** for loading or routine progress (interrupts and overwhelms).
+- Treat **`aria-live="polite"`** as **rare**: polite regions still **queue** speech, and **several** components or regions updating together becomes **noisy** (bursts, backlog). Prefer **native role semantics** (e.g. **`progressbar`**) and **one** primary message for related loaders when possible.
+
+See **`progress-circle/accessibility-migration-analysis.md`** for a full example.
 
 ## Keyboard and focus
 
