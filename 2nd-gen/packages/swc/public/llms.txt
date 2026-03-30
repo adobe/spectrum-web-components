@@ -1,0 +1,41 @@
+# Spectrum Web Components
+
+> Adobe's Spectrum 2 web component library (in active development). `swc-*` elements (Spectrum 2).
+
+## Resources
+
+- [Documentation](https://opensource.adobe.com/spectrum-web-components/second-gen): Full docs with live examples
+- [GitHub](https://github.com/adobe/spectrum-web-components): Source code and issues
+- [npm (@adobe/spectrum-wc)](https://www.npmjs.com/package/@adobe/spectrum-wc): Package
+- [llms-full.txt](https://opensource.adobe.com/spectrum-web-components/second-gen/llms-full.txt): All Spectrum 2 component APIs in one file
+- [1st-gen llms.txt](https://opensource.adobe.com/spectrum-web-components/llms.txt): Spectrum 1 (sp-*) component index
+
+## Learn about SWC
+
+- [1st-gen vs 2nd-gen](https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/learn-about-swc-1st-gen-vs-2nd-gen--docs)
+- [Overview](https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/learn-about-swc-overview--docs)
+- [When to use SWC](https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/learn-about-swc-when-to-use-swc--docs)
+
+## Guides
+
+- [Accessibility guides/Accessibility resources](https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/guides-accessibility-guides-accessibility-resources--docs)
+- [Accessibility guides/Accessible pattern libraries](https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/guides-accessibility-guides-accessible-pattern-libraries--docs)
+- [Accessibility guides/Keyboard testing](https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/guides-accessibility-guides-keyboard-testing--docs)
+- [Accessibility guides/Overview](https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/guides-accessibility-guides-overview--docs)
+- [Accessibility guides/Screen reader testing](https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/guides-accessibility-guides-screen-reader-testing--docs)
+- [Accessibility guides/Semantic HTML and ARIA](https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/guides-accessibility-guides-semantic-html-and-aria--docs)
+- [Accessibility guides/Wave toolbar testing](https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/guides-accessibility-guides-wave-toolbar-testing--docs)
+- [Customization/Component Styles](https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/guides-customization-component-styles--docs)
+- [Customization/Fonts](https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/guides-customization-fonts--docs)
+- [Customization/Getting Started](https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/guides-customization-getting-started--docs)
+- [Customization/Global Element Styling](https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/guides-customization-global-element-styling--docs)
+- [Customization/Theme and Scales](https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/guides-customization-theme-and-scales--docs)
+
+## Components
+
+- [swc-asset](reference/swc-asset.md)
+- [swc-badge](reference/swc-badge.md): A badge component that displays short, descriptive information about an element. Badges are typically used to indicate status, categories, or provide supplementary information.
+- [swc-divider](reference/swc-divider.md)
+- [swc-icon](reference/swc-icon.md): Minimal icon renderer that accepts slotted SVG markup.
+- [swc-progress-circle](reference/swc-progress-circle.md): Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way.
+- [swc-status-light](reference/swc-status-light.md): A status light is a great way to convey semantic meaning and the condition of an entity, such as statuses and categories.
