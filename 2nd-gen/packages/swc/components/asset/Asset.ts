@@ -60,7 +60,7 @@ const folder = (label: string): TemplateResult => html`
  *
  * @example
  * <swc-asset>
- *   <img class="spectrum-Asset-image" src="example.png" alt="Example image" />
+ *   <img class="swc-Asset-image" src="example.png" alt="Example image" />
  * </swc-asset>
  *
  * @example
