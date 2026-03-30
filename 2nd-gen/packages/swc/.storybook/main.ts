@@ -112,7 +112,6 @@ if (storybookMode !== 'ci-a11y') {
 
 const config: StorybookConfig = {
   stories,
-  staticDirs: ['../public'],
   docs: {
     defaultName: 'README',
   },
