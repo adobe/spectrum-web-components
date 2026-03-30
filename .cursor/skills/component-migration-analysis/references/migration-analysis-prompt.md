@@ -261,13 +261,13 @@ The key question: "Was this intentionally removed as part of Spectrum 2?" If yes
 CSS and SWC often use different names for the same concept. When mapping:
 
 1. **Look for functional equivalence**, not just naming similarity:
-    - CSS `hasClearButton` / `isRemovable` → SWC `deletable`
-    - CSS `is-invalid` state → SWC `invalid` attribute
-    - CSS `-clearButton` subcomponent → SWC `deletable` attribute triggers its render
+   - CSS `hasClearButton` / `isRemovable` → SWC `deletable`
+   - CSS `is-invalid` state → SWC `invalid` attribute
+   - CSS `-clearButton` subcomponent → SWC `deletable` attribute triggers its render
 
 2. **Document name differences** in the mapping table:
-    - If a CSS selector maps to a differently-named SWC feature, note the relationship
-    - Example: `.spectrum-Tag-clearButton` | `deletable` (renders clear button) | Implemented
+   - If a CSS selector maps to a differently-named SWC feature, note the relationship
+   - Example: `.spectrum-Tag-clearButton` | `deletable` (renders clear button) | Implemented
 
 3. **Do not mark as "Missing"** if the feature exists under a different name. A feature is only "Missing from WC" if no equivalent functionality exists.
 
