@@ -93,7 +93,7 @@ jobs:
         run: yarn workspace @spectrum-web-components/1st-gen storybook:build
 
       - name: Build second-gen Storybook
-        run: yarn workspace @spectrum-web-components/2nd-gen storybook:build
+        run: yarn workspace @adobe/spectrum-wc storybook:build
 
       ## --- DEPLOY TO AZURE BLOB STORAGE --- ##
       - name: Setup AzCopy
