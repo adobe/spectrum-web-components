@@ -80,7 +80,7 @@
     "eslint-plugin-mdx": "3.6.2",
     "eslint-plugin-notice": "1.0.0",
     "eslint-plugin-simple-import-sort": "12.1.1",
-    "eslint-plugin-storybook": "10.2.1",
+    "eslint-plugin-storybook": "10.3.3",
     "eslint-plugin-wc": "3.0.1",
     "globals": "17.3.0",
     "husky": "9.1.7",
