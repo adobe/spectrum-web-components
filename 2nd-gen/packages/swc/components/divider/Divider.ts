@@ -28,7 +28,9 @@ export class Divider extends DividerBase {
   //     RENDERING & STYLING
   // ────────────────────
 
-  public static override styles: CSSResultArray = [styles];
+  public static override get styles(): CSSResultArray {
+    return [styles];
+  }
 
   protected override render(): TemplateResult {
     return html`

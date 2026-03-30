@@ -10,3 +10,4 @@
  * governing permissions and limitations under the License.
  */
 export * from './AlertBanner.base.js';
+export * from './AlertBanner.types.js';
