@@ -124,6 +124,7 @@ test/*
 2nd-gen/packages/*/dist/
 2nd-gen/packages/*/custom-elements.json
 2nd-gen/packages/*/storybook-static
+2nd-gen/packages/swc/.storybook/contributor-docs/
 
 # npm assets
 node_modules
