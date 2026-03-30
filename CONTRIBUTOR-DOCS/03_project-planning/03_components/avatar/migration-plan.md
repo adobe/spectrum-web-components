@@ -163,12 +163,18 @@ The `href`, `target`, `rel`, `download`, `referrerpolicy`, `type`, and `disabled
 - [ ] Run `stylelint` (property order, no-descending-specificity, token usage checks)
 
 ### Phase 5 — Accessibility
-- [ ] Verify `alt` / `aria-hidden` logic preserved from 1st-gen
-- [ ] Confirm focus ring renders correctly for both link and non-link states
-- [ ] Confirm `disabled` state removes from tab order and suppresses link behavior
-- [ ] Verify decorative avatar with `href` warning is preserved in DEBUG mode
-- [ ] Check against WCAG 2.2 SC 1.1.1 (non-text content) and SC 2.4.3 (focus order)
+
+> Full requirements: [accessibility-migration-analysis.md](./accessibility-migration-analysis.md)
+
+- [ ] Non-linked: `label` → `alt="[label]"`, not focusable
+- [ ] Non-linked: `is-decorative` (no label) → `alt=""` + `aria-hidden="true"` on `<img>`, not focusable
+- [ ] Non-linked: neither → `alt=""` + DEBUG warning
+- [ ] Linked: `label` → `<a><img alt="[label]"></a>`, focusable, Enter activates
+- [ ] Linked: `is-decorative` + no `label` → DEBUG warning (invalid combination)
+- [ ] `disabled` + `href` → no `<a>` rendered, removed from tab order (already implemented in Phase 2 stub)
+- [ ] Focus ring visible on `.swc-Avatar-link:focus-visible`, meets WCAG 1.4.3 contrast
 - [ ] Run axe-core against all story variants
+- [ ] Playwright ARIA snapshot tests cover all states above
 
 ### Phase 6 — Testing
 - [ ] Port `avatar.test.ts` → `2nd-gen/packages/swc/components/avatar/test/avatar.test.ts`
