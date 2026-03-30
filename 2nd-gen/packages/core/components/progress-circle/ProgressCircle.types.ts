@@ -12,7 +12,7 @@
 
 import type { ElementSize } from '@spectrum-web-components/core/mixins/index.js';
 
-export const PROGRESS_CIRCLE_VALID_SIZES: ElementSize[] = [
+export const PROGRESS_CIRCLE_VALID_SIZES = [
   's',
   'm',
   'l',
