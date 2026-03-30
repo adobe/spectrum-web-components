@@ -75,7 +75,7 @@
 
 It **orchestrates** the migration: eight phases with checklists and quality gates, plus links to the step-by-step docs and style guides for implementation detail. It does not duplicate those guides—it sequences **what** to do and **when**.
 
-### Workspace setup
+## Workspace setup
 
 Keep **spectrum-web-components** (this repo) and **[spectrum-css](https://github.com/adobe/spectrum-css)** in the **same workspace**—typically as **sibling folders** under one parent directory (e.g. `~/dev/spectrum-web-components` and `~/dev/spectrum-css`). Step 1 analysis, Phase 4 styling (S2 source from the spectrum-css **`spectrum-two`** branch), and AI-assisted migration prompts all work best when both trees are available locally for comparison, copy-from-source, and editor/IDE context.
 
