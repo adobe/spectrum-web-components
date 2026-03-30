@@ -69,6 +69,8 @@ This doc explains how **`swc-progress-circle`** should work for **accessibility*
 | [`progressbar` role](https://www.w3.org/TR/wai-aria-1.2/#progressbar) | Needs a **name**. When you know the percent, expose **min**, **max**, **current value**, and **spoken text** (e.g. “45%”). When you **don’t** know the percent (**indeterminate**), **drop** the value attributes (see `ProgressCircleBase` in the repo). |
 | [Non-text content (WCAG 1.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html) | The **SVG** ring should not fight the host **`progressbar`**. Usually the **host** holds the name and values; inner shapes are **visual**. |
 | [Use of color (WCAG 1.4.1)](https://www.w3.org/TR/WCAG22/#use-of-color) | Do not rely on **ring color alone**. **Values** and **label** carry the state. |
+| [Non-text contrast (WCAG 1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | Meaningful parts of the **ring** are **graphical objects** and need **at least 3:1** contrast with **adjacent** colors. At **0%** progress, the **empty track** is often the only visible ring detail—if it **does not** contrast enough with the **background**, the control can fail this criterion. Test **`static-color`**, photos, and **thin** strokes carefully. |
+| [Pause, stop, hide (WCAG 2.2.2)](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html) | **Loading animation** (including **indeterminate** spin) must be **perceivable** and controllable per WCAG. Respect **reduced motion** where the platform supports it. Align **motion tokens** with Spectrum guidance across libraries where applicable (for example internal targets such as **~1s** vs **~2s** per revolution for spinner tokens). If **flicker** is a risk, define **fallback** behavior in design and docs. |
 
 **Bottom line:** Ship a **non-focusable** **`progressbar`** with the **determinate** vs **indeterminate** rules in **`ProgressCircleBase`** (`2nd-gen/packages/core/components/progress-circle/ProgressCircle.base.ts`).
 
@@ -81,12 +83,14 @@ This doc explains how **`swc-progress-circle`** should work for **accessibility*
 | Topic | What to do |
 |-------|------------|
 | **`role="progressbar"`** | **Prescribed** and **fixed** on the **host**. It must **not** be author-overridable in implementation or docs. If another role is needed, use a **different** component or pattern—not a role change on **`swc-progress-circle`**. This element satisfies **one** semantic role only. |
-| **Name (required)** | Supply **`label`**, **slot text**, **`aria-label`**, or **`aria-labelledby`** ([WCAG 4.1.2](https://www.w3.org/TR/WCAG22/#name-role-value)). The **dev warning** in the base lists these—keep its wording correct for **`swc-progress-circle`** (not only old tag names). |
+| **Name (required)** | Supply **`label`**, **slot text**, **`aria-label`**, or **`aria-labelledby`** ([WCAG 4.1.2](https://www.w3.org/TR/WCAG22/#name-role-value)). Prefer **`aria-labelledby`** when a **visible** label exists; use **`aria-label`** for a short programmatic name when it does not. If not label is given, set default label to "Loading", and include a dev mode warning. The **dev warning** in the base lists these—keep its wording correct for **`swc-progress-circle`** (not only old tag names). |
 | **Known percent** (`indeterminate` = false) | Set **`aria-valuemin="0"`**, **`aria-valuemax="100"`**, **`aria-valuenow`** = **`progress`**, **`aria-valuetext`** = **localized** percent string (`formatProgress()`). Update when **`progress`** or language changes. |
+| **0% appearance ([WCAG 1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast))** | When **`progress`** is **0**, show a **small** filled segment of the circle (or another treatment that keeps **graphical** ring details at **at least 3:1** with adjacent colors). A **fully empty** ring at **0%** often fails **non-text contrast** because the **track** alone is too weak against the background. **`aria-valuenow`**, **`aria-valuetext`**, and any visible **percent** must still read as **0%**—the minimum fill is for **perception**, not to misstate the value. |
 | **Unknown time** (`indeterminate` = true) | **Remove** min, max, now, and valuetext so assistive tech treats it as **busy** / unknown length. |
-| **`label` vs slot** | Slot change can **copy** into **`label`**. Docs should say: pick **one** clear naming path and write **what** is loading (not only “Loading”). |
+| **`label` vs slot** | Slot change can **copy** into **`label`**. Docs should say: pick **one** clear naming path. **Default** copy (“Loading”) should be applied when no label is given, but component should be given a label that is **as specific as possible** when context is known (“Uploading document,” “Loading status checks”). |
 | **`size` / `static-color`** | **Looks only**—no required ARIA mapping. |
-| **Docs** | Say **read-only**: **no Tab stop**, **no arrow keys** to change value; distinct from a progress icon for a button in pending state. |
+| **Motion / animation** | Meet **[WCAG 2.2.2](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html)** for **determinate** and **indeterminate** loading animation. Follow team **reduced-motion** rules. Align **Spectrum motion tokens** across libraries where applicable (for example **~1s** vs **~2s** per revolution for spinner tokens). If **flicker** is a risk, document **fallback** behavior in design and docs. |
+| **Docs** | Say **read-only**: **no Tab stop**, **no arrow keys** to change value; distinct from a progress icon for a button in pending state. Warn against **over-announcing**: **never** **`aria-live="assertive"`**; use **`aria-live="polite"`** only **rarely**, especially when **multiple** components or live regions update. |
 
 ### Shadow DOM and cross-root ARIA Issues
 
@@ -94,12 +98,12 @@ None
 
 ### Accessibility tree expectations
 
-#### Known percent**
+#### Known percent
 
 - **Role:** **progressbar** with a **clear name** (label / slot / `aria-label` / `aria-labelledby`).
 - **Values:** min, max, now, valuetext as above.
 
-#### Busy / unknown**
+#### Busy / unknown
 
 - **Role:** **progressbar** with a **name**, **without** numeric value attrs (per implementation).
 
@@ -123,6 +127,7 @@ None
 | **aXe + Storybook** | **WCAG 2.x** on progress-circle stories. |
 | **Playwright ARIA snapshots** | Keep **`progress-circle.a11y.spec.ts`** (overview, anatomy, sizes, static colors, progress values, **indeterminate**). |
 | **Contrast** | Run where **`static-color`** and default stories need it. |
+| **Motion / reduced motion** | Where stories animate, confirm **reduced-motion** behavior, **Spectrum** token alignment where relevant, and **WCAG 2.2.2** / **flicker** fallback expectations match product rules. |
 
 ---
 
@@ -137,6 +142,7 @@ None
 - [ ] **ARIA snapshots** cover **determinate**, **indeterminate**, and other main stories.
 - [ ] **Unit tests** prove **no** **Tab** focus by default.
 - [ ] **aXe** (WCAG 2.x tags) runs on progress-circle stories.
+- [ ] Docs and examples **never** recommend **`aria-live="assertive"`** for loading; **`aria-live="polite"`** is **rare** only, with a warning that **many** updating components or regions stay **noisy**.
 
 ---
 
@@ -145,5 +151,7 @@ None
 - [WAI-ARIA 1.2: progressbar](https://www.w3.org/TR/wai-aria-1.2/#progressbar)
 - [APG: progress bar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/progressbar/)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
+- [WCAG 2.2.2: pause, stop, hide (understanding)](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html)
 - [Using ARIA (read this first)](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
+- [Figma: Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery?node-id=478-948207&t=RVTbvK49jUbfoa0P-0)
 - [Progress circle migration roadmap](./rendering-and-styling-migration-analysis.md)
