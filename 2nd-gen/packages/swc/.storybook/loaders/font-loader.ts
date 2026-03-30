@@ -9,23 +9,31 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
+/**
+ * Explicitly load the font faces used by components.
+ * Using document.fonts.load() ensures the browser has fully loaded
+ * and rendered with the correct glyphs before Chromatic captures a snapshot.
+ * See: https://www.chromatic.com/docs/font-loading/
+ */
+const waitForFonts = async () => {
+  if (document.fonts) {
+    await document.fonts.load('1em "adobe-clean-spectrum-vf"');
+  }
+};
+
 export const FontLoader = async () => ({
   fonts: new Promise<void>((resolve) => {
-    const waitForFonts = async () => {
-      await document.fonts.ready;
-      resolve();
-    };
-
     // First check if the fonts are already loaded
     if (typeof window.Typekit !== 'undefined') {
-      waitForFonts();
+      waitForFonts().then(resolve);
       return;
     }
 
     // Listen for a custom event indicating the Adobe Fonts have loaded
     document.addEventListener('typekit-loaded', () => {
       if (typeof window.Typekit !== 'undefined') {
-        waitForFonts();
+        waitForFonts().then(resolve);
       }
     });
   }),
