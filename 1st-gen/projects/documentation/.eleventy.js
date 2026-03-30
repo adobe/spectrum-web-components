@@ -39,6 +39,10 @@ export default function (eleventyConfig) {
     eleventyConfig.addShortcode('packageVersion', packageVersion);
     eleventyConfig.addNunjucksGlobal('WATCH_MODE', process.env.WATCH_MODE);
     eleventyConfig.setUseGitIgnore(false);
+    eleventyConfig.addPassthroughCopy('./content/llms*.txt');
+    eleventyConfig.addPassthroughCopy('./content/reference/**');
+    eleventyConfig.addPassthroughCopy('./content/robots.txt');
+    eleventyConfig.addPassthroughCopy('./content/sitemap.xml');
     eleventyConfig.addPassthroughCopy('./content/favicon.ico');
     eleventyConfig.addPassthroughCopy('./content/typekit/*.woff2');
     eleventyConfig.addPassthroughCopy('./content/favicon.svg');
