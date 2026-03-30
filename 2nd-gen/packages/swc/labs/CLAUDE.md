@@ -323,17 +323,57 @@ Each designer needs to authenticate once:
 
 ### Comparing designs with screenshots
 
-This project also has the Playwright MCP server configured. When Storybook is running
-(`yarn start:labs`), you can ask Claude to screenshot your component in the browser
-and compare it against the Figma design — then iterate until they match.
+This project has the Playwright MCP server configured (see `.mcp.json` at the repo root).
+After building a component, you can use Playwright to visually verify it against the
+Figma design. This is an iterative loop — generate, screenshot, compare, refine.
+
+#### How to compare
+
+1. **Get the Figma screenshot** — use the Figma MCP `get_screenshot` tool on the design node
+2. **Build the component** — generate the files, register the element, create a story
+3. **Screenshot the Storybook result** — Storybook must be running on `localhost:6006`
+   (started via `yarn start:labs`). Use Playwright MCP to navigate to the story and
+   take a screenshot. If Storybook is not running, skip this step:
+   - Navigate to `http://localhost:6006/iframe.html?id=labs-{component-name}--{story-name}&viewMode=story`
+   - Use `browser_take_screenshot` to capture the rendered component
+4. **Compare visually** — look at both screenshots side by side. Check:
+   - Spacing and sizing match the Figma design
+   - Colors are correct (tokens mapped properly)
+   - Typography (font size, weight, line height) matches
+   - Border radius and borders are correct
+   - Layout and alignment match
+5. **Iterate** — if something doesn't match, adjust the CSS tokens or component
+   structure and screenshot again. Repeat until it matches.
+
+#### When to use this
+
+- After building any component from a Figma design
+- When the user asks you to verify or compare
+- When you're unsure if a token mapping is correct — a visual check is faster than guessing
+
+#### Storybook URL pattern
+
+Stories in labs follow this URL pattern:
+```
+http://localhost:6006/iframe.html?id=labs-{component-name}--{story-name}&viewMode=story
+```
+For example:
+- `labs-tree-view--playground`
+- `labs-chat-bubble--conversation`
+- `labs-list-view--file-browser`
 
 ### Example workflow
 
 > "Here's my Figma design: https://www.figma.com/design/...
-> Create a lab component that matches this frame. Use Spectrum tokens for all values.
-> Then open it in Storybook at localhost:6006 and screenshot it to compare."
+> Create a lab component that matches this frame. Use Spectrum tokens for all values."
 
-Claude will read the design, generate a component, and visually verify the result.
+Steps:
+1. Use `get_screenshot` on the Figma node to see the design
+2. Use `get_design_context` to extract layout, colors, typography
+3. Build the component and story
+4. Navigate Playwright to the Storybook story URL and screenshot it
+5. Compare the Storybook screenshot against the Figma screenshot
+6. Fix any mismatches and repeat steps 4-5 until they match
 
 ## Tips for prompting
 

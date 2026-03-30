@@ -1,0 +1,7 @@
+[     889ms] [WARNING] Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information. @ http://localhost:6006/node_modules/.cache/storybook/10.2.8/7c6d4884a2436d771d62652f45bbdb65cb952a2375c05e50b679e1dccc0a91cf/sb-vite/deps/chunk-PC2DAOUQ.js?v=cd89287b:93
+[     889ms] [WARNING] Multiple versions of Lit loaded. Loading multiple versions is not recommended. See https://lit.dev/msg/multiple-versions for more information. @ http://localhost:6006/@fs/Users/ruben/Documents/Work/spectrum-wc/node_modules/lit-html/development/lit-html.js?v=cd89287b:46
+[    1001ms] [WARNING] Spectrum Web Components is in dev mode. Not recommended for production!
+ 
+https://opensource.adobe.com/spectrum-web-components/dev-mode/
+ {data: Object} @ http://localhost:6006/@fs/Users/ruben/Documents/Work/spectrum-wc/2nd-gen/packages/core/element/spectrum-element.ts:103
+[    1002ms] [WARNING] Component not found in custom-elements.json: swc-chat-bubble @ http://localhost:6006/node_modules/.cache/storybook/10.2.8/7c6d4884a2436d771d62652f45bbdb65cb952a2375c05e50b679e1dccc0a91cf/sb-vite/deps/storybook_internal_preview_runtime.js?v=cd89287b:13660

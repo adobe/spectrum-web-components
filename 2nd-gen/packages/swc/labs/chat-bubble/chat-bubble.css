@@ -1,0 +1,146 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: flex;
+  max-inline-size: 70%;
+  font-family: token("sans-serif-font");
+}
+
+/* ── Layout: avatar + bubble ── */
+
+.swc-ChatBubble-root {
+  display: flex;
+  align-items: flex-end;
+  gap: token("text-to-visual-100");
+}
+
+/* ── Avatar slot ── */
+
+.swc-ChatBubble-avatar {
+  display: none;
+  flex-shrink: 0;
+  inline-size: token("component-height-200");
+  block-size: token("component-height-200");
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.swc-ChatBubble-root--has-avatar .swc-ChatBubble-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+::slotted([slot="avatar"]) {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* ── Bubble container ── */
+
+.swc-ChatBubble-bubble {
+  display: flex;
+  flex-direction: column;
+  gap: token("text-to-visual-75");
+  padding-inline: token("component-edge-to-text-200");
+  padding-block-start: token("component-top-to-text-100");
+  padding-block-end: token("component-bottom-to-text-100");
+}
+
+/* ── Header: sender + timestamp ── */
+
+.swc-ChatBubble-header {
+  display: flex;
+  align-items: baseline;
+  gap: token("text-to-visual-100");
+}
+
+.swc-ChatBubble-sender {
+  font-size: token("font-size-75");
+  font-weight: token("bold-font-weight");
+  line-height: token("line-height-100");
+}
+
+.swc-ChatBubble-timestamp {
+  font-size: token("font-size-75");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-100");
+}
+
+/* ── Message body ── */
+
+.swc-ChatBubble-body {
+  font-size: token("font-size-100");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-100");
+}
+
+/* ── Incoming variant (default) ── */
+
+:host,
+:host([variant="incoming"]) {
+  align-self: flex-start;
+}
+
+:host .swc-ChatBubble-bubble,
+:host([variant="incoming"]) .swc-ChatBubble-bubble {
+  background: token("gray-100");
+  border-radius: token("corner-radius-medium-size-large")
+    token("corner-radius-medium-size-large")
+    token("corner-radius-medium-size-large")
+    token("corner-radius-medium-size-small");
+}
+
+:host .swc-ChatBubble-body,
+:host([variant="incoming"]) .swc-ChatBubble-body {
+  color: token("gray-900");
+}
+
+:host .swc-ChatBubble-sender,
+:host([variant="incoming"]) .swc-ChatBubble-sender {
+  color: token("gray-800");
+}
+
+:host .swc-ChatBubble-timestamp,
+:host([variant="incoming"]) .swc-ChatBubble-timestamp {
+  color: token("gray-700");
+}
+
+/* ── Outgoing variant ── */
+
+:host([variant="outgoing"]) {
+  align-self: flex-end;
+}
+
+:host([variant="outgoing"]) .swc-ChatBubble-bubble {
+  background: token("accent-background-color-default");
+  border-radius: token("corner-radius-medium-size-large")
+    token("corner-radius-medium-size-large")
+    token("corner-radius-medium-size-small")
+    token("corner-radius-medium-size-large");
+}
+
+:host([variant="outgoing"]) .swc-ChatBubble-body {
+  color: token("white");
+}
+
+:host([variant="outgoing"]) .swc-ChatBubble-sender {
+  color: token("white");
+}
+
+:host([variant="outgoing"]) .swc-ChatBubble-timestamp {
+  color: token("white");
+  opacity: 0.7;
+}

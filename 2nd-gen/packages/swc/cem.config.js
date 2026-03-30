@@ -13,6 +13,7 @@
 export default {
   globs: [
     'components/**/*.ts',
+    'labs/**/*.ts',
     '../core/components/**/*.ts',
     '../core/controllers/**/*.ts',
     '../core/element/**/*.ts',

@@ -1,0 +1,232 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: inline-block;
+  position: relative;
+  font-family: token("sans-serif-font");
+
+  --swc-date-picker-cell-size: 36px;
+  --swc-date-picker-range-bg: color-mix(in srgb, token("accent-background-color-default") 15%, transparent);
+}
+
+/* ── Label ── */
+
+.swc-DatePicker-label {
+  display: block;
+  margin-block-end: 4px;
+  font-size: token("font-size-100");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-100");
+  color: token("neutral-subdued-content-color-default");
+}
+
+/* ── Input ── */
+
+.swc-DatePicker-field {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  min-block-size: token("component-height-200");
+  padding-inline: token("component-edge-to-text-200");
+  background: token("background-layer-2-color");
+  border: token("border-width-100") solid token("gray-300");
+  border-radius: token("corner-radius-medium-size-medium");
+  cursor: pointer;
+}
+
+.swc-DatePicker-field:hover {
+  border-color: token("gray-600");
+}
+
+.swc-DatePicker-fieldText {
+  flex: 1;
+  font-size: token("font-size-100");
+  line-height: token("line-height-100");
+  color: token("gray-800");
+  white-space: nowrap;
+}
+
+.swc-DatePicker-fieldIcon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  margin-inline-start: 8px;
+  color: token("gray-600");
+}
+
+/* ── Dropdown ── */
+
+.swc-DatePicker-dropdown {
+  position: absolute;
+  inset-block-start: 100%;
+  inset-inline-start: 0;
+  z-index: 10;
+  min-inline-size: 280px;
+  padding: token("component-edge-to-text-200");
+  margin-block-start: 4px;
+  background: token("background-layer-2-color");
+  border-radius: token("corner-radius-medium-size-large");
+  box-shadow: 0 4px 12px token("drop-shadow-color-100");
+}
+
+/* ── Calendar header ── */
+
+.swc-DatePicker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-block-end: 8px;
+}
+
+.swc-DatePicker-headerTitle {
+  font-size: token("font-size-300");
+  font-weight: token("bold-font-weight");
+  line-height: token("line-height-100");
+  color: token("gray-900");
+}
+
+.swc-DatePicker-navBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  color: token("gray-800");
+  background: none;
+  border: none;
+  border-radius: token("corner-radius-medium-size-medium");
+  cursor: pointer;
+}
+
+.swc-DatePicker-navBtn:hover {
+  background: token("gray-200");
+}
+
+/* ── Day labels ── */
+
+.swc-DatePicker-dayLabels {
+  display: grid;
+  grid-template-columns: repeat(7, var(--swc-date-picker-cell-size));
+  gap: 2px;
+  justify-items: center;
+  margin-block-end: 2px;
+}
+
+.swc-DatePicker-dayLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--swc-date-picker-cell-size);
+  block-size: var(--swc-date-picker-cell-size);
+  font-size: token("font-size-100");
+  font-weight: token("bold-font-weight");
+  color: token("neutral-subdued-content-color-default");
+}
+
+/* ── Day grid ── */
+
+.swc-DatePicker-grid {
+  display: grid;
+  grid-template-columns: repeat(7, var(--swc-date-picker-cell-size));
+  gap: 2px;
+  justify-items: center;
+}
+
+.swc-DatePicker-day {
+  box-sizing: border-box;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--swc-date-picker-cell-size);
+  block-size: var(--swc-date-picker-cell-size);
+  padding: 0;
+  font-size: token("font-size-100");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-100");
+  color: token("gray-800");
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.swc-DatePicker-day:hover {
+  background: token("gray-200");
+}
+
+.swc-DatePicker-day--empty {
+  cursor: default;
+}
+
+.swc-DatePicker-day--empty:hover {
+  background: none;
+}
+
+.swc-DatePicker-day--inRange {
+  background: var(--swc-date-picker-range-bg);
+  border-radius: 0;
+}
+
+.swc-DatePicker-day--inRange:hover {
+  background: var(--swc-date-picker-range-bg);
+}
+
+.swc-DatePicker-day--rangeStart {
+  border-start-start-radius: 50%;
+  border-start-end-radius: 0;
+  border-end-start-radius: 50%;
+  border-end-end-radius: 0;
+}
+
+.swc-DatePicker-day--rangeEnd {
+  border-start-start-radius: 0;
+  border-start-end-radius: 50%;
+  border-end-start-radius: 0;
+  border-end-end-radius: 50%;
+}
+
+.swc-DatePicker-day--selected {
+  color: token("white");
+  background: token("accent-background-color-default");
+  border-radius: 50%;
+}
+
+.swc-DatePicker-day--selected:hover {
+  background: token("accent-background-color-default");
+}
+
+.swc-DatePicker-day--today::after {
+  position: absolute;
+  inset-block-end: 3px;
+  inset-inline-start: 50%;
+  inline-size: 4px;
+  block-size: 4px;
+  background: token("accent-background-color-default");
+  border-radius: 50%;
+  content: "";
+  transform: translateX(-50%);
+}
+
+.swc-DatePicker-day--selected.swc-DatePicker-day--today::after {
+  background: token("white");
+}
+
+.swc-DatePicker-day--disabled {
+  color: token("gray-300");
+  cursor: not-allowed;
+}
+
+.swc-DatePicker-day--disabled:hover {
+  background: none;
+}
