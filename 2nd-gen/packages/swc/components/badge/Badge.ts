@@ -17,10 +17,10 @@ import { when } from 'lit/directives/when.js';
 
 import {
   BADGE_VALID_SIZES,
-  BADGE_VARIANTS_COLOR_S2,
-  BADGE_VARIANTS_S2,
+  BADGE_VARIANTS,
+  BADGE_VARIANTS_COLOR,
   BadgeBase,
-  type BadgeVariantS2 as BadgeVariant,
+  type BadgeVariant,
 } from '@spectrum-web-components/core/components/badge';
 
 import styles from './badge.css';
@@ -48,12 +48,12 @@ export class Badge extends BadgeBase {
   /**
    * @internal
    */
-  static override readonly VARIANTS_COLOR = BADGE_VARIANTS_COLOR_S2;
+  static override readonly VARIANTS_COLOR = BADGE_VARIANTS_COLOR;
 
   /**
    * @internal
    */
-  static override readonly VARIANTS = BADGE_VARIANTS_S2;
+  static override readonly VARIANTS = BADGE_VARIANTS;
 
   /**
    * @internal

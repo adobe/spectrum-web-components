@@ -21,7 +21,7 @@ import {
 } from '@spectrum-web-components/core/components/progress-circle';
 import { capitalize } from '@spectrum-web-components/core/utils/index.js';
 
-import progressCircleStyles from './progress-circle.css';
+import styles from './progress-circle.css';
 
 /**
  * Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way.
@@ -66,7 +66,7 @@ export class ProgressCircle extends ProgressCircleBase {
   // ──────────────────────────────
 
   public static override get styles(): CSSResultArray {
-    return [progressCircleStyles];
+    return [styles];
   }
 
   protected override render(): TemplateResult {

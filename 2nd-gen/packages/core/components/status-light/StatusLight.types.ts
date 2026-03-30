@@ -10,8 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-/*
+/**
  * @todo The S1 types can be removed once we are no longer maintaining 1st-gen.
+ * @todo Rename STATUSLIGHT_ prefix to STATUS_LIGHT_ to align with type prefix
+ * naming convention (use underscore separators for multi-word names). This
+ * requires updating all imports in 1st-gen and 2nd-gen that reference these
+ * constants.
  */
 import type { ElementSize } from '@spectrum-web-components/core/mixins/index.js';
 
@@ -20,7 +24,7 @@ export const STATUSLIGHT_VALID_SIZES = [
   'm',
   'l',
   'xl',
-] as const satisfies ElementSize[];
+] as const satisfies readonly ElementSize[];
 
 export const STATUSLIGHT_VARIANTS_SEMANTIC = [
   'neutral',
