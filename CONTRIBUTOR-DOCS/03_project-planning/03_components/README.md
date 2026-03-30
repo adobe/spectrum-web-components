@@ -27,7 +27,10 @@
 - Asset
     - [Asset migration roadmap](asset/rendering-and-styling-migration-analysis.md)
 - Avatar
+    - [Avatar accessibility migration analysis](avatar/accessibility-migration-analysis.md)
     - [Avatar migration roadmap](avatar/rendering-and-styling-migration-analysis.md)
+- Avatar Link
+    - [Avatar link accessibility migration analysis](avatar-link/accessibility-migration-analysis.md)
 - Badge
     - [Badge migration roadmap](badge/rendering-and-styling-migration-analysis.md)
 - Button

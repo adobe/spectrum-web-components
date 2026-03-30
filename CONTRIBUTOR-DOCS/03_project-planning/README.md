@@ -31,6 +31,7 @@
     - Alert Banner
     - Asset
     - Avatar
+    - Avatar Link
     - Badge
     - Button
     - Button Group
