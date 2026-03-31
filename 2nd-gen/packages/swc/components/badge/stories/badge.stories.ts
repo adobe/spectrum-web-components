@@ -256,7 +256,9 @@ export const Sizes: Story = {
     ${BADGE_VALID_SIZES.map(
       (size) => html`
         <swc-badge variant=${args.variant} size=${size}>
-          <swc-icon size=${size} slot="icon">${checkmarkIconForSize[size]()}</swc-icon>
+          <swc-icon size=${size} slot="icon">
+            ${checkmarkIconForSize[size]()}
+          </swc-icon>
           ${sizeLabels[size]}
         </swc-badge>
       `
@@ -446,11 +448,26 @@ export const TextWrapping: Story = {
  * - Screen readers will announce the badge content as static text
  * - No keyboard interaction is required or expected
  *
+ * ### Text label
+ *
+ * Badges with visible text are announced directly by screen readers. The text in the default slot is the accessible name.
+ *
+ * ### Icon + text
+ *
+ * When an icon accompanies a text label, the icon is decorative and should be hidden from assistive technology.
+ * Apply `aria-hidden="true"` to the `<swc-icon>` so screen readers only announce the label text.
+ *
+ * ### Icon only
+ *
+ * When space is limited and no visible label is shown, the badge **must** have an accessible name.
+ * Set `aria-label` directly on the `<swc-badge>` element to describe the badge's meaning.
+ * Without a label or `aria-label`, the badge has no accessible name and fails WCAG 1.1.1.
+ *
  * ### Best practices
  *
  * - Use semantic variants (`positive`, `negative`, `notice`, `informative`, `neutral`, `accent`) when the status has specific meaning
  * - Include clear, descriptive labels that explain the status without relying on color alone
- * - For icon-only badges, provide descriptive text in the default slot or use the `aria-label` attribute directly on the element
+ * - For icon-only badges, always set `aria-label` on the element
  * - Ensure sufficient color contrast between the badge and its background
  * - Badges are not interactive elements - for interactive status indicators, consider using buttons, tags, or links instead
  * - When using multiple badges together, ensure they're clearly associated with their related content
@@ -500,6 +517,19 @@ export const Accessibility: Story = {
       variant: 'silver',
       'default-slot': 'Version 1.2.10',
     })}
+
+    <!-- Icon + text: icon is decorative, aria-hidden="true" hides it from assistive technology -->
+    <swc-badge variant="positive" size=${args.size}>
+      <swc-icon size=${args.size} slot="icon" aria-hidden="true">
+        ${Checkmark75Icon()}
+      </swc-icon>
+      Approved
+    </swc-badge>
+
+    <!-- Icon only: aria-label provides the accessible name when no visible text is present -->
+    <swc-badge variant="positive" size=${args.size} aria-label="Approved">
+      <swc-icon size=${args.size} slot="icon">${Checkmark75Icon()}</swc-icon>
+    </swc-badge>
   `,
   tags: ['a11y'],
   args: {
