@@ -62,7 +62,7 @@ export const OverviewTest: Story = {
 
     await step('renders expected default values and slot content', async () => {
       expect(badge.variant).toBe('informative');
-      expect(badge.size).toBe('m');
+      expect(badge.size).toBe('s');
       expect(badge.textContent?.trim()).toBeTruthy();
     });
   },
