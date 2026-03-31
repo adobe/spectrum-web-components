@@ -52,19 +52,30 @@
   --swc-avatar-size: token("avatar-size-700");
 }
 
-/*
- * TODO (OQ-5): sizes 800–1500 are new in Spectrum 2. Uncomment once token
- * names are confirmed in @adobe/swc-tokens.
- *
- * :host([size="800"])  { --swc-avatar-size: token("avatar-size-800"); }
- * :host([size="900"])  { --swc-avatar-size: token("avatar-size-900"); }
- * :host([size="1000"]) { --swc-avatar-size: token("avatar-size-1000"); }
- * :host([size="1100"]) { --swc-avatar-size: token("avatar-size-1100"); }
- * :host([size="1200"]) { --swc-avatar-size: token("avatar-size-1200"); }
- * :host([size="1300"]) { --swc-avatar-size: token("avatar-size-1300"); }
- * :host([size="1400"]) { --swc-avatar-size: token("avatar-size-1400"); }
- * :host([size="1500"]) { --swc-avatar-size: token("avatar-size-1500"); }
- */
+:host([size="800"]) {
+  --swc-avatar-size: token("avatar-size-800");
+}
+:host([size="900"]) {
+  --swc-avatar-size: token("avatar-size-900");
+}
+:host([size="1000"]) {
+  --swc-avatar-size: token("avatar-size-1000");
+}
+:host([size="1100"]) {
+  --swc-avatar-size: token("avatar-size-1100");
+}
+:host([size="1200"]) {
+  --swc-avatar-size: token("avatar-size-1200");
+}
+:host([size="1300"]) {
+  --swc-avatar-size: token("avatar-size-1300");
+}
+:host([size="1400"]) {
+  --swc-avatar-size: token("avatar-size-1400");
+}
+:host([size="1500"]) {
+  --swc-avatar-size: token("avatar-size-1500");
+}
 
 /* ── Layout & shape ─────────────────────────────────────── */
 

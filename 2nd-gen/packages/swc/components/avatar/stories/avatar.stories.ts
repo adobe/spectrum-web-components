@@ -29,7 +29,7 @@ const { args, argTypes, template } = getStorybookHelpers('swc-avatar');
 argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
-  options: Avatar.VALID_SIZES,
+  options: Avatar.VALID_SIZES.map(String),
   table: {
     category: 'attributes',
     defaultValue: { summary: '500' },
@@ -67,20 +67,77 @@ export default {
 //    STORIES
 // ────────────────
 
-const PLACEHOLDER_SRC = 'https://i.imgur.com/kQAoOf9.jpg';
+const PLACEHOLDER_SRC = 'https://picsum.photos/id/64/500/500';
+
+// ────────────────────
+//    AUTODOCS STORY
+// ────────────────────
 
 export const Playground: Story = {
+  render: ({ src, alt, size }) => html`
+    <swc-avatar src=${src} alt=${alt ?? ''} size=${size}></swc-avatar>
+  `,
   tags: ['autodocs', 'dev'],
   args: {
     src: PLACEHOLDER_SRC,
     alt: 'Jane Doe',
-    size: 500,
+    size: '500',
   },
 };
 
+// ──────────────────────────
+//    OVERVIEW STORY
+// ──────────────────────────
+
+export const Overview: Story = {
+  render: (args) => template(args),
+  tags: ['overview'],
+  args: {
+    src: PLACEHOLDER_SRC,
+    alt: 'Jane Doe',
+    size: '500',
+  },
+};
+
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
+
+/**
+ * An avatar consists of:
+ *
+ * 1. **Image** — A circular clipped profile photo
+ *
+ * ### Content
+ *
+ * - `src`: URL of the profile image
+ * - `alt`: Text description for assistive technology. Pass `alt=""` to mark as decorative.
+ * - `size`: Numeric size token (50–1500). Defaults to `500` (40 px).
+ */
+export const Anatomy: Story = {
+  render: () => html`
+    <swc-avatar
+      src=${PLACEHOLDER_SRC}
+      alt="Jane Doe"
+      size="500"
+    ></swc-avatar>
+  `,
+  tags: ['anatomy'],
+};
+
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+/**
+ * Avatars come in 17 sizes from 50 to 1500, ranging from 16 px to 104 px.
+ * Sizes 50–700 match 1st-gen; sizes 800–1500 are new in Spectrum 2.
+ *
+ * The default size is `500` (40 px).
+ */
 export const Sizes: Story = {
   render: () => html`
-    ${AVATAR_VALID_SIZES.filter((s) => s <= 700).map(
+    ${AVATAR_VALID_SIZES.map(
       (size) => html`
         <swc-avatar
           src=${PLACEHOLDER_SRC}
@@ -90,14 +147,29 @@ export const Sizes: Story = {
       `
     )}
   `,
-  parameters: { flexLayout: 'row-wrap' },
+  parameters: {
+    flexLayout: 'row-wrap',
+    'section-order': 1,
+  },
+  tags: ['options'],
 };
 
+/**
+ * Pass `alt=""` to treat the avatar as decorative — the image is hidden from
+ * assistive technology. Use this when the surrounding context already
+ * identifies the person (e.g., their name appears next to the avatar).
+ */
 export const Decorative: Story = {
   render: () => html`
     <swc-avatar src=${PLACEHOLDER_SRC} alt="" size="500"></swc-avatar>
   `,
+  parameters: { 'section-order': 2 },
+  tags: ['options'],
 };
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
 
 /**
  * An avatar can be placed inside an action button to create a user-triggered
@@ -113,4 +185,33 @@ export const InActionButton: Story = {
       Jane Doe
     </button>
   `,
+  tags: ['behaviors'],
+};
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+/**
+ * ### Features
+ *
+ * The `<swc-avatar>` element implements several accessibility features:
+ *
+ * #### Alt text
+ *
+ * - Provide a descriptive `alt` value identifying the person or entity depicted
+ * - Pass `alt=""` to mark the image as decorative when the name already appears in context
+ *
+ * ### Best practices
+ *
+ * - Always set `alt` — omitting it causes some screen readers to announce the image URL
+ * - Use `alt=""` (decorative) only when the person is identified by adjacent text
+ * - Keep alt text short and descriptive: prefer `"Jane Doe"` over `"Profile photo of Jane Doe"`
+ */
+export const Accessibility: Story = {
+  render: () => html`
+    <swc-avatar src=${PLACEHOLDER_SRC} alt="Jane Doe" size="500"></swc-avatar>
+    <swc-avatar src=${PLACEHOLDER_SRC} alt="" size="500"></swc-avatar>
+  `,
+  tags: ['a11y'],
 };
