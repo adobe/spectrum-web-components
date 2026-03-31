@@ -12,11 +12,7 @@
 import { PropertyValues, ReactiveElement } from 'lit';
 import { property } from 'lit/decorators.js';
 
-type Constructor<T = Record<string, unknown>> = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  new (...args: any[]): T;
-  prototype: T;
-};
+import type { Constructor } from '../types.js';
 
 export const ELEMENT_SIZES = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl'] as const;
 export type ElementSize = (typeof ELEMENT_SIZES)[number];
@@ -37,6 +33,20 @@ export interface SizedElementConstructor {
   readonly VALID_SIZES: readonly ElementSize[];
 }
 
+/**
+ * Mixin that adds a validated `size` property and reflected attribute to a
+ * component, enforcing that the value is one of the allowed size tokens.
+ *
+ * @param constructor - The base class to extend
+ * @param options - Configuration for allowed sizes and default behavior
+ * @param options.validSizes - The subset of {@link ElementSize} values the
+ *   component accepts. Defaults to `DEFAULT_ELEMENT_SIZES` (`s`, `m`, `l`, `xl`).
+ * @param options.noDefaultSize - When `true`, the component may have no size
+ *   set (the attribute will not be auto-applied).
+ * @param options.defaultSize - The size applied when no explicit size is set.
+ *   Defaults to `'m'`.
+ * @returns A class that implements {@link SizedElementInterface}
+ */
 export function SizedMixin<T extends Constructor<ReactiveElement>>(
   constructor: T,
   {

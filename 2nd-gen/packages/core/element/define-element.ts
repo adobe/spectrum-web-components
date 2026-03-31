@@ -14,6 +14,16 @@ interface CustomElementConstructor {
   new (...params: unknown[]): HTMLElement;
 }
 
+/**
+ * Registers a custom element, guarding against duplicate definitions.
+ *
+ * In development mode (`window.__swc.DEBUG`), a warning is emitted when a
+ * tag name has already been registered — typically indicating that multiple
+ * versions of the same component were loaded on the page.
+ *
+ * @param name - The custom element tag name (e.g. `'sp-badge'`)
+ * @param constructor - The `HTMLElement` subclass to register
+ */
 export function defineElement(
   name: string,
   constructor: CustomElementConstructor

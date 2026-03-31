@@ -13,25 +13,32 @@ import { PropertyValues, ReactiveElement } from 'lit';
 import { property, queryAssignedNodes } from 'lit/decorators.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
-const assignedNodesList = Symbol('assignedNodes');
+import type { Constructor } from '../types.js';
 
-type Constructor<T = Record<string, unknown>> = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  new (...args: any[]): T;
-  prototype: T;
-};
+const assignedNodesList = Symbol('assignedNodes');
 
 export interface SlotTextObservingInterface {
   slotHasContent: boolean;
   manageTextObservedSlot(): void;
 }
 
+/**
+ * Mixin that observes whether a slot contains meaningful text content,
+ * exposing the result via the `slotHasContent` property.
+ *
+ * @param constructor - The base class to extend
+ * @param slotName - The named slot to observe. When omitted, the default slot
+ *   is observed.
+ * @param excludedSelectors - CSS selectors for child elements that should be
+ *   ignored when determining whether the slot has content.
+ * @returns A class that implements {@link SlotTextObservingInterface}
+ */
 export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
   constructor: T,
   slotName?: string,
   excludedSelectors: string[] = []
 ): T & Constructor<SlotTextObservingInterface> {
-  const notExcluded = (el: HTMLElement) => (selector: string) => {
+  const matchesExclusion = (el: HTMLElement) => (selector: string) => {
     return el.matches(selector);
   };
 
@@ -82,7 +89,7 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
         (currentNode) => {
           const node = currentNode as HTMLElement;
           if (node.tagName) {
-            return !excludedSelectors.some(notExcluded(node));
+            return !excludedSelectors.some(matchesExclusion(node));
           }
           return node.textContent ? node.textContent.trim() : false;
         }
@@ -96,7 +103,7 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
         const textNodes = [...childNodes].filter((currentNode) => {
           const node = currentNode as HTMLElement;
           if (node.tagName) {
-            const excluded = excludedSelectors.some(notExcluded(node));
+            const excluded = excludedSelectors.some(matchesExclusion(node));
             return !excluded
               ? // This pass happens at element upgrade and before slot rendering.
                 // Confirm it would exist in a targeted slot if there was one supplied.

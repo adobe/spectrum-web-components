@@ -1,5 +1,13 @@
 {
   "permissions": {
-    "allow": ["Bash(grep -E \"\\\\.ts$\")"]
+    "allow": [
+      "Bash(grep -E \"\\\\.ts$\")",
+      "Bash(npx tsc:*)",
+      "Bash(npx eslint:*)",
+      "Bash(grep -r \"tabbableElements\\\\|firstFocusableElement\\\\|inert\" /Users/ceickhoff/Desktop/Code/spectrum-web-components/1st-gen/packages --include=*.ts -l)",
+      "Bash(xargs cat:*)",
+      "Bash(grep -r \"restoreFocus\\\\|restore.*focus\\\\|return.*focus\" /Users/ceickhoff/Desktop/Code/spectrum-web-components/1st-gen/packages --include=*.ts -l)",
+      "Bash(ls /Users/ceickhoff/Desktop/Code/spectrum-web-components/1st-gen/packages/modal/*.ts)"
+    ]
   }
 }

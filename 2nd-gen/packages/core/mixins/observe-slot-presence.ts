@@ -12,13 +12,9 @@
 import { ReactiveElement } from 'lit';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
-const slotContentIsPresent = Symbol('slotContentIsPresent');
+import type { Constructor } from '../types.js';
 
-type Constructor<T = Record<string, unknown>> = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  new (...args: any[]): T;
-  prototype: T;
-};
+const slotContentIsPresent = Symbol('slotContentIsPresent');
 
 export interface SlotPresenceObservingInterface {
   slotContentIsPresent: boolean;
@@ -26,6 +22,17 @@ export interface SlotPresenceObservingInterface {
   managePresenceObservedSlot(): void;
 }
 
+/**
+ * Mixin that observes whether direct-child elements matching the given CSS
+ * selector(s) are present in the host's light DOM.
+ *
+ * @param constructor - The base class to extend
+ * @param lightDomSelector - One or more CSS selectors to observe. When a single
+ *   selector is provided, the result is available via `slotContentIsPresent`.
+ *   When multiple selectors are provided, use
+ *   `getSlotContentPresence(selector)` to query each individually.
+ * @returns A class that implements {@link SlotPresenceObservingInterface}
+ */
 export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
   constructor: T,
   lightDomSelector: string | string[]

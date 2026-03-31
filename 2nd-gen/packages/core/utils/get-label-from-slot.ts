@@ -10,6 +10,18 @@
  * governing permissions and limitations under the License.
  */
 
+/**
+ * Extracts a text label from a slot's assigned nodes.
+ *
+ * When `label` is already provided (non-empty string), returns `null` so that
+ * an explicit label always takes precedence over slotted content.
+ *
+ * @param label - An existing label value. If truthy, the function short-circuits
+ *   and returns `null`.
+ * @param slotEl - The `<slot>` element whose assigned nodes to read
+ * @returns The trimmed concatenated text content, or `null` when no text is
+ *   found or when `label` already has a value
+ */
 export const getLabelFromSlot = (
   label: string,
   slotEl: HTMLSlotElement

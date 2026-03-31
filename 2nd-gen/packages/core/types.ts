@@ -10,23 +10,13 @@
  * governing permissions and limitations under the License.
  */
 
-export type { Constructor } from '../types.js';
-export {
-  ObserveSlotPresence,
-  type SlotPresenceObservingInterface,
-} from './observe-slot-presence.js';
-export {
-  ObserveSlotText,
-  type SlotTextObservingInterface,
-} from './observe-slot-text.js';
-export {
-  DEFAULT_ELEMENT_SIZES,
-  ELEMENT_SIZES,
-  SizedMixin,
-} from './sized-mixin.js';
-export type {
-  DefaultElementSize,
-  ElementSize,
-  SizedElementConstructor,
-  SizedElementInterface,
-} from './sized-mixin.js';
+/**
+ * Generic constructor type used by mixins to accept and extend base classes.
+ *
+ * @template T - The instance type the constructor produces. Defaults to a
+ *   generic record so mixins can layer additional interfaces on top.
+ */
+export type Constructor<T = Record<string, unknown>> = new (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ...args: any[]
+) => T;

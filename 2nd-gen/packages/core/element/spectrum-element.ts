@@ -12,19 +12,21 @@
 
 import { LitElement, ReactiveElement } from 'lit';
 
+import type { Constructor } from '../types.js';
 import { coreVersion, version } from './version.js';
-
-type Constructor<T = Record<string, unknown>> = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  new (...args: any[]): T;
-  prototype: T;
-};
 
 export interface SpectrumInterface {
   shadowRoot: ShadowRoot;
   hasVisibleFocusInTree(): boolean;
 }
 
+/**
+ * Mixin that adds Spectrum-specific focus-visibility detection to a
+ * `ReactiveElement` subclass.
+ *
+ * @param constructor - The base class to extend with focus-visibility support
+ * @returns A class that implements {@link SpectrumInterface}
+ */
 export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
   constructor: T
 ): T & Constructor<SpectrumInterface> {
@@ -33,6 +35,14 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
      * @internal
      */
     public override shadowRoot!: ShadowRoot;
+
+    /**
+     * Checks whether the currently focused element within this component's
+     * root has visible (keyboard-driven) focus, walking through shadow roots
+     * and slotted ancestors as needed.
+     *
+     * @returns `true` when the deepest active element matches `:focus-visible`
+     */
     public hasVisibleFocusInTree(): boolean {
       const getAncestors = (root: Document = document): HTMLElement[] => {
         let currentNode = root.activeElement as HTMLElement;
