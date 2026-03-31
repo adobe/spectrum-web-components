@@ -124,7 +124,7 @@ export class Badge extends BadgeBase {
 /**
  * @element swc-progress-circle
  *
- * @property {string} static-color - Static color variant for use on different backgrounds.
+ * @property {string} staticColor - Reflected as the `static-color` attribute. Static color variant for use on different backgrounds.
  * @property {number} progress - Progress value between 0 and 100.
  *
  * @example
@@ -195,13 +195,15 @@ Declares properties at the class level for CEM tools. This is different from the
 
 **Format:** `@property {Type} name - Description`
 
+Use the **JavaScript property name** in the tag (e.g. `staticColor`), not the HTML attribute spelling when it differs (e.g. `static-color`). Hyphenated names are not valid JSDoc namepaths and trigger `jsdoc/valid-types`. Mention the attribute in the description when useful.
+
 **Example from ProgressCircle.ts:**
 
 ```ts
 /**
  * @element swc-progress-circle
  *
- * @property {string} static-color - Static color variant for use on different backgrounds.
+ * @property {string} staticColor - Reflected as the `static-color` attribute. Static color variant for use on different backgrounds.
  * @property {number} progress - Progress value between 0 and 100.
  * @property {boolean} indeterminate - Indeterminate state for loading.
  * @property {string} size - Size of the component.
