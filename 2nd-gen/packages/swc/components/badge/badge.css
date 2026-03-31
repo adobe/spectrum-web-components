@@ -23,7 +23,7 @@
 .swc-Badge {
   --_swc-badge-border-width: token("border-width-200");
   --_swc-badge-border-width-deduction: calc(var(--_swc-badge-border-width) * 2);
-  --_swc-badge-padding-block: token("component-top-to-text-100") token("component-bottom-to-text-100");
+  --_swc-badge-padding-block: token("component-padding-vertical-100");
 
   display: inline-flex;
   gap: var(--swc-badge-gap, token("text-to-visual-100"));
@@ -40,6 +40,10 @@
 
 .swc-Badge:has(.swc-Badge-icon) {
   --swc-badge-padding-inline: var(--swc-badge-with-icon-padding-inline, token("component-edge-to-visual-100"));
+}
+
+.swc-Badge--no-label:has(.swc-Badge-icon) {
+  gap: 0;
 }
 
 .swc-Badge-label {
@@ -64,13 +68,14 @@
   block-size: var(--swc-badge-icon-size, var(--_swc-badge-icon-size));
 }
 
+/* TODO: small is the default size according to the documentation site. */
 :host([size="s"]) {
   --swc-badge-height: token("component-height-75");
   --swc-badge-corner-radius: token("corner-radius-medium-size-small");
   --swc-badge-gap: token("text-to-visual-75");
   --swc-badge-padding-inline: token("component-edge-to-text-75");
   --swc-badge-with-icon-padding-inline: token("component-edge-to-visual-75");
-  --swc-badge-padding-block: token("component-top-to-text-75") token("component-bottom-to-text-75");
+  --swc-badge-padding-block: token("component-padding-vertical-75");
   --swc-badge-font-size: token("font-size-75");
   --swc-badge-icon-size: token("workflow-icon-size-75");
 }
@@ -81,7 +86,7 @@
   --swc-badge-gap: token("text-to-visual-200");
   --swc-badge-padding-inline: token("component-edge-to-text-200");
   --swc-badge-with-icon-padding-inline: token("component-edge-to-visual-200");
-  --swc-badge-padding-block: token("component-top-to-text-200") token("component-bottom-to-text-200");
+  --swc-badge-padding-block: token("component-padding-vertical-200");
   --swc-badge-font-size: token("font-size-200");
   --swc-badge-icon-size: token("workflow-icon-size-200");
 }
@@ -92,7 +97,7 @@
   --swc-badge-gap: token("text-to-visual-300");
   --swc-badge-padding-inline: token("component-edge-to-text-300");
   --swc-badge-with-icon-padding-inline: token("component-edge-to-visual-300");
-  --swc-badge-padding-block: token("component-top-to-text-300") token("component-bottom-to-text-300");
+  --swc-badge-padding-block: token("component-padding-vertical-300");
   --swc-badge-font-size: token("font-size-300");
   --swc-badge-icon-size: token("workflow-icon-size-300");
 }
