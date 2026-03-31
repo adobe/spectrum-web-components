@@ -133,9 +133,9 @@ export abstract class BadgeBase extends SizedMixin(
   // ──────────────────────
 
   /**
-   * Used for rendering gap when the badge has an icon.
-   *
    * @internal
+   *
+   * Used for rendering gap when the badge has an icon.
    */
   protected get hasIcon(): boolean {
     return this.slotContentIsPresent;
@@ -153,7 +153,7 @@ export abstract class BadgeBase extends SizedMixin(
       if (!constructor.VARIANTS.includes(this.variant)) {
         window.__swc.warn(
           this,
-          `<${this.localName}> element expect the "variant" attribute to be one of the following:`,
+          `<${this.localName}> element expects the "variant" attribute to be one of the following:`,
           'https://opensource.adobe.com/spectrum-web-components/components/badge/#variants',
           {
             issues: [...constructor.VARIANTS],
