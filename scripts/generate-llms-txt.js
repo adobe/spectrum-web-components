@@ -41,9 +41,34 @@ import {
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
-import { mdTable } from './lib/markdown.js';
-
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+/**
+ * Render a markdown table from headers and rows.
+ *
+ * @param {string[]} headers
+ * @param {string[][]} rows
+ * @returns {string}
+ */
+function mdTable(headers, rows) {
+  const cols = headers.length;
+  const widths = Array.from({ length: cols }, (_, i) =>
+    Math.max(headers[i].length, ...rows.map((r) => (r[i] ?? '').length))
+  );
+
+  const pad = (str, w) => (str ?? '').padEnd(w);
+  const sep = widths.map((w) => '-'.repeat(w)).join(' | ');
+  const headerLine = headers.map((h, i) => pad(h, widths[i])).join(' | ');
+  const bodyLines = rows.map((row) =>
+    row.map((cell, i) => pad(cell, widths[i])).join(' | ')
+  );
+
+  return [
+    '| ' + headerLine + ' |',
+    '| ' + sep + ' |',
+    ...bodyLines.map((l) => '| ' + l + ' |'),
+  ].join('\n');
+}
 const ROOT = join(__dirname, '..');
 
 /**
