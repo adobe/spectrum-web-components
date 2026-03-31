@@ -1,33 +1,33 @@
 {
-    "$schema": "https://json.schemastore.org/tsconfig",
-    "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
 
-        // Output settings (shared)
-        "declaration": true,
-        "esModuleInterop": false,
+    // Output settings (shared)
+    "declaration": true,
+    "esModuleInterop": false,
 
-        // Decorators (required for Lit)
-        "experimentalDecorators": true,
-        "forceConsistentCasingInFileNames": true,
-        "isolatedModules": true,
-        "lib": ["ES2018", "DOM", "DOM.Iterable"],
+    // Decorators (required for Lit)
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "lib": ["ES2018", "DOM", "DOM.Iterable"],
 
-        // Module settings (shared)
-        "module": "ESNext",
-        "moduleResolution": "bundler",
-        "noImplicitOverride": true,
-        "noImplicitReturns": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "resolveJsonModule": true,
-        "skipLibCheck": true,
-        "sourceMap": true,
-        // Strict type checking (shared)
-        "strict": true,
-        // ES2018 unified target
-        "target": "ES2018",
-        "useDefineForClassFields": false
-    },
-    "display": "Base TypeScript Config for Spectrum Web Components"
+    // Module settings (shared)
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    // Strict type checking (shared)
+    "strict": true,
+    // ES2018 unified target
+    "target": "ES2018",
+    "useDefineForClassFields": false
+  },
+  "display": "Base TypeScript Config for Spectrum Web Components"
 }

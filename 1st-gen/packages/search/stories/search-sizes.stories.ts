@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,32 +10,32 @@
  * governing permissions and limitations under the License.
  */
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/search/sp-search.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 export default {
-    component: 'sp-search',
-    title: 'Search/Sizes',
+  component: 'sp-search',
+  title: 'Search/Sizes',
 };
 
 const template = ({
-    size,
+  size,
 }: {
-    size?: 's' | 'm' | 'l' | 'xl';
+  size?: 's' | 'm' | 'l' | 'xl';
 } = {}): TemplateResult => {
-    return html`
-        <sp-field-label for="name" size=${ifDefined(size)}>
-            What would you like to find?
-        </sp-field-label>
-        <sp-search id="name" size=${ifDefined(size)} value="Sized Search">
-            <sp-help-text size=${ifDefined(size)} slot="help-text">
-                Anything within reason...
-            </sp-help-text>
-        </sp-search>
-    `;
+  return html`
+    <sp-field-label for="name" size=${ifDefined(size)}>
+      What would you like to find?
+    </sp-field-label>
+    <sp-search id="name" size=${ifDefined(size)} value="Sized Search">
+      <sp-help-text size=${ifDefined(size)} slot="help-text">
+        Anything within reason...
+      </sp-help-text>
+    </sp-search>
+  `;
 };
 
 export const s = (): TemplateResult => template({ size: 's' });

@@ -5,90 +5,90 @@
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.11.2
-    - @spectrum-web-components/shared@1.11.2
-    - @spectrum-web-components/icon@1.11.2
-    - @spectrum-web-components/icons-ui@1.11.2
+  - @spectrum-web-components/base@1.11.2
+  - @spectrum-web-components/shared@1.11.2
+  - @spectrum-web-components/icon@1.11.2
+  - @spectrum-web-components/icons-ui@1.11.2
 
 ## 1.11.1
 
 ### Patch Changes
 
 - Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
-    - @spectrum-web-components/shared@1.11.1
-    - @spectrum-web-components/base@1.11.1
-    - @spectrum-web-components/icon@1.11.1
-    - @spectrum-web-components/icons-ui@1.11.1
+  - @spectrum-web-components/shared@1.11.1
+  - @spectrum-web-components/base@1.11.1
+  - @spectrum-web-components/icon@1.11.1
+  - @spectrum-web-components/icons-ui@1.11.1
 
 ## 1.11.0
 
 ### Patch Changes
 
 - Updated dependencies [[`f8bdeec`](https://github.com/adobe/spectrum-web-components/commit/f8bdeecf8a230822122a990fb977d3654649f891), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
-    - @spectrum-web-components/shared@1.11.0
-    - @spectrum-web-components/base@1.11.0
-    - @spectrum-web-components/icon@1.11.0
-    - @spectrum-web-components/icons-ui@1.11.0
+  - @spectrum-web-components/shared@1.11.0
+  - @spectrum-web-components/base@1.11.0
+  - @spectrum-web-components/icon@1.11.0
+  - @spectrum-web-components/icons-ui@1.11.0
 
 ## 1.10.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.10.0
-    - @spectrum-web-components/icon@1.10.0
-    - @spectrum-web-components/icons-ui@1.10.0
-    - @spectrum-web-components/shared@1.10.0
+  - @spectrum-web-components/base@1.10.0
+  - @spectrum-web-components/icon@1.10.0
+  - @spectrum-web-components/icons-ui@1.10.0
+  - @spectrum-web-components/shared@1.10.0
 
 ## 1.9.1
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/icon@1.9.1
-    - @spectrum-web-components/icons-ui@1.9.1
-    - @spectrum-web-components/base@1.9.1
-    - @spectrum-web-components/shared@1.9.1
+  - @spectrum-web-components/icon@1.9.1
+  - @spectrum-web-components/icons-ui@1.9.1
+  - @spectrum-web-components/base@1.9.1
+  - @spectrum-web-components/shared@1.9.1
 
 ## 1.9.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/icon@1.9.0
-    - @spectrum-web-components/icons-ui@1.9.0
-    - @spectrum-web-components/base@1.9.0
-    - @spectrum-web-components/shared@1.9.0
+  - @spectrum-web-components/icon@1.9.0
+  - @spectrum-web-components/icons-ui@1.9.0
+  - @spectrum-web-components/base@1.9.0
+  - @spectrum-web-components/shared@1.9.0
 
 ## 1.8.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/icon@1.8.0
-    - @spectrum-web-components/icons-ui@1.8.0
-    - @spectrum-web-components/base@1.8.0
-    - @spectrum-web-components/shared@1.8.0
+  - @spectrum-web-components/icon@1.8.0
+  - @spectrum-web-components/icons-ui@1.8.0
+  - @spectrum-web-components/base@1.8.0
+  - @spectrum-web-components/shared@1.8.0
 
 ## 1.7.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/icon@1.7.0
-    - @spectrum-web-components/icons-ui@1.7.0
-    - @spectrum-web-components/base@1.7.0
-    - @spectrum-web-components/shared@1.7.0
+  - @spectrum-web-components/icon@1.7.0
+  - @spectrum-web-components/icons-ui@1.7.0
+  - @spectrum-web-components/base@1.7.0
+  - @spectrum-web-components/shared@1.7.0
 
 ## 1.6.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/icon@1.6.0
-    - @spectrum-web-components/icons-ui@1.6.0
-    - @spectrum-web-components/base@1.6.0
-    - @spectrum-web-components/shared@1.6.0
+  - @spectrum-web-components/icon@1.6.0
+  - @spectrum-web-components/icons-ui@1.6.0
+  - @spectrum-web-components/base@1.6.0
+  - @spectrum-web-components/shared@1.6.0
 
 ## 1.5.0
 
@@ -96,41 +96,41 @@
 
 - [#5228](https://github.com/adobe/spectrum-web-components/pull/5228) [`a4de4c7`](https://github.com/adobe/spectrum-web-components/commit/a4de4c76c38ae274535fc7df8ab32490a796485a) Thanks [@renovate](https://github.com/apps/renovate)! - 📝 [#3617](https://github.com/adobe/spectrum-css/pull/3617) Thanks [@marissahuysentruyt](https://redirect.github.com/marissahuysentruyt)!
 
-    Adds a `::before` pseudo element to properly target the checkbox checked input + box element. The selector update, specifically in the invalid + checked + hover state should now get the proper error background color, as opposed to the default background color.
+  Adds a `::before` pseudo element to properly target the checkbox checked input + box element. The selector update, specifically in the invalid + checked + hover state should now get the proper error background color, as opposed to the default background color.
 
 - Updated dependencies []:
-    - @spectrum-web-components/icon@1.5.0
-    - @spectrum-web-components/icons-ui@1.5.0
-    - @spectrum-web-components/base@1.5.0
-    - @spectrum-web-components/shared@1.5.0
+  - @spectrum-web-components/icon@1.5.0
+  - @spectrum-web-components/icons-ui@1.5.0
+  - @spectrum-web-components/base@1.5.0
+  - @spectrum-web-components/shared@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/icon@1.4.0
-    - @spectrum-web-components/icons-ui@1.4.0
-    - @spectrum-web-components/base@1.4.0
-    - @spectrum-web-components/shared@1.4.0
+  - @spectrum-web-components/icon@1.4.0
+  - @spectrum-web-components/icons-ui@1.4.0
+  - @spectrum-web-components/base@1.4.0
+  - @spectrum-web-components/shared@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
 - [#5176](https://github.com/adobe/spectrum-web-components/pull/5176) [`468314f`](https://github.com/adobe/spectrum-web-components/commit/468314f45cf5fedb2e9029da210a5886260abca9) Thanks [@TarunAdobe](https://github.com/TarunAdobe)!
-    1. chore(checkbox): updated to latest css v10.1.1 for s2 fast follow
-    2. chore(dialog):
-       The error property was not properly deprecated with a full migration plan in place. This has caused confusion and false sense of urgency for consumers to migrate. We are removing it to eliminate those pain points for consumers while we take a deep look at our dialogs and patterns.
-    3. chore(menu): updated to latest css v9.1.1 for s2 fast follow
-    4. fix(overlay):
-       sp-overlay with type="manual" should close on pressing ESC key. When the last item is on overlay stack we are triggering the close method on esc key event.
+  1. chore(checkbox): updated to latest css v10.1.1 for s2 fast follow
+  2. chore(dialog):
+     The error property was not properly deprecated with a full migration plan in place. This has caused confusion and false sense of urgency for consumers to migrate. We are removing it to eliminate those pain points for consumers while we take a deep look at our dialogs and patterns.
+  3. chore(menu): updated to latest css v9.1.1 for s2 fast follow
+  4. fix(overlay):
+     sp-overlay with type="manual" should close on pressing ESC key. When the last item is on overlay stack we are triggering the close method on esc key event.
 
 - Updated dependencies []:
-    - @spectrum-web-components/icon@1.3.0
-    - @spectrum-web-components/icons-ui@1.3.0
-    - @spectrum-web-components/base@1.3.0
-    - @spectrum-web-components/shared@1.3.0
+  - @spectrum-web-components/icon@1.3.0
+  - @spectrum-web-components/icons-ui@1.3.0
+  - @spectrum-web-components/base@1.3.0
+  - @spectrum-web-components/shared@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

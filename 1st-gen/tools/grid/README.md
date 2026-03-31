@@ -35,13 +35,13 @@ The grid consists of several key parts:
 ```html
 <sp-grid id="basic-grid"></sp-grid>
 <script type="module">
-    const grid = document.querySelector('#basic-grid');
-    grid.items = [{ name: 'Item 1' }, { name: 'Item 2' }, { name: 'Item 3' }];
-    grid.renderItem = (item) => {
-        const div = document.createElement('div');
-        div.textContent = item.name;
-        return div;
-    };
+  const grid = document.querySelector('#basic-grid');
+  grid.items = [{ name: 'Item 1' }, { name: 'Item 2' }, { name: 'Item 3' }];
+  grid.renderItem = (item) => {
+    const div = document.createElement('div');
+    div.textContent = item.name;
+    return div;
+  };
 </script>
 ```
 
@@ -58,9 +58,9 @@ The `items` property accepts a normalized array of JavaScript objects that will 
 ```javascript
 const grid = document.querySelector('sp-grid');
 grid.items = [
-    { name: 'Card 1', date: '10/15/18' },
-    { name: 'Card 2', date: '10/16/18' },
-    { name: 'Card 3', date: '10/17/18' },
+  { name: 'Card 1', date: '10/15/18' },
+  { name: 'Card 2', date: '10/16/18' },
+  { name: 'Card 3', date: '10/17/18' },
 ];
 ```
 
@@ -70,10 +70,10 @@ The `renderItem` property is a function that receives an item, index, and select
 
 ```javascript
 grid.renderItem = (item, index, selected) => {
-    const card = document.createElement('sp-card');
-    card.heading = item.name;
-    card.selected = selected;
-    return card;
+  const card = document.createElement('sp-card');
+  card.heading = item.name;
+  card.selected = selected;
+  return card;
 };
 ```
 
@@ -83,8 +83,8 @@ Control the dimensions of each grid item using the `itemSize` property, which ac
 
 ```javascript
 grid.itemSize = {
-    width: 200,
-    height: 300,
+  width: 200,
+  height: 300,
 };
 ```
 
@@ -126,18 +126,18 @@ The grid supports selection of items. You can maintain a `selectedItems` array a
 grid.selectedItems = [];
 
 grid.renderItem = (item, index, selected) => {
-    const card = document.createElement('sp-card');
-    card.selected = grid.selectedItems.includes(card.value);
-    card.addEventListener('change', () => {
-        if (grid.selectedItems.includes(card.value)) {
-            grid.selectedItems = grid.selectedItems.filter(
-                (item) => item !== card.value
-            );
-        } else {
-            grid.selectedItems.push(card.value);
-        }
-    });
-    return card;
+  const card = document.createElement('sp-card');
+  card.selected = grid.selectedItems.includes(card.value);
+  card.addEventListener('change', () => {
+    if (grid.selectedItems.includes(card.value)) {
+      grid.selectedItems = grid.selectedItems.filter(
+        (item) => item !== card.value
+      );
+    } else {
+      grid.selectedItems.push(card.value);
+    }
+  });
+  return card;
 };
 ```
 

@@ -5,126 +5,126 @@
 ### Patch Changes
 
 - Updated dependencies [[`3783d87`](https://github.com/adobe/spectrum-web-components/commit/3783d87c388c88e3ae57f54d0396556a1dea728c)]:
-    - @spectrum-web-components/picker@1.11.2
-    - @spectrum-web-components/base@1.11.2
-    - @spectrum-web-components/theme@1.11.2
-    - @spectrum-web-components/menu@1.11.2
-    - @spectrum-web-components/reactive-controllers@1.11.2
-    - @spectrum-web-components/field-label@1.11.2
-    - @spectrum-web-components/overlay@1.11.2
-    - @spectrum-web-components/switch@1.11.2
+  - @spectrum-web-components/picker@1.11.2
+  - @spectrum-web-components/base@1.11.2
+  - @spectrum-web-components/theme@1.11.2
+  - @spectrum-web-components/menu@1.11.2
+  - @spectrum-web-components/reactive-controllers@1.11.2
+  - @spectrum-web-components/field-label@1.11.2
+  - @spectrum-web-components/overlay@1.11.2
+  - @spectrum-web-components/switch@1.11.2
 
 ## 1.11.1
 
 ### Patch Changes
 
 - Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
-    - @spectrum-web-components/base@1.11.1
-    - @spectrum-web-components/theme@1.11.1
-    - @spectrum-web-components/field-label@1.11.1
-    - @spectrum-web-components/menu@1.11.1
-    - @spectrum-web-components/overlay@1.11.1
-    - @spectrum-web-components/picker@1.11.1
-    - @spectrum-web-components/switch@1.11.1
-    - @spectrum-web-components/reactive-controllers@1.11.1
+  - @spectrum-web-components/base@1.11.1
+  - @spectrum-web-components/theme@1.11.1
+  - @spectrum-web-components/field-label@1.11.1
+  - @spectrum-web-components/menu@1.11.1
+  - @spectrum-web-components/overlay@1.11.1
+  - @spectrum-web-components/picker@1.11.1
+  - @spectrum-web-components/switch@1.11.1
+  - @spectrum-web-components/reactive-controllers@1.11.1
 
 ## 1.9.1
 
 ### Patch Changes
 
 - Updated dependencies [[`a19cbe3`](https://github.com/adobe/spectrum-web-components/commit/a19cbe3e8b4690d8abd1530e3930e5d48ae43618)]:
-    - @spectrum-web-components/overlay@1.9.1
-    - @spectrum-web-components/menu@1.9.1
-    - @spectrum-web-components/picker@1.9.1
-    - @spectrum-web-components/field-label@1.9.1
-    - @spectrum-web-components/switch@1.9.1
-    - @spectrum-web-components/base@1.9.1
-    - @spectrum-web-components/reactive-controllers@1.9.1
-    - @spectrum-web-components/theme@1.9.1
+  - @spectrum-web-components/overlay@1.9.1
+  - @spectrum-web-components/menu@1.9.1
+  - @spectrum-web-components/picker@1.9.1
+  - @spectrum-web-components/field-label@1.9.1
+  - @spectrum-web-components/switch@1.9.1
+  - @spectrum-web-components/base@1.9.1
+  - @spectrum-web-components/reactive-controllers@1.9.1
+  - @spectrum-web-components/theme@1.9.1
 
 ## 1.9.0
 
 ### Patch Changes
 
 - Updated dependencies [[`4880da4`](https://github.com/adobe/spectrum-web-components/commit/4880da4f80a25ae1b475f52ce4ba7914cdcd9de4), [`dbba861`](https://github.com/adobe/spectrum-web-components/commit/dbba8617475b9e20b304935ab65ca43f744efe93), [`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8), [`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8), [`72d807c`](https://github.com/adobe/spectrum-web-components/commit/72d807c75d04b0fec1794a8d3e68383ca61d9e4c)]:
-    - @spectrum-web-components/menu@1.9.0
-    - @spectrum-web-components/picker@1.9.0
-    - @spectrum-web-components/reactive-controllers@1.9.0
-    - @spectrum-web-components/field-label@1.9.0
-    - @spectrum-web-components/overlay@1.9.0
-    - @spectrum-web-components/switch@1.9.0
-    - @spectrum-web-components/base@1.9.0
-    - @spectrum-web-components/theme@1.9.0
+  - @spectrum-web-components/menu@1.9.0
+  - @spectrum-web-components/picker@1.9.0
+  - @spectrum-web-components/reactive-controllers@1.9.0
+  - @spectrum-web-components/field-label@1.9.0
+  - @spectrum-web-components/overlay@1.9.0
+  - @spectrum-web-components/switch@1.9.0
+  - @spectrum-web-components/base@1.9.0
+  - @spectrum-web-components/theme@1.9.0
 
 ## 1.8.0
 
 ### Patch Changes
 
 - Updated dependencies [[`6c2acaf`](https://github.com/adobe/spectrum-web-components/commit/6c2acaf14ca1c210a876bdbd65a273d6a5fc22d0), [`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7), [`f27ab09`](https://github.com/adobe/spectrum-web-components/commit/f27ab096f4d53543dc53f75ec196c696b78b3baa), [`ee1bae6`](https://github.com/adobe/spectrum-web-components/commit/ee1bae6f9a7401dc31ebc84e4e27f9d39be692d1), [`dcd2cd3`](https://github.com/adobe/spectrum-web-components/commit/dcd2cd351d1cc877212cc00e9d139b7829bf4017), [`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7)]:
-    - @spectrum-web-components/picker@1.8.0
-    - @spectrum-web-components/overlay@1.8.0
-    - @spectrum-web-components/menu@1.8.0
-    - @spectrum-web-components/switch@1.8.0
-    - @spectrum-web-components/theme@1.8.0
-    - @spectrum-web-components/field-label@1.8.0
-    - @spectrum-web-components/base@1.8.0
-    - @spectrum-web-components/reactive-controllers@1.8.0
+  - @spectrum-web-components/picker@1.8.0
+  - @spectrum-web-components/overlay@1.8.0
+  - @spectrum-web-components/menu@1.8.0
+  - @spectrum-web-components/switch@1.8.0
+  - @spectrum-web-components/theme@1.8.0
+  - @spectrum-web-components/field-label@1.8.0
+  - @spectrum-web-components/base@1.8.0
+  - @spectrum-web-components/reactive-controllers@1.8.0
 
 ## 1.7.0
 
 ### Patch Changes
 
 - Updated dependencies [[`3aeafdd`](https://github.com/adobe/spectrum-web-components/commit/3aeafddab98fe30f4db538ded9052997aaa05b07), [`a646ae8`](https://github.com/adobe/spectrum-web-components/commit/a646ae8b0e652308d359226740d2cb189e492e45)]:
-    - @spectrum-web-components/menu@1.7.0
-    - @spectrum-web-components/overlay@1.7.0
-    - @spectrum-web-components/theme@1.7.0
-    - @spectrum-web-components/picker@1.7.0
-    - @spectrum-web-components/field-label@1.7.0
-    - @spectrum-web-components/switch@1.7.0
-    - @spectrum-web-components/base@1.7.0
-    - @spectrum-web-components/reactive-controllers@1.7.0
+  - @spectrum-web-components/menu@1.7.0
+  - @spectrum-web-components/overlay@1.7.0
+  - @spectrum-web-components/theme@1.7.0
+  - @spectrum-web-components/picker@1.7.0
+  - @spectrum-web-components/field-label@1.7.0
+  - @spectrum-web-components/switch@1.7.0
+  - @spectrum-web-components/base@1.7.0
+  - @spectrum-web-components/reactive-controllers@1.7.0
 
 ## 1.6.0
 
 ### Patch Changes
 
 - Updated dependencies [[`3c3bc2b`](https://github.com/adobe/spectrum-web-components/commit/3c3bc2bed9f1c731bc662220fe96f67f03331015), [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e), [`53f3769`](https://github.com/adobe/spectrum-web-components/commit/53f3769f07b6e7853a8a4c0dc63b21fe14cf3d4b)]:
-    - @spectrum-web-components/picker@1.6.0
-    - @spectrum-web-components/menu@1.6.0
-    - @spectrum-web-components/switch@1.6.0
-    - @spectrum-web-components/overlay@1.6.0
-    - @spectrum-web-components/theme@1.6.0
-    - @spectrum-web-components/field-label@1.6.0
-    - @spectrum-web-components/base@1.6.0
-    - @spectrum-web-components/reactive-controllers@1.6.0
+  - @spectrum-web-components/picker@1.6.0
+  - @spectrum-web-components/menu@1.6.0
+  - @spectrum-web-components/switch@1.6.0
+  - @spectrum-web-components/overlay@1.6.0
+  - @spectrum-web-components/theme@1.6.0
+  - @spectrum-web-components/field-label@1.6.0
+  - @spectrum-web-components/base@1.6.0
+  - @spectrum-web-components/reactive-controllers@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
 - Updated dependencies [[`86bcd12`](https://github.com/adobe/spectrum-web-components/commit/86bcd122003e99d490a64d466dab3e7d609a6ff3), [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0), [`8f8735c`](https://github.com/adobe/spectrum-web-components/commit/8f8735c9ec3eac3b6473424c78257cb46ee17f70), [`4c2f908`](https://github.com/adobe/spectrum-web-components/commit/4c2f908a92b383d49eb7197d954966fe1798aa20), [`a69accb`](https://github.com/adobe/spectrum-web-components/commit/a69accb8b44b2612d53d31ba52c99aa751ce9f3a)]:
-    - @spectrum-web-components/menu@1.5.0
-    - @spectrum-web-components/field-label@1.5.0
-    - @spectrum-web-components/overlay@1.5.0
-    - @spectrum-web-components/picker@1.5.0
-    - @spectrum-web-components/theme@1.5.0
-    - @spectrum-web-components/switch@1.5.0
-    - @spectrum-web-components/base@1.5.0
-    - @spectrum-web-components/reactive-controllers@1.5.0
+  - @spectrum-web-components/menu@1.5.0
+  - @spectrum-web-components/field-label@1.5.0
+  - @spectrum-web-components/overlay@1.5.0
+  - @spectrum-web-components/picker@1.5.0
+  - @spectrum-web-components/theme@1.5.0
+  - @spectrum-web-components/switch@1.5.0
+  - @spectrum-web-components/base@1.5.0
+  - @spectrum-web-components/reactive-controllers@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
 - Updated dependencies [[`2a0422e`](https://github.com/adobe/spectrum-web-components/commit/2a0422ec1b667a9f236858f8cc9dca261ba27f9f), [`46cd782`](https://github.com/adobe/spectrum-web-components/commit/46cd7828f65491fc08790e5ba0aec412ee89199d), [`6618422`](https://github.com/adobe/spectrum-web-components/commit/6618422848df234e420eed95f4a5a30557e1e46f), [`1fc141c`](https://github.com/adobe/spectrum-web-components/commit/1fc141cefc01b8a98910c43a1e4ffaa61e952225), [`70f5f6f`](https://github.com/adobe/spectrum-web-components/commit/70f5f6f3a97b530fb20f9f5ee049e9a8c124b02d), [`82212f4`](https://github.com/adobe/spectrum-web-components/commit/82212f4b67c0514120652e3923cc87f1378809e7)]:
-    - @spectrum-web-components/picker@1.4.0
-    - @spectrum-web-components/menu@1.4.0
-    - @spectrum-web-components/overlay@1.4.0
-    - @spectrum-web-components/theme@1.4.0
-    - @spectrum-web-components/field-label@1.4.0
-    - @spectrum-web-components/switch@1.4.0
-    - @spectrum-web-components/base@1.4.0
-    - @spectrum-web-components/reactive-controllers@1.4.0
+  - @spectrum-web-components/picker@1.4.0
+  - @spectrum-web-components/menu@1.4.0
+  - @spectrum-web-components/overlay@1.4.0
+  - @spectrum-web-components/theme@1.4.0
+  - @spectrum-web-components/field-label@1.4.0
+  - @spectrum-web-components/switch@1.4.0
+  - @spectrum-web-components/base@1.4.0
+  - @spectrum-web-components/reactive-controllers@1.4.0
 
 ## 1.3.0
 
@@ -135,14 +135,14 @@
 - [#5175](https://github.com/adobe/spectrum-web-components/pull/5175) [`20df69e`](https://github.com/adobe/spectrum-web-components/commit/20df69ecb7ad6b3d3c0a63a4174ec164a79568ee) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - added the locale picker back to the storybook decorator
 
 - Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f), [`468314f`](https://github.com/adobe/spectrum-web-components/commit/468314f45cf5fedb2e9029da210a5886260abca9)]:
-    - @spectrum-web-components/reactive-controllers@1.3.0
-    - @spectrum-web-components/picker@1.3.0
-    - @spectrum-web-components/menu@1.3.0
-    - @spectrum-web-components/overlay@1.3.0
-    - @spectrum-web-components/field-label@1.3.0
-    - @spectrum-web-components/switch@1.3.0
-    - @spectrum-web-components/base@1.3.0
-    - @spectrum-web-components/theme@1.3.0
+  - @spectrum-web-components/reactive-controllers@1.3.0
+  - @spectrum-web-components/picker@1.3.0
+  - @spectrum-web-components/menu@1.3.0
+  - @spectrum-web-components/overlay@1.3.0
+  - @spectrum-web-components/field-label@1.3.0
+  - @spectrum-web-components/switch@1.3.0
+  - @spectrum-web-components/base@1.3.0
+  - @spectrum-web-components/theme@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

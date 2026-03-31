@@ -5,69 +5,69 @@
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.11.2
-    - @spectrum-web-components/icon@1.11.2
+  - @spectrum-web-components/base@1.11.2
+  - @spectrum-web-components/icon@1.11.2
 
 ## 1.11.1
 
 ### Patch Changes
 
 - Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
-    - @spectrum-web-components/base@1.11.1
-    - @spectrum-web-components/icon@1.11.1
+  - @spectrum-web-components/base@1.11.1
+  - @spectrum-web-components/icon@1.11.1
 
 ## 1.11.0
 
 ### Patch Changes
 
 - Updated dependencies [[`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
-    - @spectrum-web-components/base@1.11.0
-    - @spectrum-web-components/icon@1.11.0
+  - @spectrum-web-components/base@1.11.0
+  - @spectrum-web-components/icon@1.11.0
 
 ## 1.10.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.10.0
-    - @spectrum-web-components/icon@1.10.0
+  - @spectrum-web-components/base@1.10.0
+  - @spectrum-web-components/icon@1.10.0
 
 ## 1.9.1
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/icon@1.9.1
-    - @spectrum-web-components/base@1.9.1
+  - @spectrum-web-components/icon@1.9.1
+  - @spectrum-web-components/base@1.9.1
 
 ## 1.9.0
 
 ### Minor Changes
 
 - [#5735](https://github.com/adobe/spectrum-web-components/pull/5735) [`bdf54c1`](https://github.com/adobe/spectrum-web-components/commit/bdf54c1bc6d3eb20da1a1bf3b40650e6ab1ba399) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - - Upgraded to `@adobe/spectrum-css-workflow-icons@5.0.0`. - Includes changes from previous a4u upstream releases: - Added `S2_Icon_HeartFilled_20_N.svg`, updated `S2_Icon_SpeedFast_20_N.svg`. - Replaced all 22×20px Cloud State icons with 20px variants. - Removed deprecated multi-colored error icon. Added new Cloud State icons (`Disconnected`, `Error`, `InProgress`, `Online`, `Paused`, `Pending`, `SlowConnection`). - Updated several other icons (`CloseCaptions`, `CommentHide`, `Community`, etc.).
-    - For the full changelog, see: https://github.com/adobe/spectrum-css-workflow-icons/pull/50
+  - For the full changelog, see: https://github.com/adobe/spectrum-css-workflow-icons/pull/50
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/icon@1.9.0
-    - @spectrum-web-components/base@1.9.0
+  - @spectrum-web-components/icon@1.9.0
+  - @spectrum-web-components/base@1.9.0
 
 ## 1.8.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/icon@1.8.0
-    - @spectrum-web-components/base@1.8.0
+  - @spectrum-web-components/icon@1.8.0
+  - @spectrum-web-components/base@1.8.0
 
 ## 1.7.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/icon@1.7.0
-    - @spectrum-web-components/base@1.7.0
+  - @spectrum-web-components/icon@1.7.0
+  - @spectrum-web-components/base@1.7.0
 
 ## 1.6.0
 
@@ -78,32 +78,32 @@
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/icon@1.6.0
-    - @spectrum-web-components/base@1.6.0
+  - @spectrum-web-components/icon@1.6.0
+  - @spectrum-web-components/base@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/icon@1.5.0
-    - @spectrum-web-components/base@1.5.0
+  - @spectrum-web-components/icon@1.5.0
+  - @spectrum-web-components/base@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/icon@1.4.0
-    - @spectrum-web-components/base@1.4.0
+  - @spectrum-web-components/icon@1.4.0
+  - @spectrum-web-components/base@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/icon@1.3.0
-    - @spectrum-web-components/base@1.3.0
+  - @spectrum-web-components/icon@1.3.0
+  - @spectrum-web-components/base@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,48 +11,48 @@
  */
 
 a {
-    color: inherit;
+  color: inherit;
 }
 
 a:focus,
 a:focus-visible {
-    outline: none;
+  outline: none;
 }
 
-:host a:before {
-    block-size: calc(100% - var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)));
-    border: var(--mod-tabs-focus-indicator-width, var(--spectrum-tabs-focus-indicator-width)) solid transparent;
-    border-radius: var(--mod-tabs-focus-indicator-border-radius, var(--spectrum-tabs-focus-indicator-border-radius));
-    box-sizing: border-box;
-    content: "";
-    inline-size: calc(100% + var(--mod-tabs-focus-indicator-gap, var(--spectrum-tabs-focus-indicator-gap)) * 2);
-    inset-block-start: calc(var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) / 2);
-    inset-inline: calc(var(--mod-tabs-focus-indicator-gap, var(--spectrum-tabs-focus-indicator-gap)) * -1);
-    pointer-events: none;
-    position: absolute;
+:host a::before {
+  box-sizing: border-box;
+  position: absolute;
+  inset-block-start: calc(var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) / 2);
+  inset-inline: calc(var(--mod-tabs-focus-indicator-gap, var(--spectrum-tabs-focus-indicator-gap)) * -1);
+  inline-size: calc(100% + var(--mod-tabs-focus-indicator-gap, var(--spectrum-tabs-focus-indicator-gap)) * 2);
+  block-size: calc(100% - var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)));
+  border: var(--mod-tabs-focus-indicator-width, var(--spectrum-tabs-focus-indicator-width)) solid transparent;
+  border-radius: var(--mod-tabs-focus-indicator-border-radius, var(--spectrum-tabs-focus-indicator-border-radius));
+  pointer-events: none;
+  content: "";
 }
 
 :host a.focus-visible {
-    color: var(--highcontrast-tabs-color-key-focus, var(--mod-tabs-color-key-focus, var(--spectrum-tabs-color-key-focus)));
+  color: var(--highcontrast-tabs-color-key-focus, var(--mod-tabs-color-key-focus, var(--spectrum-tabs-color-key-focus)));
 }
 
 :host a:focus-visible {
-    color: var(--highcontrast-tabs-color-key-focus, var(--mod-tabs-color-key-focus, var(--spectrum-tabs-color-key-focus)));
+  color: var(--highcontrast-tabs-color-key-focus, var(--mod-tabs-color-key-focus, var(--spectrum-tabs-color-key-focus)));
 }
 
-:host a.focus-visible:before {
-    border-color: var(--highcontrast-tabs-focus-indicator-color, var(--mod-tabs-focus-indicator-color, var(--spectrum-tabs-focus-indicator-color)));
+:host a.focus-visible::before {
+  border-color: var(--highcontrast-tabs-focus-indicator-color, var(--mod-tabs-focus-indicator-color, var(--spectrum-tabs-focus-indicator-color)));
 }
 
-:host a:focus-visible:before {
-    border-color: var(--highcontrast-tabs-focus-indicator-color, var(--mod-tabs-focus-indicator-color, var(--spectrum-tabs-focus-indicator-color)));
+:host a:focus-visible::before {
+  border-color: var(--highcontrast-tabs-focus-indicator-color, var(--mod-tabs-focus-indicator-color, var(--spectrum-tabs-focus-indicator-color)));
 }
 
 #item-label {
-    margin-block: 0;
-    padding-block: var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) var(--mod-tabs-bottom-to-text, var(--spectrum-tabs-bottom-to-text));
+  padding-block: var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) var(--mod-tabs-bottom-to-text, var(--spectrum-tabs-bottom-to-text));
+  margin-block: 0;
 }
 
 slot {
-    pointer-events: none;
+  pointer-events: none;
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -12,51 +12,51 @@
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import {
-    args,
-    argTypes,
-    chevronDown,
-    chevronUp,
-    StoryArgs,
-    Template,
+  args,
+  argTypes,
+  chevronDown,
+  chevronUp,
+  StoryArgs,
+  Template,
 } from './index.js';
 
 export default {
-    title: 'Infield Button',
-    component: 'sp-infield-button',
-    argTypes,
-    args,
+  title: 'Infield Button',
+  component: 'sp-infield-button',
+  argTypes,
+  args,
 };
 
 export const Default = (args: StoryArgs): TemplateResult => Template(args);
 export const disabled = (args: StoryArgs): TemplateResult => Template(args);
 disabled.args = {
-    disabled: true,
+  disabled: true,
 };
 
 export const inlineStart = (args: StoryArgs): TemplateResult => Template(args);
 inlineStart.args = {
-    inline: 'start',
+  inline: 'start',
 };
 
 export const inlineEnd = (args: StoryArgs): TemplateResult => Template(args);
 inlineEnd.args = {
-    inline: 'end',
+  inline: 'end',
 };
 
 export const stacked = (): TemplateResult => html`
-    ${Template({
-        block: 'start',
-        content: chevronUp,
-        label: 'Increase',
-    })}
-    ${Template({
-        block: 'end',
-        content: chevronDown,
-        label: 'Decrease',
-    })}
+  ${Template({
+    block: 'start',
+    content: chevronUp,
+    label: 'Increase',
+  })}
+  ${Template({
+    block: 'end',
+    content: chevronDown,
+    label: 'Decrease',
+  })}
 `;
 
 export const quiet = (args: StoryArgs): TemplateResult => Template(args);
 quiet.args = {
-    quiet: true,
+  quiet: true,
 };

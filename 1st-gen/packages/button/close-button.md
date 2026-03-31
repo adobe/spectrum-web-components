@@ -103,8 +103,8 @@ While disabled, the `<sp-close-button>` element will not respond to click events
 
 ```html
 <sp-button-group>
-    <sp-close-button>Normal</sp-close-button>
-    <sp-close-button disabled>Disabled</sp-close-button>
+  <sp-close-button>Normal</sp-close-button>
+  <sp-close-button disabled>Disabled</sp-close-button>
 </sp-button-group>
 ```
 
@@ -117,7 +117,7 @@ Events handlers for clicks and other user actions can be registered on a
 
 ```html
 <sp-close-button onclick="spAlert(this, '<sp-close-button> clicked!')">
-    Click me
+  Click me
 </sp-close-button>
 ```
 
@@ -130,10 +130,10 @@ popover or dialog opens.
 ```html
 <sp-button id="trigger">Open</sp-button>
 <sp-overlay trigger="trigger@click" placement="bottom">
-    <sp-popover>
-        <!-- Button will autofocus when open -->
-        <sp-close-button autofocus>Close</sp-close-button>
-    </sp-popover>
+  <sp-popover>
+    <!-- Button will autofocus when open -->
+    <sp-close-button autofocus>Close</sp-close-button>
+  </sp-popover>
 </sp-overlay>
 ```
 

@@ -5,92 +5,92 @@
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/progress-circle@1.11.2
-    - @spectrum-web-components/base@1.11.2
-    - @spectrum-web-components/shared@1.11.2
-    - @spectrum-web-components/reactive-controllers@1.11.2
-    - @spectrum-web-components/clear-button@1.11.2
-    - @spectrum-web-components/close-button@1.11.2
-    - @spectrum-web-components/icon@1.11.2
-    - @spectrum-web-components/icons-ui@1.11.2
+  - @spectrum-web-components/progress-circle@1.11.2
+  - @spectrum-web-components/base@1.11.2
+  - @spectrum-web-components/shared@1.11.2
+  - @spectrum-web-components/reactive-controllers@1.11.2
+  - @spectrum-web-components/clear-button@1.11.2
+  - @spectrum-web-components/close-button@1.11.2
+  - @spectrum-web-components/icon@1.11.2
+  - @spectrum-web-components/icons-ui@1.11.2
 
 ## 1.11.1
 
 ### Patch Changes
 
 - Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
-    - @spectrum-web-components/shared@1.11.1
-    - @spectrum-web-components/base@1.11.1
-    - @spectrum-web-components/progress-circle@1.11.1
-    - @spectrum-web-components/clear-button@1.11.1
-    - @spectrum-web-components/close-button@1.11.1
-    - @spectrum-web-components/icon@1.11.1
-    - @spectrum-web-components/icons-ui@1.11.1
-    - @spectrum-web-components/reactive-controllers@1.11.1
+  - @spectrum-web-components/shared@1.11.1
+  - @spectrum-web-components/base@1.11.1
+  - @spectrum-web-components/progress-circle@1.11.1
+  - @spectrum-web-components/clear-button@1.11.1
+  - @spectrum-web-components/close-button@1.11.1
+  - @spectrum-web-components/icon@1.11.1
+  - @spectrum-web-components/icons-ui@1.11.1
+  - @spectrum-web-components/reactive-controllers@1.11.1
 
 ## 1.11.0
 
 ### Patch Changes
 
 - Updated dependencies [[`b95e254`](https://github.com/adobe/spectrum-web-components/commit/b95e25413830825a506b7d4025d6b4d982691771), [`f8bdeec`](https://github.com/adobe/spectrum-web-components/commit/f8bdeecf8a230822122a990fb977d3654649f891), [`50ad026`](https://github.com/adobe/spectrum-web-components/commit/50ad0268f0de4ce077903a6e8e076aa42d067962), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
-    - @spectrum-web-components/reactive-controllers@1.11.0
-    - @spectrum-web-components/shared@1.11.0
-    - @spectrum-web-components/close-button@1.11.0
-    - @spectrum-web-components/base@1.11.0
-    - @spectrum-web-components/icon@1.11.0
-    - @spectrum-web-components/progress-circle@1.11.0
-    - @spectrum-web-components/clear-button@1.11.0
-    - @spectrum-web-components/icons-ui@1.11.0
+  - @spectrum-web-components/reactive-controllers@1.11.0
+  - @spectrum-web-components/shared@1.11.0
+  - @spectrum-web-components/close-button@1.11.0
+  - @spectrum-web-components/base@1.11.0
+  - @spectrum-web-components/icon@1.11.0
+  - @spectrum-web-components/progress-circle@1.11.0
+  - @spectrum-web-components/clear-button@1.11.0
+  - @spectrum-web-components/icons-ui@1.11.0
 
 ## 1.10.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.10.0
-    - @spectrum-web-components/clear-button@1.10.0
-    - @spectrum-web-components/close-button@1.10.0
-    - @spectrum-web-components/icon@1.10.0
-    - @spectrum-web-components/icons-ui@1.10.0
-    - @spectrum-web-components/progress-circle@1.10.0
-    - @spectrum-web-components/shared@1.10.0
-    - @spectrum-web-components/reactive-controllers@1.10.0
+  - @spectrum-web-components/base@1.10.0
+  - @spectrum-web-components/clear-button@1.10.0
+  - @spectrum-web-components/close-button@1.10.0
+  - @spectrum-web-components/icon@1.10.0
+  - @spectrum-web-components/icons-ui@1.10.0
+  - @spectrum-web-components/progress-circle@1.10.0
+  - @spectrum-web-components/shared@1.10.0
+  - @spectrum-web-components/reactive-controllers@1.10.0
 
 ## 1.9.1
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/clear-button@1.9.1
-    - @spectrum-web-components/close-button@1.9.1
-    - @spectrum-web-components/icon@1.9.1
-    - @spectrum-web-components/icons-ui@1.9.1
-    - @spectrum-web-components/progress-circle@1.9.1
-    - @spectrum-web-components/base@1.9.1
-    - @spectrum-web-components/reactive-controllers@1.9.1
-    - @spectrum-web-components/shared@1.9.1
+  - @spectrum-web-components/clear-button@1.9.1
+  - @spectrum-web-components/close-button@1.9.1
+  - @spectrum-web-components/icon@1.9.1
+  - @spectrum-web-components/icons-ui@1.9.1
+  - @spectrum-web-components/progress-circle@1.9.1
+  - @spectrum-web-components/base@1.9.1
+  - @spectrum-web-components/reactive-controllers@1.9.1
+  - @spectrum-web-components/shared@1.9.1
 
 ## 1.9.0
 
 ### Patch Changes
 
 - [#5730](https://github.com/adobe/spectrum-web-components/pull/5730) [`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8) Thanks [@caseyisonit](https://github.com/caseyisonit)! - - **Fixed**: Aria-label handling in `<sp-button>` component.
-    - **Fixed**: Moved aria-label updates to occur after slot content changes are processed to prevent timing issues
-    - **Added**: Enhanced `label` property support for programmatic aria-label control
-    - **Added**: Comprehensive tests for aria-label behavior during content and pending state changes
-    - **Fixed**: Removed duplicate aria-label update logic in `update()` method
+  - **Fixed**: Moved aria-label updates to occur after slot content changes are processed to prevent timing issues
+  - **Added**: Enhanced `label` property support for programmatic aria-label control
+  - **Added**: Comprehensive tests for aria-label behavior during content and pending state changes
+  - **Fixed**: Removed duplicate aria-label update logic in `update()` method
 
-    These changes ensure that aria-labels are properly managed and preserved across component state changes, improving accessibility for screen reader users.
+  These changes ensure that aria-labels are properly managed and preserved across component state changes, improving accessibility for screen reader users.
 
 - Updated dependencies [[`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8), [`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8)]:
-    - @spectrum-web-components/progress-circle@1.9.0
-    - @spectrum-web-components/reactive-controllers@1.9.0
-    - @spectrum-web-components/icon@1.9.0
-    - @spectrum-web-components/icons-ui@1.9.0
-    - @spectrum-web-components/clear-button@1.9.0
-    - @spectrum-web-components/close-button@1.9.0
-    - @spectrum-web-components/base@1.9.0
-    - @spectrum-web-components/shared@1.9.0
+  - @spectrum-web-components/progress-circle@1.9.0
+  - @spectrum-web-components/reactive-controllers@1.9.0
+  - @spectrum-web-components/icon@1.9.0
+  - @spectrum-web-components/icons-ui@1.9.0
+  - @spectrum-web-components/clear-button@1.9.0
+  - @spectrum-web-components/close-button@1.9.0
+  - @spectrum-web-components/base@1.9.0
+  - @spectrum-web-components/shared@1.9.0
 
 ## 1.8.0
 
@@ -98,44 +98,44 @@
 
 - [#5320](https://github.com/adobe/spectrum-web-components/pull/5320) [`15be17d`](https://github.com/adobe/spectrum-web-components/commit/15be17db91f1140ccf3cad52b1f2ed6c4b9e28ba) Thanks [@renovate](https://github.com/apps/renovate)! - Clear button styles have been updated to the latest Spectrum CSS version of the clear button. This update includes a major reduction in the number of custom property abstractions needed to support the multiple theming layers (as seen in the `styles` package).
 
-    This update spans the following additional packages:
-    - @spectrum-web-components/button
-    - @spectrum-web-components/styles
+  This update spans the following additional packages:
+  - @spectrum-web-components/button
+  - @spectrum-web-components/styles
 
-    As the updated styles now offer additional styling options, we have added the following API to the clear button component that exists in the `button` package:
-    - `quiet` - when set to true, the button will be rendered as a quiet button. This is useful for cases where you want to use the clear button in a more subtle way.
-    - `disabled` - when set to true, the button will be rendered as a disabled button.
-    - `static-color` - currently this only supports the `white` context color. This is useful for cases where the button appears on a dark background texture. This is a replacement for the previously used `variant="overBackground"` attribute which is deprecated.
+  As the updated styles now offer additional styling options, we have added the following API to the clear button component that exists in the `button` package:
+  - `quiet` - when set to true, the button will be rendered as a quiet button. This is useful for cases where you want to use the clear button in a more subtle way.
+  - `disabled` - when set to true, the button will be rendered as a disabled button.
+  - `static-color` - currently this only supports the `white` context color. This is useful for cases where the button appears on a dark background texture. This is a replacement for the previously used `variant="overBackground"` attribute which is deprecated.
 
-    ### Deprecation
+  ### Deprecation
 
-    The `variant="overBackground"` attribute is deprecated; please use the new `static-color="white"` attribute instead. When this property is used in the component, a deprecation warning will be shown in the console when in debug mode. The `variant` attribute will be removed in a future release.
+  The `variant="overBackground"` attribute is deprecated; please use the new `static-color="white"` attribute instead. When this property is used in the component, a deprecation warning will be shown in the console when in debug mode. The `variant` attribute will be removed in a future release.
 
 ### Patch Changes
 
 - Updated dependencies [[`15be17d`](https://github.com/adobe/spectrum-web-components/commit/15be17db91f1140ccf3cad52b1f2ed6c4b9e28ba)]:
-    - @spectrum-web-components/clear-button@1.8.0
-    - @spectrum-web-components/close-button@1.8.0
-    - @spectrum-web-components/icon@1.8.0
-    - @spectrum-web-components/icons-ui@1.8.0
-    - @spectrum-web-components/progress-circle@1.8.0
-    - @spectrum-web-components/base@1.8.0
-    - @spectrum-web-components/reactive-controllers@1.8.0
-    - @spectrum-web-components/shared@1.8.0
+  - @spectrum-web-components/clear-button@1.8.0
+  - @spectrum-web-components/close-button@1.8.0
+  - @spectrum-web-components/icon@1.8.0
+  - @spectrum-web-components/icons-ui@1.8.0
+  - @spectrum-web-components/progress-circle@1.8.0
+  - @spectrum-web-components/base@1.8.0
+  - @spectrum-web-components/reactive-controllers@1.8.0
+  - @spectrum-web-components/shared@1.8.0
 
 ## 1.7.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/clear-button@1.7.0
-    - @spectrum-web-components/close-button@1.7.0
-    - @spectrum-web-components/icon@1.7.0
-    - @spectrum-web-components/icons-ui@1.7.0
-    - @spectrum-web-components/progress-circle@1.7.0
-    - @spectrum-web-components/base@1.7.0
-    - @spectrum-web-components/reactive-controllers@1.7.0
-    - @spectrum-web-components/shared@1.7.0
+  - @spectrum-web-components/clear-button@1.7.0
+  - @spectrum-web-components/close-button@1.7.0
+  - @spectrum-web-components/icon@1.7.0
+  - @spectrum-web-components/icons-ui@1.7.0
+  - @spectrum-web-components/progress-circle@1.7.0
+  - @spectrum-web-components/base@1.7.0
+  - @spectrum-web-components/reactive-controllers@1.7.0
+  - @spectrum-web-components/shared@1.7.0
 
 ## 1.6.0
 
@@ -145,14 +145,14 @@
   Added `primary` and `secondary` stories to `white` and `black` button directories on storybook.
   Updates documentation site to reflect this as well.
 - Updated dependencies [[`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e)]:
-    - @spectrum-web-components/close-button@1.6.0
-    - @spectrum-web-components/clear-button@1.6.0
-    - @spectrum-web-components/icon@1.6.0
-    - @spectrum-web-components/icons-ui@1.6.0
-    - @spectrum-web-components/progress-circle@1.6.0
-    - @spectrum-web-components/base@1.6.0
-    - @spectrum-web-components/reactive-controllers@1.6.0
-    - @spectrum-web-components/shared@1.6.0
+  - @spectrum-web-components/close-button@1.6.0
+  - @spectrum-web-components/clear-button@1.6.0
+  - @spectrum-web-components/icon@1.6.0
+  - @spectrum-web-components/icons-ui@1.6.0
+  - @spectrum-web-components/progress-circle@1.6.0
+  - @spectrum-web-components/base@1.6.0
+  - @spectrum-web-components/reactive-controllers@1.6.0
+  - @spectrum-web-components/shared@1.6.0
 
 ## 1.5.0
 
@@ -160,63 +160,63 @@
 
 - [#5363](https://github.com/adobe/spectrum-web-components/pull/5363) [`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5) Thanks [@castastrophe](https://github.com/castastrophe)!
 
-    Adjust S1/Express static outline variant content color (from transparent-black/white to solid black/white) to fix unintentional regression.
+  Adjust S1/Express static outline variant content color (from transparent-black/white to solid black/white) to fix unintentional regression.
 
-    From [@spectrum-css/button v14.1.6](https://www.npmjs.com/package/@spectrum-css/button/v/14.1.6): [#3665](https://github.com/adobe/spectrum-css/pull/3665) Thanks [@rise-erpelding](https://github.com/rise-erpelding)!
+  From [@spectrum-css/button v14.1.6](https://www.npmjs.com/package/@spectrum-css/button/v/14.1.6): [#3665](https://github.com/adobe/spectrum-css/pull/3665) Thanks [@rise-erpelding](https://github.com/rise-erpelding)!
 
-    This update aims to simplify `--mod-*` access by ensuring local variants and states aren't hooking into those custom properties for overrides. This updates all local variants and states to override the `--spectrum-button-*` properties instead and adjusts the specificity to ensure no regressions in rendered results.
+  This update aims to simplify `--mod-*` access by ensuring local variants and states aren't hooking into those custom properties for overrides. This updates all local variants and states to override the `--spectrum-button-*` properties instead and adjusts the specificity to ensure no regressions in rendered results.
 
-    From [@spectrum-css/button v14.1.3](https://www.npmjs.com/package/@spectrum-css/button/v/14.1.3): [#3613](https://github.com/adobe/spectrum-css/pull/3613) Thanks [@​rise-erpelding](https://github.com/rise-erpelding)!
+  From [@spectrum-css/button v14.1.3](https://www.npmjs.com/package/@spectrum-css/button/v/14.1.3): [#3613](https://github.com/adobe/spectrum-css/pull/3613) Thanks [@​rise-erpelding](https://github.com/rise-erpelding)!
 
-    Adjusts static color buttons to more closely resemble the S2 specifications. There are no expected changes to non-static button variants in S2, and no expected changes to other themes.
+  Adjusts static color buttons to more closely resemble the S2 specifications. There are no expected changes to non-static button variants in S2, and no expected changes to other themes.
 
-    This PR includes changes to:
-    - Static white primary button (outline variant), static white secondary button (fill variant), static black primary button (outline variant), static black secondary button (fill variant)
-    - Static white secondary button (outline variant) and static black secondary button (outline variant) border and background colors
-    - Static color buttons' content color
-    - Static white primary button (fill variant) and static black primary button (fill variant) background colors
+  This PR includes changes to:
+  - Static white primary button (outline variant), static white secondary button (fill variant), static black primary button (outline variant), static black secondary button (fill variant)
+  - Static white secondary button (outline variant) and static black secondary button (outline variant) border and background colors
+  - Static color buttons' content color
+  - Static white primary button (fill variant) and static black primary button (fill variant) background colors
 
-    From [@spectrum-css/button v14.1.2](https://www.npmjs.com/package/@spectrum-css/button/v/14.1.2): [#​3600](https://github.com/adobe/spectrum-css/pull/3600) Thanks [@​rise-erpelding](https://github.com/rise-erpelding)!
+  From [@spectrum-css/button v14.1.2](https://www.npmjs.com/package/@spectrum-css/button/v/14.1.2): [#​3600](https://github.com/adobe/spectrum-css/pull/3600) Thanks [@​rise-erpelding](https://github.com/rise-erpelding)!
 
-    Adjust border colors for static black and static white outline buttons, primary variant to match S2 specifications.
+  Adjust border colors for static black and static white outline buttons, primary variant to match S2 specifications.
 
 - Updated dependencies []:
-    - @spectrum-web-components/clear-button@1.5.0
-    - @spectrum-web-components/close-button@1.5.0
-    - @spectrum-web-components/icon@1.5.0
-    - @spectrum-web-components/icons-ui@1.5.0
-    - @spectrum-web-components/progress-circle@1.5.0
-    - @spectrum-web-components/base@1.5.0
-    - @spectrum-web-components/reactive-controllers@1.5.0
-    - @spectrum-web-components/shared@1.5.0
+  - @spectrum-web-components/clear-button@1.5.0
+  - @spectrum-web-components/close-button@1.5.0
+  - @spectrum-web-components/icon@1.5.0
+  - @spectrum-web-components/icons-ui@1.5.0
+  - @spectrum-web-components/progress-circle@1.5.0
+  - @spectrum-web-components/base@1.5.0
+  - @spectrum-web-components/reactive-controllers@1.5.0
+  - @spectrum-web-components/shared@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/clear-button@1.4.0
-    - @spectrum-web-components/close-button@1.4.0
-    - @spectrum-web-components/icon@1.4.0
-    - @spectrum-web-components/icons-ui@1.4.0
-    - @spectrum-web-components/progress-circle@1.4.0
-    - @spectrum-web-components/base@1.4.0
-    - @spectrum-web-components/reactive-controllers@1.4.0
-    - @spectrum-web-components/shared@1.4.0
+  - @spectrum-web-components/clear-button@1.4.0
+  - @spectrum-web-components/close-button@1.4.0
+  - @spectrum-web-components/icon@1.4.0
+  - @spectrum-web-components/icons-ui@1.4.0
+  - @spectrum-web-components/progress-circle@1.4.0
+  - @spectrum-web-components/base@1.4.0
+  - @spectrum-web-components/reactive-controllers@1.4.0
+  - @spectrum-web-components/shared@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
 - Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)]:
-    - @spectrum-web-components/reactive-controllers@1.3.0
-    - @spectrum-web-components/clear-button@1.3.0
-    - @spectrum-web-components/close-button@1.3.0
-    - @spectrum-web-components/icon@1.3.0
-    - @spectrum-web-components/icons-ui@1.3.0
-    - @spectrum-web-components/progress-circle@1.3.0
-    - @spectrum-web-components/base@1.3.0
-    - @spectrum-web-components/shared@1.3.0
+  - @spectrum-web-components/reactive-controllers@1.3.0
+  - @spectrum-web-components/clear-button@1.3.0
+  - @spectrum-web-components/close-button@1.3.0
+  - @spectrum-web-components/icon@1.3.0
+  - @spectrum-web-components/icons-ui@1.3.0
+  - @spectrum-web-components/progress-circle@1.3.0
+  - @spectrum-web-components/base@1.3.0
+  - @spectrum-web-components/shared@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

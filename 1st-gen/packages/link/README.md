@@ -83,13 +83,13 @@ When a link needs to be placed on top of a colored background or a visual it may
 
 ```html
 <div
-    style="background-color: var(--spectrum-docs-static-white-background-color); padding: 15px 20px; display: inline-block;"
+  style="background-color: var(--spectrum-docs-static-white-background-color); padding: 15px 20px; display: inline-block;"
 >
-    <p style="color: var(--spectrum-white);">
-        This
-        <sp-link static-color="white" href="#">link</sp-link>
-        is over a background.
-    </p>
+  <p style="color: var(--spectrum-white);">
+    This
+    <sp-link static-color="white" href="#">link</sp-link>
+    is over a background.
+  </p>
 </div>
 ```
 
@@ -99,13 +99,13 @@ When a link needs to be placed on top of a colored background or a visual it may
 
 ```html
 <div
-    style="background-color: var(--spectrum-docs-static-black-background-color); padding: 15px 20px; display: inline-block;"
+  style="background-color: var(--spectrum-docs-static-black-background-color); padding: 15px 20px; display: inline-block;"
 >
-    <p style="color: var(--spectrum-black);">
-        This
-        <sp-link static-color="black" href="#">link</sp-link>
-        is over a background.
-    </p>
+  <p style="color: var(--spectrum-black);">
+    This
+    <sp-link static-color="black" href="#">link</sp-link>
+    is over a background.
+  </p>
 </div>
 ```
 

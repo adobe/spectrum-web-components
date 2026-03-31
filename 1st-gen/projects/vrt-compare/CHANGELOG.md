@@ -5,150 +5,150 @@
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.11.2
-    - @spectrum-web-components/shared@1.11.2
-    - @spectrum-web-components/theme@1.11.2
-    - @spectrum-web-components/action-bar@1.11.2
-    - @spectrum-web-components/action-button@1.11.2
-    - @spectrum-web-components/action-group@1.11.2
-    - @spectrum-web-components/icons-workflow@1.11.2
-    - @spectrum-web-components/split-view@1.11.2
-    - @spectrum-web-components/styles@1.11.2
+  - @spectrum-web-components/base@1.11.2
+  - @spectrum-web-components/shared@1.11.2
+  - @spectrum-web-components/theme@1.11.2
+  - @spectrum-web-components/action-bar@1.11.2
+  - @spectrum-web-components/action-button@1.11.2
+  - @spectrum-web-components/action-group@1.11.2
+  - @spectrum-web-components/icons-workflow@1.11.2
+  - @spectrum-web-components/split-view@1.11.2
+  - @spectrum-web-components/styles@1.11.2
 
 ## 1.11.1
 
 ### Patch Changes
 
 - Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
-    - @spectrum-web-components/shared@1.11.1
-    - @spectrum-web-components/base@1.11.1
-    - @spectrum-web-components/theme@1.11.1
-    - @spectrum-web-components/action-bar@1.11.1
-    - @spectrum-web-components/action-button@1.11.1
-    - @spectrum-web-components/split-view@1.11.1
-    - @spectrum-web-components/action-group@1.11.1
-    - @spectrum-web-components/icons-workflow@1.11.1
-    - @spectrum-web-components/styles@1.11.1
+  - @spectrum-web-components/shared@1.11.1
+  - @spectrum-web-components/base@1.11.1
+  - @spectrum-web-components/theme@1.11.1
+  - @spectrum-web-components/action-bar@1.11.1
+  - @spectrum-web-components/action-button@1.11.1
+  - @spectrum-web-components/split-view@1.11.1
+  - @spectrum-web-components/action-group@1.11.1
+  - @spectrum-web-components/icons-workflow@1.11.1
+  - @spectrum-web-components/styles@1.11.1
 
 ## 1.9.1
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/action-bar@1.9.1
-    - @spectrum-web-components/action-button@1.9.1
-    - @spectrum-web-components/action-group@1.9.1
-    - @spectrum-web-components/icons-workflow@1.9.1
-    - @spectrum-web-components/split-view@1.9.1
-    - @spectrum-web-components/base@1.9.1
-    - @spectrum-web-components/shared@1.9.1
-    - @spectrum-web-components/styles@1.9.1
-    - @spectrum-web-components/theme@1.9.1
+  - @spectrum-web-components/action-bar@1.9.1
+  - @spectrum-web-components/action-button@1.9.1
+  - @spectrum-web-components/action-group@1.9.1
+  - @spectrum-web-components/icons-workflow@1.9.1
+  - @spectrum-web-components/split-view@1.9.1
+  - @spectrum-web-components/base@1.9.1
+  - @spectrum-web-components/shared@1.9.1
+  - @spectrum-web-components/styles@1.9.1
+  - @spectrum-web-components/theme@1.9.1
 
 ## 1.9.0
 
 ### Patch Changes
 
 - Updated dependencies [[`bdf54c1`](https://github.com/adobe/spectrum-web-components/commit/bdf54c1bc6d3eb20da1a1bf3b40650e6ab1ba399)]:
-    - @spectrum-web-components/icons-workflow@1.9.0
-    - @spectrum-web-components/action-bar@1.9.0
-    - @spectrum-web-components/action-button@1.9.0
-    - @spectrum-web-components/action-group@1.9.0
-    - @spectrum-web-components/split-view@1.9.0
-    - @spectrum-web-components/base@1.9.0
-    - @spectrum-web-components/shared@1.9.0
-    - @spectrum-web-components/styles@1.9.0
-    - @spectrum-web-components/theme@1.9.0
+  - @spectrum-web-components/icons-workflow@1.9.0
+  - @spectrum-web-components/action-bar@1.9.0
+  - @spectrum-web-components/action-button@1.9.0
+  - @spectrum-web-components/action-group@1.9.0
+  - @spectrum-web-components/split-view@1.9.0
+  - @spectrum-web-components/base@1.9.0
+  - @spectrum-web-components/shared@1.9.0
+  - @spectrum-web-components/styles@1.9.0
+  - @spectrum-web-components/theme@1.9.0
 
 ## 1.8.0
 
 ### Patch Changes
 
 - Updated dependencies [[`77bdef6`](https://github.com/adobe/spectrum-web-components/commit/77bdef68a40e0f6cd5476271b01b4c0f00531f4f), [`15be17d`](https://github.com/adobe/spectrum-web-components/commit/15be17db91f1140ccf3cad52b1f2ed6c4b9e28ba)]:
-    - @spectrum-web-components/styles@1.8.0
-    - @spectrum-web-components/theme@1.8.0
-    - @spectrum-web-components/action-bar@1.8.0
-    - @spectrum-web-components/action-button@1.8.0
-    - @spectrum-web-components/action-group@1.8.0
-    - @spectrum-web-components/icons-workflow@1.8.0
-    - @spectrum-web-components/split-view@1.8.0
-    - @spectrum-web-components/base@1.8.0
-    - @spectrum-web-components/shared@1.8.0
+  - @spectrum-web-components/styles@1.8.0
+  - @spectrum-web-components/theme@1.8.0
+  - @spectrum-web-components/action-bar@1.8.0
+  - @spectrum-web-components/action-button@1.8.0
+  - @spectrum-web-components/action-group@1.8.0
+  - @spectrum-web-components/icons-workflow@1.8.0
+  - @spectrum-web-components/split-view@1.8.0
+  - @spectrum-web-components/base@1.8.0
+  - @spectrum-web-components/shared@1.8.0
 
 ## 1.7.0
 
 ### Patch Changes
 
 - Updated dependencies [[`1126cf2`](https://github.com/adobe/spectrum-web-components/commit/1126cf22c0076c8728b86e9c0bf7f67fdd8fde07), [`c1669d2`](https://github.com/adobe/spectrum-web-components/commit/c1669d2dc5e1ceeb84486ce49a428f86a3173caa), [`94dd388`](https://github.com/adobe/spectrum-web-components/commit/94dd388b36c837f02d92dfc88f8c892b7bc12eed)]:
-    - @spectrum-web-components/styles@1.7.0
-    - @spectrum-web-components/action-button@1.7.0
-    - @spectrum-web-components/split-view@1.7.0
-    - @spectrum-web-components/theme@1.7.0
-    - @spectrum-web-components/action-group@1.7.0
-    - @spectrum-web-components/action-bar@1.7.0
-    - @spectrum-web-components/icons-workflow@1.7.0
-    - @spectrum-web-components/base@1.7.0
-    - @spectrum-web-components/shared@1.7.0
+  - @spectrum-web-components/styles@1.7.0
+  - @spectrum-web-components/action-button@1.7.0
+  - @spectrum-web-components/split-view@1.7.0
+  - @spectrum-web-components/theme@1.7.0
+  - @spectrum-web-components/action-group@1.7.0
+  - @spectrum-web-components/action-bar@1.7.0
+  - @spectrum-web-components/icons-workflow@1.7.0
+  - @spectrum-web-components/base@1.7.0
+  - @spectrum-web-components/shared@1.7.0
 
 ## 1.6.0
 
 ### Patch Changes
 
 - Updated dependencies [[`f6cebbd`](https://github.com/adobe/spectrum-web-components/commit/f6cebbd90008a2abb1232c355ae06e8566086093), [`9e15a66`](https://github.com/adobe/spectrum-web-components/commit/9e15a66a281745004add414ff977d4a71186aedd), [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e)]:
-    - @spectrum-web-components/icons-workflow@1.6.0
-    - @spectrum-web-components/styles@1.6.0
-    - @spectrum-web-components/action-bar@1.6.0
-    - @spectrum-web-components/action-group@1.6.0
-    - @spectrum-web-components/action-button@1.6.0
-    - @spectrum-web-components/theme@1.6.0
-    - @spectrum-web-components/split-view@1.6.0
-    - @spectrum-web-components/base@1.6.0
-    - @spectrum-web-components/shared@1.6.0
+  - @spectrum-web-components/icons-workflow@1.6.0
+  - @spectrum-web-components/styles@1.6.0
+  - @spectrum-web-components/action-bar@1.6.0
+  - @spectrum-web-components/action-group@1.6.0
+  - @spectrum-web-components/action-button@1.6.0
+  - @spectrum-web-components/theme@1.6.0
+  - @spectrum-web-components/split-view@1.6.0
+  - @spectrum-web-components/base@1.6.0
+  - @spectrum-web-components/shared@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
 - Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0), [`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5), [`fa4be70`](https://github.com/adobe/spectrum-web-components/commit/fa4be70e9ab9dbeff26867edd3bdeb3f41c423e3), [`daeb11f`](https://github.com/adobe/spectrum-web-components/commit/daeb11f18792cf650518099fd29857139b6380b4), [`6c58f50`](https://github.com/adobe/spectrum-web-components/commit/6c58f50f7b1f5489c11e0d3484e3f4a9d576f1c8), [`fa4be70`](https://github.com/adobe/spectrum-web-components/commit/fa4be70e9ab9dbeff26867edd3bdeb3f41c423e3)]:
-    - @spectrum-web-components/action-bar@1.5.0
-    - @spectrum-web-components/split-view@1.5.0
-    - @spectrum-web-components/styles@1.5.0
-    - @spectrum-web-components/action-button@1.5.0
-    - @spectrum-web-components/theme@1.5.0
-    - @spectrum-web-components/action-group@1.5.0
-    - @spectrum-web-components/icons-workflow@1.5.0
-    - @spectrum-web-components/base@1.5.0
-    - @spectrum-web-components/shared@1.5.0
+  - @spectrum-web-components/action-bar@1.5.0
+  - @spectrum-web-components/split-view@1.5.0
+  - @spectrum-web-components/styles@1.5.0
+  - @spectrum-web-components/action-button@1.5.0
+  - @spectrum-web-components/theme@1.5.0
+  - @spectrum-web-components/action-group@1.5.0
+  - @spectrum-web-components/icons-workflow@1.5.0
+  - @spectrum-web-components/base@1.5.0
+  - @spectrum-web-components/shared@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
 - Updated dependencies [[`3cca7ea`](https://github.com/adobe/spectrum-web-components/commit/3cca7eacf127c3fd759953db38a2b5a561bfb8dc), [`72dbe62`](https://github.com/adobe/spectrum-web-components/commit/72dbe629cddfc57171eaaadf7206df47c19d3c98)]:
-    - @spectrum-web-components/styles@1.4.0
-    - @spectrum-web-components/action-button@1.4.0
-    - @spectrum-web-components/theme@1.4.0
-    - @spectrum-web-components/action-group@1.4.0
-    - @spectrum-web-components/action-bar@1.4.0
-    - @spectrum-web-components/icons-workflow@1.4.0
-    - @spectrum-web-components/split-view@1.4.0
-    - @spectrum-web-components/base@1.4.0
-    - @spectrum-web-components/shared@1.4.0
+  - @spectrum-web-components/styles@1.4.0
+  - @spectrum-web-components/action-button@1.4.0
+  - @spectrum-web-components/theme@1.4.0
+  - @spectrum-web-components/action-group@1.4.0
+  - @spectrum-web-components/action-bar@1.4.0
+  - @spectrum-web-components/icons-workflow@1.4.0
+  - @spectrum-web-components/split-view@1.4.0
+  - @spectrum-web-components/base@1.4.0
+  - @spectrum-web-components/shared@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/action-group@1.3.0
-    - @spectrum-web-components/action-bar@1.3.0
-    - @spectrum-web-components/action-button@1.3.0
-    - @spectrum-web-components/icons-workflow@1.3.0
-    - @spectrum-web-components/split-view@1.3.0
-    - @spectrum-web-components/base@1.3.0
-    - @spectrum-web-components/shared@1.3.0
-    - @spectrum-web-components/styles@1.3.0
-    - @spectrum-web-components/theme@1.3.0
+  - @spectrum-web-components/action-group@1.3.0
+  - @spectrum-web-components/action-bar@1.3.0
+  - @spectrum-web-components/action-button@1.3.0
+  - @spectrum-web-components/icons-workflow@1.3.0
+  - @spectrum-web-components/split-view@1.3.0
+  - @spectrum-web-components/base@1.3.0
+  - @spectrum-web-components/shared@1.3.0
+  - @spectrum-web-components/styles@1.3.0
+  - @spectrum-web-components/theme@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

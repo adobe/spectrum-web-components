@@ -37,15 +37,15 @@ import { RovingTabindexController } from '@spectrum-web-components/reactive-cont
 import type { Button } from '@spectrum-web-components/button';
 
 class Container extends LitElement {
-    rovingTabindexController = new RovingTabindexController()<Button>(this, {
-        elements: () => [...this.querySelectorAll('sp-button')],
-    });
+  rovingTabindexController = new RovingTabindexController()<Button>(this, {
+    elements: () => [...this.querySelectorAll('sp-button')],
+  });
 
-    render() {
-        return html`
-            <slot></slot>
-        `;
-    }
+  render() {
+    return html`
+      <slot></slot>
+    `;
+  }
 }
 ```
 
@@ -73,22 +73,22 @@ import type { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/button/sp-button.js';
 
 class HorizontalToolbar extends LitElement {
-    rovingTabindexController = new RovingTabindexController<Button>(this, {
-        elements: () => [...this.querySelectorAll('sp-button')],
-        direction: 'horizontal',
-    });
+  rovingTabindexController = new RovingTabindexController<Button>(this, {
+    elements: () => [...this.querySelectorAll('sp-button')],
+    direction: 'horizontal',
+  });
 
-    render() {
-        return html`
-            <div
-                role="toolbar"
-                aria-label="Formatting toolbar"
-                aria-orientation="horizontal"
-            >
-                <slot></slot>
-            </div>
-        `;
-    }
+  render() {
+    return html`
+      <div
+        role="toolbar"
+        aria-label="Formatting toolbar"
+        aria-orientation="horizontal"
+      >
+        <slot></slot>
+      </div>
+    `;
+  }
 }
 
 customElements.define('horizontal-toolbar', HorizontalToolbar);
@@ -106,46 +106,43 @@ import type { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/button/sp-button.js';
 
 class SelectableGroup extends LitElement {
-    @property({ attribute: false })
-    selected?: Button;
+  @property({ attribute: false })
+  selected?: Button;
 
-    rovingTabindexController = new RovingTabindexController<Button>(this, {
-        elements: () => [...this.querySelectorAll('sp-button')],
-        direction: 'horizontal',
-        focusInIndex: (buttons) => {
-            return this.selected ? buttons.indexOf(this.selected) : 0;
-        },
-        elementEnterAction: (button) => {
-            this.selected = button;
-            // Update visual selection
-            this.updateSelection();
-        },
-        isFocusableElement: (button) => !button.disabled,
+  rovingTabindexController = new RovingTabindexController<Button>(this, {
+    elements: () => [...this.querySelectorAll('sp-button')],
+    direction: 'horizontal',
+    focusInIndex: (buttons) => {
+      return this.selected ? buttons.indexOf(this.selected) : 0;
+    },
+    elementEnterAction: (button) => {
+      this.selected = button;
+      // Update visual selection
+      this.updateSelection();
+    },
+    isFocusableElement: (button) => !button.disabled,
+  });
+
+  static styles = css`
+    ::slotted(sp-button[selected]) {
+      background-color: var(--spectrum-global-color-blue-400);
+    }
+  `;
+
+  updateSelection() {
+    this.querySelectorAll('sp-button').forEach((button) => {
+      button.toggleAttribute('selected', button === this.selected);
+      button.setAttribute('aria-selected', String(button === this.selected));
     });
+  }
 
-    static styles = css`
-        ::slotted(sp-button[selected]) {
-            background-color: var(--spectrum-global-color-blue-400);
-        }
+  render() {
+    return html`
+      <div role="radiogroup" aria-label="Options">
+        <slot></slot>
+      </div>
     `;
-
-    updateSelection() {
-        this.querySelectorAll('sp-button').forEach((button) => {
-            button.toggleAttribute('selected', button === this.selected);
-            button.setAttribute(
-                'aria-selected',
-                String(button === this.selected)
-            );
-        });
-    }
-
-    render() {
-        return html`
-            <div role="radiogroup" aria-label="Options">
-                <slot></slot>
-            </div>
-        `;
-    }
+  }
 }
 
 customElements.define('selectable-group', SelectableGroup);
@@ -164,28 +161,28 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import type { MenuItem } from '@spectrum-web-components/menu';
 
 class VerticalMenu extends LitElement {
-    rovingTabindexController = new RovingTabindexController<MenuItem>(this, {
-        elements: () => [...this.querySelectorAll('sp-menu-item')],
-        direction: 'vertical',
-        isFocusableElement: (item) => !item.disabled,
-    });
+  rovingTabindexController = new RovingTabindexController<MenuItem>(this, {
+    elements: () => [...this.querySelectorAll('sp-menu-item')],
+    direction: 'vertical',
+    isFocusableElement: (item) => !item.disabled,
+  });
 
-    static styles = css`
-        :host {
-            display: block;
-            border: 1px solid var(--spectrum-global-color-gray-300);
-            border-radius: 4px;
-            padding: 4px 0;
-        }
-    `;
-
-    render() {
-        return html`
-            <div role="menu" aria-label="Menu" aria-orientation="vertical">
-                <slot></slot>
-            </div>
-        `;
+  static styles = css`
+    :host {
+      display: block;
+      border: 1px solid var(--spectrum-global-color-gray-300);
+      border-radius: 4px;
+      padding: 4px 0;
     }
+  `;
+
+  render() {
+    return html`
+      <div role="menu" aria-label="Menu" aria-orientation="vertical">
+        <slot></slot>
+      </div>
+    `;
+  }
 }
 
 customElements.define('vertical-menu', VerticalMenu);
@@ -201,52 +198,52 @@ import { property } from 'lit/decorators.js';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
 class GridNavigator extends LitElement {
-    @property({ type: Number })
-    columns = 3;
+  @property({ type: Number })
+  columns = 3;
 
-    rovingTabindexController = new RovingTabindexController<HTMLElement>(this, {
-        elements: () => [...this.querySelectorAll('.grid-item')],
-        direction: 'grid',
-    });
+  rovingTabindexController = new RovingTabindexController<HTMLElement>(this, {
+    elements: () => [...this.querySelectorAll('.grid-item')],
+    direction: 'grid',
+  });
 
-    static styles = css`
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(var(--columns, 3), 1fr);
-            gap: 8px;
-        }
+  static styles = css`
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(var(--columns, 3), 1fr);
+      gap: 8px;
+    }
 
-        .grid-item {
-            padding: 16px;
-            border: 2px solid var(--spectrum-global-color-gray-300);
-            border-radius: 4px;
-            text-align: center;
-            cursor: pointer;
-        }
+    .grid-item {
+      padding: 16px;
+      border: 2px solid var(--spectrum-global-color-gray-300);
+      border-radius: 4px;
+      text-align: center;
+      cursor: pointer;
+    }
 
-        .grid-item:focus {
-            outline: 2px solid var(--spectrum-global-color-blue-400);
-            outline-offset: 2px;
-        }
+    .grid-item:focus {
+      outline: 2px solid var(--spectrum-global-color-blue-400);
+      outline-offset: 2px;
+    }
+  `;
+
+  updated() {
+    // Set the grid column count for the controller
+    this.rovingTabindexController.directionLength = this.columns;
+  }
+
+  render() {
+    return html`
+      <div
+        class="grid"
+        style="--columns: ${this.columns}"
+        role="grid"
+        aria-label="Grid navigator"
+      >
+        <slot></slot>
+      </div>
     `;
-
-    updated() {
-        // Set the grid column count for the controller
-        this.rovingTabindexController.directionLength = this.columns;
-    }
-
-    render() {
-        return html`
-            <div
-                class="grid"
-                style="--columns: ${this.columns}"
-                role="grid"
-                aria-label="Grid navigator"
-            >
-                <slot></slot>
-            </div>
-        `;
-    }
+  }
 }
 
 customElements.define('grid-navigator', GridNavigator);
@@ -264,47 +261,47 @@ import '@spectrum-web-components/tabs/sp-tab.js';
 import type { Tab } from '@spectrum-web-components/tabs';
 
 class TabList extends LitElement {
-    @property({ attribute: false })
-    selectedTab?: Tab;
+  @property({ attribute: false })
+  selectedTab?: Tab;
 
-    rovingTabindexController = new RovingTabindexController<Tab>(this, {
-        elements: () => [...this.querySelectorAll('sp-tab')],
-        direction: 'horizontal',
-        focusInIndex: (tabs) => {
-            return this.selectedTab ? tabs.indexOf(this.selectedTab) : 0;
-        },
-        elementEnterAction: (tab) => {
-            this.selectTab(tab);
-        },
-        isFocusableElement: (tab) => !tab.disabled,
+  rovingTabindexController = new RovingTabindexController<Tab>(this, {
+    elements: () => [...this.querySelectorAll('sp-tab')],
+    direction: 'horizontal',
+    focusInIndex: (tabs) => {
+      return this.selectedTab ? tabs.indexOf(this.selectedTab) : 0;
+    },
+    elementEnterAction: (tab) => {
+      this.selectTab(tab);
+    },
+    isFocusableElement: (tab) => !tab.disabled,
+  });
+
+  selectTab(tab: Tab) {
+    this.selectedTab = tab;
+
+    // Update ARIA attributes
+    this.querySelectorAll('sp-tab').forEach((t) => {
+      t.setAttribute('aria-selected', String(t === tab));
+      t.setAttribute('tabindex', t === tab ? '0' : '-1');
     });
 
-    selectTab(tab: Tab) {
-        this.selectedTab = tab;
+    // Dispatch event
+    this.dispatchEvent(
+      new CustomEvent('tab-select', {
+        detail: { tab },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
 
-        // Update ARIA attributes
-        this.querySelectorAll('sp-tab').forEach((t) => {
-            t.setAttribute('aria-selected', String(t === tab));
-            t.setAttribute('tabindex', t === tab ? '0' : '-1');
-        });
-
-        // Dispatch event
-        this.dispatchEvent(
-            new CustomEvent('tab-select', {
-                detail: { tab },
-                bubbles: true,
-                composed: true,
-            })
-        );
-    }
-
-    render() {
-        return html`
-            <div role="tablist" aria-label="Content sections">
-                <slot></slot>
-            </div>
-        `;
-    }
+  render() {
+    return html`
+      <div role="tablist" aria-label="Content sections">
+        <slot></slot>
+      </div>
+    `;
+  }
 }
 
 customElements.define('tab-list', TabList);
@@ -437,9 +434,9 @@ For these widgets, use `aria-disabled="true"` instead of the `disabled` attribut
 ```typescript
 // For menu items, tabs, listbox options - DO NOT skip disabled items
 rovingTabindexController = new RovingTabindexController<MenuItem>(this, {
-    elements: () => [...this.querySelectorAll('sp-menu-item')],
-    // Disabled items remain focusable for accessibility
-    isFocusableElement: (item) => true,
+  elements: () => [...this.querySelectorAll('sp-menu-item')],
+  // Disabled items remain focusable for accessibility
+  isFocusableElement: (item) => true,
 });
 ```
 
@@ -448,8 +445,8 @@ For other controls like buttons or form inputs where disabled items should be sk
 ```typescript
 // For buttons/forms - skip disabled items
 rovingTabindexController = new RovingTabindexController<Button>(this, {
-    elements: () => [...this.querySelectorAll('sp-button')],
-    isFocusableElement: (button) => !button.disabled,
+  elements: () => [...this.querySelectorAll('sp-button')],
+  isFocusableElement: (button) => !button.disabled,
 });
 ```
 

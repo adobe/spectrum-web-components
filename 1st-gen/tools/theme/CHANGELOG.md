@@ -5,99 +5,99 @@
 ### Patch Changes
 
 - Updated dependencies [[`6f5419a`](https://github.com/adobe/spectrum-web-components/commit/6f5419a4de29a1ee440a36c1a57d8c2e1476e2f6)]:
-    - @spectrum-web-components/core@0.0.4
-    - @spectrum-web-components/base@1.11.2
-    - @spectrum-web-components/styles@1.11.2
+  - @spectrum-web-components/core@0.0.4
+  - @spectrum-web-components/base@1.11.2
+  - @spectrum-web-components/styles@1.11.2
 
 ## 1.11.1
 
 ### Patch Changes
 
 - Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
-    - @spectrum-web-components/core@0.0.3
-    - @spectrum-web-components/base@1.11.1
-    - @spectrum-web-components/styles@1.11.1
+  - @spectrum-web-components/core@0.0.3
+  - @spectrum-web-components/base@1.11.1
+  - @spectrum-web-components/styles@1.11.1
 
 ## 1.11.0
 
 ### Patch Changes
 
 - Updated dependencies [[`283f0fe`](https://github.com/adobe/spectrum-web-components/commit/283f0fe07533c464e9fe1a3e7edebecb9128e11f), [`1d76b70`](https://github.com/adobe/spectrum-web-components/commit/1d76b7093d8ff5f9b26f07a69086488341a02650), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595), [`7c26e3a`](https://github.com/adobe/spectrum-web-components/commit/7c26e3afa534342f09d956c7f1d1acda7e0da939)]:
-    - @spectrum-web-components/core@0.0.2
-    - @spectrum-web-components/base@1.11.0
-    - @spectrum-web-components/styles@1.11.0
+  - @spectrum-web-components/core@0.0.2
+  - @spectrum-web-components/base@1.11.0
+  - @spectrum-web-components/styles@1.11.0
 
 ## 1.10.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.10.0
-    - @spectrum-web-components/styles@1.10.0
+  - @spectrum-web-components/base@1.10.0
+  - @spectrum-web-components/styles@1.10.0
 
 ## 1.9.1
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.9.1
-    - @spectrum-web-components/styles@1.9.1
+  - @spectrum-web-components/base@1.9.1
+  - @spectrum-web-components/styles@1.9.1
 
 ## 1.9.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.9.0
-    - @spectrum-web-components/styles@1.9.0
+  - @spectrum-web-components/base@1.9.0
+  - @spectrum-web-components/styles@1.9.0
 
 ## 1.8.0
 
 ### Patch Changes
 
 - Updated dependencies [[`77bdef6`](https://github.com/adobe/spectrum-web-components/commit/77bdef68a40e0f6cd5476271b01b4c0f00531f4f), [`15be17d`](https://github.com/adobe/spectrum-web-components/commit/15be17db91f1140ccf3cad52b1f2ed6c4b9e28ba)]:
-    - @spectrum-web-components/styles@1.8.0
-    - @spectrum-web-components/base@1.8.0
+  - @spectrum-web-components/styles@1.8.0
+  - @spectrum-web-components/base@1.8.0
 
 ## 1.7.0
 
 ### Patch Changes
 
 - Updated dependencies [[`1126cf2`](https://github.com/adobe/spectrum-web-components/commit/1126cf22c0076c8728b86e9c0bf7f67fdd8fde07)]:
-    - @spectrum-web-components/styles@1.7.0
-    - @spectrum-web-components/base@1.7.0
+  - @spectrum-web-components/styles@1.7.0
+  - @spectrum-web-components/base@1.7.0
 
 ## 1.6.0
 
 ### Patch Changes
 
 - Updated dependencies [[`9e15a66`](https://github.com/adobe/spectrum-web-components/commit/9e15a66a281745004add414ff977d4a71186aedd), [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e)]:
-    - @spectrum-web-components/styles@1.6.0
-    - @spectrum-web-components/base@1.6.0
+  - @spectrum-web-components/styles@1.6.0
+  - @spectrum-web-components/base@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
 - Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0), [`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5), [`fa4be70`](https://github.com/adobe/spectrum-web-components/commit/fa4be70e9ab9dbeff26867edd3bdeb3f41c423e3), [`daeb11f`](https://github.com/adobe/spectrum-web-components/commit/daeb11f18792cf650518099fd29857139b6380b4), [`6c58f50`](https://github.com/adobe/spectrum-web-components/commit/6c58f50f7b1f5489c11e0d3484e3f4a9d576f1c8), [`fa4be70`](https://github.com/adobe/spectrum-web-components/commit/fa4be70e9ab9dbeff26867edd3bdeb3f41c423e3)]:
-    - @spectrum-web-components/styles@1.5.0
-    - @spectrum-web-components/base@1.5.0
+  - @spectrum-web-components/styles@1.5.0
+  - @spectrum-web-components/base@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
 - Updated dependencies [[`3cca7ea`](https://github.com/adobe/spectrum-web-components/commit/3cca7eacf127c3fd759953db38a2b5a561bfb8dc)]:
-    - @spectrum-web-components/styles@1.4.0
-    - @spectrum-web-components/base@1.4.0
+  - @spectrum-web-components/styles@1.4.0
+  - @spectrum-web-components/base@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.3.0
-    - @spectrum-web-components/styles@1.3.0
+  - @spectrum-web-components/base@1.3.0
+  - @spectrum-web-components/styles@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

@@ -46,28 +46,28 @@ import { LitElement, html } from 'lit';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 
 class LocalizedGreeting extends LitElement {
-    private languageResolver = new LanguageResolutionController(this);
+  private languageResolver = new LanguageResolutionController(this);
 
-    render() {
-        const greetings = {
-            en: 'Hello',
-            es: 'Hola',
-            fr: 'Bonjour',
-            de: 'Guten Tag',
-            ja: 'こんにちは',
-        };
+  render() {
+    const greetings = {
+      en: 'Hello',
+      es: 'Hola',
+      fr: 'Bonjour',
+      de: 'Guten Tag',
+      ja: 'こんにちは',
+    };
 
-        // Get base language code (e.g., 'en' from 'en-US')
-        const lang = this.languageResolver.language.split('-')[0];
-        const greeting = greetings[lang] || greetings['en'];
+    // Get base language code (e.g., 'en' from 'en-US')
+    const lang = this.languageResolver.language.split('-')[0];
+    const greeting = greetings[lang] || greetings['en'];
 
-        return html`
-            <p>
-                ${greeting}, World!
-                <span class="locale">(${this.languageResolver.language})</span>
-            </p>
-        `;
-    }
+    return html`
+      <p>
+        ${greeting}, World!
+        <span class="locale">(${this.languageResolver.language})</span>
+      </p>
+    `;
+  }
 }
 
 customElements.define('localized-greeting', LocalizedGreeting);
@@ -90,35 +90,35 @@ The controller automatically re-renders components when the language context cha
 ```typescript
 import { LitElement, html } from 'lit';
 import {
-    LanguageResolutionController,
-    languageResolverUpdatedSymbol,
+  LanguageResolutionController,
+  languageResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 
 class LanguageTracker extends LitElement {
-    private languageResolver = new LanguageResolutionController(this);
-    private updateCount = 0;
+  private languageResolver = new LanguageResolutionController(this);
+  private updateCount = 0;
 
-    protected updated(changedProperties: Map<PropertyKey, unknown>): void {
-        super.updated(changedProperties);
+  protected updated(changedProperties: Map<PropertyKey, unknown>): void {
+    super.updated(changedProperties);
 
-        // Detect when language has changed
-        if (changedProperties.has(languageResolverUpdatedSymbol)) {
-            this.updateCount++;
-            console.log('Language changed to:', this.languageResolver.language);
-        }
+    // Detect when language has changed
+    if (changedProperties.has(languageResolverUpdatedSymbol)) {
+      this.updateCount++;
+      console.log('Language changed to:', this.languageResolver.language);
     }
+  }
 
-    render() {
-        return html`
-            <div>
-                <p>
-                    Current language:
-                    <strong>${this.languageResolver.language}</strong>
-                </p>
-                <p>Change count: ${this.updateCount}</p>
-            </div>
-        `;
-    }
+  render() {
+    return html`
+      <div>
+        <p>
+          Current language:
+          <strong>${this.languageResolver.language}</strong>
+        </p>
+        <p>Change count: ${this.updateCount}</p>
+      </div>
+    `;
+  }
 }
 
 customElements.define('language-tracker', LanguageTracker);
@@ -134,18 +134,18 @@ import { LanguageResolutionController } from '@spectrum-web-components/reactive-
 
 // Component with shadow DOM
 class LocalizedCard extends LitElement {
-    private languageResolver = new LanguageResolutionController(this);
+  private languageResolver = new LanguageResolutionController(this);
 
-    render() {
-        const lang = this.languageResolver.language;
+  render() {
+    const lang = this.languageResolver.language;
 
-        return html`
-            <div class="card">
-                <h3>Language: ${lang}</h3>
-                <slot></slot>
-            </div>
-        `;
-    }
+    return html`
+      <div class="card">
+        <h3>Language: ${lang}</h3>
+        <slot></slot>
+      </div>
+    `;
+  }
 }
 
 customElements.define('localized-card', LocalizedCard);

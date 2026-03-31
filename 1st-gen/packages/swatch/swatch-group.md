@@ -35,19 +35,19 @@ Just like swatches, swatch groups come in four different sizes: extra-small, sma
 
 ```html
 <sp-swatch-group size="xs">
-    <sp-swatch color="var(--spectrum-gray-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-red-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-orange-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-yellow-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-chartreuse-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-celery-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-green-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-seafoam-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-fuchsia-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-gray-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-red-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-orange-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-yellow-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-chartreuse-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-celery-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-green-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-seafoam-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-fuchsia-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -57,19 +57,19 @@ Just like swatches, swatch groups come in four different sizes: extra-small, sma
 
 ```html
 <sp-swatch-group size="s">
-    <sp-swatch color="var(--spectrum-gray-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-red-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-orange-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-yellow-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-chartreuse-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-celery-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-green-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-seafoam-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-fuchsia-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-gray-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-red-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-orange-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-yellow-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-chartreuse-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-celery-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-green-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-seafoam-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-fuchsia-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -79,19 +79,19 @@ Just like swatches, swatch groups come in four different sizes: extra-small, sma
 
 ```html
 <sp-swatch-group size="m">
-    <sp-swatch color="var(--spectrum-gray-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-red-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-orange-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-yellow-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-chartreuse-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-celery-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-green-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-seafoam-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-fuchsia-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-gray-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-red-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-orange-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-yellow-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-chartreuse-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-celery-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-green-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-seafoam-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-fuchsia-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -101,19 +101,19 @@ Just like swatches, swatch groups come in four different sizes: extra-small, sma
 
 ```html
 <sp-swatch-group size="l">
-    <sp-swatch color="var(--spectrum-gray-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-red-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-orange-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-yellow-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-chartreuse-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-celery-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-green-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-seafoam-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-fuchsia-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-gray-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-red-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-orange-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-yellow-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-chartreuse-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-celery-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-green-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-seafoam-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-fuchsia-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -130,11 +130,11 @@ Swatch groups come in 3 densities: regular (default), compact, and spacious. The
 
 ```html
 <sp-swatch-group>
-    <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-fuchsia-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-fuchsia-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -144,11 +144,11 @@ Swatch groups come in 3 densities: regular (default), compact, and spacious. The
 
 ```html
 <sp-swatch-group density="compact">
-    <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-fuchsia-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-fuchsia-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -158,11 +158,11 @@ Swatch groups come in 3 densities: regular (default), compact, and spacious. The
 
 ```html
 <sp-swatch-group density="spacious">
-    <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-fuchsia-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-fuchsia-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -187,14 +187,14 @@ The `selected` property is always an array, so applications can programmatically
 
 ```html
 <sp-swatch-group
-    selects="single"
-    onchange="this.nextElementSibling.textContent = `Selected: ${JSON.stringify(this.selected, null, ' ')}`"
+  selects="single"
+  onchange="this.nextElementSibling.textContent = `Selected: ${JSON.stringify(this.selected, null, ' ')}`"
 >
-    <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-fuchsia-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-magenta-500)" selected></sp-swatch>
+  <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-fuchsia-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-magenta-500)" selected></sp-swatch>
 </sp-swatch-group>
 <div>Selected: [ "var(--spectrum-magenta-500)" ]</div>
 ```
@@ -207,17 +207,17 @@ The `selected` property is always an array, so applications can programmatically
 
 ```html
 <sp-swatch-group
-    selects="multiple"
-    onchange="this.nextElementSibling.textContent = `Selected: ${JSON.stringify(this.selected, null, ' ')}`"
+  selects="multiple"
+  onchange="this.nextElementSibling.textContent = `Selected: ${JSON.stringify(this.selected, null, ' ')}`"
 >
-    <sp-swatch color="var(--spectrum-blue-500)" selected></sp-swatch>
-    <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-purple-500)" selected></sp-swatch>
-    <sp-swatch color="var(--spectrum-fuchsia-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-blue-500)" selected></sp-swatch>
+  <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-purple-500)" selected></sp-swatch>
+  <sp-swatch color="var(--spectrum-fuchsia-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
 </sp-swatch-group>
 <div>
-    Selected: [ "var(--spectrum-blue-500)", "var(--spectrum-purple-500)" ]
+  Selected: [ "var(--spectrum-blue-500)", "var(--spectrum-purple-500)" ]
 </div>
 ```
 
@@ -230,23 +230,23 @@ When available, the `selected` property will be populated with the `value` attri
 
 ```html
 <sp-swatch-group
-    selects="multiple"
-    selected='["color-2"]'
-    onchange="this.nextElementSibling.textContent = `Selected: ${JSON.stringify(this.selected, null, ' ')}`"
+  selects="multiple"
+  selected='["color-2"]'
+  onchange="this.nextElementSibling.textContent = `Selected: ${JSON.stringify(this.selected, null, ' ')}`"
 >
-    <sp-swatch color="var(--spectrum-blue-500)" value="color-0"></sp-swatch>
-    <sp-swatch
-        color="var(--spectrum-indigo-500)"
-        value="color-1"
-        selected
-    ></sp-swatch>
-    <sp-swatch color="var(--spectrum-purple-500)" value="color-2"></sp-swatch>
-    <sp-swatch
-        color="var(--spectrum-fuchsia-500)"
-        value="color-3"
-        selected
-    ></sp-swatch>
-    <sp-swatch color="var(--spectrum-magenta-500)" value="color-4"></sp-swatch>
+  <sp-swatch color="var(--spectrum-blue-500)" value="color-0"></sp-swatch>
+  <sp-swatch
+    color="var(--spectrum-indigo-500)"
+    value="color-1"
+    selected
+  ></sp-swatch>
+  <sp-swatch color="var(--spectrum-purple-500)" value="color-2"></sp-swatch>
+  <sp-swatch
+    color="var(--spectrum-fuchsia-500)"
+    value="color-3"
+    selected
+  ></sp-swatch>
+  <sp-swatch color="var(--spectrum-magenta-500)" value="color-4"></sp-swatch>
 </sp-swatch-group>
 <div>Selected: [ "color-2", "color-1", "color-3" ]</div>
 ```
@@ -263,9 +263,9 @@ Once applied to an `<sp-swatch-group>` element, the value of the `border`, `roun
 
 ```html
 <sp-swatch-group shape="rectangle">
-    <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -275,9 +275,9 @@ Once applied to an `<sp-swatch-group>` element, the value of the `border`, `roun
 
 ```html
 <sp-swatch-group rounding="full">
-    <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -287,9 +287,9 @@ Once applied to an `<sp-swatch-group>` element, the value of the `border`, `roun
 
 ```html
 <sp-swatch-group rounding="none">
-    <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -299,9 +299,9 @@ Once applied to an `<sp-swatch-group>` element, the value of the `border`, `roun
 
 ```html
 <sp-swatch-group border="light">
-    <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -311,9 +311,9 @@ Once applied to an `<sp-swatch-group>` element, the value of the `border`, `roun
 
 ```html
 <sp-swatch-group border="none">
-    <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
+  <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
 </sp-swatch-group>
 ```
 

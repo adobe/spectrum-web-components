@@ -51,9 +51,9 @@ Use `label-visibility="text"` to suppress the "value" label, use `label-visibili
 
 ```html
 <sp-slider
-    label="No visible value label"
-    label-visibility="text"
-    value="50"
+  label="No visible value label"
+  label-visibility="text"
+  value="50"
 ></sp-slider>
 ```
 
@@ -82,29 +82,29 @@ The slider also optionally accepts two or more `<sp-slider-handle>` elements wit
 
 ```html
 <sp-slider step="1" min="0" max="255">
-    Output Levels
-    <sp-slider-handle
-        slot="handle"
-        name="low"
-        label="Low"
-        value="5"
-        max="next"
-    ></sp-slider-handle>
-    <sp-slider-handle
-        slot="handle"
-        name="mid"
-        label="Mid"
-        value="100"
-        min="previous"
-        max="next"
-    ></sp-slider-handle>
-    <sp-slider-handle
-        slot="handle"
-        name="high"
-        label="High"
-        value="250"
-        min="previous"
-    ></sp-slider-handle>
+  Output Levels
+  <sp-slider-handle
+    slot="handle"
+    name="low"
+    label="Low"
+    value="5"
+    max="next"
+  ></sp-slider-handle>
+  <sp-slider-handle
+    slot="handle"
+    name="mid"
+    label="Mid"
+    value="100"
+    min="previous"
+    max="next"
+  ></sp-slider-handle>
+  <sp-slider-handle
+    slot="handle"
+    name="high"
+    label="High"
+    value="250"
+    min="previous"
+  ></sp-slider-handle>
 </sp-slider>
 ```
 
@@ -163,14 +163,14 @@ The `quiet` attribute applies Quiet styling to the number field when a slider is
 
 ```html
 <sp-slider
-    label="Hours of the day (editable)"
-    editable
-    max="24"
-    min="0"
-    value="7.25"
-    step="0.25"
-    style="--spectrum-slider-editable-number-field-width: 100px;"
-    format-options='{
+  label="Hours of the day (editable)"
+  editable
+  max="24"
+  min="0"
+  value="7.25"
+  step="0.25"
+  style="--spectrum-slider-editable-number-field-width: 100px;"
+  format-options='{
         "style": "unit",
         "unit": "hour"
     }'
@@ -183,12 +183,12 @@ The `quiet` attribute applies Quiet styling to the number field when a slider is
 
 ```html
 <sp-slider
-    label="Angle (editable)"
-    editable
-    hide-stepper
-    min="0"
-    max="360"
-    format-options='{
+  label="Angle (editable)"
+  editable
+  hide-stepper
+  min="0"
+  max="360"
+  format-options='{
         "style": "unit",
         "unit": "degree",
         "unitDisplay": "narrow"
@@ -214,21 +214,21 @@ Use `variant="filled"` to add a filled style to the slider from a starting point
 
 ```html
 <sp-slider
-    label="Slider Label"
-    max="1"
-    variant="filled"
-    min="0"
-    value=".5"
-    step="0.01"
+  label="Slider Label"
+  max="1"
+  variant="filled"
+  min="0"
+  value=".5"
+  step="0.01"
 ></sp-slider>
 <sp-slider
-    label="Slider Label - Disabled"
-    max="1"
-    variant="filled"
-    min="0"
-    value=".5"
-    step="0.01"
-    disabled
+  label="Slider Label - Disabled"
+  max="1"
+  variant="filled"
+  min="0"
+  value=".5"
+  step="0.01"
+  disabled
 ></sp-slider>
 ```
 
@@ -244,23 +244,23 @@ Any number (including `0`) can be used as a fill-start value. If a [custom norma
 
 ```html
 <sp-slider
-    label="Slider Label"
-    max="1"
-    fill-start
-    variant="filled"
-    min="0"
-    value=".5"
-    step="0.01"
+  label="Slider Label"
+  max="1"
+  fill-start
+  variant="filled"
+  min="0"
+  value=".5"
+  step="0.01"
 ></sp-slider>
 <sp-slider
-    label="Slider Label"
-    max="1"
-    fill-start
-    variant="filled"
-    min="0"
-    value=".8"
-    step="0.01"
-    disabled
+  label="Slider Label"
+  max="1"
+  fill-start
+  variant="filled"
+  min="0"
+  value=".8"
+  step="0.01"
+  disabled
 ></sp-slider>
 ```
 
@@ -270,14 +270,14 @@ Any number (including `0`) can be used as a fill-start value. If a [custom norma
 
 ```html
 <sp-slider
-    id="fill-start-slider"
-    label="fill-start greater than value"
-    max="1"
-    min="0"
-    value=".3"
-    step="0.1"
-    fill-start="0.7"
-    variant="filled"
+  id="fill-start-slider"
+  label="fill-start greater than value"
+  max="1"
+  min="0"
+  value=".3"
+  step="0.1"
+  fill-start="0.7"
+  variant="filled"
 ></sp-slider>
 ```
 
@@ -287,14 +287,14 @@ Any number (including `0`) can be used as a fill-start value. If a [custom norma
 
 ```html
 <sp-slider
-    id="fill-start-slider"
-    label="Fill Start less than Value"
-    max="1"
-    min="0"
-    value=".7"
-    step="0.1"
-    fill-start="0.25"
-    variant="filled"
+  id="fill-start-slider"
+  label="Fill Start less than Value"
+  max="1"
+  min="0"
+  value=".7"
+  step="0.1"
+  fill-start="0.25"
+  variant="filled"
 ></sp-slider>
 ```
 
@@ -304,13 +304,13 @@ Any number (including `0`) can be used as a fill-start value. If a [custom norma
 
 ```html
 <sp-slider
-    label="fill-start set to 0"
-    max="1"
-    min="-1"
-    value=".7"
-    step="0.1"
-    fill-start="0"
-    variant="filled"
+  label="fill-start set to 0"
+  max="1"
+  min="-1"
+  value=".7"
+  step="0.1"
+  fill-start="0"
+  variant="filled"
 ></sp-slider>
 ```
 
@@ -328,10 +328,10 @@ With `variant="tick"`, ticks are applied at intervals defined with the `tick-ste
 ```html
 <sp-slider label="Slider Label" variant="tick" tick-step="5"></sp-slider>
 <sp-slider
-    label="Slider Label - Disabled"
-    variant="tick"
-    tick-step="5"
-    disabled
+  label="Slider Label - Disabled"
+  variant="tick"
+  tick-step="5"
+  disabled
 ></sp-slider>
 ```
 
@@ -341,17 +341,17 @@ With `variant="tick"`, ticks are applied at intervals defined with the `tick-ste
 
 ```html
 <sp-slider
-    label="Slider Label"
-    variant="tick"
-    tick-step="5"
-    tick-labels
+  label="Slider Label"
+  variant="tick"
+  tick-step="5"
+  tick-labels
 ></sp-slider>
 <sp-slider
-    label="Slider Label - Disabled"
-    variant="tick"
-    tick-step="5"
-    tick-labels
-    disabled
+  label="Slider Label - Disabled"
+  variant="tick"
+  tick-step="5"
+  tick-labels
+  disabled
 ></sp-slider>
 ```
 
@@ -373,19 +373,19 @@ The `"range"` variant along with two handles to create a range slider. (See [sli
 
 ```html
 <sp-slider variant="range" step="1" min="0" max="255">
-    Output Levels
-    <sp-slider-handle
-        slot="handle"
-        name="min"
-        label="Minimum"
-        value="5"
-    ></sp-slider-handle>
-    <sp-slider-handle
-        slot="handle"
-        name="max"
-        label="Maximum"
-        value="250"
-    ></sp-slider-handle>
+  Output Levels
+  <sp-slider-handle
+    slot="handle"
+    name="min"
+    label="Minimum"
+    value="5"
+  ></sp-slider-handle>
+  <sp-slider-handle
+    slot="handle"
+    name="max"
+    label="Maximum"
+    value="250"
+  ></sp-slider-handle>
 </sp-slider>
 ```
 
@@ -397,12 +397,12 @@ An `<sp-slider>` or `<sp-slider-handle>` element will process its numeric value 
 
 ```html
 <sp-slider
-    min="0"
-    max="1"
-    step="0.01"
-    value="0.5"
-    label="Slider Label"
-    format-options='{
+  min="0"
+  max="1"
+  step="0.01"
+  value="0.5"
+  label="Slider Label"
+  format-options='{
         "style": "percent"
     }'
 ></sp-slider>
@@ -420,14 +420,14 @@ While `Intl.NumberFormatOptions` does support a [wide range of units](https://tc
 
 ```html
 <sp-slider
-    style="width: 200px"
-    value="500"
-    format-options='{
+  style="width: 200px"
+  value="500"
+  format-options='{
         "style": "unit",
         "unit": "px"
     }'
 >
-    Document width in pixels
+  Document width in pixels
 </sp-slider>
 ```
 
@@ -491,21 +491,21 @@ Like the `<input type="range">` element after which the `<sp-slider>` is fashion
 const slider = document.querySelector('sp-slider');
 
 const endListener = ({ target }) => {
-    target.addEventListener('input', startListener);
-    target.removeEventListener('input', streamListener);
-    target.removeEventListener('change', endListener);
-    console.log(target.value);
+  target.addEventListener('input', startListener);
+  target.removeEventListener('input', streamListener);
+  target.removeEventListener('change', endListener);
+  console.log(target.value);
 };
 
 const streamListener = ({ target }) => {
-    console.log(target.value);
+  console.log(target.value);
 };
 
 const startListener = ({ target }) => {
-    target.removeEventListener('input', startListener);
-    target.addEventListener('input', streamListener);
-    target.addEventListener('change', endListener);
-    console.log(target.value);
+  target.removeEventListener('input', startListener);
+  target.addEventListener('input', streamListener);
+  target.addEventListener('change', endListener);
+  console.log(target.value);
 };
 
 slider.addEventListener('input', startListener);
@@ -530,24 +530,24 @@ When using `label-visibility="none"` or `label-visibility="text"` with multi-han
 
 ```html
 <sp-slider
-    label="Output Levels"
-    step="1"
-    min="0"
-    max="255"
-    label-visibility="none"
+  label="Output Levels"
+  step="1"
+  min="0"
+  max="255"
+  label-visibility="none"
 >
-    <sp-slider-handle
-        slot="handle"
-        name="min"
-        label="Minimum"
-        value="5"
-    ></sp-slider-handle>
-    <sp-slider-handle
-        slot="handle"
-        name="max"
-        label="Maximum"
-        value="250"
-    ></sp-slider-handle>
+  <sp-slider-handle
+    slot="handle"
+    name="min"
+    label="Minimum"
+    value="5"
+  ></sp-slider-handle>
+  <sp-slider-handle
+    slot="handle"
+    name="max"
+    label="Maximum"
+    value="250"
+  ></sp-slider-handle>
 </sp-slider>
 ```
 

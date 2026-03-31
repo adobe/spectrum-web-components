@@ -10,7 +10,7 @@ It is intended for use alongside `@adobe/swc-tokens`, which supplies the process
 
 ```css
 .swc-Button {
-    background-color: token('accent-background-color-default');
+  background-color: token('accent-background-color-default');
 }
 ```
 
@@ -18,7 +18,7 @@ to be transformed at build time into valid CSS values:
 
 ```css
 .swc-Button {
-    background-color: var(--swc-accent-background-color-default);
+  background-color: var(--swc-accent-background-color-default);
 }
 ```
 
@@ -33,9 +33,9 @@ This package is intentionally **narrow in scope**.
 - Parses `token('…')` function calls in CSS
 - Replaces them with resolved token values from `@adobe/swc-tokens`
 - Works in:
-    - Property values
-    - Nested functions
-    - Fallback expressions (e.g. inside `var()`)
+  - Property values
+  - Nested functions
+  - Fallback expressions (e.g. inside `var()`)
 - Fails fast when a referenced token does not exist
 
 ### What This Plugin Does _Not_ Do
@@ -72,11 +72,11 @@ import postcss from 'postcss';
 import postcssToken from '@adobe/postcss-token';
 
 export default {
-    plugins: [
-        postcssToken({
-            prefix: 'swc',
-        }),
-    ],
+  plugins: [
+    postcssToken({
+      prefix: 'swc',
+    }),
+  ],
 };
 ```
 

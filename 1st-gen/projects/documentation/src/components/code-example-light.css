@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-@import 'prismjs/themes/prism.css';
+@import url("prismjs/themes/prism.css");
 
 .token.attr-name,
 .token.builtin,
@@ -18,13 +18,13 @@
 .token.inserted,
 .token.selector,
 .token.string {
-    color: #567f01;
+  color: #567f01;
 }
 
 .token.punctuation {
-    color: #737373;
+  color: #737373;
 }
 
 .language-css .token.function {
-    color: inherit;
+  color: inherit;
 }

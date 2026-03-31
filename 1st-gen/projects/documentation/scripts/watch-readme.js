@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -14,6 +14,7 @@
 
 import chokidar from 'chokidar';
 import debounce from 'debounce';
+
 import { processREADME } from './copy-component-docs.js';
 
 const debounceProcessREADME = debounce(processREADME, 200);
@@ -24,5 +25,5 @@ chokidar
     .on('change', debounceProcessREADME)
     .on('add', debounceProcessREADME);
 
-// eslint-disable-next-line no-console
+ 
 console.log('Listening to MD Files...');

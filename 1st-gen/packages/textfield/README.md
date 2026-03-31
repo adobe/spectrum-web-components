@@ -61,10 +61,10 @@ See [help text](../help-text) for more information.
 ```html
 <sp-field-label for="self">Stay "Positive"</sp-field-label>
 <sp-textfield id="self" pattern="[P][o][s][i][t][i][v][e]" value="Positive">
-    <sp-help-text slot="help-text">
-        Tell us how you are feeling today.
-    </sp-help-text>
-    <sp-help-text slot="negative-help-text">Please be "Positive".</sp-help-text>
+  <sp-help-text slot="help-text">
+    Tell us how you are feeling today.
+  </sp-help-text>
+  <sp-help-text slot="negative-help-text">Please be "Positive".</sp-help-text>
 </sp-textfield>
 ```
 
@@ -75,19 +75,19 @@ See [help text](../help-text) for more information.
 ```html
 <sp-field-label for="managed">Stay "Positive"</sp-field-label>
 <sp-textfield
-    id="managed"
-    pattern="[P][o][s][i][t][i][v][e]"
-    value="Positive"
-    oninput='
+  id="managed"
+  pattern="[P][o][s][i][t][i][v][e]"
+  value="Positive"
+  oninput='
         const helpText = this.querySelector(`[slot="help-text"]`);
         helpText.textContent = this.invalid ? `Please be "Positive".` : `Tell us how you are feeling today.`;
         helpText.variant = this.invalid ? `negative` : `neutral`;
     '
 >
-    <sp-help-text slot="neutral-text">
-        Tell us how you're feeling today.
-    </sp-help-text>
-    <sp-help-text slot="help-text">Please be "Positive".</sp-help-text>
+  <sp-help-text slot="neutral-text">
+    Tell us how you're feeling today.
+  </sp-help-text>
+  <sp-help-text slot="help-text">Please be "Positive".</sp-help-text>
 </sp-textfield>
 ```
 
@@ -105,9 +105,9 @@ See [help text](../help-text) for more information.
 ```html
 <sp-field-label size="s" for="name-0-s">Name</sp-field-label>
 <sp-textfield
-    size="s"
-    id="name-0-s"
-    placeholder="Enter your name"
+  size="s"
+  id="name-0-s"
+  placeholder="Enter your name"
 ></sp-textfield>
 ```
 
@@ -127,9 +127,9 @@ See [help text](../help-text) for more information.
 ```html
 <sp-field-label size="l" for="name-0-l">Name</sp-field-label>
 <sp-textfield
-    size="l"
-    id="name-0-l"
-    placeholder="Enter your name"
+  size="l"
+  id="name-0-l"
+  placeholder="Enter your name"
 ></sp-textfield>
 ```
 
@@ -140,9 +140,9 @@ See [help text](../help-text) for more information.
 ```html
 <sp-field-label size="xl" for="name-0-xl">Name</sp-field-label>
 <sp-textfield
-    size="xl"
-    id="name-0-xl"
-    placeholder="Enter your name"
+  size="xl"
+  id="name-0-xl"
+  placeholder="Enter your name"
 ></sp-textfield>
 ```
 
@@ -163,16 +163,16 @@ user affordances like mobile keyboards and obscured characters:
 ```html
 <sp-field-label for="tel-1">Telephone</sp-field-label>
 <sp-textfield
-    id="tel-1"
-    type="tel"
-    placeholder="Enter your phone number"
-    autocomplete="tel"
+  id="tel-1"
+  type="tel"
+  placeholder="Enter your phone number"
+  autocomplete="tel"
 ></sp-textfield>
 <sp-field-label for="password-1">Password</sp-field-label>
 <sp-textfield
-    id="password-1"
-    type="password"
-    autocomplete="current-password"
+  id="password-1"
+  type="password"
+  autocomplete="current-password"
 ></sp-textfield>
 ```
 
@@ -185,10 +185,10 @@ The quiet style works best when a clear layout (vertical stack, table, grid) ass
 ```html
 <sp-field-label for="name-3">Name (quietly)</sp-field-label>
 <sp-textfield
-    id="name-3"
-    placeholder="Enter your name"
-    quiet
-    autocomplete="name"
+  id="name-3"
+  placeholder="Enter your name"
+  quiet
+  autocomplete="name"
 ></sp-textfield>
 ```
 
@@ -199,19 +199,37 @@ Use the `required` attribute to indicate a textfield value is required. Dictate 
 ```html
 <sp-field-label for="name-1" required>Name</sp-field-label>
 <sp-textfield
-    id="name-1"
-    placeholder="Enter your name"
-    valid
-    value="My Name"
-    autocomplete="name"
+  id="name-1"
+  placeholder="Enter your name"
+  valid
+  value="My Name"
+  autocomplete="name"
 ></sp-textfield>
 <br />
 <sp-field-label for="name-2" required>Name</sp-field-label>
 <sp-textfield
-    id="name-2"
-    invalid
-    autocomplete="name"
-    placeholder="Enter your name"
+  id="name-2"
+  invalid
+  autocomplete="name"
+  placeholder="Enter your name"
+></sp-textfield>
+```
+
+### Behaviors
+
+#### Truncated value tooltip
+
+When a single-line textfield value is visually truncated, a tooltip appears on hover/focus to expose the full value. This helps users review long input content when the control is too narrow to display all characters. This supports accessibility when users adjust text spacing (WCAG 1.4.12).
+
+This behavior applies to single-line inputs and does not apply to multiline textfields. The full value is available on hover and keyboard focus so screen reader users can access it via the control's value. See also the same behavior on [number-field](../number-field).
+
+By default the tooltip uses placement `bottom`. To change where the tooltip appears relative to the field, set the `tooltip-placement` attribute to a valid placement value: `top`, `top-start`, `top-end`, `right`, `right-start`, `right-end`, `bottom`, `bottom-start`, `bottom-end`, `left`, `left-start`, `left-end`. Placement is preferred but may flip (e.g. to the opposite side) when there is insufficient space so the tooltip stays in view.
+
+```html
+<sp-field-label for="truncated-text">Email</sp-field-label>
+<sp-textfield
+  id="truncated-text"
+  value="very.long.email.address@subdomain.example.com"
 ></sp-textfield>
 ```
 

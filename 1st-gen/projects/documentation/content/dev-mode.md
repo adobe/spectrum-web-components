@@ -17,13 +17,13 @@ Dev mode can be accessed via the `development` [export condition](https://nodejs
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 export default {
-    // ...
-    plugins: [
-        nodeResolve({
-            // Add this line for development config, omit for production config
-            exportConditions: ['development'],
-        }),
-    ],
+  // ...
+  plugins: [
+    nodeResolve({
+      // Add this line for development config, omit for production config
+      exportConditions: ['development'],
+    }),
+  ],
 };
 ```
 
@@ -70,20 +70,20 @@ type WarningType = 'default' | 'accessibility' | 'api';
 type WarningLevel = 'default' | 'low' | 'medium' | 'high' | 'deprecation';
 
 type SWCWarningData = {
-    localName: string;
-    type: WarningType;
-    level: WarningLevel;
+  localName: string;
+  type: WarningType;
+  level: WarningLevel;
 };
 
 type BrandedSWCWarningID = `${ElementLocalName}:${WarningType}:${WarningLevel}`;
 
 interface Window {
-    __swc: {
-        ignoreWarningTypes: Record<WarningType, boolean>;
-        ignoreWarningLevels: Record<WarningLevel, boolean>;
-        ignoreWarningLocalNames: Record<ElementLocalName, boolean>;
-        verbose?: boolean;
-    };
+  __swc: {
+    ignoreWarningTypes: Record<WarningType, boolean>;
+    ignoreWarningLevels: Record<WarningLevel, boolean>;
+    ignoreWarningLocalNames: Record<ElementLocalName, boolean>;
+    verbose?: boolean;
+  };
 }
 ```
 

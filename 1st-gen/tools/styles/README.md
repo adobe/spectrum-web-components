@@ -35,22 +35,22 @@ This package provides design token CSS custom properties for three Adobe design 
 Global token files (`global-vars.css`) define design values that remain constant across color options and scales, as well as semantic tokens that reference color- or scale-specific values:
 
 - **Fixed constants** - Values that never change regardless of color or scale:
-    - Opacity values (e.g., `--spectrum-opacity-disabled: 0.3`)
-    - Font families (Adobe Clean, for instance)
-    - Font weights (300, 400, 500, 700, 800, 900)
-    - Line heights and font styles
-    - Transparent white and black color definitions
-    - Base spacing scale (`--spectrum-spacing-50` through `--spectrum-spacing-1000`)
-    - Semantically-named component constants (e.g., `--spectrum-swatch-border-color`, `--spectrum-button-minimum-width-multiplier`)
+  - Opacity values (e.g., `--spectrum-opacity-disabled: 0.3`)
+  - Font families (Adobe Clean, for instance)
+  - Font weights (300, 400, 500, 700, 800, 900)
+  - Line heights and font styles
+  - Transparent white and black color definitions
+  - Base spacing scale (`--spectrum-spacing-50` through `--spectrum-spacing-1000`)
+  - Semantically-named component constants (e.g., `--spectrum-swatch-border-color`, `--spectrum-button-minimum-width-multiplier`)
 
 - **Semantic color aliases** - Named by purpose, referencing values that change depending on the color option:
-    - `--spectrum-disabled-background-color` (in tokens-v2, references `--spectrum-gray-100`, which has different values for light and dark)
-    - `--spectrum-focus-indicator-color`
-    - `--spectrum-neutral-content-color-default`
+  - `--spectrum-disabled-background-color` (in tokens-v2, references `--spectrum-gray-100`, which has different values for light and dark)
+  - `--spectrum-focus-indicator-color`
+  - `--spectrum-neutral-content-color-default`
 
 - **Semantic component tokens** - Named by purpose, referencing scale-specific values:
-    - `--spectrum-breadcrumbs-height: var(--spectrum-component-height-300)` (where `component-height-300` is 48px in medium, 60px in large)
-    - `--spectrum-meter-default-width: var(--spectrum-meter-width)` (where `meter-width` is 192px in medium, 240px in large)
+  - `--spectrum-breadcrumbs-height: var(--spectrum-component-height-300)` (where `component-height-300` is 48px in medium, 60px in large)
+  - `--spectrum-meter-default-width: var(--spectrum-meter-width)` (where `meter-width` is 192px in medium, 240px in large)
 
 #### Color options
 
@@ -59,28 +59,28 @@ Each system makes a `dark` and `light` color option available. Currently, the Sp
 Color option files (`light-vars.css` and `dark-vars.css`) contain raw color definitions that differ between themes, as well as semantic color mappings that reference different colors based on the selected theme:
 
 - **Raw color definitions** - Color scale values that differ between light and dark themes:
-    - `--spectrum-gray-50` is white (`255, 255, 255`) in light theme, but dark gray (`29, 29, 29`) in dark theme
-    - `--spectrum-gray-900` is black (`0, 0, 0`) in light theme, but white (`255, 255, 255`) in dark theme
-    - Full color scales for gray, blue, red, orange, yellow, green, and other semantic color families
+  - `--spectrum-gray-50` is white (`255, 255, 255`) in light theme, but dark gray (`29, 29, 29`) in dark theme
+  - `--spectrum-gray-900` is black (`0, 0, 0`) in light theme, but white (`255, 255, 255`) in dark theme
+  - Full color scales for gray, blue, red, orange, yellow, green, and other semantic color families
 
 - **Semantic color mappings** - Named by purpose, referencing different raw colors based on theme:
-    - `--spectrum-background-base-color` references `--spectrum-gray-200` in light, but `--spectrum-gray-50` in dark
-    - `--spectrum-neutral-subdued-background-color-default` references `--spectrum-gray-600` in light, but `--spectrum-gray-400` in dark
-    - Component-specific colors like `--spectrum-neutral-visual-color`, background colors, and visual indicators
+  - `--spectrum-background-base-color` references `--spectrum-gray-200` in light, but `--spectrum-gray-50` in dark
+  - `--spectrum-neutral-subdued-background-color-default` references `--spectrum-gray-600` in light, but `--spectrum-gray-400` in dark
+  - Component-specific colors like `--spectrum-neutral-visual-color`, background colors, and visual indicators
 
 #### Scales
 
 Each system has two scale sizes available: `medium` (default) and `large`. The `medium` scale is designed for desktop environments, while `large` is optimized for mobile and touch devices with larger touch targets. Scale files (`medium-vars.css` and `large-vars.css`) contain raw size and spacing definitions that differ between scales, as well as component-specific sizing values:
 
 - **Raw size and spacing definitions** - Values that differ between medium and large scales:
-    - `--spectrum-font-size-200` is `16px` in medium, but `19px` in large
-    - `--spectrum-component-height-100` is `32px` in medium, but `40px` in large
-    - Icon sizes, spacing values, and other dimensional tokens that scale up for larger/touch interfaces
+  - `--spectrum-font-size-200` is `16px` in medium, but `19px` in large
+  - `--spectrum-component-height-100` is `32px` in medium, but `40px` in large
+  - Icon sizes, spacing values, and other dimensional tokens that scale up for larger/touch interfaces
 
 - **Component-specific sizing** - Tokens for component dimensions that vary by scale:
-    - `--spectrum-meter-width` is `192px` in medium, but `240px` in large
-    - `--spectrum-breadcrumbs-height-multiline` is `72px` in medium, but `84px` in large
-    - Component-specific measurements like button heights, field widths, and icon positioning
+  - `--spectrum-meter-width` is `192px` in medium, but `240px` in large
+  - `--spectrum-breadcrumbs-height-multiline` is `72px` in medium, but `84px` in large
+  - Component-specific measurements like button heights, field widths, and icon positioning
 
 #### Token imports
 
@@ -191,23 +191,23 @@ Which tokens files you import will depend on which tokens you want to use. Here'
 @import '@spectrum-web-components/styles/tokens-v2/global-vars.css';
 
 .my-component {
-    /* defined in global-vars.css */
-    border-radius: var(--spectrum-corner-radius-medium-size-small);
-    border-width: var(--spectrum-border-width-100);
-    color: var(
-        --spectrum-neutral-content-color-default
-    ); /* uses --spectrum-gray-800, which is defined differently depending whether light or dark vars are loaded */
+  /* defined in global-vars.css */
+  border-radius: var(--spectrum-corner-radius-medium-size-small);
+  border-width: var(--spectrum-border-width-100);
+  color: var(
+    --spectrum-neutral-content-color-default
+  ); /* uses --spectrum-gray-800, which is defined differently depending whether light or dark vars are loaded */
 
-    /* defined in light-vars.css, defined differently in dark-vars.css */
-    background-color: var(--spectrum-gray-100);
-    border-color: var(--spectrum-gray-800);
+  /* defined in light-vars.css, defined differently in dark-vars.css */
+  background-color: var(--spectrum-gray-100);
+  border-color: var(--spectrum-gray-800);
 
-    /* defined in medium-vars.css, defined differently in large-vars.css */
-    padding-inline: var(--spectrum-component-edge-to-text-75);
-    padding-block: var(--spectrum-component-top-to-text-75);
-    min-block-size: var(--spectrum-component-height-75);
+  /* defined in medium-vars.css, defined differently in large-vars.css */
+  padding-inline: var(--spectrum-component-edge-to-text-75);
+  padding-block: var(--spectrum-component-top-to-text-75);
+  min-block-size: var(--spectrum-component-height-75);
 
-    border-style: solid;
+  border-style: solid;
 }
 ```
 
@@ -228,27 +228,27 @@ These tokens are generally similar to the Spectrum 2 tokens, but use a base laye
 @import '@spectrum-web-components/styles/tokens/express/global-vars.css';
 
 .my-component {
-    /* defined in express medium-vars.css */
-    border-radius: var(--spectrum-corner-radius-100);
+  /* defined in express medium-vars.css */
+  border-radius: var(--spectrum-corner-radius-100);
 
-    /* defined in express global-vars.css */
-    border-width: var(--spectrum-border-width-100);
+  /* defined in express global-vars.css */
+  border-width: var(--spectrum-border-width-100);
 
-    /* defined in base global-vars.css */
-    color: var(
-        --spectrum-neutral-subdued-content-color-default
-    ); /* uses --spectrum-gray-700, which is defined differently depending whether light or dark vars are loaded */
+  /* defined in base global-vars.css */
+  color: var(
+    --spectrum-neutral-subdued-content-color-default
+  ); /* uses --spectrum-gray-700, which is defined differently depending whether light or dark vars are loaded */
 
-    /* defined in base light-vars.css, defined differently in dark-vars.css */
-    background-color: var(--spectrum-gray-50);
-    border-color: var(--spectrum-gray-700);
+  /* defined in base light-vars.css, defined differently in dark-vars.css */
+  background-color: var(--spectrum-gray-50);
+  border-color: var(--spectrum-gray-700);
 
-    /* defined in base medium-vars.css, defined differently in large-vars.css */
-    padding-inline: var(--spectrum-component-edge-to-text-75);
-    padding-block: var(--spectrum-component-top-to-text-75);
-    min-block-size: var(--spectrum-component-height-75);
+  /* defined in base medium-vars.css, defined differently in large-vars.css */
+  padding-inline: var(--spectrum-component-edge-to-text-75);
+  padding-block: var(--spectrum-component-top-to-text-75);
+  min-block-size: var(--spectrum-component-height-75);
 
-    border-style: solid;
+  border-style: solid;
 }
 ```
 

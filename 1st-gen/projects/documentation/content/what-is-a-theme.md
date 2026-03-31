@@ -11,7 +11,7 @@ Theme is an overloaded term that can lead to confusion and a general thought of 
 
 ```html
 <sp-theme system="spectrum" color="dark" scale="medium">
-    <sp-button>Don't Click</sp-button>
+  <sp-button>Don't Click</sp-button>
 </sp-theme>
 ```
 
@@ -21,11 +21,11 @@ This guide aims to provide an understanding of what we mean when we say "theme" 
 
 In a world where "theme" is often used to describe the look and feel of an application, we often tie the term to color alone. If we think about how a theme in a CMS (like Wordpress) works, however, it’s often much more than just color. It can affect the entire layout of the page. We don't quite have that concept to worry about but we do have multiple parameters to think about. Those are:
 
--   **System** » The design system to use, in our case we have Spectrum and Express. This system can be spectrum itself, and as we work towards future versions of Spectrum, this system can become a way to control which version of the Design System you are using. It's also an open API which opens the door to a limited system you build for your product.
--   **Color** » The color appearance, typically light or dark mode.
--   **Scale** » The scale of the components as designed, often used for mobile—for example `medium`, `large`.
--   **Direction** » The directionality of layout, this helps support right-to-left languages like Arabic.
--   **Language** » The language of the content, such as `en-US`, `it`, `jp`, `uk`,—as defined [by mozilla](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang).
+- **System** » The design system to use, in our case we have Spectrum and Express. This system can be spectrum itself, and as we work towards future versions of Spectrum, this system can become a way to control which version of the Design System you are using. It's also an open API which opens the door to a limited system you build for your product.
+- **Color** » The color appearance, typically light or dark mode.
+- **Scale** » The scale of the components as designed, often used for mobile—for example `medium`, `large`.
+- **Direction** » The directionality of layout, this helps support right-to-left languages like Arabic.
+- **Language** » The language of the content, such as `en-US`, `it`, `jp`, `uk`,—as defined [by mozilla](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang).
 
 ## A theme is all of it
 
@@ -33,12 +33,12 @@ All these parameters together are what we consider a "theme". Theme becomes an a
 
 ```html
 <sp-theme system="spectrum" color="dark" scale="medium">
-    <sp-button>Don't Click</sp-button>
+  <sp-button>Don't Click</sp-button>
 </sp-theme>
 
 <!-- is a different "theme" from -->
 
 <sp-theme system="express" color="light" scale="large">
-    <sp-button>Don't Click</sp-button>
+  <sp-button>Don't Click</sp-button>
 </sp-theme>
 ```

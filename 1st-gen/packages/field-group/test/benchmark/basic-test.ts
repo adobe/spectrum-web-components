@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,17 +10,19 @@
  * governing permissions and limitations under the License.
  */
 
+import { html } from 'lit';
+
 import '@spectrum-web-components/field-group/sp-field-group.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
-import { html } from 'lit';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-field-group horizontal>
-        <sp-checkbox>Checkbox 1</sp-checkbox>
-        <sp-checkbox>Checkbox 2</sp-checkbox>
-        <sp-checkbox>Checkbox 3</sp-checkbox>
-        <sp-checkbox>Checkbox 4</sp-checkbox>
-        <sp-checkbox>Checkbox 5</sp-checkbox>
-    </sp-field-group>
+  <sp-field-group horizontal>
+    <sp-checkbox>Checkbox 1</sp-checkbox>
+    <sp-checkbox>Checkbox 2</sp-checkbox>
+    <sp-checkbox>Checkbox 3</sp-checkbox>
+    <sp-checkbox>Checkbox 4</sp-checkbox>
+    <sp-checkbox>Checkbox 5</sp-checkbox>
+  </sp-field-group>
 `);

@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+import '../src/spectrum-two/core-tokens.js';
+
 import darkStyles from '../src/spectrum-two/theme-dark-core-tokens.css.js';
 import { Theme } from '../src/Theme.js';
-import '../src/spectrum-two/core-tokens.js';
 
 Theme.registerThemeFragment('dark-spectrum-two', 'color', darkStyles);

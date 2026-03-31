@@ -32,9 +32,9 @@ The color loupe consists of:
 
 ```html
 <div style="padding: 100px 0 0;">
-    <div style="position:relative">
-        <sp-color-loupe open="" dir="ltr"></sp-color-loupe>
-    </div>
+  <div style="position:relative">
+    <sp-color-loupe open="" dir="ltr"></sp-color-loupe>
+  </div>
 </div>
 ```
 
@@ -50,43 +50,43 @@ Transparency Support: When using transparent colors, the handle displays an opac
 
 ```html
 <div
-    style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; width: 100%;;"
+  style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; width: 100%;;"
 >
-    <!-- Yellow color loupe -->
-    <div style="padding: 100px 0 0; position: relative; min-width: 120px;">
-        <div style="position: relative;">
-            <sp-color-loupe color="yellow" open dir="ltr"></sp-color-loupe>
-        </div>
+  <!-- Yellow color loupe -->
+  <div style="padding: 100px 0 0; position: relative; min-width: 120px;">
+    <div style="position: relative;">
+      <sp-color-loupe color="yellow" open dir="ltr"></sp-color-loupe>
     </div>
+  </div>
 
-    <!-- Red color loupe -->
-    <div style="padding: 100px 0 0; position: relative; min-width: 120px;">
-        <div style="position: relative;">
-            <sp-color-loupe color="#ff0000" open dir="ltr"></sp-color-loupe>
-        </div>
+  <!-- Red color loupe -->
+  <div style="padding: 100px 0 0; position: relative; min-width: 120px;">
+    <div style="position: relative;">
+      <sp-color-loupe color="#ff0000" open dir="ltr"></sp-color-loupe>
     </div>
+  </div>
 
-    <!-- Blue color loupe -->
-    <div style="padding: 100px 0 0; position: relative; min-width: 120px;">
-        <div style="position: relative;">
-            <sp-color-loupe
-                color="rgba(44, 62, 224, 0.81)"
-                open
-                dir="ltr"
-            ></sp-color-loupe>
-        </div>
+  <!-- Blue color loupe -->
+  <div style="padding: 100px 0 0; position: relative; min-width: 120px;">
+    <div style="position: relative;">
+      <sp-color-loupe
+        color="rgba(44, 62, 224, 0.81)"
+        open
+        dir="ltr"
+      ></sp-color-loupe>
     </div>
+  </div>
 
-    <!-- Green color loupe -->
-    <div style="padding: 100px 0 0; position: relative; min-width: 120px;">
-        <div style="position: relative;">
-            <sp-color-loupe
-                color="hsl(111, 82%, 56%)"
-                open
-                dir="ltr"
-            ></sp-color-loupe>
-        </div>
+  <!-- Green color loupe -->
+  <div style="padding: 100px 0 0; position: relative; min-width: 120px;">
+    <div style="position: relative;">
+      <sp-color-loupe
+        color="hsl(111, 82%, 56%)"
+        open
+        dir="ltr"
+      ></sp-color-loupe>
     </div>
+  </div>
 </div>
 ```
 
@@ -98,25 +98,25 @@ The `open` attribute controls whether the loupe is visible. When `open` is prese
 
 ```html
 <div style="display: flex; flex-direction: row; gap: 20px;">
-    <!-- Loupe is visible -->
-    <div style="padding: 100px 0 0; margin-left:20%">
-        <div style="position:relative">
-            <sp-color-loupe open="" dir="ltr"></sp-color-loupe>
-            <p id="color-context" style="margin-top: 40px">
-                This loupe above this text is visible.
-            </p>
-        </div>
+  <!-- Loupe is visible -->
+  <div style="padding: 100px 0 0; margin-left:20%">
+    <div style="position:relative">
+      <sp-color-loupe open="" dir="ltr"></sp-color-loupe>
+      <p id="color-context" style="margin-top: 40px">
+        This loupe above this text is visible.
+      </p>
     </div>
+  </div>
 
-    <!-- Loupe is hidden -->
-    <div style="padding: 100px 0 0;">
-        <div style="position:relative">
-            <sp-color-loupe dir="ltr"></sp-color-loupe>
-            <p id="color-context" style="margin-top: 40px">
-                This loupe above this text is not visible.
-            </p>
-        </div>
+  <!-- Loupe is hidden -->
+  <div style="padding: 100px 0 0;">
+    <div style="position:relative">
+      <sp-color-loupe dir="ltr"></sp-color-loupe>
+      <p id="color-context" style="margin-top: 40px">
+        This loupe above this text is not visible.
+      </p>
     </div>
+  </div>
 </div>
 ```
 
@@ -141,12 +141,12 @@ The `<sp-color-loupe>` is designed to work as part of accessible color selection
 
 ```html
 <div
-    style="display: flex; flex-direction: row; justify-content: space-between; width: 100%;"
+  style="display: flex; flex-direction: row; justify-content: space-between; width: 100%;"
 >
-    <sp-color-area
-        aria-label="Saturation and brightness selector - adjust color intensity and lightness"
-        aria-describedby="color-context"
-    ></sp-color-area>
+  <sp-color-area
+    aria-label="Saturation and brightness selector - adjust color intensity and lightness"
+    aria-describedby="color-context"
+  ></sp-color-area>
 </div>
 ```
 
@@ -156,12 +156,12 @@ The `<sp-color-loupe>` is designed to work as part of accessible color selection
 
 ```html
 <div
-    style="display: flex; flex-direction: row; justify-content: space-between; width: 100%;"
+  style="display: flex; flex-direction: row; justify-content: space-between; width: 100%;"
 >
-    <sp-color-slider
-        aria-label="Hue slider - adjust the base color"
-        aria-describedby="color-context"
-    ></sp-color-slider>
+  <sp-color-slider
+    aria-label="Hue slider - adjust the base color"
+    aria-describedby="color-context"
+  ></sp-color-slider>
 </div>
 ```
 
@@ -171,12 +171,12 @@ The `<sp-color-loupe>` is designed to work as part of accessible color selection
 
 ```html
 <div
-    style="display: flex; flex-direction: row; justify-content: space-between; width: 100%;"
+  style="display: flex; flex-direction: row; justify-content: space-between; width: 100%;"
 >
-    <sp-color-wheel
-        aria-label="Color wheel - select from the full color spectrum"
-        aria-describedby="color-context"
-    ></sp-color-wheel>
+  <sp-color-wheel
+    aria-label="Color wheel - select from the full color spectrum"
+    aria-describedby="color-context"
+  ></sp-color-wheel>
 </div>
 ```
 
@@ -211,19 +211,19 @@ Provide clear context for what the loupe displays. The loupe itself is presentat
 
 ```html
 <div
-    role="region"
-    aria-label="Color selection interface"
-    style="padding: 100px 0 0;"
+  role="region"
+  aria-label="Color selection interface"
+  style="padding: 100px 0 0;"
 >
-    <div
-        style="position: relative; display: flex; flex-direction: column; align-items: center;"
-    >
-        <sp-color-loupe open dir="ltr"></sp-color-loupe>
-    </div>
-    <p id="color-context" style="margin-top: 8px; text-align: center;">
-        The loupe above shows the color currently selected. During touch
-        interactions, it automatically appears to prevent your finger from
-        covering the selected color.
-    </p>
+  <div
+    style="position: relative; display: flex; flex-direction: column; align-items: center;"
+  >
+    <sp-color-loupe open dir="ltr"></sp-color-loupe>
+  </div>
+  <p id="color-context" style="margin-top: 8px; text-align: center;">
+    The loupe above shows the color currently selected. During touch
+    interactions, it automatically appears to prevent your finger from covering
+    the selected color.
+  </p>
 </div>
 ```

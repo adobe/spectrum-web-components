@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,104 +11,104 @@
  */
 
 ::slotted(*) {
-    width: 100%;
+  width: 100%;
 }
 
 aside {
-    display: flex;
-    flex-direction: column;
-    max-height: 100vh;
-    height: 100vh;
-    overflow: auto;
-    position: sticky;
-    top: 0;
-    left: 0;
-    background-color: var(--spectrum-gray-75);
+  display: flex;
+  position: sticky;
+  top: 0;
+  left: 0;
+  flex-direction: column;
+  height: 100vh;
+  max-height: 100vh;
+  background-color: var(--spectrum-gray-75);
+  overflow: auto;
 }
 
-@media screen and (max-width: 960px) {
-    aside {
-        position: fixed;
-        top: 0;
-        left: 0;
-        transition:
-            transform var(--spectrum-dialog-confirm-background-entry-animation-duration, var(--spectrum-animation-duration-600)) cubic-bezier(0, 0, 0.4, 1),
-            visibility 0s linear var(--spectrum-animation-duration-600);
-        transform: translateX(-100%);
-        z-index: 10;
-        min-height: 100vh;
-        visibility: hidden;
-    }
+@media screen and (width <= 960px) {
+  aside {
+    visibility: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    min-height: 100vh;
+    transform: translateX(-100%);
+    transition:
+      transform var(--spectrum-dialog-confirm-background-entry-animation-duration, var(--spectrum-animation-duration-600)) cubic-bezier(0, 0, 0.4, 1),
+      visibility 0s linear var(--spectrum-animation-duration-600);
+  }
 
-    aside:dir(rtl) {
-        right: 0;
-        left: auto;
-        transform: translateX(100%);
-        visibility: hidden;
-    }
+  aside:dir(rtl) {
+    visibility: hidden;
+    right: 0;
+    left: auto;
+    transform: translateX(100%);
+  }
 
-    :host([open]) aside {
-        transform: translateX(0);
-        visibility: visible;
-        transition-delay: 0s, 0s;
-    }
+  :host([open]) aside {
+    visibility: visible;
+    transform: translateX(0);
+    transition-delay: 0s, 0s;
+  }
 
-    .scrim {
-        z-index: 10;
-        touch-action: none;
-    }
+  .scrim {
+    z-index: 10;
+    touch-action: none;
+  }
 }
 
 #nav-header a,
 #nav-header a:visited {
-    color: var(--spectrum-gray-800);
-    text-decoration: none;
+  color: var(--spectrum-gray-800);
+  text-decoration: none;
 }
 
 .navigation {
-    width: calc(var(--swc-scale-factor) * 240px - 48px);
-    padding: 0 24px 24px;
-    flex: 1;
-    flex-grow: 1;
-    overflow: auto;
-    overflow-x: hidden;
-    overflow-y: auto;
+  flex: 1;
+  flex-grow: 1;
+  width: calc(var(--swc-scale-factor) * 240px - 48px);
+  padding: 0 24px 24px;
+  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 docs-spectrum-logo {
-    width: 36px;
-    height: 32px;
-    display: block;
-    padding-top: 7px;
+  display: block;
+  width: 36px;
+  height: 32px;
+  padding-top: 7px;
 }
 
 docs-spectrum-logo:dir(ltr) {
-    margin-right: 16px;
+  margin-right: 16px;
 }
 
 docs-spectrum-logo:dir(rtl) {
-    margin-left: 16px;
+  margin-left: 16px;
 }
 
 #logo-container {
-    outline: none;
-    border-radius: 4px;
+  border-radius: 4px;
+  outline: none;
 }
 
 docs-search {
-    width: calc(var(--swc-scale-factor) * 192px);
-    padding: 0 calc(var(--swc-scale-factor) * 24px) calc(var(--swc-scale-factor) * 24px);
+  width: calc(var(--swc-scale-factor) * 192px);
+  padding: 0 calc(var(--swc-scale-factor) * 24px) calc(var(--swc-scale-factor) * 24px);
 }
 
 sp-sidenav {
-    width: 100%;
+  width: 100%;
 }
 
 .spectrum-web {
-    margin-top: 80px;
-    display: block;
+  display: block;
+  margin-top: 80px;
 }
 
 sp-underlay:not(:defined) {
-    opacity: 0;
+  opacity: 0;
 }

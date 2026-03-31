@@ -13,22 +13,22 @@
 /// <reference types="vite/client" />
 
 declare module '*.css' {
-    import { CSSResult } from 'lit';
-    const css: CSSResult;
-    export default css;
+  import { CSSResult } from 'lit';
+  const css: CSSResult;
+  export default css;
 }
 
 declare module '*.svg' {
-    const src: string;
-    export default src;
+  const src: string;
+  export default src;
 }
 
 declare module '*.png' {
-    const src: string;
-    export default src;
+  const src: string;
+  export default src;
 }
 
 declare module '*.jpg' {
-    const src: string;
-    export default src;
+  const src: string;
+  export default src;
 }

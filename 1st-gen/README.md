@@ -12,10 +12,10 @@ To this end, Spectrum Web Components only targets _modern_, evergreen browsers t
 - Yarn >= 4.6.0
 - Typescript
 - Supported desktop browsers:
-    - Last 2 versions of Chrome
-    - Last 2 versions of Firefox
-    - Last 2 versions of Safari
-    - Last 2 versions of Edge
+  - Last 2 versions of Chrome
+  - Last 2 versions of Firefox
+  - Last 2 versions of Safari
+  - Last 2 versions of Edge
 - Or appropriate [polyfills](https://github.com/webcomponents/webcomponentsjs) in older browsers.
 - We support all viewport sizes across supported desktop browsers.
 - While our components are designed to be responsive and mobile-friendly, we do not yet fully support mobile browsers due to limited testing in mobile hardware. We advise testing updates on mobile devices before updating and are happy to address any reported issues.

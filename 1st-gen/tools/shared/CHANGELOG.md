@@ -5,20 +5,20 @@
 ### Patch Changes
 
 - Updated dependencies [[`6f5419a`](https://github.com/adobe/spectrum-web-components/commit/6f5419a4de29a1ee440a36c1a57d8c2e1476e2f6)]:
-    - @spectrum-web-components/core@0.0.4
-    - @spectrum-web-components/base@1.11.2
+  - @spectrum-web-components/core@0.0.4
+  - @spectrum-web-components/base@1.11.2
 
 ## 1.11.1
 
 ### Patch Changes
 
 - [#5993](https://github.com/adobe/spectrum-web-components/pull/5993) [`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - - **Fixed**: Replaced wildcard exports from `@spectrum-web-components/core` with explicit named exports for better bundler compatibility
-    - **Fixed**: Changed build target from ES2022 to ES2018 to support Vitest and other consumer environments
-    - **Fixed**: Added `@spectrum-web-components/core` as direct dependency to `@spectrum-web-components/shared` to resolve module resolution issues in strict dependency environments
-    - **Fixed**: Added `@lit-labs/observers` as dependency and externalized it in Vite build config
+  - **Fixed**: Changed build target from ES2022 to ES2018 to support Vitest and other consumer environments
+  - **Fixed**: Added `@spectrum-web-components/core` as direct dependency to `@spectrum-web-components/shared` to resolve module resolution issues in strict dependency environments
+  - **Fixed**: Added `@lit-labs/observers` as dependency and externalized it in Vite build config
 - Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
-    - @spectrum-web-components/core@0.0.3
-    - @spectrum-web-components/base@1.11.1
+  - @spectrum-web-components/core@0.0.3
+  - @spectrum-web-components/base@1.11.1
 
 ## 1.11.0
 
@@ -27,70 +27,70 @@
 - [#5968](https://github.com/adobe/spectrum-web-components/pull/5968) [`f8bdeec`](https://github.com/adobe/spectrum-web-components/commit/f8bdeecf8a230822122a990fb977d3654649f891) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - Improve reliability when composing components and mixins that observe slot presence.
 
 - Updated dependencies [[`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
-    - @spectrum-web-components/base@1.11.0
+  - @spectrum-web-components/base@1.11.0
 
 ## 1.10.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.10.0
+  - @spectrum-web-components/base@1.10.0
 
 ## 1.9.1
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.9.1
+  - @spectrum-web-components/base@1.9.1
 
 ## 1.9.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.9.0
+  - @spectrum-web-components/base@1.9.0
 
 ## 1.8.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.8.0
+  - @spectrum-web-components/base@1.8.0
 
 ## 1.7.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.7.0
+  - @spectrum-web-components/base@1.7.0
 
 ## 1.6.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.6.0
+  - @spectrum-web-components/base@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.5.0
+  - @spectrum-web-components/base@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.4.0
+  - @spectrum-web-components/base@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.3.0
+  - @spectrum-web-components/base@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

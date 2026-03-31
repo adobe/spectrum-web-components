@@ -16,16 +16,16 @@ Changesets are a way to manage versions and changelogs for monorepos. Each chang
 
 1. Make your changes to the codebase
 2. Run the following command:
-    ```bash
-    yarn changeset
-    ```
+   ```bash
+   yarn changeset
+   ```
 3. Follow the prompts:
-    - Select the packages that have changed
-    - Choose the type of change for each package:
-        - `major` (breaking changes)
-        - `minor` (new features)
-        - `patch` (bug fixes)
-    - Write a summary of the changes
+   - Select the packages that have changed
+   - Choose the type of change for each package:
+     - `major` (breaking changes)
+     - `minor` (new features)
+     - `patch` (bug fixes)
+   - Write a summary of the changes
 
 The command will create a new markdown file in the `.changeset` directory with your changes.
 
@@ -62,9 +62,9 @@ We have a quick list of common questions to get you started engaging with this p
 1. Changesets are collected in PRs
 2. When PRs are merged, the changesets are accumulated
 3. During release, changesets are used to:
-    - Determine new version numbers
-    - Generate changelogs
-    - Update package.json files
+   - Determine new version numbers
+   - Generate changelogs
+   - Update package.json files
 
 ## Additional Resources
 

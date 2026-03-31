@@ -11,21 +11,23 @@ import { formatComponentName } from '../helpers/index.js';
  * @param componentName - Optional override for the component class name (defaults to derived PascalCase from title)
  * @param tagName - Optional override for the custom element tag name (defaults to swc-{packageName})
  */
-export const GettingStarted = ({ of }: { of?: any }) => {
-    const resolvedOf = useOf(of || 'meta', ['meta']);
+export const GettingStarted = ({ of, tags }: { of?: any; tag?: string }) => {
+  const resolvedOf = useOf(of || 'meta', ['meta']);
 
-    // Extract component name in kebab-case from the title (e.g., "Components/Progress Circle" -> "progress-circle")
-    const packageName = formatComponentName(resolvedOf.preparedMeta?.title);
+  if (tags.includes('utility')) return null;
 
-    // Extract component name in PascalCase from the title (e.g., "Components/Progress Circle" -> "ProgressCircle")
-    const baseClassName = formatComponentName(
-        resolvedOf.preparedMeta?.title,
-        'pascal'
-    );
+  // Extract component name in kebab-case from the title (e.g., "Components/Progress Circle" -> "progress-circle")
+  const packageName = formatComponentName(resolvedOf.preparedMeta?.title);
 
-    const tagName = `swc-${packageName}`;
+  // Extract component name in PascalCase from the title (e.g., "Components/Progress Circle" -> "ProgressCircle")
+  const baseClassName = formatComponentName(
+    resolvedOf.preparedMeta?.title,
+    'pascal'
+  );
 
-    const markdownContent = `## Getting started
+  const tagName = `swc-${packageName}`;
+
+  const markdownContent = `## Getting started
 
 Add the package to your project:
 
@@ -46,5 +48,5 @@ import { ${baseClassName} } from '@spectrum-web-components/${packageName}';
 \`\`\`
 `;
 
-    return <Markdown>{markdownContent}</Markdown>;
+  return <Markdown>{markdownContent}</Markdown>;
 };

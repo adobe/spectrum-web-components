@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -13,15 +13,16 @@
 @import url("./spectrum-accordion-item.css");
 
 :host {
-    display: block;
+  display: block;
 }
 
 #heading {
-    /* .spectrum-Accordion-itemHeading */
-    height: auto;
-    position: relative;
+  position: relative;
+
+  /* .spectrum-Accordion-itemHeading */
+  height: auto;
 }
 
 :host([disabled]) #heading .indicator {
-    color: var(--mod-accordion-item-header-disabled-color, var(--spectrum-accordion-item-header-disabled-color));
+  color: var(--mod-accordion-item-header-disabled-color, var(--spectrum-accordion-item-header-disabled-color));
 }

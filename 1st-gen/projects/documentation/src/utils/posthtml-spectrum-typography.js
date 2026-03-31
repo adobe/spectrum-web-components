@@ -1,5 +1,5 @@
-/*
- * Copyright 2025 Adobe. All rights reserved.
+/**
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -16,23 +16,23 @@ import parseAttrs from 'posthtml-attrs-parser';
 import matchHelper from 'posthtml-match-helper';
 
 export default (options = {}) => {
-    const htmlTransforms = options.customTransforms || [];
-    return function postHTMLSpectrumTypeography(tree) {
-        for (const transform of htmlTransforms) {
-            tree.match(matchHelper(transform.selector), (node) => {
-                const attrs = parseAttrs(node.attrs);
-                if (transform.classes) {
-                    attrs.class = attrs.class
-                        ? transform.classes.concat(attrs.class)
-                        : transform.classes;
-                }
-                node.attrs = attrs.compose();
-                if (transform.fn) {
-                    node = transform.fn(node);
-                }
-                return node;
-            });
+  const htmlTransforms = options.customTransforms || [];
+  return function postHTMLSpectrumTypeography(tree) {
+    for (const transform of htmlTransforms) {
+      tree.match(matchHelper(transform.selector), (node) => {
+        const attrs = parseAttrs(node.attrs);
+        if (transform.classes) {
+          attrs.class = attrs.class
+            ? transform.classes.concat(attrs.class)
+            : transform.classes;
         }
-        return tree;
-    };
+        node.attrs = attrs.compose();
+        if (transform.fn) {
+          node = transform.fn(node);
+        }
+        return node;
+      });
+    }
+    return tree;
+  };
 };

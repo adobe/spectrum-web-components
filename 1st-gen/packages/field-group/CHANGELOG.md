@@ -5,96 +5,96 @@
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.11.2
-    - @spectrum-web-components/help-text@1.11.2
+  - @spectrum-web-components/base@1.11.2
+  - @spectrum-web-components/help-text@1.11.2
 
 ## 1.11.1
 
 ### Patch Changes
 
 - Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
-    - @spectrum-web-components/base@1.11.1
-    - @spectrum-web-components/help-text@1.11.1
+  - @spectrum-web-components/base@1.11.1
+  - @spectrum-web-components/help-text@1.11.1
 
 ## 1.11.0
 
 ### Patch Changes
 
 - Updated dependencies [[`7af5e8f`](https://github.com/adobe/spectrum-web-components/commit/7af5e8fa8cb4142b7e4038e8ffe6e8ea547a397e), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
-    - @spectrum-web-components/help-text@1.11.0
-    - @spectrum-web-components/base@1.11.0
+  - @spectrum-web-components/help-text@1.11.0
+  - @spectrum-web-components/base@1.11.0
 
 ## 1.10.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/base@1.10.0
-    - @spectrum-web-components/help-text@1.10.0
+  - @spectrum-web-components/base@1.10.0
+  - @spectrum-web-components/help-text@1.10.0
 
 ## 1.9.1
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/help-text@1.9.1
-    - @spectrum-web-components/base@1.9.1
+  - @spectrum-web-components/help-text@1.9.1
+  - @spectrum-web-components/base@1.9.1
 
 ## 1.9.0
 
 ### Patch Changes
 
 - Updated dependencies [[`72d807c`](https://github.com/adobe/spectrum-web-components/commit/72d807c75d04b0fec1794a8d3e68383ca61d9e4c)]:
-    - @spectrum-web-components/help-text@1.9.0
-    - @spectrum-web-components/base@1.9.0
+  - @spectrum-web-components/help-text@1.9.0
+  - @spectrum-web-components/base@1.9.0
 
 ## 1.8.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/help-text@1.8.0
-    - @spectrum-web-components/base@1.8.0
+  - @spectrum-web-components/help-text@1.8.0
+  - @spectrum-web-components/base@1.8.0
 
 ## 1.7.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/help-text@1.7.0
-    - @spectrum-web-components/base@1.7.0
+  - @spectrum-web-components/help-text@1.7.0
+  - @spectrum-web-components/base@1.7.0
 
 ## 1.6.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/help-text@1.6.0
-    - @spectrum-web-components/base@1.6.0
+  - @spectrum-web-components/help-text@1.6.0
+  - @spectrum-web-components/base@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
 - Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0)]:
-    - @spectrum-web-components/help-text@1.5.0
-    - @spectrum-web-components/base@1.5.0
+  - @spectrum-web-components/help-text@1.5.0
+  - @spectrum-web-components/base@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/help-text@1.4.0
-    - @spectrum-web-components/base@1.4.0
+  - @spectrum-web-components/help-text@1.4.0
+  - @spectrum-web-components/base@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-    - @spectrum-web-components/help-text@1.3.0
-    - @spectrum-web-components/base@1.3.0
+  - @spectrum-web-components/help-text@1.3.0
+  - @spectrum-web-components/base@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

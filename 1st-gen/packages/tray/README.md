@@ -29,13 +29,13 @@ A tray has a single default `slot`. Expected content typically includes dialogs 
 
 ```html
 <overlay-trigger type="modal">
-    <sp-button slot="trigger" variant="secondary">Toggle tray</sp-button>
-    <sp-tray slot="click-content">
-        <sp-dialog size="s" dismissable>
-            <h2 slot="heading">New Messages</h2>
-            You have 5 new messages.
-        </sp-dialog>
-    </sp-tray>
+  <sp-button slot="trigger" variant="secondary">Toggle tray</sp-button>
+  <sp-tray slot="click-content">
+    <sp-dialog size="s" dismissable>
+      <h2 slot="heading">New Messages</h2>
+      You have 5 new messages.
+    </sp-dialog>
+  </sp-tray>
 </overlay-trigger>
 ```
 
@@ -63,32 +63,25 @@ This example shows the default behavior where the tray automatically detects tha
 
 ```html
 <overlay-trigger type="modal">
-    <sp-button slot="trigger" variant="secondary">
-        Toggle tray content
-    </sp-button>
-    <sp-tray slot="click-content">
-        <div style="display: flex; flex-direction: column; margin: 16px;">
-            <p style="margin-block-start: 0;">
-                Custom content that doesn't have dismiss functionality, so the
-                tray detects it needs the visually-hidden dismiss buttons.
-            </p>
-            <label>
-                What's your favorite Super Mario character?
-                <select
-                    name="favorite-characters"
-                    style="margin-block-start: 8px;"
-                >
-                    <option value="">
-                        Choose your favorite Super Mario character.
-                    </option>
-                    <option value="mario">Mario</option>
-                    <option value="luigi">Luigi</option>
-                    <option value="toad">Toad</option>
-                    <option value="bowser">Bowser</option>
-                </select>
-            </label>
-        </div>
-    </sp-tray>
+  <sp-button slot="trigger" variant="secondary">Toggle tray content</sp-button>
+  <sp-tray slot="click-content">
+    <div style="display: flex; flex-direction: column; margin: 16px;">
+      <p style="margin-block-start: 0;">
+        Custom content that doesn't have dismiss functionality, so the tray
+        detects it needs the visually-hidden dismiss buttons.
+      </p>
+      <label>
+        What's your favorite Super Mario character?
+        <select name="favorite-characters" style="margin-block-start: 8px;">
+          <option value="">Choose your favorite Super Mario character.</option>
+          <option value="mario">Mario</option>
+          <option value="luigi">Luigi</option>
+          <option value="toad">Toad</option>
+          <option value="bowser">Bowser</option>
+        </select>
+      </label>
+    </div>
+  </sp-tray>
 </overlay-trigger>
 ```
 
@@ -100,15 +93,15 @@ This example shows auto-detection recognizing that the dialog has its own dismis
 
 ```html
 <overlay-trigger type="modal">
-    <sp-button slot="trigger" variant="secondary">
-        Toggle dialog content
-    </sp-button>
-    <sp-tray slot="click-content">
-        <sp-dialog size="s" dismissable>
-            <h2 slot="heading">New messages</h2>
-            You have 5 new messages.
-        </sp-dialog>
-    </sp-tray>
+  <sp-button slot="trigger" variant="secondary">
+    Toggle dialog content
+  </sp-button>
+  <sp-tray slot="click-content">
+    <sp-dialog size="s" dismissable>
+      <h2 slot="heading">New messages</h2>
+      You have 5 new messages.
+    </sp-dialog>
+  </sp-tray>
 </overlay-trigger>
 ```
 
@@ -120,15 +113,15 @@ Set `has-keyboard-dismiss` (or `has-keyboard-dismiss="true"`) to prevent the tra
 
 ```html
 <overlay-trigger type="modal">
-    <sp-button slot="trigger" variant="secondary">
-        Toggle without helpers
-    </sp-button>
-    <sp-tray slot="click-content" has-keyboard-dismiss>
-        <p style="margin: 16px;">
-            Custom content that should have custom dismiss functionality, even
-            though the tray didn't detect buttons in this slot.
-        </p>
-    </sp-tray>
+  <sp-button slot="trigger" variant="secondary">
+    Toggle without helpers
+  </sp-button>
+  <sp-tray slot="click-content" has-keyboard-dismiss>
+    <p style="margin: 16px;">
+      Custom content that should have custom dismiss functionality, even though
+      the tray didn't detect buttons in this slot.
+    </p>
+  </sp-tray>
 </overlay-trigger>
 ```
 

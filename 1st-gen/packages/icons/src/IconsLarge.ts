@@ -11,7 +11,6 @@
  */
 
 import { TemplateResult } from '@spectrum-web-components/base';
-
 import { IconsetSVG } from '@spectrum-web-components/iconset/src/iconset-svg.js';
 
 import iconsSVG from './icons-large.svg.js';
@@ -20,35 +19,35 @@ import iconsSVG from './icons-large.svg.js';
  * @element sp-icons-large
  */
 export class IconsLarge extends IconsetSVG {
-    public constructor() {
-        super();
-        this.name = 'ui'; // default iconset name for these icons
-    }
+  public constructor() {
+    super();
+    this.name = 'ui'; // default iconset name for these icons
+  }
 
-    protected override firstUpdated(): void {
-        super.firstUpdated();
-        if (window.__swc?.DEBUG) {
-            window.__swc.warn(
-                this,
-                'Icons package has been deprecated and will be removed from the project in an upcoming release. For default Spectrum Icons, learn more about leveraging UI Icons (https://opensource.adobe.com/spectrum-web-components/components/icons-ui/) or Workflow Icons (https://opensource.adobe.com/spectrum-web-components/components/icons-workflow/) as an alternative.',
-                'https://opensource.adobe.com/spectrum-web-components/components/icons/#deprecated',
-                { level: 'deprecation' }
-            );
-        }
+  protected override firstUpdated(): void {
+    super.firstUpdated();
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        'Icons package has been deprecated and will be removed from the project in an upcoming release. For default Spectrum Icons, learn more about leveraging UI Icons (https://opensource.adobe.com/spectrum-web-components/components/icons-ui/) or Workflow Icons (https://opensource.adobe.com/spectrum-web-components/components/icons-workflow/) as an alternative.',
+        'https://opensource.adobe.com/spectrum-web-components/components/icons/#deprecated',
+        { level: 'deprecation' }
+      );
     }
+  }
 
-    protected override renderDefaultContent(): TemplateResult {
-        return iconsSVG;
-    }
-    /**
-     * Overrides createIconName to make icon strings compatible with spectrum-icon id format
-     * @param icon
-     * @param size
-     */
-    protected override getSVGIconName(icon: string): string {
-        return `spectrum-icon-${icon}`;
-    }
-    protected override getSanitizedIconName(icon: string): string {
-        return icon.replace('spectrum-icon-', '');
-    }
+  protected override renderDefaultContent(): TemplateResult {
+    return iconsSVG;
+  }
+  /**
+   * Overrides createIconName to make icon strings compatible with spectrum-icon id format
+   * @param icon
+   * @param size
+   */
+  protected override getSVGIconName(icon: string): string {
+    return `spectrum-icon-${icon}`;
+  }
+  protected override getSanitizedIconName(icon: string): string {
+    return icon.replace('spectrum-icon-', '');
+  }
 }

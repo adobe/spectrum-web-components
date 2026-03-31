@@ -204,12 +204,12 @@ const colorField = document.querySelector('sp-color-field');
 
 // Listen for real-time changes
 colorField.addEventListener('input', (event) => {
-    console.log('Color value changed:', event.target.value);
+  console.log('Color value changed:', event.target.value);
 });
 
 // Listen for committed changes
 colorField.addEventListener('change', (event) => {
-    console.log('Color value committed:', event.target.value);
+  console.log('Color value committed:', event.target.value);
 });
 ```
 

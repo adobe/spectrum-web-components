@@ -31,9 +31,9 @@ import { Tag } from '@spectrum-web-components/tags';
 
 ```html
 <sp-tags>
-    <sp-tag size="s">Tag 1</sp-tag>
-    <sp-tag invalid size="s">Tag 2</sp-tag>
-    <sp-tag disabled size="s">Tag 3</sp-tag>
+  <sp-tag size="s">Tag 1</sp-tag>
+  <sp-tag invalid size="s">Tag 2</sp-tag>
+  <sp-tag disabled size="s">Tag 3</sp-tag>
 </sp-tags>
 ```
 
@@ -43,9 +43,9 @@ import { Tag } from '@spectrum-web-components/tags';
 
 ```html
 <sp-tags>
-    <sp-tag size="m">Tag 1</sp-tag>
-    <sp-tag invalid size="m">Tag 2</sp-tag>
-    <sp-tag disabled size="m">Tag 3</sp-tag>
+  <sp-tag size="m">Tag 1</sp-tag>
+  <sp-tag invalid size="m">Tag 2</sp-tag>
+  <sp-tag disabled size="m">Tag 3</sp-tag>
 </sp-tags>
 ```
 
@@ -55,9 +55,9 @@ import { Tag } from '@spectrum-web-components/tags';
 
 ```html
 <sp-tags>
-    <sp-tag size="l">Tag 1</sp-tag>
-    <sp-tag invalid size="l">Tag 2</sp-tag>
-    <sp-tag disabled size="l">Tag 3</sp-tag>
+  <sp-tag size="l">Tag 1</sp-tag>
+  <sp-tag invalid size="l">Tag 2</sp-tag>
+  <sp-tag disabled size="l">Tag 3</sp-tag>
 </sp-tags>
 ```
 

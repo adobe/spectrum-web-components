@@ -40,38 +40,37 @@ Here's a complete example showing the anatomy:
 
 ```html
 <sp-coachmark
-    current-step="2"
-    total-steps="8"
-    open
-    primary-cta="Next"
-    secondary-cta="Previous"
+  current-step="2"
+  total-steps="8"
+  open
+  primary-cta="Next"
+  secondary-cta="Previous"
 >
-    <!-- Title -->
-    <div slot="title">Welcome to the Tour</div>
+  <!-- Title -->
+  <div slot="title">Welcome to the Tour</div>
 
-    <!-- Main content -->
-    <div slot="content">
-        This coachmark demonstrates the various parts that make up the
-        component.
-    </div>
+  <!-- Main content -->
+  <div slot="content">
+    This coachmark demonstrates the various parts that make up the component.
+  </div>
 
-    <!-- Media content -->
-    <img
-        slot="asset"
-        src="https://picsum.photos/id/237/200/300"
-        alt="Feature demonstration"
-    />
+  <!-- Media content -->
+  <img
+    slot="asset"
+    src="https://picsum.photos/id/237/200/300"
+    alt="Feature demonstration"
+  />
 
-    <!-- Action menu -->
-    <sp-action-menu
-        slot="actions"
-        label="More Actions"
-        placement="bottom-end"
-        quiet
-    >
-        <sp-menu-item>Skip tour</sp-menu-item>
-        <sp-menu-item>Restart tour</sp-menu-item>
-    </sp-action-menu>
+  <!-- Action menu -->
+  <sp-action-menu
+    slot="actions"
+    label="More Actions"
+    placement="bottom-end"
+    quiet
+  >
+    <sp-menu-item>Skip tour</sp-menu-item>
+    <sp-menu-item>Restart tour</sp-menu-item>
+  </sp-action-menu>
 </sp-coachmark>
 ```
 
@@ -85,25 +84,23 @@ The `primary-cta` and `secondary-cta` attributes are used to display navigation 
 
 ```html
 <sp-coachmark
-    id="coachmark-navigation"
-    open
-    primary-cta="Next"
-    secondary-cta="Previous"
+  id="coachmark-navigation"
+  open
+  primary-cta="Next"
+  secondary-cta="Previous"
 >
-    <div slot="title">Coachmark with navigation</div>
-    <div slot="content">
-        This coachmark demonstrates the navigation buttons.
-    </div>
-    <!-- Action menu -->
-    <sp-action-menu
-        slot="actions"
-        label="More Actions"
-        placement="bottom-end"
-        quiet
-    >
-        <sp-menu-item>Skip tour</sp-menu-item>
-        <sp-menu-item>Restart tour</sp-menu-item>
-    </sp-action-menu>
+  <div slot="title">Coachmark with navigation</div>
+  <div slot="content">This coachmark demonstrates the navigation buttons.</div>
+  <!-- Action menu -->
+  <sp-action-menu
+    slot="actions"
+    label="More Actions"
+    placement="bottom-end"
+    quiet
+  >
+    <sp-menu-item>Skip tour</sp-menu-item>
+    <sp-menu-item>Restart tour</sp-menu-item>
+  </sp-action-menu>
 </sp-coachmark>
 ```
 
@@ -115,27 +112,25 @@ The `current-step` and `total-steps` attributes are used to display a progress i
 
 ```html
 <sp-coachmark
-    id="coachmark-progress"
-    open
-    current-step="2"
-    total-steps="8"
-    primary-cta="Next"
-    secondary-cta="Previous"
+  id="coachmark-progress"
+  open
+  current-step="2"
+  total-steps="8"
+  primary-cta="Next"
+  secondary-cta="Previous"
 >
-    <div slot="title">Coachmark with progress indicator</div>
-    <div slot="content">
-        This coachmark demonstrates the progress indicator.
-    </div>
-    <!-- Action menu -->
-    <sp-action-menu
-        slot="actions"
-        label="More Actions"
-        placement="bottom-end"
-        quiet
-    >
-        <sp-menu-item>Skip tour</sp-menu-item>
-        <sp-menu-item>Restart tour</sp-menu-item>
-    </sp-action-menu>
+  <div slot="title">Coachmark with progress indicator</div>
+  <div slot="content">This coachmark demonstrates the progress indicator.</div>
+  <!-- Action menu -->
+  <sp-action-menu
+    slot="actions"
+    label="More Actions"
+    placement="bottom-end"
+    quiet
+  >
+    <sp-menu-item>Skip tour</sp-menu-item>
+    <sp-menu-item>Restart tour</sp-menu-item>
+  </sp-action-menu>
 </sp-coachmark>
 ```
 
@@ -241,26 +236,26 @@ Inside the `<sp-coachmark>`, add the content and instructions for the coachmark 
 
 ```html
 <sp-coachmark
-    id="coachmark-action"
-    open
-    current-step="2"
-    total-steps="8"
-    primary-cta="Asset added"
-    secondary-cta="Previous"
+  id="coachmark-action"
+  open
+  current-step="2"
+  total-steps="8"
+  primary-cta="Asset added"
+  secondary-cta="Previous"
 >
-    <div slot="title">Coachmark with user action</div>
-    <div slot="content">
-        This coachmark waits for the user to complete a specific action.
-    </div>
-    <sp-action-menu
-        label="More Actions"
-        placement="bottom-end"
-        quiet
-        slot="actions"
-    >
-        <sp-menu-item>Skip tour</sp-menu-item>
-        <sp-menu-item>Restart tour</sp-menu-item>
-    </sp-action-menu>
+  <div slot="title">Coachmark with user action</div>
+  <div slot="content">
+    This coachmark waits for the user to complete a specific action.
+  </div>
+  <sp-action-menu
+    label="More Actions"
+    placement="bottom-end"
+    quiet
+    slot="actions"
+  >
+    <sp-menu-item>Skip tour</sp-menu-item>
+    <sp-menu-item>Restart tour</sp-menu-item>
+  </sp-action-menu>
 </sp-coachmark>
 ```
 

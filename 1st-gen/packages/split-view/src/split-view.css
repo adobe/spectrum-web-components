@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -14,95 +14,95 @@
 @import url("./split-view-overrides.css");
 
 :host {
-    --spectrum-split-view-first-pane-size: 50%;
+  --spectrum-split-view-first-pane-size: 50%;
 }
 
 ::slotted(*) {
-    overflow: auto;
+  overflow: auto;
 }
 
 ::slotted(:first-child) {
-    order: 1;
+  order: 1;
 }
 
 :host(:not([vertical])) ::slotted(:first-child:not(:last-child)) {
-    width: var(--spectrum-split-view-first-pane-size);
+  width: var(--spectrum-split-view-first-pane-size);
 }
 
 :host([vertical]) ::slotted(:first-child:not(:last-child)) {
-    height: var(--spectrum-split-view-first-pane-size);
+  height: var(--spectrum-split-view-first-pane-size);
 }
 
 ::slotted(:nth-child(2)) {
-    order: 3;
-    flex: 1;
+  flex: 1;
+  order: 3;
 }
 
 ::slotted(:nth-child(n + 3)) {
-    display: none;
+  display: none;
 }
 
 #gripper {
-    touch-action: none;
+  touch-action: none;
 }
 
 #splitter {
-    order: 2;
-    height: auto; /* for horizontal splitviews without proper outter height value */
+  order: 2;
+  height: auto; /* for horizontal splitviews without proper outter height value */
 }
 
 :host([resizable]) #splitter {
-    background-clip: content-box;
-    cursor: ew-resize;
+  background-clip: content-box;
+  cursor: ew-resize;
 }
 
 :host([vertical][resizable]) #splitter {
-    background-clip: content-box;
-    cursor: ns-resize;
+  background-clip: content-box;
+  cursor: ns-resize;
 }
 
 :host([resizable]) #splitter.is-resized-start:dir(ltr),
 :host([resizable]) #splitter.is-resized-end:dir(rtl) {
-    cursor: e-resize;
+  cursor: e-resize;
 }
 
 :host([resizable]) #splitter.is-resized-end:dir(ltr),
 :host([resizable]) #splitter.is-resized-start:dir(rtl) {
-    cursor: w-resize;
+  cursor: w-resize;
 }
 
 :host([vertical][resizable]) #splitter.is-resized-start {
-    cursor: s-resize;
+  cursor: s-resize;
 }
 
 :host([vertical][resizable]) #splitter.is-resized-end {
-    cursor: n-resize;
+  cursor: n-resize;
 }
 
 :host([resizable][collapsible]) #splitter.is-resized-start,
 :host([resizable][collapsible]) #splitter.is-resized-end {
-    cursor: ew-resize;
+  cursor: ew-resize;
 }
 
 :host([resizable][collapsible]) #splitter.is-collapsed-start:dir(ltr),
 :host([resizable][collapsible]) #splitter.is-collapsed-end:dir(rtl) {
-    cursor: e-resize;
+  cursor: e-resize;
 }
 
 :host([resizable][collapsible]) #splitter.is-collapsed-end:dir(ltr),
 :host([resizable][collapsible]) #splitter.is-collapsed-start:dir(rtl) {
-    cursor: w-resize;
+  cursor: w-resize;
 }
 
 :host([vertical][resizable][collapsible]) #splitter.is-collapsed-start {
-    cursor: s-resize;
+  cursor: s-resize;
 }
 
 :host([vertical][resizable][collapsible]) #splitter.is-collapsed-end {
-    cursor: n-resize;
+  cursor: n-resize;
 }
 
 :host([vertical][resizable][collapsible]) #splitter.is-resized-start,
 :host([vertical][resizable][collapsible]) #splitter.is-resized-end {
-    cursor: ns-resize;
+  cursor: ns-resize;
 }

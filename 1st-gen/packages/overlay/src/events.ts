@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -13,53 +13,53 @@
 import type { TriggerInteractions } from './overlay-types.js';
 
 export class BeforetoggleClosedEvent extends Event {
-    currentState = 'open';
-    newState = 'closed';
-    constructor() {
-        super('beforetoggle', {
-            bubbles: false,
-            composed: false,
-        });
-    }
+  currentState = 'open';
+  newState = 'closed';
+  constructor() {
+    super('beforetoggle', {
+      bubbles: false,
+      composed: false,
+    });
+  }
 }
 
 export class BeforetoggleOpenEvent extends Event {
-    currentState = 'closed';
-    newState = 'open';
-    constructor() {
-        super('beforetoggle', {
-            bubbles: false,
-            composed: false,
-        });
-    }
+  currentState = 'closed';
+  newState = 'open';
+  constructor() {
+    super('beforetoggle', {
+      bubbles: false,
+      composed: false,
+    });
+  }
 }
 
 export class OverlayStateEvent extends Event {
-    detail!: {
-        interaction: string;
-        reason?: 'external-click';
-    };
+  detail!: {
+    interaction: string;
+    reason?: 'external-click';
+  };
 
-    constructor(
-        type: string,
-        public overlay: HTMLElement,
-        {
-            publish,
-            interaction,
-            reason,
-        }: {
-            publish?: boolean;
-            interaction: TriggerInteractions;
-            reason?: 'external-click';
-        }
-    ) {
-        super(type, {
-            bubbles: publish,
-            composed: publish,
-        });
-        this.detail = {
-            interaction,
-            reason,
-        };
+  constructor(
+    type: string,
+    public overlay: HTMLElement,
+    {
+      publish,
+      interaction,
+      reason,
+    }: {
+      publish?: boolean;
+      interaction: TriggerInteractions;
+      reason?: 'external-click';
     }
+  ) {
+    super(type, {
+      bubbles: publish,
+      composed: publish,
+    });
+    this.detail = {
+      interaction,
+      reason,
+    };
+  }
 }

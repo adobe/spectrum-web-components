@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -16,40 +16,40 @@
 @import url("./menu-item-overrides.css");
 
 :host {
-    text-align: initial;
+  text-align: initial;
 }
 
 :host([hidden]) {
-    display: none;
+  display: none;
 }
 
 :host([disabled]) {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 :host([disabled]) [name="value"]::slotted(*) {
-    color: var(--highcontrast-menu-item-color-disabled, var(--mod-menu-item-label-icon-color-disabled, var(--spectrum-menu-item-label-icon-color-disabled)));
+  color: var(--highcontrast-menu-item-color-disabled, var(--mod-menu-item-label-icon-color-disabled, var(--spectrum-menu-item-label-icon-color-disabled)));
 }
 
 :host([has-submenu][disabled]) .chevron {
-    color: var(--highcontrast-menu-item-color-disabled, var(--mod-menu-item-label-icon-color-disabled, var(--spectrum-menu-item-label-icon-color-disabled)));
+  color: var(--highcontrast-menu-item-color-disabled, var(--mod-menu-item-label-icon-color-disabled, var(--spectrum-menu-item-label-icon-color-disabled)));
 }
 
 #button {
-    position: absolute;
-    inset: 0;
+  position: absolute;
+  inset: 0;
 }
 
 sp-popover {
-    margin-block-start: var(--system-submenu-offset-block, -5px);
+  margin-block-start: var(--system-submenu-offset-block, -5px);
 }
 
 :host(:dir(ltr)) [icon-only]::slotted(:last-of-type) {
-    margin-right: auto;
+  margin-right: auto;
 }
 
 :host(:dir(rtl)) [icon-only]::slotted(:last-of-type) {
-    margin-left: auto;
+  margin-left: auto;
 }
 
 /* N: Manually adding this selector because I can't use this selector in
@@ -57,23 +57,23 @@ sp-popover {
 ** that file which I don't want to surface
 */
 @media (forced-colors: active) {
-    :host {
-        forced-color-adjust: none;
-    }
+  :host {
+    forced-color-adjust: none;
+  }
 }
 
 ::slotted([slot="submenu"]) {
-    width: max-content;
-    max-width: 100%;
-    overflow-y: auto;
+  width: max-content;
+  max-width: 100%;
+  overflow-y: auto;
 }
 
 :host([no-wrap]) #label {
-    display: block;
+  display: block;
 }
 
 /** Host is :focus bt not :focus-visible so we remove the outline */
 :host([focused]:not(:focus-visible)) {
-    outline: none;
-    box-shadow: none;
+  box-shadow: none;
+  outline: none;
 }

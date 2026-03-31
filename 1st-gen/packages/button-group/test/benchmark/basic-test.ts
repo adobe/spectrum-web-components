@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,15 +10,17 @@
  * governing permissions and limitations under the License.
  */
 
+import { html } from 'lit';
+
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/button/sp-button.js';
-import { html } from 'lit';
+
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-button-group>
-        <sp-button>Button 1</sp-button>
-        <sp-button>Longer Button 2</sp-button>
-        <sp-button>Short 3</sp-button>
-    </sp-button-group>
+  <sp-button-group>
+    <sp-button>Button 1</sp-button>
+    <sp-button>Longer Button 2</sp-button>
+    <sp-button>Short 3</sp-button>
+  </sp-button-group>
 `);

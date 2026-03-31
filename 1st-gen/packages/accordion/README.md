@@ -36,24 +36,23 @@ The accordion consists of several key parts:
 
 ```html
 <sp-accordion>
-    <sp-accordion-item label="Bellows">
-        <div>
-            The bellows is the expandable section in the middle of the
-            accordion.
-        </div>
-    </sp-accordion-item>
-    <sp-accordion-item disabled label="Treble">
-        <div>
-            The treble section of the accordion is the right-hand section for
-            playing melodies.
-        </div>
-    </sp-accordion-item>
-    <sp-accordion-item label="Bass">
-        <div>
-            The bass section of the accordion is the left-hand section for
-            playing accompaniment.
-        </div>
-    </sp-accordion-item>
+  <sp-accordion-item label="Bellows">
+    <div>
+      The bellows is the expandable section in the middle of the accordion.
+    </div>
+  </sp-accordion-item>
+  <sp-accordion-item disabled label="Treble">
+    <div>
+      The treble section of the accordion is the right-hand section for playing
+      melodies.
+    </div>
+  </sp-accordion-item>
+  <sp-accordion-item label="Bass">
+    <div>
+      The bass section of the accordion is the left-hand section for playing
+      accompaniment.
+    </div>
+  </sp-accordion-item>
 </sp-accordion>
 ```
 
@@ -67,31 +66,29 @@ The accordion consists of several key parts:
 
 ```html
 <sp-accordion size="s">
-    <sp-accordion-item label="Key Accordion">
-        <div>
-            A key accordion, or a chromatic piano accordion, includes a keyboard
-            for the right hand.
-        </div>
-    </sp-accordion-item>
-    <sp-accordion-item disabled label="Button Accordion">
-        <div>
-            A button accoridon, or a chromatic accordion, has buttons instead of
-            keys.
-        </div>
-    </sp-accordion-item>
-    <sp-accordion-item label="Diatonic Accordion">
-        <div>
-            Produces two different tones or notes depending on whether the
-            bellows is pulled or pushed.
-        </div>
-    </sp-accordion-item>
-    <sp-accordion-item label="Concertina">
-        <div>
-            A concertina has buttons on both sides and each button makes two
-            different notes or tones depending on whether the bellows is pulled
-            or pushed.
-        </div>
-    </sp-accordion-item>
+  <sp-accordion-item label="Key Accordion">
+    <div>
+      A key accordion, or a chromatic piano accordion, includes a keyboard for
+      the right hand.
+    </div>
+  </sp-accordion-item>
+  <sp-accordion-item disabled label="Button Accordion">
+    <div>
+      A button accoridon, or a chromatic accordion, has buttons instead of keys.
+    </div>
+  </sp-accordion-item>
+  <sp-accordion-item label="Diatonic Accordion">
+    <div>
+      Produces two different tones or notes depending on whether the bellows is
+      pulled or pushed.
+    </div>
+  </sp-accordion-item>
+  <sp-accordion-item label="Concertina">
+    <div>
+      A concertina has buttons on both sides and each button makes two different
+      notes or tones depending on whether the bellows is pulled or pushed.
+    </div>
+  </sp-accordion-item>
 </sp-accordion>
 ```
 
@@ -101,31 +98,29 @@ The accordion consists of several key parts:
 
 ```html
 <sp-accordion size="m">
-    <sp-accordion-item label="Key Accordion">
-        <div>
-            A key accordion, or a chromatic piano accordion, includes a keyboard
-            for the right hand.
-        </div>
-    </sp-accordion-item>
-    <sp-accordion-item disabled label="Button Accordion">
-        <div>
-            A button accoridon, or a chromatic accordion, has buttons instead of
-            keys.
-        </div>
-    </sp-accordion-item>
-    <sp-accordion-item label="Diatonic Accordion">
-        <div>
-            Produces two different tones or notes depending on whether the
-            bellows is pulled or pushed.
-        </div>
-    </sp-accordion-item>
-    <sp-accordion-item label="Concertina">
-        <div>
-            A concertina has buttons on both sides and each button makes two
-            different notes or tones depending on whether the bellows is pulled
-            or pushed.
-        </div>
-    </sp-accordion-item>
+  <sp-accordion-item label="Key Accordion">
+    <div>
+      A key accordion, or a chromatic piano accordion, includes a keyboard for
+      the right hand.
+    </div>
+  </sp-accordion-item>
+  <sp-accordion-item disabled label="Button Accordion">
+    <div>
+      A button accoridon, or a chromatic accordion, has buttons instead of keys.
+    </div>
+  </sp-accordion-item>
+  <sp-accordion-item label="Diatonic Accordion">
+    <div>
+      Produces two different tones or notes depending on whether the bellows is
+      pulled or pushed.
+    </div>
+  </sp-accordion-item>
+  <sp-accordion-item label="Concertina">
+    <div>
+      A concertina has buttons on both sides and each button makes two different
+      notes or tones depending on whether the bellows is pulled or pushed.
+    </div>
+  </sp-accordion-item>
 </sp-accordion>
 ```
 
@@ -135,31 +130,29 @@ The accordion consists of several key parts:
 
 ```html
 <sp-accordion size="l">
-    <sp-accordion-item label="Key Accordion">
-        <div>
-            A key accordion, or a chromatic piano accordion, includes a keyboard
-            for the right hand.
-        </div>
-    </sp-accordion-item>
-    <sp-accordion-item disabled label="Button Accordion">
-        <div>
-            A button accoridon, or a chromatic accordion, has buttons instead of
-            keys.
-        </div>
-    </sp-accordion-item>
-    <sp-accordion-item label="Diatonic Accordion">
-        <div>
-            Produces two different tones or notes depending on whether the
-            bellows is pulled or pushed.
-        </div>
-    </sp-accordion-item>
-    <sp-accordion-item label="Concertina">
-        <div>
-            A concertina has buttons on both sides and each button makes two
-            different notes or tones depending on whether the bellows is pulled
-            or pushed.
-        </div>
-    </sp-accordion-item>
+  <sp-accordion-item label="Key Accordion">
+    <div>
+      A key accordion, or a chromatic piano accordion, includes a keyboard for
+      the right hand.
+    </div>
+  </sp-accordion-item>
+  <sp-accordion-item disabled label="Button Accordion">
+    <div>
+      A button accoridon, or a chromatic accordion, has buttons instead of keys.
+    </div>
+  </sp-accordion-item>
+  <sp-accordion-item label="Diatonic Accordion">
+    <div>
+      Produces two different tones or notes depending on whether the bellows is
+      pulled or pushed.
+    </div>
+  </sp-accordion-item>
+  <sp-accordion-item label="Concertina">
+    <div>
+      A concertina has buttons on both sides and each button makes two different
+      notes or tones depending on whether the bellows is pulled or pushed.
+    </div>
+  </sp-accordion-item>
 </sp-accordion>
 ```
 
@@ -169,31 +162,29 @@ The accordion consists of several key parts:
 
 ```html
 <sp-accordion size="xl">
-    <sp-accordion-item label="Key Accordion">
-        <div>
-            A key accordion, or a chromatic piano accordion, includes a keyboard
-            for the right hand.
-        </div>
-    </sp-accordion-item>
-    <sp-accordion-item disabled label="Button Accordion">
-        <div>
-            A button accoridon, or a chromatic accordion, has buttons instead of
-            keys.
-        </div>
-    </sp-accordion-item>
-    <sp-accordion-item label="Diatonic Accordion">
-        <div>
-            Produces two different tones or notes depending on whether the
-            bellows is pulled or pushed.
-        </div>
-    </sp-accordion-item>
-    <sp-accordion-item label="Concertina">
-        <div>
-            A concertina has buttons on both sides and each button makes two
-            different notes or tones depending on whether the bellows is pulled
-            or pushed.
-        </div>
-    </sp-accordion-item>
+  <sp-accordion-item label="Key Accordion">
+    <div>
+      A key accordion, or a chromatic piano accordion, includes a keyboard for
+      the right hand.
+    </div>
+  </sp-accordion-item>
+  <sp-accordion-item disabled label="Button Accordion">
+    <div>
+      A button accoridon, or a chromatic accordion, has buttons instead of keys.
+    </div>
+  </sp-accordion-item>
+  <sp-accordion-item label="Diatonic Accordion">
+    <div>
+      Produces two different tones or notes depending on whether the bellows is
+      pulled or pushed.
+    </div>
+  </sp-accordion-item>
+  <sp-accordion-item label="Concertina">
+    <div>
+      A concertina has buttons on both sides and each button makes two different
+      notes or tones depending on whether the bellows is pulled or pushed.
+    </div>
+  </sp-accordion-item>
 </sp-accordion>
 ```
 
@@ -210,43 +201,43 @@ The `density` property, when applied, accepts the values of `compact` or `spacio
 
 ```html
 <div
-    style="
+  style="
   display: grid;
   grid-gap: 20px;
   grid-template-columns: 1fr 1fr"
 >
-    <sp-accordion density="compact" size="s">
-        <sp-accordion-item label="Compact Density">
-            <div>This accordion is compact.</div>
-        </sp-accordion-item>
-        <sp-accordion-item label="Small Size">
-            <div>This accordion is also small.</div>
-        </sp-accordion-item>
-    </sp-accordion>
-    <sp-accordion density="compact" size="m">
-        <sp-accordion-item label="Compact Density">
-            <div>This accordion is compact.</div>
-        </sp-accordion-item>
-        <sp-accordion-item label="Medium Size">
-            <div>This accordion is also medium.</div>
-        </sp-accordion-item>
-    </sp-accordion>
-    <sp-accordion density="compact" size="l">
-        <sp-accordion-item label="Compact Density">
-            <div>This accordion is compact.</div>
-        </sp-accordion-item>
-        <sp-accordion-item label="Large Size">
-            <div>This accordion is also large.</div>
-        </sp-accordion-item>
-    </sp-accordion>
-    <sp-accordion density="compact" size="xl">
-        <sp-accordion-item label="Compact Density">
-            <div>This accordion is compact.</div>
-        </sp-accordion-item>
-        <sp-accordion-item label="Extra Large Size">
-            <div>This accordion is also extra large.</div>
-        </sp-accordion-item>
-    </sp-accordion>
+  <sp-accordion density="compact" size="s">
+    <sp-accordion-item label="Compact Density">
+      <div>This accordion is compact.</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Small Size">
+      <div>This accordion is also small.</div>
+    </sp-accordion-item>
+  </sp-accordion>
+  <sp-accordion density="compact" size="m">
+    <sp-accordion-item label="Compact Density">
+      <div>This accordion is compact.</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Medium Size">
+      <div>This accordion is also medium.</div>
+    </sp-accordion-item>
+  </sp-accordion>
+  <sp-accordion density="compact" size="l">
+    <sp-accordion-item label="Compact Density">
+      <div>This accordion is compact.</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Large Size">
+      <div>This accordion is also large.</div>
+    </sp-accordion-item>
+  </sp-accordion>
+  <sp-accordion density="compact" size="xl">
+    <sp-accordion-item label="Compact Density">
+      <div>This accordion is compact.</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Extra Large Size">
+      <div>This accordion is also extra large.</div>
+    </sp-accordion-item>
+  </sp-accordion>
 </div>
 ```
 
@@ -256,43 +247,43 @@ The `density` property, when applied, accepts the values of `compact` or `spacio
 
 ```html
 <div
-    style="
+  style="
   display: grid;
   grid-gap: 20px;
     grid-template-columns: 1fr 1fr"
 >
-    <sp-accordion density="spacious" size="s">
-        <sp-accordion-item label="Spacious Density">
-            <div>This accordion is spacious.</div>
-        </sp-accordion-item>
-        <sp-accordion-item label="Small Size">
-            <div>This accordion is also small.</div>
-        </sp-accordion-item>
-    </sp-accordion>
-    <sp-accordion density="spacious" size="m">
-        <sp-accordion-item label="Spacious Density">
-            <div>This accordion is spacious.</div>
-        </sp-accordion-item>
-        <sp-accordion-item label="Medium Size">
-            <div>This accordion is also medium.</div>
-        </sp-accordion-item>
-    </sp-accordion>
-    <sp-accordion density="spacious" size="l">
-        <sp-accordion-item label="Spacious Density">
-            <div>This accordion is spacious.</div>
-        </sp-accordion-item>
-        <sp-accordion-item label="Large Size">
-            <div>This accordion is also large.</div>
-        </sp-accordion-item>
-    </sp-accordion>
-    <sp-accordion density="spacious" size="xl">
-        <sp-accordion-item label="Spacious Density">
-            <div>This accordion is spacious.</div>
-        </sp-accordion-item>
-        <sp-accordion-item label="Extra Large Size">
-            <div>This accordion is also extra large.</div>
-        </sp-accordion-item>
-    </sp-accordion>
+  <sp-accordion density="spacious" size="s">
+    <sp-accordion-item label="Spacious Density">
+      <div>This accordion is spacious.</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Small Size">
+      <div>This accordion is also small.</div>
+    </sp-accordion-item>
+  </sp-accordion>
+  <sp-accordion density="spacious" size="m">
+    <sp-accordion-item label="Spacious Density">
+      <div>This accordion is spacious.</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Medium Size">
+      <div>This accordion is also medium.</div>
+    </sp-accordion-item>
+  </sp-accordion>
+  <sp-accordion density="spacious" size="l">
+    <sp-accordion-item label="Spacious Density">
+      <div>This accordion is spacious.</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Large Size">
+      <div>This accordion is also large.</div>
+    </sp-accordion-item>
+  </sp-accordion>
+  <sp-accordion density="spacious" size="xl">
+    <sp-accordion-item label="Spacious Density">
+      <div>This accordion is spacious.</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Extra Large Size">
+      <div>This accordion is also extra large.</div>
+    </sp-accordion-item>
+  </sp-accordion>
 </div>
 ```
 
@@ -309,26 +300,26 @@ All items within an accordion will use the same heading level, ensuring items of
 <h1>Main Page Title</h1>
 
 <sp-accordion level="2">
-    <sp-accordion-item label="First Section">
-        <div>Content for the first main section.</div>
-    </sp-accordion-item>
-    <sp-accordion-item label="Second Section">
-        <div>Content for the second main section.</div>
-    </sp-accordion-item>
-    <sp-accordion-item label="Third Section">
-        <div>Content for the third main section.</div>
-    </sp-accordion-item>
+  <sp-accordion-item label="First Section">
+    <div>Content for the first main section.</div>
+  </sp-accordion-item>
+  <sp-accordion-item label="Second Section">
+    <div>Content for the second main section.</div>
+  </sp-accordion-item>
+  <sp-accordion-item label="Third Section">
+    <div>Content for the third main section.</div>
+  </sp-accordion-item>
 </sp-accordion>
 
 <h2>Subsection Title</h2>
 
 <sp-accordion level="3">
-    <sp-accordion-item label="Subsection A">
-        <div>Content for subsection A.</div>
-    </sp-accordion-item>
-    <sp-accordion-item label="Subsection B">
-        <div>Content for subsection B.</div>
-    </sp-accordion-item>
+  <sp-accordion-item label="Subsection A">
+    <div>Content for subsection A.</div>
+  </sp-accordion-item>
+  <sp-accordion-item label="Subsection B">
+    <div>Content for subsection B.</div>
+  </sp-accordion-item>
 </sp-accordion>
 ```
 
@@ -340,15 +331,15 @@ By default, only one accordion item can be expanded at a time. Use the `allow-mu
 
 ```html
 <sp-accordion allow-multiple>
-    <sp-accordion-item label="Kermit">
-        <div>Kermit is a frog.</div>
-    </sp-accordion-item>
-    <sp-accordion-item label="Fozzie">
-        <div>Fozzie is a bear.</div>
-    </sp-accordion-item>
-    <sp-accordion-item label="Miss Piggy">
-        <div>Miss Piggy is a pig.</div>
-    </sp-accordion-item>
+  <sp-accordion-item label="Kermit">
+    <div>Kermit is a frog.</div>
+  </sp-accordion-item>
+  <sp-accordion-item label="Fozzie">
+    <div>Fozzie is a bear.</div>
+  </sp-accordion-item>
+  <sp-accordion-item label="Miss Piggy">
+    <div>Miss Piggy is a pig.</div>
+  </sp-accordion-item>
 </sp-accordion>
 ```
 
@@ -358,18 +349,18 @@ Individual accordion items can be disabled using the `disabled` attribute. Disab
 
 ```html
 <sp-accordion>
-    <sp-accordion-item label="Apples">
-        <div>
-            We have some of the most popular varieties include Red Delicious,
-            Gala, Granny Smith, Honeycrisp, and Fuji.
-        </div>
-    </sp-accordion-item>
-    <sp-accordion-item disabled label="Bananas">
-        <div>We have the Gros Michel.</div>
-    </sp-accordion-item>
-    <sp-accordion-item label="Oranges">
-        <div>We have Mandarins, Seville Oranges, and Clementines.</div>
-    </sp-accordion-item>
+  <sp-accordion-item label="Apples">
+    <div>
+      We have some of the most popular varieties include Red Delicious, Gala,
+      Granny Smith, Honeycrisp, and Fuji.
+    </div>
+  </sp-accordion-item>
+  <sp-accordion-item disabled label="Bananas">
+    <div>We have the Gros Michel.</div>
+  </sp-accordion-item>
+  <sp-accordion-item label="Oranges">
+    <div>We have Mandarins, Seville Oranges, and Clementines.</div>
+  </sp-accordion-item>
 </sp-accordion>
 ```
 

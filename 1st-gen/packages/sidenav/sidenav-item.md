@@ -40,11 +40,11 @@ Most often, the default side nav item includes an `href` to navigate users to a 
 
 ```html
 <sp-sidenav>
-    <sp-sidenav-item
-        value="pixar"
-        label="Pixar movies"
-        href="/components/sidenav"
-    ></sp-sidenav-item>
+  <sp-sidenav-item
+    value="pixar"
+    label="Pixar movies"
+    href="/components/sidenav"
+  ></sp-sidenav-item>
 </sp-sidenav>
 ```
 
@@ -83,12 +83,12 @@ Icons can be displayed in first-level items of any type of side navigation (sing
 
 ```html
 <sp-sidenav>
-    <sp-sidenav-item value="star" label="Starred">
-        <sp-icon-star slot="icon"></sp-icon-star>
-    </sp-sidenav-item>
-    <sp-sidenav-item value="add" label="Add more">
-        <sp-icon-add slot="icon"></sp-icon-add>
-    </sp-sidenav-item>
+  <sp-sidenav-item value="star" label="Starred">
+    <sp-icon-star slot="icon"></sp-icon-star>
+  </sp-sidenav-item>
+  <sp-sidenav-item value="add" label="Add more">
+    <sp-icon-add slot="icon"></sp-icon-add>
+  </sp-sidenav-item>
 </sp-sidenav>
 ```
 
@@ -100,12 +100,12 @@ The `target` property specifies where to display the linked URL, such as in a ne
 
 ```html
 <sp-sidenav>
-    <sp-sidenav-item
-        value="pixar"
-        label="Pixar movies"
-        href="/components/sidenav"
-        target="_blank"
-    ></sp-sidenav-item>
+  <sp-sidenav-item
+    value="pixar"
+    label="Pixar movies"
+    href="/components/sidenav"
+    target="_blank"
+  ></sp-sidenav-item>
 </sp-sidenav>
 ```
 
@@ -117,12 +117,12 @@ When set, the `download` property causes the browser to treat the linked URL as 
 
 ```html
 <sp-sidenav>
-    <sp-sidenav-item
-        value="pixar"
-        label="Pixar movies"
-        href="/components/sidenav"
-        download
-    ></sp-sidenav-item>
+  <sp-sidenav-item
+    value="pixar"
+    label="Pixar movies"
+    href="/components/sidenav"
+    download
+  ></sp-sidenav-item>
 </sp-sidenav>
 ```
 
@@ -134,12 +134,12 @@ The `rel` property defines the relationship between the current page and the lin
 
 ```html
 <sp-sidenav>
-    <sp-sidenav-item
-        value="pixar"
-        label="Pixar movies"
-        href="/components/sidenav"
-        rel="noreferrer"
-    ></sp-sidenav-item>
+  <sp-sidenav-item
+    value="pixar"
+    label="Pixar movies"
+    href="/components/sidenav"
+    rel="noreferrer"
+  ></sp-sidenav-item>
 </sp-sidenav>
 ```
 
@@ -151,12 +151,12 @@ Setting `referrer-policy` will control how much referrer information is sent whe
 
 ```html
 <sp-sidenav>
-    <sp-sidenav-item
-        value="pixar"
-        label="Pixar movies"
-        href="/components/sidenav"
-        referrerpolicy="no-referrer"
-    ></sp-sidenav-item>
+  <sp-sidenav-item
+    value="pixar"
+    label="Pixar movies"
+    href="/components/sidenav"
+    referrerpolicy="no-referrer"
+  ></sp-sidenav-item>
 </sp-sidenav>
 ```
 
@@ -173,20 +173,20 @@ Adding the `disabled` attribute to a side nav item renders it non-interactive.
 
 ```html
 <sp-sidenav>
-    <sp-sidenav-item
-        value="toy-story"
-        label="Toy Story"
-        disabled
-    ></sp-sidenav-item>
-    <sp-sidenav-item
-        value="monsters-inc"
-        label="Monsters, Inc."
-    ></sp-sidenav-item>
-    <sp-sidenav-item
-        value="incredibles"
-        label="The Incredibles"
-    ></sp-sidenav-item>
-    <sp-sidenav-item value="up" label="Up" disabled></sp-sidenav-item>
+  <sp-sidenav-item
+    value="toy-story"
+    label="Toy Story"
+    disabled
+  ></sp-sidenav-item>
+  <sp-sidenav-item
+    value="monsters-inc"
+    label="Monsters, Inc."
+  ></sp-sidenav-item>
+  <sp-sidenav-item
+    value="incredibles"
+    label="The Incredibles"
+  ></sp-sidenav-item>
+  <sp-sidenav-item value="up" label="Up" disabled></sp-sidenav-item>
 </sp-sidenav>
 ```
 
@@ -198,29 +198,20 @@ Adding `expanded` to an `<sp-sidenav-item>` will render it as expanded if it has
 
 ```html
 <sp-sidenav>
-    <sp-sidenav-item value="toy-story" label="Toy Story" expanded>
-        <sp-sidenav-item
-            value="toy-story-2"
-            label="Toy Story 2"
-        ></sp-sidenav-item>
-        <sp-sidenav-item
-            value="toy-story-3"
-            label="Toy Story 3"
-        ></sp-sidenav-item>
-        <sp-sidenav-item
-            value="toy-story-4"
-            label="Toy Story 4"
-        ></sp-sidenav-item>
-    </sp-sidenav-item>
-    <sp-sidenav-item
-        value="monsters-inc"
-        label="Monsters, Inc."
-    ></sp-sidenav-item>
-    <sp-sidenav-item
-        value="incredibles"
-        label="The Incredibles"
-    ></sp-sidenav-item>
-    <sp-sidenav-item value="up" label="Up"></sp-sidenav-item>
+  <sp-sidenav-item value="toy-story" label="Toy Story" expanded>
+    <sp-sidenav-item value="toy-story-2" label="Toy Story 2"></sp-sidenav-item>
+    <sp-sidenav-item value="toy-story-3" label="Toy Story 3"></sp-sidenav-item>
+    <sp-sidenav-item value="toy-story-4" label="Toy Story 4"></sp-sidenav-item>
+  </sp-sidenav-item>
+  <sp-sidenav-item
+    value="monsters-inc"
+    label="Monsters, Inc."
+  ></sp-sidenav-item>
+  <sp-sidenav-item
+    value="incredibles"
+    label="The Incredibles"
+  ></sp-sidenav-item>
+  <sp-sidenav-item value="up" label="Up"></sp-sidenav-item>
 </sp-sidenav>
 ```
 
@@ -232,30 +223,21 @@ When users select an item, the `selected` attribute is applied. The `value` of t
 
 ```html
 <sp-sidenav value="wall-e">
-    <sp-sidenav-item value="toy-story" label="Toy Story">
-        <sp-sidenav-item
-            value="toy-story-2"
-            label="Toy Story 2"
-        ></sp-sidenav-item>
-        <sp-sidenav-item
-            value="toy-story-3"
-            label="Toy Story 3"
-        ></sp-sidenav-item>
-        <sp-sidenav-item
-            value="toy-story-4"
-            label="Toy Story 4"
-        ></sp-sidenav-item>
-    </sp-sidenav-item>
-    <sp-sidenav-item
-        value="monsters-inc"
-        label="Monsters, Inc."
-    ></sp-sidenav-item>
-    <sp-sidenav-item
-        value="incredibles"
-        label="The Incredibles"
-    ></sp-sidenav-item>
-    <sp-sidenav-item value="up" label="Up"></sp-sidenav-item>
-    <sp-sidenav-item value="wall-e" label="Wall-E" selected></sp-sidenav-item>
+  <sp-sidenav-item value="toy-story" label="Toy Story">
+    <sp-sidenav-item value="toy-story-2" label="Toy Story 2"></sp-sidenav-item>
+    <sp-sidenav-item value="toy-story-3" label="Toy Story 3"></sp-sidenav-item>
+    <sp-sidenav-item value="toy-story-4" label="Toy Story 4"></sp-sidenav-item>
+  </sp-sidenav-item>
+  <sp-sidenav-item
+    value="monsters-inc"
+    label="Monsters, Inc."
+  ></sp-sidenav-item>
+  <sp-sidenav-item
+    value="incredibles"
+    label="The Incredibles"
+  ></sp-sidenav-item>
+  <sp-sidenav-item value="up" label="Up"></sp-sidenav-item>
+  <sp-sidenav-item value="wall-e" label="Wall-E" selected></sp-sidenav-item>
 </sp-sidenav>
 ```
 

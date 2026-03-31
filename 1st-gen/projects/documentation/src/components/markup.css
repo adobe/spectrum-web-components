@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,17 +11,17 @@
  */
 
 .markup {
-    position: relative;
-    max-width: 100%;
-    padding: 0.75rem 1.5rem;
-    border-radius: 6px;
-    border-top: 1px solid var(--spectrum-gray-100);
-    background: var(--spectrum-gray-75);
-    overflow: hidden;
-    line-height: 1.3em;
-    overflow-x: auto;
+  position: relative;
+  max-width: 100%;
+  padding: 0.75rem 1.5rem;
+  line-height: 1.3em;
+  background: var(--spectrum-gray-75);
+  border-top: 1px solid var(--spectrum-gray-100);
+  border-radius: 6px;
+  overflow: hidden;
+  overflow-x: auto;
 }
 
 div + .markup {
-    border-radius: 0 0 6px 6px;
+  border-radius: 0 0 6px 6px;
 }

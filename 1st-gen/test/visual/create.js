@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,28 +9,28 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import fs from 'fs';
 import fg from 'fast-glob';
+import fs from 'fs';
 import path from 'path';
 import { rimraf } from 'rimraf';
 
 async function createTest(dir) {
-    for (const storyPath of await fg(`${dir}/*/stories/*.stories.ts`)) {
-        const pathParts = storyPath.split('/');
-        const packageName = pathParts[1];
-        const stories = pathParts[3].replace('.stories.ts', '');
-        const name =
-            stories
-                .split('-')
-                .map((part) => {
-                    if (part === 'cta' || part === 'ui') {
-                        return part.toUpperCase();
-                    }
-                    return part[0].toUpperCase() + part.substr(1);
-                })
-                .join('') + 'Stories';
-        const testString = `/**
- * Copyright 2025 Adobe. All rights reserved.
+  for (const storyPath of await fg(`${dir}/*/stories/*.stories.ts`)) {
+    const pathParts = storyPath.split('/');
+    const packageName = pathParts[1];
+    const stories = pathParts[3].replace('.stories.ts', '');
+    const name =
+      stories
+        .split('-')
+        .map((part) => {
+          if (part === 'cta' || part === 'ui') {
+            return part.toUpperCase();
+          }
+          return part[0].toUpperCase() + part.substr(1);
+        })
+        .join('') + 'Stories';
+    const testString = `/**
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -41,30 +41,37 @@ async function createTest(dir) {
  * governing permissions and limitations under the License.
  */
 
-import * as stories from '../stories/${stories}.stories.js';
-import { regressVisuals } from '../../../test/visual/test.js';
 import type { TestsType } from '../../../test/visual/test.js';
+import { regressVisuals } from '../../../test/visual/test.js';
+import * as stories from '../stories/${stories}.stories.js';
 
 regressVisuals('${name}', stories as unknown as TestsType);
 `;
-        const directory = path.join(dir, packageName, 'test');
-        fs.mkdirSync(directory, { recursive: true });
-        fs.writeFileSync(
-            path.join(directory, `${stories}.test-vrt.ts`),
-            testString,
-            { recursive: true }
-        );
-    }
+    const directory = path.join(dir, packageName, 'test');
+    fs.mkdirSync(directory, { recursive: true });
+    fs.writeFileSync(
+      path.join(directory, `${stories}.test-vrt.ts`),
+      testString,
+      { recursive: true }
+    );
+  }
 }
 async function main() {
-    try {
-        await rimraf('**/*-vrt.ts');
-    } catch (error) {
-        process.exit(1);
+  try {
+    await rimraf('**/*-vrt.ts');
+  } catch (error) {
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        undefined,
+        `Failed to delete test files: ${JSON.stringify(error)}`,
+        { issues: [error instanceof Error ? error.message : 'Unknown error'] }
+      );
     }
-    await createTest('packages');
-    await createTest('tools');
-    process.exit(0);
+    process.exit(1);
+  }
+  await createTest('packages');
+  await createTest('tools');
+  process.exit(0);
 }
 
 main();

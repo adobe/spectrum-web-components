@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,13 +11,14 @@
  */
 import { TemplateResult } from '@spectrum-web-components/base';
 
-import { argTypes, StoryArgs, Template } from './index.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
 
+import { argTypes, StoryArgs, Template } from './index.js';
+
 export default {
-    title: 'Picker Button/Sizes',
-    component: 'sp-picker-button',
-    ...argTypes,
+  title: 'Picker Button/Sizes',
+  component: 'sp-picker-button',
+  ...argTypes,
 };
 
 export const s = (args: StoryArgs): TemplateResult => Template(args);

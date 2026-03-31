@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,16 +11,15 @@
  */
 
 import {
-    CSSResultArray,
-    html,
-    LitElement,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  LitElement,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import {
-    customElement,
-    property,
+  customElement,
+  property,
 } from '@spectrum-web-components/base/src/decorators.js';
-
 import styles from '@spectrum-web-components/theme/src/typography.css.js';
 
 /**
@@ -28,15 +27,17 @@ import styles from '@spectrum-web-components/theme/src/typography.css.js';
  */
 @customElement('typography-decorator')
 export class Typography extends LitElement {
-    static override styles: CSSResultArray = [styles];
+  static override styles: CSSResultArray = [styles];
 
-    @property({ attribute: false })
-    public story?: TemplateResult;
+  @property({ attribute: false })
+  public story?: TemplateResult;
 
-    protected override render(): TemplateResult {
-        if (!this.story) return html``;
-        return html`
-            <div class="spectrum-Typography">${this.story}</div>
-        `;
+  protected override render(): TemplateResult {
+    if (!this.story) {
+      return html``;
     }
+    return html`
+      <div class="spectrum-Typography">${this.story}</div>
+    `;
+  }
 }

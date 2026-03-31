@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,172 +10,234 @@
  * governing permissions and limitations under the License.
  */
 import {
-    elementUpdated,
-    expect,
-    fixture,
-    html,
-    nextFrame,
-    oneEvent,
-    waitUntil,
+  elementUpdated,
+  expect,
+  fixture,
+  html,
+  nextFrame,
+  oneEvent,
+  waitUntil,
 } from '@open-wc/testing';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import { OverlayTrigger } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import { Tooltip } from '@spectrum-web-components/tooltip';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
+
+import { Overlay, OverlayTrigger } from '@spectrum-web-components/overlay';
+import { Tooltip } from '@spectrum-web-components/tooltip';
+
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+
 import { sendTabKey } from '../../../test/testing-helpers';
 
 describe('Overlay Trigger - accessible hover content management', () => {
-    it('accessibly describes trigger content with hover content', async () => {
-        const el = await fixture<OverlayTrigger>(html`
-            <overlay-trigger placement="right-start" triggered-by="hover">
-                <sp-action-button slot="trigger">
-                    Button with Tooltip
-                </sp-action-button>
-                <sp-tooltip slot="hover-content">
-                    Described by this content on focus/hover. 1
-                </sp-tooltip>
-            </overlay-trigger>
-        `);
+  it('accessibly describes trigger content with hover content', async () => {
+    const el = await fixture<OverlayTrigger>(html`
+      <overlay-trigger placement="right-start" triggered-by="hover">
+        <sp-action-button slot="trigger">Button with Tooltip</sp-action-button>
+        <sp-tooltip slot="hover-content">
+          Described by this content on focus/hover. 1
+        </sp-tooltip>
+      </overlay-trigger>
+    `);
 
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        expect(el.open).to.be.undefined;
-        type DescribedNode = {
-            name: string;
-            description: string;
-        };
-        const snapshot = (await a11ySnapshot(
-            {}
-        )) as unknown as DescribedNode & {
-            children: DescribedNode[];
-        };
-        expect(
-            findAccessibilityNode<DescribedNode>(
-                snapshot,
-                (node) =>
-                    node.name === 'Button with Tooltip' &&
-                    typeof node.description === 'undefined'
-            ),
-            '`name`ed with no `description`'
-        );
+    expect(el.open).to.be.undefined;
+    type DescribedNode = {
+      name: string;
+      description: string;
+    };
+    const snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
+      children: DescribedNode[];
+    };
+    expect(
+      findAccessibilityNode<DescribedNode>(
+        snapshot,
+        (node) =>
+          node.name === 'Button with Tooltip' &&
+          typeof node.description === 'undefined'
+      ),
+      '`name`ed with no `description`'
+    );
+  });
+  it('gardens `aria-describedby` in its target', async () => {
+    const el = await fixture<OverlayTrigger>(html`
+      <overlay-trigger placement="right-start" triggered-by="hover">
+        <sp-action-button slot="trigger" aria-describedby="descriptor">
+          Button with Tooltip
+        </sp-action-button>
+        <sp-tooltip slot="hover-content" delayed>
+          Described by this content on focus/hover. 2
+        </sp-tooltip>
+      </overlay-trigger>
+      <div id="descriptor">I'm a description!</div>
+    `);
+
+    const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
+    const tooltip = el.querySelector('[slot="hover-content"]') as HTMLElement;
+
+    await elementUpdated(el);
+    await nextFrame();
+    await nextFrame();
+
+    await waitUntil(
+      () => tooltip.id,
+      'Tooltip never published an ID for itself'
+    );
+
+    expect(trigger.getAttribute('aria-describedby')).to.equal(
+      `descriptor ${tooltip.id}`
+    );
+
+    trigger.remove();
+
+    // slot change timing
+    await nextFrame();
+
+    expect(trigger.getAttribute('aria-describedby')).to.equal('descriptor');
+  });
+  it('applies `aria-describedby` attribute', async () => {
+    const el = await fixture<OverlayTrigger>(html`
+      <overlay-trigger placement="right-start" triggered-by="hover">
+        <sp-action-button slot="trigger">Button with Tooltip</sp-action-button>
+        <sp-tooltip slot="hover-content" delayed>
+          Described by this content on focus/hover. 2
+        </sp-tooltip>
+      </overlay-trigger>
+    `);
+
+    const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
+    const tooltip = el.querySelector('[slot="hover-content"]') as HTMLElement;
+
+    await elementUpdated(el);
+    await nextFrame();
+    await nextFrame();
+
+    await waitUntil(
+      () => tooltip.id,
+      'Tooltip never published an ID for itself'
+    );
+
+    expect(trigger.getAttribute('aria-describedby')).to.equal(tooltip.id);
+
+    trigger.remove();
+
+    // slot change timing
+    await nextFrame();
+
+    expect(trigger.getAttribute('aria-describedby')).to.be.null;
+  });
+  it('does not duplicate `aria-describedby` attribute', async () => {
+    const el = await fixture<OverlayTrigger>(html`
+      <div>
+        <sp-action-button slot="trigger">Button with Tooltip</sp-action-button>
+        <overlay-trigger placement="right-start" triggered-by="hover">
+          <sp-tooltip slot="hover-content" delayed>
+            Described by this content on focus/hover. 2
+          </sp-tooltip>
+        </overlay-trigger>
+      </div>
+    `);
+
+    const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
+    const tooltip = el.querySelector('sp-tooltip') as Tooltip;
+    const overlay = el.querySelector('overlay-trigger') as OverlayTrigger;
+
+    trigger.setAttribute('aria-describedby', tooltip.id);
+    overlay.append(trigger);
+
+    await elementUpdated(el);
+    expect(trigger.getAttribute('aria-describedby')).to.equal(tooltip.id);
+    expect(el.open).to.be.undefined;
+
+    // For `:focus-visible` heuristic.
+    const input = document.createElement('input');
+    el.insertAdjacentElement('afterbegin', input);
+    input.focus();
+
+    const opened = oneEvent(el, 'sp-opened');
+    await sendTabKey();
+    await opened;
+
+    expect(trigger.getAttribute('aria-describedby')).to.equal(tooltip.id);
+
+    const closed = oneEvent(el, 'sp-closed');
+    trigger.dispatchEvent(
+      new FocusEvent('focusout', { bubbles: true, composed: true })
+    );
+    await closed;
+
+    expect(trigger.getAttribute('aria-describedby')).to.equal(tooltip.id);
+  });
+
+  describe('describeTrigger escape hatch', () => {
+    it('does not set aria-describedby on trigger when describeTrigger is "none" (hover)', async () => {
+      const el = await fixture<HTMLDivElement>(html`
+        <div>
+          <input id="focus-sentinel" type="text" />
+          <sp-action-button id="hover-trigger">Hover me</sp-action-button>
+          <sp-overlay
+            id="hover-overlay"
+            type="hint"
+            .describeTrigger=${'none'}
+            .triggerInteraction=${'hover'}
+          >
+            <sp-tooltip>Tooltip content</sp-tooltip>
+          </sp-overlay>
+        </div>
+      `);
+
+      const trigger = el.querySelector('#hover-trigger') as HTMLElement;
+      const overlay = el.querySelector('#hover-overlay') as Overlay;
+      overlay.triggerElement = trigger;
+
+      await elementUpdated(overlay);
+      await nextFrame();
+      await nextFrame();
+
+      const sentinel = el.querySelector('#focus-sentinel') as HTMLInputElement;
+      sentinel.focus();
+
+      const opened = oneEvent(overlay, 'sp-opened');
+      await sendTabKey();
+      await opened;
+
+      expect(trigger.getAttribute('aria-describedby')).to.be.null;
     });
-    it('gardens `aria-describedby` in its target', async () => {
-        const el = await fixture<OverlayTrigger>(html`
-            <overlay-trigger placement="right-start" triggered-by="hover">
-                <sp-action-button slot="trigger" aria-describedby="descriptor">
-                    Button with Tooltip
-                </sp-action-button>
-                <sp-tooltip slot="hover-content" delayed>
-                    Described by this content on focus/hover. 2
-                </sp-tooltip>
-            </overlay-trigger>
-            <div id="descriptor">I'm a description!</div>
-        `);
 
-        const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
-        const tooltip = el.querySelector(
-            '[slot="hover-content"]'
-        ) as HTMLElement;
+    it('does not set aria-describedby on trigger when describeTrigger is "none" (longpress)', async () => {
+      const el = await fixture<HTMLDivElement>(html`
+        <div>
+          <sp-action-button id="longpress-trigger" hold-affordance>
+            Longpress me
+          </sp-action-button>
+          <sp-overlay
+            id="longpress-overlay"
+            type="hint"
+            .describeTrigger=${'none'}
+            .triggerInteraction=${'longpress'}
+          >
+            <sp-tooltip>Longpress content</sp-tooltip>
+          </sp-overlay>
+        </div>
+      `);
 
-        await elementUpdated(el);
-        await nextFrame();
-        await nextFrame();
+      const trigger = el.querySelector('#longpress-trigger') as HTMLElement;
+      const overlay = el.querySelector('#longpress-overlay') as Overlay;
+      overlay.triggerElement = trigger;
 
-        await waitUntil(
-            () => tooltip.id,
-            'Tooltip never published an ID for itself'
-        );
+      await elementUpdated(overlay);
+      await nextFrame();
+      await nextFrame();
 
-        expect(trigger.getAttribute('aria-describedby')).to.equal(
-            `descriptor ${tooltip.id}`
-        );
+      const opened = oneEvent(overlay, 'sp-opened');
+      trigger.dispatchEvent(
+        new CustomEvent('longpress', { bubbles: true, composed: true })
+      );
+      await opened;
 
-        trigger.remove();
-
-        // slot change timing
-        await nextFrame();
-
-        expect(trigger.getAttribute('aria-describedby')).to.equal('descriptor');
+      expect(trigger.getAttribute('aria-describedby')).to.be.null;
     });
-    it('applies `aria-describedby` attribute', async () => {
-        const el = await fixture<OverlayTrigger>(html`
-            <overlay-trigger placement="right-start" triggered-by="hover">
-                <sp-action-button slot="trigger">
-                    Button with Tooltip
-                </sp-action-button>
-                <sp-tooltip slot="hover-content" delayed>
-                    Described by this content on focus/hover. 2
-                </sp-tooltip>
-            </overlay-trigger>
-        `);
-
-        const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
-        const tooltip = el.querySelector(
-            '[slot="hover-content"]'
-        ) as HTMLElement;
-
-        await elementUpdated(el);
-        await nextFrame();
-        await nextFrame();
-
-        await waitUntil(
-            () => tooltip.id,
-            'Tooltip never published an ID for itself'
-        );
-
-        expect(trigger.getAttribute('aria-describedby')).to.equal(tooltip.id);
-
-        trigger.remove();
-
-        // slot change timing
-        await nextFrame();
-
-        expect(trigger.getAttribute('aria-describedby')).to.be.null;
-    });
-    it('does not duplicate `aria-describedby` attribute', async () => {
-        const el = await fixture<OverlayTrigger>(html`
-            <div>
-                <sp-action-button slot="trigger">
-                    Button with Tooltip
-                </sp-action-button>
-                <overlay-trigger placement="right-start" triggered-by="hover">
-                    <sp-tooltip slot="hover-content" delayed>
-                        Described by this content on focus/hover. 2
-                    </sp-tooltip>
-                </overlay-trigger>
-            </div>
-        `);
-
-        const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
-        const tooltip = el.querySelector('sp-tooltip') as Tooltip;
-        const overlay = el.querySelector('overlay-trigger') as OverlayTrigger;
-
-        trigger.setAttribute('aria-describedby', tooltip.id);
-        overlay.append(trigger);
-
-        await elementUpdated(el);
-        expect(trigger.getAttribute('aria-describedby')).to.equal(tooltip.id);
-        expect(el.open).to.be.undefined;
-
-        // For `:focus-visible` heuristic.
-        const input = document.createElement('input');
-        el.insertAdjacentElement('afterbegin', input);
-        input.focus();
-
-        const opened = oneEvent(el, 'sp-opened');
-        await sendTabKey();
-        await opened;
-
-        expect(trigger.getAttribute('aria-describedby')).to.equal(tooltip.id);
-
-        const closed = oneEvent(el, 'sp-closed');
-        trigger.dispatchEvent(
-            new FocusEvent('focusout', { bubbles: true, composed: true })
-        );
-        await closed;
-
-        expect(trigger.getAttribute('aria-describedby')).to.equal(tooltip.id);
-    });
+  });
 });

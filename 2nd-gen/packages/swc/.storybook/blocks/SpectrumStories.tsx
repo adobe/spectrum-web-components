@@ -1,8 +1,8 @@
 import {
-    Canvas,
-    Description,
-    Markdown,
-    useOf,
+  Canvas,
+  Description,
+  Markdown,
+  useOf,
 } from '@storybook/addon-docs/blocks';
 import React, { Fragment } from 'react';
 
@@ -15,40 +15,40 @@ import React, { Fragment } from 'react';
  * @param hideTitle - Whether to hide the story title heading
  */
 export const SpectrumStories = ({
-    of,
-    tag = 'usage',
-    hideTitle = false,
+  of,
+  tag = 'usage',
+  hideTitle = false,
 }: {
-    of?: any;
-    tag?: string;
-    hideTitle?: boolean;
+  of?: any;
+  tag?: string;
+  hideTitle?: boolean;
 }) => {
-    const resolvedOf = useOf(of || 'meta', ['meta']);
+  const resolvedOf = useOf(of || 'meta', ['meta']);
 
-    // Get stories and filter by tag
-    let taggedStories = Object.values(resolvedOf.csfFile.stories).filter(
-        (story: any) => story.tags?.includes(tag)
-    );
+  // Get stories and filter by tag
+  let taggedStories = Object.values(resolvedOf.csfFile.stories).filter(
+    (story: any) => story.tags?.includes(tag)
+  );
 
-    // Sort by explicit order if provided, otherwise preserve current order
-    taggedStories = taggedStories.sort((a: any, b: any) => {
-        const aIndex = a.parameters['section-order'] ?? taggedStories.length;
-        const bIndex = b.parameters['section-order'] ?? taggedStories.length;
-        // Stories not in order array go to the end
-        return aIndex - bIndex;
-    });
+  // Sort by explicit order if provided, otherwise preserve current order
+  taggedStories = taggedStories.sort((a: any, b: any) => {
+    const aIndex = a.parameters['section-order'] ?? taggedStories.length;
+    const bIndex = b.parameters['section-order'] ?? taggedStories.length;
+    // Stories not in order array go to the end
+    return aIndex - bIndex;
+  });
 
-    if (taggedStories.length === 0) {
-        return null;
-    }
+  if (taggedStories.length === 0) {
+    return null;
+  }
 
-    const spectrumStories = taggedStories.map((story: any) => (
-        <Fragment key={story.name}>
-            {!hideTitle && <Markdown>{`### ${story.name}`}</Markdown>}
-            <Description of={story.moduleExport} />
-            <Canvas of={story.moduleExport} />
-        </Fragment>
-    ));
+  const spectrumStories = taggedStories.map((story: any) => (
+    <Fragment key={story.name}>
+      {!hideTitle && <Markdown>{`### ${story.name}`}</Markdown>}
+      <Description of={story.moduleExport} />
+      <Canvas of={story.moduleExport} />
+    </Fragment>
+  ));
 
-    return spectrumStories;
+  return spectrumStories;
 };

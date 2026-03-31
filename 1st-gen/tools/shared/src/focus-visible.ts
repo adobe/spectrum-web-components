@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,21 +11,21 @@
  */
 
 declare global {
-    interface Window {
-        applyFocusVisiblePolyfill?: (scope: Document | ShadowRoot) => void;
-    }
+  interface Window {
+    applyFocusVisiblePolyfill?: (scope: Document | ShadowRoot) => void;
+  }
 }
 
 type Constructor<T = Record<string, unknown>> = {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    new (...args: any[]): T;
-    prototype: T;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  new (...args: any[]): T;
+  prototype: T;
 };
 
 interface OptionalLifecycleCallbacks {
-    connectedCallback?(): void;
-    disconnectedCallback?(): void;
-    manageAutoFocus?(): void;
+  connectedCallback?(): void;
+  disconnectedCallback?(): void;
+  manageAutoFocus?(): void;
 }
 
 type MixableBaseClass = HTMLElement & OptionalLifecycleCallbacks;
@@ -35,12 +35,22 @@ type EndPolyfillCoordinationCallback = () => void;
 let hasFocusVisible = true;
 
 try {
-    document.body.querySelector(':focus-visible');
+  document.body.querySelector(':focus-visible');
 } catch (error) {
-    hasFocusVisible = false;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    import('focus-visible');
+  if (window.__swc?.DEBUG) {
+    window.__swc.warn(
+      undefined,
+      `The :focus-visible polyfill is not supported in this browser.`,
+      'https://github.com/WICG/focus-visible/pull/196',
+      {
+        issues: [error instanceof Error ? error.message : 'Unknown error'],
+      }
+    );
+  }
+  hasFocusVisible = false;
+
+  // @ts-ignore
+  import('focus-visible');
 }
 
 /**
@@ -56,102 +66,98 @@ try {
  * implementation that coordinates with the :focus-visible polyfill
  */
 export const FocusVisiblePolyfillMixin = <
-    T extends Constructor<MixableBaseClass>,
+  T extends Constructor<MixableBaseClass>,
 >(
-    SuperClass: T
+  SuperClass: T
 ): T => {
-    const coordinateWithPolyfill = (
-        instance: MixableBaseClass
-    ): EndPolyfillCoordinationCallback => {
-        // If there is no shadow root, there is no need to coordinate with
-        // the polyfill. If we already coordinated with the polyfill, we can
-        // skip subsequent invokcations:
-        if (
-            instance.shadowRoot == null ||
-            instance.hasAttribute('data-js-focus-visible')
-        ) {
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            return () => {};
-        }
-
-        // The polyfill might already be loaded. If so, we can apply it to
-        // the shadow root immediately:
-        if (self.applyFocusVisiblePolyfill) {
-            self.applyFocusVisiblePolyfill(instance.shadowRoot);
-
-            if (instance.manageAutoFocus) {
-                instance.manageAutoFocus();
-            }
-        } else {
-            const coordinationHandler = (): void => {
-                if (self.applyFocusVisiblePolyfill && instance.shadowRoot) {
-                    self.applyFocusVisiblePolyfill(instance.shadowRoot);
-                }
-
-                if (instance.manageAutoFocus) {
-                    instance.manageAutoFocus();
-                }
-            };
-            // Otherwise, wait for the polyfill to be loaded lazily. It might
-            // never be loaded, but if it is then we can apply it to the
-            // shadow root at the appropriate time by waiting for the ready
-            // event:
-            self.addEventListener(
-                'focus-visible-polyfill-ready',
-                coordinationHandler,
-                { once: true }
-            );
-
-            return () => {
-                self.removeEventListener(
-                    'focus-visible-polyfill-ready',
-                    coordinationHandler
-                );
-            };
-        }
-
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        return () => {};
-    };
-
-    const $endPolyfillCoordination = Symbol('endPolyfillCoordination');
-
-    // IE11 doesn't natively support custom elements or JavaScript class
-    // syntax The mixin implementation assumes that the user will take the
-    // appropriate steps to support both:
-    class FocusVisibleCoordinator extends SuperClass {
-        private [$endPolyfillCoordination]: EndPolyfillCoordinationCallback | null =
-            null;
-
-        // Attempt to coordinate with the polyfill when connected to the
-        // document:
-        override connectedCallback(): void {
-            super.connectedCallback && super.connectedCallback();
-            if (!hasFocusVisible) {
-                requestAnimationFrame(() => {
-                    if (this[$endPolyfillCoordination] == null) {
-                        this[$endPolyfillCoordination] =
-                            coordinateWithPolyfill(this);
-                    }
-                });
-            }
-        }
-
-        override disconnectedCallback(): void {
-            super.disconnectedCallback && super.disconnectedCallback();
-            // It's important to remove the polyfill event listener when we
-            // disconnect, otherwise we will leak the whole element via window:
-            if (!hasFocusVisible) {
-                requestAnimationFrame(() => {
-                    if (this[$endPolyfillCoordination] != null) {
-                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                        this[$endPolyfillCoordination]!();
-                        this[$endPolyfillCoordination] = null;
-                    }
-                });
-            }
-        }
+  const coordinateWithPolyfill = (
+    instance: MixableBaseClass
+  ): EndPolyfillCoordinationCallback => {
+    // If there is no shadow root, there is no need to coordinate with
+    // the polyfill. If we already coordinated with the polyfill, we can
+    // skip subsequent invokcations:
+    if (
+      instance.shadowRoot == null ||
+      instance.hasAttribute('data-js-focus-visible')
+    ) {
+      return () => {};
     }
 
-    return FocusVisibleCoordinator;
+    // The polyfill might already be loaded. If so, we can apply it to
+    // the shadow root immediately:
+    if (self.applyFocusVisiblePolyfill) {
+      self.applyFocusVisiblePolyfill(instance.shadowRoot);
+
+      if (instance.manageAutoFocus) {
+        instance.manageAutoFocus();
+      }
+    } else {
+      const coordinationHandler = (): void => {
+        if (self.applyFocusVisiblePolyfill && instance.shadowRoot) {
+          self.applyFocusVisiblePolyfill(instance.shadowRoot);
+        }
+
+        if (instance.manageAutoFocus) {
+          instance.manageAutoFocus();
+        }
+      };
+      // Otherwise, wait for the polyfill to be loaded lazily. It might
+      // never be loaded, but if it is then we can apply it to the
+      // shadow root at the appropriate time by waiting for the ready
+      // event:
+      self.addEventListener(
+        'focus-visible-polyfill-ready',
+        coordinationHandler,
+        { once: true }
+      );
+
+      return () => {
+        self.removeEventListener(
+          'focus-visible-polyfill-ready',
+          coordinationHandler
+        );
+      };
+    }
+
+    return () => {};
+  };
+
+  const $endPolyfillCoordination = Symbol('endPolyfillCoordination');
+
+  // IE11 doesn't natively support custom elements or JavaScript class
+  // syntax The mixin implementation assumes that the user will take the
+  // appropriate steps to support both:
+  class FocusVisibleCoordinator extends SuperClass {
+    private [$endPolyfillCoordination]: EndPolyfillCoordinationCallback | null =
+      null;
+
+    // Attempt to coordinate with the polyfill when connected to the
+    // document:
+    override connectedCallback(): void {
+      super.connectedCallback?.();
+      if (!hasFocusVisible) {
+        requestAnimationFrame(() => {
+          if (this[$endPolyfillCoordination] == null) {
+            this[$endPolyfillCoordination] = coordinateWithPolyfill(this);
+          }
+        });
+      }
+    }
+
+    override disconnectedCallback(): void {
+      super.disconnectedCallback?.();
+      // It's important to remove the polyfill event listener when we
+      // disconnect, otherwise we will leak the whole element via window:
+      if (!hasFocusVisible) {
+        requestAnimationFrame(() => {
+          if (this[$endPolyfillCoordination] != null) {
+            this[$endPolyfillCoordination]!();
+            this[$endPolyfillCoordination] = null;
+          }
+        });
+      }
+    }
+  }
+
+  return FocusVisibleCoordinator;
 };

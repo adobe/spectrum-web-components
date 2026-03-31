@@ -32,19 +32,19 @@ By leveraging the `trigger` attribute to pass an ID reference to another element
 
 <!-- Opening an overlay via a click interaction -->
 <sp-overlay trigger="trigger@click" placement="bottom">
-    <sp-popover>
-        <sp-dialog>
-            <h2 slot="heading">Clicking opens this popover...</h2>
-            <p>But, it really could be anything. Really.</p>
-        </sp-dialog>
-    </sp-popover>
+  <sp-popover>
+    <sp-dialog>
+      <h2 slot="heading">Clicking opens this popover...</h2>
+      <p>But, it really could be anything. Really.</p>
+    </sp-dialog>
+  </sp-popover>
 </sp-overlay>
 
 <!-- Opening an overlay via a hover interaction -->
 <sp-overlay trigger="trigger@hover" placement="bottom">
-    <sp-tooltip>
-        I'm a tooltip and I'm triggered by hovering over the button!
-    </sp-tooltip>
+  <sp-tooltip>
+    I'm a tooltip and I'm triggered by hovering over the button!
+  </sp-tooltip>
 </sp-overlay>
 ```
 
@@ -64,7 +64,7 @@ An Overlay that is `delayed` will wait until a warm-up period of 1000ms has comp
 <sp-button id="trigger">Overlay Trigger</sp-button>
 
 <sp-overlay trigger="trigger@hover" placement="bottom" delayed>
-    <sp-tooltip>I'm a tooltip and I'm delayed!</sp-tooltip>
+  <sp-tooltip>I'm a tooltip and I'm delayed!</sp-tooltip>
 </sp-overlay>
 ```
 
@@ -200,12 +200,12 @@ The `offset` property accepts either a single number, to define the offset of th
 <sp-button id="trigger">Overlay Trigger</sp-button>
 
 <sp-overlay trigger="trigger@click" placement="bottom" offset="50">
-    <sp-popover>
-        <sp-dialog>
-            <h2 slot="heading">Clicking opens this popover...</h2>
-            <p>An offset of 50px is applied to the overlay.</p>
-        </sp-dialog>
-    </sp-popover>
+  <sp-popover>
+    <sp-dialog>
+      <h2 slot="heading">Clicking opens this popover...</h2>
+      <p>An offset of 50px is applied to the overlay.</p>
+    </sp-dialog>
+  </sp-popover>
 </sp-overlay>
 ```
 
@@ -219,12 +219,12 @@ A `placement` of `"auto-start" | "auto-end" | "top" | "bottom" | "right" | "left
 <sp-button id="trigger">Overlay Trigger</sp-button>
 
 <sp-overlay trigger="trigger@click" placement="right-start">
-    <sp-popover>
-        <sp-dialog>
-            <h2 slot="heading">Clicking opens this popover...</h2>
-            <p>The overlay is placed to the right of the trigger.</p>
-        </sp-dialog>
-    </sp-popover>
+  <sp-popover>
+    <sp-dialog>
+      <h2 slot="heading">Clicking opens this popover...</h2>
+      <p>The overlay is placed to the right of the trigger.</p>
+    </sp-dialog>
+  </sp-popover>
 </sp-overlay>
 ```
 
@@ -238,15 +238,15 @@ Some Overlays will always be passed focus (e.g. modal or page Overlays). When th
 <sp-button id="trigger">Overlay Trigger</sp-button>
 
 <sp-overlay trigger="trigger@click" placement="bottom" receives-focus="false">
-    <sp-popover>
-        <sp-dialog>
-            <h2 slot="heading">
-                Clicking opens this popover but does not receive focus
-            </h2>
-            <sp-field-label>Enter your email</sp-field-label>
-            <sp-textfield placeholder="test@gmail.com"></sp-textfield>
-            <sp-action-button
-                onClick="
+  <sp-popover>
+    <sp-dialog>
+      <h2 slot="heading">
+        Clicking opens this popover but does not receive focus
+      </h2>
+      <sp-field-label>Enter your email</sp-field-label>
+      <sp-textfield placeholder="test@gmail.com"></sp-textfield>
+      <sp-action-button
+        onClick="
                     this.dispatchEvent(
                         new Event('close', {
                             bubbles: true,
@@ -254,11 +254,11 @@ Some Overlays will always be passed focus (e.g. modal or page Overlays). When th
                         })
                     );
                 "
-            >
-                Sign in
-            </sp-action-button>
-        </sp-dialog>
-    </sp-popover>
+      >
+        Sign in
+      </sp-action-button>
+    </sp-dialog>
+  </sp-popover>
 </sp-overlay>
 ```
 
@@ -281,17 +281,17 @@ Examples:
 
 <!-- Explicit click interaction -->
 <sp-overlay trigger="my-button@click" placement="top-start">
-    <sp-popover>Click popover</sp-popover>
+  <sp-popover>Click popover</sp-popover>
 </sp-overlay>
 
 <!-- Explicit hover interaction -->
 <sp-overlay trigger="my-button@hover" placement="right-start">
-    <sp-popover>Hover popover</sp-popover>
+  <sp-popover>Hover popover</sp-popover>
 </sp-overlay>
 
 <!-- Explicit longpress interaction -->
 <sp-overlay trigger="my-button@longpress" placement="bottom-start">
-    <sp-popover>Longpress popover</sp-popover>
+  <sp-popover>Longpress popover</sp-popover>
 </sp-overlay>
 ```
 
@@ -316,12 +316,12 @@ They should be used when you need to ensure that the user has interacted with th
 ```html
 <sp-button id="trigger">open modal</sp-button>
 <sp-overlay trigger="trigger@click" type="modal">
-    <sp-dialog-wrapper headline="Signin form" dismissable underlay>
-        <p>I am a modal type overlay.</p>
-        <sp-field-label>Enter your email</sp-field-label>
-        <sp-textfield placeholder="test@gmail.com"></sp-textfield>
-        <sp-action-button
-            onClick="
+  <sp-dialog-wrapper headline="Signin form" dismissable underlay>
+    <p>I am a modal type overlay.</p>
+    <sp-field-label>Enter your email</sp-field-label>
+    <sp-textfield placeholder="test@gmail.com"></sp-textfield>
+    <sp-action-button
+      onClick="
                 this.dispatchEvent(
                     new Event('close', {
                         bubbles: true,
@@ -329,10 +329,10 @@ They should be used when you need to ensure that the user has interacted with th
                     })
                 );
             "
-        >
-            Sign in
-        </sp-action-button>
-    </sp-dialog-wrapper>
+    >
+      Sign in
+    </sp-action-button>
+  </sp-dialog-wrapper>
 </sp-overlay>
 ```
 
@@ -347,13 +347,13 @@ A page overlay could be used for a full-screen menu on a mobile website. When th
 ```html
 <sp-button id="trigger">open page</sp-button>
 <sp-overlay trigger="trigger@click" type="page">
-    <sp-dialog-wrapper
-        headline="Full screen menu"
-        mode="fullscreenTakeover"
-        cancel-label="Close"
-    >
-        <p>I am a page type overlay.</p>
-    </sp-dialog-wrapper>
+  <sp-dialog-wrapper
+    headline="Full screen menu"
+    mode="fullscreenTakeover"
+    cancel-label="Close"
+  >
+    <p>I am a page type overlay.</p>
+  </sp-dialog-wrapper>
 </sp-overlay>
 ```
 
@@ -368,10 +368,10 @@ This overlay type does not accept focus and does not interfere with the user's i
 ```html
 <sp-button id="trigger">open hint</sp-button>
 <sp-overlay trigger="trigger@hover" type="hint">
-    <sp-tooltip>
-        I am a hint type overlay. I am not interactive and will close when the
-        user interacts with the page.
-    </sp-tooltip>
+  <sp-tooltip>
+    I am a hint type overlay. I am not interactive and will close when the user
+    interacts with the page.
+  </sp-tooltip>
 </sp-overlay>
 ```
 
@@ -384,12 +384,12 @@ This overlay type does not accept focus and does not interfere with the user's i
 ```html
 <sp-button id="trigger">Open Overlay</sp-button>
 <sp-overlay trigger="trigger@click" type="auto" placement="bottom">
-    <sp-popover dialog>
-        <p>
-            My slider in overlay element:
-            <sp-slider label="Slider Label - Editable" editable></sp-slider>
-        </p>
-    </sp-popover>
+  <sp-popover dialog>
+    <p>
+      My slider in overlay element:
+      <sp-slider label="Slider Label - Editable" editable></sp-slider>
+    </p>
+  </sp-popover>
 </sp-overlay>
 ```
 
@@ -403,21 +403,21 @@ Note: When a `'manual'` Overlay is at the top of the "overlay stack", it will st
 
 ```html
 <style>
-    .chat-container {
-        position: fixed;
-        bottom: 1em;
-        left: 1em;
-    }
+  .chat-container {
+    position: fixed;
+    bottom: 1em;
+    left: 1em;
+  }
 </style>
 <sp-button id="trigger">open manual</sp-button>
 <sp-overlay trigger="trigger@click" type="manual">
-    <sp-popover class="chat-container">
-        <sp-dialog dismissable>
-            <span slot="heading">Chat Window</span>
-            <sp-textfield placeholder="Enter your message"></sp-textfield>
-            <sp-action-button>Send</sp-action-button>
-        </sp-dialog>
-    </sp-popover>
+  <sp-popover class="chat-container">
+    <sp-dialog dismissable>
+      <span slot="heading">Chat Window</span>
+      <sp-textfield placeholder="Enter your message"></sp-textfield>
+      <sp-action-button>Send</sp-action-button>
+    </sp-dialog>
+  </sp-popover>
 </sp-overlay>
 ```
 
@@ -430,7 +430,7 @@ When fully open the `<sp-overlay>` element will dispatch the `sp-opened` event, 
 
 ```ts
 type OverlayStateEvent = Event & {
-    overlay: Overlay;
+  overlay: Overlay;
 };
 ```
 
@@ -451,101 +451,83 @@ This means that in both cases, if the transition is meant to be a part of the op
 
 ```html
 <style>
-    .overlay-demo-popover sp-action-group {
-        padding: var(--spectrum-actiongroup-vertical-spacing-regular);
-    }
-    #overlay-demo {
-        position: static;
-    }
-    #overlay-demo:not(:defined),
-    #overlay-demo *:not(:defined) {
-        display: none;
-    }
+  .overlay-demo-popover sp-action-group {
+    padding: var(--spectrum-actiongroup-vertical-spacing-regular);
+  }
+  #overlay-demo {
+    position: static;
+  }
+  #overlay-demo:not(:defined),
+  #overlay-demo *:not(:defined) {
+    display: none;
+  }
 </style>
 <sp-popover id="overlay-demo" class="overlay-demo-popover" open>
-    <sp-action-group vertical quiet emphasized selects="single">
-        <sp-action-button id="trigger-1" hold-affordance>
-            <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+  <sp-action-group vertical quiet emphasized selects="single">
+    <sp-action-button id="trigger-1" hold-affordance>
+      <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+    </sp-action-button>
+    <sp-action-button id="trigger-2" hold-affordance>
+      <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+    </sp-action-button>
+    <sp-action-button id="trigger-3" hold-affordance>
+      <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+    </sp-action-button>
+  </sp-action-group>
+  <sp-overlay trigger="trigger-1@hover" type="hint">
+    <sp-tooltip>Hover</sp-tooltip>
+  </sp-overlay>
+  <sp-overlay trigger="trigger-1@longpress" type="auto" placement="right-start">
+    <sp-popover class="overlay-demo-popover" tip>
+      <sp-action-group vertical quiet>
+        <sp-action-button>
+          <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
         </sp-action-button>
-        <sp-action-button id="trigger-2" hold-affordance>
-            <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+        <sp-action-button>
+          <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
         </sp-action-button>
-        <sp-action-button id="trigger-3" hold-affordance>
-            <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+        <sp-action-button>
+          <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
         </sp-action-button>
-    </sp-action-group>
-    <sp-overlay trigger="trigger-1@hover" type="hint">
-        <sp-tooltip>Hover</sp-tooltip>
-    </sp-overlay>
-    <sp-overlay
-        trigger="trigger-1@longpress"
-        type="auto"
-        placement="right-start"
-    >
-        <sp-popover class="overlay-demo-popover" tip>
-            <sp-action-group vertical quiet>
-                <sp-action-button>
-                    <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
-                </sp-action-button>
-                <sp-action-button>
-                    <sp-icon-polygon-select
-                        slot="icon"
-                    ></sp-icon-polygon-select>
-                </sp-action-button>
-                <sp-action-button>
-                    <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
-                </sp-action-button>
-            </sp-action-group>
-        </sp-popover>
-    </sp-overlay>
-    <sp-overlay trigger="trigger-2@hover" type="hint">
-        <sp-tooltip>Hover</sp-tooltip>
-    </sp-overlay>
-    <sp-overlay
-        trigger="trigger-2@longpress"
-        type="auto"
-        placement="right-start"
-    >
-        <sp-popover class="overlay-demo-popover" tip>
-            <sp-action-group vertical quiet>
-                <sp-action-button>
-                    <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
-                </sp-action-button>
-                <sp-action-button>
-                    <sp-icon-polygon-select
-                        slot="icon"
-                    ></sp-icon-polygon-select>
-                </sp-action-button>
-                <sp-action-button>
-                    <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
-                </sp-action-button>
-            </sp-action-group>
-        </sp-popover>
-    </sp-overlay>
-    <sp-overlay trigger="trigger-3@hover" type="hint">
-        <sp-tooltip>Hover</sp-tooltip>
-    </sp-overlay>
-    <sp-overlay
-        trigger="trigger-3@longpress"
-        type="auto"
-        placement="right-start"
-    >
-        <sp-popover class="overlay-demo-popover" tip>
-            <sp-action-group vertical quiet>
-                <sp-action-button>
-                    <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
-                </sp-action-button>
-                <sp-action-button>
-                    <sp-icon-polygon-select
-                        slot="icon"
-                    ></sp-icon-polygon-select>
-                </sp-action-button>
-                <sp-action-button>
-                    <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
-                </sp-action-button>
-            </sp-action-group>
-        </sp-popover>
-    </sp-overlay>
+      </sp-action-group>
+    </sp-popover>
+  </sp-overlay>
+  <sp-overlay trigger="trigger-2@hover" type="hint">
+    <sp-tooltip>Hover</sp-tooltip>
+  </sp-overlay>
+  <sp-overlay trigger="trigger-2@longpress" type="auto" placement="right-start">
+    <sp-popover class="overlay-demo-popover" tip>
+      <sp-action-group vertical quiet>
+        <sp-action-button>
+          <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+        </sp-action-button>
+        <sp-action-button>
+          <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+        </sp-action-button>
+        <sp-action-button>
+          <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+        </sp-action-button>
+      </sp-action-group>
+    </sp-popover>
+  </sp-overlay>
+  <sp-overlay trigger="trigger-3@hover" type="hint">
+    <sp-tooltip>Hover</sp-tooltip>
+  </sp-overlay>
+  <sp-overlay trigger="trigger-3@longpress" type="auto" placement="right-start">
+    <sp-popover class="overlay-demo-popover" tip>
+      <sp-action-group vertical quiet>
+        <sp-action-button>
+          <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+        </sp-action-button>
+        <sp-action-button>
+          <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+        </sp-action-button>
+        <sp-action-button>
+          <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+        </sp-action-button>
+      </sp-action-group>
+    </sp-popover>
+  </sp-overlay>
 </sp-popover>
 ```
 
@@ -615,9 +597,9 @@ The `allow-outside-click` property allows clicks outside the overlay to close it
 ```html
 <!-- @deprecated Not recommended for accessibility reasons -->
 <sp-overlay trigger="trigger@click" allow-outside-click="true">
-    <sp-popover>
-        <p>This overlay can be closed by clicking outside</p>
-    </sp-popover>
+  <sp-popover>
+    <p>This overlay can be closed by clicking outside</p>
+  </sp-popover>
 </sp-overlay>
 ```
 
@@ -641,35 +623,35 @@ When an overlay is placed within a page with complex layering, the content there
 
 ```html
 <div class="complex-layered-demo">
-    <div class="complex-layered-holder">
-        <sp-action-button id="complex-layered">Trigger</sp-action-button>
-        <sp-overlay
-            trigger="complex-layered@hover"
-            type="hint"
-            placement="bottom-start"
-        >
-            <sp-tooltip>
-                I can be partially blocked when [popover] is not available
-            </sp-tooltip>
-        </sp-overlay>
-    </div>
-    <div class="complex-layered-blocker"></div>
+  <div class="complex-layered-holder">
+    <sp-action-button id="complex-layered">Trigger</sp-action-button>
+    <sp-overlay
+      trigger="complex-layered@hover"
+      type="hint"
+      placement="bottom-start"
+    >
+      <sp-tooltip>
+        I can be partially blocked when [popover] is not available
+      </sp-tooltip>
+    </sp-overlay>
+  </div>
+  <div class="complex-layered-blocker"></div>
 </div>
 <style>
-    .complex-layered-demo {
-        position: relative;
-    }
-    .complex-layered-holder {
-        z-index: 1;
-        position: relative;
-    }
-    .complex-layered-blocker {
-        position: relative;
-        z-index: 10;
-        background: white;
-        width: 100%;
-        height: 40px;
-    }
+  .complex-layered-demo {
+    position: relative;
+  }
+  .complex-layered-holder {
+    z-index: 1;
+    position: relative;
+  }
+  .complex-layered-blocker {
+    position: relative;
+    z-index: 10;
+    background: white;
+    width: 100%;
+    height: 40px;
+  }
 </style>
 ```
 
@@ -681,17 +663,15 @@ Properly managed `z-index` values will support working around this issue while b
 
 ```html
 <div class="contained-demo">
-    <sp-action-button id="contained">Trigger</sp-action-button>
-    <sp-overlay trigger="contained@hover" type="hint" placement="bottom-start">
-        <sp-tooltip>
-            I can be blocked when [popover] is not available
-        </sp-tooltip>
-    </sp-overlay>
+  <sp-action-button id="contained">Trigger</sp-action-button>
+  <sp-overlay trigger="contained@hover" type="hint" placement="bottom-start">
+    <sp-tooltip>I can be blocked when [popover] is not available</sp-tooltip>
+  </sp-overlay>
 </div>
 <style>
-    .contained-demo {
-        contain: content;
-    }
+  .contained-demo {
+    contain: content;
+  }
 </style>
 ```
 
@@ -699,19 +679,19 @@ You could just _remove_ the `contain` rule. But, if you are not OK with simply r
 
 ```html
 <div class="contained-demo">
-    <sp-action-button id="contained-working">Trigger</sp-action-button>
+  <sp-action-button id="contained-working">Trigger</sp-action-button>
 </div>
 <sp-overlay
-    trigger="contained-working@hover"
-    type="hint"
-    placement="bottom-start"
+  trigger="contained-working@hover"
+  type="hint"
+  placement="bottom-start"
 >
-    <sp-tooltip>I can be blocked when [popover] is not available</sp-tooltip>
+  <sp-tooltip>I can be blocked when [popover] is not available</sp-tooltip>
 </sp-overlay>
 <style>
-    .contained-demo {
-        contain: content;
-    }
+  .contained-demo {
+    contain: content;
+  }
 </style>
 ```
 
@@ -723,21 +703,15 @@ You could just _remove_ the `contain` rule. But, if you are not OK with simply r
 
 ```html
 <div class="clip-pathed-demo">
-    <sp-action-button id="clip-pathed">Trigger</sp-action-button>
-    <sp-overlay
-        trigger="clip-pathed@hover"
-        type="hint"
-        placement="bottom-start"
-    >
-        <sp-tooltip>
-            I can be blocked when [popover] is not available
-        </sp-tooltip>
-    </sp-overlay>
+  <sp-action-button id="clip-pathed">Trigger</sp-action-button>
+  <sp-overlay trigger="clip-pathed@hover" type="hint" placement="bottom-start">
+    <sp-tooltip>I can be blocked when [popover] is not available</sp-tooltip>
+  </sp-overlay>
 </div>
 <style>
-    .clip-pathed-demo {
-        clip-path: inset(0 0);
-    }
+  .clip-pathed-demo {
+    clip-path: inset(0 0);
+  }
 </style>
 ```
 
@@ -745,19 +719,19 @@ Here, again, working with your content needs (whether or not you want to leverag
 
 ```html
 <div class="clip-pathed-demo">
-    <sp-action-button id="clip-pathed-working">Trigger</sp-action-button>
+  <sp-action-button id="clip-pathed-working">Trigger</sp-action-button>
 </div>
 <sp-overlay
-    trigger="clip-pathed-working@hover"
-    type="hint"
-    placement="bottom-start"
+  trigger="clip-pathed-working@hover"
+  type="hint"
+  placement="bottom-start"
 >
-    <sp-tooltip>I can be blocked when [popover] is not available</sp-tooltip>
+  <sp-tooltip>I can be blocked when [popover] is not available</sp-tooltip>
 </sp-overlay>
 <style>
-    .clip-pathed-demo {
-        clip-path: inset(0 0);
-    }
+  .clip-pathed-demo {
+    clip-path: inset(0 0);
+  }
 </style>
 ```
 
@@ -780,41 +754,31 @@ When nesting multiple overlays, it is important to ensure that the nested overla
 
 ```html
 <div style="padding: 20px;">
-    <sp-button id="outerTrigger" variant="primary" aria-haspopup="dialog">
-        Open Outer Modal
-    </sp-button>
-    <sp-overlay id="outerOverlay" type="auto" trigger="outerTrigger@click">
-        <sp-popover>
+  <sp-button id="outerTrigger" variant="primary" aria-haspopup="dialog">
+    Open Outer Modal
+  </sp-button>
+  <sp-overlay id="outerOverlay" type="auto" trigger="outerTrigger@click">
+    <sp-popover>
+      <sp-dialog>
+        <h2 slot="heading" id="outer-dialog-heading">Outer Dialog</h2>
+        <p>This is the outer modal content. Press ESC to close it.</p>
+        <sp-button id="innerTrigger" variant="primary" aria-haspopup="dialog">
+          Open Inner Modal
+        </sp-button>
+        <sp-overlay id="innerOverlay" type="auto" trigger="innerTrigger@click">
+          <sp-popover>
             <sp-dialog>
-                <h2 slot="heading" id="outer-dialog-heading">Outer Dialog</h2>
-                <p>This is the outer modal content. Press ESC to close it.</p>
-                <sp-button
-                    id="innerTrigger"
-                    variant="primary"
-                    aria-haspopup="dialog"
-                >
-                    Open Inner Modal
-                </sp-button>
-                <sp-overlay
-                    id="innerOverlay"
-                    type="auto"
-                    trigger="innerTrigger@click"
-                >
-                    <sp-popover>
-                        <sp-dialog>
-                            <h2 slot="heading" id="inner-dialog-heading">
-                                Inner Dialog
-                            </h2>
-                            <p>
-                                This is the inner modal content. Press ESC to
-                                close this first, then the outer modal.
-                            </p>
-                        </sp-dialog>
-                    </sp-popover>
-                </sp-overlay>
+              <h2 slot="heading" id="inner-dialog-heading">Inner Dialog</h2>
+              <p>
+                This is the inner modal content. Press ESC to close this first,
+                then the outer modal.
+              </p>
             </sp-dialog>
-        </sp-popover>
-    </sp-overlay>
+          </sp-popover>
+        </sp-overlay>
+      </sp-dialog>
+    </sp-popover>
+  </sp-overlay>
 </div>
 ```
 
@@ -830,34 +794,34 @@ Example of proper focus management:
 
 ```html
 <sp-button id="modal-trigger" aria-haspopup="dialog" aria-expanded="false">
-    Open Settings
+  Open Settings
 </sp-button>
 <sp-overlay trigger="modal-trigger@click" type="modal">
-    <sp-dialog-wrapper
-        headline="Settings"
-        dismissable
-        underlay
-        aria-labelledby="settings-heading"
-    >
-        <h2 id="settings-heading" slot="heading">Settings</h2>
-        <sp-field-label for="setting1">Email Notifications</sp-field-label>
-        <sp-switch id="setting1">Enable notifications</sp-switch>
+  <sp-dialog-wrapper
+    headline="Settings"
+    dismissable
+    underlay
+    aria-labelledby="settings-heading"
+  >
+    <h2 id="settings-heading" slot="heading">Settings</h2>
+    <sp-field-label for="setting1">Email Notifications</sp-field-label>
+    <sp-switch id="setting1">Enable notifications</sp-switch>
 
-        <div slot="footer">
-            <sp-button
-                variant="secondary"
-                onclick="this.dispatchEvent(new Event('close', { bubbles: true }))"
-            >
-                Cancel
-            </sp-button>
-            <sp-button
-                variant="accent"
-                onclick="this.dispatchEvent(new Event('close', { bubbles: true }))"
-            >
-                Save
-            </sp-button>
-        </div>
-    </sp-dialog-wrapper>
+    <div slot="footer">
+      <sp-button
+        variant="secondary"
+        onclick="this.dispatchEvent(new Event('close', { bubbles: true }))"
+      >
+        Cancel
+      </sp-button>
+      <sp-button
+        variant="accent"
+        onclick="this.dispatchEvent(new Event('close', { bubbles: true }))"
+      >
+        Save
+      </sp-button>
+    </div>
+  </sp-dialog-wrapper>
 </sp-overlay>
 ```
 
@@ -899,11 +863,11 @@ Example of a tooltip with proper screen reader support:
 
 ```html
 <sp-button id="help-trigger" aria-describedby="help-tooltip" label="Help">
-    <sp-icon-help slot="icon"></sp-icon-help>
+  <sp-icon-help slot="icon"></sp-icon-help>
 </sp-button>
 <sp-overlay trigger="help-trigger@hover" type="hint">
-    <sp-tooltip id="help-tooltip">
-        Click for more information about this feature
-    </sp-tooltip>
+  <sp-tooltip id="help-tooltip">
+    Click for more information about this feature
+  </sp-tooltip>
 </sp-overlay>
 ```

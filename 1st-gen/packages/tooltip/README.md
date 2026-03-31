@@ -34,8 +34,8 @@ The tooltip consists of several key parts:
 
 ```html
 <sp-tooltip open>
-    <sp-icon-info slot="icon"></sp-icon-info>
-    Tooltip message
+  <sp-icon-info slot="icon"></sp-icon-info>
+  Tooltip message
 </sp-tooltip>
 ```
 
@@ -64,8 +64,8 @@ Use `variant="info"` for informational messages.
 
 ```html
 <sp-tooltip open placement="top" variant="info">
-    <sp-icon-info slot="icon" size="s"></sp-icon-info>
-    Embark on a side quest.
+  <sp-icon-info slot="icon" size="s"></sp-icon-info>
+  Embark on a side quest.
 </sp-tooltip>
 ```
 
@@ -77,8 +77,8 @@ Use `variant="positive"` for success messages.
 
 ```html
 <sp-tooltip open placement="top" variant="positive">
-    <sp-icon-checkmark-circle slot="icon" size="s"></sp-icon-checkmark-circle>
-    Quest completed!
+  <sp-icon-checkmark-circle slot="icon" size="s"></sp-icon-checkmark-circle>
+  Quest completed!
 </sp-tooltip>
 ```
 
@@ -90,8 +90,8 @@ Use `variant="negative"` for error messages.
 
 ```html
 <sp-tooltip open placement="top" variant="negative">
-    <sp-icon-alert slot="icon" size="s"></sp-icon-alert>
-    Quest failed!
+  <sp-icon-alert slot="icon" size="s"></sp-icon-alert>
+  Quest failed!
 </sp-tooltip>
 ```
 
@@ -112,10 +112,10 @@ You must combine it with an [Overlay Trigger](https://opensource.adobe.com/spect
 
 ```html
 <overlay-trigger triggered-by="hover">
-    <sp-button slot="trigger" variant="secondary">Hover me</sp-button>
-    <sp-tooltip slot="hover-content" placement="bottom">
-        Tooltip overlay triggered by hover
-    </sp-tooltip>
+  <sp-button slot="trigger" variant="secondary">Hover me</sp-button>
+  <sp-tooltip slot="hover-content" placement="bottom">
+    Tooltip overlay triggered by hover
+  </sp-tooltip>
 </overlay-trigger>
 ```
 
@@ -127,8 +127,8 @@ For simpler use cases, you can use the `self-managed` attribute which automatica
 
 ```html
 <sp-action-button>
-    Items
-    <sp-tooltip self-managed>Use items during battle.</sp-tooltip>
+  Items
+  <sp-tooltip self-managed>Use items during battle.</sp-tooltip>
 </sp-action-button>
 ```
 
@@ -143,10 +143,10 @@ A tooltip can be configured to delay its opening using the `delayed` attribute. 
 
 ```html
 <sp-action-button>
-    Show delayed tooltip
-    <sp-tooltip self-managed delayed>
-        This tooltip will show after a delay
-    </sp-tooltip>
+  Show delayed tooltip
+  <sp-tooltip self-managed delayed>
+    This tooltip will show after a delay
+  </sp-tooltip>
 </sp-action-button>
 ```
 
@@ -177,8 +177,8 @@ For non-interactive elements like icons, wrap them in an interactive element:
 
 ```html
 <sp-action-button size="s">
-    <sp-icon-book slot="icon"></sp-icon-book>
-    <sp-tooltip self-managed placement="right">Save progress.</sp-tooltip>
+  <sp-icon-book slot="icon"></sp-icon-book>
+  <sp-tooltip self-managed placement="right">Save progress.</sp-tooltip>
 </sp-action-button>
 ```
 
