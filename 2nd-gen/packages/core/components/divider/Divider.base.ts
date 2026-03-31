@@ -23,13 +23,19 @@ import {
 } from './Divider.types.js';
 
 /**
- * @element swc-divider
+ * A divider separates and distinguishes sections of content or groups of menu items.
+ *
+ * @attribute {ElementSize} size - The size of the divider.
  */
 export abstract class DividerBase extends SizedMixin(SpectrumElement, {
   validSizes: DIVIDER_VALID_SIZES,
   /**@todo the design spec says the default size is small but we declare no default size */
   noDefaultSize: true,
 }) {
+  // ──────────────────
+  //     SHARED API
+  // ──────────────────
+
   /**
    * @internal
    *
@@ -52,6 +58,10 @@ export abstract class DividerBase extends SizedMixin(SpectrumElement, {
    */
   @property({ reflect: true, attribute: 'static-color' })
   public staticColor?: DividerStaticColor;
+
+  // ──────────────────────
+  //     IMPLEMENTATION
+  // ──────────────────────
 
   protected override firstUpdated(changed: PropertyValues<this>): void {
     super.firstUpdated(changed);

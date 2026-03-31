@@ -23,6 +23,7 @@
 - [2nd-gen Component Migration](02_2nd-gen-component-migration/README.md)
     - [Status](02_2nd-gen-component-migration/01_status.md)
     - Step By Step
+    - [Migration project planning (Epics and tickets)](02_2nd-gen-component-migration/03_migration-project-planning.md)
 - [Accessibility Improvements](03_accessibility-improvements/README.md)
 - [Component Improvements](04_component-improvements/README.md)
 - [1st-gen Spectrum 2 Enhancements](05_1st-gen-spectrum-2-enhancements/README.md)
