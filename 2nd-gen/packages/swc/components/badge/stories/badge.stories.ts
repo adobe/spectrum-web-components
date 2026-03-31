@@ -10,13 +10,14 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Badge } from '@adobe/spectrum-wc/badge';
 
 import '@adobe/spectrum-wc/badge';
+import '@adobe/spectrum-wc/icon';
 
 import {
   BADGE_VALID_SIZES,
@@ -29,6 +30,12 @@ import {
   FIXED_VALUES,
   type FixedValues,
 } from '../../../../core/components/badge/Badge.types.js';
+import {
+  Checkmark75Icon,
+  Checkmark100Icon,
+  Checkmark200Icon,
+  Checkmark300Icon,
+} from '../../icon/elements/index.js';
 
 // ────────────────
 //    METADATA
@@ -152,6 +159,13 @@ const nonSemanticLabels = {
 
 const allVariantsLabels = { ...semanticLabels, ...nonSemanticLabels };
 
+const checkmarkIconForSize: Record<BadgeSize, () => TemplateResult> = {
+  s: Checkmark75Icon,
+  m: Checkmark100Icon,
+  l: Checkmark200Icon,
+  xl: Checkmark300Icon,
+};
+
 const fixedLabels = {
   'block-start': 'Block start',
   'block-end': 'Block end',
@@ -208,12 +222,13 @@ export const Overview: Story = {
 export const Anatomy: Story = {
   render: (args) => html`
     ${template({ ...args, 'default-slot': 'Label only' })}
-    ${template({ ...args, 'icon-slot': '✓', 'aria-label': 'Icon only' })}
-    ${template({
-      ...args,
-      'icon-slot': '✓',
-      'default-slot': 'Icon and label',
-    })}
+    <swc-badge variant=${args.variant} size=${args.size} aria-label="Checkmark">
+      <swc-icon size=${args.size} slot="icon">${Checkmark75Icon()}</swc-icon>
+    </swc-badge>
+    <swc-badge variant=${args.variant} size=${args.size}>
+      <swc-icon size=${args.size} slot="icon">${Checkmark75Icon()}</swc-icon>
+      Icon and label
+    </swc-badge>
   `,
   tags: ['anatomy'],
   args: {
@@ -238,12 +253,13 @@ export const Anatomy: Story = {
  */
 export const Sizes: Story = {
   render: (args) => html`
-    ${BADGE_VALID_SIZES.map((size) =>
-      template({
-        ...args,
-        size,
-        'default-slot': sizeLabels[size],
-      })
+    ${BADGE_VALID_SIZES.map(
+      (size) => html`
+        <swc-badge variant=${args.variant} size=${size}>
+          <swc-icon size=${size} slot="icon">${checkmarkIconForSize[size]()}</swc-icon>
+          ${sizeLabels[size]}
+        </swc-badge>
+      `
     )}
   `,
   parameters: { 'section-order': 1 },
