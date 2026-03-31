@@ -339,7 +339,11 @@ const preview = {
                 'Asset',
                 ['Rendering and styling migration analysis'],
                 'Avatar',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Migration plan',
+                  'Rendering and styling migration analysis',
+                ],
                 'Badge',
                 [
                   'Accessibility migration analysis',
