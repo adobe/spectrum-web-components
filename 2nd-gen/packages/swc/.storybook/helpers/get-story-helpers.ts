@@ -10,9 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import {
-  getStorybookHelpers,
-} from '@wc-toolkit/storybook-helpers';
+import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 interface CemAttribute {
   name: string;
@@ -90,7 +88,9 @@ export function getStoryHelpers<T>(tagName: string) {
         ? argType.description.replace(/\n/g, '<br/>')
         : '';
 
-      argType.description = [attributeLabel, desc].filter(Boolean).join('<br/><br/>');
+      argType.description = [attributeLabel, desc]
+        .filter(Boolean)
+        .join('<br/><br/>');
     }
 
     // Add trailing breaks before the type for all properties
