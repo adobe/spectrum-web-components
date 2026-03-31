@@ -11,44 +11,58 @@
  */
 
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
+import type {
+  ClassMember,
+  CustomElement,
+  Declaration,
+  Package,
+} from 'custom-elements-manifest/schema';
 
-interface CemAttribute {
-  name: string;
-  fieldName?: string;
-}
-
-interface CemMember {
-  name: string;
-  kind: string;
+/**
+ * The 2nd-gen `custom-elements-manifest` schema lacks `reflects` and
+ * `attribute` on class members. This type adds them so we can read
+ * reflection metadata from the actual manifest data.
+ */
+type CustomElementMember = ClassMember & {
   attribute?: string;
   reflects?: boolean;
+};
+
+declare global {
+  interface Window {
+    __STORYBOOK_CUSTOM_ELEMENTS_MANIFEST__?: Package;
+  }
 }
 
-interface CemDeclaration {
-  tagName?: string;
-  attributes?: CemAttribute[];
-  members?: CemMember[];
+function isCustomElement(
+  decl: Declaration
+): decl is Declaration & CustomElement {
+  return 'tagName' in decl;
 }
 
-interface CemModule {
-  declarations?: CemDeclaration[];
-}
-
-interface Cem {
-  modules?: CemModule[];
-}
+/** Lazily-populated lookup from tagName → declaration. */
+const componentCache = new Map<
+  string,
+  (Declaration & CustomElement) | undefined
+>();
 
 function findComponentByTagName(
-  cem: Cem,
+  cem: Package,
   tagName: string
-): CemDeclaration | undefined {
-  for (const mod of cem.modules || []) {
-    for (const decl of mod.declarations || []) {
-      if (decl.tagName === tagName) {
+): (Declaration & CustomElement) | undefined {
+  if (componentCache.has(tagName)) {
+    return componentCache.get(tagName);
+  }
+
+  for (const mod of cem.modules) {
+    for (const decl of mod.declarations ?? []) {
+      if (isCustomElement(decl) && decl.tagName === tagName) {
+        componentCache.set(tagName, decl);
         return decl;
       }
     }
   }
+  componentCache.set(tagName, undefined);
   return undefined;
 }
 
@@ -61,8 +75,7 @@ export function getStoryHelpers<T>(tagName: string) {
   const helpers = getStorybookHelpers<T>(tagName);
   const { argTypes } = helpers;
 
-  const cem: Cem | undefined = (window as unknown as Record<string, unknown>)
-    .__STORYBOOK_CUSTOM_ELEMENTS_MANIFEST__ as Cem | undefined;
+  const cem = window.__STORYBOOK_CUSTOM_ELEMENTS_MANIFEST__;
 
   const component = cem ? findComponentByTagName(cem, tagName) : undefined;
 
@@ -71,7 +84,9 @@ export function getStoryHelpers<T>(tagName: string) {
       // Look up whether this attribute reflects from the CEM
       const attr = component?.attributes?.find((a) => a.name === key);
       const member = attr?.fieldName
-        ? component?.members?.find((m) => m.name === attr.fieldName)
+        ? (component?.members?.find((m) => m.name === attr.fieldName) as
+            | CustomElementMember
+            | undefined)
         : undefined;
 
       const reflects = member?.reflects;
