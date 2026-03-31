@@ -102,13 +102,13 @@ export const StatusBadge = ({ of }: { of?: any }) => {
 
   return (
     <div style={{ display: 'flex', gap: '6px', marginBottom: '12px' }}>
-      {statusConfig && (
-        <Badge variant={statusConfig.variant}>{statusConfig.label}</Badge>
-      )}
       {since && (
         <Badge variant="neutral" outline>
           {`Since ${since}`}
         </Badge>
+      )}
+      {statusConfig && (
+        <Badge variant={statusConfig.variant}>{statusConfig.label}</Badge>
       )}
     </div>
   );
