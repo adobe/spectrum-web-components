@@ -31,7 +31,7 @@ import styles from './progress-circle.css';
  * @status preview
  * @since 0.0.1
  *
- * @property {string} static-color - Static color variant for use on different backgrounds.
+ * @property {string} staticColor - Reflected as the `static-color` attribute. Static color variant for use on different backgrounds.
  * @property {number} progress - Progress value between 0 and 100.
  * @property {boolean} indeterminate - Indeterminate state for loading.
  * @property {string} size - Size of the component.
@@ -80,7 +80,7 @@ export class ProgressCircle extends ProgressCircleBase {
       <div
         class=${classMap({
           ['swc-ProgressCircle']: true,
-          [`swc-ProgressCircle--indeterminate`]: this.indeterminate,
+          ['swc-ProgressCircle--indeterminate']: this.indeterminate,
           [`swc-ProgressCircle--static${capitalize(this.staticColor)}`]:
             typeof this.staticColor !== 'undefined',
           [`swc-ProgressCircle--size${this.size?.toUpperCase()}`]:
