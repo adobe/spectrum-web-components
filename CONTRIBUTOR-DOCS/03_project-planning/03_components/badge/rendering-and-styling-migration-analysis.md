@@ -343,7 +343,7 @@ No significant structural changes.
 
 **Note**: Fixed positioning exists in both SWC and Spectrum 2 CSS but is not in the design spec. Consider whether to keep this for 2nd gen.
 
-### Updates
+### TODOs
 
 #### 31 March 2026
 
