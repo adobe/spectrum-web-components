@@ -10,23 +10,22 @@
 <meta property="og:site_name" content="Adobe | Spectrum Web Components" />
 <meta property="og:type" content="website" />
 
+<link rel="preconnect" href="https://use.typekit.net" crossorigin />
+<link rel="dns-prefetch" href="https://use.typekit.net" />
+<link
+  rel="preload"
+  href="https://use.typekit.net/obc6cux.css"
+  as="style"
+  crossorigin
+/>
 <script>
-  if (!/Chromatic/.test(navigator.userAgent)) {
-    const preconnect = document.createElement('link');
-    preconnect.rel = 'preconnect';
-    preconnect.href = 'https://use.typekit.net';
-    preconnect.crossOrigin = '';
-
-    const dnsPrefetch = document.createElement('link');
-    dnsPrefetch.rel = 'dns-prefetch';
-    dnsPrefetch.href = 'https://use.typekit.net';
-
-    const stylesheet = document.createElement('link');
-    stylesheet.rel = 'stylesheet';
-    stylesheet.href = 'https://use.typekit.net/obc6cux.css';
-
-    document.head.append(preconnect, dnsPrefetch, stylesheet);
-  }
+  // Load typekit CSS asynchronously to avoid render-blocking layout differences
+  // that cause misalignment in Chromatic snapshots
+  const stylesheet = document.createElement('link');
+  stylesheet.rel = 'stylesheet';
+  stylesheet.href = 'https://use.typekit.net/obc6cux.css';
+  stylesheet.crossOrigin = '';
+  document.head.append(stylesheet);
 </script>
 <!-- TEMP: Disabled to test if Badge padding issue is font-related -->
 <!--
