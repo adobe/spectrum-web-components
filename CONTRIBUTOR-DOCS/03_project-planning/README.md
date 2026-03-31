@@ -29,6 +29,7 @@
     - Action Button
     - Action Group
     - Alert Banner
+    - Alert Region
     - Asset
     - Avatar
     - Badge

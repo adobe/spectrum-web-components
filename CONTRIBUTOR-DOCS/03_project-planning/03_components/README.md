@@ -23,7 +23,10 @@
 - Action Group
     - [Action group migration roadmap](action-group/rendering-and-styling-migration-analysis.md)
 - Alert Banner
+    - [Alert banner accessibility migration analysis](alert-banner/accessibility-migration-analysis.md)
     - [Alert Banner migration roadmap](alert-banner/rendering-and-styling-migration-analysis.md)
+- Alert Region
+    - [Alert region accessibility migration analysis](alert-region/accessibility-migration-analysis.md)
 - Asset
     - [Asset migration roadmap](asset/rendering-and-styling-migration-analysis.md)
 - Avatar
