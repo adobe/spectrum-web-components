@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 import { ReactiveElement } from 'lit';
-import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 import type { Constructor } from '../types.js';
 
@@ -44,21 +43,22 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
     extends constructor
     implements SlotPresenceObservingInterface
   {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    constructor(...args: any[]) {
-      super(...args);
-
-      new MutationController(this, {
-        config: {
-          childList: true,
-          subtree: true,
-        },
-        callback: () => {
-          this.managePresenceObservedSlot();
-        },
-      });
-
+    private presenceObserver = new MutationObserver(() => {
       this.managePresenceObservedSlot();
+    });
+
+    public override connectedCallback(): void {
+      super.connectedCallback();
+      this.presenceObserver.observe(this, {
+        childList: true,
+        subtree: true,
+      });
+      this.managePresenceObservedSlot();
+    }
+
+    public override disconnectedCallback(): void {
+      this.presenceObserver.disconnect();
+      super.disconnectedCallback();
     }
 
     /**

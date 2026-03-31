@@ -2,6 +2,7 @@
 .cursor/mcp.json
 .cursor/handoffs
 .claude/worktrees
+.claude/settings.local.json
 yarn-error.log
 build-storybook.log
 .DS_STORE

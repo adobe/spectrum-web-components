@@ -11,7 +11,6 @@
  */
 import { PropertyValues, ReactiveElement } from 'lit';
 import { property, queryAssignedNodes } from 'lit/decorators.js';
-import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 import type { Constructor } from '../types.js';
 
@@ -46,24 +45,28 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
     extends constructor
     implements SlotTextObservingInterface
   {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    constructor(...args: any[]) {
-      super(...args);
-
-      new MutationController(this, {
-        config: {
-          characterData: true,
-          subtree: true,
-        },
-        callback: (mutationsList: Array<MutationRecord>) => {
-          for (const mutation of mutationsList) {
-            if (mutation.type === 'characterData') {
-              this.manageTextObservedSlot();
-              return;
-            }
+    private textObserver = new MutationObserver(
+      (mutationsList: MutationRecord[]) => {
+        for (const mutation of mutationsList) {
+          if (mutation.type === 'characterData') {
+            this.manageTextObservedSlot();
+            return;
           }
-        },
+        }
+      }
+    );
+
+    public override connectedCallback(): void {
+      super.connectedCallback();
+      this.textObserver.observe(this, {
+        characterData: true,
+        subtree: true,
       });
+    }
+
+    public override disconnectedCallback(): void {
+      this.textObserver.disconnect();
+      super.disconnectedCallback();
     }
 
     /**

@@ -86,10 +86,6 @@ export class SpectrumElement extends SpectrumMixin(LitElement) {
   static VERSION = version;
 
   static CORE_VERSION = coreVersion;
-
-  public override get dir(): CSSStyleDeclaration['direction'] {
-    return getComputedStyle(this).direction ?? 'ltr';
-  }
 }
 
 if (process.env.NODE_ENV === 'development') {
