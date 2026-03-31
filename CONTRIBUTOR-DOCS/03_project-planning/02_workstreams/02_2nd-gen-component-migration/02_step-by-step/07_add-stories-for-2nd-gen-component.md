@@ -12,7 +12,7 @@
 - Add section headers: METADATA, STORIES, HELPER FUNCTIONS (if needed)
 - In METADATA section:
     - Import `StoryObj as Story` for consistency
-    - Set up Storybook helpers with `getStorybookHelpers()`
+    - Set up Storybook helpers with `getStoryHelpers()`
     - Configure argTypes for component-specific controls
     - Define and export the meta object
 - In STORIES section:
