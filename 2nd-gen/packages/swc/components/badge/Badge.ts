@@ -39,10 +39,6 @@ import styles from './badge.css';
  *   <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
  *   Verified
  * </swc-badge>
- *
- * @cssproperty --swc-badge-gap - The gap between icon and label.
- * @cssproperty --swc-badge-height - The minimum block size of the badge.
- * @cssproperty --swc-badge-background-color - The background color of the badge.
  */
 export class Badge extends BadgeBase {
   // ────────────────────
@@ -79,7 +75,7 @@ export class Badge extends BadgeBase {
    *
    * @todo This can be moved to the base class once we are no longer maintaining 1st-gen.
    */
-  @property({ type: Boolean, attribute: false })
+  @property({ type: Boolean, reflect: true })
   public subtle: boolean = false;
 
   /**
