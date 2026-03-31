@@ -28,6 +28,8 @@ import styles from './progress-circle.css';
  * They can represent determinate (with a specific progress value) or indeterminate (loading) progress.
  *
  * @element swc-progress-circle
+ * @status preview
+ * @since 0.0.1
  *
  * @property {string} static-color - Static color variant for use on different backgrounds.
  * @property {number} progress - Progress value between 0 and 100.

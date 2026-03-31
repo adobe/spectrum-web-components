@@ -9,7 +9,12 @@ import {
   Subtitle,
   useOf,
 } from '@storybook/addon-docs/blocks';
-import { GettingStarted, SpectrumStories, OverviewStory } from './blocks';
+import {
+  GettingStarted,
+  SpectrumStories,
+  OverviewStory,
+  StatusBadge,
+} from './blocks';
 
 export const checkIsSingleStory = () => {
   const resolvedOf = useOf('meta', ['meta']);
@@ -65,6 +70,7 @@ export const ConditionalGettingStarted = () => {
 <Meta isTemplate />
 
 <Title />
+<StatusBadge />
 <Subtitle />
 <Description />
 <SingleStoryDescription />
