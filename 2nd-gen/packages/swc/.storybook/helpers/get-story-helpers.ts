@@ -10,7 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
+import {
+  getStorybookHelpers,
+} from '@wc-toolkit/storybook-helpers';
 
 interface CemAttribute {
   name: string;
@@ -67,28 +69,34 @@ export function getStoryHelpers<T>(tagName: string) {
   const component = cem ? findComponentByTagName(cem, tagName) : undefined;
 
   for (const [key, argType] of Object.entries(argTypes)) {
-    if (argType?.table?.category !== 'attributes') {
-      continue;
+    if (argType?.table?.category === 'attributes') {
+      // Look up whether this attribute reflects from the CEM
+      const attr = component?.attributes?.find((a) => a.name === key);
+      const member = attr?.fieldName
+        ? component?.members?.find((m) => m.name === attr.fieldName)
+        : undefined;
+
+      const reflects = member?.reflects;
+
+      // Merge into properties category
+      argType.table.category = 'properties';
+
+      const reflectsTag = reflects
+        ? ` <span style="font-size:0.7em;opacity:0.8">(reflects)</span>`
+        : '';
+      const attributeLabel = `<b>Attribute:</b> <code>${key}</code>${reflectsTag}`;
+
+      const desc = argType.description
+        ? argType.description.replace(/\n/g, '<br/>')
+        : '';
+
+      argType.description = [attributeLabel, desc].filter(Boolean).join('<br/><br/>');
     }
 
-    // Look up whether this attribute reflects from the CEM
-    const attr = component?.attributes?.find((a) => a.name === key);
-    const member = attr?.fieldName
-      ? component?.members?.find((m) => m.name === attr.fieldName)
-      : undefined;
-
-    const reflects = member?.reflects;
-
-    // Merge into properties category
-    argType.table.category = 'properties';
-
-    const badge = reflects
-      ? `**Attribute:** \`${key}\` *(reflects)*`
-      : `**Attribute:** \`${key}\``;
-
-    argType.description = argType.description
-      ? `${badge}\n\n${argType.description}`
-      : badge;
+    // Add trailing breaks before the type for all properties
+    if (argType.description) {
+      argType.description += '<br/><br/>';
+    }
   }
 
   return helpers;

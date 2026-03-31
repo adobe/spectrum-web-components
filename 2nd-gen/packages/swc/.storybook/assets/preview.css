@@ -40,13 +40,6 @@ body {
   background: var(--swc-examples-gradient-static-white);
 }
 
-/* --- DOCS API TABLE --- */
-
-/* Give the description column more room in the args/controls table */
-.docblock-argstable-body td:nth-child(2) {
-  width: 50%;
-}
-
 /* --- DOCS STYLES --- */
 
 /* Force the modal wrapper to be contained by the frame not the viewport */
