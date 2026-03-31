@@ -107,6 +107,7 @@ export class Badge extends BadgeBase {
           [`swc-Badge--subtle`]: this.subtle,
           [`swc-Badge--outline`]: this.outline,
           [`swc-Badge--fixed-${this.fixed}`]: typeof this.fixed !== 'undefined',
+          [`swc-Badge--no-label`]: !this.slotHasContent,
         })}
       >
         ${when(
