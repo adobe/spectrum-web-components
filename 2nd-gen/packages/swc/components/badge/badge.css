@@ -20,26 +20,27 @@
   box-sizing: border-box;
 }
 
+/* Size `s` is the default. tokens are set directly on .swc-Badge, so no :host([size="s"]) needed */
 .swc-Badge {
   --_swc-badge-border-width: token("border-width-200");
   --_swc-badge-border-width-deduction: calc(var(--_swc-badge-border-width) * 2);
-  --_swc-badge-padding-block: token("component-padding-vertical-100");
+  --_swc-badge-padding-block: token("component-padding-vertical-75");
 
   display: inline-flex;
-  gap: var(--swc-badge-gap, token("text-to-visual-100"));
+  gap: var(--swc-badge-gap, token("text-to-visual-75"));
   align-items: center;
-  min-block-size: var(--swc-badge-height, token("component-height-100"));
+  min-block-size: var(--swc-badge-height, token("component-height-75"));
   padding-block: calc(var(--swc-badge-padding-block, var(--_swc-badge-padding-block)) - var(--_swc-badge-border-width-deduction));
-  padding-inline: calc(var(--swc-badge-padding-inline, token("component-edge-to-text-100")) - var(--_swc-badge-border-width-deduction));
+  padding-inline: calc(var(--swc-badge-padding-inline, token("component-edge-to-text-75")) - var(--_swc-badge-border-width-deduction));
   color: var(--swc-badge-label-icon-color, token("white"));
   background: var(--swc-badge-background-color, token("accent-background-color-default"));
   border: var(--_swc-badge-border-width) solid var(--swc-badge-border-color, transparent);
-  border-radius: var(--swc-badge-corner-radius, token("corner-radius-medium-size-medium"));
+  border-radius: var(--swc-badge-corner-radius, token("corner-radius-medium-size-small"));
   cursor: default;
 }
 
 .swc-Badge:has(.swc-Badge-icon) {
-  --swc-badge-padding-inline: var(--swc-badge-with-icon-padding-inline, token("component-edge-to-visual-100"));
+  --swc-badge-padding-inline: var(--swc-badge-with-icon-padding-inline, token("component-edge-to-visual-75"));
 }
 
 .swc-Badge--no-label:has(.swc-Badge-icon) {
@@ -47,7 +48,7 @@
 }
 
 .swc-Badge-label {
-  font-size: var(--swc-badge-font-size, token("font-size-100"));
+  font-size: var(--swc-badge-font-size, token("font-size-75"));
   font-weight: token("medium-font-weight");
   line-height: var(--swc-badge-line-height, token("line-height-100"));
 
@@ -59,7 +60,7 @@
 }
 
 .swc-Badge-icon {
-  --_swc-badge-icon-size: token("workflow-icon-size-100");
+  --_swc-badge-icon-size: token("workflow-icon-size-75");
 
   display: grid;
   flex-shrink: 0;
@@ -68,16 +69,15 @@
   block-size: var(--swc-badge-icon-size, var(--_swc-badge-icon-size));
 }
 
-/* TODO: small is the default size according to the documentation site. */
-:host([size="s"]) {
-  --swc-badge-height: token("component-height-75");
-  --swc-badge-corner-radius: token("corner-radius-medium-size-small");
-  --swc-badge-gap: token("text-to-visual-75");
-  --swc-badge-padding-inline: token("component-edge-to-text-75");
-  --swc-badge-with-icon-padding-inline: token("component-edge-to-visual-75");
-  --swc-badge-padding-block: token("component-padding-vertical-75");
-  --swc-badge-font-size: token("font-size-75");
-  --swc-badge-icon-size: token("workflow-icon-size-75");
+:host([size="m"]) {
+  --swc-badge-height: token("component-height-100");
+  --swc-badge-corner-radius: token("corner-radius-medium-size-medium");
+  --swc-badge-gap: token("text-to-visual-100");
+  --swc-badge-padding-inline: token("component-edge-to-text-100");
+  --swc-badge-with-icon-padding-inline: token("component-edge-to-visual-100");
+  --swc-badge-padding-block: token("component-padding-vertical-100");
+  --swc-badge-font-size: token("font-size-100");
+  --swc-badge-icon-size: token("workflow-icon-size-100");
 }
 
 :host([size="l"]) {
