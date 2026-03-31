@@ -32,13 +32,15 @@ argTypes.size = {
   options: Avatar.VALID_SIZES,
   table: {
     category: 'attributes',
-    defaultValue: { summary: '100' },
+    defaultValue: { summary: '500' },
   },
 };
 
 /**
  * An avatar displays a circular profile image representing a person or entity.
- * Use `<swc-avatar-link>` when the avatar should navigate to a URL.
+ *
+ * Provide `alt` with a description of who is depicted. Pass `alt=""` to treat
+ * the image as decorative and hide it from assistive technology.
  */
 export const meta: Meta = {
   title: 'Avatar',
@@ -71,8 +73,8 @@ export const Playground: Story = {
   tags: ['autodocs', 'dev'],
   args: {
     src: PLACEHOLDER_SRC,
-    label: 'Jane Doe',
-    size: 100,
+    alt: 'Jane Doe',
+    size: 500,
   },
 };
 
@@ -82,7 +84,7 @@ export const Sizes: Story = {
       (size) => html`
         <swc-avatar
           src=${PLACEHOLDER_SRC}
-          label="Jane Doe, size ${size}"
+          alt="Jane Doe, size ${size}"
           size=${size}
         ></swc-avatar>
       `
@@ -93,6 +95,22 @@ export const Sizes: Story = {
 
 export const Decorative: Story = {
   render: () => html`
-    <swc-avatar src=${PLACEHOLDER_SRC} is-decorative size="100"></swc-avatar>
+    <swc-avatar src=${PLACEHOLDER_SRC} alt="" size="500"></swc-avatar>
+  `,
+};
+
+/**
+ * An avatar can be placed inside an action button to create a user-triggered
+ * action tied to a specific person or entity.
+ *
+ * @todo Replace `<button>` with `<swc-action-button>` once that component is
+ * migrated to 2nd-gen.
+ */
+export const InActionButton: Story = {
+  render: () => html`
+    <button type="button" style="display:inline-flex;align-items:center;gap:8px;padding:4px 12px;cursor:pointer;">
+      <swc-avatar src=${PLACEHOLDER_SRC} alt="Jane Doe" size="100"></swc-avatar>
+      Jane Doe
+    </button>
   `,
 };

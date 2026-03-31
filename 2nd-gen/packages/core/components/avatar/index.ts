@@ -10,5 +10,4 @@
  * governing permissions and limitations under the License.
  */
 export * from './Avatar.base.js';
-export * from './AvatarLink.base.js';
 export * from './Avatar.types.js';

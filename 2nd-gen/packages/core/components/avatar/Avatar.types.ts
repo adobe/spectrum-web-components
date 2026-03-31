@@ -28,4 +28,4 @@ export const AVATAR_VALID_SIZES = [
 
 export type AvatarSize = (typeof AVATAR_VALID_SIZES)[number];
 
-export const AVATAR_DEFAULT_SIZE = 100 as const satisfies AvatarSize;
+export const AVATAR_DEFAULT_SIZE = 500 as const satisfies AvatarSize;

@@ -21,16 +21,11 @@ import {
 } from './Avatar.types.js';
 
 /**
- * Base class for the static avatar component.
+ * Base class for the avatar component.
  *
- * Provides the shared image API (src, size, label, is-decorative) used by both
- * `<swc-avatar>` and `<swc-avatar-link>`. Link-specific properties live in
- * `AvatarLinkBase`.
- *
- * @attribute {number} size - The size of the avatar. One of: 50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500.
  * @attribute {string} src - URL of the profile image.
- * @attribute {string} label - Accessible label for the image. Required unless is-decorative is set.
- * @attribute {boolean} is-decorative - Marks the image as decorative (hidden from screen readers).
+ * @attribute {string} alt - Text description of the avatar. Pass `alt=""` or omit to mark the image as decorative.
+ * @attribute {number} size - One of: 50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500.
  */
 export abstract class AvatarBase extends SpectrumElement {
   // ─────────────────────────
@@ -53,23 +48,13 @@ export abstract class AvatarBase extends SpectrumElement {
   public src = '';
 
   /**
-   * Accessible label for the avatar image.
+   * Text description of the avatar image.
    *
    * Becomes the `alt` attribute on the underlying `<img>` element.
-   * Required unless `isDecorative` is set. Takes precedence over `isDecorative`
-   * when both are present.
+   * Pass `alt=""` or omit entirely to treat the image as decorative.
    */
   @property({ type: String })
-  public label = '';
-
-  /**
-   * Marks the avatar image as decorative — it conveys no information and
-   * should be hidden from assistive technology.
-   *
-   * When set, `alt=""` and `aria-hidden="true"` are applied to the image.
-   */
-  @property({ type: Boolean, reflect: true, attribute: 'is-decorative' })
-  public isDecorative = false;
+  public alt: string | undefined;
 
   // ───────────────────
   //     SIZE API
@@ -78,10 +63,10 @@ export abstract class AvatarBase extends SpectrumElement {
   /**
    * The size of the avatar.
    *
-   * Accepts numeric values: 50, 75, 100 (default), 200, 300, 400, 500, 600,
+   * Accepts numeric values: 50, 75, 100, 200, 300, 400, 500 (default), 600,
    * 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500.
    *
-   * Invalid values fall back to the default (100).
+   * Invalid values fall back to the default (500).
    */
   @property({ type: Number, reflect: true })
   public get size(): AvatarSize {
@@ -106,6 +91,29 @@ export abstract class AvatarBase extends SpectrumElement {
 
   private _size: AvatarSize = AVATAR_DEFAULT_SIZE;
 
+  // ──────────────────────────────────────────
+  //     DEPRECATED — 1st-gen compat shims
+  // ──────────────────────────────────────────
+
+  /**
+   * @deprecated Use `alt` instead. This shim will be removed in a future release.
+   */
+  public get label(): string | undefined {
+    return this.alt;
+  }
+
+  public set label(value: string | undefined) {
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `The "label" attribute on <${this.localName}> is deprecated. Use "alt" instead.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/avatar/',
+        { type: 'api' }
+      );
+    }
+    this.alt = value;
+  }
+
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
@@ -114,32 +122,6 @@ export abstract class AvatarBase extends SpectrumElement {
     super.firstUpdated(changes);
     if (!this.hasAttribute('size')) {
       this.setAttribute('size', String(this.size));
-    }
-    this.warnMissingLabel();
-  }
-
-  protected override updated(changes: PropertyValues): void {
-    super.updated(changes);
-    if (changes.has('label') || changes.has('isDecorative')) {
-      this.warnMissingLabel();
-    }
-  }
-
-  /**
-   * Emits a DEBUG-mode warning when no accessible label information is provided.
-   */
-  protected warnMissingLabel(): void {
-    if (!window.__swc?.DEBUG) {
-      return;
-    }
-
-    if (!this.label && !this.isDecorative) {
-      window.__swc.warn(
-        this,
-        `<${this.localName}> element requires either a "label" attribute or the "is-decorative" attribute to be accessible.`,
-        'https://opensource.adobe.com/spectrum-web-components/components/avatar/#accessibility',
-        { type: 'accessibility' }
-      );
     }
   }
 }

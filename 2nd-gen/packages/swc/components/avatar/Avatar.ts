@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { AvatarBase } from '@spectrum-web-components/core/components/avatar';
 
@@ -19,35 +18,29 @@ import styles from './avatar.css';
 /**
  * A static avatar component that displays a circular user profile image.
  *
- * For a clickable avatar that navigates to a URL, use `<swc-avatar-link>`.
+ * Provide `alt` with a description of the person or entity depicted.
+ * Pass `alt=""` or omit it entirely to treat the image as decorative.
  *
  * @element swc-avatar
  *
  * @example
- * <swc-avatar src="/path/to/image.jpg" label="Jane Doe"></swc-avatar>
+ * <swc-avatar src="/path/to/image.jpg" alt="Jane Doe"></swc-avatar>
  *
  * @example
- * <swc-avatar src="/path/to/image.jpg" is-decorative></swc-avatar>
+ * <swc-avatar src="/path/to/image.jpg" alt=""></swc-avatar>
  */
 export class Avatar extends AvatarBase {
-  // ──────────────────────────────
-  //     RENDERING & STYLING
-  // ──────────────────────────────
-
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
   protected override render(): TemplateResult {
-    const ariaHidden = this.isDecorative && !this.label ? 'true' : undefined;
-
     return html`
       <div class="swc-Avatar">
         <img
           class="swc-Avatar-image"
           src=${this.src}
-          alt=${this.label}
-          aria-hidden=${ifDefined(ariaHidden)}
+          alt=${this.alt ?? ''}
         />
       </div>
     `;
