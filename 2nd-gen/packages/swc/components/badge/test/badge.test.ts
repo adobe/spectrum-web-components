@@ -139,7 +139,7 @@ export const AnatomyTest: Story = {
       expect(badgeWithIcon).toBeTruthy();
       const slottedIcon = badgeWithIcon?.querySelector('[slot="icon"]');
       expect(slottedIcon).toBeTruthy();
-      expect(slottedIcon?.textContent?.trim()).toBeTruthy();
+      expect(slottedIcon?.children.length).toBeGreaterThan(0);
     });
   },
 };
