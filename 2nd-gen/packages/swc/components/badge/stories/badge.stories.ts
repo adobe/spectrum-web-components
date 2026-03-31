@@ -68,7 +68,7 @@ argTypes.size = {
   table: {
     category: 'attributes',
     defaultValue: {
-      summary: 'm',
+      summary: 's',
     },
   },
 };
@@ -166,7 +166,7 @@ const fixedLabels = {
 export const Playground: Story = {
   render: (args) => template(args),
   args: {
-    size: 'm',
+    size: 's',
     variant: 'informative',
     'default-slot': 'Active',
   },
@@ -183,7 +183,7 @@ export const Overview: Story = {
   `,
   tags: ['overview'],
   args: {
-    size: 'm',
+    size: 's',
     variant: 'informative',
     'default-slot': 'Active',
   },
@@ -218,7 +218,7 @@ export const Anatomy: Story = {
   tags: ['anatomy'],
   args: {
     variant: 'informative',
-    size: 'm',
+    size: 's',
   },
 };
 
@@ -234,7 +234,7 @@ export const Anatomy: Story = {
  * - **Large (`l`)**: Increased emphasis in cards or content areas
  * - **Extra-large (`xl`)**: Maximum visibility for primary status indicators
  *
- * The `m` size is the default and most frequently used option. Use larger sizes sparingly to create a hierarchy of importance on a page.
+ * The `s` size is the default and most frequently used option. Use larger sizes sparingly to create a hierarchy of importance on a page.
  */
 export const Sizes: Story = {
   render: (args) => html`
@@ -272,6 +272,7 @@ export const SemanticVariants: Story = {
       template({
         ...args,
         variant,
+        size: 's',
         'default-slot': semanticLabels[variant],
       })
     )}
@@ -291,7 +292,6 @@ SemanticVariants.storyName = 'Semantic variants';
  * - Creating department, team, or project color schemes
  *
  * > **Note**: 2nd-gen adds `pink`, `turquoise`, `brown`, `cinnamon`, and `silver` variants.
- * 1st-gen variants `gray`, `red`, `orange`, `green`, and `blue` are not available in 2nd-gen.
  */
 export const NonSemanticVariants: Story = {
   render: (args) => html`
@@ -299,6 +299,7 @@ export const NonSemanticVariants: Story = {
       template({
         ...args,
         variant,
+        size: 's',
         'default-slot': nonSemanticLabels[variant],
       })
     )}
@@ -321,6 +322,7 @@ export const Outline: Story = {
       template({
         ...args,
         variant,
+        size: 's',
         outline: true,
         'default-slot': semanticLabels[variant],
       })
@@ -345,6 +347,7 @@ export const Subtle: Story = {
       template({
         ...args,
         variant,
+        size: 's',
         subtle: true,
         'default-slot': allVariantsLabels[variant],
       })
@@ -374,16 +377,14 @@ export const Fixed: Story = {
       template({
         ...args,
         fixed,
+        size: 's',
+        variant: 'informative',
         'default-slot': fixedLabels[fixed],
       })
     )}
   `,
   parameters: { 'section-order': 6 },
   tags: ['options'],
-  args: {
-    variant: 'informative',
-    size: 'm',
-  },
 };
 
 // ──────────────────────────────
@@ -401,15 +402,12 @@ export const TextWrapping: Story = {
     ${template({
       ...args,
       variant: 'informative',
+      size: 's',
       'default-slot': 'Document review pending approval from manager',
       style: 'max-inline-size: 120px',
     })}
   `,
   tags: ['behaviors'],
-  args: {
-    variant: 'informative',
-    size: 'm',
-  },
 };
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
@@ -489,6 +487,6 @@ export const Accessibility: Story = {
   `,
   tags: ['a11y'],
   args: {
-    size: 'm',
+    size: 's',
   },
 };
