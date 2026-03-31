@@ -80,22 +80,13 @@ export function getStoryHelpers<T>(tagName: string) {
       argType.table.category = 'properties';
 
       const reflectsTag = reflects
-        ? ` <span style="font-size:0.7em;opacity:0.8">(reflects)</span>`
+        ? ' <span style="font-size:0.75em;opacity:0.7">(reflects)</span>'
         : '';
-      const attributeLabel = `<b>Attribute:</b> <code>${key}</code>${reflectsTag}`;
+      const attributeLabel = `**Attribute:** \`${key}\`${reflectsTag}`;
 
-      const desc = argType.description
-        ? argType.description.replace(/\n/g, '<br/>')
-        : '';
+      const desc = argType.description ?? '';
 
-      argType.description = [attributeLabel, desc]
-        .filter(Boolean)
-        .join('<br/><br/>');
-    }
-
-    // Add trailing breaks before the type for all properties
-    if (argType.description) {
-      argType.description += '<br/><br/>';
+      argType.description = [attributeLabel, desc].filter(Boolean).join('\n\n');
     }
   }
 
