@@ -24,9 +24,9 @@ import styles from './divider.css';
  * @since 0.0.1
  */
 export class Divider extends DividerBase {
-  // ────────────────────
+  // ──────────────────────────────
   //     RENDERING & STYLING
-  // ────────────────────
+  // ──────────────────────────────
 
   public static override get styles(): CSSResultArray {
     return [styles];

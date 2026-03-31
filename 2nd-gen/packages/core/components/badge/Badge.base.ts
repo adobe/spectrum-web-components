@@ -32,6 +32,8 @@ import {
  *
  * @slot - Text label of the badge.
  * @slot icon - Optional icon that appears to the left of the label
+ *
+ * @todo review the mixin composition here. We currently have 3 levels of mixins on this class, but the mixin composition guide recommends a maximum of 2.
  */
 export abstract class BadgeBase extends SizedMixin(
   ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), ''),
@@ -103,7 +105,7 @@ export abstract class BadgeBase extends SizedMixin(
    *
    * @todo The purpose of the bespoke getter and setter is unclear, as it
    * looks like they may be behaving just like a standard Lit reactive
-   * property. Explore replacing after the Barebones milestone.
+   * property. Explore replacing after milestone 2.
    */
   @property({ reflect: true })
   public get fixed(): FixedValues | undefined {
@@ -131,12 +133,19 @@ export abstract class BadgeBase extends SizedMixin(
   // ──────────────────────
 
   /**
-   * @internal Used for rendering gap when the badge has an icon.
+   * Used for rendering gap when the badge has an icon.
+   *
+   * @internal
    */
   protected get hasIcon(): boolean {
     return this.slotContentIsPresent;
   }
 
+  /**
+   * @todo Migrate from update() to updated() for consistency with other
+   * components. The standard pattern is to use updated() for post-render
+   * validation (debug warnings).
+   */
   protected override update(changedProperties: PropertyValues): void {
     super.update(changedProperties);
     if (window.__swc?.DEBUG) {

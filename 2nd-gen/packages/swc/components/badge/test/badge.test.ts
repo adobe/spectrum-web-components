@@ -19,8 +19,8 @@ import '@adobe/spectrum-wc/badge';
 
 import {
   BADGE_VALID_SIZES,
-  BADGE_VARIANTS_COLOR_S2,
-  BADGE_VARIANTS_S2,
+  BADGE_VARIANTS,
+  BADGE_VARIANTS_COLOR,
   BADGE_VARIANTS_SEMANTIC,
   FIXED_VALUES,
 } from '../../../../core/components/badge/Badge.types.js';
@@ -206,7 +206,7 @@ export const SubtleTest: Story = {
   ...Subtle,
   play: async ({ canvasElement, step }) => {
     await step('reflects subtle attribute on all variants', async () => {
-      for (const variant of BADGE_VARIANTS_S2) {
+      for (const variant of BADGE_VARIANTS) {
         const badge = canvasElement.querySelector(
           `swc-badge[variant="${variant}"]`
         ) as Badge;
@@ -237,7 +237,7 @@ export const NonSemanticVariantsTest: Story = {
   play: async ({ canvasElement, step }) => {
     await step('renders all color variant values', async () => {
       await Promise.all(
-        BADGE_VARIANTS_COLOR_S2.map(async (variant) => {
+        BADGE_VARIANTS_COLOR.map(async (variant) => {
           const badge = canvasElement.querySelector(
             `swc-badge[variant="${variant}"]`
           ) as Badge;
