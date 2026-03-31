@@ -159,11 +159,16 @@ const nonSemanticLabels = {
 
 const allVariantsLabels = { ...semanticLabels, ...nonSemanticLabels };
 
-const checkmarkIconForSize: Record<BadgeSize, () => TemplateResult> = {
-  s: Checkmark75Icon,
-  m: Checkmark100Icon,
-  l: Checkmark200Icon,
-  xl: Checkmark300Icon,
+const checkmarkIconForSize = (size: string): TemplateResult => {
+  const validSize: BadgeSize = BADGE_VALID_SIZES.includes(size as BadgeSize)
+    ? (size as BadgeSize)
+    : 's';
+  return {
+    s: Checkmark75Icon,
+    m: Checkmark100Icon,
+    l: Checkmark200Icon,
+    xl: Checkmark300Icon,
+  }[validSize]();
 };
 
 const fixedLabels = {
@@ -220,16 +225,23 @@ export const Overview: Story = {
  * - **icon slot**: (optional) - Visual indicator positioned before the label
  */
 export const Anatomy: Story = {
-  render: (args) => html`
-    ${template({ ...args, 'default-slot': 'Label only' })}
-    <swc-badge variant=${args.variant} size=${args.size} aria-label="Checkmark">
-      <swc-icon size=${args.size} slot="icon">${Checkmark75Icon()}</swc-icon>
-    </swc-badge>
-    <swc-badge variant=${args.variant} size=${args.size}>
-      <swc-icon size=${args.size} slot="icon">${Checkmark75Icon()}</swc-icon>
-      Icon and label
-    </swc-badge>
-  `,
+  render: (args) => {
+    const size = args.size as BadgeSize;
+    return html`
+      ${template({ ...args, 'default-slot': 'Label only' })}
+      <swc-badge variant=${args.variant} size=${size} aria-label="Checkmark">
+        <swc-icon size=${size} slot="icon">
+          ${checkmarkIconForSize(size)}
+        </swc-icon>
+      </swc-badge>
+      <swc-badge variant=${args.variant} size=${size}>
+        <swc-icon size=${size} slot="icon">
+          ${checkmarkIconForSize(size)}
+        </swc-icon>
+        Icon and label
+      </swc-badge>
+    `;
+  },
   tags: ['anatomy'],
   args: {
     variant: 'informative',
@@ -257,7 +269,7 @@ export const Sizes: Story = {
       (size) => html`
         <swc-badge variant=${args.variant} size=${size}>
           <swc-icon size=${size} slot="icon">
-            ${checkmarkIconForSize[size]()}
+            ${checkmarkIconForSize(size)}
           </swc-icon>
           ${sizeLabels[size]}
         </swc-badge>
@@ -521,14 +533,16 @@ export const Accessibility: Story = {
     <!-- Icon + text: icon is decorative, aria-hidden="true" hides it from assistive technology -->
     <swc-badge variant="positive" size=${args.size}>
       <swc-icon size=${args.size} slot="icon" aria-hidden="true">
-        ${Checkmark75Icon()}
+        ${checkmarkIconForSize(args.size)}
       </swc-icon>
       Approved
     </swc-badge>
 
     <!-- Icon only: aria-label provides the accessible name when no visible text is present -->
     <swc-badge variant="positive" size=${args.size} aria-label="Approved">
-      <swc-icon size=${args.size} slot="icon">${Checkmark75Icon()}</swc-icon>
+      <swc-icon size=${args.size} slot="icon">
+        ${checkmarkIconForSize(args.size)}
+      </swc-icon>
     </swc-badge>
   `,
   tags: ['a11y'],
