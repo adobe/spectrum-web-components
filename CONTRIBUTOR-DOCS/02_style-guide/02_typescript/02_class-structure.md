@@ -312,6 +312,8 @@ protected override render(): TemplateResult {
 }
 ```
 
+For `classMap` object keys (bracketed string keys vs plain quoted keys, mixing with template literal keys, and what to avoid), see [classMap patterns](09_rendering-patterns.md#classmap-patterns).
+
 ## Section comment format
 
 Section comments use ASCII box-drawing characters. The format has three lines:
