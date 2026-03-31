@@ -67,6 +67,11 @@ if (storybookMode !== 'ci-a11y') {
       directory: 'guides',
       files: '**/!(*documentation).mdx',
       titlePrefix: 'Guides',
+    },
+    {
+      directory: 'contributor-docs',
+      files: '**/*.mdx',
+      titlePrefix: 'Contributor docs',
     }
   );
 }
@@ -123,13 +128,10 @@ const config: StorybookConfig = {
       // breaking our custom DocumentTemplate.mdx. Keep docs enabled but
       // disable addons that are not needed for visual regression testing.
       // See: https://github.com/storybookjs/storybook/issues/31699
-      disabledAddons: [
-        '@storybook/addon-a11y',
-        '@storybook/addon-designs',
-        '@storybook/addon-vitest',
-      ],
+      disabledAddons: [],
     },
   },
+  staticDirs: ['../public'],
   addons,
   experimental_indexers: storybookMode === 'dev' ? [testStoryIndexer] : [],
   viteFinal: async (config) => {
