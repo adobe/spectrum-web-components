@@ -35,9 +35,6 @@ function applyLanguageAndFontKit(lang: string | false, isRTL: boolean): void {
   }
   root.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
 
-  // TEMP: Skip font kit injection to test if Chromatic alignment issue is font-related
-  return;
-
   // If the fonts are actively loading, do not re-trigger the load
   if (window.FontsLoading === true) {
     return;
