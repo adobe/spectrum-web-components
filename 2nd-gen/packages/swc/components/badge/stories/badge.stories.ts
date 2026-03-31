@@ -80,6 +80,15 @@ argTypes.size = {
   },
 };
 
+// @todo: create a select dropdown with all available/acceptable icons for a component.
+// For now, this arg is turned off in the control table since the string doesn't get parsed as HTML
+argTypes['icon-slot'] = {
+  ...argTypes['icon-slot'],
+  control: false,
+  description:
+    'Accepts an icon element. The control is disabled. Use the Anatomy story to see icon usage. Enhancements to this control will be added in a future release.',
+};
+
 /**
  * Similar to [status lights](/docs/components-status-light--readme), they use color and text to convey status or category information.
  *
