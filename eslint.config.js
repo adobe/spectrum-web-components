@@ -283,6 +283,8 @@ export default defineConfig([
             'attr', // Attribute shorthand
             'attribute', // Attribute documentation
             'internal', // Internal member marker
+            'status', // Component maturity status (preview, early-access, deprecated)
+            'since', // Version when the component was introduced
           ],
         },
       ],
