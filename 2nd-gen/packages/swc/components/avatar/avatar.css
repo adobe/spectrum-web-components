@@ -55,24 +55,31 @@
 :host([size="800"]) {
   --swc-avatar-size: token("avatar-size-800");
 }
+
 :host([size="900"]) {
   --swc-avatar-size: token("avatar-size-900");
 }
+
 :host([size="1000"]) {
   --swc-avatar-size: token("avatar-size-1000");
 }
+
 :host([size="1100"]) {
   --swc-avatar-size: token("avatar-size-1100");
 }
+
 :host([size="1200"]) {
   --swc-avatar-size: token("avatar-size-1200");
 }
+
 :host([size="1300"]) {
   --swc-avatar-size: token("avatar-size-1300");
 }
+
 :host([size="1400"]) {
   --swc-avatar-size: token("avatar-size-1400");
 }
+
 :host([size="1500"]) {
   --swc-avatar-size: token("avatar-size-1500");
 }
@@ -98,4 +105,23 @@
   inline-size: var(--swc-avatar-size, token("avatar-size-500"));
   block-size: var(--swc-avatar-size, token("avatar-size-500"));
   border-radius: token("corner-radius-full");
+}
+
+/* ── Over-background outline ────────────────────────────── */
+
+/* Default outline (1px) for all sizes */
+:host([over-background]) .swc-Avatar-image {
+  outline-width: var(--swc-avatar-border-width, token("avatar-border-width"));
+  outline-style: solid;
+  outline-color: var(--swc-avatar-border-color, token("avatar-border-color"));
+}
+
+/* Thicker outline (2px) for large sizes >= 1000 (≥ 64 px), matching S2 */
+:host([over-background][size="1000"]) .swc-Avatar-image,
+:host([over-background][size="1100"]) .swc-Avatar-image,
+:host([over-background][size="1200"]) .swc-Avatar-image,
+:host([over-background][size="1300"]) .swc-Avatar-image,
+:host([over-background][size="1400"]) .swc-Avatar-image,
+:host([over-background][size="1500"]) .swc-Avatar-image {
+  outline-width: 2px;
 }

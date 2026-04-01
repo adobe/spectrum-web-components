@@ -61,12 +61,7 @@ export abstract class AvatarBase extends SpectrumElement {
   // ───────────────────
 
   /**
-   * The size of the avatar.
-   *
-   * Accepts numeric values: 50, 75, 100, 200, 300, 400, 500 (default), 600,
-   * 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500.
-   *
-   * Invalid values fall back to the default (500).
+   * The size of the avatar. Invalid values fall back to the default (500).
    */
   @property({ type: Number, reflect: true })
   public get size(): AvatarSize {
@@ -90,6 +85,19 @@ export abstract class AvatarBase extends SpectrumElement {
   }
 
   private _size: AvatarSize = AVATAR_DEFAULT_SIZE;
+
+  // ───────────────────────
+  //     VISUAL API
+  // ───────────────────────
+
+  /**
+   * Renders an outline around the avatar image so it remains visible against
+   * backgrounds that share the same color as the image border.
+   *
+   * Mirrors React Spectrum S2's `isOverBackground` prop.
+   */
+  @property({ type: Boolean, reflect: true, attribute: 'over-background' })
+  public overBackground = false;
 
   // ──────────────────────────────────────────
   //     DEPRECATED — 1st-gen compat shims

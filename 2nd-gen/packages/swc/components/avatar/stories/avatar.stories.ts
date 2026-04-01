@@ -36,6 +36,15 @@ argTypes.size = {
   },
 };
 
+argTypes['over-background'] = {
+  ...argTypes['over-background'],
+  control: { type: 'boolean' },
+  table: {
+    category: 'attributes',
+    defaultValue: { summary: 'false' },
+  },
+};
+
 /**
  * An avatar displays a circular profile image representing a person or entity.
  *
@@ -74,14 +83,26 @@ const PLACEHOLDER_SRC = 'https://picsum.photos/id/64/500/500';
 // ────────────────────
 
 export const Playground: Story = {
-  render: ({ src, alt, size }) => html`
-    <swc-avatar src=${src} alt=${alt ?? ''} size=${size}></swc-avatar>
+  render: ({ src, alt, size, 'over-background': overBackground }) => html`
+    <div
+      style=${overBackground
+        ? 'padding:16px;background:linear-gradient(to right,rgb(15,23,42),rgb(51,65,85));border-radius:8px;'
+        : ''}
+    >
+      <swc-avatar
+        src=${src}
+        alt=${alt ?? ''}
+        size=${size}
+        ?over-background=${overBackground}
+      ></swc-avatar>
+    </div>
   `,
   tags: ['autodocs', 'dev'],
   args: {
     src: PLACEHOLDER_SRC,
     alt: 'Jane Doe',
     size: '500',
+    'over-background': false,
   },
 };
 
@@ -186,6 +207,35 @@ export const InActionButton: Story = {
     </button>
   `,
   tags: ['behaviors'],
+};
+
+/**
+ * When placed on a background that shares the same color as the avatar's image
+ * border, use `over-background` to render a solid outline that keeps the
+ * avatar visually distinct. The outline is 1 px for sizes 50–900 and 2 px for
+ * sizes 1000–1500, matching Spectrum 2's breakpoint.
+ */
+export const OverBackground: Story = {
+  render: () => html`
+    <div
+      style="display:inline-flex;gap:8px;align-items:center;padding:16px;background:linear-gradient(to right,rgb(15,23,42),rgb(51,65,85));border-radius:8px;"
+    >
+      <swc-avatar
+        src=${PLACEHOLDER_SRC}
+        alt="Jane Doe"
+        size="500"
+        over-background
+      ></swc-avatar>
+      <swc-avatar
+        src=${PLACEHOLDER_SRC}
+        alt="Jane Doe"
+        size="1000"
+        over-background
+      ></swc-avatar>
+    </div>
+  `,
+  parameters: { 'section-order': 3 },
+  tags: ['options'],
 };
 
 // ────────────────────────────────
