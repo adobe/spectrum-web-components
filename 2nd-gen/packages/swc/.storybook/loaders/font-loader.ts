@@ -9,19 +9,41 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import type {} from '../storybook-env';
 
 export const FontLoader = async () => ({
-  fonts: new Promise<void>((resolve) => {
-    // First check if the fonts are already loaded
-    if (typeof window.Typekit !== 'undefined') {
-      resolve();
-    }
-
-    // Listen for a custom event indicating the Adobe Fonts have loaded
-    document.addEventListener('typekit-loaded', () => {
-      if (typeof window.Typekit !== 'undefined') {
+  fonts: (async () => {
+    // Wait for the Typekit library to signal that fonts have been activated.
+    // The old check (`typeof window.Typekit !== 'undefined'`) resolved as soon
+    // as the Typekit *script* loaded, before font files were fetched. We now
+    // also gate on `FontsLoading` so we don't resolve mid-download.
+    await new Promise<void>((resolve) => {
+      if (
+        typeof window.Typekit !== 'undefined' &&
+        window.FontsLoading !== true
+      ) {
         resolve();
+        return;
       }
+
+      document.addEventListener('typekit-loaded', () => resolve(), {
+        once: true,
+      });
+
+      // Don't block stories forever if fonts fail to load.
+      setTimeout(resolve, 5000);
     });
-  }),
+
+    // `document.fonts.ready` resolves when all queued font-face loads
+    // are complete — the browser-native signal that text layout is final.
+    await document.fonts.ready;
+
+    // Two rAF ticks guarantee the browser has
+    // repainted with the newly-loaded font metrics.
+    await new Promise<void>((resolve) => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => resolve());
+      });
+    });
+  })(),
 });
