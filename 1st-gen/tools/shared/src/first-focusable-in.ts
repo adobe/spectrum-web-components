@@ -9,27 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
-import type { SpectrumElement } from '@spectrum-web-components/base';
-
-import { userFocusableSelector } from './focusable-selectors.js';
-
-export const firstFocusableIn = (
-  root: HTMLElement | ShadowRoot
-): SpectrumElement | null => {
-  const firstFocusable = root.querySelector(
-    userFocusableSelector
-  ) as SpectrumElement;
-  return firstFocusable;
-};
-
-export const firstFocusableSlottedIn = (
-  root: HTMLSlotElement
-): SpectrumElement | null => {
-  const firstFocusable = root
-    .assignedElements()
-    .find((element) =>
-      element.matches(userFocusableSelector)
-    ) as SpectrumElement;
-  return firstFocusable;
-};
+export {
+  firstFocusableIn,
+  firstFocusableSlottedIn,
+} from '@spectrum-web-components/core/utils/focus-utils.js';

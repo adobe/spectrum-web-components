@@ -20,3 +20,44 @@ Component-specific mixins should live alongside their component, unless multiple
 
 - `mixins/` — when the behavior is generic
 - `components/` — when specific to a component family
+
+## 1st-gen → 2nd-gen file map
+
+Tracks what moved, where it landed, and any changes made during the move.
+
+### Mixins
+
+| 1st-gen source                              | 2nd-gen core                      | Notes                                                                  |
+| ------------------------------------------- | --------------------------------- | ---------------------------------------------------------------------- |
+| `tools/shared/src/focusable.ts`             | `mixins/focusable.ts`             | Extends `SpectrumElement` directly (drops `FocusVisiblePolyfillMixin`) |
+| `tools/shared/src/observe-slot-presence.ts` | `mixins/observe-slot-presence.ts` |                                                                        |
+| `tools/shared/src/observe-slot-text.ts`     | `mixins/observe-slot-text.ts`     |                                                                        |
+| _(various packages)_                        | `mixins/sized-mixin.ts`           |                                                                        |
+
+#### Not moved
+
+| 1st-gen source                      | Reason                                                            |
+| ----------------------------------- | ----------------------------------------------------------------- |
+| `tools/shared/src/focus-visible.ts` | Polyfill shim — modern browsers support `:focus-visible` natively |
+
+### Utils
+
+| 1st-gen source                            | 2nd-gen core                   | Notes                                      |
+| ----------------------------------------- | ------------------------------ | ------------------------------------------ |
+| `tools/shared/src/focusable-selectors.ts` | `utils/focus-utils.ts`         | Typo fix: `userFocuable` → `userFocusable` |
+| `tools/shared/src/first-focusable-in.ts`  | `utils/focus-utils.ts`         | Consolidated with focusable selectors      |
+| `tools/shared/src/get-label-from-slot.ts` | `utils/get-label-from-slot.ts` |                                            |
+| _(n/a)_                                   | `utils/capitalize.ts`          | New in 2nd-gen                             |
+
+### Controllers
+
+| 1st-gen source | 2nd-gen core                         | Notes |
+| -------------- | ------------------------------------ | ----- |
+| _(various)_    | `controllers/language-resolution.ts` |       |
+
+### Element
+
+| 1st-gen source  | 2nd-gen core                  | Notes                              |
+| --------------- | ----------------------------- | ---------------------------------- |
+| `packages/base` | `element/spectrum-element.ts` | `SpectrumElement`, `SpectrumMixin` |
+| _(n/a)_         | `element/define-element.ts`   | New in 2nd-gen                     |

@@ -11,4 +11,10 @@
  */
 
 export { capitalize } from './capitalize.js';
+export {
+  firstFocusableIn,
+  firstFocusableSlottedIn,
+  focusableSelector,
+  userFocusableSelector,
+} from './focus-utils.js';
 export { getLabelFromSlot } from './get-label-from-slot.js';

@@ -107,6 +107,10 @@
       "types": "./dist/utils/capitalize.d.ts",
       "import": "./dist/utils/capitalize.js"
     },
+    "./utils/focus-utils.js": {
+      "types": "./dist/utils/focusable.d.ts",
+      "import": "./dist/utils/focusable.js"
+    },
     "./utils/get-label-from-slot.js": {
       "types": "./dist/utils/get-label-from-slot.d.ts",
       "import": "./dist/utils/get-label-from-slot.js"
@@ -197,6 +201,9 @@
       ],
       "utils/capitalize.js": [
         "dist/utils/capitalize.d.ts"
+      ],
+      "utils/focusable.js": [
+        "dist/utils/focusable.d.ts"
       ],
       "utils/get-label-from-slot.js": [
         "dist/utils/get-label-from-slot.d.ts"
