@@ -238,7 +238,12 @@ export const Anatomy: Story = {
     const size = args.size as BadgeSize;
     return html`
       ${template({ ...args, 'default-slot': 'Label only' })}
-      <swc-badge variant=${args.variant} size=${size} aria-label="Checkmark">
+      <swc-badge
+        variant=${args.variant}
+        size=${size}
+        role="img"
+        aria-label="Checkmark"
+      >
         <swc-icon size=${size} slot="icon">
           ${checkmarkIconForSize(size)}
         </swc-icon>
@@ -481,14 +486,16 @@ export const TextWrapping: Story = {
  * ### Icon only
  *
  * When space is limited and no visible label is shown, the badge **must** have an accessible name.
- * Set `aria-label` directly on the `<swc-badge>` element to describe the badge's meaning.
- * Without a label or `aria-label`, the badge has no accessible name and fails WCAG 1.1.1.
+ * Set `role="img"` and `aria-label` directly on the `<swc-badge>` element to describe the badge's meaning.
+ * `role="img"` is required because custom elements have no implicit ARIA role — without it, `aria-label` is not
+ * permitted by the ARIA specification and will fail automated accessibility checks.
+ * Without both attributes, the badge has no accessible name and fails WCAG 1.1.1.
  *
  * ### Best practices
  *
  * - Use semantic variants (`positive`, `negative`, `notice`, `informative`, `neutral`, `accent`) when the status has specific meaning
  * - Include clear, descriptive labels that explain the status without relying on color alone
- * - For icon-only badges, always set `aria-label` on the element
+ * - For icon-only badges, always set `role="img"` and `aria-label` on `swc-badge`
  * - Ensure sufficient color contrast between the badge and its background
  * - Badges are not interactive elements - for interactive status indicators, consider using buttons, tags, or links instead
  * - When using multiple badges together, ensure they're clearly associated with their related content
@@ -547,8 +554,13 @@ export const Accessibility: Story = {
       Approved
     </swc-badge>
 
-    <!-- Icon only: aria-label provides the accessible name when no visible text is present -->
-    <swc-badge variant="positive" size=${args.size} aria-label="Approved">
+    <!-- Icon-only: role and aria-label provides the accessible name and purpose when no visible text is present -->
+    <swc-badge
+      variant="positive"
+      size=${args.size}
+      role="img"
+      aria-label="Approved"
+    >
       <swc-icon size=${args.size} slot="icon">
         ${checkmarkIconForSize(args.size)}
       </swc-icon>
