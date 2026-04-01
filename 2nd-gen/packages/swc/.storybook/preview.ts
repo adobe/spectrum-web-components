@@ -131,7 +131,6 @@ const preview = {
   ],
   parameters: {
     layout: 'centered',
-    chromatic: { delay: 5000 },
     backgrounds: { disable: true }, // Use custom context switches
     controls: {
       expanded: true,
