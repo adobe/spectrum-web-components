@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+export { Focusable } from './focusable.js';
 export {
   ObserveSlotPresence,
   type SlotPresenceObservingInterface,

@@ -79,6 +79,10 @@
       "types": "./dist/mixins/index.d.ts",
       "import": "./dist/mixins/index.js"
     },
+    "./mixins/focusable.js": {
+      "types": "./dist/mixins/focusable.d.ts",
+      "import": "./dist/mixins/focusable.js"
+    },
     "./mixins/index.js": {
       "types": "./dist/mixins/index.d.ts",
       "import": "./dist/mixins/index.js"
@@ -172,6 +176,9 @@
       ],
       "mixins": [
         "dist/mixins/index.d.ts"
+      ],
+      "mixins/focusable.js": [
+        "dist/mixins/focusable.d.ts"
       ],
       "mixins/index.js": [
         "dist/mixins/index.d.ts"
