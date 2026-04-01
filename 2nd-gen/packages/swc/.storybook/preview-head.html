@@ -14,7 +14,29 @@
 <link rel="preconnect" href="https://use.typekit.net" crossorigin />
 <link rel="dns-prefetch" href="https://use.typekit.net" />
 <!-- For Adobe Clean Spectrum VF font support. CJK kits are loaded on-demand by the language decorator. -->
-<link rel="stylesheet" href="https://use.typekit.net/obc6cux.css" />
+<script>
+  // Fetch the typekit CSS and override font-display to 'block' so the browser
+  // never paints with a fallback font. This prevents Chromatic snapshots from
+  // capturing frames where fallback font metrics cause slight text misalignment
+  // (e.g. Badge, StatusLight line-height shifts).
+  fetch('https://use.typekit.net/obc6cux.css')
+    .then((r) => r.text())
+    .then((css) => {
+      const style = document.createElement('style');
+      style.textContent = css.replace(
+        /font-display:\s*auto/g,
+        'font-display:block'
+      );
+      document.head.append(style);
+    })
+    .catch(() => {
+      // Fallback: load normally if fetch fails
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://use.typekit.net/obc6cux.css';
+      document.head.append(link);
+    });
+</script>
 <!-- This is the script that attempts to pre-load the typekit fonts -->
 <script>
   window.global = window;
