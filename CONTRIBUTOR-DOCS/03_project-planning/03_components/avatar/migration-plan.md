@@ -123,7 +123,7 @@ All `--mod-avatar-*` customization properties removed. Consumers must migrate to
 - [x] `alt` provided → `alt="[value]"` on `<img>`
 - [x] `alt=""` (decorative) → `alt=""` on `<img>`
 - [x] `alt` omitted → `alt=""` on `<img>`
-- [ ] DEBUG warning for missing `alt`
+- [x] DEBUG warning for missing `alt`
 - [ ] Playwright ARIA snapshot tests
 
 ### Phase 6 — Testing

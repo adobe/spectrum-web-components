@@ -23,9 +23,8 @@ import {
 /**
  * Base class for the avatar component.
  *
- * @attribute {string} src - URL of the profile image.
- * @attribute {string} alt - Text description of the avatar. Pass `alt=""` or omit to mark the image as decorative.
- * @attribute {number} size - One of: 50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500.
+ * Provides the core API for displaying a circular profile image. Concrete
+ * classes supply the stylesheet and render template.
  */
 export abstract class AvatarBase extends SpectrumElement {
   // ─────────────────────────
@@ -34,6 +33,8 @@ export abstract class AvatarBase extends SpectrumElement {
 
   /**
    * @internal
+   *
+   * The set of valid numeric size values for the avatar.
    */
   static readonly VALID_SIZES: readonly AvatarSize[] = AVATAR_VALID_SIZES;
 
@@ -51,7 +52,8 @@ export abstract class AvatarBase extends SpectrumElement {
    * Text description of the avatar image.
    *
    * Becomes the `alt` attribute on the underlying `<img>` element.
-   * Pass `alt=""` or omit entirely to treat the image as decorative.
+   * Pass `alt=""` to treat the image as decorative and hide it from
+   * assistive technology. If omitted, a DEBUG warning is issued.
    */
   @property({ type: String })
   public alt: string | undefined;
@@ -105,6 +107,9 @@ export abstract class AvatarBase extends SpectrumElement {
 
   /**
    * @deprecated Use `alt` instead. This shim will be removed in a future release.
+   *
+   * **Breaking change:** In 1st-gen, `label` was the primary way to provide
+   * alternative text for the avatar image. In 2nd-gen, use `alt` instead.
    */
   public get label(): string | undefined {
     return this.alt;
@@ -116,7 +121,7 @@ export abstract class AvatarBase extends SpectrumElement {
         this,
         `The "label" attribute on <${this.localName}> is deprecated. Use "alt" instead.`,
         'https://opensource.adobe.com/spectrum-web-components/components/avatar/',
-        { type: 'api' }
+        { type: 'api', level: 'deprecation' }
       );
     }
     this.alt = value;
@@ -130,6 +135,33 @@ export abstract class AvatarBase extends SpectrumElement {
     super.firstUpdated(changes);
     if (!this.hasAttribute('size')) {
       this.setAttribute('size', String(this.size));
+    }
+    if (window.__swc?.DEBUG) {
+      this.warnMissingAlt();
+    }
+  }
+
+  protected override updated(changes: PropertyValues): void {
+    super.updated(changes);
+    if (window.__swc?.DEBUG && changes.has('alt')) {
+      this.warnMissingAlt();
+    }
+  }
+
+  private warnMissingAlt(): void {
+    if (this.alt === undefined) {
+      window.__swc?.warn(
+        this,
+        `<${this.localName}> is missing an \`alt\` attribute. Provide a text description or pass \`alt=""\` to mark it as decorative.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/avatar/#accessibility',
+        {
+          type: 'accessibility',
+          issues: [
+            'Provide an `alt` attribute with meaningful alternative text, or',
+            'Set `alt=""` to mark the image as decorative (hidden from screen readers).',
+          ],
+        }
+      );
     }
   }
 }

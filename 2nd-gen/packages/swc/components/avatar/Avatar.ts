@@ -19,7 +19,8 @@ import styles from './avatar.css';
  * A static avatar component that displays a circular user profile image.
  *
  * Provide `alt` with a description of the person or entity depicted.
- * Pass `alt=""` or omit it entirely to treat the image as decorative.
+ * Pass `alt=""` to treat the image as decorative and hide it from assistive
+ * technology.
  *
  * @element swc-avatar
  *
@@ -28,6 +29,9 @@ import styles from './avatar.css';
  *
  * @example
  * <swc-avatar src="/path/to/image.jpg" alt=""></swc-avatar>
+ *
+ * @example
+ * <swc-avatar src="/path/to/image.jpg" alt="Jane Doe" over-background></swc-avatar>
  */
 export class Avatar extends AvatarBase {
   public static override get styles(): CSSResultArray {
