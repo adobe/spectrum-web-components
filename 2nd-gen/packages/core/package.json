@@ -111,10 +111,6 @@
       "types": "./dist/utils/focus-utils.d.ts",
       "import": "./dist/utils/focus-utils.js"
     },
-    "./utils/get-deep-element-from-point.js": {
-      "types": "./dist/utils/get-deep-element-from-point.d.ts",
-      "import": "./dist/utils/get-deep-element-from-point.js"
-    },
     "./utils/get-label-from-slot.js": {
       "types": "./dist/utils/get-label-from-slot.d.ts",
       "import": "./dist/utils/get-label-from-slot.js"
@@ -130,10 +126,6 @@
     "./utils/random-id.js": {
       "types": "./dist/utils/random-id.d.ts",
       "import": "./dist/utils/random-id.js"
-    },
-    "./utils/reparent-children.js": {
-      "types": "./dist/utils/reparent-children.d.ts",
-      "import": "./dist/utils/reparent-children.js"
     }
   },
   "main": "./dist/index.js",
@@ -221,9 +213,6 @@
       "utils/focus-utils.js": [
         "dist/utils/focus-utils.d.ts"
       ],
-      "utils/get-deep-element-from-point.js": [
-        "dist/utils/get-deep-element-from-point.d.ts"
-      ],
       "utils/get-label-from-slot.js": [
         "dist/utils/get-label-from-slot.d.ts"
       ],
@@ -235,9 +224,6 @@
       ],
       "utils/random-id.js": [
         "dist/utils/random-id.d.ts"
-      ],
-      "utils/reparent-children.js": [
-        "dist/utils/reparent-children.d.ts"
       ]
     }
   },

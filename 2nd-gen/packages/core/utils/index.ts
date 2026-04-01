@@ -17,7 +17,6 @@ export {
   focusableSelector,
   userFocusableSelector,
 } from './focus-utils.js';
-export { getDeepElementFromPoint } from './get-deep-element-from-point.js';
 export { getLabelFromSlot } from './get-label-from-slot.js';
 export {
   isAndroid,
@@ -32,4 +31,3 @@ export {
   isWebKit,
 } from './platform.js';
 export { randomID } from './random-id.js';
-export { reparentChildren } from './reparent-children.js';

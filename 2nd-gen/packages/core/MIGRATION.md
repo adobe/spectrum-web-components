@@ -36,9 +36,13 @@ Tracks what moved, where it landed, and any changes made during the move.
 
 #### Not moved
 
-| 1st-gen source                      | Reason                                                            |
-| ----------------------------------- | ----------------------------------------------------------------- |
-| `tools/shared/src/focus-visible.ts` | Polyfill shim — modern browsers support `:focus-visible` natively |
+| 1st-gen source                        | Reason                                                                                                                                      |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `tools/shared/src/focus-visible.ts`   | Polyfill shim — modern browsers support `:focus-visible` natively. No longer needed in 2nd-gen.                                             |
+| `tools/shared/src/like-anchor.ts`     | Mixin removed. Anchor-like properties (`href`, `target`, etc.) will be added directly to components that need them, reducing one abstraction layer. |
+| `tools/shared/src/get-active-element.ts`      | Only used by a single component — inline where needed rather than shared.                                                                       |
+| `tools/shared/src/get-deep-element-from-point.ts` | Only used by overlay — inline in the component when overlay is migrated.                                                                   |
+| `tools/shared/src/reparent-children.ts`       | Only used by overlay — inline in the component when overlay is migrated.                                                                        |
 
 ### Utils
 
@@ -46,11 +50,9 @@ Tracks what moved, where it landed, and any changes made during the move.
 | ------------------------------------------------- | -------------------------------------- | ---------------------------------------------- |
 | `tools/shared/src/focusable-selectors.ts`         | `utils/focus-utils.ts`                 | Typo fix: `userFocuable` → `userFocusable`     |
 | `tools/shared/src/first-focusable-in.ts`          | `utils/focus-utils.ts`                 | Consolidated with focusable selectors          |
-| `tools/shared/src/get-deep-element-from-point.ts` | `utils/get-deep-element-from-point.ts` |                                                |
 | `tools/shared/src/get-label-from-slot.ts`         | `utils/get-label-from-slot.ts`         |                                                |
 | `tools/shared/src/platform.ts`                    | `utils/platform.ts`                    |                                                |
 | `tools/shared/src/random-id.ts`                   | `utils/random-id.ts`                   |                                                |
-| `tools/shared/src/reparent-children.ts`           | `utils/reparent-children.ts`           | Move to overlay utils when overlay is migrated |
 | _(n/a)_                                           | `utils/capitalize.ts`                  | New in 2nd-gen                                 |
 
 ### Controllers
