@@ -16,24 +16,18 @@
  * and rendered with the correct glyphs before Chromatic captures a snapshot.
  * See: https://www.chromatic.com/docs/font-loading/
  */
-const waitForFonts = async () => {
-  if (document.fonts) {
-    await document.fonts.load('1em "adobe-clean-spectrum-vf"');
-  }
-};
 
 export const FontLoader = async () => ({
   fonts: new Promise<void>((resolve) => {
     // First check if the fonts are already loaded
     if (typeof window.Typekit !== 'undefined') {
-      waitForFonts().then(resolve);
-      return;
+      resolve();
     }
 
     // Listen for a custom event indicating the Adobe Fonts have loaded
     document.addEventListener('typekit-loaded', () => {
       if (typeof window.Typekit !== 'undefined') {
-        waitForFonts().then(resolve);
+        resolve();
       }
     });
   }),
