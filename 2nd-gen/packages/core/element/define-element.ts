@@ -28,15 +28,14 @@ export function defineElement(
   name: string,
   constructor: CustomElementConstructor
 ): void {
-  if (customElements.get(name)) {
-    if (window.__swc && window.__swc.DEBUG) {
+  if (window.__swc && window.__swc.DEBUG) {
+    if (customElements.get(name)) {
       window.__swc.warn(
         undefined,
         `Attempted to redefine <${name}>. This usually indicates that multiple versions of the same web component were loaded onto a single page.`,
         'https://opensource.adobe.com/spectrum-web-components/registry-conflicts'
       );
     }
-    return;
   }
   customElements.define(name, constructor);
 }

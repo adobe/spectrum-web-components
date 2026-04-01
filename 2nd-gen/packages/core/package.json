@@ -103,6 +103,10 @@
       "types": "./dist/mixins/sized-mixin.d.ts",
       "import": "./dist/mixins/sized-mixin.js"
     },
+    "./types.js": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js"
+    },
     "./utils": {
       "types": "./dist/utils/index.d.ts",
       "import": "./dist/utils/index.js"
@@ -198,6 +202,9 @@
       ],
       "mixins/sized-mixin.js": [
         "dist/mixins/sized-mixin.d.ts"
+      ],
+      "types.js": [
+        "dist/types.d.ts"
       ],
       "utils": [
         "dist/utils/index.d.ts"

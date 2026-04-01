@@ -44,11 +44,28 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
      * @returns `true` when the deepest active element matches `:focus-visible`
      */
     public hasVisibleFocusInTree(): boolean {
-      const root = this.getRootNode() as Document;
-      let activeElement = root.activeElement as HTMLElement | null;
-      while (activeElement?.shadowRoot?.activeElement) {
-        activeElement = activeElement.shadowRoot.activeElement as HTMLElement;
-      }
+      const getAncestors = (root: Document = document): HTMLElement[] => {
+        let currentNode = root.activeElement as HTMLElement;
+        while (
+          currentNode?.shadowRoot &&
+          currentNode.shadowRoot.activeElement
+        ) {
+          currentNode = currentNode.shadowRoot.activeElement as HTMLElement;
+        }
+        const ancestors: HTMLElement[] = currentNode ? [currentNode] : [];
+        while (currentNode) {
+          const ancestor =
+            currentNode.assignedSlot ||
+            currentNode.parentElement ||
+            (currentNode.getRootNode() as ShadowRoot)?.host;
+          if (ancestor) {
+            ancestors.push(ancestor as HTMLElement);
+          }
+          currentNode = ancestor as HTMLElement;
+        }
+        return ancestors;
+      };
+      const activeElement = getAncestors(this.getRootNode() as Document)[0];
       if (!activeElement) {
         return false;
       }
@@ -62,6 +79,10 @@ export class SpectrumElement extends SpectrumMixin(LitElement) {
   static VERSION = version;
 
   static CORE_VERSION = coreVersion;
+
+  public override get dir(): CSSStyleDeclaration['direction'] {
+    return getComputedStyle(this).direction ?? 'ltr';
+  }
 }
 
 if (process.env.NODE_ENV === 'development') {

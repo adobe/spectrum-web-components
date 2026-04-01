@@ -33,42 +33,4 @@ export class SpectrumElement extends CoreSpectrumElement {
    * The version of the core base package.
    */
   static override CORE_VERSION = coreVersion;
-
-  /**
-   * 1st-gen override that preserves the `.focus-visible` polyfill fallback
-   * and full ancestor traversal for older browser support.
-   *
-   * The 2nd-gen core version was simplified to only use native
-   * `:focus-visible` (supported by all target browsers). This override
-   * retains the legacy behavior for 1st-gen components that may still
-   * run in environments needing the polyfill.
-   */
-  public override hasVisibleFocusInTree(): boolean {
-    const getAncestors = (root: Document = document): HTMLElement[] => {
-      let currentNode = root.activeElement as HTMLElement;
-      while (currentNode?.shadowRoot && currentNode.shadowRoot.activeElement) {
-        currentNode = currentNode.shadowRoot.activeElement as HTMLElement;
-      }
-      const ancestors: HTMLElement[] = currentNode ? [currentNode] : [];
-      while (currentNode) {
-        const ancestor =
-          currentNode.assignedSlot ||
-          currentNode.parentElement ||
-          (currentNode.getRootNode() as ShadowRoot)?.host;
-        if (ancestor) {
-          ancestors.push(ancestor as HTMLElement);
-        }
-        currentNode = ancestor as HTMLElement;
-      }
-      return ancestors;
-    };
-    const activeElement = getAncestors(this.getRootNode() as Document)[0];
-    if (!activeElement) {
-      return false;
-    }
-    return (
-      activeElement.matches(':focus-visible') ||
-      activeElement.matches('.focus-visible')
-    );
-  }
 }
