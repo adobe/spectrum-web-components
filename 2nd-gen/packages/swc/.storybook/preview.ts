@@ -141,6 +141,9 @@ const preview = {
         date: /Date$/i,
       },
     },
+    chromatic: {
+      delay: 5000,
+    },
     a11y: {
       // CI enforces a11y via the custom Storybook test-runner; keep addon-a11y non-blocking here.
       test: 'todo',
