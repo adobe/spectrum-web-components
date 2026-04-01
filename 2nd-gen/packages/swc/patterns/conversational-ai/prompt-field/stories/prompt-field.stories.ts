@@ -14,6 +14,8 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
+import '../../conversation-artifact-card/index.js';
+import '../../conversation-artifact-media/index.js';
 import '../index.js';
 
 // ────────────────
@@ -35,7 +37,7 @@ argTypes.state = {
 argTypes['uploaded-artifact'] = {
   ...argTypes['uploaded-artifact'],
   control: { type: 'select' },
-  options: ['none', 'card', 'image'],
+  options: ['none', 'card', 'media'],
   table: {
     category: 'attributes',
     defaultValue: { summary: 'none' },
@@ -45,6 +47,8 @@ argTypes['uploaded-artifact'] = {
 /**
  * The prompt entry surface for conversational AI flows.
  * Fires events for all interactions — consumers manage state externally.
+ *
+ * Prefer **`template(args)`** (or **`docs.source`**) so the docs code panel shows HTML.
  */
 const meta: Meta = {
   title: 'Conversational AI/Prompt field',
@@ -108,12 +112,14 @@ export const Overview: Story = {
  * 4. **Disclaimer** — Legal attribution below the card
  */
 export const Anatomy: Story = {
-  render: () => html`
-    <swc-prompt-field
-      label="Prompt"
-      placeholder="Ask anything"
-    ></swc-prompt-field>
-  `,
+  args: {
+    label: 'Prompt',
+    placeholder: 'Ask anything',
+    value: '',
+    state: 'default',
+    'uploaded-artifact': 'none',
+    populated: false,
+  },
   tags: ['anatomy'],
 };
 
@@ -178,11 +184,11 @@ export const State: Story = {
  * The `uploaded-artifact` attribute controls whether an artifact preview appears above the text input:
  *
  * - **`none`** — No artifact (default)
- * - **`card`** — Horizontal card attachment (e.g. a linked file or project)
- * - **`image`** — Square image/asset thumbnail
+ * - **`card`** — Full-width band for horizontal file-style attachments
+ * - **`media`** — Square tile for visual previews (image, GIF, video poster, etc.)
  *
- * Slot the artifact content into the `artifact` named slot.
- * The component always renders the dismiss button over the artifact.
+ * Slot content into the **`artifact`** slot. Recommended: `swc-conversation-artifact-card` or `swc-conversation-artifact-media` (omit **`title`** / **`subtitle`** on media for the square tile).
+ * The prompt field always renders the dismiss control; it fires `swc-artifact-dismiss` (consumers clear attachment state).
  */
 export const UploadedArtifact: Story = {
   render: () => html`
@@ -205,26 +211,16 @@ export const UploadedArtifact: Story = {
           label="Prompt"
           placeholder="Ask anything"
         >
-          <div
-            slot="artifact"
-            style="display:flex;gap:12px;align-items:center;block-size:68px;padding-inline:12px;background:var(--swc-gray-75);border-radius:8px;"
-          >
+          <swc-conversation-artifact-card slot="artifact">
             <div
-              style="inline-size:44px;block-size:44px;border-radius:4px;background:var(--swc-gray-200);flex-shrink:0;"
+              slot="leading"
+              style="background:var(--swc-gray-200);"
+              role="img"
+              aria-label="PDF"
             ></div>
-            <div>
-              <div
-                style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-100);font-weight:700;color:var(--swc-gray-900);"
-              >
-                Hilton commercial assets
-              </div>
-              <div
-                style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-              >
-                2026
-              </div>
-            </div>
-          </div>
+            <span slot="title">Hilton commercial assets</span>
+            <span slot="subtitle">2026</span>
+          </swc-conversation-artifact-card>
         </swc-prompt-field>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
@@ -234,23 +230,23 @@ export const UploadedArtifact: Story = {
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
-          uploaded-artifact="image"
+          uploaded-artifact="media"
           label="Prompt"
           placeholder="Ask anything"
         >
-          <div
-            slot="artifact"
-            style="inline-size:68px;block-size:68px;border-radius:8px;overflow:hidden;"
-          >
+          <swc-conversation-artifact-media slot="artifact">
             <div
-              style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#a78bfa,#f472b6);"
+              slot="preview"
+              style="inline-size:100%;block-size:100%;min-block-size:0;background:linear-gradient(135deg,#a78bfa,#f472b6);"
+              role="img"
+              aria-label="Attachment preview"
             ></div>
-          </div>
+          </swc-conversation-artifact-media>
         </swc-prompt-field>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
-          Image
+          Media
         </span>
       </div>
     </div>
@@ -281,11 +277,13 @@ export const UploadedArtifact: Story = {
  * - Ensure artifact content slotted into `artifact` slot includes descriptive text
  */
 export const Accessibility: Story = {
-  render: () => html`
-    <swc-prompt-field
-      label="Prompt"
-      placeholder="Ask anything"
-    ></swc-prompt-field>
-  `,
+  args: {
+    label: 'Prompt',
+    placeholder: 'Ask anything',
+    value: '',
+    state: 'default',
+    'uploaded-artifact': 'none',
+    populated: false,
+  },
   tags: ['a11y'],
 };

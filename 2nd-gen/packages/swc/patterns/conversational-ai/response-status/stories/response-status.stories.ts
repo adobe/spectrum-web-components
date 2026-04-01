@@ -25,16 +25,29 @@ const { args, argTypes, template } = getStorybookHelpers('swc-response-status');
 argTypes.state = {
   ...argTypes.state,
   control: { type: 'select' },
-  options: ['loading', 'loading-complete'],
+  options: ['loading', 'complete'],
   table: {
     category: 'attributes',
     defaultValue: { summary: 'loading' },
   },
 };
 
+argTypes.reasoning = {
+  ...argTypes.reasoning,
+  control: { type: 'select' },
+  options: ['hidden', 'collapsed', 'expanded'],
+  table: {
+    category: 'attributes',
+    defaultValue: { summary: 'hidden' },
+  },
+};
+
 /**
  * Displays the current state of AI response generation — either a spinning
  * loading indicator or a "Response generated" confirmation.
+ *
+ * Stories use **`template(args)`** (or explicit **`docs.source`**) so the docs code panel
+ * shows HTML instead of a dumped CSF object.
  */
 const meta: Meta = {
   title: 'Conversational AI/Response status',
@@ -60,8 +73,7 @@ export default meta;
 export const Playground: Story = {
   args: {
     state: 'loading',
-    'show-reasoning': false,
-    'reasoning-expanded': false,
+    reasoning: 'hidden',
   },
   tags: ['autodocs', 'dev'],
 };
@@ -73,8 +85,7 @@ export const Playground: Story = {
 export const Overview: Story = {
   args: {
     state: 'loading',
-    'show-reasoning': false,
-    'reasoning-expanded': false,
+    reasoning: 'hidden',
   },
   tags: ['overview'],
 };
@@ -90,9 +101,10 @@ export const Overview: Story = {
  * 2. **Reasoning toggle** — Optional expandable disclosure for chain-of-thought content
  */
 export const Anatomy: Story = {
-  render: () => html`
-    <swc-response-status state="loading"></swc-response-status>
-  `,
+  args: {
+    state: 'loading',
+    reasoning: 'hidden',
+  },
   tags: ['anatomy'],
 };
 
@@ -104,7 +116,7 @@ export const Anatomy: Story = {
  * The `state` attribute controls which indicator is shown:
  *
  * - **`loading`** — Animated spinner + "Thinking…" label
- * - **`loading-complete`** — Checkmark + "Response generated" label
+ * - **`complete`** — Checkmark + "Response generated" label
  */
 export const State: Story = {
   render: () => html`
@@ -118,11 +130,11 @@ export const State: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-response-status state="loading-complete"></swc-response-status>
+        <swc-response-status state="complete"></swc-response-status>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
-          Loading complete
+          Complete
         </span>
       </div>
     </div>
@@ -132,16 +144,17 @@ export const State: Story = {
 };
 
 /**
- * When `show-reasoning` is set, a disclosure button appears below the status row.
- * Clicking it expands a panel where reasoning content can be slotted in.
+ * When `state` is **`complete`**, set **`reasoning`** to **`collapsed`** or **`expanded`** to show the disclosure.
+ * The component toggles between those two on click and keeps the **`reasoning`** attribute in sync. Use **`expanded`**
+ * for an initially open panel. While **`state`** is **`loading`**, reasoning UI is not shown.
  */
 export const Reasoning: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:24px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-response-status
-          state="loading"
-          show-reasoning
+          state="complete"
+          reasoning="collapsed"
         ></swc-response-status>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
@@ -150,7 +163,7 @@ export const Reasoning: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-response-status state="loading" show-reasoning reasoning-expanded>
+        <swc-response-status state="complete" reasoning="expanded">
           <span slot="reasoning">
             Step 1: Analyzing the request… Step 2: Searching for relevant
             context… Step 3: Composing response.
@@ -184,8 +197,9 @@ export const Reasoning: Story = {
  * - The reasoning panel uses `role="region"` with `aria-label="Reasoning"`
  */
 export const Accessibility: Story = {
-  render: () => html`
-    <swc-response-status state="loading" show-reasoning></swc-response-status>
-  `,
+  args: {
+    state: 'complete',
+    reasoning: 'collapsed',
+  },
   tags: ['a11y'],
 };

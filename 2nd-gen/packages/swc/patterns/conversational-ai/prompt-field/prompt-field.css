@@ -39,10 +39,10 @@
 .swc-PromptField-box {
   display: flex;
   flex-direction: column;
-  gap: 0;
-  padding: 16px;
+  gap: token("spacing-300");
+  padding: token("spacing-300");
   background: token("gray-25");
-  border-radius: 16px;
+  border-radius: token("corner-radius-800");
   box-shadow: token("drop-shadow-emphasized-default-x") token("drop-shadow-emphasized-default-y") token("drop-shadow-emphasized-default-blur") token("drop-shadow-emphasized-default-color");
   overflow: hidden;
 }
@@ -54,8 +54,15 @@
 .swc-PromptField-input-area {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding-block-end: 4px;
+  gap: token("spacing-300");
+  padding-block-start: 0;
+  padding-inline: token("spacing-100");
+}
+
+/* Figma: input area uses 8px top padding only when an artifact row is shown */
+:host([uploaded-artifact="card"]) .swc-PromptField-input-area,
+:host([uploaded-artifact="media"]) .swc-PromptField-input-area {
+  padding-block-start: token("spacing-100");
 }
 
 /* ─────────────────────────────────────
@@ -67,7 +74,7 @@
   block-size: 68px;
 }
 
-:host([uploaded-artifact="image"]) .swc-PromptField-artifact {
+:host([uploaded-artifact="media"]) .swc-PromptField-artifact {
   inline-size: 68px;
 }
 
@@ -121,12 +128,13 @@
   display: block;
   inline-size: 100%;
   min-block-size: calc(token("font-size-100") * token("line-height-100"));
+  max-block-size: 72px;
   padding: 0;
   font-family: token("sans-serif-font");
   font-size: token("font-size-100");
   font-weight: token("regular-font-weight");
   line-height: token("line-height-100");
-  color: token("gray-800");
+  color: token("gray-900");
   background: transparent;
   border: none;
   resize: none;
@@ -145,7 +153,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-block-start: 12px;
 }
 
 /* Upload button (quiet, left side) */
@@ -157,10 +164,10 @@
   inline-size: 32px;
   block-size: 32px;
   padding: 0;
-  color: token("gray-700");
+  color: token("gray-800");
   background: transparent;
   border: none;
-  border-radius: token("corner-radius-medium-size-medium");
+  border-radius: token("corner-radius-500");
   cursor: pointer;
 }
 
@@ -170,8 +177,8 @@
 }
 
 .swc-PromptField-upload swc-icon {
-  --swc-icon-inline-size: 18px;
-  --swc-icon-block-size: 18px;
+  --swc-icon-inline-size: 20px;
+  --swc-icon-block-size: 20px;
 }
 
 /* Send button (filled circle, right side) */
@@ -192,8 +199,8 @@
 }
 
 .swc-PromptField-send:disabled {
-  color: token("gray-500");
-  background: token("gray-200");
+  color: token("gray-400");
+  background: token("gray-100");
   cursor: default;
 }
 
@@ -202,8 +209,8 @@
 }
 
 .swc-PromptField-send swc-icon {
-  --swc-icon-inline-size: 14px;
-  --swc-icon-block-size: 14px;
+  --swc-icon-inline-size: 20px;
+  --swc-icon-block-size: 20px;
 }
 
 /* Stop button (filled black circle, right side) */
@@ -228,8 +235,8 @@
 }
 
 .swc-PromptField-stop swc-icon {
-  --swc-icon-inline-size: 14px;
-  --swc-icon-block-size: 14px;
+  --swc-icon-inline-size: 20px;
+  --swc-icon-block-size: 20px;
 }
 
 /* ─────────────────────────────────────
@@ -238,7 +245,8 @@
 
 .swc-PromptField-disclaimer {
   display: flex;
-  gap: 4px;
+  flex-wrap: wrap;
+  gap: token("spacing-75");
   align-items: center;
   justify-content: center;
   padding: 0;
@@ -251,6 +259,42 @@
   text-align: center;
 }
 
+.swc-PromptField-disclaimer-copy {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: token("spacing-75");
+  align-items: center;
+  justify-content: center;
+  max-inline-size: 100%;
+  text-align: center;
+}
+
+/* Link + trailing info icon stay together (matches Figma). */
+.swc-PromptField-disclaimer-link-row {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  gap: token("spacing-75");
+  align-items: center;
+}
+
+.swc-PromptField-disclaimer-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  line-height: 0;
+  color: token("gray-700");
+}
+
+.swc-PromptField-disclaimer-icon svg {
+  display: block;
+  inline-size: 20px;
+  block-size: 20px;
+}
+
+.swc-PromptField-disclaimer-text {
+  display: inline;
+}
+
+
 .swc-PromptField-disclaimer-link {
   color: token("gray-700");
   text-decoration: underline;
@@ -258,21 +302,5 @@
 }
 
 .swc-PromptField-disclaimer-link:hover {
-  color: token("gray-800");
-}
-
-.swc-PromptField-disclaimer-info {
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  color: token("gray-700");
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.swc-PromptField-disclaimer-info:hover {
   color: token("gray-800");
 }

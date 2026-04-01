@@ -9,8 +9,20 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from './DocsAfterApiMarkdown';
-export * from './GettingStarted';
-export * from './OverviewStory';
-export * from './SpectrumDocs';
-export * from './SpectrumStories';
+
+import { Markdown, useOf } from '@storybook/addon-docs/blocks';
+import React from 'react';
+
+/**
+ * Renders `parameters.docs.afterApi` (markdown) immediately after the API / Controls table.
+ */
+export const DocsAfterApiMarkdown = () => {
+  const resolvedOf = useOf('meta', ['meta']);
+  const md = resolvedOf.preparedMeta?.parameters?.docs?.afterApi;
+
+  if (!md || typeof md !== 'string') {
+    return null;
+  }
+
+  return <Markdown>{md}</Markdown>;
+};

@@ -14,29 +14,18 @@ import { expect, test } from '@playwright/test';
 
 import { gotoStory } from '../../../../utils/a11y-helpers.js';
 
-/**
- * Accessibility tests for PromptField pattern (2nd Generation)
- *
- * ARIA snapshot tests validate the accessibility tree structure.
- * aXe WCAG compliance and color contrast validation are run via
- * test-storybook (see .storybook/test-runner.ts). Both are included
- * in the `test:a11y` command.
- */
-
-test.describe('PromptField - ARIA Snapshots', () => {
-  test('should have correct accessibility tree for default prompt field', async ({
-    page,
-  }) => {
+test.describe('AssistantMessage - ARIA Snapshots', () => {
+  test('should have correct accessibility tree', async ({ page }) => {
     const root = await gotoStory(
       page,
-      'conversational-ai-prompt-field--overview',
-      'swc-prompt-field'
+      'conversational-ai-assistant-message--overview',
+      'swc-assistant-message'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - textbox "Prompt"
-      - button "Add attachment"
-      - button "Send" [disabled]
-      - link "AI User Guidelines"
+      - text: /warmth of welcome/
+      - group "Response feedback":
+        - button "Good response" [pressed=false]
+        - button "Poor response" [pressed=false]
     `);
   });
 });

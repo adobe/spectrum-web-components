@@ -20,28 +20,32 @@ import '../index.js';
 //    METADATA
 // ────────────────
 
+/** Default-slot HTML for three chips (recommended count in docs). */
+const threeChipsSlot = `<span>Create a slide deck from this</span><span>Summarize in 3 bullet points</span><span>Translate to Spanish</span>`;
+
 const { args, argTypes, template } = getStorybookHelpers(
   'swc-message-suggestions'
 );
 
-argTypes.suggestions = {
-  ...argTypes.suggestions,
-  control: { type: 'select' },
-  options: ['1', '2', '3'],
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: '3' },
-  },
-};
-
 /**
- * A row of up to three follow-up suggestion chips rendered below an AI response.
- * Slot text into `suggestion-1`, `suggestion-2`, and `suggestion-3` named slots.
+ * Follow-up suggestion chips for an AI response. Put **any number** of elements in the
+ * **default slot** (one per chip); labels come from each element’s **`textContent`**.
+ *
+ * **Recommendation:** use **three** suggestions for most layouts; more are supported and
+ * wrap to additional rows (`flex-wrap`).
+ *
+ * Stories use **`getStorybookHelpers` `template(args)`** so the docs **Source** panel shows
+ * HTML (Storybook’s `docs.source.type: 'auto'` often fails on raw `render: () => html`… with
+ * nested slotted children and falls back to dumping the CSF object).
  */
 const meta: Meta = {
   title: 'Conversational AI/Message suggestions',
   component: 'swc-message-suggestions',
-  args,
+  args: {
+    ...args,
+    'default-slot': threeChipsSlot,
+    showTitle: false,
+  },
   argTypes,
   render: (args) => template(args),
   parameters: {
@@ -60,13 +64,6 @@ export default meta;
 // ────────────────────
 
 export const Playground: Story = {
-  args: {
-    suggestions: '3',
-    'show-title': false,
-    'slot-suggestion-1': 'Create a slide deck from this',
-    'slot-suggestion-2': 'Summarize this in 3 bullet points',
-    'slot-suggestion-3': 'Translate this to Spanish',
-  },
   tags: ['autodocs', 'dev'],
 };
 
@@ -75,13 +72,6 @@ export const Playground: Story = {
 // ──────────────────────────────
 
 export const Overview: Story = {
-  render: () => html`
-    <swc-message-suggestions suggestions="3">
-      <span slot="suggestion-1">Create a slide deck from this</span>
-      <span slot="suggestion-2">Summarize in 3 bullet points</span>
-      <span slot="suggestion-3">Translate to Spanish</span>
-    </swc-message-suggestions>
-  `,
   tags: ['overview'],
 };
 
@@ -92,17 +82,14 @@ export const Overview: Story = {
 /**
  * A message suggestions component consists of:
  *
- * 1. **Title** — Optional "What would you like to do next?" heading (hidden by default)
- * 2. **Chips** — Up to three rounded buttons, each with an arrow icon and slot text
+ * 1. **Title** — Optional "What would you like to do next?" heading (`show-title`)
+ * 2. **Chips** — One rounded button per **default-slot** child; arrow icon + label from `textContent`
  */
 export const Anatomy: Story = {
-  render: () => html`
-    <swc-message-suggestions suggestions="3" show-title>
-      <span slot="suggestion-1">Create a slide deck from this</span>
-      <span slot="suggestion-2">Summarize in 3 bullet points</span>
-      <span slot="suggestion-3">Translate to Spanish</span>
-    </swc-message-suggestions>
-  `,
+  args: {
+    showTitle: true,
+    'default-slot': threeChipsSlot,
+  },
   tags: ['anatomy'],
 };
 
@@ -111,46 +98,46 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 /**
- * The `suggestions` attribute controls how many chips are rendered:
- *
- * - **`1`** — One chip
- * - **`2`** — Two chips
- * - **`3`** — Three chips (default)
+ * Chip count follows the number of **default-slot** children. Three is a good default for
+ * scanning; one, many, or zero (empty row) are all valid.
  */
 export const SuggestionCount: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-message-suggestions suggestions="1">
-          <span slot="suggestion-1">Create a slide deck from this</span>
+        <swc-message-suggestions>
+          <span>Create a slide deck from this</span>
         </swc-message-suggestions>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
-          1 suggestion
+          One suggestion
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-message-suggestions suggestions="2">
-          <span slot="suggestion-1">Create a slide deck from this</span>
-          <span slot="suggestion-2">Summarize in 3 bullet points</span>
+        <swc-message-suggestions>
+          <span>Create a slide deck from this</span>
+          <span>Summarize in 3 bullet points</span>
+          <span>Translate to Spanish</span>
         </swc-message-suggestions>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
-          2 suggestions
+          Three suggestions (recommended)
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-message-suggestions suggestions="3">
-          <span slot="suggestion-1">Create a slide deck from this</span>
-          <span slot="suggestion-2">Summarize in 3 bullet points</span>
-          <span slot="suggestion-3">Translate to Spanish</span>
+        <swc-message-suggestions>
+          <span>Refine the executive summary</span>
+          <span>Add competitive analysis</span>
+          <span>Shorten for a 5-minute read</span>
+          <span>Export as talking points</span>
+          <span>Suggest a subject line</span>
         </swc-message-suggestions>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
-          3 suggestions
+          Five suggestions (wraps)
         </span>
       </div>
     </div>
@@ -167,10 +154,10 @@ export const Title: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-message-suggestions suggestions="3">
-          <span slot="suggestion-1">Create a slide deck from this</span>
-          <span slot="suggestion-2">Summarize in 3 bullet points</span>
-          <span slot="suggestion-3">Translate to Spanish</span>
+        <swc-message-suggestions>
+          <span>Create a slide deck from this</span>
+          <span>Summarize in 3 bullet points</span>
+          <span>Translate to Spanish</span>
         </swc-message-suggestions>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
@@ -179,10 +166,10 @@ export const Title: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-message-suggestions suggestions="3" show-title>
-          <span slot="suggestion-1">Create a slide deck from this</span>
-          <span slot="suggestion-2">Summarize in 3 bullet points</span>
-          <span slot="suggestion-3">Translate to Spanish</span>
+        <swc-message-suggestions show-title>
+          <span>Create a slide deck from this</span>
+          <span>Summarize in 3 bullet points</span>
+          <span>Translate to Spanish</span>
         </swc-message-suggestions>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
@@ -209,15 +196,9 @@ export const Title: Story = {
  *
  * - Each chip is a native `<button>` element, fully keyboard-navigable
  * - The icon within each chip has an empty `label` to avoid duplicate announcements
- * - Slot text provides the accessible name for each chip
+ * - Button text is the suggestion label (from slotted `textContent`)
+ * - The chips row uses `role="group"` with `aria-label="Follow-up suggestions"`
  */
 export const Accessibility: Story = {
-  render: () => html`
-    <swc-message-suggestions suggestions="3">
-      <span slot="suggestion-1">Create a slide deck from this</span>
-      <span slot="suggestion-2">Summarize in 3 bullet points</span>
-      <span slot="suggestion-3">Translate to Spanish</span>
-    </swc-message-suggestions>
-  `,
   tags: ['a11y'],
 };

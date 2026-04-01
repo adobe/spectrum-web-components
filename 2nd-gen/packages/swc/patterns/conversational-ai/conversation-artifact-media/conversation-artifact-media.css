@@ -1,0 +1,94 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: block;
+  inline-size: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.swc-ConversationArtifactMedia {
+  display: flex;
+  flex-direction: column;
+  gap: token("spacing-100");
+  inline-size: 100%;
+}
+
+.swc-ConversationArtifactMedia-preview {
+  border-radius: token("spacing-200");
+  overflow: hidden;
+}
+
+.swc-ConversationArtifactMedia-preview ::slotted(img) {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  object-fit: cover;
+}
+
+.swc-ConversationArtifactMedia-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+  inline-size: 100%;
+}
+
+.swc-ConversationArtifactMedia-meta[hidden] {
+  display: none;
+}
+
+.swc-ConversationArtifactMedia-title {
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-100");
+  font-weight: token("bold-font-weight");
+  line-height: token("line-height-font-size-100");
+  color: token("gray-900");
+  text-align: start;
+}
+
+.swc-ConversationArtifactMedia-subtitle {
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-75");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-font-size-75");
+  color: token("gray-700");
+  text-align: start;
+}
+
+/* Preview only: no title/subtitle — fill square hosts such as prompt-field media artifact */
+:host([data-preview-only]) {
+  block-size: 100%;
+  min-block-size: 0;
+}
+
+:host([data-preview-only]) .swc-ConversationArtifactMedia {
+  gap: 0;
+  block-size: 100%;
+  min-block-size: 0;
+}
+
+:host([data-preview-only]) .swc-ConversationArtifactMedia-preview {
+  flex: 1;
+  min-block-size: 0;
+}
+
+:host([data-preview-only]) .swc-ConversationArtifactMedia-preview ::slotted(*) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}

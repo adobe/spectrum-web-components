@@ -22,6 +22,9 @@ import '../index.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-message-sources');
 
+const defaultListItems =
+  '<li><a href="#">Adobe Experience Manager documentation</a></li><li><a href="#">Creative Cloud release notes 2026</a></li><li><a href="#">Firefly API getting started guide</a></li>';
+
 argTypes.state = {
   ...argTypes.state,
   control: { type: 'select' },
@@ -39,7 +42,11 @@ argTypes.state = {
 const meta: Meta = {
   title: 'Conversational AI/Message sources',
   component: 'swc-message-sources',
-  args,
+  args: {
+    ...args,
+    state: 'collapsed',
+    'default-slot': defaultListItems,
+  },
   argTypes,
   render: (args) => template(args),
   parameters: {
@@ -58,9 +65,6 @@ export default meta;
 // ────────────────────
 
 export const Playground: Story = {
-  args: {
-    state: 'collapsed',
-  },
   tags: ['autodocs', 'dev'],
 };
 
@@ -69,13 +73,9 @@ export const Playground: Story = {
 // ──────────────────────────────
 
 export const Overview: Story = {
-  render: () => html`
-    <swc-message-sources state="expanded">
-      <li><a href="#">Adobe Experience Manager documentation</a></li>
-      <li><a href="#">Creative Cloud release notes 2026</a></li>
-      <li><a href="#">Firefly API getting started guide</a></li>
-    </swc-message-sources>
-  `,
+  args: {
+    state: 'expanded',
+  },
   tags: ['overview'],
 };
 
@@ -90,12 +90,11 @@ export const Overview: Story = {
  * 2. **Sources list** — Numbered list of linked source items (visible when expanded)
  */
 export const Anatomy: Story = {
-  render: () => html`
-    <swc-message-sources state="expanded">
-      <li><a href="#">Adobe Experience Manager documentation</a></li>
-      <li><a href="#">Creative Cloud release notes 2026</a></li>
-    </swc-message-sources>
-  `,
+  args: {
+    state: 'expanded',
+    'default-slot':
+      '<li><a href="#">Adobe Experience Manager documentation</a></li><li><a href="#">Creative Cloud release notes 2026</a></li>',
+  },
   tags: ['anatomy'],
 };
 
@@ -157,11 +156,8 @@ export const State: Story = {
  * - The sources panel uses `role="list"` with `aria-label="Sources"`
  */
 export const Accessibility: Story = {
-  render: () => html`
-    <swc-message-sources state="expanded">
-      <li><a href="#">Adobe Experience Manager documentation</a></li>
-      <li><a href="#">Creative Cloud release notes 2026</a></li>
-    </swc-message-sources>
-  `,
+  args: {
+    state: 'expanded',
+  },
   tags: ['a11y'],
 };

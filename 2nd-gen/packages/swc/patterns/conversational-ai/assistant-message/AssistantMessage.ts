@@ -14,37 +14,42 @@ import { CSSResultArray, html, TemplateResult } from 'lit';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
-import styles from './conversation-thread.css';
+import styles from './assistant-message.css';
 
 /**
- * Layout container for a single AI conversation exchange.
+ * Layout container for a single assistant (AI) reply: status, body, feedback, sources, and suggestions.
  *
- * Slot sub-components into the named slots in this order:
- * 1. `status` — `<swc-response-status>` thinking/complete indicator
- * 2. `message` — `<swc-system-message>` AI response body
- * 3. `feedback` — `<swc-message-feedback>` thumbs-up/down
- * 4. `sources` — `<swc-message-sources>` collapsible source list
- * 5. `suggestions` — `<swc-message-suggestions>` follow-up chips
+ * **Presentation order is fixed** by this element’s shadow tree: **status → message → feedback → sources → suggestions**,
+ * regardless of the order slotted nodes appear in the host DOM (each child must use the correct **`slot`** name).
  *
- * @element swc-conversation-thread
+ * Slots:
+ * - `status` — `<swc-response-status>` thinking/complete indicator
+ * - `message` — Assistant reply body (semantic HTML; typography after API table on Assistant message Storybook docs)
+ * - `feedback` — `<swc-message-feedback>` thumbs-up/down
+ * - `sources` — `<swc-message-sources>` collapsible source list
+ * - `suggestions` — `<swc-message-suggestions>` follow-up chips
+ *
+ * Wrap with `<swc-conversation-turn participant="assistant">` for column alignment in the thread.
+ *
+ * @element swc-assistant-message
  * @slot status - Response status indicator (thinking / complete)
- * @slot message - AI response body content
+ * @slot message - Assistant reply body (semantic HTML; typography after API table on Assistant message Storybook docs)
  * @slot feedback - Thumbs-up / thumbs-down feedback controls
  * @slot sources - Collapsible list of sources
  * @slot suggestions - Follow-up suggestion chips (rendered outside the main body)
  */
-export class ConversationThread extends SpectrumElement {
+export class AssistantMessage extends SpectrumElement {
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
   protected override render(): TemplateResult {
     return html`
-      <div class="swc-ConversationThread">
-        <div class="swc-ConversationThread-body">
-          <div class="swc-ConversationThread-output">
+      <div class="swc-AssistantMessage">
+        <div class="swc-AssistantMessage-body">
+          <div class="swc-AssistantMessage-output">
             <slot name="status"></slot>
-            <div class="swc-ConversationThread-content">
+            <div class="swc-AssistantMessage-content">
               <slot name="message"></slot>
               <slot name="feedback"></slot>
             </div>

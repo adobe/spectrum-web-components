@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
@@ -22,23 +23,20 @@ import { ArrowCurvedIcon } from '../utils/icons/index.js';
 import styles from './message-suggestions.css';
 
 /**
- * A row of up to three follow-up suggestion chips rendered below an AI response.
+ * A row of follow-up suggestion chips rendered below an AI response.
  *
- * Slot suggestion text into the named slots `suggestion-1`, `suggestion-2`, `suggestion-3`.
+ * Add **any number** of elements as **default-slot** children (e.g. one `<span>` per chip).
+ * Label text is taken from each element’s **`textContent`**. The slotted nodes stay in the
+ * light DOM for your data layer; visible chips are rendered in shadow with the same labels.
+ *
+ * **Documentation:** three suggestions is the recommended default for readability; the
+ * component does not enforce a maximum.
  *
  * @element swc-message-suggestions
- * @slot suggestion-1 - Text for the first suggestion chip
- * @slot suggestion-2 - Text for the second suggestion chip
- * @slot suggestion-3 - Text for the third suggestion chip
- * @fires {CustomEvent} swc-suggestion - Dispatched when a chip is clicked.
+ * @slot - One element per suggestion chip; label from `textContent` (order matches DOM order)
+ * @fires swc-suggestion - Dispatched when a chip is clicked. Detail: `{ index: number }` (1-based)
  */
 export class MessageSuggestions extends SpectrumElement {
-  /**
-   * How many suggestion chips to render (1–3).
-   */
-  @property({ type: String, reflect: true })
-  public suggestions: '1' | '2' | '3' = '3';
-
   /**
    * When `true`, shows the section title "What would you like to do next?".
    */
@@ -49,39 +47,47 @@ export class MessageSuggestions extends SpectrumElement {
     return [styles];
   }
 
-  private _handleChip1Click(): void {
+  private _defaultSlotRef = createRef<HTMLSlotElement>();
+
+  /** Visible label per chip, synced from default-slot assigned elements. */
+  private _chipLabels: string[] = [];
+
+  protected override firstUpdated(_changed: PropertyValues): void {
+    super.firstUpdated(_changed);
+    this._syncFromSlot();
+  }
+
+  private _syncFromSlot(): void {
+    const slot = this._defaultSlotRef.value;
+    if (!slot) {
+      return;
+    }
+    this._chipLabels = slot
+      .assignedElements({ flatten: true })
+      .map((el) => el.textContent?.trim() ?? '');
+    this.requestUpdate();
+  }
+
+  private _handleChipClick(index: number): void {
     this.dispatchEvent(
       new CustomEvent('swc-suggestion', {
         bubbles: true,
         composed: true,
-        detail: { index: 1 },
+        detail: { index: index + 1 },
       })
     );
   }
 
-  private _handleChip2Click(): void {
-    this.dispatchEvent(
-      new CustomEvent('swc-suggestion', {
-        bubbles: true,
-        composed: true,
-        detail: { index: 2 },
-      })
-    );
-  }
-
-  private _handleChip3Click(): void {
-    this.dispatchEvent(
-      new CustomEvent('swc-suggestion', {
-        bubbles: true,
-        composed: true,
-        detail: { index: 3 },
-      })
-    );
+  private _handleChipButtonClick(event: Event): void {
+    const button = event.currentTarget as HTMLButtonElement;
+    const index = Number(button.dataset.index);
+    if (!Number.isInteger(index)) {
+      return;
+    }
+    this._handleChipClick(index);
   }
 
   protected override render(): TemplateResult {
-    const count = parseInt(this.suggestions, 10) as 1 | 2 | 3;
-
     return html`
       <div class="swc-MessageSuggestions">
         ${this.showTitle
@@ -91,52 +97,35 @@ export class MessageSuggestions extends SpectrumElement {
               </p>
             `
           : ''}
-        <div class="swc-MessageSuggestions-chips">
-          <button
-            class="swc-MessageSuggestions-chip"
-            @click=${this._handleChip1Click}
-          >
-            <swc-icon
-              style="--swc-icon-inline-size:14px;--swc-icon-block-size:14px;"
-              label=""
-            >
-              ${ArrowCurvedIcon()}
-            </swc-icon>
-            <slot name="suggestion-1"></slot>
-          </button>
-          ${count >= 2
-            ? html`
-                <button
-                  class="swc-MessageSuggestions-chip"
-                  @click=${this._handleChip2Click}
+        <div
+          class="swc-MessageSuggestions-chips"
+          role="group"
+          aria-label="Follow-up suggestions"
+        >
+          ${this._chipLabels.map(
+            (label, i) => html`
+              <button
+                type="button"
+                class="swc-MessageSuggestions-chip"
+                data-index=${String(i)}
+                @click=${this._handleChipButtonClick}
+              >
+                <swc-icon
+                  style="--swc-icon-inline-size:14px;--swc-icon-block-size:14px;"
+                  label=""
                 >
-                  <swc-icon
-                    style="--swc-icon-inline-size:14px;--swc-icon-block-size:14px;"
-                    label=""
-                  >
-                    ${ArrowCurvedIcon()}
-                  </swc-icon>
-                  <slot name="suggestion-2"></slot>
-                </button>
-              `
-            : ''}
-          ${count >= 3
-            ? html`
-                <button
-                  class="swc-MessageSuggestions-chip"
-                  @click=${this._handleChip3Click}
-                >
-                  <swc-icon
-                    style="--swc-icon-inline-size:14px;--swc-icon-block-size:14px;"
-                    label=""
-                  >
-                    ${ArrowCurvedIcon()}
-                  </swc-icon>
-                  <slot name="suggestion-3"></slot>
-                </button>
-              `
-            : ''}
+                  ${ArrowCurvedIcon()}
+                </swc-icon>
+                ${label}
+              </button>
+            `
+          )}
         </div>
+        <slot
+          ${ref(this._defaultSlotRef)}
+          hidden
+          @slotchange=${this._syncFromSlot}
+        ></slot>
       </div>
     `;
   }

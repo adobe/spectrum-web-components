@@ -15,14 +15,6 @@
   max-inline-size: var(--swc-user-message-max-inline-size, 536px);
 }
 
-:host([modality="split-right-rail"]) {
-  --swc-user-message-max-inline-size: 440px;
-}
-
-:host([modality="panel"]) {
-  --swc-user-message-max-inline-size: 360px;
-}
-
 *,
 *::before,
 *::after {

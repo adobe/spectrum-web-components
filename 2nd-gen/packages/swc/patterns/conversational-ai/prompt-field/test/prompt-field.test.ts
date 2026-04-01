@@ -88,9 +88,9 @@ export const PropertyMutationTest: Story = {
         await el.updateComplete;
         expect(el.getAttribute('uploaded-artifact')).toBe('card');
 
-        el.uploadedArtifact = 'image';
+        el.uploadedArtifact = 'media';
         await el.updateComplete;
-        expect(el.getAttribute('uploaded-artifact')).toBe('image');
+        expect(el.getAttribute('uploaded-artifact')).toBe('media');
 
         el.uploadedArtifact = 'none';
         await el.updateComplete;

@@ -9,7 +9,12 @@ import {
   Subtitle,
   useOf,
 } from '@storybook/addon-docs/blocks';
-import { GettingStarted, SpectrumStories, OverviewStory } from './blocks';
+import {
+  DocsAfterApiMarkdown,
+  GettingStarted,
+  OverviewStory,
+  SpectrumStories,
+} from './blocks';
 
 export const checkIsSingleStory = () => {
   const resolvedOf = useOf('meta', ['meta']);
@@ -82,6 +87,7 @@ export const ConditionalGettingStarted = () => {
 
 <Primary />
 <Controls />
+<DocsAfterApiMarkdown />
 <AdvancedExamplesStories />
 
 ## Feedback

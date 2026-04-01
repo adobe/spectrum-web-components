@@ -41,9 +41,12 @@ export const OverviewTest: Story = {
       'swc-message-suggestions'
     );
 
-    await step('renders with 3 suggestions by default', async () => {
-      expect(el.suggestions).toBe('3');
+    await step('renders three chips from three default-slot children', async () => {
       expect(el.showTitle).toBe(false);
+      const chips = el.shadowRoot?.querySelectorAll(
+        '.swc-MessageSuggestions-chip'
+      );
+      expect(chips?.length).toBe(3);
     });
   },
 };

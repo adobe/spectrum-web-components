@@ -17,10 +17,10 @@ import { SpectrumElement } from '@spectrum-web-components/core/element/index.js'
 
 import '@adobe/spectrum-wc/icon';
 
-import { AlertIcon } from '../../../components/icon/elements/index.js';
 import {
   ChevronUpIcon,
   CrossIcon,
+  InformationIcon,
   PlusIcon,
   StopIcon,
 } from '../utils/icons/index.js';
@@ -33,6 +33,8 @@ import styles from './prompt-field.css';
  * Fires events for all interactions; consumers are responsible for managing state.
  *
  * @element swc-prompt-field
+ *
+ * @slot artifact - Optional attachment preview; pair with `uploaded-artifact` for shell layout.
  */
 export class PromptField extends SpectrumElement {
   /** Controls whether the send button or stop button is shown on the right. */
@@ -40,11 +42,13 @@ export class PromptField extends SpectrumElement {
   public state: 'default' | 'send' | 'stop' = 'default';
 
   /**
-   * Whether an uploaded artifact is shown above the text input.
-   * `none` hides the artifact area.
+   * Shell layout preset for the artifact region above the text input.
+   * - `none`: hide the artifact area
+   * - `card`: full-width band (horizontal file-style attachments)
+   * - `media`: square tile region for visual previews (image, GIF, video poster, etc.); use `swc-conversation-artifact-media` without title/subtitle to fill it
    */
   @property({ type: String, reflect: true, attribute: 'uploaded-artifact' })
-  public uploadedArtifact: 'none' | 'card' | 'image' = 'none';
+  public uploadedArtifact: 'none' | 'card' | 'media' = 'none';
 
   /** When `true`, the send button is enabled. Set this based on whether the textarea has content. */
   @property({ type: Boolean, reflect: true })
@@ -181,21 +185,25 @@ export class PromptField extends SpectrumElement {
         </div>
 
         <p class="swc-PromptField-disclaimer">
-          Verify responses.
-          <a
-            class="swc-PromptField-disclaimer-link"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Adobe Generative AI User Guidelines
-          </a>
-          <button
-            class="swc-PromptField-disclaimer-info"
-            aria-label="More information about Adobe Generative AI guidelines"
-          >
-            <swc-icon size="xs" label="Info">${AlertIcon()}</swc-icon>
-          </button>
+          <span class="swc-PromptField-disclaimer-copy">
+            <span class="swc-PromptField-disclaimer-text">
+              Responses are generated using AI, and may be inaccurate. Check
+              before using.
+            </span>
+            <span class="swc-PromptField-disclaimer-link-row">
+              <a
+                class="swc-PromptField-disclaimer-link"
+                href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                AI User Guidelines
+              </a>
+              <span class="swc-PromptField-disclaimer-icon" aria-hidden="true">
+                ${InformationIcon()}
+              </span>
+            </span>
+          </span>
         </p>
       </div>
     `;

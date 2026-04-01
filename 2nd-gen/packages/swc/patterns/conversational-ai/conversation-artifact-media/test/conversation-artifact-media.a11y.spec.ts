@@ -14,15 +14,18 @@ import { expect, test } from '@playwright/test';
 
 import { gotoStory } from '../../../../utils/a11y-helpers.js';
 
-test.describe('SystemMessage - ARIA Snapshots', () => {
-  test('should have correct accessibility tree', async ({ page }) => {
+test.describe('ConversationArtifactMedia - ARIA Snapshots', () => {
+  test('should expose title and subtitle text in the accessibility tree', async ({
+    page,
+  }) => {
     const root = await gotoStory(
       page,
-      'conversational-ai-system-message--overview',
-      'swc-system-message'
+      'conversational-ai-conversation-artifact-media--overview',
+      'swc-conversation-artifact-media'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - text: /45-minute executive presentation/
+      - text: Hilton commercial assets
+      - text: Campaign stills
     `);
   });
 });

@@ -16,12 +16,12 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import '../index.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
-import { meta, Overview } from '../stories/user-message.stories.js';
-import { UserMessage } from '../UserMessage.js';
+import { AssistantMessage } from '../AssistantMessage.js';
+import { meta, Overview } from '../stories/assistant-message.stories.js';
 
 export default {
   ...meta,
-  title: 'Conversational AI/User message/Tests',
+  title: 'Conversational AI/Assistant message/Tests',
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },
@@ -32,37 +32,14 @@ export default {
 export const OverviewTest: Story = {
   ...Overview,
   play: async ({ canvasElement, step }) => {
-    const el = await getComponent<UserMessage>(
+    const el = await getComponent<AssistantMessage>(
       canvasElement,
-      'swc-user-message'
+      'swc-assistant-message'
     );
 
-    await step('renders with default content mode', async () => {
-      expect(el.content).toBe('copy');
-    });
-  },
-};
-
-export const PropertyMutationTest: Story = {
-  ...Overview,
-  play: async ({ canvasElement, step }) => {
-    const el = await getComponent<UserMessage>(
-      canvasElement,
-      'swc-user-message'
-    );
-
-    await step('content reflects to attribute after mutation', async () => {
-      el.content = 'card';
-      await el.updateComplete;
-      expect(el.getAttribute('content')).toBe('card');
-
-      el.content = 'media';
-      await el.updateComplete;
-      expect(el.getAttribute('content')).toBe('media');
-
-      el.content = 'copy';
-      await el.updateComplete;
-      expect(el.getAttribute('content')).toBe('copy');
+    await step('element is defined and rendered', async () => {
+      expect(el).toBeDefined();
+      expect(el.shadowRoot).toBeTruthy();
     });
   },
 };

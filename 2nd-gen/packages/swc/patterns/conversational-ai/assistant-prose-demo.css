@@ -10,44 +10,34 @@
  * governing permissions and limitations under the License.
  */
 
-:host {
-  display: block;
-  font-family: token("sans-serif-font");
-  font-size: token("font-size-200");
-  font-weight: token("regular-font-weight");
-  line-height: token("line-height-font-size-200");
-  color: token("gray-800");
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-.swc-SystemMessage {
+/**
+ * Reference styles for AI assistant prose inside `swc-assistant-message` slot="message".
+ * This is not a component — Storybook imports it for demos; products should copy or map
+ * equivalent rules to their design tokens.
+ */
+.swc-conversationalAi-assistantProse {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  font-family: var(--swc-sans-serif-font);
+  font-size: var(--swc-font-size-200);
+  font-weight: var(--swc-regular-font-weight);
+  line-height: var(--swc-line-height-font-size-200);
+  color: var(--swc-gray-800);
 }
 
-/* ─────────────────────────────────────
-   Slotted prose — only properties that
-   reliably win against light-DOM styles
-   ───────────────────────────────────── */
-
-::slotted(p) {
+.swc-conversationalAi-assistantProse p {
   margin: 0;
 }
 
-::slotted(ul),
-::slotted(ol) {
-  margin: 0;
+.swc-conversationalAi-assistantProse ul,
+.swc-conversationalAi-assistantProse ol {
   padding-inline-start: 20px;
+  margin: 0;
 }
 
-::slotted(a) {
-  color: token("accent-color-900");
+.swc-conversationalAi-assistantProse a {
+  color: var(--swc-accent-color-900);
   text-decoration: underline;
   text-underline-offset: 2px;
 }

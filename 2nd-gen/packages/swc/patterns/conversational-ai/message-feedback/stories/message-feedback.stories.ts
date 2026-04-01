@@ -37,6 +37,8 @@ argTypes.selection = {
 /**
  * Binary thumbs-up / thumbs-down feedback control placed below an AI response.
  * Selecting the active option again toggles it back to `none`.
+ *
+ * Prefer **`template(args)`** (or **`docs.source`**) so the docs code panel shows HTML.
  */
 const meta: Meta = {
   title: 'Conversational AI/Message feedback',
@@ -90,9 +92,9 @@ export const Overview: Story = {
  * The selected button renders with a dark filled background.
  */
 export const Anatomy: Story = {
-  render: () => html`
-    <swc-message-feedback selection="none"></swc-message-feedback>
-  `,
+  args: {
+    selection: 'none',
+  },
   tags: ['anatomy'],
 };
 
@@ -156,8 +158,8 @@ export const Selection: Story = {
  * - Each button uses `aria-pressed` to communicate the selected state
  */
 export const Accessibility: Story = {
-  render: () => html`
-    <swc-message-feedback selection="none"></swc-message-feedback>
-  `,
+  args: {
+    selection: 'none',
+  },
   tags: ['a11y'],
 };

@@ -11,27 +11,33 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
+import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
-import styles from './system-message.css';
+import styles from './conversation-turn.css';
 
 /**
- * Container for AI-generated response content in a conversational thread.
+ * Aligns one turn in a chat column: user content toward the end (right in LTR) with a
+ * comfortable inset, assistant content toward the start at full width.
  *
- * Accepts rich slotted content: text, headings, lists, and custom elements.
+ * Slot **`swc-user-message`**, **`swc-assistant-message`**, or custom markup inside each turn.
  *
- * @element swc-system-message
- * @slot - The AI response body content
+ * @element swc-conversation-turn
+ * @slot - Turn body (message stack or bubble)
  */
-export class SystemMessage extends SpectrumElement {
+export class ConversationTurn extends SpectrumElement {
+  /** `user` — end-aligned; `assistant` — start-aligned, full width of the column. */
+  @property({ type: String, reflect: true })
+  public participant: 'user' | 'assistant' = 'user';
+
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
   protected override render(): TemplateResult {
     return html`
-      <div class="swc-SystemMessage">
+      <div class="swc-ConversationTurn">
         <slot></slot>
       </div>
     `;

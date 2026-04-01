@@ -16,12 +16,15 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import '../index.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
-import { meta, Overview } from '../stories/system-message.stories.js';
-import { SystemMessage } from '../SystemMessage.js';
+import { ConversationArtifactCard } from '../ConversationArtifactCard.js';
+import {
+  meta,
+  Overview,
+} from '../stories/conversation-artifact-card.stories.js';
 
 export default {
   ...meta,
-  title: 'Conversational AI/System message/Tests',
+  title: 'Conversational AI/Conversation artifact card/Tests',
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },
@@ -29,21 +32,17 @@ export default {
   tags: ['!autodocs', 'dev'],
 } as Meta;
 
-// ──────────────────────────────────────────────────────────────
-// TEST: Renders
-// ──────────────────────────────────────────────────────────────
-
 export const OverviewTest: Story = {
   ...Overview,
   play: async ({ canvasElement, step }) => {
-    const el = await getComponent<SystemMessage>(
+    const el = await getComponent<ConversationArtifactCard>(
       canvasElement,
-      'swc-system-message'
+      'swc-conversation-artifact-card'
     );
 
-    await step('element is defined and rendered', async () => {
-      expect(el).toBeDefined();
-      expect(el.shadowRoot).toBeTruthy();
+    await step('renders upgraded custom element', async () => {
+      expect(el).toBeTruthy();
+      expect(el.tagName.toLowerCase()).toBe('swc-conversation-artifact-card');
     });
   },
 };

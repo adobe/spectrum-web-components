@@ -14,10 +14,10 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
+import '../../conversation-artifact-card/index.js';
+import '../../conversation-artifact-media/index.js';
+import '../../conversation-turn/index.js';
 import '../index.js';
-import '@adobe/spectrum-wc/icon';
-
-import { ThreeDotsIcon } from '../../utils/icons/index.js';
 
 // ────────────────
 //    METADATA
@@ -25,20 +25,10 @@ import { ThreeDotsIcon } from '../../utils/icons/index.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-user-message');
 
-argTypes.modality = {
-  ...argTypes.modality,
-  control: { type: 'select' },
-  options: ['full-screen', 'split-right-rail', 'panel'],
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'full-screen' },
-  },
-};
-
 argTypes.content = {
   ...argTypes.content,
   control: { type: 'select' },
-  options: ['copy', 'card', 'image'],
+  options: ['copy', 'card', 'media'],
   table: {
     category: 'attributes',
     defaultValue: { summary: 'copy' },
@@ -46,8 +36,10 @@ argTypes.content = {
 };
 
 /**
- * A user-authored message bubble rendered in the conversational AI thread.
- * It adapts its max-width to the host modality and its padding to the content type.
+ * User-authored message bubble. Use inside `<swc-conversation-turn participant="user">` for thread alignment.
+ * Max width defaults to 536px; override with `--swc-user-message-max-inline-size` on the host if needed.
+ *
+ * Prefer **`template(args)`** (or **`docs.source`**) so the docs code panel shows HTML.
  */
 const meta: Meta = {
   title: 'Conversational AI/User message',
@@ -57,9 +49,9 @@ const meta: Meta = {
   render: (args) => template(args),
   decorators: [
     (story) => html`
-      <div style="display:flex;flex-direction:column;align-items:flex-end;">
+      <swc-conversation-turn participant="user" style="inline-size:100%;">
         ${story()}
-      </div>
+      </swc-conversation-turn>
     `,
   ],
   parameters: {
@@ -79,7 +71,6 @@ export default meta;
 
 export const Playground: Story = {
   args: {
-    modality: 'full-screen',
     content: 'copy',
     'default-slot':
       'Can you help me create a 45-minute presentation, with animations, for an executive update?',
@@ -93,7 +84,6 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   args: {
-    modality: 'full-screen',
     content: 'copy',
     'default-slot':
       'Can you help me create a 45-minute presentation, with animations, for an executive update?',
@@ -109,14 +99,14 @@ export const Overview: Story = {
  * A user message consists of:
  *
  * 1. **Bubble** — Rounded container with a neutral gray background (`gray-50`)
- * 2. **Default slot** — The message content: plain text (`copy`), a card attachment (`card`), or an image asset (`image`)
+ * 2. **Default slot** — The message content: plain text (`copy`), a card attachment (`card`), or media-first content (`media`)
  */
 export const Anatomy: Story = {
-  render: () => html`
-    <swc-user-message content="copy">
-      Can you help me create a 45-minute presentation?
-    </swc-user-message>
-  `,
+  args: {
+    content: 'copy',
+    'default-slot':
+      'Can you help me create a 45-minute presentation?',
+  },
   tags: ['anatomy'],
 };
 
@@ -125,154 +115,75 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 /**
- * The `modality` attribute constrains the bubble's maximum width to match the host UI context:
- *
- * - **`full-screen`** — max 536px (default)
- * - **`split-right-rail`** — max 440px
- * - **`panel`** — max 360px
- */
-export const Modality: Story = {
-  render: () => html`
-    <div style="display:flex;flex-direction:column;gap:32px;">
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
-        <swc-user-message modality="full-screen" content="copy">
-          Can you help me create a 45-minute presentation, with animations, for
-          an executive update?
-        </swc-user-message>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
-        >
-          Full screen
-        </span>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
-        <swc-user-message modality="split-right-rail" content="copy">
-          Can you help me create a 45-minute presentation, with animations, for
-          an executive update?
-        </swc-user-message>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
-        >
-          Split / Right rail
-        </span>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
-        <swc-user-message modality="panel" content="copy">
-          Can you help me create a 45-minute presentation, with animations, for
-          an executive update?
-        </swc-user-message>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
-        >
-          Panel
-        </span>
-      </div>
-    </div>
-  `,
-  parameters: { 'section-order': 1 },
-  tags: ['options'],
-};
-
-/**
  * The `content` attribute adjusts the bubble's padding to match the type of content:
  *
  * - **`copy`** — standard text padding (default)
  * - **`card`** — reduced padding (`75` token scale) to frame horizontal card content
- * - **`image`** — standard padding for image/asset card content
+ * - **`media`** — standard padding for media-first attachment content (use `swc-conversation-artifact-media` or custom markup)
  */
 export const Content: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
-        <swc-user-message content="copy">
-          Can you help me create a 45-minute presentation, with animations, for
-          an executive update?
-        </swc-user-message>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-conversation-turn participant="user" style="inline-size:100%;">
+          <swc-user-message content="copy">
+            Can you help me create a 45-minute presentation, with animations, for
+            an executive update?
+          </swc-user-message>
+        </swc-conversation-turn>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
           Copy
         </span>
       </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
-        <swc-user-message content="card">
-          <div
-            style="display:flex;gap:16px;align-items:center;padding:16px;background:var(--swc-gray-75);border-radius:8px;"
-          >
-            <div
-              style="width:32px;height:32px;border-radius:3px;background:var(--swc-gray-200);flex-shrink:0;"
-            ></div>
-            <div style="flex:1;min-width:0;">
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-conversation-turn participant="user" style="inline-size:100%;">
+          <swc-user-message content="card">
+            <swc-conversation-artifact-card>
               <div
-                style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-100);font-weight:700;color:var(--swc-gray-900);"
-              >
-                Hilton commercial assets
-              </div>
-              <div
-                style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-              >
-                2026
-              </div>
-            </div>
-            <button
-              style="display:inline-flex;align-items:center;justify-content:center;padding:0;background:transparent;border:none;cursor:pointer;color:var(--swc-gray-700);flex-shrink:0;"
-              aria-label="More options"
-            >
-              <swc-icon label="More options" style="--swc-icon-inline-size:20px;--swc-icon-block-size:20px;">
-                ${ThreeDotsIcon()}
-              </swc-icon>
-            </button>
-          </div>
-        </swc-user-message>
+                slot="leading"
+                style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);flex-shrink:0;"
+                role="img"
+                aria-label="File"
+              ></div>
+              <span slot="title">Hilton commercial assets</span>
+              <span slot="subtitle">2026</span>
+            </swc-conversation-artifact-card>
+          </swc-user-message>
+        </swc-conversation-turn>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
           Card
         </span>
       </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
-        <swc-user-message content="image">
-          <div style="display:flex;flex-direction:column;gap:8px;width:200px;">
-            <div
-              style="width:200px;height:150px;border-radius:10px;overflow:hidden;"
-            >
-              <div
-                style="width:100%;height:100%;background:linear-gradient(135deg,#a78bfa,#f472b6);"
-              ></div>
-            </div>
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;">
-              <div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-conversation-turn participant="user" style="inline-size:100%;">
+          <swc-user-message content="media">
+            <div style="inline-size:200px;">
+              <swc-conversation-artifact-media>
                 <div
-                  style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-100);font-weight:700;color:var(--swc-gray-900);"
-                >
-                  Hilton commercial assets
-                </div>
-                <div
-                  style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-                >
-                  2026
-                </div>
-              </div>
-              <button
-                style="display:inline-flex;align-items:center;justify-content:center;padding:0;background:transparent;border:none;cursor:pointer;color:var(--swc-gray-700);flex-shrink:0;"
-                aria-label="More options"
-              >
-                <swc-icon label="More options" style="--swc-icon-inline-size:20px;--swc-icon-block-size:20px;">
-                  ${ThreeDotsIcon()}
-                </swc-icon>
-              </button>
+                  slot="preview"
+                  style="inline-size:100%;block-size:150px;background:linear-gradient(135deg,#a78bfa,#f472b6);"
+                  role="img"
+                  aria-label="Campaign preview"
+                ></div>
+                <span slot="title">Hilton commercial assets</span>
+                <span slot="subtitle">2026</span>
+              </swc-conversation-artifact-media>
             </div>
-          </div>
-        </swc-user-message>
+          </swc-user-message>
+        </swc-conversation-turn>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
-          Image
+          Media
         </span>
       </div>
     </div>
   `,
-  parameters: { 'section-order': 2 },
+  parameters: { 'section-order': 1 },
   tags: ['options'],
 };
 
@@ -288,19 +199,18 @@ export const Content: Story = {
  * #### Semantic structure
  *
  * - The bubble is rendered as a `<div>` acting as a visual container
- * - The default slot accepts any content; consumers are responsible for providing meaningful text alternatives when slotting non-text content (cards, images)
+ * - The default slot accepts any content; consumers are responsible for providing meaningful text alternatives when slotting non-text content (cards, media)
  *
  * ### Best practices
  *
  * - Ensure message text is descriptive and self-contained
- * - When using `content="card"` or `content="image"`, make sure slotted content includes appropriate text labels and `alt` text for images
+ * - When using `content="card"` or `content="media"`, make sure slotted content includes appropriate text labels and `alt` text for previews
  */
 export const Accessibility: Story = {
-  render: () => html`
-    <swc-user-message content="copy">
-      Can you help me create a 45-minute presentation, with animations, for an
-      executive update?
-    </swc-user-message>
-  `,
+  args: {
+    content: 'copy',
+    'default-slot':
+      'Can you help me create a 45-minute presentation, with animations, for an executive update?',
+  },
   tags: ['a11y'],
 };

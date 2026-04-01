@@ -9,16 +9,35 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { defineElement } from '@spectrum-web-components/core/element/index.js';
 
-import { SystemMessage } from './SystemMessage.js';
-
-export * from './SystemMessage.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'swc-system-message': SystemMessage;
-  }
+:host {
+  display: block;
+  inline-size: 100%;
 }
 
-defineElement('swc-system-message', SystemMessage);
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.swc-ConversationTurn {
+  display: flex;
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+:host([participant="user"]) .swc-ConversationTurn {
+  justify-content: flex-end;
+}
+
+:host([participant="assistant"]) .swc-ConversationTurn {
+  justify-content: flex-start;
+}
+
+/* Let assistant stacks span the column; user bubbles keep their own max-inline-size. */
+:host([participant="assistant"]) ::slotted(*) {
+  flex: 1 1 100%;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}

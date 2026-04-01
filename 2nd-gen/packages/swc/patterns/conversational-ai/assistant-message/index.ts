@@ -11,14 +11,14 @@
  */
 import { defineElement } from '@spectrum-web-components/core/element/index.js';
 
-import { ConversationThread } from './ConversationThread.js';
+import { AssistantMessage } from './AssistantMessage.js';
 
-export * from './ConversationThread.js';
+export * from './AssistantMessage.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'swc-conversation-thread': ConversationThread;
+    'swc-assistant-message': AssistantMessage;
   }
 }
 
-defineElement('swc-conversation-thread', ConversationThread);
+defineElement('swc-assistant-message', AssistantMessage);

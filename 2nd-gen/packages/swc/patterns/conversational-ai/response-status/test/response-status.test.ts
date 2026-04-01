@@ -43,8 +43,7 @@ export const OverviewTest: Story = {
 
     await step('renders with default state', async () => {
       expect(el.state).toBe('loading');
-      expect(el.showReasoning).toBe(false);
-      expect(el.reasoningExpanded).toBe(false);
+      expect(el.reasoning).toBe('hidden');
     });
   },
 };
@@ -62,9 +61,9 @@ export const StateMutationTest: Story = {
     );
 
     await step('state reflects to attribute after mutation', async () => {
-      el.state = 'loading-complete';
+      el.state = 'complete';
       await el.updateComplete;
-      expect(el.getAttribute('state')).toBe('loading-complete');
+      expect(el.getAttribute('state')).toBe('complete');
 
       el.state = 'loading';
       await el.updateComplete;

@@ -21,26 +21,17 @@ import styles from './user-message.css';
  * User-authored conversation bubble for conversational AI pattern exploration.
  *
  * @element swc-user-message
- * @slot - Message content (text, card, image, etc.)
+ * @slot - Message content (text, card, media attachment, etc.)
  */
 export class UserMessage extends SpectrumElement {
-  /**
-   * Controls the maximum width of the bubble to match the host modality.
-   * - `full-screen`: max 536px (default)
-   * - `split-right-rail`: max 440px
-   * - `panel`: max 360px
-   */
-  @property({ type: String, reflect: true })
-  public modality: 'full-screen' | 'split-right-rail' | 'panel' = 'full-screen';
-
   /**
    * Controls the padding of the bubble to match the content type.
    * - `copy`: regular text padding (default)
    * - `card`: reduced padding for horizontal card content
-   * - `image`: regular padding for image/asset card content
+   * - `media`: regular padding for media-first attachment content (image, GIF, video poster, etc.)
    */
   @property({ type: String, reflect: true })
-  public content: 'copy' | 'card' | 'image' = 'copy';
+  public content: 'copy' | 'card' | 'media' = 'copy';
 
   public static override get styles(): CSSResultArray {
     return [styles];

@@ -1,5 +1,5 @@
 import { Meta, Canvas } from '@storybook/addon-docs/blocks';
-import * as ConversationThreadStories from './conversation-thread/stories/conversation-thread.stories';
+import * as ConversationTurnStories from './conversation-turn/stories/conversation-turn.stories';
 
 <Meta title="Conversational AI/README" />
 
@@ -11,22 +11,24 @@ A complete set of building blocks for composing AI chat interfaces in 2nd-gen Sp
 
 ## Full example
 
-<Canvas of={ConversationThreadStories.FullPattern} />
+<Canvas of={ConversationTurnStories.FullPattern} />
 
 ---
 
 ## Components
 
-| Element                   | Description                                          |
-| ------------------------- | ---------------------------------------------------- |
-| `swc-prompt-field`        | Text input surface for entering or refining a prompt |
-| `swc-user-message`        | Right-aligned user message bubble                    |
-| `swc-response-status`     | Loading / generation-complete status indicator       |
-| `swc-system-message`      | Container for AI-generated prose content             |
-| `swc-message-feedback`    | Thumbs-up / thumbs-down feedback control             |
-| `swc-message-sources`     | Collapsible numbered list of response sources        |
-| `swc-message-suggestions` | Row of follow-up suggestion chips                    |
-| `swc-conversation-thread` | Layout shell that composes one full AI exchange      |
+| Element                           | Description                                                                                                  |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `swc-prompt-field`                | Text input surface for entering or refining a prompt                                                         |
+| `swc-conversation-artifact-card`  | Horizontal file-style attachment row (optional building block)                                               |
+| `swc-conversation-artifact-media` | Media-first attachment; preview-only tile when title/subtitle omitted                                        |
+| `swc-conversation-turn`           | Column alignment for one user or assistant turn                                                              |
+| `swc-user-message`                | User message bubble (copy, card, or media content)                                                           |
+| `swc-assistant-message`           | Assistant reply stack; **`message`** slot guidance is after the API table on the Assistant message docs page |
+| `swc-response-status`             | Loading / generation-complete status indicator                                                               |
+| `swc-message-feedback`            | Thumbs-up / thumbs-down feedback control                                                                     |
+| `swc-message-sources`             | Collapsible numbered list of response sources                                                                |
+| `swc-message-suggestions`         | Row of follow-up suggestion chips                                                                            |
 
 ---
 
@@ -36,14 +38,17 @@ A complete set of building blocks for composing AI chat interfaces in 2nd-gen Sp
 patterns/
   conversational-ai/
     README.mdx
+    assistant-prose-demo.css
+    conversation-artifact-card/
+    conversation-artifact-media/
     prompt-field/
     user-message/
     response-status/
-    system-message/
     message-feedback/
     message-sources/
     message-suggestions/
-    conversation-thread/
+    conversation-turn/
+    assistant-message/
     utils/
       icons/
 ```
