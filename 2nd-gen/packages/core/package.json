@@ -47,6 +47,14 @@
       "types": "./dist/controllers/index.d.ts",
       "import": "./dist/controllers/index.js"
     },
+    "./controllers/FocusGroup.js": {
+      "types": "./dist/controllers/FocusGroup.d.ts",
+      "import": "./dist/controllers/FocusGroup.js"
+    },
+    "./controllers/RovingTabindex.js": {
+      "types": "./dist/controllers/RovingTabindex.d.ts",
+      "import": "./dist/controllers/RovingTabindex.js"
+    },
     "./controllers/index.js": {
       "types": "./dist/controllers/index.d.ts",
       "import": "./dist/controllers/index.js"
@@ -148,6 +156,12 @@
       ],
       "controllers": [
         "dist/controllers/index.d.ts"
+      ],
+      "controllers/FocusGroup.js": [
+        "dist/controllers/FocusGroup.d.ts"
+      ],
+      "controllers/RovingTabindex.js": [
+        "dist/controllers/RovingTabindex.d.ts"
       ],
       "controllers/index.js": [
         "dist/controllers/index.d.ts"

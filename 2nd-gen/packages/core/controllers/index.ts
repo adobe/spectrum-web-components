@@ -14,3 +14,9 @@ export {
   LanguageResolutionController,
   languageResolverUpdatedSymbol,
 } from './language-resolution.js';
+
+export { FocusGroupController } from './FocusGroup.js';
+export type { FocusGroupConfig } from './FocusGroup.js';
+
+export { RovingTabindexController } from './RovingTabindex.js';
+export type { RovingTabindexConfig } from './RovingTabindex.js';
