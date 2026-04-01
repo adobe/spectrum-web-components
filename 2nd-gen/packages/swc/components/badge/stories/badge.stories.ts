@@ -51,7 +51,7 @@ argTypes.variant = {
   table: {
     category: 'attributes',
     defaultValue: {
-      summary: 'informative',
+      summary: 'accent',
     },
   },
 };
@@ -195,7 +195,7 @@ export const Playground: Story = {
   render: (args) => template(args),
   args: {
     size: 's',
-    variant: 'informative',
+    variant: 'accent',
     'default-slot': 'Active',
   },
   tags: ['autodocs', 'dev'],
@@ -212,7 +212,7 @@ export const Overview: Story = {
   tags: ['overview'],
   args: {
     size: 's',
-    variant: 'informative',
+    variant: 'accent',
     'default-slot': 'Active',
   },
 };
@@ -258,7 +258,7 @@ export const Anatomy: Story = {
   },
   tags: ['anatomy'],
   args: {
-    variant: 'informative',
+    variant: 'accent',
     size: 's',
   },
 };
@@ -293,7 +293,7 @@ export const Sizes: Story = {
   parameters: { 'section-order': 1 },
   tags: ['options'],
   args: {
-    variant: 'informative',
+    variant: 'accent',
   },
 };
 

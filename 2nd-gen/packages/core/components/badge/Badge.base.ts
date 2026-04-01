@@ -83,7 +83,7 @@ export abstract class BadgeBase extends SizedMixin(
    * and should be narrowed in each subclass.
    */
   @property({ type: String, reflect: true })
-  public variant: BadgeVariant = 'informative';
+  public variant: BadgeVariant = 'accent';
 
   // ──────────────────
   //     SHARED API
