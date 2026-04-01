@@ -12,20 +12,16 @@
 
 <link rel="preconnect" href="https://use.typekit.net" crossorigin />
 <link rel="dns-prefetch" href="https://use.typekit.net" />
-<link
-  rel="preload"
-  href="https://use.typekit.net/obc6cux.css"
-  as="style"
-  crossorigin
-/>
 <script>
-  // Load typekit CSS asynchronously to avoid render-blocking layout differences
-  // that cause misalignment in Chromatic snapshots
-  const stylesheet = document.createElement('link');
-  stylesheet.rel = 'stylesheet';
-  stylesheet.href = 'https://use.typekit.net/obc6cux.css';
-  stylesheet.crossOrigin = '';
-  document.head.append(stylesheet);
+  // Only load the typekit CSS stylesheet outside of Chromatic;
+  // Chromatic loads fonts via the language decorator + Typekit.load() instead
+  if (!/Chromatic/.test(navigator.userAgent)) {
+    const stylesheet = document.createElement('link');
+    stylesheet.rel = 'stylesheet';
+    stylesheet.href = 'https://use.typekit.net/obc6cux.css';
+    stylesheet.crossOrigin = '';
+    document.head.append(stylesheet);
+  }
 </script>
 <!-- TEMP: Disabled to test if Badge padding issue is font-related -->
 <!--
