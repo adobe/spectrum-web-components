@@ -218,7 +218,7 @@ export class Focusable extends SpectrumElement {
     }
   }
 
-  protected manageAutoFocus(): void {
+  public manageAutoFocus(): void {
     if (this.autofocus) {
       /**
        * Trick :focus-visible polyfill into thinking keyboard based focus
