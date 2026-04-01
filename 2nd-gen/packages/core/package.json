@@ -19,6 +19,10 @@
       "types": "./dist/components/alert-banner/index.d.ts",
       "import": "./dist/components/alert-banner/index.js"
     },
+    "./components/accordion": {
+      "types": "./dist/components/accordion/index.d.ts",
+      "import": "./dist/components/accordion/index.js"
+    },
     "./components/asset": {
       "types": "./dist/components/asset/index.d.ts",
       "import": "./dist/components/asset/index.js"
@@ -54,6 +58,18 @@
     "./controllers/language-resolution.js": {
       "types": "./dist/controllers/language-resolution.d.ts",
       "import": "./dist/controllers/language-resolution.js"
+    },
+    "./controllers/composite-focus-navigation.js": {
+      "types": "./dist/controllers/composite-focus-navigation.d.ts",
+      "import": "./dist/controllers/composite-focus-navigation.js"
+    },
+    "./controllers/grid-focus-navigation.js": {
+      "types": "./dist/controllers/grid-focus-navigation.d.ts",
+      "import": "./dist/controllers/grid-focus-navigation.js"
+    },
+    "./controllers/focusgroup-env.js": {
+      "types": "./dist/controllers/focusgroup-env.d.ts",
+      "import": "./dist/controllers/focusgroup-env.js"
     },
     "./element": {
       "types": "./dist/element/index.d.ts",
@@ -128,6 +144,9 @@
       "components/alert-banner": [
         "dist/components/alert-banner/index.d.ts"
       ],
+      "components/accordion": [
+        "dist/components/accordion/index.d.ts"
+      ],
       "components/asset": [
         "dist/components/asset/index.d.ts"
       ],
@@ -154,6 +173,15 @@
       ],
       "controllers/language-resolution.js": [
         "dist/controllers/language-resolution.d.ts"
+      ],
+      "controllers/composite-focus-navigation.js": [
+        "dist/controllers/composite-focus-navigation.d.ts"
+      ],
+      "controllers/grid-focus-navigation.js": [
+        "dist/controllers/grid-focus-navigation.d.ts"
+      ],
+      "controllers/focusgroup-env.js": [
+        "dist/controllers/focusgroup-env.d.ts"
       ],
       "element": [
         "dist/element/index.d.ts"

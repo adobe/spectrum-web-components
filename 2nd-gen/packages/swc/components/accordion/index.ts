@@ -9,29 +9,20 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { defineElement } from '@spectrum-web-components/core/element/index.js';
 
-export {
-  LanguageResolutionController,
-  languageResolverUpdatedSymbol,
-} from './language-resolution.js';
+import { Accordion } from './Accordion.js';
+import { AccordionItem } from './AccordionItem.js';
 
-export {
-  CompositeFocusNavigationController,
-  buildFocusgroupAttribute,
-  defaultFocusgroupForKind,
-  hasNativeFocusgroup,
-} from './composite-focus-navigation.js';
+export * from './Accordion.js';
+export * from './AccordionItem.js';
 
-export type {
-  CompositeFocusNavigationConfig,
-  LinearDirection,
-  FocusgroupAxis,
-  NativeFocusgroupOptions,
-  SwcCompositeKind,
-} from './composite-focus-navigation.js';
+declare global {
+  interface HTMLElementTagNameMap {
+    'swc-accordion': Accordion;
+    'swc-accordion-item': AccordionItem;
+  }
+}
 
-export {
-  GridFocusNavigationController,
-} from './grid-focus-navigation.js';
-
-export type { GridFocusNavigationConfig } from './grid-focus-navigation.js';
+defineElement('swc-accordion', Accordion);
+defineElement('swc-accordion-item', AccordionItem);

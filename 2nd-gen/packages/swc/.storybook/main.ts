@@ -72,6 +72,11 @@ if (storybookMode !== 'ci-a11y') {
       directory: 'contributor-docs',
       files: '**/*.mdx',
       titlePrefix: 'Contributor docs',
+    },
+    {
+      directory: 'controllers',
+      files: '*.mdx',
+      titlePrefix: 'Core / Controllers',
     }
   );
 }

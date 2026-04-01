@@ -30,6 +30,12 @@ declare module '*.css' {
   export default content;
 }
 
+/** Vite raw imports for controller API markdown in `.storybook/controllers/*.mdx`. */
+declare module '*.md?raw' {
+  const content: string;
+  export default content;
+}
+
 // exports storybook-env.d.ts as a module so declare global can augment the Window
 export {};
 

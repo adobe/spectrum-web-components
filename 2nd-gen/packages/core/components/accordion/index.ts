@@ -9,29 +9,6 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
-export {
-  LanguageResolutionController,
-  languageResolverUpdatedSymbol,
-} from './language-resolution.js';
-
-export {
-  CompositeFocusNavigationController,
-  buildFocusgroupAttribute,
-  defaultFocusgroupForKind,
-  hasNativeFocusgroup,
-} from './composite-focus-navigation.js';
-
-export type {
-  CompositeFocusNavigationConfig,
-  LinearDirection,
-  FocusgroupAxis,
-  NativeFocusgroupOptions,
-  SwcCompositeKind,
-} from './composite-focus-navigation.js';
-
-export {
-  GridFocusNavigationController,
-} from './grid-focus-navigation.js';
-
-export type { GridFocusNavigationConfig } from './grid-focus-navigation.js';
+export * from './Accordion.base.js';
+export * from './AccordionItem.base.js';
+export * from './Accordion.types.js';

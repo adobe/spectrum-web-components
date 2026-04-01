@@ -1,0 +1,82 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  box-sizing: border-box;
+  display: block;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+.swc-AccordionItem-heading {
+  margin: 0;
+  font-size: token("font-size-300");
+  font-weight: token("black-font-weight");
+}
+
+.swc-AccordionItem-chevron {
+  display: inline-block;
+  margin-inline-end: token("spacing-75");
+  transition: transform 0.15s ease;
+}
+
+:host([open]) .swc-AccordionItem-chevron {
+  transform: rotate(90deg);
+}
+
+:host(:dir(rtl)[open]) .swc-AccordionItem-chevron {
+  transform: rotate(-90deg);
+}
+
+#header {
+  display: inline-flex;
+  align-items: center;
+  inline-size: 100%;
+  padding-block: token("spacing-100");
+  padding-inline: token("spacing-100");
+  margin: 0;
+  font: inherit;
+  color: token("gray-900");
+  text-align: start;
+  background: token("gray-50");
+  border: none;
+  border-radius: token("corner-radius-100");
+  cursor: pointer;
+}
+
+#header:focus-visible {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-indicator-gap");
+}
+
+#header:disabled {
+  color: token("disabled-content-color");
+  cursor: default;
+}
+
+#header:hover:not(:disabled) {
+  background: token("gray-100");
+}
+
+.swc-AccordionItem-content {
+  padding-block: token("spacing-100");
+  padding-inline: token("spacing-200");
+  border-block-end: 1px solid token("gray-200");
+}
+
+.swc-AccordionItem-content[hidden] {
+  display: none;
+}
