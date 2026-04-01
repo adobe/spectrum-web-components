@@ -13,19 +13,9 @@
 <!-- This preconnect opens the connection for typekit to more quickly load fonts -->
 <link rel="preconnect" href="https://use.typekit.net" crossorigin />
 <link rel="dns-prefetch" href="https://use.typekit.net" />
-<script>
-  // Only load the typekit CSS stylesheet outside of Chromatic.
-  // Loading it as a render-blocking stylesheet causes unexplained flaky
-  // alignment diffs in Chromatic snapshots (e.g. Badge text offset).
-  // Chromatic loads fonts via the language decorator + Typekit.load() instead.
-  if (!/Chromatic/.test(navigator.userAgent)) {
-    const stylesheet = document.createElement('link');
-    stylesheet.rel = 'stylesheet';
-    stylesheet.href = 'https://use.typekit.net/obc6cux.css';
-    stylesheet.crossOrigin = '';
-    document.head.append(stylesheet);
-  }
-</script>
+<!-- For Adobe Clean Spectrum VF font support. CJK kits are loaded on-demand by the language decorator. -->
+<link rel="stylesheet" href="https://use.typekit.net/obc6cux.css" />
+<!-- This is the script that attempts to pre-load the typekit fonts -->
 <script>
   window.global = window;
 
