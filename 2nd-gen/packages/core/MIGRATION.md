@@ -42,12 +42,16 @@ Tracks what moved, where it landed, and any changes made during the move.
 
 ### Utils
 
-| 1st-gen source                            | 2nd-gen core                   | Notes                                      |
-| ----------------------------------------- | ------------------------------ | ------------------------------------------ |
-| `tools/shared/src/focusable-selectors.ts` | `utils/focus-utils.ts`         | Typo fix: `userFocuable` → `userFocusable` |
-| `tools/shared/src/first-focusable-in.ts`  | `utils/focus-utils.ts`         | Consolidated with focusable selectors      |
-| `tools/shared/src/get-label-from-slot.ts` | `utils/get-label-from-slot.ts` |                                            |
-| _(n/a)_                                   | `utils/capitalize.ts`          | New in 2nd-gen                             |
+| 1st-gen source                                    | 2nd-gen core                           | Notes                                          |
+| ------------------------------------------------- | -------------------------------------- | ---------------------------------------------- |
+| `tools/shared/src/focusable-selectors.ts`         | `utils/focus-utils.ts`                 | Typo fix: `userFocuable` → `userFocusable`     |
+| `tools/shared/src/first-focusable-in.ts`          | `utils/focus-utils.ts`                 | Consolidated with focusable selectors          |
+| `tools/shared/src/get-deep-element-from-point.ts` | `utils/get-deep-element-from-point.ts` |                                                |
+| `tools/shared/src/get-label-from-slot.ts`         | `utils/get-label-from-slot.ts`         |                                                |
+| `tools/shared/src/platform.ts`                    | `utils/platform.ts`                    |                                                |
+| `tools/shared/src/random-id.ts`                   | `utils/random-id.ts`                   |                                                |
+| `tools/shared/src/reparent-children.ts`           | `utils/reparent-children.ts`           | Move to overlay utils when overlay is migrated |
+| _(n/a)_                                           | `utils/capitalize.ts`                  | New in 2nd-gen                                 |
 
 ### Controllers
 

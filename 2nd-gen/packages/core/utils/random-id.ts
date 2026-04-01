@@ -10,26 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-export { capitalize } from './capitalize.js';
-export {
-  firstFocusableIn,
-  firstFocusableSlottedIn,
-  focusableSelector,
-  userFocusableSelector,
-} from './focus-utils.js';
-export { getDeepElementFromPoint } from './get-deep-element-from-point.js';
-export { getLabelFromSlot } from './get-label-from-slot.js';
-export {
-  isAndroid,
-  isAppleDevice,
-  isChrome,
-  isFirefox,
-  isIOS,
-  isIPad,
-  isIPhone,
-  isMac,
-  isSeamonkey,
-  isWebKit,
-} from './platform.js';
-export { randomID } from './random-id.js';
-export { reparentChildren } from './reparent-children.js';
+// This gnarly-looking implementation returns the equivalent of crypto.randomUUID().slice(0, 8).
+// It uses getRandomValues() in order to be compatible with HTTP contexts.
+export function randomID(): string {
+  return Array.from(crypto.getRandomValues(new Uint8Array(4)), (b) =>
+    `0${(b & 0xff).toString(16)}`.slice(-2)
+  ).join('');
+}

@@ -9,22 +9,4 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
-export const getDeepElementFromPoint = (
-  x: number,
-  y: number
-): Element | null => {
-  let target = document.elementFromPoint(x, y);
-  while (target?.shadowRoot) {
-    const innerTarget = (
-      target.shadowRoot as unknown as {
-        elementFromPoint: (x: number, y: number) => Element | null;
-      }
-    ).elementFromPoint(x, y);
-    if (!innerTarget || innerTarget === target) {
-      break;
-    }
-    target = innerTarget;
-  }
-  return target;
-};
+export { getDeepElementFromPoint } from '@spectrum-web-components/core/utils/get-deep-element-from-point.js';

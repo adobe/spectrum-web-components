@@ -108,8 +108,12 @@
       "import": "./dist/utils/capitalize.js"
     },
     "./utils/focus-utils.js": {
-      "types": "./dist/utils/focusable.d.ts",
-      "import": "./dist/utils/focusable.js"
+      "types": "./dist/utils/focus-utils.d.ts",
+      "import": "./dist/utils/focus-utils.js"
+    },
+    "./utils/get-deep-element-from-point.js": {
+      "types": "./dist/utils/get-deep-element-from-point.d.ts",
+      "import": "./dist/utils/get-deep-element-from-point.js"
     },
     "./utils/get-label-from-slot.js": {
       "types": "./dist/utils/get-label-from-slot.d.ts",
@@ -118,6 +122,18 @@
     "./utils/index.js": {
       "types": "./dist/utils/index.d.ts",
       "import": "./dist/utils/index.js"
+    },
+    "./utils/platform.js": {
+      "types": "./dist/utils/platform.d.ts",
+      "import": "./dist/utils/platform.js"
+    },
+    "./utils/random-id.js": {
+      "types": "./dist/utils/random-id.d.ts",
+      "import": "./dist/utils/random-id.js"
+    },
+    "./utils/reparent-children.js": {
+      "types": "./dist/utils/reparent-children.d.ts",
+      "import": "./dist/utils/reparent-children.js"
     }
   },
   "main": "./dist/index.js",
@@ -202,14 +218,26 @@
       "utils/capitalize.js": [
         "dist/utils/capitalize.d.ts"
       ],
-      "utils/focusable.js": [
-        "dist/utils/focusable.d.ts"
+      "utils/focus-utils.js": [
+        "dist/utils/focus-utils.d.ts"
+      ],
+      "utils/get-deep-element-from-point.js": [
+        "dist/utils/get-deep-element-from-point.d.ts"
       ],
       "utils/get-label-from-slot.js": [
         "dist/utils/get-label-from-slot.d.ts"
       ],
       "utils/index.js": [
         "dist/utils/index.d.ts"
+      ],
+      "utils/platform.js": [
+        "dist/utils/platform.d.ts"
+      ],
+      "utils/random-id.js": [
+        "dist/utils/random-id.d.ts"
+      ],
+      "utils/reparent-children.js": [
+        "dist/utils/reparent-children.d.ts"
       ]
     }
   },

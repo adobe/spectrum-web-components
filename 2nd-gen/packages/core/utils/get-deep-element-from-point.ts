@@ -10,26 +10,21 @@
  * governing permissions and limitations under the License.
  */
 
-export { capitalize } from './capitalize.js';
-export {
-  firstFocusableIn,
-  firstFocusableSlottedIn,
-  focusableSelector,
-  userFocusableSelector,
-} from './focus-utils.js';
-export { getDeepElementFromPoint } from './get-deep-element-from-point.js';
-export { getLabelFromSlot } from './get-label-from-slot.js';
-export {
-  isAndroid,
-  isAppleDevice,
-  isChrome,
-  isFirefox,
-  isIOS,
-  isIPad,
-  isIPhone,
-  isMac,
-  isSeamonkey,
-  isWebKit,
-} from './platform.js';
-export { randomID } from './random-id.js';
-export { reparentChildren } from './reparent-children.js';
+export const getDeepElementFromPoint = (
+  x: number,
+  y: number
+): Element | null => {
+  let target = document.elementFromPoint(x, y);
+  while (target?.shadowRoot) {
+    const innerTarget = (
+      target.shadowRoot as unknown as {
+        elementFromPoint: (x: number, y: number) => Element | null;
+      }
+    ).elementFromPoint(x, y);
+    if (!innerTarget || innerTarget === target) {
+      break;
+    }
+    target = innerTarget;
+  }
+  return target;
+};
