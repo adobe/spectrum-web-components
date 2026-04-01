@@ -1,8 +1,8 @@
 ---
 component: Avatar
-phase: 1 — Preparation
-status: draft
-last-updated: 2026-03-30
+phase: 7 — Documentation
+status: in progress
+last-updated: 2026-03-31
 ---
 
 # Avatar — 2nd-Gen Migration Plan
@@ -33,160 +33,108 @@ last-updated: 2026-03-30
 | `referrerpolicy` | `string` | — | Yes | `LikeAnchor` mixin |
 | `type` | `string` | — | Yes | `LikeAnchor` mixin |
 
-### Methods / Lifecycle
+---
 
-| Method | Visibility | Notes |
-|---|---|---|
-| `render()` | protected | Returns `<img>` or `<a><img></a>` depending on `href` |
-| `firstUpdated()` | protected | Sets `size` attribute default; calls `warnMissingAlt()` |
-| `updated()` | protected | Calls `warnMissingAlt()` on label / isDecorative / href changes |
-| `focusElement` | getter | Returns `<a#link>` if present, else host |
-| `warnMissingAlt()` | private | DEBUG-mode warning for missing accessibility attributes |
+## 2. 2nd-Gen API Surface (implemented)
 
-### Events
+### Properties
 
-None dispatched. Standard DOM events flow through the anchor element when `href` is set.
+| Property | Type | Default | Reflected | Notes |
+|---|---|---|---|---|
+| `src` | `string` | `''` | No | Unchanged |
+| `alt` | `string \| undefined` | `undefined` | No | Replaces `label` + `isDecorative`; pass `alt=""` for decorative |
+| `size` | `AvatarSize` (50–1500) | `500` | Yes | Numeric scale extended; invalid values fall back to 500 |
+| `overBackground` | `boolean` | `false` | Yes (`over-background`) | New in S2; adds outline for contrast on colored backgrounds |
+| `label` _(deprecated)_ | `string \| undefined` | — | No | Shim → sets `alt`; warns in DEBUG mode |
 
-### Slots
+### Dropped from 1st-gen
 
-None.
-
-### CSS Custom Properties
-
-**Read from tokens:**
-
-| Property | Purpose |
+| Property | Reason |
 |---|---|
-| `--spectrum-avatar-size-{50–700}` | Dimension per size step |
-| `--spectrum-avatar-color-opacity` | Default opacity (1) |
-| `--spectrum-avatar-color-opacity-disabled` | Disabled opacity |
-| `--spectrum-avatar-opacity-disabled` | Alt disabled opacity |
-| `--spectrum-avatar-focus-indicator-thickness` | Focus ring thickness |
-| `--spectrum-avatar-focus-indicator-gap` | Focus ring gap |
-| `--spectrum-avatar-focus-indicator-color` | Focus ring color |
-
-**Consumed as `--mod-*` customization surface (to be removed in 2nd-gen):**
-
-`--mod-avatar-inline-size`, `--mod-avatar-block-size`, `--mod-avatar-border-radius`,
-`--mod-avatar-color-opacity`, `--mod-avatar-color-opacity-disabled`,
-`--mod-avatar-focus-indicator-thickness`, `--mod-avatar-focus-indicator-gap`,
-`--mod-avatar-focus-indicator-color`
-
-### DOM Structure
-
-```html
-<!-- No href -->
-<img class="image" alt="[label|'']" src="[src]" />
-
-<!-- With href -->
-<a id="link" class="link" href="[href]">
-  <img class="image" alt="[label|'']" src="[src]" />
-</a>
-```
-
-### Accessibility Logic
-
-```
-label provided    → alt=label, aria-hidden removed
-isDecorative only → alt="", aria-hidden="true"
-href + isDecorative (no label) → alt="", aria-hidden="true" + DEBUG warning
-neither           → alt="", DEBUG warning
-```
+| `href`, `target`, `rel`, `download`, `referrerpolicy`, `type` | Linked variant dropped — not in Spectrum 2 avatar spec |
+| `disabled` | No linked variant; no disabled state in S2 spec |
+| `isDecorative` | Replaced by `alt=""` (standard HTML pattern) |
 
 ---
 
-## 2. Dependencies
+## 3. Dependencies
 
 | Dependency | 1st-Gen Source | 2nd-Gen Equivalent | Status |
 |---|---|---|---|
-| `Focusable` mixin | `@spectrum-web-components/shared` | Not yet in `2nd-gen/packages/core` | **Open question — see §5** |
-| `LikeAnchor` mixin | `@spectrum-web-components/shared` | Not yet in `2nd-gen/packages/core` | **Open question — see §5** |
-| `SizedMixin` | N/A (custom getter/setter in Avatar.ts) | `2nd-gen/packages/core/mixins/sized-mixin.ts` | Available, but uses T-shirt sizes — **breaking** |
-| `SpectrumElement` | `@spectrum-web-components/base` | `2nd-gen/packages/core/element/spectrum-element.ts` | Available |
-| Spectrum CSS avatar | `spectrum-css` v1 branch | `spectrum-css` `spectrum-two` branch | Must be checked out as sibling |
+| `Focusable` mixin | `@spectrum-web-components/shared` | Not needed | **Closed — linked variant dropped** |
+| `LikeAnchor` mixin | `@spectrum-web-components/shared` | Not needed | **Closed — linked variant dropped** |
+| `SizedMixin` | N/A | Not used | **Closed — bespoke numeric getter/setter in `AvatarBase`** |
+| `SpectrumElement` | `@spectrum-web-components/base` | `2nd-gen/packages/core/element/spectrum-element.ts` | Done |
 
 ---
 
-## 3. Breaking Changes
+## 4. Breaking Changes
 
-### 3.1 Size System (High Impact)
+### 4.1 Size System
 
-The 1st-gen avatar uses numeric sizes (`50 | 75 | 100 | 200 | 300 | 400 | 500 | 600 | 700`). The 2nd-gen `SizedMixin` uses T-shirt sizes (`xxs | xs | s | m | l | xl | xxl`). Additionally, Spectrum 2 introduces new size steps not present in 1st-gen: **800, 900, 1000, 1100, 1200, 1300, 1400, 1500**.
+Numeric sizes kept (not T-shirt sizes). Scale extended from `50–700` → `50–1500`. Default changed from `100` → `500` (40 px, matching S2 spec). Invalid values fall back to `500`.
 
-**Decision needed:** Does 2nd-gen avatar keep numeric sizes (extending to 1500) or adopt T-shirt sizes? This affects the `AvatarSize` type, the `size` attribute values, and all size-related CSS custom properties. If T-shirt sizes are adopted, a deprecation alias or coercion layer may be needed for 1.x → 2.x migrations.
+### 4.2 `--mod-*` Properties Removed
 
-> See open question OQ-1.
+All `--mod-avatar-*` customization properties removed. Consumers must migrate to the explicit component-level custom properties (`--swc-avatar-size`, `--swc-avatar-border-color`, `--swc-avatar-border-width`).
 
-### 3.2 `--mod-*` Properties Removed
+### 4.3 Linked Variant Removed
 
-All `--mod-avatar-*` customization properties will be removed. Consumers relying on them must migrate to the explicit component-level custom properties exposed by the 2nd-gen component.
+`href` and all `LikeAnchor` properties are not carried forward. The Spectrum 2 avatar spec does not include a linked variant.
 
-### 3.3 `LikeAnchor` / `Focusable` Mixin Shape May Change
+### 4.4 `isDecorative` → `alt=""`
 
-The `href`, `target`, `rel`, `download`, `referrerpolicy`, `type`, and `disabled` properties are currently inherited from `LikeAnchor`. The 2nd-gen equivalent mixin (if created) may change the API shape or attribute names. Until the mixin is confirmed in 2nd-gen core, treat these as potentially breaking.
+`isDecorative` is removed. Pass `alt=""` to mark an avatar as decorative. This aligns with standard HTML `<img>` semantics.
 
-### 3.4 CSS Class Wrapper
+### 4.5 `label` → `alt`
 
-2nd-gen components use a `<div class="swc-Avatar">` wrapper element. 1st-gen does not. This changes the shadow DOM structure and may affect consumers targeting shadow parts or relying on `:host` layout.
+`label` is deprecated with a DEBUG-mode warning shim. Consumers should migrate to `alt`.
 
-### 3.5 Attribute Name: `is-decorative` → TBD
+### 4.6 CSS Class Wrapper
 
-`isDecorative` reflects as `is-decorative`. Confirm whether the attribute name is preserved in 2nd-gen or renamed for consistency with other patterns (e.g. `decorative`).
+2nd-gen components use a `<div class="swc-Avatar">` wrapper. 1st-gen renders `<img>` directly into the shadow root. Consumers targeting shadow internals will need to update.
 
 ---
 
-## 4. Migration Checklist
+## 5. Migration Checklist
 
 ### Phase 2 — Setup
-- [ ] Create `2nd-gen/packages/core/components/avatar/` directory
-- [ ] Create `2nd-gen/packages/swc/components/avatar/` directory
-- [ ] Stub `Avatar.base.ts`, `Avatar.types.ts`, `index.ts` in core
-- [ ] Stub `Avatar.ts`, `Avatar.css`, `index.ts` in swc
-- [ ] Add packages to workspace; verify build passes
+- [x] Create `2nd-gen/packages/core/components/avatar/` directory
+- [x] Create `2nd-gen/packages/swc/components/avatar/` directory
+- [x] Stub `Avatar.base.ts`, `Avatar.types.ts`, `index.ts` in core
+- [x] Stub `Avatar.ts`, `Avatar.css`, `index.ts` in swc
+- [x] Add packages to workspace; verify build passes
 
 ### Phase 3 — API Migration
-- [ ] Define `AvatarSize` type in `Avatar.types.ts` (resolve size-system decision first)
-- [ ] Define `AvatarBase` extending `SpectrumElement` with `src`, `size`, `isDecorative` properties
-- [ ] Implement `LikeAnchor`-equivalent link behavior (pending 2nd-gen mixin or inline)
-- [ ] Implement `Focusable`-equivalent focus management (pending 2nd-gen mixin or inline)
-- [ ] Implement `warnMissingAlt()` debug warning
-- [ ] Add `static readonly VALID_SIZES` array
+- [x] Define `AvatarSize` type in `Avatar.types.ts`
+- [x] Define `AvatarBase` extending `SpectrumElement` with `src`, `alt`, `size`, `overBackground`
+- [x] Add deprecated `label` shim with DEBUG warning
+- [x] Add `static readonly VALID_SIZES` array
+- [x] Implement `firstUpdated` to set `size` attribute if missing
 
 ### Phase 4 — Styling
-- [ ] Confirm `spectrum-css` checkout on `spectrum-two` branch (sibling to this repo)
-- [ ] Copy `packages/avatar/index.css` from spectrum-css `spectrum-two` branch (not `/dist`)
-- [ ] Add `<div class="swc-Avatar">` wrapper to render output
-- [ ] Replace `:host` selectors with `.swc-Avatar`
-- [ ] Remove all `--mod-avatar-*` properties; replace with explicit component custom properties
-- [ ] Add size token mappings for all new S2 sizes (800–1500) if staying numeric
-- [ ] Remove `avatar-overrides.css`; clean up legacy classes
-- [ ] Run `stylelint` (property order, no-descending-specificity, token usage checks)
+- [x] Add `<div class="swc-Avatar">` wrapper to render output
+- [x] Size token mappings for all sizes (50–1500)
+- [x] `over-background` outline rules (1px for 50–900, 2px for 1000–1500)
+- [x] Remove all `--mod-avatar-*` properties
+- [x] Run `stylelint`
 
 ### Phase 5 — Accessibility
-
-> Full requirements: [accessibility-migration-analysis.md](./accessibility-migration-analysis.md)
-
-- [ ] Non-linked: `label` → `alt="[label]"`, not focusable
-- [ ] Non-linked: `is-decorative` (no label) → `alt=""` + `aria-hidden="true"` on `<img>`, not focusable
-- [ ] Non-linked: neither → `alt=""` + DEBUG warning
-- [ ] Linked: `label` → `<a><img alt="[label]"></a>`, focusable, Enter activates
-- [ ] Linked: `is-decorative` + no `label` → DEBUG warning (invalid combination)
-- [ ] `disabled` + `href` → no `<a>` rendered, removed from tab order (already implemented in Phase 2 stub)
-- [ ] Focus ring visible on `.swc-Avatar-link:focus-visible`, meets WCAG 1.4.3 contrast
-- [ ] Run axe-core against all story variants
-- [ ] Playwright ARIA snapshot tests cover all states above
+- [x] `alt` provided → `alt="[value]"` on `<img>`
+- [x] `alt=""` (decorative) → `alt=""` on `<img>`
+- [x] `alt` omitted → `alt=""` on `<img>`
+- [ ] DEBUG warning for missing `alt`
+- [ ] Playwright ARIA snapshot tests
 
 ### Phase 6 — Testing
 - [ ] Port `avatar.test.ts` → `2nd-gen/packages/swc/components/avatar/test/avatar.test.ts`
-- [ ] Port `avatar-memory.test.ts` memory leak tests
 - [ ] Add Playwright `.a11y.spec.ts` file
-- [ ] Add Storybook play functions for interaction coverage
 
 ### Phase 7 — Documentation
-- [ ] Add JSDoc to all public properties in `Avatar.base.ts` and `Avatar.ts`
-- [ ] Write Storybook stories covering all sizes, linked, disabled, decorative variants
-- [ ] Add migration notes for `--mod-*` removal and any size-system change
-- [ ] Update `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/01_status.md`
+- [x] JSDoc on all public properties in `Avatar.base.ts`
+- [x] Storybook stories: Playground, Overview, Anatomy, Sizes, Decorative, OverBackground, InActionButton, Accessibility
+- [ ] Add migration notes for `--mod-*` removal and API changes
+- [ ] Update migration status doc
 
 ### Phase 8 — Review
 - [ ] Run full lint suite
@@ -195,19 +143,21 @@ The `href`, `target`, `rel`, `download`, `referrerpolicy`, `type`, and `disabled
 
 ---
 
-## 5. Open Questions / Blockers
+## 6. Open Questions
 
-| ID | Question | Impact | Owner |
-|---|---|---|---|
-| **OQ-1** | **Size system:** Keep numeric sizes (50–1500) or migrate to T-shirt sizes? If numeric, can we extend `SizedMixin` or do we need a bespoke implementation? | High — affects API, CSS, type definitions, and consumer migration path | Needs team decision |
-| **OQ-2** | **`Focusable` mixin:** Is a 2nd-gen equivalent planned or should Avatar inline the focus management logic? | Medium — no existing 2nd-gen mixin; linking behavior depends on answer | Needs architecture decision |
-| **OQ-3** | **`LikeAnchor` mixin:** Same question as OQ-2 — does 2nd-gen plan a shared mixin for anchor-like elements? | Medium — affects multiple components (Button, Tag, etc.) | Coordinate with team |
-| **OQ-4** | **`is-decorative` attribute name:** Preserve as-is or rename to `decorative` for consistency? | Low — minor breaking change if renamed | Product decision |
-| **OQ-5** | **New S2 sizes 800–1500:** Confirm token values exist in spectrum-css `spectrum-two` branch for all new size steps | Medium — blocks Phase 4 if tokens are missing | Check spectrum-css branch |
+All open questions closed.
+
+| ID | Question | Resolution |
+|---|---|---|
+| **OQ-1** | Size system: numeric vs T-shirt sizes? | **Closed** — numeric sizes kept and extended to 1500; bespoke getter/setter in `AvatarBase` (no `SizedMixin`) |
+| **OQ-2** | `Focusable` mixin needed? | **Closed** — linked variant dropped; avatar is not focusable |
+| **OQ-3** | `LikeAnchor` mixin needed? | **Closed** — linked variant dropped; `href` and related props not carried forward |
+| **OQ-4** | `is-decorative` attribute name? | **Closed** — dropped entirely; replaced by `alt=""` (standard HTML semantics) |
+| **OQ-5** | S2 tokens for sizes 800–1500 exist? | **Closed** — confirmed in `tokens.css`; all size rules implemented |
 
 ---
 
-## 6. Reference
+## 7. Reference
 
 - Reference implementation: `2nd-gen/packages/core/components/badge/Badge.base.ts`
 - CSS migration guide: `CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md`
