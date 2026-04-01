@@ -102,31 +102,9 @@ export abstract class BadgeBase extends SizedMixin(
 
   /**
    * The fixed position of the badge.
-   *
-   * @todo The purpose of the bespoke getter and setter is unclear, as it
-   * looks like they may be behaving just like a standard Lit reactive
-   * property. Explore replacing after milestone 2.
    */
-  @property({ reflect: true })
-  public get fixed(): FixedValues | undefined {
-    return this._fixed;
-  }
-
-  public set fixed(fixed: FixedValues | undefined) {
-    if (fixed === this.fixed) {
-      return;
-    }
-    const oldValue = this.fixed;
-    this._fixed = fixed;
-    if (fixed) {
-      this.setAttribute('fixed', fixed);
-    } else {
-      this.removeAttribute('fixed');
-    }
-    this.requestUpdate('fixed', oldValue);
-  }
-
-  private _fixed?: FixedValues;
+  @property({ type: String, reflect: true })
+  public fixed?: FixedValues;
 
   // ──────────────────────
   //     IMPLEMENTATION
