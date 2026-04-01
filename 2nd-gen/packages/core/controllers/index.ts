@@ -14,3 +14,5 @@ export {
   LanguageResolutionController,
   languageResolverUpdatedSymbol,
 } from './language-resolution.js';
+export { SlotPresenceController } from './slot-presence.js';
+export { SlotTextController } from './slot-text.js';

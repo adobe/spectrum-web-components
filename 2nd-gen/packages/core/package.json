@@ -55,6 +55,14 @@
       "types": "./dist/controllers/language-resolution.d.ts",
       "import": "./dist/controllers/language-resolution.js"
     },
+    "./controllers/slot-presence.js": {
+      "types": "./dist/controllers/slot-presence.d.ts",
+      "import": "./dist/controllers/slot-presence.js"
+    },
+    "./controllers/slot-text.js": {
+      "types": "./dist/controllers/slot-text.d.ts",
+      "import": "./dist/controllers/slot-text.js"
+    },
     "./element": {
       "types": "./dist/element/index.d.ts",
       "import": "./dist/element/index.js"
@@ -154,6 +162,12 @@
       ],
       "controllers/language-resolution.js": [
         "dist/controllers/language-resolution.d.ts"
+      ],
+      "controllers/slot-presence.js": [
+        "dist/controllers/slot-presence.d.ts"
+      ],
+      "controllers/slot-text.js": [
+        "dist/controllers/slot-text.d.ts"
       ],
       "element": [
         "dist/element/index.d.ts"
