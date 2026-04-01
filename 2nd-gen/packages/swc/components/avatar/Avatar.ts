@@ -37,11 +37,7 @@ export class Avatar extends AvatarBase {
   protected override render(): TemplateResult {
     return html`
       <div class="swc-Avatar">
-        <img
-          class="swc-Avatar-image"
-          src=${this.src}
-          alt=${this.alt ?? ''}
-        />
+        <img class="swc-Avatar-image" src=${this.src} alt=${this.alt ?? ''} />
       </div>
     `;
   }

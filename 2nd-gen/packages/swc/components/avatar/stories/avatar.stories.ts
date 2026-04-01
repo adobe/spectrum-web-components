@@ -137,11 +137,7 @@ export const Overview: Story = {
  */
 export const Anatomy: Story = {
   render: () => html`
-    <swc-avatar
-      src=${PLACEHOLDER_SRC}
-      alt="Jane Doe"
-      size="500"
-    ></swc-avatar>
+    <swc-avatar src=${PLACEHOLDER_SRC} alt="Jane Doe" size="500"></swc-avatar>
   `,
   tags: ['anatomy'],
 };
@@ -201,7 +197,10 @@ export const Decorative: Story = {
  */
 export const InActionButton: Story = {
   render: () => html`
-    <button type="button" style="display:inline-flex;align-items:center;gap:8px;padding:4px 12px;cursor:pointer;">
+    <button
+      type="button"
+      style="display:inline-flex;align-items:center;gap:8px;padding:4px 12px;cursor:pointer;"
+    >
       <swc-avatar src=${PLACEHOLDER_SRC} alt="Jane Doe" size="100"></swc-avatar>
       Jane Doe
     </button>
