@@ -9,6 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import type { SpectrumElement } from '../element/spectrum-element.js';
 
 // Inspired from https://github.com/focus-trap/tabbable/blob/8acf516c29da42c928753950210b07ac32efc724/src/index.js#L6
 const focusables = [
@@ -36,18 +37,18 @@ export const focusableSelector = focusables.join(', ');
 
 export const firstFocusableIn = (
   root: HTMLElement | ShadowRoot
-): HTMLElement | null => {
-  return root.querySelector(userFocusableSelector);
+): SpectrumElement | null => {
+  return root.querySelector(userFocusableSelector) as SpectrumElement | null;
 };
 
 export const firstFocusableSlottedIn = (
   root: HTMLSlotElement
-): HTMLElement | null => {
+): SpectrumElement | null => {
   return (
     (root
       .assignedElements()
       .find((element) =>
         element.matches(userFocusableSelector)
-      ) as HTMLElement) ?? null
+      ) as SpectrumElement) ?? null
   );
 };
