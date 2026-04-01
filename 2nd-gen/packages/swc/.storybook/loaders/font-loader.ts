@@ -10,13 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-/**
- * Explicitly load the font faces used by components.
- * Using document.fonts.load() ensures the browser has fully loaded
- * and rendered with the correct glyphs before Chromatic captures a snapshot.
- * See: https://www.chromatic.com/docs/font-loading/
- */
-
 export const FontLoader = async () => ({
   fonts: new Promise<void>((resolve) => {
     // First check if the fonts are already loaded
