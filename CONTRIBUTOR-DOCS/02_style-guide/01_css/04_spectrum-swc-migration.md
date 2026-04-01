@@ -77,10 +77,10 @@ background: var(--mod-badge-background-color-default, var(--spectrum-badge-backg
 #### After (SWC)
 
 ```css
-min-block-size: var(--swc-badge-height, token('component-height-100'));
+min-block-size: var(--swc-badge-height, token('component-height-75'));
 border-radius: var(
   --swc-badge-corner-radius,
-  token('corner-radius-medium-size-medium')
+  token('corner-radius-medium-size-small')
 );
 background: var(
   --swc-badge-background-color,
@@ -104,9 +104,9 @@ Badge clearly distinguishes between **exposed customization** and **internal imp
 #### Exposed customization (attribute-based)
 
 ```css
-:host([size='s']) {
-  --swc-badge-height: token('component-height-75');
-  --swc-badge-font-size: token('font-size-75');
+:host([size='m']) {
+  --swc-badge-height: token('component-height-100');
+  --swc-badge-font-size: token('font-size-100');
 }
 ```
 
@@ -147,22 +147,15 @@ Badge clearly distinguishes between **exposed customization** and **internal imp
 .swc-Badge {
   display: inline-flex;
   align-items: center;
-  gap: var(--swc-badge-gap, token('text-to-visual-100'));
-  padding-inline: var(
-    --swc-badge-padding-inline,
-    token('component-edge-to-text-100')
-  );
-  padding-block: var(
-    --swc-badge-padding-block,
-    token('component-top-to-text-100')
-    token('component-bottom-to-text-100')
-  );
+  gap: var(--swc-badge-gap, token('text-to-visual-75'));
+  padding-inline: calc(var(--swc-badge-padding-inline, token('component-edge-to-text-75')) - var(--_swc-badge-border-width-deduction));
+  padding-block: calc(var(--swc-badge-padding-block, var(--_swc-badge-padding-block)) - var(--_swc-badge-border-width-deduction));
 }
 ```
 
 ```css
-.swc-Badge:has(.swc-Badge-icon) {
-  --swc-badge-padding-inline: token('component-edge-to-visual-100');
+.swc-Badge:has(.swc-Badge-icon):not(.swc-Badge--no-label) {
+  --swc-badge-padding-inline-start: var(--swc-badge-with-icon-padding-inline, token('component-edge-to-visual-75'));
 }
 ```
 

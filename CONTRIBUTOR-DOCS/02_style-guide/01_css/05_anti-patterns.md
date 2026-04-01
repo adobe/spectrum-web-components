@@ -152,10 +152,10 @@ min-block-size: var(--swc-mod-badge-height, token('component-height-100'));
 
 ```css
 .swc-Badge {
-  min-block-size: var(--swc-badge-height, token('component-height-100'));
+  min-block-size: var(--swc-badge-height, token('component-height-75'));
   border-radius: var(
     --swc-badge-corner-radius,
-    token('corner-radius-medium-size-medium')
+    token('corner-radius-medium-size-small')
   );
   background: var(
     --swc-badge-background-color,
