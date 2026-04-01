@@ -62,7 +62,7 @@
   }
 }
 
-.swc-Badge-icon ::slotted(swc-icon) {
+.swc-Badge-icon {
   --_swc-badge-icon-size: token("workflow-icon-size-75");
 
   display: grid;
