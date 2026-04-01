@@ -9,4 +9,12 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export { Focusable } from '@spectrum-web-components/core/mixins/focusable.js';
+import { Focusable as CoreFocusable } from '@spectrum-web-components/core/mixins/focusable.js';
+
+import { FocusVisiblePolyfillMixin } from './focus-visible.js';
+
+/**
+ * 1st-gen Focusable wraps the core Focusable with the :focus-visible
+ * polyfill mixin for legacy browser support.
+ */
+export class Focusable extends FocusVisiblePolyfillMixin(CoreFocusable) {}
