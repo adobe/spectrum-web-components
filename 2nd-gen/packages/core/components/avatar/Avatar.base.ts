@@ -52,8 +52,11 @@ export abstract class AvatarBase extends SpectrumElement {
    * Text description of the avatar image.
    *
    * Becomes the `alt` attribute on the underlying `<img>` element.
-   * Pass `alt=""` to treat the image as decorative and hide it from
-   * assistive technology. If omitted, a DEBUG warning is issued.
+   * Pass `alt=""` to treat the image as decorative — the host receives
+   * `aria-hidden="true"` so the entire shadow tree is hidden from assistive
+   * technology. If omitted, the image renders with `alt=""` and a DEBUG
+   * warning is issued; only the warning distinguishes this from an
+   * intentional decorative image.
    */
   @property({ type: String })
   public alt: string | undefined;
@@ -136,6 +139,7 @@ export abstract class AvatarBase extends SpectrumElement {
     if (!this.hasAttribute('size')) {
       this.setAttribute('size', String(this.size));
     }
+    this.toggleAttribute('aria-hidden', this.alt === '');
     if (window.__swc?.DEBUG) {
       this.warnMissingAlt();
     }
@@ -143,8 +147,11 @@ export abstract class AvatarBase extends SpectrumElement {
 
   protected override updated(changes: PropertyValues): void {
     super.updated(changes);
-    if (window.__swc?.DEBUG && changes.has('alt')) {
-      this.warnMissingAlt();
+    if (changes.has('alt')) {
+      this.toggleAttribute('aria-hidden', this.alt === '');
+      if (window.__swc?.DEBUG) {
+        this.warnMissingAlt();
+      }
     }
   }
 

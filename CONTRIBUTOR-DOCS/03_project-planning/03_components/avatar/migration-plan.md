@@ -121,9 +121,11 @@ All `--mod-avatar-*` customization properties removed. Consumers must migrate to
 
 ### Phase 5 — Accessibility
 - [x] `alt` provided → `alt="[value]"` on `<img>`
-- [x] `alt=""` (decorative) → `alt=""` on `<img>`
-- [x] `alt` omitted → `alt=""` on `<img>`
+- [x] `alt=""` (decorative) → `alt=""` + `aria-hidden="true"` on `<img>`
+- [x] `alt` omitted → `alt=""` on `<img>` + DEBUG warning
 - [x] DEBUG warning for missing `alt`
+- [x] Host is not focusable (no `Focusable` mixin, no `tabIndex` set)
+- [x] Host exposes no interactive role (`role="button"` / `role="link"`)
 - [ ] Playwright ARIA snapshot tests
 
 ### Phase 6 — Testing
