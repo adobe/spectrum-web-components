@@ -12,6 +12,12 @@
 
 :host {
   display: inline-block;
+  place-self: start;
+  vertical-align: middle;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 /* ── Size variants ──────────────────────────────────────── */
@@ -89,34 +95,30 @@
 .swc-Avatar {
   -webkit-user-drag: none;
   display: inline-block;
-  position: relative;
   inline-size: var(--swc-avatar-size, token("avatar-size-500"));
   block-size: var(--swc-avatar-size, token("avatar-size-500"));
-  border-width: 0;
   border-radius: token("corner-radius-full");
-  overflow: visible;
   user-select: none;
-  outline: none;
 }
 
 /* ── Image ──────────────────────────────────────────────── */
 
 .swc-Avatar-image {
+  display: block;
   inline-size: var(--swc-avatar-size, token("avatar-size-500"));
   block-size: var(--swc-avatar-size, token("avatar-size-500"));
   border-radius: token("corner-radius-full");
+  object-fit: cover;
 }
 
 /* ── Over-background outline ────────────────────────────── */
 
-/* Default outline (1px) for all sizes */
+/* Default outline width for all sizes */
 :host([over-background]) .swc-Avatar-image {
-  outline-width: var(--swc-avatar-border-width, token("avatar-border-width"));
-  outline-style: solid;
-  outline-color: var(--swc-avatar-border-color, token("avatar-border-color"));
+  outline: var(--swc-avatar-border-width, token("avatar-border-width")) solid var(--swc-avatar-border-color, token("avatar-border-color"));
 }
 
-/* Thicker outline (2px) for large sizes >= 1000 (≥ 64 px), matching S2 */
+/* Thicker outline for large sizes >= 1000 (≥ 64 px), matching S2 */
 :host([over-background][size="1000"]) .swc-Avatar-image,
 :host([over-background][size="1100"]) .swc-Avatar-image,
 :host([over-background][size="1200"]) .swc-Avatar-image,
