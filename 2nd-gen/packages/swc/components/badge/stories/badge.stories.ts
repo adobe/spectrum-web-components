@@ -277,6 +277,8 @@ export const Anatomy: Story = {
  *
  * The `s` size is the default and most frequently used option. Use larger sizes sparingly to create a hierarchy of importance on a page.
  */
+
+// @todo - We should make sure to capture icon-only badges in all sizes for VRTs.
 export const Sizes: Story = {
   render: (args) => html`
     ${BADGE_VALID_SIZES.map(
@@ -446,12 +448,14 @@ export const TextWrapping: Story = {
     ${template({
       ...args,
       variant: 'informative',
-      size: 's',
       'default-slot': 'Document review pending approval from manager',
       style: 'max-inline-size: 120px',
     })}
   `,
   tags: ['behaviors'],
+  args: {
+    size: 's',
+  },
 };
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
