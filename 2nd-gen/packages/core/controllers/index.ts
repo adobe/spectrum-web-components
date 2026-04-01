@@ -11,6 +11,25 @@
  */
 
 export {
+  ColorController,
+  type Color,
+  type ColorTypes,
+} from './color-controller.js';
+export {
+  DependencyManagerController,
+  dependencyManagerLoadedSymbol,
+} from './dependency-manager.js';
+export {
+  ElementResolutionController,
+  elementResolverUpdatedSymbol,
+} from './element-resolution.js';
+export {
   LanguageResolutionController,
   languageResolverUpdatedSymbol,
 } from './language-resolution.js';
+export {
+  DARK_MODE,
+  IS_MOBILE,
+  IS_TOUCH_DEVICE,
+  MatchMediaController,
+} from './match-media.js';

@@ -51,9 +51,25 @@
       "types": "./dist/controllers/index.d.ts",
       "import": "./dist/controllers/index.js"
     },
+    "./controllers/color-controller.js": {
+      "types": "./dist/controllers/color-controller.d.ts",
+      "import": "./dist/controllers/color-controller.js"
+    },
+    "./controllers/dependency-manager.js": {
+      "types": "./dist/controllers/dependency-manager.d.ts",
+      "import": "./dist/controllers/dependency-manager.js"
+    },
+    "./controllers/element-resolution.js": {
+      "types": "./dist/controllers/element-resolution.d.ts",
+      "import": "./dist/controllers/element-resolution.js"
+    },
     "./controllers/language-resolution.js": {
       "types": "./dist/controllers/language-resolution.d.ts",
       "import": "./dist/controllers/language-resolution.js"
+    },
+    "./controllers/match-media.js": {
+      "types": "./dist/controllers/match-media.d.ts",
+      "import": "./dist/controllers/match-media.js"
     },
     "./element": {
       "types": "./dist/element/index.d.ts",
@@ -168,8 +184,20 @@
       "controllers/index.js": [
         "dist/controllers/index.d.ts"
       ],
+      "controllers/color-controller.js": [
+        "dist/controllers/color-controller.d.ts"
+      ],
+      "controllers/dependency-manager.js": [
+        "dist/controllers/dependency-manager.d.ts"
+      ],
+      "controllers/element-resolution.js": [
+        "dist/controllers/element-resolution.d.ts"
+      ],
       "controllers/language-resolution.js": [
         "dist/controllers/language-resolution.d.ts"
+      ],
+      "controllers/match-media.js": [
+        "dist/controllers/match-media.d.ts"
       ],
       "element": [
         "dist/element/index.d.ts"
@@ -229,6 +257,7 @@
   },
   "dependencies": {
     "@lit-labs/observers": "2.0.2",
+    "colorjs.io": "0.5.2",
     "lit": "^2.5.0 || ^3.1.3"
   },
   "devDependencies": {
