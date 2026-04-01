@@ -26,6 +26,84 @@
     document.head.append(stylesheet);
   }
 </script>
+<script>
+  window.global = window;
+
+  let isLoading = false;
+  /**
+   * Adobe Fonts kit IDs by locale. Used to load the correct font project when the user changes language in Storybook.
+   * Latin/default is loaded in preview-head; CJK kits are loaded on-demand by the language decorator (which injects the
+   * corresponding kit script when the Language toolbar value changes).
+   */
+  window.__SWC_FONT_KIT_IDS__ = {
+    default: 'obc6cux',
+    en: 'obc6cux',
+    'en-US': 'obc6cux',
+    ar: 'obc6cux',
+    he: 'obc6cux',
+    ja: 'fhs4zuy',
+    ko: 'cbs0ykg',
+    'zh-Hant': 'ueg0fjf',
+    'zh-TW': 'ueg0fjf',
+    zh: 'ueg0fjf',
+    'zh-Hans': 'dck3siu',
+    'zh-CN': 'dck3siu',
+    'zh-HK': 'kje4xva',
+  };
+
+  window.getKitIdForLang = function (lang) {
+    if (!lang) {
+      return window.__SWC_FONT_KIT_IDS__.default;
+    }
+    return (
+      window.__SWC_FONT_KIT_IDS__[lang] || window.__SWC_FONT_KIT_IDS__.default
+    );
+  };
+
+  const script = document.createElement('script');
+  script.src = '//use.typekit.net/obc6cux.js';
+  script.type = 'text/javascript';
+  script.async = 'true';
+  script.onload = script.onreadystatechange = function () {
+    const readyState = this.readyState;
+    if (
+      isLoading ||
+      (readyState && readyState != 'complete' && readyState != 'loaded')
+    )
+      return;
+    isLoading = true;
+
+    try {
+      Typekit.load({
+        kitId: 'obc6cux',
+        async: true,
+        scriptTimeout: 3000,
+        // https://github.com/typekit/webfontloader?tab=readme-ov-file#configuration
+        loading: function () {
+          window.FontsLoading = true;
+        },
+        active: function () {
+          window.FontsLoading = false;
+          window.currentKitId = this.kitId;
+          console.log(`Font loaded [id: ${window.currentKitId}]`);
+
+          // Fire a custom event to indicate the Adobe Fonts have loaded
+          document.dispatchEvent(
+            new CustomEvent('typekit-loaded', {
+              detail: { kitId: this.kitId },
+            })
+          );
+        },
+      });
+    } catch (e) {
+      console.log('Typekit failed to load:', e);
+    }
+  };
+
+  const firstScript = document.getElementsByTagName('script')[0];
+  firstScript.parentNode.insertBefore(script, firstScript);
+</script>
+
 <style>
   /* Force Adobe Clean font on all Storybook elements */
   body,
@@ -221,81 +299,3 @@
     ) !important;
   }
 </style>
-
-<script>
-  window.global = window;
-
-  let isLoading = false;
-  /**
-   * Adobe Fonts kit IDs by locale. Used to load the correct font project when the user changes language in Storybook.
-   * Latin/default is loaded in preview-head; CJK kits are loaded on-demand by the language decorator (which injects the
-   * corresponding kit script when the Language toolbar value changes).
-   */
-  window.__SWC_FONT_KIT_IDS__ = {
-    default: 'obc6cux',
-    en: 'obc6cux',
-    'en-US': 'obc6cux',
-    ar: 'obc6cux',
-    he: 'obc6cux',
-    ja: 'fhs4zuy',
-    ko: 'cbs0ykg',
-    'zh-Hant': 'ueg0fjf',
-    'zh-TW': 'ueg0fjf',
-    zh: 'ueg0fjf',
-    'zh-Hans': 'dck3siu',
-    'zh-CN': 'dck3siu',
-    'zh-HK': 'kje4xva',
-  };
-
-  window.getKitIdForLang = function (lang) {
-    if (!lang) {
-      return window.__SWC_FONT_KIT_IDS__.default;
-    }
-    return (
-      window.__SWC_FONT_KIT_IDS__[lang] || window.__SWC_FONT_KIT_IDS__.default
-    );
-  };
-
-  const script = document.createElement('script');
-  script.src = '//use.typekit.net/obc6cux.js';
-  script.type = 'text/javascript';
-  script.async = 'true';
-  script.onload = script.onreadystatechange = function () {
-    const readyState = this.readyState;
-    if (
-      isLoading ||
-      (readyState && readyState != 'complete' && readyState != 'loaded')
-    )
-      return;
-    isLoading = true;
-
-    try {
-      Typekit.load({
-        kitId: 'obc6cux',
-        async: true,
-        scriptTimeout: 3000,
-        // https://github.com/typekit/webfontloader?tab=readme-ov-file#configuration
-        loading: function () {
-          window.FontsLoading = true;
-        },
-        active: function () {
-          window.FontsLoading = false;
-          window.currentKitId = this.kitId;
-          console.log(`Font loaded [id: ${window.currentKitId}]`);
-
-          // Fire a custom event to indicate the Adobe Fonts have loaded
-          document.dispatchEvent(
-            new CustomEvent('typekit-loaded', {
-              detail: { kitId: this.kitId },
-            })
-          );
-        },
-      });
-    } catch (e) {
-      console.log('Typekit failed to load:', e);
-    }
-  };
-
-  const firstScript = document.getElementsByTagName('script')[0];
-  firstScript.parentNode.insertBefore(script, firstScript);
-</script>
