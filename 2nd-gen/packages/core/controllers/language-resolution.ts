@@ -12,7 +12,11 @@
 
 import type { ReactiveController, ReactiveElement } from 'lit';
 
-// TODO: Update this when theme is migrated to 2nd-gen
+// TODO: Remove this 1st-gen bridge when sp-theme is migrated to 2nd-gen.
+// 1st-gen sp-theme listens for this event and provides language context to
+// any LanguageResolutionController hosted inside it. Since 1st-gen re-exports
+// this controller directly, removing the event would silently break locale
+// resolution for components nested in <sp-theme lang="...">.
 type ProvideLang = {
   callback: (lang: string, unsubscribe: () => void) => void;
 };
@@ -79,9 +83,9 @@ function addLangListener(listener: LangChangeListener): () => void {
  *
  * This controller:
  * - Gets initial language from `<html lang>`, then `navigator.language`, then `'en-US'`
- * - Optionally subscribes to a provider (e.g. 1st-gen `<sp-theme>`) via the
- *   `sp-language-context` event; if something up the tree handles it and calls the
- *   callback, that becomes the source of truth for live updates
+ * - Subscribes to a language provider (e.g. 1st-gen `<sp-theme>`) via the
+ *   `sp-language-context` event; if a provider responds, it becomes the source
+ *   of truth for live language updates
  * - Observes `<html lang>` attribute changes via a shared singleton observer so that
  *   when the document language changes at runtime (e.g. app-level locale switching),
  *   the controller updates and the host re-renders (e.g. aria-valuetext reformats)
@@ -176,7 +180,7 @@ export class LanguageResolutionController implements ReactiveController {
 
   /**
    * Resolves the language: syncs from document, then queries for a provider
-   * (e.g. sp-theme) via 'sp-language-context'. If a provider calls the
+   * (e.g. 1st-gen sp-theme) via 'sp-language-context'. If a provider calls the
    * callback, it becomes the source of truth until disconnected.
    *
    * @private

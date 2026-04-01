@@ -96,10 +96,7 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
         const nextValue = !!this.querySelector(`:scope > ${selector}`);
         const previousValue = this[slotContentIsPresent].get(selector) || false;
         changes = changes || previousValue !== nextValue;
-        this[slotContentIsPresent].set(
-          selector,
-          !!this.querySelector(`:scope > ${selector}`)
-        );
+        this[slotContentIsPresent].set(selector, nextValue);
       });
       if (changes) {
         this.updateComplete.then(() => {
