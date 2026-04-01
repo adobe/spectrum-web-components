@@ -10,22 +10,18 @@
  * governing permissions and limitations under the License.
  */
 
-import {
-  CSSResultArray,
-  html,
-  TemplateResult,
-} from '@spectrum-web-components/base';
+export const ALERT_BANNER_VALID_VARIANTS = [
+  'neutral',
+  'info',
+  'negative',
+] as const satisfies readonly string[];
 
-import { DividerBase } from './Divider.base.js';
-import styles from './divider.css.js';
+export type AlertBannerVariant =
+  | (typeof ALERT_BANNER_VALID_VARIANTS)[number]
+  | '';
 
 /**
- * @element sp-divider
+ * @deprecated Use `AlertBannerVariant` instead.
+ * Kept as `string` for backward compatibility with 1st-gen.
  */
-export class Divider extends DividerBase {
-  public static override styles: CSSResultArray = [styles];
-
-  protected override render(): TemplateResult {
-    return html``;
-  }
-}
+export type AlertBannerVariants = string;
