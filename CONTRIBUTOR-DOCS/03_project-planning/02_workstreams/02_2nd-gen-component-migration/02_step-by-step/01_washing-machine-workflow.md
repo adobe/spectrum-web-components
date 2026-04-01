@@ -536,6 +536,27 @@ Use these when you are not sure how to structure the migration.
 - Is it **only for this component**?  
   → Keep it in the component (base or SWC as appropriate).
 
+#### 1st-gen shared modules not carried forward to 2nd-gen
+
+Some 1st-gen shared modules (`tools/shared/src/`) are intentionally **not** moved to core. When migrating a component that depends on one of these, follow the guidance below instead of importing from 1st-gen:
+
+| Module | Reason not moved | What to do instead |
+|--------|------------------|--------------------|
+| `focus-visible.ts` | Polyfill for `:focus-visible`. All modern browsers support it natively. | Remove usage. No replacement needed. |
+| `like-anchor.ts` | Mixin that adds anchor-like properties (`href`, `target`, `download`, etc.). | Add the necessary properties directly to the component that needs them. One fewer mixin abstraction. |
+| `get-active-element.ts` | Only used by a single component. | Inline the logic in the component that uses it rather than sharing. |
+| `get-deep-element-from-point.ts` | Only used by overlay. | Inline in the overlay component when it is migrated. |
+| `reparent-children.ts` | Only used by overlay. | Inline in the overlay component when it is migrated. |
+
+#### 1st-gen reactive controllers not carried forward to 2nd-gen
+
+| Controller | Reason not moved | What to do instead |
+|------------|------------------|--------------------|
+| `PendingStateController` | Manages pending state UI via a progress circle and ARIA labels. | Inline the pending logic directly in the component that needs it. |
+| `SystemResolutionController` | Resolves Spectrum design system variant (Spectrum, Spectrum 2, Express) from `<sp-theme>`. 2nd-gen does not have the `sp-theme` component nor multiple systems. | Remove usage. |
+
+See also the full migration map in [`2nd-gen/packages/core/MIGRATION.md`](../../../../../2nd-gen/packages/core/MIGRATION.md).
+
 ### How should variants be implemented?
 
 - **Small, fixed set** (e.g. size: S/M/L): Use a **string attribute** and reflect it; use a const array for type and Storybook options.

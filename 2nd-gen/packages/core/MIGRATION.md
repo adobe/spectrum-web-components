@@ -57,9 +57,20 @@ Tracks what moved, where it landed, and any changes made during the move.
 
 ### Controllers
 
-| 1st-gen source | 2nd-gen core                         | Notes |
-| -------------- | ------------------------------------ | ----- |
-| _(various)_    | `controllers/language-resolution.ts` |       |
+| 1st-gen source | 2nd-gen core | Notes |
+|---|---|---|
+| `tools/reactive-controllers/src/ColorController.ts` | `controllers/color-controller.ts` | `ColorController`, `Color`, `ColorTypes` |
+| `tools/reactive-controllers/src/DependencyManger.ts` | `controllers/dependency-manager.ts` | Fixed filename typo: `Manger` → `Manager` |
+| `tools/reactive-controllers/src/ElementResolution.ts` | `controllers/element-resolution.ts` | `ElementResolutionController`, `elementResolverUpdatedSymbol` |
+| `tools/reactive-controllers/src/LanguageResolution.ts` | `controllers/language-resolution.ts` | |
+| `tools/reactive-controllers/src/MatchMedia.ts` | `controllers/match-media.ts` | `MatchMediaController`, `DARK_MODE`, `IS_MOBILE`, `IS_TOUCH_DEVICE` |
+
+#### Not moved
+
+| 1st-gen source | Reason |
+|---|---|
+| `tools/reactive-controllers/src/PendingState.ts` | Has a `progress-circle` component dependency and little value as shared code — prefer inlining where needed. |
+| `tools/reactive-controllers/src/SystemContextResolution.ts` | No longer needed in 2nd-gen — `sp-theme` context resolution is removed. |
 
 ### Element
 
