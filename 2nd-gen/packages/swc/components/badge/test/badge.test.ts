@@ -61,7 +61,7 @@ export const OverviewTest: Story = {
     const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
 
     await step('renders expected default values and slot content', async () => {
-      expect(badge.variant).toBe('informative');
+      expect(badge.variant).toBe('accent');
       expect(badge.size).toBe('s');
       expect(badge.textContent?.trim()).toBeTruthy();
     });
