@@ -31,7 +31,7 @@
   align-items: center;
   min-block-size: var(--swc-badge-height, token("component-height-75"));
   padding-block: calc(var(--swc-badge-padding-block, var(--_swc-badge-padding-block)) - var(--_swc-badge-border-width-deduction));
-  padding-inline-start: calc(var(--swc-badge-padding-inline-start, token("component-edge-to-text-75")) - var(--_swc-badge-border-width));
+  padding-inline-start: calc(var(--swc-badge-padding-inline-start, var(--swc-badge-padding-inline, token("component-edge-to-text-75"))) - var(--_swc-badge-border-width));
   padding-inline-end: calc(var(--swc-badge-padding-inline, token("component-edge-to-text-75")) - var(--_swc-badge-border-width));
   color: var(--swc-badge-label-icon-color, token("white"));
   background: var(--swc-badge-background-color, token("accent-background-color-default"));
