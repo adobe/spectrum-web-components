@@ -13,8 +13,10 @@
 <link rel="preconnect" href="https://use.typekit.net" crossorigin />
 <link rel="dns-prefetch" href="https://use.typekit.net" />
 <script>
-  // Only load the typekit CSS stylesheet outside of Chromatic;
-  // Chromatic loads fonts via the language decorator + Typekit.load() instead
+  // Only load the typekit CSS stylesheet outside of Chromatic.
+  // Loading it as a render-blocking stylesheet causes unexplained flaky
+  // alignment diffs in Chromatic snapshots (e.g. Badge text offset).
+  // Chromatic loads fonts via the language decorator + Typekit.load() instead.
   if (!/Chromatic/.test(navigator.userAgent)) {
     const stylesheet = document.createElement('link');
     stylesheet.rel = 'stylesheet';
