@@ -31,7 +31,6 @@ export class MatchMediaController implements ReactiveController {
     this.media = window.matchMedia(query);
     this.matches = this.media.matches;
     this.onChange = this.onChange.bind(this);
-    host.addController(this);
   }
 
   public hostConnected(): void {

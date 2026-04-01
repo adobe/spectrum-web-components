@@ -463,14 +463,12 @@ export class ColorController {
         }
         case 'hex string': {
           const hadAlpha =
-            this._colorOrigin.length === 9 ||
-            this._colorOrigin.length === 5;
+            this._colorOrigin.length === 9 || this._colorOrigin.length === 5;
           return this._getHexString(true, hadAlpha);
         }
         case 'hex': {
           const hadAlpha =
-            this._colorOrigin.length === 8 ||
-            this._colorOrigin.length === 4;
+            this._colorOrigin.length === 8 || this._colorOrigin.length === 4;
           return this._getHexString(false, hadAlpha);
         }
         //rgb
