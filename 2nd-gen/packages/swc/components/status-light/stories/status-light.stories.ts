@@ -40,20 +40,29 @@ argTypes.variant = {
   ...argTypes.variant,
   control: { type: 'select' },
   options: StatusLight.VARIANTS,
+  table: {
+    category: 'attributes',
+    defaultValue: {
+      summary: 'info',
+    },
+  },
 };
 
 argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
   options: StatusLight.VALID_SIZES,
+  table: {
+    category: 'attributes',
+    defaultValue: {
+      summary: 'm',
+    },
+  },
 };
 
 /**
  * Status lights describe the condition of an entity. Much like [badges](../?path=/docs/components-badge--readme), they can be used to convey semantic meaning, such as statuses and categories.
  */
-args['default-slot'] = 'Status light';
-args.size = 'm';
-
 export const meta: Meta = {
   title: 'Status light',
   component: 'swc-status-light',
@@ -125,8 +134,6 @@ const sizeLabels = {
 export const Playground: Story = {
   tags: ['autodocs', 'dev'],
   args: {
-    size: 'm',
-    variant: 'info',
     'default-slot': 'Active',
   },
 };
@@ -138,8 +145,6 @@ export const Playground: Story = {
 export const Overview: Story = {
   tags: ['overview'],
   args: {
-    size: 'm',
-    variant: 'info',
     'default-slot': 'Active',
   },
 };
@@ -167,9 +172,7 @@ export const Anatomy: Story = {
     })}
   `,
   tags: ['anatomy'],
-  args: {
-    size: 'm',
-  },
+
 };
 
 // ──────────────────────────
@@ -208,6 +211,8 @@ export const Sizes: Story = {
  * - **`positive`**: Approved, complete, success, new, purchased, licensed
  * - **`notice`**: Needs approval, pending, scheduled, syncing, indexing, processing
  * - **`negative`**: Error, alert, rejected, failed
+ * 
+ * Semantic status lights should never be used for color coding categories or labels, and vice versa.
  */
 export const SemanticVariants: Story = {
   render: (args) => html`
