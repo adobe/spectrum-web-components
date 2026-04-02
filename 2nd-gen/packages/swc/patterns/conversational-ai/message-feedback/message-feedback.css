@@ -60,10 +60,10 @@
   inset-inline-start: 50%;
   inline-size: 0;
   block-size: 0;
-  margin-inline-start: calc(var(--swc-tooltip-tip-width, 10px) / -2);
+  margin-inline-start: calc(token("tooltip-tip-width", 10px) / -2);
   border-color: token("neutral-background-color-default") transparent transparent;
   border-style: solid;
-  border-width: var(--swc-tooltip-tip-height, 5px) calc(var(--swc-tooltip-tip-width, 10px) / 2) 0;
+  border-width: token("tooltip-tip-height", 5px) calc(token("tooltip-tip-width", 10px) / 2) 0;
   content: "";
 }
 
