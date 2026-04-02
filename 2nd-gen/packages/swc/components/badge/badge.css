@@ -20,7 +20,7 @@
   box-sizing: border-box;
 }
 
-/* Size `s` is noted as the default in Spectrum design documentation, so be aware there is a discrepancy between the t-shirt API, which supports `m` as the default. */
+/* @todo Size `s` is noted as the default in Spectrum design documentation, so be aware there is a discrepancy between the t-shirt API, which supports `m` as the default. SWC-1847 */
 .swc-Badge {
   --_swc-badge-border-width: token("border-width-200");
   --_swc-badge-border-width-deduction: calc(var(--_swc-badge-border-width) * 2);
