@@ -30,8 +30,8 @@ const THUMB_DOWN_LABEL = 'Poor response';
  * @element swc-message-feedback
  * @fires {CustomEvent} swc-feedback - Dispatched when the user selects a feedback option.
  *
- * When `show-tooltips` is true (default), Spectrum-style labels appear
- * above each control on hover and keyboard focus (see SWC review / MVP Figma message feedback).
+ * When `show-tooltips` is true (default), Spectrum-style labels appear above each control on
+ * `:hover` or when the button matches `:focus-visible` (keyboard-style focus, not click-focus).
  */
 export class MessageFeedback extends SpectrumElement {
   /**
@@ -44,7 +44,7 @@ export class MessageFeedback extends SpectrumElement {
   public selection: 'none' | 'thumb-up' | 'thumb-down' = 'none';
 
   /**
-   * When `true`, shows Tooltip (M)-style labels on hover and `:focus-visible` on each thumb
+   * When `true`, shows Tooltip (M)-style labels on hover and when the thumb has `:focus-visible`
    * (fixed English copy matching design; not attribute-configurable).
    */
   @property({ type: Boolean, reflect: true, attribute: 'show-tooltips' })
