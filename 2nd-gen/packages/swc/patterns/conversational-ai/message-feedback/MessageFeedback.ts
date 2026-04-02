@@ -95,13 +95,14 @@ export class MessageFeedback extends SpectrumElement {
     return html`
       <div
         class="swc-MessageFeedback"
-        role="group"
+        role="radiogroup"
         aria-label="Response feedback"
       >
         <span class="swc-MessageFeedback-anchor">
           <button
             class="swc-MessageFeedback-button"
             ?data-selected=${this.selection === 'thumb-up'}
+            role="radio"
             aria-label=${THUMB_UP_LABEL}
             aria-pressed=${this.selection === 'thumb-up'}
             @click=${this._handleThumbUp}
@@ -119,6 +120,7 @@ export class MessageFeedback extends SpectrumElement {
           <button
             class="swc-MessageFeedback-button"
             ?data-selected=${this.selection === 'thumb-down'}
+            role="radio"
             aria-label=${THUMB_DOWN_LABEL}
             aria-pressed=${this.selection === 'thumb-down'}
             @click=${this._handleThumbDown}
