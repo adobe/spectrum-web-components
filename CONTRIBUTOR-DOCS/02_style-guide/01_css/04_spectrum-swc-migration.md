@@ -156,7 +156,7 @@ Badge clearly distinguishes between **exposed customization** and **internal imp
 
 ```css
 .swc-Badge:where(:has(.swc-Badge-icon):not(.swc-Badge--no-label)) {
-  --swc-badge-padding-inline-start: var(--swc-badge-with-icon-padding-inline, token('component-edge-to-visual-75'));
+  --swc-badge-padding-inline-start: var(--swc-badge-with-icon-padding-inline, token('component-edge-to-visual-100'));
 }
 ```
 
