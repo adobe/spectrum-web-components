@@ -135,11 +135,11 @@ All `--mod-avatar-*` customization properties removed. Consumers must migrate to
 ### Phase 7 — Documentation
 - [x] JSDoc on all public properties in `Avatar.base.ts`
 - [x] Storybook stories: Playground, Overview, Anatomy, Sizes, Decorative, OverBackground, InActionButton, Accessibility
-- [ ] Add migration notes for `--mod-*` removal and API changes
-- [ ] Update migration status doc
+- [x] Add migration notes for `--mod-*` removal and API changes
+- [x] Update migration status doc
 
 ### Phase 8 — Review
-- [ ] Run full lint suite
+- [x] Run full lint suite
 - [ ] QA all story variants visually
 - [ ] At least one engineer review before merging to `main`
 

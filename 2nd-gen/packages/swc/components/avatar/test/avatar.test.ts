@@ -235,17 +235,14 @@ export const LabelShimTest: Story = {
       expect(avatar.label, 'label getter when alt is set').toBe('Jane Doe');
     });
 
-    await step(
-      'label setter updates alt without DEBUG mode warning',
-      async () => {
-        avatar.label = 'John Smith';
-        await avatar.updateComplete;
-        expect(avatar.alt, 'alt after label setter').toBe('John Smith');
-        expect(avatar.label, 'label getter after label setter').toBe(
-          'John Smith'
-        );
-      }
-    );
+    await step('label setter updates alt when DEBUG mode is off', async () => {
+      avatar.label = 'John Smith';
+      await avatar.updateComplete;
+      expect(avatar.alt, 'alt after label setter').toBe('John Smith');
+      expect(avatar.label, 'label getter after label setter').toBe(
+        'John Smith'
+      );
+    });
   },
 };
 

@@ -35,6 +35,10 @@ export abstract class AvatarBase extends SpectrumElement {
    * @internal
    *
    * The set of valid numeric size values for the avatar.
+   *
+   * This is an internal property not intended for consumer use, but used in
+   * internal validation logic, stories, and tests to keep them in sync with
+   * the canonical type definition in `Avatar.types.ts`.
    */
   static readonly VALID_SIZES: readonly AvatarSize[] = AVATAR_VALID_SIZES;
 

@@ -242,8 +242,9 @@ export const InActionButton: Story = {
 /**
  * When placed on a background that shares the same color as the avatar's image
  * border, use `over-background` to render a solid outline that keeps the
- * avatar visually distinct. The outline is 1 px for sizes 50–900 and 2 px for
- * sizes 1000–1500, matching Spectrum 2's breakpoint.
+ * avatar visually distinct. The outline uses `--swc-avatar-border-width`
+ * (currently 1 px) for sizes 50–900 and a hardcoded 2 px for sizes 1000–1500,
+ * matching Spectrum 2's breakpoint.
  */
 export const OverBackground: Story = {
   render: () => html`
