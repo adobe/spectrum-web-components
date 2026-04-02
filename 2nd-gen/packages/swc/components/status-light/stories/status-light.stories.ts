@@ -16,10 +16,12 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { StatusLight } from '@adobe/spectrum-wc/status-light';
 import {
+  STATUSLIGHT_VALID_SIZES,
   STATUSLIGHT_VARIANTS_COLOR_S2,
   STATUSLIGHT_VARIANTS_SEMANTIC_S2,
   StatusLightColorVariantS2,
   StatusLightSemanticVariantS2,
+  type StatusLightSize,
 } from '@spectrum-web-components/core/components/status-light';
 
 import '@adobe/spectrum-wc/status-light';
@@ -109,6 +111,13 @@ const nonSemanticLabels = {
   silver: 'Version 1.2.10',
 } as const satisfies Record<StatusLightColorVariantS2, string>;
 
+const sizeLabels = {
+  s: 'Small',
+  m: 'Medium',
+  l: 'Large',
+  xl: 'Extra-large',
+} as const satisfies Record<StatusLightSize, string>;
+
 // ────────────────────
 //    AUTODOCS STORY
 // ────────────────────
@@ -179,10 +188,13 @@ export const Anatomy: Story = {
  */
 export const Sizes: Story = {
   render: (args) => html`
-    ${template({ ...args, size: 's', 'default-slot': 'Small' })}
-    ${template({ ...args, size: 'm', 'default-slot': 'Medium' })}
-    ${template({ ...args, size: 'l', 'default-slot': 'Large' })}
-    ${template({ ...args, size: 'xl', 'default-slot': 'Extra-large' })}
+    ${STATUSLIGHT_VALID_SIZES.map((size) =>
+      template({
+        ...args,
+        size,
+        'default-slot': sizeLabels[size],
+      })
+    )}
   `,
   parameters: { 'section-order': 1 },
   tags: ['options'],
