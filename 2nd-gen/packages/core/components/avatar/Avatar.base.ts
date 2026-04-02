@@ -98,8 +98,6 @@ export abstract class AvatarBase extends SpectrumElement {
   /**
    * Renders an outline around the avatar image so it remains visible against
    * backgrounds that share the same color as the image border.
-   *
-   * Mirrors React Spectrum S2's `isOverBackground` prop.
    */
   @property({ type: Boolean, reflect: true, attribute: 'over-background' })
   public overBackground = false;
