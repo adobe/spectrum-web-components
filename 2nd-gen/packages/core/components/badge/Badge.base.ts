@@ -119,13 +119,7 @@ export abstract class BadgeBase extends SizedMixin(
     return this.slotContentIsPresent;
   }
 
-  /**
-   * @todo Migrate from update() to updated() for consistency with other
-   * components. The standard pattern is to use updated() for post-render
-   * validation (debug warnings).
-   */
   protected override update(changedProperties: PropertyValues): void {
-    super.update(changedProperties);
     if (window.__swc?.DEBUG) {
       const constructor = this.constructor as typeof BadgeBase;
       if (!constructor.VARIANTS.includes(this.variant)) {
@@ -154,5 +148,6 @@ export abstract class BadgeBase extends SizedMixin(
         );
       }
     }
+    super.update(changedProperties);
   }
 }
