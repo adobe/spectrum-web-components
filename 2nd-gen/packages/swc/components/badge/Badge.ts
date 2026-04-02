@@ -68,7 +68,7 @@ export class Badge extends BadgeBase {
    * @todo - Implement new badge variants (notification, indicator) introduced in S2. Jira ticket: SWC-1831
    */
   @property({ type: String, reflect: true })
-  public override variant: BadgeVariant = 'informative';
+  public override variant: BadgeVariant = 'neutral';
 
   // ───────────────────
   //     API ADDITIONS

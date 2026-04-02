@@ -51,7 +51,7 @@ argTypes.variant = {
   table: {
     category: 'attributes',
     defaultValue: {
-      summary: 'accent',
+      summary: 'neutral',
     },
   },
 };
@@ -75,7 +75,7 @@ argTypes.size = {
   table: {
     category: 'attributes',
     defaultValue: {
-      summary: 's',
+      summary: 'm',
     },
   },
 };
@@ -171,7 +171,7 @@ const allVariantsLabels = { ...semanticLabels, ...nonSemanticLabels };
 const checkmarkIconForSize = (size: string): TemplateResult => {
   const validSize: BadgeSize = BADGE_VALID_SIZES.includes(size as BadgeSize)
     ? (size as BadgeSize)
-    : 's';
+    : 'm';
   return {
     s: Checkmark75Icon,
     m: Checkmark100Icon,
@@ -194,8 +194,6 @@ const fixedLabels = {
 export const Playground: Story = {
   render: (args) => template(args),
   args: {
-    size: 's',
-    variant: 'accent',
     'default-slot': 'Active',
   },
   tags: ['autodocs', 'dev'],
@@ -211,8 +209,6 @@ export const Overview: Story = {
   `,
   tags: ['overview'],
   args: {
-    size: 's',
-    variant: 'accent',
     'default-slot': 'Active',
   },
 };
@@ -259,7 +255,6 @@ export const Anatomy: Story = {
   tags: ['anatomy'],
   args: {
     variant: 'accent',
-    size: 's',
   },
 };
 
@@ -275,7 +270,7 @@ export const Anatomy: Story = {
  * - **Large (`l`)**: Increased emphasis in cards or content areas
  * - **Extra-large (`xl`)**: Maximum visibility for primary status indicators
  *
- * The `s` size is the default and most frequently used option. Use larger sizes sparingly to create a hierarchy of importance on a page.
+ * The `m` size is the default and most frequently used option. Use larger sizes sparingly to create a hierarchy of importance on a page.
  */
 
 // @todo - We should make sure to capture icon-only badges in all sizes for VRTs.
@@ -318,7 +313,6 @@ export const SemanticVariants: Story = {
       template({
         ...args,
         variant,
-        size: 's',
         'default-slot': semanticLabels[variant],
       })
     )}
@@ -345,7 +339,6 @@ export const NonSemanticVariants: Story = {
       template({
         ...args,
         variant,
-        size: 's',
         'default-slot': nonSemanticLabels[variant],
       })
     )}
@@ -368,7 +361,6 @@ export const Outline: Story = {
       template({
         ...args,
         variant,
-        size: 's',
         outline: true,
         'default-slot': semanticLabels[variant],
       })
@@ -393,7 +385,6 @@ export const Subtle: Story = {
       template({
         ...args,
         variant,
-        size: 's',
         subtle: true,
         'default-slot': allVariantsLabels[variant],
       })
@@ -423,7 +414,6 @@ export const Fixed: Story = {
       template({
         ...args,
         fixed,
-        size: 's',
         variant: 'informative',
         'default-slot': fixedLabels[fixed],
       })
@@ -453,9 +443,6 @@ export const TextWrapping: Story = {
     })}
   `,
   tags: ['behaviors'],
-  args: {
-    size: 's',
-  },
 };
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
@@ -571,7 +558,4 @@ export const Accessibility: Story = {
     </swc-badge>
   `,
   tags: ['a11y'],
-  args: {
-    size: 's',
-  },
 };
