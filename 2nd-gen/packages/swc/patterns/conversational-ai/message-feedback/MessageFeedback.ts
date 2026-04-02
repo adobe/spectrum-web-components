@@ -29,6 +29,7 @@ const THUMB_DOWN_LABEL = 'Poor response';
  *
  * @element swc-message-feedback
  * @fires {CustomEvent} swc-feedback - Dispatched when the user selects a feedback option.
+ * @fires {CustomEvent} swc-escape - Dispatched when the user presses Escape while focus is inside this control (after blurring the active element).
  *
  * When `show-tooltips` is true (default), Spectrum-style labels appear above each control on
  * `:hover` or when the button matches `:focus-visible` (keyboard-style focus, not click-focus).
@@ -76,6 +77,27 @@ export class MessageFeedback extends SpectrumElement {
     );
   }
 
+  private _handleKeydown(event: KeyboardEvent): void {
+    if (event.key !== 'Escape') {
+      return;
+    }
+    if (!event.composedPath().includes(this)) {
+      return;
+    }
+
+    const { target } = event;
+    if (target instanceof HTMLElement && typeof target.blur === 'function') {
+      target.blur();
+    }
+
+    this.dispatchEvent(
+      new CustomEvent('swc-escape', {
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
   protected override render(): TemplateResult {
     const tipUp = this.showTooltips
       ? html`
@@ -97,6 +119,7 @@ export class MessageFeedback extends SpectrumElement {
         class="swc-MessageFeedback"
         role="radiogroup"
         aria-label="Response feedback"
+        @keydown=${this._handleKeydown}
       >
         <span class="swc-MessageFeedback-anchor">
           <button
@@ -107,10 +130,7 @@ export class MessageFeedback extends SpectrumElement {
             aria-pressed=${this.selection === 'thumb-up'}
             @click=${this._handleThumbUp}
           >
-            <swc-icon
-              label=${THUMB_UP_LABEL}
-              class="swc-MessageFeedback-icon"
-            >
+            <swc-icon label=${THUMB_UP_LABEL} class="swc-MessageFeedback-icon">
               ${ThumbUpIcon()}
             </swc-icon>
           </button>

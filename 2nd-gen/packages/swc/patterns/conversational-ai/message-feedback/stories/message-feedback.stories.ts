@@ -163,6 +163,7 @@ export const Selection: Story = {
  * - Each button carries a descriptive `aria-label`: "Good response" / "Poor response"
  * - Each button uses `aria-pressed` to communicate the selected state
  * - With `show-tooltips` (default), Spectrum **Tooltip (M)**-style labels appear on hover and keyboard focus; tooltip text is `aria-hidden` because the name is already on the button
+ * - **Escape** blurs the focused thumb and dispatches **`swc-escape`** (`bubbles`, `composed`) for host-level dismiss or focus management
  */
 export const Accessibility: Story = {
   args: {
