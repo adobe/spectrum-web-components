@@ -181,10 +181,10 @@ protected get hasIcon(): boolean {
 }
 
 protected override update(changedProperties: PropertyValues): void {
-  super.update(changedProperties);
   if (window.__swc?.DEBUG) {
-    // ...variant validation...
+    // ...variant validation (before super.update so it runs before render)...
   }
+  super.update(changedProperties);
 }
 ```
 
