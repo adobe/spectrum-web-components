@@ -13,8 +13,8 @@ The core package is private/internal, so we can organize foundational code for d
 ```
 core/
   element/      # SpectrumElement, defineElement, and element infrastructure
-  mixins/       # Reusable mixins (SizedMixin, ObserveSlotPresence, etc.)
-  controllers/  # Reactive controllers (Lit controllers, observers, etc.)
+  mixins/       # Reusable mixins (SizedMixin)
+  controllers/  # Reactive controllers (SlotTextController, SlotPresenceController, etc.)
   utils/        # Utility functions (DOM helpers, label extraction, etc.)
   components/   # Component base classes (already established)
 ```

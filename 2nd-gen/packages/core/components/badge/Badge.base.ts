@@ -12,10 +12,10 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
+import { SlotPresenceController } from '@spectrum-web-components/core/controllers/slot-presence.js';
+import { SlotTextController } from '@spectrum-web-components/core/controllers/slot-text.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
-import { ObserveSlotPresence } from '@spectrum-web-components/core/mixins/observe-slot-presence.js';
-import { ObserveSlotText } from '@spectrum-web-components/core/mixins/observe-slot-text.js';
 
 import {
   BADGE_VARIANTS_SEMANTIC,
@@ -32,15 +32,10 @@ import {
  *
  * @slot - Text label of the badge.
  * @slot icon - Optional icon that appears to the left of the label
- *
- * @todo review the mixin composition here. We currently have 3 levels of mixins on this class, but the mixin composition guide recommends a maximum of 2.
  */
-export abstract class BadgeBase extends SizedMixin(
-  ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), ''),
-  {
-    noDefaultSize: true,
-  }
-) {
+export abstract class BadgeBase extends SizedMixin(SpectrumElement, {
+  noDefaultSize: true,
+}) {
   // ─────────────────────────
   //     API TO OVERRIDE
   // ─────────────────────────
@@ -129,6 +124,24 @@ export abstract class BadgeBase extends SizedMixin(
   private _fixed?: FixedValues;
 
   // ──────────────────────
+  //     CONTROLLERS
+  // ──────────────────────
+
+  /**
+   * Observes whether an icon is slotted into `[slot="icon"]`.
+   *
+   * @internal
+   */
+  protected slotPresence = new SlotPresenceController(this, '[slot="icon"]');
+
+  /**
+   * Observes whether the default slot has text content.
+   *
+   * @internal
+   */
+  protected slotText = new SlotTextController(this);
+
+  // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
 
@@ -138,7 +151,16 @@ export abstract class BadgeBase extends SizedMixin(
    * @internal
    */
   protected get hasIcon(): boolean {
-    return this.slotContentIsPresent;
+    return this.slotPresence.isPresent;
+  }
+
+  /**
+   * Whether the default slot has meaningful text content.
+   *
+   * @internal
+   */
+  protected get slotHasContent(): boolean {
+    return this.slotText.hasContent;
   }
 
   /**
