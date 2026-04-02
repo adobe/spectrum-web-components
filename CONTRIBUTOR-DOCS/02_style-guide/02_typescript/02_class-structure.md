@@ -32,7 +32,7 @@ This guide explains how to organize a component class in 2nd-gen. Every componen
 
 ## Overview
 
-The base class holds shared logic. The concrete class holds styles, rendering, and anything specific to 2nd-gen (S2). Code is split this way so 1st-gen and 2nd-gen can share the same behavior without duplicating it.
+The base class holds behavior and API. The concrete class holds styles, rendering, and anything specific to the visual layer. This separation keeps logic testable and reusable independently of rendering.
 
 > **Reference implementation:** [Badge.base.ts](../../../2nd-gen/packages/core/components/badge/Badge.base.ts) (base) and [Badge.ts](../../../2nd-gen/packages/swc/components/badge/Badge.ts) (concrete).
 
@@ -57,7 +57,7 @@ IMPLEMENTATION     → Lifecycle methods, validation, and internal logic
 
 ### Section: API TO OVERRIDE
 
-This section holds properties and static members that each concrete class **must** override. These differ between 1st-gen and 2nd-gen, so the base class declares them but does not set their final values.
+This section holds properties and static members that each concrete class **must** override. The base class declares them but does not set their final values — concrete classes provide the actual values.
 
 **What goes here:**
 

@@ -200,7 +200,7 @@ The core package also lives at `2nd-gen/packages/core/components/<name>/` and th
 
 ## Where types files live
 
-Types files always live in the **core** package, not in swc. This is because types are shared between 1st-gen and 2nd-gen.
+Types files always live in the **core** package, not in swc. This keeps the behavior layer (core) and the rendering layer (swc) cleanly separated.
 
 ```text
 2nd-gen/packages/core/components/badge/Badge.types.ts     ✅ Correct

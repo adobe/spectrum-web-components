@@ -146,7 +146,7 @@ PROGRESSCIRCLE_VALID_SIZES
 ACTIONBUTTON_VARIANTS
 ```
 
-If existing code uses merged prefixes, rename to the underscore-separated form and provide deprecated re-exports for backward compatibility (see [Component types](08_component-types.md#constant-prefixes)).
+If existing code uses merged prefixes, rename to the underscore-separated form (see [Component types](08_component-types.md#constant-prefixes)).
 
 ## CSS class names
 
@@ -159,7 +159,7 @@ CSS classes use the `swc-` prefix with PascalCase component name and optional BE
 | Variant modifier | `swc-Badge--positive`, `swc-Badge--subtle` |
 | Element (rare) | `swc-Badge-icon`, `swc-Badge-label` |
 
-**Never use the `spectrum-` prefix** — this is reserved for 1st-gen compatibility:
+**Never use the `spectrum-` prefix** — this is a 1st-gen convention:
 
 ```css
 /* ✅ Good */
