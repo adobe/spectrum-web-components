@@ -58,10 +58,11 @@ CSS custom properties *normally* can't actually be "private". However, due to sh
 ```css
 .swc-Badge {
   --_swc-badge-border-width: token("border-width-200");
-  --_swc-badge-border-width-deduction: calc(var(--_swc-badge-border-width) * 2);
-  --_swc-badge-padding-block: token("component-padding-vertical-75");
+  --_swc-badge-padding-inline-start: var(--swc-badge-padding-inline-start, var(--swc-badge-padding-inline, token("component-edge-to-text-100")));
+  --_swc-badge-padding-block: var(--swc-badge-padding-block, token("component-padding-vertical-100"));
 
-  padding-block: calc(var(--swc-badge-padding-block, var(--_swc-badge-padding-block)) - var(--_swc-badge-border-width-deduction));
+  padding-inline-start: calc(var(--_swc-badge-padding-inline-start) - var(--_swc-badge-border-width));
+  padding-block: calc(var(--_swc-badge-padding-block) - var(--_swc-badge-border-width));
   background: var(--swc-badge-background-color, token("accent-background-color-default"));
 }
 ```

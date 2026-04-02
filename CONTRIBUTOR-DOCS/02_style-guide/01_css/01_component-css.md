@@ -120,15 +120,15 @@ For the full list and annotated examples, see the [property order quick referenc
 ```css
 .swc-Badge {
   display: inline-flex;
-  gap: var(--swc-badge-gap, token("text-to-visual-75"));
+  gap: var(--swc-badge-gap, token("text-to-visual-100"));
   align-items: center;
-  min-block-size: var(--swc-badge-height, token("component-height-75"));
+  min-block-size: var(--swc-badge-height, token("component-height-100"));
   padding-block: calc(/* ... */);
   padding-inline: calc(/* ... */);
   color: var(--swc-badge-label-icon-color, token("white"));
   background: var(--swc-badge-background-color, token("accent-background-color-default"));
   border: var(--_swc-badge-border-width) solid var(--swc-badge-border-color, transparent);
-  border-radius: var(--swc-badge-corner-radius, token("corner-radius-medium-size-small"));
+  border-radius: var(--swc-badge-corner-radius, token("corner-radius-medium-size-medium"));
   cursor: default;
 }
 ```
