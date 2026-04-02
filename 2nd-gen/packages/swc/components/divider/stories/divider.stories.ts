@@ -28,6 +28,12 @@ argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
   options: Divider.VALID_SIZES,
+  table: {
+    category: 'attributes',
+    defaultValue: {
+      summary: 'm',
+    },
+  },
 };
 
 argTypes['static-color'] = {
