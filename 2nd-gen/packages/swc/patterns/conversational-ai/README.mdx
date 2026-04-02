@@ -11,7 +11,7 @@ A complete set of building blocks for composing AI chat interfaces in 2nd-gen Sp
 
 ## Full example
 
-<Canvas of={ConversationTurnStories.FullPattern} />
+<Canvas of={ConversationTurnStories.FullPattern} sourceState="none" />
 
 ---
 
@@ -22,7 +22,7 @@ A complete set of building blocks for composing AI chat interfaces in 2nd-gen Sp
 | `swc-prompt-field`                | Text input surface for entering or refining a prompt                                                         |
 | `swc-conversation-artifact-card`  | Horizontal file-style attachment row (optional building block)                                               |
 | `swc-conversation-artifact-media` | Media-first attachment; preview-only tile when title/subtitle omitted                                        |
-| `swc-conversation-turn`           | Column alignment for one user or assistant turn                                                              |
+| `swc-conversation-turn`           | Column alignment for one participant turn; stack consecutive messages in one turn for grouped spacing        |
 | `swc-user-message`                | User message bubble (copy, card, or media content)                                                           |
 | `swc-assistant-message`           | Assistant reply stack; **`message`** slot guidance is after the API table on the Assistant message docs page |
 | `swc-response-status`             | Loading / generation-complete status indicator                                                               |
