@@ -254,7 +254,7 @@ export const Anatomy: Story = {
   },
   tags: ['anatomy'],
   args: {
-    variant: 'accent',
+    variant: 'informative',
   },
 };
 
@@ -290,7 +290,7 @@ export const Sizes: Story = {
   parameters: { 'section-order': 1 },
   tags: ['options'],
   args: {
-    variant: 'accent',
+    variant: 'informative',
   },
 };
 
