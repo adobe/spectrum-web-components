@@ -89,7 +89,6 @@ Use **PascalCase** matching the component class name. No `I` prefix for interfac
 | Component size | `BadgeSize`, `ProgressCircleSize` |
 | Static color | `ProgressCircleStaticColor`, `DividerStaticColor` |
 | Semantic variant | `BadgeSemanticVariant` |
-| S1-only type | `BadgeVariantS1`, `BadgeColorVariantS1` |
 
 See [Component types](08_component-types.md#type-names) for detailed naming and suffixing rules.
 
@@ -112,7 +111,6 @@ Use **UPPER_SNAKE_CASE** with an underscore-separated component prefix.
 |----------|---------|
 | Valid sizes | `BADGE_VALID_SIZES`, `PROGRESS_CIRCLE_VALID_SIZES` |
 | Variant arrays | `BADGE_VARIANTS_SEMANTIC`, `BADGE_VARIANTS_COLOR` |
-| S1-only arrays | `BADGE_VARIANTS_COLOR_S1` |
 | Non-variant constants | `FIXED_VALUES`, `DIVIDER_STATIC_COLORS` |
 
 Multi-word component names use underscores: `STATUS_LIGHT_`, not `STATUSLIGHT_`.

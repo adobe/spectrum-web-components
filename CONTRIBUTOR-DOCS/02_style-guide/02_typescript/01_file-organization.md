@@ -178,7 +178,7 @@ Each component has files in two packages: **core** and **swc**.
 
 | Package | File | Purpose |
 |---------|------|---------|
-| core | `Component.base.ts` | Abstract base class with shared behavior |
+| core | `Component.base.ts` | Abstract base class with behavior and API |
 | core | `Component.types.ts` | Constant arrays and TypeScript types |
 | core | `index.ts` | Re-exports base class and types |
 | swc | `Component.ts` | Concrete class with styles and rendering |

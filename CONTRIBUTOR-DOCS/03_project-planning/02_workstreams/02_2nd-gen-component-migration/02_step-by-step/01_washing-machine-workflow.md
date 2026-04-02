@@ -108,7 +108,7 @@ Keep **spectrum-web-components** (this repo) and **[spectrum-css](https://github
 
 Use this doc for **what order** to do things and **what to check**; use the linked docs for **how to do** each phase.
 
-- **Workstream:** [2nd-gen Component Migration](../README.md) — README, status table, and **7 step-by-step docs** that describe the refactor-first path (factor 1st-gen, move base to core, then add 2nd-gen).
+- **Workstream:** [2nd-gen Component Migration](../README.md) — README, status table, and **7 step-by-step docs** that describe the migration path (study 1st-gen, create base in core, build 2nd-gen).
 - **Status table:** [01_status.md](../01_status.md) — use it to see which components have completed which steps and to **update progress** when you finish a migration.
 - **Jira / Epics:** [Migration project planning — Epics and tickets](../03_migration-project-planning.md) — epic templates, phase-aligned tickets, tracking.
 
@@ -117,7 +117,7 @@ Use this doc for **what order** to do things and **what to check**; use the link
 | Washing machine phase | Step-by-step doc(s) |
 |----------------------|---------------------------|
 | **1. Preparation** | Uses output of **Step 1: Analyze rendering and styling** (read the component analysis). Plan breaking changes and scope. |
-| **2. Setup** | **Steps 2–3** — factor rendering out of 1st-gen, move base to core — then create 2nd-gen core/SWC layout per Phase 2. |
+| **2. Setup** | **Steps 2–3** — study 1st-gen structure, create base class in core — then create 2nd-gen core/SWC layout per Phase 2. |
 | **3. API migration** | **Step 4: Formalize Spectrum data model** + **Step 5: Add 2nd-gen SWC** (API overrides/additions). |
 | **4. Styling** | **Step 6: Migrate rendering & styles from Spectrum CSS**. |
 | **5. Accessibility** | (No dedicated step — this guide adds it.) |
@@ -263,7 +263,7 @@ See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_mo
 
 ## Phase 3: API migration
 
-**Goal:** Move properties, methods, and types from 1st-gen to 2nd-gen; keep a clear public API.
+**Goal:** Define properties, methods, and types in 2nd-gen (using 1st-gen as reference); keep a clear public API.
 
 ### What to do
 

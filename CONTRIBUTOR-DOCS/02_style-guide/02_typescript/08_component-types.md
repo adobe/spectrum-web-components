@@ -93,24 +93,16 @@ Use the component name in `PascalCase` matching the class name:
 | Status Light | `StatusLight` | `StatusLightVariant` |
 | Progress Circle | `ProgressCircle` | `ProgressCircleStaticColor` |
 
-### S1-only suffixing rule
+### Naming rule
 
-**Unsuffixed names are the canonical (S2) values.** Only S1-specific values get a suffix.
+**Names in core types files are the canonical S2 values.** No `_S1` or `_S2` suffixes are needed.
 
 | Scope | Name example | When to use |
 | ----- | ------------ | ----------- |
-| Canonical (S2) | `BADGE_VARIANTS_COLOR` | Values supported in 2nd-gen |
-| Canonical (S2) | `BadgeVariant` | Type for 2nd-gen consumers |
-| S1-only | `BADGE_VARIANTS_COLOR_S1` | Subset of values for 1st-gen |
-| S1-only | `BadgeVariantS1` | Type for 1st-gen consumers |
+| Canonical | `BADGE_VARIANTS_COLOR` | Values supported in 2nd-gen |
+| Canonical | `BadgeVariant` | Type for 2nd-gen consumers |
 
-This means:
-
-- 2nd-gen SWC classes import clean, unsuffixed names — no aliasing needed
-- 1st-gen classes import `_S1`-suffixed names and narrow types explicitly
-- When S1 is removed, no renames or breaking changes affect 2nd-gen consumers
-
-> **Never suffix with `_S2`.** If a constant or type has `_S2` in its name, it should be renamed to the unsuffixed version.
+> **Note:** S1-only constants and types (`_S1` suffix) are no longer needed in core. If you encounter them in existing files, they can be removed. 1st-gen manages its own values independently.
 
 ## File structure
 
@@ -158,9 +150,8 @@ Constants use `as const` to preserve literal types. When a shared constraint typ
 | ------- | ------- | ----------- |
 | `as const` | Preserves literal types for type derivation | All constant arrays |
 | `as const satisfies readonly T[]` | Adds compile-time validation against a shared type | When a constraint type exists (sizes, static colors) |
-| `as const satisfies readonly CanonicalType[]` | Validates S1 values are a subset of the canonical set | S1 subset arrays where the canonical type is defined in SHARED |
 
-> **When to introduce `satisfies` for a new category:** If a shared constraint type is added to core (e.g., a `StaticColor` type for `'white' | 'black'`), update the guidance here and add `satisfies` to the corresponding constant pattern. The rule is: `satisfies` is warranted when a cross-component type already exists to validate against. For S1 subset arrays, `satisfies` against the canonical type is warranted because the canonical base array is always defined in SHARED before the S1-ONLY section.
+> **When to introduce `satisfies` for a new category:** If a shared constraint type is added to core (e.g., a `StaticColor` type for `'white' | 'black'`), update the guidance here and add `satisfies` to the corresponding constant pattern. The rule is: `satisfies` is warranted when a cross-component type already exists to validate against.
 
 ### Sizes
 
@@ -183,12 +174,12 @@ Do not add an explicit type annotation (e.g., `: ElementSize[]`) — it widens t
 
 ### Variants with S1/S2 split
 
-When S1 and S2 support different variant sets, define the canonical base arrays in the SHARED section, then compose each generation from them. S1 subset arrays go in the S1-ONLY section and validate against the canonical type:
+When a component has multiple groups of variants (e.g., semantic vs color), define base arrays separately and compose them into a canonical array:
 
 ```typescript
 // ── SHARED ──
 
-// Semantic variants shared across both generations
+// Semantic variants
 export const BADGE_VARIANTS_SEMANTIC = [
     'accent',
     'informative',

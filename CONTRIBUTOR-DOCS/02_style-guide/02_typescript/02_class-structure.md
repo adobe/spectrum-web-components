@@ -40,7 +40,7 @@ The base class holds behavior and API. The concrete class holds styles, renderin
 
 | Class | Package | Location | Purpose |
 |-------|---------|----------|---------|
-| Base (abstract) | core | `core/components/<name>/Component.base.ts` | Shared behavior, validation, and API |
+| Base (abstract) | core | `core/components/<name>/Component.base.ts` | Behavior, validation, and API |
 | Concrete | swc | `swc/components/<name>/Component.ts` | Styles, rendering, and 2nd-gen API |
 
 The base class is `abstract`. You cannot create an instance of it directly. The concrete class extends the base and provides everything needed to render the component.
@@ -51,7 +51,7 @@ The base class is organized into up to three sections:
 
 ```text
 API TO OVERRIDE    → Properties and statics that subclasses must set
-SHARED API         → Properties and constants shared across all generations
+SHARED API         → Properties and constants used by all concrete classes
 IMPLEMENTATION     → Lifecycle methods, validation, and internal logic
 ```
 
