@@ -109,7 +109,7 @@ export class MessageFeedback extends SpectrumElement {
           >
             <swc-icon
               label=${THUMB_UP_LABEL}
-              style="--swc-icon-inline-size:16px;--swc-icon-block-size:16px;"
+              class="swc-MessageFeedback-icon"
             >
               ${ThumbUpIcon()}
             </swc-icon>
@@ -127,7 +127,7 @@ export class MessageFeedback extends SpectrumElement {
           >
             <swc-icon
               label=${THUMB_DOWN_LABEL}
-              style="--swc-icon-inline-size:16px;--swc-icon-block-size:16px;"
+              class="swc-MessageFeedback-icon"
             >
               ${ThumbDownIcon()}
             </swc-icon>

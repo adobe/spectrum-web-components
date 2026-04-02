@@ -159,10 +159,10 @@ export const Selection: Story = {
  *
  * #### Toggle buttons
  *
- * - The button group uses `role="group"` with `aria-label="Response feedback"`
+ * - The button group uses `role="radiogroup"` with `aria-label="Response feedback"`
  * - Each button carries a descriptive `aria-label`: "Good response" / "Poor response"
  * - Each button uses `aria-pressed` to communicate the selected state
- * - With `show-tooltips` (default), Spectrum **Tooltip (M)**-style labels appear on hover and keyboard focus; tooltip text is `aria-hidden` because the name is already on the button ([SWC review Figma|https://www.figma.com/design/4jxyxyrOgYhmUiOZClcDDt/SWC-review?node-id=9-1801])
+ * - With `show-tooltips` (default), Spectrum **Tooltip (M)**-style labels appear on hover and keyboard focus; tooltip text is `aria-hidden` because the name is already on the button
  */
 export const Accessibility: Story = {
   args: {

@@ -90,6 +90,11 @@
     color 130ms ease;
 }
 
+.swc-MessageFeedback-icon {
+  --swc-icon-inline-size: 16px;
+  --swc-icon-block-size: 16px;
+}
+
 .swc-MessageFeedback-button:hover {
   color: token("gray-800");
   background: token("gray-100");
