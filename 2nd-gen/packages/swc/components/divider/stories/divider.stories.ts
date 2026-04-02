@@ -90,9 +90,9 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   render: (args) => html`
-    <h3>Content above the divider</h3>
+    <h3>Account settings</h3>
     ${template({ ...args, size: 'm' })}
-    <p>Content below the divider</p>
+    <p>Update your personal details, password, and preferences.</p>
   `,
   parameters: {
     flexLayout: 'column-stretch',
@@ -111,9 +111,9 @@ export const Overview: Story = {
  */
 export const Anatomy: Story = {
   render: (args) => html`
-    <h4>Content above the divider</h4>
+    <h4>Account settings</h4>
     ${template({ ...args, size: 'm' })}
-    <p>Content below the divider</p>
+    <p>Update your personal details, password, and preferences.</p>
   `,
   tags: ['anatomy'],
   parameters: {
