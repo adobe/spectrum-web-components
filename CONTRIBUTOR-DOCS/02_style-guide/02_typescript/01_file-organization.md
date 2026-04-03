@@ -178,7 +178,7 @@ Each component has files in two packages: **core** and **swc**.
 
 | Package | File | Purpose |
 |---------|------|---------|
-| core | `Component.base.ts` | Abstract base class with shared behavior |
+| core | `Component.base.ts` | Abstract base class with behavior and API |
 | core | `Component.types.ts` | Constant arrays and TypeScript types |
 | core | `index.ts` | Re-exports base class and types |
 | swc | `Component.ts` | Concrete class with styles and rendering |
@@ -200,7 +200,7 @@ The core package also lives at `2nd-gen/packages/core/components/<name>/` and th
 
 ## Where types files live
 
-Types files always live in the **core** package, not in swc. This is because types are shared between 1st-gen and 2nd-gen.
+Types files always live in the **core** package, not in swc. This keeps the behavior layer (core) and the rendering layer (swc) cleanly separated.
 
 ```text
 2nd-gen/packages/core/components/badge/Badge.types.ts     ✅ Correct
