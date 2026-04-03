@@ -71,8 +71,6 @@ The docs are organized into sections to help you find the information you need:
 
 **[Accessibility testing](./01_contributor-guides/09_accessibility-testing.md)** - Automated accessibility testing, snapshots, and manual testing expectations for pull requests.
 
-**[Accessibility guides](./04_accessibility_guides/README.md)** - Deeper topics such as [semantic HTML, ARIA, and cross-root accessibility](./04_accessibility_guides/01_semantic_html_aria.md) for component authors and consumers.
-
 **[Project Planning](./03_project-planning/README.md)** - Strategic planning documentation including objectives, workstreams, component roadmaps, and milestones. This section contains:
 
 - **[Objectives and Strategy](./03_project-planning/01_objectives-and-strategy.md)** - Strategic context for the 1st-gen-to-2nd-gen transition, including our goals and approach.

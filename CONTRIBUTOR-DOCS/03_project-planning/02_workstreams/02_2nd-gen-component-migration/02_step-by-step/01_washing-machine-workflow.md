@@ -125,7 +125,7 @@ Use this doc for **what order** to do things and **what to check**; use the link
 | **7. Documentation** | **Step 7: Add stories for 2nd-gen component** + JSDoc and usage docs. |
 | **8. Review** | (No dedicated step — this guide adds checklist and PR.) |
 
-Follow [Refactor path (1st-gen required)](#refactor-path-1st-gen-required) and the linked step-by-step docs for Steps 2–3. If those steps are **already** done, start **Phase 2** at SWC package setup and the Phase 2 “What to do” list.
+Follow [Starting from 1st-gen (reference, not dependency)](#starting-from-1st-gen-reference-not-dependency) and the linked step-by-step docs for Steps 2–3. If those steps are **already** done, start **Phase 2** at SWC package setup and the Phase 2 “What to do” list.
 
 ---
 
