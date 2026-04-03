@@ -95,7 +95,7 @@ The following controllers exist in 1st-gen and may be ported to 2nd-gen core:
 
 **Events:** Dispatches `swc-focusgroup-navigation-active-change` when the active item changes.
 
-**Docs:** See `core/controllers/focus-group-navigation-controller.md` and Storybook **Controllers / Focus group navigation controller**.
+**Docs:** See `core/controllers/focus-group-navigation-controller.md` and Storybook **Core / Focus group navigation controller**.
 
 ## LanguageResolutionController
 
