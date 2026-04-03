@@ -145,7 +145,10 @@ export type FocusgroupNavigationActiveChangeDetail = {
  * - Optional **`skipDisabled`**: omit **`disabled`** and **`aria-disabled="true"`** items from
  *   roving tabindex and arrow navigation.
  * - Supports optional last-focused memory when re-entering via Tab.
- * - Exposes {@link FocusgroupNavigationController.focusItem} for programmatic focus.
+ * - Exposes {@link FocusgroupNavigationController.focusItem} for programmatic focus and
+ *   {@link FocusgroupNavigationController.focusFirstItemByTextPrefix} for typeahead-style roving
+ *   `tabindex` (call {@link FocusgroupNavigationController.getActiveItem} and `focus()` yourself
+ *   when you want keyboard focus to move).
  *
  * Dispatches a bubbling, composed `CustomEvent` named
  * {@link focusgroupNavigationActiveChange} when the active item changes.
@@ -202,8 +205,10 @@ export type FocusgroupNavigationActiveChangeDetail = {
 // geometry-based **grid** navigation; **pageStep** (Page Up/Down magnitude); **skipDisabled** and
 // `isDisabledForSkip`; `isNodeWithinHostScope` / `getRawItems` if declarative scoping differs in
 // shadow DOM; `dispatchActiveChange`, `onActiveItemChange`, and the exported event name if
-// products still want a single composed integration hook. `isRtl()` may duplicate or diverge
-// from native axis mapping — revisit when testing RTL with native focusgroup.
+// products still want a single composed integration hook; `focusFirstItemByTextPrefix` for
+// typeahead roving tabindex (callers focus `getActiveItem()` unless the platform adds an equivalent).
+// `isRtl()` may
+// duplicate or diverge from native axis mapping — revisit when testing RTL with native focusgroup.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export class FocusgroupNavigationController implements ReactiveController {
@@ -266,13 +271,13 @@ export class FocusgroupNavigationController implements ReactiveController {
   }
 
   /**
-   * Returns the managed item that currently participates in the sequential focus order
-   * (`tabindex="0"`), or null if none of the items from `getItems` have tab index zero.
+   * Returns the eligible managed item that currently participates in the sequential focus order
+   * (`tabindex="0"`), or null if no eligible item has tab index zero.
    *
    * @returns The active roving item, or null.
    */
   public getActiveItem(): HTMLElement | null {
-    for (const el of this.options.getItems()) {
+    for (const el of this.getEligibleItems()) {
       if (el.tabIndex === 0) {
         return el;
       }
@@ -330,6 +335,42 @@ export class FocusgroupNavigationController implements ReactiveController {
     if (this.options.memory) {
       this.lastFocused = item;
     }
+    return true;
+  }
+
+  /**
+   * Updates roving `tabindex` so the first **eligible** item (same set as arrow navigation)
+   * whose typeahead label starts with `prefix` becomes the active tab stop (`tabindex="0"`).
+   * Matching is **case-insensitive**. The label is the first non-empty of: trimmed
+   * **`aria-label`**, trimmed text from **`aria-labelledby`** references (in order, space-joined),
+   * or trimmed **`textContent`**. Search order matches arrow-key traversal.
+   *
+   * Does **not** call `focus()`. After this returns `true`, call `focus()` on
+   * {@link FocusgroupNavigationController.getActiveItem} (for example `getActiveItem()?.focus()`),
+   * often from a **microtask** when the caller runs from a pointer handler so focus is not
+   * overwritten by the clicked control.
+   *
+   * Typical use: menu typeahead; wire `keydown` or `input` at the host and debounce as needed.
+   *
+   * @param prefix - String to match as a leading substring after `trim`; whitespace-only yields
+   *   no match and returns `false`.
+   * @returns True if a matching item was found and roving tabindex was applied.
+   */
+  public focusFirstItemByTextPrefix(prefix: string): boolean {
+    const trimmed = prefix.trim();
+    if (trimmed === '') {
+      return false;
+    }
+    const needle = trimmed.toLowerCase();
+    const items = this.getEligibleItems();
+    const match = items.find((el) => {
+      const label = this.getItemTypeaheadLabel(el).toLowerCase();
+      return label.startsWith(needle);
+    });
+    if (!match) {
+      return false;
+    }
+    this.applyRovingTabindex(match);
     return true;
   }
 
@@ -471,6 +512,41 @@ export class FocusgroupNavigationController implements ReactiveController {
       return true;
     }
     return el.getAttribute('aria-disabled') === 'true';
+  }
+
+  /**
+   * String used for {@link focusFirstItemByTextPrefix}: prefers **`aria-label`**, then text from
+   * **`aria-labelledby`** (IDs resolved in the shadow root or document), else **`textContent`**.
+   * All branches are trimmed; empty strings fall through to the next source.
+   */
+  private getItemTypeaheadLabel(el: HTMLElement): string {
+    const fromAria = el.getAttribute('aria-label')?.trim();
+    if (fromAria) {
+      return fromAria;
+    }
+    const labelledBy = el.getAttribute('aria-labelledby')?.trim();
+    if (labelledBy) {
+      const root = el.getRootNode();
+      const chunks: string[] = [];
+      for (const id of labelledBy.split(/\s+/)) {
+        if (!id) {
+          continue;
+        }
+        const ref =
+          root instanceof ShadowRoot
+            ? root.getElementById(id) ?? el.ownerDocument.getElementById(id)
+            : el.ownerDocument.getElementById(id);
+        const t = ref?.textContent?.trim();
+        if (t) {
+          chunks.push(t);
+        }
+      }
+      const joined = chunks.join(' ').trim();
+      if (joined) {
+        return joined;
+      }
+    }
+    return el.textContent?.trim() ?? '';
   }
 
   /**

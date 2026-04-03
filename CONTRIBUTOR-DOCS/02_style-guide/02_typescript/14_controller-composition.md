@@ -92,7 +92,7 @@ The following controllers exist in 1st-gen and may be ported to 2nd-gen core:
 3. Optional **`skipDisabled`**: omit native **`disabled`** and **`aria-disabled="true"`** items from roving tabindex and arrow navigation (story **Skip disabled menu**).
 4. Optionally wraps at ends and remembers the last focused item for Tab re-entry (similar to Open UI `focusgroup` semantics).
 
-**Public API:** `setOptions`, `getActiveItem`, `refresh`, `focusItem`, plus `hostConnected` / `hostDisconnected` via `ReactiveController`.
+**Public API:** `setOptions`, `getActiveItem`, `refresh`, `focusItem`, `focusFirstItemByTextPrefix` (sets roving `tabindex` to the first typeahead label match only — call `getActiveItem()?.focus()` to move focus), plus `hostConnected` / `hostDisconnected` via `ReactiveController`.
 
 **Events:** Dispatches `swc-focusgroup-navigation-active-change` when the active item changes.
 

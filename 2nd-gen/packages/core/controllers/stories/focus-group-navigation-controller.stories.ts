@@ -541,6 +541,170 @@ export class DemoFocusgroupProgrammatic extends LitElement {
   }
 }
 
+/**
+ * @internal
+ *
+ * Storybook-only host demonstrating {@link FocusgroupNavigationController.focusFirstItemByTextPrefix}.
+ */
+@customElement('demo-focusgroup-text-prefix')
+export class DemoFocusgroupTextPrefix extends LitElement {
+  /**
+   * Shadow DOM styles for the vertical menu and demo triggers outside the roving group.
+   */
+  static override styles = css`
+    :host {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+      max-width: 18rem;
+    }
+    .menu {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 4px;
+      width: 100%;
+      padding: 8px;
+      border: 1px solid var(--spectrum-gray-300, #ddd);
+      border-radius: 4px;
+      background: var(--spectrum-gray-50, #fff);
+    }
+    .menu button {
+      font: inherit;
+      text-align: start;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      background: transparent;
+      cursor: pointer;
+    }
+    .menu button:hover {
+      background: var(--spectrum-gray-200, #e8e8e8);
+    }
+    .menu button:focus-visible {
+      outline: 2px solid var(--spectrum-blue-800, #0265dc);
+      outline-offset: 0;
+    }
+    .menu button.typeahead-icon {
+      font-size: 1.125rem;
+      line-height: 1.2;
+    }
+    .triggers {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .demo-trigger {
+      font: inherit;
+      padding: 8px 12px;
+      border-radius: 4px;
+      border: 1px solid var(--spectrum-gray-400, #ccc);
+      background: var(--spectrum-gray-75, #f5f5f5);
+      cursor: pointer;
+    }
+    .demo-trigger:focus-visible {
+      outline: 2px solid var(--spectrum-blue-800, #0265dc);
+      outline-offset: 2px;
+    }
+  `;
+
+  /**
+   * Controller instance: only `.menu button` elements participate (triggers are outside).
+   */
+  private readonly navigation = new FocusgroupNavigationController(this, {
+    direction: 'vertical',
+    wrap: true,
+    getItems: () =>
+      Array.from(this.renderRoot.querySelectorAll<HTMLElement>('.menu button')),
+  });
+
+  /**
+   * Runs after first render so menu buttons exist before {@link FocusgroupNavigationController.refresh}.
+   */
+  protected override firstUpdated(): void {
+    super.firstUpdated();
+    this.navigation.refresh();
+  }
+
+  /**
+   * Applies roving tabindex via {@link FocusgroupNavigationController.focusFirstItemByTextPrefix},
+   * then focuses the active item (for Storybook tests; production code can call those separately).
+   *
+   * @param prefix - Prefix to match against each item’s typeahead label.
+   * @returns Whether a matching item was found and focused.
+   */
+  public focusByTextPrefix(prefix: string): boolean {
+    if (!this.navigation.focusFirstItemByTextPrefix(prefix)) {
+      return false;
+    }
+    this.navigation.getActiveItem()?.focus();
+    return true;
+  }
+
+  /**
+   * Demo: roving tabindex for **Paste** via prefix `Pas`, then move focus after the click target
+   * has finished activation.
+   */
+  private handleDemoPrefixPas(): void {
+    if (!this.navigation.focusFirstItemByTextPrefix('Pas')) {
+      return;
+    }
+    queueMicrotask(() => {
+      this.navigation.getActiveItem()?.focus();
+    });
+  }
+
+  /**
+   * Demo: roving tabindex for **Cut** via prefix `cu`, then move focus after activation.
+   */
+  private handleDemoPrefixCu(): void {
+    if (!this.navigation.focusFirstItemByTextPrefix('cu')) {
+      return;
+    }
+    queueMicrotask(() => {
+      this.navigation.getActiveItem()?.focus();
+    });
+  }
+
+  /**
+   * Renders a small menu plus trigger buttons that call prefix-based focus on the controller.
+   */
+  protected override render(): TemplateResult {
+    return html`
+      <div class="menu" role="menu" aria-label="Edit actions (typeahead demo)">
+        <button type="button">Copy</button>
+        <button type="button">Cut</button>
+        <button type="button">Paste</button>
+        <button type="button">Select all</button>
+        <button
+          type="button"
+          class="typeahead-icon"
+          aria-label="Undo"
+        >
+          ↩
+        </button>
+      </div>
+      <div class="triggers">
+        <button
+          type="button"
+          class="demo-trigger"
+          @click=${this.handleDemoPrefixPas}
+        >
+          Focus match for &quot;Pas&quot; → Paste
+        </button>
+        <button
+          type="button"
+          class="demo-trigger"
+          @click=${this.handleDemoPrefixCu}
+        >
+          Focus match for &quot;cu&quot; → Cut
+        </button>
+      </div>
+    `;
+  }
+}
+
 // ─────────────────────────
 //     STORYBOOK
 // ─────────────────────────
@@ -639,5 +803,16 @@ export const ProgrammaticFocus: Story = {
     <demo-focusgroup-programmatic
       focus-target="c"
     ></demo-focusgroup-programmatic>
+  `,
+};
+
+/**
+ * The controller’s **focusFirstItemByTextPrefix** only syncs roving `tabindex` to the first label
+ * match; the demo triggers then call `focus()` on {@link FocusgroupNavigationController.getActiveItem}
+ * in a microtask. Call the same pattern from application code (for example on `keydown` for typeahead).
+ */
+export const TextPrefixFocus: Story = {
+  render: () => html`
+    <demo-focusgroup-text-prefix></demo-focusgroup-text-prefix>
   `,
 };

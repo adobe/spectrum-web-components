@@ -16,10 +16,12 @@ import { getComponent } from '../../../swc/utils/test-utils.js';
 import focusMeta, {
   BothAxesLinear,
   DemoFocusgroupProgrammatic,
+  DemoFocusgroupTextPrefix,
   Grid,
   HorizontalToolbar,
   ProgrammaticFocus,
   SkipDisabledMenu,
+  TextPrefixFocus,
   VerticalMenu,
 } from './focus-group-navigation-controller.stories.js';
 
@@ -447,5 +449,56 @@ export const ProgrammaticFocusAndArrows: Story = {
         expect(shadowActiveButton(host)?.getAttribute('data-item')).toBe('b');
       }
     );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// Text prefix / typeahead (focusFirstItemByTextPrefix)
+// ──────────────────────────────────────────────────────────────
+
+export const TextPrefixFocusNavigation: Story = {
+  ...TextPrefixFocus,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DemoFocusgroupTextPrefix>(
+      canvasElement,
+      'demo-focusgroup-text-prefix'
+    );
+
+    await step(
+      'prefix "c" focuses Copy (first eligible match in order)',
+      async () => {
+        expect(host.focusByTextPrefix('c')).toBe(true);
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Copy');
+      }
+    );
+
+    await step('longer prefix "cu" focuses Cut', async () => {
+      expect(host.focusByTextPrefix('cu')).toBe(true);
+      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Cut');
+    });
+
+    await step('prefix is case-insensitive and trim-aware', async () => {
+      expect(host.focusByTextPrefix('  PAS  ')).toBe(true);
+      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Paste');
+
+      expect(host.focusByTextPrefix('SEL')).toBe(true);
+      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Select all');
+    });
+
+    await step('aria-label is used when present (icon-only item)', async () => {
+      expect(host.focusByTextPrefix('un')).toBe(true);
+      expect(shadowActiveButton(host)?.getAttribute('aria-label')).toBe('Undo');
+    });
+
+    await step('whitespace-only prefix returns false without changing focus', async () => {
+      host.focusByTextPrefix('Paste');
+      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Paste');
+      expect(host.focusByTextPrefix('   ')).toBe(false);
+      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Paste');
+    });
+
+    await step('no match returns false', async () => {
+      expect(host.focusByTextPrefix('zzz')).toBe(false);
+    });
   },
 };

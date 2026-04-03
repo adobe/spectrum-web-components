@@ -7,6 +7,7 @@
 - Supports **Home** / **End** to jump to the first or last item (for `grid`, order is visual row-major).
 - In **`grid`** mode only, **Ctrl+Home** moves focus to the **first cell in the first row** and **Ctrl+End** to the **last cell in the last row** (rows are derived from layout; ragged last rows use the final cell in that row).
 - Optional **`skipDisabled`**: when `true`, elements with native **`disabled`** or **`aria-disabled="true"`** are excluded from roving `tabindex` and from arrow-key navigation (see story **Skip disabled menu**).
+- **`focusFirstItemByTextPrefix(prefix)`** updates roving `tabindex` to the first eligible item whose typeahead label starts with `prefix` (case-insensitive), in `getItems()` order — label uses **`aria-label`**, then **`aria-labelledby`** text, then **`textContent`**. It does **not** call `focus()`; call **`getActiveItem()?.focus()`** yourself (story **Text prefix focus**).
 - Optional **`pageStep`**: when set to a non-zero integer, **Page Up** / **Page Down** move that many items in `getItems()` order (linear modes) or that many **rows** in **`grid`** mode.
 - Optional **wrap** (end wraps to start) and **memory** (Tab returns to the last focused item), similar to `wrap` and `nomemory` concepts in the `focusgroup` proposal.
 
@@ -118,6 +119,21 @@ this.navigation = new FocusgroupNavigationController(this, {
 
 With `pageStep: 3`, each **Page Down** advances three items in `getItems()` order; **Page Up** goes back three. For **`grid`**, use the same option to move three rows at a time.
 
+### Example (focus by text prefix / typeahead)
+
+Call **`focusFirstItemByTextPrefix`** when the user types into a composite (often from a capturing `keydown` or debounced `input`). Matching uses each item’s typeahead label — trimmed **`aria-label`** if set, otherwise text from **`aria-labelledby`** references (in order), otherwise trimmed **`textContent`** — with a **case-insensitive** prefix test, and only **eligible** items (respects **`skipDisabled`**). The first match in `getItems()` order becomes the roving tab stop; **`focus()` is not called** by the controller.
+
+Move focus yourself on **`getActiveItem()`**. From a **`click`** handler on another control, defer `focus()` with **`queueMicrotask`** (or similar) so the browser does not move focus back to the clicked element after your handler returns.
+
+```typescript
+// Example: after the user types into your menu search buffer `buffer`
+if (this.navigation.focusFirstItemByTextPrefix(buffer)) {
+  queueMicrotask(() => {
+    this.navigation.getActiveItem()?.focus();
+  });
+}
+```
+
 ### Example (grid)
 
 Use `direction: 'grid'` when items are laid out in rows (for example CSS Grid). The controller groups items into rows using bounding rectangles, then maps Arrow keys to cell movement. **Home** / **End** use visual row-major order (first and last item in that flattened sequence). **Ctrl+Home** / **Ctrl+End** jump to the first cell of the top row or the last cell of the bottom row, which matches rectangular grids and differs from plain **End** only when the last row has fewer cells than earlier rows.
@@ -126,12 +142,13 @@ Set **`pageStep`** to a positive integer (for example `2`) so **Page Up** / **Pa
 
 ## API
 
-| Member                              | Description                                                                                                                |
-| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `setOptions(partial)`               | Merge new options and reapply roving tabindex.                                                                             |
-| `refresh()`                         | Re-query items and sync tabindex (call after DOM changes).                                                                 |
-| `focusItem(element, focusOptions?)` | Programmatically focus an item and update roving tabindex. Returns `false` if the element is not in the current item list. |
-| `getActiveItem()`                   | Returns the item with `tabindex="0"`, if any.                                                                              |
+| Member                               | Description                                                                                                                                                                                                                                                                  |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `setOptions(partial)`                | Merge new options and reapply roving tabindex.                                                                                                                                                                                                                               |
+| `refresh()`                          | Re-query items and sync tabindex (call after DOM changes).                                                                                                                                                                                                                   |
+| `focusItem(element, focusOptions?)`  | Programmatically focus an item and update roving tabindex. Returns `false` if the element is not in the current item list.                                                                                                                                                   |
+| `focusFirstItemByTextPrefix(prefix)` | Set roving `tabindex` to the first eligible item whose typeahead label (`aria-label`, then `aria-labelledby`, then `textContent`) starts with `prefix` (case-insensitive). Does **not** call `focus()`. Returns `false` if `prefix` is whitespace-only or there is no match. |
+| `getActiveItem()`                    | Returns the eligible item with `tabindex="0"`, if any.                                                                                                                                                                                                                       |
 
 ### Events
 
