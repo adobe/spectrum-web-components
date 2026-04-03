@@ -139,5 +139,5 @@ jobs:
             yarn prettier --check $FILES
           fi
 
-      - name: AI tooling validation
+      - name: Validate AI tooling
         run: yarn lint:ai
