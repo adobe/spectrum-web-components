@@ -95,7 +95,7 @@ No mixins, no shared utilities, no other SWC components composed inside. No depe
 
 | # | What is added | Notes |
 |---|---|---|
-| **A1** | `size` attribute (`s` \| `l`, default `l`) | Net-new t-shirt sizing. Consumers not using it get `size="l"`. Implemented via `:host([size="..."])` attribute selectors, not modifier classes. |
+| **A1** | `size` attribute (`s` \| `m` \| `l`, default `m`) | Net-new t-shirt sizing. `m` is the base style, no extra ruleset needed. Implemented via `:host([size="..."])` attribute selectors, not modifier classes. |
 | **A2** | `horizontal` boolean attribute | Net-new layout variant. Consumers not using it are unaffected. |
 | **A3** | `actions` slot | Net-new. Leave untyped — a focus group navigation controller will be needed in a future follow-up. |
 
@@ -112,7 +112,7 @@ These are derived from the a11y analysis and rendering roadmap. Confirmed items 
 | `heading` | `string` | `''` | `heading` | Carry forward; attribute is fallback, slot takes precedence via `<slot name="heading">${this.heading}</slot>` |
 | `description` | `string` | `''` | `description` | Carry forward; same fallback pattern |
 | `headingLevel` | `2 \| 3 \| 4 \| 5 \| 6` | `2` | `heading-level` | **New.** Values outside `2`–`6` silently clamped using `Math.max(2, Math.min(6, level))` — same pattern as `AccordionItem.getHeadingLevel()`. |
-| `size` | `'s' \| 'l'` | `'l'` | `size` | **New.** Drives `:host([size="s"])` / `:host([size="l"])` attribute selectors per [selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions). |
+| `size` | `'s' \| 'm' \| 'l'` | `'m'` | `size` | **New.**  `m` is the implicit base style `s` and `l` override via `:host([size="s"])` / `:host([size="l"])` attribute selectors per [selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions). |
 | `horizontal` | `boolean` | `false` | `horizontal` | **New.** Drives horizontal layout variant. |
 
 ### Slots (2nd-gen)
