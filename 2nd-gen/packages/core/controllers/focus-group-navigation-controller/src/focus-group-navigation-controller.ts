@@ -145,10 +145,11 @@ export type FocusgroupNavigationActiveChangeDetail = {
  * - Optional **`skipDisabled`**: omit **`disabled`** and **`aria-disabled="true"`** items from
  *   roving tabindex and arrow navigation.
  * - Supports optional last-focused memory when re-entering via Tab.
- * - Exposes {@link FocusgroupNavigationController.focusItem} for programmatic focus and
- *   {@link FocusgroupNavigationController.focusFirstItemByTextPrefix} for typeahead-style roving
- *   `tabindex` (call {@link FocusgroupNavigationController.getActiveItem} and `focus()` yourself
- *   when you want keyboard focus to move).
+ * - Exposes {@link FocusgroupNavigationController.setActiveItem} to choose the roving tab stop
+ *   without calling `focus()`, and {@link FocusgroupNavigationController.focusFirstItemByTextPrefix}
+ *   for typeahead-style roving `tabindex` (call {@link FocusgroupNavigationController.getActiveItem}
+ *   and `focus()` yourself when you want keyboard focus to move). Arrow-key handling calls
+ *   `setActiveItem` and `focus()` together.
  *
  * Dispatches a bubbling, composed `CustomEvent` named
  * {@link focusgroupNavigationActiveChange} when the active item changes.
@@ -189,7 +190,7 @@ export type FocusgroupNavigationActiveChangeDetail = {
 // controller for your targets, consider removing or shrinking the following areas first:
 //
 // 1. Roving tabindex — `applyRovingTabindex()`, the tabindex portions of `refresh()` and
-//    `focusItem()`, and assigning `tabIndex` to ineligible raw items.
+//    `setActiveItem()`, and assigning `tabIndex` to ineligible raw items.
 //
 // 2. Host keyboard interception — `handleKeydown()`, `hostConnected` / `hostDisconnected`
 //    `keydown` listeners, `resolveManagedKeydownTarget()` (shadow retargeting workaround), and
@@ -318,20 +319,19 @@ export class FocusgroupNavigationController implements ReactiveController {
   }
 
   /**
-   * Moves keyboard focus to `item`, updates roving tabindex on all managed items,
-   * and updates memory when enabled.
+   * Sets roving `tabindex` so `item` is the active tab stop (`tabindex="0"`) and others in the
+   * group are `-1`. Does **not** call `focus()`. When {@link FocusgroupNavigationOptions.memory}
+   * is true, updates the stored last-focused item so Tab re-entry can target this item.
    *
-   * @param item - Item to focus; must be returned by `getItems` and pass eligibility checks.
-   * @param focusOptions - Optional `focus()` options (e.g. `preventScroll`).
-   * @returns False if `item` is not in the current item list from `getItems`.
+   * @param item - Item to mark active; must be returned by `getItems` and pass eligibility checks.
+   * @returns False if `item` is not in the current eligible item list.
    */
-  public focusItem(item: HTMLElement, focusOptions?: FocusOptions): boolean {
+  public setActiveItem(item: HTMLElement): boolean {
     const items = this.getEligibleItems();
     if (!items.includes(item)) {
       return false;
     }
     this.applyRovingTabindex(item);
-    item.focus(focusOptions);
     if (this.options.memory) {
       this.lastFocused = item;
     }
@@ -722,7 +722,7 @@ export class FocusgroupNavigationController implements ReactiveController {
             : (lastRow?.[lastRow.length - 1] ?? null);
         if (boundary && boundary !== target) {
           event.preventDefault();
-          this.focusItem(boundary);
+          this.moveKeyNavigationFocusTo(boundary);
         }
       }
       return;
@@ -744,7 +744,7 @@ export class FocusgroupNavigationController implements ReactiveController {
       );
       if (pageNext && pageNext !== target) {
         event.preventDefault();
-        this.focusItem(pageNext);
+        this.moveKeyNavigationFocusTo(pageNext);
       }
       return;
     }
@@ -771,7 +771,7 @@ export class FocusgroupNavigationController implements ReactiveController {
 
     if (next && next !== target) {
       event.preventDefault();
-      this.focusItem(next);
+      this.moveKeyNavigationFocusTo(next);
       return;
     }
 
@@ -787,8 +787,17 @@ export class FocusgroupNavigationController implements ReactiveController {
         event.key === 'Home' ? ordered[0] : ordered[ordered.length - 1];
       if (boundary && boundary !== target) {
         event.preventDefault();
-        this.focusItem(boundary);
+        this.moveKeyNavigationFocusTo(boundary);
       }
+    }
+  }
+
+  /**
+   * Applies roving tabindex to `item` and moves DOM focus; used for keyboard navigation only.
+   */
+  private moveKeyNavigationFocusTo(item: HTMLElement): void {
+    if (this.setActiveItem(item)) {
+      item.focus();
     }
   }
 

@@ -14,7 +14,7 @@ import { css, html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type { Meta, StoryObj } from '@storybook/web-components';
 
-import { FocusgroupNavigationController } from '../focus-group-navigation-controller.js';
+import { FocusgroupNavigationController } from '../../focus-group-navigation-controller.js';
 import readme from '../focus-group-navigation-controller.md?raw';
 
 // ─────────────────────────
@@ -424,7 +424,8 @@ export class DemoFocusgroupGrid extends LitElement {
 /**
  * @internal
  *
- * Storybook-only host demonstrating {@link FocusgroupNavigationController.focusItem}.
+ * Storybook-only host demonstrating {@link FocusgroupNavigationController.setActiveItem} plus
+ * explicit `focus()` from the demo.
  */
 @customElement('demo-focusgroup-programmatic')
 export class DemoFocusgroupProgrammatic extends LitElement {
@@ -499,13 +500,16 @@ export class DemoFocusgroupProgrammatic extends LitElement {
   }
 
   /**
-   * Focuses the toolbar button whose `data-item` matches {@link focusTarget}.
+   * Sets roving tabindex to the toolbar button whose `data-item` matches {@link focusTarget},
+   * then moves focus (deferred so a trigger `click` does not overwrite focus).
    */
   public focusProgrammaticTarget(): void {
     const sel = `[data-item="${this.focusTarget}"]`;
     const el = this.renderRoot.querySelector<HTMLElement>(sel);
-    if (el) {
-      this.navigation.focusItem(el);
+    if (el && this.navigation.setActiveItem(el)) {
+      queueMicrotask(() => {
+        el.focus();
+      });
     }
   }
 
@@ -792,7 +796,7 @@ export const Grid: Story = {
 };
 
 /**
- * Calls \`focusItem\` on a chosen button so tabindex stays consistent with keyboard navigation.
+ * Demo calls \`setActiveItem\` then \`focus()\` so the roving tab stop matches keyboard navigation.
  */
 export const ProgrammaticFocus: Story = {
   render: () => html`

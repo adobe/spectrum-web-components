@@ -436,9 +436,10 @@ export const ProgrammaticFocusAndArrows: Story = {
     );
 
     await step(
-      'focusItem updates roving tabindex and arrow navigation',
+      'setActiveItem plus focus updates roving tabindex and arrow navigation',
       async () => {
         host.focusProgrammaticTarget();
+        await Promise.resolve();
         expect(host.focusTarget).toBe('c');
         expect(shadowActiveButton(host)?.getAttribute('data-item')).toBe('c');
 
