@@ -25,12 +25,11 @@ import {
 /**
  * A divider separates and distinguishes sections of content or groups of menu items.
  *
- * @attribute {ElementSize} size - The size of the divider.
+ * @attribute {ElementSize} size - The size of the divider. Defaults to small (`s`).
  */
 export abstract class DividerBase extends SizedMixin(SpectrumElement, {
   validSizes: DIVIDER_VALID_SIZES,
-  /** @todo the design spec says the default size is small but we declare no default size */
-  noDefaultSize: true,
+  defaultSize: 's',
 }) {
   // ──────────────────
   //     SHARED API
