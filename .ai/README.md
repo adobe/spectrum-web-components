@@ -257,16 +257,54 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: Implementing any feature or bugfix, before writing implementation code
 - Provides: TDD cycle, verification checklist, good/bad test examples, anti-patterns to avoid
 
-## Using rules and skills across IDEs
+## Using rules and skills across tools and IDEs
 
-`.ai/` is the canonical, editor-neutral source of truth. Rules and skills are written once here and work with any coding agent — Cursor, Claude Code, or others.
+Canonical content lives in **`.ai/`** (this directory). Tool-specific directories (`.cursor/`, `.claude/`) are thin adapters that point back here via symlinks — edit files in `.ai/`, never in the adapter directories.
 
-IDE-specific adapter directories contain symlinks that point back to `.ai/`:
+### Current symlink structure
 
-- **Cursor** — `.cursor/rules/*.mdc` are per-file symlinks to `.ai/rules/*.md` (Cursor expects `.mdc` extension); `.cursor/skills/` symlinks to `.ai/skills/`
-- **Claude Code** — `.claude/rules/` and `.claude/skills/` are directory symlinks to `.ai/rules/` and `.ai/skills/`
+```text
+.ai/rules/
+└── *.md                          ← canonical, tool-agnostic source of truth
 
-To add support for another tool, create its config directory with symlinks (or copies) pointing to `.ai/`. The content is plain markdown and JSON, so it’s portable to any schema.
+.ai/skills/
+└── <skill-name>/SKILL.md         ← canonical, tool-agnostic source of truth
+
+.cursor/rules/
+└── *.mdc → ../../.ai/rules/*.md  (per-file symlinks; Cursor expects .mdc)
+.cursor/skills/ → ../.ai/skills/  (directory symlink)
+
+.claude/rules/ → ../.ai/rules/    (directory symlink; Claude Code reads .md)
+.claude/skills/ → ../.ai/skills/  (directory symlink)
+```
+
+Editing any `.ai/rules/*.md` file immediately updates what both Cursor and Claude Code see — no sync step required.
+
+### Adding a new rule
+
+1. Create `rule-name.md` in `.ai/rules/` with YAML frontmatter (`globs`, `alwaysApply`).
+2. Add one per-file symlink for Cursor:
+
+   ```sh
+   ln -s “../../.ai/rules/rule-name.md” “.cursor/rules/rule-name.mdc”
+   ```
+
+3. Register it in the tables in this README (rules catalog) and in [`AGENTS.md`](../AGENTS.md).
+4. `.claude/rules/` picks it up automatically via the directory symlink — nothing extra needed.
+
+### Adding a new skill
+
+1. Create `.ai/skills/<skill-name>/SKILL.md`.
+2. Register it in the skills catalog below and in [`AGENTS.md`](../AGENTS.md).
+3. Both `.cursor/skills/` and `.claude/skills/` pick it up automatically via directory symlinks.
+
+### Using rules and skills in other environments
+
+If you use a tool that does not read `.cursor/` or `.claude/`, point it at `.ai/` directly:
+
+- **Start from [`AGENTS.md`](../AGENTS.md)** at the repository root.
+- **Reference files when prompting** — for example: “Follow the rules in `.ai/rules/` and load `.ai/skills/deep-understanding/SKILL.md` for this task.”
+- **Copy or adapt** the markdown and JSON content into your tool’s own config format as needed.
 
 ## MCPs
 
