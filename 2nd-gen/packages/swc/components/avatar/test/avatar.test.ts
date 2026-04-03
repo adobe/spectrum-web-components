@@ -181,6 +181,20 @@ export const AltAriaHiddenTest: Story = {
         ).toBe(false);
       }
     );
+
+    await step(
+      'removes aria-hidden from host when alt is changed to undefined',
+      async () => {
+        avatar.alt = '';
+        await avatar.updateComplete;
+        avatar.alt = undefined;
+        await avatar.updateComplete;
+        expect(
+          avatar.hasAttribute('aria-hidden'),
+          'aria-hidden removed when alt is undefined'
+        ).toBe(false);
+      }
+    );
   },
 };
 

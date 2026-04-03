@@ -113,6 +113,8 @@ const PLACEHOLDER_SRC = 'https://picsum.photos/id/64/500/500';
 //    AUTODOCS STORY
 // ────────────────────
 
+// alt ?? '' guards against undefined produced by Storybook controls when
+// the user clears the alt field. Explicit stories use typed args that are always defined.
 export const Playground: Story = {
   render: ({ src, alt, size, 'over-background': overBackground }) => html`
     <div

@@ -14,12 +14,6 @@
  * Valid numeric size values for the Avatar component.
  *
  * Sizes 50–700 match 1st-gen. Sizes 800–1500 are new in Spectrum 2.
- *
- * @todo OQ-1: Team decision pending on whether to keep numeric sizes or migrate
- * to T-shirt sizes (xxs–xxl) consistent with SizedMixin. If T-shirt sizes are
- * adopted, this type and AVATAR_VALID_SIZES will change, and a deprecation
- * alias layer will be needed for consumer migration.
- * See: CONTRIBUTOR-DOCS/03_project-planning/03_components/avatar/migration-plan.md
  */
 export const AVATAR_VALID_SIZES = [
   50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300,

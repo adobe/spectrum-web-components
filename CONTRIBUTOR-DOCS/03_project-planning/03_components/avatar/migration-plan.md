@@ -126,11 +126,11 @@ All `--mod-avatar-*` customization properties removed. Consumers must migrate to
 - [x] DEBUG warning for missing `alt`
 - [x] Host is not focusable (no `Focusable` mixin, no `tabIndex` set)
 - [x] Host exposes no interactive role (`role="button"` / `role="link"`)
-- [ ] Playwright ARIA snapshot tests
+- [x] Playwright ARIA snapshot tests
 
 ### Phase 6 — Testing
-- [ ] Port `avatar.test.ts` → `2nd-gen/packages/swc/components/avatar/test/avatar.test.ts`
-- [ ] Add Playwright `.a11y.spec.ts` file
+- [x] Port `avatar.test.ts` → `2nd-gen/packages/swc/components/avatar/test/avatar.test.ts`
+- [x] Add Playwright `.a11y.spec.ts` file
 
 ### Phase 7 — Documentation
 - [x] JSDoc on all public properties in `Avatar.base.ts`
