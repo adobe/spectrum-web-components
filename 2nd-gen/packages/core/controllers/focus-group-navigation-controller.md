@@ -1,5 +1,3 @@
-# Focus group navigation controller
-
 `FocusgroupNavigationController` implements the [roving `tabindex` pattern](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#managingfocuswithincomponentsusingarovingtabindex) from the ARIA Authoring Practices Guide (APG) and directional keyboard behavior aligned with the Open UI [`focusgroup` explainer](https://open-ui.org/components/scoped-focusgroup.explainer/). Use it inside Lit-based custom elements (or any `ReactiveElement`) until native `focusgroup` is widely available.
 
 ## What it does

@@ -120,11 +120,32 @@ export class DemoFocusgroupVertical extends LitElement {
       outline: 2px solid var(--spectrum-blue-800, #0265dc);
       outline-offset: 0;
     }
-    button[disabled] {
+    button[aria-disabled='true'] {
       opacity: 0.5;
       cursor: not-allowed;
     }
   `;
+
+  /**
+   * Blocks pointer activation for the menu item that uses `aria-disabled` instead of native
+   * `disabled` so it can stay in the roving focus order (native `disabled` is not focusable).
+   *
+   * @param event - Click event from the inert item.
+   */
+  private handleInertMenuItemClick(event: Event): void {
+    event.preventDefault();
+  }
+
+  /**
+   * Prevents Enter/Space from activating the `aria-disabled` item like a normal button.
+   *
+   * @param event - Key event while the inert item is focused.
+   */
+  private handleInertMenuItemKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+    }
+  }
 
   /**
    * Controller instance: vertical direction with wrapping; disabled items stay focusable.
@@ -146,13 +167,24 @@ export class DemoFocusgroupVertical extends LitElement {
   }
 
   /**
-   * Renders menu-like actions including one disabled control.
+   * Renders menu-like actions including one inactive control.
+   *
+   * Uses `aria-disabled="true"` instead of the `disabled` attribute so the item stays
+   * focusable while arrow keys move through the list; native `disabled` removes focusability
+   * and would block reaching items after it.
    */
   protected override render(): TemplateResult {
     return html`
       <button type="button">Copy</button>
       <button type="button">Paste</button>
-      <button type="button" disabled>Cut (unavailable)</button>
+      <button
+        type="button"
+        aria-disabled="true"
+        @click=${this.handleInertMenuItemClick}
+        @keydown=${this.handleInertMenuItemKeydown}
+      >
+        Cut (unavailable)
+      </button>
       <button type="button">Select all</button>
     `;
   }
@@ -383,7 +415,8 @@ export const HorizontalToolbar: Story = {
 };
 
 /**
- * Block-axis arrows traverse menu-like items; disabled item stays in the focus order.
+ * Block-axis arrows traverse menu-like items; one item uses `aria-disabled` (not native
+ * `disabled`) so it stays focusable and items after it remain reachable.
  */
 export const VerticalMenu: Story = {
   render: () => html`
