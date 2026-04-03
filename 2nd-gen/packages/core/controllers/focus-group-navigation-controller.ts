@@ -11,17 +11,13 @@
  */
 
 /**
- * Public exports for Lit reactive controllers shared across 2nd-gen packages.
+ * Package entry for `@spectrum-web-components/core/controllers/focus-group-navigation-controller.js`.
+ * Implementation lives under `focus-group-navigation-controller/src/` next to demos and tests.
  */
-
 export {
   focusgroupNavigationActiveChange,
   FocusgroupNavigationController,
   type FocusgroupDirection,
   type FocusgroupNavigationActiveChangeDetail,
   type FocusgroupNavigationOptions,
-} from './focus-group-navigation-controller.js';
-export {
-  LanguageResolutionController,
-  languageResolverUpdatedSymbol,
-} from './language-resolution.js';
+} from './focus-group-navigation-controller/src/focus-group-navigation-controller.js';
