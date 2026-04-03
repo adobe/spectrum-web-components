@@ -28,6 +28,12 @@ argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
   options: Divider.VALID_SIZES,
+  table: {
+    category: 'attributes',
+    defaultValue: {
+      summary: 'm',
+    },
+  },
 };
 
 argTypes['static-color'] = {
@@ -84,9 +90,9 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   render: (args) => html`
-    <h3>Content above the divider</h3>
+    <h3>Account settings</h3>
     ${template({ ...args, size: 'm' })}
-    <p>Content below the divider</p>
+    <p>Update your personal details, password, and preferences.</p>
   `,
   parameters: {
     flexLayout: 'column-stretch',
@@ -105,9 +111,9 @@ export const Overview: Story = {
  */
 export const Anatomy: Story = {
   render: (args) => html`
-    <h4>Content above the divider</h4>
+    <h4>Account settings</h4>
     ${template({ ...args, size: 'm' })}
-    <p>Content below the divider</p>
+    <p>Update your personal details, password, and preferences.</p>
   `,
   tags: ['anatomy'],
   parameters: {
@@ -129,19 +135,19 @@ export const Anatomy: Story = {
 export const Sizes: Story = {
   render: (args) => html`
     <div>
-      <h3>Small</h3>
+      <h3>Team members</h3>
       ${template({ ...args, size: 's' })}
-      <p>Content below the small divider.</p>
+      <p>Manage your team roles and access permissions.</p>
     </div>
     <div>
-      <h3>Medium</h3>
+      <h3>Account settings</h3>
       ${template({ ...args, size: 'm' })}
-      <p>Content below the medium divider.</p>
+      <p>Update your personal details, password, and preferences.</p>
     </div>
     <div>
-      <h3>Large</h3>
+      <h3>Projects</h3>
       ${template({ ...args, size: 'l' })}
-      <p>Content below the large divider.</p>
+      <p>Track progress across your projects.</p>
     </div>
   `,
   parameters: {
@@ -156,24 +162,24 @@ export const Sizes: Story = {
  */
 export const Vertical: Story = {
   render: (args) => html`
-    <h4>Small</h4>
+    <h4>Profile</h4>
     ${template({
       ...args,
       size: 's',
     })}
-    <p>Content next to the small divider.</p>
-    <h4>Medium</h4>
+    <p>Your profile name appears when you log in.</p>
+    <h4>Account settings</h4>
     ${template({
       ...args,
       size: 'm',
     })}
-    <p>Content next to the medium divider.</p>
-    <h4>Large</h4>
+    <p>Update your password and preferences.</p>
+    <h4>Projects</h4>
     ${template({
       ...args,
       size: 'l',
     })}
-    <p>Content next to the large divider.</p>
+    <p>Track progress across your projects.</p>
   `,
   parameters: {
     'section-order': 2,
