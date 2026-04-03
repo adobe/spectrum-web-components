@@ -14,7 +14,3 @@ export {
   LanguageResolutionController,
   languageResolverUpdatedSymbol,
 } from './language-resolution.js';
-export {
-  RovingTabindexController,
-  type RovingTabindexConfig,
-} from './roving-tabindex.js';
