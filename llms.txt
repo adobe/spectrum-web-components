@@ -1,0 +1,121 @@
+# Spectrum Web Components
+
+> Adobe's Spectrum 1 web component library. `sp-*` elements (Spectrum 1).
+
+## Resources
+
+- [Documentation](https://opensource.adobe.com/spectrum-web-components): Full docs with live examples
+- [GitHub](https://github.com/adobe/spectrum-web-components): Source code and issues
+- [npm](https://www.npmjs.com/search?q=%40spectrum-web-components): All 1st-gen packages
+- [llms-full.txt](https://opensource.adobe.com/spectrum-web-components/llms-full.txt): All Spectrum 1 component APIs in one file
+- [2nd-gen llms.txt](https://opensource.adobe.com/spectrum-web-components/second-gen/llms.txt): Spectrum 2 (swc-*) component index
+
+## Guides
+
+- [Deprecation Guide](https://opensource.adobe.com/spectrum-web-components/deprecation-guide/)
+- [Dev mode](https://opensource.adobe.com/spectrum-web-components/dev-mode/)
+- [Getting started](https://opensource.adobe.com/spectrum-web-components/getting-started/)
+- [Migrating to Spectrum 2](https://opensource.adobe.com/spectrum-web-components/migrating-to-spectrum2/)
+- [Registry conflicts](https://opensource.adobe.com/spectrum-web-components/registry-conflicts/)
+- [Support and compatibility](https://opensource.adobe.com/spectrum-web-components/support-and-compatibility/)
+- [Using swc-react](https://opensource.adobe.com/spectrum-web-components/getstarted-react-wrapper/)
+- [What is a theme?](https://opensource.adobe.com/spectrum-web-components/what-is-a-theme/)
+
+## Developer guides
+
+- [Configuring your project](https://opensource.adobe.com/spectrum-web-components/guides/configuring-openwc/)
+- [Developing a Component](https://opensource.adobe.com/spectrum-web-components/guides/developing-component/)
+- [Generating a new component](https://opensource.adobe.com/spectrum-web-components/guides/generating-a-new-component/)
+- [Styling Components](https://opensource.adobe.com/spectrum-web-components/guides/styling-components/)
+- [Writing Changesets](https://opensource.adobe.com/spectrum-web-components/guides/writing-changesets/)
+
+## Components
+
+- [sp-accordion](reference/sp-accordion.md): The sp-accordion element contains a list of items that can be expanded or collapsed to reveal additional content or information associated with each item.
+- [sp-accordion-item](reference/sp-accordion-item.md): The sp-accordion element contains a list of items that can be expanded or collapsed to reveal additional content or information associated with each item.
+- [sp-action-bar](reference/sp-action-bar.md): A sp-action-bar delivers a floating action bar that is a convenient way to deliver stateful actions in cases like selection mode.
+- [sp-action-button](reference/sp-action-button.md): An sp-action-button represents an action a user can take.
+- [sp-action-group](reference/sp-action-group.md)
+- [sp-action-menu](reference/sp-action-menu.md): An `<sp-action-menu>` is an action button with an attached menu of options. Unlike a standard picker, it does not maintain a selection by default and displays a "more" icon instead of a chevron.
+- [sp-alert-banner](reference/sp-alert-banner.md): The sp-alert-banner displays pressing and high-signal messages, such as system alerts.
+- [sp-alert-dialog](reference/sp-alert-dialog.md): sp-alert-dialog displays important information that users need to acknowledge.
+- [sp-asset](reference/sp-asset.md)
+- [sp-avatar](reference/sp-avatar.md): An sp-avatar is a thumbnail representation of an entity, such as a user or an organization.
+- [sp-badge](reference/sp-badge.md): sp-badge elements display a small amount of color-categorized metadata.
+- [sp-breadcrumb-item](reference/sp-breadcrumb-item.md): An sp-breadcrumbs shows hierarchy and navigational context for a user's location within an app.
+- [sp-breadcrumbs](reference/sp-breadcrumbs.md): An sp-breadcrumbs shows hierarchy and navigational context for a user's location within an app.
+- [sp-button](reference/sp-button.md): An sp-button represents an action a user can take.
+- [sp-button-group](reference/sp-button-group.md): sp-button-group delivers a set of buttons in horizontal or vertical orientation while ensuring the appropriate spacing between those buttons.
+- [sp-card](reference/sp-card.md): An sp-card represents a rectangular card that contains a variety of text and image layouts.
+- [sp-checkbox](reference/sp-checkbox.md): sp-checkbox allow users to select multiple items from a list of independent options, or to mark an individual option as selected.
+- [sp-clear-button](reference/sp-clear-button.md): An sp-button represents an action a user can take.
+- [sp-close-button](reference/sp-close-button.md): An sp-button represents an action a user can take.
+- [sp-coach-indicator](reference/sp-coach-indicator.md): sp-coachmark is a temporary message that educates users through new or unfamiliar product experiences.
+- [sp-coachmark](reference/sp-coachmark.md): sp-coachmark is a temporary message that educates users through new or unfamiliar product experiences.
+- [sp-color-area](reference/sp-color-area.md): An sp-color-area allows users to visually select two properties of a color simultaneously.
+- [sp-color-field](reference/sp-color-field.md): sp-color-field elements are textfields that allow users to input custom color values.
+- [sp-color-handle](reference/sp-color-handle.md): The sp-color-handle is used to select a color on an sp-color-area , sp-color-slider , or sp-color-wheel .
+- [sp-color-loupe](reference/sp-color-loupe.md): An sp-color-loupe shows the output color that would otherwise be covered by a cursor, stylus, or finger during color selection.
+- [sp-color-slider](reference/sp-color-slider.md): An sp-color-slider lets users visually change an individual channel of a color.
+- [sp-color-wheel](reference/sp-color-wheel.md): An sp-color-wheel allows users to visually select the hue of a color on a circular track.
+- [sp-combobox](reference/sp-combobox.md): An sp-combobox allows users to filter lists to only the options matching a query.
+- [sp-contextual-help](reference/sp-contextual-help.md): Spectrum Contextual help provides additional information about the state of either an adjacent component or an entire view.
+- [sp-dialog](reference/sp-dialog.md): sp-dialog displays important information that users need to acknowledge.
+- [sp-dialog-base](reference/sp-dialog-base.md): sp-dialog displays important information that users need to acknowledge.
+- [sp-dialog-wrapper](reference/sp-dialog-wrapper.md): sp-dialog displays important information that users need to acknowledge.
+- [sp-divider](reference/sp-divider.md): sp-divider brings clarity to a layout by grouping and dividing content that exists in close proximity.
+- [sp-dropzone](reference/sp-dropzone.md): A sp-dropzone is an area on the screen into which an object can be dragged and dropped to accomplish a task.
+- [sp-field-group](reference/sp-field-group.md): An sp-field-group element is used to layout a group of fields, usually sp-checkbox elements.
+- [sp-field-label](reference/sp-field-label.md): An sp-field-label provides accessible labelling for form elements.
+- [sp-help-text](reference/sp-help-text.md): An sp-help-text provides either an informative description or an error message that gives more context about what a user needs to input.
+- [sp-icon](reference/sp-icon.md): sp-icon renders an icon to the page.
+- [sp-illustrated-message](reference/sp-illustrated-message.md): An sp-illustrated-message displays an outline illustration and a message, usually in an empty state or on an error page.
+- [sp-infield-button](reference/sp-infield-button.md)
+- [sp-link](reference/sp-link.md): An sp-link allows users to navigate to a different location.
+- [sp-menu](reference/sp-menu.md): Spectrum Menu Component
+- [sp-menu-divider](reference/sp-menu-divider.md): An sp-menu is used for creating a menu list.
+- [sp-menu-group](reference/sp-menu-group.md): An sp-menu is used for creating a menu list.
+- [sp-menu-item](reference/sp-menu-item.md): An sp-menu is used for creating a menu list.
+- [sp-meter](reference/sp-meter.md): An sp-meter is a visual representation of a quantity or achievement.
+- [sp-number-field](reference/sp-number-field.md): sp-number-field elements are used for numeric inputs.
+- [sp-overlay](reference/sp-overlay.md): An sp-overlay element is used to decorate content that you would like to present to your visitors as "overlaid" on the rest of the application.
+- [sp-picker](reference/sp-picker.md): An `<sp-picker>` is a dropdown selection component that allows users to choose a single option from a list of menu items.
+- [sp-picker-button](reference/sp-picker-button.md): An sp-picker-button is used as a sub-component of patterns like the sp-combobox (release pending) to pair a button interface with a text input.
+- [sp-popover](reference/sp-popover.md): An sp-popover is used to display transient content (menus, options, additional actions etc.) and appears when clicking/tapping on a source (tools, buttons, etc.) It stands out via its visual style (stroke and drop shadow) and floats on top of the rest of the interface.
+- [sp-progress-bar](reference/sp-progress-bar.md): An sp-progress-bar is used to visually show the progression of a system operation such as downloading, uploading, processing, etc.
+- [sp-progress-circle](reference/sp-progress-circle.md): An sp-progress-circle shows the progression of a system operation such as downloading, uploading, processing, etc.
+- [sp-radio](reference/sp-radio.md): sp-radio and sp-radio-group allow users to select a single option from a list of mutually exclusive options.
+- [sp-radio-group](reference/sp-radio-group.md): sp-radio and sp-radio-group allow users to select a single option from a list of mutually exclusive options.
+- [sp-search](reference/sp-search.md): The sp-search element is used for searching and filtering items.
+- [sp-sidenav](reference/sp-sidenav.md): Side navigation allows users to locate information and features within the UI.
+- [sp-sidenav-heading](reference/sp-sidenav-heading.md): Side navigation allows users to locate information and features within the UI.
+- [sp-sidenav-item](reference/sp-sidenav-item.md): Side navigation allows users to locate information and features within the UI.
+- [sp-slider](reference/sp-slider.md): sp-slider allows users to quickly select a value within a range.
+- [sp-slider-handle](reference/sp-slider-handle.md): sp-slider allows users to quickly select a value within a range.
+- [sp-split-view](reference/sp-split-view.md): An sp-split-view element displays its first two direct child elements side by side (horizontal) or stacked (vertical with vertical attribute).
+- [sp-status-light](reference/sp-status-light.md): An sp-status-light is a great way to convey semantic meaning, such as statuses and categories.
+- [sp-swatch](reference/sp-swatch.md): An sp-swatch shows a small sample of a fill — such as a color, gradient, texture, or material — that is intended to be applied to an object.
+- [sp-swatch-group](reference/sp-swatch-group.md): An sp-swatch shows a small sample of a fill — such as a color, gradient, texture, or material — that is intended to be applied to an object.
+- [sp-switch](reference/sp-switch.md): An sp-switch is used to turn an option on or off.
+- [sp-tab](reference/sp-tab.md): The sp-tabs displays a list of sp-tab element children as role="tablist".
+- [sp-tab-panel](reference/sp-tab-panel.md): The sp-tabs displays a list of sp-tab element children as role="tablist".
+- [sp-table](reference/sp-table.md): An sp-table is used to create a container for displaying information.
+- [sp-table-body](reference/sp-table-body.md): An sp-table is used to create a container for displaying information.
+- [sp-table-cell](reference/sp-table-cell.md): An sp-table is used to create a container for displaying information.
+- [sp-table-checkbox-cell](reference/sp-table-checkbox-cell.md): An sp-table is used to create a container for displaying information.
+- [sp-table-head](reference/sp-table-head.md): An sp-table is used to create a container for displaying information.
+- [sp-table-head-cell](reference/sp-table-head-cell.md): An sp-table is used to create a container for displaying information.
+- [sp-table-row](reference/sp-table-row.md): An sp-table is used to create a container for displaying information.
+- [sp-tabs](reference/sp-tabs.md): The sp-tabs displays a list of sp-tab element children as role="tablist".
+- [sp-tabs-overflow](reference/sp-tabs-overflow.md): The sp-tabs displays a list of sp-tab element children as role="tablist".
+- [sp-tag](reference/sp-tag.md): sp-tags elements contain a collection of sp-tag elements and allow users to categorize content.
+- [sp-tags](reference/sp-tags.md): sp-tags elements contain a collection of sp-tag elements and allow users to categorize content.
+- [sp-textfield](reference/sp-textfield.md): sp-textfield components are text boxes that allow users to input custom text entries with a keyboard.
+- [sp-theme](reference/sp-theme.md)
+- [sp-thumbnail](reference/sp-thumbnail.md): An sp-thumbnail can be used in a variety of locations as a way to display a preview of an image, layer, or effect.
+- [sp-toast](reference/sp-toast.md): sp-toast elements display brief, temporary notifications.
+- [sp-tooltip](reference/sp-tooltip.md): sp-tooltip allow users to get contextual help or information about specific components when hovering or focusing on them.
+- [sp-top-nav](reference/sp-top-nav.md): sp-top-nav delivers site navigation, particularly for when that navigation will change the majority of the page's content and/or the page's URL when selected.
+- [sp-top-nav-item](reference/sp-top-nav-item.md): sp-top-nav delivers site navigation, particularly for when that navigation will change the majority of the page's content and/or the page's URL when selected.
+- [sp-tray](reference/sp-tray.md): sp-tray elements are typically used to portray information on mobile device or smaller screens.
+- [sp-underlay](reference/sp-underlay.md): An sp-underlay provides a visual layer between overlay content and the rest of your application.

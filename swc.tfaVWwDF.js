@@ -1,0 +1,25 @@
+import{d as t}from"./swc.JlveB6nj.js";import{i}from"./swc.D6BEinCi.js";import{i as e}from"./swc.CZZTz5mk.js";import{f as s}from"./swc.D0Be8Aa5.js";import"./swc.CrQ_-wxU.js";import"./swc.rsFDaasR.js";import"./swc.Y3x2X0rw.js";import{F as o}from"./swc.Bg5uLBM2.js";import{S as n,x as r,E as a}from"./swc.DRY409cl.js";import{n as l}from"./swc.DGMRmT0Y.js";const d=e`
+    :host{box-sizing:border-box;visibility:hidden;z-index:1;pointer-events:none;block-size:stretch;inline-size:100vw;transition:visibility 0s linear var(--mod-modal-transition-animation-duration,var(--spectrum-animation-duration-100));justify-content:center;align-items:center;display:flex;position:fixed;inset-block-start:0;inset-inline-start:0}:host([open]){visibility:visible}@media only screen and (device-height<=350px),only screen and (device-width<=400px){:host([responsive]){border-radius:0;block-size:100%;max-block-size:100%;inline-size:100%;max-inline-size:100%;margin-block-start:0}}
+`;var p=Object.defineProperty,h=(t,i,e,s)=>{for(var o,n=void 0,r=t.length-1;r>=0;r--)(o=t[r])&&(n=o(i,e,n)||n);return n&&p(i,e,n),n};class c extends(o(n)){constructor(){super(...arguments),this.dismissable=!1,this.open=!1,this.responsive=!1,this.transitionPromise=Promise.resolve(),this.resolveTransitionPromise=()=>{},this.underlay=!1,this.animating=!1}static get styles(){return[d,i]}get dialog(){return this.shadowRoot.querySelector("slot").assignedElements()[0]||this}async focus(){if(this.shadowRoot){const t=s(this.dialog);t?(t.updateComplete&&await t.updateComplete,t.focus()):this.dialog.focus()}else super.focus()}overlayWillCloseCallback(){return this.open?(this.close(),!0):this.animating}dismiss(){this.dismissable&&this.close()}handleClose(t){t.stopPropagation(),this.close()}close(){this.open=!1}dispatchClosed(){this.dispatchEvent(new Event("close",{bubbles:!0}))}handleTransitionEvent(t){this.dispatchEvent(new TransitionEvent(t.type,{bubbles:!0,composed:!0,propertyName:t.propertyName}))}handleUnderlayTransitionend(t){!this.open&&"visibility"===t.propertyName&&this.resolveTransitionPromise(),this.handleTransitionEvent(t)}handleModalTransitionend(t){(this.open||!this.underlay)&&this.resolveTransitionPromise(),this.handleTransitionEvent(t)}get hasTransitionDuration(){const t=this.shadowRoot.querySelector(".modal"),i=window.getComputedStyle(t).transitionDuration;for(const t of i.split(","))if(parseFloat(t)>0)return!0;const e=this.shadowRoot.querySelector("sp-underlay");if(e){const t=window.getComputedStyle(e).transitionDuration;for(const i of t.split(","))if(parseFloat(i)>0)return!0}return!1}update(t){if(t.has("open")&&void 0!==t.get("open")){const t=this.hasTransitionDuration;this.animating=!0,this.transitionPromise=new Promise(i=>{this.resolveTransitionPromise=()=>{this.animating=!1,!this.open&&t&&this.dispatchClosed(),i()}}),!this.open&&!t&&this.dispatchClosed()}super.update(t)}renderDialog(){return r`
+      <slot></slot>
+    `}render(){return r`
+      ${this.underlay?r`
+            <sp-underlay
+              ?open=${this.open}
+              @close=${this.dismiss}
+              @transitionrun=${this.handleTransitionEvent}
+              @transitionend=${this.handleUnderlayTransitionend}
+              @transitioncancel=${this.handleTransitionEvent}
+            ></sp-underlay>
+          `:a}
+      <div
+        class="modal ${this.mode}"
+        @transitionrun=${this.handleTransitionEvent}
+        @transitionend=${this.handleModalTransitionend}
+        @transitioncancel=${this.handleTransitionEvent}
+        @close=${this.handleClose}
+      >
+        ${this.renderDialog()}
+      </div>
+    `}updated(t){t.has("open")&&this.open&&"updateComplete"in this.dialog&&"shouldManageTabOrderForScrolling"in this.dialog&&this.dialog.updateComplete.then(()=>{this.dialog.shouldManageTabOrderForScrolling()})}async getUpdateComplete(){const t=await super.getUpdateComplete();return await this.transitionPromise,t}}h([l({type:Boolean,reflect:!0})],c.prototype,"dismissable"),h([l({type:Boolean,reflect:!0})],c.prototype,"open"),h([l({type:String,reflect:!0})],c.prototype,"mode"),h([l({type:Boolean})],c.prototype,"responsive"),h([l({type:Boolean})],c.prototype,"underlay"),t("sp-dialog-base",c);var m=Object.freeze({__proto__:null});export{c as D,m as s};
+//# sourceMappingURL=swc.DZ-UdrvJ.js.map
