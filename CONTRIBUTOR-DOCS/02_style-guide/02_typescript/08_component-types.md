@@ -44,7 +44,7 @@
 
 <!-- Document content (editable) -->
 
-This guide defines patterns for the `*.types.ts` files in `core/components/*/`. These files contain the shared constants and types that both 1st-gen and 2nd-gen component classes consume.
+This guide defines patterns for the `*.types.ts` files in `core/components/*/`. These files contain the constants and types that 2nd-gen component classes consume.
 
 > **Note:** This guide was migrated from `02_style-guide/03_component-types.md`. The original file has been removed.
 
@@ -54,7 +54,7 @@ Types files serve three goals:
 
 1. **Define valid values** — sizes, variants, static colors, and other enumerable properties as `as const` arrays
 2. **Derive TypeScript types** — narrow union types extracted from those arrays for compile-time safety
-3. **Support multi-generation coexistence** — separate S1-only values from the canonical set so S1 can be cleanly removed later
+3. **Define the canonical value sets** — S2 values are the source of truth; no need to maintain S1-only values
 
 ## File location and naming
 
@@ -81,19 +81,7 @@ Use the component name in `UPPER_SNAKE_CASE` with underscores separating words:
 
 Do not merge multi-word names (e.g., `STATUSLIGHT_`). Consistent underscore separators make constants greppable and predictable.
 
-**Renaming existing merged prefixes:** If a component's types file in core already uses a merged prefix (e.g., `STATUSLIGHT_`), rename the constants to the underscore-separated form (`STATUS_LIGHT_`) in core. To avoid a breaking change in 1st-gen, re-export the old name as a deprecated alias from the 1st-gen package:
-
-```typescript
-// 1st-gen/packages/status-light/src/StatusLight.ts
-import { STATUS_LIGHT_VARIANTS_S1 } from '@spectrum-web-components/core/components/status-light';
-
-/**
- * @deprecated Use `STATUS_LIGHT_VARIANTS_S1` instead.
- */
-export const STATUSLIGHT_VARIANTS_S1 = STATUS_LIGHT_VARIANTS_S1;
-```
-
-This keeps the canonical name correct in core while giving 1st-gen consumers a migration path.
+**Renaming existing merged prefixes:** If a component's types file in core already uses a merged prefix (e.g., `STATUSLIGHT_`), rename the constants to the underscore-separated form (`STATUS_LIGHT_`) in core. Since 1st-gen does not import from core, this is a safe rename with no cross-generation impact.
 
 ### Type names
 
@@ -105,24 +93,16 @@ Use the component name in `PascalCase` matching the class name:
 | Status Light | `StatusLight` | `StatusLightVariant` |
 | Progress Circle | `ProgressCircle` | `ProgressCircleStaticColor` |
 
-### S1-only suffixing rule
+### Naming rule
 
-**Unsuffixed names are the canonical (S2) values.** Only S1-specific values get a suffix.
+**Names in core types files are the canonical S2 values.** No `_S1` or `_S2` suffixes are needed.
 
 | Scope | Name example | When to use |
 | ----- | ------------ | ----------- |
-| Canonical (S2) | `BADGE_VARIANTS_COLOR` | Values supported in 2nd-gen |
-| Canonical (S2) | `BadgeVariant` | Type for 2nd-gen consumers |
-| S1-only | `BADGE_VARIANTS_COLOR_S1` | Subset of values for 1st-gen |
-| S1-only | `BadgeVariantS1` | Type for 1st-gen consumers |
+| Canonical | `BADGE_VARIANTS_COLOR` | Values supported in 2nd-gen |
+| Canonical | `BadgeVariant` | Type for 2nd-gen consumers |
 
-This means:
-
-- 2nd-gen SWC classes import clean, unsuffixed names — no aliasing needed
-- 1st-gen classes import `_S1`-suffixed names and narrow types explicitly
-- When S1 is removed, no renames or breaking changes affect 2nd-gen consumers
-
-> **Never suffix with `_S2`.** If a constant or type has `_S2` in its name, it should be renamed to the unsuffixed version.
+> **Note:** S1-only constants and types (`_S1` suffix) are no longer needed in core. If you encounter them in existing files, they can be removed. 1st-gen manages its own values independently.
 
 ## File structure
 
@@ -132,14 +112,11 @@ Organize the file in this order:
 
 1. **Copyright header**
 2. **Imports** (typically only `ElementSize` from core mixins)
-3. **Shared constants** — sizes (e.g., `BADGE_VALID_SIZES`), canonical base arrays (e.g., `BADGE_VARIANTS_COLOR`, `BADGE_VARIANTS_SEMANTIC`), non-variant constants (e.g., `FIXED_VALUES`)
-4. **S1-only constants** — subset arrays exclusive to 1st-gen, validated against canonical types via `satisfies` (e.g., `BADGE_VARIANTS_COLOR_S1`, `BADGE_VARIANTS_S1`)
-5. **Canonical constants** — composed arrays that spread from shared bases (e.g., `BADGE_VARIANTS`)
-6. **Types** — shared types (e.g., `BadgeSize`, `BadgeColorVariant`), then S1-only types (e.g., `BadgeVariantS1`), then canonical types (e.g., `BadgeVariant`)
+3. **Constants** — sizes (e.g., `BADGE_VALID_SIZES`), variant arrays (e.g., `BADGE_VARIANTS_COLOR`, `BADGE_VARIANTS_SEMANTIC`), non-variant constants (e.g., `FIXED_VALUES`)
+4. **Canonical constants** — composed arrays that spread from base arrays (e.g., `BADGE_VARIANTS`)
+5. **Types** — types derived from the const arrays (e.g., `BadgeSize`, `BadgeColorVariant`, `BadgeVariant`)
 
-Canonical base arrays (like `BADGE_VARIANTS_COLOR`) belong in the shared section because they define the source-of-truth values that both generations reference. S1 subset arrays validate against the canonical type, and canonical composed arrays spread from the shared bases. This ensures S1 arrays can use `satisfies` against canonical types defined earlier in the file.
-
-In practice, sections 4 and 5 are only needed when S1 and S2 support different value sets for the same property. If there is no S1/S2 split (e.g., Asset variants), only the shared section is needed.
+> **Note:** S1-only constants and types are no longer needed in core. Since 1st-gen does not import from core, you only need to define the canonical S2 values here. If you encounter existing S1 sections in types files, they can be removed.
 
 ### Section separators
 
@@ -173,9 +150,8 @@ Constants use `as const` to preserve literal types. When a shared constraint typ
 | ------- | ------- | ----------- |
 | `as const` | Preserves literal types for type derivation | All constant arrays |
 | `as const satisfies readonly T[]` | Adds compile-time validation against a shared type | When a constraint type exists (sizes, static colors) |
-| `as const satisfies readonly CanonicalType[]` | Validates S1 values are a subset of the canonical set | S1 subset arrays where the canonical type is defined in SHARED |
 
-> **When to introduce `satisfies` for a new category:** If a shared constraint type is added to core (e.g., a `StaticColor` type for `'white' | 'black'`), update the guidance here and add `satisfies` to the corresponding constant pattern. The rule is: `satisfies` is warranted when a cross-component type already exists to validate against. For S1 subset arrays, `satisfies` against the canonical type is warranted because the canonical base array is always defined in SHARED before the S1-ONLY section.
+> **When to introduce `satisfies` for a new category:** If a shared constraint type is added to core (e.g., a `StaticColor` type for `'white' | 'black'`), update the guidance here and add `satisfies` to the corresponding constant pattern. The rule is: `satisfies` is warranted when a cross-component type already exists to validate against.
 
 ### Sizes
 
@@ -198,12 +174,12 @@ Do not add an explicit type annotation (e.g., `: ElementSize[]`) — it widens t
 
 ### Variants with S1/S2 split
 
-When S1 and S2 support different variant sets, define the canonical base arrays in the SHARED section, then compose each generation from them. S1 subset arrays go in the S1-ONLY section and validate against the canonical type:
+When a component has multiple groups of variants (e.g., semantic vs color), define base arrays separately and compose them into a canonical array:
 
 ```typescript
 // ── SHARED ──
 
-// Semantic variants shared across both generations
+// Semantic variants
 export const BADGE_VARIANTS_SEMANTIC = [
     'accent',
     'informative',
@@ -260,9 +236,9 @@ export const BADGE_VARIANTS = [
 - **Canonical arrays never reference S1 arrays** — each array is self-contained or spreads only from shared constants. This prevents deletion of S1 content from breaking canonical arrays
 - **CANONICAL section contains only composed arrays** — arrays that spread from shared bases (e.g., `BADGE_VARIANTS` combines semantic and color)
 
-### Variants without S1/S2 split
+### Simple variant arrays
 
-When both generations share the same values, a single constant is sufficient. No S1 or S2 section is needed.
+When a component has a single set of values, a single constant is sufficient.
 
 ```typescript
 export const ASSET_VARIANTS = ['file', 'folder'] as const;
