@@ -5,6 +5,7 @@
 - Collapses the tab sequence to **one** tab stop for the composite by setting `tabindex="0"` on the active item and `tabindex="-1"` on the others it manages.
 - Moves focus with **Arrow** keys according to `direction`: horizontal (inline axis), vertical (block axis), or **grid** (rows and columns from layout).
 - Supports **Home** / **End** to jump to the first or last item (for `grid`, order is visual row-major).
+- In **`grid`** mode only, **Ctrl+Home** moves focus to the **first cell in the first row** and **Ctrl+End** to the **last cell in the last row** (rows are derived from layout; ragged last rows use the final cell in that row).
 - Optional **wrap** (end wraps to start) and **memory** (Tab returns to the last focused item), similar to `wrap` and `nomemory` concepts in the `focusgroup` proposal.
 
 ## Import
@@ -77,7 +78,7 @@ this.navigation = new FocusgroupNavigationController(this, {
 
 ### Example (grid)
 
-Use `direction: 'grid'` when items are laid out in rows (for example CSS Grid). The controller groups items into rows using bounding rectangles, then maps Arrow keys to cell movement. **Home** / **End** use visual row-major order.
+Use `direction: 'grid'` when items are laid out in rows (for example CSS Grid). The controller groups items into rows using bounding rectangles, then maps Arrow keys to cell movement. **Home** / **End** use visual row-major order (first and last item in that flattened sequence). **Ctrl+Home** / **Ctrl+End** jump to the first cell of the top row or the last cell of the bottom row, which matches rectangular grids and differs from plain **End** only when the last row has fewer cells than earlier rows.
 
 ## API
 

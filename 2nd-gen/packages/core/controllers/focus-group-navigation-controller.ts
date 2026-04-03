@@ -22,7 +22,8 @@ import type { ReactiveController, ReactiveElement } from 'lit';
  *
  * - **horizontal**: Arrow keys on the inline axis move focus (respects `dir`).
  * - **vertical**: Arrow keys on the block axis move focus.
- * - **grid**: Arrow keys move in rows and columns using bounding-rect layout.
+ * - **grid**: Arrow keys move in rows and columns using bounding-rect layout; Ctrl+Home / Ctrl+End
+ *   jump to the first cell of the first row or the last cell of the last row.
  */
 export type FocusgroupDirection = 'horizontal' | 'vertical' | 'grid';
 
@@ -122,7 +123,9 @@ export type FocusgroupNavigationActiveChangeDetail = {
  * The controller:
  * - Keeps exactly one item in the tab order (`tabindex="0"`) per composite; sets
  *   `tabindex="-1"` on other items it manages.
- * - Handles Arrow keys, Home, and End for focus movement (and optionally wrap).
+ * - Handles Arrow keys, Home, and End for focus movement (and optionally wrap). In **`grid`**
+ *   mode only, **Ctrl+Home** / **Ctrl+End** move to the first cell of the first row or the
+ *   last cell of the last row (by layout-derived rows).
  * - Supports optional last-focused memory when re-entering via Tab.
  * - Exposes {@link FocusgroupNavigationController.focusItem} for programmatic focus.
  *
@@ -507,7 +510,8 @@ export class FocusgroupNavigationController implements ReactiveController {
   }
 
   /**
-   * Resolves which managed item should receive arrow / Home / End handling for this key event.
+   * Resolves which managed item should receive arrow, Home, End, or grid Ctrl+Home / Ctrl+End
+   * handling for this key event.
    *
    * Listeners on the shadow **host** often see a **retargeted** {@link KeyboardEvent.target}
    * (the host) while focus is on a descendant inside the shadow tree, so matching
@@ -549,20 +553,46 @@ export class FocusgroupNavigationController implements ReactiveController {
    * Capture-phase `keydown` handler: arrow keys and Home/End move focus among eligible items
    * when the event target is managed; calls `preventDefault` when handling navigation.
    *
+   * When {@link FocusgroupDirection | `direction`} is **`grid`**, **Ctrl+Home** focuses the
+   * first cell in the first row and **Ctrl+End** focuses the last cell in the last row (from
+   * {@link buildRows}); other modifier combinations are ignored except plain Home/End.
+   *
    * @param event - Keyboard event from the focused element inside the host.
    */
   private handleKeydown(event: KeyboardEvent): void {
-    if (
-      event.defaultPrevented ||
-      event.altKey ||
-      event.ctrlKey ||
-      event.metaKey
-    ) {
+    if (event.defaultPrevented || event.altKey) {
       return;
     }
+
     const items = this.getEligibleItems();
     const target = this.resolveManagedKeydownTarget(event, items);
     if (!target) {
+      return;
+    }
+
+    if (
+      this.options.direction === 'grid' &&
+      event.ctrlKey &&
+      !event.metaKey &&
+      (event.key === 'Home' || event.key === 'End')
+    ) {
+      const grid = this.buildRows(items);
+      if (grid.length > 0) {
+        const firstRow = grid[0];
+        const lastRow = grid[grid.length - 1];
+        const boundary =
+          event.key === 'Home'
+            ? (firstRow?.[0] ?? null)
+            : (lastRow?.[lastRow.length - 1] ?? null);
+        if (boundary && boundary !== target) {
+          event.preventDefault();
+          this.focusItem(boundary);
+        }
+      }
+      return;
+    }
+
+    if (event.ctrlKey || event.metaKey) {
       return;
     }
 

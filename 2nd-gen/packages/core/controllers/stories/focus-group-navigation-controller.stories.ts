@@ -428,7 +428,9 @@ export const VerticalMenu: Story = {
 };
 
 /**
- * Arrow keys move across a 3×3 grid; Home and End jump to the first and last cell in row-major order.
+ * Arrow keys move across a 3×3 grid; **Home** / **End** jump to the first and last cell in
+ * row-major order; **Ctrl+Home** / **Ctrl+End** jump to the first cell of the first row and
+ * the last cell of the last row (equivalent here to cells **1** and **9**).
  */
 export const Grid: Story = {
   render: () => html`
