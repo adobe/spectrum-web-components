@@ -32,7 +32,7 @@ This guide explains how to organize a component class in 2nd-gen. Every componen
 
 ## Overview
 
-The base class holds shared logic. The concrete class holds styles, rendering, and anything specific to 2nd-gen (S2). Code is split this way so 1st-gen and 2nd-gen can share the same behavior without duplicating it.
+The base class holds behavior and API. The concrete class holds styles, rendering, and anything specific to the visual layer. This separation keeps logic testable and reusable independently of rendering.
 
 > **Reference implementation:** [Badge.base.ts](../../../2nd-gen/packages/core/components/badge/Badge.base.ts) (base) and [Badge.ts](../../../2nd-gen/packages/swc/components/badge/Badge.ts) (concrete).
 
@@ -40,7 +40,7 @@ The base class holds shared logic. The concrete class holds styles, rendering, a
 
 | Class | Package | Location | Purpose |
 |-------|---------|----------|---------|
-| Base (abstract) | core | `core/components/<name>/Component.base.ts` | Shared behavior, validation, and API |
+| Base (abstract) | core | `core/components/<name>/Component.base.ts` | Behavior, validation, and API |
 | Concrete | swc | `swc/components/<name>/Component.ts` | Styles, rendering, and 2nd-gen API |
 
 The base class is `abstract`. You cannot create an instance of it directly. The concrete class extends the base and provides everything needed to render the component.
@@ -51,13 +51,13 @@ The base class is organized into up to three sections:
 
 ```text
 API TO OVERRIDE    → Properties and statics that subclasses must set
-SHARED API         → Properties and constants shared across all generations
+SHARED API         → Properties and constants used by all concrete classes
 IMPLEMENTATION     → Lifecycle methods, validation, and internal logic
 ```
 
 ### Section: API TO OVERRIDE
 
-This section holds properties and static members that each concrete class **must** override. These differ between 1st-gen and 2nd-gen, so the base class declares them but does not set their final values.
+This section holds properties and static members that each concrete class **must** override. The base class declares them but does not set their final values — concrete classes provide the actual values.
 
 **What goes here:**
 
