@@ -11,7 +11,7 @@
  */
 
 :host {
-  display: inline-block;
+  display: inline-flex;
   place-self: start;
   vertical-align: middle;
 }
@@ -20,17 +20,20 @@
   box-sizing: border-box;
 }
 
+/* @todo Size `s` is noted as the default in Spectrum design documentation, so be aware there is a discrepancy between the t-shirt API, which supports `m` as the default. SWC-1847 */
 .swc-Badge {
   --_swc-badge-border-width: token("border-width-200");
-  --_swc-badge-border-width-deduction: calc(var(--_swc-badge-border-width) * 2);
-  --_swc-badge-padding-block: token("component-top-to-text-100") token("component-bottom-to-text-100");
+  --_swc-badge-padding-block: var(--swc-badge-padding-block, token("component-padding-vertical-100"));
+  --_swc-badge-padding-inline-start: var(--swc-badge-padding-inline-start, var(--swc-badge-padding-inline, token("component-edge-to-text-100")));
+  --_swc-badge-padding-inline: var(--swc-badge-padding-inline, token("component-edge-to-text-100"));
 
   display: inline-flex;
   gap: var(--swc-badge-gap, token("text-to-visual-100"));
   align-items: center;
   min-block-size: var(--swc-badge-height, token("component-height-100"));
-  padding-block: calc(var(--swc-badge-padding-block, var(--_swc-badge-padding-block)) - var(--_swc-badge-border-width-deduction));
-  padding-inline: calc(var(--swc-badge-padding-inline, token("component-edge-to-text-100")) - var(--_swc-badge-border-width-deduction));
+  padding-block: calc(var(--_swc-badge-padding-block) - var(--_swc-badge-border-width));
+  padding-inline-start: calc(var(--_swc-badge-padding-inline-start) - var(--_swc-badge-border-width));
+  padding-inline-end: calc(var(--_swc-badge-padding-inline) - var(--_swc-badge-border-width));
   color: var(--swc-badge-label-icon-color, token("white"));
   background: var(--swc-badge-background-color, token("accent-background-color-default"));
   border: var(--_swc-badge-border-width) solid var(--swc-badge-border-color, transparent);
@@ -38,8 +41,15 @@
   cursor: default;
 }
 
-.swc-Badge:has(.swc-Badge-icon) {
-  --swc-badge-padding-inline: var(--swc-badge-with-icon-padding-inline, token("component-edge-to-visual-100"));
+.swc-Badge:where(:has(.swc-Badge-icon):not(.swc-Badge--no-label)) {
+  --swc-badge-padding-inline-start: var(--swc-badge-with-icon-padding-inline, token("component-edge-to-visual-100"));
+}
+
+.swc-Badge--no-label:where(:has(.swc-Badge-icon)) {
+  --swc-badge-padding-block: var(--swc-badge-with-icon-only-padding-block, token("component-edge-to-visual-only-100"));
+  --swc-badge-padding-inline-start: var(--swc-badge-with-icon-only-padding-inline, token("component-edge-to-visual-only-100"));
+  --swc-badge-padding-inline: var(--swc-badge-with-icon-only-padding-inline, token("component-edge-to-visual-only-100"));
+  --swc-badge-gap: 0;
 }
 
 .swc-Badge-label {
@@ -71,7 +81,9 @@
   --swc-badge-gap: token("text-to-visual-75");
   --swc-badge-padding-inline: token("component-edge-to-text-75");
   --swc-badge-with-icon-padding-inline: token("component-edge-to-visual-75");
-  --swc-badge-padding-block: token("component-top-to-text-75") token("component-bottom-to-text-75");
+  --swc-badge-with-icon-only-padding-inline: token("component-edge-to-visual-only-75");
+  --swc-badge-with-icon-only-padding-block: token("component-edge-to-visual-only-75");
+  --swc-badge-padding-block: token("component-padding-vertical-75");
   --swc-badge-font-size: token("font-size-75");
   --swc-badge-icon-size: token("workflow-icon-size-75");
 }
@@ -82,7 +94,9 @@
   --swc-badge-gap: token("text-to-visual-200");
   --swc-badge-padding-inline: token("component-edge-to-text-200");
   --swc-badge-with-icon-padding-inline: token("component-edge-to-visual-200");
-  --swc-badge-padding-block: token("component-top-to-text-200") token("component-bottom-to-text-200");
+  --swc-badge-with-icon-only-padding-inline: token("component-edge-to-visual-only-200");
+  --swc-badge-with-icon-only-padding-block: token("component-edge-to-visual-only-200");
+  --swc-badge-padding-block: token("component-padding-vertical-200");
   --swc-badge-font-size: token("font-size-200");
   --swc-badge-icon-size: token("workflow-icon-size-200");
 }
@@ -93,7 +107,9 @@
   --swc-badge-gap: token("text-to-visual-300");
   --swc-badge-padding-inline: token("component-edge-to-text-300");
   --swc-badge-with-icon-padding-inline: token("component-edge-to-visual-300");
-  --swc-badge-padding-block: token("component-top-to-text-300") token("component-bottom-to-text-300");
+  --swc-badge-with-icon-only-padding-inline: token("component-edge-to-visual-only-300");
+  --swc-badge-with-icon-only-padding-block: token("component-edge-to-visual-only-300");
+  --swc-badge-padding-block: token("component-padding-vertical-300");
   --swc-badge-font-size: token("font-size-300");
   --swc-badge-icon-size: token("workflow-icon-size-300");
 }
