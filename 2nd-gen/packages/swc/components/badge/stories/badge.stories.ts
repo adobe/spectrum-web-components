@@ -81,7 +81,7 @@ argTypes.size = {
 };
 
 // @todo: create a select dropdown with all available/acceptable icons for a component.
-// For now, this arg is turned off in the control table since the string doesn't get parsed as HTML
+// For now, this arg is turned off in the control table since the string doesn't get parsed as HTML: SWC-1853
 argTypes['icon-slot'] = {
   ...argTypes['icon-slot'],
   control: false,
@@ -273,7 +273,7 @@ export const Anatomy: Story = {
  * The `m` size is the default and most frequently used option. Use larger sizes sparingly to create a hierarchy of importance on a page.
  */
 
-// @todo - We should make sure to capture icon-only badges in all sizes for VRTs.
+// @todo - We should make sure to capture icon-only badges in all sizes for VRTs: SWC-1852
 export const Sizes: Story = {
   render: (args) => html`
     ${BADGE_VALID_SIZES.map(
