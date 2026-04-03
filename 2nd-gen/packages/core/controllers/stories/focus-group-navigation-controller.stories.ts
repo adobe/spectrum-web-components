@@ -258,6 +258,102 @@ export class DemoFocusgroupVertical extends LitElement {
 /**
  * @internal
  *
+ * Storybook-only host demonstrating {@link FocusgroupNavigationController} with
+ * `skipDisabled: true` so native `disabled` and `aria-disabled="true"` items are omitted
+ * from roving tabindex and arrow navigation.
+ */
+@customElement('demo-focusgroup-skip-disabled')
+export class DemoFocusgroupSkipDisabled extends LitElement {
+  /**
+   * Shadow DOM styles for the menu demo (disabled styling for skipped items).
+   */
+  static override styles = css`
+    :host {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 4px;
+      max-width: 16rem;
+      padding: 8px;
+      border: 1px solid var(--spectrum-gray-300, #ddd);
+      border-radius: 4px;
+      background: var(--spectrum-gray-50, #fff);
+    }
+    button {
+      font: inherit;
+      text-align: start;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      background: transparent;
+      cursor: pointer;
+    }
+    button:hover:not([disabled]):not([aria-disabled='true']) {
+      background: var(--spectrum-gray-200, #e8e8e8);
+    }
+    button:focus-visible {
+      outline: 2px solid var(--spectrum-blue-800, #0265dc);
+      outline-offset: 0;
+    }
+    button[disabled],
+    button[aria-disabled='true'] {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  `;
+
+  /**
+   * Prevents activating the `aria-disabled` item if it is clicked (not in arrow sequence).
+   *
+   * @param event - Click from the inactive item.
+   */
+  private handleSkippedAriaDisabledClick(event: Event): void {
+    event.preventDefault();
+  }
+
+  /**
+   * Controller instance: vertical list; disabled and `aria-disabled` items are skipped.
+   */
+  private readonly navigation = new FocusgroupNavigationController(this, {
+    direction: 'vertical',
+    wrap: true,
+    skipDisabled: true,
+    getItems: () =>
+      Array.from(this.renderRoot.querySelectorAll<HTMLElement>('button')),
+  });
+
+  /**
+   * Runs after first render so `renderRoot` contains buttons before {@link FocusgroupNavigationController.refresh}.
+   */
+  protected override firstUpdated(): void {
+    super.firstUpdated();
+    this.navigation.refresh();
+  }
+
+  /**
+   * Renders a file menu with two skipped entries (native **disabled** and **aria-disabled**).
+   */
+  protected override render(): TemplateResult {
+    return html`
+      <button type="button">New</button>
+      <button type="button">Open</button>
+      <button type="button" disabled>Save</button>
+      <button type="button">Print</button>
+      <button
+        type="button"
+        aria-disabled="true"
+        @click=${this.handleSkippedAriaDisabledClick}
+      >
+        Close
+      </button>
+      <button type="button">Help</button>
+    `;
+  }
+}
+
+/**
+ * @internal
+ *
  * Storybook-only host demonstrating `grid` {@link FocusgroupNavigationController} usage.
  */
 @customElement('demo-focusgroup-grid')
@@ -506,6 +602,20 @@ export const VerticalMenu: Story = {
       role="menu"
       aria-label="Edit menu"
     ></demo-focusgroup-vertical>
+  `,
+};
+
+/**
+ * With `skipDisabled: true`, **Save** (`disabled`) and **Close** (`aria-disabled="true"`) are
+ * left out of the tab order and arrow sequence; **New**, **Open**, **Print**, and **Help** are
+ * all reachable with **ArrowDown** / **ArrowUp** (wrap on).
+ */
+export const SkipDisabledMenu: Story = {
+  render: () => html`
+    <demo-focusgroup-skip-disabled
+      role="menu"
+      aria-label="File menu (skip disabled)"
+    ></demo-focusgroup-skip-disabled>
   `,
 };
 

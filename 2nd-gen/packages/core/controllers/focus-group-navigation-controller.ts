@@ -142,6 +142,8 @@ export type FocusgroupNavigationActiveChangeDetail = {
  *   row or the last cell of the last row (by layout-derived rows).
  * - Optional **`pageStep`**: **Page Up** / **Page Down** move by that many items (linear modes)
  *   or rows (**`grid`**).
+ * - Optional **`skipDisabled`**: omit **`disabled`** and **`aria-disabled="true"`** items from
+ *   roving tabindex and arrow navigation.
  * - Supports optional last-focused memory when re-entering via Tab.
  * - Exposes {@link FocusgroupNavigationController.focusItem} for programmatic focus.
  *

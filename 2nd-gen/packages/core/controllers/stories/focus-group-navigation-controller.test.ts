@@ -19,6 +19,7 @@ import focusMeta, {
   Grid,
   HorizontalToolbar,
   ProgrammaticFocus,
+  SkipDisabledMenu,
   VerticalMenu,
 } from './focus-group-navigation-controller.stories.js';
 
@@ -229,6 +230,80 @@ export const VerticalMenuArrowNavigation: Story = {
         expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Paste');
       }
     );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// Skip disabled (native disabled + aria-disabled omitted from arrows)
+// ──────────────────────────────────────────────────────────────
+
+export const SkipDisabledMenuArrowNavigation: Story = {
+  ...SkipDisabledMenu,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<HTMLElement>(
+      canvasElement,
+      'demo-focusgroup-skip-disabled'
+    );
+    const root = host.shadowRoot!;
+    const buttonByLabel = (label: string): HTMLButtonElement => {
+      const b = Array.from(root.querySelectorAll<HTMLButtonElement>('button')).find(
+        (btn) => btn.textContent?.trim() === label
+      );
+      expect(b).toBeTruthy();
+      return b!;
+    };
+
+    await step(
+      'skipped items use tabindex -1 and are disabled or aria-disabled',
+      async () => {
+        const save = buttonByLabel('Save');
+        const close = buttonByLabel('Close');
+        expect(save.disabled).toBe(true);
+        expect(close.getAttribute('aria-disabled')).toBe('true');
+        expect(save.tabIndex).toBe(-1);
+        expect(close.tabIndex).toBe(-1);
+      }
+    );
+
+    await step(
+      'ArrowDown visits every enabled item in order then wraps to first',
+      async () => {
+        buttonByLabel('New').focus();
+        const visited: string[] = [];
+        for (let i = 0; i < 5; i++) {
+          visited.push(shadowActiveButton(host)!.textContent!.trim());
+          keydown(shadowActiveButton(host)!, 'ArrowDown');
+        }
+        expect(visited).toEqual(['New', 'Open', 'Print', 'Help', 'New']);
+      }
+    );
+
+    await step('ArrowUp from first enabled wraps to last enabled', async () => {
+      buttonByLabel('New').focus();
+      keydown(shadowActiveButton(host)!, 'ArrowUp');
+      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Help');
+    });
+
+    await step(
+      'many arrow steps never focus Save or Close',
+      async () => {
+        buttonByLabel('New').focus();
+        for (let i = 0; i < 16; i++) {
+          const label = shadowActiveButton(host)?.textContent?.trim();
+          expect(label).not.toBe('Save');
+          expect(label).not.toBe('Close');
+          keydown(shadowActiveButton(host)!, 'ArrowDown');
+        }
+      }
+    );
+
+    await step('Home and End stay within eligible items only', async () => {
+      buttonByLabel('Print').focus();
+      keydown(shadowActiveButton(host)!, 'Home');
+      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('New');
+      keydown(shadowActiveButton(host)!, 'End');
+      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Help');
+    });
   },
 };
 

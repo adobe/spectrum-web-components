@@ -6,6 +6,7 @@
 - Moves focus with **Arrow** keys according to `direction`: horizontal (inline axis), vertical (block axis), **both** (horizontal and vertical arrows on the same linear order), or **grid** (rows and columns from layout).
 - Supports **Home** / **End** to jump to the first or last item (for `grid`, order is visual row-major).
 - In **`grid`** mode only, **Ctrl+Home** moves focus to the **first cell in the first row** and **Ctrl+End** to the **last cell in the last row** (rows are derived from layout; ragged last rows use the final cell in that row).
+- Optional **`skipDisabled`**: when `true`, elements with native **`disabled`** or **`aria-disabled="true"`** are excluded from roving `tabindex` and from arrow-key navigation (see story **Skip disabled menu**).
 - Optional **`pageStep`**: when set to a non-zero integer, **Page Up** / **Page Down** move that many items in `getItems()` order (linear modes) or that many **rows** in **`grid`** mode.
 - Optional **wrap** (end wraps to start) and **memory** (Tab returns to the last focused item), similar to `wrap` and `nomemory` concepts in the `focusgroup` proposal.
 
@@ -80,17 +81,29 @@ The Storybook story **Both axes linear** demonstrates this on a small toolbar.
 
 ### Example (vertical list, skip disabled)
 
+Items stay in the DOM (for example for layout or screen-reader context), but **`skipDisabled: true`** removes them from the roving tab stop and from arrow movement. Treat both native **`disabled`** and **`aria-disabled="true"`** as skipped.
+
 ```typescript
 this.navigation = new FocusgroupNavigationController(this, {
   direction: 'vertical',
   wrap: true,
   skipDisabled: true,
   getItems: () =>
-    Array.from(
-      this.renderRoot.querySelectorAll<HTMLElement>('[role="menuitem"]')
-    ),
+    Array.from(this.renderRoot.querySelectorAll<HTMLElement>('button')),
 });
 ```
+
+```html
+<!-- In render(): skipped entries are still in getItems() but not focusable via arrows -->
+<button type="button">New</button>
+<button type="button">Open</button>
+<button type="button" disabled>Save</button>
+<button type="button">Print</button>
+<button type="button" aria-disabled="true">Close</button>
+<button type="button">Help</button>
+```
+
+The Storybook story **Skip disabled menu** walks **New → Open → Print → Help** with arrow keys only (Save and Close are never focused).
 
 ### Example (Page Up / Page Down)
 
