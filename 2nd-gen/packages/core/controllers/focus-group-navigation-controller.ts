@@ -328,12 +328,46 @@ export class FocusgroupNavigationController implements ReactiveController {
   }
 
   /**
+   * Whether `node` is the host or reachable from it by walking `parentNode` and
+   * `ShadowRoot.host` (so shadow descendants count, including nested shadow roots).
+   *
+   * `Element.contains()` is not used because it returns false for nodes inside the
+   * host's shadow tree, which would drop every item for typical Lit components.
+   *
+   * @param node - Node to test (may be null).
+   * @returns True if `node` is in the host's shadow-inclusive subtree.
+   */
+  private isNodeWithinHostScope(node: Node | null): boolean {
+    if (!node) {
+      return false;
+    }
+    const host = this.host;
+    let current: Node | null = node;
+    while (current) {
+      if (current === host) {
+        return true;
+      }
+      const parent: Node | null = current.parentNode;
+      if (parent) {
+        current = parent;
+      } else if (current instanceof ShadowRoot) {
+        current = current.host;
+      } else {
+        return false;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Items returned by `getItems` that lie within `host` (shadow-inclusive tree).
    *
    * @returns Candidates before eligibility filtering.
    */
   private getRawItems(): HTMLElement[] {
-    return this.options.getItems().filter((el) => this.host.contains(el));
+    return this.options
+      .getItems()
+      .filter((el) => this.isNodeWithinHostScope(el));
   }
 
   /**
@@ -459,7 +493,7 @@ export class FocusgroupNavigationController implements ReactiveController {
    */
   private handleFocusout(event: FocusEvent): void {
     const next = event.relatedTarget;
-    if (next instanceof Node && this.host.contains(next)) {
+    if (next instanceof Node && this.isNodeWithinHostScope(next)) {
       return;
     }
     const target = event.target;
@@ -470,6 +504,45 @@ export class FocusgroupNavigationController implements ReactiveController {
     ) {
       this.lastFocused = target;
     }
+  }
+
+  /**
+   * Resolves which managed item should receive arrow / Home / End handling for this key event.
+   *
+   * Listeners on the shadow **host** often see a **retargeted** {@link KeyboardEvent.target}
+   * (the host) while focus is on a descendant inside the shadow tree, so matching
+   * `event.target` against `getItems()` fails. {@link Event.composedPath} still includes the
+   * focused node; we also fall back to {@link ShadowRoot.activeElement} when needed.
+   *
+   * @param event - Keyboard event dispatched while focus is in this composite.
+   * @param items - Current eligible items from {@link getEligibleItems}.
+   * @returns The managed element to treat as keydown target, or null.
+   */
+  private resolveManagedKeydownTarget(
+    event: KeyboardEvent,
+    items: HTMLElement[]
+  ): HTMLElement | null {
+    if (items.length === 0) {
+      return null;
+    }
+    const set = new Set(items);
+    for (const node of event.composedPath()) {
+      if (!(node instanceof HTMLElement)) {
+        continue;
+      }
+      if (set.has(node)) {
+        return node;
+      }
+      if (node === this.host) {
+        break;
+      }
+    }
+    const root = this.host.shadowRoot;
+    const active = root?.activeElement;
+    if (active instanceof HTMLElement && set.has(active)) {
+      return active;
+    }
+    return null;
   }
 
   /**
@@ -487,12 +560,9 @@ export class FocusgroupNavigationController implements ReactiveController {
     ) {
       return;
     }
-    const target = event.target;
-    if (!(target instanceof HTMLElement)) {
-      return;
-    }
     const items = this.getEligibleItems();
-    if (!items.includes(target)) {
+    const target = this.resolveManagedKeydownTarget(event, items);
+    if (!target) {
       return;
     }
 
