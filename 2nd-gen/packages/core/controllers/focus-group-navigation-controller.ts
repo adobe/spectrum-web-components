@@ -22,10 +22,12 @@ import type { ReactiveController, ReactiveElement } from 'lit';
  *
  * - **horizontal**: Arrow keys on the inline axis move focus (respects `dir`).
  * - **vertical**: Arrow keys on the block axis move focus.
+ * - **both**: **ArrowLeft** / **ArrowRight** move along `getItems()` order like **horizontal**
+ *   (respects `dir`); **ArrowUp** / **ArrowDown** move backward / forward in the same order.
  * - **grid**: Arrow keys move in rows and columns using bounding-rect layout; Ctrl+Home / Ctrl+End
  *   jump to the first cell of the first row or the last cell of the last row.
  */
-export type FocusgroupDirection = 'horizontal' | 'vertical' | 'grid';
+export type FocusgroupDirection = 'horizontal' | 'vertical' | 'both' | 'grid';
 
 /**
  * Options for {@link FocusgroupNavigationController}.
@@ -40,6 +42,7 @@ export type FocusgroupNavigationOptions = {
 
   /**
    * Determines which arrow keys move focus and how grid navigation is computed.
+   * Use **`both`** when the same linear order should respond to horizontal and vertical arrow keys.
    */
   direction: FocusgroupDirection;
 
@@ -123,9 +126,10 @@ export type FocusgroupNavigationActiveChangeDetail = {
  * The controller:
  * - Keeps exactly one item in the tab order (`tabindex="0"`) per composite; sets
  *   `tabindex="-1"` on other items it manages.
- * - Handles Arrow keys, Home, and End for focus movement (and optionally wrap). In **`grid`**
- *   mode only, **Ctrl+Home** / **Ctrl+End** move to the first cell of the first row or the
- *   last cell of the last row (by layout-derived rows).
+ * - Handles Arrow keys, Home, and End for focus movement (and optionally wrap). **`both`**
+ *   direction accepts horizontal and vertical arrows on the same `getItems()` sequence.
+ *   In **`grid`** mode only, **Ctrl+Home** / **Ctrl+End** move to the first cell of the first
+ *   row or the last cell of the last row (by layout-derived rows).
  * - Supports optional last-focused memory when re-entering via Tab.
  * - Exposes {@link FocusgroupNavigationController.focusItem} for programmatic focus.
  *
@@ -553,6 +557,9 @@ export class FocusgroupNavigationController implements ReactiveController {
    * Capture-phase `keydown` handler: arrow keys and Home/End move focus among eligible items
    * when the event target is managed; calls `preventDefault` when handling navigation.
    *
+   * When {@link FocusgroupDirection | `direction`} is **`both`**, **ArrowLeft** / **ArrowRight**
+   * and **ArrowUp** / **ArrowDown** all participate (see {@link navigateBothAxes}).
+   *
    * When {@link FocusgroupDirection | `direction`} is **`grid`**, **Ctrl+Home** focuses the
    * first cell in the first row and **Ctrl+End** focuses the last cell in the last row (from
    * {@link buildRows}); other modifier combinations are ignored except plain Home/End.
@@ -605,6 +612,9 @@ export class FocusgroupNavigationController implements ReactiveController {
         break;
       case 'vertical':
         next = this.navigateLinear(items, target, event.key, 'vertical', rtl);
+        break;
+      case 'both':
+        next = this.navigateBothAxes(items, target, event.key, rtl);
         break;
       case 'grid':
         next = this.navigateGrid(items, target, event.key, rtl);
@@ -671,6 +681,52 @@ export class FocusgroupNavigationController implements ReactiveController {
       } else if (key === 'ArrowDown') {
         delta = 1;
       }
+    }
+
+    if (delta === 0) {
+      return null;
+    }
+
+    let nextIdx = idx + delta;
+    if (this.options.wrap) {
+      nextIdx = (nextIdx + items.length) % items.length;
+    } else if (nextIdx < 0 || nextIdx >= items.length) {
+      return null;
+    }
+    return items[nextIdx] ?? null;
+  }
+
+  /**
+   * Computes the next focus target when {@link FocusgroupDirection | `direction`} is **`both`**:
+   * inline arrows use the same deltas as {@link navigateLinear} `horizontal` mode; **ArrowUp** /
+   * **ArrowDown** step backward / forward in `getItems()` order (not flipped by `dir`).
+   *
+   * @param items - Eligible items in traversal order.
+   * @param current - Currently focused item.
+   * @param key - `KeyboardEvent.key` value.
+   * @param rtl - When true, horizontal Left/Right swap forward/backward.
+   * @returns Next item, or null if the key is not handled or movement is blocked.
+   */
+  private navigateBothAxes(
+    items: HTMLElement[],
+    current: HTMLElement,
+    key: string,
+    rtl: boolean
+  ): HTMLElement | null {
+    const idx = items.indexOf(current);
+    if (idx < 0) {
+      return null;
+    }
+
+    let delta = 0;
+    if (key === 'ArrowLeft') {
+      delta = rtl ? 1 : -1;
+    } else if (key === 'ArrowRight') {
+      delta = rtl ? -1 : 1;
+    } else if (key === 'ArrowUp') {
+      delta = -1;
+    } else if (key === 'ArrowDown') {
+      delta = 1;
     }
 
     if (delta === 0) {

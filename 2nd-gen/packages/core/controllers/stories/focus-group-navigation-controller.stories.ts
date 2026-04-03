@@ -85,6 +85,69 @@ export class DemoFocusgroupHorizontal extends LitElement {
 /**
  * @internal
  *
+ * Storybook-only host demonstrating `direction: 'both'` — horizontal and vertical arrows
+ * move along the same `getItems()` order.
+ */
+@customElement('demo-focusgroup-both-axes')
+export class DemoFocusgroupBothAxes extends LitElement {
+  /**
+   * Shadow DOM styles for the inline toolbar demo (layout matches horizontal; keys differ).
+   */
+  static override styles = css`
+    :host {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    button {
+      font: inherit;
+      padding: 8px 12px;
+      border-radius: 4px;
+      border: 1px solid var(--spectrum-gray-400, #ccc);
+      background: var(--spectrum-gray-75, #f5f5f5);
+      cursor: pointer;
+    }
+    button:focus-visible {
+      outline: 2px solid var(--spectrum-blue-800, #0265dc);
+      outline-offset: 2px;
+    }
+  `;
+
+  /**
+   * Controller instance: both axes on one linear sequence with wrapping.
+   */
+  private readonly navigation = new FocusgroupNavigationController(this, {
+    direction: 'both',
+    wrap: true,
+    getItems: () =>
+      Array.from(this.renderRoot.querySelectorAll<HTMLElement>('button')),
+  });
+
+  /**
+   * Runs after first render so `renderRoot` contains buttons before {@link FocusgroupNavigationController.refresh}.
+   */
+  protected override firstUpdated(): void {
+    super.firstUpdated();
+    this.navigation.refresh();
+  }
+
+  /**
+   * Renders segment controls; **ArrowLeft** / **ArrowRight** and **ArrowUp** / **ArrowDown**
+   * all traverse this row in order.
+   */
+  protected override render(): TemplateResult {
+    return html`
+      <button type="button">Start</button>
+      <button type="button">Section A</button>
+      <button type="button">Section B</button>
+      <button type="button">End</button>
+    `;
+  }
+}
+
+/**
+ * @internal
+ *
  * Storybook-only host demonstrating vertical {@link FocusgroupNavigationController} usage.
  */
 @customElement('demo-focusgroup-vertical')
@@ -411,6 +474,20 @@ export const HorizontalToolbar: Story = {
       role="toolbar"
       aria-label="Text formatting"
     ></demo-focusgroup-horizontal>
+  `,
+};
+
+/**
+ * **ArrowLeft** / **ArrowRight** and **ArrowUp** / **ArrowDown** all move along the same
+ * control order (LTR: Right and Down advance, Left and Up go back). Useful when layout is
+ * horizontal but users expect vertical arrow keys to work as well.
+ */
+export const BothAxesLinear: Story = {
+  render: () => html`
+    <demo-focusgroup-both-axes
+      role="toolbar"
+      aria-label="Segmented controls"
+    ></demo-focusgroup-both-axes>
   `,
 };
 

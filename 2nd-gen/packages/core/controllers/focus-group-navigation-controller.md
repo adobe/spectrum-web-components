@@ -3,7 +3,7 @@
 ## What it does
 
 - Collapses the tab sequence to **one** tab stop for the composite by setting `tabindex="0"` on the active item and `tabindex="-1"` on the others it manages.
-- Moves focus with **Arrow** keys according to `direction`: horizontal (inline axis), vertical (block axis), or **grid** (rows and columns from layout).
+- Moves focus with **Arrow** keys according to `direction`: horizontal (inline axis), vertical (block axis), **both** (horizontal and vertical arrows on the same linear order), or **grid** (rows and columns from layout).
 - Supports **Home** / **End** to jump to the first or last item (for `grid`, order is visual row-major).
 - In **`grid`** mode only, **Ctrl+Home** moves focus to the **first cell in the first row** and **Ctrl+End** to the **last cell in the last row** (rows are derived from layout; ragged last rows use the final cell in that row).
 - Optional **wrap** (end wraps to start) and **memory** (Tab returns to the last focused item), similar to `wrap` and `nomemory` concepts in the `focusgroup` proposal.
@@ -62,6 +62,21 @@ export class MyFormatToolbar extends LitElement {
 }
 ```
 
+### Example (horizontal and vertical arrows, same order)
+
+Use `direction: 'both'` when controls are laid out in a line (or any single sequence) but you want **ArrowUp** / **ArrowDown** to move focus as well as **ArrowLeft** / **ArrowRight**. Inline arrows follow `dir` like `horizontal`; **ArrowUp** / **ArrowDown** step backward / forward in `getItems()` order.
+
+```typescript
+this.navigation = new FocusgroupNavigationController(this, {
+  direction: 'both',
+  wrap: true,
+  getItems: () =>
+    Array.from(this.renderRoot.querySelectorAll<HTMLElement>('button')),
+});
+```
+
+The Storybook story **Both axes linear** demonstrates this on a small toolbar.
+
 ### Example (vertical list, skip disabled)
 
 ```typescript
@@ -95,18 +110,18 @@ On the host, the controller dispatches **`swc-focusgroup-navigation-active-chang
 
 ### Options
 
-| Option               | Type                                   | Default    | Description                                     |
-| -------------------- | -------------------------------------- | ---------- | ----------------------------------------------- |
-| `getItems`           | `() => HTMLElement[]`                  | (required) | Current navigable items.                        |
-| `direction`          | `'horizontal' \| 'vertical' \| 'grid'` | (required) | Arrow-key mode.                                 |
-| `wrap`               | `boolean`                              | `false`    | Wrap at ends.                                   |
-| `memory`             | `boolean`                              | `true`     | Remember last focused for re-entry via Tab.     |
-| `skipDisabled`       | `boolean`                              | `false`    | Skip `disabled` / `aria-disabled="true"` items. |
-| `onActiveItemChange` | `(el) => void`                         | —          | Callback when active item changes.              |
+| Option               | Type                                             | Default    | Description                                                                           |
+| -------------------- | ------------------------------------------------ | ---------- | ------------------------------------------------------------------------------------- |
+| `getItems`           | `() => HTMLElement[]`                            | (required) | Current navigable items.                                                              |
+| `direction`          | `'horizontal' \| 'vertical' \| 'both' \| 'grid'` | (required) | Arrow-key mode. **`both`**: Left/Right and Up/Down on the same `getItems()` sequence. |
+| `wrap`               | `boolean`                                        | `false`    | Wrap at ends.                                                                         |
+| `memory`             | `boolean`                                        | `true`     | Remember last focused for re-entry via Tab.                                           |
+| `skipDisabled`       | `boolean`                                        | `false`    | Skip `disabled` / `aria-disabled="true"` items.                                       |
+| `onActiveItemChange` | `(el) => void`                                   | —          | Callback when active item changes.                                                    |
 
 ## RTL and writing modes
 
-For `horizontal`, **ArrowLeft** / **ArrowRight** follow the host’s resolved `dir` (`rtl` swaps forward/back). Vertical grid movement uses row geometry; column movement respects `dir` for left/right.
+For `horizontal`, **ArrowLeft** / **ArrowRight** follow the host’s resolved `dir` (`rtl` swaps forward/back). For **`both`**, **ArrowLeft** / **ArrowRight** follow `dir` the same way, while **ArrowUp** / **ArrowDown** always step backward / forward in `getItems()` order. In **`grid`** mode, vertical movement uses row geometry; column movement respects `dir` for left/right.
 
 ## Relationship to native `focusgroup`
 
