@@ -39,8 +39,6 @@
     - [Workstreams](03_project-planning/02_workstreams/README.md)
     - [Components](03_project-planning/03_components/README.md)
     - [Milestones](03_project-planning/04_milestones/README.md)
-- [Accessibility guides](04_accessibility_guides/README.md)
-    - [Semantic HTML, ARIA, and cross-root accessibility](04_accessibility_guides/01_semantic_html_aria.md)
 
 </details>
 
