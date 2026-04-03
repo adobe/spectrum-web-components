@@ -17,4 +17,4 @@ When the rule applies, do deep research before writing any code:
 
 **Trivial tasks:** For very small, single-file edits (e.g. typo, one-line fix), a short in-chat confirmation of understanding in the form of a question is acceptable instead of a full research report. Confirm in chat before editing code.
 
-Follow the full workflow and rationale in `.cursor/skills/deep-understanding/SKILL.md`. The written report is the review surface; wrong research leads to incorrect planning and wasted implementation time.
+Follow the full workflow and rationale in `.ai/skills/deep-understanding/SKILL.md`. The written report is the review surface; wrong research leads to incorrect planning and wasted implementation time.

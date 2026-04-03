@@ -14,7 +14,7 @@ Suggests the ideal branch naming format for Spectrum Web Components contribution
 ^[a-z0-9]+\/(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)-[a-z0-9-]+(-swc-[0-9]+)?$
 ```
 
-The canonical list of types and the validation pattern are defined in `.cursor/config.json` under `git.types` and `validationPattern`.
+The canonical list of types and the validation pattern are defined in `.ai/config.json` under `git.types` and `validationPattern`.
 
 ## Message
 
@@ -26,7 +26,7 @@ Username will be automatically pulled from your git config settings.
 
 - Use lowercase letters and numbers only
 - Separate words with dashes (not camelCase)
-- Use conventional commit types from `.cursor/config.json` (`git.types`). Descriptions below are for quick reference:
+- Use conventional commit types from `.ai/config.json` (`git.types`). Descriptions below are for quick reference:
   • **feat**: New feature
   • **fix**: Bug fix
   • **docs**: Documentation only

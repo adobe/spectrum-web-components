@@ -7,7 +7,7 @@ alwaysApply: true
 
 Enforce consistent formatting and technical structure for Storybook stories files in 2nd-gen components.
 
-**See also**: `.cursor/rules/stories-documentation.mdc` for comprehensive guidance on WHAT to document (content, patterns, examples).
+**See also**: `.ai/rules/stories-documentation.md` for comprehensive guidance on WHAT to document (content, patterns, examples).
 
 ## Scope
 

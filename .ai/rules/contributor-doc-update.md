@@ -32,15 +32,15 @@ alwaysApply: false
 3. **Fix any link verification errors** reported by the script (fix straightforward cases; consult the user for ambiguous ones).
 4. **Report results** to the user (files updated, link counts, any remaining issues).
 
-**Skill:** For full Operator and Maintainer workflows, use the contributor-docs-nav skill (`.cursor/skills/contributor-docs-nav/SKILL.md`); it points to the full instructions below.
+**Skill:** For full Operator and Maintainer workflows, use the contributor-docs-nav skill (`.ai/skills/contributor-docs-nav/SKILL.md`); it points to the full instructions below.
 
-Full instructions: `.cursor/skills/contributor-docs-nav/references/ai-agent-instructions.md` (Role 1: Operator).
+Full instructions: `.ai/skills/contributor-docs-nav/references/ai-agent-instructions.md` (Role 1: Operator).
 
 ## If the instructions file is missing
 
 If the file above is not found:
 
-1. Search for `**/ai-agent-instructions.md` and find the one under `.cursor/skills/contributor-docs-nav/references/`.
+1. Search for `**/ai-agent-instructions.md` and find the one under `.ai/skills/contributor-docs-nav/references/`.
 2. Read it to confirm it contains the nav update instructions.
 3. Update this rule with the correct path, inform the user, then run the nav process.
 
