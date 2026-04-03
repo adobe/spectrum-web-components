@@ -51,7 +51,7 @@ export abstract class DividerBase extends SizedMixin(SpectrumElement, {
   /**
    * The static color variant to use for the divider.
    */
-  @property({ reflect: true, attribute: 'static-color' })
+  @property({ type: String, reflect: true, attribute: 'static-color' })
   public staticColor?: DividerStaticColor;
 
   // ──────────────────────
