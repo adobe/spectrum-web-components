@@ -181,10 +181,10 @@ protected get hasIcon(): boolean {
 }
 
 protected override update(changedProperties: PropertyValues): void {
-  super.update(changedProperties);
   if (window.__swc?.DEBUG) {
-    // ...variant validation...
+    // ...variant validation (before super.update so it runs before render)...
   }
+  super.update(changedProperties);
 }
 ```
 
@@ -311,6 +311,8 @@ protected override render(): TemplateResult {
   `;
 }
 ```
+
+For `classMap` object keys (bracketed string keys vs plain quoted keys, mixing with template literal keys, and what to avoid), see [classMap patterns](09_rendering-patterns.md#classmap-patterns).
 
 ## Section comment format
 
