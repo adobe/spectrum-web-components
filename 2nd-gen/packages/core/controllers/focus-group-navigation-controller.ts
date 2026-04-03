@@ -172,7 +172,40 @@ export type FocusgroupNavigationActiveChangeDetail = {
  *
  * @see https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#keyboardnavigationinsidecomponents
  * @see https://open-ui.org/components/scoped-focusgroup.explainer/
+ *
+ * **Native `focusgroup` (future):** The comment block immediately below this class lists which
+ * parts of this file are the most likely candidates for deprecation or deletion once browsers
+ * ship built-in focus-group behavior that covers the same cases (especially roving tabindex and
+ * arrow-key focus moves). Some options (for example rect-based **grid**, **pageStep**, or
+ * **skipDisabled**) may remain useful longer if the platform surface stays narrower.
  */
+// ─────────────────────────────────────────────────────────────────────────────
+// Native `focusgroup` (future) — likely deprecation candidates
+//
+// If/when browsers implement `focusgroup` (or equivalent) with behavior comparable to this
+// controller for your targets, consider removing or shrinking the following areas first:
+//
+// 1. Roving tabindex — `applyRovingTabindex()`, the tabindex portions of `refresh()` and
+//    `focusItem()`, and assigning `tabIndex` to ineligible raw items.
+//
+// 2. Host keyboard interception — `handleKeydown()`, `hostConnected` / `hostDisconnected`
+//    `keydown` listeners, `resolveManagedKeydownTarget()` (shadow retargeting workaround), and
+//    navigation helpers: `navigateLinear`, `navigateBothAxes`, `navigateGrid`, `navigatePage`,
+//    `navigatePageLinearItems`, `navigatePageGridRows`, `getEffectivePageMagnitude`, plus
+//    Home/End and Ctrl+Home/Ctrl+End branches inside `handleKeydown`.
+//
+// 3. JS “memory” for Tab re-entry — `lastFocused`, `handleFocusin` / `handleFocusout` memory
+//    paths, and `refresh()`’s preference for `lastFocused` when native group memory replaces
+//    this pattern.
+//
+// Often slower to retire (verify against shipped HTML/Open UI behavior): `buildRows` and
+// geometry-based **grid** navigation; **pageStep** (Page Up/Down magnitude); **skipDisabled** and
+// `isDisabledForSkip`; `isNodeWithinHostScope` / `getRawItems` if declarative scoping differs in
+// shadow DOM; `dispatchActiveChange`, `onActiveItemChange`, and the exported event name if
+// products still want a single composed integration hook. `isRtl()` may duplicate or diverge
+// from native axis mapping — revisit when testing RTL with native focusgroup.
+// ─────────────────────────────────────────────────────────────────────────────
+
 export class FocusgroupNavigationController implements ReactiveController {
   /**
    * Lit reactive host this controller is attached to.
@@ -323,6 +356,9 @@ export class FocusgroupNavigationController implements ReactiveController {
   // ─────────────────────────
   //     IMPLEMENTATION
   // ─────────────────────────
+  //
+  // Which parts may become redundant under native `focusgroup` is summarized in the
+  // “Native `focusgroup` (future)” comment block directly above the class declaration.
 
   /**
    * Resolves `dir` from the shadow host, nearest `dir` ancestor, or `document.documentElement`.
