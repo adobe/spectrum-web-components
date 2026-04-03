@@ -10,22 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import {
-  CSSResultArray,
-  html,
-  TemplateResult,
-} from '@spectrum-web-components/base';
+export const ASSET_VARIANTS = [
+  'file',
+  'folder',
+] as const satisfies readonly string[];
 
-import { DividerBase } from './Divider.base.js';
-import styles from './divider.css.js';
-
-/**
- * @element sp-divider
- */
-export class Divider extends DividerBase {
-  public static override styles: CSSResultArray = [styles];
-
-  protected override render(): TemplateResult {
-    return html``;
-  }
-}
+export type AssetVariant = (typeof ASSET_VARIANTS)[number];
