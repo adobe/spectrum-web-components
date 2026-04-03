@@ -1,6 +1,8 @@
 # AI and agent documentation
 
-This directory contains rules and skills that coding agents uses to enforce consistent formatting and structure in our codebase.
+Coding agents should start with [`AGENTS.md`](../AGENTS.md) at the repository root. It summarizes how to use this directory as the canonical source for rules and skills.
+
+This directory contains rules and skills that coding agents use to enforce consistent formatting and structure in our codebase.
 
 ## Rules
 
@@ -39,7 +41,7 @@ Additional, more specific rules can be found in the `rules` directory in either 
 - **required_sections**: Ensures required sections are present
 - **templates**: Enforces template structure for different ticket types
 - **labels**: Validates that only allowed labels are used
-- **issue_types**: Ensures correct issue type selectionc
+- **issue_types**: Ensures correct issue type selection
 
 #### Styles
 
@@ -55,7 +57,7 @@ Additional, more specific rules can be found in the `rules` directory in either 
 
 - **branch_format**: Recommends `username/type-description[-swc-XXX]` format
   - Uses conventional commit types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`
-  - Commit type list and validation pattern: `.cursor/config.json` (`git.types`, `validationPattern`). When adding or removing a type, update both `types` and `validationPattern` together.
+  - Commit type list and validation pattern: `.ai/config.json` (`git.types`, `validationPattern`). When adding or removing a type, update both `types` and `validationPattern` together.
   - Lowercase letters and numbers only, words separated by dashes
   - Severity: Warning (recommended, not required)
 
@@ -111,7 +113,7 @@ These two rules share the same glob (`2nd-gen/**/stories/**`) and work as a pair
 
 **Always-applied rules:** Rules use `alwaysApply: true` to activate automatically, or `globs` to activate when matching files are edited.
 **On-demand rules:** Rules with `alwaysApply: false` and no globs are on-demand only (activated by `@` mentioning them in chat).
-**Config-based rules:** The `config.json` also defines structured validation for Cursor (or other tooling) to verify branch names, Jira ticket drafts, text-formatting, etc.:
+**Config-based rules:** The `config.json` also defines structured validation for editors and other tooling to verify branch names, Jira ticket drafts, text-formatting, etc.:
 
 - **text_formatting.headings**: Sentence case enforcement with technical term exceptions
 - **text_formatting.patterns**: File patterns for text formatting (`**/*.md`, `**/*.txt`, `**/*.mdx`)
