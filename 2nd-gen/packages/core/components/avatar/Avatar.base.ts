@@ -141,7 +141,7 @@ export abstract class AvatarBase extends SpectrumElement {
     if (!this.hasAttribute('size')) {
       this.setAttribute('size', String(this.size));
     }
-    this.toggleAttribute('aria-hidden', this.alt === '');
+    this._syncAriaHidden();
     if (window.__swc?.DEBUG) {
       this.warnMissingAlt();
     }
@@ -150,10 +150,18 @@ export abstract class AvatarBase extends SpectrumElement {
   protected override updated(changes: PropertyValues): void {
     super.updated(changes);
     if (changes.has('alt')) {
-      this.toggleAttribute('aria-hidden', this.alt === '');
+      this._syncAriaHidden();
       if (window.__swc?.DEBUG) {
         this.warnMissingAlt();
       }
+    }
+  }
+
+  private _syncAriaHidden(): void {
+    if (this.alt === '') {
+      this.setAttribute('aria-hidden', 'true');
+    } else {
+      this.removeAttribute('aria-hidden');
     }
   }
 

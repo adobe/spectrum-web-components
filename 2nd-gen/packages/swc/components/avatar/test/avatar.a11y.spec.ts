@@ -27,9 +27,12 @@ test.describe('Avatar - ARIA Snapshots', () => {
   test('should expose img role with alt text for a labeled avatar', async ({
     page,
   }) => {
+    // Use the Anatomy story (explicit html template) rather than Overview
+    // (template(args)) to avoid a timing issue where wc-toolkit sets `alt`
+    // as a JS property after first render, leaving the img briefly decorative.
     const root = await gotoStory(
       page,
-      'components-avatar--overview',
+      'components-avatar--anatomy',
       'swc-avatar'
     );
     await expect(root).toMatchAriaSnapshot(`
@@ -52,7 +55,7 @@ test.describe('Avatar - ARIA Snapshots', () => {
       'aria-hidden on decorative host'
     ).toBe('true');
     // aria-hidden="true" on the host removes the avatar entirely from the AT.
-    await expect(root).toMatchAriaSnapshot();
+    await expect(root.getByRole('img')).toHaveCount(0);
   });
 
   test('should handle both labeled and decorative avatars in the same story', async ({
@@ -77,8 +80,25 @@ test.describe('Avatar - ARIA Snapshots', () => {
       'components-avatar--sizes',
       'swc-avatar'
     );
-    // Each avatar has a meaningful alt that includes the size value.
-    await expect(root).toMatchAriaSnapshot();
+    await expect(root).toMatchAriaSnapshot(`
+      - img "Jane Doe, size 50"
+      - img "Jane Doe, size 75"
+      - img "Jane Doe, size 100"
+      - img "Jane Doe, size 200"
+      - img "Jane Doe, size 300"
+      - img "Jane Doe, size 400"
+      - img "Jane Doe, size 500"
+      - img "Jane Doe, size 600"
+      - img "Jane Doe, size 700"
+      - img "Jane Doe, size 800"
+      - img "Jane Doe, size 900"
+      - img "Jane Doe, size 1000"
+      - img "Jane Doe, size 1100"
+      - img "Jane Doe, size 1200"
+      - img "Jane Doe, size 1300"
+      - img "Jane Doe, size 1400"
+      - img "Jane Doe, size 1500"
+    `);
   });
 
   test('should expose correct img role when over-background is active', async ({

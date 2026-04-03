@@ -142,7 +142,9 @@ export const Playground: Story = {
 // ──────────────────────────
 
 export const Overview: Story = {
-  render: (args) => template(args),
+  render: ({ src, alt, size }) => html`
+    <swc-avatar src=${src} alt=${alt} size=${size}></swc-avatar>
+  `,
   tags: ['overview'],
   args: {
     src: PLACEHOLDER_SRC,
