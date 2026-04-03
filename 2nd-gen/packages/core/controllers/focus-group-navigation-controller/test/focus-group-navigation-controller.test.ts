@@ -248,9 +248,9 @@ export const SkipDisabledMenuArrowNavigation: Story = {
     );
     const root = host.shadowRoot!;
     const buttonByLabel = (label: string): HTMLButtonElement => {
-      const b = Array.from(root.querySelectorAll<HTMLButtonElement>('button')).find(
-        (btn) => btn.textContent?.trim() === label
-      );
+      const b = Array.from(
+        root.querySelectorAll<HTMLButtonElement>('button')
+      ).find((btn) => btn.textContent?.trim() === label);
       expect(b).toBeTruthy();
       return b!;
     };
@@ -286,18 +286,15 @@ export const SkipDisabledMenuArrowNavigation: Story = {
       expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Help');
     });
 
-    await step(
-      'many arrow steps never focus Save or Close',
-      async () => {
-        buttonByLabel('New').focus();
-        for (let i = 0; i < 16; i++) {
-          const label = shadowActiveButton(host)?.textContent?.trim();
-          expect(label).not.toBe('Save');
-          expect(label).not.toBe('Close');
-          keydown(shadowActiveButton(host)!, 'ArrowDown');
-        }
+    await step('many arrow steps never focus Save or Close', async () => {
+      buttonByLabel('New').focus();
+      for (let i = 0; i < 16; i++) {
+        const label = shadowActiveButton(host)?.textContent?.trim();
+        expect(label).not.toBe('Save');
+        expect(label).not.toBe('Close');
+        keydown(shadowActiveButton(host)!, 'ArrowDown');
       }
-    );
+    });
 
     await step('Home and End stay within eligible items only', async () => {
       buttonByLabel('Print').focus();
@@ -490,12 +487,15 @@ export const TextPrefixFocusNavigation: Story = {
       expect(shadowActiveButton(host)?.getAttribute('aria-label')).toBe('Undo');
     });
 
-    await step('whitespace-only prefix returns false without changing focus', async () => {
-      host.focusByTextPrefix('Paste');
-      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Paste');
-      expect(host.focusByTextPrefix('   ')).toBe(false);
-      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Paste');
-    });
+    await step(
+      'whitespace-only prefix returns false without changing focus',
+      async () => {
+        host.focusByTextPrefix('Paste');
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Paste');
+        expect(host.focusByTextPrefix('   ')).toBe(false);
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Paste');
+      }
+    );
 
     await step('no match returns false', async () => {
       expect(host.focusByTextPrefix('zzz')).toBe(false);

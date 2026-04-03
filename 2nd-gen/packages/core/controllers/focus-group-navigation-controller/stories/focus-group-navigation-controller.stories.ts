@@ -677,11 +677,7 @@ export class DemoFocusgroupTextPrefix extends LitElement {
         <button type="button">Cut</button>
         <button type="button">Paste</button>
         <button type="button">Select all</button>
-        <button
-          type="button"
-          class="typeahead-icon"
-          aria-label="Undo"
-        >
+        <button type="button" class="typeahead-icon" aria-label="Undo">
           ↩
         </button>
       </div>

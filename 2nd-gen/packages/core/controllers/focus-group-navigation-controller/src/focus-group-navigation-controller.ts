@@ -534,7 +534,7 @@ export class FocusgroupNavigationController implements ReactiveController {
         }
         const ref =
           root instanceof ShadowRoot
-            ? root.getElementById(id) ?? el.ownerDocument.getElementById(id)
+            ? (root.getElementById(id) ?? el.ownerDocument.getElementById(id))
             : el.ownerDocument.getElementById(id);
         const t = ref?.textContent?.trim();
         if (t) {
