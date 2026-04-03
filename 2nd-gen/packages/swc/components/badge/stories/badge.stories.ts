@@ -254,7 +254,7 @@ export const Anatomy: Story = {
   },
   tags: ['anatomy'],
   args: {
-    variant: 'informative',
+    variant: 'neutral',
   },
 };
 
@@ -290,7 +290,7 @@ export const Sizes: Story = {
   parameters: { 'section-order': 1 },
   tags: ['options'],
   args: {
-    variant: 'informative',
+    variant: 'neutral',
   },
 };
 
@@ -414,7 +414,7 @@ export const Fixed: Story = {
       template({
         ...args,
         fixed,
-        variant: 'informative',
+        variant: 'neutral',
         'default-slot': fixedLabels[fixed],
       })
     )}
@@ -437,7 +437,7 @@ export const TextWrapping: Story = {
   render: (args) => html`
     ${template({
       ...args,
-      variant: 'informative',
+      variant: 'notice',
       'default-slot': 'Document review pending approval from manager',
       style: 'max-inline-size: 120px',
     })}
