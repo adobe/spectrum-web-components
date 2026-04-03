@@ -21,7 +21,7 @@ Rules defined in the `config.json` follow this structure:
 }
 ```
 
-Additional, more specific rules can be found in the `rules` directory in either a `json` or `mdc` format.
+Additional, more specific rules can be found in the `rules` directory in either a `json` or `md` format.
 
 ### Available rules
 
@@ -104,7 +104,7 @@ These two rules share the same glob (`2nd-gen/**/stories/**`) and work as a pair
 #### Deep understanding
 
 - **apply_intelligently**: Use for non-trivial work (multiple files, new area, complex behavior); do not use for simple, self-contained requests (e.g. creating a regex, one-line fix, single known file) to avoid wasting tokens and overloading context. Before writing non-trivial code, do deep research on the relevant part of the codebase first.
-- **action** (when the rule applies): Scope → deep read → write persistent report (e.g. research.md at repo root) → pause for user review → proceed only after validation. Full workflow in `.cursor/skills/deep-understanding/SKILL.md`
+- **action** (when the rule applies): Scope → deep read → write persistent report (e.g. research.md at repo root) → pause for user review → proceed only after validation. Full workflow in `.ai/skills/deep-understanding/SKILL.md`
 - **rationale**: The written report is the review surface; wrong research leads to wrong plan and wrong code (garbage in, garbage out)
 
 ### When rules are activated
@@ -152,7 +152,7 @@ These two rules share the same glob (`2nd-gen/**/stories/**`) and work as a pair
 
 ### Usage
 
-1. Cursor will automatically enforce these rules while editing relevant files; however, if you wish to enable a rule that is not triggered by default, you can do so by `@` mentioning it in the chat.
+1. Rules are automatically enforced by your coding agent while editing relevant files; however, if you wish to enable a rule that is not triggered by default, you can do so by mentioning it in the chat (e.g. `@` in Cursor, or by name in Claude Code).
 2. Rules can be toggled using the `enabled` flag
 3. Custom error messages will be shown when rules are violated
 4. Exceptions are handled through the `exceptions` field in relevant rules
@@ -173,6 +173,14 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 
 ### Available skills
 
+#### Accessibility migration analysis
+
+- **purpose**: Create accessibility migration analysis docs for the "analyze accessibility" step of 2nd-gen component migration
+- **How to invoke**: Say "create accessibility analysis for [component]", "analyze accessibility for [component]", or "accessibility migration for [component]". Also invoked when you refer to the "analyze accessibility" step in the 2nd-gen component migration workstream.
+- Use when: On the analyze-accessibility step for one or more components; creating one markdown file per component at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/accessibility-migration-analysis.md`
+- Applies to: `CONTRIBUTOR-DOCS/**/accessibility-migration-analysis.md`
+- Provides: Required section order, ARIA recommendations structure, Shadow DOM guidance, keyboard and focus conventions, testing table format, reference examples
+
 #### Accessibility compliance
 
 - **purpose**: Implement WCAG 2.2 compliant interfaces with mobile accessibility, inclusive design patterns, and assistive technology support
@@ -192,7 +200,7 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - **purpose**: Run the CONTRIBUTOR-DOCS nav script to update breadcrumbs and TOCs, and handle link verification
 - **How to invoke**: Say “update contributor docs nav”, “regenerate TOC”, “fix broken links in CONTRIBUTOR-DOCS”, or “run the nav script”. Also invoked when you add, remove, rename, or move files under `CONTRIBUTOR-DOCS/` or change H1/H2/H3 headings (the contributor-doc-update rule may trigger; the skill holds the full workflow).
 - Use when: Updating contributor docs structure, regenerating navigation, or fixing reported broken links
-- Provides: Operator workflow (run script, verify, fix links), Maintainer workflow (when to update script). Full instructions in `.cursor/skills/contributor-docs-nav/references/ai-agent-instructions.md`
+- Provides: Operator workflow (run script, verify, fix links), Maintainer workflow (when to update script). Full instructions in `.ai/skills/contributor-docs-nav/references/ai-agent-instructions.md`
 
 #### Component migration (rendering and styling)
 
@@ -249,20 +257,20 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: Implementing any feature or bugfix, before writing implementation code
 - Provides: TDD cycle, verification checklist, good/bad test examples, anti-patterns to avoid
 
-## Using rules and skills in other IDEs
+## Using rules and skills across IDEs
 
-The rules and skills in this directory are set up for **Cursor** and are applied automatically when you use Cursor in this repo. If you use a different AI-enabled IDE (e.g. Windsurf, Zed, or another editor with built-in AI), that tool will not automatically read `.cursor/` — each IDE has its own config locations and formats.
+`.ai/` is the canonical, editor-neutral source of truth. Rules and skills are written once here and work with any coding agent — Cursor, Claude Code, or others.
 
-You can still get the same guidance in another IDE:
+IDE-specific adapter directories contain symlinks that point back to `.ai/`:
 
-- **Copy or adapt the contents** of `rules/` and `skills/` into your IDE’s equivalent config (e.g. your IDE’s project rules, instructions, or “AI context” directory). The content is markdown and JSON, so it’s portable; you may need to adjust paths or format to match your IDE’s schema.
-- **Reference the files when prompting** — e.g. “Follow the rules in `.cursor/README.md` and the rules in `.cursor/rules/` when relevant” or “Use the workflow in `.cursor/skills/contributor-docs-nav/SKILL.md` for this task.”
+- **Cursor** — `.cursor/rules/*.mdc` are per-file symlinks to `.ai/rules/*.md` (Cursor expects `.mdc` extension); `.cursor/skills/` symlinks to `.ai/skills/`
+- **Claude Code** — `.claude/rules/` and `.claude/skills/` are directory symlinks to `.ai/rules/` and `.ai/skills/`
 
-Keeping rules and skills in this repo means everyone can use the same standards; Cursor users get them automatically, and non-Cursor users can copy or point their IDE at the same content.
+To add support for another tool, create its config directory with symlinks (or copies) pointing to `.ai/`. The content is plain markdown and JSON, so it’s portable to any schema.
 
 ## MCPs
 
-When developing for the SWC project, there may be instances where Cursor needs context from external sources. Contributors and maintainers can configure [MCP (Model Context Protocol) servers](https://modelcontextprotocol.io/docs/getting-started/intro) via [Easy MCP](https://wiki.corp.adobe.com/display/assetscollab/Cursor+integration+with+Easy+MCP). Some recommended MCP servers might include:
+When developing for the SWC project, there may be instances where your coding agent needs context from external sources. Contributors and maintainers can configure [MCP (Model Context Protocol) servers](https://modelcontextprotocol.io/docs/getting-started/intro) via [Easy MCP](https://wiki.corp.adobe.com/display/assetscollab/Cursor+integration+with+Easy+MCP). Some recommended MCP servers might include:
 
 - Figma
 - Corp Jira
