@@ -211,11 +211,13 @@ export class DemoFocusgroupVertical extends LitElement {
   }
 
   /**
-   * Controller instance: vertical direction with wrapping; disabled items stay focusable.
+   * Controller instance: vertical direction with wrapping; disabled items stay focusable;
+   * **Page Up** / **Page Down** move two items at a time (`pageStep: 2`).
    */
   private readonly navigation = new FocusgroupNavigationController(this, {
     direction: 'vertical',
     wrap: true,
+    pageStep: 2,
     skipDisabled: false,
     getItems: () =>
       Array.from(this.renderRoot.querySelectorAll<HTMLElement>('button')),
@@ -287,11 +289,13 @@ export class DemoFocusgroupGrid extends LitElement {
   `;
 
   /**
-   * Controller instance: grid direction without row/column wrap.
+   * Controller instance: grid direction without row/column wrap; **Page Up** / **Page Down**
+   * move two rows (`pageStep: 2`).
    */
   private readonly navigation = new FocusgroupNavigationController(this, {
     direction: 'grid',
     wrap: false,
+    pageStep: 2,
     getItems: () =>
       Array.from(this.renderRoot.querySelectorAll<HTMLElement>('.grid button')),
   });
@@ -492,8 +496,9 @@ export const BothAxesLinear: Story = {
 };
 
 /**
- * Block-axis arrows traverse menu-like items; one item uses `aria-disabled` (not native
- * `disabled`) so it stays focusable and items after it remain reachable.
+ * Block-axis arrows traverse menu-like items; **Page Up** / **Page Down** skip two items.
+ * One control uses `aria-disabled` (not native `disabled`) so it stays focusable and items
+ * after it remain reachable.
  */
 export const VerticalMenu: Story = {
   render: () => html`
@@ -505,9 +510,10 @@ export const VerticalMenu: Story = {
 };
 
 /**
- * Arrow keys move across a 3×3 grid; **Home** / **End** jump to the first and last cell in
- * row-major order; **Ctrl+Home** / **Ctrl+End** jump to the first cell of the first row and
- * the last cell of the last row (equivalent here to cells **1** and **9**).
+ * Arrow keys move across a 3×3 grid; **Page Up** / **Page Down** move two rows at a time.
+ * **Home** / **End** jump to the first and last cell in row-major order; **Ctrl+Home** /
+ * **Ctrl+End** jump to the first cell of the first row and the last cell of the last row
+ * (equivalent here to cells **1** and **9**).
  */
 export const Grid: Story = {
   render: () => html`

@@ -74,6 +74,16 @@ export type FocusgroupNavigationOptions = {
    * The argument is the new active element, or null when the group has no eligible items.
    */
   onActiveItemChange?: (active: HTMLElement | null) => void;
+
+  /**
+   * When set to a **non-zero** integer, **Page Up** / **Page Down** move focus by that many
+   * positions in `getItems()` order for **`horizontal`**, **`vertical`**, and **`both`** modes
+   * (respects **`wrap`** the same way as single-step arrows).
+   * For **`grid`**, page keys move by that many **rows** (column index is clamped to each row’s
+   * length). Omitted, `0`, `NaN`, and non-finite values disable page keys. The sign of the
+   * number is ignored; only the magnitude is used.
+   */
+  pageStep?: number;
 };
 
 // ─────────────────────────
@@ -130,6 +140,8 @@ export type FocusgroupNavigationActiveChangeDetail = {
  *   direction accepts horizontal and vertical arrows on the same `getItems()` sequence.
  *   In **`grid`** mode only, **Ctrl+Home** / **Ctrl+End** move to the first cell of the first
  *   row or the last cell of the last row (by layout-derived rows).
+ * - Optional **`pageStep`**: **Page Up** / **Page Down** move by that many items (linear modes)
+ *   or rows (**`grid`**).
  * - Supports optional last-focused memory when re-entering via Tab.
  * - Exposes {@link FocusgroupNavigationController.focusItem} for programmatic focus.
  *
@@ -564,6 +576,9 @@ export class FocusgroupNavigationController implements ReactiveController {
    * first cell in the first row and **Ctrl+End** focuses the last cell in the last row (from
    * {@link buildRows}); other modifier combinations are ignored except plain Home/End.
    *
+   * When {@link FocusgroupNavigationOptions.pageStep} is a non-zero finite number, **Page Up**
+   * and **Page Down** are handled before arrow keys (see {@link navigatePage}).
+   *
    * @param event - Keyboard event from the focused element inside the host.
    */
   private handleKeydown(event: KeyboardEvent): void {
@@ -600,6 +615,23 @@ export class FocusgroupNavigationController implements ReactiveController {
     }
 
     if (event.ctrlKey || event.metaKey) {
+      return;
+    }
+
+    const pageMagnitude = this.getEffectivePageMagnitude();
+    if (
+      pageMagnitude !== null &&
+      (event.key === 'PageUp' || event.key === 'PageDown')
+    ) {
+      const pageNext = this.navigatePage(
+        items,
+        target,
+        event.key === 'PageDown' ? pageMagnitude : -pageMagnitude
+      );
+      if (pageNext && pageNext !== target) {
+        event.preventDefault();
+        this.focusItem(pageNext);
+      }
       return;
     }
 
@@ -644,6 +676,95 @@ export class FocusgroupNavigationController implements ReactiveController {
         this.focusItem(boundary);
       }
     }
+  }
+
+  /**
+   * Positive step count for {@link FocusgroupNavigationOptions.pageStep}, or null when page keys
+   * are disabled.
+   */
+  private getEffectivePageMagnitude(): number | null {
+    const raw = this.options.pageStep;
+    if (raw === undefined || raw === null) {
+      return null;
+    }
+    const n = Math.trunc(Number(raw));
+    if (!Number.isFinite(n) || n === 0) {
+      return null;
+    }
+    return Math.abs(n);
+  }
+
+  /**
+   * Target for **Page Up** / **Page Down** when {@link getEffectivePageMagnitude} is set.
+   *
+   * @param items - Eligible items.
+   * @param current - Focused item.
+   * @param signedDelta - `+magnitude` for Page Down or `-magnitude` for Page Up (items for
+   *   linear modes, rows for `grid`).
+   */
+  private navigatePage(
+    items: HTMLElement[],
+    current: HTMLElement,
+    signedDelta: number
+  ): HTMLElement | null {
+    if (this.options.direction === 'grid') {
+      return this.navigatePageGridRows(items, current, signedDelta);
+    }
+    return this.navigatePageLinearItems(items, current, signedDelta);
+  }
+
+  /**
+   * Page Up/Down along `getItems()` order (used for `horizontal`, `vertical`, and `both`).
+   */
+  private navigatePageLinearItems(
+    items: HTMLElement[],
+    current: HTMLElement,
+    deltaIdx: number
+  ): HTMLElement | null {
+    const idx = items.indexOf(current);
+    if (idx < 0 || items.length === 0) {
+      return null;
+    }
+    let nextIdx = idx + deltaIdx;
+    if (this.options.wrap) {
+      const len = items.length;
+      nextIdx = ((nextIdx % len) + len) % len;
+    } else {
+      nextIdx = Math.max(0, Math.min(items.length - 1, nextIdx));
+    }
+    return items[nextIdx] ?? null;
+  }
+
+  /**
+   * Page Up/Down by whole rows in `grid` mode (column clamped per {@link navigateGrid}).
+   */
+  private navigatePageGridRows(
+    items: HTMLElement[],
+    current: HTMLElement,
+    rowDelta: number
+  ): HTMLElement | null {
+    const grid = this.buildRows(items);
+    if (grid.length === 0) {
+      return null;
+    }
+    const pos = this.findGridIndex(grid, current);
+    if (!pos) {
+      return null;
+    }
+    const { row, col } = pos;
+    let nextRow = row + rowDelta;
+    if (this.options.wrap) {
+      const n = grid.length;
+      nextRow = ((nextRow % n) + n) % n;
+    } else {
+      nextRow = Math.max(0, Math.min(grid.length - 1, nextRow));
+    }
+    const targetRow = grid[nextRow];
+    if (!targetRow?.length) {
+      return null;
+    }
+    const clampedCol = Math.min(col, targetRow.length - 1);
+    return targetRow[clampedCol] ?? null;
   }
 
   /**

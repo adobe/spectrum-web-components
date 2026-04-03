@@ -6,6 +6,7 @@
 - Moves focus with **Arrow** keys according to `direction`: horizontal (inline axis), vertical (block axis), **both** (horizontal and vertical arrows on the same linear order), or **grid** (rows and columns from layout).
 - Supports **Home** / **End** to jump to the first or last item (for `grid`, order is visual row-major).
 - In **`grid`** mode only, **Ctrl+Home** moves focus to the **first cell in the first row** and **Ctrl+End** to the **last cell in the last row** (rows are derived from layout; ragged last rows use the final cell in that row).
+- Optional **`pageStep`**: when set to a non-zero integer, **Page Up** / **Page Down** move that many items in `getItems()` order (linear modes) or that many **rows** in **`grid`** mode.
 - Optional **wrap** (end wraps to start) and **memory** (Tab returns to the last focused item), similar to `wrap` and `nomemory` concepts in the `focusgroup` proposal.
 
 ## Import
@@ -91,9 +92,24 @@ this.navigation = new FocusgroupNavigationController(this, {
 });
 ```
 
+### Example (Page Up / Page Down)
+
+```typescript
+this.navigation = new FocusgroupNavigationController(this, {
+  direction: 'vertical',
+  pageStep: 3,
+  getItems: () =>
+    Array.from(this.renderRoot.querySelectorAll<HTMLElement>('button')),
+});
+```
+
+With `pageStep: 3`, each **Page Down** advances three items in `getItems()` order; **Page Up** goes back three. For **`grid`**, use the same option to move three rows at a time.
+
 ### Example (grid)
 
 Use `direction: 'grid'` when items are laid out in rows (for example CSS Grid). The controller groups items into rows using bounding rectangles, then maps Arrow keys to cell movement. **Home** / **End** use visual row-major order (first and last item in that flattened sequence). **Ctrl+Home** / **Ctrl+End** jump to the first cell of the top row or the last cell of the bottom row, which matches rectangular grids and differs from plain **End** only when the last row has fewer cells than earlier rows.
+
+Set **`pageStep`** to a positive integer (for example `2`) so **Page Up** / **Page Down** move that many rows; the focused column index is clamped when a row has fewer cells (same rule as **ArrowUp** / **ArrowDown**).
 
 ## API
 
@@ -110,14 +126,15 @@ On the host, the controller dispatches **`swc-focusgroup-navigation-active-chang
 
 ### Options
 
-| Option               | Type                                             | Default    | Description                                                                           |
-| -------------------- | ------------------------------------------------ | ---------- | ------------------------------------------------------------------------------------- |
-| `getItems`           | `() => HTMLElement[]`                            | (required) | Current navigable items.                                                              |
-| `direction`          | `'horizontal' \| 'vertical' \| 'both' \| 'grid'` | (required) | Arrow-key mode. **`both`**: Left/Right and Up/Down on the same `getItems()` sequence. |
-| `wrap`               | `boolean`                                        | `false`    | Wrap at ends.                                                                         |
-| `memory`             | `boolean`                                        | `true`     | Remember last focused for re-entry via Tab.                                           |
-| `skipDisabled`       | `boolean`                                        | `false`    | Skip `disabled` / `aria-disabled="true"` items.                                       |
-| `onActiveItemChange` | `(el) => void`                                   | —          | Callback when active item changes.                                                    |
+| Option               | Type                                             | Default    | Description                                                                                                                                 |
+| -------------------- | ------------------------------------------------ | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `getItems`           | `() => HTMLElement[]`                            | (required) | Current navigable items.                                                                                                                    |
+| `direction`          | `'horizontal' \| 'vertical' \| 'both' \| 'grid'` | (required) | Arrow-key mode. **`both`**: Left/Right and Up/Down on the same `getItems()` sequence.                                                       |
+| `wrap`               | `boolean`                                        | `false`    | Wrap at ends.                                                                                                                               |
+| `memory`             | `boolean`                                        | `true`     | Remember last focused for re-entry via Tab.                                                                                                 |
+| `skipDisabled`       | `boolean`                                        | `false`    | Skip `disabled` / `aria-disabled="true"` items.                                                                                             |
+| `pageStep`           | `number`                                         | —          | Non-zero: **Page Up** / **Page Down** move this many items (linear) or rows (**grid**); sign ignored. `0` / omitted / non-finite: disabled. |
+| `onActiveItemChange` | `(el) => void`                                   | —          | Callback when active item changes.                                                                                                          |
 
 ## RTL and writing modes
 

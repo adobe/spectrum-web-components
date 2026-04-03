@@ -93,6 +93,11 @@ if (storybookMode === 'dev') {
     files: '**/*.test.ts',
     titlePrefix: 'Components',
   });
+  stories.push({
+    directory: '../../core',
+    files: '**/stories/**/*.test.ts',
+    titlePrefix: 'Core',
+  });
 }
 
 /**
