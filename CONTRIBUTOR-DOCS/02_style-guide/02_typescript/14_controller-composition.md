@@ -88,7 +88,7 @@ The following controllers exist in 1st-gen and may be ported to 2nd-gen core:
 **What it does:**
 
 1. Collapses roving `tabindex` to one tab stop in a composite (`tabindex="0"` on the active item, `-1` on others it manages).
-2. Handles Arrow keys, Home, and End for horizontal, vertical, **`both`** (horizontal and vertical arrows on the same linear order), or **grid** layouts; in **grid** mode, Ctrl+Home / Ctrl+End jump to the first cell of the first row or the last cell of the last row.
+2. Handles Arrow keys, Home, and End for horizontal, vertical, **`both`** (horizontal and vertical arrows on the same linear order), or **grid** layouts; optional **`pageStep`** enables Page Up / Page Down by that many items (linear) or rows (**grid**); in **grid** mode, Ctrl+Home / Ctrl+End jump to the first cell of the first row or the last cell of the last row.
 3. Optionally wraps at ends and remembers the last focused item for Tab re-entry (similar to Open UI `focusgroup` semantics).
 
 **Public API:** `setOptions`, `getActiveItem`, `refresh`, `focusItem`, plus `hostConnected` / `hostDisconnected` via `ReactiveController`.
