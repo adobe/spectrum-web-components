@@ -104,8 +104,8 @@ export class Badge extends BadgeBase {
         class=${classMap({
           ['swc-Badge']: true,
           [`swc-Badge--${this.variant}`]: typeof this.variant !== 'undefined',
-          [`swc-Badge--subtle`]: this.subtle,
-          [`swc-Badge--outline`]: this.outline,
+          ['swc-Badge--subtle']: this.subtle,
+          ['swc-Badge--outline']: this.outline,
           [`swc-Badge--fixed-${this.fixed}`]: typeof this.fixed !== 'undefined',
         })}
       >
@@ -114,7 +114,7 @@ export class Badge extends BadgeBase {
           () => html`
             <div
               class=${classMap({
-                [`swc-Badge-icon`]: true,
+                ['swc-Badge-icon']: true,
               })}
             >
               <slot name="icon"></slot>
