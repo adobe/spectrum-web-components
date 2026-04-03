@@ -35,6 +35,10 @@ Use these syntax rules when writing GitHub descriptions:
 
 - Present title, labels, and type before description content
 - Description format and structure should follow the pull request template in the Templates section below
+- Accessibility testing checklist is required. Populate keyboard and screen reader with component-specific numbered
+  steps (Storybook paths, expected focus behavior, what should be announced). For non-interactive components (e.g. static
+  elements, dividers), state that clearly under Keyboard (e.g. no focusable parts; confirm no regressions in surrounding
+  examples) and still document Screen reader checks (roles, structure, labels).
 - Include links to related issues, RFCs, or documentation when applicable
 - All descriptions must include clear acceptance criteria or expected outcomes
 - Provide enough context so anyone can understand the objective
@@ -122,6 +126,7 @@ Common additional labels include:
 
 ## Pull request guidelines
 
+- Include the Accessibility testing checklist section in every drafted PR body (see Description structure and the template below).
 - Use conventional commit messages
 - Keep PRs focused and small when possible
 - Include tests for new features
@@ -137,7 +142,7 @@ Common additional labels include:
 
 **Note:** All pull requests should include the `ready-for-review` label.
 
-**When returning the template, check off the author requirements in the Author's checklist section. Do not check off the Manual review test cases or Device review sections as these are for reviewers to complete.**
+**When returning the template, check off the author requirements in the Author's checklist section. Do not check off the Manual review test cases or Device review sections as these are for reviewers to complete. Fill in the **Accessibility testing checklist** with concrete steps; leave its checkboxes unchecked unless the user confirms testing is done.**
 
 ```markdown
 <!---
@@ -162,10 +167,9 @@ Common additional labels include:
     - If you're an Adobe employee, add a Jira ticket number but DO NOT LINK directly to Jira.
 -->
 
--   fixes [Issue Number]
+- fixes [Issue Number]
 
 ## Screenshots (if appropriate)
-
 
 ## Author's checklist
 
@@ -176,7 +180,6 @@ Common additional labels include:
 -   [ ] I have added automated tests to cover my changes.
 -   [ ] I have included a well-written changeset if my change needs to be published.
 -   [ ] I have included updated documentation if my change required it.
-
 
 ## Reviewer's checklist
 
@@ -214,4 +217,25 @@ Common additional labels include:
 - [ ] Did it pass in (emulated) Mobile?
 - [ ] Did it pass in (emulated) iPad?
 
+## Accessibility testing checklist
+
+<!---
+    Manual accessibility testing is required because automated tools cannot catch all issues (e.g. focus order, screen reader announcements, keyboard flow).
+    You must document your keyboard and screen reader testing steps below. Reviewers will use this checklist during review.
+    See: [Accessibility testing guide](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/01_contributor-guides/09_accessibility-testing.md)
+-->
+
+**Required:** Complete each applicable item and document your testing steps (replace the placeholders with your component-specific instructions).
+
+- [ ] **Keyboard** (required — document steps below)
+<!-- _What to test for:_ Focus order is logical; <kbd>Tab</kbd> reaches the component and all interactive descendants; <kbd>Enter</kbd>/<kbd>Space</kbd> activate where appropriate; arrow keys work for tabs, menus, sliders, etc.; no focus traps; <kbd>Escape</kbd> dismisses when applicable; focus indicator is visible. -->
+  1. Go [here](url)
+  2. Do this action
+  3. Expect this result
+
+- [ ] **Screen reader** (required — document steps below)
+ <!-- _What to test for:_ Role and name are announced correctly; state changes (e.g. expanded, selected) are announced; labels and relationships are clear; no unnecessary or duplicate announcements. -->
+  1. Go [here](url)
+  2. Do this action
+  3. Expect this result
 ```
