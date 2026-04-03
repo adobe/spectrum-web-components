@@ -10,22 +10,18 @@
  * governing permissions and limitations under the License.
  */
 
-import {
-  CSSResultArray,
-  html,
-  TemplateResult,
-} from '@spectrum-web-components/base';
+import type { ElementSize } from '@spectrum-web-components/base/src/sizedMixin.js';
 
-import { DividerBase } from './Divider.base.js';
-import styles from './divider.css.js';
+export const DIVIDER_VALID_SIZES = [
+  's',
+  'm',
+  'l',
+] as const satisfies readonly ElementSize[];
+export const DIVIDER_STATIC_COLORS = [
+  'white',
+  'black',
+] as const satisfies readonly string[];
 
-/**
- * @element sp-divider
- */
-export class Divider extends DividerBase {
-  public static override styles: CSSResultArray = [styles];
+export type DividerStaticColor = (typeof DIVIDER_STATIC_COLORS)[number];
 
-  protected override render(): TemplateResult {
-    return html``;
-  }
-}
+export type DividerSize = (typeof DIVIDER_VALID_SIZES)[number];

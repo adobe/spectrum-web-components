@@ -17,16 +17,16 @@ import {
   TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+
+import { BadgeBase } from './Badge.base.js';
+import styles from './badge.css.js';
 import {
   BADGE_VARIANTS_COLOR_S1,
   BADGE_VARIANTS_S1,
-  BadgeBase,
   type BadgeVariantS1,
   FIXED_VALUES as FIXED_VALUES_BASE,
   type FixedValues as FixedValuesBase,
-} from '@spectrum-web-components/core/components/badge';
-
-import styles from './badge.css.js';
+} from './Badge.types.js';
 
 /**
  * @deprecated The `BADGE_VARIANTS` export is deprecated and will be removed
