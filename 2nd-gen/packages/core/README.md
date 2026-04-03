@@ -2,7 +2,7 @@
 
 Abstract base classes for Spectrum Web Components.
 
-This package provides shared functionality between multiple generations of implementations and is **not intended for direct external use**.
+This package provides the behavior layer for 2nd-gen Spectrum Web Components and is **not intended for direct external use**. It is independent from 1st-gen — there is no runtime dependency between them.
 
 For more information, visit the [Spectrum Web Components repository](https://github.com/adobe/spectrum-web-components).
 

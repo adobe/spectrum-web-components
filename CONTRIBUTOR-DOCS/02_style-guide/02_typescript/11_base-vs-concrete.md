@@ -25,15 +25,13 @@ This guide explains the split between the **base class** (in the core package) a
 
 ## Why two classes
 
-Spectrum Web Components supports two generations side by side: 1st-gen (S1) and 2nd-gen (S2). Both generations share the same behavior — validation, state management, accessibility logic — but they look different and support slightly different value sets.
-
-The base class in core holds the **shared** behavior. The concrete class in SWC adds the **generation-specific** parts: styles, rendering, and value overrides.
+2nd-gen components are built in two layers: a **base class** in core and a **concrete class** in SWC. The base class holds behavior — validation, state management, accessibility logic. The concrete class adds the visual parts: styles, rendering, and value overrides.
 
 This split means:
 
-- Fixing a bug in the base class fixes it for both generations at once
-- Adding a new feature to the base class makes it available to both generations
-- Changing the look of S2 does not affect S1, and vice versa
+- Behavior logic is reusable and testable independently of rendering
+- Changing styles or templates does not risk breaking component logic
+- Multiple concrete classes can extend the same base (e.g., future platform variants)
 
 ## Core (base class) responsibilities
 
