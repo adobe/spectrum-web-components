@@ -10,7 +10,18 @@
  * governing permissions and limitations under the License.
  */
 
-export { capitalize } from './capitalize.js';
-export { getActiveElement } from './get-active-element.js';
-export { focusableSelector, tabbableSelector } from './focusable-selectors.js';
-export { getLabelFromSlot } from './get-label-from-slot.js';
+export const ALERT_BANNER_VALID_VARIANTS = [
+  'neutral',
+  'info',
+  'negative',
+] as const satisfies readonly string[];
+
+export type AlertBannerVariant =
+  | (typeof ALERT_BANNER_VALID_VARIANTS)[number]
+  | '';
+
+/**
+ * @deprecated Use `AlertBannerVariant` instead.
+ * Kept as `string` for backward compatibility with 1st-gen.
+ */
+export type AlertBannerVariants = string;

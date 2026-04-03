@@ -10,7 +10,18 @@
  * governing permissions and limitations under the License.
  */
 
-export { capitalize } from './capitalize.js';
-export { getActiveElement } from './get-active-element.js';
-export { focusableSelector, tabbableSelector } from './focusable-selectors.js';
-export { getLabelFromSlot } from './get-label-from-slot.js';
+import type { ElementSize } from '@spectrum-web-components/base/src/sizedMixin.js';
+
+export const DIVIDER_VALID_SIZES = [
+  's',
+  'm',
+  'l',
+] as const satisfies readonly ElementSize[];
+export const DIVIDER_STATIC_COLORS = [
+  'white',
+  'black',
+] as const satisfies readonly string[];
+
+export type DividerStaticColor = (typeof DIVIDER_STATIC_COLORS)[number];
+
+export type DividerSize = (typeof DIVIDER_VALID_SIZES)[number];

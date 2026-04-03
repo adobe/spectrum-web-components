@@ -10,7 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-export { capitalize } from './capitalize.js';
-export { getActiveElement } from './get-active-element.js';
-export { focusableSelector, tabbableSelector } from './focusable-selectors.js';
-export { getLabelFromSlot } from './get-label-from-slot.js';
+export const ASSET_VARIANTS = [
+  'file',
+  'folder',
+] as const satisfies readonly string[];
+
+export type AssetVariant = (typeof ASSET_VARIANTS)[number];
