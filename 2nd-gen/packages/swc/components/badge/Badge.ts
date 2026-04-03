@@ -64,9 +64,11 @@ export class Badge extends BadgeBase {
 
   /**
    * The variant of the badge.
+   *
+   * @todo - Implement new badge variants (notification, indicator) introduced in S2. Jira ticket: SWC-1831
    */
   @property({ type: String, reflect: true })
-  public override variant: BadgeVariant = 'informative';
+  public override variant: BadgeVariant = 'neutral';
 
   // ───────────────────
   //     API ADDITIONS
@@ -107,6 +109,7 @@ export class Badge extends BadgeBase {
           ['swc-Badge--subtle']: this.subtle,
           ['swc-Badge--outline']: this.outline,
           [`swc-Badge--fixed-${this.fixed}`]: typeof this.fixed !== 'undefined',
+          [`swc-Badge--no-label`]: !this.slotHasContent,
         })}
       >
         ${when(

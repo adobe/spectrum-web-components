@@ -46,6 +46,10 @@ Required structure with visual separators between sections:
 //    AUTODOCS STORY
 // ────────────────────
 
+// ────────────────────
+//    OVERVIEW STORIES
+// ────────────────────
+
 // ──────────────────────────
 //    ANATOMY STORIES
 // ──────────────────────────
@@ -117,6 +121,26 @@ export const Sizes: Story = {
     tags: ['options'],
 };
 ```
+
+### `template()` and slot content
+
+`getStorybookHelpers('<tag>')` returns a `template(args)` function. Use `template({ ...args, ... })` as the default so attributes/properties from the Custom Elements Manifest and Storybook controls stay wired to the component.
+
+Slot args (`default-slot`, `icon-slot`, etc.) accept strings only — they are injected via `innerHTML`. Plain text and self-contained HTML strings work fine.
+
+When slot content can't be expressed as a string — for example, an imported icon or `TemplateResult` content, a Lit binding like `size=${size}`, or a `.map()` call — write the host element directly with `html` instead:
+
+```typescript
+// slot content is a TemplateResult; use html directly
+html`
+  <swc-badge variant=${args.variant} size=${args.size}>
+    <swc-icon slot="icon">${checkmarkIconForSize(args.size)}</swc-icon>
+    ${args['default-slot']}
+  </swc-badge>
+`
+```
+
+Avoid duplicating SVG or nested components as long HTML strings just to force them through a `*-slot` arg.
 
 ### Documentation sections (auto-generated)
 
