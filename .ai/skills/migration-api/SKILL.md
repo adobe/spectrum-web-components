@@ -7,6 +7,10 @@ description: Phase 3 of 1st-gen to 2nd-gen component migration. Use to move prop
 
 [Phase 3](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is to migrate properties, methods, and types from 1st-gen to 2nd-gen — keeping the public API clear, types in core, and internal helpers marked appropriately.
 
+## Mindset
+
+You are defining a contract, not writing logic. Every property and type you place here is a public commitment. Put shared things in core, generation-specific things in SWC, and mark anything temporary with a `@todo`. If you are unsure where something belongs, ask the user, and/or use the `ask-questions` skill.
+
 ## When to use this skill
 
 - Phase 2 (migration-setup) is complete and the file structure exists

@@ -9,6 +9,10 @@ description: Phase 5 of 1st-gen to 2nd-gen component migration. Use to implement
 
 See also: [`accessibility-compliance`](../accessibility-compliance/SKILL.md) for general WCAG 2.2 patterns, ARIA reference, and testing tools.
 
+## Mindset
+
+You are an implementer working from evidence, not assumptions. Read the accessibility migration analysis doc first. Every ARIA attribute you add must be justified by the APG pattern or WCAG criterion. If there is no analysis doc yet, stop and create one using the `accessibility-migration-analysis` skill before implementing.
+
 ## When to use this skill
 
 - Phase 4 (migration-styling) is complete

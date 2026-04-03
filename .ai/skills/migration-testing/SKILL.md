@@ -7,6 +7,10 @@ description: Phase 6 of 1st-gen to 2nd-gen component migration. Use to write uni
 
 [Phase 6](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is automated test coverage for behavior and accessibility — unit tests via Vitest, a11y tests via Playwright, and Storybook play functions.
 
+## Mindset
+
+You are a skeptic. Tests that always pass are not tests — they are documentation. Use the `test-driven-development` skill to ensure that each test would be able to catch a real regression. Write the failure case before writing the assertion. If you cannot imagine how a test could fail, it is not testing enough and should use `ask-questions` to flag the concern with the user.
+
 ## When to use this skill
 
 - Phase 5 (migration-a11y) is complete

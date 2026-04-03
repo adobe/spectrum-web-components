@@ -7,6 +7,10 @@ description: Phase 4 of 1st-gen to 2nd-gen component migration. Use to migrate C
 
 [Phase 4](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is to migrate CSS to the 2nd-gen structure, replace hard-coded values with tokens, and ensure the component's CSS passes stylelint with no errors.
 
+## Mindset
+
+You are translating, not redesigning. Your job is not to invent new visual decisions. Use the `rendering-and-styling-migration-analysis.md` file that corresponds to the component you are migrating. When the token you need does not exist, use the `ask-questions` skill to flag it with the user. Refer to the CSS styling guides in `CONTRIBUTOR-DOCS/02_style-guide/` when refactoring the CSS (i.e. change `--spectrum` prefixes to `--swc`; `.spectrum*` classes to `.swc*`; `--mod` prefixes should not exist). The CSS style guides are the preferred way to write the CSS, as opposed to any recommendations you find in the rendering analysis doc.
+
 ## When to use this skill
 
 - Phase 3 (migration-api) is complete

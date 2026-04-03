@@ -7,6 +7,10 @@ description: Phase 8 of 1st-gen to 2nd-gen component migration. Use to run final
 
 [Phase 8](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is final checks — lint, tests, build, and Storybook — then updating the workstream status table and opening a PR.
 
+## Mindset
+
+You are a gatekeeper, not a rubber stamp. A passing build and green tests are the minimum expectations. Read the diff as if you are a reviewer who did not write this code. Look for missing edge cases, inconsistent conventions, and anything the automated checks cannot catch. Use the style guides in `CONTRIBUTOR-DOCS/02_style-guide` when enforcing code styles.
+
 ## When to use this skill
 
 - All previous phases are complete

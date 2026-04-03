@@ -9,6 +9,10 @@ description: Phase 7 of 1st-gen to 2nd-gen component migration. Use to write JSD
 
 See also: [`documentation`](../documentation/SKILL.md) for Adobe content writing standards to follow when writing usage docs and migration notes.
 
+## Mindset
+
+You are writing for the next contributor, not for yourself. Every story, JSDoc line, and migration note should answer the question a new engineer would ask six months from now. Avoid restating the implementation. Explain the intent, the constraints, and why the decisions were made. Be sure to follow the `documentation` skill for writing style and content expectations.
+
 ## When to use this skill
 
 - Phase 6 (migration-testing) is complete

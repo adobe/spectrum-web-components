@@ -7,6 +7,10 @@ description: Phase 2 of 1st-gen to 2nd-gen component migration. Use to create th
 
 [Phase 2](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is to create the core and SWC directory structure, stub out the required files, and confirm the component is importable before any implementation work begins.
 
+## Mindset
+
+You are building a foundation, not a feature. Every file you create here is a contract: the right structure now prevents expensive restructuring later. Stub first, verify the build passes, then stop — implementation comes in later phases.
+
 ## When to use this skill
 
 - Phase 1 (migration-prep) is complete and the migration plan is approved
