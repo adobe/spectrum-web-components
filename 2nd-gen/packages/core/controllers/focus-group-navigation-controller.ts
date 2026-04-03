@@ -1,0 +1,709 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+import type { ReactiveController, ReactiveElement } from 'lit';
+
+// ─────────────────────────
+//     TYPES
+// ─────────────────────────
+
+/**
+ * Spatial mode for arrow-key movement. Aligns with logical axes (inline/block) and a
+ * 2D layout mode derived from element geometry.
+ *
+ * - **horizontal**: Arrow keys on the inline axis move focus (respects `dir`).
+ * - **vertical**: Arrow keys on the block axis move focus.
+ * - **grid**: Arrow keys move in rows and columns using bounding-rect layout.
+ */
+export type FocusgroupDirection = 'horizontal' | 'vertical' | 'grid';
+
+/**
+ * Options for {@link FocusgroupNavigationController}.
+ */
+export type FocusgroupNavigationOptions = {
+  /**
+   * Returns the current set of items that participate in roving tabindex and
+   * directional navigation. Callers typically close over the host (for example
+   * querying slotted or shadow DOM children).
+   */
+  getItems: () => HTMLElement[];
+
+  /**
+   * Determines which arrow keys move focus and how grid navigation is computed.
+   */
+  direction: FocusgroupDirection;
+
+  /**
+   * When true, arrow keys wrap from the last item to the first (and reverse).
+   * Defaults to false.
+   */
+  wrap?: boolean;
+
+  /**
+   * When true, restoring focus into the composite (for example with Tab) targets
+   * the item that was last focused, if it is still a member of the group.
+   * Similar to the default memory behavior described for `focusgroup` in Open UI.
+   * Defaults to true.
+   */
+  memory?: boolean;
+
+  /**
+   * When true, items that are disabled for interaction are skipped for arrow
+   * navigation and are not chosen as the roving tab stop. When false, disabled
+   * items remain in sequence (useful for patterns such as menus where disabled
+   * items may still be focusable per APG guidance).
+   * Defaults to false.
+   */
+  skipDisabled?: boolean;
+
+  /**
+   * Invoked after the active item changes and `tabindex` values are synchronized.
+   * The argument is the new active element, or null when the group has no eligible items.
+   */
+  onActiveItemChange?: (active: HTMLElement | null) => void;
+};
+
+// ─────────────────────────
+//     CONSTANTS
+// ─────────────────────────
+
+/**
+ * Default boolean flags merged with the constructor `options` object.
+ *
+ * @internal
+ */
+const DEFAULT_OPTIONS = {
+  wrap: false,
+  memory: true,
+  skipDisabled: false,
+} as const;
+
+/**
+ * Tolerance in CSS pixels for grouping items into the same grid row when using
+ * {@link FocusgroupDirection | `grid`} mode.
+ *
+ * @internal
+ */
+const GRID_ROW_TOLERANCE_PX = 6;
+
+/**
+ * Name of the `CustomEvent` dispatched on the host when the roving tabindex active item changes.
+ *
+ * The event `bubbles` and is `composed`. Handlers read
+ * {@link FocusgroupNavigationActiveChangeDetail} from `event.detail`.
+ */
+export const focusgroupNavigationActiveChange =
+  'swc-focusgroup-navigation-active-change';
+
+/**
+ * `detail` object for the {@link focusgroupNavigationActiveChange} event.
+ */
+export type FocusgroupNavigationActiveChangeDetail = {
+  /**
+   * Element that now has `tabindex="0"` among managed items, or null when the group is empty.
+   */
+  activeElement: HTMLElement | null;
+};
+
+/**
+ * **FocusgroupNavigation** — implements the roving `tabindex` pattern from the APG
+ * keyboard guide and directional navigation similar to the proposed `focusgroup`
+ * attribute (Open UI). The exported class name is `FocusgroupNavigationController`.
+ *
+ * The controller:
+ * - Keeps exactly one item in the tab order (`tabindex="0"`) per composite; sets
+ *   `tabindex="-1"` on other items it manages.
+ * - Handles Arrow keys, Home, and End for focus movement (and optionally wrap).
+ * - Supports optional last-focused memory when re-entering via Tab.
+ * - Exposes {@link FocusgroupNavigationController.focusItem} for programmatic focus.
+ *
+ * Dispatches a bubbling, composed `CustomEvent` named
+ * {@link focusgroupNavigationActiveChange} when the active item changes.
+ *
+ * This is not a browser `focusgroup` implementation; it is a Lit reactive controller
+ * for custom elements until native `focusgroup` is available.
+ *
+ * @example
+ * ```typescript
+ * class MyToolbar extends LitElement {
+ *   private readonly navigation = new FocusgroupNavigationController(this, {
+ *     direction: 'horizontal',
+ *     wrap: true,
+ *     getItems: () =>
+ *       Array.from(this.renderRoot.querySelectorAll<HTMLElement>('button')),
+ *   });
+ *
+ *   protected override firstUpdated(): void {
+ *     super.firstUpdated();
+ *     this.navigation.refresh();
+ *   }
+ * }
+ * ```
+ *
+ * @see https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#keyboardnavigationinsidecomponents
+ * @see https://open-ui.org/components/scoped-focusgroup.explainer/
+ */
+export class FocusgroupNavigationController implements ReactiveController {
+  /**
+   * Lit reactive host this controller is attached to.
+   */
+  private host: ReactiveElement;
+
+  /**
+   * Effective options (defaults merged with the latest `setOptions` / constructor values).
+   */
+  private options: FocusgroupNavigationOptions;
+
+  /**
+   * Capture-phase `keydown` listener reference for removal on disconnect.
+   */
+  private readonly boundKeydown = this.handleKeydown.bind(this);
+
+  /**
+   * Capture-phase `focusin` listener reference for removal on disconnect.
+   */
+  private readonly boundFocusin = this.handleFocusin.bind(this);
+
+  /**
+   * Capture-phase `focusout` listener reference for removal on disconnect.
+   */
+  private readonly boundFocusout = this.handleFocusout.bind(this);
+
+  /**
+   * Cached item for {@link FocusgroupNavigationOptions.memory} when the user moves focus
+   * inside or out of the composite. Cleared when that node is no longer returned by
+   * `getItems` or when the group becomes empty.
+   */
+  private lastFocused: HTMLElement | null = null;
+
+  // ─────────────────────────
+  //     PUBLIC API
+  // ─────────────────────────
+
+  /**
+   * Registers this instance on `host` via `addController` and merges `options` with defaults.
+   *
+   * @param host - Reactive element that owns the composite (arrow keys and tab order apply within its subtree).
+   * @param options - `getItems`, `direction`, and optional behavior flags.
+   */
+  constructor(host: ReactiveElement, options: FocusgroupNavigationOptions) {
+    this.host = host;
+    this.options = { ...DEFAULT_OPTIONS, ...options };
+    host.addController(this);
+  }
+
+  /**
+   * Merges `partial` into the current options and reapplies roving `tabindex` to the item set.
+   *
+   * @param partial - Fields to override; omitted keys keep their previous values.
+   */
+  public setOptions(partial: Partial<FocusgroupNavigationOptions>): void {
+    this.options = { ...this.options, ...partial };
+    this.refresh();
+  }
+
+  /**
+   * Returns the managed item that currently participates in the sequential focus order
+   * (`tabindex="0"`), or null if none of the items from `getItems` have tab index zero.
+   *
+   * @returns The active roving item, or null.
+   */
+  public getActiveItem(): HTMLElement | null {
+    for (const el of this.options.getItems()) {
+      if (el.tabIndex === 0) {
+        return el;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Re-queries `getItems()`, recomputes eligibility, and syncs roving `tabindex`.
+   *
+   * Call after the item list or item eligibility changes (for example after Lit
+   * `updated()` or slot changes). When {@link FocusgroupNavigationOptions.memory} is true,
+   * prefers the stored last-focused item if it is still eligible; otherwise keeps the
+   * current active item or falls back to the first eligible item.
+   */
+  public refresh(): void {
+    const items = this.getEligibleItems();
+    if (items.length === 0) {
+      for (const el of this.getRawItems()) {
+        el.tabIndex = -1;
+      }
+      this.lastFocused = null;
+      this.dispatchActiveChange(null);
+      this.options.onActiveItemChange?.(null);
+      return;
+    }
+
+    const preferred =
+      (this.options.memory &&
+      this.lastFocused &&
+      items.includes(this.lastFocused)
+        ? this.lastFocused
+        : null) ??
+      this.getActiveItem() ??
+      items[0];
+
+    this.applyRovingTabindex(preferred);
+  }
+
+  /**
+   * Moves keyboard focus to `item`, updates roving tabindex on all managed items,
+   * and updates memory when enabled.
+   *
+   * @param item - Item to focus; must be returned by `getItems` and pass eligibility checks.
+   * @param focusOptions - Optional `focus()` options (e.g. `preventScroll`).
+   * @returns False if `item` is not in the current item list from `getItems`.
+   */
+  public focusItem(item: HTMLElement, focusOptions?: FocusOptions): boolean {
+    const items = this.getEligibleItems();
+    if (!items.includes(item)) {
+      return false;
+    }
+    this.applyRovingTabindex(item);
+    item.focus(focusOptions);
+    if (this.options.memory) {
+      this.lastFocused = item;
+    }
+    return true;
+  }
+
+  /**
+   * Lit `ReactiveController` hook: registers capture-phase listeners on `host` and runs
+   * an initial {@link refresh}.
+   */
+  public hostConnected(): void {
+    this.host.addEventListener('keydown', this.boundKeydown, true);
+    this.host.addEventListener('focusin', this.boundFocusin, true);
+    this.host.addEventListener('focusout', this.boundFocusout, true);
+    this.refresh();
+  }
+
+  /**
+   * Lit `ReactiveController` hook: removes listeners registered in {@link hostConnected}.
+   */
+  public hostDisconnected(): void {
+    this.host.removeEventListener('keydown', this.boundKeydown, true);
+    this.host.removeEventListener('focusin', this.boundFocusin, true);
+    this.host.removeEventListener('focusout', this.boundFocusout, true);
+  }
+
+  // ─────────────────────────
+  //     IMPLEMENTATION
+  // ─────────────────────────
+
+  /**
+   * Resolves `dir` from the shadow host, nearest `dir` ancestor, or `document.documentElement`.
+   *
+   * @returns True when horizontal arrow directions should follow RTL semantics.
+   */
+  private isRtl(): boolean {
+    const root = this.host.getRootNode();
+    if (root instanceof ShadowRoot) {
+      const dir = root.host.getAttribute('dir');
+      if (dir === 'rtl' || dir === 'ltr') {
+        return dir === 'rtl';
+      }
+    }
+    const scoped = this.host.closest('[dir]');
+    const d = scoped?.getAttribute('dir');
+    if (d === 'rtl') {
+      return true;
+    }
+    if (d === 'ltr') {
+      return false;
+    }
+    return document.documentElement.dir === 'rtl';
+  }
+
+  /**
+   * Items returned by `getItems` that lie within `host` (shadow-inclusive tree).
+   *
+   * @returns Candidates before eligibility filtering.
+   */
+  private getRawItems(): HTMLElement[] {
+    return this.options.getItems().filter((el) => this.host.contains(el));
+  }
+
+  /**
+   * {@link getRawItems} filtered by {@link isNavigableItem}.
+   *
+   * @returns Items that participate in roving tabindex and arrow navigation.
+   */
+  private getEligibleItems(): HTMLElement[] {
+    return this.getRawItems().filter((el) => this.isNavigableItem(el));
+  }
+
+  /**
+   * Whether `el` may participate in the focus group (connected, visible, not inert,
+   * and not skipped when {@link FocusgroupNavigationOptions.skipDisabled} is true).
+   *
+   * @param el - Candidate from `getItems`.
+   * @returns True if the element counts as navigable for this controller.
+   */
+  private isNavigableItem(el: HTMLElement): boolean {
+    if (!el.isConnected) {
+      return false;
+    }
+    if (el.hasAttribute('inert') || el.closest('[inert]')) {
+      return false;
+    }
+    const style = getComputedStyle(el);
+    if (style.visibility === 'hidden' || style.display === 'none') {
+      return false;
+    }
+    if (this.options.skipDisabled && this.isDisabledForSkip(el)) {
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Whether `el` should be treated as disabled for {@link FocusgroupNavigationOptions.skipDisabled}.
+   *
+   * @param el - Element to test.
+   * @returns True if the native `disabled` property is true or `aria-disabled` is `"true"`.
+   */
+  private isDisabledForSkip(el: HTMLElement): boolean {
+    if ('disabled' in el && (el as HTMLButtonElement).disabled) {
+      return true;
+    }
+    return el.getAttribute('aria-disabled') === 'true';
+  }
+
+  /**
+   * Sets `tabindex="-1"` on ineligible raw items, then assigns `tabindex="0"` to
+   * `active` (or the first eligible item if `active` is not eligible) and `-1` to the rest.
+   * Dispatches the active-change event and {@link FocusgroupNavigationOptions.onActiveItemChange}.
+   *
+   * @param active - Preferred item to mark as the single tab stop when eligible.
+   */
+  private applyRovingTabindex(active: HTMLElement): void {
+    const items = this.getEligibleItems();
+    const raw = this.getRawItems();
+    for (const el of raw) {
+      if (!items.includes(el)) {
+        el.tabIndex = -1;
+      }
+    }
+    if (items.length === 0) {
+      return;
+    }
+    const safeActive = items.includes(active) ? active : items[0];
+    for (const el of items) {
+      if (el === safeActive) {
+        el.tabIndex = 0;
+      } else {
+        el.tabIndex = -1;
+      }
+    }
+    this.dispatchActiveChange(safeActive);
+    this.options.onActiveItemChange?.(safeActive);
+  }
+
+  /**
+   * Dispatches {@link focusgroupNavigationActiveChange} on the reactive host with the given detail.
+   *
+   * @param activeElement - New active item, or null when clearing selection.
+   */
+  private dispatchActiveChange(activeElement: HTMLElement | null): void {
+    this.host.dispatchEvent(
+      new CustomEvent<FocusgroupNavigationActiveChangeDetail>(
+        focusgroupNavigationActiveChange,
+        {
+          bubbles: true,
+          composed: true,
+          detail: { activeElement },
+        }
+      )
+    );
+  }
+
+  /**
+   * Capture-phase `focusin` handler: syncs roving `tabindex` when focus moves to a managed item
+   * (for example via pointer), and updates memory when enabled.
+   *
+   * @param event - Focus event whose target may be a group item.
+   */
+  private handleFocusin(event: FocusEvent): void {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    const items = this.getEligibleItems();
+    if (!items.includes(target)) {
+      return;
+    }
+    this.applyRovingTabindex(target);
+    if (this.options.memory) {
+      this.lastFocused = target;
+    }
+  }
+
+  /**
+   * Capture-phase `focusout` handler: when focus leaves the host subtree, stores the
+   * previous target for {@link FocusgroupNavigationOptions.memory}.
+   *
+   * @param event - Focus event; `relatedTarget` stays inside the host when moving between items.
+   */
+  private handleFocusout(event: FocusEvent): void {
+    const next = event.relatedTarget;
+    if (next instanceof Node && this.host.contains(next)) {
+      return;
+    }
+    const target = event.target;
+    if (
+      this.options.memory &&
+      target instanceof HTMLElement &&
+      this.getRawItems().includes(target)
+    ) {
+      this.lastFocused = target;
+    }
+  }
+
+  /**
+   * Capture-phase `keydown` handler: arrow keys and Home/End move focus among eligible items
+   * when the event target is managed; calls `preventDefault` when handling navigation.
+   *
+   * @param event - Keyboard event from the focused element inside the host.
+   */
+  private handleKeydown(event: KeyboardEvent): void {
+    if (
+      event.defaultPrevented ||
+      event.altKey ||
+      event.ctrlKey ||
+      event.metaKey
+    ) {
+      return;
+    }
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    const items = this.getEligibleItems();
+    if (!items.includes(target)) {
+      return;
+    }
+
+    const rtl = this.isRtl();
+    let next: HTMLElement | null = null;
+
+    switch (this.options.direction) {
+      case 'horizontal':
+        next = this.navigateLinear(items, target, event.key, 'horizontal', rtl);
+        break;
+      case 'vertical':
+        next = this.navigateLinear(items, target, event.key, 'vertical', rtl);
+        break;
+      case 'grid':
+        next = this.navigateGrid(items, target, event.key, rtl);
+        break;
+      default:
+        break;
+    }
+
+    if (next && next !== target) {
+      event.preventDefault();
+      this.focusItem(next);
+      return;
+    }
+
+    if (event.key === 'Home' || event.key === 'End') {
+      const ordered =
+        this.options.direction === 'grid'
+          ? this.buildRows(items).flat()
+          : items;
+      if (ordered.length === 0) {
+        return;
+      }
+      const boundary =
+        event.key === 'Home' ? ordered[0] : ordered[ordered.length - 1];
+      if (boundary && boundary !== target) {
+        event.preventDefault();
+        this.focusItem(boundary);
+      }
+    }
+  }
+
+  /**
+   * Computes the next focus target for linear {@link FocusgroupDirection} modes.
+   *
+   * @param items - Eligible items in traversal order.
+   * @param current - Currently focused item.
+   * @param key - `KeyboardEvent.key` value.
+   * @param mode - `horizontal` (inline axis) or `vertical` (block axis).
+   * @param rtl - When true, horizontal Left/Right swap forward/backward.
+   * @returns Next item, or null if the key is not a navigation key or movement is blocked.
+   */
+  private navigateLinear(
+    items: HTMLElement[],
+    current: HTMLElement,
+    key: string,
+    mode: 'horizontal' | 'vertical',
+    rtl: boolean
+  ): HTMLElement | null {
+    const idx = items.indexOf(current);
+    if (idx < 0) {
+      return null;
+    }
+
+    let delta = 0;
+    if (mode === 'horizontal') {
+      if (key === 'ArrowLeft') {
+        delta = rtl ? 1 : -1;
+      } else if (key === 'ArrowRight') {
+        delta = rtl ? -1 : 1;
+      }
+    } else {
+      if (key === 'ArrowUp') {
+        delta = -1;
+      } else if (key === 'ArrowDown') {
+        delta = 1;
+      }
+    }
+
+    if (delta === 0) {
+      return null;
+    }
+
+    let nextIdx = idx + delta;
+    if (this.options.wrap) {
+      nextIdx = (nextIdx + items.length) % items.length;
+    } else if (nextIdx < 0 || nextIdx >= items.length) {
+      return null;
+    }
+    return items[nextIdx] ?? null;
+  }
+
+  /**
+   * Computes the next focus target for `grid` {@link FocusgroupDirection} mode using
+   * row clustering and column indices.
+   *
+   * @param items - Eligible items (layout-derived rows may differ from DOM order).
+   * @param current - Currently focused item.
+   * @param key - `KeyboardEvent.key` value.
+   * @param rtl - When true, horizontal Left/Right swap column direction within a row.
+   * @returns Next cell item, or null if the key is not handled or movement is blocked.
+   */
+  private navigateGrid(
+    items: HTMLElement[],
+    current: HTMLElement,
+    key: string,
+    rtl: boolean
+  ): HTMLElement | null {
+    const grid = this.buildRows(items);
+    const pos = this.findGridIndex(grid, current);
+    if (!pos) {
+      return null;
+    }
+    const { row, col } = pos;
+    const rowItems = grid[row] ?? [];
+    let nextRow = row;
+    let nextCol = col;
+
+    switch (key) {
+      case 'ArrowLeft':
+        nextCol = rtl ? col + 1 : col - 1;
+        break;
+      case 'ArrowRight':
+        nextCol = rtl ? col - 1 : col + 1;
+        break;
+      case 'ArrowUp':
+        nextRow = row - 1;
+        break;
+      case 'ArrowDown':
+        nextRow = row + 1;
+        break;
+      default:
+        return null;
+    }
+
+    if (key === 'ArrowLeft' || key === 'ArrowRight') {
+      if (nextCol >= 0 && nextCol < rowItems.length) {
+        return rowItems[nextCol] ?? null;
+      }
+      if (this.options.wrap && rowItems.length > 0) {
+        const wrappedCol = (nextCol + rowItems.length) % rowItems.length;
+        return rowItems[wrappedCol] ?? null;
+      }
+      return null;
+    }
+
+    if (nextRow < 0 || nextRow >= grid.length) {
+      if (this.options.wrap && grid.length > 0) {
+        nextRow = (nextRow + grid.length) % grid.length;
+      } else {
+        return null;
+      }
+    }
+
+    const targetRow = grid[nextRow];
+    if (!targetRow?.length) {
+      return null;
+    }
+    const clampedCol = Math.min(col, targetRow.length - 1);
+    return targetRow[clampedCol] ?? null;
+  }
+
+  /**
+   * Groups `items` into rows by similar `getBoundingClientRect().top`, then sorts each row by `left`.
+   *
+   * @param items - Eligible elements to lay out as a grid.
+   * @returns Row-major array of rows; each row is left-to-right.
+   */
+  private buildRows(items: HTMLElement[]): HTMLElement[][] {
+    type RowAcc = { top: number; elements: HTMLElement[] };
+    const rows: RowAcc[] = [];
+
+    for (const el of items) {
+      const top = el.getBoundingClientRect().top;
+      let row = rows.find(
+        (r) => Math.abs(r.top - top) <= GRID_ROW_TOLERANCE_PX
+      );
+      if (!row) {
+        row = { top, elements: [] };
+        rows.push(row);
+      }
+      row.elements.push(el);
+    }
+
+    rows.sort((a, b) => a.top - b.top);
+    return rows.map((r) =>
+      r.elements.sort(
+        (a, b) =>
+          a.getBoundingClientRect().left - b.getBoundingClientRect().left
+      )
+    );
+  }
+
+  /**
+   * Locates `el` in a row-major grid built by {@link buildRows}.
+   *
+   * @param grid - Rows of elements.
+   * @param el - Element to find.
+   * @returns Row and column indices, or null if absent.
+   */
+  private findGridIndex(
+    grid: HTMLElement[][],
+    el: HTMLElement
+  ): { row: number; col: number } | null {
+    for (let r = 0; r < grid.length; r++) {
+      const c = grid[r].indexOf(el);
+      if (c !== -1) {
+        return { row: r, col: c };
+      }
+    }
+    return null;
+  }
+}

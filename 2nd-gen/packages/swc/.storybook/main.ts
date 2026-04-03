@@ -59,6 +59,16 @@ const stories: StorybookConfig['stories'] = [
 if (storybookMode !== 'ci-a11y') {
   stories.push(
     {
+      directory: 'controllers',
+      files: '*.mdx',
+      titlePrefix: 'Controllers',
+    },
+    {
+      directory: '../../core/controllers/stories',
+      files: '**/*.stories.ts',
+      titlePrefix: 'Controllers',
+    },
+    {
       directory: 'learn-about-swc',
       files: '*.mdx',
       titlePrefix: 'Learn about SWC',
