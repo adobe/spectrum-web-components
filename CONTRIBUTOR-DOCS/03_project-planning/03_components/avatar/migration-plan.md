@@ -44,7 +44,8 @@ last-updated: 2026-03-31
 | `src` | `string` | `''` | No | Unchanged |
 | `alt` | `string \| undefined` | `undefined` | No | Replaces `label` + `isDecorative`; pass `alt=""` for decorative |
 | `size` | `AvatarSize` (50–1500) | `500` | Yes | Numeric scale extended; invalid values fall back to 500 |
-| `overBackground` | `boolean` | `false` | Yes (`over-background`) | New in S2; adds outline for contrast on colored backgrounds |
+| `showStroke` | `boolean` | `false` | Yes (`show-stroke`) | Renders outline for visual separation; defaults to `true` in Avatar Group |
+| `disabled` | `boolean` | `false` | Yes | Renders at reduced opacity; entity is inactive or unavailable |
 | `label` _(deprecated)_ | `string \| undefined` | — | No | Shim → sets `alt`; warns in DEBUG mode |
 
 ### Dropped from 1st-gen
@@ -52,7 +53,6 @@ last-updated: 2026-03-31
 | Property | Reason |
 |---|---|
 | `href`, `target`, `rel`, `download`, `referrerpolicy`, `type` | Linked variant dropped — not in Spectrum 2 avatar spec |
-| `disabled` | No linked variant; no disabled state in S2 spec |
 | `isDecorative` | Replaced by `alt=""` (standard HTML pattern) |
 
 ---
@@ -147,8 +147,6 @@ All `--mod-avatar-*` customization properties removed. Consumers must migrate to
 
 ## 6. Open Questions
 
-All open questions closed.
-
 | ID | Question | Resolution |
 |---|---|---|
 | **OQ-1** | Size system: numeric vs T-shirt sizes? | **Closed** — numeric sizes kept and extended to 1500; bespoke getter/setter in `AvatarBase` (no `SizedMixin`) |
@@ -156,6 +154,7 @@ All open questions closed.
 | **OQ-3** | `LikeAnchor` mixin needed? | **Closed** — linked variant dropped; `href` and related props not carried forward |
 | **OQ-4** | `is-decorative` attribute name? | **Closed** — dropped entirely; replaced by `alt=""` (standard HTML semantics) |
 | **OQ-5** | S2 tokens for sizes 800–1500 exist? | **Closed** — confirmed in `tokens.css`; all size rules implemented |
+| **OQ-6** | `image` variant types (gradient, initials, guest)? | **Open** — S2 spec defines four image variants: `user image`, `gradient image`, `initials`, `guest`. Figma shows all four but provides no implementation detail (token names, gradient asset, initials derivation logic, fallback chain). Current implementation only supports `user image` via `src`. Remaining variants are a **known gap** — do not implement until design provides full spec for each variant including tokens, assets, and fallback behavior. |
 
 ---
 

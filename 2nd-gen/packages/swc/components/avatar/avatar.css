@@ -111,20 +111,28 @@
   object-fit: cover;
 }
 
-/* ── Over-background outline ────────────────────────────── */
+/* ── Stroke outline ─────────────────────────────────────── */
 
 /* Default outline width for all sizes */
-:host([over-background]) .swc-Avatar-image {
+:host([show-stroke]) .swc-Avatar-image {
   outline: var(--swc-avatar-border-width, token("avatar-border-width")) solid var(--swc-avatar-border-color, token("avatar-border-color"));
 }
 
 /* Thicker outline for large sizes >= 1000 (≥ 64 px), matching S2.
    No Spectrum 2 token exists for the large-size border width; hardcoded per spec. */
-:host([over-background][size="1000"]) .swc-Avatar-image,
-:host([over-background][size="1100"]) .swc-Avatar-image,
-:host([over-background][size="1200"]) .swc-Avatar-image,
-:host([over-background][size="1300"]) .swc-Avatar-image,
-:host([over-background][size="1400"]) .swc-Avatar-image,
-:host([over-background][size="1500"]) .swc-Avatar-image {
+:host([show-stroke][size="1000"]) .swc-Avatar-image,
+:host([show-stroke][size="1100"]) .swc-Avatar-image,
+:host([show-stroke][size="1200"]) .swc-Avatar-image,
+:host([show-stroke][size="1300"]) .swc-Avatar-image,
+:host([show-stroke][size="1400"]) .swc-Avatar-image,
+:host([show-stroke][size="1500"]) .swc-Avatar-image {
   outline-width: 2px;
+}
+
+/* ── Disabled state ─────────────────────────────────────── */
+
+:host([disabled]) {
+  pointer-events: none;
+  cursor: default;
+  opacity: var(--swc-avatar-opacity-disabled, token("opacity-disabled"));
 }

@@ -25,6 +25,7 @@ import {
 } from '../../../utils/test-utils.js';
 import {
   Decorative,
+  Disabled,
   meta,
   Overview,
   Sizes,
@@ -55,7 +56,8 @@ export const OverviewTest: Story = {
       expect(avatar.src, 'src property').toBe(PLACEHOLDER_SRC);
       expect(avatar.alt, 'alt property').toBe('Jane Doe');
       expect(avatar.size, 'size property').toBe(500);
-      expect(avatar.overBackground, 'overBackground property').toBe(false);
+      expect(avatar.showStroke, 'showStroke property').toBe(false);
+      expect(avatar.disabled, 'disabled property').toBe(false);
     });
 
     await step('size attribute is present after first render', async () => {
@@ -198,43 +200,74 @@ export const AltAriaHiddenTest: Story = {
   },
 };
 
-export const OverBackgroundReflectionTest: Story = {
+export const ShowStrokeReflectionTest: Story = {
   ...Overview,
   play: async ({ canvasElement, step }) => {
     const avatar = await getComponent<Avatar>(canvasElement, 'swc-avatar');
 
-    await step(
-      'reflects over-background attribute after mutation',
-      async () => {
-        avatar.overBackground = true;
-        await avatar.updateComplete;
-        expect(
-          avatar.hasAttribute('over-background'),
-          'over-background attribute presence'
-        ).toBe(true);
+    await step('reflects show-stroke attribute after mutation', async () => {
+      avatar.showStroke = true;
+      await avatar.updateComplete;
+      expect(
+        avatar.hasAttribute('show-stroke'),
+        'show-stroke attribute presence'
+      ).toBe(true);
 
-        avatar.overBackground = false;
-        await avatar.updateComplete;
-        expect(
-          avatar.hasAttribute('over-background'),
-          'over-background attribute removed'
-        ).toBe(false);
-      }
-    );
+      avatar.showStroke = false;
+      await avatar.updateComplete;
+      expect(
+        avatar.hasAttribute('show-stroke'),
+        'show-stroke attribute removed'
+      ).toBe(false);
+    });
 
     await step(
       'does not toggle aria-hidden when a non-alt property changes',
       async () => {
         // alt="Jane Doe" from Overview args — aria-hidden should remain absent
-        // even after overBackground changes (covers changes.has("alt") === false path)
-        avatar.overBackground = true;
+        // even after showStroke changes (covers changes.has("alt") === false path)
+        avatar.showStroke = true;
         await avatar.updateComplete;
         expect(
           avatar.hasAttribute('aria-hidden'),
-          'aria-hidden unaffected by overBackground change'
+          'aria-hidden unaffected by showStroke change'
         ).toBe(false);
       }
     );
+  },
+};
+
+export const DisabledTest: Story = {
+  ...Disabled,
+  play: async ({ canvasElement, step }) => {
+    const avatar = await getComponent<Avatar>(canvasElement, 'swc-avatar');
+
+    await step('reflects disabled attribute on initial render', async () => {
+      expect(avatar.disabled, 'disabled property').toBe(true);
+      expect(
+        avatar.hasAttribute('disabled'),
+        'disabled attribute presence'
+      ).toBe(true);
+    });
+
+    await step('removes disabled attribute after mutation', async () => {
+      avatar.disabled = false;
+      await avatar.updateComplete;
+      expect(avatar.disabled, 'disabled property after removal').toBe(false);
+      expect(
+        avatar.hasAttribute('disabled'),
+        'disabled attribute removed'
+      ).toBe(false);
+    });
+
+    await step('re-applies disabled attribute after re-enabling', async () => {
+      avatar.disabled = true;
+      await avatar.updateComplete;
+      expect(
+        avatar.hasAttribute('disabled'),
+        'disabled attribute re-applied'
+      ).toBe(true);
+    });
   },
 };
 

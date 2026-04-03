@@ -38,7 +38,7 @@ import '@adobe/spectrum-wc/avatar';
 | Alt text attribute    | `label="Jane Doe"`     | `alt="Jane Doe"`                                                       |
 | Decorative pattern    | `is-decorative`        | `alt=""`                                                               |
 | Linked variant        | `href="..."` supported | Not supported — see [Linked variant removed](#linked-variant-removed)  |
-| Disabled state        | `disabled` supported   | Not supported — not in S2 spec                                         |
+| Disabled state        | `disabled` supported   | `disabled` supported — see [Disabled](#disabled)                       |
 | Default size          | `100` (20 px)          | `500` (40 px)                                                          |
 | Available sizes       | `50`–`700`             | `50`–`1500`                                                            |
 | CSS custom properties | `--mod-avatar-*`       | `--swc-avatar-*` — see [CSS custom properties](#css-custom-properties) |
@@ -130,24 +130,24 @@ is not part of the Spectrum 2 spec.
 
 ---
 
-### Disabled state removed
+### Disabled
 
-The `disabled` attribute is not supported in 2nd-gen. The Spectrum 2 avatar spec
-does not include a disabled state.
+The `disabled` attribute is supported in both 1st-gen and 2nd-gen, but the
+behavior differs. In 1st-gen, `disabled` was only meaningful on the linked
+variant — it rendered the avatar as a static image without a link. In 2nd-gen,
+`disabled` applies to any avatar and renders it at reduced opacity, indicating
+the entity is not currently active or available.
 
 ```html
-<!-- Before — linked + disabled, renders as static image -->
-<sp-avatar
-  disabled
-  href="https://example.com/profile"
-  label="Jane Doe"
-  src="/img/user.jpg"
-></sp-avatar>
+<!-- Before — disabled only had effect on linked avatars -->
+<sp-avatar disabled href="..." label="Jane Doe" src="/img/user.jpg"></sp-avatar>
+
+<!-- After — disabled works on any avatar -->
+<swc-avatar disabled alt="Jane Doe" src="/img/user.jpg"></swc-avatar>
 ```
 
-If you need to prevent a wrapped link from being interactive, use standard HTML
-techniques (remove the `href`, use `pointer-events: none`, or manage focus
-programmatically).
+A disabled avatar remains present in the layout and accessible to assistive
+technology. It is not hidden from the accessibility tree.
 
 ---
 
@@ -219,14 +219,15 @@ with `::part()` or `:host` selectors, update them accordingly.
 
 ## New in 2nd-gen
 
-### `over-background`
+### `show-stroke`
 
-A new `over-background` boolean attribute renders a solid outline around the
-avatar image, keeping it visually distinct when placed on a background that shares
-the same color as the image border.
+A new `show-stroke` boolean attribute renders a solid outline around the avatar
+image to create visual separation from adjacent content. It defaults to `true`
+within an Avatar Group. Set it explicitly on a standalone avatar when the image
+border color matches the surrounding background.
 
 ```html
-<swc-avatar alt="Jane Doe" src="/img/user.jpg" over-background></swc-avatar>
+<swc-avatar alt="Jane Doe" src="/img/user.jpg" show-stroke></swc-avatar>
 ```
 
 The outline uses `--swc-avatar-border-width` (currently 1 px) for sizes 50–900
@@ -241,3 +242,4 @@ and a hardcoded 2 px for sizes 1000–1500, matching the Spectrum 2 specificatio
 - Never use `alt=""` on a linked avatar (wrapped in `<a>`).
 - `swc-avatar` is not focusable on its own. Keyboard accessibility for linked
   avatars is provided by the wrapping `<a>` element.
+- A disabled avatar remains accessible — `disabled` only affects visual opacity.

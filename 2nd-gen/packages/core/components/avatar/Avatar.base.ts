@@ -100,11 +100,21 @@ export abstract class AvatarBase extends SpectrumElement {
   // ───────────────────────
 
   /**
-   * Renders an outline around the avatar image so it remains visible against
-   * backgrounds that share the same color as the image border.
+   * Renders a stroke (outline) around the avatar image to create visual
+   * separation from adjacent content. Defaults to `true` within an Avatar
+   * Group; set explicitly on a standalone avatar when the image border color
+   * matches the surrounding background.
    */
-  @property({ type: Boolean, reflect: true, attribute: 'over-background' })
-  public overBackground = false;
+  @property({ type: Boolean, reflect: true, attribute: 'show-stroke' })
+  public showStroke = false;
+
+  /**
+   * Renders the avatar at reduced opacity, indicating the entity is not
+   * currently active or available. The avatar remains present in the layout
+   * and accessible to assistive technology.
+   */
+  @property({ type: Boolean, reflect: true })
+  public disabled = false;
 
   // ──────────────────────────────────────────
   //     DEPRECATED — 1st-gen compat shims

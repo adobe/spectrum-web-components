@@ -36,8 +36,17 @@ argTypes.size = {
   },
 };
 
-argTypes['over-background'] = {
-  ...argTypes['over-background'],
+argTypes['show-stroke'] = {
+  ...argTypes['show-stroke'],
+  control: { type: 'boolean' },
+  table: {
+    category: 'attributes',
+    defaultValue: { summary: 'false' },
+  },
+};
+
+argTypes.disabled = {
+  ...argTypes.disabled,
   control: { type: 'boolean' },
   table: {
     category: 'attributes',
@@ -72,7 +81,7 @@ argTypes.src = {
  * | Change | 1st-gen | 2nd-gen |
  * |--------|---------|---------|
  * | **Linked variant removed** | `href`, `target`, `rel`, `download`, `referrerpolicy`, `type` | Not supported — not in the Spectrum 2 spec. Wrap the avatar in an `<a>` element instead. The `alt` attribute becomes the link's accessible name — `alt=""` (decorative) is incompatible with a linked wrapper. |
- * | **Disabled state removed** | `disabled` | Not supported — no disabled state in the S2 avatar spec. |
+ * | **Disabled state** | `disabled` | Supported — renders at reduced opacity to indicate the entity is inactive or unavailable. |
  * | **Decorative pattern** | `is-decorative` attribute | Pass `alt=""` — aligns with standard HTML `<img>` semantics. |
  * | **Alt text property** | `label` attribute | `alt` attribute. `label` still works but emits a deprecation warning in DEBUG mode. |
  * | **Default size** | `100` (20 px) | `500` (40 px) |
@@ -116,9 +125,9 @@ const PLACEHOLDER_SRC = 'https://picsum.photos/id/64/500/500';
 // alt ?? '' guards against undefined produced by Storybook controls when
 // the user clears the alt field. Explicit stories use typed args that are always defined.
 export const Playground: Story = {
-  render: ({ src, alt, size, 'over-background': overBackground }) => html`
+  render: ({ src, alt, size, 'show-stroke': showStroke, disabled }) => html`
     <div
-      style=${overBackground
+      style=${showStroke
         ? 'padding:16px;background:linear-gradient(to right,rgb(15,23,42),rgb(51,65,85));border-radius:8px;'
         : ''}
     >
@@ -126,7 +135,8 @@ export const Playground: Story = {
         src=${src}
         alt=${alt ?? ''}
         size=${size}
-        ?over-background=${overBackground}
+        ?show-stroke=${showStroke}
+        ?disabled=${disabled}
       ></swc-avatar>
     </div>
   `,
@@ -135,7 +145,8 @@ export const Playground: Story = {
     src: PLACEHOLDER_SRC,
     alt: 'Jane Doe',
     size: '500',
-    'over-background': false,
+    'show-stroke': false,
+    disabled: false,
   },
 };
 
@@ -244,13 +255,14 @@ export const InActionButton: Story = {
 };
 
 /**
- * When placed on a background that shares the same color as the avatar's image
- * border, use `over-background` to render a solid outline that keeps the
- * avatar visually distinct. The outline uses `--swc-avatar-border-width`
- * (currently 1 px) for sizes 50–900 and a hardcoded 2 px for sizes 1000–1500,
- * matching Spectrum 2's breakpoint.
+ * Use `show-stroke` to render a solid outline around the avatar image.
+ * This is useful when the avatar's image border color matches the surrounding
+ * background. The outline uses `--swc-avatar-border-width` (currently 1 px)
+ * for sizes 50–900 and a hardcoded 2 px for sizes 1000–1500, matching the
+ * Spectrum 2 specification. Within an Avatar Group, `show-stroke` defaults
+ * to `true` to visually separate stacked avatars.
  */
-export const OverBackground: Story = {
+export const ShowStroke: Story = {
   render: () => html`
     <div
       style="display:inline-flex;gap:8px;align-items:center;padding:16px;background:linear-gradient(to right,rgb(15,23,42),rgb(51,65,85));border-radius:8px;"
@@ -259,17 +271,35 @@ export const OverBackground: Story = {
         src=${PLACEHOLDER_SRC}
         alt="Jane Doe"
         size="500"
-        over-background
+        show-stroke
       ></swc-avatar>
       <swc-avatar
         src=${PLACEHOLDER_SRC}
         alt="Jane Doe"
         size="1000"
-        over-background
+        show-stroke
       ></swc-avatar>
     </div>
   `,
   parameters: { 'section-order': 3 },
+  tags: ['options'],
+};
+
+/**
+ * A disabled avatar indicates that the entity is not currently active or
+ * available. The avatar remains visible in the layout at reduced opacity,
+ * communicating that it may become active later.
+ */
+export const Disabled: Story = {
+  render: () => html`
+    <swc-avatar
+      src=${PLACEHOLDER_SRC}
+      alt="Jane Doe"
+      size="500"
+      disabled
+    ></swc-avatar>
+  `,
+  parameters: { 'section-order': 4 },
   tags: ['options'],
 };
 

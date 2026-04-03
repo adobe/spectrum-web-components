@@ -101,16 +101,30 @@ test.describe('Avatar - ARIA Snapshots', () => {
     `);
   });
 
-  test('should expose correct img role when over-background is active', async ({
+  test('should expose correct img role when show-stroke is active', async ({
     page,
   }) => {
     const root = await gotoStory(
       page,
-      'components-avatar--over-background',
+      'components-avatar--show-stroke',
       'swc-avatar'
     );
     await expect(root).toMatchAriaSnapshot(`
       - img "Jane Doe"
+      - img "Jane Doe"
+    `);
+  });
+
+  test('should remain in the accessibility tree when disabled', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-avatar--disabled',
+      'swc-avatar'
+    );
+    // disabled is purely visual (opacity); the avatar stays accessible.
+    await expect(root).toMatchAriaSnapshot(`
       - img "Jane Doe"
     `);
   });
