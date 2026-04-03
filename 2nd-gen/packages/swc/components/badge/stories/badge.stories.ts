@@ -10,13 +10,14 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Badge } from '@adobe/spectrum-wc/badge';
 
 import '@adobe/spectrum-wc/badge';
+import '@adobe/spectrum-wc/icon';
 
 import {
   BADGE_VALID_SIZES,
@@ -29,6 +30,12 @@ import {
   FIXED_VALUES,
   type FixedValues,
 } from '../../../../core/components/badge/Badge.types.js';
+import {
+  Checkmark75Icon,
+  Checkmark100Icon,
+  Checkmark200Icon,
+  Checkmark300Icon,
+} from '../../icon/elements/index.js';
 
 // ────────────────
 //    METADATA
@@ -41,6 +48,12 @@ argTypes.variant = {
   ...argTypes.variant,
   control: { type: 'select' },
   options: Badge.VARIANTS,
+  table: {
+    category: 'attributes',
+    defaultValue: {
+      summary: 'neutral',
+    },
+  },
 };
 
 argTypes.fixed = {
@@ -53,6 +66,15 @@ argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
   options: Badge.VALID_SIZES,
+};
+
+// @todo: create a select dropdown with all available/acceptable icons for a component.
+// For now, this arg is turned off in the control table since the string doesn't get parsed as HTML: SWC-1853
+argTypes['icon-slot'] = {
+  ...argTypes['icon-slot'],
+  control: false,
+  description:
+    'Accepts an icon element. The control is disabled. Use the Anatomy story to see icon usage. Enhancements to this control will be added in a future release.',
 };
 
 /**
@@ -134,6 +156,18 @@ const nonSemanticLabels = {
 
 const allVariantsLabels = { ...semanticLabels, ...nonSemanticLabels };
 
+const checkmarkIconForSize = (size: string): TemplateResult => {
+  const validSize: BadgeSize = BADGE_VALID_SIZES.includes(size as BadgeSize)
+    ? (size as BadgeSize)
+    : 'm';
+  return {
+    s: Checkmark75Icon,
+    m: Checkmark100Icon,
+    l: Checkmark200Icon,
+    xl: Checkmark300Icon,
+  }[validSize]();
+};
+
 const fixedLabels = {
   'block-start': 'Block start',
   'block-end': 'Block end',
@@ -148,8 +182,6 @@ const fixedLabels = {
 export const Playground: Story = {
   render: (args) => template(args),
   args: {
-    size: 'm',
-    variant: 'informative',
     'default-slot': 'Active',
   },
   tags: ['autodocs', 'dev'],
@@ -165,8 +197,6 @@ export const Overview: Story = {
   `,
   tags: ['overview'],
   args: {
-    size: 'm',
-    variant: 'informative',
     'default-slot': 'Active',
   },
 };
@@ -188,19 +218,31 @@ export const Overview: Story = {
  * - **icon slot**: (optional) - Visual indicator positioned before the label
  */
 export const Anatomy: Story = {
-  render: (args) => html`
-    ${template({ ...args, 'default-slot': 'Label only' })}
-    ${template({ ...args, 'icon-slot': '✓', 'aria-label': 'Icon only' })}
-    ${template({
-      ...args,
-      'icon-slot': '✓',
-      'default-slot': 'Icon and label',
-    })}
-  `,
+  render: (args) => {
+    const size = args.size as BadgeSize;
+    return html`
+      ${template({ ...args, 'default-slot': 'Label only' })}
+      <swc-badge
+        variant=${args.variant}
+        size=${size}
+        role="img"
+        aria-label="Checkmark"
+      >
+        <swc-icon size=${size} slot="icon">
+          ${checkmarkIconForSize(size)}
+        </swc-icon>
+      </swc-badge>
+      <swc-badge variant=${args.variant} size=${size}>
+        <swc-icon size=${size} slot="icon">
+          ${checkmarkIconForSize(size)}
+        </swc-icon>
+        Icon and label
+      </swc-badge>
+    `;
+  },
   tags: ['anatomy'],
   args: {
-    variant: 'informative',
-    size: 'm',
+    variant: 'neutral',
   },
 };
 
@@ -218,20 +260,25 @@ export const Anatomy: Story = {
  *
  * The `m` size is the default and most frequently used option. Use larger sizes sparingly to create a hierarchy of importance on a page.
  */
+
+// @todo - We should make sure to capture icon-only badges in all sizes for VRTs: SWC-1852
 export const Sizes: Story = {
   render: (args) => html`
-    ${BADGE_VALID_SIZES.map((size) =>
-      template({
-        ...args,
-        size,
-        'default-slot': sizeLabels[size],
-      })
+    ${BADGE_VALID_SIZES.map(
+      (size) => html`
+        <swc-badge variant=${args.variant} size=${size}>
+          <swc-icon size=${size} slot="icon">
+            ${checkmarkIconForSize(size)}
+          </swc-icon>
+          ${sizeLabels[size]}
+        </swc-badge>
+      `
     )}
   `,
   parameters: { 'section-order': 1 },
   tags: ['options'],
   args: {
-    variant: 'informative',
+    variant: 'neutral',
   },
 };
 
@@ -273,7 +320,6 @@ SemanticVariants.storyName = 'Semantic variants';
  * - Creating department, team, or project color schemes
  *
  * > **Note**: 2nd-gen adds `pink`, `turquoise`, `brown`, `cinnamon`, and `silver` variants.
- * 1st-gen variants `gray`, `red`, `orange`, `green`, and `blue` are not available in 2nd-gen.
  */
 export const NonSemanticVariants: Story = {
   render: (args) => html`
@@ -356,16 +402,13 @@ export const Fixed: Story = {
       template({
         ...args,
         fixed,
+        variant: 'neutral',
         'default-slot': fixedLabels[fixed],
       })
     )}
   `,
   parameters: { 'section-order': 6 },
   tags: ['options'],
-  args: {
-    variant: 'informative',
-    size: 'm',
-  },
 };
 
 // ──────────────────────────────
@@ -382,16 +425,12 @@ export const TextWrapping: Story = {
   render: (args) => html`
     ${template({
       ...args,
-      variant: 'informative',
+      variant: 'notice',
       'default-slot': 'Document review pending approval from manager',
       style: 'max-inline-size: 120px',
     })}
   `,
   tags: ['behaviors'],
-  args: {
-    variant: 'informative',
-    size: 'm',
-  },
 };
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
@@ -414,11 +453,28 @@ export const TextWrapping: Story = {
  * - Screen readers will announce the badge content as static text
  * - No keyboard interaction is required or expected
  *
+ * ### Text label
+ *
+ * Badges with visible text are announced directly by screen readers. The text in the default slot is the accessible name.
+ *
+ * ### Icon + text
+ *
+ * When an icon accompanies a text label, the icon is decorative and should be hidden from assistive technology.
+ * Apply `aria-hidden="true"` to the `<swc-icon>` so screen readers only announce the label text.
+ *
+ * ### Icon only
+ *
+ * When space is limited and no visible label is shown, the badge **must** have an accessible name.
+ * Set `role="img"` and `aria-label` directly on the `<swc-badge>` element to describe the badge's meaning.
+ * `role="img"` is required because custom elements have no implicit ARIA role — without it, `aria-label` is not
+ * permitted by the ARIA specification and will fail automated accessibility checks.
+ * Without both attributes, the badge has no accessible name and fails WCAG 1.1.1.
+ *
  * ### Best practices
  *
  * - Use semantic variants (`positive`, `negative`, `notice`, `informative`, `neutral`, `accent`) when the status has specific meaning
  * - Include clear, descriptive labels that explain the status without relying on color alone
- * - For icon-only badges, provide descriptive text in the default slot or use the `aria-label` attribute directly on the element
+ * - For icon-only badges, always set `role="img"` and `aria-label` on `swc-badge`
  * - Ensure sufficient color contrast between the badge and its background
  * - Badges are not interactive elements - for interactive status indicators, consider using buttons, tags, or links instead
  * - When using multiple badges together, ensure they're clearly associated with their related content
@@ -468,9 +524,26 @@ export const Accessibility: Story = {
       variant: 'silver',
       'default-slot': 'Version 1.2.10',
     })}
+
+    <!-- Icon + text: icon is decorative, aria-hidden="true" hides it from assistive technology -->
+    <swc-badge variant="positive" size=${args.size}>
+      <swc-icon size=${args.size} slot="icon" aria-hidden="true">
+        ${checkmarkIconForSize(args.size)}
+      </swc-icon>
+      Approved
+    </swc-badge>
+
+    <!-- Icon-only: role and aria-label provides the accessible name and purpose when no visible text is present -->
+    <swc-badge
+      variant="positive"
+      size=${args.size}
+      role="img"
+      aria-label="Approved"
+    >
+      <swc-icon size=${args.size} slot="icon">
+        ${checkmarkIconForSize(args.size)}
+      </swc-icon>
+    </swc-badge>
   `,
   tags: ['a11y'],
-  args: {
-    size: 'm',
-  },
 };
