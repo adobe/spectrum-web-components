@@ -283,6 +283,8 @@ export default defineConfig([
             'attr', // Attribute shorthand
             'attribute', // Attribute documentation
             'internal', // Internal member marker
+            'status', // Component maturity status (preview, early-access, deprecated)
+            'since', // Version when the component was introduced
           ],
         },
       ],
@@ -410,6 +412,7 @@ export default defineConfig([
       'scripts/**/*',
       '**/scripts/**/*.js',
       '**/scripts/**/*.ts',
+      '**/scripts/**/*.mjs',
       'linters/**/*.js',
       '.github/**/*.js',
       '1st-gen/test/visual/**/*.js',
@@ -530,7 +533,12 @@ export default defineConfig([
   // Scripts: allow console.log and devDependencies imports
   // ────────────────────────────────────────────────────────────────────────────
   {
-    files: ['**/scripts/**/*.js', '**/scripts/**/*.ts', 'scripts/**/*'],
+    files: [
+      '**/scripts/**/*.js',
+      '**/scripts/**/*.ts',
+      '**/scripts/**/*.mjs',
+      'scripts/**/*',
+    ],
     rules: {
       'no-console': 'off',
       'import/no-extraneous-dependencies': 'off',

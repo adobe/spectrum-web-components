@@ -61,7 +61,7 @@ yarn changeset
 
 Follow the prompts to select packages and bump type.
 
-> **Important:** When you modify `@spectrum-web-components/core`, you must **manually add changesets** for any affected 1st-gen components. The `linked` versioning between Core and 2nd-gen handles 2nd-gen automatically, but 1st-gen packages are in a `fixed` group and are not linked to Core.
+> **Note:** 1st-gen and 2nd-gen are independent. Changes to `@spectrum-web-components/core` only affect 2nd-gen. The `linked` versioning between Core and 2nd-gen handles this automatically. 1st-gen packages are in a separate `fixed` group.
 
 ### Understand the versioning strategy
 

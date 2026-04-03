@@ -17,10 +17,10 @@ import { when } from 'lit/directives/when.js';
 
 import {
   BADGE_VALID_SIZES,
-  BADGE_VARIANTS_COLOR_S2,
-  BADGE_VARIANTS_S2,
+  BADGE_VARIANTS,
+  BADGE_VARIANTS_COLOR,
   BadgeBase,
-  type BadgeVariantS2 as BadgeVariant,
+  type BadgeVariant,
 } from '@spectrum-web-components/core/components/badge';
 
 import styles from './badge.css';
@@ -30,6 +30,8 @@ import styles from './badge.css';
  * Badges are typically used to indicate status, categories, or provide supplementary information.
  *
  * @element swc-badge
+ * @status preview
+ * @since 0.0.1
  *
  * @example
  * <swc-badge variant="positive">New</swc-badge>
@@ -48,12 +50,12 @@ export class Badge extends BadgeBase {
   /**
    * @internal
    */
-  static override readonly VARIANTS_COLOR = BADGE_VARIANTS_COLOR_S2;
+  static override readonly VARIANTS_COLOR = BADGE_VARIANTS_COLOR;
 
   /**
    * @internal
    */
-  static override readonly VARIANTS = BADGE_VARIANTS_S2;
+  static override readonly VARIANTS = BADGE_VARIANTS;
 
   /**
    * @internal
