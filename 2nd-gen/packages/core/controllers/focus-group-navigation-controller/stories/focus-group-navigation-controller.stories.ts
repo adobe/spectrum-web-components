@@ -725,7 +725,19 @@ const meta: Meta = {
   },
 };
 
-export default meta;
+/** Lit demo hosts are exported for unit tests; exclude from CSF so Vitest does not run them as stories. */
+export default {
+  ...meta,
+  excludeStories: [
+    'DemoFocusgroupHorizontal',
+    'DemoFocusgroupBothAxes',
+    'DemoFocusgroupVertical',
+    'DemoFocusgroupSkipDisabled',
+    'DemoFocusgroupGrid',
+    'DemoFocusgroupProgrammatic',
+    'DemoFocusgroupTextPrefix',
+  ],
+} as Meta;
 
 type Story = StoryObj;
 
