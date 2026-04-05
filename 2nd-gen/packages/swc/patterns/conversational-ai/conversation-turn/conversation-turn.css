@@ -13,6 +13,8 @@
 :host {
   display: block;
   inline-size: 100%;
+  container-name: swc-conversation-turn;
+  container-type: inline-size;
 }
 
 *,
@@ -27,12 +29,28 @@
   min-inline-size: 0;
 }
 
+.swc-ConversationTurn > slot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--swc-conversation-turn-group-gap, 8px);
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
 :host([participant="user"]) .swc-ConversationTurn {
   justify-content: flex-end;
 }
 
+:host([participant="user"]) .swc-ConversationTurn > slot {
+  align-items: flex-end;
+}
+
 :host([participant="assistant"]) .swc-ConversationTurn {
   justify-content: flex-start;
+}
+
+:host([participant="assistant"]) .swc-ConversationTurn > slot {
+  align-items: stretch;
 }
 
 /* Let assistant stacks span the column; user bubbles keep their own max-inline-size. */

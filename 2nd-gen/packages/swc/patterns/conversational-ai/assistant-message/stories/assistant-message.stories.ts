@@ -71,7 +71,7 @@ const richSlots = {
 };
 
 const withAssistantTurn = (story: () => unknown) => html`
-  <swc-conversation-turn participant="assistant" style="inline-size:100%;">
+  <swc-conversation-turn participant="assistant">
     ${story()}
   </swc-conversation-turn>
 `;
@@ -166,10 +166,7 @@ export const Loading: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:48px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn
-          participant="assistant"
-          style="inline-size:100%;"
-        >
+        <swc-conversation-turn participant="assistant">
           <swc-assistant-message>
             <swc-response-status
               slot="status"
@@ -184,10 +181,7 @@ export const Loading: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn
-          participant="assistant"
-          style="inline-size:100%;"
-        >
+        <swc-conversation-turn participant="assistant">
           <swc-assistant-message>
             <swc-response-status
               slot="status"

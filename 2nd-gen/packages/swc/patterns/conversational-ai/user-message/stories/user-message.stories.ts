@@ -35,11 +35,13 @@ argTypes.content = {
   },
 };
 
+// Wraps a single swc-user-message in a conversation turn for proper alignment.
+const withUserTurn = (story: () => unknown) => html`
+  <swc-conversation-turn participant="user">${story()}</swc-conversation-turn>
+`;
+
 /**
  * User-authored message bubble. Use inside `<swc-conversation-turn participant="user">` for thread alignment.
- * Max width defaults to 536px; override with `--swc-user-message-max-inline-size` on the host if needed.
- *
- * Prefer **`template(args)`** (or **`docs.source`**) so the docs code panel shows HTML.
  */
 const meta: Meta = {
   title: 'Conversational AI/User message',
@@ -47,13 +49,6 @@ const meta: Meta = {
   args,
   argTypes,
   render: (args) => template(args),
-  decorators: [
-    (story) => html`
-      <swc-conversation-turn participant="user" style="inline-size:100%;">
-        ${story()}
-      </swc-conversation-turn>
-    `,
-  ],
   parameters: {
     docs: {
       subtitle: 'User-submitted message rendered in the thread.',
@@ -75,6 +70,7 @@ export const Playground: Story = {
     'default-slot':
       'Can you help me create a 45-minute presentation, with animations, for an executive update?',
   },
+  decorators: [withUserTurn],
   tags: ['autodocs', 'dev'],
 };
 
@@ -88,6 +84,7 @@ export const Overview: Story = {
     'default-slot':
       'Can you help me create a 45-minute presentation, with animations, for an executive update?',
   },
+  decorators: [withUserTurn],
   tags: ['overview'],
 };
 
@@ -104,9 +101,9 @@ export const Overview: Story = {
 export const Anatomy: Story = {
   args: {
     content: 'copy',
-    'default-slot':
-      'Can you help me create a 45-minute presentation?',
+    'default-slot': 'Can you help me create a 45-minute presentation?',
   },
+  decorators: [withUserTurn],
   tags: ['anatomy'],
 };
 
@@ -123,12 +120,14 @@ export const Anatomy: Story = {
  */
 export const Content: Story = {
   render: () => html`
-    <div style="display:flex;flex-direction:column;gap:32px;">
+    <div
+      style="display:flex;flex-direction:column;gap:32px;max-inline-size:640px;"
+    >
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn participant="user" style="inline-size:100%;">
+        <swc-conversation-turn participant="user">
           <swc-user-message content="copy">
-            Can you help me create a 45-minute presentation, with animations, for
-            an executive update?
+            Can you help me create a 45-minute presentation, with animations,
+            for an executive update?
           </swc-user-message>
         </swc-conversation-turn>
         <span
@@ -138,7 +137,7 @@ export const Content: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn participant="user" style="inline-size:100%;">
+        <swc-conversation-turn participant="user">
           <swc-user-message content="card">
             <swc-conversation-artifact-card>
               <div
@@ -159,13 +158,13 @@ export const Content: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn participant="user" style="inline-size:100%;">
+        <swc-conversation-turn participant="user">
           <swc-user-message content="media">
-            <div style="inline-size:200px;">
+            <div style="inline-size:240px;">
               <swc-conversation-artifact-media>
                 <div
                   slot="preview"
-                  style="inline-size:100%;block-size:150px;background:linear-gradient(135deg,#a78bfa,#f472b6);"
+                  style="inline-size:100%;block-size:196px;background:linear-gradient(135deg,#a78bfa,#f472b6);"
                   role="img"
                   aria-label="Campaign preview"
                 ></div>
@@ -212,5 +211,6 @@ export const Accessibility: Story = {
     'default-slot':
       'Can you help me create a 45-minute presentation, with animations, for an executive update?',
   },
+  decorators: [withUserTurn],
   tags: ['a11y'],
 };

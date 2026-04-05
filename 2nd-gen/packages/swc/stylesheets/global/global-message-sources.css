@@ -10,7 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-@layer swc-global-elements, swc-global-element-overrides;
-
-@import url("./global-button.css");
-@import url("./global-message-sources.css");
+@layer swc-global-elements {
+  swc-message-sources li a {
+    font-size: token("font-size-100");
+    color: token("gray-800");
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+}
