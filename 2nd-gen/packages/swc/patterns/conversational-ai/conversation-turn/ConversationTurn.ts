@@ -22,6 +22,10 @@ import styles from './conversation-turn.css';
  * comfortable inset, assistant content toward the start at full width.
  *
  * Slot **`swc-user-message`**, **`swc-assistant-message`**, or custom markup inside each turn.
+ * Multiple slotted messages are stacked automatically with
+ * `--swc-conversation-turn-group-gap` spacing.
+ * User-message widths are applied by layout context (full screen, split rail,
+ * panel) while assistant content remains full width.
  *
  * @element swc-conversation-turn
  * @slot - Turn body (message stack or bubble)

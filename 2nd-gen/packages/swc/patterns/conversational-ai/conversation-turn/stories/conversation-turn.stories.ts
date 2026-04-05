@@ -33,6 +33,7 @@ import '../../assistant-prose-demo.css';
 /**
  * Column alignment for one chat turn: `participant="user"` (end) vs `participant="assistant"` (start, full width).
  * Slot **`swc-user-message`**, **`swc-assistant-message`**, or custom markup.
+ * Stack consecutive messages in one turn to create grouped spacing.
  */
 const meta: Meta = {
   title: 'Conversational AI/Conversation turn',
@@ -40,7 +41,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       subtitle:
-        'Aligns user vs assistant content in a thread column (end vs start, full width).',
+        'Aligns user vs assistant content in a thread column and supports grouped message stacking.',
     },
     layout: 'padded',
   },
@@ -119,8 +120,9 @@ export const Overview: Story = {
 // ──────────────────────────────────────────
 
 /**
- * Product-style column: stacked **user** turns (`swc-user-message`), one **assistant** turn
- * (`swc-assistant-message`), then **prompt field**.
+ * Product-style column with grouped user content: three consecutive user
+ * messages are stacked in one turn, followed by one assistant turn
+ * (`swc-assistant-message`) and the **prompt field**.
  */
 export const FullPattern: Story = {
   render: () => html`
@@ -129,11 +131,11 @@ export const FullPattern: Story = {
     >
       <swc-conversation-turn participant="user">
         <swc-user-message content="media">
-          <div style="inline-size:200px;">
+          <div style="inline-size:240px;">
             <swc-conversation-artifact-media>
               <div
                 slot="preview"
-                style="inline-size:100%;block-size:150px;background:linear-gradient(135deg,#6366f1 0%,#a855f7 40%,#ec4899 70%,#f59e0b 100%);"
+                style="inline-size:100%;block-size:196px;background:linear-gradient(135deg,#6366f1 0%,#a855f7 40%,#ec4899 70%,#f59e0b 100%);"
                 role="img"
                 aria-label="Campaign preview"
               ></div>
@@ -142,9 +144,6 @@ export const FullPattern: Story = {
             </swc-conversation-artifact-media>
           </div>
         </swc-user-message>
-      </swc-conversation-turn>
-
-      <swc-conversation-turn participant="user">
         <swc-user-message content="card">
           <swc-conversation-artifact-card>
             <div
@@ -157,9 +156,6 @@ export const FullPattern: Story = {
             <span slot="subtitle">2026</span>
           </swc-conversation-artifact-card>
         </swc-user-message>
-      </swc-conversation-turn>
-
-      <swc-conversation-turn participant="user">
         <swc-user-message content="copy">
           Can you help me create a 45-minute presentation, with animations, for
           an executive update?
