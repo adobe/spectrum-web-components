@@ -14,6 +14,10 @@
   display: block;
 }
 
+:host ::slotted(a) {
+  color: token("gray-800");
+}
+
 *,
 *::before,
 *::after {
@@ -90,22 +94,12 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  inline-size: 18px;
-  block-size: 18px;
+  inline-size: 12px;
+  block-size: 20px;
   font-size: token("font-size-50");
   font-weight: token("bold-font-weight");
   color: token("gray-700");
   background: token("gray-100");
-  border-radius: 50%;
+  border-radius: 4px;
   content: counter(sources);
-}
-
-::slotted(a) {
-  color: token("gray-800");
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-::slotted(a:hover) {
-  color: token("gray-900");
 }

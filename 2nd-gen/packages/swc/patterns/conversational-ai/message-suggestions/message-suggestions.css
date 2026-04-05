@@ -55,8 +55,8 @@
 
 .swc-MessageSuggestions-chip {
   display: inline-flex;
-  align-items: center;
   gap: 0;
+  align-items: center;
   padding-block: 10px;
   padding-inline-start: 13px;
   padding-inline-end: 15px;
@@ -79,6 +79,7 @@
 .swc-MessageSuggestions-chip swc-icon {
   --swc-icon-inline-size: 22px;
   --swc-icon-block-size: 22px;
+
   flex-shrink: 0;
   margin-inline-end: 6px;
 }

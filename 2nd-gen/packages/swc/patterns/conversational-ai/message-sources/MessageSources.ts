@@ -30,6 +30,8 @@ import styles from './message-sources.css';
  * @element swc-message-sources
  * @slot - Source link items (rendered as a numbered list when expanded)
  * @fires swc-sources-toggle - Dispatched when the panel is toggled. Detail: `{ expanded: boolean }`
+ * @csspart toggle - The disclosure control that expands or collapses sources
+ * @csspart sources-list - The numbered list container when expanded (slotted items render inside)
  */
 export class MessageSources extends SpectrumElement {
   /**
@@ -59,6 +61,7 @@ export class MessageSources extends SpectrumElement {
     return html`
       <div class="swc-MessageSources">
         <button
+          part="toggle"
           class="swc-MessageSources-toggle"
           aria-expanded=${isExpanded}
           aria-controls="swc-sources-panel"
@@ -79,6 +82,7 @@ export class MessageSources extends SpectrumElement {
         ${isExpanded
           ? html`
               <ol
+                part="sources-list"
                 id="swc-sources-panel"
                 class="swc-MessageSources-list"
                 role="list"

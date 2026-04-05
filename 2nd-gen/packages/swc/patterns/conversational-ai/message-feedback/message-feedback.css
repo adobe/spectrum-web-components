@@ -22,8 +22,8 @@
 
 .swc-MessageFeedback {
   display: inline-flex;
-  align-items: center;
   gap: 4px;
+  align-items: center;
 }
 
 .swc-MessageFeedback-button {
@@ -44,8 +44,8 @@
 }
 
 .swc-MessageFeedback-button:hover {
-  background: token("gray-100");
   color: token("gray-800");
+  background: token("gray-100");
 }
 
 .swc-MessageFeedback-button[data-selected] {
