@@ -45,7 +45,6 @@
   align-items: flex-end;
 }
 
-
 :host([participant="assistant"]) .swc-ConversationTurn {
   justify-content: flex-start;
 }

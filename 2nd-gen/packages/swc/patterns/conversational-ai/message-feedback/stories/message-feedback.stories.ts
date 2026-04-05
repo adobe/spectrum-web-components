@@ -20,12 +20,17 @@ import '../index.js';
 //    METADATA
 // ────────────────
 
-const { args, argTypes, template } = getStorybookHelpers(
-  'swc-message-feedback'
-);
+const {
+  args: ceArgs,
+  argTypes: ceArgTypes,
+  template,
+} = getStorybookHelpers('swc-message-feedback');
+
+const args = { ...ceArgs } as Record<string, unknown>;
+const argTypes = { ...ceArgTypes } as Record<string, unknown>;
 
 argTypes.selection = {
-  ...argTypes.selection,
+  ...(argTypes.selection as object),
   control: { type: 'select' },
   options: ['none', 'thumb-up', 'thumb-down'],
   table: {
@@ -43,14 +48,15 @@ argTypes.selection = {
 const meta: Meta = {
   title: 'Conversational AI/Message feedback',
   component: 'swc-message-feedback',
-  args,
-  argTypes,
+  args: args as Meta['args'],
+  argTypes: argTypes as Meta['argTypes'],
   render: (args) => template(args),
   parameters: {
     docs: {
       subtitle: 'Binary thumbs-up / thumbs-down feedback control.',
     },
-    layout: 'padded',
+    /* Centers the thumbs in the Storybook canvas (not baked into the component). */
+    layout: 'centered',
   },
   excludeStories: ['meta'],
 };
@@ -153,9 +159,11 @@ export const Selection: Story = {
  *
  * #### Toggle buttons
  *
- * - The button group uses `role="group"` with `aria-label="Response feedback"`
+ * - The button group uses `role="radiogroup"` with `aria-label="Response feedback"`
  * - Each button carries a descriptive `aria-label`: "Good response" / "Poor response"
  * - Each button uses `aria-pressed` to communicate the selected state
+ * - With `show-tooltips` (default), Spectrum **Tooltip (M)**-style labels appear on hover and keyboard focus; tooltip text is `aria-hidden` because the name is already on the button
+ * - **Escape** blurs the focused thumb and dispatches **`swc-escape`** (`bubbles`, `composed`) for host-level dismiss or focus management
  */
 export const Accessibility: Story = {
   args: {

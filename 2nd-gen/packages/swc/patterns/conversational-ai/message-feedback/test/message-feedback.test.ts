@@ -84,3 +84,30 @@ export const InteractionTest: Story = {
     });
   },
 };
+
+export const EscapeKeyTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<MessageFeedback>(
+      canvasElement,
+      'swc-message-feedback'
+    );
+    const canvas = within(canvasElement);
+
+    await step('Escape blurs focus and dispatches swc-escape', async () => {
+      const thumbUpBtn = canvas.getByRole('button', { name: 'Good response' });
+      thumbUpBtn.focus();
+      expect(document.activeElement).toBe(thumbUpBtn);
+
+      let fired = false;
+      el.addEventListener('swc-escape', () => {
+        fired = true;
+      });
+
+      await userEvent.keyboard('{Escape}');
+
+      expect(fired).toBe(true);
+      expect(document.activeElement).not.toBe(thumbUpBtn);
+    });
+  },
+};

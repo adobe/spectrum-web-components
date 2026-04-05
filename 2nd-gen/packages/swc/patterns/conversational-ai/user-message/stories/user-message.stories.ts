@@ -36,10 +36,9 @@ argTypes.content = {
 };
 
 // Wraps a single swc-user-message in a conversation turn for proper alignment.
-const withUserTurn = (story: () => unknown) =>
-  html`<swc-conversation-turn participant="user"
-    >${story()}</swc-conversation-turn
-  >`;
+const withUserTurn = (story: () => unknown) => html`
+  <swc-conversation-turn participant="user">${story()}</swc-conversation-turn>
+`;
 
 /**
  * User-authored message bubble. Use inside `<swc-conversation-turn participant="user">` for thread alignment.
@@ -127,8 +126,8 @@ export const Content: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-conversation-turn participant="user">
           <swc-user-message content="copy">
-            Can you help me create a 45-minute presentation, with animations, for
-            an executive update?
+            Can you help me create a 45-minute presentation, with animations,
+            for an executive update?
           </swc-user-message>
         </swc-conversation-turn>
         <span

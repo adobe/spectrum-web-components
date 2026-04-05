@@ -26,6 +26,53 @@
   align-items: center;
 }
 
+.swc-MessageFeedback-anchor {
+  display: inline-flex;
+  position: relative;
+}
+
+/* Tooltip (M) — SWC review / Spectrum: dark label + tip above control */
+.swc-MessageFeedback-tooltip {
+  position: absolute;
+  inset-block-end: 100%;
+  inset-inline-start: 50%;
+  z-index: 1;
+  max-inline-size: token("tooltip-maximum-width");
+  padding-block: 4px;
+  padding-inline: 9px;
+  margin-block-end: calc(token("spacing-75") * 2);
+  font-size: token("font-size-75");
+  line-height: token("line-height-100");
+  color: token("gray-25");
+  text-align: center;
+  white-space: nowrap;
+  background: token("neutral-background-color-default");
+  border-radius: token("corner-radius-500");
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-50%);
+  transition: opacity 90ms ease;
+}
+
+.swc-MessageFeedback-tooltip::after {
+  position: absolute;
+  inset-block-start: 100%;
+  inset-inline-start: 50%;
+  inline-size: 0;
+  block-size: 0;
+  margin-inline-start: calc(token("tooltip-tip-width", 10px) / -2);
+  border-color: token("neutral-background-color-default") transparent transparent;
+  border-style: solid;
+  border-width: token("tooltip-tip-height", 5px) calc(token("tooltip-tip-width", 10px) / 2) 0;
+  content: "";
+}
+
+/* Hover for pointer; :focus-visible on the *button* so click-focus (no focus ring) does not pin the tooltip open */
+.swc-MessageFeedback-anchor:hover .swc-MessageFeedback-tooltip,
+.swc-MessageFeedback-button:focus-visible ~ .swc-MessageFeedback-tooltip {
+  opacity: 1;
+}
+
 .swc-MessageFeedback-button {
   display: flex;
   align-items: center;
@@ -43,6 +90,11 @@
     color 130ms ease;
 }
 
+.swc-MessageFeedback-icon {
+  --swc-icon-inline-size: 16px;
+  --swc-icon-block-size: 16px;
+}
+
 .swc-MessageFeedback-button:hover {
   color: token("gray-800");
   background: token("gray-100");
@@ -55,4 +107,10 @@
 
 .swc-MessageFeedback-button[data-selected]:hover {
   background: token("gray-700");
+}
+
+.swc-MessageFeedback:has(.swc-MessageFeedback-tooltip) .swc-MessageFeedback-button:focus-visible:not([data-selected]),
+.swc-MessageFeedback:has(.swc-MessageFeedback-tooltip) .swc-MessageFeedback-anchor:hover .swc-MessageFeedback-button:not([data-selected]) {
+  color: token("gray-800");
+  background: token("gray-200");
 }
