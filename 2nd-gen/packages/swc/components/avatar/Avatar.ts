@@ -31,7 +31,7 @@ import styles from './avatar.css';
  * <swc-avatar src="/path/to/image.jpg" alt=""></swc-avatar>
  *
  * @example
- * <swc-avatar src="/path/to/image.jpg" alt="Jane Doe" over-background></swc-avatar>
+ * <swc-avatar src="/path/to/image.jpg" alt="Jane Doe" show-stroke></swc-avatar>
  */
 export class Avatar extends AvatarBase {
   public static override get styles(): CSSResultArray {

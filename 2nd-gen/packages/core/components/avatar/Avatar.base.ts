@@ -116,16 +116,21 @@ export abstract class AvatarBase extends SpectrumElement {
   @property({ type: Boolean, reflect: true })
   public disabled = false;
 
-We need to keep the decorative property because of recommendations from the a11y team, but maybe align it with HTML attributes:
+  // ───────────────────────────
+  //     ACCESSIBILITY API
+  // ───────────────────────────
 
-/**
-   * Indicates that avatar alt text is intentionally left blank.
-   * Should only be left blank in cases where the surrounding context already
-   * identifies the person (e.g., their name appears next to the avatar).
-   * 
+  /**
+   * Marks the avatar as decorative, hiding it from assistive technology.
+   *
+   * Use when the surrounding context already identifies the person (e.g.,
+   * their name appears next to the avatar). Setting this attribute causes the
+   * host to receive `aria-hidden="true"`, removing it from the accessibility
+   * tree. Equivalent to setting `alt=""`.
    */
-  @property({ type: Boolean })
+  @property({ type: Boolean, reflect: true })
   public decorative = false;
+
   // ──────────────────────────────────────────
   //     DEPRECATED — 1st-gen compat shims
   // ──────────────────────────────────────────
@@ -140,12 +145,37 @@ We need to keep the decorative property because of recommendations from the a11y
     return this.alt;
   }
 
-  
-  public set isDecorative(value: string | undefined) {
+  public set label(value: string | undefined) {
     if (window.__swc?.DEBUG) {
       window.__swc.warn(
         this,
-        `The "isDecorative" attribute on <${this.localName}> is deprecated. Use "decorative" instead.`,
+        `The "label" property on <${this.localName}> is deprecated. Use "alt" instead.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/avatar/',
+        { type: 'api', level: 'deprecation' }
+      );
+    }
+    this.alt = value;
+  }
+
+  /**
+   * @deprecated Use `decorative` instead. This shim will be removed in a future release.
+   *
+   * **Breaking change:** In 1st-gen, `isDecorative` was used to mark an avatar
+   * as decorative. In 2nd-gen, use the `decorative` attribute instead.
+   *
+   * **Note:** This shim covers the JS property API only. The `is-decorative`
+   * HTML attribute is not shimmed — consumers using the attribute must migrate
+   * to `decorative`.
+   */
+  public get isDecorative(): boolean {
+    return this.decorative;
+  }
+
+  public set isDecorative(value: boolean) {
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `The "isDecorative" property on <${this.localName}> is deprecated. Use "decorative" instead.`,
         'https://opensource.adobe.com/spectrum-web-components/components/avatar/',
         { type: 'api', level: 'deprecation' }
       );
@@ -164,17 +194,17 @@ We need to keep the decorative property because of recommendations from the a11y
     }
     this._syncAriaHidden();
     if (window.__swc?.DEBUG) {
-      this.warnMissingAlt();
+      this._warnMissingAlt();
     }
   }
 
   protected override updated(changes: PropertyValues): void {
     super.updated(changes);
-    if (changes.has('alt')) {
+    if (changes.has('decorative')) {
       this._syncAriaHidden();
-      if (window.__swc?.DEBUG) {
-        this.warnMissingAlt();
-      }
+    }
+    if (changes.has('alt') && window.__swc?.DEBUG) {
+      this._warnMissingAlt();
     }
   }
 
@@ -186,8 +216,8 @@ We need to keep the decorative property because of recommendations from the a11y
     }
   }
 
-  private warnMissingAlt(): void {
-    if (this.alt === undefined || !this.decorative) {
+  private _warnMissingAlt(): void {
+    if (this.alt === undefined && !this.decorative) {
       window.__swc?.warn(
         this,
         `<${this.localName}> is missing an \`alt\` attribute. Provide a text description or pass \`alt=""\` and mark it as \`decorative\`.`,

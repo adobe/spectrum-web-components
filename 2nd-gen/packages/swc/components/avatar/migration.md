@@ -82,9 +82,9 @@ attribute on the underlying `<img>` element, following standard HTML semantics.
 
 ### `is-decorative` → `decorative` and `alt=""`
 
-The `is-decorative` attribute has been renamed to `decorative`. 
-Additionally include `alt=""`. This aligns with standard HTML `<img>` 
-semantics and lets assistive technology consistently treat the image as 
+The `is-decorative` attribute has been renamed to `decorative`.
+Additionally include `alt=""`. This aligns with standard HTML `<img>`
+semantics and lets assistive technology consistently treat the image as
 decorative.
 
 ```html
@@ -93,6 +93,14 @@ decorative.
 
 <!-- After -->
 <swc-avatar decorative alt="" src="/img/user.jpg"></swc-avatar>
+```
+
+When `alt=""` and `decorative` are set, `swc-avatar` automatically adds `aria-hidden="true"` to the
+host element, hiding it entirely from the accessibility tree.
+
+> **Note:** `is-decorative` still works in 2nd-gen as a compatibility shim but
+> emits a deprecation warning in DEBUG mode. Migrate to `decorative` as soon as
+> possible — the shim will be removed in a future release.
 
 ---
 

@@ -1,11 +1,43 @@
----
-component: Avatar
-phase: 7 — Documentation
-status: in progress
-last-updated: 2026-03-31
----
+<!-- Generated breadcrumbs - DO NOT EDIT -->
+
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Avatar / Avatar — 2nd-Gen Migration Plan
+
+<!-- Document title (editable) -->
 
 # Avatar — 2nd-Gen Migration Plan
+
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
+
+- [1. 1st-Gen API Surface](#1-1st-gen-api-surface)
+    - [Properties](#properties)
+- [2. 2nd-Gen API Surface (implemented)](#2-2nd-gen-api-surface-implemented)
+    - [Properties](#properties)
+    - [Dropped from 1st-gen](#dropped-from-1st-gen)
+- [3. Dependencies](#3-dependencies)
+- [4. Breaking Changes](#4-breaking-changes)
+    - [4.1 Size System](#41-size-system)
+    - [4.2 `--mod-*` Properties Removed](#42---mod--properties-removed)
+    - [4.3 Linked Variant Removed](#43-linked-variant-removed)
+    - [4.4 `isDecorative` → `decorative`](#44-isdecorative--decorative)
+    - [4.5 `label` → `alt`](#45-label--alt)
+    - [4.6 CSS Class Wrapper](#46-css-class-wrapper)
+- [5. Migration Checklist](#5-migration-checklist)
+    - [Phase 2 — Setup](#phase-2--setup)
+    - [Phase 3 — API Migration](#phase-3--api-migration)
+    - [Phase 4 — Styling](#phase-4--styling)
+    - [Phase 5 — Accessibility](#phase-5--accessibility)
+    - [Phase 6 — Testing](#phase-6--testing)
+    - [Phase 7 — Documentation](#phase-7--documentation)
+    - [Phase 8 — Review](#phase-8--review)
+- [6. Open Questions](#6-open-questions)
+- [7. Reference](#7-reference)
+
+</details>
+
+<!-- Document content (editable) -->
 
 > **Input documents**
 > - [Rendering & Styling Migration Analysis](./rendering-and-styling-migration-analysis.md)
@@ -42,19 +74,19 @@ last-updated: 2026-03-31
 | Property | Type | Default | Reflected | Notes |
 |---|---|---|---|---|
 | `src` | `string` | `''` | No | Unchanged |
-| `alt` | `string \| undefined` | `undefined` | No | Replaces `label` + `isDecorative`; pass `alt=""` for decorative |
+| `alt` | `string \| undefined` | `undefined` | No | Replaces `label`; pass `alt=""` for decorative |
 | `size` | `AvatarSize` (50–1500) | `500` | Yes | Numeric scale extended; invalid values fall back to 500 |
 | `showStroke` | `boolean` | `false` | Yes (`show-stroke`) | Renders outline for visual separation; defaults to `true` in Avatar Group |
 | `disabled` | `boolean` | `false` | Yes | Renders at reduced opacity; entity is inactive or unavailable |
+| `decorative` | `boolean` | `false` | Yes | Marks image as decorative; sets `aria-hidden="true"` on host. Use together with `alt=""` for full semantic correctness. Replaces `isDecorative`. |
 | `label` _(deprecated)_ | `string \| undefined` | — | No | Shim → sets `alt`; warns in DEBUG mode |
-| `isDecorative` _(deprecated)_ | `boolean` |false | No | Shim → sets `decorative`; warns in DEBUG mode |
+| `isDecorative` _(deprecated)_ | `boolean` | `false` | No | Shim → sets `decorative`; warns in DEBUG mode |
 
 ### Dropped from 1st-gen
 
 | Property | Reason |
 |---|---|
 | `href`, `target`, `rel`, `download`, `referrerpolicy`, `type` | Linked variant dropped — not in Spectrum 2 avatar spec |
-| `isDecorative` | Replaced by `decotrative` (standard HTML pattern) |
 
 ---
 
@@ -83,11 +115,9 @@ All `--mod-avatar-*` customization properties removed. Consumers must migrate to
 
 `href` and all `LikeAnchor` properties are not carried forward. The Spectrum 2 avatar spec does not include a linked variant.
 
-### 4.4 `isDecorative` → `alt=""`
-
 ### 4.4 `isDecorative` → `decorative`
 
-`isDecorative` is deprecated with a DEBUG-mode warning shim. Consumers should migrate to `decorative`.
+`isDecorative` is deprecated with a DEBUG-mode warning shim. Consumers should migrate to the `decorative` attribute. Only `decorative` causes the host to receive `aria-hidden="true"`. Include `alt=""` alongside `decorative` for full semantic alignment with HTML `<img>` conventions.
 
 ### 4.5 `label` → `alt`
 

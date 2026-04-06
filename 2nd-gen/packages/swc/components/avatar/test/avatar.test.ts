@@ -65,11 +65,14 @@ export const OverviewTest: Story = {
       expect(avatar.getAttribute('size'), 'size attribute value').toBe('500');
     });
 
-    await step('aria-hidden is not set when alt is provided', async () => {
-      expect(avatar.hasAttribute('aria-hidden'), 'aria-hidden absence').toBe(
-        false
-      );
-    });
+    await step(
+      'aria-hidden is not set when the avatar is not decorative',
+      async () => {
+        expect(avatar.hasAttribute('aria-hidden'), 'aria-hidden absence').toBe(
+          false
+        );
+      }
+    );
   },
 };
 
@@ -156,44 +159,41 @@ export const AltAriaHiddenTest: Story = {
   play: async ({ canvasElement, step }) => {
     const avatar = await getComponent<Avatar>(canvasElement, 'swc-avatar');
 
-    await step(
-      'sets aria-hidden on host when alt is changed to empty string',
-      async () => {
-        avatar.alt = '';
-        await avatar.updateComplete;
-        expect(
-          avatar.hasAttribute('aria-hidden'),
-          'aria-hidden when alt=""'
-        ).toBe(true);
-        expect(
-          avatar.getAttribute('aria-hidden'),
-          'aria-hidden value when decorative'
-        ).toBe('true');
-      }
-    );
+    await step('sets aria-hidden on host when decorative is set', async () => {
+      avatar.decorative = true;
+      await avatar.updateComplete;
+      expect(
+        avatar.hasAttribute('aria-hidden'),
+        'aria-hidden when decorative'
+      ).toBe(true);
+      expect(
+        avatar.getAttribute('aria-hidden'),
+        'aria-hidden value when decorative'
+      ).toBe('true');
+    });
 
     await step(
-      'removes aria-hidden from host when alt is changed to a non-empty string',
+      'removes aria-hidden from host when decorative is unset',
       async () => {
-        avatar.alt = 'Jane Doe';
+        avatar.decorative = false;
         await avatar.updateComplete;
         expect(
           avatar.hasAttribute('aria-hidden'),
-          'aria-hidden removed when alt provided'
+          'aria-hidden removed when not decorative'
         ).toBe(false);
       }
     );
 
     await step(
-      'removes aria-hidden from host when alt is changed to undefined',
+      'does not set aria-hidden when only alt is changed to empty string',
       async () => {
+        // aria-hidden is exclusively controlled by the decorative property;
+        // alt="" alone affects only the <img> alt attribute, not host visibility.
         avatar.alt = '';
-        await avatar.updateComplete;
-        avatar.alt = undefined;
         await avatar.updateComplete;
         expect(
           avatar.hasAttribute('aria-hidden'),
-          'aria-hidden removed when alt is undefined'
+          'aria-hidden not set by alt="" alone'
         ).toBe(false);
       }
     );
@@ -222,10 +222,10 @@ export const ShowStrokeReflectionTest: Story = {
     });
 
     await step(
-      'does not toggle aria-hidden when a non-alt property changes',
+      'does not toggle aria-hidden when a non-decorative property changes',
       async () => {
         // alt="Jane Doe" from Overview args — aria-hidden should remain absent
-        // even after showStroke changes (covers changes.has("alt") === false path)
+        // even after showStroke changes (covers changes.has("decorative") === false path)
         avatar.showStroke = true;
         await avatar.updateComplete;
         expect(
@@ -325,20 +325,17 @@ export const DecorativeTest: Story = {
   play: async ({ canvasElement, step }) => {
     const avatar = await getComponent<Avatar>(canvasElement, 'swc-avatar');
 
-    await step(
-      'sets aria-hidden on host when alt is empty string',
-      async () => {
-        expect(avatar.alt, 'alt property for decorative').toBe('');
-        expect(
-          avatar.hasAttribute('aria-hidden'),
-          'aria-hidden on decorative avatar'
-        ).toBe(true);
-        expect(
-          avatar.getAttribute('aria-hidden'),
-          'aria-hidden value on decorative avatar'
-        ).toBe('true');
-      }
-    );
+    await step('sets aria-hidden on host when decorative is set', async () => {
+      expect(avatar.alt, 'alt property for decorative').toBe('');
+      expect(
+        avatar.hasAttribute('aria-hidden'),
+        'aria-hidden on decorative avatar'
+      ).toBe(true);
+      expect(
+        avatar.getAttribute('aria-hidden'),
+        'aria-hidden value on decorative avatar'
+      ).toBe('true');
+    });
   },
 };
 
@@ -351,27 +348,29 @@ export const MissingAltWarningOnFirstRenderTest: Story = {
     <div id="avatar-warning-container"></div>
   `,
   play: async ({ canvasElement, step }) => {
-    await step('warns when alt is absent on first render in DEBUG mode', () =>
-      withWarningSpy(async (warnCalls) => {
-        const container = canvasElement.querySelector(
-          '#avatar-warning-container'
-        )!;
-        const avatar = document.createElement('swc-avatar') as Avatar;
-        avatar.src = PLACEHOLDER_SRC;
-        container.appendChild(avatar);
-        await avatar.updateComplete;
+    await step(
+      'warns when alt is absent and avatar is not marked decorative on first render',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const container = canvasElement.querySelector(
+            '#avatar-warning-container'
+          )!;
+          const avatar = document.createElement('swc-avatar') as Avatar;
+          avatar.src = PLACEHOLDER_SRC;
+          container.appendChild(avatar);
+          await avatar.updateComplete;
 
-        expect(
-          warnCalls.length,
-          'warning count for missing alt'
-        ).toBeGreaterThan(0);
-        expect(
-          String(warnCalls[0]?.[1] ?? ''),
-          'warning message content'
-        ).toContain('alt');
+          expect(
+            warnCalls.length,
+            'warning count for missing alt'
+          ).toBeGreaterThan(0);
+          expect(
+            String(warnCalls[0]?.[1] ?? ''),
+            'warning message content'
+          ).toContain('alt');
 
-        container.removeChild(avatar);
-      })
+          container.removeChild(avatar);
+        })
     );
   },
 };
@@ -383,20 +382,22 @@ export const MissingAltWarningOnUpdateTest: Story = {
   play: async ({ canvasElement, step }) => {
     const avatar = await getComponent<Avatar>(canvasElement, 'swc-avatar');
 
-    await step('warns when alt is changed to undefined in DEBUG mode', () =>
-      withWarningSpy(async (warnCalls) => {
-        avatar.alt = undefined;
-        await avatar.updateComplete;
+    await step(
+      'warns when alt is changed to undefined and avatar is not decorative',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          avatar.alt = undefined;
+          await avatar.updateComplete;
 
-        expect(
-          warnCalls.length,
-          'warning count after alt set to undefined'
-        ).toBeGreaterThan(0);
-        expect(
-          String(warnCalls[0]?.[1] ?? ''),
-          'warning message content'
-        ).toContain('alt');
-      })
+          expect(
+            warnCalls.length,
+            'warning count after alt set to undefined'
+          ).toBeGreaterThan(0);
+          expect(
+            String(warnCalls[0]?.[1] ?? ''),
+            'warning message content'
+          ).toContain('alt');
+        })
     );
   },
 };
@@ -408,39 +409,33 @@ export const AltProvidedNoWarningTest: Story = {
   play: async ({ canvasElement, step }) => {
     const avatar = await getComponent<Avatar>(canvasElement, 'swc-avatar');
 
-    await step(
-      'does not warn when alt is changed from empty to a provided value',
-      () =>
-        withWarningSpy(async (warnCalls) => {
-          avatar.alt = 'Jane Doe';
-          await avatar.updateComplete;
+    await step('does not warn when a non-empty alt is provided', () =>
+      withWarningSpy(async (warnCalls) => {
+        avatar.alt = 'Jane Doe';
+        await avatar.updateComplete;
 
-          expect(warnCalls.length, 'warning count when alt is provided').toBe(
-            0
-          );
-        })
+        expect(warnCalls.length, 'warning count when alt is provided').toBe(0);
+      })
     );
   },
 };
 
 export const DecorativeNoWarningTest: Story = {
   render: () => html`
-    <swc-avatar src=${PLACEHOLDER_SRC} alt="Jane Doe"></swc-avatar>
+    <swc-avatar src=${PLACEHOLDER_SRC}></swc-avatar>
   `,
   play: async ({ canvasElement, step }) => {
     const avatar = await getComponent<Avatar>(canvasElement, 'swc-avatar');
 
-    await step(
-      'does not warn when alt is changed to empty string (decorative)',
-      () =>
-        withWarningSpy(async (warnCalls) => {
-          avatar.alt = '';
-          await avatar.updateComplete;
+    await step('does not warn when decorative is set', () =>
+      withWarningSpy(async (warnCalls) => {
+        avatar.decorative = true;
+        await avatar.updateComplete;
 
-          expect(warnCalls.length, 'warning count for decorative avatar').toBe(
-            0
-          );
-        })
+        expect(warnCalls.length, 'warning count when decorative is set').toBe(
+          0
+        );
+      })
     );
   },
 };
@@ -465,6 +460,68 @@ export const LabelDeprecationWarningTest: Story = {
             'deprecation warning message'
           ).toContain('label');
           expect(avatar.alt, 'alt updated by label setter').toBe('John Smith');
+        })
+    );
+  },
+};
+
+export const IsDecorativeShimTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const avatar = await getComponent<Avatar>(canvasElement, 'swc-avatar');
+
+    await step(
+      'isDecorative getter returns the current decorative value',
+      async () => {
+        avatar.decorative = true;
+        await avatar.updateComplete;
+        expect(
+          avatar.isDecorative,
+          'isDecorative getter when decorative is true'
+        ).toBe(true);
+      }
+    );
+
+    await step(
+      'isDecorative setter updates decorative when DEBUG mode is off',
+      async () => {
+        avatar.isDecorative = false;
+        await avatar.updateComplete;
+        expect(avatar.decorative, 'decorative after isDecorative setter').toBe(
+          false
+        );
+        expect(
+          avatar.isDecorative,
+          'isDecorative getter after isDecorative setter'
+        ).toBe(false);
+      }
+    );
+  },
+};
+
+export const IsDecorativeDeprecationWarningTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const avatar = await getComponent<Avatar>(canvasElement, 'swc-avatar');
+
+    await step(
+      'warns when isDecorative property is set in DEBUG mode and updates decorative',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          avatar.isDecorative = true;
+          await avatar.updateComplete;
+
+          expect(warnCalls.length, 'deprecation warning count').toBeGreaterThan(
+            0
+          );
+          expect(
+            String(warnCalls[0]?.[1] ?? ''),
+            'deprecation warning message'
+          ).toContain('isDecorative');
+          expect(
+            avatar.decorative,
+            'decorative updated by isDecorative setter'
+          ).toBe(true);
         })
     );
   },
