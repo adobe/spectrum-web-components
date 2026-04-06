@@ -30,6 +30,7 @@
     - [Avatar migration roadmap](avatar/rendering-and-styling-migration-analysis.md)
 - Badge
     - [Badge accessibility migration analysis](badge/accessibility-migration-analysis.md)
+    - [Badge consumer migration guide](badge/consumer-migration-guide.md)
     - [Badge migration roadmap](badge/rendering-and-styling-migration-analysis.md)
 - Button
     - [Button migration roadmap](button/rendering-and-styling-migration-analysis.md)

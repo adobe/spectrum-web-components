@@ -343,6 +343,7 @@ const preview = {
                 'Badge',
                 [
                   'Accessibility migration analysis',
+                  'Consumer migration guide',
                   'Rendering and styling migration analysis',
                 ],
                 'Button',
