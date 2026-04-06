@@ -53,7 +53,7 @@ last-updated: 2026-03-31
 | Property | Reason |
 |---|---|
 | `href`, `target`, `rel`, `download`, `referrerpolicy`, `type` | Linked variant dropped — not in Spectrum 2 avatar spec |
-| `isDecorative` | Replaced by `alt=""` (standard HTML pattern) |
+| `isDecorative` | Replaced by `decotrative` (standard HTML pattern) |
 
 ---
 
