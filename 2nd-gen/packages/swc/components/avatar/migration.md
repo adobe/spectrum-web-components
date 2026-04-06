@@ -36,7 +36,7 @@ import '@adobe/spectrum-wc/avatar';
 | --------------------- | ---------------------- | ---------------------------------------------------------------------- |
 | Tag name              | `sp-avatar`            | `swc-avatar`                                                           |
 | Alt text attribute    | `label="Jane Doe"`     | `alt="Jane Doe"`                                                       |
-| Decorative pattern    | `is-decorative`        | `alt=""`                                                               |
+| Decorative pattern    | `is-decorative`        | `decorative`                                                           |
 | Linked variant        | `href="..."` supported | Not supported — see [Linked variant removed](#linked-variant-removed)  |
 | Disabled state        | `disabled` supported   | `disabled` supported — see [Disabled](#disabled)                       |
 | Default size          | `100` (20 px)          | `500` (40 px)                                                          |
