@@ -85,7 +85,9 @@ All `--mod-avatar-*` customization properties removed. Consumers must migrate to
 
 ### 4.4 `isDecorative` → `alt=""`
 
-`isDecorative` is removed. Pass `alt=""` to mark an avatar as decorative. This aligns with standard HTML `<img>` semantics.
+### 4.4 `isDecorative` → `decorative`
+
+`isDecorative` is deprecated with a DEBUG-mode warning shim. Consumers should migrate to `decorative`.
 
 ### 4.5 `label` → `alt`
 
