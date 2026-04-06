@@ -29,6 +29,7 @@
     - [Maintaining StackBlitz examples for Spectrum Web Components](01_contributor-guides/10_using-stackblitz.md)
     - [2nd gen testing](01_contributor-guides/11_2ndgen_testing.md)
     - [Tools vs packages: where code lives](01_contributor-guides/12_tools-vs-packages.md)
+    - [Focus management](01_contributor-guides/13_focus-management.md)
 - [Style guide](02_style-guide/README.md)
     - [2nd-Gen CSS](02_style-guide/01_css/README.md)
     - [2nd-gen TypeScript](02_style-guide/02_typescript/README.md)
@@ -39,6 +40,7 @@
     - [Workstreams](03_project-planning/02_workstreams/README.md)
     - [Components](03_project-planning/03_components/README.md)
     - [Milestones](03_project-planning/04_milestones/README.md)
+    - Strategies
 
 </details>
 

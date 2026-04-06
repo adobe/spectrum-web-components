@@ -10,12 +10,18 @@
  * governing permissions and limitations under the License.
  */
 
-import { css, html, LitElement, type TemplateResult } from 'lit';
+import {
+  css,
+  html,
+  LitElement,
+  PropertyValues,
+  type TemplateResult,
+} from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type { Meta, StoryObj } from '@storybook/web-components';
 
-import { FocusgroupNavigationController } from '../../focus-group-navigation-controller.js';
-import readme from '../focus-group-navigation-controller.md?raw';
+import readme from '../focus-group-navigation-controller.md';
+import { FocusgroupNavigationController } from '../index.js';
 
 // ─────────────────────────
 //     DEMO HOSTS
@@ -64,8 +70,8 @@ export class DemoFocusgroupHorizontal extends LitElement {
   /**
    * Runs after first render so `renderRoot` contains buttons before {@link FocusgroupNavigationController.refresh}.
    */
-  protected override firstUpdated(): void {
-    super.firstUpdated();
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
     this.navigation.refresh();
   }
 
@@ -126,8 +132,8 @@ export class DemoFocusgroupBothAxes extends LitElement {
   /**
    * Runs after first render so `renderRoot` contains buttons before {@link FocusgroupNavigationController.refresh}.
    */
-  protected override firstUpdated(): void {
-    super.firstUpdated();
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
     this.navigation.refresh();
   }
 
@@ -226,8 +232,8 @@ export class DemoFocusgroupVertical extends LitElement {
   /**
    * Runs after first render so `renderRoot` contains buttons before {@link FocusgroupNavigationController.refresh}.
    */
-  protected override firstUpdated(): void {
-    super.firstUpdated();
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
     this.navigation.refresh();
   }
 
@@ -325,8 +331,8 @@ export class DemoFocusgroupSkipDisabled extends LitElement {
   /**
    * Runs after first render so `renderRoot` contains buttons before {@link FocusgroupNavigationController.refresh}.
    */
-  protected override firstUpdated(): void {
-    super.firstUpdated();
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
     this.navigation.refresh();
   }
 
@@ -399,8 +405,8 @@ export class DemoFocusgroupGrid extends LitElement {
   /**
    * Runs after first render so grid buttons exist before {@link FocusgroupNavigationController.refresh}.
    */
-  protected override firstUpdated(): void {
-    super.firstUpdated();
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
     this.navigation.refresh();
   }
 
@@ -713,7 +719,7 @@ export class DemoFocusgroupTextPrefix extends LitElement {
  * Storybook metadata: documentation body comes from `focus-group-navigation-controller.md`.
  */
 const meta: Meta = {
-  title: 'Focus group navigation controller',
+  title: 'Core/Controllers/Focus group navigation controller',
   tags: ['autodocs'],
   parameters: {
     docs: {

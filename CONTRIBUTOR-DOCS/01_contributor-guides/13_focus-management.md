@@ -19,17 +19,17 @@
     - [How to use](#how-to-use)
     - [Gotchas](#gotchas)
     - [CSS and focus styling](#css-and-focus-styling)
-    - [Common mistakes](#common-mistakes-delegatesfocus)
+    - [Common mistakes (delegatesFocus)](#common-mistakes-delegatesfocus)
 - [DisabledMixin](#disabledmixin)
-    - [When to use](#when-to-use-1)
-    - [How to use](#how-to-use-1)
+    - [When to use](#when-to-use)
+    - [How to use](#how-to-use)
     - [Why aria-disabled](#why-aria-disabled)
-    - [Common mistakes](#common-mistakes-disabledmixin)
-- [RovingTabindexController](#rovingtabindexcontroller)
-    - [When to use](#when-to-use-2)
-    - [How to use](#how-to-use-2)
+    - [Common mistakes (DisabledMixin)](#common-mistakes-disabledmixin)
+- [FocusgroupNavigationController](#focusgroupnavigationcontroller)
+    - [When to use](#when-to-use)
+    - [How to use](#how-to-use)
     - [Configuration options](#configuration-options)
-    - [Common mistakes](#common-mistakes-rovingtabindexcontroller)
+    - [Common mistakes (FocusgroupNavigationController)](#common-mistakes-focusgroupnavigationcontroller)
 - [Focus utilities](#focus-utilities)
     - [getActiveElement()](#getactiveelement)
     - [focusableSelector and tabbableSelector](#focusableselector-and-tabbableselector)
@@ -53,14 +53,14 @@
 SpectrumElement (base, no focus logic)
  ├── + DisabledMixin                    (opt-in disabled state)
  ├── + delegatesFocus: true             (native browser focus delegation)
- └── + RovingTabindexController         (opt-in roving tabindex + arrow keys)
+ └── + FocusgroupNavigationController   (opt-in roving tabindex + arrow keys)
 ```
 
 This guide explains when and how to use each primitive, with correct examples and common mistakes to avoid.
 
 > **Scope:** This guide covers core focus management for standard components. Overlay, dialog, and dropdown focus concerns (focus trapping, focus restoration, overlay stacking) are **out of scope** and will be documented when those components are migrated.
 
-For the full technical rationale, see the [Focus Management Proposal](../../2nd-gen/packages/core/FOCUS-MANAGEMENT-PROPOSAL.md).
+For the full technical rationale, see the [Focus Management Strategy RFC](../03_project-planning/05_strategies/focus-management-strategy-rfc.md).
 
 ---
 
@@ -70,7 +70,7 @@ For the full technical rationale, see the [Focus Management Proposal](../../2nd-
 |-----------|-------------|--------|
 | `delegatesFocus: true` | Browser-native focus delegation from host to first focusable child | Built-in (shadow root option) |
 | `DisabledMixin` | Reactive `disabled` property with `aria-disabled`, tabindex, blur | `@spectrum-web-components/core/mixins` |
-| `RovingTabindexController` | Arrow key navigation + tabindex management for composite widgets | `@spectrum-web-components/core/controllers` |
+| `FocusgroupNavigationController` | Arrow key navigation + tabindex management for composite widgets (Open UI `focusgroup` aligned) | `@spectrum-web-components/core/controllers` |
 
 ---
 
@@ -79,7 +79,7 @@ For the full technical rationale, see the [Focus Management Proposal](../../2nd-
 Use this decision tree for every component:
 
 1. **Does the component manage focus across child elements?** (e.g., tabs, radio group, menu)
-   - **Yes** → Use `RovingTabindexController`
+   - **Yes** → Use `FocusgroupNavigationController`
 
 2. **Does the host element itself receive focus?** (e.g., button, menu item)
    - **Yes** → Use `DisabledMixin` only. No delegation needed.
@@ -235,7 +235,7 @@ class SpButton extends DisabledMixin(SpectrumElement) {
 
 ### When to use
 
-Any interactive component that can be disabled — buttons, inputs, links, menu items, sliders, etc. Most components that use `delegatesFocus` or `RovingTabindexController` will also use `DisabledMixin`.
+Any interactive component that can be disabled — buttons, inputs, links, menu items, sliders, etc. Most components that use `delegatesFocus` or `FocusgroupNavigationController` will also use `DisabledMixin`.
 
 ### How to use
 
@@ -338,7 +338,7 @@ class SpButton extends DisabledMixin(SpectrumElement) {
 
 ---
 
-## RovingTabindexController
+## FocusgroupNavigationController
 
 ### When to use
 
@@ -349,33 +349,35 @@ Composite widgets that should appear as a **single tab stop** with arrow key nav
 - Menus (`<sp-menu>`)
 - Listboxes, grids, tree views
 
+The controller is aligned with the [Open UI `focusgroup` attribute](https://open-ui.org/components/focusgroup.explainer/) so it can deprecate gracefully as browsers ship native support.
+
 ### How to use
 
 ```typescript
-import { RovingTabindexController } from '@spectrum-web-components/core/controllers';
+import { FocusgroupNavigationController } from '@spectrum-web-components/core/controllers';
 import { SpectrumElement } from '@spectrum-web-components/core/element';
 
 class SpTabs extends SpectrumElement {
-  private rovingTabindex = new RovingTabindexController<Tab>(this, {
-    elements: () => [...this.querySelectorAll('sp-tab')] as Tab[],
+  private navigation = new FocusgroupNavigationController(this, {
+    getItems: () => [...this.querySelectorAll('sp-tab')] as HTMLElement[],
     direction: 'horizontal',
-    isFocusableElement: (tab) => !tab.disabled,
+    wrap: true,
     // Auto-select tab on arrow key navigation
-    elementEnterAction: (tab) => {
-      if (this.auto) {
+    onActiveItemChange: (tab) => {
+      if (this.auto && tab) {
         this.selectTab(tab);
       }
     },
-    // Return to selected tab (or first enabled tab) when re-entering
-    focusInIndex: (tabs) => {
-      const selectedIndex = tabs.findIndex((t) => t.selected);
-      return selectedIndex >= 0 ? selectedIndex : 0;
-    },
   });
 
-  // Expose the focus-in element for external focus management
-  get focusElement(): Tab {
-    return this.rovingTabindex.focusInElement;
+  protected override firstUpdated(): void {
+    super.firstUpdated();
+    this.navigation.refresh();
+  }
+
+  // Expose the active item for external focus management
+  get focusElement(): HTMLElement | null {
+    return this.navigation.getActiveItem();
   }
 }
 ```
@@ -389,7 +391,7 @@ Tab into group → focus lands on element with tabindex="0":
 Arrow Right → tabindex swaps, focus moves to B:
   [ A: -1 ]  [ B: 0 ]  [ C: -1 ]  [ D: -1 ]
 
-Tab out, then Tab back in → returns to B (remembered):
+Tab out, then Tab back in → returns to B (memory: true, the default):
   [ A: -1 ]  [ B: 0 ]  [ C: -1 ]  [ D: -1 ]
 ```
 
@@ -397,97 +399,87 @@ Tab out, then Tab back in → returns to B (remembered):
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `elements` | `() => T[]` | **(required)** | Returns the current list of focusable elements |
-| `direction` | `DirectionTypes \| () => DirectionTypes` | `'both'` | `'horizontal'`, `'vertical'`, `'both'`, or `'grid'` |
-| `focusInIndex` | `number \| (elements: T[]) => number` | `0` | Which element to focus when entering the group |
-| `isFocusableElement` | `(el: T) => boolean` | `() => true` | Filter non-focusable/disabled elements |
-| `elementEnterAction` | `(el: T) => void` | no-op | Callback before focusing an element (e.g., auto-select) |
-| `stopKeyEventPropagation` | `boolean` | `false` | Stop arrow key events from propagating |
-| `listenerScope` | `HTMLElement \| () => HTMLElement` | `host.renderRoot` | Scope element for event listeners |
-| `hostDelegatesFocus` | `boolean` | `false` | Set `true` if host also uses `delegatesFocus` |
-| `directionLength` | `number` | `1` | Items per row in grid mode (required for `'grid'` direction) |
+| `getItems` | `() => HTMLElement[]` | **(required)** | Returns the current set of navigable items |
+| `direction` | `FocusgroupDirection` | **(required)** | `'horizontal'`, `'vertical'`, `'both'`, or `'grid'` |
+| `wrap` | `boolean` | `false` | Wrap from last to first (and reverse) at boundaries |
+| `memory` | `boolean` | `true` | Re-enter at last-focused item on Tab |
+| `skipDisabled` | `boolean` | `false` | Skip `disabled` and `aria-disabled="true"` items |
+| `onActiveItemChange` | `(el: HTMLElement \| null) => void` | — | Callback after the active item changes |
+| `pageStep` | `number` | — | Page Up/Down step size (items for linear, rows for grid). 0 or omitted disables page keys |
 
-### Common mistakes (RovingTabindexController)
+**Public methods:**
+
+| Method | Description |
+|--------|-------------|
+| `getActiveItem()` | Returns the item currently holding `tabindex="0"`, or `null` |
+| `setActiveItem(item)` | Sets the roving tab stop without calling `.focus()`. Returns `false` if ineligible |
+| `refresh()` | Re-reads `getItems()`, applies roving tabindex, restores memory. Call after dynamic DOM changes |
+| `setOptions(partial)` | Merges partial options and calls `refresh()` |
+| `focusFirstItemByTextPrefix(prefix)` | Typeahead: sets active item to first match by `textContent`. Returns `true` if found |
+
+**Key behaviors:**
+- **RTL-aware** — Horizontal arrow keys respect the host's `dir` attribute
+- **Grid mode** — Uses bounding-rect layout to derive rows and columns from actual element positions (no manual column count needed). Ctrl+Home / Ctrl+End jump to first/last cell
+- **Capture-phase handlers** — Keyboard events are intercepted in the capture phase for reliable shadow DOM support
+- **Custom event** — Dispatches `swc-focusgroup-navigation-active-change` (bubbling, composed) on active item changes
+
+### Common mistakes (FocusgroupNavigationController)
 
 ```typescript
-// BAD: elements() returning a static array that goes stale
+// BAD: getItems() returning a static array that goes stale
 class SpTabs extends SpectrumElement {
   private tabs = [...this.querySelectorAll('sp-tab')]; // Captured once at construction
 
-  private rovingTabindex = new RovingTabindexController<Tab>(this, {
-    elements: () => this.tabs, // WRONG — won't reflect DOM changes
+  private navigation = new FocusgroupNavigationController(this, {
+    getItems: () => this.tabs, // WRONG — won't reflect DOM changes
+    direction: 'horizontal',
   });
 }
 
-// GOOD: elements() queries live DOM every time
+// GOOD: getItems() queries live DOM every time
 class SpTabs extends SpectrumElement {
-  private rovingTabindex = new RovingTabindexController<Tab>(this, {
-    elements: () => [...this.querySelectorAll('sp-tab')] as Tab[],
+  private navigation = new FocusgroupNavigationController(this, {
+    getItems: () => [...this.querySelectorAll('sp-tab')] as HTMLElement[],
+    direction: 'horizontal',
   });
 }
 ```
 
 ```typescript
-// BAD: forgetting isFocusableElement — arrow keys land on disabled items
+// BAD: not calling refresh() after dynamic DOM changes
 class SpMenu extends SpectrumElement {
-  private rovingTabindex = new RovingTabindexController<MenuItem>(this, {
-    elements: () => [...this.querySelectorAll('sp-menu-item')] as MenuItem[],
-    direction: 'vertical',
-    // WRONG — disabled items will receive focus via arrow keys
-  });
-}
-
-// GOOD: skip disabled elements
-class SpMenu extends SpectrumElement {
-  private rovingTabindex = new RovingTabindexController<MenuItem>(this, {
-    elements: () => [...this.querySelectorAll('sp-menu-item')] as MenuItem[],
-    direction: 'vertical',
-    isFocusableElement: (item) => !item.disabled,
-  });
-}
-```
-
-```typescript
-// BAD: using delegatesFocus with RovingTabindexController without telling it
-class SpActionGroup extends SpectrumElement {
-  static override shadowRootOptions = {
-    ...SpectrumElement.shadowRootOptions,
-    delegatesFocus: true,
-  };
-  private rovingTabindex = new RovingTabindexController<ActionButton>(this, {
-    elements: () => [...this.querySelectorAll('sp-action-button')] as ActionButton[],
-    // WRONG — controller doesn't know about delegatesFocus, tabindex conflicts
-  });
-}
-
-// GOOD: tell the controller about delegatesFocus
-class SpActionGroup extends SpectrumElement {
-  static override shadowRootOptions = {
-    ...SpectrumElement.shadowRootOptions,
-    delegatesFocus: true,
-  };
-  private rovingTabindex = new RovingTabindexController<ActionButton>(this, {
-    elements: () => [...this.querySelectorAll('sp-action-button')] as ActionButton[],
-    hostDelegatesFocus: true, // Coordinates tabindex management with delegation
-  });
-}
-```
-
-```typescript
-// BAD: not calling clearElementCache() when items change dynamically
-class SpMenu extends SpectrumElement {
-  addItem(item: MenuItem) {
+  addItem(item: HTMLElement) {
     this.appendChild(item);
-    // WRONG — controller still has the old cached element list
+    // WRONG — controller may have stale tabindex state
   }
 }
 
-// GOOD: invalidate the cache after DOM mutations
+// GOOD: refresh after DOM mutations
 class SpMenu extends SpectrumElement {
-  addItem(item: MenuItem) {
+  addItem(item: HTMLElement) {
     this.appendChild(item);
-    this.rovingTabindex.clearElementCache();
+    this.navigation.refresh();
   }
+}
+```
+
+```typescript
+// BAD: using skipDisabled when disabled items should remain focusable (e.g., menus)
+class SpMenu extends SpectrumElement {
+  private navigation = new FocusgroupNavigationController(this, {
+    getItems: () => [...this.querySelectorAll('sp-menu-item')] as HTMLElement[],
+    direction: 'vertical',
+    skipDisabled: true, // WRONG for menus — APG says disabled menu items may still be focusable
+  });
+}
+
+// GOOD: leave skipDisabled as false (default) for menu patterns
+class SpMenu extends SpectrumElement {
+  private navigation = new FocusgroupNavigationController(this, {
+    getItems: () => [...this.querySelectorAll('sp-menu-item')] as HTMLElement[],
+    direction: 'vertical',
+    // skipDisabled defaults to false — disabled items remain in sequence
+  });
 }
 ```
 
@@ -589,16 +581,24 @@ override render() {
 
 ### Replacing FocusGroupController
 
-`FocusGroupController` no longer exists as a separate class. Its logic is consolidated into `RovingTabindexController`. If you were using `FocusGroupController` directly (only Accordion did this in 1st-gen), switch to `RovingTabindexController`:
+`FocusGroupController` and `RovingTabindexController` no longer exist as separate classes. Their logic is consolidated into `FocusgroupNavigationController`, which is aligned with the Open UI `focusgroup` attribute. If you were using either controller in 1st-gen, switch to `FocusgroupNavigationController`:
 
 ```typescript
 // 1st-gen
 import { FocusGroupController } from '@spectrum-web-components/reactive-controllers';
+import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers';
 
 // 2nd-gen
-import { RovingTabindexController } from '@spectrum-web-components/core/controllers';
-// Same API — just a different import and class name
+import { FocusgroupNavigationController } from '@spectrum-web-components/core/controllers';
 ```
+
+Key API differences from 1st-gen:
+- `elements` → `getItems` (function returning `HTMLElement[]`)
+- `elementEnterAction` / `focusInIndex` → `onActiveItemChange` callback
+- `isFocusableElement` → `skipDisabled` option (checks `disabled` + `aria-disabled`)
+- `directionLength` → removed (grid uses bounding-rect layout automatically)
+- `clearElementCache()` → `refresh()`
+- New: `wrap`, `memory`, `pageStep`, `focusFirstItemByTextPrefix()`
 
 ---
 
@@ -628,8 +628,9 @@ When submitting a PR that affects focus management, you must verify:
 
 ## Resources
 
-- [Focus Management Proposal](../../2nd-gen/packages/core/FOCUS-MANAGEMENT-PROPOSAL.md) — Full technical rationale
-- [WAI-ARIA Roving Tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex) — The pattern `RovingTabindexController` implements
+- [Focus Management Strategy RFC](../03_project-planning/05_strategies/focus-management-strategy-rfc.md) — Full technical rationale
+- [WAI-ARIA Roving Tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex) — The pattern `FocusgroupNavigationController` implements
+- [Open UI Focusgroup Explainer](https://open-ui.org/components/focusgroup.explainer/) — The emerging standard the controller aligns with
 - [Shadow DOM delegatesFocus](https://frontendmasters.com/blog/shadow-dom-focus-delegation-getting-delegatesfocus-right/) — Implementation deep-dive
 - [On disabled and aria-disabled](https://kittygiraudel.com/2024/03/29/on-disabled-and-aria-disabled-attributes/) — Why `DisabledMixin` uses `aria-disabled`
 - [Accessibility Testing Guide](09_accessibility-testing.md) — Automated and manual a11y testing

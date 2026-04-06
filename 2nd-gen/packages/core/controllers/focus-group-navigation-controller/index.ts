@@ -10,14 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-/**
- * Package entry for `@spectrum-web-components/core/controllers/focus-group-navigation-controller.js`.
- * Implementation lives under `focus-group-navigation-controller/src/` next to demos and tests.
- */
 export {
   focusgroupNavigationActiveChange,
   FocusgroupNavigationController,
   type FocusgroupDirection,
   type FocusgroupNavigationActiveChangeDetail,
   type FocusgroupNavigationOptions,
-} from './focus-group-navigation-controller/src/focus-group-navigation-controller.js';
+} from './src/focus-group-navigation-controller.js';

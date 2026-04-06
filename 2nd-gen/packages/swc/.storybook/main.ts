@@ -65,7 +65,7 @@ if (storybookMode !== 'ci-a11y') {
     },
     {
       directory: '../../core',
-      files: '**/stories/**/*.stories.ts',
+      files: '**/stories/*.stories.ts',
       titlePrefix: 'Core',
     },
     {
