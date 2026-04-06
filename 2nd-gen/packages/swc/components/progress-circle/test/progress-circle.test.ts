@@ -202,10 +202,10 @@ export const AriaLabelledbyAccessibleNameTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Slots
+// TEST: Light DOM (no default slot)
 // ──────────────────────────────────────────────────────────────
 
-export const SlotLabelTest: Story = {
+export const LightDomChildrenDoNotSetLabelTest: Story = {
   render: () => html`
     <swc-progress-circle>Loading data</swc-progress-circle>
   `,
@@ -215,10 +215,24 @@ export const SlotLabelTest: Story = {
       'swc-progress-circle'
     );
 
-    await step('uses slot content as the label', async () => {
-      expect(progressCircle.label).toBe('Loading data');
-      expect(progressCircle.getAttribute('aria-label')).toBe('Loading data');
-    });
+    await step(
+      'does not use light DOM text as the label or accessible name',
+      async () => {
+        expect(progressCircle.label).toBe('');
+        expect(progressCircle.getAttribute('aria-label')).toBeNull();
+      }
+    );
+
+    await step(
+      'warns in dev mode when there is no accessible name (light DOM text alone is insufficient)',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          progressCircle.progress = 10;
+          await progressCircle.updateComplete;
+
+          expect(warnCalls.length).toBeGreaterThan(0);
+        })
+    );
   },
 };
 

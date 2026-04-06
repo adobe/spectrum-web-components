@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { PropertyValues } from 'lit';
-import { property, query } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 
 import {
   LanguageResolutionController,
@@ -18,7 +18,6 @@ import {
 } from '@spectrum-web-components/core/controllers/language-resolution.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
-import { getLabelFromSlot } from '@spectrum-web-components/core/utils/get-label-from-slot.js';
 
 import {
   PROGRESS_CIRCLE_VALID_SIZES,
@@ -30,14 +29,6 @@ import {
  * Can be used in both determinate (with specific progress value) and indeterminate (loading) states.
  *
  * @attribute {ElementSize} size - The size of the progress circle.
- *
- * @todo Why do we support both the slot and the label attribute? Should we deprecate the slot?
- *
- * @todo Figure out why our tool chain doesn't respect the line breaks in this slot description.
- *
- * @slot - Accessible label for the progress circle.
- *
- *   Used to provide context about what is loading or progressing.
  */
 export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
   validSizes: PROGRESS_CIRCLE_VALID_SIZES,
@@ -107,23 +98,10 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
   //     IMPLEMENTATION
   // ──────────────────────
 
-  /**
-   * @internal
-   */
-  @query('slot')
-  private slotEl!: HTMLSlotElement;
-
   protected makeRotation(rotation: number): string | undefined {
     return this.indeterminate
       ? undefined
       : `transform: rotate(${rotation}deg);`;
-  }
-
-  protected handleSlotchange(): void {
-    const labelFromSlot = getLabelFromSlot(this.label, this.slotEl);
-    if (labelFromSlot) {
-      this.label = labelFromSlot;
-    }
   }
 
   protected override firstUpdated(changes: PropertyValues): void {
@@ -174,8 +152,7 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
       return Boolean(
         this.label ||
         this.getAttribute('aria-label') ||
-        this.getAttribute('aria-labelledby') ||
-        this.slotEl.assignedNodes().length
+        this.getAttribute('aria-labelledby')
       );
     };
 
@@ -183,13 +160,12 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
       if (!hasAccessibleName() && this.getAttribute('role') === 'progressbar') {
         window.__swc?.warn(
           this,
-          '<sp-progress-circle> elements need one of the following to be accessible:',
+          '<swc-progress-circle> elements need one of the following to be accessible:',
           'https://opensource.adobe.com/spectrum-web-components/components/progress-circle/#accessibility',
           {
             type: 'accessibility',
             issues: [
               'value supplied to the "label" attribute, which will be displayed visually as part of the element, or',
-              'text content supplied directly to the <sp-progress-circle> element, or',
               'value supplied to the "aria-label" attribute, which will only be provided to screen readers, or',
               'an element ID reference supplied to the "aria-labelledby" attribute, which will be provided by screen readers and will need to be managed manually by the parent application.',
             ],
