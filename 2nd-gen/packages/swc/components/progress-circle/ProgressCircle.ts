@@ -89,9 +89,8 @@ export class ProgressCircle extends ProgressCircleBase {
             typeof this.size !== 'undefined',
         })}
       >
-        <svg fill="none" width="100%" height="100%" class="swc-outerCircle">
+        <svg fill="none" width="100%" height="100%">
           <circle
-            class="swc-innerCircle"
             cx="50%"
             cy="50%"
             r=${`calc(50% - ${strokeWidth / 1}px)`}
