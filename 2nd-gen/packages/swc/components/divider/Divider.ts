@@ -40,7 +40,7 @@ export class Divider extends DividerBase {
           [`swc-Divider--size${this.size?.toUpperCase()}`]: this.size != null,
           [`swc-Divider--static${capitalize(this.staticColor)}`]:
             this.staticColor != null,
-          [`swc-Divider--vertical`]: this.vertical,
+          ['swc-Divider--vertical']: this.vertical,
         })}
       ></div>
     `;
