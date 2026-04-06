@@ -1,0 +1,48 @@
+{
+  "name": "@adobe/spectrum-wc-mcp",
+  "version": "0.0.1",
+  "description": "MCP server for Spectrum Web Components — exposes component metadata and search to AI assistants",
+  "license": "Apache-2.0",
+  "author": "Adobe",
+  "type": "module",
+  "main": "./dist/index.js",
+  "bin": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "prestart": "yarn workspace @adobe/spectrum-wc analyze",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "typescript": "5.9.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adobe/spectrum-web-components.git",
+    "directory": "2nd-gen/packages/mcp-server"
+  },
+  "bugs": {
+    "url": "https://github.com/adobe/spectrum-web-components/issues"
+  },
+  "homepage": "https://opensource.adobe.com/spectrum-web-components/components/mcp-server",
+  "keywords": [
+    "design-system",
+    "spectrum",
+    "adobe",
+    "adobe-spectrum",
+    "web components",
+    "web-components",
+    "lit-element",
+    "lit-html",
+    "component",
+    "css"
+  ],
+  "module": "./dist/index.js"
+}
