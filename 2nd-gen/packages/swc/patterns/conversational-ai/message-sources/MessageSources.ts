@@ -29,39 +29,36 @@ import styles from './message-sources.css';
  *
  * @element swc-message-sources
  * @slot - Source link items (rendered as a numbered list when expanded)
- * @fires swc-sources-toggle - Dispatched when the panel is toggled. Detail: `{ expanded: boolean }`
- * @csspart toggle - The disclosure control that expands or collapses sources
- * @csspart sources-list - The numbered list container when expanded (slotted items render inside)
+ * @fires swc-sources-toggle - Dispatched when the panel is toggled. Detail: `{ open: boolean }`
  */
 export class MessageSources extends SpectrumElement {
   /**
-   * Whether the sources list is expanded or collapsed.
+   * Whether the sources list is open.
    */
-  @property({ type: String, reflect: true })
-  public state: 'collapsed' | 'expanded' = 'collapsed';
+  @property({ type: Boolean, reflect: true })
+  public open = false;
 
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
   private _handleToggle(): void {
-    this.state = this.state === 'collapsed' ? 'expanded' : 'collapsed';
+    this.open = !this.open;
     this.dispatchEvent(
       new CustomEvent('swc-sources-toggle', {
         bubbles: true,
         composed: true,
-        detail: { expanded: this.state === 'expanded' },
+        detail: { open: this.open },
       })
     );
   }
 
   protected override render(): TemplateResult {
-    const isExpanded = this.state === 'expanded';
+    const isExpanded = this.open;
 
     return html`
       <div class="swc-MessageSources">
         <button
-          part="toggle"
           class="swc-MessageSources-toggle"
           aria-expanded=${isExpanded}
           aria-controls="swc-sources-panel"
@@ -82,7 +79,6 @@ export class MessageSources extends SpectrumElement {
         ${isExpanded
           ? html`
               <ol
-                part="sources-list"
                 id="swc-sources-panel"
                 class="swc-MessageSources-list"
                 role="list"

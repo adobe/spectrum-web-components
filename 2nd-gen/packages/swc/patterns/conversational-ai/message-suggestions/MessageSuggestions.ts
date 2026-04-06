@@ -25,31 +25,25 @@ import styles from './message-suggestions.css';
 /**
  * A row of follow-up suggestion chips rendered below an AI response.
  *
- * Add **any number** of elements as **default-slot** children (e.g. one `<span>` per chip).
- * Label text is taken from each element’s **`textContent`**. The slotted nodes stay in the
- * light DOM for your data layer; visible chips are rendered in shadow with the same labels.
- *
- * **Documentation:** three suggestions is the recommended default for readability; the
- * component does not enforce a maximum.
+ * Add **any number** of text elements in the **default slot**
+ * (for example, one `<span>` per suggestion). Label text is taken from each
+ * element's **`textContent`**.
  *
  * @element swc-message-suggestions
- * @slot - One element per suggestion chip; label from `textContent` (order matches DOM order)
- * @fires swc-suggestion - Dispatched when a chip is clicked. Detail: `{ index: number }` (1-based)
+ * @slot - One element per suggestion; chip label comes from each item's `textContent`
  */
 export class MessageSuggestions extends SpectrumElement {
   /**
-   * When `true`, shows the section title "What would you like to do next?".
+   * Optional heading shown above the actions row.
    */
-  @property({ type: Boolean, reflect: true, attribute: 'show-title' })
-  public showTitle = false;
+  @property({ type: String, reflect: true })
+  public override title = '';
 
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
   private _defaultSlotRef = createRef<HTMLSlotElement>();
-
-  /** Visible label per chip, synced from default-slot assigned elements. */
   private _chipLabels: string[] = [];
 
   protected override firstUpdated(_changed: PropertyValues): void {
@@ -62,13 +56,15 @@ export class MessageSuggestions extends SpectrumElement {
     if (!slot) {
       return;
     }
+
     this._chipLabels = slot
       .assignedElements({ flatten: true })
-      .map((el) => el.textContent?.trim() ?? '');
+      .map((el) => el.textContent?.trim() ?? '')
+      .filter(Boolean);
     this.requestUpdate();
   }
 
-  private _handleChipClick(index: number): void {
+  private _dispatchSuggestion(index: number): void {
     this.dispatchEvent(
       new CustomEvent('swc-suggestion', {
         bubbles: true,
@@ -84,16 +80,16 @@ export class MessageSuggestions extends SpectrumElement {
     if (!Number.isInteger(index)) {
       return;
     }
-    this._handleChipClick(index);
+    this._dispatchSuggestion(index);
   }
 
   protected override render(): TemplateResult {
     return html`
       <div class="swc-MessageSuggestions">
-        ${this.showTitle
+        ${this.title
           ? html`
               <p class="swc-MessageSuggestions-title">
-                What would you like to do next?
+                ${this.title}
               </p>
             `
           : ''}

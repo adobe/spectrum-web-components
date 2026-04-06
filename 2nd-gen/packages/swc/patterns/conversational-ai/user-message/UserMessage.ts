@@ -11,7 +11,7 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import { property } from 'lit/decorators.js';
+import { state } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
@@ -21,26 +21,79 @@ import styles from './user-message.css';
  * User-authored conversation bubble for conversational AI pattern exploration.
  *
  * @element swc-user-message
- * @slot - Message content (text, card, media attachment, etc.)
+ * @slot - Message content. Slotted `swc-conversation-artifact[variant]` drives bubble layout inference.
  */
 export class UserMessage extends SpectrumElement {
-  /**
-   * Controls the padding of the bubble to match the content type.
-   * - `copy`: regular text padding (default)
-   * - `card`: reduced padding for horizontal card content
-   * - `media`: regular padding for media-first attachment content (image, GIF, video poster, etc.)
-   */
-  @property({ type: String, reflect: true })
-  public content: 'copy' | 'card' | 'media' = 'copy';
+  @state()
+  private _contentKind: 'copy' | 'card' | 'media' = 'copy';
 
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
+  private _elementHasArtifactVariant(
+    element: Element,
+    variant: 'card' | 'media'
+  ): boolean {
+    if (element.matches(`swc-conversation-artifact[variant="${variant}"]`)) {
+      return true;
+    }
+    return (
+      element.querySelector(`swc-conversation-artifact[variant="${variant}"]`) !==
+      null
+    );
+  }
+
+  private _inferContentKind(slot?: HTMLSlotElement): 'copy' | 'card' | 'media' {
+    const defaultSlot =
+      slot ?? this.shadowRoot?.querySelector<HTMLSlotElement>('slot');
+    const assigned = defaultSlot?.assignedElements({ flatten: true }) ?? [];
+
+    if (
+      assigned.some((element) =>
+        this._elementHasArtifactVariant(element, 'media')
+      )
+    ) {
+      return 'media';
+    }
+
+    if (
+      assigned.some((element) =>
+        this._elementHasArtifactVariant(element, 'card')
+      )
+    ) {
+      return 'card';
+    }
+
+    return 'copy';
+  }
+
+  private _syncContentKind(slot?: HTMLSlotElement): void {
+    const nextKind = this._inferContentKind(slot);
+    if (nextKind === this._contentKind) {
+      return;
+    }
+
+    this._contentKind = nextKind;
+    this.requestUpdate();
+  }
+
+  private _handleDefaultSlotChange(event: Event): void {
+    this._syncContentKind(event.target as HTMLSlotElement);
+  }
+
+  protected override firstUpdated(): void {
+    this._syncContentKind();
+  }
+
+  protected override updated(): void {
+    this.setAttribute('data-content-kind', this._contentKind);
+  }
+
   protected override render(): TemplateResult {
     return html`
       <div class="swc-UserMessage">
-        <slot></slot>
+        <slot @slotchange=${this._handleDefaultSlotChange}></slot>
       </div>
     `;
   }

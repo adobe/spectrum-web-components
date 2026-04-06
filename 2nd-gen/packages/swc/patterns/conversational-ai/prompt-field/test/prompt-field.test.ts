@@ -13,6 +13,7 @@
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
+import '../../conversation-artifact/index.js';
 import '../index.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
@@ -43,11 +44,9 @@ export const OverviewTest: Story = {
     );
 
     await step(
-      'renders with default state, uploadedArtifact and populated',
+      'renders with default sending state',
       async () => {
-        expect(el.state).toBe('default');
-        expect(el.uploadedArtifact).toBe('none');
-        expect(el.populated).toBe(false);
+        expect(el.sending).toBe(false);
         expect(el.label).toBe('Prompt');
         expect(el.placeholder).toBe('Ask anything');
       }
@@ -67,46 +66,46 @@ export const PropertyMutationTest: Story = {
       'swc-prompt-field'
     );
 
-    await step('state reflects to attribute after mutation', async () => {
-      el.state = 'send';
+    await step('sending reflects to attribute after mutation', async () => {
+      el.sending = true;
       await el.updateComplete;
-      expect(el.getAttribute('state')).toBe('send');
+      expect(el.hasAttribute('sending')).toBe(true);
 
-      el.state = 'stop';
+      el.sending = false;
       await el.updateComplete;
-      expect(el.getAttribute('state')).toBe('stop');
-
-      el.state = 'default';
-      await el.updateComplete;
-      expect(el.getAttribute('state')).toBe('default');
+      expect(el.hasAttribute('sending')).toBe(false);
     });
 
     await step(
-      'uploaded-artifact reflects to attribute after mutation',
+      'leading-actions slot accepts consumer-provided controls',
       async () => {
-        el.uploadedArtifact = 'card';
+        el.innerHTML = '<button slot="leading-actions">Options</button>';
         await el.updateComplete;
-        expect(el.getAttribute('uploaded-artifact')).toBe('card');
 
-        el.uploadedArtifact = 'media';
-        await el.updateComplete;
-        expect(el.getAttribute('uploaded-artifact')).toBe('media');
-
-        el.uploadedArtifact = 'none';
-        await el.updateComplete;
-        expect(el.getAttribute('uploaded-artifact')).toBe('none');
+        const slot = el.shadowRoot?.querySelector<HTMLSlotElement>(
+          'slot[name="leading-actions"]'
+        );
+        const assigned = slot?.assignedElements({ flatten: true }) ?? [];
+        expect(assigned.length).toBe(1);
       }
     );
 
-    await step('populated reflects to attribute after mutation', async () => {
-      el.populated = true;
-      await el.updateComplete;
-      expect(el.hasAttribute('populated')).toBe(true);
+    await step(
+      'artifact slot supports multiple assigned artifacts',
+      async () => {
+        el.innerHTML = `
+          <swc-conversation-artifact slot="artifact" variant="card"></swc-conversation-artifact>
+          <swc-conversation-artifact slot="artifact" variant="media"></swc-conversation-artifact>
+        `;
+        await el.updateComplete;
 
-      el.populated = false;
-      await el.updateComplete;
-      expect(el.hasAttribute('populated')).toBe(false);
-    });
+        const slot = el.shadowRoot?.querySelector<HTMLSlotElement>(
+          'slot[name="artifact"]'
+        );
+        const assigned = slot?.assignedElements({ flatten: true }) ?? [];
+        expect(assigned.length).toBe(2);
+      }
+    );
   },
 };
 
@@ -118,8 +117,8 @@ export const EventsTest: Story = {
   ...Overview,
   args: {
     ...Overview.args,
-    state: 'send',
-    populated: true,
+    value: 'Summarize the API changes in this branch.',
+    sending: false,
   },
   play: async ({ canvasElement, step }) => {
     const el = await getComponent<PromptField>(
@@ -160,6 +159,35 @@ export const EventsTest: Story = {
           '.swc-PromptField-upload'
         );
         uploadBtn?.click();
+        expect(fired).toBe(true);
+      }
+    );
+
+    await step(
+      'bubbles swc-artifact-dismiss from a dismissible artifact',
+      async () => {
+        el.innerHTML = `
+          <swc-conversation-artifact slot="artifact" variant="media" dismissible>
+            <div slot="thumbnail" style="inline-size:100%;block-size:100%;"></div>
+          </swc-conversation-artifact>
+        `;
+        await el.updateComplete;
+
+        let fired = false;
+        el.addEventListener(
+          'swc-artifact-dismiss',
+          () => {
+            fired = true;
+          },
+          { once: true }
+        );
+
+        const dismissBtn = el.querySelector('swc-conversation-artifact')
+          ?.shadowRoot
+          ?.querySelector<HTMLButtonElement>(
+            '.swc-ConversationArtifact-dismiss'
+          );
+        dismissBtn?.click();
         expect(fired).toBe(true);
       }
     );

@@ -9,23 +9,16 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { defineElement } from '@spectrum-web-components/core/element/index.js';
 
-import { expect, test } from '@playwright/test';
+import { ConversationArtifact } from './ConversationArtifact.js';
 
-import { gotoStory } from '../../../../utils/a11y-helpers.js';
+export * from './ConversationArtifact.js';
 
-test.describe('ConversationArtifactCard - ARIA Snapshots', () => {
-  test('should expose title and subtitle text in the accessibility tree', async ({
-    page,
-  }) => {
-    const root = await gotoStory(
-      page,
-      'conversational-ai-conversation-artifact-card--overview',
-      'swc-conversation-artifact-card'
-    );
-    await expect(root).toMatchAriaSnapshot(`
-      - text: Hilton commercial assets
-      - text: PDF file
-    `);
-  });
-});
+declare global {
+  interface HTMLElementTagNameMap {
+    'swc-conversation-artifact': ConversationArtifact;
+  }
+}
+
+defineElement('swc-conversation-artifact', ConversationArtifact);

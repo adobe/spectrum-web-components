@@ -10,14 +10,17 @@
  * governing permissions and limitations under the License.
  */
 
-/* Sizing per content type sourced from Figma spec (node 5-2328), full-screen modality.
+/* Sizing per inferred content type sourced from Figma spec (node 5-2328), full-screen modality.
  *
  * copy  — fills available column width, capped at 536px (text reflows naturally)
  * card  — shrinks to card content, capped at 528px, min 272px
  * media — shrinks to media content, min 272px
  *
- * All sizing lives here in a single shadow root so normal CSS specificity applies:
- * :host([content="card"]) wins over :host for the inline-size override.
+ * Content kind is inferred from slotted markup and exposed via
+ * `data-content-kind` on host:
+ * - media: any slotted `swc-conversation-artifact[variant="media"]`
+ * - card: any slotted `swc-conversation-artifact[variant="card"]` (when no media)
+ * - copy: default fallback
  */
 
 :host {
@@ -27,14 +30,14 @@
 }
 
 /* Card: fixed 324px per Figma spec (card content is always 308px = 324px - 2×8px padding) */
-:host([content="card"]) {
+:host([data-content-kind='card']) {
   inline-size: 324px;
   min-inline-size: 272px;
   max-inline-size: 528px;
 }
 
 /* Media: shrinks to preview content + padding; min 272px (240px image + 2×16px padding) */
-:host([content="media"]) {
+:host([data-content-kind='media']) {
   inline-size: fit-content;
   min-inline-size: 272px;
 }
@@ -58,7 +61,7 @@
 }
 
 /* Card content uses tighter padding to frame the card thumbnail/metadata */
-:host([content="card"]) .swc-UserMessage {
+:host([data-content-kind='card']) .swc-UserMessage {
   padding-block: 4px;
   padding-inline: 8px;
 }

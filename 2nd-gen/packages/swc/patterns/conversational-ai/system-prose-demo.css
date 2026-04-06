@@ -11,11 +11,11 @@
  */
 
 /**
- * Reference styles for AI assistant prose inside `swc-assistant-message` slot="message".
+ * Reference styles for system prose inside `swc-system-message` default slot.
  * This is not a component — Storybook imports it for demos; products should copy or map
  * equivalent rules to their design tokens.
  */
-.swc-conversationalAi-assistantProse {
+.swc-conversationalAi-systemProse {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -26,17 +26,17 @@
   color: var(--swc-gray-800);
 }
 
-.swc-conversationalAi-assistantProse p {
+.swc-conversationalAi-systemProse p {
   margin: 0;
 }
 
-.swc-conversationalAi-assistantProse ul,
-.swc-conversationalAi-assistantProse ol {
+.swc-conversationalAi-systemProse ul,
+.swc-conversationalAi-systemProse ol {
   padding-inline-start: 20px;
   margin: 0;
 }
 
-.swc-conversationalAi-assistantProse a {
+.swc-conversationalAi-systemProse a {
   color: var(--swc-accent-color-900);
   text-decoration: underline;
   text-underline-offset: 2px;

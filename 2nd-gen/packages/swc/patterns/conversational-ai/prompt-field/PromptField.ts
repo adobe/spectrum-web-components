@@ -19,8 +19,6 @@ import '@adobe/spectrum-wc/icon';
 
 import {
   ChevronUpIcon,
-  CrossIcon,
-  InformationIcon,
   PlusIcon,
   StopIcon,
 } from '../utils/icons/index.js';
@@ -34,25 +32,13 @@ import styles from './prompt-field.css';
  *
  * @element swc-prompt-field
  *
- * @slot artifact - Optional attachment preview; pair with `uploaded-artifact` for shell layout.
+ * @slot artifact - Optional attachment preview(s); supports multiple slotted artifacts.
+ * @slot leading-actions - Optional additional actions shown next to the upload button.
  */
 export class PromptField extends SpectrumElement {
-  /** Controls whether the send button or stop button is shown on the right. */
-  @property({ type: String, reflect: true })
-  public state: 'default' | 'send' | 'stop' = 'default';
-
-  /**
-   * Shell layout preset for the artifact region above the text input.
-   * - `none`: hide the artifact area
-   * - `card`: full-width band (horizontal file-style attachments)
-   * - `media`: square tile region for visual previews (image, GIF, video poster, etc.); use `swc-conversation-artifact-media` without title/subtitle to fill it
-   */
-  @property({ type: String, reflect: true, attribute: 'uploaded-artifact' })
-  public uploadedArtifact: 'none' | 'card' | 'media' = 'none';
-
-  /** When `true`, the send button is enabled. Set this based on whether the textarea has content. */
+  /** When `true`, show the stop action in place of send. */
   @property({ type: Boolean, reflect: true })
-  public populated = false;
+  public sending = false;
 
   /** Accessible label shown above the textarea. */
   @property({ type: String })
@@ -65,6 +51,8 @@ export class PromptField extends SpectrumElement {
   /** The current textarea value. Controlled by the consumer. */
   @property({ type: String })
   public value = '';
+
+  private _hasArtifacts = false;
 
   public static override get styles(): CSSResultArray {
     return [styles];
@@ -83,7 +71,7 @@ export class PromptField extends SpectrumElement {
   }
 
   private _handleSendClick(): void {
-    if (!this.populated) {
+    if (!this._isPopulated) {
       return;
     }
     this.dispatchEvent(
@@ -103,23 +91,42 @@ export class PromptField extends SpectrumElement {
     );
   }
 
-  private _handleArtifactDismiss(): void {
-    this.dispatchEvent(
-      new CustomEvent('swc-artifact-dismiss', { bubbles: true, composed: true })
-    );
+  private _syncArtifactPresenceFromSlot(slot?: HTMLSlotElement): void {
+    const artifactSlot =
+      slot ??
+      this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="artifact"]');
+
+    const hasArtifacts =
+      (artifactSlot?.assignedElements({ flatten: true })?.length ?? 0) > 0;
+
+    if (hasArtifacts !== this._hasArtifacts) {
+      this._hasArtifacts = hasArtifacts;
+      this.requestUpdate();
+    }
+  }
+
+  private _handleArtifactSlotChange(event: Event): void {
+    this._syncArtifactPresenceFromSlot(event.target as HTMLSlotElement);
+  }
+
+  private get _isPopulated(): boolean {
+    return this.value.trim().length > 0 || this._hasArtifacts;
+  }
+
+  protected override firstUpdated(): void {
+    this._syncArtifactPresenceFromSlot();
   }
 
   private _renderArtifact(): TemplateResult {
     return html`
-      <div class="swc-PromptField-artifact">
-        <slot name="artifact"></slot>
-        <button
-          class="swc-PromptField-artifact-dismiss"
-          aria-label="Remove attachment"
-          @click=${this._handleArtifactDismiss}
-        >
-          <swc-icon label="Remove">${CrossIcon()}</swc-icon>
-        </button>
+      <div
+        class="swc-PromptField-artifacts"
+        ?hidden=${!this._hasArtifacts}
+      >
+        <slot
+          name="artifact"
+          @slotchange=${this._handleArtifactSlotChange}
+        ></slot>
       </div>
     `;
   }
@@ -128,7 +135,7 @@ export class PromptField extends SpectrumElement {
     return html`
       <button
         class="swc-PromptField-send"
-        ?disabled=${!this.populated}
+        ?disabled=${!this._isPopulated}
         aria-label="Send"
         @click=${this._handleSendClick}
       >
@@ -150,14 +157,17 @@ export class PromptField extends SpectrumElement {
   }
 
   protected override render(): TemplateResult {
-    const showArtifact = this.uploadedArtifact !== 'none';
-    const showStop = this.state === 'stop';
+    const showStop = this.sending;
 
     return html`
       <div class="swc-PromptField">
         <div class="swc-PromptField-box">
-          <div class="swc-PromptField-input-area">
-            ${showArtifact ? this._renderArtifact() : ''}
+          <div
+            class="swc-PromptField-input-area${this._hasArtifacts
+              ? ' has-artifact'
+              : ''}"
+          >
+            ${this._renderArtifact()}
             <div class="swc-PromptField-text-area">
               <span class="swc-PromptField-label">${this.label}</span>
               <textarea
@@ -172,39 +182,20 @@ export class PromptField extends SpectrumElement {
           </div>
 
           <div class="swc-PromptField-action-bar">
-            <button
-              class="swc-PromptField-upload"
-              aria-label="Add attachment"
-              @click=${this._handleUploadClick}
-            >
-              <swc-icon label="Add">${PlusIcon()}</swc-icon>
-            </button>
+            <div class="swc-PromptField-leading-actions">
+              <button
+                class="swc-PromptField-upload"
+                aria-label="Add attachment"
+                @click=${this._handleUploadClick}
+              >
+                <swc-icon label="Add">${PlusIcon()}</swc-icon>
+              </button>
+              <slot name="leading-actions"></slot>
+            </div>
 
             ${showStop ? this._renderStopButton() : this._renderSendButton()}
           </div>
         </div>
-
-        <p class="swc-PromptField-disclaimer">
-          <span class="swc-PromptField-disclaimer-copy">
-            <span class="swc-PromptField-disclaimer-text">
-              Responses are generated using AI, and may be inaccurate. Check
-              before using.
-            </span>
-            <span class="swc-PromptField-disclaimer-link-row">
-              <a
-                class="swc-PromptField-disclaimer-link"
-                href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                AI User Guidelines
-              </a>
-              <span class="swc-PromptField-disclaimer-icon" aria-hidden="true">
-                ${InformationIcon()}
-              </span>
-            </span>
-          </span>
-        </p>
       </div>
     `;
   }

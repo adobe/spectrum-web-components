@@ -13,7 +13,6 @@
 import {
   CSSResultArray,
   html,
-  PropertyValues,
   TemplateResult,
 } from 'lit';
 import { property } from 'lit/decorators.js';
@@ -27,60 +26,40 @@ import { CheckCircleIcon } from '../utils/icons/index.js';
 
 import styles from './response-status.css';
 
-const REASONING_MODES = ['hidden', 'collapsed', 'expanded'] as const;
-export type ResponseStatusReasoning = (typeof REASONING_MODES)[number];
-
 /**
  * Displays the current status of an AI response generation.
  *
- * While **`state="loading"`**, reasoning is not shown (the `reasoning` attribute is ignored for UI).
+ * While **`loading`** is `true`, reasoning is not shown.
  *
  * @element swc-response-status
- * @slot reasoning - Content shown when `reasoning` is `collapsed` (panel hidden) or `expanded` (panel visible); only interactive when `state` is `complete`.
+ * @slot reasoning - Optional reasoning content shown when `loading` is `false` and `open` is `true`.
  */
 export class ResponseStatus extends SpectrumElement {
-  /**
-   * - `loading`: spinner + "Thinking…" label
-   * - `complete`: checkmark + "Response generated" label
-   */
-  @property({ type: String, reflect: true })
-  public state: 'loading' | 'complete' = 'loading';
+  /** `true`: spinner + "Thinking…", `false`: checkmark + "Response generated". */
+  @property({ type: Boolean, reflect: true })
+  public loading = false;
 
   /**
-   * - `hidden`: no reasoning disclosure
-   * - `collapsed`: disclosure closed (default when showing reasoning)
-   * - `expanded`: disclosure open; use for initial open state — toggling updates this attribute
+   * `true`: reasoning expanded; `false`: reasoning collapsed.
+   * Ignored while `loading` is `true`.
    */
-  @property({ type: String, reflect: true })
-  public reasoning: ResponseStatusReasoning = 'hidden';
+  @property({ type: Boolean, reflect: true })
+  public open = false;
 
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
-  protected override willUpdate(changed: PropertyValues<this>): void {
-    super.willUpdate(changed);
-    if (changed.has('reasoning')) {
-      const v = this.reasoning as string;
-      if (!REASONING_MODES.includes(v as ResponseStatusReasoning)) {
-        this.reasoning = 'hidden';
-      }
-    }
-  }
-
   private _handleReasoningToggle(): void {
-    if (this.state !== 'complete') {
+    if (this.loading) {
       return;
     }
-    if (this.reasoning !== 'collapsed' && this.reasoning !== 'expanded') {
-      return;
-    }
-    this.reasoning = this.reasoning === 'expanded' ? 'collapsed' : 'expanded';
+    this.open = !this.open;
     this.dispatchEvent(
       new CustomEvent('swc-reasoning-toggle', {
         bubbles: true,
         composed: true,
-        detail: { reasoning: this.reasoning },
+        detail: { open: this.open },
       })
     );
   }
@@ -99,9 +78,8 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   private _renderCompleteRow(): TemplateResult {
-    const showDisclosure =
-      this.reasoning === 'collapsed' || this.reasoning === 'expanded';
-    const expanded = this.reasoning === 'expanded';
+    const showDisclosure = true;
+    const expanded = this.open;
 
     if (showDisclosure) {
       return html`
@@ -145,9 +123,8 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   protected override render(): TemplateResult {
-    const isLoading = this.state === 'loading';
-    const showReasoningPanel =
-      !isLoading && this.reasoning === 'expanded';
+    const isLoading = this.loading;
+    const showReasoningPanel = !isLoading && this.open;
 
     return html`
       <div class="swc-ResponseStatus">

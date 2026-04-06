@@ -14,43 +14,43 @@ import { CSSResultArray, html, TemplateResult } from 'lit';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
-import styles from './assistant-message.css';
+import styles from './system-message.css';
 
 /**
- * Layout container for a single assistant (AI) reply: status, body, feedback, sources, and suggestions.
+ * Layout container for a single system (AI) reply: status, body, feedback, sources, and suggestions.
  *
- * **Presentation order is fixed** by this element’s shadow tree: **status → message → feedback → sources → suggestions**,
+ * **Presentation order is fixed** by this element's shadow tree: **status -> default content -> feedback -> sources -> suggestions**,
  * regardless of the order slotted nodes appear in the host DOM (each child must use the correct **`slot`** name).
  *
  * Slots:
  * - `status` — `<swc-response-status>` thinking/complete indicator
- * - `message` — Assistant reply body (semantic HTML; typography after API table on Assistant message Storybook docs)
- * - `feedback` — `<swc-message-feedback>` thumbs-up/down
+ * - default slot — System reply body (semantic HTML; typography after API table on System message Storybook docs)
+ * - `feedback` — `<swc-message-feedback>` positive/negative feedback
  * - `sources` — `<swc-message-sources>` collapsible source list
- * - `suggestions` — `<swc-message-suggestions>` follow-up chips
+ * - `suggestions` — `<swc-message-suggestions>` follow-up suggestion chips
  *
- * Wrap with `<swc-conversation-turn participant="assistant">` for column alignment in the thread.
+ * Wrap with `<swc-conversation-turn type="incoming">` for column alignment in the thread.
  *
- * @element swc-assistant-message
+ * @element swc-system-message
+ * @slot - System reply body (semantic HTML; typography after API table on System message Storybook docs)
  * @slot status - Response status indicator (thinking / complete)
- * @slot message - Assistant reply body (semantic HTML; typography after API table on Assistant message Storybook docs)
- * @slot feedback - Thumbs-up / thumbs-down feedback controls
+ * @slot feedback - Positive / negative feedback controls
  * @slot sources - Collapsible list of sources
  * @slot suggestions - Follow-up suggestion chips (rendered outside the main body)
  */
-export class AssistantMessage extends SpectrumElement {
+export class SystemMessage extends SpectrumElement {
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
   protected override render(): TemplateResult {
     return html`
-      <div class="swc-AssistantMessage">
-        <div class="swc-AssistantMessage-body">
-          <div class="swc-AssistantMessage-output">
+      <div class="swc-SystemMessage">
+        <div class="swc-SystemMessage-body">
+          <div class="swc-SystemMessage-output">
             <slot name="status"></slot>
-            <div class="swc-AssistantMessage-content">
-              <slot name="message"></slot>
+            <div class="swc-SystemMessage-content">
+              <slot></slot>
               <slot name="feedback"></slot>
             </div>
           </div>

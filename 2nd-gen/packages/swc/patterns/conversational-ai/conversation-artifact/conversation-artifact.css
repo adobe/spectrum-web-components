@@ -1,0 +1,203 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: block;
+  position: relative;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.swc-ConversationArtifact-dismiss {
+  display: flex;
+  position: absolute;
+  inset-block-start: -12px;
+  inset-inline-end: -12px;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  inline-size: 24px;
+  block-size: 24px;
+  padding: 0;
+  color: token("gray-800");
+  background: token("gray-200");
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.swc-ConversationArtifact-dismiss[hidden] {
+  display: none;
+}
+
+.swc-ConversationArtifact-dismiss:hover {
+  background: token("gray-300");
+}
+
+.swc-ConversationArtifact-dismiss swc-icon {
+  --swc-icon-inline-size: 10px;
+  --swc-icon-block-size: 10px;
+}
+
+.swc-ConversationArtifact-surface {
+  display: flex;
+  background: token("gray-50");
+}
+
+.swc-ConversationArtifact-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-inline-size: 0;
+}
+
+.swc-ConversationArtifact-meta[hidden] {
+  display: none;
+}
+
+.swc-ConversationArtifact-title {
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-100");
+  font-weight: token("bold-font-weight");
+  line-height: 1.3;
+  color: token("gray-900");
+}
+
+.swc-ConversationArtifact-subtitle {
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-75");
+  font-weight: token("regular-font-weight");
+  line-height: 1.5;
+  color: token("gray-800");
+}
+
+.swc-ConversationArtifact-actions {
+  display: flex;
+  align-items: center;
+}
+
+.swc-ConversationArtifact-actions ::slotted(*) {
+  display: inline-flex;
+  align-items: center;
+}
+
+.swc-ConversationArtifact-default-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 20px;
+  block-size: 20px;
+  color: token("gray-800");
+}
+
+.swc-ConversationArtifact-default-action svg {
+  inline-size: 20px;
+  block-size: 20px;
+}
+
+:host([variant="card"]) .swc-ConversationArtifact-surface {
+  gap: token("spacing-300");
+  align-items: center;
+  min-block-size: 68px;
+  padding: token("spacing-300");
+  border-radius: 12px;
+}
+
+:host([variant="card"]) .swc-ConversationArtifact-thumbnail {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+:host([variant="card"]) .swc-ConversationArtifact-thumbnail ::slotted(*) {
+  flex-shrink: 0;
+  inline-size: 32px;
+  block-size: 32px;
+  border-radius: token("corner-radius-75");
+}
+
+:host([variant="card"]) .swc-ConversationArtifact-meta {
+  flex: 1;
+  align-items: flex-start;
+}
+
+:host([variant="card"]) .swc-ConversationArtifact-title,
+:host([variant="card"]) .swc-ConversationArtifact-subtitle {
+  inline-size: 100%;
+  text-align: start;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:host([variant="media"]) .swc-ConversationArtifact-surface {
+  flex-direction: column;
+  gap: token("spacing-100");
+}
+
+:host([variant="media"]) .swc-ConversationArtifact-thumbnail {
+  border-radius: token("spacing-200");
+  overflow: hidden;
+}
+
+:host([variant="media"]) .swc-ConversationArtifact-thumbnail ::slotted(img) {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  object-fit: cover;
+}
+
+:host([variant="media"]) .swc-ConversationArtifact-meta {
+  inline-size: 100%;
+}
+
+:host([variant="media"]) .swc-ConversationArtifact-header {
+  display: flex;
+  gap: token("spacing-100");
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+:host([variant="media"]) .swc-ConversationArtifact-header > div {
+  min-inline-size: 0;
+}
+
+:host([variant="media"]) .swc-ConversationArtifact-title {
+  line-height: token("line-height-font-size-100");
+}
+
+:host([variant="media"]) .swc-ConversationArtifact-subtitle {
+  line-height: token("line-height-font-size-75");
+}
+
+/* Preview-only media (no title/subtitle) fills hosts like prompt-field tiles. */
+:host([variant="media"][data-preview-only]) .swc-ConversationArtifact-surface {
+  gap: 0;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+:host([variant="media"][data-preview-only]) .swc-ConversationArtifact-thumbnail {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+:host([variant="media"][data-preview-only]) .swc-ConversationArtifact-thumbnail ::slotted(*) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}

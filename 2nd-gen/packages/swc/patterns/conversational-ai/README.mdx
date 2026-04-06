@@ -17,18 +17,17 @@ A complete set of building blocks for composing AI chat interfaces in 2nd-gen Sp
 
 ## Components
 
-| Element                           | Description                                                                                                  |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `swc-prompt-field`                | Text input surface for entering or refining a prompt                                                         |
-| `swc-conversation-artifact-card`  | Horizontal file-style attachment row (optional building block)                                               |
-| `swc-conversation-artifact-media` | Media-first attachment; preview-only tile when title/subtitle omitted                                        |
-| `swc-conversation-turn`           | Column alignment for one participant turn; stack consecutive messages in one turn for grouped spacing        |
-| `swc-user-message`                | User message bubble (copy, card, or media content)                                                           |
-| `swc-assistant-message`           | Assistant reply stack; **`message`** slot guidance is after the API table on the Assistant message docs page |
-| `swc-response-status`             | Loading / generation-complete status indicator                                                               |
-| `swc-message-feedback`            | Thumbs-up / thumbs-down feedback control                                                                     |
-| `swc-message-sources`             | Collapsible numbered list of response sources                                                                |
-| `swc-message-suggestions`         | Row of follow-up suggestion chips                                                                            |
+| Element                     | Description                                                                                                |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `swc-prompt-field`          | Text input surface for entering or refining a prompt                                                       |
+| `swc-conversation-artifact` | Shared artifact primitive with `card` and `media` variants, used in prompt-field and user-message surfaces |
+| `swc-conversation-turn`     | Column alignment for one participant turn; stack consecutive messages in one turn for grouped spacing      |
+| `swc-user-message`          | User message bubble with slot-inferred copy/card/media layout                                              |
+| `swc-system-message`        | System reply stack; **default slot** guidance is after the API table on the System message docs page       |
+| `swc-response-status`       | Loading / generation-complete status indicator                                                             |
+| `swc-message-feedback`      | Positive / negative feedback control                                                                       |
+| `swc-message-sources`       | Collapsible numbered list of response sources                                                              |
+| `swc-message-suggestions`   | Row of follow-up suggestion chips generated from slotted text items                                        |
 
 ---
 
@@ -38,9 +37,8 @@ A complete set of building blocks for composing AI chat interfaces in 2nd-gen Sp
 patterns/
   conversational-ai/
     README.mdx
-    assistant-prose-demo.css
-    conversation-artifact-card/
-    conversation-artifact-media/
+    system-prose-demo.css
+    conversation-artifact/
     prompt-field/
     user-message/
     response-status/
@@ -48,7 +46,7 @@ patterns/
     message-sources/
     message-suggestions/
     conversation-turn/
-    assistant-message/
+    system-message/
     utils/
       icons/
 ```

@@ -14,8 +14,7 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '../../conversation-artifact-card/index.js';
-import '../../conversation-artifact-media/index.js';
+import '../../conversation-artifact/index.js';
 import '../../conversation-turn/index.js';
 import '../index.js';
 
@@ -24,25 +23,17 @@ import '../index.js';
 // ────────────────
 
 const { args, argTypes, template } = getStorybookHelpers('swc-user-message');
-
-argTypes.content = {
-  ...argTypes.content,
-  control: { type: 'select' },
-  options: ['copy', 'card', 'media'],
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'copy' },
-  },
-};
+delete (args as Record<string, unknown>).content;
+delete (argTypes as Record<string, unknown>).content;
 
 // Wraps a single swc-user-message in a conversation turn for proper alignment.
 const withUserTurn = (story: () => unknown) =>
-  html`<swc-conversation-turn participant="user"
+  html`<swc-conversation-turn type="outgoing"
     >${story()}</swc-conversation-turn
   >`;
 
 /**
- * User-authored message bubble. Use inside `<swc-conversation-turn participant="user">` for thread alignment.
+ * User-authored message bubble. Use inside `<swc-conversation-turn type="outgoing">` for thread alignment.
  */
 const meta: Meta = {
   title: 'Conversational AI/User message',
@@ -67,7 +58,6 @@ export default meta;
 
 export const Playground: Story = {
   args: {
-    content: 'copy',
     'default-slot':
       'Can you help me create a 45-minute presentation, with animations, for an executive update?',
   },
@@ -81,7 +71,6 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   args: {
-    content: 'copy',
     'default-slot':
       'Can you help me create a 45-minute presentation, with animations, for an executive update?',
   },
@@ -97,11 +86,10 @@ export const Overview: Story = {
  * A user message consists of:
  *
  * 1. **Bubble** — Rounded container with a neutral gray background (`gray-50`)
- * 2. **Default slot** — The message content: plain text (`copy`), a card attachment (`card`), or media-first content (`media`)
+ * 2. **Default slot** — The message content: plain text, a card attachment, or media-first content
  */
 export const Anatomy: Story = {
   args: {
-    content: 'copy',
     'default-slot': 'Can you help me create a 45-minute presentation?',
   },
   decorators: [withUserTurn],
@@ -113,11 +101,11 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 /**
- * The `content` attribute adjusts the bubble's padding to match the type of content:
+ * Bubble sizing and padding are inferred from slotted content:
  *
- * - **`copy`** — standard text padding (default)
- * - **`card`** — reduced padding (`75` token scale) to frame horizontal card content
- * - **`media`** — standard padding for media-first attachment content (use `swc-conversation-artifact-media` or custom markup)
+ * - **Copy** — default text-only content
+ * - **Card** — inferred when slotted content contains `swc-conversation-artifact[variant="card"]`
+ * - **Media** — inferred when slotted content contains `swc-conversation-artifact[variant="media"]`
  */
 export const Content: Story = {
   render: () => html`
@@ -125,8 +113,8 @@ export const Content: Story = {
       style="display:flex;flex-direction:column;gap:32px;max-inline-size:640px;"
     >
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn participant="user">
-          <swc-user-message content="copy">
+        <swc-conversation-turn type="outgoing">
+          <swc-user-message>
             Can you help me create a 45-minute presentation, with animations, for
             an executive update?
           </swc-user-message>
@@ -138,18 +126,18 @@ export const Content: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn participant="user">
-          <swc-user-message content="card">
-            <swc-conversation-artifact-card>
+        <swc-conversation-turn type="outgoing">
+          <swc-user-message>
+            <swc-conversation-artifact variant="card">
               <div
-                slot="leading"
+                slot="thumbnail"
                 style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);flex-shrink:0;"
                 role="img"
                 aria-label="File"
               ></div>
               <span slot="title">Hilton commercial assets</span>
               <span slot="subtitle">2026</span>
-            </swc-conversation-artifact-card>
+            </swc-conversation-artifact>
           </swc-user-message>
         </swc-conversation-turn>
         <span
@@ -159,19 +147,19 @@ export const Content: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn participant="user">
-          <swc-user-message content="media">
+        <swc-conversation-turn type="outgoing">
+          <swc-user-message>
             <div style="inline-size:240px;">
-              <swc-conversation-artifact-media>
+              <swc-conversation-artifact variant="media">
                 <div
-                  slot="preview"
+                  slot="thumbnail"
                   style="inline-size:100%;block-size:196px;background:linear-gradient(135deg,#a78bfa,#f472b6);"
                   role="img"
                   aria-label="Campaign preview"
                 ></div>
                 <span slot="title">Hilton commercial assets</span>
                 <span slot="subtitle">2026</span>
-              </swc-conversation-artifact-media>
+              </swc-conversation-artifact>
             </div>
           </swc-user-message>
         </swc-conversation-turn>
@@ -204,11 +192,10 @@ export const Content: Story = {
  * ### Best practices
  *
  * - Ensure message text is descriptive and self-contained
- * - When using `content="card"` or `content="media"`, make sure slotted content includes appropriate text labels and `alt` text for previews
+ * - For slotted artifacts, ensure titles/subtitles and `aria-label`/`alt` text are present for previews
  */
 export const Accessibility: Story = {
   args: {
-    content: 'copy',
     'default-slot':
       'Can you help me create a 45-minute presentation, with animations, for an executive update?',
   },

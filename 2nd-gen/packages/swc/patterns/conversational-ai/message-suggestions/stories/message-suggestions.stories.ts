@@ -20,31 +20,27 @@ import '../index.js';
 //    METADATA
 // ────────────────
 
-/** Default-slot HTML for three chips (recommended count in docs). */
-const threeChipsSlot = `<span>Create a slide deck from this</span><span>Summarize in 3 bullet points</span><span>Translate to Spanish</span>`;
+/** Default-slot HTML for three suggestions (recommended count in docs). */
+const threeSuggestionsSlot = `<span>Create a slide deck from this</span><span>Summarize in 3 bullet points</span><span>Translate to Spanish</span>`;
 
 const { args, argTypes, template } = getStorybookHelpers(
   'swc-message-suggestions'
 );
 
 /**
- * Follow-up suggestion chips for an AI response. Put **any number** of elements in the
- * **default slot** (one per chip); labels come from each element’s **`textContent`**.
+ * Follow-up suggestion chips for an AI response.
+ * Put **text elements** (e.g. `<span>`) in the default slot. Chip labels are derived from `textContent`.
  *
  * **Recommendation:** use **three** suggestions for most layouts; more are supported and
  * wrap to additional rows (`flex-wrap`).
- *
- * Stories use **`getStorybookHelpers` `template(args)`** so the docs **Source** panel shows
- * HTML (Storybook’s `docs.source.type: 'auto'` often fails on raw `render: () => html`… with
- * nested slotted children and falls back to dumping the CSF object).
  */
 const meta: Meta = {
   title: 'Conversational AI/Message suggestions',
   component: 'swc-message-suggestions',
   args: {
     ...args,
-    'default-slot': threeChipsSlot,
-    showTitle: false,
+    'default-slot': threeSuggestionsSlot,
+    title: '',
   },
   argTypes,
   render: (args) => template(args),
@@ -82,13 +78,13 @@ export const Overview: Story = {
 /**
  * A message suggestions component consists of:
  *
- * 1. **Title** — Optional "What would you like to do next?" heading (`show-title`)
- * 2. **Chips** — One rounded button per **default-slot** child; arrow icon + label from `textContent`
+ * 1. **Title** — Optional heading via the `title` property
+ * 2. **Chips** — One generated action button per **default-slot** child
  */
 export const Anatomy: Story = {
   args: {
-    showTitle: true,
-    'default-slot': threeChipsSlot,
+    title: 'What would you like to do next?',
+    'default-slot': threeSuggestionsSlot,
   },
   tags: ['anatomy'],
 };
@@ -147,7 +143,7 @@ export const SuggestionCount: Story = {
 };
 
 /**
- * When `show-title` is set, a "What would you like to do next?" heading appears
+ * When `title` is provided, a heading appears
  * above the chips row.
  */
 export const Title: Story = {
@@ -166,7 +162,7 @@ export const Title: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-message-suggestions show-title>
+        <swc-message-suggestions title="What would you like to do next?">
           <span>Create a slide deck from this</span>
           <span>Summarize in 3 bullet points</span>
           <span>Translate to Spanish</span>
@@ -194,11 +190,13 @@ export const Title: Story = {
  *
  * #### Chip buttons
  *
- * - Each chip is a native `<button>` element, fully keyboard-navigable
- * - The icon within each chip has an empty `label` to avoid duplicate announcements
- * - Button text is the suggestion label (from slotted `textContent`)
- * - The chips row uses `role="group"` with `aria-label="Follow-up suggestions"`
+ * - The component renders native chip `<button>` elements in shadow DOM from slotted text content
+ * - Supply meaningful text via default-slot elements (e.g., `<span>`)
+ * - The suggestions row uses `role="group"` with `aria-label="Follow-up suggestions"`
  */
 export const Accessibility: Story = {
+  args: {
+    'default-slot': threeSuggestionsSlot,
+  },
   tags: ['a11y'],
 };

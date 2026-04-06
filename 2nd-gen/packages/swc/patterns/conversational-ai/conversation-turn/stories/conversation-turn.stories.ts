@@ -14,25 +14,24 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../index.js';
-import '../../assistant-message/index.js';
+import '../../system-message/index.js';
 import '../../user-message/index.js';
-import '../../conversation-artifact-card/index.js';
-import '../../conversation-artifact-media/index.js';
+import '../../conversation-artifact/index.js';
 import '../../prompt-field/index.js';
 import '../../response-status/index.js';
 import '../../message-feedback/index.js';
 import '../../message-sources/index.js';
 import '../../message-suggestions/index.js';
 
-import '../../assistant-prose-demo.css';
+import '../../system-prose-demo.css';
 
 // ────────────────
 //    METADATA
 // ────────────────
 
 /**
- * Column alignment for one chat turn: `participant="user"` (end) vs `participant="assistant"` (start, full width).
- * Slot **`swc-user-message`**, **`swc-assistant-message`**, or custom markup.
+ * Column alignment for one chat turn: `type="outgoing"` (end) vs `type="incoming"` (start, full width).
+ * Slot **`swc-user-message`**, **`swc-system-message`**, or custom markup.
  * Stack consecutive messages in one turn to create grouped spacing.
  */
 const meta: Meta = {
@@ -41,7 +40,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       subtitle:
-        'Aligns user vs assistant content in a thread column and supports grouped message stacking.',
+        'Aligns user vs system content in a thread column and supports grouped message stacking.',
     },
     layout: 'padded',
   },
@@ -59,22 +58,21 @@ export const Playground: Story = {
     <div
       style="display:flex;flex-direction:column;gap:16px;max-inline-size:600px;"
     >
-      <swc-conversation-turn participant="user">
-        <swc-user-message content="copy">
+      <swc-conversation-turn type="outgoing">
+        <swc-user-message>
           Short user question for the demo.
         </swc-user-message>
       </swc-conversation-turn>
-      <swc-conversation-turn participant="assistant">
-        <swc-assistant-message>
+      <swc-conversation-turn type="incoming">
+        <swc-system-message>
           <swc-response-status
             slot="status"
-            state="complete"
           ></swc-response-status>
-          <div class="swc-conversationalAi-assistantProse" slot="message">
-            <p>Assistant reply body goes here.</p>
+          <div class="swc-conversationalAi-systemProse">
+            <p>System reply body goes here.</p>
           </div>
           <swc-message-feedback slot="feedback"></swc-message-feedback>
-        </swc-assistant-message>
+        </swc-system-message>
       </swc-conversation-turn>
     </div>
   `,
@@ -90,25 +88,24 @@ export const Overview: Story = {
     <div
       style="display:flex;flex-direction:column;gap:16px;max-inline-size:600px;"
     >
-      <swc-conversation-turn participant="user">
-        <swc-user-message content="copy">
+      <swc-conversation-turn type="outgoing">
+        <swc-user-message>
           Can you summarize the attached campaign assets?
         </swc-user-message>
       </swc-conversation-turn>
-      <swc-conversation-turn participant="assistant">
-        <swc-assistant-message>
+      <swc-conversation-turn type="incoming">
+        <swc-system-message>
           <swc-response-status
             slot="status"
-            state="complete"
           ></swc-response-status>
-          <div class="swc-conversationalAi-assistantProse" slot="message">
+          <div class="swc-conversationalAi-systemProse">
             <p>
               Here is a concise summary based on the files you shared. I grouped
               themes by audience and channel.
             </p>
           </div>
           <swc-message-feedback slot="feedback"></swc-message-feedback>
-        </swc-assistant-message>
+        </swc-system-message>
       </swc-conversation-turn>
     </div>
   `,
@@ -121,53 +118,52 @@ export const Overview: Story = {
 
 /**
  * Product-style column with grouped user content: three consecutive user
- * messages are stacked in one turn, followed by one assistant turn
- * (`swc-assistant-message`) and the **prompt field**.
+ * messages are stacked in one turn, followed by one system turn
+ * (`swc-system-message`) and the **prompt field**.
  */
 export const FullPattern: Story = {
   render: () => html`
     <div
       style="display:flex;flex-direction:column;gap:24px;max-width:600px;padding:24px;"
     >
-      <swc-conversation-turn participant="user">
-        <swc-user-message content="media">
+      <swc-conversation-turn type="outgoing">
+        <swc-user-message>
           <div style="inline-size:240px;">
-            <swc-conversation-artifact-media>
+            <swc-conversation-artifact variant="media">
               <div
-                slot="preview"
+                slot="thumbnail"
                 style="inline-size:100%;block-size:196px;background:linear-gradient(135deg,#6366f1 0%,#a855f7 40%,#ec4899 70%,#f59e0b 100%);"
                 role="img"
                 aria-label="Campaign preview"
               ></div>
               <span slot="title">Hilton commercial assets</span>
               <span slot="subtitle">2026</span>
-            </swc-conversation-artifact-media>
+            </swc-conversation-artifact>
           </div>
         </swc-user-message>
-        <swc-user-message content="card">
-          <swc-conversation-artifact-card>
+        <swc-user-message>
+          <swc-conversation-artifact variant="card">
             <div
-              slot="leading"
+              slot="thumbnail"
               style="inline-size:36px;block-size:36px;border-radius:4px;background:var(--swc-gray-200);flex-shrink:0;"
               role="img"
               aria-label="File"
             ></div>
             <span slot="title">Hilton commercial assets</span>
             <span slot="subtitle">2026</span>
-          </swc-conversation-artifact-card>
+          </swc-conversation-artifact>
         </swc-user-message>
-        <swc-user-message content="copy">
+        <swc-user-message>
           Can you help me create a 45-minute presentation, with animations, for
           an executive update?
         </swc-user-message>
       </swc-conversation-turn>
 
-      <swc-conversation-turn participant="assistant">
-        <swc-assistant-message>
+      <swc-conversation-turn type="incoming">
+        <swc-system-message>
           <swc-response-status
             slot="status"
-            state="complete"
-            reasoning="expanded"
+            open
           >
             <span slot="reasoning">
               The user said make a presentation deck but didn't specify duration
@@ -177,7 +173,7 @@ export const FullPattern: Story = {
             </span>
           </swc-response-status>
 
-          <div class="swc-conversationalAi-assistantProse" slot="message">
+          <div class="swc-conversationalAi-systemProse">
             <p
               style="font-size:var(--swc-font-size-400);font-weight:800;line-height:var(--swc-line-height-font-size-400);color:var(--swc-gray-900);margin:0;"
             >
@@ -213,33 +209,38 @@ export const FullPattern: Story = {
 
           <swc-message-feedback slot="feedback"></swc-message-feedback>
 
-          <swc-message-sources slot="sources" state="expanded">
+          <swc-message-sources slot="sources" open>
             <li><a href="#">Hilton brand email — Q1 campaign 2026</a></li>
             <li><a href="#">Market research — hospitality trends 2025</a></li>
             <li><a href="#">User research — loyalty programme survey</a></li>
           </swc-message-sources>
 
-          <swc-message-suggestions slot="suggestions" show-title>
-            <span>
-              Create a year-over-year growth chart for the next decade
-            </span>
+          <swc-message-suggestions
+            slot="suggestions"
+            title="What would you like to do next?"
+          >
+            <span>Create a year-over-year growth chart for the next decade</span>
             <span>Generate a congratulatory poster</span>
             <span>Summarize development pipeline</span>
           </swc-message-suggestions>
-        </swc-assistant-message>
+        </swc-system-message>
       </swc-conversation-turn>
 
-      <swc-prompt-field state="send" populated uploaded-artifact="card">
-        <swc-conversation-artifact-card slot="artifact">
+      <swc-prompt-field sending>
+        <swc-conversation-artifact
+          slot="artifact"
+          variant="card"
+          dismissible
+        >
           <div
-            slot="leading"
+            slot="thumbnail"
             style="inline-size:28px;block-size:28px;border-radius:3px;background:var(--swc-gray-200);flex-shrink:0;"
             role="img"
             aria-label="File"
           ></div>
           <span slot="title">Hilton commercial assets</span>
           <span slot="subtitle">2026</span>
-        </swc-conversation-artifact-card>
+        </swc-conversation-artifact>
       </swc-prompt-field>
     </div>
   `,

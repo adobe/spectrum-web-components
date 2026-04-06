@@ -41,8 +41,8 @@ export const OverviewTest: Story = {
       'swc-message-feedback'
     );
 
-    await step('renders with no selection by default', async () => {
-      expect(el.selection).toBe('none');
+    await step('renders with no status by default', async () => {
+      expect(el.status).toBeUndefined();
     });
   },
 };
@@ -60,27 +60,44 @@ export const InteractionTest: Story = {
     );
     const canvas = within(canvasElement);
 
-    await step('clicking thumb-up sets selection', async () => {
-      const thumbUpBtn = canvas.getByRole('button', { name: 'Good response' });
-      await userEvent.click(thumbUpBtn);
-      await el.updateComplete;
-      expect(el.selection).toBe('thumb-up');
-    });
+    await step('clicking positive emits swc-feedback with positive status', async () => {
+      const events: Array<string> = [];
+      el.addEventListener('swc-feedback', ((event: Event) => {
+        const customEvent = event as CustomEvent<{ status: string }>;
+        events.push(customEvent.detail.status);
+      }) as EventListener);
 
-    await step('clicking thumb-up again toggles back to none', async () => {
-      const thumbUpBtn = canvas.getByRole('button', { name: 'Good response' });
-      await userEvent.click(thumbUpBtn);
-      await el.updateComplete;
-      expect(el.selection).toBe('none');
-    });
-
-    await step('clicking thumb-down sets selection', async () => {
-      const thumbDownBtn = canvas.getByRole('button', {
-        name: 'Poor response',
+      const positiveRadio = canvas.getByRole('radio', {
+        name: 'Positive response',
       });
-      await userEvent.click(thumbDownBtn);
+      await userEvent.click(positiveRadio);
       await el.updateComplete;
-      expect(el.selection).toBe('thumb-down');
+      expect(events.at(-1)).toBe('positive');
+      expect(el.status).toBeUndefined();
+    });
+
+    await step('consumer-controlled status updates selected option', async () => {
+      el.status = 'positive';
+      await el.updateComplete;
+      const positiveRadio = canvas.getByRole('radio', {
+        name: 'Positive response',
+      });
+      expect(positiveRadio).toHaveAttribute('aria-checked', 'true');
+    });
+
+    await step('clicking negative emits swc-feedback with negative status', async () => {
+      const events: Array<string> = [];
+      el.addEventListener('swc-feedback', ((event: Event) => {
+        const customEvent = event as CustomEvent<{ status: string }>;
+        events.push(customEvent.detail.status);
+      }) as EventListener);
+
+      const negativeRadio = canvas.getByRole('radio', {
+        name: 'Negative response',
+      });
+      await userEvent.click(negativeRadio);
+      await el.updateComplete;
+      expect(events.at(-1)).toBe('negative');
     });
   },
 };

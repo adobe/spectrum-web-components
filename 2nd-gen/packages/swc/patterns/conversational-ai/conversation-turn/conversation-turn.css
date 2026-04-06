@@ -37,25 +37,25 @@
   min-inline-size: 0;
 }
 
-:host([participant="user"]) .swc-ConversationTurn {
+:host([type='outgoing']) .swc-ConversationTurn {
   justify-content: flex-end;
 }
 
-:host([participant="user"]) .swc-ConversationTurn > slot {
+:host([type='outgoing']) .swc-ConversationTurn > slot {
   align-items: flex-end;
 }
 
 
-:host([participant="assistant"]) .swc-ConversationTurn {
+:host([type='incoming']) .swc-ConversationTurn {
   justify-content: flex-start;
 }
 
-:host([participant="assistant"]) .swc-ConversationTurn > slot {
+:host([type='incoming']) .swc-ConversationTurn > slot {
   align-items: stretch;
 }
 
-/* Let assistant stacks span the column; user bubbles keep their own max-inline-size. */
-:host([participant="assistant"]) ::slotted(*) {
+/* Let system stacks span the column; user bubbles keep their own max-inline-size. */
+:host([type='incoming']) ::slotted(*) {
   flex: 1 1 100%;
   min-inline-size: 0;
   max-inline-size: 100%;

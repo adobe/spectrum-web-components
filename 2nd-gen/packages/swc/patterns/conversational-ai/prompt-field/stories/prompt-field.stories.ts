@@ -14,8 +14,9 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '../../conversation-artifact-card/index.js';
-import '../../conversation-artifact-media/index.js';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '../../conversation-artifact/index.js';
 import '../index.js';
 
 // ────────────────
@@ -24,31 +25,18 @@ import '../index.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-prompt-field');
 
-argTypes.state = {
-  ...argTypes.state,
-  control: { type: 'select' },
-  options: ['default', 'send', 'stop'],
+argTypes.sending = {
+  ...argTypes.sending,
+  control: { type: 'boolean' },
   table: {
     category: 'attributes',
-    defaultValue: { summary: 'default' },
-  },
-};
-
-argTypes['uploaded-artifact'] = {
-  ...argTypes['uploaded-artifact'],
-  control: { type: 'select' },
-  options: ['none', 'card', 'media'],
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'none' },
+    defaultValue: { summary: 'false' },
   },
 };
 
 /**
  * The prompt entry surface for conversational AI flows.
  * Fires events for all interactions — consumers manage state externally.
- *
- * Prefer **`template(args)`** (or **`docs.source`**) so the docs code panel shows HTML.
  */
 const meta: Meta = {
   title: 'Conversational AI/Prompt field',
@@ -76,9 +64,7 @@ export const Playground: Story = {
     label: 'Prompt',
     placeholder: 'Ask anything',
     value: '',
-    state: 'default',
-    'uploaded-artifact': 'none',
-    populated: false,
+    sending: false,
   },
   tags: ['autodocs', 'dev'],
 };
@@ -92,9 +78,7 @@ export const Overview: Story = {
     label: 'Prompt',
     placeholder: 'Ask anything',
     value: '',
-    state: 'default',
-    'uploaded-artifact': 'none',
-    populated: false,
+    sending: false,
   },
   tags: ['overview'],
 };
@@ -108,17 +92,14 @@ export const Overview: Story = {
  *
  * 1. **Box** — White card with shadow and 16px border radius
  * 2. **Input area** — Optional artifact preview + prompt label + textarea
- * 3. **Action bar** — Upload button (left) and send/stop button (right)
- * 4. **Disclaimer** — Legal attribution below the card
+ * 3. **Action bar** — Upload button + optional `leading-actions` slot content (left), and send/stop button (right)
  */
 export const Anatomy: Story = {
   args: {
     label: 'Prompt',
     placeholder: 'Ask anything',
     value: '',
-    state: 'default',
-    'uploaded-artifact': 'none',
-    populated: false,
+    sending: false,
   },
   tags: ['anatomy'],
 };
@@ -128,50 +109,48 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 /**
- * The `state` attribute controls which action button appears on the right side of the action bar:
+ * The `sending` attribute controls the right-side action:
  *
- * - **`default`** — Send button is shown but disabled (no content yet)
- * - **`send`** — Send button is enabled (content present); set via `populated` attribute
- * - **`stop`** — Stop button is shown while the AI is generating a response
+ * - **`false`** — Send button is shown
+ * - **`true`** — Stop button is shown while the AI is generating a response
+ *
+ * The send button enablement is derived internally from prompt content (value or artifact).
  */
-export const State: Story = {
+export const Sending: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
-          state="default"
           label="Prompt"
           placeholder="Ask anything"
         ></swc-prompt-field>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
-          Default — send disabled
+          'sending=false' with empty value
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
-          state="send"
-          label="Prompt"
-          value="Summarize the API changes in this branch."
-          populated
-        ></swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
-        >
-          Send — populated, send enabled
-        </span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          state="stop"
           label="Prompt"
           value="Summarize the API changes in this branch."
         ></swc-prompt-field>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
-          Stop — AI is generating
+          'sending=false' with entered value
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          sending
+          label="Prompt"
+          value="Summarize the API changes in this branch."
+        ></swc-prompt-field>
+        <span
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+        >
+          'sending=true' (input remains editable)
         </span>
       </div>
     </div>
@@ -181,24 +160,19 @@ export const State: Story = {
 };
 
 /**
- * The `uploaded-artifact` attribute controls whether an artifact preview appears above the text input:
+ * Artifact layout is inferred from the **`artifact`** slot content and supports multiple mixed items:
  *
- * - **`none`** — No artifact (default)
- * - **`card`** — Full-width band for horizontal file-style attachments
- * - **`media`** — Square tile for visual previews (image, GIF, video poster, etc.)
+ * - No slot content: no artifact region
+ * - `swc-conversation-artifact variant="card"`: file-style card artifact
+ * - `swc-conversation-artifact variant="media"`: media tile artifact
  *
- * Slot content into the **`artifact`** slot. Recommended: `swc-conversation-artifact-card` or `swc-conversation-artifact-media` (omit **`title`** / **`subtitle`** on media for the square tile).
- * The prompt field always renders the dismiss control; it fires `swc-artifact-dismiss` (consumers clear attachment state).
+ * Artifacts own dismiss behavior via `dismissible` and emit `swc-artifact-dismiss`.
  */
-export const UploadedArtifact: Story = {
+export const Artifact: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          uploaded-artifact="none"
-          label="Prompt"
-          placeholder="Ask anything"
-        ></swc-prompt-field>
+        <swc-prompt-field label="Prompt" placeholder="Ask anything"></swc-prompt-field>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
@@ -206,21 +180,21 @@ export const UploadedArtifact: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          uploaded-artifact="card"
-          label="Prompt"
-          placeholder="Ask anything"
-        >
-          <swc-conversation-artifact-card slot="artifact">
+        <swc-prompt-field label="Prompt" placeholder="Ask anything">
+          <swc-conversation-artifact
+            slot="artifact"
+            variant="card"
+            dismissible
+          >
             <div
-              slot="leading"
+              slot="thumbnail"
               style="background:var(--swc-gray-200);"
               role="img"
               aria-label="PDF"
             ></div>
             <span slot="title">Hilton commercial assets</span>
             <span slot="subtitle">2026</span>
-          </swc-conversation-artifact-card>
+          </swc-conversation-artifact>
         </swc-prompt-field>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
@@ -229,19 +203,19 @@ export const UploadedArtifact: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          uploaded-artifact="media"
-          label="Prompt"
-          placeholder="Ask anything"
-        >
-          <swc-conversation-artifact-media slot="artifact">
+        <swc-prompt-field label="Prompt" placeholder="Ask anything">
+          <swc-conversation-artifact
+            slot="artifact"
+            variant="media"
+            dismissible
+          >
             <div
-              slot="preview"
+              slot="thumbnail"
               style="inline-size:100%;block-size:100%;min-block-size:0;background:linear-gradient(135deg,#a78bfa,#f472b6);"
               role="img"
               aria-label="Attachment preview"
             ></div>
-          </swc-conversation-artifact-media>
+          </swc-conversation-artifact>
         </swc-prompt-field>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
@@ -249,9 +223,82 @@ export const UploadedArtifact: Story = {
           Media
         </span>
       </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field label="Prompt" value="Use attached assets for a launch plan.">
+          <swc-conversation-artifact
+            slot="artifact"
+            variant="card"
+            dismissible
+          >
+            <div
+              slot="thumbnail"
+              style="background:var(--swc-gray-200);"
+              role="img"
+              aria-label="PDF"
+            ></div>
+            <span slot="title">Brand guidelines</span>
+            <span slot="subtitle">PDF</span>
+          </swc-conversation-artifact>
+          <swc-conversation-artifact
+            slot="artifact"
+            variant="media"
+            dismissible
+          >
+            <div
+              slot="thumbnail"
+              style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#6366f1,#ec4899);"
+              role="img"
+              aria-label="Campaign still"
+            ></div>
+          </swc-conversation-artifact>
+          <swc-conversation-artifact
+            slot="artifact"
+            variant="media"
+            dismissible
+          >
+            <div
+              slot="thumbnail"
+              style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#0ea5e9,#22c55e);"
+              role="img"
+              aria-label="Storyboard frame"
+            ></div>
+          </swc-conversation-artifact>
+        </swc-prompt-field>
+        <span
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+        >
+          Mixed multi-artifact set (wrapping layout)
+        </span>
+      </div>
     </div>
   `,
   parameters: { 'section-order': 2 },
+  tags: ['options'],
+};
+
+/**
+ * Use the `leading-actions` slot to add optional controls next to upload on the left side
+ * (for example quick actions, overflow menu, or custom tooling).
+ */
+export const LeadingActions: Story = {
+  render: () => html`
+    <swc-prompt-field
+      label="Prompt"
+      value="Summarize the API changes in this branch."
+    >
+      <sp-action-menu
+        slot="leading-actions"
+        quiet
+        label="Prompt options"
+        style="inline-size:32px;block-size:32px;"
+      >
+        <sp-menu-item value="rewrite">Rewrite text</sp-menu-item>
+        <sp-menu-item value="shorten">Shorten</sp-menu-item>
+        <sp-menu-item value="expand">Expand</sp-menu-item>
+      </sp-action-menu>
+    </swc-prompt-field>
+  `,
+  parameters: { 'section-order': 3 },
   tags: ['options'],
 };
 
@@ -268,22 +315,21 @@ export const UploadedArtifact: Story = {
  *
  * - The `<textarea>` has an `aria-label` matching the `label` property
  * - All icon buttons carry descriptive `aria-label` attributes
- * - The send button uses `disabled` natively when `populated` is false
+ * - The send button uses `disabled` natively when the prompt has no content
  *
  * ### Best practices
  *
  * - Always provide a meaningful `label` value
  * - Use `placeholder` as a hint, not a replacement for the label
  * - Ensure artifact content slotted into `artifact` slot includes descriptive text
+ * - Provide `aria-label` values for interactive elements added to the `leading-actions` slot
  */
 export const Accessibility: Story = {
   args: {
     label: 'Prompt',
     placeholder: 'Ask anything',
     value: '',
-    state: 'default',
-    'uploaded-artifact': 'none',
-    populated: false,
+    sending: false,
   },
   tags: ['a11y'],
 };

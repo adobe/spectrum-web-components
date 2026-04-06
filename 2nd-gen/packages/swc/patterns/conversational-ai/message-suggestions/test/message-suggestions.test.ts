@@ -41,8 +41,11 @@ export const OverviewTest: Story = {
       'swc-message-suggestions'
     );
 
-    await step('renders three chips from three default-slot children', async () => {
-      expect(el.showTitle).toBe(false);
+    await step('renders with empty title by default', async () => {
+      expect(el.title).toBe('');
+    });
+
+    await step('renders three generated chips from three slot items', async () => {
       const chips = el.shadowRoot?.querySelectorAll(
         '.swc-MessageSuggestions-chip'
       );

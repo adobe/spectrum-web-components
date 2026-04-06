@@ -34,15 +34,15 @@ export const OverviewTest: Story = {
     const els = canvasElement.querySelectorAll('swc-conversation-turn');
     const first = els[0] as ConversationTurn;
 
-    await step('participant reflects on host', async () => {
-      expect(first.participant).toBe('user');
-      expect(first.getAttribute('participant')).toBe('user');
+    await step('type reflects on host', async () => {
+      expect(first.type).toBe('outgoing');
+      expect(first.getAttribute('type')).toBe('outgoing');
     });
 
-    await step('participant updates when set', async () => {
-      first.participant = 'assistant';
+    await step('type updates when set', async () => {
+      first.type = 'incoming';
       await first.updateComplete;
-      expect(first.getAttribute('participant')).toBe('assistant');
+      expect(first.getAttribute('type')).toBe('incoming');
     });
   },
 };

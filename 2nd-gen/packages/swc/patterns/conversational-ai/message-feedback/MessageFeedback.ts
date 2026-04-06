@@ -22,43 +22,43 @@ import { ThumbDownIcon, ThumbUpIcon } from '../utils/icons/index.js';
 import styles from './message-feedback.css';
 
 /**
- * Binary thumbs-up / thumbs-down feedback control for AI responses.
+ * Binary positive / negative feedback control for AI responses.
  *
  * @element swc-message-feedback
- * @fires {CustomEvent} swc-feedback - Dispatched when the user selects a feedback option.
+ * @fires {CustomEvent} swc-feedback - Dispatched when the user selects positive or negative feedback.
  */
 export class MessageFeedback extends SpectrumElement {
   /**
-   * The currently selected feedback option.
-   * - `none`: no selection (default)
-   * - `thumb-up`: positive feedback selected
-   * - `thumb-down`: negative feedback selected
+   * The currently selected feedback status.
+   * - `positive`: positive feedback selected
+   * - `negative`: negative feedback selected
+   *
+   * This is controlled by the consumer. The component dispatches `swc-feedback`
+   * on click and expects the parent to update `status`.
    */
   @property({ type: String, reflect: true })
-  public selection: 'none' | 'thumb-up' | 'thumb-down' = 'none';
+  public status?: 'positive' | 'negative';
 
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
-  private _handleThumbUp(): void {
-    this.selection = this.selection === 'thumb-up' ? 'none' : 'thumb-up';
+  private _handlePositive(): void {
     this.dispatchEvent(
       new CustomEvent('swc-feedback', {
         bubbles: true,
         composed: true,
-        detail: { selection: this.selection },
+        detail: { status: 'positive' as const },
       })
     );
   }
 
-  private _handleThumbDown(): void {
-    this.selection = this.selection === 'thumb-down' ? 'none' : 'thumb-down';
+  private _handleNegative(): void {
     this.dispatchEvent(
       new CustomEvent('swc-feedback', {
         bubbles: true,
         composed: true,
-        detail: { selection: this.selection },
+        detail: { status: 'negative' as const },
       })
     );
   }
@@ -67,18 +67,19 @@ export class MessageFeedback extends SpectrumElement {
     return html`
       <div
         class="swc-MessageFeedback"
-        role="group"
+        role="radiogroup"
         aria-label="Response feedback"
       >
         <button
           class="swc-MessageFeedback-button"
-          ?data-selected=${this.selection === 'thumb-up'}
-          aria-label="Good response"
-          aria-pressed=${this.selection === 'thumb-up'}
-          @click=${this._handleThumbUp}
+          role="radio"
+          ?data-selected=${this.status === 'positive'}
+          aria-label="Positive response"
+          aria-checked=${this.status === 'positive'}
+          @click=${this._handlePositive}
         >
           <swc-icon
-            label="Good response"
+            label="Positive response"
             style="--swc-icon-inline-size:16px;--swc-icon-block-size:16px;"
           >
             ${ThumbUpIcon()}
@@ -86,13 +87,14 @@ export class MessageFeedback extends SpectrumElement {
         </button>
         <button
           class="swc-MessageFeedback-button"
-          ?data-selected=${this.selection === 'thumb-down'}
-          aria-label="Poor response"
-          aria-pressed=${this.selection === 'thumb-down'}
-          @click=${this._handleThumbDown}
+          role="radio"
+          ?data-selected=${this.status === 'negative'}
+          aria-label="Negative response"
+          aria-checked=${this.status === 'negative'}
+          @click=${this._handleNegative}
         >
           <swc-icon
-            label="Poor response"
+            label="Negative response"
             style="--swc-icon-inline-size:16px;--swc-icon-block-size:16px;"
           >
             ${ThumbDownIcon()}

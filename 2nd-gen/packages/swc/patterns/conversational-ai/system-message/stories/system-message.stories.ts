@@ -21,16 +21,16 @@ import '../../message-sources/index.js';
 import '../../message-suggestions/index.js';
 import '../../response-status/index.js';
 
-import '../../assistant-prose-demo.css';
+import '../../system-prose-demo.css';
 
 // ────────────────
 //    METADATA
 // ────────────────
 
-const assistantMessageSlotDocs = `
-### \`message\` slot — reply body
+const systemMessageSlotDocs = `
+### Default slot — reply body
 
-Put the AI reply in **\`slot="message"\`** as **semantic HTML** (and optional app components) styled with Spectrum **\`var(--swc-*)\`** tokens.
+Put the AI reply in the **default slot** as **semantic HTML** (and optional app components) styled with Spectrum **\`var(--swc-*)\`** tokens.
 
 #### Markup
 
@@ -48,46 +48,40 @@ Put the AI reply in **\`slot="message"\`** as **semantic HTML** (and optional ap
 | Links | \`--swc-accent-color-900\`, \`text-decoration: underline\`, \`text-underline-offset: 2px\` |
 `.trim();
 
-const { args, argTypes, template } = getStorybookHelpers(
-  'swc-assistant-message'
-);
+const { args, argTypes, template } = getStorybookHelpers('swc-system-message');
 
-const slotStatusRich = `<swc-response-status slot="status" state="complete" reasoning="expanded"><span slot="reasoning">The user said make a presentation deck but didn't specify duration of deck. Assumption is a brief presentation. I should check previous Hilton executive presentation decks and extract the structure.</span></swc-response-status>`;
+const slotStatusRich = `<swc-response-status slot="status" open><span slot="reasoning">The user said make a presentation deck but didn't specify duration of deck. Assumption is a brief presentation. I should check previous Hilton executive presentation decks and extract the structure.</span></swc-response-status>`;
 
-const slotMessageRich = `<div class="swc-conversationalAi-assistantProse" slot="message"><p>According to the assets, there is a clear journey from beginning to end. Let's start with overarching themes and build from there.</p><p style="font-size:var(--swc-font-size-400);font-weight:800;line-height:var(--swc-line-height-font-size-400);color:var(--swc-gray-900);margin:0;">Big idea/ core narrative: The warmth of welcome</p><p>Hospitality begins the moment our customers set foot off their plane. We are more than accommodation, and we service a diverse base. We hope to be the anchor and bounce board for all who stay with us.</p><p style="font-size:var(--swc-font-size-300);font-weight:800;line-height:var(--swc-line-height-font-size-300);color:var(--swc-gray-900);margin:0;">Belonging happens at Hilton</p><p>We strive to be familiar but exceed expectations. These assets highlight how belonging is personified.</p><p style="font-size:var(--swc-font-size-300);font-weight:800;line-height:var(--swc-line-height-font-size-300);color:var(--swc-gray-900);margin:0;">We are more than accommodation</p><ul><li>Airport pick up service</li><li>Local recommendations</li><li>Everyday excursions</li><li>Customizable experience</li></ul></div>`;
+const slotMessageRich = `<div class="swc-conversationalAi-systemProse"><p>According to the assets, there is a clear journey from beginning to end. Let's start with overarching themes and build from there.</p><p style="font-size:var(--swc-font-size-400);font-weight:800;line-height:var(--swc-line-height-font-size-400);color:var(--swc-gray-900);margin:0;">Big idea/ core narrative: The warmth of welcome</p><p>Hospitality begins the moment our customers set foot off their plane. We are more than accommodation, and we service a diverse base. We hope to be the anchor and bounce board for all who stay with us.</p><p style="font-size:var(--swc-font-size-300);font-weight:800;line-height:var(--swc-line-height-font-size-300);color:var(--swc-gray-900);margin:0;">Belonging happens at Hilton</p><p>We strive to be familiar but exceed expectations. These assets highlight how belonging is personified.</p><p style="font-size:var(--swc-font-size-300);font-weight:800;line-height:var(--swc-line-height-font-size-300);color:var(--swc-gray-900);margin:0;">We are more than accommodation</p><ul><li>Airport pick up service</li><li>Local recommendations</li><li>Everyday excursions</li><li>Customizable experience</li></ul></div>`;
 
 const slotFeedback = `<swc-message-feedback slot="feedback"></swc-message-feedback>`;
 
 const slotSourcesRich = `<swc-message-sources slot="sources"><li><a href="#">Adobe Experience Manager documentation</a></li><li><a href="#">Creative Cloud release notes 2026</a></li><li><a href="#">Firefly API getting started guide</a></li></swc-message-sources>`;
 
-const slotSuggestionsRich = `<swc-message-suggestions slot="suggestions" show-title><span>Create a year-over-year growth chart for the next decade</span><span>Generate a congratulatory poster</span><span>Summarize development pipeline</span></swc-message-suggestions>`;
+const slotSuggestionsRich = `<swc-message-suggestions slot="suggestions" title="What would you like to do next?"><span>Create a year-over-year growth chart for the next decade</span><span>Generate a congratulatory poster</span><span>Summarize development pipeline</span></swc-message-suggestions>`;
 
 const richSlots = {
   'status-slot': slotStatusRich,
-  'message-slot': slotMessageRich,
+  'default-slot': slotMessageRich,
   'feedback-slot': slotFeedback,
   'sources-slot': slotSourcesRich,
   'suggestions-slot': slotSuggestionsRich,
 };
 
-const withAssistantTurn = (story: () => unknown) => html`
-  <swc-conversation-turn participant="assistant">
-    ${story()}
-  </swc-conversation-turn>
+const withSystemTurn = (story: () => unknown) => html`
+  <swc-conversation-turn type="incoming">${story()}</swc-conversation-turn>
 `;
 
 /**
- * Layout container for one assistant reply (status, body, feedback, sources, suggestions).
+ * Layout container for one system reply (status, body, feedback, sources, suggestions).
  * **Presentation order is fixed** by the component (shadow slot order); host children may appear in any order if
- * each uses the correct **`slot`** name. For thread alignment, wrap in `<swc-conversation-turn participant="assistant">`.
+ * each uses the correct **`slot`** name. For thread alignment, wrap in `<swc-conversation-turn type="incoming">`.
  *
- * **`message` slot:** semantic HTML and typography guidance appears **after the API table** on this page.
- *
- * Stories use **`getStorybookHelpers` `template(args)`** (or **`docs.source`**) so the docs code panel shows HTML.
+ * **Default slot:** semantic HTML and typography guidance appears **after the API table** on this page.
  */
 const meta: Meta = {
-  title: 'Conversational AI/Assistant message',
-  component: 'swc-assistant-message',
+  title: 'Conversational AI/System message',
+  component: 'swc-system-message',
   args: {
     ...args,
     ...richSlots,
@@ -96,8 +90,8 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
-      subtitle: 'Layout container for a single assistant (AI) reply.',
-      afterApi: assistantMessageSlotDocs,
+      subtitle: 'Layout container for a single system (AI) reply.',
+      afterApi: systemMessageSlotDocs,
     },
     layout: 'padded',
   },
@@ -111,7 +105,7 @@ export default meta;
 // ────────────────────
 
 export const Playground: Story = {
-  decorators: [withAssistantTurn],
+  decorators: [withSystemTurn],
   tags: ['autodocs', 'dev'],
 };
 
@@ -120,7 +114,7 @@ export const Playground: Story = {
 // ──────────────────────────────
 
 export const Overview: Story = {
-  decorators: [withAssistantTurn],
+  decorators: [withSystemTurn],
   tags: ['overview'],
 };
 
@@ -131,26 +125,26 @@ export const Overview: Story = {
 /**
  * ### Fixed layout order
  *
- * The shell **always** paints **status → message → feedback → sources → suggestions**, no matter how you order
- * children under `<swc-assistant-message>`, as long as each uses the right **`slot`** name.
+ * The shell **always** paints **status -> default content -> feedback -> sources -> suggestions**, no matter how you order
+ * children under `<swc-system-message>`, as long as each uses the right **`slot`** name.
  *
  * ### Slots
  *
+ * - **Default slot** — System reply body (semantic HTML; see **after API** on this docs page)
  * - **`status`** — `<swc-response-status>`
- * - **`message`** — Assistant reply body (semantic HTML; see **after API** on this docs page)
  * - **`feedback`** — `<swc-message-feedback>`
  * - **`sources`** — `<swc-message-sources>`
  * - **`suggestions`** — `<swc-message-suggestions>`
  */
 export const Anatomy: Story = {
   args: {
-    'status-slot': `<swc-response-status slot="status" state="complete"></swc-response-status>`,
-    'message-slot': `<div class="swc-conversationalAi-assistantProse" slot="message"><p>Here is the AI-generated response content.</p></div>`,
+    'status-slot': `<swc-response-status slot="status"></swc-response-status>`,
+    'default-slot': `<div class="swc-conversationalAi-systemProse"><p>Here is the AI-generated response content.</p></div>`,
     'feedback-slot': slotFeedback,
     'sources-slot': `<swc-message-sources slot="sources"><li><a href="#">Source one</a></li></swc-message-sources>`,
-    'suggestions-slot': `<swc-message-suggestions slot="suggestions" show-title><span>Follow up suggestion one</span><span>Follow up suggestion two</span></swc-message-suggestions>`,
+    'suggestions-slot': `<swc-message-suggestions slot="suggestions" title="What would you like to do next?"><span>Follow up suggestion one</span><span>Follow up suggestion two</span></swc-message-suggestions>`,
   },
-  decorators: [withAssistantTurn],
+  decorators: [withSystemTurn],
   tags: ['anatomy'],
 };
 
@@ -159,20 +153,17 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 /**
- * While the AI is generating a response, slot a `<swc-response-status state="loading">`
- * into the `status` slot. Once generation is complete, switch to `state="complete"`.
+ * While the AI is generating a response, slot `<swc-response-status loading>`
+ * into the `status` slot. Once generation is complete, remove `loading`.
  */
 export const Loading: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:48px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn participant="assistant">
-          <swc-assistant-message>
-            <swc-response-status
-              slot="status"
-              state="loading"
-            ></swc-response-status>
-          </swc-assistant-message>
+        <swc-conversation-turn type="incoming">
+          <swc-system-message>
+            <swc-response-status slot="status" loading></swc-response-status>
+          </swc-system-message>
         </swc-conversation-turn>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
@@ -181,13 +172,10 @@ export const Loading: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn participant="assistant">
-          <swc-assistant-message>
-            <swc-response-status
-              slot="status"
-              state="complete"
-            ></swc-response-status>
-            <div class="swc-conversationalAi-assistantProse" slot="message">
+        <swc-conversation-turn type="incoming">
+          <swc-system-message>
+            <swc-response-status slot="status"></swc-response-status>
+            <div class="swc-conversationalAi-systemProse">
               <p>
                 According to the assets, there is a clear journey from beginning
                 to end.
@@ -197,7 +185,7 @@ export const Loading: Story = {
             <swc-message-sources slot="sources">
               <li><a href="#">Adobe Experience Manager documentation</a></li>
             </swc-message-sources>
-          </swc-assistant-message>
+          </swc-system-message>
         </swc-conversation-turn>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
@@ -218,27 +206,27 @@ export const Loading: Story = {
 /**
  * ### Features
  *
- * The `<swc-assistant-message>` element provides a layout container.
+ * The `<swc-system-message>` element provides a layout container.
  * Accessibility is delegated to the slotted sub-components:
  *
  * - `<swc-response-status>` announces generation state via `role="status"`
- * - `<swc-message-feedback>` exposes `role="group"` with labelled toggle buttons
+ * - `<swc-message-feedback>` exposes `role="radiogroup"` with labelled radio options
  * - `<swc-message-sources>` uses `aria-expanded` on its disclosure toggle
  * - `<swc-message-suggestions>` chips are native focusable `<button>` elements
  *
  * ### Best practices
  *
- * - Use semantic HTML in **`message`** (paragraphs, lists, headings) for screen reader clarity
+ * - Use semantic HTML in the **default slot** (paragraphs, lists, headings) for screen reader clarity
  * - Ensure source links have descriptive text
  */
 export const Accessibility: Story = {
   args: {
-    'status-slot': `<swc-response-status slot="status" state="complete"></swc-response-status>`,
-    'message-slot': `<div class="swc-conversationalAi-assistantProse" slot="message"><p>According to the assets, there is a clear journey from beginning to end. Let's start with overarching themes and build from there.</p></div>`,
+    'status-slot': `<swc-response-status slot="status"></swc-response-status>`,
+    'default-slot': `<div class="swc-conversationalAi-systemProse"><p>According to the assets, there is a clear journey from beginning to end. Let's start with overarching themes and build from there.</p></div>`,
     'feedback-slot': slotFeedback,
-    'sources-slot': `<swc-message-sources slot="sources" state="expanded"><li><a href="#">Adobe Experience Manager documentation</a></li><li><a href="#">Creative Cloud release notes 2026</a></li></swc-message-sources>`,
-    'suggestions-slot': `<swc-message-suggestions slot="suggestions" show-title><span>Create a year-over-year growth chart for the next decade</span><span>Generate a congratulatory poster</span></swc-message-suggestions>`,
+    'sources-slot': `<swc-message-sources slot="sources" open><li><a href="#">Adobe Experience Manager documentation</a></li><li><a href="#">Creative Cloud release notes 2026</a></li></swc-message-sources>`,
+    'suggestions-slot': `<swc-message-suggestions slot="suggestions" title="What would you like to do next?"><span>Create a year-over-year growth chart for the next decade</span><span>Generate a congratulatory poster</span></swc-message-suggestions>`,
   },
-  decorators: [withAssistantTurn],
+  decorators: [withSystemTurn],
   tags: ['a11y'],
 };

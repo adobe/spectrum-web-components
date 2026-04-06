@@ -22,9 +22,9 @@ test.describe('MessageFeedback - ARIA Snapshots', () => {
       'swc-message-feedback'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - group "Response feedback":
-        - button "Good response" [pressed=false]
-        - button "Poor response" [pressed=false]
+      - radiogroup "Response feedback":
+        - radio "Positive response" [checked=false]
+        - radio "Negative response" [checked=false]
     `);
   });
 });

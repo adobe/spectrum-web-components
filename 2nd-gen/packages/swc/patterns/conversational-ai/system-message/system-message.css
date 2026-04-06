@@ -24,7 +24,7 @@
    Outer wrapper — status + body + suggestions
    ───────────────────────────────────── */
 
-.swc-AssistantMessage {
+.swc-SystemMessage {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -34,7 +34,7 @@
    Body — output content + sources
    ───────────────────────────────────── */
 
-.swc-AssistantMessage-body {
+.swc-SystemMessage-body {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -44,7 +44,7 @@
    Output — status + content wrapper
    ───────────────────────────────────── */
 
-.swc-AssistantMessage-output {
+.swc-SystemMessage-output {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -54,7 +54,7 @@
    Content — message + feedback
    ───────────────────────────────────── */
 
-.swc-AssistantMessage-content {
+.swc-SystemMessage-content {
   display: flex;
   flex-direction: column;
   gap: 8px;

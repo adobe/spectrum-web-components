@@ -41,8 +41,8 @@ export const OverviewTest: Story = {
       'swc-message-sources'
     );
 
-    await step('renders with expanded state in overview', async () => {
-      expect(el.state).toBe('expanded');
+    await step('renders with open state in overview', async () => {
+      expect(el.open).toBe(true);
     });
   },
 };
@@ -51,7 +51,7 @@ export const OverviewTest: Story = {
 // TEST: State mutation
 // ──────────────────────────────────────────────────────────────
 
-export const StateMutationTest: Story = {
+export const OpenMutationTest: Story = {
   ...Overview,
   play: async ({ canvasElement, step }) => {
     const el = await getComponent<MessageSources>(
@@ -59,14 +59,14 @@ export const StateMutationTest: Story = {
       'swc-message-sources'
     );
 
-    await step('state reflects to attribute after mutation', async () => {
-      el.state = 'collapsed';
+    await step('open reflects to attribute after mutation', async () => {
+      el.open = false;
       await el.updateComplete;
-      expect(el.getAttribute('state')).toBe('collapsed');
+      expect(el.hasAttribute('open')).toBe(false);
 
-      el.state = 'expanded';
+      el.open = true;
       await el.updateComplete;
-      expect(el.getAttribute('state')).toBe('expanded');
+      expect(el.hasAttribute('open')).toBe(true);
     });
   },
 };

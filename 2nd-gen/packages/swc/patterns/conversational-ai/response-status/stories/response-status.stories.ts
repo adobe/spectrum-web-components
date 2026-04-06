@@ -22,32 +22,31 @@ import '../index.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-response-status');
 
-argTypes.state = {
-  ...argTypes.state,
-  control: { type: 'select' },
-  options: ['loading', 'complete'],
+delete (args as Record<string, unknown>).state;
+delete (args as Record<string, unknown>).reasoning;
+delete (argTypes as Record<string, unknown>).state;
+delete (argTypes as Record<string, unknown>).reasoning;
+
+argTypes.loading = {
+  ...argTypes.loading,
+  control: { type: 'boolean' },
   table: {
     category: 'attributes',
-    defaultValue: { summary: 'loading' },
+    defaultValue: { summary: 'false' },
   },
 };
 
-argTypes.reasoning = {
-  ...argTypes.reasoning,
-  control: { type: 'select' },
-  options: ['hidden', 'collapsed', 'expanded'],
+argTypes.open = {
+  ...argTypes.open,
+  control: { type: 'boolean' },
   table: {
     category: 'attributes',
-    defaultValue: { summary: 'hidden' },
+    defaultValue: { summary: 'false' },
   },
 };
 
 /**
- * Displays the current state of AI response generation — either a spinning
- * loading indicator or a "Response generated" confirmation.
- *
- * Stories use **`template(args)`** (or explicit **`docs.source`**) so the docs code panel
- * shows HTML instead of a dumped CSF object.
+ * Displays AI response progress with a loading spinner and optional reasoning disclosure.
  */
 const meta: Meta = {
   title: 'Conversational AI/Response status',
@@ -72,8 +71,8 @@ export default meta;
 
 export const Playground: Story = {
   args: {
-    state: 'loading',
-    reasoning: 'hidden',
+    loading: true,
+    open: false,
   },
   tags: ['autodocs', 'dev'],
 };
@@ -84,8 +83,8 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   args: {
-    state: 'loading',
-    reasoning: 'hidden',
+    loading: true,
+    open: false,
   },
   tags: ['overview'],
 };
@@ -102,8 +101,8 @@ export const Overview: Story = {
  */
 export const Anatomy: Story = {
   args: {
-    state: 'loading',
-    reasoning: 'hidden',
+    loading: true,
+    open: false,
   },
   tags: ['anatomy'],
 };
@@ -113,16 +112,16 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 /**
- * The `state` attribute controls which indicator is shown:
+ * The `loading` attribute controls which indicator is shown:
  *
- * - **`loading`** — Animated spinner + "Thinking…" label
- * - **`complete`** — Checkmark + "Response generated" label
+ * - **`loading=true`** — Animated spinner + "Thinking…" label
+ * - **`loading=false`** — Checkmark + "Response generated" label
  */
-export const State: Story = {
+export const Loading: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:24px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-response-status state="loading"></swc-response-status>
+        <swc-response-status loading></swc-response-status>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
@@ -130,7 +129,7 @@ export const State: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-response-status state="complete"></swc-response-status>
+        <swc-response-status></swc-response-status>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
@@ -144,18 +143,18 @@ export const State: Story = {
 };
 
 /**
- * When `state` is **`complete`**, set **`reasoning`** to **`collapsed`** or **`expanded`** to show the disclosure.
- * The component toggles between those two on click and keeps the **`reasoning`** attribute in sync. Use **`expanded`**
- * for an initially open panel. While **`state`** is **`loading`**, reasoning UI is not shown.
+ * Set **`open`** to control reasoning disclosure:
+ *
+ * - **`open=false`** — reasoning collapsed
+ * - **`open=true`** — reasoning expanded
+ *
+ * While **`loading=true`**, reasoning UI is not shown.
  */
 export const Reasoning: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:24px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-response-status
-          state="complete"
-          reasoning="collapsed"
-        ></swc-response-status>
+        <swc-response-status></swc-response-status>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
@@ -163,7 +162,7 @@ export const Reasoning: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-response-status state="complete" reasoning="expanded">
+        <swc-response-status open>
           <span slot="reasoning">
             Step 1: Analyzing the request… Step 2: Searching for relevant
             context… Step 3: Composing response.
@@ -198,8 +197,8 @@ export const Reasoning: Story = {
  */
 export const Accessibility: Story = {
   args: {
-    state: 'complete',
-    reasoning: 'collapsed',
+    loading: false,
+    open: false,
   },
   tags: ['a11y'],
 };

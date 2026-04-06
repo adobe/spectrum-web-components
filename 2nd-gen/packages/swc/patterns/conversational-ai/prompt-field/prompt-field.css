@@ -59,49 +59,41 @@
   padding-inline: token("spacing-100");
 }
 
-/* Figma: input area uses 8px top padding only when an artifact row is shown */
-:host([uploaded-artifact="card"]) .swc-PromptField-input-area,
-:host([uploaded-artifact="media"]) .swc-PromptField-input-area {
+/* Figma: input area uses 8px top padding only when an artifact row is shown. */
+.swc-PromptField-input-area.has-artifact {
   padding-block-start: token("spacing-100");
 }
 
 /* ─────────────────────────────────────
-   Uploaded artifact
+   Uploaded artifacts
    ───────────────────────────────────── */
 
-.swc-PromptField-artifact {
-  position: relative;
-  block-size: 68px;
-}
-
-:host([uploaded-artifact="media"]) .swc-PromptField-artifact {
-  inline-size: 68px;
-}
-
-.swc-PromptField-artifact-dismiss {
+.swc-PromptField-artifacts {
   display: flex;
-  position: absolute;
-  inset-block-start: -12px;
-  inset-inline-end: -12px;
-  align-items: center;
-  justify-content: center;
-  inline-size: 24px;
-  block-size: 24px;
-  padding: 0;
-  color: token("gray-800");
-  background: token("gray-200");
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
+  flex-wrap: wrap;
+  gap: token("spacing-100");
+  align-items: flex-start;
 }
 
-.swc-PromptField-artifact-dismiss:hover {
-  background: token("gray-300");
+/* Mixed card/media artifacts support horizontal flow with wrapping. */
+.swc-PromptField-artifacts > slot::slotted(*) {
+  flex: 0 0 auto;
 }
 
-.swc-PromptField-artifact-dismiss swc-icon {
-  --swc-icon-inline-size: 10px;
-  --swc-icon-block-size: 10px;
+/* Prompt-field media artifact uses 68×68 preview tile. */
+.swc-PromptField-artifacts > slot::slotted([variant='media']) {
+  inline-size: 68px;
+  min-inline-size: 68px;
+  block-size: 68px;
+  min-block-size: 68px;
+  aspect-ratio: 1 / 1;
+}
+
+/* Card artifacts can grow but wrap naturally in multi-artifact sets. */
+.swc-PromptField-artifacts > slot::slotted([variant='card']) {
+  flex: 0 1 324px;
+  inline-size: 324px;
+  max-inline-size: 100%;
 }
 
 /* ─────────────────────────────────────
@@ -153,6 +145,17 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.swc-PromptField-leading-actions {
+  display: inline-flex;
+  gap: token("spacing-75");
+  align-items: center;
+}
+
+.swc-PromptField-leading-actions ::slotted(*) {
+  display: inline-flex;
+  align-items: center;
 }
 
 /* Upload button (quiet, left side) */
@@ -237,70 +240,4 @@
 .swc-PromptField-stop swc-icon {
   --swc-icon-inline-size: 20px;
   --swc-icon-block-size: 20px;
-}
-
-/* ─────────────────────────────────────
-   Legal disclaimer
-   ───────────────────────────────────── */
-
-.swc-PromptField-disclaimer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: token("spacing-75");
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  margin: 0;
-  font-family: token("sans-serif-font");
-  font-size: token("font-size-75");
-  font-weight: token("regular-font-weight");
-  line-height: token("line-height-font-size-75");
-  color: token("gray-700");
-  text-align: center;
-}
-
-.swc-PromptField-disclaimer-copy {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: token("spacing-75");
-  align-items: center;
-  justify-content: center;
-  max-inline-size: 100%;
-  text-align: center;
-}
-
-/* Link + trailing info icon stay together (matches Figma). */
-.swc-PromptField-disclaimer-link-row {
-  display: inline-flex;
-  flex-wrap: nowrap;
-  gap: token("spacing-75");
-  align-items: center;
-}
-
-.swc-PromptField-disclaimer-icon {
-  display: inline-flex;
-  flex-shrink: 0;
-  line-height: 0;
-  color: token("gray-700");
-}
-
-.swc-PromptField-disclaimer-icon svg {
-  display: block;
-  inline-size: 20px;
-  block-size: 20px;
-}
-
-.swc-PromptField-disclaimer-text {
-  display: inline;
-}
-
-
-.swc-PromptField-disclaimer-link {
-  color: token("gray-700");
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-.swc-PromptField-disclaimer-link:hover {
-  color: token("gray-800");
 }

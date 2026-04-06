@@ -41,9 +41,9 @@ export const OverviewTest: Story = {
       'swc-response-status'
     );
 
-    await step('renders with default state', async () => {
-      expect(el.state).toBe('loading');
-      expect(el.reasoning).toBe('hidden');
+    await step('renders with overview args', async () => {
+      expect(el.loading).toBe(true);
+      expect(el.open).toBe(false);
     });
   },
 };
@@ -52,7 +52,7 @@ export const OverviewTest: Story = {
 // TEST: State mutation
 // ──────────────────────────────────────────────────────────────
 
-export const StateMutationTest: Story = {
+export const BooleanMutationTest: Story = {
   ...Overview,
   play: async ({ canvasElement, step }) => {
     const el = await getComponent<ResponseStatus>(
@@ -60,14 +60,24 @@ export const StateMutationTest: Story = {
       'swc-response-status'
     );
 
-    await step('state reflects to attribute after mutation', async () => {
-      el.state = 'complete';
+    await step('loading reflects to attribute after mutation', async () => {
+      el.loading = false;
       await el.updateComplete;
-      expect(el.getAttribute('state')).toBe('complete');
+      expect(el.hasAttribute('loading')).toBe(false);
 
-      el.state = 'loading';
+      el.loading = true;
       await el.updateComplete;
-      expect(el.getAttribute('state')).toBe('loading');
+      expect(el.hasAttribute('loading')).toBe(true);
+    });
+
+    await step('open reflects to attribute after mutation', async () => {
+      el.open = true;
+      await el.updateComplete;
+      expect(el.hasAttribute('open')).toBe(true);
+
+      el.open = false;
+      await el.updateComplete;
+      expect(el.hasAttribute('open')).toBe(false);
     });
   },
 };

@@ -18,22 +18,22 @@ import { SpectrumElement } from '@spectrum-web-components/core/element/index.js'
 import styles from './conversation-turn.css';
 
 /**
- * Aligns one turn in a chat column: user content toward the end (right in LTR) with a
- * comfortable inset, assistant content toward the start at full width.
+ * Aligns one turn in a chat column: outgoing content toward the end (right in LTR)
+ * and incoming content toward the start at full width.
  *
- * Slot **`swc-user-message`**, **`swc-assistant-message`**, or custom markup inside each turn.
+ * Slot **`swc-user-message`**, **`swc-system-message`**, or custom markup inside each turn.
  * Multiple slotted messages are stacked automatically with
  * `--swc-conversation-turn-group-gap` spacing.
  * User-message widths are applied by layout context (full screen, split rail,
- * panel) while assistant content remains full width.
+ * panel) while system content remains full width.
  *
  * @element swc-conversation-turn
  * @slot - Turn body (message stack or bubble)
  */
 export class ConversationTurn extends SpectrumElement {
-  /** `user` — end-aligned; `assistant` — start-aligned, full width of the column. */
+  /** `outgoing` — end-aligned; `incoming` — start-aligned, full width of the column. */
   @property({ type: String, reflect: true })
-  public participant: 'user' | 'assistant' = 'user';
+  public type: 'incoming' | 'outgoing' = 'outgoing';
 
   public static override get styles(): CSSResultArray {
     return [styles];

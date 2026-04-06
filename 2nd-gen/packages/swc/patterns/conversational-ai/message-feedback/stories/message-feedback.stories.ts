@@ -24,21 +24,22 @@ const { args, argTypes, template } = getStorybookHelpers(
   'swc-message-feedback'
 );
 
-argTypes.selection = {
-  ...argTypes.selection,
+delete (args as Record<string, unknown>).selection;
+delete (argTypes as Record<string, unknown>).selection;
+
+argTypes.status = {
+  ...argTypes.status,
   control: { type: 'select' },
-  options: ['none', 'thumb-up', 'thumb-down'],
+  options: ['positive', 'negative'],
   table: {
     category: 'attributes',
-    defaultValue: { summary: 'none' },
+    defaultValue: { summary: '(unset)' },
   },
 };
 
 /**
- * Binary thumbs-up / thumbs-down feedback control placed below an AI response.
- * Selecting the active option again toggles it back to `none`.
- *
- * Prefer **`template(args)`** (or **`docs.source`**) so the docs code panel shows HTML.
+ * Binary positive / negative feedback control placed below an AI response.
+ * This component is controlled: it emits `swc-feedback`, and consumers set `status`.
  */
 const meta: Meta = {
   title: 'Conversational AI/Message feedback',
@@ -48,7 +49,7 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
-      subtitle: 'Binary thumbs-up / thumbs-down feedback control.',
+      subtitle: 'Binary positive / negative feedback control.',
     },
     layout: 'padded',
   },
@@ -62,9 +63,7 @@ export default meta;
 // ────────────────────
 
 export const Playground: Story = {
-  args: {
-    selection: 'none',
-  },
+  args: {},
   tags: ['autodocs', 'dev'],
 };
 
@@ -73,9 +72,7 @@ export const Playground: Story = {
 // ──────────────────────────────
 
 export const Overview: Story = {
-  args: {
-    selection: 'none',
-  },
+  args: {},
   tags: ['overview'],
 };
 
@@ -84,17 +81,15 @@ export const Overview: Story = {
 // ──────────────────────────
 
 /**
- * A message feedback control consists of two quiet icon buttons:
+ * A message feedback control consists of two quiet radio buttons:
  *
- * 1. **Thumbs-up** — "Good response"
- * 2. **Thumbs-down** — "Poor response"
+ * 1. **Positive** — "Positive response"
+ * 2. **Negative** — "Negative response"
  *
  * The selected button renders with a dark filled background.
  */
 export const Anatomy: Story = {
-  args: {
-    selection: 'none',
-  },
+  args: {},
   tags: ['anatomy'],
 };
 
@@ -103,37 +98,37 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 /**
- * The `selection` attribute controls which button appears selected:
+ * The `status` attribute controls which button appears selected:
  *
- * - **`none`** — Neither button selected (default)
- * - **`thumb-up`** — Positive feedback
- * - **`thumb-down`** — Negative feedback
+ * - **Unset** — Neither option selected (default)
+ * - **`positive`** — Positive feedback selected
+ * - **`negative`** — Negative feedback selected
  */
-export const Selection: Story = {
+export const Status: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:24px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-message-feedback selection="none"></swc-message-feedback>
+        <swc-message-feedback></swc-message-feedback>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
-          None
+          Unset
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-message-feedback selection="thumb-up"></swc-message-feedback>
+        <swc-message-feedback status="positive"></swc-message-feedback>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
-          Thumb up
+          Positive
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-message-feedback selection="thumb-down"></swc-message-feedback>
+        <swc-message-feedback status="negative"></swc-message-feedback>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
-          Thumb down
+          Negative
         </span>
       </div>
     </div>
@@ -151,15 +146,13 @@ export const Selection: Story = {
  *
  * The `<swc-message-feedback>` element implements the following accessibility features:
  *
- * #### Toggle buttons
+ * #### Radio buttons
  *
- * - The button group uses `role="group"` with `aria-label="Response feedback"`
- * - Each button carries a descriptive `aria-label`: "Good response" / "Poor response"
- * - Each button uses `aria-pressed` to communicate the selected state
+ * - The group uses `role="radiogroup"` with `aria-label="Response feedback"`
+ * - Each option uses `role="radio"` with `aria-checked` to communicate selection
+ * - Each option carries a descriptive label: "Positive response" / "Negative response"
  */
 export const Accessibility: Story = {
-  args: {
-    selection: 'none',
-  },
+  args: {},
   tags: ['a11y'],
 };

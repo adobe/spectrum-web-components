@@ -36,7 +36,6 @@ test.describe('PromptField - ARIA Snapshots', () => {
       - textbox "Prompt"
       - button "Add attachment"
       - button "Send" [disabled]
-      - link "AI User Guidelines"
     `);
   });
 });

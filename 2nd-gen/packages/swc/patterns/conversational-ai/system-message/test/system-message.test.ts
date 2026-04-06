@@ -16,16 +16,12 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import '../index.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
-import { ConversationArtifactMedia } from '../ConversationArtifactMedia.js';
-import {
-  meta,
-  Overview,
-  PreviewOnlyTile,
-} from '../stories/conversation-artifact-media.stories.js';
+import { meta, Overview } from '../stories/system-message.stories.js';
+import { SystemMessage } from '../SystemMessage.js';
 
 export default {
   ...meta,
-  title: 'Conversational AI/Conversation artifact media/Tests',
+  title: 'Conversational AI/System message/Tests',
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },
@@ -36,35 +32,14 @@ export default {
 export const OverviewTest: Story = {
   ...Overview,
   play: async ({ canvasElement, step }) => {
-    const el = await getComponent<ConversationArtifactMedia>(
+    const el = await getComponent<SystemMessage>(
       canvasElement,
-      'swc-conversation-artifact-media'
+      'swc-system-message'
     );
 
-    await step(
-      'does not use preview-only layout when title is slotted',
-      async () => {
-        await el.updateComplete;
-        expect(el.hasAttribute('data-preview-only')).toBe(false);
-      }
-    );
-  },
-};
-
-export const PreviewOnlyTileTest: Story = {
-  ...PreviewOnlyTile,
-  play: async ({ canvasElement, step }) => {
-    const el = await getComponent<ConversationArtifactMedia>(
-      canvasElement,
-      'swc-conversation-artifact-media'
-    );
-
-    await step(
-      'uses preview-only layout when title and subtitle are omitted',
-      async () => {
-        await el.updateComplete;
-        expect(el.hasAttribute('data-preview-only')).toBe(true);
-      }
-    );
+    await step('element is defined and rendered', async () => {
+      expect(el).toBeDefined();
+      expect(el.shadowRoot).toBeTruthy();
+    });
   },
 };

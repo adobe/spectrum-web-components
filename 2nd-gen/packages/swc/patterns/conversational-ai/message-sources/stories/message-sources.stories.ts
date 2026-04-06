@@ -25,13 +25,15 @@ const { args, argTypes, template } = getStorybookHelpers('swc-message-sources');
 const defaultListItems =
   '<li><a href="#">Adobe Experience Manager documentation</a></li><li><a href="#">Creative Cloud release notes 2026</a></li><li><a href="#">Firefly API getting started guide</a></li>';
 
-argTypes.state = {
-  ...argTypes.state,
-  control: { type: 'select' },
-  options: ['collapsed', 'expanded'],
+delete (args as Record<string, unknown>).state;
+delete (argTypes as Record<string, unknown>).state;
+
+argTypes.open = {
+  ...argTypes.open,
+  control: { type: 'boolean' },
   table: {
     category: 'attributes',
-    defaultValue: { summary: 'collapsed' },
+    defaultValue: { summary: 'false' },
   },
 };
 
@@ -44,7 +46,7 @@ const meta: Meta = {
   component: 'swc-message-sources',
   args: {
     ...args,
-    state: 'collapsed',
+    open: false,
     'default-slot': defaultListItems,
   },
   argTypes,
@@ -74,7 +76,7 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   args: {
-    state: 'expanded',
+    open: true,
   },
   tags: ['overview'],
 };
@@ -91,7 +93,7 @@ export const Overview: Story = {
  */
 export const Anatomy: Story = {
   args: {
-    state: 'expanded',
+    open: true,
     'default-slot':
       '<li><a href="#">Adobe Experience Manager documentation</a></li><li><a href="#">Creative Cloud release notes 2026</a></li>',
   },
@@ -103,16 +105,16 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 /**
- * The `state` attribute controls whether the sources list is visible:
+ * The `open` attribute controls whether the sources list is visible:
  *
- * - **`collapsed`** — Only the toggle button is shown (default)
- * - **`expanded`** — The numbered source list is revealed below the toggle
+ * - **`open=false`** — Only the toggle button is shown (default)
+ * - **`open=true`** — The numbered source list is revealed below the toggle
  */
-export const State: Story = {
+export const Open: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-message-sources state="collapsed">
+        <swc-message-sources>
           <li><a href="#">Adobe Experience Manager documentation</a></li>
           <li><a href="#">Creative Cloud release notes 2026</a></li>
         </swc-message-sources>
@@ -123,7 +125,7 @@ export const State: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-message-sources state="expanded">
+        <swc-message-sources open>
           <li><a href="#">Adobe Experience Manager documentation</a></li>
           <li><a href="#">Creative Cloud release notes 2026</a></li>
           <li><a href="#">Firefly API getting started guide</a></li>
@@ -157,7 +159,7 @@ export const State: Story = {
  */
 export const Accessibility: Story = {
   args: {
-    state: 'expanded',
+    open: true,
   },
   tags: ['a11y'],
 };
