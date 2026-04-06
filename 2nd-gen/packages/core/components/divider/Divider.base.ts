@@ -29,7 +29,7 @@ import {
  */
 export abstract class DividerBase extends SizedMixin(SpectrumElement, {
   validSizes: DIVIDER_VALID_SIZES,
-  /**@todo the design spec says the default size is small but we declare no default size */
+  /** @todo Size `s` is noted as the default in Spectrum design documentation, so be aware there is a discrepancy between the t-shirt API, which supports `m` as the default, and this component's use of `noDefaultSize` (visual default via CSS). SWC-1847 */
   noDefaultSize: true,
 }) {
   // ──────────────────
@@ -51,17 +51,33 @@ export abstract class DividerBase extends SizedMixin(SpectrumElement, {
 
   /**
    * The static color variant to use for the divider.
-   *
-   * @todo Add runtime validation separately. When implementing,
-   * access STATIC_COLORS from this.constructor.STATIC_COLORS to ensure
-   * correct values are used.
    */
-  @property({ reflect: true, attribute: 'static-color' })
+  @property({ type: String, reflect: true, attribute: 'static-color' })
   public staticColor?: DividerStaticColor;
 
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
+
+  protected override update(changedProperties: PropertyValues): void {
+    if (window.__swc?.DEBUG) {
+      const constructor = this.constructor as typeof DividerBase;
+      if (
+        typeof this.staticColor !== 'undefined' &&
+        !constructor.STATIC_COLORS.includes(this.staticColor)
+      ) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> element expects the "static-color" attribute to be one of the following:`,
+          'https://opensource.adobe.com/spectrum-web-components/components/divider/',
+          {
+            issues: [...constructor.STATIC_COLORS],
+          }
+        );
+      }
+    }
+    super.update(changedProperties);
+  }
 
   protected override firstUpdated(changed: PropertyValues<this>): void {
     super.firstUpdated(changed);
