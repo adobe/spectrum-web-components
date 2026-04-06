@@ -190,7 +190,7 @@ We need to keep the decorative property because of recommendations from the a11y
     if (this.alt === undefined) {
       window.__swc?.warn(
         this,
-        `<${this.localName}> is missing an \`alt\` attribute. Provide a text description or pass \`alt=""\` to mark it as decorative.`,
+        `<${this.localName}> is missing an \`alt\` attribute. Provide a text description or pass \`alt=""\` and mark it as \`decorative\`.`,
         'https://opensource.adobe.com/spectrum-web-components/components/avatar/#accessibility',
         {
           type: 'accessibility',
