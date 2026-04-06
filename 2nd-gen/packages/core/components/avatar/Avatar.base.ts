@@ -187,7 +187,7 @@ We need to keep the decorative property because of recommendations from the a11y
   }
 
   private warnMissingAlt(): void {
-    if (this.alt === undefined) {
+    if (this.alt === undefined || !this.decorative) {
       window.__swc?.warn(
         this,
         `<${this.localName}> is missing an \`alt\` attribute. Provide a text description or pass \`alt=""\` and mark it as \`decorative\`.`,
