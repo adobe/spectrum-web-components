@@ -165,3 +165,66 @@ export const EventsTest: Story = {
     );
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Send availability events
+// ──────────────────────────────────────────────────────────────
+
+export const SendAvailabilityTest: Story = {
+  ...Overview,
+  args: {
+    ...Overview.args,
+    state: 'default',
+    populated: false,
+    value: '',
+  },
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<PromptField>(
+      canvasElement,
+      'swc-prompt-field'
+    );
+
+    await step(
+      'fires swc-prompt-send-ready when typing makes send actionable',
+      async () => {
+        let detailValue = '';
+        el.addEventListener(
+          'swc-prompt-send-ready',
+          ((event: CustomEvent<{ value: string }>) => {
+            detailValue = event.detail.value;
+          }) as EventListener,
+          { once: true }
+        );
+
+        const textarea = el.shadowRoot?.querySelector<HTMLTextAreaElement>(
+          '.swc-PromptField-textarea'
+        );
+        textarea!.value = 'hello';
+        textarea!.dispatchEvent(new Event('input', { bubbles: true }));
+
+        await el.updateComplete;
+        expect(detailValue).toBe('hello');
+      }
+    );
+
+    await step('fires swc-prompt-send-idle when text cleared', async () => {
+      let idleFired = false;
+      el.addEventListener(
+        'swc-prompt-send-idle',
+        () => {
+          idleFired = true;
+        },
+        { once: true }
+      );
+
+      const textarea = el.shadowRoot?.querySelector<HTMLTextAreaElement>(
+        '.swc-PromptField-textarea'
+      );
+      textarea!.value = '';
+      textarea!.dispatchEvent(new Event('input', { bubbles: true }));
+
+      await el.updateComplete;
+      expect(idleFired).toBe(true);
+    });
+  },
+};

@@ -130,8 +130,7 @@ export const Anatomy: Story = {
 /**
  * The `state` attribute controls which action button appears on the right side of the action bar:
  *
- * - **`default`** — Send button is shown but disabled (no content yet)
- * - **`send`** — Send button is enabled (content present); set via `populated` attribute
+ * - **`default`** / **`send`** — Send button is shown; enabled when the textarea has non-whitespace text or `populated` is set
  * - **`stop`** — Stop button is shown while the AI is generating a response
  */
 export const State: Story = {
@@ -268,7 +267,7 @@ export const UploadedArtifact: Story = {
  *
  * - The `<textarea>` has an `aria-label` matching the `label` property
  * - All icon buttons carry descriptive `aria-label` attributes
- * - The send button uses `disabled` natively when `populated` is false
+ * - The send button uses `disabled` natively when there is no non-whitespace `value` and `populated` is false
  *
  * ### Best practices
  *
