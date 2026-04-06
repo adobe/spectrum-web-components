@@ -285,14 +285,15 @@ Editing any `.ai/rules/*.md` file immediately updates what both Cursor and Claud
 ### Adding a new rule
 
 1. Create `rule-name.md` in `.ai/rules/` with YAML frontmatter (`globs`, `alwaysApply`).
-2. Add one per-file symlink for Cursor:
+2. Add one per-file symlink for Cursor (required — Cursor needs `.mdc` extension):
 
    ```sh
    ln -s “../../.ai/rules/rule-name.md” “.cursor/rules/rule-name.mdc”
    ```
 
+   `.claude/rules/` is a directory symlink pointing at `.ai/rules/`, so it picks up the new file automatically — no extra step needed.
+
 3. Register it in the tables in this README (rules catalog) and in [`AGENTS.md`](../AGENTS.md).
-4. `.claude/rules/` picks it up automatically via the directory symlink — nothing extra needed.
 
 ### Adding a new skill
 
