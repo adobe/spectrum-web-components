@@ -80,22 +80,19 @@ attribute on the underlying `<img>` element, following standard HTML semantics.
 
 ---
 
-### `is-decorative` → `alt=""`
+### `is-decorative` → `decorative` and `alt=""`
 
-The `is-decorative` attribute has been removed. To mark an avatar as decorative,
-pass `alt=""`. This aligns with standard HTML `<img>` semantics and lets assistive
-technology consistently treat the image as decorative.
+The `is-decorative` attribute has been renamed to `decorative`. 
+Additionally include `alt=""`. This aligns with standard HTML `<img>` 
+semantics and lets assistive technology consistently treat the image as 
+decorative.
 
 ```html
 <!-- Before -->
 <sp-avatar is-decorative src="/img/user.jpg"></sp-avatar>
 
 <!-- After -->
-<swc-avatar alt="" src="/img/user.jpg"></swc-avatar>
-```
-
-When `alt=""` is set, `swc-avatar` automatically adds `aria-hidden="true"` to the
-host element, hiding it entirely from the accessibility tree.
+<swc-avatar decorative alt="" src="/img/user.jpg"></swc-avatar>
 
 ---
 
