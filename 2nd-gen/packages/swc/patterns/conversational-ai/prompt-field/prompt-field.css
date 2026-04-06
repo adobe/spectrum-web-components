@@ -198,6 +198,13 @@
   transition: background 130ms ease;
 }
 
+.swc-PromptField-send:focus-visible,
+.swc-PromptField-send:focus {
+  outline-width: 2px;
+  outline-color: token("focus-indicator-color");
+  outline-offset: 2px;
+}
+
 .swc-PromptField-send:disabled {
   color: token("gray-400");
   background: token("gray-100");
@@ -211,6 +218,16 @@
 .swc-PromptField-send swc-icon {
   --swc-icon-inline-size: 20px;
   --swc-icon-block-size: 20px;
+}
+
+.swc-PromptField-stop swc-icon {
+  --swc-icon-inline-size: 20px;
+  --swc-icon-block-size: 20px;
+}
+
+.swc-PromptField-send:not(:disabled) swc-icon,
+.swc-PromptField-stop:not(:disabled) swc-icon {
+  color: token("white");
 }
 
 /* Stop button (filled black circle, right side) */
@@ -232,11 +249,6 @@
 
 .swc-PromptField-stop:hover {
   background: token("gray-800");
-}
-
-.swc-PromptField-stop swc-icon {
-  --swc-icon-inline-size: 20px;
-  --swc-icon-block-size: 20px;
 }
 
 /* ─────────────────────────────────────
@@ -293,7 +305,6 @@
 .swc-PromptField-disclaimer-text {
   display: inline;
 }
-
 
 .swc-PromptField-disclaimer-link {
   color: token("gray-700");

@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, type PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
@@ -34,6 +34,9 @@ import styles from './prompt-field.css';
  *
  * @element swc-prompt-field
  *
+ * @fires swc-prompt-send-ready - Fired when the send control becomes actionable (was not ready, now ready). Not emitted on first paint. `detail.value` is the current prompt string.
+ * @fires swc-prompt-send-idle - Fired when the send control stops being actionable (e.g. text cleared and `populated` is false, or `state` becomes `stop`).
+ *
  * @slot artifact - Optional attachment preview; pair with `uploaded-artifact` for shell layout.
  */
 export class PromptField extends SpectrumElement {
@@ -50,7 +53,10 @@ export class PromptField extends SpectrumElement {
   @property({ type: String, reflect: true, attribute: 'uploaded-artifact' })
   public uploadedArtifact: 'none' | 'card' | 'media' = 'none';
 
-  /** When `true`, the send button is enabled. Set this based on whether the textarea has content. */
+  /**
+   * When `true`, the send button is enabled even if the textarea is empty (e.g. attachment-only send).
+   * Otherwise send is enabled when `value` has non-whitespace content.
+   */
   @property({ type: Boolean, reflect: true })
   public populated = false;
 
@@ -66,8 +72,56 @@ export class PromptField extends SpectrumElement {
   @property({ type: String })
   public value = '';
 
+  private _sendReady = false;
+
   public static override get styles(): CSSResultArray {
     return [styles];
+  }
+
+  /** Whether the send affordance is enabled (`state` is not `stop`, and there is text or `populated`). */
+  private _isSendReady(): boolean {
+    if (this.state === 'stop') {
+      return false;
+    }
+    return this.populated || this.value.trim().length > 0;
+  }
+
+  protected override firstUpdated(_changedProperties: PropertyValues): void {
+    super.firstUpdated(_changedProperties);
+    this._sendReady = this._isSendReady();
+  }
+
+  protected override updated(changedProperties: PropertyValues): void {
+    super.updated(changedProperties);
+    if (
+      !changedProperties.has('value') &&
+      !changedProperties.has('populated') &&
+      !changedProperties.has('state')
+    ) {
+      return;
+    }
+    const next = this._isSendReady();
+    if (next === this._sendReady) {
+      return;
+    }
+    if (next) {
+      this.dispatchEvent(
+        new CustomEvent('swc-prompt-send-ready', {
+          bubbles: true,
+          composed: true,
+          detail: { value: this.value },
+        })
+      );
+    } else {
+      this.dispatchEvent(
+        new CustomEvent('swc-prompt-send-idle', {
+          bubbles: true,
+          composed: true,
+          detail: { value: this.value },
+        })
+      );
+    }
+    this._sendReady = next;
   }
 
   private _handleInput(event: Event): void {
@@ -83,7 +137,7 @@ export class PromptField extends SpectrumElement {
   }
 
   private _handleSendClick(): void {
-    if (!this.populated) {
+    if (!this._isSendReady()) {
       return;
     }
     this.dispatchEvent(
@@ -128,7 +182,7 @@ export class PromptField extends SpectrumElement {
     return html`
       <button
         class="swc-PromptField-send"
-        ?disabled=${!this.populated}
+        ?disabled=${!this._isSendReady()}
         aria-label="Send"
         @click=${this._handleSendClick}
       >
