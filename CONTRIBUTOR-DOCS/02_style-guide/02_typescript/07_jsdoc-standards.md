@@ -384,14 +384,14 @@ Standard JSDoc tags for function parameters and return values. Use them on metho
 - `@returns {Type} Description`
 
 ```ts
-// ✅ Good — describes non-obvious parameter
+// ✅ Good — documents parameter and return when types alone are not enough
 /**
- * Creates a CSS rotation string for the progress indicator.
+ * Whether the string is a supported banner variant.
  *
- * @param rotation - The rotation angle in degrees
- * @returns The CSS rotation value, or undefined if not needed
+ * @param variant - Candidate variant from an attribute or property
+ * @returns True when `variant` is in `ALERT_BANNER_VALID_VARIANTS`
  */
-protected makeRotation(rotation: number): string | undefined { ... }
+protected isValidVariant(variant: string): boolean { ... }
 ```
 
 `@param` and `@returns` are optional when the types and names are self-explanatory.
