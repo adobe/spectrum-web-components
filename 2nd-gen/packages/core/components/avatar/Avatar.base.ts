@@ -179,7 +179,7 @@ We need to keep the decorative property because of recommendations from the a11y
   }
 
   private _syncAriaHidden(): void {
-    if (this.alt === '') {
+    if (this.decorative) {
       this.setAttribute('aria-hidden', 'true');
     } else {
       this.removeAttribute('aria-hidden');
