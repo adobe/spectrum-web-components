@@ -47,6 +47,7 @@ last-updated: 2026-03-31
 | `showStroke` | `boolean` | `false` | Yes (`show-stroke`) | Renders outline for visual separation; defaults to `true` in Avatar Group |
 | `disabled` | `boolean` | `false` | Yes | Renders at reduced opacity; entity is inactive or unavailable |
 | `label` _(deprecated)_ | `string \| undefined` | — | No | Shim → sets `alt`; warns in DEBUG mode |
+| `isDecorative` _(deprecated)_ | `boolean` |false | No | Shim → sets `decorative`; warns in DEBUG mode |
 
 ### Dropped from 1st-gen
 
