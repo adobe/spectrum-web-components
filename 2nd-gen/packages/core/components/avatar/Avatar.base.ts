@@ -196,7 +196,7 @@ We need to keep the decorative property because of recommendations from the a11y
           type: 'accessibility',
           issues: [
             'Provide an `alt` attribute with meaningful alternative text, or',
-            'Set `alt=""` to mark the image as decorative (hidden from screen readers).',
+            'Set `alt=""` and mark the image as `decorative` (hidden from screen readers).',
           ],
         }
       );
