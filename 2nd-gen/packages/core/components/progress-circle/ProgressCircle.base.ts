@@ -99,6 +99,34 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
   //     IMPLEMENTATION
   // ──────────────────────
 
+  /** True when light DOM has element nodes or non-whitespace text (no default slot). */
+  private static hasMeaningfulLightDomChildren(host: HTMLElement): boolean {
+    for (const node of host.childNodes) {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        return true;
+      }
+      if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private warnDeprecatedLightDomChildren(): void {
+    if (!window.__swc?.DEBUG) {
+      return;
+    }
+    if (!ProgressCircleBase.hasMeaningfulLightDomChildren(this)) {
+      return;
+    }
+    window.__swc.warn(
+      this,
+      `<${this.localName}> no longer has a default slot. Light DOM children are not rendered and are not used for an accessible name. Use the "label" attribute or property, or "aria-label" / "aria-labelledby" on the host instead.`,
+      'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/components-progress-circle--docs',
+      { level: 'deprecation' }
+    );
+  }
+
   private static clampProgress(value: number): number {
     if (!Number.isFinite(value)) {
       return 0;
@@ -169,11 +197,12 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
     };
 
     if (window.__swc?.DEBUG) {
+      this.warnDeprecatedLightDomChildren();
       if (!hasAccessibleName() && this.getAttribute('role') === 'progressbar') {
         window.__swc?.warn(
           this,
-          '<swc-progress-circle> elements need one of the following to be accessible:',
-          'https://opensource.adobe.com/spectrum-web-components/components/progress-circle/#accessibility',
+          `<${this.localName}> elements need one of the following to be accessible:`,
+          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/components-progress-circle--docs',
           {
             type: 'accessibility',
             issues: [

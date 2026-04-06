@@ -224,13 +224,51 @@ export const LightDomChildrenDoNotSetLabelTest: Story = {
     );
 
     await step(
-      'warns in dev mode when there is no accessible name (light DOM text alone is insufficient)',
+      'warns in dev mode: deprecation for light DOM children and accessibility when there is no name',
       () =>
         withWarningSpy(async (warnCalls) => {
           progressCircle.progress = 10;
           await progressCircle.updateComplete;
 
-          expect(warnCalls.length).toBeGreaterThan(0);
+          expect(warnCalls.length).toBeGreaterThanOrEqual(2);
+          expect(
+            warnCalls.some((call) =>
+              String(call[1] ?? '').includes('no longer has a default slot')
+            )
+          ).toBe(true);
+          expect(
+            warnCalls.some((call) =>
+              String(call[1] ?? '').includes('accessible')
+            )
+          ).toBe(true);
+        })
+    );
+  },
+};
+
+export const LightDomWithLabelDeprecationOnlyTest: Story = {
+  render: () => html`
+    <swc-progress-circle label="Uploading" progress="5">
+      Ignored slot content
+    </swc-progress-circle>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const progressCircle = await getComponent<ProgressCircle>(
+      canvasElement,
+      'swc-progress-circle'
+    );
+
+    await step(
+      'still deprecates light DOM when label provides the accessible name',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          progressCircle.progress = 6;
+          await progressCircle.updateComplete;
+
+          expect(warnCalls.length).toBe(1);
+          expect(String(warnCalls[0]?.[1] ?? '')).toContain(
+            'no longer has a default slot'
+          );
         })
     );
   },
