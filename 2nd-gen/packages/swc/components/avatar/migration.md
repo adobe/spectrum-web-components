@@ -235,7 +235,7 @@ and a hardcoded 2 px for sizes 1000–1500, matching the Spectrum 2 specificatio
 ## Accessibility
 
 - Always provide `alt` with a meaningful description of the person or entity shown.
-- Use `alt=""` only when the person's name already appears in surrounding text.
+- Use `decorative` and `alt=""` only when the person's name already appears in surrounding text.
 - Never use `decorative` and `alt=""` on a linked avatar (wrapped in `<a>`).
 - `swc-avatar` is not focusable on its own. Keyboard accessibility for linked
   avatars is provided by the wrapping `<a>` element.
