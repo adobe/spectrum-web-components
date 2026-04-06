@@ -111,9 +111,9 @@ Each component's `packages/_componentname_/README.md`. These files must meet our
 - The "Accessibility" section contains notes on any accessibility considerations that affect the component's development. See the notes on cross-root ARIA in Accessibility section of [`packages/help-text/README.md`](https://github.com/adobe/spectrum-web-components/blob/main/packages/help-text/README.md).
 - Check out the [Spectrum Design System documentation](https://spectrum.adobe.com/) to ensure our documentation is uses consistent langauge and component recommendations.
 
-##### Cursor rules
+##### AI Rules
 
-If you're using [Cursor](https://cursor.sh/), the repository includes rules that help enforce these documentation standards automatically. When editing component README files, Cursor's AI assistant will follow the guidelines in `.cursor/rules/component-readme.mdc` to ensure consistent structure, accessible code examples, and proper heading hierarchy.
+If you're using a coding agent, like [Cursor](https://cursor.com/) or [Claude Code](https://code.claude.com/docs/en/overview), the repository includes rules that help enforce these documentation standards automatically. When editing component README files, your AI assistant will follow the guidelines in `.ai/rules/component-readme.md` to ensure consistent structure, accessible code examples, and proper heading hierarchy.
 
 #### Documentation structure
 
