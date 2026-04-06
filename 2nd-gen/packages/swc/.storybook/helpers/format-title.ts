@@ -9,21 +9,21 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export const formatComponentName = (
+export const formatTitle = (
   title: string,
   typeCase: 'kebab' | 'pascal' = 'kebab'
 ) => {
-  const formattedComponentName = title
+  const formattedTitle = title
     .split('/')
     .pop()
     ?.toLowerCase()
     .replace(/\s+/g, '-');
 
   if (typeCase === 'pascal') {
-    return formattedComponentName
+    return formattedTitle
       ?.split('-')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join('');
   }
-  return formattedComponentName;
+  return formattedTitle;
 };

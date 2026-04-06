@@ -12,7 +12,7 @@
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { getComponent } from '../../../swc/utils/test-utils.js';
+import { getComponent } from '../../../../swc/utils/test-utils.js';
 import focusMeta, {
   BothAxesLinear,
   DemoFocusgroupProgrammatic,
@@ -23,7 +23,7 @@ import focusMeta, {
   SkipDisabledMenu,
   TextPrefixFocus,
   VerticalMenu,
-} from './focus-group-navigation-controller.stories.js';
+} from '../stories/demo-hosts.js';
 
 type KeydownOptions = {
   ctrlKey?: boolean;

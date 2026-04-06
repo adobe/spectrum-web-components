@@ -30,6 +30,10 @@ export const SpectrumStories = ({
     (story: any) => story.tags?.includes(tag)
   );
 
+  const descriptionOnlyStories = taggedStories.filter((story: any) =>
+    story.tags?.includes('description-only')
+  );
+
   // Sort by explicit order if provided, otherwise preserve current order
   taggedStories = taggedStories.sort((a: any, b: any) => {
     const aIndex = a.parameters['section-order'] ?? taggedStories.length;
@@ -46,7 +50,9 @@ export const SpectrumStories = ({
     <Fragment key={story.name}>
       {!hideTitle && <Markdown>{`### ${story.name}`}</Markdown>}
       <Description of={story.moduleExport} />
-      <Canvas of={story.moduleExport} />
+      {!descriptionOnlyStories.includes(story) && (
+        <Canvas of={story.moduleExport} />
+      )}
     </Fragment>
   ));
 

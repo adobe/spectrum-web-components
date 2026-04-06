@@ -16,4 +16,4 @@ export {
   type FocusgroupDirection,
   type FocusgroupNavigationActiveChangeDetail,
   type FocusgroupNavigationOptions,
-} from './src/focus-group-navigation-controller.js';
+} from './src/focusgroup-navigation-controller.js';

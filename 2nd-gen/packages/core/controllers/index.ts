@@ -20,7 +20,7 @@ export {
   type FocusgroupDirection,
   type FocusgroupNavigationActiveChangeDetail,
   type FocusgroupNavigationOptions,
-} from './focus-group-navigation-controller/index.js';
+} from './focusgroup-navigation-controller/index.js';
 export {
   LanguageResolutionController,
   languageResolverUpdatedSymbol,
