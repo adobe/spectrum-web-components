@@ -130,16 +130,17 @@ export abstract class AvatarBase extends SpectrumElement {
     return this.alt;
   }
 
-  public set label(value: string | undefined) {
+  
+  public set isDecorative(value: string | undefined) {
     if (window.__swc?.DEBUG) {
       window.__swc.warn(
         this,
-        `The "label" attribute on <${this.localName}> is deprecated. Use "alt" instead.`,
+        `The "isDecorative" attribute on <${this.localName}> is deprecated. Use "decorative" instead.`,
         'https://opensource.adobe.com/spectrum-web-components/components/avatar/',
         { type: 'api', level: 'deprecation' }
       );
     }
-    this.alt = value;
+    this.decorative = value;
   }
 
   // ──────────────────────
