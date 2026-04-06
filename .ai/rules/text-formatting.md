@@ -1,7 +1,7 @@
 ---
 description: Text formatting and capitalization rules for documentation and tickets
 globs: **/*.md, **/*.txt,**/*.mdx
-alwaysApply: true
+alwaysApply: false
 ---
 
 # Text formatting conventions

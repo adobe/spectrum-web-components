@@ -1,3 +1,9 @@
+---
+description: Converts contributor documentation from Markdown to MDX for Storybook rendering — adds imports, Meta tag, and converts HTML comments to JSX comments without altering any other content.
+globs: '**/*.md,**/*.mdx'
+alwaysApply: false
+---
+
 # Storybook MDX conversion
 
 Converts markdown files to MDX format compatible with Storybook rendering.

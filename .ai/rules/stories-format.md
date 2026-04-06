@@ -1,6 +1,7 @@
 ---
+description: Enforces consistent file structure, section separators, meta configuration, story tags, layout parameters, and JSDoc conventions for 2nd-gen Storybook stories files.
 globs: 2nd-gen/packages/swc/components/*/stories/**
-alwaysApply: true
+alwaysApply: false
 ---
 
 # Storybook stories format standards

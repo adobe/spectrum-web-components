@@ -1,6 +1,7 @@
 ---
+description: Comprehensive guide for what to document in 2nd-gen Storybook stories — overview, anatomy, options, states, behaviors, and accessibility sections — with patterns for JSDoc, args, accessible examples, and 1st-gen comparison notes.
 globs: 2nd-gen/packages/swc/components/*/stories/**
-alwaysApply: true
+alwaysApply: false
 ---
 
 # Component stories documentation standards
