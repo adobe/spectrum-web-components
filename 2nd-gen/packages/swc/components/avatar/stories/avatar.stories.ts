@@ -218,9 +218,11 @@ export const Sizes: Story = {
 };
 
 /**
- * Pass `alt=""` to treat the avatar as decorative — the image is hidden from
- * assistive technology. Use this when the surrounding context already
- * identifies the person (e.g., their name appears next to the avatar).
+ * Use the `decorative` attribute and `alt=""` to treat the avatar as decorative — 
+ * the image is hidden from assistive technology. 
+ *
+ * Use this **only when the surrounding context already identifies the person**
+ * (e.g., their name appears next to the avatar).
  */
 export const Decorative: Story = {
   render: () => html`
