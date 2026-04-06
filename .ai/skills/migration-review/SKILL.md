@@ -17,6 +17,11 @@ You are a gatekeeper, not a rubber stamp. A passing build and green tests are th
 - The user asks to "review [component]", "finalize [component]", or "open a PR for [component]"
 - The user refers to "Phase 8" of the 2nd-gen component migration workstream
 
+## When NOT to use
+
+- Phase 7 is not complete — documentation and stories should be finalized before review
+- You are resolving a lint, test, or build failure that belongs to an earlier phase (e.g. stylelint errors → Phase 4, failing unit or a11y tests → Phase 6)
+
 ## How to invoke
 
 - "Review [component] migration"
@@ -27,4 +32,4 @@ You are a gatekeeper, not a rubber stamp. A passing build and green tests are th
 
 ## Workflow
 
-Follow **[Phase 8: Review](CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-8-review)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
+Follow **[Phase 8: Review](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-8-review)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.

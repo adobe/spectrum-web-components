@@ -33,4 +33,4 @@ You are translating, not redesigning. Your job is not to invent new visual decis
 
 ## Workflow
 
-Follow **[Phase 4: Styling](CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-4-styling)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
+Follow **[Phase 4: Styling](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-4-styling)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.

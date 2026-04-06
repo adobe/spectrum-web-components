@@ -35,4 +35,4 @@ You are writing for the next contributor, not for yourself. Every story, JSDoc l
 
 ## Workflow
 
-Follow **[Phase 7: Documentation](CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-7-documentation)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
+Follow **[Phase 7: Documentation](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-7-documentation)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
