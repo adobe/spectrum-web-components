@@ -29,7 +29,7 @@ import {
  */
 export abstract class DividerBase extends SizedMixin(SpectrumElement, {
   validSizes: DIVIDER_VALID_SIZES,
-  /** @todo the design spec says the default size is small but we declare no default size */
+  /** @todo Size `s` is noted as the default in Spectrum design documentation, so be aware there is a discrepancy between the t-shirt API, which supports `m` as the default, and this component's use of `noDefaultSize` (visual default via CSS). SWC-1847 */
   noDefaultSize: true,
 }) {
   // ──────────────────
