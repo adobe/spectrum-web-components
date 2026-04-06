@@ -87,7 +87,8 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
   /**
    * Progress value from 0 to 100.
    *
-   * Only relevant when indeterminate is false.
+   * Only relevant when indeterminate is false. Values outside that range or
+   * non-finite numbers are clamped to 0–100 (non-finite becomes 0).
    */
   @property({ type: Number })
   public progress = 0;
@@ -97,6 +98,23 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
+
+  private static clampProgress(value: number): number {
+    if (!Number.isFinite(value)) {
+      return 0;
+    }
+    return Math.min(100, Math.max(0, value));
+  }
+
+  protected override willUpdate(changes: PropertyValues): void {
+    if (changes.has('progress')) {
+      const clamped = ProgressCircleBase.clampProgress(this.progress);
+      if (clamped !== this.progress) {
+        this.progress = clamped;
+      }
+    }
+    super.willUpdate(changes);
+  }
 
   protected override firstUpdated(changes: PropertyValues): void {
     super.firstUpdated(changes);

@@ -257,6 +257,35 @@ export const ProgressValuesTest: Story = {
   },
 };
 
+export const ProgressClampTest: Story = {
+  render: () => html`
+    <swc-progress-circle
+      progress="150"
+      label="Clamped high"
+    ></swc-progress-circle>
+    <swc-progress-circle
+      progress="-20"
+      label="Clamped low"
+    ></swc-progress-circle>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const circles = await getComponents<ProgressCircle>(
+      canvasElement,
+      'swc-progress-circle'
+    );
+
+    await step('clamps progress above 100 to 100', async () => {
+      expect(circles[0].progress).toBe(100);
+      expect(circles[0].getAttribute('aria-valuenow')).toBe('100');
+    });
+
+    await step('clamps progress below 0 to 0', async () => {
+      expect(circles[1].progress).toBe(0);
+      expect(circles[1].getAttribute('aria-valuenow')).toBe('0');
+    });
+  },
+};
+
 export const IndeterminateTest: Story = {
   ...Indeterminate,
   play: async ({ canvasElement, step }) => {
