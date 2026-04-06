@@ -93,7 +93,7 @@ export class ProgressCircle extends ProgressCircleBase {
           <circle
             cx="50%"
             cy="50%"
-            r=${`calc(50% - ${strokeWidth / 1}px)`}
+            r=${`calc(50% - ${strokeWidth}px)`}
             stroke-width=${strokeWidth}
           />
           <circle
