@@ -81,7 +81,7 @@
 }
 
 /* Prompt-field media artifact uses 68×68 preview tile. */
-.swc-PromptField-artifacts > slot::slotted([variant='media']) {
+.swc-PromptField-artifacts > slot::slotted([variant="media"]) {
   inline-size: 68px;
   min-inline-size: 68px;
   block-size: 68px;
@@ -90,9 +90,10 @@
 }
 
 /* Card artifacts can grow but wrap naturally in multi-artifact sets. */
-.swc-PromptField-artifacts > slot::slotted([variant='card']) {
-  flex: 0 1 324px;
-  inline-size: 324px;
+.swc-PromptField-artifacts > slot::slotted([variant="card"]) {
+  flex: 1 1 324px;
+  inline-size: auto;
+  min-inline-size: min(324px, 100%);
   max-inline-size: 100%;
 }
 

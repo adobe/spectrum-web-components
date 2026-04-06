@@ -185,6 +185,16 @@
 }
 
 /* Preview-only media (no title/subtitle) fills hosts like prompt-field tiles. */
+:host([variant="media"][data-preview-only]) {
+  inline-size: var(--swc-conversation-artifact-preview-size, 68px);
+  block-size: var(--swc-conversation-artifact-preview-size, 68px);
+}
+
+:host([variant="media"][data-preview-only]) .swc-ConversationArtifact {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
 :host([variant="media"][data-preview-only]) .swc-ConversationArtifact-surface {
   gap: 0;
   inline-size: 100%;
