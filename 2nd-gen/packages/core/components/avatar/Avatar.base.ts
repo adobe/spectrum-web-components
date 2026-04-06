@@ -116,6 +116,16 @@ export abstract class AvatarBase extends SpectrumElement {
   @property({ type: Boolean, reflect: true })
   public disabled = false;
 
+We need to keep the decorative property because of recommendations from the a11y team, but maybe align it with HTML attributes:
+
+/**
+   * Indicates that avatar alt text is intentionally left blank.
+   * Should only be left blank in cases where the surrounding context already
+   * identifies the person (e.g., their name appears next to the avatar).
+   * 
+   */
+  @property({ type: Boolean })
+  public decorative = false;
   // ──────────────────────────────────────────
   //     DEPRECATED — 1st-gen compat shims
   // ──────────────────────────────────────────
