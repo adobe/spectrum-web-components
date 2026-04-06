@@ -224,7 +224,7 @@ export const Sizes: Story = {
  */
 export const Decorative: Story = {
   render: () => html`
-    <swc-avatar src=${PLACEHOLDER_SRC} alt="" size="500"></swc-avatar>
+    <swc-avatar src=${PLACEHOLDER_SRC} alt="" size="500" decorative></swc-avatar> Jane Doe
   `,
   parameters: { 'section-order': 2 },
   tags: ['options'],
