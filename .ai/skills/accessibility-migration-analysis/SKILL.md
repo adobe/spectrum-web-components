@@ -102,7 +102,7 @@ Then add rows for **name**, **states**, **properties**, **visual-only props**, *
 ### Shadow DOM and cross-root ARIA Issues
 
 - **Heading text must be exactly:** `### Shadow DOM and cross-root ARIA Issues` (word **Issues** capitalized).
-- **If** the component has **no** cross-root ARIA concerns (no reliance on **ID references** that must resolve across shadow boundaries, e.g. `aria-labelledby` / `aria-describedby` pointing at shadow-only IDs) **and** it is **not** a **form-associated** control, the **entire body** of the subsection should be a single word: **`None`**.
+- **If** the component has **no** cross-root ARIA concerns (no reliance on **ID references** that must resolve across shadow boundaries, e.g. `aria-labelledby` / `aria-describedby` pointing at shadow-only IDs) **and** it is **not** a **form-associated** control, the **entire body** of the subsection should be a single word: **`None`** (no extra sentences).
 - **Otherwise** describe the concrete issues and expectations (e.g. `ElementInternals`, `aria-*` delegation, proposed ID strategies).
 
 ### Live regions and announcements
@@ -111,7 +111,7 @@ When the component or its docs touch **live regions** or **frequent** status upd
 
 - Call out **over-announcing** as a risk: docs should **warn** authors not to flood screen reader users.
 - **Never** recommend **`aria-live="assertive"`** for loading or routine progress.
-- Treat **`aria-live="polite"`** as **rare**: prefer **native role semantics** (e.g. **`progressbar`**) and **one** primary message for related loaders when possible.
+- Treat **`aria-live="polite"`** as **rare**: polite regions still **queue** speech, and **several** components or regions updating together becomes **noisy** (bursts, backlog). Prefer **native role semantics** (e.g. **`progressbar`**) and **one** primary message for related loaders when possible.
 
 See `progress-circle/accessibility-migration-analysis.md` for a full example.
 
@@ -130,6 +130,8 @@ See `progress-circle/accessibility-migration-analysis.md` for a full example.
 
 ### Testing
 
+### Automated tests
+
 - Table: **Kind of test** | **What to check** (unit, aXe/Storybook, Playwright ARIA snapshots, contrast, etc. — match what the repo actually uses for that component).
 
 ### Summary checklist
@@ -145,3 +147,9 @@ See `progress-circle/accessibility-migration-analysis.md` for a full example.
 - Follow **text-formatting** rules: sentence case for headings (proper nouns such as **ARIA**, **WCAG**, **APG** stay as usual).
 - Prefer plain, scannable wording; avoid duplicating the rendering doc — **link** to it instead.
 - **Verify** behavior and ARIA in **2nd-gen source** before stating what the component exposes.
+
+## Related rules and skills
+
+- **contributor-doc-update.md** — when to run `update-nav.js` after heading or structure changes.
+- **component-migration-analysis** skill — for `rendering-and-styling-migration-analysis.md`, not this file.
+- **stories-documentation.md** / **stories-format.md** — Storybook docs, separate from this contributor planning doc.
