@@ -98,12 +98,6 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
   //     IMPLEMENTATION
   // ──────────────────────
 
-  protected makeRotation(rotation: number): string | undefined {
-    return this.indeterminate
-      ? undefined
-      : `transform: rotate(${rotation}deg);`;
-  }
-
   protected override firstUpdated(changes: PropertyValues): void {
     super.firstUpdated(changes);
     if (!this.hasAttribute('role')) {
