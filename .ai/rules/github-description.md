@@ -1,6 +1,12 @@
+---
+description: Generates GitHub pull request and issue descriptions — title, labels, and body — following Spectrum Web Components conventions. Prompts for a linked ticket if none is provided.
+globs:
+alwaysApply: false
+---
+
 # GitHub description guidelines
 
-Note for Cursor: If a ticket (GitHub issue or Jira ticket) is not provided by the prompt, prompt the user to supply one before generating the description or pull request content.
+If a ticket (GitHub issue or Jira ticket) is not provided by the prompt, prompt the user to supply one before generating the description or pull request content.
 
 When prompted to create a GitHub description, output the following:
 
@@ -17,7 +23,7 @@ Use these syntax rules when writing GitHub descriptions:
 - `##` through `######` - Headings (use `##` for main, `###` for secondary, etc.)
 - `**text**` - Bold text
 - `` `code` `` - Inline code
-- `` `language` ``` - Language-specific code blocks
+- `` `language` `` - Language-specific code blocks
 - `[text](url)` - Links
 - `-` - Bullet points
 - `1.` - Numbered list items
