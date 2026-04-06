@@ -62,6 +62,15 @@ argTypes.alt = {
   },
 };
 
+argTypes.decorative = {
+  ...argTypes.decorative,
+  control: { type: 'boolean' },
+  table: {
+    category: 'attributes',
+    defaultValue: { summary: 'false' },
+  },
+};
+
 argTypes.src = {
   ...argTypes.src,
   table: {
