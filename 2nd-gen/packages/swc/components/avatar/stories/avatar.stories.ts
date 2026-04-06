@@ -82,7 +82,7 @@ argTypes.src = {
  * |--------|---------|---------|
  * | **Linked variant removed** | `href`, `target`, `rel`, `download`, `referrerpolicy`, `type` | Not supported — not in the Spectrum 2 spec. Wrap the avatar in an `<a>` element instead. The `alt` attribute becomes the link's accessible name — `alt=""` (decorative) is incompatible with a linked wrapper. |
  * | **Disabled state** | `disabled` | Supported — renders at reduced opacity to indicate the entity is inactive or unavailable. |
- * | **Decorative pattern** | `is-decorative` attribute | Pass `alt=""` — aligns with standard HTML `<img>` semantics. |
+ * | **Decorative pattern** | `is-decorative` attribute | `decorative` attrbiute — aligns with standard HTML `<img>` semantics. `decorative` still works but emits a deprecation warning in DEBUG mode. |
  * | **Alt text property** | `label` attribute | `alt` attribute. `label` still works but emits a deprecation warning in DEBUG mode. |
  * | **Default size** | `100` (20 px) | `500` (40 px) |
  * | **Size scale** | `50`–`700` | `50`–`1500` (eight new sizes added) |
