@@ -15,10 +15,11 @@
 /**
  * Entry point for AI tooling CI validation.
  *
- * Runs three checks:
+ * Runs four checks:
  *   1. Story tags — valid tags in 2nd-gen *.stories.ts files
  *   2. AGENTS.md paths — relative links in AGENTS.md files resolve to real files
  *   3. Config schema — .ai/config.json structure and regex validity
+ *   4. Symlinks — .cursor/ and .claude/ adapter symlinks point to .ai/ sources
  *
  * Exits with code 1 if any check has errors; warnings are printed but do not fail.
  *
@@ -29,6 +30,7 @@
 import { validateAgentsPaths } from './validate-agents-paths.js';
 import { validateConfigSchema } from './validate-config-schema.js';
 import { validateStoryTags } from './validate-story-tags.js';
+import { validateSymlinks } from './validate-symlinks.js';
 
 const RESET = '\x1b[0m';
 const RED = '\x1b[31m';
@@ -75,6 +77,16 @@ printSection(
   config.errors,
   config.warnings,
   1
+);
+
+// 4. Symlinks
+const symlinks = validateSymlinks();
+totalErrors += symlinks.errors.length;
+printSection(
+  'Symlinks (.cursor/ and .claude/)',
+  symlinks.errors,
+  [],
+  symlinks.fileCount
 );
 
 // Summary
