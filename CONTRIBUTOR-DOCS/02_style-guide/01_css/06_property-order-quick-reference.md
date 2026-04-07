@@ -104,7 +104,7 @@ From [status-light.css](../../../2nd-gen/packages/swc/components/status-light/st
   inline-size: var(--_swc-statuslight-dot-size);
   block-size: var(--_swc-statuslight-dot-size);
   /* Spacing */
-  margin-block-start: calc(var(--_swc-statuslight-top-to-dot) - var(--_swc-statuslight-top-to-text));
+  margin-block-start: calc(var(--_swc-statuslight-top-to-dot) - var(--_swc-statuslight-padding-block));
   /* Decoration */
   background-color: var(--swc-statuslight-dot-color);
   border-radius: token("corner-radius-full");
