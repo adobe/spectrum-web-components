@@ -1,0 +1,160 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="FocusGroupController" />
+
+# FocusGroupController
+
+`FocusGroupController` implements **focus-group** keyboard navigation for composite widgets. It handles the shared interaction patterns described in the APG for toolbars, tablists, menus, listboxes, radio groups, and grids.
+
+## Features
+
+- **Arrow-key navigation** among a set of focusable elements, respecting a configurable axis (`horizontal`, `vertical`, `both`, or `grid`)
+- **Home / End** keys jump to the first or last focusable element
+- **Circular wrapping** — navigation wraps from the last element back to the first (and vice versa)
+- **Skipping non-focusable items** — disabled, hidden, or otherwise non-participating elements are automatically bypassed
+- **Focus memory** — the last-focused element index is retained so returning to the group restores the user's position
+- **Dynamic element lists** — a `MutationObserver` watches for attribute changes on participating elements and updates the internal cache
+- **Grid mode** — when `direction` is `'grid'`, Up/Down keys move by `directionLength` positions, enabling 2-D navigation
+
+## Basic usage
+
+```typescript
+import { LitElement } from 'lit';
+import { FocusGroupController } from '@spectrum-web-components/core/controllers/FocusGroup.js';
+
+class MyToolbar extends LitElement {
+  private focusGroup = new FocusGroupController<HTMLButtonElement>(this, {
+    elements: () => [...this.querySelectorAll('button')],
+    direction: 'horizontal',
+    isFocusableElement: (el) => !el.disabled,
+  });
+}
+```
+
+## Configuration
+
+The controller accepts a `FocusGroupConfig` object with these options:
+
+### `elements` (required)
+
+A function that returns the ordered array of elements participating in the focus group. Called each time the internal cache is invalidated (for example, after DOM mutations).
+
+```typescript
+elements: () => [...this.querySelectorAll('[role="menuitem"]')];
+```
+
+### `direction`
+
+The navigation axis. Accepts a static value or a function for dynamic direction.
+
+| Value              | Behavior                                                         |
+| ------------------ | ---------------------------------------------------------------- |
+| `'horizontal'`     | Left/Right arrows only                                           |
+| `'vertical'`       | Up/Down arrows only                                              |
+| `'both'` (default) | All four arrow keys navigate linearly                            |
+| `'grid'`           | All four arrow keys; Up/Down move by `directionLength` positions |
+
+```typescript
+// Static
+direction: 'horizontal';
+
+// Dynamic (e.g. based on viewport)
+direction: () => (window.innerWidth < 768 ? 'vertical' : 'horizontal');
+```
+
+### `focusInIndex`
+
+Determines which element receives focus when the group is first entered via Tab. Accepts a static index or a function.
+
+```typescript
+// Always start at first element (default)
+focusInIndex: 0;
+
+// Start at the selected tab
+focusInIndex: (tabs) => tabs.findIndex((t) => t.ariaSelected === 'true');
+```
+
+### `isFocusableElement`
+
+Predicate to determine whether an element should be included in arrow-key navigation. Elements failing this check are skipped.
+
+```typescript
+isFocusableElement: (el) => !el.disabled && !el.hidden;
+```
+
+### `elementEnterAction`
+
+Callback invoked **before** an element receives focus via arrow-key navigation. Use this to update selection state, expand panels, or perform side effects.
+
+```typescript
+elementEnterAction: (tab) => {
+  this.selectTab(tab);
+};
+```
+
+### `listenerScope`
+
+The DOM element (or a function returning one) that scopes which `focusin`/`focusout` events the controller reacts to. Defaults to the host element.
+
+```typescript
+listenerScope: () => this.shadowRoot.querySelector('.items-container');
+```
+
+### `stopKeyEventPropagation`
+
+When `true`, handled arrow-key events call `event.stopPropagation()` to prevent parent composite widgets from also reacting. Set this when nesting focus groups (for example, a toolbar inside a dialog).
+
+```typescript
+stopKeyEventPropagation: true;
+```
+
+## Public API
+
+### Properties
+
+| Property          | Type             | Default        | Description                                        |
+| ----------------- | ---------------- | -------------- | -------------------------------------------------- |
+| `currentIndex`    | `number`         | `focusInIndex` | Zero-based index of the currently focused element  |
+| `direction`       | `DirectionTypes` | `'both'`       | The resolved navigation direction                  |
+| `directionLength` | `number`         | `5`            | Items per row in grid mode                         |
+| `elements`        | `T[]`            | —              | The cached list of participating elements          |
+| `focusInElement`  | `T`              | —              | The element that should receive focus on Tab entry |
+| `focusInIndex`    | `number`         | `0`            | The index of the initial focus target              |
+
+### Methods
+
+| Method                            | Description                                       |
+| --------------------------------- | ------------------------------------------------- |
+| `focus(options?)`                 | Focuses the element at `currentIndex`             |
+| `focusOnItem(item, options?)`     | Focuses a specific item                           |
+| `reset()`                         | Resets focus to the initial element               |
+| `clearElementCache(offset?)`      | Invalidates the cached element list               |
+| `setCurrentIndexCircularly(diff)` | Advances the index by `diff`, wrapping circularly |
+| `manage()`                        | Activates the controller (attaches listeners)     |
+| `unmanage()`                      | Deactivates the controller (removes listeners)    |
+| `update(config)`                  | Replaces the element source and re-initializes    |
+
+## Grid mode example
+
+For 2-D navigation (for example, color swatches arranged in rows), use `direction: 'grid'` and set `directionLength` to the number of items per row:
+
+```typescript
+class MySwatchGrid extends LitElement {
+  private focusGroup = new FocusGroupController<HTMLElement>(this, {
+    elements: () => [...this.querySelectorAll('[role="gridcell"]')],
+    direction: 'grid',
+  });
+
+  protected override firstUpdated(): void {
+    this.focusGroup.directionLength = 5; // 5 items per row
+  }
+}
+```
+
+In grid mode, Up/Down arrow keys move by `directionLength` positions and clamp at boundaries (no wrapping), matching the [APG grid pattern](https://www.w3.org/WAI/ARIA/apg/patterns/grid/).
+
+## APG patterns covered
+
+- [Toolbar](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/)
+- [Grid](https://www.w3.org/WAI/ARIA/apg/patterns/grid/)
+- [Tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)

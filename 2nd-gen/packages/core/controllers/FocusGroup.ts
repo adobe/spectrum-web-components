@@ -57,15 +57,6 @@ type DirectionTypes = 'horizontal' | 'vertical' | 'both' | 'grid';
  */
 export type FocusGroupConfig<T> = {
   /**
-   * Whether the host element uses `delegatesFocus: true` in its shadow root.
-   * When `true`, focus management adjusts for the browser's automatic focus
-   * delegation behavior to avoid double-focusing.
-   *
-   * @default false
-   */
-  hostDelegatesFocus?: boolean;
-
-  /**
    * Determines which element should receive focus when the group is first
    * entered via Tab. Accepts either a static index or a function that
    * receives the current elements array and returns an index.
@@ -311,14 +302,6 @@ export class FocusGroupController<
   public directionLength = 5;
 
   /**
-   * Whether the host's shadow root was created with `delegatesFocus: true`.
-   * Adjusts internal focus bookkeeping accordingly.
-   *
-   * @default false
-   */
-  public hostDelegatesFocus = false;
-
-  /**
    * Callback invoked when an element is about to receive focus during
    * arrow-key navigation. Runs *before* the element is focused.
    *
@@ -437,7 +420,6 @@ export class FocusGroupController<
    *
    * @param host - The Lit reactive element that owns this controller.
    * @param config - Configuration for the focus group behavior.
-   * @param config.hostDelegatesFocus - Whether the host uses `delegatesFocus`.
    * @param config.direction - Navigation axis (`'horizontal'`, `'vertical'`, `'both'`, or `'grid'`).
    * @param config.elementEnterAction - Callback invoked before an element receives focus via arrow keys.
    * @param config.elements - Function returning the ordered array of participating elements.
@@ -449,7 +431,6 @@ export class FocusGroupController<
   constructor(
     host: ReactiveElement,
     {
-      hostDelegatesFocus,
       direction,
       elementEnterAction,
       elements,
@@ -462,7 +443,6 @@ export class FocusGroupController<
     this.mutationObserver = new MutationObserver(() => {
       this.handleItemMutation();
     });
-    this.hostDelegatesFocus = hostDelegatesFocus || false;
     this.stopKeyEventPropagation = stopKeyEventPropagation || false;
     this.host = host;
     this.host.addController(this);
@@ -574,6 +554,11 @@ export class FocusGroupController<
    * is not focusable, advances circularly to find the next valid candidate.
    * Also manages `tabindex` so only the focused element is tabbable.
    *
+   * All 2nd-gen hosts use `delegatesFocus: true`, so the controller
+   * avoids clearing `tabindex` when re-focusing the same element and
+   * ensures `hostContainsFocus()` is called if the group was not
+   * previously tracking focus.
+   *
    * @param options - Standard `FocusOptions` forwarded to `element.focus()`.
    */
   focus(options?: FocusOptions): void {
@@ -587,15 +572,12 @@ export class FocusGroupController<
       focusElement = elements[this.currentIndex];
     }
     if (focusElement && this.isFocusableElement(focusElement)) {
-      if (
-        !this.hostDelegatesFocus ||
-        elements[this.prevIndex] !== focusElement
-      ) {
+      if (elements[this.prevIndex] !== focusElement) {
         elements[this.prevIndex]?.setAttribute('tabindex', '-1');
       }
       focusElement.tabIndex = 0;
       focusElement.focus(options);
-      if (this.hostDelegatesFocus && !this.focused) {
+      if (!this.focused) {
         this.hostContainsFocus();
       }
     }

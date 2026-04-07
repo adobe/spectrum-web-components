@@ -64,6 +64,11 @@ if (storybookMode !== 'ci-a11y') {
       titlePrefix: 'Learn about SWC',
     },
     {
+      directory: 'controllers',
+      files: '*.mdx',
+      titlePrefix: 'Controllers',
+    },
+    {
       directory: 'guides',
       files: '**/!(*documentation).mdx',
       titlePrefix: 'Guides',

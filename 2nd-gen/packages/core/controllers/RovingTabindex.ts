@@ -133,30 +133,24 @@ export class RovingTabindexController<
   }
 
   /**
-   * Recalculates `tabindex` for every managed element based on the
-   * current focus state:
+   * Recalculates `tabindex` for every managed element. The
+   * {@link FocusGroupController.focusInElement|focusInElement} gets
+   * `tabindex="0"` and all others get `tabindex="-1"`. Elements that
+   * *contain* the `focusInElement` get their tabindex removed instead
+   * (to avoid a double Tab stop on the container).
    *
-   * - **When focused and host does not delegate focus:** all elements
-   *   get `tabindex="-1"` (the focused element's tabindex is managed
-   *   separately by the base class's `focus()` method).
-   * - **When not focused (or host delegates focus):** the
-   *   {@link FocusGroupController.focusInElement|focusInElement} gets
-   *   `tabindex="0"` and all others get `tabindex="-1"`. Elements that
-   *   *contain* the `focusInElement` get their tabindex removed instead
-   *   (to avoid a double Tab stop on the container).
+   * All 2nd-gen hosts use `delegatesFocus: true`, so the controller
+   * always applies the focusInElement-aware strategy regardless of
+   * whether the group is currently focused.
    */
   manageTabindexes(): void {
-    if (this.focused && !this.hostDelegatesFocus) {
-      this.updateTabindexes(() => ({ tabIndex: -1 }));
-    } else {
-      this.updateTabindexes((el: HTMLElement): UpdateTabIndexes => {
-        return {
-          removeTabIndex:
-            el.contains(this.focusInElement) && el !== this.focusInElement,
-          tabIndex: el === this.focusInElement ? 0 : -1,
-        };
-      });
-    }
+    this.updateTabindexes((el: HTMLElement): UpdateTabIndexes => {
+      return {
+        removeTabIndex:
+          el.contains(this.focusInElement) && el !== this.focusInElement,
+        tabIndex: el === this.focusInElement ? 0 : -1,
+      };
+    });
   }
 
   /**

@@ -1,0 +1,68 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Overview" />
+
+# Controllers
+
+Controllers are [Lit reactive controllers](https://lit.dev/docs/composition/controllers/) that encapsulate reusable keyboard navigation and focus-management logic for composite widgets. They implement the patterns described in the [WAI-ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/).
+
+## Available controllers
+
+| Controller                                                                           | Purpose                                                       | Common use cases                         |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------- | ---------------------------------------- |
+| [`FocusGroupController`](?path=/docs/controllers-focusgroupcontroller--docs)         | Arrow-key navigation among a set of focusable elements        | Toolbars, action groups, grids           |
+| [`RovingTabindexController`](?path=/docs/controllers-rovingtabindexcontroller--docs) | Arrow-key navigation **plus** automatic `tabindex` management | Tablists, menus, listboxes, radio groups |
+
+## When to use which
+
+Use **`FocusGroupController`** when:
+
+- You need arrow-key navigation but manage `tabindex` yourself (or the items are natively focusable and don't need tabindex manipulation).
+- The host already handles focus delegation through other mechanisms.
+
+Use **`RovingTabindexController`** when:
+
+- The widget should expose exactly **one Tab stop** to the sequential focus order.
+- You want the controller to automatically set `tabindex="0"` on the active item and `tabindex="-1"` on all siblings.
+
+In most cases, **`RovingTabindexController`** is the right choice for composite widgets.
+
+## Installation
+
+Both controllers are available from `@spectrum-web-components/core/controllers`:
+
+```typescript
+import {
+  FocusGroupController,
+  RovingTabindexController,
+} from '@spectrum-web-components/core/controllers';
+```
+
+Or import individually for tree-shaking:
+
+```typescript
+import { FocusGroupController } from '@spectrum-web-components/core/controllers/FocusGroup.js';
+import { RovingTabindexController } from '@spectrum-web-components/core/controllers/RovingTabindex.js';
+```
+
+## Relationship to the proposed `focusgroup` HTML attribute
+
+The [`focusgroup`](https://developer.chrome.com/blog/focusgroup-rfc) attribute (Chromium experimental, Open UI proposal) aims to make arrow-key navigation declarative and platform-native. When `focusgroup` ships in stable browsers, components should prefer the native attribute. Until then, these controllers serve as the behavioral equivalent.
+
+Feature detection:
+
+```typescript
+const hasNativeFocusgroup = 'focusgroup' in HTMLElement.prototype;
+```
+
+### Mapping between controller concepts and the proposal
+
+| Controller concept            | `focusgroup` equivalent              |
+| ----------------------------- | ------------------------------------ |
+| `direction: 'horizontal'`     | `focusgroup="<behavior> inline"`     |
+| `direction: 'vertical'`       | `focusgroup="<behavior> block"`      |
+| `direction: 'both'`           | `focusgroup="<behavior>"`            |
+| `focusInIndex` / focus memory | `focusgroupstart` + default memory   |
+| `isFocusableElement`          | Native skip of disabled/hidden/inert |
+| `stopKeyEventPropagation`     | Nested focusgroup scoping            |
+| `direction: 'grid'`           | Not yet in the proposal              |

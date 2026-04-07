@@ -1,0 +1,135 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="RovingTabindexController" />
+
+# RovingTabindexController
+
+`RovingTabindexController` extends [`FocusGroupController`](?path=/docs/controllers-focusgroupcontroller--docs) with automatic **roving tabindex** management. It ensures composite widgets expose exactly **one Tab stop** to the sequential focus order — the currently active item gets `tabindex="0"` and all siblings get `tabindex="-1"`.
+
+This matches the [roving tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex) technique recommended by the WAI-ARIA Authoring Practices Guide.
+
+## When to use
+
+Use `RovingTabindexController` for any composite widget where:
+
+- Multiple interactive elements should behave as a single Tab stop
+- Arrow keys move focus between items within the group
+- Tab key moves focus in and out of the entire group
+
+Common examples include tablists, menus, listboxes, radio groups, and similar composites.
+
+## Basic usage
+
+```typescript
+import { LitElement } from 'lit';
+import { RovingTabindexController } from '@spectrum-web-components/core/controllers/RovingTabindex.js';
+
+class MyTablist extends LitElement {
+  private rovingTabindex = new RovingTabindexController<HTMLButtonElement>(
+    this,
+    {
+      elements: () => [...this.querySelectorAll('[role="tab"]')],
+      direction: 'horizontal',
+      focusInIndex: (tabs) => tabs.findIndex((t) => t.ariaSelected === 'true'),
+      elementEnterAction: (tab) => this.selectTab(tab),
+    }
+  );
+
+  private selectTab(tab: HTMLButtonElement): void {
+    // Update selection state before focus moves
+    this.querySelectorAll('[role="tab"]').forEach((t) => {
+      t.ariaSelected = t === tab ? 'true' : 'false';
+    });
+  }
+}
+```
+
+## Configuration
+
+`RovingTabindexController` accepts the same configuration options as [`FocusGroupController`](?path=/docs/controllers-focusgroupcontroller--docs). See the FocusGroupController documentation for the full list of configuration options.
+
+## Tabindex management behavior
+
+The controller manages `tabindex` attributes automatically:
+
+- The **focusInElement** (determined by `focusInIndex`) gets `tabindex="0"`
+- All other elements get `tabindex="-1"`
+- Elements that **contain** the focusInElement get their tabindex removed entirely (to avoid a double Tab stop on the container)
+- When the group is focused, only the currently active item's tabindex is preserved
+
+All 2nd-gen hosts use `delegatesFocus: true`, so the controller always applies the focusInElement-aware strategy regardless of whether the group is currently focused.
+
+## Additional methods
+
+In addition to the methods inherited from `FocusGroupController`:
+
+| Method                       | Description                                                     |
+| ---------------------------- | --------------------------------------------------------------- |
+| `manageTabindexes()`         | Recalculates `tabindex` for all managed elements                |
+| `updateTabindexes(callback)` | Applies a custom tabindex strategy to all elements              |
+| `manage()`                   | Activates tabindex management and event listeners               |
+| `unmanage()`                 | Deactivates management and restores all items to `tabindex="0"` |
+
+## Example: menu with disabled items
+
+```typescript
+class MyMenu extends LitElement {
+  private rovingTabindex = new RovingTabindexController<HTMLElement>(this, {
+    elements: () => [...this.querySelectorAll('[role="menuitem"]')],
+    direction: 'vertical',
+    isFocusableElement: (el) => el.getAttribute('aria-disabled') !== 'true',
+  });
+}
+```
+
+## Example: radio group
+
+```typescript
+class MyRadioGroup extends LitElement {
+  private rovingTabindex = new RovingTabindexController<HTMLElement>(this, {
+    elements: () => [...this.querySelectorAll('[role="radio"]')],
+    direction: 'vertical',
+    focusInIndex: (radios) =>
+      Math.max(
+        0,
+        radios.findIndex((r) => r.getAttribute('aria-checked') === 'true')
+      ),
+    elementEnterAction: (radio) => this.selectRadio(radio),
+  });
+}
+```
+
+## Example: nested focus groups
+
+When nesting composites (for example, a toolbar containing a menu), use `stopKeyEventPropagation` on the inner group to prevent the outer group from intercepting arrow keys:
+
+```typescript
+class InnerToolbar extends LitElement {
+  private rovingTabindex = new RovingTabindexController<HTMLButtonElement>(
+    this,
+    {
+      elements: () => [...this.querySelectorAll('button')],
+      direction: 'horizontal',
+      stopKeyEventPropagation: true,
+    }
+  );
+}
+```
+
+## Lifecycle
+
+The controller integrates with Lit's reactive lifecycle:
+
+1. **`hostConnected`**: Attaches `focusin` and `click` listeners
+2. **`hostUpdated`**: On first render, sets initial tabindex values; attaches `MutationObserver` to managed elements
+3. **`hostDisconnected`**: Removes all listeners and disconnects the observer
+
+When the element cache needs refreshing (for example, after items are added or removed), call `clearElementCache()`. The controller schedules a deferred tabindex recalculation via `requestAnimationFrame` to ensure the DOM has settled before reassigning values.
+
+## APG patterns covered
+
+- [Tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)
+- [Menu](https://www.w3.org/WAI/ARIA/apg/patterns/menu/)
+- [Listbox](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/)
+- [Radio group](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex)
+- [Toolbar](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/)
