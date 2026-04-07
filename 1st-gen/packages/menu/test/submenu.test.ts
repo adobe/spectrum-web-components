@@ -498,9 +498,7 @@ describe('Submenu', () => {
     const handleSubmenuChange = (event: Event & { target: Menu }): void => {
       submenuChanged(event.target.value);
     };
-    const handleSubSubmenuChange = (
-      event: Event & { target: Menu }
-    ): void => {
+    const handleSubSubmenuChange = (event: Event & { target: Menu }): void => {
       subSubmenuChanged(event.target.value);
     };
     const el = await fixture<Menu>(html`
