@@ -78,6 +78,16 @@ export class ProgressCircle extends ProgressCircleBase {
     // SVG strokes are centered, so subtract half the stroke width from the radius to create an inner stroke.
     const radius = `calc(50% - ${strokeWidth / 2}px)`;
 
+    // At progress=0, a dashoffset of 100 makes the fill fully invisible, which fails WCAG 1.4.11
+    // non-text contrast (the track alone may not meet 3:1 against the background).
+    // Clamp to 98 to show a minimum 2-unit fill so the graphical element remains perceivable.
+    // aria-valuenow stays at 0 — this is a visual-only adjustment.
+    const dashOffset = this.indeterminate
+      ? 100 - this.progress
+      : this.progress === 0
+        ? 98
+        : 100 - this.progress;
+
     return html`
       <div
         class=${classMap({
@@ -107,7 +117,7 @@ export class ProgressCircle extends ProgressCircleBase {
             class="swc-ProgressCircle-fill"
             pathLength="100"
             stroke-dasharray="100 200"
-            stroke-dashoffset=${100 - this.progress}
+            stroke-dashoffset=${dashOffset}
             stroke-linecap="round"
           />
         </svg>
