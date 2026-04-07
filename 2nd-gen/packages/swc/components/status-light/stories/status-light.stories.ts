@@ -387,6 +387,7 @@ export const Accessibility: Story = {
  * textfield.value from translations.json based on context.globals.lang.
  * Used by the Fonts guide and for locale/font demos. This story is "docs-only."
  */
+// @todo: a withLocaleWrapper could be pulled up into a global decorator/helper to be implemented by more components. SWC-1872
 function withLocaleWrapperRender(
   args: Record<string, unknown> & { lang?: string; 'default-slot'?: string },
   context: { globals: { lang?: string } }
@@ -408,10 +409,12 @@ function withLocaleWrapperRender(
 /**
  * Status light with label driven by the Language toolbar and translations.json.
  * Use this story in the Fonts guide to demonstrate font loading and translated copy.
+ * Learn more about [loading the expected fonts](/docs/guides-customization-fonts--readme).
  */
+// @todo: this story is docs-only, but we should start capturing Chromatic baselines for internationalized content in components. SWC-1871
 export const WithLocaleWrapper: Story = {
   render: withLocaleWrapperRender,
-  tags: [ '' ],
+  tags: [''],
   parameters: {
     docs: {
       canvas: { sourceState: 'none' },
