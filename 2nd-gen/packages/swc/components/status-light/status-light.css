@@ -87,7 +87,7 @@
   --swc-statuslight-font-size: token("font-size-300");
 }
 
-/* Semantic Colors */
+/* Semantic colors */
 :host([variant="neutral"]) {
   --swc-statuslight-content-color: token("gray-600");
   --swc-statuslight-dot-color: token("neutral-visual-color");
@@ -109,7 +109,7 @@
   --swc-statuslight-dot-color: token("positive-visual-color");
 }
 
-/* Non-Semantic Colors */
+/* Non-semantic colors */
 .swc-StatusLight--yellow {
   --swc-statuslight-dot-color: token("yellow-visual-color");
 }

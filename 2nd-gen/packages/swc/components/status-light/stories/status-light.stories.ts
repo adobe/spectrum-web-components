@@ -139,7 +139,7 @@ export const Playground: Story = {
 };
 
 // ────────────────────
-//    OVERVIEW STORY
+//    OVERVIEW STORIES
 // ────────────────────
 
 export const Overview: Story = {
@@ -302,8 +302,9 @@ export const TextWrapping: Story = {
  *
  * - Semantic variants provide consistent color associations for common statuses
  * - Text labels provide clear context for all users
+ * - Disabled status lights are deprecated for Spectrum 2. Content like "Unavailable" may be used to communicate that concept instead.
  *
- * Non-interactive element
+ * #### Non-interactive element
  *
  * - Status lights have no interactive behavior and are not focusable
  * - Screen readers will announce the status light content as static text
@@ -410,6 +411,7 @@ function withLocaleWrapperRender(
  */
 export const WithLocaleWrapper: Story = {
   render: withLocaleWrapperRender,
+  tags: [ '' ],
   parameters: {
     docs: {
       canvas: { sourceState: 'none' },
