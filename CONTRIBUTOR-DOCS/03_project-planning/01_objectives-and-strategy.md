@@ -77,7 +77,7 @@ At a high level, our strategy for efficiently pursuing our objectives in paralle
 
 - Channel disruptive changes into 2nd-gen, where we can take the time to get them right and the care to minimize the disruption they actually cause.
 
-- Work on 1st-gen and 2nd-gen side-by-side, so that non-disruptive changes can easily be shared between generations and delivered continually throughout the transition.
+- Work on 1st-gen and 2nd-gen side-by-side in the same repository, keeping both visible while maintaining their independence.
 
 ### Disruptive vs. non-disruptive change
 
@@ -91,24 +91,20 @@ Our first three objectives have aspects that are inherently disruptive, or have 
 
 Meanwhile, most of the **accessibility improvements** and general **component improvements** we want to make aren't inherently disruptive—they can delivered in a continual stream of targeted, mostly non-breaking releases.
 
-### Side-by-side development of 1st-gen and 2nd-gen
+### Independent development of 1st-gen and 2nd-gen
 
-We have decided to work on 1st-gen and 2nd-gen side-by-side—in the same repository, but in separate workspaces. This gives us two important advantages: **isolation** and **colocation**.
+We work on 1st-gen and 2nd-gen in the same repository but in **separate, independent workspaces**. There is **no runtime dependency** between them — 2nd-gen code does not affect 1st-gen, and vice versa.
 
 **Isolation** of 1st-gen and 2nd-gen in separate workspaces lets us build 2nd-gen iteratively from the ground up, leaving behind as much structural and technical debt as possible, without needing to worry about breaking 1st-gen. Disruptive changes are confined to the `2nd-gen` workspace, while the 1st-gen project continues working essentially "as-is."
 
-**Colocation** of 1st-gen and 2nd-gen in a single branch of the same repository makes it easy to share core component functionality between generations. Here's how this works:
+**Colocation** of 1st-gen and 2nd-gen in the same repository keeps both visible to the team and makes it easy to reference existing implementations when building 2nd-gen components. However, **code is not shared between generations at runtime**.
 
-- We locate core component implementations in the 2nd-gen Core library as **abstract, non-rendering classes**.
+Here's how this works:
 
-    These classes define **shared API** and implement **generation-agnostic behavior and logic**.
+- 2nd-gen Core contains **abstract, non-rendering base classes** that define API and implement behavior.
 
-- In both 1st-gen and 2nd-gen SWC, we implement components as **concrete, rendering classes** that extend from the abstract classes in Core.
+- 2nd-gen SWC contains **concrete, rendering classes** that extend from Core and add styles, templates, and element registration.
 
-    These classes implement **generation-specific rendering and styling**, and **override API and behavior** as needed.
+- 1st-gen is **self-contained** — it has its own implementations and does not import from 2nd-gen packages.
 
-This architecture delivers two key benefits:
-
-1. **Improvements we make in shared code immediately benefit 1st-gen SWC customers,** letting us deliver value on a continual basis throughout the transition.
-
-2. **Sharing code will help make customers' eventual migration from 1st-gen to 2nd-gen as smooth as possible.** By design, it will be difficult to introduce unnecessary or unintentional API or functional differences between 1st- and 2nd-gen components.
+When migrating a component, we start from the existing 1st-gen implementation as a reference and apply improvements incrementally. This keeps changes scoped and avoids blocking migrations. More dramatic rewrites should be informed by existing bugs, accessibility considerations, or feature disparity — not done speculatively.

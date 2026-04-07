@@ -6134,7 +6134,6 @@ __metadata:
   dependencies:
     "@spectrum-web-components/base": "npm:1.11.2"
     "@spectrum-web-components/button": "npm:1.11.2"
-    "@spectrum-web-components/core": "npm:0.0.4"
     "@spectrum-web-components/icons-workflow": "npm:1.11.2"
   languageName: unknown
   linkType: soft
@@ -6158,7 +6157,6 @@ __metadata:
   resolution: "@spectrum-web-components/asset@workspace:1st-gen/packages/asset"
   dependencies:
     "@spectrum-web-components/base": "npm:1.11.2"
-    "@spectrum-web-components/core": "npm:0.0.4"
   languageName: unknown
   linkType: soft
 
@@ -6176,7 +6174,6 @@ __metadata:
   resolution: "@spectrum-web-components/badge@workspace:1st-gen/packages/badge"
   dependencies:
     "@spectrum-web-components/base": "npm:1.11.2"
-    "@spectrum-web-components/core": "npm:0.0.4"
     "@spectrum-web-components/shared": "npm:1.11.2"
   languageName: unknown
   linkType: soft
@@ -6185,7 +6182,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/base@workspace:1st-gen/tools/base"
   dependencies:
-    "@spectrum-web-components/core": "npm:0.0.4"
     lit: "npm:^2.5.0 || ^3.1.3"
   languageName: unknown
   linkType: soft
@@ -6540,7 +6536,6 @@ __metadata:
   resolution: "@spectrum-web-components/divider@workspace:1st-gen/packages/divider"
   dependencies:
     "@spectrum-web-components/base": "npm:1.11.2"
-    "@spectrum-web-components/core": "npm:0.0.4"
   languageName: unknown
   linkType: soft
 
@@ -6819,7 +6814,7 @@ __metadata:
   resolution: "@spectrum-web-components/progress-circle@workspace:1st-gen/packages/progress-circle"
   dependencies:
     "@spectrum-web-components/base": "npm:1.11.2"
-    "@spectrum-web-components/core": "npm:0.0.4"
+    "@spectrum-web-components/reactive-controllers": "npm:1.11.2"
     "@spectrum-web-components/shared": "npm:1.11.2"
   languageName: unknown
   linkType: soft
@@ -6840,7 +6835,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/reactive-controllers@workspace:1st-gen/tools/reactive-controllers"
   dependencies:
-    "@spectrum-web-components/core": "npm:0.0.4"
     "@spectrum-web-components/progress-circle": "npm:1.11.2"
     colorjs.io: "npm:0.5.2"
     lit: "npm:^2.5.0 || ^3.1.3"
@@ -6865,7 +6859,6 @@ __metadata:
   dependencies:
     "@lit-labs/observers": "npm:2.0.2"
     "@spectrum-web-components/base": "npm:1.11.2"
-    "@spectrum-web-components/core": "npm:0.0.4"
     focus-visible: "npm:5.2.1"
   languageName: unknown
   linkType: soft
@@ -6909,7 +6902,6 @@ __metadata:
   resolution: "@spectrum-web-components/status-light@workspace:1st-gen/packages/status-light"
   dependencies:
     "@spectrum-web-components/base": "npm:1.11.2"
-    "@spectrum-web-components/core": "npm:0.0.4"
   languageName: unknown
   linkType: soft
 
@@ -7028,7 +7020,6 @@ __metadata:
   resolution: "@spectrum-web-components/theme@workspace:1st-gen/tools/theme"
   dependencies:
     "@spectrum-web-components/base": "npm:1.11.2"
-    "@spectrum-web-components/core": "npm:0.0.4"
     "@spectrum-web-components/styles": "npm:1.11.2"
   languageName: unknown
   linkType: soft

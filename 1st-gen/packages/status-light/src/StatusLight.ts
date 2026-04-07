@@ -17,15 +17,15 @@ import {
   TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+
+import statusLightStyles from './status-light.css.js';
+import { StatusLightBase } from './StatusLight.base.js';
 import {
   STATUSLIGHT_VARIANTS_COLOR_S1,
   STATUSLIGHT_VARIANTS_S1,
   STATUSLIGHT_VARIANTS_SEMANTIC_S1,
-  StatusLightBase,
   type StatusLightVariantS1,
-} from '@spectrum-web-components/core/components/status-light';
-
-import statusLightStyles from './status-light.css.js';
+} from './StatusLight.types.js';
 
 /**
  * @deprecated The `STATUSLIGHT_VARIANTS` export is deprecated and will be removed

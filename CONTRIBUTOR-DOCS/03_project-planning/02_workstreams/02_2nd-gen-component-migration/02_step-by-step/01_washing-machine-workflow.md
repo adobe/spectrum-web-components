@@ -108,7 +108,7 @@ Keep **spectrum-web-components** (this repo) and **[spectrum-css](https://github
 
 Use this doc for **what order** to do things and **what to check**; use the linked docs for **how to do** each phase.
 
-- **Workstream:** [2nd-gen Component Migration](../README.md) — README, status table, and **7 step-by-step docs** that describe the refactor-first path (factor 1st-gen, move base to core, then add 2nd-gen).
+- **Workstream:** [2nd-gen Component Migration](../README.md) — README, status table, and **7 step-by-step docs** that describe the migration path (study 1st-gen, create base in core, build 2nd-gen).
 - **Status table:** [01_status.md](../01_status.md) — use it to see which components have completed which steps and to **update progress** when you finish a migration.
 - **Jira / Epics:** [Migration project planning — Epics and tickets](../03_migration-project-planning.md) — epic templates, phase-aligned tickets, tracking.
 
@@ -117,7 +117,7 @@ Use this doc for **what order** to do things and **what to check**; use the link
 | Washing machine phase | Step-by-step doc(s) |
 |----------------------|---------------------------|
 | **1. Preparation** | Uses output of **Step 1: Analyze rendering and styling** (read the component analysis). Plan breaking changes and scope. |
-| **2. Setup** | **Steps 2–3** — factor rendering out of 1st-gen, move base to core — then create 2nd-gen core/SWC layout per Phase 2. |
+| **2. Setup** | **Steps 2–3** — study 1st-gen structure, create base class in core — then create 2nd-gen core/SWC layout per Phase 2. |
 | **3. API migration** | **Step 4: Formalize Spectrum data model** + **Step 5: Add 2nd-gen SWC** (API overrides/additions). |
 | **4. Styling** | **Step 6: Migrate rendering & styles from Spectrum CSS**. |
 | **5. Accessibility** | (No dedicated step — this guide adds it.) |
@@ -154,14 +154,17 @@ flowchart LR
 
 ---
 
-## Refactor path (1st-gen required)
+## Starting from 1st-gen (reference, not dependency)
 
-This workflow assumes a **1st-gen package** (`1st-gen/packages/<component>/` or equivalent) is in place and is what you are migrating. Do the following **before** or as part of **Phase 2 (Setup)**:
+This workflow assumes a **1st-gen package** (`1st-gen/packages/<component>/` or equivalent) exists and serves as the **reference implementation**. You use it to understand the component's API, behavior, and edge cases — but neither generation imports from or depends on the other at runtime.
 
-1. **Factor rendering out of 1st-gen** — [Step 2](02_factor-rendering-out-of-1st-gen-component.md): Rename to `[Component].base.ts`, create new `[Component].ts` that extends the base, move `render()` and `styles` to the concrete class. Confirm tests still pass.
-2. **Move base class to 2nd-gen core** — [Step 3](03_move-base-class-to-2nd-gen-core.md): Create `core/components/<name>/`, move the base and types there, update 1st-gen to import from core. Confirm tests still pass.
+The approach:
 
-After that, continue with **Phase 2** (create 2nd-gen SWC directory and files) and the rest of the workflow. Steps 4–7 (data model, implement 2nd-gen, render & style, stories) align with Phases 3–4 and 7 below.
+1. **Study the 1st-gen implementation** — understand the public API, mixins, controllers, and rendering.
+2. **Create the 2nd-gen base class in core** — start from the 1st-gen logic, applying improvements incrementally. Do not speculatively rewrite — changes should be informed by existing bugs, accessibility considerations, or feature disparity.
+3. **Create the 2nd-gen concrete class in SWC** — add rendering, styles, and element registration.
+
+1st-gen remains self-contained. It is **not** updated to import from 2nd-gen core.
 
 ---
 
@@ -171,12 +174,12 @@ Before you start, know the split:
 
 | Layer | Location | Contains |
 |-------|----------|----------|
-| **Core** | `2nd-gen/packages/core/components/<name>/` | Shared logic, **no** rendering. Base class, types, validation, mixins. |
+| **Core** | `2nd-gen/packages/core/components/<name>/` | Behavior, API, validation. Base class, types, mixins. **No** rendering. |
 | **SWC** | `2nd-gen/packages/swc/components/<name>/` | Rendering, styling, element registration. Extends core base; adds `render()`, CSS, stories. |
 
 - **Base class (core):** Properties, getters/setters, lifecycle, validation. Use `@internal` for non-public API.
 - **Concrete class (SWC):** `extends` the base; adds `styles`, `render()`, and any SWC-only props (e.g. S2-only options).
-- **Types:** In core (e.g. `Badge.types.ts`) so both 1st-gen and 2nd-gen can share or extend.
+- **Types:** In core (e.g. `Badge.types.ts`) for use by the concrete class and consumers.
 
 <details>
 <summary>File layout</summary>
@@ -260,33 +263,33 @@ See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_mo
 
 ## Phase 3: API migration
 
-**Goal:** Move properties, methods, and types from 1st-gen to 2nd-gen; keep a clear public API.
+**Goal:** Define properties, methods, and types in 2nd-gen (using 1st-gen as reference); keep a clear public API.
 
 ### What to do
 
 1. **List the public API** from 1st-gen (attributes, properties, slots, events).
 2. **Define types** in `Component.types.ts`; put shared API in base (core), SWC-only in concrete class.
 3. **Mark internal API** with JSDoc `@internal`; add JSDoc for public props/slots.
-4. **Implement static readonly arrays, debug warnings, and 1st-gen export deprecations** — follow [API patterns (statics, warnings, and 1st-gen exports)](#api-patterns-statics-warnings-and-1st-gen-exports) below; reference implementation: 2nd-gen Badge (`Badge.base.ts`, `Badge.ts`) and 1st-gen `badge/src/Badge.ts` for deprecated re-exports.
+4. **Implement static readonly arrays and debug warnings** — follow [API patterns (statics and warnings)](#api-patterns-statics-and-warnings) below; reference implementation: 2nd-gen Badge (`Badge.base.ts`, `Badge.ts`).
 
 ### Property migration scenarios
 
 | Scenario | Where it goes | Action |
 |----------|---------------|--------|
-| **Same in S1 and S2** | Base (core) | Move as-is. |
-| **Renamed in S2** | Base (core) + deprecation in 1st-gen | Map old → new; forward old attribute in 1st-gen (e.g. setter that forwards to new prop); emit a console warning when old attribute is used. |
-| **Removed in S2** | 1st-gen only | Do not migrate; mark `@deprecated` in 1st-gen; document removal. |
-| **New in S2** | SWC (temporary) | Add in SWC with `@todo` to move to base once 1st-gen is removed. |
+| **Same in S1 and S2** | Base (core) | Carry over from 1st-gen reference. |
+| **Renamed in S2** | Base (core) with new name | Use the new name directly. No need to maintain the old name. |
+| **Removed in S2** | Do not migrate | Document removal in component README. |
+| **New in S2** | Base or SWC | Put in base if it's behavior; SWC if it's rendering-only. |
 
 See [Step 4](04_formalize-spectrum-data-model.md) and [Step 5](05_implement-2nd-gen-component.md) for types, base vs SWC API, and native input handling (Checkbox).
 
-### API patterns (statics, warnings, and 1st-gen exports)
+### API patterns (statics and warnings)
 
 Follow team **TypeScript conventions (Ticket 7)** for naming and structure; use **Badge** as the concrete reference.
 
 **Static `readonly` arrays (`VARIANTS`, `VARIANTS_COLOR`, `VALID_SIZES`, `FIXED_VALUES`, etc.)**
 
-- Declare canonical option lists in `Component.types.ts` as const arrays; the **base** exposes `static readonly` fields (often overridden in **SWC** for S2-specific lists).
+- Declare canonical option lists in `Component.types.ts` as const arrays; the **base** exposes `static readonly` fields that concrete classes can override with their own valid values. This keeps the base abstract — validation uses `(this.constructor as typeof Base).VARIANTS` at runtime, so it automatically applies the correct set for whichever concrete class is running (including potential future rendering layers).
 - Use them for: **runtime validation** (e.g. in `update()` or setters—check value is in the list), **Storybook** `argTypes` `options`, and **tests** (assert against the same source of truth).
 - See `2nd-gen/packages/core/components/badge/Badge.base.ts` and `2nd-gen/packages/swc/components/badge/Badge.ts`.
 
@@ -296,26 +299,26 @@ Follow team **TypeScript conventions (Ticket 7)** for naming and structure; use 
 
 **Deprecating 1st-gen type and const exports**
 
+While 1st-gen does not import from 2nd-gen core, we still want to guide 1st-gen consumers toward patterns that will ease their eventual migration to 2nd-gen:
+
 - Prefer **statics on the custom element class** over package-level exports for variant lists and related constants (`Component.VARIANTS`, etc.).
-- For **types**, deprecate standalone type exports from 1st-gen packages and document migration to inference from the element (e.g. `typeof Badge.prototype.variant`, `typeof Badge.FIXED_VALUES`)—see `@deprecated` JSDoc on exports in `1st-gen/packages/badge/src/Badge.ts`.
-- Re-export from core in 1st-gen where needed, mark `@deprecated`, avoid duplicating logic.
+- For **types**, deprecate standalone type exports from 1st-gen packages and document migration to inference from the element (e.g. `typeof Badge.prototype.variant`, `typeof Badge.FIXED_VALUES`) — see `@deprecated` JSDoc on exports in `1st-gen/packages/badge/src/Badge.ts`.
+- Use `window.__swc.warn()` in 1st-gen to surface deprecation notices at dev time when deprecated APIs are used.
 
 ### What to check
 
-- [ ] All public 1st-gen props have a 2nd-gen home (base or SWC).
-- [ ] Types are in core and reused in SWC.
+- [ ] All relevant 1st-gen props have a 2nd-gen home (base or SWC).
+- [ ] Types are in core and used by SWC.
 - [ ] Internal helpers are marked `@internal`.
 - [ ] Static `readonly` arrays match types; used for validation, Storybook, and tests where applicable.
 - [ ] Invalid prop combinations emit `window.__swc.warn()` when debug is on (where the component has combination rules).
-- [ ] Deprecated 1st-gen exports document the constructor/prototype-based replacement pattern.
 
 ### Common problems and solutions
 
 | Problem | Solution |
 |--------|----------|
-| S1 vs S2 different options | Define S1/S2 const arrays in types; base uses union; SWC overrides. See Badge. |
+| Different options from 1st-gen | Define const arrays in types; base uses canonical set; SWC overrides if needed. See Badge. |
 | Complex getter/setter | Use only for attribute sync or validation; otherwise `@property`. |
-| Deprecated 1st-gen exports | Re-export from core, mark `@deprecated`; no duplicate logic. |
 | Native `<input>` (Checkbox) | See `Checkbox.base.ts` and `Checkbox.ts` for abstract `inputElement`, `handleChange`, `delegatesFocus`. |
 
 <details>
@@ -326,8 +329,8 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 
 ### Quality gate
 
-- [ ] Public API is documented; types are in core; base holds shared logic; SWC holds rendering and S2-only API.
-- [ ] Static readonly pattern, debug warnings, and any 1st-gen deprecation notes align with Badge (or equivalent) and TypeScript conventions (Ticket 7).
+- [ ] Public API is documented; types are in core; base holds behavior; SWC holds rendering.
+- [ ] Static readonly pattern, debug warnings, and 1st-gen deprecation notices align with Badge (or equivalent) and TypeScript conventions (Ticket 7).
 
 ---
 
@@ -554,13 +557,13 @@ Use these when you are not sure how to structure the migration.
 
 Use Badge as the reference implementation:
 
-| Area | 1st-gen | 2nd-gen core | 2nd-gen SWC |
-|------|---------|--------------|-------------|
-| **Base class** | — | `Badge.base.ts` (logic, mixins, shared props) | — |
-| **Concrete class** | `src/Badge.ts` | — | `Badge.ts` (extends BadgeBase, render, styles) |
-| **Types** | Inline / re-export | `Badge.types.ts` (VARIANTS_*, FixedValues, BadgeVariant) | Imports from core |
+| Area | 1st-gen (reference) | 2nd-gen core | 2nd-gen SWC |
+|------|---------------------|--------------|-------------|
+| **Base class** | `src/Badge.ts` (study as reference) | `Badge.base.ts` (behavior, validation) | — |
+| **Concrete class** | — | — | `Badge.ts` (extends BadgeBase, render, styles) |
+| **Types** | Own types | `Badge.types.ts` (VARIANTS_*, FixedValues, BadgeVariant) | Imports from core |
 | **CSS** | `badge.css.ts` (Constructable) | — | `badge.css` (plain CSS module) |
-| **Stories** | `stories/badge.stories.ts` | — | `stories/badge.stories.ts` (getStorybookHelpers, argTypes from component) |
+| **Stories** | `stories/badge.stories.ts` | — | `stories/badge.stories.ts` (getStoryHelpers, argTypes from component) |
 | **Tests** | `test/badge.test.ts`, `badge.a11y.spec.ts` | — | `test/badge.test.ts`, `test/badge.a11y.spec.ts` |
 
 **Paths:**
@@ -580,7 +583,7 @@ Use Badge as the reference implementation:
 ## Style guides and resources
 
 - **Workspace:** [spectrum-css](https://github.com/adobe/spectrum-css) cloned **next to** this repo—see [Workspace setup](#workspace-setup).
-- **TypeScript:** Team conventions; for 2nd-gen API patterns (static `readonly`, `window.__swc.warn`, deprecating Gen1 exports), see Phase 3 [API patterns](#api-patterns-statics-warnings-and-1st-gen-exports) and 2nd-gen Badge (`core` + `swc` + 1st-gen `badge/src/Badge.ts`).
+- **TypeScript:** Team conventions; for 2nd-gen API patterns (static `readonly`, `window.__swc.warn`), see Phase 3 [API patterns](#api-patterns-statics-and-warnings) and 2nd-gen Badge (`core` + `swc`).
 - **CSS:** [2nd-gen CSS style guide (CONTRIBUTOR-DOCS)](../../../../02_style-guide/01_css/README.md) — component CSS, custom properties, Spectrum→SWC migration, anti-patterns, property order
 - **Testing:** [2nd gen testing conventions](../../../../01_contributor-guides/11_2ndgen_testing.md)
 - **WCAG APG:** [https://www.w3.org/WAI/ARIA/apg/patterns/](https://www.w3.org/WAI/ARIA/apg/patterns/)

@@ -64,7 +64,7 @@ To attach a controller, call `host.addController(this)` in the constructor. This
 
 ## Planned controllers
 
-The following controllers exist in 1st-gen and may be ported to 2nd-gen core:
+The following controllers exist in 1st-gen and may be recreated in 2nd-gen core (using 1st-gen as reference):
 
 | Controller | 1st-gen location | Purpose |
 |-----------|-----------------|---------|

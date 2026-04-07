@@ -73,18 +73,16 @@ SWC is currently in transition from its first generation (**1st-gen**) to its se
 
 > This transition is motivated by some important strategic goals. For more information, see [Objectives and Strategy](../03_project-planning/01_objectives-and-strategy.md).
 
-Instead of creating a separate branch or repo for 2nd-gen, we are working on the 1st-gen and 2nd-gen projects side-by-side in this repository, with some core functionality being shared between 1st- and 2nd-gen components. This strategy makes it easier for us to continue actively improving and supporting 1st-gen even as we devote much of our attention to defining and building 2nd-gen.
+Instead of creating a separate branch or repo for 2nd-gen, we are working on both projects side-by-side in this repository. The two generations are **independent** — there is no runtime dependency between them. Code in 2nd-gen does not affect 1st-gen, and vice versa.
 
-Reflecting the side-by-side strategy, the repository is organized into two top-level workspaces:
+Reflecting this structure, the repository is organized into two top-level workspaces:
 
-- **`1st-gen/`** contains all of the 1st-gen packages, tooling, and supporting materials.
-
-    Most of what lives here will be left behind in the transition to 2nd-gen; the core component functionality we'll carry forward is gradually being moved into the `2nd-gen` workspace.
+- **`1st-gen/`** contains all of the 1st-gen packages, tooling, and supporting materials. It is self-contained.
 
     While we'll continue doing work in `1st-gen` as needed to accomplish our goals, we expect this work to decrease steadily toward none.
 
 - **`2nd-gen/`** is a new workspace that we're building from the ground up to serve as a clean foundation for our future work. It includes:
-    - A Core library (`packages/core/`), which contains the functionality shared between 1st- and 2nd-gen
+    - A Core library (`packages/core/`), which contains behavior, API, and shared logic for 2nd-gen components
 
     - The 2nd-gen SWC library (`packages/swc/`).
 

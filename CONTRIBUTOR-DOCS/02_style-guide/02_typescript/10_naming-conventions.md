@@ -89,7 +89,6 @@ Use **PascalCase** matching the component class name. No `I` prefix for interfac
 | Component size | `BadgeSize`, `ProgressCircleSize` |
 | Static color | `ProgressCircleStaticColor`, `DividerStaticColor` |
 | Semantic variant | `BadgeSemanticVariant` |
-| S1-only type | `BadgeVariantS1`, `BadgeColorVariantS1` |
 
 See [Component types](08_component-types.md#type-names) for detailed naming and suffixing rules.
 
@@ -112,7 +111,6 @@ Use **UPPER_SNAKE_CASE** with an underscore-separated component prefix.
 |----------|---------|
 | Valid sizes | `BADGE_VALID_SIZES`, `PROGRESS_CIRCLE_VALID_SIZES` |
 | Variant arrays | `BADGE_VARIANTS_SEMANTIC`, `BADGE_VARIANTS_COLOR` |
-| S1-only arrays | `BADGE_VARIANTS_COLOR_S1` |
 | Non-variant constants | `FIXED_VALUES`, `DIVIDER_STATIC_COLORS` |
 
 Multi-word component names use underscores: `STATUS_LIGHT_`, not `STATUSLIGHT_`.
@@ -146,7 +144,7 @@ PROGRESSCIRCLE_VALID_SIZES
 ACTIONBUTTON_VARIANTS
 ```
 
-If existing code uses merged prefixes, rename to the underscore-separated form and provide deprecated re-exports for backward compatibility (see [Component types](08_component-types.md#constant-prefixes)).
+If existing code uses merged prefixes, rename to the underscore-separated form (see [Component types](08_component-types.md#constant-prefixes)).
 
 ## CSS class names
 
@@ -159,7 +157,7 @@ CSS classes use the `swc-` prefix with PascalCase component name and optional BE
 | Variant modifier | `swc-Badge--positive`, `swc-Badge--subtle` |
 | Element (rare) | `swc-Badge-icon`, `swc-Badge-label` |
 
-**Never use the `spectrum-` prefix** — this is reserved for 1st-gen compatibility:
+**Never use the `spectrum-` prefix** — this is a 1st-gen convention:
 
 ```css
 /* ✅ Good */

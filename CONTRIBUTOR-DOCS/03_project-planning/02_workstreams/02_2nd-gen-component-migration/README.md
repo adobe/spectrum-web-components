@@ -27,11 +27,13 @@
 
 <!-- Document content (editable) -->
 
-The tactical process of migrating individual components to the multi-generation architecture:
+The tactical process of building 2nd-gen components, using 1st-gen as a reference:
 
-- Refactoring 1st-gen components to separate core functionality from generation-specific rendering
-- Moving base classes into 2nd-gen Core
-- Building corresponding 2nd-gen implementations
+- Studying 1st-gen implementations to understand API, behavior, and edge cases
+- Creating base classes in 2nd-gen Core (behavior and API)
+- Building concrete 2nd-gen implementations in SWC (rendering and styles)
 - Migrating styles from the Spectrum CSS repository
 
-Because our 1st-gen components vary in complexity and quality—some have known issues (a11y and otherwise) that we believe will require substantial changes or rewrites—we will add classes to 2nd-gen Core incrementally, based on component-specific roadmaps we'll build in parallel with spinning up the 2nd-gen project.
+1st-gen and 2nd-gen are **independent** — there is no runtime dependency between them. We start from existing implementations and apply improvements incrementally. More dramatic rewrites should be informed by existing bugs, accessibility considerations, or feature disparity.
+
+Because our 1st-gen components vary in complexity and quality — some have known issues (a11y and otherwise) that we believe will require substantial changes — we will add classes to 2nd-gen Core incrementally, based on component-specific roadmaps.
