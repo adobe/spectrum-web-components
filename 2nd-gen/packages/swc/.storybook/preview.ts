@@ -217,11 +217,7 @@ const preview = {
           ['Overview', 'When to use SWC', '1st-gen vs 2nd-gen'],
           'Components',
           'Controllers',
-          [
-            'Overview',
-            'FocusGroupController',
-            'RovingTabindexController',
-          ],
+          ['Overview', 'FocusGroupController', 'RovingTabindexController'],
           'Guides',
           [
             'Accessibility guides',
