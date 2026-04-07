@@ -33,7 +33,7 @@ test.describe('IllustratedMessage - ARIA Snapshots', () => {
       'swc-illustrated-message'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - heading "No results found" [level=2]
+      - heading "Illustrated message title" [level=2]
     `);
   });
 
