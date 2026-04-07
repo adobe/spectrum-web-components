@@ -142,6 +142,23 @@ Declares the slots the component provides. Use this on the **base class**. If th
 - Default slot: `@slot - Description`
 - Named slot: `@slot name - Description`
 
+**CEM:** Put the full slot description on **one line** with the `@slot` tag. The Custom Elements Manifest analyzer does not preserve extra JSDoc lines as part of the slot description; continuation lines are easy to lose or merge unpredictably in generated manifests and Storybook. If you need more detail, add it in the class prose (above the tags) or in component stories—not on following lines under `@slot`.
+
+```ts
+// ✅ Good — single line per slot
+/**
+ * @slot - Text label of the badge.
+ * @slot icon - Optional icon to the left of the label.
+ */
+
+// ❌ Bad — multiline slot description (do not rely on this for CEM)
+/**
+ * @slot - Short summary on the first line.
+ *
+ *   Extra lines you meant as part of the same slot description.
+ */
+```
+
 **Example from Badge.base.ts:**
 
 ```ts
