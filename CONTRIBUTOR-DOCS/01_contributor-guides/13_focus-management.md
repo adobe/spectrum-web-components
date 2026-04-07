@@ -560,6 +560,8 @@ class SpTextfield extends DisabledMixin(SpectrumElement) {
 }
 ```
 
+> **⚠️ `aria-disabled` does not block click events.** Unlike the native `disabled` attribute used in 1st-gen's `Focusable`, `DisabledMixin` uses `aria-disabled` which leaves the element interactive at the DOM level. Every interaction handler must explicitly guard with `if (this.disabled) return;`. This is the most common migration mistake — in 1st-gen, the native `disabled` attribute on inner elements blocked clicks automatically; in 2nd-gen, you must guard them yourself.
+
 ### Replacing focusElement getter
 
 The `focusElement` getter is no longer needed. `delegatesFocus: true` automatically delegates to the first focusable child. Make sure the focus target is first in the template:
