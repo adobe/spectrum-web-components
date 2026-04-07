@@ -15,6 +15,11 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { ProgressCircle } from '@adobe/spectrum-wc/progress-circle';
+import {
+  PROGRESS_CIRCLE_STATIC_COLORS_S2,
+  PROGRESS_CIRCLE_VALID_SIZES,
+  type ProgressCircleSize,
+} from '@spectrum-web-components/core/components/progress-circle';
 
 import '@adobe/spectrum-wc/progress-circle';
 
@@ -68,6 +73,16 @@ const meta: Meta = {
 };
 
 export default meta;
+
+// ────────────────────
+//    HELPERS
+// ────────────────────
+
+const sizeLabels = {
+  s: 'Processing small item',
+  m: 'Processing medium item',
+  l: 'Processing large item',
+} as const satisfies Record<ProgressCircleSize, string>;
 
 // ────────────────────
 //    AUTODOCS STORY
@@ -146,9 +161,15 @@ export const Anatomy: Story = {
  */
 export const Sizes: Story = {
   render: (args) => html`
-    ${template({ ...args, size: 's', label: 'Processing small item' })}
-    ${template({ ...args, size: 'm', label: 'Processing medium item' })}
-    ${template({ ...args, size: 'l', label: 'Processing large item' })}
+    ${PROGRESS_CIRCLE_VALID_SIZES.map(
+      (size) => html`
+        ${template({
+          ...args,
+          size,
+          label: sizeLabels[size],
+        })}
+      `
+    )}
   `,
   tags: ['options'],
   args: {
@@ -167,7 +188,7 @@ export const Sizes: Story = {
  */
 export const StaticColors: Story = {
   render: (args) => html`
-    ${ProgressCircle.STATIC_COLORS.map(
+    ${PROGRESS_CIRCLE_STATIC_COLORS_S2.map(
       (color) => html`
         ${template({ ...args, 'static-color': color })}
       `
