@@ -18,8 +18,11 @@ import { IllustratedMessage } from '@adobe/spectrum-wc/illustrated-message';
 import '@adobe/spectrum-wc/illustrated-message';
 
 import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
-import meta from '../stories/illustrated-message.stories.js';
-import { Overview } from '../stories/illustrated-message.stories.js';
+import meta, {
+  Orientation,
+  Overview,
+  Sizes,
+} from '../stories/illustrated-message.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
@@ -148,6 +151,98 @@ export const DescriptionSlotTest: Story = {
       expect(slotted?.textContent?.trim(), 'description text').toBe(
         'Description text here.'
       );
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Size
+// ──────────────────────────────────────────────────────────────
+
+export const SizesTest: Story = {
+  ...Sizes,
+  play: async ({ canvasElement, step }) => {
+    const messages = canvasElement.querySelectorAll('swc-illustrated-message');
+
+    await step('reflects size="s" attribute', async () => {
+      const el = messages[0] as IllustratedMessage;
+      await el.updateComplete;
+      expect(el.size, 'size property').toBe('s');
+      expect(el.getAttribute('size'), 'size attribute').toBe('s');
+    });
+
+    await step('reflects size="m" attribute (default)', async () => {
+      const el = messages[1] as IllustratedMessage;
+      await el.updateComplete;
+      expect(el.size, 'size property').toBe('m');
+      expect(el.getAttribute('size'), 'size attribute').toBe('m');
+    });
+
+    await step('reflects size="l" attribute', async () => {
+      const el = messages[2] as IllustratedMessage;
+      await el.updateComplete;
+      expect(el.size, 'size property').toBe('l');
+      expect(el.getAttribute('size'), 'size attribute').toBe('l');
+    });
+  },
+};
+
+export const DefaultSizeTest: Story = {
+  render: () => html`
+    <swc-illustrated-message heading="Default size"></swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step('defaults to size="m"', async () => {
+      expect(el.size, 'default size property').toBe('m');
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Orientation
+// ──────────────────────────────────────────────────────────────
+
+export const OrientationTest: Story = {
+  ...Orientation,
+  play: async ({ canvasElement, step }) => {
+    const messages = canvasElement.querySelectorAll('swc-illustrated-message');
+
+    await step('defaults to orientation="vertical"', async () => {
+      const el = messages[0] as IllustratedMessage;
+      await el.updateComplete;
+      expect(el.orientation, 'orientation property').toBe('vertical');
+    });
+
+    await step('reflects orientation="horizontal" attribute', async () => {
+      const el = messages[1] as IllustratedMessage;
+      await el.updateComplete;
+      expect(el.orientation, 'orientation property').toBe('horizontal');
+      expect(el.getAttribute('orientation'), 'orientation attribute').toBe(
+        'horizontal'
+      );
+    });
+  },
+};
+
+export const DefaultOrientationTest: Story = {
+  render: () => html`
+    <swc-illustrated-message
+      heading="Default orientation"
+    ></swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step('defaults to orientation="vertical"', async () => {
+      expect(el.orientation, 'default orientation property').toBe('vertical');
     });
   },
 };

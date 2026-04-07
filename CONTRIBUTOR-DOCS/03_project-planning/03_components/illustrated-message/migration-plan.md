@@ -96,7 +96,7 @@ No mixins, no shared utilities, no other SWC components composed inside. No depe
 | # | What is added | Notes |
 |---|---|---|
 | **A1** | `size` attribute (`s` \| `m` \| `l`, default `m`) | Net-new t-shirt sizing. `m` is the base style, no extra ruleset needed. Implemented via `:host([size="..."])` attribute selectors, not modifier classes. |
-| **A2** | `horizontal` boolean attribute | Net-new layout variant. Consumers not using it are unaffected. |
+| **A2** | `orientation` string attribute (`'vertical'` \| `'horizontal'`, default `'vertical'`) | Net-new layout variant. Consumers not using it are unaffected. |
 | **A3** | `actions` slot | Net-new. Leave untyped — a focus group navigation controller will be needed in a future follow-up. |
 
 ---
@@ -113,7 +113,7 @@ These are derived from the a11y analysis and rendering roadmap. Confirmed items 
 | `description` | `string` | `''` | `description` | Carry forward; same fallback pattern |
 | `headingLevel` | `2 \| 3 \| 4 \| 5 \| 6` | `2` | `heading-level` | **New.** Values outside `2`–`6` silently clamped using `Math.max(2, Math.min(6, level))` — same pattern as `AccordionItem.getHeadingLevel()`. |
 | `size` | `'s' \| 'm' \| 'l'` | `'m'` | `size` | **New.**  `m` is the implicit base style `s` and `l` override via `:host([size="s"])` / `:host([size="l"])` attribute selectors per [selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions). |
-| `horizontal` | `boolean` | `false` | `horizontal` | **New.** Drives horizontal layout variant. |
+| `orientation` | `'vertical' \| 'horizontal'` | `'vertical'` | `orientation` | **New.** Drives layout variant; `horizontal` places the illustration beside the content. |
 
 ### Slots (2nd-gen)
 
@@ -163,7 +163,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 ### API
 
 - [ ] `IllustratedMessage.types.ts`: `ILLUSTRATED_MESSAGE_VALID_SIZES`, `ILLUSTRATED_MESSAGE_VALID_HEADING_LEVELS`, derived types
-- [ ] `IllustratedMessage.base.ts`: abstract base class built from 1st-gen as reference; `headingLevel`, `size`, `horizontal`, `heading`, `description` properties; `getHeadingLevel()` clamping helper; `window.__swc?.DEBUG` warnings for invalid `heading-level` and heading-slot content type; new S2 properties go directly in base with correct names (no old-name forwarding)
+- [ ] `IllustratedMessage.base.ts`: abstract base class built from 1st-gen as reference; `headingLevel`, `size`, `orientation`, `heading`, `description` properties; `getHeadingLevel()` clamping helper; `window.__swc?.DEBUG` warnings for invalid `heading-level` and heading-slot content type; new S2 properties go directly in base with correct names (no old-name forwarding)
 - [ ] `IllustratedMessage.ts` (SWC): extends base, static `VALID_SIZES`, S2 rendering
 
 ### Styling
@@ -190,16 +190,16 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 
 ### Testing
 
-- [ ] `test/illustrated-message.test.ts`: heading tag matches `heading-level`; default is `h2`; `heading-level="1"` does not produce `<h1>`; `size` and `horizontal` attribute reflection
+- [ ] `test/illustrated-message.test.ts`: heading tag matches `heading-level`; default is `h2`; `heading-level="1"` does not produce `<h1>`; `size` and `orientation` attribute reflection
 - [ ] `test/illustrated-message.a11y.spec.ts`: Playwright `toMatchAriaSnapshot` with default story; `heading-level` variants `2`–`5`; no `h1` stories
-- [ ] Storybook stories include: default, size `s` / `l`, horizontal, custom `heading-level`, with actions
+- [ ] Storybook stories include: default, size `s` / `l`, orientation horizontal, custom `heading-level`, with actions
 - [ ] VRT story (`illustrated-message.test-vrt.ts` equivalent)
 
 ### Documentation
 
 - [ ] JSDoc on all public props, slots, and CSS custom properties
 - [ ] Storybook argTypes driven by `ILLUSTRATED_MESSAGE_VALID_SIZES` and `ILLUSTRATED_MESSAGE_VALID_HEADING_LEVELS` static arrays
-- [ ] Migration notes: `heading-level` replaces hard-coded `h2`; heading slot now `span`-only; new `size`, `horizontal`, `actions` slot
+- [ ] Migration notes: `heading-level` replaces hard-coded `h2`; heading slot now `span`-only; new `size`, `orientation`, `actions` slot
 - [ ] Storybook examples vary `heading-level` by context (not always `2`)
 - [ ] Decorative vs meaningful illustration guidance in Storybook
 

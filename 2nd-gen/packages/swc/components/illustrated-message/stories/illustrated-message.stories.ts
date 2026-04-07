@@ -17,7 +17,11 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '@adobe/spectrum-wc/illustrated-message';
 
-import { ILLUSTRATED_MESSAGE_VALID_HEADING_LEVELS } from '../../../../core/components/illustrated-message/IllustratedMessage.types.js';
+import {
+  ILLUSTRATED_MESSAGE_VALID_HEADING_LEVELS,
+  ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS,
+  ILLUSTRATED_MESSAGE_VALID_SIZES,
+} from '../../../../core/components/illustrated-message/IllustratedMessage.types.js';
 
 // ────────────────
 //    METADATA
@@ -34,6 +38,26 @@ argTypes['heading-level'] = {
   table: {
     category: 'attributes',
     defaultValue: { summary: '2' },
+  },
+};
+
+argTypes['size'] = {
+  ...argTypes['size'],
+  control: { type: 'select' },
+  options: ILLUSTRATED_MESSAGE_VALID_SIZES,
+  table: {
+    category: 'attributes',
+    defaultValue: { summary: 'm' },
+  },
+};
+
+argTypes['orientation'] = {
+  ...argTypes['orientation'],
+  control: { type: 'select' },
+  options: ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS,
+  table: {
+    category: 'attributes',
+    defaultValue: { summary: 'vertical' },
   },
 };
 
@@ -118,6 +142,40 @@ export const HeadingLevels: Story = {
       <span slot="description">
         Illustrated message description. Give more information about what a user
         can do, expect, or how to make items appear.
+      </span>
+    </swc-illustrated-message>
+  `,
+};
+
+export const Sizes: Story = {
+  render: () => html`
+    <swc-illustrated-message size="s" heading="Small">
+      ${placeholderIllustration}
+      <span slot="description">Size small illustrated message.</span>
+    </swc-illustrated-message>
+    <swc-illustrated-message size="m" heading="Medium">
+      ${placeholderIllustration}
+      <span slot="description">Size medium illustrated message (default).</span>
+    </swc-illustrated-message>
+    <swc-illustrated-message size="l" heading="Large">
+      ${placeholderIllustration}
+      <span slot="description">Size large illustrated message.</span>
+    </swc-illustrated-message>
+  `,
+};
+
+export const Orientation: Story = {
+  render: () => html`
+    <swc-illustrated-message heading="Vertical (default)">
+      ${placeholderIllustration}
+      <span slot="description">
+        The default orientation stacks the illustration above the content.
+      </span>
+    </swc-illustrated-message>
+    <swc-illustrated-message orientation="horizontal" heading="Horizontal">
+      ${placeholderIllustration}
+      <span slot="description">
+        The horizontal orientation places the illustration beside the content.
       </span>
     </swc-illustrated-message>
   `,
