@@ -172,7 +172,6 @@ export const Anatomy: Story = {
     })}
   `,
   tags: ['anatomy'],
-
 };
 
 // ──────────────────────────
@@ -211,7 +210,7 @@ export const Sizes: Story = {
  * - **`positive`**: Approved, complete, success, new, purchased, licensed
  * - **`notice`**: Needs approval, pending, scheduled, syncing, indexing, processing
  * - **`negative`**: Error, alert, rejected, failed
- * 
+ *
  * Semantic status lights should never be used for color coding categories or labels, and vice versa.
  */
 export const SemanticVariants: Story = {
@@ -304,10 +303,17 @@ export const TextWrapping: Story = {
  * - Semantic variants provide consistent color associations for common statuses
  * - Text labels provide clear context for all users
  *
+ * Non-interactive element
+ *
+ * - Status lights have no interactive behavior and are not focusable
+ * - Screen readers will announce the status light content as static text
+ * - No keyboard interaction is required or expected
+ *
  * ### Best practices
  *
  * - Always provide a descriptive text label that explains the status
  * - Use semantic variants (`info`, `positive`, `negative`, `notice`, `neutral`) when the status has specific meaning
+ * - Status lights are not interactive elements - for interactive status indicators, consider using buttons, tags, or links instead
  * - Use meaningful, specific labels (e.g., "Approved" instead of "Green")
  * - Ensure sufficient color contrast between the status light and its background
  * - For non-semantic variants, ensure the text label provides complete context
