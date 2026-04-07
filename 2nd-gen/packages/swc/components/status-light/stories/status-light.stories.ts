@@ -414,7 +414,6 @@ function withLocaleWrapperRender(
 // @todo: this story is docs-only, but we should start capturing Chromatic baselines for internationalized content in components. SWC-1871
 export const WithLocaleWrapper: Story = {
   render: withLocaleWrapperRender,
-  tags: [''],
   parameters: {
     docs: {
       canvas: { sourceState: 'none' },
