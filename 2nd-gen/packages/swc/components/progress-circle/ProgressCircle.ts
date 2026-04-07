@@ -21,13 +21,15 @@ import {
 } from '@spectrum-web-components/core/components/progress-circle';
 import { capitalize } from '@spectrum-web-components/core/utils/index.js';
 
-import progressCircleStyles from './progress-circle.css';
+import styles from './progress-circle.css';
 
 /**
  * Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way.
  * They can represent determinate (with a specific progress value) or indeterminate (loading) progress.
  *
  * @element swc-progress-circle
+ * @status preview
+ * @since 0.0.1
  *
  * @property {string} static-color - Static color variant for use on different backgrounds.
  * @property {number} progress - Progress value between 0 and 100.
@@ -66,7 +68,7 @@ export class ProgressCircle extends ProgressCircleBase {
   // ──────────────────────────────
 
   public static override get styles(): CSSResultArray {
-    return [progressCircleStyles];
+    return [styles];
   }
 
   protected override render(): TemplateResult {

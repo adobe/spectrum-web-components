@@ -14,29 +14,37 @@ import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
-const VALID_VARIANTS = ['neutral', 'info', 'negative'];
-export type AlertBannerVariants = (typeof VALID_VARIANTS)[number];
+import {
+  ALERT_BANNER_VALID_VARIANTS,
+  type AlertBannerVariant,
+} from './AlertBanner.types.js';
 
 /**
- * Base class for alert banner components
+ * An alert banner shows pressing and high-signal messages, such as system alerts.
+ * It is meant to be noticed and prompt users to take action.
+ *
+ * @slot - The main content of the alert banner.
+ * @slot action - An optional action button for the alert banner.
+ *
+ * @fires close - Dispatched when the alert banner is dismissed. Cancelable.
  */
 export abstract class AlertBannerBase extends SpectrumElement {
   public static override get styles(): CSSResultArray {
     return [];
   }
 
+  // ──────────────────
+  //     SHARED API
+  // ──────────────────
+
   /**
-   * Controls the display of the alert banner
-   *
-   * @param {boolean} open
+   * Controls the display of the alert banner.
    */
   @property({ type: Boolean, reflect: true })
   public open = false;
 
   /**
-   * Whether to include an icon-only close button to dismiss the alert banner
-   *
-   * @param {boolean} dismissible
+   * Whether to include an icon-only close button to dismiss the alert banner.
    */
   @property({ type: Boolean, reflect: true })
   public dismissible = false;
@@ -44,11 +52,9 @@ export abstract class AlertBannerBase extends SpectrumElement {
   /**
    * The variant applies specific styling when set to `negative` or `info`;
    * `variant` attribute is removed when it's passed an invalid variant.
-   *
-   * @param {string} variant
    */
   @property({ type: String })
-  public set variant(variant: AlertBannerVariants) {
+  public set variant(variant: AlertBannerVariant) {
     if (variant === this.variant) {
       return;
     }
@@ -67,7 +73,7 @@ export abstract class AlertBannerBase extends SpectrumElement {
           `<${this.localName}> element expects the "variant" attribute to be one of the following:`,
           'https://opensource.adobe.com/spectrum-web-components/components/alert-banner/#variants',
           {
-            issues: [...VALID_VARIANTS],
+            issues: [...ALERT_BANNER_VALID_VARIANTS],
           }
         );
       }
@@ -75,14 +81,18 @@ export abstract class AlertBannerBase extends SpectrumElement {
     this.requestUpdate('variant', oldValue);
   }
 
-  public get variant(): AlertBannerVariants {
+  public get variant(): AlertBannerVariant {
     return this._variant;
   }
 
-  private _variant: AlertBannerVariants = '';
+  private _variant: AlertBannerVariant = '';
+
+  // ──────────────────────
+  //     IMPLEMENTATION
+  // ──────────────────────
 
   protected isValidVariant(variant: string): boolean {
-    return VALID_VARIANTS.includes(variant);
+    return (ALERT_BANNER_VALID_VARIANTS as readonly string[]).includes(variant);
   }
 
   protected abstract renderIcon(variant: string): TemplateResult;

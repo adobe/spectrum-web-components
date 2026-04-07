@@ -284,14 +284,11 @@ export class StoryDecorator extends SpectrumElement {
     );
     const updates = litElementDescendents.map((el) => el.updateComplete);
     await Promise.all(updates);
-    new Promise((res) => {
-      setTimeout(res);
-    }).then(async () => {
-      await (document.fonts ? document.fonts.ready : Promise.resolve());
-      setTimeout(() => {
-        this.ready = true;
-      });
+    await new Promise<void>((res) => {
+      setTimeout(() => res());
     });
+    await (document.fonts ? document.fonts.ready : Promise.resolve());
+    this.ready = true;
   }
 
   private get manageTheme(): TemplateResult {

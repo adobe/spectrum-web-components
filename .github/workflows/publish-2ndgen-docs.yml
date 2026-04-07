@@ -1,0 +1,70 @@
+name: Publish 2nd-Gen Documentation
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-2ndgen-docs
+  cancel-in-progress: true
+
+env:
+  AZCOPY_AUTO_LOGIN_TYPE: SPN
+  AZCOPY_SPA_APPLICATION_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+  AZCOPY_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    name: Build and Deploy 2nd-Gen Docs
+    timeout-minutes: 30
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Use Node version from .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: yarn
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Check for cached dependencies
+        continue-on-error: true
+        id: cache-dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            .cache/yarn
+            node_modules
+          key: ubuntu-latest-${{ hashFiles('.nvmrc', 'package.json', 'yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build all generations
+        run: yarn build
+
+      - name: Build 2nd-gen Storybook
+        run: yarn workspace @spectrum-web-components/2nd-gen storybook:build
+
+      - name: Setup AzCopy
+        uses: ./.github/actions/setup-azcopy
+
+      - name: Deploy to Azure Blob Storage
+        run: |
+          echo "Deploying 2nd-gen docs to docs/"
+          azcopy sync "2nd-gen/packages/swc/storybook-static/" \
+            "https://swcpreviews.blob.core.windows.net/\$web/docs/" \
+            --recursive \
+            --delete-destination=true \
+            --from-to LocalBlob
+          echo "Deployed to https://swcpreviews.z13.web.core.windows.net/docs/"

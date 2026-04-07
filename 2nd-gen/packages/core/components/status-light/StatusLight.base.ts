@@ -15,14 +15,19 @@ import { property } from 'lit/decorators.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
 
-import { type StatusLightVariant } from './StatusLight.types.js';
+import {
+  STATUSLIGHT_VALID_SIZES,
+  type StatusLightVariant,
+} from './StatusLight.types.js';
 
 /**
  * A status light is a great way to convey semantic meaning and the condition of an entity, such as statuses and categories. It provides visual indicators through colored dots accompanied by descriptive text.
  *
  * @slot - The text label of the status light.
+ * @attribute {ElementSize} size - The size of the status light.
  */
 export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
+  validSizes: STATUSLIGHT_VALID_SIZES,
   noDefaultSize: true,
 }) {
   // ─────────────────────────

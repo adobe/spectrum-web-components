@@ -13,11 +13,14 @@
 import { TemplateResult } from '@spectrum-web-components/base';
 
 import type { Properties } from './index.js';
-import { renderButtons } from './index.js';
+import { argTypes, renderButtons } from './index.js';
 
 export default {
   component: 'sp-action-button',
   title: 'Action Button/Standard',
+  argTypes: {
+    ...argTypes,
+  },
 };
 
 export const XS = (args: Properties): TemplateResult => renderButtons(args);
@@ -43,4 +46,10 @@ l.args = {
 export const XL = (args: Properties): TemplateResult => renderButtons(args);
 XL.args = {
   size: 'xl',
+};
+
+export const href = (args: Properties): TemplateResult => renderButtons(args);
+href.args = {
+  size: 'm',
+  href: '#',
 };

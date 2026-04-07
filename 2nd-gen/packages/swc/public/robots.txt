@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://opensource.adobe.com/spectrum-web-components/second-gen/sitemap.xml

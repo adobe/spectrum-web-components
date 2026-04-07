@@ -38,9 +38,10 @@
     "test:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen test",
     "test:a11y": "playwright test --config=playwright.a11y.config.ts",
     "test:a11y:1st": "playwright test --config=playwright.a11y.config.ts --project=1st-gen",
-    "test:a11y:2nd": "playwright test --config=playwright.a11y.config.ts --project=2nd-gen",
+    "test:a11y:2nd": "playwright test --config=playwright.a11y.2ndgen.config.ts",
     "test:a11y:report": "playwright show-report 2nd-gen/test/playwright-a11y/report",
     "test:a11y:ui": "playwright test --config=playwright.a11y.config.ts --ui",
+    "generate:llms": "node scripts/generate-llms-txt.js",
     "tokens:test": "yarn workspace @adobe/swc-tokens test && yarn workspace @adobe/postcss-token test && yarn workspace swc-vscode-token test",
     "tokens:update": "yarn tokens:test && yarn workspace swc-vscode-token tokens && yarn workspace @adobe/spectrum-wc stylesheet:tokens && yarn workspace @adobe/spectrum-wc stylesheet:typography"
   },
@@ -56,6 +57,7 @@
   ],
   "resolutions": {
     "@web/test-runner-coverage-v8": "patch:@web/test-runner-coverage-v8@npm%3A0.8.0#~/.yarn/patches/@web-test-runner-coverage-v8-npm-0.8.0-b19cf60e5f.patch",
+    "basic-ftp": "5.2.0",
     "playwright": "1.53.1"
   },
   "devDependencies": {
@@ -89,6 +91,7 @@
     "prettier": "3.8.1",
     "prettier-plugin-package": "1.4.0",
     "replace-in-file": "8.3.0",
+    "start-server-and-test": "2.1.5",
     "stylelint": "17.1.1",
     "stylelint-config-standard": "40.0.0",
     "stylelint-declaration-strict-value": "1.10.11",
