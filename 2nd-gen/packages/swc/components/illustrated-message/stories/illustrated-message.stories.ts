@@ -66,7 +66,7 @@ const placeholderIllustration = html`
 `;
 
 export const Playground: Story = {
-  render: (args) => template(args),
+  render: (args) => template(args, placeholderIllustration),
   args: {
     heading: 'Illustrated message title',
     description:
@@ -121,6 +121,7 @@ export const HeadingLevels: Story = {
       </span>
     </swc-illustrated-message>
   `,
+  tags: ['options'],
 };
 
 /**
@@ -163,4 +164,5 @@ export const IllustrationAccessibility: Story = {
       </span>
     </swc-illustrated-message>
   `,
+  tags: ['a11y'],
 };
