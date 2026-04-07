@@ -1,18 +1,20 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../../README.md) / [Project planning](../../../README.md) / [Workstreams](../../README.md) / [2nd-gen Component Migration](../README.md) / Step By Step / Factor rendering out of 1st-gen component
+[CONTRIBUTOR-DOCS](../../../../README.md) / [Project planning](../../../README.md) / [Workstreams](../../README.md) / [2nd-gen Component Migration](../README.md) / Step By Step / Understand the 1st-gen component structure
 
 <!-- Document title (editable) -->
 
-# Factor rendering out of 1st-gen component
+# Understand the 1st-gen component structure
 
 <!-- Document content (editable) -->
 
-- Use `git mv` to rename `[Component].ts` to `[Component].base.ts`
-- Create a new `[Component].ts` file
-- In `[Component].base.ts`, edit the component definition to make it an abstract class named `[Component]Base`
-- In `[Component].ts`, import the `[Component]Base` class and define a new `[Component]` class extending from `[Component]Base`
-- Move the stylesheet import from the `[Component].base.ts` file to the `[Component].ts` file
-- Move the `render()` method and the static `styles` getter from the `[Component]Base` class to the `[Component]` class
-- If the 1st-gen component has any rendering code that has been factored out of the `render()` method (e.g., into helper methods), move that code from `[Component]Base` to `[Component]` as well
-- Confirm that the refactored component still renders and behaves the same, and that all tests continue to pass
+> **Context:** This step is about understanding the 1st-gen component before building the 2nd-gen version. You do **not** need to refactor 1st-gen — it remains self-contained.
+
+When studying the 1st-gen implementation, identify:
+
+- The **rendering logic** — `render()` method, helper render methods, Lit directives used
+- The **behavior logic** — properties, validation, lifecycle hooks, event handling
+- The **styles** — CSS imports, constructable stylesheets
+- The **mixins and controllers** — what shared utilities it depends on
+
+This understanding helps you decide what goes in the 2nd-gen **base class** (behavior) vs the **concrete class** (rendering and styles). See [Step 3: Create base class in 2nd-gen core](03_move-base-class-to-2nd-gen-core.md).

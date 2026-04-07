@@ -62,17 +62,20 @@ Source list: `.cursor/config.json` → `git.types`.
 
 ## Subject Line Rules
 
-- Use imperative, present tense: "Add feature" not "Added feature"
-- Capitalize the first letter
-- No period at the end
+- Use imperative, present tense: "add feature" not "added feature"
+- Start with a lowercase letter — commitlint enforces this (`subject-case` rule forbids sentence-case, start-case, pascal-case, and upper-case)
+- No period or white space at the end
 - Maximum 70 characters
 
 ## Body Guidelines
 
-- Explain **what** and **why**, not how
+- Explain **why** decisions were made, not how or what
 - Use imperative mood and present tense
 - Include motivation for the change
 - Contrast with previous behavior when relevant
+- Use a bullet point for each distinct concept or reason — this also handles line length naturally
+- If a bullet's text exceeds 80 characters, continue on the next line flush with the
+  bullet text (no indentation)
 
 ## Conventional Commits
 
@@ -86,29 +89,32 @@ The commit contains the following structural elements, to communicate intent to 
 
 ## Examples
 
-### Simple fix
+### Simple fix (with line wrapping)
 
 ```
-fix(api): Handle null response in user endpoint
+fix(api): handle null response in user endpoint
 
-The user API could return null for deleted accounts, causing a crash
-in the dashboard. Add null check before accessing user properties.
+- the user API could return null for deleted accounts, causing a crash
+in the dashboard
+- add a null check before accessing user properties to prevent the
+unhandled exception
 ```
 
-### Feature with scope
+### Feature with scope (with bullet points)
 
 ```
-feat(alerts): Add Slack thread replies for alert updates
+feat(alerts): add Slack thread replies for alert updates
 
-When an alert is updated or resolved, post a reply to the original
-Slack thread instead of creating a new message. This keeps related
-notifications grouped together.
+- post a reply to the original Slack thread when an alert is updated
+or resolved instead of creating a new message
+- keeps related notifications grouped together for easier scanning
+- reduces noise in high-volume alert channels
 ```
 
 ### Refactor
 
 ```
-refactor: Extract common validation logic to shared module
+refactor: extract common validation logic to shared module
 
 Move duplicate validation code from three endpoints into a shared
 validator class. No behavior change.
@@ -117,7 +123,7 @@ validator class. No behavior change.
 ### Breaking change
 
 ```
-feat(api)!: Remove deprecated v1 endpoints
+feat(api)!: remove deprecated v1 endpoints
 
 Remove all v1 API endpoints that were deprecated in version 23.1.
 Clients should migrate to v2 endpoints.
@@ -128,7 +134,7 @@ BREAKING CHANGE: v1 endpoints no longer available
 ## Revert Format
 
 ```
-revert: feat(api): Add new endpoint
+revert: feat(api): add new endpoint
 
 This reverts commit abc123def456.
 

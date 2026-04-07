@@ -1,5 +1,5 @@
 ---
-description:
+description: Suggests the preferred branch naming format for Spectrum Web Components contributions — lowercase, dash-separated, with a conventional commit type and optional issue number.
 globs:
 alwaysApply: true
 ---
