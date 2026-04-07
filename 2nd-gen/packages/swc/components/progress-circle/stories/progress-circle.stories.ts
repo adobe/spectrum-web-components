@@ -191,6 +191,7 @@ export const Sizes: Story = {
  * - **white**: Use on dark or colored backgrounds for better contrast
  * - **black**: Use on light backgrounds for better contrast
  */
+// @todo: capture the Chromatic VRTs for all sizes of progress circles for both static color options and WHCM. SWC-1848
 export const StaticColors: Story = {
   render: (args) => html`
     ${PROGRESS_CIRCLE_STATIC_COLORS_S2.map(
