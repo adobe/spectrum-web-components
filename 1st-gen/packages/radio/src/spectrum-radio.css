@@ -87,6 +87,7 @@
   position: fixed;
   inset-block-end: 100%;
   inset-inline-end: 100%;
+  /* stylelint-disable-next-line property-no-deprecated */
   clip: rect(1px, 1px, 1px, 1px);
   clip-path: inset(50%);
 }
