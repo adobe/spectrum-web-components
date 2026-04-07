@@ -85,8 +85,6 @@ export class ProgressCircle extends ProgressCircleBase {
           ['swc-ProgressCircle--indeterminate']: this.indeterminate,
           [`swc-ProgressCircle--static${capitalize(this.staticColor)}`]:
             typeof this.staticColor !== 'undefined',
-          [`swc-ProgressCircle--size${this.size?.toUpperCase()}`]:
-            typeof this.size !== 'undefined',
         })}
       >
         <svg fill="none" width="100%" height="100%">
