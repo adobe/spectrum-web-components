@@ -39,6 +39,12 @@ argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
   options: ProgressCircle.VALID_SIZES,
+  table: {
+    category: 'attributes',
+    defaultValue: {
+      summary: 'm',
+    },
+  },
 };
 
 argTypes['static-color'] = {
@@ -92,7 +98,6 @@ export const Playground: Story = {
   tags: ['autodocs', 'dev'],
   args: {
     progress: 50,
-    size: 'm',
     label: 'Uploading document',
   },
 };
@@ -129,23 +134,23 @@ export const Anatomy: Story = {
     ${template({
       ...args,
       progress: 0,
-      size: 'l',
       label: 'Starting upload',
     })}
     ${template({
       ...args,
       progress: 50,
-      size: 'l',
       label: 'Uploading document',
     })}
     ${template({
       ...args,
       progress: 100,
-      size: 'l',
       label: 'Upload complete',
     })}
   `,
   tags: ['anatomy'],
+  args: {
+    size: 'l',
+  },
 };
 
 // ──────────────────────────
@@ -224,9 +229,6 @@ export const ProgressValues: Story = {
     ${template({ ...args, progress: 100, label: 'Download complete' })}
   `,
   tags: ['states'],
-  args: {
-    size: 'm',
-  },
   parameters: {
     'section-order': 1,
   },
@@ -247,7 +249,6 @@ export const Indeterminate: Story = {
   tags: ['states'],
   args: {
     indeterminate: true,
-    size: 'm',
     label: 'Processing request',
   },
   parameters: {
