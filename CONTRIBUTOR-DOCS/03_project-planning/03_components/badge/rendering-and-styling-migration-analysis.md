@@ -19,6 +19,7 @@
     - [CSS => SWC mapping](#css--swc-mapping)
 - [Summary of changes](#summary-of-changes)
     - [CSS => SWC implementation gaps](#css--swc-implementation-gaps)
+    - [TODOs](#todos)
     - [CSS Spectrum 2 changes](#css-spectrum-2-changes)
 - [Resources](#resources)
 
