@@ -337,7 +337,7 @@ export const Disabled: Story = {
  * ### Best practices
  *
  * - Always set `alt` — omitting it causes some screen readers to announce the image URL
- * - Use `alt=""` (decorative) only when the person is identified by adjacent text
+ * - Use `alt=""` and `decorative` attribute only when the person is identified by adjacent text
  * - Keep alt text short and descriptive: prefer `"Jane Doe"` over `"Profile photo of Jane Doe"`
  */
 export const Accessibility: Story = {
