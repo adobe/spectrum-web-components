@@ -392,7 +392,11 @@ const preview = {
                 'Help text',
                 ['Rendering and styling migration analysis'],
                 'Illustrated message',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Migration plan',
+                  'Rendering and styling migration analysis',
+                ],
                 'Infield button',
                 ['Rendering and styling migration analysis'],
                 'Infield progress circle',
