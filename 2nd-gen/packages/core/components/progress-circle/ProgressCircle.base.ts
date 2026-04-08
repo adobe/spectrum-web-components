@@ -69,6 +69,8 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
   // ──────────────────
 
   /**
+   * @todo Revisit the default API for `indeterminate` and `progress`. SWC-1891
+   *
    * Whether the progress circle shows indeterminate progress (loading state).
    *
    * When true, displays an animated loading indicator instead of a specific progress value.
