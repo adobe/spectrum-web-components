@@ -72,11 +72,9 @@ CSS custom properties *normally* can't actually be "private". However, due to sh
 
 ```css
 .swc-StatusLight {
-  --_swc-statuslight-top-to-text: var(--swc-statuslight-top-to-text, token("component-top-to-text-100"));
-  --_swc-statuslight-bottom-to-text: var(--swc-statuslight-bottom-to-text, token("component-bottom-to-text-100"));
+  --_swc-statuslight-padding-block: var(--swc-statuslight-padding-block, token("component-padding-vertical-100"));
 
-  padding-block-start: var(--_swc-statuslight-top-to-text);
-  padding-block-end: var(--_swc-statuslight-bottom-to-text);
+  padding-block: var(--_swc-statuslight-padding-block);
 }
 ```
 

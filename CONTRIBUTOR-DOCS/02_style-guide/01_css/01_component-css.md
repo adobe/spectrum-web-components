@@ -287,7 +287,7 @@ Size variants (s, m, l, xl) use `:host([size="..."])` and update custom properti
 
 ```css
 :host([size="s"]) {
-  --swc-statuslight-top-to-text: token("component-top-to-text-75");
+  --swc-statuslight-padding-block: token("component-padding-vertical-75");
   --swc-statuslight-height: token("component-height-75");
   --swc-statuslight-dot-size: token("status-light-dot-size-small");
   --swc-statuslight-font-size: token("font-size-75");
