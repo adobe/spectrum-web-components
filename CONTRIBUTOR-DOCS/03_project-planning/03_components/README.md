@@ -30,6 +30,7 @@
     - [Avatar migration roadmap](avatar/rendering-and-styling-migration-analysis.md)
 - Badge
     - [Badge accessibility migration analysis](badge/accessibility-migration-analysis.md)
+    - [Badge Styling Validation](badge/badge-styling-validation.md)
     - [Badge migration roadmap](badge/rendering-and-styling-migration-analysis.md)
 - Button
     - [Button migration roadmap](button/rendering-and-styling-migration-analysis.md)
@@ -41,6 +42,7 @@
     - [Color field migration roadmap](color-field/rendering-and-styling-migration-analysis.md)
 - Divider
     - [Divider accessibility migration analysis](divider/accessibility-migration-analysis.md)
+    - [Divider Styling Validation](divider/divider-styling-validation.md)
     - [Divider migration roadmap](divider/rendering-and-styling-migration-analysis.md)
 - Dropzone
     - [Dropzone migration roadmap](dropzone/rendering-and-styling-migration-analysis.md)
@@ -70,6 +72,7 @@
     - [Progress bar migration roadmap](progress-bar/rendering-and-styling-migration-analysis.md)
 - Progress Circle
     - [Progress circle accessibility migration analysis](progress-circle/accessibility-migration-analysis.md)
+    - [Progress circle styling validation](progress-circle/progress-circle-styling-validation.md)
     - [Progress Circle migration roadmap](progress-circle/rendering-and-styling-migration-analysis.md)
 - Radio
     - [Radio migration roadmap](radio/rendering-and-styling-migration-analysis.md)
@@ -80,6 +83,7 @@
 - Status Light
     - [Status light accessibility migration analysis](status-light/accessibility-migration-analysis.md)
     - [Status Light migration roadmap](status-light/rendering-and-styling-migration-analysis.md)
+    - [Status light styling validation](status-light/statuslight-styling-validation.md)
 - Swatch
     - [Swatch migration roadmap](swatch/rendering-and-styling-migration-analysis.md)
 - Swatch Group
