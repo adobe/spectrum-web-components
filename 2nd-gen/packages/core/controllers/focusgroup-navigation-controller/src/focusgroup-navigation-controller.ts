@@ -729,16 +729,18 @@ export class FocusgroupNavigationController implements ReactiveController {
       return;
     }
 
+    const isGrid = this.options.direction === 'grid';
+    const rows = isGrid ? this.buildRows(items) : null;
+
     if (
-      this.options.direction === 'grid' &&
+      isGrid &&
       event.ctrlKey &&
       !event.metaKey &&
       (event.key === 'Home' || event.key === 'End')
     ) {
-      const grid = this.buildRows(items);
-      if (grid.length > 0) {
-        const firstRow = grid[0];
-        const lastRow = grid[grid.length - 1];
+      if (rows!.length > 0) {
+        const firstRow = rows![0];
+        const lastRow = rows![rows!.length - 1];
         const boundary =
           event.key === 'Home'
             ? (firstRow?.[0] ?? null)
@@ -763,7 +765,8 @@ export class FocusgroupNavigationController implements ReactiveController {
       const pageNext = this.navigatePage(
         items,
         target,
-        event.key === 'PageDown' ? pageMagnitude : -pageMagnitude
+        event.key === 'PageDown' ? pageMagnitude : -pageMagnitude,
+        rows
       );
       if (pageNext && pageNext !== target) {
         event.preventDefault();
@@ -786,7 +789,7 @@ export class FocusgroupNavigationController implements ReactiveController {
         next = this.navigateBothAxes(items, target, event.key, rtl);
         break;
       case 'grid':
-        next = this.navigateGrid(items, target, event.key, rtl);
+        next = this.navigateGrid(target, event.key, rtl, rows!);
         break;
       default:
         break;
@@ -799,10 +802,7 @@ export class FocusgroupNavigationController implements ReactiveController {
     }
 
     if (event.key === 'Home' || event.key === 'End') {
-      const ordered =
-        this.options.direction === 'grid'
-          ? this.buildRows(items).flat()
-          : items;
+      const ordered = isGrid ? rows!.flat() : items;
       if (ordered.length === 0) {
         return;
       }
@@ -856,10 +856,11 @@ export class FocusgroupNavigationController implements ReactiveController {
   private navigatePage(
     items: HTMLElement[],
     current: HTMLElement,
-    signedDelta: number
+    signedDelta: number,
+    rows: HTMLElement[][] | null
   ): HTMLElement | null {
     if (this.options.direction === 'grid') {
-      return this.navigatePageGridRows(items, current, signedDelta);
+      return this.navigatePageGridRows(current, signedDelta, rows!);
     }
     return this.navigatePageLinearItems(items, current, signedDelta);
   }
@@ -890,11 +891,10 @@ export class FocusgroupNavigationController implements ReactiveController {
    * Page Up/Down by whole rows in `grid` mode (column clamped per {@link navigateGrid}).
    */
   private navigatePageGridRows(
-    items: HTMLElement[],
     current: HTMLElement,
-    rowDelta: number
+    rowDelta: number,
+    grid: HTMLElement[][]
   ): HTMLElement | null {
-    const grid = this.buildRows(items);
     if (grid.length === 0) {
       return null;
     }
@@ -1018,19 +1018,18 @@ export class FocusgroupNavigationController implements ReactiveController {
    * Computes the next focus target for `grid` {@link FocusgroupDirection} mode using
    * row clustering and column indices.
    *
-   * @param items - Eligible items (layout-derived rows may differ from DOM order).
    * @param current - Currently focused item.
    * @param key - `KeyboardEvent.key` value.
    * @param rtl - When true, horizontal Left/Right swap column direction within a row.
+   * @param grid - Pre-built row grid from {@link buildRows}.
    * @returns Next cell item, or null if the key is not handled or movement is blocked.
    */
   private navigateGrid(
-    items: HTMLElement[],
     current: HTMLElement,
     key: string,
-    rtl: boolean
+    rtl: boolean,
+    grid: HTMLElement[][]
   ): HTMLElement | null {
-    const grid = this.buildRows(items);
     const pos = this.findGridIndex(grid, current);
     if (!pos) {
       return null;
