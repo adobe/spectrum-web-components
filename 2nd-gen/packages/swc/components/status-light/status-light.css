@@ -36,7 +36,7 @@
   font-style: token("default-font-style");
   font-weight: token("regular-font-weight");
   line-height: var(--_swc-statuslight-line-height);
-  color: var(--swc-statuslight-content-color, token("neutral-content-color-default"));
+  color: token("neutral-content-color-default");
 
   &:lang(ja),
   &:lang(zh),
@@ -48,8 +48,6 @@
   &::before {
     --_swc-statuslight-dot-size: var(--swc-statuslight-dot-size, token("status-light-dot-size-medium"));
 
-    box-sizing: border-box;
-    display: inline-block;
     flex-grow: 0;
     flex-shrink: 0;
     inline-size: var(--_swc-statuslight-dot-size);
