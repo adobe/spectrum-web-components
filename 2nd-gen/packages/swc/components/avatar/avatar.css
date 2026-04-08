@@ -126,7 +126,7 @@
 :host([show-stroke][size="1300"]) .swc-Avatar-image,
 :host([show-stroke][size="1400"]) .swc-Avatar-image,
 :host([show-stroke][size="1500"]) .swc-Avatar-image {
-  outline-width: 2px;
+  --swc-avatar-border-width: 2px;
 }
 
 /* ── Disabled state ─────────────────────────────────────── */
