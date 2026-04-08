@@ -18,11 +18,8 @@ import { IllustratedMessage } from '@adobe/spectrum-wc/illustrated-message';
 import '@adobe/spectrum-wc/illustrated-message';
 
 import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
-import meta, {
-  Orientation,
-  Overview,
-  Sizes,
-} from '../stories/illustrated-message.stories.js';
+import meta from '../stories/illustrated-message.stories.js';
+import { Overview } from '../stories/illustrated-message.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
@@ -51,12 +48,6 @@ export const OverviewTest: Story = {
       expect(illustratedMessage.headingLevel, 'default heading level').toBe(2);
     });
 
-    await step('renders heading text from attribute', async () => {
-      expect(illustratedMessage.heading, 'heading attribute value').toBe(
-        'Illustrated message title'
-      );
-    });
-
     await step('renders an h2 element in shadow DOM by default', async () => {
       expect(
         illustratedMessage.shadowRoot?.querySelector('h2'),
@@ -72,9 +63,9 @@ export const OverviewTest: Story = {
 
 export const AllHeadingLevelsTest: Story = {
   render: () => html`
-    <swc-illustrated-message
-      heading="Heading level test"
-    ></swc-illustrated-message>
+    <swc-illustrated-message>
+      <span slot="heading">Heading level test</span>
+    </swc-illustrated-message>
   `,
   play: async ({ canvasElement, step }) => {
     const illustratedMessage = await getComponent<IllustratedMessage>(
@@ -104,9 +95,9 @@ export const AllHeadingLevelsTest: Story = {
 
 export const HeadingLevelClampTest: Story = {
   render: () => html`
-    <swc-illustrated-message
-      heading="Clamped heading"
-    ></swc-illustrated-message>
+    <swc-illustrated-message>
+      <span slot="heading">Clamped heading</span>
+    </swc-illustrated-message>
   `,
   play: async ({ canvasElement, step }) => {
     const illustratedMessage = await getComponent<IllustratedMessage>(
@@ -135,7 +126,7 @@ export const HeadingLevelClampTest: Story = {
 
 export const DescriptionSlotTest: Story = {
   render: () => html`
-    <swc-illustrated-message heading="Test">
+    <swc-illustrated-message>
       <span slot="description">Description text here.</span>
     </swc-illustrated-message>
   `,
@@ -156,104 +147,14 @@ export const DescriptionSlotTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Size
-// ──────────────────────────────────────────────────────────────
-
-export const SizesTest: Story = {
-  ...Sizes,
-  play: async ({ canvasElement, step }) => {
-    const messages = canvasElement.querySelectorAll('swc-illustrated-message');
-
-    await step('reflects size="s" attribute', async () => {
-      const el = messages[0] as IllustratedMessage;
-      await el.updateComplete;
-      expect(el.size, 'size property').toBe('s');
-      expect(el.getAttribute('size'), 'size attribute').toBe('s');
-    });
-
-    await step('reflects size="m" attribute (default)', async () => {
-      const el = messages[1] as IllustratedMessage;
-      await el.updateComplete;
-      expect(el.size, 'size property').toBe('m');
-      expect(el.getAttribute('size'), 'size attribute').toBe('m');
-    });
-
-    await step('reflects size="l" attribute', async () => {
-      const el = messages[2] as IllustratedMessage;
-      await el.updateComplete;
-      expect(el.size, 'size property').toBe('l');
-      expect(el.getAttribute('size'), 'size attribute').toBe('l');
-    });
-  },
-};
-
-export const DefaultSizeTest: Story = {
-  render: () => html`
-    <swc-illustrated-message heading="Default size"></swc-illustrated-message>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const el = await getComponent<IllustratedMessage>(
-      canvasElement,
-      'swc-illustrated-message'
-    );
-
-    await step('defaults to size="m"', async () => {
-      expect(el.size, 'default size property').toBe('m');
-    });
-  },
-};
-
-// ──────────────────────────────────────────────────────────────
-// TEST: Orientation
-// ──────────────────────────────────────────────────────────────
-
-export const OrientationTest: Story = {
-  ...Orientation,
-  play: async ({ canvasElement, step }) => {
-    const messages = canvasElement.querySelectorAll('swc-illustrated-message');
-
-    await step('defaults to orientation="vertical"', async () => {
-      const el = messages[0] as IllustratedMessage;
-      await el.updateComplete;
-      expect(el.orientation, 'orientation property').toBe('vertical');
-    });
-
-    await step('reflects orientation="horizontal" attribute', async () => {
-      const el = messages[1] as IllustratedMessage;
-      await el.updateComplete;
-      expect(el.orientation, 'orientation property').toBe('horizontal');
-      expect(el.getAttribute('orientation'), 'orientation attribute').toBe(
-        'horizontal'
-      );
-    });
-  },
-};
-
-export const DefaultOrientationTest: Story = {
-  render: () => html`
-    <swc-illustrated-message
-      heading="Default orientation"
-    ></swc-illustrated-message>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const el = await getComponent<IllustratedMessage>(
-      canvasElement,
-      'swc-illustrated-message'
-    );
-
-    await step('defaults to orientation="vertical"', async () => {
-      expect(el.orientation, 'default orientation property').toBe('vertical');
-    });
-  },
-};
-
-// ──────────────────────────────────────────────────────────────
 // TEST: Dev mode warnings
 // ──────────────────────────────────────────────────────────────
 
 export const InvalidHeadingLevelWarningTest: Story = {
   render: () => html`
-    <swc-illustrated-message heading="Test"></swc-illustrated-message>
+    <swc-illustrated-message>
+      <span slot="heading">Test</span>
+    </swc-illustrated-message>
   `,
   play: async ({ canvasElement, step }) => {
     const illustratedMessage = await getComponent<IllustratedMessage>(
@@ -281,7 +182,9 @@ export const InvalidHeadingLevelWarningTest: Story = {
 
 export const ValidHeadingLevelNoWarningTest: Story = {
   render: () => html`
-    <swc-illustrated-message heading="Test"></swc-illustrated-message>
+    <swc-illustrated-message>
+      <span slot="heading">Test</span>
+    </swc-illustrated-message>
   `,
   play: async ({ canvasElement, step }) => {
     const illustratedMessage = await getComponent<IllustratedMessage>(

@@ -16,16 +16,3 @@ export const ILLUSTRATED_MESSAGE_VALID_HEADING_LEVELS = [
 
 export type IllustratedMessageHeadingLevel =
   (typeof ILLUSTRATED_MESSAGE_VALID_HEADING_LEVELS)[number];
-
-export const ILLUSTRATED_MESSAGE_VALID_SIZES = ['s', 'm', 'l'] as const;
-
-export type IllustratedMessageSize =
-  (typeof ILLUSTRATED_MESSAGE_VALID_SIZES)[number];
-
-export const ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS = [
-  'horizontal',
-  'vertical',
-] as const;
-
-export type IllustratedMessageOrientation =
-  (typeof ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS)[number];

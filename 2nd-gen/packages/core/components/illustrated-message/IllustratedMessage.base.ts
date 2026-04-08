@@ -17,11 +17,7 @@ import { SpectrumElement } from '@spectrum-web-components/core/element/index.js'
 
 import {
   ILLUSTRATED_MESSAGE_VALID_HEADING_LEVELS,
-  ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS,
-  ILLUSTRATED_MESSAGE_VALID_SIZES,
   type IllustratedMessageHeadingLevel,
-  type IllustratedMessageOrientation,
-  type IllustratedMessageSize,
 } from './IllustratedMessage.types.js';
 
 /**
@@ -46,33 +42,9 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
   static readonly VALID_HEADING_LEVELS: readonly IllustratedMessageHeadingLevel[] =
     ILLUSTRATED_MESSAGE_VALID_HEADING_LEVELS;
 
-  /**
-   * @internal
-   */
-  static readonly VALID_SIZES: readonly IllustratedMessageSize[] =
-    ILLUSTRATED_MESSAGE_VALID_SIZES;
-
-  /**
-   * @internal
-   */
-  static readonly VALID_ORIENTATIONS: readonly IllustratedMessageOrientation[] =
-    ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS;
-
   // ──────────────────
   //     SHARED API
   // ──────────────────
-
-  /**
-   * Plain-text heading. Used as fallback when the heading slot is empty.
-   */
-  @property({ type: String })
-  public heading = '';
-
-  /**
-   * Plain-text description. Used as fallback when the description slot is empty.
-   */
-  @property({ type: String })
-  public description = '';
 
   /**
    * The heading level rendered in shadow DOM. Accepts 2–6; values outside
@@ -80,20 +52,6 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
    */
   @property({ type: Number, reflect: true, attribute: 'heading-level' })
   public headingLevel: IllustratedMessageHeadingLevel = 2;
-
-  /**
-   * The size of the illustrated message. Accepts `s`, `m`, or `l`; defaults to `m`.
-   */
-  @property({ type: String, reflect: true })
-  public size: IllustratedMessageSize = 'm';
-
-  /**
-   * The layout orientation of the illustrated message. `vertical` stacks the
-   * illustration above the content; `horizontal` places them side by side.
-   * Defaults to `vertical`.
-   */
-  @property({ type: String, reflect: true })
-  public orientation: IllustratedMessageOrientation = 'vertical';
 
   // ──────────────────────
   //     IMPLEMENTATION

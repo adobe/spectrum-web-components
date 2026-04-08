@@ -46,9 +46,8 @@ export class IllustratedMessage extends IllustratedMessageBase {
 
   protected override render(): TemplateResult {
     const level = this.getHeadingLevel();
-    const heading = html`
-      <slot name="heading">${this.heading}</slot>
-    `;
+    const headingClass = 'swc-IllustratedMessage-heading';
+    const heading = html`<slot name="heading"></slot>`;
 
     return html`
       <div class="swc-IllustratedMessage">
@@ -58,25 +57,25 @@ export class IllustratedMessage extends IllustratedMessageBase {
         <div class="swc-IllustratedMessage-content">
           ${level === 2
             ? html`
-                <h2 class="swc-IllustratedMessage-heading">${heading}</h2>
+                <h2 class=${headingClass}>${heading}</h2>
               `
             : level === 3
               ? html`
-                  <h3 class="swc-IllustratedMessage-heading">${heading}</h3>
+                  <h3 class=${headingClass}>${heading}</h3>
                 `
               : level === 4
                 ? html`
-                    <h4 class="swc-IllustratedMessage-heading">${heading}</h4>
+                    <h4 class=${headingClass}>${heading}</h4>
                   `
                 : level === 5
                   ? html`
-                      <h5 class="swc-IllustratedMessage-heading">${heading}</h5>
+                      <h5 class=${headingClass}>${heading}</h5>
                     `
                   : html`
-                      <h6 class="swc-IllustratedMessage-heading">${heading}</h6>
+                      <h6 class=${headingClass}>${heading}</h6>
                     `}
           <div class="swc-IllustratedMessage-description">
-            <slot name="description">${this.description}</slot>
+            <slot name="description"></slot>
           </div>
         </div>
       </div>
