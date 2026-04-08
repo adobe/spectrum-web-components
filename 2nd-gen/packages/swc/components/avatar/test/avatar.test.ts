@@ -59,6 +59,7 @@ export const OverviewTest: Story = {
       expect(avatar.showStroke, 'showStroke property').toBe(false);
       expect(avatar.disabled, 'disabled property').toBe(false);
       expect(avatar.decorative, 'decorative property').toBe(false);
+      expect(avatar.decorative, 'decorative property').toBe(false);
     });
 
     await step('size attribute is present after first render', async () => {
