@@ -253,6 +253,12 @@ export class FocusgroupNavigationController implements ReactiveController {
    */
   private previousActive: HTMLElement | null = null;
 
+  /**
+   * Guard flag set during keyboard navigation so that the `focusin` triggered
+   * by `item.focus()` does not redundantly call {@link applyRovingTabindex}.
+   */
+  private isNavigating = false;
+
   // ─────────────────────────
   //     PUBLIC API
   // ─────────────────────────
@@ -618,6 +624,9 @@ export class FocusgroupNavigationController implements ReactiveController {
    * @param event - Focus event whose target may be a group item.
    */
   private handleFocusin(event: FocusEvent): void {
+    if (this.isNavigating) {
+      return;
+    }
     const target = event.target;
     if (!(target instanceof HTMLElement)) {
       return;
@@ -810,8 +819,13 @@ export class FocusgroupNavigationController implements ReactiveController {
    * Applies roving tabindex to `item` and moves DOM focus; used for keyboard navigation only.
    */
   private moveKeyNavigationFocusTo(item: HTMLElement): void {
-    if (this.setActiveItem(item)) {
-      item.focus();
+    this.isNavigating = true;
+    try {
+      if (this.setActiveItem(item)) {
+        item.focus();
+      }
+    } finally {
+      this.isNavigating = false;
     }
   }
 
