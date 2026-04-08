@@ -47,9 +47,7 @@ export class IllustratedMessage extends IllustratedMessageBase {
   protected override render(): TemplateResult {
     const level = this.getHeadingLevel();
     const headingClass = 'swc-IllustratedMessage-heading';
-    const heading = html`
-      <slot name="heading">${this.heading}</slot>
-    `;
+    const heading = html`<slot name="heading"></slot>`;
 
     return html`
       <div class="swc-IllustratedMessage">
@@ -77,7 +75,7 @@ export class IllustratedMessage extends IllustratedMessageBase {
                       <h6 class=${headingClass}>${heading}</h6>
                     `}
           <div class="swc-IllustratedMessage-description">
-            <slot name="description">${this.description}</slot>
+            <slot name="description"></slot>
           </div>
         </div>
       </div>

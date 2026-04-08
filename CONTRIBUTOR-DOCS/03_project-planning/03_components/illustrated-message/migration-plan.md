@@ -88,6 +88,7 @@ No mixins, no shared utilities, no other SWC components composed inside. No depe
 |---|---|---|---|---|
 | **B1** | Heading slot content type | Accepts any node inside `<h2>` | Accepts `<span>` only; shadow DOM owns the heading tag | Consumers slotting plain text or `<span>` are unaffected. Consumers who slotted `<h2>`–`<h6>` (incorrect but possible) must switch to `<span>`. Ships now — deferring would cause font property inheritance side-effects and a second migration event. |
 | **B2** | CSS token migration (S1 → S2) | Uses `--spectrum-*` base tokens with `--mod-*` override chains (e.g. `var(--mod-illustrated-message-title-color, var(--spectrum-illustrated-message-title-color))`). Forced-colors override applied on `:host`. | `--mod-*` and `--spectrum-*` chains removed; collapsed into `--swc-*` (exposed) or `--_swc-*` (private) properties per [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure). Forced colors moved to internal `.swc-IllustratedMessage` selector. | Since no `--mod-*` properties were ever documented as public API, there is no consumer breakage. Any new `--swc-*` properties introduced are additive capability. |
+| **B3** | `heading` and `description` attributes removed | `heading` and `description` were available as plain-text attribute fallbacks when slots were empty. | Both attributes and properties are removed. All content must be provided via slots: `<span slot="heading">` and `<span slot="description">`. This is idiomatic web component API and avoids a dual-path content model. Consumers must switch to slots. |
 | **A11y** | Heading level control | Always `<h2>`, no way for consumers to change level | `heading-level` attribute (`2`–`6`, default `2`); shadow DOM renders the correct `<hN>` tag | Consumers using the default are unaffected. Consumers needing a different level add `heading-level`. Required for WCAG 1.3.1 and 2.4.6 compliance. |
 | **A11y** | Illustration accessibility | No handling for decorative vs informative SVGs | Decorative SVGs: `aria-hidden="true"`; informative: `role="img"` + `aria-label` / `<title>` | Slot contract; documented guidance rather than enforced by the component. |
 
@@ -109,8 +110,6 @@ These are derived from the a11y analysis and rendering roadmap. Confirmed items 
 
 | Property | Type | Default | Attribute | Notes |
 |---|---|---|---|---|
-| `heading` | `string` | `''` | `heading` | Carry forward; attribute is fallback, slot takes precedence via `<slot name="heading">${this.heading}</slot>` |
-| `description` | `string` | `''` | `description` | Carry forward; same fallback pattern |
 | `headingLevel` | `2 \| 3 \| 4 \| 5 \| 6` | `2` | `heading-level` | **New.** Values outside `2`–`6` silently clamped using `Math.max(2, Math.min(6, level))` — same pattern as `AccordionItem.getHeadingLevel()`. |
 | `size` | `'s' \| 'm' \| 'l'` | `'m'` | `size` | **New.**  `m` is the implicit base style `s` and `l` override via `:host([size="s"])` / `:host([size="l"])` attribute selectors per [selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions). |
 | `horizontal` | `boolean` | `false` | `horizontal` | **New.** Drives horizontal layout variant. |

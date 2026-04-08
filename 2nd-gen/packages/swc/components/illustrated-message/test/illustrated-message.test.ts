@@ -48,12 +48,6 @@ export const OverviewTest: Story = {
       expect(illustratedMessage.headingLevel, 'default heading level').toBe(2);
     });
 
-    await step('renders heading text from attribute', async () => {
-      expect(illustratedMessage.heading, 'heading attribute value').toBe(
-        'Illustrated message title'
-      );
-    });
-
     await step('renders an h2 element in shadow DOM by default', async () => {
       expect(
         illustratedMessage.shadowRoot?.querySelector('h2'),
@@ -69,9 +63,9 @@ export const OverviewTest: Story = {
 
 export const AllHeadingLevelsTest: Story = {
   render: () => html`
-    <swc-illustrated-message
-      heading="Heading level test"
-    ></swc-illustrated-message>
+    <swc-illustrated-message>
+      <span slot="heading">Heading level test</span>
+    </swc-illustrated-message>
   `,
   play: async ({ canvasElement, step }) => {
     const illustratedMessage = await getComponent<IllustratedMessage>(
@@ -101,9 +95,9 @@ export const AllHeadingLevelsTest: Story = {
 
 export const HeadingLevelClampTest: Story = {
   render: () => html`
-    <swc-illustrated-message
-      heading="Clamped heading"
-    ></swc-illustrated-message>
+    <swc-illustrated-message>
+      <span slot="heading">Clamped heading</span>
+    </swc-illustrated-message>
   `,
   play: async ({ canvasElement, step }) => {
     const illustratedMessage = await getComponent<IllustratedMessage>(
@@ -132,7 +126,7 @@ export const HeadingLevelClampTest: Story = {
 
 export const DescriptionSlotTest: Story = {
   render: () => html`
-    <swc-illustrated-message heading="Test">
+    <swc-illustrated-message>
       <span slot="description">Description text here.</span>
     </swc-illustrated-message>
   `,
@@ -158,7 +152,9 @@ export const DescriptionSlotTest: Story = {
 
 export const InvalidHeadingLevelWarningTest: Story = {
   render: () => html`
-    <swc-illustrated-message heading="Test"></swc-illustrated-message>
+    <swc-illustrated-message>
+      <span slot="heading">Test</span>
+    </swc-illustrated-message>
   `,
   play: async ({ canvasElement, step }) => {
     const illustratedMessage = await getComponent<IllustratedMessage>(
@@ -186,7 +182,9 @@ export const InvalidHeadingLevelWarningTest: Story = {
 
 export const ValidHeadingLevelNoWarningTest: Story = {
   render: () => html`
-    <swc-illustrated-message heading="Test"></swc-illustrated-message>
+    <swc-illustrated-message>
+      <span slot="heading">Test</span>
+    </swc-illustrated-message>
   `,
   play: async ({ canvasElement, step }) => {
     const illustratedMessage = await getComponent<IllustratedMessage>(

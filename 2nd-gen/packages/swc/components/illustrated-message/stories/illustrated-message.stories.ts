@@ -66,19 +66,26 @@ const placeholderIllustration = html`
 `;
 
 export const Playground: Story = {
-  render: (args) => template(args, placeholderIllustration),
-  args: {
-    heading: 'Illustrated message title',
-    description:
-      'Illustrated message description. Give more information about what a user can do, expect, or how to make items appear.',
-  },
+  render: (args) =>
+    template(
+      args,
+      html`
+        ${placeholderIllustration}
+        <span slot="heading">Illustrated message title</span>
+        <span slot="description">
+          Illustrated message description. Give more information about what a
+          user can do, expect, or how to make items appear.
+        </span>
+      `
+    ),
   tags: ['autodocs', 'dev'],
 };
 
 export const Overview: Story = {
   render: () => html`
-    <swc-illustrated-message heading="Illustrated message title">
+    <swc-illustrated-message>
       ${placeholderIllustration}
+      <span slot="heading">Illustrated message title</span>
       <span slot="description">
         Illustrated message description. Give more information about what a user
         can do, expect, or how to make items appear.
@@ -90,31 +97,25 @@ export const Overview: Story = {
 
 export const HeadingLevels: Story = {
   render: () => html`
-    <swc-illustrated-message
-      heading="Illustrated message title"
-      heading-level="2"
-    >
+    <swc-illustrated-message heading-level="2">
       ${placeholderIllustration}
+      <span slot="heading">Illustrated message title</span>
       <span slot="description">
         Illustrated message description. Give more information about what a user
         can do, expect, or how to make items appear.
       </span>
     </swc-illustrated-message>
-    <swc-illustrated-message
-      heading="Illustrated message title"
-      heading-level="3"
-    >
+    <swc-illustrated-message heading-level="3">
       ${placeholderIllustration}
+      <span slot="heading">Illustrated message title</span>
       <span slot="description">
         Illustrated message description. Give more information about what a user
         can do, expect, or how to make items appear.
       </span>
     </swc-illustrated-message>
-    <swc-illustrated-message
-      heading="Illustrated message title"
-      heading-level="4"
-    >
+    <swc-illustrated-message heading-level="4">
       ${placeholderIllustration}
+      <span slot="heading">Illustrated message title</span>
       <span slot="description">
         Illustrated message description. Give more information about what a user
         can do, expect, or how to make items appear.
@@ -135,8 +136,9 @@ export const HeadingLevels: Story = {
  */
 export const IllustrationAccessibility: Story = {
   render: () => html`
-    <swc-illustrated-message heading="Illustrated message title">
+    <swc-illustrated-message>
       <span slot="">${iconCloud({ width: 64, height: 64 })}</span>
+      <span slot="heading">Illustrated message title</span>
       <span slot="description">
         The icon above uses
         <code>aria-hidden="true"</code>
@@ -145,7 +147,8 @@ export const IllustrationAccessibility: Story = {
       </span>
     </swc-illustrated-message>
 
-    <swc-illustrated-message heading="Illustrated message title">
+    <swc-illustrated-message>
+      <span slot="heading">Illustrated message title</span>
       <span slot="">
         ${iconCloud({
           width: 120,

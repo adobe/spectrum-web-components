@@ -47,18 +47,6 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
   // ──────────────────
 
   /**
-   * Plain-text heading. Used as fallback when the heading slot is empty.
-   */
-  @property({ type: String })
-  public heading = '';
-
-  /**
-   * Plain-text description. Used as fallback when the description slot is empty.
-   */
-  @property({ type: String })
-  public description = '';
-
-  /**
    * The heading level rendered in shadow DOM. Accepts 2–6; values outside
    * this range are clamped using `Math.max(2, Math.min(6, value))`.
    */
