@@ -245,6 +245,14 @@ export class FocusgroupNavigationController implements ReactiveController {
    */
   private lastFocused: HTMLElement | null = null;
 
+  /**
+   * Tracks the previously dispatched active item so that
+   * {@link applyRovingTabindex} only fires the active-change event and
+   * {@link FocusgroupNavigationOptions.onActiveItemChange} callback when the
+   * active item actually changes.
+   */
+  private previousActive: HTMLElement | null = null;
+
   // ─────────────────────────
   //     PUBLIC API
   // ─────────────────────────
@@ -301,8 +309,11 @@ export class FocusgroupNavigationController implements ReactiveController {
         el.tabIndex = -1;
       }
       this.lastFocused = null;
-      this.dispatchActiveChange(null);
-      this.options.onActiveItemChange?.(null);
+      if (this.previousActive !== null) {
+        this.previousActive = null;
+        this.dispatchActiveChange(null);
+        this.options.onActiveItemChange?.(null);
+      }
       return;
     }
 
@@ -575,8 +586,11 @@ export class FocusgroupNavigationController implements ReactiveController {
         el.tabIndex = -1;
       }
     }
-    this.dispatchActiveChange(safeActive);
-    this.options.onActiveItemChange?.(safeActive);
+    if (safeActive !== this.previousActive) {
+      this.previousActive = safeActive;
+      this.dispatchActiveChange(safeActive);
+      this.options.onActiveItemChange?.(safeActive);
+    }
   }
 
   /**
