@@ -332,7 +332,7 @@ export const Disabled: Story = {
  * #### Alt text
  *
  * - Provide a descriptive `alt` value identifying the person or entity depicted
- * - Pass `alt=""` to mark the image as decorative when the name already appears in context
+ * - Pass `alt=""` and set the `decorative` attribute when the name already appears in context
  *
  * ### Best practices
  *
