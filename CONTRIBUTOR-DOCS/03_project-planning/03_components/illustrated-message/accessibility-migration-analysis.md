@@ -49,7 +49,7 @@ This doc defines how `swc-illustrated-message` should work for accessibility and
 
 ### Heading hierarchy and page context
 
-The component cannot know which `h2`–`h6` level is correct for the page; authors must set that explicitly. The only supported pattern is: title text comes from the `heading` attribute and/or the `heading` slot (see below), and the semantic heading element is always created in shadow DOM.
+The component cannot know which `h2`–`h6` level is correct for the page; authors must set that explicitly. The only supported pattern is: title text comes from the `heading` slot (see below), and the semantic heading element is always created in shadow DOM.
 
 Do not use `h1` for the illustrated message title. `h1` is for the primary page (or dialog / sheet title outside this block). This component exposes `h2`–`h6` only via `heading-level` (`2`–`6`).
 
@@ -57,7 +57,6 @@ Do not use `h1` for the illustrated message title. `h1` is for the primary page 
 
 - `heading-level` property (attribute `heading-level`): integers `2`–`6`, default `2`. The shadow tree renders exactly one `<h2>` … `<h6>` matching that value. Values outside `2`–`6` (including `1`) must be clamped or coerced to `2`–`6` (for example `1` → `2`), or rejected in types with a documented default—pick one policy and document it in Storybook.
 - `heading` slot: accepts a `span` only (or equivalent documented phrasing: a single `span` wrapper as the slotted node). Do not allow slotted `<h1>`–`<h6>`; authors must not put heading elements in light DOM for this slot. Implementation may validate in dev and warn or ignore invalid slotted tags.
-- Optional `heading` attribute: when used, its text is rendered as the title inside the shadow heading (alongside or instead of slot content per product rules—document the precedence if both exist).
 
 This differs from putting a real heading in the slot (as in accordion item titles) and from 1st-gen, which always wraps the slot in `<h2>` with no level control. Accordion still allows `level` `1`–`6` on the parent ([SWC-1466](https://jira.corp.adobe.com/browse/SWC-1466), [PR #5969](https://github.com/adobe/spectrum-web-components/pull/5969)); illustrated message uses `heading-level` `2`–`6` only (no `h1`).
 
@@ -93,7 +92,7 @@ Bottom line: Authors choose `heading-level` (`2`–`6`, i.e. `h2`–`h6`) to mat
 | `heading-level` | Required behavior: `2`–`6`, default `2`. Clamp or coerce out-of-range values; document behavior for invalid input (same spirit as accordion `getHeadingLevel()`). |
 | `heading` slot | Span only: document that the slot must contain a `span` (or stricter: exactly one root `span`). No slotted `<h1>`–`<h6>`. |
 | Shadow heading | Single heading element in shadow DOM; tag is `<h2>`–`<h6>` per `heading-level`. Slot and/or `heading` attribute supply text content inside that element (not the element type). |
-| `heading` attribute | Plain-text title when slot is empty or as fallback; document interaction with slotted content if both are present. |
+| `heading` slot | Only mechanism for providing heading content; no attribute fallback. |
 | Docs | Examples across `heading-level` `2`–`6` (for example below page `h1` vs nested under `h3`). Contrast with accordion: accordion allows `level` `1`; illustrated message does not. |
 
 ### Other content and slots
@@ -112,7 +111,7 @@ Bottom line: Authors choose `heading-level` (`2`–`6`, i.e. `h2`–`h6`) to mat
 
 Typical open state
 
-- One heading: correct `h2`–`h6` from `heading-level`, with label text from `heading` attribute and/or `heading` slot (`span` content).
+- One heading: correct `h2`–`h6` from `heading-level`, with label text from the `heading` slot (`span` content).
 - Description as text content (and focusable links if present).
 - Illustration exposed or hidden per decorative vs informative rules.
 
