@@ -22,22 +22,21 @@
 }
 
 .swc-StatusLight {
-  --_swc-statuslight-top-to-text: var(--swc-statuslight-top-to-text, token("component-top-to-text-100"));
-  --_swc-statuslight-bottom-to-text: var(--swc-statuslight-bottom-to-text, token("component-bottom-to-text-100"));
+  --_swc-statuslight-padding-block: var(--swc-statuslight-padding-block, token("component-padding-vertical-100"));
   --_swc-statuslight-top-to-dot: var(--swc-statuslight-top-to-dot, token("status-light-top-to-dot-medium"));
   --_swc-statuslight-text-to-visual: var(--swc-statuslight-text-to-visual, token("status-light-text-to-visual-100"));
+  --_swc-statuslight-line-height: var(--swc-statuslight-line-height, token("line-height-font-size-100"));
 
   display: flex;
   gap: var(--_swc-statuslight-text-to-visual);
   align-items: flex-start;
   min-block-size: var(--swc-statuslight-height, token("component-height-100"));
-  padding-block-start: var(--_swc-statuslight-top-to-text);
-  padding-block-end: var(--_swc-statuslight-bottom-to-text);
+  padding-block: var(--_swc-statuslight-padding-block);
   font-size: var(--swc-statuslight-font-size, token("font-size-100"));
   font-style: token("default-font-style");
   font-weight: token("regular-font-weight");
-  line-height: token("line-height-100");
-  color: var(--swc-statuslight-content-color, token("neutral-content-color-default"));
+  line-height: var(--_swc-statuslight-line-height);
+  color: token("neutral-content-color-default");
 
   &:lang(ja),
   &:lang(zh),
@@ -49,13 +48,11 @@
   &::before {
     --_swc-statuslight-dot-size: var(--swc-statuslight-dot-size, token("status-light-dot-size-medium"));
 
-    box-sizing: border-box;
-    display: inline-block;
     flex-grow: 0;
     flex-shrink: 0;
     inline-size: var(--_swc-statuslight-dot-size);
     block-size: var(--_swc-statuslight-dot-size);
-    margin-block-start: calc(var(--_swc-statuslight-top-to-dot) - var(--_swc-statuslight-top-to-text));
+    margin-block-start: calc(var(--_swc-statuslight-top-to-dot) - var(--_swc-statuslight-padding-block));
     background-color: var(--swc-statuslight-dot-color);
     border-radius: token("corner-radius-full");
     content: "";
@@ -63,36 +60,36 @@
 }
 
 :host([size="s"]) {
-  --swc-statuslight-top-to-text: token("component-top-to-text-75");
-  --swc-statuslight-bottom-to-text: token("component-bottom-to-text-75");
+  --swc-statuslight-padding-block: token("component-padding-vertical-75");
   --swc-statuslight-top-to-dot: token("status-light-top-to-dot-small");
   --swc-statuslight-text-to-visual: token("status-light-text-to-visual-75");
   --swc-statuslight-height: token("component-height-75");
   --swc-statuslight-dot-size: token("status-light-dot-size-small");
   --swc-statuslight-font-size: token("font-size-75");
+  --swc-statuslight-line-height: token("line-height-font-size-75");
 }
 
 :host([size="l"]) {
-  --swc-statuslight-top-to-text: token("component-top-to-text-200");
-  --swc-statuslight-bottom-to-text: token("component-bottom-to-text-200");
+  --swc-statuslight-padding-block: token("component-padding-vertical-200");
   --swc-statuslight-top-to-dot: token("status-light-top-to-dot-large");
   --swc-statuslight-text-to-visual: token("status-light-text-to-visual-200");
   --swc-statuslight-height: token("component-height-200");
   --swc-statuslight-dot-size: token("status-light-dot-size-large");
   --swc-statuslight-font-size: token("font-size-200");
+  --swc-statuslight-line-height: token("line-height-font-size-200");
 }
 
 :host([size="xl"]) {
-  --swc-statuslight-top-to-text: token("component-top-to-text-300");
-  --swc-statuslight-bottom-to-text: token("component-bottom-to-text-300");
+  --swc-statuslight-padding-block: token("component-padding-vertical-300");
   --swc-statuslight-top-to-dot: token("status-light-top-to-dot-extra-large");
   --swc-statuslight-text-to-visual: token("status-light-text-to-visual-300");
   --swc-statuslight-height: token("component-height-300");
   --swc-statuslight-dot-size: token("status-light-dot-size-extra-large");
   --swc-statuslight-font-size: token("font-size-300");
+  --swc-statuslight-line-height: token("line-height-font-size-300");
 }
 
-/* Semantic Colors */
+/* Semantic colors */
 :host([variant="neutral"]) {
   --swc-statuslight-content-color: token("gray-600");
   --swc-statuslight-dot-color: token("neutral-visual-color");
@@ -114,7 +111,7 @@
   --swc-statuslight-dot-color: token("positive-visual-color");
 }
 
-/* Non-Semantic Colors */
+/* Non-semantic colors */
 .swc-StatusLight--yellow {
   --swc-statuslight-dot-color: token("yellow-visual-color");
 }
