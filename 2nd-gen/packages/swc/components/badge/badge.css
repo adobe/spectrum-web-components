@@ -26,6 +26,7 @@
   --_swc-badge-padding-block: var(--swc-badge-padding-block, token("component-padding-vertical-100"));
   --_swc-badge-padding-inline-start: var(--swc-badge-padding-inline-start, var(--swc-badge-padding-inline, token("component-edge-to-text-100")));
   --_swc-badge-padding-inline: var(--swc-badge-padding-inline, token("component-edge-to-text-100"));
+  --_swc-badge-line-height: var(--swc-badge-line-height, token("line-height-font-size-100"));
 
   display: inline-flex;
   gap: var(--swc-badge-gap, token("text-to-visual-100"));
@@ -56,7 +57,7 @@
   font-size: var(--swc-badge-font-size, token("font-size-100"));
   font-weight: token("medium-font-weight");
   text-box: cap alphabetic;
-  line-height: var(--swc-badge-line-height, token("line-height-100"));
+  line-height: var(--_swc-badge-line-height);
 
   &:lang(ja),
   &:lang(zh),
@@ -86,6 +87,7 @@
   --swc-badge-padding-block: token("component-padding-vertical-75");
   --swc-badge-font-size: token("font-size-75");
   --swc-badge-icon-size: token("workflow-icon-size-75");
+  --swc-badge-line-height: token("line-height-font-size-75");
 }
 
 :host([size="l"]) {
@@ -99,6 +101,7 @@
   --swc-badge-padding-block: token("component-padding-vertical-200");
   --swc-badge-font-size: token("font-size-200");
   --swc-badge-icon-size: token("workflow-icon-size-200");
+  --swc-badge-line-height: token("line-height-font-size-200");
 }
 
 :host([size="xl"]) {
@@ -112,6 +115,7 @@
   --swc-badge-padding-block: token("component-padding-vertical-300");
   --swc-badge-font-size: token("font-size-300");
   --swc-badge-icon-size: token("workflow-icon-size-300");
+  --swc-badge-line-height: token("line-height-font-size-300");
 }
 
 .swc-Badge--fixed-inline-start {
