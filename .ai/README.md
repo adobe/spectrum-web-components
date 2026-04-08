@@ -219,6 +219,13 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: On the analyze-rendering-and-styling step for one or more components; creating one markdown file per component at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`
 - Provides: Workflow summary (specs from CSS + SWC, three-way DOM comparison, CSS⇒SWC mapping table, summary). Full instructions in `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_analyze-rendering-and-styling/cursor_prompt.md`
 
+#### PR review
+
+- **purpose**: Perform a first-round pre-PR review of a feature branch against `main`, with repo-specific guidance for accessibility, 2nd-gen testing, CSS, and TypeScript patterns
+- **How to invoke**: Say “perform a PR review of this branch”, “review this branch against main”, or “do a first-round code review before I open the PR”. You can also specify a different base branch.
+- Use when: Reviewing changed files before requesting team review, writing feedback to `.ai/pr-feedback/pr-feedback-#.md`, and checking branch changes against repo guidance and targeted commands
+- Provides: Workflow summary (scaffold report, inspect diff, run targeted checks, findings-first review report). Full instructions in `.ai/skills/pr-review/references/pr-review-prompt.md`
+
 #### Washing machine migration workflow
 
 - **purpose**: End-to-end 1st-gen → 2nd-gen migration sequence (phases, checklists, links to step docs and style guides)

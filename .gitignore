@@ -2,6 +2,7 @@
 .cursor/mcp.json
 .cursor/handoffs
 .ai/handoffs
+.ai/pr-feedback
 .claude/handoffs
 .claude/settings.local.json
 .claude/worktrees
