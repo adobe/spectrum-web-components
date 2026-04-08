@@ -102,10 +102,10 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
   /** True when light DOM has element nodes or non-whitespace text (no default slot). */
   private static hasMeaningfulLightDomChildren(host: HTMLElement): boolean {
     for (const node of host.childNodes) {
-      if (node.nodeType === Node.ELEMENT_NODE) {
-        return true;
-      }
-      if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
+      if (
+        node.nodeType === Node.ELEMENT_NODE ||
+        (node.nodeType === Node.TEXT_NODE && node.textContent?.trim())
+      ) {
         return true;
       }
     }
