@@ -82,7 +82,7 @@ export class StatusLight extends StatusLightBase {
             typeof this.variant !== 'undefined',
         })}
       >
-        <slot></slot>
+        <span class="swc-StatusLight-label"><slot></slot></span>
       </div>
     `;
   }
