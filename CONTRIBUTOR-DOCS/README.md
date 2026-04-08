@@ -63,13 +63,13 @@ Spectrum Web Components is currently in transition from its first generation (1s
 
 These docs contain essential information about the SWC project for both maintainers (members of the core team) and contributors from outside the core team.
 
-The docs are organized into three main sections to help you find the information you need:
+The docs are organized into sections to help you find the information you need:
 
 **[Contributor Guides](./01_contributor-guides/README.md)** - Topical guides for working on the project. This section includes guides for getting started, understanding processes, and accomplishing specific tasks like adding new components or editing these contributor docs themselves. When you change doc structure or headings, see [Authoring contributor docs](./01_contributor-guides/07_authoring-contributor-docs/README.md) to regenerate navigation and verify links.
 
 **[Style Guide](./02_style-guide/README.md)** - Comprehensive style guide covering project-wide conventions and area-specific rules. This section is useful for human reference and for AI-assisted work, documenting our approaches to linting, JSDoc conventions, component structure, and other coding standards.
 
-**[Accessibility Guide](./01_contributor-guides/09_accessibility-testing.md)** - Accessibility guide covering essential accessibility knowledge and practices for customers and contributors to Spectrum Web Components.
+**[Accessibility testing](./01_contributor-guides/09_accessibility-testing.md)** - Automated accessibility testing, snapshots, and manual testing expectations for pull requests.
 
 **[Project Planning](./03_project-planning/README.md)** - Strategic planning documentation including objectives, workstreams, component roadmaps, and milestones. This section contains:
 
