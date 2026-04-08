@@ -283,6 +283,12 @@ export const Indeterminate: Story = {
  * - High contrast mode is supported with appropriate color overrides
  * - Static color variants ensure sufficient contrast on different backgrounds
  *
+ *  #### Non-interactive element
+ *
+ * - Progress circles have no interactive behavior and are not focusable
+ * - Screen readers will announce the progress circle content as static text
+ * - No keyboard interaction is required or expected
+ *
  * ### Best practices
  *
  * - Always provide a descriptive `label` that explains what the progress represents
