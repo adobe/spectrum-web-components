@@ -67,6 +67,9 @@
     - [Number field migration roadmap](number-field/rendering-and-styling-migration-analysis.md)
 - Opacity Checkerboard
     - [Opacity Checkerboard migration roadmap](opacity-checkerboard/rendering-and-styling-migration-analysis.md)
+- Picker
+    - [Picker accessibility migration analysis](picker/accessibility-migration-analysis.md)
+    - [Picker migration roadmap](picker/rendering-and-styling-migration-analysis.md)
 - Picker Button
     - [Picker button migration roadmap](picker-button/rendering-and-styling-migration-analysis.md)
 - Progress Bar
