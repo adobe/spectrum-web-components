@@ -124,7 +124,7 @@ export class Badge extends BadgeBase {
 /**
  * @element swc-progress-circle
  *
- * @property {string} static-color - Static color variant for use on different backgrounds.
+ * @property {string} staticColor - Reflected as the `static-color` attribute. Static color variant for use on different backgrounds.
  * @property {number} progress - Progress value between 0 and 100.
  *
  * @example
@@ -141,6 +141,23 @@ Declares the slots the component provides. Use this on the **base class**. If th
 
 - Default slot: `@slot - Description`
 - Named slot: `@slot name - Description`
+
+**CEM:** Put the full slot description on **one line** with the `@slot` tag. The Custom Elements Manifest analyzer does not preserve extra JSDoc lines as part of the slot description; continuation lines are easy to lose or merge unpredictably in generated manifests and Storybook. If you need more detail, add it in the class prose (above the tags) or in component stories—not on following lines under `@slot`.
+
+```ts
+// ✅ Good — single line per slot
+/**
+ * @slot - Text label of the badge.
+ * @slot icon - Optional icon to the left of the label.
+ */
+
+// ❌ Bad — multiline slot description (do not rely on this for CEM)
+/**
+ * @slot - Short summary on the first line.
+ *
+ *   Extra lines you meant as part of the same slot description.
+ */
+```
 
 **Example from Badge.base.ts:**
 
@@ -195,13 +212,15 @@ Declares properties at the class level for CEM tools. This is different from the
 
 **Format:** `@property {Type} name - Description`
 
+Use the **JavaScript property name** in the tag (e.g. `staticColor`), not the HTML attribute spelling when it differs (e.g. `static-color`). Hyphenated names are not valid JSDoc namepaths and trigger `jsdoc/valid-types`. Mention the attribute in the description when useful.
+
 **Example from ProgressCircle.ts:**
 
 ```ts
 /**
  * @element swc-progress-circle
  *
- * @property {string} static-color - Static color variant for use on different backgrounds.
+ * @property {string} staticColor - Reflected as the `static-color` attribute. Static color variant for use on different backgrounds.
  * @property {number} progress - Progress value between 0 and 100.
  * @property {boolean} indeterminate - Indeterminate state for loading.
  * @property {string} size - Size of the component.
@@ -365,14 +384,14 @@ Standard JSDoc tags for function parameters and return values. Use them on metho
 - `@returns {Type} Description`
 
 ```ts
-// ✅ Good — describes non-obvious parameter
+// ✅ Good — documents parameter and return when types alone are not enough
 /**
- * Creates a CSS rotation string for the progress indicator.
+ * Whether the string is a supported banner variant.
  *
- * @param rotation - The rotation angle in degrees
- * @returns The CSS rotation value, or undefined if not needed
+ * @param variant - Candidate variant from an attribute or property
+ * @returns True when `variant` is in `ALERT_BANNER_VALID_VARIANTS`
  */
-protected makeRotation(rotation: number): string | undefined { ... }
+protected isValidVariant(variant: string): boolean { ... }
 ```
 
 `@param` and `@returns` are optional when the types and names are self-explanatory.
