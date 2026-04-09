@@ -118,7 +118,6 @@ export const Overview: Story = {
  * 3. **Label** - Accessible text describing the operation (not visually rendered).
  *
  * > **A11y Note:** Light DOM children are not projected into the shadow tree, so content between the opening and closing tags does not supply an accessible name. Use the `label` attribute or property, or `aria-label` / `aria-labelledby` on the host.
- *
  */
 export const Anatomy: Story = {
   render: () => html`
