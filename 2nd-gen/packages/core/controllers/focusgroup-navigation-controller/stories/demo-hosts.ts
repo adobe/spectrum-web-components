@@ -21,6 +21,8 @@ import { customElement } from 'lit/decorators.js';
 
 import {
   type FocusgroupDirection,
+  focusgroupNavigationActiveChange,
+  type FocusgroupNavigationActiveChangeDetail,
   FocusgroupNavigationController,
 } from '../index.js';
 
@@ -34,6 +36,8 @@ declare global {
     'demo-focusgroup-grid': DemoFocusgroupGrid;
     'demo-focusgroup-programmatic': DemoFocusgroupProgrammatic;
     'demo-focusgroup-text-prefix': DemoFocusgroupTextPrefix;
+    'demo-focusgroup-dynamic': DemoFocusgroupDynamic;
+    'demo-focusgroup-event-tracker': DemoFocusgroupEventTracker;
   }
 }
 
@@ -963,6 +967,171 @@ export class DemoFocusgroupTextPrefix extends LitElement {
           Focus match for &quot;cu&quot; → Cut
         </button>
       </div>
+    `;
+  }
+}
+
+// ─────────────────────────────────
+//     DYNAMIC ITEMS DEMO HOST
+// ─────────────────────────────────
+
+/**
+ * @internal
+ *
+ * Storybook-only host for testing dynamic item addition, removal, and
+ * inert toggling with {@link FocusgroupNavigationController}.
+ */
+@customElement('demo-focusgroup-dynamic')
+export class DemoFocusgroupDynamic extends LitElement {
+  static override styles = css`
+    :host {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    button {
+      font: inherit;
+      padding: 8px 12px;
+      border-radius: 4px;
+      border: 1px solid var(--spectrum-gray-400, #ccc);
+      background: var(--spectrum-gray-75, #f5f5f5);
+      cursor: pointer;
+    }
+    button:focus-visible {
+      outline: 2px solid var(--spectrum-blue-800, #0265dc);
+      outline-offset: 2px;
+    }
+  `;
+
+  static override properties = {
+    items: { type: Array },
+  };
+
+  declare items: string[];
+
+  constructor() {
+    super();
+    this.items = ['Alpha', 'Beta', 'Gamma', 'Delta'];
+  }
+
+  private readonly navigation = new FocusgroupNavigationController(this, {
+    direction: 'horizontal',
+    wrap: true,
+    getItems: () =>
+      Array.from(this.renderRoot.querySelectorAll<HTMLElement>('button')),
+  });
+
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
+    this.navigation.refresh();
+  }
+
+  protected override updated(changedProperties: PropertyValues): void {
+    super.updated(changedProperties);
+    if (changedProperties.has('items')) {
+      this.navigation.refresh();
+    }
+  }
+
+  public callRefresh(): void {
+    this.navigation.refresh();
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      ${this.items.map(
+        (label) => html`
+          <button type="button">${label}</button>
+        `
+      )}
+    `;
+  }
+}
+
+// ─────────────────────────────────────
+//     EVENT TRACKER DEMO HOST
+// ─────────────────────────────────────
+
+/**
+ * @internal
+ *
+ * Storybook-only host that tracks active-change events dispatched by
+ * {@link FocusgroupNavigationController} for test assertions.
+ */
+@customElement('demo-focusgroup-event-tracker')
+export class DemoFocusgroupEventTracker extends LitElement {
+  static override styles = css`
+    :host {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    button {
+      font: inherit;
+      padding: 8px 12px;
+      border-radius: 4px;
+      border: 1px solid var(--spectrum-gray-400, #ccc);
+      background: var(--spectrum-gray-75, #f5f5f5);
+      cursor: pointer;
+    }
+    button:focus-visible {
+      outline: 2px solid var(--spectrum-blue-800, #0265dc);
+      outline-offset: 2px;
+    }
+  `;
+
+  public activeChangeLog: (string | null)[] = [];
+  public callbackLog: (string | null)[] = [];
+
+  private readonly navigation = new FocusgroupNavigationController(this, {
+    direction: 'horizontal',
+    wrap: false,
+    getItems: () =>
+      Array.from(this.renderRoot.querySelectorAll<HTMLElement>('button')),
+    onActiveItemChange: (el: HTMLElement | null) => {
+      this.callbackLog.push(el?.textContent?.trim() ?? null);
+    },
+  });
+
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
+    this.navigation.refresh();
+  }
+
+  public override connectedCallback(): void {
+    super.connectedCallback?.();
+    this.addEventListener(
+      focusgroupNavigationActiveChange,
+      this.handleActiveChange as EventListener
+    );
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback?.();
+    this.removeEventListener(
+      focusgroupNavigationActiveChange,
+      this.handleActiveChange as EventListener
+    );
+  }
+
+  private handleActiveChange = (
+    event: CustomEvent<FocusgroupNavigationActiveChangeDetail>
+  ): void => {
+    this.activeChangeLog.push(
+      event.detail.activeElement?.textContent?.trim() ?? null
+    );
+  };
+
+  public clearLogs(): void {
+    this.activeChangeLog = [];
+    this.callbackLog = [];
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <button type="button">First</button>
+      <button type="button">Second</button>
+      <button type="button">Third</button>
     `;
   }
 }

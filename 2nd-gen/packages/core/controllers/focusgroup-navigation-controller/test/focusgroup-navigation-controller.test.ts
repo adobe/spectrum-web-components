@@ -9,21 +9,33 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
+import '../stories/demo-hosts.js';
+
 import { getComponent } from '../../../../swc/utils/test-utils.js';
-import focusMeta, {
-  BothAxesLinear,
+import {
+  focusgroupNavigationActiveChange,
+  type FocusgroupNavigationActiveChangeDetail,
+} from '../index.js';
+import type {
+  DemoFocusgroupDynamic,
+  DemoFocusgroupEventTracker,
+  DemoFocusgroupPlayground,
   DemoFocusgroupProgrammatic,
   DemoFocusgroupTextPrefix,
+} from '../stories/demo-hosts.js';
+import focusMeta, {
+  BothAxesLinear,
   Grid,
   HorizontalToolbar,
   ProgrammaticFocus,
   SkipDisabledMenu,
   TextPrefixFocus,
   VerticalMenu,
-} from '../stories/demo-hosts.js';
+} from '../stories/focusgroup-navigation-controller.stories.js';
 
 type KeydownOptions = {
   ctrlKey?: boolean;
@@ -501,5 +513,430 @@ export const TextPrefixFocusNavigation: Story = {
     await step('no match returns false', async () => {
       expect(host.focusByTextPrefix('zzz')).toBe(false);
     });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// Memory: Tab re-entry remembers last focused item (#25)
+// ──────────────────────────────────────────────────────────────
+
+export const MemoryTabReentry: Story = {
+  ...HorizontalToolbar,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<HTMLElement>(
+      canvasElement,
+      'demo-focusgroup-horizontal'
+    );
+    const root = host.shadowRoot!;
+    const buttons = Array.from(
+      root.querySelectorAll<HTMLButtonElement>('button')
+    );
+
+    await step(
+      'after navigating to third item, tabindex=0 remains on that item when focus leaves',
+      async () => {
+        buttons[0].focus();
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Bold');
+
+        keydown(buttons[0], 'ArrowRight');
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Italic');
+
+        keydown(shadowActiveButton(host)!, 'ArrowRight');
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Underline');
+
+        (document.activeElement as HTMLElement)?.blur();
+
+        const tabbable = buttons.filter((b) => b.tabIndex === 0);
+        expect(tabbable.length).toBe(1);
+        expect(tabbable[0].textContent?.trim()).toBe('Underline');
+      }
+    );
+
+    await step(
+      'Tab re-entry to the group lands on the remembered item',
+      async () => {
+        const remembered = buttons.find((b) => b.tabIndex === 0);
+        expect(remembered).toBeTruthy();
+        remembered!.focus();
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Underline');
+
+        keydown(shadowActiveButton(host)!, 'ArrowRight');
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe(
+          'Strikethrough'
+        );
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// RTL: ArrowLeft/ArrowRight swap in dir="rtl" context (#26)
+// ──────────────────────────────────────────────────────────────
+
+export const RTLArrowNavigation: Story = {
+  render: () => html`
+    <div dir="rtl">
+      <demo-focusgroup-horizontal
+        role="toolbar"
+        aria-label="RTL toolbar"
+      ></demo-focusgroup-horizontal>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<HTMLElement>(
+      canvasElement,
+      'demo-focusgroup-horizontal'
+    );
+    const root = host.shadowRoot!;
+    const first = root.querySelector<HTMLButtonElement>('button')!;
+
+    await step('ArrowLeft moves forward in RTL', async () => {
+      first.focus();
+      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Bold');
+
+      keydown(first, 'ArrowLeft');
+      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Italic');
+
+      keydown(shadowActiveButton(host)!, 'ArrowLeft');
+      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Underline');
+    });
+
+    await step('ArrowRight moves backward in RTL', async () => {
+      keydown(shadowActiveButton(host)!, 'ArrowRight');
+      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Italic');
+
+      keydown(shadowActiveButton(host)!, 'ArrowRight');
+      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Bold');
+    });
+
+    await step(
+      'wrap still works: ArrowRight from first wraps to last',
+      async () => {
+        keydown(shadowActiveButton(host)!, 'ArrowRight');
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe(
+          'Strikethrough'
+        );
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// Dynamic items: refresh() after adding/removing items (#27)
+// ──────────────────────────────────────────────────────────────
+
+export const DynamicItemRefresh: Story = {
+  render: () => html`
+    <demo-focusgroup-dynamic
+      role="toolbar"
+      aria-label="Dynamic toolbar"
+    ></demo-focusgroup-dynamic>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DemoFocusgroupDynamic>(
+      canvasElement,
+      'demo-focusgroup-dynamic'
+    );
+    const root = host.shadowRoot!;
+
+    await step('initial items have correct roving tabindex', async () => {
+      const buttons = Array.from(
+        root.querySelectorAll<HTMLButtonElement>('button')
+      );
+      expect(buttons.length).toBe(4);
+      const tabbable = buttons.filter((b) => b.tabIndex === 0);
+      expect(tabbable.length).toBe(1);
+    });
+
+    await step(
+      'removing items and calling refresh reassigns tabindex',
+      async () => {
+        host.items = ['Epsilon', 'Zeta'];
+        await host.updateComplete;
+
+        const buttons = Array.from(
+          root.querySelectorAll<HTMLButtonElement>('button')
+        );
+        expect(buttons.length).toBe(2);
+        const tabbable = buttons.filter((b) => b.tabIndex === 0);
+        expect(tabbable.length).toBe(1);
+        expect(tabbable[0].textContent?.trim()).toBe('Epsilon');
+      }
+    );
+
+    await step(
+      'adding items back and refreshing preserves navigation',
+      async () => {
+        host.items = ['Epsilon', 'Zeta', 'Eta'];
+        await host.updateComplete;
+
+        const buttons = Array.from(
+          root.querySelectorAll<HTMLButtonElement>('button')
+        );
+        expect(buttons.length).toBe(3);
+
+        buttons[0].focus();
+        keydown(buttons[0], 'ArrowRight');
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Zeta');
+
+        keydown(shadowActiveButton(host)!, 'ArrowRight');
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Eta');
+
+        keydown(shadowActiveButton(host)!, 'ArrowRight');
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Epsilon');
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// onActiveItemChange callback and custom event (#28, #29)
+// ──────────────────────────────────────────────────────────────
+
+export const ActiveChangeEventAndCallback: Story = {
+  render: () => html`
+    <demo-focusgroup-event-tracker
+      role="toolbar"
+      aria-label="Event tracker toolbar"
+    ></demo-focusgroup-event-tracker>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DemoFocusgroupEventTracker>(
+      canvasElement,
+      'demo-focusgroup-event-tracker'
+    );
+    const root = host.shadowRoot!;
+    const buttons = Array.from(
+      root.querySelectorAll<HTMLButtonElement>('button')
+    );
+
+    await step(
+      'custom event fires with correct detail on arrow navigation',
+      async () => {
+        host.clearLogs();
+        buttons[0].focus();
+        keydown(buttons[0], 'ArrowRight');
+
+        expect(host.activeChangeLog.length).toBeGreaterThan(0);
+        expect(host.activeChangeLog).toContain('Second');
+      }
+    );
+
+    await step(
+      'onActiveItemChange callback fires alongside event',
+      async () => {
+        host.clearLogs();
+        buttons[0].focus();
+        keydown(buttons[0], 'ArrowRight');
+
+        expect(host.callbackLog.length).toBeGreaterThan(0);
+        expect(host.callbackLog).toContain('Second');
+      }
+    );
+
+    await step('event detail has correct activeElement reference', async () => {
+      let receivedDetail: FocusgroupNavigationActiveChangeDetail | null = null;
+      const handler = ((
+        event: CustomEvent<FocusgroupNavigationActiveChangeDetail>
+      ) => {
+        receivedDetail = event.detail;
+      }) as EventListener;
+
+      host.addEventListener(focusgroupNavigationActiveChange, handler);
+
+      buttons[0].focus();
+      keydown(buttons[0], 'ArrowRight');
+
+      expect(receivedDetail).toBeTruthy();
+      expect(receivedDetail!.activeElement).toBeInstanceOf(HTMLButtonElement);
+      expect(receivedDetail!.activeElement?.textContent?.trim()).toBe('Second');
+
+      host.removeEventListener(focusgroupNavigationActiveChange, handler);
+    });
+
+    await step('event bubbles and is composed', async () => {
+      let captured = false;
+      const handler = ((event: CustomEvent) => {
+        expect(event.bubbles).toBe(true);
+        expect(event.composed).toBe(true);
+        captured = true;
+      }) as EventListener;
+
+      canvasElement.addEventListener(focusgroupNavigationActiveChange, handler);
+
+      buttons[0].focus();
+      keydown(buttons[0], 'ArrowRight');
+
+      expect(captured).toBe(true);
+
+      canvasElement.removeEventListener(
+        focusgroupNavigationActiveChange,
+        handler
+      );
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// setOptions: dynamic direction change at runtime (#30)
+// ──────────────────────────────────────────────────────────────
+
+export const SetOptionsDirectionChange: Story = {
+  render: () => html`
+    <demo-focusgroup-playground
+      .direction=${'horizontal'}
+      .wrap=${true}
+    ></demo-focusgroup-playground>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<HTMLElement>(
+      canvasElement,
+      'demo-focusgroup-playground'
+    );
+    const root = host.shadowRoot!;
+
+    await step(
+      'horizontal mode: ArrowRight moves forward, ArrowDown does nothing',
+      async () => {
+        const first = root.querySelector<HTMLButtonElement>('button')!;
+        first.focus();
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Bold');
+
+        keydown(first, 'ArrowRight');
+        const afterRight = shadowActiveButton(host)?.textContent?.trim();
+        expect(afterRight).toBe('Italic');
+
+        keydown(shadowActiveButton(host)!, 'ArrowDown');
+        const afterDown = shadowActiveButton(host)?.textContent?.trim();
+        expect(afterDown).toBe('Italic');
+      }
+    );
+
+    await step(
+      'switching to both via property: ArrowDown now moves forward',
+      async () => {
+        (host as DemoFocusgroupPlayground).direction = 'both';
+        await (host as DemoFocusgroupPlayground).updateComplete;
+
+        const current = shadowActiveButton(host)!;
+        keydown(current, 'ArrowDown');
+        const afterDown = shadowActiveButton(host)?.textContent?.trim();
+        expect(afterDown).not.toBe(current.textContent?.trim());
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// Inert attribute: items with [inert] are excluded (#31)
+// ──────────────────────────────────────────────────────────────
+
+export const InertItemsSkipped: Story = {
+  render: () => html`
+    <demo-focusgroup-dynamic
+      role="toolbar"
+      aria-label="Inert test toolbar"
+    ></demo-focusgroup-dynamic>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DemoFocusgroupDynamic>(
+      canvasElement,
+      'demo-focusgroup-dynamic'
+    );
+    const root = host.shadowRoot!;
+
+    await step('all four items are navigable initially', async () => {
+      const buttons = Array.from(
+        root.querySelectorAll<HTMLButtonElement>('button')
+      );
+      expect(buttons.length).toBe(4);
+
+      buttons[0].focus();
+      keydown(buttons[0], 'ArrowRight');
+      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Beta');
+    });
+
+    await step(
+      'marking second item inert skips it during arrow navigation',
+      async () => {
+        const buttons = Array.from(
+          root.querySelectorAll<HTMLButtonElement>('button')
+        );
+        buttons[1].setAttribute('inert', '');
+        host.callRefresh();
+
+        buttons[0].focus();
+        keydown(buttons[0], 'ArrowRight');
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Gamma');
+
+        buttons[1].removeAttribute('inert');
+        host.callRefresh();
+      }
+    );
+
+    await step('after removing inert, item is navigable again', async () => {
+      const buttons = Array.from(
+        root.querySelectorAll<HTMLButtonElement>('button')
+      );
+      buttons[0].focus();
+      keydown(buttons[0], 'ArrowRight');
+      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Beta');
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// Disconnect/reconnect: listeners removed and restored (#32)
+// ──────────────────────────────────────────────────────────────
+
+export const DisconnectReconnect: Story = {
+  render: () => html`
+    <div class="reconnect-container">
+      <demo-focusgroup-horizontal
+        role="toolbar"
+        aria-label="Reconnect test toolbar"
+      ></demo-focusgroup-horizontal>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const container = canvasElement.querySelector('.reconnect-container')!;
+    const host = await getComponent<HTMLElement>(
+      canvasElement,
+      'demo-focusgroup-horizontal'
+    );
+
+    await step('arrow navigation works before disconnect', async () => {
+      const root = host.shadowRoot!;
+      const first = root.querySelector<HTMLButtonElement>('button')!;
+      first.focus();
+      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Bold');
+
+      keydown(first, 'ArrowRight');
+      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Italic');
+    });
+
+    await step(
+      'after disconnect and reconnect, arrow navigation resumes',
+      async () => {
+        container.removeChild(host);
+        await new Promise((r) => setTimeout(r, 50));
+
+        container.appendChild(host);
+        await new Promise((r) => setTimeout(r, 50));
+
+        const root = host.shadowRoot!;
+        const buttons = Array.from(
+          root.querySelectorAll<HTMLButtonElement>('button')
+        );
+        buttons[0].focus();
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Bold');
+
+        keydown(buttons[0], 'ArrowRight');
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Italic');
+
+        keydown(shadowActiveButton(host)!, 'ArrowRight');
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Underline');
+      }
+    );
   },
 };
