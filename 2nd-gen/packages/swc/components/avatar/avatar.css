@@ -131,7 +131,7 @@
 
 /* ── Disabled state ─────────────────────────────────────── */
 
-:host([disabled]) {
+:host([disabled]) .swc-Avatar {
   pointer-events: none;
   cursor: default;
   opacity: var(--swc-avatar-opacity-disabled, token("opacity-disabled"));
