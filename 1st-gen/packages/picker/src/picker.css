@@ -60,6 +60,28 @@ sp-overlay {
   pointer-events: none;
 }
 
+/* Native popover container — replaces sp-overlay in new Picker. */
+#popover-container {
+  position: fixed;
+  inset: unset;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  background: transparent;
+  border: none;
+  overflow: visible;
+  pointer-events: none;
+}
+
+#popover-container > sp-popover {
+  max-height: none;
+}
+
+/* Reset the ::backdrop for the native popover (no dimming for auto type). */
+#popover-container::backdrop {
+  background: transparent;
+}
+
 sp-menu {
   pointer-events: initial;
 }

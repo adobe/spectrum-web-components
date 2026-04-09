@@ -55,6 +55,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 
 import { DesktopController } from './DesktopController.js';
+import { FloatingController } from './FloatingController.js';
 import { MobileController } from './MobileController.js';
 import pickerStyles from './picker.css.js';
 import { strategies } from './strategies.js';
@@ -1295,6 +1296,15 @@ export class Picker extends SizedMixin(ExpandableElement, {
     return [pickerStyles, chevronStyles];
   }
 
+  // ── Lightweight overlay: native popover + FloatingController ──
+
+  /** Floating UI positioning controller — replaces sp-overlay + PlacementController. */
+  private floatingController = new FloatingController(this);
+
+  /** The native popover container element. */
+  @query('#popover-container')
+  popoverContainer!: HTMLElement | null;
+
   /** The label applied to the picker, typically from an associated field label. */
   @state()
   appliedLabel?: string;
@@ -1551,8 +1561,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
    * If already open, focuses the first selected item in the menu.
    */
   protected async keyboardOpen(): Promise<void> {
-    // if the menu is not open, we need to toggle it and wait for it to open to focus on the first selected item
-    if (!this.open || !this.strategy.open) {
+    if (!this.open) {
       this.addEventListener(
         'sp-opened',
         () => this.optionsMenu?.focusOnFirstSelectedItem(),
@@ -1562,7 +1571,6 @@ export class Picker extends SizedMixin(ExpandableElement, {
       );
       this.toggle(true);
     } else {
-      // if the menu is already open, we need to focus on the first selected item
       this.optionsMenu?.focusOnFirstSelectedItem();
     }
   }
@@ -1867,29 +1875,123 @@ export class Picker extends SizedMixin(ExpandableElement, {
    * @param menu - The menu template to render inside the overlay
    * @returns The rendered overlay template
    */
+  /**
+   * Renders the overlay using a native popover element + FloatingController
+   * instead of sp-overlay. This eliminates the dependency on the Overlay
+   * component, OverlayStack, focus-trap, and the OverlayPopover/NoPopover
+   * mixin branching.
+   *
+   * The native `popover="auto"` attribute gives us:
+   * - Top-layer rendering (no z-index management)
+   * - Light dismiss (click-outside + Escape)
+   * - Dismiss ordering for nested popovers
+   *
+   * FloatingController gives us:
+   * - Floating UI positioning (flip, shift, size constraints)
+   * - Auto-update on scroll/resize
+   */
   protected renderOverlay(menu: TemplateResult): TemplateResult {
     const container = this.renderContainer(menu);
-    this.dependencyManager.add('sp-overlay');
-    import('@spectrum-web-components/overlay/sp-overlay.js');
     return html`
-      <sp-overlay
-        @slottable-request=${this.handleSlottableRequest}
-        @beforetoggle=${this.handleBeforetoggle}
-        .triggerElement=${this as HTMLElement}
-        .offset=${0}
-        ?open=${this.open && this.dependencyManager.loaded}
-        .placement=${this.isMobile.matches && !this.forcePopover
-          ? undefined
-          : this.placement}
-        .type=${this.isMobile.matches && !this.forcePopover ? 'modal' : 'auto'}
-        .receivesFocus=${'false'}
-        .willPreventClose=${this.strategy?.preventNextToggle !== 'no' &&
-        this.open &&
-        this.dependencyManager.loaded}
-      >
+      <div id="popover-container" popover="manual">
         ${container}
-      </sp-overlay>
+      </div>
     `;
+  }
+
+  /**
+   * Show/hide the native popover, sync sp-popover.open, and
+   * start/stop FloatingController positioning.
+   */
+  private managePopoverVisibility(): void {
+    const container = this.popoverContainer;
+    if (!container) {
+      return;
+    }
+
+    // sp-popover uses :host([open]) for visibility (opacity, visibility).
+    // Set the attribute directly so it works even before the element upgrades.
+    const popoverEl = container.querySelector('sp-popover');
+    if (popoverEl) {
+      popoverEl.toggleAttribute('open', this.open);
+    }
+
+    if (this.open) {
+      try {
+        container.showPopover();
+      } catch {
+        // Already showing or disconnected.
+      }
+
+      this.floatingController.start(this as unknown as HTMLElement, container, {
+        placement:
+          this.isMobile.matches && !this.forcePopover
+            ? undefined
+            : this.placement,
+        offset: 0,
+      });
+
+      requestAnimationFrame(() => {
+        if (this.open) {
+          this.dispatchEvent(
+            new CustomEvent('sp-opened', {
+              bubbles: true,
+              composed: true,
+              detail: { interaction: 'auto' },
+            })
+          );
+        }
+      });
+    } else {
+      this.floatingController.stop();
+
+      try {
+        container.hidePopover();
+      } catch {
+        // Already hidden or disconnected.
+      }
+
+      this.dispatchEvent(
+        new CustomEvent('sp-closed', {
+          bubbles: true,
+          composed: true,
+          detail: { interaction: 'auto' },
+        })
+      );
+    }
+  }
+
+  /** Click outside → close. */
+  private handleLightDismiss = (event: Event): void => {
+    if (!this.open) {
+      return;
+    }
+    if (!event.composedPath().includes(this)) {
+      this.close();
+      this.button?.focus();
+    }
+  };
+
+  /**
+   * Simple click-to-toggle + click-outside-to-close.
+   * No DesktopController / MobileController needed.
+   */
+  public override bindEvents(): void {
+    this.button?.addEventListener('click', () => {
+      if (this.disabled || this.readonly || this.pending) {
+        return;
+      }
+      this.toggle();
+    });
+    document.addEventListener('pointerdown', this.handleLightDismiss);
+  }
+
+  /** Work without InteractionController. */
+  public override close(): void {
+    if (this.readonly) {
+      return;
+    }
+    this.open = false;
   }
 
   /**
@@ -2008,8 +2110,8 @@ export class Picker extends SizedMixin(ExpandableElement, {
 
   protected override updated(changes: PropertyValues<this>): void {
     super.updated(changes);
-    if (changes.has('open') && this.overlayElement && !this.strategy.overlay) {
-      this.strategy.overlay = this.overlayElement;
+    if (changes.has('open')) {
+      this.managePopoverVisibility();
     }
   }
 
@@ -2019,11 +2121,6 @@ export class Picker extends SizedMixin(ExpandableElement, {
     super.firstUpdated(changes);
     this.bindButtonKeydownListener();
     this.bindEvents();
-
-    await this.updateComplete;
-    if (this.overlayElement && !this.strategy.overlay) {
-      this.strategy.overlay = this.overlayElement;
-    }
   }
 
   /**
@@ -2124,9 +2221,6 @@ export class Picker extends SizedMixin(ExpandableElement, {
       this.open ||
       !!this.deprecatedMenu;
     if (this.hasRenderedOverlay) {
-      if (this.dependencyManager.loaded) {
-        this.dependencyManager.add('sp-overlay');
-      }
       return this.renderOverlay(menu);
     }
     return menu;
