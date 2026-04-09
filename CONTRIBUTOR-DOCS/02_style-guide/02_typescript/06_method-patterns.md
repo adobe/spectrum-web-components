@@ -33,7 +33,7 @@ Within the [IMPLEMENTATION section](02_class-structure.md#section-implementation
 2. **protected** methods second (including lifecycle overrides)
 3. **private** methods last
 
-**Exception:** Keep lifecycle overrides in **Lit order** (e.g. `firstUpdated` before `updated`). A **private method** that only those hooks call may sit **between** them so the file reads in execution order; if the private method is used more broadly, put it **after** all protected members instead.
+**Exception:** Keep lifecycle overrides in **Lit order** (e.g. `firstUpdated` before `updated`). You may place a **private method** **between** those hooks **when only those hooks call it** (and nothing else in the class does), so the file reads in execution order; if the method is also used elsewhere, put it **after** all protected members instead.
 
 **Example from [ProgressCircle.base.ts](../../../2nd-gen/packages/core/components/progress-circle/ProgressCircle.base.ts) — IMPLEMENTATION section:**
 
