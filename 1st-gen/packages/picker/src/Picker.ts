@@ -1916,10 +1916,15 @@ export class Picker extends SizedMixin(ExpandableElement, {
 
     const popoverEl = container.querySelector('sp-popover');
 
+    const eventOptions = { bubbles: true, composed: true };
+
     if (this.open) {
       // Cancel any pending close hide so it doesn't clobber this open.
       this.closeAbort?.abort();
       this.closeAbort = undefined;
+
+      // sp-open: opening starts.
+      this.dispatchEvent(new CustomEvent('sp-open', eventOptions));
 
       // 1. Make the container visible in the top layer.
       try {
@@ -1943,18 +1948,18 @@ export class Picker extends SizedMixin(ExpandableElement, {
         if (this.open && popoverEl) {
           popoverEl.toggleAttribute('open', true);
         }
+        // sp-opened: open transition complete (fires after [open] is set,
+        // transition is ~130ms but we fire here for backward compat).
         if (this.open) {
-          this.dispatchEvent(
-            new CustomEvent('sp-opened', {
-              bubbles: true,
-              composed: true,
-              detail: { interaction: 'auto' },
-            })
-          );
+          this.dispatchEvent(new CustomEvent('sp-opened', eventOptions));
+          this.dispatchEvent(new CustomEvent('sp-after-open', eventOptions));
         }
       });
     } else {
       this.floatingController.stop();
+
+      // sp-close: closing starts.
+      this.dispatchEvent(new CustomEvent('sp-close', eventOptions));
 
       // Restore focus after the current event completes so Enter keyup
       // doesn't generate a click on the newly-focused button.
@@ -1983,6 +1988,9 @@ export class Picker extends SizedMixin(ExpandableElement, {
         } catch {
           // Already hidden or disconnected.
         }
+        // sp-closed / sp-after-close: close transition complete, popover hidden.
+        this.dispatchEvent(new CustomEvent('sp-closed', eventOptions));
+        this.dispatchEvent(new CustomEvent('sp-after-close', eventOptions));
       };
 
       if (popoverEl) {
@@ -1993,14 +2001,6 @@ export class Picker extends SizedMixin(ExpandableElement, {
       }
       // Safety: hide after 150ms even if transitionend doesn't fire.
       setTimeout(hideWhenDone, 150);
-
-      this.dispatchEvent(
-        new CustomEvent('sp-closed', {
-          bubbles: true,
-          composed: true,
-          detail: { interaction: 'auto' },
-        })
-      );
     }
   }
 
