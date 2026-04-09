@@ -32,7 +32,16 @@ The `window.__swc` object provides debug utilities:
 ```ts
 interface SWCDebug {
   DEBUG: boolean;
-  warn(element: HTMLElement, message: string, url?: string, options?: { issues?: string[] }): void;
+  warn(
+    element: HTMLElement,
+    message: string,
+    url?: string,
+    options?: {
+      type?: string;
+      level?: 'default' | 'low' | 'medium' | 'high' | 'deprecation';
+      issues?: string[];
+    }
+  ): void;
 }
 ```
 

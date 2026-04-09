@@ -100,10 +100,6 @@
   --swc-progress-circle-fill-border-color: token("static-black-track-indicator-color");
 }
 
-slot {
-  display: none;
-}
-
 @media (forced-colors: active) {
   .swc-ProgressCircle {
     --swc-progress-circle-fill-border-color: Highlight;

@@ -202,10 +202,10 @@ export const AriaLabelledbyAccessibleNameTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Slots
+// TEST: Light DOM (no default slot)
 // ──────────────────────────────────────────────────────────────
 
-export const SlotLabelTest: Story = {
+export const LightDomChildrenDoNotSetLabelTest: Story = {
   render: () => html`
     <swc-progress-circle>Loading data</swc-progress-circle>
   `,
@@ -215,10 +215,62 @@ export const SlotLabelTest: Story = {
       'swc-progress-circle'
     );
 
-    await step('uses slot content as the label', async () => {
-      expect(progressCircle.label).toBe('Loading data');
-      expect(progressCircle.getAttribute('aria-label')).toBe('Loading data');
-    });
+    await step(
+      'does not use light DOM text as the label or accessible name',
+      async () => {
+        expect(progressCircle.label).toBe('');
+        expect(progressCircle.getAttribute('aria-label')).toBeNull();
+      }
+    );
+
+    await step(
+      'warns in dev mode: deprecation for light DOM children and accessibility when there is no name',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          progressCircle.progress = 10;
+          await progressCircle.updateComplete;
+
+          expect(warnCalls.length).toBeGreaterThanOrEqual(2);
+          expect(
+            warnCalls.some((call) =>
+              String(call[1] ?? '').includes('no longer has a default slot')
+            )
+          ).toBe(true);
+          expect(
+            warnCalls.some((call) =>
+              String(call[1] ?? '').includes('accessible')
+            )
+          ).toBe(true);
+        })
+    );
+  },
+};
+
+export const LightDomWithLabelDeprecationOnlyTest: Story = {
+  render: () => html`
+    <swc-progress-circle label="Uploading" progress="5">
+      Ignored slot content
+    </swc-progress-circle>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const progressCircle = await getComponent<ProgressCircle>(
+      canvasElement,
+      'swc-progress-circle'
+    );
+
+    await step(
+      'still deprecates light DOM when label provides the accessible name',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          progressCircle.progress = 6;
+          await progressCircle.updateComplete;
+
+          expect(warnCalls.length).toBe(1);
+          expect(String(warnCalls[0]?.[1] ?? '')).toContain(
+            'no longer has a default slot'
+          );
+        })
+    );
   },
 };
 
@@ -239,6 +291,35 @@ export const ProgressValuesTest: Story = {
         const progress = String(circle.progress);
         expect(circle.getAttribute('aria-valuenow')).toBe(progress);
       });
+    });
+  },
+};
+
+export const ProgressClampTest: Story = {
+  render: () => html`
+    <swc-progress-circle
+      progress="150"
+      label="Clamped high"
+    ></swc-progress-circle>
+    <swc-progress-circle
+      progress="-20"
+      label="Clamped low"
+    ></swc-progress-circle>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const circles = await getComponents<ProgressCircle>(
+      canvasElement,
+      'swc-progress-circle'
+    );
+
+    await step('clamps progress above 100 to 100', async () => {
+      expect(circles[0].progress).toBe(100);
+      expect(circles[0].getAttribute('aria-valuenow')).toBe('100');
+    });
+
+    await step('clamps progress below 0 to 0', async () => {
+      expect(circles[1].progress).toBe(0);
+      expect(circles[1].getAttribute('aria-valuenow')).toBe('0');
     });
   },
 };
