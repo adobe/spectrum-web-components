@@ -79,17 +79,11 @@ This doc explains how **`swc-progress-circle`** should work for **accessibility*
 
 ## Related 1st-gen accessibility (Jira)
 
-**Adobe Jira** is authoritative for **open** vs **closed** status. Treat this table as a curated snapshot; refresh **status** and **resolution** in Jira when you triage. **Do not** list issues that have Jira labels **`gen2`** or **`gen-2`**, or whose summary **begins with** **Audit and improve** (cross-cutting audit epics). See **accessibility-migration-analysis** Cursor rule.
-
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 |------|------|-------------------|-------------------------|---------|
 | [SWC-1125](https://jira.corp.adobe.com/browse/SWC-1125) | Bug | Blocked | Unresolved | [Accessibility] Graphical object lacks 3:1 contrast ratio — `sp-progress-circle` (progress bar and loading indicator) |
 | [SWC-1171](https://jira.corp.adobe.com/browse/SWC-1171) | Bug | Done | Fixed | [Accessibility] ARIA `progressbar` nodes do not have an accessible name — `sp-picker` (loading indicator) |
 | [SWC-1369](https://jira.corp.adobe.com/browse/SWC-1369) | Bug | To Do | Unresolved | `Pending` button not visible in WHCM |
-
-**Omitted from this table (by doc rules):** [SWC-876](https://jira.corp.adobe.com/browse/SWC-876) (**Audit and improve** … card and meter epic); [SWC-1474](https://jira.corp.adobe.com/browse/SWC-1474) and [SWC-1413](https://jira.corp.adobe.com/browse/SWC-1413) (labels include **gen2**).
-
-**Scope note:** **SWC-1171** applies to **`sp-picker`** (in-field loading), not the standalone **`sp-progress-circle`** host. **SWC-1369** is **pending** / **WHCM** visibility and may overlap **button / picker** patterns more than the circle widget alone.
 
 ---
 

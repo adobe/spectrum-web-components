@@ -19,6 +19,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
+- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
 - [Recommendations: `<swc-progress-bar>`](#recommendations-swc-progress-bar)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -77,6 +78,14 @@ This doc explains how **`swc-progress-bar`** should work for **accessibility**. 
 | [Pause, stop, hide (WCAG 2.2.2)](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html) | **Indeterminate** motion on the **fill** must meet WCAG expectations. Respect **reduced motion** where supported. Align **Spectrum motion tokens** across libraries where applicable; document **fallback** if **flicker** is a risk. |
 
 **Bottom line:** Ship a **non-focusable** **`progressbar`** with **determinate** vs **indeterminate** rules consistent with **`swc-progress-circle`** and **`ProgressBar.ts`**, verified in **`swc-progress-bar`** once implemented.
+
+---
+
+## Related 1st-gen accessibility (Jira)
+
+| Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
+|------|------|-------------------|-------------------------|---------|
+| [SWC-1122](https://jira.corp.adobe.com/browse/SWC-1122) | Bug | Done | Fixed | [Accessibility] - Progress bar: Progress bar is missing appropriate role and/or attributes - sp-progress-bar (updating progress bar) |
 
 ---
 

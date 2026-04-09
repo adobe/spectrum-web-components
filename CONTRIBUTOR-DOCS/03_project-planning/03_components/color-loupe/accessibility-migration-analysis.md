@@ -14,10 +14,10 @@
 - [Overview](#overview)
     - [Also read](#also-read)
     - [What it is](#what-it-is)
-    - [When to use something else](#when-to-use-something-else)
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
+- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
 - [Recommendations: `<swc-color-loupe>`](#recommendations-swc-color-loupe)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -65,6 +65,14 @@ This doc explains how **`swc-color-loupe`** should work for **accessibility**. I
 | [Use of color (WCAG 1.4.1)](https://www.w3.org/TR/WCAG22/#use-of-color) | The **loupe** shows **color**; meaning must **not** rely on the loupe **alone**. The **field** / **slider** / **hex** input must **state** what is being adjusted. |
 
 **Bottom line:** Pair **`swc-color-loupe`** with a **fully labeled** color **workflow**. Accept **documented** **1.4.11** limitations on loupe **chrome** per **SWC-1193** unless design finds a **conformant** approach that still meets product goals.
+
+---
+
+## Related 1st-gen accessibility (Jira)
+
+| Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
+|------|------|-------------------|-------------------------|---------|
+| [SWC-1193](https://jira.corp.adobe.com/browse/SWC-1193) | Bug | Done | Working As Designed | [Accessibility] Graphical object lacks 3:1 contrast ratio — `sp-color-loupe` (Color Loupe Example) |
 
 ---
 

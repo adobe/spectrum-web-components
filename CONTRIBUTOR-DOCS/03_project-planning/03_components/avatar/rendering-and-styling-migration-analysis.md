@@ -19,6 +19,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
+- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
 - [Recommendations: avatar image](#recommendations-avatar-image)
     - [SWC style (native **`<img>`**)](#swc-style-native-img)
     - [**`<swc-avatar>`** (component)](#swc-avatar-component)
@@ -84,6 +85,14 @@ This doc defines how the **avatar image** should work for **accessibility**—th
 | [Name, role, value (4.1.2)](https://www.w3.org/TR/WCAG22/#name-role-value) | The meaningful node is the **`<img>`** (name via **`alt`**); the **avatar image** is not an interactive widget. |
 
 **Bottom line:** The **avatar image** is not a link or button. Do not put it in the **Tab** order. A native **`<img>`** is not tab-focusable by default; **`<swc-avatar>`** must **not** delegate **focus** to the host or shadow **`<img>`** (fix **1st-gen** **`Focusable`** behavior for the static case).
+
+---
+
+## Related 1st-gen accessibility (Jira)
+
+| Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
+|------|------|-------------------|-------------------------|---------|
+| [SWC-915](https://jira.corp.adobe.com/browse/SWC-915) | Bug | Done | Done | [Bug][a11y]: Avatar should render an `alt` tag even if no label is specified to avoid a11y violations |
 
 ---
 

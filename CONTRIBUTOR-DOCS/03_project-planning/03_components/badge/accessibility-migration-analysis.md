@@ -70,8 +70,6 @@ This doc tells you how **`swc-badge`** should work for **accessibility**. It mat
 
 ## Related 1st-gen accessibility (Jira)
 
-**Adobe Jira** is authoritative for **open** vs **closed** status. Treat this table as a curated snapshot; refresh **status** and **resolution** in Jira when you triage. **Do not** list issues that have Jira labels **`gen2`** or **`gen-2`**, or whose summary **begins with** **Audit and improve** (cross-cutting audit epics). See **accessibility-migration-analysis** Cursor rule.
-
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 |------|------|-------------------|-------------------------|---------|
 | [SWC-1136](https://jira.corp.adobe.com/browse/SWC-1136) | Bug | To Do | Unresolved | [Accessibility] Text content lacks 4.5:1 contrast ratio — `sp-badge` (semantic) |

@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Divider / Divider accessibility migration analysis
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Illustrated Message / Divider accessibility migration analysis
 
 <!-- Document title (editable) -->
 
@@ -72,12 +72,8 @@ This doc explains how **`swc-divider`** should work for **accessibility**. It su
 
 ## Related 1st-gen accessibility (Jira)
 
-**Adobe Jira** is authoritative for **open** vs **closed** status. Treat this table as a curated snapshot; refresh **status** and **resolution** in Jira when you triage. **Do not** list issues that have Jira labels **`gen2`** or **`gen-2`**, or whose summary **begins with** **Audit and improve** (cross-cutting audit epics). See **accessibility-migration-analysis** Cursor rule.
-
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 |------|------|-------------------|-------------------------|---------|
-
-**Omitted from this table (by doc rules):** [SWC-879](https://jira.corp.adobe.com/browse/SWC-879) (**Audit and improve** … primitive components epic); [SWC-1474](https://jira.corp.adobe.com/browse/SWC-1474) and [SWC-1411](https://jira.corp.adobe.com/browse/SWC-1411) (labels include **gen2**).
 
 ---
 

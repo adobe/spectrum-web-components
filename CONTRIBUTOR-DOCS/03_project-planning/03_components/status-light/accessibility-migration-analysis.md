@@ -72,8 +72,6 @@ This doc explains how **`swc-status-light`** should work for **accessibility**. 
 
 ## Related 1st-gen accessibility (Jira)
 
-**Adobe Jira** is authoritative for **open** vs **closed** status. Treat this table as a curated snapshot; add or edit rows when you triage. **Do not** list issues that have Jira labels **`gen2`** or **`gen-2`**, or whose summary **begins with** **Audit and improve** (cross-cutting audit epics). See **accessibility-migration-analysis** Cursor rule.
-
 | Jira | Summary (short) | Typical 1st-gen / scope | Notes |
 |------|-----------------|-------------------------|--------|
 
