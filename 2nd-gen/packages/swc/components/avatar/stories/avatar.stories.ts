@@ -56,6 +56,7 @@ argTypes.disabled = {
 
 argTypes.alt = {
   ...argTypes.alt,
+  description: 'Text description of the avatar image.',
   table: {
     category: 'attributes',
     defaultValue: { summary: 'undefined' },
@@ -64,6 +65,8 @@ argTypes.alt = {
 
 argTypes.decorative = {
   ...argTypes.decorative,
+  description:
+    'Marks the avatar as decorative, hiding it from assistive technology.',
   control: { type: 'boolean' },
   table: {
     category: 'attributes',
@@ -81,22 +84,6 @@ argTypes.src = {
 
 /**
  * An avatar displays a circular profile image representing a person or entity.
- *
- * Provide `alt` with a description of who is depicted. Pass `alt=""` to treat
- * the image as decorative and hide it from assistive technology.
- *
- * ### Breaking changes from 1st-gen (`sp-avatar`)
- *
- * | Change | 1st-gen | 2nd-gen |
- * |--------|---------|---------|
- * | **Linked variant removed** | `href`, `target`, `rel`, `download`, `referrerpolicy`, `type` | Not supported — not in the Spectrum 2 spec. Wrap the avatar in an `<a>` element instead. The `alt` attribute becomes the link's accessible name — `alt=""` (decorative) is incompatible with a linked wrapper. |
- * | **Disabled state** | `disabled` | Supported — renders at reduced opacity to indicate the entity is inactive or unavailable. |
- * | **Decorative pattern** | `is-decorative` attribute | `decorative` attribute — aligns with standard HTML `<img>` semantics. |
- * | **Alt text property** | `label` attribute | `alt` attribute. |
- * | **Default size** | `100` (20 px) | `500` (40 px) |
- * | **Size scale** | `50`–`700` | `50`–`1500` (eight new sizes added) |
- * | **CSS custom properties** | `--mod-avatar-*` | Removed. Use `--swc-avatar-size`, `--swc-avatar-border-color`, `--swc-avatar-border-width`. |
- * | **Shadow DOM structure** | `<img>` directly in shadow root | `<div class="swc-Avatar"><img class="swc-Avatar-image"></div>` — update any shadow-part selectors. |
  */
 export const meta: Meta = {
   title: 'Avatar',

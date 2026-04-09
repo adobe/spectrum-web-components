@@ -93,7 +93,6 @@
 /* ── Layout & shape ─────────────────────────────────────── */
 
 .swc-Avatar {
-  -webkit-user-drag: none;
   display: inline-block;
   inline-size: var(--swc-avatar-size, token("avatar-size-500"));
   block-size: var(--swc-avatar-size, token("avatar-size-500"));
@@ -120,12 +119,12 @@
 
 /* Thicker outline for large sizes >= 1000 (≥ 64 px), matching S2.
    No Spectrum 2 token exists for the large-size border width; hardcoded per spec. */
-:host([show-stroke][size="1000"]) .swc-Avatar-image,
-:host([show-stroke][size="1100"]) .swc-Avatar-image,
-:host([show-stroke][size="1200"]) .swc-Avatar-image,
-:host([show-stroke][size="1300"]) .swc-Avatar-image,
-:host([show-stroke][size="1400"]) .swc-Avatar-image,
-:host([show-stroke][size="1500"]) .swc-Avatar-image {
+:host([show-stroke][size="1000"]),
+:host([show-stroke][size="1100"]),
+:host([show-stroke][size="1200"]),
+:host([show-stroke][size="1300"]),
+:host([show-stroke][size="1400"]),
+:host([show-stroke][size="1500"]) {
   --swc-avatar-border-width: 2px;
 }
 
