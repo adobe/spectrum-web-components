@@ -261,7 +261,7 @@ export const InActionButton: Story = {
 /**
  * Use the `outline` attribute to render a solid outline around the avatar
  * image. This is useful when the avatar's image border color matches the
- * surrounding background. The outline uses `--swc-avatar-border-width`
+ * surrounding background. The outline uses `--swc-avatar-outline-width`
  * (currently 1 px) for sizes 50–900 and a hardcoded 2 px for sizes 1000–1500,
  * matching the Spectrum 2 specification. Within an Avatar Group, `outline`
  * defaults to `true` to visually separate stacked avatars.

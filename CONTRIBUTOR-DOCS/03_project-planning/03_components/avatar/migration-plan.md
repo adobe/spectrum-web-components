@@ -107,7 +107,7 @@ Numeric sizes kept (not T-shirt sizes). Scale extended from `50–700` → `50�
 
 ### 4.2 `--mod-*` Properties Removed
 
-All `--mod-avatar-*` customization properties removed. Consumers must migrate to the explicit component-level custom properties (`--swc-avatar-size`, `--swc-avatar-border-color`, `--swc-avatar-border-width`).
+All `--mod-avatar-*` customization properties removed. Consumers must migrate to the explicit component-level custom properties (`--swc-avatar-size`, `--swc-avatar-outline-color`, `--swc-avatar-outline-width`).
 
 ### 4.3 Linked Variant Removed
 

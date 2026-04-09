@@ -180,11 +180,11 @@ Existing sizes are unchanged. Eight new larger sizes have been added:
 All `--mod-avatar-*` custom properties have been removed. Replace them with the
 explicit 2nd-gen equivalents:
 
-| Removed (1st-gen)           | Replacement (2nd-gen)       |
-| --------------------------- | --------------------------- |
-| `--mod-avatar-size`         | `--swc-avatar-size`         |
-| `--mod-avatar-border-color` | `--swc-avatar-border-color` |
-| `--mod-avatar-border-width` | `--swc-avatar-border-width` |
+| Removed (1st-gen)           | Replacement (2nd-gen)        |
+| --------------------------- | ---------------------------- |
+| `--mod-avatar-size`         | `--swc-avatar-size`          |
+| `--mod-avatar-border-color` | `--swc-avatar-outline-color` |
+| `--mod-avatar-border-width` | `--swc-avatar-outline-width` |
 
 ```css
 /* Before */
@@ -228,7 +228,7 @@ border color matches the surrounding background.
 <swc-avatar alt="Jane Doe" src="/img/user.jpg" outline></swc-avatar>
 ```
 
-The outline uses `--swc-avatar-border-width` (currently 1 px) for sizes 50–900
+The outline uses `--swc-avatar-outline-width` (currently 1 px) for sizes 50–900
 and a hardcoded 2 px for sizes 1000–1500, matching the Spectrum 2 specification.
 
 ---
