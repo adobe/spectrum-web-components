@@ -69,6 +69,7 @@ Token values may be:
 - Static primitives (e.g. `16px`)
 - Aliases referencing another token (e.g. `{gray-500}`)
 - Composite values containing embedded aliases
+- Structured composite values such as arrays or objects that are serialized for CSS output
 
 At a high level:
 
@@ -191,6 +192,12 @@ By declaring scaling tokens under both `:root` and `.swc-theme`:
 
 Without this structure, scaling tokens would not recompute correctly when applied within a scoped theme or size container.
 
+Some composite tokens are also serialized into CSS-ready values during generation. For example, `drop-shadow` tokens authored as layered arrays are emitted as a single custom property that can be used directly in `box-shadow`, while related primitive shadow tokens like `-x`, `-y`, and `-blur` continue to be emitted separately.
+
+```css
+box-shadow: var(--swc-drop-shadow-dragged);
+```
+
 ### Updating the Tokens Stylesheet
 
 If changes are made to the token data or processing, see ["Upon Token Data Update"](#upon-token-data-update) for how to update dependent packages, which includes regenerating the tokens stylesheet.
@@ -209,6 +216,7 @@ It acts as a read-only query interface over the processed token map produced by 
 - Returns the final CSS-safe value, which may be:
   - A resolved primitive (e.g. rgb(0 0 0))
   - A composed custom property (e.g. var(--swc-gray-700))
+  - A custom property referencing a serialized composite token (e.g. var(--swc-drop-shadow-dragged))
 - Throws an error if the requested token does not exist or is not resolvable
 
 > `lookupToken()` does not perform token parsing, normalization, or resolution itself. It only queries the already-processed token data.
