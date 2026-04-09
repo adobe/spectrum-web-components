@@ -12,7 +12,21 @@
  * governing permissions and limitations under the License.
  */
 
-export const buildPreviewURLComment = (prNumber) => {
+/**
+ * @param {number} prNumber pull request number
+ * @param {object} [options]
+ * @param {string} [options.headCommitSha] PR head SHA (for StackBlitz “open repo at commit”)
+ * @param {string} [options.repositoryFullName] `owner/name` (fork-aware)
+ * @param {string} [options.stackBlitzStoryLinksSection] markdown from `extract-storybook-stackblitz-links.js`
+ */
+export const buildPreviewURLComment = (
+  prNumber,
+  {
+    headCommitSha = '',
+    repositoryFullName = 'adobe/spectrum-web-components',
+    stackBlitzStoryLinksSection = '',
+  } = {}
+) => {
   // Use just PR number so each commit overwrites the previous deployment
   const prHash = `pr-${prNumber}`;
 
@@ -89,15 +103,38 @@ export const buildPreviewURLComment = (prNumber) => {
   const stackBlitzCollectionUrl =
     'https://stackblitz.com/orgs/custom/SWC-Team/collections/spectrum-web-components';
 
+  const shortSha =
+    headCommitSha && headCommitSha.length >= 7
+      ? headCommitSha.slice(0, 7)
+      : headCommitSha;
+
+  const stackBlitzForkUrl = headCommitSha
+    ? `https://stackblitz.com/fork/github/${repositoryFullName}/tree/${headCommitSha}`
+    : '';
+
+  const stackBlitzForkBullet = stackBlitzForkUrl
+    ? `- [Open repository at head commit \`${shortSha}\` (StackBlitz fork)](${stackBlitzForkUrl}) — full monorepo at this PR’s commit. Large project: \`yarn install\` can take several minutes. To run second-gen Storybook locally: \`yarn workspace @spectrum-web-components/2nd-gen storybook\`.`
+    : '';
+
   let comment = `## 📚 Branch Preview Links
 
 - [Documentation Site (first-gen)](${docsFirstGenUrl})
 - [Storybook (first-gen)](${storybookFirstGenUrl})
 - [Storybook (second-gen)](${storybookSecondGenUrl})
 
-<h3><strong>🧪 StackBlitz curated examples</strong></h3>
+<h3><strong>🧪 StackBlitz</strong></h3>
 
-- [Spectrum Web Components collection](${stackBlitzCollectionUrl}) — interactive examples maintained in the SWC-Team workspace. These use published packages and do not reflect this PR branch; use the Storybook links above to review changes from this branch.
+**Branch / commit**
+
+${stackBlitzForkBullet || '- _StackBlitz repository link unavailable (missing commit SHA)._'}
+
+**Curated collection** (SWC-Team workspace; published package demos)
+
+- [Spectrum Web Components collection](${stackBlitzCollectionUrl})
+
+**Story-linked templates** (from 2nd-gen \`parameters.stackblitz.url\`; standalone StackBlitz projects use the **published** npm package—use Storybook previews above for this branch’s build)
+
+${stackBlitzStoryLinksSection || '- _No story-level StackBlitz URLs extracted._'}
 
 <h3><strong>🔍 First Generation Visual Regression Test Results</strong></h3>
 

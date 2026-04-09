@@ -155,10 +155,21 @@ jobs:
         with:
           script: |
             const { buildPreviewURLComment } = await import('${{ github.workspace }}/.github/scripts/build-preview-urls-comment.js');
+            const { buildStackBlitzStoryLinksSection } = await import('${{ github.workspace }}/.github/scripts/extract-storybook-stackblitz-links.js');
             const { commentOrUpdate } = await import('${{ github.workspace }}/.github/scripts/comment-or-update.js');
 
             const prNumber = context.payload.pull_request.number;
-            const body = buildPreviewURLComment(prNumber);
+            const head = context.payload.pull_request.head;
+            const headSha = head.sha;
+            // Use head repo so fork PRs resolve commits that are not on the base repo yet.
+            const repositoryFullName = head.repo.full_name;
+            const stackBlitzStoryLinksSection = buildStackBlitzStoryLinksSection(process.env.GITHUB_WORKSPACE);
+
+            const body = buildPreviewURLComment(prNumber, {
+              headCommitSha: headSha,
+              repositoryFullName,
+              stackBlitzStoryLinksSection,
+            });
 
             console.log(`Posting comment to PR #${prNumber}`);
             commentOrUpdate(github, context, '## 📚 Branch Preview Links', body);
