@@ -272,28 +272,6 @@ export const DisabledTest: Story = {
   },
 };
 
-export const LabelShimTest: Story = {
-  ...Overview,
-  play: async ({ canvasElement, step }) => {
-    const avatar = await getComponent<Avatar>(canvasElement, 'swc-avatar');
-
-    await step('label getter returns the current alt value', async () => {
-      avatar.alt = 'Jane Doe';
-      await avatar.updateComplete;
-      expect(avatar.label, 'label getter when alt is set').toBe('Jane Doe');
-    });
-
-    await step('label setter updates alt when DEBUG mode is off', async () => {
-      avatar.label = 'John Smith';
-      await avatar.updateComplete;
-      expect(avatar.alt, 'alt after label setter').toBe('John Smith');
-      expect(avatar.label, 'label getter after label setter').toBe(
-        'John Smith'
-      );
-    });
-  },
-};
-
 // ──────────────────────────────────────────────────────────────
 // TEST: Variants / States
 // ──────────────────────────────────────────────────────────────
@@ -437,93 +415,6 @@ export const DecorativeNoWarningTest: Story = {
           0
         );
       })
-    );
-  },
-};
-
-export const LabelDeprecationWarningTest: Story = {
-  ...Overview,
-  play: async ({ canvasElement, step }) => {
-    const avatar = await getComponent<Avatar>(canvasElement, 'swc-avatar');
-
-    await step(
-      'warns when label property is set in DEBUG mode and updates alt',
-      () =>
-        withWarningSpy(async (warnCalls) => {
-          avatar.label = 'John Smith';
-          await avatar.updateComplete;
-
-          expect(warnCalls.length, 'deprecation warning count').toBeGreaterThan(
-            0
-          );
-          expect(
-            String(warnCalls[0]?.[1] ?? ''),
-            'deprecation warning message'
-          ).toContain('label');
-          expect(avatar.alt, 'alt updated by label setter').toBe('John Smith');
-        })
-    );
-  },
-};
-
-export const IsDecorativeShimTest: Story = {
-  ...Overview,
-  play: async ({ canvasElement, step }) => {
-    const avatar = await getComponent<Avatar>(canvasElement, 'swc-avatar');
-
-    await step(
-      'isDecorative getter returns the current decorative value',
-      async () => {
-        avatar.decorative = true;
-        await avatar.updateComplete;
-        expect(
-          avatar.isDecorative,
-          'isDecorative getter when decorative is true'
-        ).toBe(true);
-      }
-    );
-
-    await step(
-      'isDecorative setter updates decorative when DEBUG mode is off',
-      async () => {
-        avatar.isDecorative = false;
-        await avatar.updateComplete;
-        expect(avatar.decorative, 'decorative after isDecorative setter').toBe(
-          false
-        );
-        expect(
-          avatar.isDecorative,
-          'isDecorative getter after isDecorative setter'
-        ).toBe(false);
-      }
-    );
-  },
-};
-
-export const IsDecorativeDeprecationWarningTest: Story = {
-  ...Overview,
-  play: async ({ canvasElement, step }) => {
-    const avatar = await getComponent<Avatar>(canvasElement, 'swc-avatar');
-
-    await step(
-      'warns when isDecorative property is set in DEBUG mode and updates decorative',
-      () =>
-        withWarningSpy(async (warnCalls) => {
-          avatar.isDecorative = true;
-          await avatar.updateComplete;
-
-          expect(warnCalls.length, 'deprecation warning count').toBeGreaterThan(
-            0
-          );
-          expect(
-            String(warnCalls[0]?.[1] ?? ''),
-            'deprecation warning message'
-          ).toContain('isDecorative');
-          expect(
-            avatar.decorative,
-            'decorative updated by isDecorative setter'
-          ).toBe(true);
-        })
     );
   },
 };

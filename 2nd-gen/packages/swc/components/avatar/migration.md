@@ -74,10 +74,6 @@ attribute on the underlying `<img>` element, following standard HTML semantics.
 <swc-avatar src="/img/user.jpg" alt="Jane Doe"></swc-avatar>
 ```
 
-> **Note:** `label` still works in 2nd-gen as a compatibility shim but emits a
-> deprecation warning in DEBUG mode. Migrate to `alt` as soon as possible — the
-> shim will be removed in a future release.
-
 ---
 
 ### `is-decorative` → `decorative` and `alt=""`
@@ -95,12 +91,9 @@ decorative.
 <swc-avatar decorative alt="" src="/img/user.jpg"></swc-avatar>
 ```
 
-When `alt=""` and `decorative` are set, `swc-avatar` automatically adds `aria-hidden="true"` to the
-host element, hiding it entirely from the accessibility tree.
-
-> **Note:** `is-decorative` still works in 2nd-gen as a compatibility shim but
-> emits a deprecation warning in DEBUG mode. Migrate to `decorative` as soon as
-> possible — the shim will be removed in a future release.
+When `decorative` is set, `swc-avatar` automatically adds `aria-hidden="true"` to the host element,
+hiding it entirely from the accessibility tree. Include `alt=""` alongside `decorative` for full
+semantic alignment with the HTML `<img>` element.
 
 ---
 

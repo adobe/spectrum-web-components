@@ -79,8 +79,6 @@
 | `showStroke` | `boolean` | `false` | Yes (`show-stroke`) | Renders outline for visual separation; defaults to `true` in Avatar Group |
 | `disabled` | `boolean` | `false` | Yes | Renders at reduced opacity; entity is inactive or unavailable |
 | `decorative` | `boolean` | `false` | Yes | Marks image as decorative; sets `aria-hidden="true"` on host. Use together with `alt=""` for full semantic correctness. Replaces `isDecorative`. |
-| `label` _(deprecated)_ | `string \| undefined` | — | No | Shim → sets `alt`; warns in DEBUG mode |
-| `isDecorative` _(deprecated)_ | `boolean` | `false` | No | Shim → sets `decorative`; warns in DEBUG mode |
 
 ### Dropped from 1st-gen
 
@@ -117,11 +115,11 @@ All `--mod-avatar-*` customization properties removed. Consumers must migrate to
 
 ### 4.4 `isDecorative` → `decorative`
 
-`isDecorative` is deprecated with a DEBUG-mode warning shim. Consumers should migrate to the `decorative` attribute. Only `decorative` causes the host to receive `aria-hidden="true"`. Include `alt=""` alongside `decorative` for full semantic alignment with HTML `<img>` conventions.
+`isDecorative` and the `is-decorative` attribute are not carried forward. Consumers must migrate to the `decorative` attribute. Only `decorative` causes the host to receive `aria-hidden="true"`. Include `alt=""` alongside `decorative` for full semantic alignment with HTML `<img>` conventions.
 
 ### 4.5 `label` → `alt`
 
-`label` is deprecated with a DEBUG-mode warning shim. Consumers should migrate to `alt`.
+`label` is not carried forward. Consumers must migrate to `alt`.
 
 ### 4.6 CSS Class Wrapper
 
@@ -141,7 +139,6 @@ All `--mod-avatar-*` customization properties removed. Consumers must migrate to
 ### Phase 3 — API Migration
 - [x] Define `AvatarSize` type in `Avatar.types.ts`
 - [x] Define `AvatarBase` extending `SpectrumElement` with `src`, `alt`, `size`, `overBackground`
-- [x] Add deprecated `label` shim with DEBUG warning
 - [x] Add `static readonly VALID_SIZES` array
 - [x] Implement `firstUpdated` to set `size` attribute if missing
 

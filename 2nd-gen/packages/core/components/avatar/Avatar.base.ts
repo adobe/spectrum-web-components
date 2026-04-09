@@ -126,62 +126,10 @@ export abstract class AvatarBase extends SpectrumElement {
    * Use when the surrounding context already identifies the person (e.g.,
    * their name appears next to the avatar). Setting this attribute causes the
    * host to receive `aria-hidden="true"`, removing it from the accessibility
-   * tree. Equivalent to setting `alt=""`.
+   * tree. For full semantic alignment with HTML `<img>` conventions, also set `alt=""`.
    */
   @property({ type: Boolean, reflect: true })
   public decorative = false;
-
-  // ──────────────────────────────────────────
-  //     DEPRECATED — 1st-gen compat shims
-  // ──────────────────────────────────────────
-
-  /**
-   * @deprecated Use `alt` instead. This shim will be removed in a future release.
-   *
-   * **Breaking change:** In 1st-gen, `label` was the primary way to provide
-   * alternative text for the avatar image. In 2nd-gen, use `alt` instead.
-   */
-  public get label(): string | undefined {
-    return this.alt;
-  }
-
-  public set label(value: string | undefined) {
-    if (window.__swc?.DEBUG) {
-      window.__swc.warn(
-        this,
-        `The "label" property on <${this.localName}> is deprecated. Use "alt" instead.`,
-        'https://opensource.adobe.com/spectrum-web-components/components/avatar/',
-        { type: 'api', level: 'deprecation' }
-      );
-    }
-    this.alt = value;
-  }
-
-  /**
-   * @deprecated Use `decorative` instead. This shim will be removed in a future release.
-   *
-   * **Breaking change:** In 1st-gen, `isDecorative` was used to mark an avatar
-   * as decorative. In 2nd-gen, use the `decorative` attribute instead.
-   *
-   * **Note:** This shim covers the JS property API only. The `is-decorative`
-   * HTML attribute is not shimmed — consumers using the attribute must migrate
-   * to `decorative`.
-   */
-  public get isDecorative(): boolean {
-    return this.decorative;
-  }
-
-  public set isDecorative(value: boolean) {
-    if (window.__swc?.DEBUG) {
-      window.__swc.warn(
-        this,
-        `The "isDecorative" property on <${this.localName}> is deprecated. Use "decorative" instead.`,
-        'https://opensource.adobe.com/spectrum-web-components/components/avatar/',
-        { type: 'api', level: 'deprecation' }
-      );
-    }
-    this.decorative = value;
-  }
 
   // ──────────────────────
   //     IMPLEMENTATION
