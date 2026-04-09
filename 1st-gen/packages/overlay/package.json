@@ -158,7 +158,7 @@
   ],
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@floating-ui/dom": "1.7.4",
+    "@floating-ui/dom": "1.7.6",
     "@floating-ui/utils": "0.2.10",
     "@spectrum-web-components/action-button": "1.11.2",
     "@spectrum-web-components/base": "1.11.2",
