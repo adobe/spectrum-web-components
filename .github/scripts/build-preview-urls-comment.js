@@ -86,11 +86,18 @@ export const buildPreviewURLComment = (prNumber) => {
   const storybookFirstGenUrl = `${baseUrl}/${prHash}/docs/first-gen-storybook/`;
   const storybookSecondGenUrl = `${baseUrl}/${prHash}/docs/second-gen-storybook/`;
 
+  const stackBlitzCollectionUrl =
+    'https://stackblitz.com/orgs/custom/SWC-Team/collections/spectrum-web-components';
+
   let comment = `## 📚 Branch Preview Links
 
 - [Documentation Site (first-gen)](${docsFirstGenUrl})
 - [Storybook (first-gen)](${storybookFirstGenUrl})
 - [Storybook (second-gen)](${storybookSecondGenUrl})
+
+<h3><strong>🧪 StackBlitz curated examples</strong></h3>
+
+- [Spectrum Web Components collection](${stackBlitzCollectionUrl}) — interactive examples maintained in the SWC-Team workspace. These use published packages and do not reflect this PR branch; use the Storybook links above to review changes from this branch.
 
 <h3><strong>🔍 First Generation Visual Regression Test Results</strong></h3>
 
