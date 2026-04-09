@@ -1304,9 +1304,9 @@ export class Picker extends SizedMixin(ExpandableElement, {
   /** Cancels a pending close-transition hide when rapidly reopening. */
   private closeAbort?: AbortController;
 
-  /** The native popover container element. */
-  @query('#popover-container')
-  popoverContainer!: HTMLElement | null;
+  /** The sp-popover element which is also the native popover. */
+  @query('#popover')
+  popoverEl!: HTMLElement | null;
 
   /** The label applied to the picker, typically from an associated field label. */
   @state()
@@ -1895,9 +1895,21 @@ export class Picker extends SizedMixin(ExpandableElement, {
    * - Auto-update on scroll/resize
    */
   protected renderOverlay(menu: TemplateResult): TemplateResult {
-    const container = this.renderContainer(menu);
+    const accessibleMenu = html`
+      ${this.dismissHelper} ${menu} ${this.dismissHelper}
+    `;
+    this.dependencyManager.add('sp-popover');
+    import('@spectrum-web-components/popover/sp-popover.js');
     return html`
-      <div id="popover-container" popover="manual">${container}</div>
+      <sp-popover
+        id="popover"
+        popover="manual"
+        role="presentation"
+        style=${styleMap(this.containerStyles)}
+        placement=${this.placement}
+      >
+        ${accessibleMenu}
+      </sp-popover>
     `;
   }
 
@@ -1909,32 +1921,31 @@ export class Picker extends SizedMixin(ExpandableElement, {
    * Close sequence: remove [open] → wait for transition → hidePopover()
    */
   private managePopoverVisibility(): void {
-    const container = this.popoverContainer;
-    if (!container) {
+    const popover = this.popoverEl;
+    if (!popover) {
       return;
     }
-
-    const popoverEl = container.querySelector('sp-popover');
 
     const eventOptions = { bubbles: true, composed: true };
 
     if (this.open) {
-      // Cancel any pending close hide so it doesn't clobber this open.
       this.closeAbort?.abort();
       this.closeAbort = undefined;
 
-      // sp-open: opening starts.
       this.dispatchEvent(new CustomEvent('sp-open', eventOptions));
 
-      // 1. Make the container visible in the top layer.
+      // 1. Set [open] so sp-popover has layout dimensions for Floating UI.
+      popover.toggleAttribute('open', true);
+
+      // 2. Show in the top layer.
       try {
-        container.showPopover();
+        popover.showPopover();
       } catch {
         // Already showing or disconnected.
       }
 
-      // 2. Start positioning immediately so the first frame is correct.
-      this.floatingController.start(this as unknown as HTMLElement, container, {
+      // 3. Start positioning — sp-popover is now measurable.
+      this.floatingController.start(this as unknown as HTMLElement, popover, {
         placement:
           this.isMobile.matches && !this.forcePopover
             ? undefined
@@ -1942,14 +1953,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
         offset: 0,
       });
 
-      // 3. Set [open] on the next frame so the browser has a "from" state
-      //    for the opacity/transform transition.
       requestAnimationFrame(() => {
-        if (this.open && popoverEl) {
-          popoverEl.toggleAttribute('open', true);
-        }
-        // sp-opened: open transition complete (fires after [open] is set,
-        // transition is ~130ms but we fire here for backward compat).
         if (this.open) {
           this.dispatchEvent(new CustomEvent('sp-opened', eventOptions));
           this.dispatchEvent(new CustomEvent('sp-after-open', eventOptions));
@@ -1958,23 +1962,18 @@ export class Picker extends SizedMixin(ExpandableElement, {
     } else {
       this.floatingController.stop();
 
-      // sp-close: closing starts.
       this.dispatchEvent(new CustomEvent('sp-close', eventOptions));
 
-      // Restore focus after the current event completes so Enter keyup
-      // doesn't generate a click on the newly-focused button.
       requestAnimationFrame(() => {
         if (!this.open && !this.button?.matches(':focus')) {
           this.button?.focus();
         }
       });
 
-      // 1. Remove [open] to start the closing transition (opacity 1→0).
-      if (popoverEl) {
-        popoverEl.toggleAttribute('open', false);
-      }
+      // 1. Remove [open] to start the closing transition.
+      popover.toggleAttribute('open', false);
 
-      // 2. Wait for the transition to finish, then hide the container.
+      // 2. Wait for transition, then hide from top layer.
       this.closeAbort = new AbortController();
       const { signal } = this.closeAbort;
 
@@ -1984,22 +1983,18 @@ export class Picker extends SizedMixin(ExpandableElement, {
         }
         this.closeAbort = undefined;
         try {
-          container.hidePopover();
+          popover.hidePopover();
         } catch {
           // Already hidden or disconnected.
         }
-        // sp-closed / sp-after-close: close transition complete, popover hidden.
         this.dispatchEvent(new CustomEvent('sp-closed', eventOptions));
         this.dispatchEvent(new CustomEvent('sp-after-close', eventOptions));
       };
 
-      if (popoverEl) {
-        popoverEl.addEventListener('transitionend', hideWhenDone, {
-          once: true,
-          signal,
-        });
-      }
-      // Safety: hide after 150ms even if transitionend doesn't fire.
+      popover.addEventListener('transitionend', hideWhenDone, {
+        once: true,
+        signal,
+      });
       setTimeout(hideWhenDone, 150);
     }
   }

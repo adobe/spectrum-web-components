@@ -10,10 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import type {
-  ReactiveController,
-  ReactiveElement,
-} from '@spectrum-web-components/base';
 import {
   autoUpdate,
   computePosition,
@@ -24,10 +20,16 @@ import {
   size,
 } from '@floating-ui/dom';
 
+import type {
+  ReactiveController,
+  ReactiveElement,
+} from '@spectrum-web-components/base';
+
 // Spectrum design spec: minimum distance between overlay and viewport edge.
 const REQUIRED_DISTANCE_TO_EDGE = 8;
-// Minimum overlay height before it gets constrained.
-const MIN_OVERLAY_HEIGHT = 100;
+// Minimum height for the floating content — prevents it from being
+// squished to an unusable size when viewport space is tight.
+const MIN_FLOATING_HEIGHT = 100;
 
 function roundByDPR(num?: number): number {
   if (typeof num === 'undefined') {
@@ -36,6 +38,27 @@ function roundByDPR(num?: number): number {
   const dpr = window.devicePixelRatio || 1;
   return Math.round(num * dpr) / dpr;
 }
+
+/**
+ * Fallback placements for flip(), matching the original PlacementController.
+ */
+const getFallbackPlacements = (placement: Placement): Placement[] => {
+  const fallbacks: Record<string, Placement[]> = {
+    left: ['right', 'bottom', 'top'],
+    'left-start': ['right-start', 'bottom', 'top'],
+    'left-end': ['right-end', 'bottom', 'top'],
+    right: ['left', 'bottom', 'top'],
+    'right-start': ['left-start', 'bottom', 'top'],
+    'right-end': ['left-end', 'bottom', 'top'],
+    top: ['bottom', 'left', 'right'],
+    'top-start': ['bottom-start', 'left', 'right'],
+    'top-end': ['bottom-end', 'left', 'right'],
+    bottom: ['top', 'left', 'right'],
+    'bottom-start': ['top-start', 'left', 'right'],
+    'bottom-end': ['top-end', 'left', 'right'],
+  };
+  return fallbacks[placement] ?? [placement];
+};
 
 export interface FloatingOptions {
   placement?: Placement;
@@ -90,21 +113,38 @@ export class FloatingController implements ReactiveController {
   ): Promise<void> {
     await (document.fonts ? document.fonts.ready : Promise.resolve());
 
+    const resolvedPlacement = options.placement ?? 'bottom-start';
+
     const [mainAxis = 0, crossAxis = 0] = Array.isArray(options.offset)
       ? options.offset
       : [options.offset ?? 0, 0];
 
+    // If the floating element has no dimensions yet (e.g. sp-popover
+    // hasn't upgraded), bail out — autoUpdate will retry when it resizes.
+    const popoverRect = popover.getBoundingClientRect();
+    if (popoverRect.width === 0 && popoverRect.height === 0) {
+      return;
+    }
+
     const { x, y, placement } = await computePosition(trigger, popover, {
-      placement: options.placement ?? 'bottom-start',
+      placement: resolvedPlacement,
       middleware: [
         offset({ mainAxis, crossAxis }),
-        flip(),
+        flip({
+          padding: REQUIRED_DISTANCE_TO_EDGE,
+          fallbackPlacements: getFallbackPlacements(resolvedPlacement),
+          fallbackStrategy: 'bestFit',
+        }),
         shift({ padding: REQUIRED_DISTANCE_TO_EDGE }),
         size({
           padding: REQUIRED_DISTANCE_TO_EDGE,
           apply: ({ availableHeight, availableWidth }) => {
+            const maxH = Math.max(
+              MIN_FLOATING_HEIGHT,
+              Math.floor(availableHeight)
+            );
             Object.assign(popover.style, {
-              maxHeight: `${Math.max(MIN_OVERLAY_HEIGHT, Math.floor(availableHeight))}px`,
+              maxHeight: `${maxH}px`,
               maxWidth: `${Math.floor(availableWidth)}px`,
             });
           },
@@ -121,7 +161,8 @@ export class FloatingController implements ReactiveController {
 
     popover.setAttribute('actual-placement', placement);
 
-    // Sync placement attribute on the styled sp-popover child.
+    // Sync placement attribute on the styled sp-popover child so the
+    // tip arrow (if any) and transform-origin point the right way.
     const popoverChild = popover.querySelector('[placement]');
     if (popoverChild) {
       popoverChild.setAttribute('placement', placement);
