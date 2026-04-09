@@ -36,6 +36,8 @@ import styles from './progress-circle.css';
  *
  * @example
  * <swc-progress-circle indeterminate label="Loading..."></swc-progress-circle>
+ *
+ * Light DOM children are not projected into the shadow tree. Use the `label` attribute or property, or `aria-label` / `aria-labelledby` on the host, for an accessible name.
  */
 export class ProgressCircle extends ProgressCircleBase {
   // ────────────────────
@@ -74,20 +76,18 @@ export class ProgressCircle extends ProgressCircleBase {
       <div
         class=${classMap({
           ['swc-ProgressCircle']: true,
-          [`swc-ProgressCircle--indeterminate`]: this.indeterminate,
+          ['swc-ProgressCircle--indeterminate']: this.indeterminate,
           [`swc-ProgressCircle--static${capitalize(this.staticColor)}`]:
             typeof this.staticColor !== 'undefined',
           [`swc-ProgressCircle--size${this.size?.toUpperCase()}`]:
             typeof this.size !== 'undefined',
         })}
       >
-        <slot @slotchange=${this.handleSlotchange}></slot>
-        <svg fill="none" width="100%" height="100%" class="swc-outerCircle">
+        <svg fill="none" width="100%" height="100%">
           <circle
-            class="swc-innerCircle"
             cx="50%"
             cy="50%"
-            r=${`calc(50% - ${strokeWidth / 1}px)`}
+            r=${`calc(50% - ${strokeWidth}px)`}
             stroke-width=${strokeWidth}
           />
           <circle
