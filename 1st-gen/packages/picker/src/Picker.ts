@@ -1950,7 +1950,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
           this.isMobile.matches && !this.forcePopover
             ? undefined
             : this.placement,
-        offset: 0,
+        offset: 8,
       });
 
       requestAnimationFrame(() => {
