@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { PropertyValues } from 'lit';
-import { property, query } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 
 import {
   LanguageResolutionController,
@@ -18,7 +18,6 @@ import {
 } from '@spectrum-web-components/core/controllers/language-resolution.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
-import { getLabelFromSlot } from '@spectrum-web-components/core/utils/get-label-from-slot.js';
 
 import {
   PROGRESS_CIRCLE_VALID_SIZES,
@@ -30,14 +29,6 @@ import {
  * Can be used in both determinate (with specific progress value) and indeterminate (loading) states.
  *
  * @attribute {ElementSize} size - The size of the progress circle.
- *
- * @todo Why do we support both the slot and the label attribute? Should we deprecate the slot?
- *
- * @todo Figure out why our tool chain doesn't respect the line breaks in this slot description.
- *
- * @slot - Accessible label for the progress circle.
- *
- *   Used to provide context about what is loading or progressing.
  */
 export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
   validSizes: PROGRESS_CIRCLE_VALID_SIZES,
@@ -85,6 +76,8 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
   // ──────────────────
 
   /**
+   * @todo Revisit the default API for `indeterminate` and `progress`. SWC-1891
+   *
    * Whether the progress circle shows indeterminate progress (loading state).
    *
    * When true, displays an animated loading indicator instead of a specific progress value.
@@ -103,7 +96,8 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
   /**
    * Progress value from 0 to 100.
    *
-   * Only relevant when indeterminate is false.
+   * Only relevant when indeterminate is false. Values outside that range or
+   * non-finite numbers are clamped to 0–100 (non-finite becomes 0).
    */
   @property({ type: Number })
   public progress = 0;
@@ -114,23 +108,49 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
   //     IMPLEMENTATION
   // ──────────────────────
 
-  /**
-   * @internal
-   */
-  @query('slot')
-  private slotEl!: HTMLSlotElement;
-
-  protected makeRotation(rotation: number): string | undefined {
-    return this.indeterminate
-      ? undefined
-      : `transform: rotate(${rotation}deg);`;
+  /** True when light DOM has element nodes or non-whitespace text (no default slot). */
+  private static hasMeaningfulLightDomChildren(host: HTMLElement): boolean {
+    for (const node of host.childNodes) {
+      if (
+        node.nodeType === Node.ELEMENT_NODE ||
+        (node.nodeType === Node.TEXT_NODE && node.textContent?.trim())
+      ) {
+        return true;
+      }
+    }
+    return false;
   }
 
-  protected handleSlotchange(): void {
-    const labelFromSlot = getLabelFromSlot(this.label, this.slotEl);
-    if (labelFromSlot) {
-      this.label = labelFromSlot;
+  private warnDeprecatedLightDomChildren(): void {
+    if (!window.__swc?.DEBUG) {
+      return;
     }
+    if (!ProgressCircleBase.hasMeaningfulLightDomChildren(this)) {
+      return;
+    }
+    window.__swc.warn(
+      this,
+      `<${this.localName}> no longer has a default slot. Light DOM children are not rendered and are not used for an accessible name. Use the "label" attribute or property, or "aria-label" / "aria-labelledby" on the host instead.`,
+      'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/components-progress-circle--docs',
+      { level: 'deprecation' }
+    );
+  }
+
+  private static clampProgress(value: number): number {
+    if (!Number.isFinite(value)) {
+      return 0;
+    }
+    return Math.min(100, Math.max(0, value));
+  }
+
+  protected override willUpdate(changes: PropertyValues): void {
+    if (changes.has('progress')) {
+      const clamped = ProgressCircleBase.clampProgress(this.progress);
+      if (clamped !== this.progress) {
+        this.progress = clamped;
+      }
+    }
+    super.willUpdate(changes);
   }
 
   protected override firstUpdated(changes: PropertyValues): void {
@@ -158,12 +178,12 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
       } else {
         this.setAttribute('aria-valuemin', '0');
         this.setAttribute('aria-valuemax', '100');
-        this.setAttribute('aria-valuenow', '' + this.progress);
+        this.setAttribute('aria-valuenow', String(this.progress));
         this.setAttribute('aria-valuetext', this.formatProgress());
       }
     }
     if (!this.indeterminate && changes.has('progress')) {
-      this.setAttribute('aria-valuenow', '' + this.progress);
+      this.setAttribute('aria-valuenow', String(this.progress));
       this.setAttribute('aria-valuetext', this.formatProgress());
     }
     if (!this.indeterminate && changes.has(languageResolverUpdatedSymbol)) {
@@ -181,22 +201,21 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
       return Boolean(
         this.label ||
         this.getAttribute('aria-label') ||
-        this.getAttribute('aria-labelledby') ||
-        this.slotEl.assignedNodes().length
+        this.getAttribute('aria-labelledby')
       );
     };
 
     if (window.__swc?.DEBUG) {
+      this.warnDeprecatedLightDomChildren();
       if (!hasAccessibleName() && this.getAttribute('role') === 'progressbar') {
         window.__swc?.warn(
           this,
-          '<sp-progress-circle> elements need one of the following to be accessible:',
-          'https://opensource.adobe.com/spectrum-web-components/components/progress-circle/#accessibility',
+          `<${this.localName}> elements need one of the following to be accessible:`,
+          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/components-progress-circle--docs',
           {
             type: 'accessibility',
             issues: [
               'value supplied to the "label" attribute, which will be displayed visually as part of the element, or',
-              'text content supplied directly to the <sp-progress-circle> element, or',
               'value supplied to the "aria-label" attribute, which will only be provided to screen readers, or',
               'an element ID reference supplied to the "aria-labelledby" attribute, which will be provided by screen readers and will need to be managed manually by the parent application.',
             ],

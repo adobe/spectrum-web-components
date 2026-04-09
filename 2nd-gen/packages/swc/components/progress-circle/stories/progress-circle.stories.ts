@@ -103,10 +103,10 @@ export const Overview: Story = {
  *
  * 1. **Track** - Background ring showing the full progress range
  * 2. **Fill** - Colored ring segment showing current progress
- * 3. **Label** - Accessible text describing the operation (not visually rendered)
+ * 3. **Label** - Accessible text describing the operation (not visually rendered), provided via the `label` attribute or property, or `aria-label` / `aria-labelledby` on the host
  *
  * ### Content
- * - **Default slot**: Alternative way to provide an accessible label (the `label` attribute is preferred)
+ *
  * - **Label**: Accessible text describing what is loading or progressing (not visually rendered)
  */
 export const Anatomy: Story = {
@@ -246,9 +246,7 @@ export const Indeterminate: Story = {
  * #### ARIA implementation
  *
  * 1. **ARIA role**: Automatically sets `role="progressbar"` for proper semantic meaning
- * 2. **Labeling**:
- *     - Uses the `label` attribute value as `aria-label`
- *     - Alternative: Content in the default slot can provide the label
+ * 2. **Labeling**: Uses the `label` attribute value as `aria-label`, or rely on `aria-label` / `aria-labelledby` you set on the host
  * 3. **Progress state** (determinate):
  *     - Sets `aria-valuenow` with the current `progress` value
  * 4. **Loading state** (indeterminate):
