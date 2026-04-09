@@ -1,10 +1,10 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Illustrated Message / Divider accessibility migration analysis
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Illustrated Message / Illustrated message accessibility migration analysis
 
 <!-- Document title (editable) -->
 
-# Divider accessibility migration analysis
+# Illustrated message accessibility migration analysis
 
 <!-- Generated TOC - DO NOT EDIT -->
 
@@ -13,13 +13,13 @@
 
 - [Overview](#overview)
     - [Also read](#also-read)
-    - [What a divider is](#what-a-divider-is)
-    - [When to use something else](#when-to-use-something-else)
+    - [What it is](#what-it-is)
+    - [What it is not](#what-it-is-not)
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
 - [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
-- [Recommendations: `<swc-divider>`](#recommendations-swc-divider)
+- [Recommendations: `<swc-illustrated-message>`](#recommendations-swc-illustrated-message)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
     - [Accessibility tree expectations](#accessibility-tree-expectations)
@@ -35,19 +35,21 @@
 
 ## Overview
 
-This doc explains how **`swc-divider`** should work for **accessibility**. It supports **WCAG 2.2 Level AA**.
+This doc explains how **`swc-illustrated-message`** should work for **accessibility**. It supports **WCAG 2.2 Level AA**. Until **`swc-illustrated-message`** ships, use **`1st-gen/packages/illustrated-message/src/IllustratedMessage.ts`** (`<sp-illustrated-message>`) as a behavioral reference, while aligning **2nd-gen** **API** and **docs** with the decisions below.
 
 ### Also read
 
-[Divider migration roadmap](./rendering-and-styling-migration-analysis.md) for visuals and DOM.
+[Illustrated message migration roadmap](./rendering-and-styling-migration-analysis.md).
 
-### What a divider is
+### What it is
 
-- A **line** that splits sections or groups of controls. It is **not** draggable and **not** a focus target by default.
+- A **block** for **empty**, **error**, or **onboarding** states: an **illustration** (often **SVG**), a **title**, and **description** text (sometimes with **actions**).
+- **2nd-gen** supplies the **title** and **description** through **slots** only—**no** string **`heading`** / **`description`** **attributes** as fallbacks in the slot (see **Recommendations** and [PR #6150 discussion](https://github.com/adobe/spectrum-web-components/pull/6150#discussion_r3047502294)).
 
-### When to use something else
+### What it is not
 
-- For a **split pane** users can move with the keyboard, use a **window splitter** pattern ([APG](https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/)), not the plain divider.
+- **Not** a **dialog** or **alertdialog** by itself unless a **separate** spec wraps it that way.
+- **Not** a substitute for **page**-level **`h1`**—keep **one** top-level heading per view where that pattern applies.
 
 ---
 
@@ -55,18 +57,18 @@ This doc explains how **`swc-divider`** should work for **accessibility**. It su
 
 ### Pattern in the APG
 
-- There is **no** page in the APG named “divider.”
+- The APG does **not** define an “illustrated message” widget. Treat it as **structured content**: **heading**, **text**, optional **links** in the description, optional **buttons** in an **actions** area, and a usually **decorative** illustration.
 
 ### Guidelines that apply
 
 | Idea | Plain meaning |
 |------|----------------|
-| [`separator` role](https://www.w3.org/TR/wai-aria-1.2/#separator) | A **non-focusable** divider maps to a **separator** in the accessibility tree. **Do not** add progress values (`aria-valuenow`, etc.). |
-| [`aria-orientation`](https://www.w3.org/TR/wai-aria-1.2/#aria-orientation) | Use **`vertical`** for vertical dividers. For horizontal lines, **leave the attribute off** (default is horizontal). |
-| [Non-text contrast (WCAG 1.4.11)](https://www.w3.org/TR/WCAG22/#non-text-contrast) | The line should be **visible enough** next to its background, especially with **`static-color`** on photos or tinted areas. |
-| [Info and relationships (WCAG 1.3.1)](https://www.w3.org/TR/WCAG22/#info-and-relationships) | **Headings** and **landmarks** still define sections. A divider **helps** layout; it **does not replace** a heading. |
+| [Info and relationships (WCAG 1.3.1)](https://www.w3.org/TR/WCAG22/#info-and-relationships) | The **programmatic** heading level must match the **document** outline. Avoid a second **`h1`** inside this pattern unless the product shell intentionally nests it—typically the block uses **`h2`–`h6`** per **`heading-level`** (or equivalent) from the host. |
+| [Headings and labels (WCAG 2.4.6)](https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels.html) | The **title** should describe **purpose**; the **description** should add **useful** detail. |
+| [Non-text content (WCAG 1.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content) | If the **illustration** is **decorative**, hide it from assistive tech (**`aria-hidden="true"`** on the **SVG** or equivalent). If it **conveys** information not in the **heading** / **description**, give it a **short** accessible **name**. |
+| [Name, role, value (WCAG 4.1.2)](https://www.w3.org/TR/WCAG22/#name-role-value) | **Action** **buttons** and **links** in the **description** or **actions** region need **discernible** **names**. |
 
-**Bottom line:** Keep **`swc-divider`** as a **separator** with the right **orientation**. Do not pretend it is keyboard-driven unless you ship a different, interactive pattern.
+**Bottom line:** Authors choose **`heading-level`** (or the implementation maps **`h2`–`h6`**) to match the page. **2nd-gen** puts **title** and **body** copy in **slots** only; see [PR #6150 discussion](https://github.com/adobe/spectrum-web-components/pull/6150#discussion_r3047502294).
 
 ---
 
@@ -77,39 +79,31 @@ This doc explains how **`swc-divider`** should work for **accessibility**. It su
 
 ---
 
-## Recommendations: `<swc-divider>`
+## Recommendations: `<swc-illustrated-message>`
 
 ### ARIA roles, states, and properties
 
 | Topic | What to do |
 |-------|------------|
-| **`role="separator"`** | **Prescribed** and **fixed** on the host (`DividerBase`). It must **not** be author-overridable in implementation or docs. **Do not** switch to `presentation`, `none`, or any other role; if that fits better, use **different** markup or a **different** pattern. **`swc-divider`** maps to **one** semantic role only. |
-| **`aria-orientation`** | Set **`vertical`** when the divider is vertical. For horizontal, **omit** it. |
-| **Docs** | Tell authors to pair dividers with **headings** or **landmarks** when section structure matters.  Ensure that docs examples use divders in this way. Too many separators can make screen readers **chatty**—use **fewer** lines when you can. |
+| **Heading and description content (2nd-gen)** | Provide **title** and **description** **only** via **`slot="heading"`** and **`slot="description"`**. **Do not** rely on **reflecting** **`heading`** or **`description`** **string properties** as **default slot content** the way **1st-gen** **`<sp-illustrated-message>`** could—those **attribute** fallbacks are **removed** in **2nd-gen** to **sever the 1st-gen dependency**. This matches maintainer direction ([discussion with @5t3ph](https://github.com/adobe/spectrum-web-components/pull/6150#discussion_r3047502294)); further API tweaks remain **open to discussion** in that thread. |
+| **Heading level** | Expose a **real** heading in shadow DOM (**`h2`–`h6`**) from **`heading-level`** (or the agreed property). **Do not** accept **`heading-level="1"`** / **`h1`** for this block—the **page** (or **dialog** title) should own **`h1`**. |
+| **Illustration** | Prefer **`aria-hidden="true"`** on **decorative** **SVG**s. If the graphic is **meaningful**, use **`role="img"`** and **`aria-label`** (or **visible** text that names it). |
+| **Actions** | **Buttons** or **links** in an **actions** slot must keep **visible** **text** or **`aria-label`** as required by **WCAG**. |
+| **Docs** | Examples should **only** show **slotted** **heading** and **description** for **2nd-gen**; **do not** teach **`heading="..."`** / **`description="..."`** as an alternative **content** API. |
 
 ### Shadow DOM and cross-root ARIA Issues
 
-None
+None for a minimal implementation if **slots** carry **light-DOM** **links** / **buttons** with **native** semantics. If **IDs** for **`aria-labelledby`** must point across roots, document the **pattern** (or prefer **slots** that **project** into shadow **heading** / **description** wrappers).
 
 ### Accessibility tree expectations
 
-#### Horizontal line**
-
-- **Role:** **separator** (horizontal by default).
-- **Name:** Usually **none**. In rare cases an app may set **`aria-label`**—that should be uncommon.
-- **Focus:** **Not** focusable.
-
-#### Vertical line**
-
-- Same as horizontal, plus **`aria-orientation="vertical"`**.
-
-#### Where it sits
-
-- Between named **siblings** (e.g. toolbar groups, landmark sections, etc.). It should **not** be the **only** clue for “what section is this?”—use **headings** too when needed.
+- Users hear a **heading** at the **chosen** level and the **description** content.
+- **Decorative** **illustration** does **not** add **noise** to the **tree**.
+- **Actions** are **real** **controls** with **names**.
 
 ### Keyboard and focus
 
-**Not focusable.** Keyboard navigation should skip this component and move to the next focusable element.
+- The **illustrated message** host is **not** a single **tab stop** by default; **Tab** moves among **focusable** **children** (**buttons**, **links**, etc.) in **document** order.
 
 ---
 
@@ -119,30 +113,26 @@ None
 
 | Kind of test | What to check |
 |--------------|----------------|
-| **Unit** | **`role="separator"`**. **`aria-orientation="vertical"`** when `vertical` is true; **not** set (or default horizontal) when false. **Role + orientation** stay in sync if `vertical` toggles. Host is **not** focusable. |
-| **aXe + Storybook** | **WCAG 2.x** rules on divider stories. |
-| **Playwright ARIA snapshots** | Keep **`divider.a11y.spec.ts`** (overview, sizes, vertical, static colors, …). |
-| **Contrast** | **Color-contrast** / non-text checks where they matter, especially **`static-color`** stories. |
+| **Unit** | **Heading** tag matches **`heading-level`**; **no** **`h1`** when disallowed; **SVG** **`aria-hidden`** (or **img** **name**) matches **decorative** vs **informative** stories. |
+| **aXe + Storybook** | **WCAG 2.x** on **overview** and **empty-state**-style stories with **slotted** **heading** / **description**. |
+| **Playwright ARIA snapshots** | **Heading** **role** / **level** and **description** text; **actions** **names** when present. |
 
 ---
 
 ## Summary checklist
 
-- [ ] Stories use **real section text** around dividers—not only **`size`** or **`static-color`** as if they were user-facing labels.
-- [ ] Code keeps **`role="separator"`** and correct **`aria-orientation`** for vertical dividers.
-- [ ] Divider stays **non-interactive** (no Tab stop).
-- [ ] Docs explain **headings / landmarks** vs **divider-only** layout.
-- [ ] **`static-color`** and contrast are documented; Storybook **Accessibility** matches.
-- [ ] Tree checks show **separator**; vertical stories show **vertical**; no surprise **name** unless intended.
-- [ ] **ARIA snapshots** for **horizontal** and **vertical** dividers.
-- [ ] **Unit tests** prove **no** **Tab** focus on the divider by default.
-- [ ] **aXe** (WCAG 2.x tags) runs on divider stories.
+- [ ] **2nd-gen** **docs** and **stories** use **slots** for **heading** and **description** **only**—**no** **`heading`** / **`description`** **attribute** fallbacks as the **content** API ([PR #6150](https://github.com/adobe/spectrum-web-components/pull/6150#discussion_r3047502294)).
+- [ ] **Heading level** is **correct** for the page; **no** **`h1`** inside the component when the pattern forbids it.
+- [ ] **Illustration** is **decorative** (**`aria-hidden`**) or **named** when it carries **meaning**.
+- [ ] **Actions** and **inline** **links** in **description** are **labeled**.
+- [ ] **Snapshots** / **aXe** cover representative **stories**.
 
 ---
 
 ## References
 
-- [WAI-ARIA 1.2: separator](https://www.w3.org/TR/wai-aria-1.2/#separator)
+- [WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-1.2/)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
 - [Using ARIA (read this first)](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
-- [Divider migration roadmap](./rendering-and-styling-migration-analysis.md)
+- [Illustrated message migration roadmap](./rendering-and-styling-migration-analysis.md)
+- [PR #6150 — illustrated message: file structure and initial API (discussion: slots vs heading attributes)](https://github.com/adobe/spectrum-web-components/pull/6150#discussion_r3047502294)

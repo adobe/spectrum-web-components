@@ -53,7 +53,7 @@
 - Help Text
     - [Help text migration roadmap](help-text/rendering-and-styling-migration-analysis.md)
 - Illustrated Message
-    - [Divider accessibility migration analysis](illustrated-message/accessibility-migration-analysis.md)
+    - [Illustrated message accessibility migration analysis](illustrated-message/accessibility-migration-analysis.md)
     - [Illustrated message migration roadmap](illustrated-message/rendering-and-styling-migration-analysis.md)
 - Infield Button
     - [In-field button migration roadmap](infield-button/rendering-and-styling-migration-analysis.md)
