@@ -49,7 +49,6 @@
     - Meter
     - Number Field
     - Opacity Checkerboard
-    - Picker
     - Picker Button
     - Progress Bar
     - Progress Circle
