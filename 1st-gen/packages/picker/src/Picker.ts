@@ -1301,6 +1301,9 @@ export class Picker extends SizedMixin(ExpandableElement, {
   /** Floating UI positioning controller — replaces sp-overlay + PlacementController. */
   private floatingController = new FloatingController(this);
 
+  /** Cancels a pending close-transition hide when rapidly reopening. */
+  private closeAbort?: AbortController;
+
   /** The native popover container element. */
   @query('#popover-container')
   popoverContainer!: HTMLElement | null;
@@ -1875,6 +1878,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
    * @param menu - The menu template to render inside the overlay
    * @returns The rendered overlay template
    */
+
   /**
    * Renders the overlay using a native popover element + FloatingController
    * instead of sp-overlay. This eliminates the dependency on the Overlay
@@ -1893,15 +1897,16 @@ export class Picker extends SizedMixin(ExpandableElement, {
   protected renderOverlay(menu: TemplateResult): TemplateResult {
     const container = this.renderContainer(menu);
     return html`
-      <div id="popover-container" popover="manual">
-        ${container}
-      </div>
+      <div id="popover-container" popover="manual">${container}</div>
     `;
   }
 
   /**
    * Show/hide the native popover, sync sp-popover.open, and
    * start/stop FloatingController positioning.
+   *
+   * Open sequence:  showPopover() → next frame → set [open] (triggers CSS transition)
+   * Close sequence: remove [open] → wait for transition → hidePopover()
    */
   private managePopoverVisibility(): void {
     const container = this.popoverContainer;
@@ -1909,20 +1914,21 @@ export class Picker extends SizedMixin(ExpandableElement, {
       return;
     }
 
-    // sp-popover uses :host([open]) for visibility (opacity, visibility).
-    // Set the attribute directly so it works even before the element upgrades.
     const popoverEl = container.querySelector('sp-popover');
-    if (popoverEl) {
-      popoverEl.toggleAttribute('open', this.open);
-    }
 
     if (this.open) {
+      // Cancel any pending close hide so it doesn't clobber this open.
+      this.closeAbort?.abort();
+      this.closeAbort = undefined;
+
+      // 1. Make the container visible in the top layer.
       try {
         container.showPopover();
       } catch {
         // Already showing or disconnected.
       }
 
+      // 2. Start positioning immediately so the first frame is correct.
       this.floatingController.start(this as unknown as HTMLElement, container, {
         placement:
           this.isMobile.matches && !this.forcePopover
@@ -1931,7 +1937,12 @@ export class Picker extends SizedMixin(ExpandableElement, {
         offset: 0,
       });
 
+      // 3. Set [open] on the next frame so the browser has a "from" state
+      //    for the opacity/transform transition.
       requestAnimationFrame(() => {
+        if (this.open && popoverEl) {
+          popoverEl.toggleAttribute('open', true);
+        }
         if (this.open) {
           this.dispatchEvent(
             new CustomEvent('sp-opened', {
@@ -1945,11 +1956,43 @@ export class Picker extends SizedMixin(ExpandableElement, {
     } else {
       this.floatingController.stop();
 
-      try {
-        container.hidePopover();
-      } catch {
-        // Already hidden or disconnected.
+      // Restore focus after the current event completes so Enter keyup
+      // doesn't generate a click on the newly-focused button.
+      requestAnimationFrame(() => {
+        if (!this.open && !this.button?.matches(':focus')) {
+          this.button?.focus();
+        }
+      });
+
+      // 1. Remove [open] to start the closing transition (opacity 1→0).
+      if (popoverEl) {
+        popoverEl.toggleAttribute('open', false);
       }
+
+      // 2. Wait for the transition to finish, then hide the container.
+      this.closeAbort = new AbortController();
+      const { signal } = this.closeAbort;
+
+      const hideWhenDone = (): void => {
+        if (signal.aborted) {
+          return;
+        }
+        this.closeAbort = undefined;
+        try {
+          container.hidePopover();
+        } catch {
+          // Already hidden or disconnected.
+        }
+      };
+
+      if (popoverEl) {
+        popoverEl.addEventListener('transitionend', hideWhenDone, {
+          once: true,
+          signal,
+        });
+      }
+      // Safety: hide after 150ms even if transitionend doesn't fire.
+      setTimeout(hideWhenDone, 150);
 
       this.dispatchEvent(
         new CustomEvent('sp-closed', {
@@ -1973,16 +2016,38 @@ export class Picker extends SizedMixin(ExpandableElement, {
   };
 
   /**
-   * Simple click-to-toggle + click-outside-to-close.
-   * No DesktopController / MobileController needed.
+   * Pointerdown-to-open enables click-and-drag item selection.
+   * A flag prevents the subsequent click from re-closing.
    */
   public override bindEvents(): void {
+    let openedViaPointerdown = false;
+
+    this.button?.addEventListener('pointerdown', (event: PointerEvent) => {
+      if (
+        event.button !== 0 ||
+        this.disabled ||
+        this.readonly ||
+        this.pending
+      ) {
+        return;
+      }
+      if (!this.open) {
+        openedViaPointerdown = true;
+        this.toggle(true);
+      }
+    });
+
     this.button?.addEventListener('click', () => {
       if (this.disabled || this.readonly || this.pending) {
         return;
       }
+      if (openedViaPointerdown) {
+        openedViaPointerdown = false;
+        return;
+      }
       this.toggle();
     });
+
     document.addEventListener('pointerdown', this.handleLightDismiss);
   }
 
