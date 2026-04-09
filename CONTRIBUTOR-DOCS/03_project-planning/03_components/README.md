@@ -22,6 +22,9 @@
     - [Action button migration roadmap](action-button/rendering-and-styling-migration-analysis.md)
 - Action Group
     - [Action group migration roadmap](action-group/rendering-and-styling-migration-analysis.md)
+- Action Menu
+    - [Action menu accessibility migration analysis](action-menu/accessibility-migration-analysis.md)
+    - [Action menu migration roadmap](action-menu/rendering-and-styling-migration-analysis.md)
 - Alert Banner
     - [Alert Banner migration roadmap](alert-banner/rendering-and-styling-migration-analysis.md)
 - Asset

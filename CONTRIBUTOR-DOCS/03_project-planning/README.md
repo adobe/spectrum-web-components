@@ -28,6 +28,7 @@
 - [Components](03_components/README.md)
     - Action Button
     - Action Group
+    - Action Menu
     - Alert Banner
     - Asset
     - Avatar
