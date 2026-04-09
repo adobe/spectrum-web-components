@@ -97,6 +97,30 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
     super.updated(changedProperties);
     if (window.__swc?.DEBUG) {
       if (
+        changedProperties.has('size') &&
+        !ILLUSTRATED_MESSAGE_VALID_SIZES.includes(this.size)
+      ) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> received an invalid "size" value of "${this.size}". Valid values are ${ILLUSTRATED_MESSAGE_VALID_SIZES.join(', ')}.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/illustrated-message/',
+          { issues: [`size="${this.size}"`] }
+        );
+      }
+
+      if (
+        changedProperties.has('orientation') &&
+        !ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS.includes(this.orientation)
+      ) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> received an invalid "orientation" value of "${this.orientation}". Valid values are ${ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS.join(', ')}.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/illustrated-message/',
+          { issues: [`orientation="${this.orientation}"`] }
+        );
+      }
+
+      if (
         changedProperties.has('headingLevel') &&
         (this.headingLevel < 2 || this.headingLevel > 6)
       ) {
