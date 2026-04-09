@@ -100,13 +100,13 @@ export abstract class AvatarBase extends SpectrumElement {
   // ───────────────────────
 
   /**
-   * Renders a stroke (outline) around the avatar image to create visual
-   * separation from adjacent content. Defaults to `true` within an Avatar
-   * Group; set explicitly on a standalone avatar when the image border color
-   * matches the surrounding background.
+   * Renders an outline around the avatar image to create visual separation
+   * from adjacent content. Defaults to `true` within an Avatar Group; set
+   * explicitly on a standalone avatar when the image border color matches
+   * the surrounding background.
    */
-  @property({ type: Boolean, reflect: true, attribute: 'show-stroke' })
-  public showStroke = false;
+  @property({ type: Boolean, reflect: true })
+  public outline = false;
 
   /**
    * Renders the avatar at reduced opacity, indicating the entity is not

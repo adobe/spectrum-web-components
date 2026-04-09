@@ -36,8 +36,8 @@ argTypes.size = {
   },
 };
 
-argTypes['show-stroke'] = {
-  ...argTypes['show-stroke'],
+argTypes.outline = {
+  ...argTypes.outline,
   control: { type: 'boolean' },
   table: {
     category: 'attributes',
@@ -121,9 +121,9 @@ const PLACEHOLDER_SRC = 'https://picsum.photos/id/64/500/500';
 // alt ?? '' guards against undefined produced by Storybook controls when
 // the user clears the alt field. Explicit stories use typed args that are always defined.
 export const Playground: Story = {
-  render: ({ src, alt, size, 'show-stroke': showStroke, disabled }) => html`
+  render: ({ src, alt, size, outline, disabled }) => html`
     <div
-      style=${showStroke
+      style=${outline
         ? 'padding:16px;background:linear-gradient(to right,rgb(15,23,42),rgb(51,65,85));border-radius:8px;'
         : ''}
     >
@@ -131,7 +131,7 @@ export const Playground: Story = {
         src=${src}
         alt=${alt ?? ''}
         size=${size}
-        ?show-stroke=${showStroke}
+        ?outline=${outline}
         ?disabled=${disabled}
       ></swc-avatar>
     </div>
@@ -141,7 +141,7 @@ export const Playground: Story = {
     src: PLACEHOLDER_SRC,
     alt: 'Jane Doe',
     size: '500',
-    'show-stroke': false,
+    outline: false,
     disabled: false,
   },
 };
@@ -259,14 +259,14 @@ export const InActionButton: Story = {
 };
 
 /**
- * Use `show-stroke` to render a solid outline around the avatar image.
- * This is useful when the avatar's image border color matches the surrounding
- * background. The outline uses `--swc-avatar-border-width` (currently 1 px)
- * for sizes 50–900 and a hardcoded 2 px for sizes 1000–1500, matching the
- * Spectrum 2 specification. Within an Avatar Group, `show-stroke` defaults
- * to `true` to visually separate stacked avatars.
+ * Use the `outline` attribute to render a solid outline around the avatar
+ * image. This is useful when the avatar's image border color matches the
+ * surrounding background. The outline uses `--swc-avatar-border-width`
+ * (currently 1 px) for sizes 50–900 and a hardcoded 2 px for sizes 1000–1500,
+ * matching the Spectrum 2 specification. Within an Avatar Group, `outline`
+ * defaults to `true` to visually separate stacked avatars.
  */
-export const ShowStroke: Story = {
+export const Outline: Story = {
   render: () => html`
     <div
       style="display:inline-flex;gap:8px;align-items:center;padding:16px;background:linear-gradient(to right,rgb(15,23,42),rgb(51,65,85));border-radius:8px;"
@@ -275,13 +275,13 @@ export const ShowStroke: Story = {
         src=${PLACEHOLDER_SRC}
         alt="Jane Doe"
         size="500"
-        show-stroke
+        outline
       ></swc-avatar>
       <swc-avatar
         src=${PLACEHOLDER_SRC}
         alt="Jane Doe"
         size="1000"
-        show-stroke
+        outline
       ></swc-avatar>
     </div>
   `,

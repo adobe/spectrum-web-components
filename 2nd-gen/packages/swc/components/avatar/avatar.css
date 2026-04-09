@@ -113,18 +113,18 @@
 /* ── Stroke outline ─────────────────────────────────────── */
 
 /* Default outline width for all sizes */
-:host([show-stroke]) .swc-Avatar-image {
+:host([outline]) .swc-Avatar-image {
   outline: var(--swc-avatar-border-width, token("avatar-border-width")) solid var(--swc-avatar-border-color, token("avatar-border-color"));
 }
 
 /* Thicker outline for large sizes >= 1000 (≥ 64 px), matching S2.
    No Spectrum 2 token exists for the large-size border width; hardcoded per spec. */
-:host([show-stroke][size="1000"]),
-:host([show-stroke][size="1100"]),
-:host([show-stroke][size="1200"]),
-:host([show-stroke][size="1300"]),
-:host([show-stroke][size="1400"]),
-:host([show-stroke][size="1500"]) {
+:host([outline][size="1000"]),
+:host([outline][size="1100"]),
+:host([outline][size="1200"]),
+:host([outline][size="1300"]),
+:host([outline][size="1400"]),
+:host([outline][size="1500"]) {
   --swc-avatar-border-width: 2px;
 }
 

@@ -101,12 +101,12 @@ test.describe('Avatar - ARIA Snapshots', () => {
     `);
   });
 
-  test('should expose correct img role when show-stroke is active', async ({
+  test('should expose correct img role when outline is active', async ({
     page,
   }) => {
     const root = await gotoStory(
       page,
-      'components-avatar--show-stroke',
+      'components-avatar--outline',
       'swc-avatar'
     );
     await expect(root).toMatchAriaSnapshot(`

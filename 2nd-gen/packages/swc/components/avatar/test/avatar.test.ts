@@ -56,7 +56,7 @@ export const OverviewTest: Story = {
       expect(avatar.src, 'src property').toBe(PLACEHOLDER_SRC);
       expect(avatar.alt, 'alt property').toBe('Jane Doe');
       expect(avatar.size, 'size property').toBe(500);
-      expect(avatar.showStroke, 'showStroke property').toBe(false);
+      expect(avatar.outline, 'outline property').toBe(false);
       expect(avatar.disabled, 'disabled property').toBe(false);
       expect(avatar.decorative, 'decorative property').toBe(false);
     });
@@ -201,24 +201,24 @@ export const AltAriaHiddenTest: Story = {
   },
 };
 
-export const ShowStrokeReflectionTest: Story = {
+export const OutlineReflectionTest: Story = {
   ...Overview,
   play: async ({ canvasElement, step }) => {
     const avatar = await getComponent<Avatar>(canvasElement, 'swc-avatar');
 
-    await step('reflects show-stroke attribute after mutation', async () => {
-      avatar.showStroke = true;
+    await step('reflects outline attribute after mutation', async () => {
+      avatar.outline = true;
       await avatar.updateComplete;
       expect(
-        avatar.hasAttribute('show-stroke'),
-        'show-stroke attribute presence'
+        avatar.hasAttribute('outline'),
+        'outline attribute presence'
       ).toBe(true);
 
-      avatar.showStroke = false;
+      avatar.outline = false;
       await avatar.updateComplete;
       expect(
-        avatar.hasAttribute('show-stroke'),
-        'show-stroke attribute removed'
+        avatar.hasAttribute('outline'),
+        'outline attribute removed'
       ).toBe(false);
     });
 
@@ -226,12 +226,12 @@ export const ShowStrokeReflectionTest: Story = {
       'does not toggle aria-hidden when a non-decorative property changes',
       async () => {
         // alt="Jane Doe" from Overview args — aria-hidden should remain absent
-        // even after showStroke changes (covers changes.has("decorative") === false path)
-        avatar.showStroke = true;
+        // even after outline changes (covers changes.has("decorative") === false path)
+        avatar.outline = true;
         await avatar.updateComplete;
         expect(
           avatar.hasAttribute('aria-hidden'),
-          'aria-hidden unaffected by showStroke change'
+          'aria-hidden unaffected by outline change'
         ).toBe(false);
       }
     );

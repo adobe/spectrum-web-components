@@ -217,15 +217,15 @@ with `::part()` or `:host` selectors, update them accordingly.
 
 ## New in 2nd-gen
 
-### `show-stroke`
+### `outline`
 
-A new `show-stroke` boolean attribute renders a solid outline around the avatar
+A new `outline` boolean attribute renders a solid outline around the avatar
 image to create visual separation from adjacent content. It defaults to `true`
 within an Avatar Group. Set it explicitly on a standalone avatar when the image
 border color matches the surrounding background.
 
 ```html
-<swc-avatar alt="Jane Doe" src="/img/user.jpg" show-stroke></swc-avatar>
+<swc-avatar alt="Jane Doe" src="/img/user.jpg" outline></swc-avatar>
 ```
 
 The outline uses `--swc-avatar-border-width` (currently 1 px) for sizes 50–900

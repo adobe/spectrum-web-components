@@ -76,7 +76,7 @@
 | `src` | `string` | `''` | No | Unchanged |
 | `alt` | `string \| undefined` | `undefined` | No | Replaces `label`; pass `alt=""` for decorative |
 | `size` | `AvatarSize` (50–1500) | `500` | Yes | Numeric scale extended; invalid values fall back to 500 |
-| `showStroke` | `boolean` | `false` | Yes (`show-stroke`) | Renders outline for visual separation; defaults to `true` in Avatar Group |
+| `outline` | `boolean` | `false` | Yes | Renders outline for visual separation; defaults to `true` in Avatar Group |
 | `disabled` | `boolean` | `false` | Yes | Renders at reduced opacity; entity is inactive or unavailable |
 | `decorative` | `boolean` | `false` | Yes | Marks image as decorative; sets `aria-hidden="true"` on host. Use together with `alt=""` for full semantic correctness. Replaces `isDecorative`. |
 
