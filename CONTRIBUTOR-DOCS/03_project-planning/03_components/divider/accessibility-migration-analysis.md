@@ -1,10 +1,10 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Divider / Illustrated message accessibility migration analysis
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Divider / Divider accessibility migration analysis
 
 <!-- Document title (editable) -->
 
-# Illustrated message accessibility migration analysis
+# Divider accessibility migration analysis
 
 <!-- Generated TOC - DO NOT EDIT -->
 
@@ -13,18 +13,17 @@
 
 - [Overview](#overview)
     - [Also read](#also-read)
-    - [What `swc-illustrated-message` is](#what-swc-illustrated-message-is)
-    - [Heading hierarchy and page context](#heading-hierarchy-and-page-context)
+    - [What a divider is](#what-a-divider-is)
+    - [When to use something else](#when-to-use-something-else)
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Recommendations: `<swc-illustrated-message>`](#recommendations-swc-illustrated-message)
-    - [Heading slot, `heading` attribute, and `heading-level`](#heading-slot-heading-attribute-and-heading-level)
-    - [Other content and slots](#other-content-and-slots)
-    - [Shadow DOM and cross-root ARIA issues](#shadow-dom-and-cross-root-aria-issues)
+- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Recommendations: `<swc-divider>`](#recommendations-swc-divider)
+    - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
+    - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
     - [Accessibility tree expectations](#accessibility-tree-expectations)
     - [Keyboard and focus](#keyboard-and-focus)
-- [Known 1st-gen issues](#known-1st-gen-issues)
 - [Testing](#testing)
     - [Automated tests](#automated-tests)
 - [Summary checklist](#summary-checklist)
@@ -36,32 +35,19 @@
 
 ## Overview
 
-This doc defines how `swc-illustrated-message` should work for accessibility and heading semantics. It targets WCAG 2.2 Level AA.
+This doc explains how **`swc-divider`** should work for **accessibility**. It supports **WCAG 2.2 Level AA**.
 
 ### Also read
 
-- [Illustrated message migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, CSS, DOM, and Spectrum 2 gaps.
+[Divider migration roadmap](./rendering-and-styling-migration-analysis.md) for visuals and DOM.
 
-### What `swc-illustrated-message` is
+### What a divider is
 
-- A composed empty state or explanatory block: illustration (often SVG), a title-like line, description text, and optionally actions.
-- It can appear anywhere on a page—inside a dialog, under a page `h1`, as the only content of a section, nested in cards, etc.
+- A **line** that splits sections or groups of controls. It is **not** draggable and **not** a focus target by default.
 
-### Heading hierarchy and page context
+### When to use something else
 
-The component cannot know which `h2`–`h6` level is correct for the page; authors must set that explicitly. The only supported pattern is: title text comes from the `heading` attribute and/or the `heading` slot (see below), and the semantic heading element is always created in shadow DOM.
-
-Do not use `h1` for the illustrated message title. `h1` is for the primary page (or dialog / sheet title outside this block). This component exposes `h2`–`h6` only via `heading-level` (`2`–`6`).
-
-2nd-gen must implement:
-
-- `heading-level` property (attribute `heading-level`): integers `2`–`6`, default `2`. The shadow tree renders exactly one `<h2>` … `<h6>` matching that value. Values outside `2`–`6` (including `1`) must be clamped or coerced to `2`–`6` (for example `1` → `2`), or rejected in types with a documented default—pick one policy and document it in Storybook.
-- `heading` slot: accepts a `span` only (or equivalent documented phrasing: a single `span` wrapper as the slotted node). Do not allow slotted `<h1>`–`<h6>`; authors must not put heading elements in light DOM for this slot. Implementation may validate in dev and warn or ignore invalid slotted tags.
-- Optional `heading` attribute: when used, its text is rendered as the title inside the shadow heading (alongside or instead of slot content per product rules—document the precedence if both exist).
-
-This differs from putting a real heading in the slot (as in accordion item titles) and from 1st-gen, which always wraps the slot in `<h2>` with no level control. Accordion still allows `level` `1`–`6` on the parent ([SWC-1466](https://jira.corp.adobe.com/browse/SWC-1466), [PR #5969](https://github.com/adobe/spectrum-web-components/pull/5969)); illustrated message uses `heading-level` `2`–`6` only (no `h1`).
-
-Documentation and Storybook must tell authors to set `heading-level` from document outline, not from visual preference alone.
+- For a **split pane** users can move with the keyboard, use a **window splitter** pattern ([APG](https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/)), not the plain divider.
 
 ---
 
@@ -69,64 +55,61 @@ Documentation and Storybook must tell authors to set `heading-level` from docume
 
 ### Pattern in the APG
 
-- The APG does not define an “illustrated message” widget. Treat it as structured content: headings, text, optional controls.
+- There is **no** page in the APG named “divider.”
 
 ### Guidelines that apply
 
 | Idea | Plain meaning |
 |------|----------------|
-| [Info and relationships (WCAG 1.3.1)](https://www.w3.org/TR/WCAG22/#info-and-relationships) | The programmatic heading level must reflect the document outline. Avoid a second `h1` inside this pattern—keep one top-level heading per page view. |
-| [Headings and labels (WCAG 2.4.6)](https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels.html) | The title should describe topic purpose; `heading-level` should match sibling and parent headings (`h2`–`h6`). |
-| [Name, role, value (WCAG 4.1.2)](https://www.w3.org/TR/WCAG22/#name-role-value) | Action buttons and links need discernible names; decorative illustrations should not pollute the accessibility tree. |
+| [`separator` role](https://www.w3.org/TR/wai-aria-1.2/#separator) | A **non-focusable** divider maps to a **separator** in the accessibility tree. **Do not** add progress values (`aria-valuenow`, etc.). |
+| [`aria-orientation`](https://www.w3.org/TR/wai-aria-1.2/#aria-orientation) | Use **`vertical`** for vertical dividers. For horizontal lines, **leave the attribute off** (default is horizontal). |
+| [Non-text contrast (WCAG 1.4.11)](https://www.w3.org/TR/WCAG22/#non-text-contrast) | The line should be **visible enough** next to its background, especially with **`static-color`** on photos or tinted areas. |
+| [Info and relationships (WCAG 1.3.1)](https://www.w3.org/TR/WCAG22/#info-and-relationships) | **Headings** and **landmarks** still define sections. A divider **helps** layout; it **does not replace** a heading. |
 
-Bottom line: Authors choose `heading-level` (`2`–`6`, i.e. `h2`–`h6`) to match the page. The component always emits the corresponding heading in shadow DOM; the slot does not supply the heading tag.
+**Bottom line:** Keep **`swc-divider`** as a **separator** with the right **orientation**. Do not pretend it is keyboard-driven unless you ship a different, interactive pattern.
 
 ---
 
-## Recommendations: `<swc-illustrated-message>`
+## Related 1st-gen accessibility (Jira)
 
-### Heading slot, `heading` attribute, and `heading-level`
+| Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
+|------|------|-------------------|-------------------------|---------|
 
-| Topic | What to do |
-|-------|------------|
-| No `h1` | Never render `<h1>`. Do not accept `heading-level="1"`. `h1` belongs to the page, shell, or dialog title, not this block. |
-| `heading-level` | Required behavior: `2`–`6`, default `2`. Clamp or coerce out-of-range values; document behavior for invalid input (same spirit as accordion `getHeadingLevel()`). |
-| `heading` slot | Span only: document that the slot must contain a `span` (or stricter: exactly one root `span`). No slotted `<h1>`–`<h6>`. |
-| Shadow heading | Single heading element in shadow DOM; tag is `<h2>`–`<h6>` per `heading-level`. Slot and/or `heading` attribute supply text content inside that element (not the element type). |
-| `heading` attribute | Plain-text title when slot is empty or as fallback; document interaction with slotted content if both are present. |
-| Docs | Examples across `heading-level` `2`–`6` (for example below page `h1` vs nested under `h3`). Contrast with accordion: accordion allows `level` `1`; illustrated message does not. |
+---
 
-### Other content and slots
+## Recommendations: `<swc-divider>`
+
+### ARIA roles, states, and properties
 
 | Topic | What to do |
 |-------|------------|
-| Illustration (default slot) | If purely decorative, `aria-hidden="true"` on the SVG (or equivalent). If meaningful, `role="img"` and `aria-label` / `<title>` (see icon and SVG accessibility patterns). |
-| Description | Body text; links inside description must be real `<a>` or link components with visible names. |
-| Actions (Spectrum 2) | Slotted buttons follow button and action group labeling; order matches visual reading order. |
+| **`role="separator"`** | **Prescribed** and **fixed** on the host (`DividerBase`). It must **not** be author-overridable in implementation or docs. **Do not** switch to `presentation`, `none`, or any other role; if that fits better, use **different** markup or a **different** pattern. **`swc-divider`** maps to **one** semantic role only. |
+| **`aria-orientation`** | Set **`vertical`** when the divider is vertical. For horizontal, **omit** it. |
+| **Docs** | Tell authors to pair dividers with **headings** or **landmarks** when section structure matters.  Ensure that docs examples use divders in this way. Too many separators can make screen readers **chatty**—use **fewer** lines when you can. |
 
-### Shadow DOM and cross-root ARIA issues
+### Shadow DOM and cross-root ARIA Issues
 
-- If `aria-labelledby` / `aria-describedby` reference slotted ids, confirm 2nd-gen id forwarding or document limitations. Heading `id` for region labeling should live on the shadow `<h2>`–`<h6>` if needed.
+None
 
 ### Accessibility tree expectations
 
-Typical open state
+#### Horizontal line**
 
-- One heading: correct `h2`–`h6` from `heading-level`, with label text from `heading` attribute and/or `heading` slot (`span` content).
-- Description as text content (and focusable links if present).
-- Illustration exposed or hidden per decorative vs informative rules.
+- **Role:** **separator** (horizontal by default).
+- **Name:** Usually **none**. In rare cases an app may set **`aria-label`**—that should be uncommon.
+- **Focus:** **Not** focusable.
+
+#### Vertical line**
+
+- Same as horizontal, plus **`aria-orientation="vertical"`**.
+
+#### Where it sits
+
+- Between named **siblings** (e.g. toolbar groups, landmark sections, etc.). It should **not** be the **only** clue for “what section is this?”—use **headings** too when needed.
 
 ### Keyboard and focus
 
-- The host is not a single tab stop unless design adds interactive chrome; Tab moves to slotted actions and links in DOM order.
-- No requirement for arrow-key widget behavior unless actions compose a pattern (for example button group docs).
-
----
-
-## Known 1st-gen issues
-
-- `sp-illustrated-message` always wraps the heading slot in `<h2 id="heading">` ([`IllustratedMessage.ts`](https://github.com/adobe/spectrum-web-components/blob/main/1st-gen/packages/illustrated-message/src/IllustratedMessage.ts)) with no `heading-level` API—authors cannot match outline when the block should be `h3`–`h6`.
-- The slot accepts any node; slotted heading elements would nest incorrectly inside `<h2>`. 2nd-gen fixes this by owning the heading tag and restricting the slot to `span` only.
+**Not focusable.** Keyboard navigation should skip this component and move to the next focusable element.
 
 ---
 
@@ -136,27 +119,30 @@ Typical open state
 
 | Kind of test | What to check |
 |--------------|----------------|
-| Unit | Rendered tag is `h2`–`h6` matching `heading-level`; default `2`; `heading-level` `1` never produces `h1`; invalid values coerce per spec; `heading` slot rejects or ignores non-`span` root if that is the contract. |
-| aXe + Storybook | Heading order sane; no `h1` inside illustrated message stories; no empty headings when title required. |
-| Integration | Dropzone and dialog demos set `heading-level` appropriately for context. |
+| **Unit** | **`role="separator"`**. **`aria-orientation="vertical"`** when `vertical` is true; **not** set (or default horizontal) when false. **Role + orientation** stay in sync if `vertical` toggles. Host is **not** focusable. |
+| **aXe + Storybook** | **WCAG 2.x** rules on divider stories. |
+| **Playwright ARIA snapshots** | Keep **`divider.a11y.spec.ts`** (overview, sizes, vertical, static colors, …). |
+| **Contrast** | **Color-contrast** / non-text checks where they matter, especially **`static-color`** stories. |
 
 ---
 
 ## Summary checklist
 
-- [ ] API documented: `heading-level` `2`–`6` (default `2`); `heading` slot span-only; shadow DOM owns `<h2>`–`<h6>`; no `<h1>`.
-- [ ] Storybook examples vary `heading-level` by context (not always `2`).
-- [ ] 1st-gen fixed `h2` called out as migration motivation; link SWC-1466 / accordion for “configurable level” precedent only (different slot rules).
-- [ ] Decorative vs meaningful illustration documented for SVG slot.
-- [ ] Actions slot meets button label requirements.
+- [ ] Stories use **real section text** around dividers—not only **`size`** or **`static-color`** as if they were user-facing labels.
+- [ ] Code keeps **`role="separator"`** and correct **`aria-orientation`** for vertical dividers.
+- [ ] Divider stays **non-interactive** (no Tab stop).
+- [ ] Docs explain **headings / landmarks** vs **divider-only** layout.
+- [ ] **`static-color`** and contrast are documented; Storybook **Accessibility** matches.
+- [ ] Tree checks show **separator**; vertical stories show **vertical**; no surprise **name** unless intended.
+- [ ] **ARIA snapshots** for **horizontal** and **vertical** dividers.
+- [ ] **Unit tests** prove **no** **Tab** focus on the divider by default.
+- [ ] **aXe** (WCAG 2.x tags) runs on divider stories.
 
 ---
 
 ## References
 
+- [WAI-ARIA 1.2: separator](https://www.w3.org/TR/wai-aria-1.2/#separator)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
-- [Understanding info and relationships (1.3.1)](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html)
-- [Understanding headings and labels (2.4.6)](https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels.html)
-- [feat(accordion): add `level` property for controlling title heading (PR #5969)](https://github.com/adobe/spectrum-web-components/pull/5969) — precedent for a numeric heading level on a parent; illustrated message uses `heading-level` `2`–`6`, span-only title slot, and shadow-owned heading tag (SWC-1466).
-- [Illustrated message migration roadmap](./rendering-and-styling-migration-analysis.md)
-- [SWC-1466](https://jira.corp.adobe.com/browse/SWC-1466) (Adobe internal Jira): accordion heading level; analogous motivation for configurable `heading-level` on illustrated message.
+- [Using ARIA (read this first)](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
+- [Divider migration roadmap](./rendering-and-styling-migration-analysis.md)

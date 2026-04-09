@@ -42,7 +42,7 @@
 - Color Loupe
     - [Color loupe accessibility migration analysis](color-loupe/accessibility-migration-analysis.md)
 - Divider
-    - [Illustrated message accessibility migration analysis](divider/accessibility-migration-analysis.md)
+    - [Divider accessibility migration analysis](divider/accessibility-migration-analysis.md)
     - [Divider migration roadmap](divider/rendering-and-styling-migration-analysis.md)
 - Dropzone
     - [Dropzone migration roadmap](dropzone/rendering-and-styling-migration-analysis.md)
