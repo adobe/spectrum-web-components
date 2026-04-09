@@ -54,13 +54,6 @@ export abstract class AvatarBase extends SpectrumElement {
 
   /**
    * Text description of the avatar image.
-   *
-   * Becomes the `alt` attribute on the underlying `<img>` element.
-   * Pass `alt=""` to treat the image as decorative — the host receives
-   * `aria-hidden="true"` so the entire shadow tree is hidden from assistive
-   * technology. If omitted, the image renders with `alt=""` and a DEBUG
-   * warning is issued; only the warning distinguishes this from an
-   * intentional decorative image.
    */
   @property({ type: String })
   public alt: string | undefined;
@@ -100,18 +93,13 @@ export abstract class AvatarBase extends SpectrumElement {
   // ───────────────────────
 
   /**
-   * Renders an outline around the avatar image to create visual separation
-   * from adjacent content. Defaults to `true` within an Avatar Group; set
-   * explicitly on a standalone avatar when the image border color matches
-   * the surrounding background.
+   * Renders a visual outline around the avatar image.
    */
   @property({ type: Boolean, reflect: true })
   public outline = false;
 
   /**
-   * Renders the avatar at reduced opacity, indicating the entity is not
-   * currently active or available. The avatar remains present in the layout
-   * and accessible to assistive technology.
+   * Renders the avatar at reduced opacity, indicating the entity is inactive or unavailable.
    */
   @property({ type: Boolean, reflect: true })
   public disabled = false;
@@ -122,11 +110,6 @@ export abstract class AvatarBase extends SpectrumElement {
 
   /**
    * Marks the avatar as decorative, hiding it from assistive technology.
-   *
-   * Use when the surrounding context already identifies the person (e.g.,
-   * their name appears next to the avatar). Setting this attribute causes the
-   * host to receive `aria-hidden="true"`, removing it from the accessibility
-   * tree. For full semantic alignment with HTML `<img>` conventions, also set `alt=""`.
    */
   @property({ type: Boolean, reflect: true })
   public decorative = false;

@@ -209,17 +209,15 @@ export const OutlineReflectionTest: Story = {
     await step('reflects outline attribute after mutation', async () => {
       avatar.outline = true;
       await avatar.updateComplete;
-      expect(
-        avatar.hasAttribute('outline'),
-        'outline attribute presence'
-      ).toBe(true);
+      expect(avatar.hasAttribute('outline'), 'outline attribute presence').toBe(
+        true
+      );
 
       avatar.outline = false;
       await avatar.updateComplete;
-      expect(
-        avatar.hasAttribute('outline'),
-        'outline attribute removed'
-      ).toBe(false);
+      expect(avatar.hasAttribute('outline'), 'outline attribute removed').toBe(
+        false
+      );
     });
 
     await step(

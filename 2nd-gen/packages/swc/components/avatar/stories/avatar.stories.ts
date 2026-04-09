@@ -292,7 +292,8 @@ export const Outline: Story = {
 /**
  * A disabled avatar indicates that the entity is not currently active or
  * available. The avatar remains visible in the layout at reduced opacity,
- * communicating that it may become active later.
+ * communicating that it may become active later. It remains in the
+ * accessibility tree — `disabled` is purely visual.
  */
 export const Disabled: Story = {
   render: () => html`
