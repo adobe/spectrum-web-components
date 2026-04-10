@@ -72,22 +72,20 @@ your templates and HTML.
 
 ### CSS custom properties
 
-All `--mod-progress-circle-*` and `--spectrum-progress-circle-*` custom properties have
-been replaced with `--swc-progress-circle-*`. Update any overrides in your stylesheets:
+All `--mod-progress-circle-*` custom properties have been renamed to
+`--swc-progress-circle-*`. Update any overrides in your stylesheets:
 
-| Removed (1st-gen)                             | Replacement (2nd-gen)                      |
-| --------------------------------------------- | ------------------------------------------ |
-| `--mod-progress-circle-size`                  | `--swc-progress-circle-size`               |
-| `--mod-progress-circle-track-border-color`    | `--swc-progress-circle-track-border-color` |
-| `--mod-progress-circle-fill-border-color`     | `--swc-progress-circle-fill-border-color`  |
-| `--mod-progress-circle-position`              | Not directly exposed                       |
-| `--spectrum-progress-circle-size-small`       | `--swc-progress-circle-size-small`         |
-| `--spectrum-progress-circle-size-medium`      | `--swc-progress-circle-size-medium`        |
-| `--spectrum-progress-circle-size-large`       | `--swc-progress-circle-size-large`         |
-| `--spectrum-progress-circle-thickness`        | `--swc-progress-circle-thickness`          |
-| `--spectrum-progress-circle-thickness-small`  | `--swc-progress-circle-thickness-small`    |
-| `--spectrum-progress-circle-thickness-medium` | `--swc-progress-circle-thickness-medium`   |
-| `--spectrum-progress-circle-thickness-large`  | `--swc-progress-circle-thickness-large`    |
+| Removed (1st-gen)                          | Replacement (2nd-gen)                      |
+| ------------------------------------------ | ------------------------------------------ |
+| `--mod-progress-circle-size`               | `--swc-progress-circle-size`               |
+| `--mod-progress-circle-track-border-color` | `--swc-progress-circle-track-border-color` |
+| `--mod-progress-circle-fill-border-color`  | `--swc-progress-circle-fill-border-color`  |
+| `--mod-progress-circle-position`           | Not directly exposed                       |
+
+> **Note:** The 1st-gen component also used `--spectrum-progress-circle-*` variables
+> internally as design-token fallbacks (e.g. `var(--mod-progress-circle-size, var(--spectrum-progress-circle-size))`).
+> These were never consumer-facing API. If you were overriding them directly, use
+> the corresponding `--swc-progress-circle-*` property shown above instead.
 
 ```css
 /* Before */

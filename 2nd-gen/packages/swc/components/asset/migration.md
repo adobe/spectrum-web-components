@@ -85,9 +85,10 @@ overriding colors or dimensions.
 The 2nd-gen component derives its colors from Spectrum 2 design tokens (e.g.,
 `gray-200`, `gray-25`, `gray-500`). These resolve automatically based on the active
 theme and color scheme — no manual override is needed for standard light/dark mode
-support. If you need to override asset colors beyond what the theme provides, target
-the component's `::part()` selectors or use a wrapping element with custom CSS properties
-and consult the Spectrum 2 token documentation for the token names in use.
+support. If you need to override asset colors beyond what the theme provides, use a
+wrapping element with custom CSS properties and consult the Spectrum 2 token
+documentation for the token names in use. `swc-asset` does not expose `::part()`
+selectors.
 
 ---
 

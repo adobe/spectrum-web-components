@@ -74,13 +74,13 @@ Find and replace all instances of `sp-divider` with `swc-divider` in your templa
 All `--mod-divider-*` custom properties have been renamed to `--swc-divider-*`. Update
 any overrides in your stylesheets:
 
-| Removed (1st-gen)                | Replacement (2nd-gen)                                                                                                                                                                         |
-| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--mod-divider-background-color` | `--swc-divider-background-color`                                                                                                                                                              |
-| `--mod-divider-thickness`        | `--swc-divider-thickness`                                                                                                                                                                     |
-| `--mod-divider-vertical-align`   | `--swc-divider-thickness` — in 1st-gen this controlled the rendered line size for vertical dividers; in 2nd-gen `--swc-divider-thickness` controls line width uniformly for both orientations |
-| `--mod-divider-vertical-height`  | Not directly exposed                                                                                                                                                                          |
-| `--mod-divider-vertical-margin`  | Not directly exposed                                                                                                                                                                          |
+| Removed (1st-gen)                | Replacement (2nd-gen)                                                                                                                  |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `--mod-divider-background-color` | `--swc-divider-background-color`                                                                                                       |
+| `--mod-divider-thickness`        | `--swc-divider-thickness`                                                                                                              |
+| `--mod-divider-vertical-align`   | Not directly exposed — in 1st-gen this controlled `align-self` for vertical dividers; in 2nd-gen `align-self: flex-start` is hardcoded |
+| `--mod-divider-vertical-height`  | Not directly exposed                                                                                                                   |
+| `--mod-divider-vertical-margin`  | Not directly exposed                                                                                                                   |
 
 ```css
 /* Before */

@@ -37,16 +37,16 @@ import '@adobe/spectrum-wc/status-light';
 
 ## Quick reference
 
-| What changed          | Before (1st-gen)                        | After (2nd-gen)                                                   |
-| --------------------- | --------------------------------------- | ----------------------------------------------------------------- |
-| Tag name              | `sp-status-light`                       | `swc-status-light`                                                |
-| Package               | `@spectrum-web-components/status-light` | `@adobe/spectrum-wc`                                              |
-| `variant` attribute   | 14 variants (incl. `accent`)            | 14 variants (`accent` removed, 5 new colors added)                |
-| `size` attribute      | `s \| m \| l \| xl`                     | `s \| m \| l \| xl` — unchanged                                   |
-| `disabled` attribute  | Boolean                                 | **Removed** — see [disabled removed](#disabled-attribute-removed) |
-| `accent` variant      | Available                               | **Removed** — see [accent removed](#accent-variant-removed)       |
-| New color variants    | —                                       | `pink`, `turquoise`, `brown`, `cinnamon`, `silver`                |
-| CSS custom properties | `--mod-statuslight-*`                   | `--swc-statuslight-*`                                             |
+| What changed          | Before (1st-gen)                                  | After (2nd-gen)                                                           |
+| --------------------- | ------------------------------------------------- | ------------------------------------------------------------------------- |
+| Tag name              | `sp-status-light`                                 | `swc-status-light`                                                        |
+| Package               | `@spectrum-web-components/status-light`           | `@adobe/spectrum-wc`                                                      |
+| `variant` attribute   | 15 variants (6 semantic incl. `accent`, 9 colors) | 19 variants (`accent` removed, 5 new colors added; 5 semantic, 14 colors) |
+| `size` attribute      | `s \| m \| l \| xl`                               | `s \| m \| l \| xl` — unchanged                                           |
+| `disabled` attribute  | Boolean                                           | **Removed** — see [disabled removed](#disabled-attribute-removed)         |
+| `accent` variant      | Available                                         | **Removed** — see [accent removed](#accent-variant-removed)               |
+| New color variants    | —                                                 | `pink`, `turquoise`, `brown`, `cinnamon`, `silver`                        |
+| CSS custom properties | `--mod-statuslight-*`                             | `--swc-statuslight-*`                                                     |
 
 ---
 
