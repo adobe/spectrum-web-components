@@ -112,8 +112,8 @@ that best represents your use case:
 
 ### CSS custom properties
 
-All `--mod-statuslight-*` custom properties have been renamed to `--swc-statuslight-*`.
-Update any overrides in your stylesheets:
+All `--mod-statuslight-*` custom properties have been removed. Replace them with the
+`--swc-statuslight-*` equivalents in your stylesheets:
 
 | Removed (1st-gen)                           | Replacement (2nd-gen)              |
 | ------------------------------------------- | ---------------------------------- |
@@ -143,6 +143,29 @@ swc-status-light {
   --swc-statuslight-font-size: 14px;
 }
 ```
+
+> **Note on per-variant color overrides:** Semantic variants (`neutral`, `info`,
+> `positive`, `negative`, `notice`) use attribute-based selectors internally, so
+> consumer per-variant overrides work as expected:
+>
+> ```css
+> swc-status-light[variant='positive'] {
+>   --swc-statuslight-dot-color: darkgreen;
+> }
+> ```
+>
+> Color variants (`yellow`, `chartreuse`, `celery`, `seafoam`, `cyan`, `indigo`,
+> `purple`, `fuchsia`, `magenta`, `pink`, `turquoise`, `brown`, `cinnamon`, `silver`)
+> are applied via internal class selectors. A consumer attribute selector targeting one
+> of these variants will not reliably override `--swc-statuslight-dot-color` — use a
+> global (unscoped) override instead:
+>
+> ```css
+> /* Works — but applies to all status-light instances */
+> swc-status-light {
+>   --swc-statuslight-dot-color: rebeccapurple;
+> }
+> ```
 
 ---
 

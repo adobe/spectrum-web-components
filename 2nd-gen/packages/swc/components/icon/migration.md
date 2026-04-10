@@ -183,7 +183,8 @@ to the nearest available size:
 
 ### CSS custom properties
 
-All `--mod-icon-*` custom properties have been renamed to `--swc-icon-*`:
+All `--mod-icon-*` custom properties have been removed. Replace them with the
+`--swc-icon-*` equivalents:
 
 | Removed (1st-gen)        | Replacement (2nd-gen)                                |
 | ------------------------ | ---------------------------------------------------- |

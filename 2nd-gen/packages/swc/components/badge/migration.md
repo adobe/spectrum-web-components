@@ -69,8 +69,8 @@ Find and replace all instances of `sp-badge` with `swc-badge` in your templates 
 
 ### CSS custom properties
 
-All `--mod-badge-*` custom properties have been renamed to `--swc-badge-*`. Update any
-overrides in your stylesheets:
+All `--mod-badge-*` custom properties have been removed. Replace them with the
+`--swc-badge-*` equivalents in your stylesheets:
 
 | Removed (1st-gen)                           | Replacement (2nd-gen)          |
 | ------------------------------------------- | ------------------------------ |
@@ -98,6 +98,30 @@ swc-badge {
   --swc-badge-corner-radius: 4px;
 }
 ```
+
+> **Note on per-variant color overrides:** Semantic variants (`neutral`, `informative`,
+> `positive`, `negative`, `notice`, `accent`) use attribute-based selectors internally,
+> so consumer per-variant overrides work as expected:
+>
+> ```css
+> swc-badge[variant='positive'] {
+>   --swc-badge-background-color: darkgreen;
+> }
+> ```
+>
+> Non-semantic color variants (`gray`, `red`, `orange`, `yellow`, `chartreuse`, `celery`,
+> `green`, `seafoam`, `cyan`, `blue`, `indigo`, `purple`, `fuchsia`, `magenta`, `pink`,
+> `turquoise`, `brown`, `cinnamon`, `silver`) are applied via internal class selectors.
+> A consumer attribute selector targeting one of these variants will not reliably override
+> its color properties — use a global (unscoped) override instead, which will affect all
+> variants:
+>
+> ```css
+> /* Works — but applies to all badge instances */
+> swc-badge {
+>   --swc-badge-background-color: rebeccapurple;
+> }
+> ```
 
 ---
 

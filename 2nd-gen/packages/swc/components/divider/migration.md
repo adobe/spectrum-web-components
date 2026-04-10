@@ -71,8 +71,8 @@ Find and replace all instances of `sp-divider` with `swc-divider` in your templa
 
 ### CSS custom properties
 
-All `--mod-divider-*` custom properties have been renamed to `--swc-divider-*`. Update
-any overrides in your stylesheets:
+All `--mod-divider-*` custom properties have been removed. Replace them with the
+`--swc-divider-*` equivalents in your stylesheets:
 
 | Removed (1st-gen)                | Replacement (2nd-gen)                                                                                                                  |
 | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
@@ -93,6 +93,11 @@ swc-divider {
   --swc-divider-background-color: hotpink;
 }
 ```
+
+> **Note on `static-color` overrides:** When `static-color="white"` or
+> `static-color="black"` is set, the component applies color values via internal class
+> selectors to ensure correct contrast on static backgrounds. Consumer overrides of
+> `--swc-divider-background-color` will not take effect when `static-color` is in use.
 
 ---
 

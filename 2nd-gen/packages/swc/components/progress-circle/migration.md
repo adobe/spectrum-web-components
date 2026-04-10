@@ -72,8 +72,8 @@ your templates and HTML.
 
 ### CSS custom properties
 
-All `--mod-progress-circle-*` custom properties have been renamed to
-`--swc-progress-circle-*`. Update any overrides in your stylesheets:
+All `--mod-progress-circle-*` custom properties have been removed. Replace them with the
+`--swc-progress-circle-*` equivalents in your stylesheets:
 
 | Removed (1st-gen)                          | Replacement (2nd-gen)                      |
 | ------------------------------------------ | ------------------------------------------ |
@@ -134,6 +134,12 @@ The new internal SVG elements use these classes:
 The `static-color` attribute now accepts `"black"` in addition to `"white"`, matching
 the Spectrum 2 specification. Use `static-color="black"` when placing the component on
 a light static background that falls outside the normal theme.
+
+> **Note:** When `static-color` is set, the component applies track and fill colors via
+> internal class selectors to ensure correct contrast. Consumer overrides of
+> `--swc-progress-circle-track-border-color` and
+> `--swc-progress-circle-fill-border-color` will not take effect when `static-color` is
+> in use.
 
 ```html
 <!-- 1st-gen: white only -->
