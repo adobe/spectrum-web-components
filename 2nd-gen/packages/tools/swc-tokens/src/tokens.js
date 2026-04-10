@@ -420,9 +420,10 @@ function formatDropShadowValue(value) {
     .join(', ');
 }
 
-function serializeTokenValue(name, value) {
-  if (name.includes('drop-shadow')) {
-    return formatDropShadowValue(value);
+function serializeTokenValue(value) {
+  const shadow = formatDropShadowValue(value);
+  if (shadow != null) {
+    return shadow;
   }
 
   return null;
@@ -535,7 +536,7 @@ export async function generateCSS(prefix, debug = false) {
       continue;
     }
 
-    const serialized = serializeTokenValue(name, value);
+    const serialized = serializeTokenValue(value);
     if (serialized != null) {
       write(name, serialized, nonScaling);
       continue;

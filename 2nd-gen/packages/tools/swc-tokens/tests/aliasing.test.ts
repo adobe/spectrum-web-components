@@ -74,7 +74,7 @@ describe('serializeTokenValue', () => {
   const { serializeTokenValue } = __test__;
 
   it('formats drop-shadow arrays as box-shadow-ready values', () => {
-    const result = serializeTokenValue('drop-shadow-dragged', [
+    const result = serializeTokenValue([
       {
         x: '0px',
         y: '12px',
