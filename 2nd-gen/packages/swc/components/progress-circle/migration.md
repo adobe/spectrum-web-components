@@ -167,7 +167,9 @@ a light static background that falls outside the normal theme.
 ## Accessibility
 
 - Always provide `label` with a meaningful description. When `label` is set, the
-  component applies `aria-label` to the host element.
+  component applies `aria-label` to the host element. Prefer task-specific labels
+  ("Uploading document", "Processing request") over the generic default ("Loading")
+  whenever context is available.
 - `swc-progress-circle` sets `role="progressbar"` automatically in `firstUpdated`.
   Do not provide a conflicting `role` attribute.
 - In determinate mode (`progress` is set), `aria-valuenow`, `aria-valuemin="0"`,
@@ -177,3 +179,9 @@ a light static background that falls outside the normal theme.
   correctly announces the component as having no known progress value.
 - A development-mode warning is emitted when no accessible name can be determined.
   Provide either `label` or text content in the default slot to satisfy this requirement.
+- Do not add `aria-live="assertive"` to or around `swc-progress-circle` — it will
+  interrupt screen reader users continuously. Use `aria-live="polite"` only when a
+  deliberate status update is needed, and avoid it when multiple components on the page
+  may update simultaneously.
+- Respect `prefers-reduced-motion`. The indeterminate spinner animation should be
+  suppressed or slowed when the user has requested reduced motion.

@@ -195,6 +195,15 @@ All remaining original variants continue to work unchanged.
   meaningful text — do not use the component without a text label, as the indicator dot
   alone conveys no accessible information.
 - Do not rely on color alone to convey status. The text label must independently
-  communicate the state.
+  communicate the state (WCAG 1.4.1).
+- The status dot is rendered as a CSS `::before` pseudo-element and is purely
+  decorative. No additional ARIA attributes are needed for it.
+- Do not add `role="status"` or `aria-live` to `swc-status-light` for static usage.
+  These attributes imply live updates and will cause screen readers to announce the
+  component at unexpected times. If content genuinely updates live, manage the live
+  region at the application level rather than on the component itself.
+- `variant` does not set any ARIA states. The meaning comes from the label text, not
+  the color. Do not map `variant` values to attributes like `aria-invalid` or
+  `aria-label` automatically.
 - With `disabled` removed, there is no mechanism to convey "unavailable" visually
   beyond writing it in the label text. This is intentional per the Spectrum 2 spec.

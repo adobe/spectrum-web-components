@@ -176,3 +176,9 @@ All 14 original color variants remain available and are unchanged.
 - When placing a badge alongside an icon in the `icon` slot, ensure the icon is
   decorative (hidden from assistive technology) if the text label already conveys
   the full meaning.
+- For icon-only badges (no visible text), set `aria-label` directly on the `swc-badge`
+  element to provide an accessible name. A badge with no visible text and no
+  `aria-label` has no accessible name and fails WCAG 4.1.2.
+- `variant` does not set any ARIA states. The meaning of a badge comes from its label
+  text, not from the color. Do not add `aria-invalid`, `role="status"`, or similar
+  attributes based on `variant` value alone.

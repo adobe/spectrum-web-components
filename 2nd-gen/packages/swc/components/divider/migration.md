@@ -130,9 +130,15 @@ The new internal class names applied to the inner element are:
 ## Accessibility
 
 - `swc-divider` sets `role="separator"` automatically in `firstUpdated`. Do not provide
-  a conflicting `role` attribute unless you have a specific need to override it.
-- When used vertically, `aria-orientation="vertical"` is set automatically.
+  a conflicting `role` attribute.
+- When used vertically, `aria-orientation="vertical"` is set automatically. For
+  horizontal dividers the attribute is omitted, which is correct — the default
+  orientation for `separator` is horizontal.
 - The divider is non-focusable and non-interactive in both generations.
-- `static-color="white"` and `static-color="black"` are intended for use on
-  colored or photographic backgrounds. Ensure sufficient contrast between the divider
-  color and its background.
+- `static-color="white"` and `static-color="black"` are intended for use on colored or
+  photographic backgrounds. Ensure sufficient contrast between the divider color and
+  its background (WCAG 1.4.11 non-text contrast).
+- A divider is a visual supplement to page structure, not a replacement for it.
+  Headings and landmarks still define sections for screen reader users — a divider alone
+  does not communicate that a new section has begun. Use fewer dividers where headings
+  or whitespace can carry the structural meaning.
