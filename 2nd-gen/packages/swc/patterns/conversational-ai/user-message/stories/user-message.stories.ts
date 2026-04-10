@@ -1,0 +1,204 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+import { html } from 'lit';
+import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
+
+import '../../conversation-artifact/index.js';
+import '../../conversation-turn/index.js';
+import '../index.js';
+
+// ────────────────
+//    METADATA
+// ────────────────
+
+const { args, argTypes, template } = getStorybookHelpers('swc-user-message');
+delete (args as Record<string, unknown>).content;
+delete (argTypes as Record<string, unknown>).content;
+
+// Wraps a single swc-user-message in a conversation turn for proper alignment.
+const withUserTurn = (story: () => unknown) =>
+  html`<swc-conversation-turn type="outgoing"
+    >${story()}</swc-conversation-turn
+  >`;
+
+/**
+ * User-authored message bubble. Use inside `<swc-conversation-turn type="outgoing">` for thread alignment.
+ */
+const meta: Meta = {
+  title: 'Conversational AI/User message',
+  component: 'swc-user-message',
+  args,
+  argTypes,
+  render: (args) => template(args),
+  parameters: {
+    docs: {
+      subtitle: 'User-submitted message rendered in the thread.',
+    },
+    layout: 'padded',
+  },
+  excludeStories: ['meta'],
+};
+
+export default meta;
+
+// ────────────────────
+//    AUTODOCS STORY
+// ────────────────────
+
+export const Playground: Story = {
+  args: {
+    'default-slot':
+      'Can you help me create a 45-minute presentation, with animations, for an executive update?',
+  },
+  decorators: [withUserTurn],
+  tags: ['autodocs', 'dev'],
+};
+
+// ──────────────────────────────
+//    OVERVIEW STORY
+// ──────────────────────────────
+
+export const Overview: Story = {
+  args: {
+    'default-slot':
+      'Can you help me create a 45-minute presentation, with animations, for an executive update?',
+  },
+  decorators: [withUserTurn],
+  tags: ['overview'],
+};
+
+// ──────────────────────────
+//    ANATOMY STORY
+// ──────────────────────────
+
+/**
+ * A user message consists of:
+ *
+ * 1. **Bubble** — Rounded container with a neutral gray background (`gray-50`)
+ * 2. **Default slot** — The message content: plain text, a card attachment, or media-first content
+ */
+export const Anatomy: Story = {
+  args: {
+    'default-slot': 'Can you help me create a 45-minute presentation?',
+  },
+  decorators: [withUserTurn],
+  tags: ['anatomy'],
+};
+
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+/**
+ * Bubble sizing and padding are inferred from slotted content:
+ *
+ * - **Copy** — default text-only content
+ * - **Card** — inferred when slotted content contains `swc-conversation-artifact[variant="card"]`
+ * - **Media** — inferred when slotted content contains `swc-conversation-artifact[variant="media"]`
+ */
+export const Content: Story = {
+  render: () => html`
+    <div
+      style="display:flex;flex-direction:column;gap:32px;max-inline-size:640px;"
+    >
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-conversation-turn type="outgoing">
+          <swc-user-message>
+            Can you help me create a 45-minute presentation, with animations, for
+            an executive update?
+          </swc-user-message>
+        </swc-conversation-turn>
+        <span
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+        >
+          Copy
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-conversation-turn type="outgoing">
+          <swc-user-message>
+            <swc-conversation-artifact variant="card">
+              <div
+                slot="thumbnail"
+                style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);flex-shrink:0;"
+                role="img"
+                aria-label="File"
+              ></div>
+              <span slot="title">Hilton commercial assets</span>
+              <span slot="subtitle">2026</span>
+            </swc-conversation-artifact>
+          </swc-user-message>
+        </swc-conversation-turn>
+        <span
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+        >
+          Card
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-conversation-turn type="outgoing">
+          <swc-user-message>
+            <div style="inline-size:240px;">
+              <swc-conversation-artifact variant="media">
+                <div
+                  slot="thumbnail"
+                  style="inline-size:100%;block-size:196px;background:linear-gradient(135deg,#a78bfa,#f472b6);"
+                  role="img"
+                  aria-label="Campaign preview"
+                ></div>
+                <span slot="title">Hilton commercial assets</span>
+                <span slot="subtitle">2026</span>
+              </swc-conversation-artifact>
+            </div>
+          </swc-user-message>
+        </swc-conversation-turn>
+        <span
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+        >
+          Media
+        </span>
+      </div>
+    </div>
+  `,
+  parameters: { 'section-order': 1 },
+  tags: ['options'],
+};
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORY
+// ────────────────────────────────
+
+/**
+ * ### Features
+ *
+ * The `<swc-user-message>` element implements the following accessibility features:
+ *
+ * #### Semantic structure
+ *
+ * - The bubble is rendered as a `<div>` acting as a visual container
+ * - The default slot accepts any content; consumers are responsible for providing meaningful text alternatives when slotting non-text content (cards, media)
+ *
+ * ### Best practices
+ *
+ * - Ensure message text is descriptive and self-contained
+ * - For slotted artifacts, ensure titles/subtitles and `aria-label`/`alt` text are present for previews
+ */
+export const Accessibility: Story = {
+  args: {
+    'default-slot':
+      'Can you help me create a 45-minute presentation, with animations, for an executive update?',
+  },
+  decorators: [withUserTurn],
+  tags: ['a11y'],
+};

@@ -9,9 +9,16 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from './DocsAfterApiMarkdown';
-export * from './GettingStarted';
-export * from './OverviewStory';
-export * from './SpectrumDocs';
-export * from './SpectrumStories';
-export * from './StatusBadge';
+import { defineElement } from '@spectrum-web-components/core/element/index.js';
+
+import { ConversationTurn } from './ConversationTurn.js';
+
+export * from './ConversationTurn.js';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'swc-conversation-turn': ConversationTurn;
+  }
+}
+
+defineElement('swc-conversation-turn', ConversationTurn);

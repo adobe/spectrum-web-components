@@ -1,0 +1,43 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/**
+ * Reference styles for system prose inside `swc-system-message` default slot.
+ * This is not a component — Storybook imports it for demos; products should copy or map
+ * equivalent rules to their design tokens.
+ */
+.swc-conversationalAi-systemProse {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--swc-sans-serif-font);
+  font-size: var(--swc-font-size-200);
+  font-weight: var(--swc-regular-font-weight);
+  line-height: var(--swc-line-height-font-size-200);
+  color: var(--swc-gray-800);
+}
+
+.swc-conversationalAi-systemProse p {
+  margin: 0;
+}
+
+.swc-conversationalAi-systemProse ul,
+.swc-conversationalAi-systemProse ol {
+  padding-inline-start: 20px;
+  margin: 0;
+}
+
+.swc-conversationalAi-systemProse a {
+  color: var(--swc-accent-color-900);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

@@ -1,0 +1,105 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: block;
+}
+
+:host ::slotted(a) {
+  color: token("gray-800");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.swc-MessageSources {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ─────────────────────────────────────
+   Toggle button
+   ───────────────────────────────────── */
+
+.swc-MessageSources-toggle {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  padding: 0;
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-75");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-font-size-75");
+  color: token("gray-700");
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.swc-MessageSources-toggle:hover {
+  color: token("gray-800");
+}
+
+.swc-MessageSources-chevron {
+  transition: transform 130ms ease;
+}
+
+.swc-MessageSources-chevron--down {
+  transform: rotate(90deg);
+}
+
+/* ─────────────────────────────────────
+   Sources list
+   ───────────────────────────────────── */
+
+.swc-MessageSources-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  counter-reset: sources;
+}
+
+/* Each slotted item is expected to be a <li> */
+::slotted(li) {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-75");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-font-size-75");
+  color: token("gray-800");
+  list-style: none;
+  counter-increment: sources;
+}
+
+::slotted(li)::before {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  inline-size: 12px;
+  block-size: 20px;
+  font-size: token("font-size-50");
+  font-weight: token("bold-font-weight");
+  color: token("gray-700");
+  background: token("gray-100");
+  border-radius: 4px;
+  content: counter(sources);
+}

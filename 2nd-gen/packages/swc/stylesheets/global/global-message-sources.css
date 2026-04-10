@@ -9,9 +9,12 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from './DocsAfterApiMarkdown';
-export * from './GettingStarted';
-export * from './OverviewStory';
-export * from './SpectrumDocs';
-export * from './SpectrumStories';
-export * from './StatusBadge';
+
+@layer swc-global-elements {
+  swc-message-sources li a {
+    font-size: token("font-size-100");
+    color: token("gray-800");
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+}

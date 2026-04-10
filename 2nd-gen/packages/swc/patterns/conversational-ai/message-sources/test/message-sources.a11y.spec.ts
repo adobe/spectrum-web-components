@@ -9,9 +9,23 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from './DocsAfterApiMarkdown';
-export * from './GettingStarted';
-export * from './OverviewStory';
-export * from './SpectrumDocs';
-export * from './SpectrumStories';
-export * from './StatusBadge';
+
+import { expect, test } from '@playwright/test';
+
+import { gotoStory } from '../../../../utils/a11y-helpers.js';
+
+test.describe('MessageSources - ARIA Snapshots', () => {
+  test('should have correct accessibility tree when expanded', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'conversational-ai-message-sources--overview',
+      'swc-message-sources'
+    );
+    await expect(root).toMatchAriaSnapshot(`
+      - button "Collapse sources" [expanded=true]
+      - list "Sources"
+    `);
+  });
+});

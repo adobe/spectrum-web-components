@@ -1,0 +1,58 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: inline-block;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.swc-MessageFeedback {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.swc-MessageFeedback-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 28px;
+  block-size: 28px;
+  padding: 0;
+  color: token("gray-700");
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition:
+    background 130ms ease,
+    color 130ms ease;
+}
+
+.swc-MessageFeedback-button:hover {
+  color: token("gray-800");
+  background: token("gray-100");
+}
+
+.swc-MessageFeedback-button[data-selected] {
+  color: token("gray-25");
+  background: token("gray-800");
+}
+
+.swc-MessageFeedback-button[data-selected]:hover {
+  background: token("gray-700");
+}

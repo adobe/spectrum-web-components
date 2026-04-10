@@ -70,6 +70,7 @@ function statusPlugin() {
 export default {
   globs: [
     'components/**/*.ts',
+    'patterns/**/*.ts',
     '../core/components/**/*.ts',
     '../core/controllers/**/*.ts',
     '../core/element/**/*.ts',

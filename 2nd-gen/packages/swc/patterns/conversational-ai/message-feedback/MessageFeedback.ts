@@ -1,0 +1,106 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+import { CSSResultArray, html, TemplateResult } from 'lit';
+import { property } from 'lit/decorators.js';
+
+import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+
+import '@adobe/spectrum-wc/icon';
+
+import { ThumbDownIcon, ThumbUpIcon } from '../utils/icons/index.js';
+
+import styles from './message-feedback.css';
+
+/**
+ * Binary positive / negative feedback control for AI responses.
+ *
+ * @element swc-message-feedback
+ * @fires {CustomEvent} swc-feedback - Dispatched when the user selects positive or negative feedback.
+ */
+export class MessageFeedback extends SpectrumElement {
+  /**
+   * The currently selected feedback status.
+   * - `positive`: positive feedback selected
+   * - `negative`: negative feedback selected
+   *
+   * This is controlled by the consumer. The component dispatches `swc-feedback`
+   * on click and expects the parent to update `status`.
+   */
+  @property({ type: String, reflect: true })
+  public status?: 'positive' | 'negative';
+
+  public static override get styles(): CSSResultArray {
+    return [styles];
+  }
+
+  private _handlePositive(): void {
+    this.dispatchEvent(
+      new CustomEvent('swc-feedback', {
+        bubbles: true,
+        composed: true,
+        detail: { status: 'positive' as const },
+      })
+    );
+  }
+
+  private _handleNegative(): void {
+    this.dispatchEvent(
+      new CustomEvent('swc-feedback', {
+        bubbles: true,
+        composed: true,
+        detail: { status: 'negative' as const },
+      })
+    );
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <div
+        class="swc-MessageFeedback"
+        role="radiogroup"
+        aria-label="Response feedback"
+      >
+        <button
+          class="swc-MessageFeedback-button"
+          role="radio"
+          ?data-selected=${this.status === 'positive'}
+          aria-label="Positive response"
+          aria-checked=${this.status === 'positive'}
+          @click=${this._handlePositive}
+        >
+          <swc-icon
+            label="Positive response"
+            style="--swc-icon-inline-size:16px;--swc-icon-block-size:16px;"
+          >
+            ${ThumbUpIcon()}
+          </swc-icon>
+        </button>
+        <button
+          class="swc-MessageFeedback-button"
+          role="radio"
+          ?data-selected=${this.status === 'negative'}
+          aria-label="Negative response"
+          aria-checked=${this.status === 'negative'}
+          @click=${this._handleNegative}
+        >
+          <swc-icon
+            label="Negative response"
+            style="--swc-icon-inline-size:16px;--swc-icon-block-size:16px;"
+          >
+            ${ThumbDownIcon()}
+          </swc-icon>
+        </button>
+      </div>
+    `;
+  }
+}
