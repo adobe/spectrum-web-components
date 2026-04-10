@@ -400,6 +400,9 @@ function isDropShadowLayer(value) {
 }
 
 function formatDropShadowLayerColor(color) {
+  // This path is reached when a composite shadow token comes from a source
+  // file with resolveAliases enabled and its color alias resolves to a
+  // light/dark set object instead of remaining a var(...) reference.
   if (isColorSchemeSet(color)) {
     return `light-dark(${color.light}, ${color.dark})`;
   }
