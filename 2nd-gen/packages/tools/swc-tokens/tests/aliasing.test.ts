@@ -70,6 +70,45 @@ describe('normalizePrimitive – set alias protection', () => {
   });
 });
 
+describe('normalizeCompositeValue', () => {
+  const { normalizeCompositeValue } = __test__;
+
+  it('recursively normalizes nested arrays and objects', () => {
+    const lookup = {
+      color: '{gray-100}',
+      'gray-100': 'rgb(255, 255, 255, 0.5)',
+      shadow: '{shadow-color}',
+      'shadow-color': '{gray-100}',
+    };
+
+    const result = normalizeCompositeValue(
+      [
+        {
+          color: '{color}',
+          nested: {
+            shadow: '{shadow}',
+          },
+        },
+      ],
+      {
+        resolveAliases: true,
+        lookup,
+        prefix: 'test',
+        debug: false,
+      }
+    );
+
+    expect(result).toEqual([
+      {
+        color: 'var(--test-color)',
+        nested: {
+          shadow: 'var(--test-shadow)',
+        },
+      },
+    ]);
+  });
+});
+
 describe('serializeTokenValue', () => {
   const { serializeTokenValue } = __test__;
 
