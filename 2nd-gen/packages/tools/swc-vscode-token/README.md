@@ -42,6 +42,7 @@ Typography snippets are currently scoped to CSS-family languages and are generat
 
 Example expansion:
 
+<!-- prettier-ignore -->
 ```css
 font-family: token("sans-serif-font-family");
 font-size: token("font-size-100");
