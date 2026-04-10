@@ -84,6 +84,9 @@ export class Coachmark extends Popover {
   @property({ type: Number, attribute: 'total-steps' })
   public totalSteps?: number;
 
+  @property({ type: String, attribute: 'step-count-of' })
+  public stepCountOf = 'of';
+
   @property({ type: String, attribute: 'primary-cta' })
   primaryCTA?: string;
 
@@ -268,7 +271,7 @@ export class Coachmark extends Popover {
       <div class="step" role="status">
         <span aria-live="polite">
           <slot name="step-count">
-            ${this.currentStep} of ${this.totalSteps}
+            ${this.currentStep} ${this.stepCountOf} ${this.totalSteps}
           </slot>
         </span>
       </div>
