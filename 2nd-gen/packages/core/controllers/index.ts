@@ -10,6 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
+export { FloatingController } from './floating-controller.js';
+export {
+  FALLBACK_PLACEMENTS,
+  type FloatingOptions,
+  type Placement,
+} from './floating-controller.types.js';
 export {
   LanguageResolutionController,
   languageResolverUpdatedSymbol,

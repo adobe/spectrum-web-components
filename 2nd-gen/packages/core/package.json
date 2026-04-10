@@ -51,6 +51,14 @@
       "types": "./dist/controllers/index.d.ts",
       "import": "./dist/controllers/index.js"
     },
+    "./controllers/floating-controller.js": {
+      "types": "./dist/controllers/floating-controller.d.ts",
+      "import": "./dist/controllers/floating-controller.js"
+    },
+    "./controllers/floating-controller.types.js": {
+      "types": "./dist/controllers/floating-controller.types.d.ts",
+      "import": "./dist/controllers/floating-controller.types.js"
+    },
     "./controllers/index.js": {
       "types": "./dist/controllers/index.d.ts",
       "import": "./dist/controllers/index.js"
@@ -156,6 +164,12 @@
       "controllers": [
         "dist/controllers/index.d.ts"
       ],
+      "controllers/floating-controller.js": [
+        "dist/controllers/floating-controller.d.ts"
+      ],
+      "controllers/floating-controller.types.js": [
+        "dist/controllers/floating-controller.types.d.ts"
+      ],
       "controllers/index.js": [
         "dist/controllers/index.d.ts"
       ],
@@ -207,6 +221,7 @@
     }
   },
   "dependencies": {
+    "@floating-ui/dom": "1.7.5",
     "@lit-labs/observers": "2.0.2",
     "lit": "^2.5.0 || ^3.1.3"
   },
