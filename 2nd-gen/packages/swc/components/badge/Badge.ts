@@ -76,8 +76,6 @@ export class Badge extends BadgeBase {
 
   /**
    * Whether the badge is subtle.
-   *
-   * @todo This can be moved to the base class once we are no longer maintaining 1st-gen.
    */
   @property({ type: Boolean, reflect: true })
   public subtle: boolean = false;
@@ -86,8 +84,6 @@ export class Badge extends BadgeBase {
    * Whether the badge is outlined.
    *
    * Can only be used with semantic variants.
-   *
-   * @todo This can be moved to the base class once we are no longer maintaining 1st-gen.
    */
   @property({ type: Boolean, reflect: true })
   public outline: boolean = false;
