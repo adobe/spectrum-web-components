@@ -365,11 +365,18 @@ export const GridArrowNavigation: Story = {
     );
 
     await step(
-      'Home and End jump to first and last cell in row-major order',
+      'Home and End scope to the current row per APG grid pattern',
       async () => {
         cell('5').focus();
         keydown(shadowActiveButton(host)!, 'Home');
-        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('1');
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('4');
+
+        keydown(shadowActiveButton(host)!, 'End');
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('6');
+
+        cell('8').focus();
+        keydown(shadowActiveButton(host)!, 'Home');
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('7');
 
         keydown(shadowActiveButton(host)!, 'End');
         expect(shadowActiveButton(host)?.textContent?.trim()).toBe('9');
@@ -616,6 +623,48 @@ export const RTLArrowNavigation: Story = {
         expect(shadowActiveButton(host)?.textContent?.trim()).toBe(
           'Strikethrough'
         );
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// CSS-inherited RTL: direction via CSS, no dir attribute (#26b)
+// ──────────────────────────────────────────────────────────────
+
+export const CSSInheritedRTL: Story = {
+  render: () => html`
+    <div style="direction: rtl">
+      <demo-focusgroup-horizontal
+        role="toolbar"
+        aria-label="CSS RTL toolbar"
+      ></demo-focusgroup-horizontal>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<HTMLElement>(
+      canvasElement,
+      'demo-focusgroup-horizontal'
+    );
+    const root = host.shadowRoot!;
+    const first = root.querySelector<HTMLButtonElement>('button')!;
+
+    await step(
+      'ArrowLeft moves forward when RTL is set via CSS (no dir attribute)',
+      async () => {
+        first.focus();
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Bold');
+
+        keydown(first, 'ArrowLeft');
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Italic');
+      }
+    );
+
+    await step(
+      'ArrowRight moves backward when RTL is set via CSS (no dir attribute)',
+      async () => {
+        keydown(shadowActiveButton(host)!, 'ArrowRight');
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Bold');
       }
     );
   },

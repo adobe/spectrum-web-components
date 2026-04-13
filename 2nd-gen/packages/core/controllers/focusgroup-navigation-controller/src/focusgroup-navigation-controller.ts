@@ -419,27 +419,15 @@ export class FocusgroupNavigationController implements ReactiveController {
   // “Native `focusgroup` (future)” comment block directly above the class declaration.
 
   /**
-   * Resolves `dir` from the shadow host, nearest `dir` ancestor, or `document.documentElement`.
+   * Resolves writing direction from the computed style of the host element.
+   *
+   * Uses `getComputedStyle` rather than walking `dir` attributes so that
+   * CSS-inherited direction (the 2nd-gen default) is correctly detected.
    *
    * @returns True when horizontal arrow directions should follow RTL semantics.
    */
   private isRtl(): boolean {
-    const root = this.host.getRootNode();
-    if (root instanceof ShadowRoot) {
-      const dir = root.host.getAttribute('dir');
-      if (dir === 'rtl' || dir === 'ltr') {
-        return dir === 'rtl';
-      }
-    }
-    const scoped = this.host.closest('[dir]');
-    const d = scoped?.getAttribute('dir');
-    if (d === 'rtl') {
-      return true;
-    }
-    if (d === 'ltr') {
-      return false;
-    }
-    return document.documentElement.dir === 'rtl';
+    return getComputedStyle(this.host).direction === 'rtl';
   }
 
   /**
@@ -802,15 +790,35 @@ export class FocusgroupNavigationController implements ReactiveController {
     }
 
     if (event.key === 'Home' || event.key === 'End') {
-      const ordered = isGrid ? rows!.flat() : items;
-      if (ordered.length === 0) {
-        return;
-      }
-      const boundary =
-        event.key === 'Home' ? ordered[0] : ordered[ordered.length - 1];
-      if (boundary && boundary !== target) {
-        event.preventDefault();
-        this.moveKeyNavigationFocusTo(boundary);
+      if (isGrid) {
+        // APG grid pattern: Home/End scope to the current row.
+        // Ctrl+Home/End (entire grid) is handled above.
+        const pos = this.findGridIndex(rows!, target);
+        if (!pos) {
+          return;
+        }
+        const currentRow = rows![pos.row];
+        if (!currentRow?.length) {
+          return;
+        }
+        const boundary =
+          event.key === 'Home'
+            ? currentRow[0]
+            : currentRow[currentRow.length - 1];
+        if (boundary && boundary !== target) {
+          event.preventDefault();
+          this.moveKeyNavigationFocusTo(boundary);
+        }
+      } else {
+        if (items.length === 0) {
+          return;
+        }
+        const boundary =
+          event.key === 'Home' ? items[0] : items[items.length - 1];
+        if (boundary && boundary !== target) {
+          event.preventDefault();
+          this.moveKeyNavigationFocusTo(boundary);
+        }
       }
     }
   }
