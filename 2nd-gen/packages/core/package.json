@@ -23,6 +23,10 @@
       "types": "./dist/components/asset/index.d.ts",
       "import": "./dist/components/asset/index.js"
     },
+    "./components/avatar": {
+      "types": "./dist/components/avatar/index.d.ts",
+      "import": "./dist/components/avatar/index.js"
+    },
     "./components/badge": {
       "types": "./dist/components/badge/index.d.ts",
       "import": "./dist/components/badge/index.js"
@@ -130,6 +134,9 @@
       ],
       "components/asset": [
         "dist/components/asset/index.d.ts"
+      ],
+      "components/avatar": [
+        "dist/components/avatar/index.d.ts"
       ],
       "components/badge": [
         "dist/components/badge/index.d.ts"
