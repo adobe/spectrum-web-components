@@ -36,7 +36,7 @@ export class ConversationArtifact extends SpectrumElement {
   @property({ type: String, reflect: true })
   public variant: 'card' | 'media' = 'card';
 
-  /** When `true`, show a dismiss affordance and emit `swc-artifact-dismiss` on click. */
+  /** When `true`, show a dismiss affordance and emit `swc-dismiss` on click. */
   @property({ type: Boolean, reflect: true })
   public dismissible = false;
 
@@ -143,7 +143,7 @@ export class ConversationArtifact extends SpectrumElement {
 
   private _handleDismissClick(): void {
     this.dispatchEvent(
-      new CustomEvent('swc-artifact-dismiss', {
+      new CustomEvent('swc-dismiss', {
         bubbles: true,
         composed: true,
         detail: { artifact: this },

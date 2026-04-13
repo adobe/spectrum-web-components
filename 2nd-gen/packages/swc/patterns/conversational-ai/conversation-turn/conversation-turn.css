@@ -37,25 +37,24 @@
   min-inline-size: 0;
 }
 
-:host([type='outgoing']) .swc-ConversationTurn {
+:host([type="user"]) .swc-ConversationTurn {
   justify-content: flex-end;
 }
 
-:host([type='outgoing']) .swc-ConversationTurn > slot {
+:host([type="user"]) .swc-ConversationTurn > slot {
   align-items: flex-end;
 }
 
-
-:host([type='incoming']) .swc-ConversationTurn {
+:host([type="system"]) .swc-ConversationTurn {
   justify-content: flex-start;
 }
 
-:host([type='incoming']) .swc-ConversationTurn > slot {
+:host([type="system"]) .swc-ConversationTurn > slot {
   align-items: stretch;
 }
 
 /* Let system stacks span the column; user bubbles keep their own max-inline-size. */
-:host([type='incoming']) ::slotted(*) {
+:host([type="system"]) ::slotted(*) {
   flex: 1 1 100%;
   min-inline-size: 0;
   max-inline-size: 100%;

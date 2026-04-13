@@ -27,9 +27,9 @@ import styles from './system-message.css';
  * - default slot — System reply body (semantic HTML; typography after API table on System message Storybook docs)
  * - `feedback` — `<swc-message-feedback>` positive/negative feedback
  * - `sources` — `<swc-message-sources>` collapsible source list
- * - `suggestions` — `<swc-message-suggestions>` follow-up suggestion chips
+ * - `suggestions` — `<swc-suggestion>` follow-up suggestion group
  *
- * Wrap with `<swc-conversation-turn type="incoming">` for column alignment in the thread.
+ * Wrap with `<swc-conversation-turn type="system">` for column alignment in the thread.
  *
  * @element swc-system-message
  * @slot - System reply body (semantic HTML; typography after API table on System message Storybook docs)

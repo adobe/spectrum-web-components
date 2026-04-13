@@ -45,6 +45,24 @@ argTypes.open = {
   },
 };
 
+argTypes.loadingLabel = {
+  ...argTypes.loadingLabel,
+  control: { type: 'text' },
+  table: {
+    category: 'attributes',
+    defaultValue: { summary: 'Thinking…' },
+  },
+};
+
+argTypes.completeLabel = {
+  ...argTypes.completeLabel,
+  control: { type: 'text' },
+  table: {
+    category: 'attributes',
+    defaultValue: { summary: 'Response generated' },
+  },
+};
+
 /**
  * Displays AI response progress with a loading spinner and optional reasoning disclosure.
  */
@@ -73,6 +91,8 @@ export const Playground: Story = {
   args: {
     loading: true,
     open: false,
+    loadingLabel: 'Thinking…',
+    completeLabel: 'Response generated',
   },
   tags: ['autodocs', 'dev'],
 };
@@ -85,6 +105,8 @@ export const Overview: Story = {
   args: {
     loading: true,
     open: false,
+    loadingLabel: 'Thinking…',
+    completeLabel: 'Response generated',
   },
   tags: ['overview'],
 };
@@ -103,6 +125,8 @@ export const Anatomy: Story = {
   args: {
     loading: true,
     open: false,
+    loadingLabel: 'Thinking…',
+    completeLabel: 'Response generated',
   },
   tags: ['anatomy'],
 };
@@ -116,6 +140,7 @@ export const Anatomy: Story = {
  *
  * - **`loading=true`** — Animated spinner + "Thinking…" label
  * - **`loading=false`** — Checkmark + "Response generated" label
+ * - Set `loading-label` or `complete-label` to customize row text per state
  */
 export const Loading: Story = {
   render: () => html`
@@ -133,7 +158,15 @@ export const Loading: Story = {
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
-          Complete
+          Complete (default label)
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-response-status complete-label="Ready"></swc-response-status>
+        <span
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+        >
+          Complete (custom label)
         </span>
       </div>
     </div>
@@ -163,10 +196,8 @@ export const Reasoning: Story = {
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-response-status open>
-          <span slot="reasoning">
-            Step 1: Analyzing the request… Step 2: Searching for relevant
-            context… Step 3: Composing response.
-          </span>
+          Step 1: Analyzing the request… Step 2: Searching for relevant context…
+          Step 3: Composing response.
         </swc-response-status>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
@@ -199,6 +230,8 @@ export const Accessibility: Story = {
   args: {
     loading: false,
     open: false,
+    loadingLabel: 'Thinking…',
+    completeLabel: 'Response generated',
   },
   tags: ['a11y'],
 };

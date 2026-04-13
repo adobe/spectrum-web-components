@@ -168,7 +168,7 @@ export const Sending: Story = {
  * - `swc-conversation-artifact variant="card"`: file-style card artifact
  * - `swc-conversation-artifact variant="media"`: media tile artifact
  *
- * Artifacts own dismiss behavior via `dismissible` and emit `swc-artifact-dismiss`.
+ * Artifacts own dismiss behavior via `dismissible` and emit `swc-dismiss`.
  */
 export const Artifact: Story = {
   render: () => html`

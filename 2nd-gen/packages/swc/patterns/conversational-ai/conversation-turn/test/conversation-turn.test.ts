@@ -35,14 +35,14 @@ export const OverviewTest: Story = {
     const first = els[0] as ConversationTurn;
 
     await step('type reflects on host', async () => {
-      expect(first.type).toBe('outgoing');
-      expect(first.getAttribute('type')).toBe('outgoing');
+      expect(first.type).toBe('user');
+      expect(first.getAttribute('type')).toBe('user');
     });
 
     await step('type updates when set', async () => {
-      first.type = 'incoming';
+      first.type = 'system';
       await first.updateComplete;
-      expect(first.getAttribute('type')).toBe('incoming');
+      expect(first.getAttribute('type')).toBe('system');
     });
   },
 };

@@ -14,14 +14,15 @@ import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../index.js';
+import '../../suggestion-item/index.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
-import { MessageSuggestions } from '../MessageSuggestions.js';
-import { meta, Overview } from '../stories/message-suggestions.stories.js';
+import { meta, Overview } from '../stories/suggestion.stories.js';
+import { Suggestion } from '../Suggestion.js';
 
 export default {
   ...meta,
-  title: 'Conversational AI/Message suggestions/Tests',
+  title: 'Conversational AI/Suggestion/Tests',
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },
@@ -36,20 +37,19 @@ export default {
 export const OverviewTest: Story = {
   ...Overview,
   play: async ({ canvasElement, step }) => {
-    const el = await getComponent<MessageSuggestions>(
-      canvasElement,
-      'swc-message-suggestions'
-    );
+    const el = await getComponent<Suggestion>(canvasElement, 'swc-suggestion');
 
     await step('renders with empty title by default', async () => {
       expect(el.title).toBe('');
     });
 
-    await step('renders three generated chips from three slot items', async () => {
-      const chips = el.shadowRoot?.querySelectorAll(
-        '.swc-MessageSuggestions-chip'
-      );
-      expect(chips?.length).toBe(3);
-    });
+    await step(
+      'renders three slotted suggestion items by default',
+      async () => {
+        const slot = el.shadowRoot?.querySelector<HTMLSlotElement>('slot');
+        const assigned = slot?.assignedElements({ flatten: true }) ?? [];
+        expect(assigned.length).toBe(3);
+      }
+    );
   },
 };

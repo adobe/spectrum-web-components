@@ -27,7 +27,8 @@ A complete set of building blocks for composing AI chat interfaces in 2nd-gen Sp
 | `swc-response-status`       | Loading / generation-complete status indicator                                                             |
 | `swc-message-feedback`      | Positive / negative feedback control                                                                       |
 | `swc-message-sources`       | Collapsible numbered list of response sources                                                              |
-| `swc-message-suggestions`   | Row of follow-up suggestion chips generated from slotted text items                                        |
+| `swc-suggestion`            | Follow-up suggestion group with optional title and slotted suggestion items                                |
+| `swc-suggestion-item`       | Interactive chip action used inside `swc-suggestion`; emits bubbled selection event                        |
 
 ---
 
@@ -44,7 +45,8 @@ patterns/
     response-status/
     message-feedback/
     message-sources/
-    message-suggestions/
+    suggestion/
+    suggestion-item/
     conversation-turn/
     system-message/
     utils/

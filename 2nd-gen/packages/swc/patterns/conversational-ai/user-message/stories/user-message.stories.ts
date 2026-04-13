@@ -27,13 +27,12 @@ delete (args as Record<string, unknown>).content;
 delete (argTypes as Record<string, unknown>).content;
 
 // Wraps a single swc-user-message in a conversation turn for proper alignment.
-const withUserTurn = (story: () => unknown) =>
-  html`<swc-conversation-turn type="outgoing"
-    >${story()}</swc-conversation-turn
-  >`;
+const withUserTurn = (story: () => unknown) => html`
+  <swc-conversation-turn type="user">${story()}</swc-conversation-turn>
+`;
 
 /**
- * User-authored message bubble. Use inside `<swc-conversation-turn type="outgoing">` for thread alignment.
+ * User-authored message bubble. Use inside `<swc-conversation-turn type="user">` for thread alignment.
  */
 const meta: Meta = {
   title: 'Conversational AI/User message',
@@ -113,10 +112,10 @@ export const Content: Story = {
       style="display:flex;flex-direction:column;gap:32px;max-inline-size:640px;"
     >
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn type="outgoing">
+        <swc-conversation-turn type="user">
           <swc-user-message>
-            Can you help me create a 45-minute presentation, with animations, for
-            an executive update?
+            Can you help me create a 45-minute presentation, with animations,
+            for an executive update?
           </swc-user-message>
         </swc-conversation-turn>
         <span
@@ -126,7 +125,7 @@ export const Content: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn type="outgoing">
+        <swc-conversation-turn type="user">
           <swc-user-message>
             <swc-conversation-artifact variant="card">
               <div
@@ -147,7 +146,7 @@ export const Content: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn type="outgoing">
+        <swc-conversation-turn type="user">
           <swc-user-message>
             <div style="inline-size:240px;">
               <swc-conversation-artifact variant="media">

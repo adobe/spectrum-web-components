@@ -211,7 +211,7 @@ export const EventsTest: Story = {
     );
 
     await step(
-      'bubbles swc-artifact-dismiss from a dismissible artifact',
+      'bubbles swc-dismiss from a dismissible artifact',
       async () => {
         el.innerHTML = `
           <swc-conversation-artifact slot="artifact" variant="media" dismissible>
@@ -222,7 +222,7 @@ export const EventsTest: Story = {
 
         let fired = false;
         el.addEventListener(
-          'swc-artifact-dismiss',
+          'swc-dismiss',
           () => {
             fired = true;
           },

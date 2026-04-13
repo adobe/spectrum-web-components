@@ -121,7 +121,7 @@
   display: block;
   inline-size: 100%;
   min-block-size: calc(token("font-size-100") * token("line-height-100"));
-  max-block-size: 72px;
+  max-block-size: calc(token("font-size-100") * token("line-height-100") * 4);
   padding: 0;
   font-family: token("sans-serif-font");
   font-size: token("font-size-100");

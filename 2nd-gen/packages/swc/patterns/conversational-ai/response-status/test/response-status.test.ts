@@ -79,5 +79,70 @@ export const BooleanMutationTest: Story = {
       await el.updateComplete;
       expect(el.hasAttribute('open')).toBe(false);
     });
+
+    await step(
+      'loadingLabel and completeLabel support custom status text',
+      async () => {
+        el.loading = true;
+        el.loadingLabel = 'Generating';
+        await el.updateComplete;
+        let statusLabel = el.shadowRoot?.querySelector(
+          '.swc-ResponseStatus-label'
+        );
+        expect(statusLabel?.textContent?.trim()).toBe('Generating');
+
+        el.loading = false;
+        el.completeLabel = 'Ready';
+        await el.updateComplete;
+        statusLabel = el.shadowRoot?.querySelector('.swc-ResponseStatus-label');
+        expect(statusLabel?.textContent?.trim()).toBe('Ready');
+      }
+    );
+  },
+};
+
+export const InteractionTest: Story = {
+  ...Overview,
+  args: {
+    ...Overview.args,
+    loading: false,
+    open: false,
+    'default-slot': 'Reasoning details here.',
+  },
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<ResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+
+    await step('toggle dispatches swc-toggle with open detail', async () => {
+      let captured: CustomEvent<{ open: boolean }> | undefined;
+      el.addEventListener('swc-toggle', (event) => {
+        captured = event as CustomEvent<{ open: boolean }>;
+      });
+
+      const button = el.shadowRoot?.querySelector(
+        '.swc-ResponseStatus-row--button'
+      ) as HTMLButtonElement | null;
+      button?.click();
+      await el.updateComplete;
+
+      expect(el.open).toBe(true);
+      expect(captured?.detail.open).toBe(true);
+    });
+
+    await step('default slot content renders in reasoning panel', async () => {
+      const panel = el.shadowRoot?.querySelector(
+        '#swc-reasoning-panel'
+      ) as HTMLElement | null;
+      const assigned = el.shadowRoot
+        ?.querySelector('#swc-reasoning-panel slot')
+        ?.assignedNodes({ flatten: true });
+
+      expect(panel).toBeTruthy();
+      expect(
+        assigned?.some((node) => node.textContent?.includes('Reasoning'))
+      ).toBe(true);
+    });
   },
 };

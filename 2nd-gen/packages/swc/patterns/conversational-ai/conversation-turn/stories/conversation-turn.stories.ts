@@ -21,7 +21,8 @@ import '../../prompt-field/index.js';
 import '../../response-status/index.js';
 import '../../message-feedback/index.js';
 import '../../message-sources/index.js';
-import '../../message-suggestions/index.js';
+import '../../suggestion/index.js';
+import '../../suggestion-item/index.js';
 
 import '../../system-prose-demo.css';
 
@@ -30,7 +31,7 @@ import '../../system-prose-demo.css';
 // ────────────────
 
 /**
- * Column alignment for one chat turn: `type="outgoing"` (end) vs `type="incoming"` (start, full width).
+ * Column alignment for one chat turn: `type="user"` (end) vs `type="system"` (start, full width).
  * Slot **`swc-user-message`**, **`swc-system-message`**, or custom markup.
  * Stack consecutive messages in one turn to create grouped spacing.
  */
@@ -58,10 +59,10 @@ export const Playground: Story = {
     <div
       style="display:flex;flex-direction:column;gap:16px;max-inline-size:600px;"
     >
-      <swc-conversation-turn type="outgoing">
+      <swc-conversation-turn type="user">
         <swc-user-message>Short user question for the demo.</swc-user-message>
       </swc-conversation-turn>
-      <swc-conversation-turn type="incoming">
+      <swc-conversation-turn type="system">
         <swc-system-message>
           <swc-response-status slot="status"></swc-response-status>
           <div class="swc-conversationalAi-systemProse">
@@ -84,12 +85,12 @@ export const Overview: Story = {
     <div
       style="display:flex;flex-direction:column;gap:16px;max-inline-size:600px;"
     >
-      <swc-conversation-turn type="outgoing">
+      <swc-conversation-turn type="user">
         <swc-user-message>
           Can you summarize the attached campaign assets?
         </swc-user-message>
       </swc-conversation-turn>
-      <swc-conversation-turn type="incoming">
+      <swc-conversation-turn type="system">
         <swc-system-message>
           <swc-response-status slot="status"></swc-response-status>
           <div class="swc-conversationalAi-systemProse">
@@ -199,9 +200,7 @@ export const FullPattern: Story = {
       if (!Number.isInteger(messageId)) {
         return;
       }
-      const detail = (event as CustomEvent<{ index: number }>).detail;
-      const message = messages.find((entry) => entry.id === messageId);
-      const suggestion = message?.suggestions?.[detail.index - 1];
+      const suggestion = (event as CustomEvent<{ label: string }>).detail.label;
       if (!suggestion) {
         return;
       }
@@ -292,12 +291,12 @@ export const FullPattern: Story = {
             ${messages.map((message) =>
               message.role === 'user'
                 ? html`
-                    <swc-conversation-turn type="outgoing">
+                    <swc-conversation-turn type="user">
                       <swc-user-message>${message.text}</swc-user-message>
                     </swc-conversation-turn>
                   `
                 : html`
-                    <swc-conversation-turn type="incoming">
+                    <swc-conversation-turn type="system">
                       <swc-system-message>
                         <swc-response-status
                           slot="status"
@@ -305,9 +304,7 @@ export const FullPattern: Story = {
                         >
                           ${message.reasoning
                             ? html`
-                                <span slot="reasoning">
-                                  ${message.reasoning}
-                                </span>
+                                <span>${message.reasoning}</span>
                               `
                             : ''}
                         </swc-response-status>
@@ -333,7 +330,7 @@ export const FullPattern: Story = {
                                 )}
                               </swc-message-sources>
 
-                              <swc-message-suggestions
+                              <swc-suggestion
                                 slot="suggestions"
                                 title="What would you like to do next?"
                                 data-message-id=${String(message.id)}
@@ -341,10 +338,12 @@ export const FullPattern: Story = {
                               >
                                 ${(message.suggestions ?? []).map(
                                   (suggestion) => html`
-                                    <span>${suggestion}</span>
+                                    <swc-suggestion-item>
+                                      ${suggestion}
+                                    </swc-suggestion-item>
                                   `
                                 )}
-                              </swc-message-suggestions>
+                              </swc-suggestion>
                             `}
                       </swc-system-message>
                     </swc-conversation-turn>
@@ -356,7 +355,7 @@ export const FullPattern: Story = {
               .sending=${sending}
               @swc-input=${handlePromptInput}
               @swc-upload-click=${handleUploadClick}
-              @swc-artifact-dismiss=${handleArtifactDismiss}
+              @swc-dismiss=${handleArtifactDismiss}
               @swc-submit=${handleSubmit}
             >
               ${artifacts.map(

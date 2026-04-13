@@ -14,39 +14,38 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
+import '../../suggestion-item/index.js';
 import '../index.js';
 
 // ────────────────
 //    METADATA
 // ────────────────
 
-/** Default-slot HTML for three suggestions (recommended count in docs). */
-const threeSuggestionsSlot = `<span>Create a slide deck from this</span><span>Summarize in 3 bullet points</span><span>Translate to Spanish</span>`;
+/** Default-slot HTML for three suggestion items (recommended count in docs). */
+const threeSuggestionItems =
+  `<swc-suggestion-item>Create a slide deck from this</swc-suggestion-item>` +
+  `<swc-suggestion-item>Summarize in 3 bullet points</swc-suggestion-item>` +
+  `<swc-suggestion-item>Translate to Spanish</swc-suggestion-item>`;
 
-const { args, argTypes, template } = getStorybookHelpers(
-  'swc-message-suggestions'
-);
+const { args, argTypes, template } = getStorybookHelpers('swc-suggestion');
 
 /**
- * Follow-up suggestion chips for an AI response.
- * Put **text elements** (e.g. `<span>`) in the default slot. Chip labels are derived from `textContent`.
- *
- * **Recommendation:** use **three** suggestions for most layouts; more are supported and
- * wrap to additional rows (`flex-wrap`).
+ * Follow-up suggestion group for an AI response.
+ * Put one or more `<swc-suggestion-item>` elements in the default slot.
  */
 const meta: Meta = {
-  title: 'Conversational AI/Message suggestions',
-  component: 'swc-message-suggestions',
+  title: 'Conversational AI/Suggestion',
+  component: 'swc-suggestion',
   args: {
     ...args,
-    'default-slot': threeSuggestionsSlot,
+    'default-slot': threeSuggestionItems,
     title: '',
   },
   argTypes,
   render: (args) => template(args),
   parameters: {
     docs: {
-      subtitle: 'Follow-up suggestion chips for an AI response.',
+      subtitle: 'Follow-up suggestion group for an AI response.',
     },
     layout: 'padded',
   },
@@ -76,15 +75,15 @@ export const Overview: Story = {
 // ──────────────────────────
 
 /**
- * A message suggestions component consists of:
+ * A suggestion group consists of:
  *
  * 1. **Title** — Optional heading via the `title` property
- * 2. **Chips** — One generated action button per **default-slot** child
+ * 2. **Items** — One or more slotted `<swc-suggestion-item>` actions
  */
 export const Anatomy: Story = {
   args: {
     title: 'What would you like to do next?',
-    'default-slot': threeSuggestionsSlot,
+    'default-slot': threeSuggestionItems,
   },
   tags: ['anatomy'],
 };
@@ -94,16 +93,17 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 /**
- * Chip count follows the number of **default-slot** children. Three is a good default for
- * scanning; one, many, or zero (empty row) are all valid.
+ * Suggestion count follows the number of `<swc-suggestion-item>` elements.
  */
 export const SuggestionCount: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-message-suggestions>
-          <span>Create a slide deck from this</span>
-        </swc-message-suggestions>
+        <swc-suggestion>
+          <swc-suggestion-item>
+            Create a slide deck from this
+          </swc-suggestion-item>
+        </swc-suggestion>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
@@ -111,11 +111,15 @@ export const SuggestionCount: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-message-suggestions>
-          <span>Create a slide deck from this</span>
-          <span>Summarize in 3 bullet points</span>
-          <span>Translate to Spanish</span>
-        </swc-message-suggestions>
+        <swc-suggestion>
+          <swc-suggestion-item>
+            Create a slide deck from this
+          </swc-suggestion-item>
+          <swc-suggestion-item>
+            Summarize in 3 bullet points
+          </swc-suggestion-item>
+          <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
+        </swc-suggestion>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
@@ -123,13 +127,15 @@ export const SuggestionCount: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-message-suggestions>
-          <span>Refine the executive summary</span>
-          <span>Add competitive analysis</span>
-          <span>Shorten for a 5-minute read</span>
-          <span>Export as talking points</span>
-          <span>Suggest a subject line</span>
-        </swc-message-suggestions>
+        <swc-suggestion>
+          <swc-suggestion-item>
+            Refine the executive summary
+          </swc-suggestion-item>
+          <swc-suggestion-item>Add competitive analysis</swc-suggestion-item>
+          <swc-suggestion-item>Shorten for a 5-minute read</swc-suggestion-item>
+          <swc-suggestion-item>Export as talking points</swc-suggestion-item>
+          <swc-suggestion-item>Suggest a subject line</swc-suggestion-item>
+        </swc-suggestion>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
@@ -143,18 +149,21 @@ export const SuggestionCount: Story = {
 };
 
 /**
- * When `title` is provided, a heading appears
- * above the chips row.
+ * When `title` is provided, a heading appears above the item row.
  */
 export const Title: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-message-suggestions>
-          <span>Create a slide deck from this</span>
-          <span>Summarize in 3 bullet points</span>
-          <span>Translate to Spanish</span>
-        </swc-message-suggestions>
+        <swc-suggestion>
+          <swc-suggestion-item>
+            Create a slide deck from this
+          </swc-suggestion-item>
+          <swc-suggestion-item>
+            Summarize in 3 bullet points
+          </swc-suggestion-item>
+          <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
+        </swc-suggestion>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
@@ -162,11 +171,15 @@ export const Title: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-message-suggestions title="What would you like to do next?">
-          <span>Create a slide deck from this</span>
-          <span>Summarize in 3 bullet points</span>
-          <span>Translate to Spanish</span>
-        </swc-message-suggestions>
+        <swc-suggestion title="What would you like to do next?">
+          <swc-suggestion-item>
+            Create a slide deck from this
+          </swc-suggestion-item>
+          <swc-suggestion-item>
+            Summarize in 3 bullet points
+          </swc-suggestion-item>
+          <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
+        </swc-suggestion>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
@@ -186,17 +199,15 @@ export const Title: Story = {
 /**
  * ### Features
  *
- * The `<swc-message-suggestions>` element implements the following accessibility features:
+ * The `<swc-suggestion>` group and `<swc-suggestion-item>` controls implement:
  *
- * #### Chip buttons
- *
- * - The component renders native chip `<button>` elements in shadow DOM from slotted text content
- * - Supply meaningful text via default-slot elements (e.g., `<span>`)
- * - The suggestions row uses `role="group"` with `aria-label="Follow-up suggestions"`
+ * - Native `<button>` semantics per suggestion item
+ * - Group labeling via `role="group"` and `aria-label="Follow-up suggestions"`
+ * - Item click event bubbling from each `<swc-suggestion-item>`
  */
 export const Accessibility: Story = {
   args: {
-    'default-slot': threeSuggestionsSlot,
+    'default-slot': threeSuggestionItems,
   },
   tags: ['a11y'],
 };

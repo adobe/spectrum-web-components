@@ -11,7 +11,7 @@
  */
 
 :host {
-  display: block;
+  display: inline-flex;
 }
 
 *,
@@ -20,40 +20,7 @@
   box-sizing: border-box;
 }
 
-.swc-MessageSuggestions {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-/* ─────────────────────────────────────
-   Section title
-   ───────────────────────────────────── */
-
-.swc-MessageSuggestions-title {
-  margin: 0;
-  font-family: token("sans-serif-font");
-  font-size: token("font-size-300");
-  font-weight: token("bold-font-weight");
-  line-height: token("line-height-font-size-300");
-  color: token("gray-900");
-}
-
-/* ─────────────────────────────────────
-   Chips row
-   ───────────────────────────────────── */
-
-.swc-MessageSuggestions-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-/* ─────────────────────────────────────
-   Individual chip
-   ───────────────────────────────────── */
-
-.swc-MessageSuggestions-chip {
+.swc-SuggestionItem {
   display: inline-flex;
   gap: 0;
   align-items: center;
@@ -72,14 +39,18 @@
   transition: background 130ms ease;
 }
 
-.swc-MessageSuggestions-chip:hover {
+.swc-SuggestionItem:hover {
   background: token("gray-100");
 }
 
-.swc-MessageSuggestions-chip swc-icon {
+.swc-SuggestionItem swc-icon {
   --swc-icon-inline-size: 22px;
   --swc-icon-block-size: 22px;
 
   flex-shrink: 0;
   margin-inline-end: 6px;
+}
+
+.swc-SuggestionItem-label {
+  display: inline-flex;
 }

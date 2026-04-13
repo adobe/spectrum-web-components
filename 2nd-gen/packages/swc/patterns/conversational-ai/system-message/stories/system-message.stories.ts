@@ -18,7 +18,8 @@ import '../index.js';
 import '../../conversation-turn/index.js';
 import '../../message-feedback/index.js';
 import '../../message-sources/index.js';
-import '../../message-suggestions/index.js';
+import '../../suggestion/index.js';
+import '../../suggestion-item/index.js';
 import '../../response-status/index.js';
 
 import '../../system-prose-demo.css';
@@ -50,7 +51,7 @@ Put the AI reply in the **default slot** as **semantic HTML** (and optional app 
 
 const { args, argTypes, template } = getStorybookHelpers('swc-system-message');
 
-const slotStatusRich = `<swc-response-status slot="status" open><span slot="reasoning">The user said make a presentation deck but didn't specify duration of deck. Assumption is a brief presentation. I should check previous Hilton executive presentation decks and extract the structure.</span></swc-response-status>`;
+const slotStatusRich = `<swc-response-status slot="status" open>The user said make a presentation deck but didn't specify duration of deck. Assumption is a brief presentation. I should check previous Hilton executive presentation decks and extract the structure.</swc-response-status>`;
 
 const slotMessageRich = `<div class="swc-conversationalAi-systemProse"><p>According to the assets, there is a clear journey from beginning to end. Let's start with overarching themes and build from there.</p><p style="font-size:var(--swc-font-size-400);font-weight:800;line-height:var(--swc-line-height-font-size-400);color:var(--swc-gray-900);margin:0;">Big idea/ core narrative: The warmth of welcome</p><p>Hospitality begins the moment our customers set foot off their plane. We are more than accommodation, and we service a diverse base. We hope to be the anchor and bounce board for all who stay with us.</p><p style="font-size:var(--swc-font-size-300);font-weight:800;line-height:var(--swc-line-height-font-size-300);color:var(--swc-gray-900);margin:0;">Belonging happens at Hilton</p><p>We strive to be familiar but exceed expectations. These assets highlight how belonging is personified.</p><p style="font-size:var(--swc-font-size-300);font-weight:800;line-height:var(--swc-line-height-font-size-300);color:var(--swc-gray-900);margin:0;">We are more than accommodation</p><ul><li>Airport pick up service</li><li>Local recommendations</li><li>Everyday excursions</li><li>Customizable experience</li></ul></div>`;
 
@@ -58,7 +59,7 @@ const slotFeedback = `<swc-message-feedback slot="feedback"></swc-message-feedba
 
 const slotSourcesRich = `<swc-message-sources slot="sources"><li><a href="#">Adobe Experience Manager documentation</a></li><li><a href="#">Creative Cloud release notes 2026</a></li><li><a href="#">Firefly API getting started guide</a></li></swc-message-sources>`;
 
-const slotSuggestionsRich = `<swc-message-suggestions slot="suggestions" title="What would you like to do next?"><span>Create a year-over-year growth chart for the next decade</span><span>Generate a congratulatory poster</span><span>Summarize development pipeline</span></swc-message-suggestions>`;
+const slotSuggestionsRich = `<swc-suggestion slot="suggestions" title="What would you like to do next?"><swc-suggestion-item>Create a year-over-year growth chart for the next decade</swc-suggestion-item><swc-suggestion-item>Generate a congratulatory poster</swc-suggestion-item><swc-suggestion-item>Summarize development pipeline</swc-suggestion-item></swc-suggestion>`;
 
 const richSlots = {
   'status-slot': slotStatusRich,
@@ -69,13 +70,13 @@ const richSlots = {
 };
 
 const withSystemTurn = (story: () => unknown) => html`
-  <swc-conversation-turn type="incoming">${story()}</swc-conversation-turn>
+  <swc-conversation-turn type="system">${story()}</swc-conversation-turn>
 `;
 
 /**
  * Layout container for one system reply (status, body, feedback, sources, suggestions).
  * **Presentation order is fixed** by the component (shadow slot order); host children may appear in any order if
- * each uses the correct **`slot`** name. For thread alignment, wrap in `<swc-conversation-turn type="incoming">`.
+ * each uses the correct **`slot`** name. For thread alignment, wrap in `<swc-conversation-turn type="system">`.
  *
  * **Default slot:** semantic HTML and typography guidance appears **after the API table** on this page.
  */
@@ -134,7 +135,7 @@ export const Overview: Story = {
  * - **`status`** — `<swc-response-status>`
  * - **`feedback`** — `<swc-message-feedback>`
  * - **`sources`** — `<swc-message-sources>`
- * - **`suggestions`** — `<swc-message-suggestions>`
+ * - **`suggestions`** — `<swc-suggestion>`
  */
 export const Anatomy: Story = {
   args: {
@@ -142,7 +143,7 @@ export const Anatomy: Story = {
     'default-slot': `<div class="swc-conversationalAi-systemProse"><p>Here is the AI-generated response content.</p></div>`,
     'feedback-slot': slotFeedback,
     'sources-slot': `<swc-message-sources slot="sources"><li><a href="#">Source one</a></li></swc-message-sources>`,
-    'suggestions-slot': `<swc-message-suggestions slot="suggestions" title="What would you like to do next?"><span>Follow up suggestion one</span><span>Follow up suggestion two</span></swc-message-suggestions>`,
+    'suggestions-slot': `<swc-suggestion slot="suggestions" title="What would you like to do next?"><swc-suggestion-item>Follow up suggestion one</swc-suggestion-item><swc-suggestion-item>Follow up suggestion two</swc-suggestion-item></swc-suggestion>`,
   },
   decorators: [withSystemTurn],
   tags: ['anatomy'],
@@ -160,7 +161,7 @@ export const Loading: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:48px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn type="incoming">
+        <swc-conversation-turn type="system">
           <swc-system-message>
             <swc-response-status slot="status" loading></swc-response-status>
           </swc-system-message>
@@ -172,7 +173,7 @@ export const Loading: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn type="incoming">
+        <swc-conversation-turn type="system">
           <swc-system-message>
             <swc-response-status slot="status"></swc-response-status>
             <div class="swc-conversationalAi-systemProse">
@@ -212,7 +213,7 @@ export const Loading: Story = {
  * - `<swc-response-status>` announces generation state via `role="status"`
  * - `<swc-message-feedback>` exposes `role="radiogroup"` with labelled radio options
  * - `<swc-message-sources>` uses `aria-expanded` on its disclosure toggle
- * - `<swc-message-suggestions>` chips are native focusable `<button>` elements
+ * - `<swc-suggestion-item>` is a native focusable `<button>` element
  *
  * ### Best practices
  *
@@ -225,7 +226,7 @@ export const Accessibility: Story = {
     'default-slot': `<div class="swc-conversationalAi-systemProse"><p>According to the assets, there is a clear journey from beginning to end. Let's start with overarching themes and build from there.</p></div>`,
     'feedback-slot': slotFeedback,
     'sources-slot': `<swc-message-sources slot="sources" open><li><a href="#">Adobe Experience Manager documentation</a></li><li><a href="#">Creative Cloud release notes 2026</a></li></swc-message-sources>`,
-    'suggestions-slot': `<swc-message-suggestions slot="suggestions" title="What would you like to do next?"><span>Create a year-over-year growth chart for the next decade</span><span>Generate a congratulatory poster</span></swc-message-suggestions>`,
+    'suggestions-slot': `<swc-suggestion slot="suggestions" title="What would you like to do next?"><swc-suggestion-item>Create a year-over-year growth chart for the next decade</swc-suggestion-item><swc-suggestion-item>Generate a congratulatory poster</swc-suggestion-item></swc-suggestion>`,
   },
   decorators: [withSystemTurn],
   tags: ['a11y'],

@@ -15,25 +15,20 @@ import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
-import styles from './conversation-turn.css';
+import styles from './suggestion.css';
 
 /**
- * Aligns one turn in a chat column: user content toward the end (right in LTR)
- * and system content toward the start at full width.
+ * Groups follow-up suggestions shown below a system response.
  *
- * Slot **`swc-user-message`**, **`swc-system-message`**, or custom markup inside each turn.
- * Multiple slotted messages are stacked automatically with
- * `--swc-conversation-turn-group-gap` spacing.
- * User-message widths are applied by layout context (full screen, split rail,
- * panel) while system content remains full width.
+ * Add one or more `<swc-suggestion-item>` elements to the default slot.
  *
- * @element swc-conversation-turn
- * @slot - Turn body (message stack or bubble)
+ * @element swc-suggestion
+ * @slot - Suggestion items (recommended: `<swc-suggestion-item>`)
  */
-export class ConversationTurn extends SpectrumElement {
-  /** `user` — end-aligned; `system` — start-aligned, full width of the column. */
+export class Suggestion extends SpectrumElement {
+  /** Optional heading shown above suggestion items. */
   @property({ type: String, reflect: true })
-  public type: 'system' | 'user' = 'user';
+  public override title = '';
 
   public static override get styles(): CSSResultArray {
     return [styles];
@@ -41,8 +36,19 @@ export class ConversationTurn extends SpectrumElement {
 
   protected override render(): TemplateResult {
     return html`
-      <div class="swc-ConversationTurn">
-        <slot></slot>
+      <div class="swc-Suggestion">
+        ${this.title
+          ? html`
+              <p class="swc-Suggestion-title">${this.title}</p>
+            `
+          : ''}
+        <div
+          class="swc-Suggestion-items"
+          role="group"
+          aria-label="Follow-up suggestions"
+        >
+          <slot></slot>
+        </div>
       </div>
     `;
   }

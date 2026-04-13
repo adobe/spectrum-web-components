@@ -10,11 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import {
-  CSSResultArray,
-  html,
-  TemplateResult,
-} from 'lit';
+import { CSSResultArray, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
@@ -32,12 +28,24 @@ import styles from './response-status.css';
  * While **`loading`** is `true`, reasoning is not shown.
  *
  * @element swc-response-status
- * @slot reasoning - Optional reasoning content shown when `loading` is `false` and `open` is `true`.
+ * @slot - Optional reasoning content shown when `loading` is `false` and `open` is `true`.
  */
 export class ResponseStatus extends SpectrumElement {
-  /** `true`: spinner + "Thinking…", `false`: checkmark + "Response generated". */
+  /** `true`: spinner + status label, `false`: checkmark + status label. */
   @property({ type: Boolean, reflect: true })
   public loading = false;
+
+  /**
+   * Status row label text shown while `loading=true`.
+   */
+  @property({ type: String, reflect: true })
+  public loadingLabel = 'Thinking…';
+
+  /**
+   * Status row label text shown while `loading=false`.
+   */
+  @property({ type: String, reflect: true })
+  public completeLabel = 'Response generated';
 
   /**
    * `true`: reasoning expanded; `false`: reasoning collapsed.
@@ -50,13 +58,13 @@ export class ResponseStatus extends SpectrumElement {
     return [styles];
   }
 
-  private _handleReasoningToggle(): void {
+  private _handleToggle(): void {
     if (this.loading) {
       return;
     }
     this.open = !this.open;
     this.dispatchEvent(
-      new CustomEvent('swc-reasoning-toggle', {
+      new CustomEvent('swc-toggle', {
         bubbles: true,
         composed: true,
         detail: { open: this.open },
@@ -64,20 +72,24 @@ export class ResponseStatus extends SpectrumElement {
     );
   }
 
-  private _renderLoadingRow(): TemplateResult {
+  private _getStatusLabel(): string {
+    return this.loading ? this.loadingLabel : this.completeLabel;
+  }
+
+  private _renderLoadingRow(label: string): TemplateResult {
     return html`
       <div class="swc-ResponseStatus-row">
         <span
           class="swc-ResponseStatus-spinner"
           role="status"
-          aria-label="Thinking"
+          aria-label=${label}
         ></span>
-        <span class="swc-ResponseStatus-label">Thinking…</span>
+        <span class="swc-ResponseStatus-label">${label}</span>
       </div>
     `;
   }
 
-  private _renderCompleteRow(): TemplateResult {
+  private _renderCompleteRow(label: string): TemplateResult {
     const showDisclosure = true;
     const expanded = this.open;
 
@@ -87,7 +99,7 @@ export class ResponseStatus extends SpectrumElement {
           class="swc-ResponseStatus-row swc-ResponseStatus-row--button"
           aria-expanded=${expanded}
           aria-controls="swc-reasoning-panel"
-          @click=${this._handleReasoningToggle}
+          @click=${this._handleToggle}
         >
           <swc-icon
             class=${expanded
@@ -98,10 +110,10 @@ export class ResponseStatus extends SpectrumElement {
           >
             ${Chevron75Icon()}
           </swc-icon>
-          <span class="swc-ResponseStatus-label">Response generated</span>
+          <span class="swc-ResponseStatus-label">${label}</span>
           <swc-icon
             style="--swc-icon-inline-size:20px;--swc-icon-block-size:20px;"
-            label="Response generated"
+            label=${label}
           >
             ${CheckCircleIcon()}
           </swc-icon>
@@ -113,11 +125,11 @@ export class ResponseStatus extends SpectrumElement {
       <div class="swc-ResponseStatus-row">
         <swc-icon
           style="--swc-icon-inline-size:20px;--swc-icon-block-size:20px;"
-          label="Response generated"
+          label=${label}
         >
           ${CheckCircleIcon()}
         </swc-icon>
-        <span class="swc-ResponseStatus-label">Response generated</span>
+        <span class="swc-ResponseStatus-label">${label}</span>
       </div>
     `;
   }
@@ -125,10 +137,13 @@ export class ResponseStatus extends SpectrumElement {
   protected override render(): TemplateResult {
     const isLoading = this.loading;
     const showReasoningPanel = !isLoading && this.open;
+    const statusLabel = this._getStatusLabel();
 
     return html`
       <div class="swc-ResponseStatus">
-        ${isLoading ? this._renderLoadingRow() : this._renderCompleteRow()}
+        ${isLoading
+          ? this._renderLoadingRow(statusLabel)
+          : this._renderCompleteRow(statusLabel)}
         ${showReasoningPanel
           ? html`
               <div
@@ -137,7 +152,7 @@ export class ResponseStatus extends SpectrumElement {
                 role="region"
                 aria-label="Reasoning"
               >
-                <slot name="reasoning"></slot>
+                <slot></slot>
               </div>
             `
           : ''}
