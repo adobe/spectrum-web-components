@@ -60,6 +60,12 @@ describe('lookupToken', () => {
     expect(result).toBe(`var(--${prefix}-accent-background-color-default)`);
   });
 
+  it('Composite drop-shadow array', async () => {
+    const result = await lookupToken('drop-shadow-emphasized', prefix);
+
+    expect(result).toBe(`var(--${prefix}-drop-shadow-emphasized)`);
+  });
+
   it('Returns custom token value', async () => {
     const result = await lookupToken('animation-duration-300', prefix);
 
