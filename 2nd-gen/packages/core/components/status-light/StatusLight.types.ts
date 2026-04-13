@@ -10,23 +10,24 @@
  * governing permissions and limitations under the License.
  */
 
-/**
+/*
  * @todo The S1 types can be removed once we are no longer maintaining 1st-gen.
- * @todo Rename STATUSLIGHT_ prefix to STATUS_LIGHT_ to align with type prefix
- * naming convention (use underscore separators for multi-word names). This
- * requires updating all imports in 1st-gen and 2nd-gen that reference these
- * constants.
  */
+
 import type { ElementSize } from '@spectrum-web-components/core/mixins/index.js';
 
-export const STATUSLIGHT_VALID_SIZES = [
+// ──────────────────
+//     SHARED
+// ──────────────────
+
+export const STATUS_LIGHT_VALID_SIZES = [
   's',
   'm',
   'l',
   'xl',
 ] as const satisfies readonly ElementSize[];
 
-export const STATUSLIGHT_VARIANTS_SEMANTIC = [
+export const STATUS_LIGHT_VARIANTS_SEMANTIC = [
   'neutral',
   'info',
   'positive',
@@ -34,16 +35,20 @@ export const STATUSLIGHT_VARIANTS_SEMANTIC = [
   'notice',
 ] as const;
 
-export const STATUSLIGHT_VARIANTS_SEMANTIC_S1 = [
-  ...STATUSLIGHT_VARIANTS_SEMANTIC,
+export const STATUS_LIGHT_VARIANTS_SEMANTIC_S2 = [
+  ...STATUS_LIGHT_VARIANTS_SEMANTIC,
+] as const;
+
+// ──────────────────────────────────────────
+//     S1-ONLY (remove with 1st-gen)
+// ──────────────────────────────────────────
+
+export const STATUS_LIGHT_VARIANTS_SEMANTIC_S1 = [
+  ...STATUS_LIGHT_VARIANTS_SEMANTIC,
   'accent',
 ] as const;
 
-export const STATUSLIGHT_VARIANTS_SEMANTIC_S2 = [
-  ...STATUSLIGHT_VARIANTS_SEMANTIC,
-] as const;
-
-export const STATUSLIGHT_VARIANTS_COLOR_S1 = [
+export const STATUS_LIGHT_VARIANTS_COLOR_S1 = [
   'fuchsia',
   'indigo',
   'magenta',
@@ -55,8 +60,17 @@ export const STATUSLIGHT_VARIANTS_COLOR_S1 = [
   'cyan',
 ] as const;
 
-export const STATUSLIGHT_VARIANTS_COLOR_S2 = [
-  ...STATUSLIGHT_VARIANTS_COLOR_S1,
+export const STATUS_LIGHT_VARIANTS_S1 = [
+  ...STATUS_LIGHT_VARIANTS_SEMANTIC_S1,
+  ...STATUS_LIGHT_VARIANTS_COLOR_S1,
+] as const;
+
+// ──────────────────
+//     CANONICAL
+// ──────────────────
+
+export const STATUS_LIGHT_VARIANTS_COLOR_S2 = [
+  ...STATUS_LIGHT_VARIANTS_COLOR_S1,
   'pink',
   'turquoise',
   'brown',
@@ -64,34 +78,36 @@ export const STATUSLIGHT_VARIANTS_COLOR_S2 = [
   'silver',
 ] as const;
 
-export const STATUSLIGHT_VARIANTS_S1 = [
-  ...STATUSLIGHT_VARIANTS_SEMANTIC_S1,
-  ...STATUSLIGHT_VARIANTS_COLOR_S1,
+export const STATUS_LIGHT_VARIANTS_S2 = [
+  ...STATUS_LIGHT_VARIANTS_SEMANTIC_S2,
+  ...STATUS_LIGHT_VARIANTS_COLOR_S2,
 ] as const;
 
-export const STATUSLIGHT_VARIANTS_S2 = [
-  ...STATUSLIGHT_VARIANTS_SEMANTIC_S2,
-  ...STATUSLIGHT_VARIANTS_COLOR_S2,
-] as const;
+// ──────────────────
+//     TYPES
+// ──────────────────
 
+// S1-only (remove with 1st-gen)
 export type StatusLightSemanticVariantS1 =
-  (typeof STATUSLIGHT_VARIANTS_SEMANTIC_S1)[number];
+  (typeof STATUS_LIGHT_VARIANTS_SEMANTIC_S1)[number];
+export type StatusLightColorVariantS1 =
+  (typeof STATUS_LIGHT_VARIANTS_COLOR_S1)[number];
+export type StatusLightVariantS1 = (typeof STATUS_LIGHT_VARIANTS_S1)[number];
+
+// Canonical (S2)
 export type StatusLightSemanticVariantS2 =
-  (typeof STATUSLIGHT_VARIANTS_SEMANTIC_S2)[number];
+  (typeof STATUS_LIGHT_VARIANTS_SEMANTIC_S2)[number];
+export type StatusLightColorVariantS2 =
+  (typeof STATUS_LIGHT_VARIANTS_COLOR_S2)[number];
+export type StatusLightVariantS2 = (typeof STATUS_LIGHT_VARIANTS_S2)[number];
+
+// Base class (S1 | S2)
 export type StatusLightSemanticVariant =
   | StatusLightSemanticVariantS1
   | StatusLightSemanticVariantS2;
-
-export type StatusLightColorVariantS1 =
-  (typeof STATUSLIGHT_VARIANTS_COLOR_S1)[number];
-export type StatusLightColorVariantS2 =
-  (typeof STATUSLIGHT_VARIANTS_COLOR_S2)[number];
 export type StatusLightColorVariant =
   | StatusLightColorVariantS1
   | StatusLightColorVariantS2;
-
-export type StatusLightVariantS1 = (typeof STATUSLIGHT_VARIANTS_S1)[number];
-export type StatusLightVariantS2 = (typeof STATUSLIGHT_VARIANTS_S2)[number];
 export type StatusLightVariant = StatusLightVariantS1 | StatusLightVariantS2;
 
-export type StatusLightSize = (typeof STATUSLIGHT_VALID_SIZES)[number];
+export type StatusLightSize = (typeof STATUS_LIGHT_VALID_SIZES)[number];
