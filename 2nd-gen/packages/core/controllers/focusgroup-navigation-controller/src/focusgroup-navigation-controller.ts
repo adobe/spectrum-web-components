@@ -259,6 +259,13 @@ export class FocusgroupNavigationController implements ReactiveController {
    */
   private isNavigating = false;
 
+  /**
+   * Cached result of {@link getEligibleItems}, populated on first access within
+   * a refresh cycle and cleared at the start of each entry point
+   * ({@link refresh}, {@link handleFocusin}, {@link handleKeydown}).
+   */
+  private cachedEligibleItems: HTMLElement[] | null = null;
+
   // ─────────────────────────
   //     PUBLIC API
   // ─────────────────────────
@@ -309,6 +316,7 @@ export class FocusgroupNavigationController implements ReactiveController {
    * current active item or falls back to the first eligible item.
    */
   public refresh(): void {
+    this.cachedEligibleItems = null;
     const items = this.getEligibleItems();
     if (items.length === 0) {
       for (const el of this.getRawItems()) {
@@ -396,6 +404,8 @@ export class FocusgroupNavigationController implements ReactiveController {
    * an initial {@link refresh}.
    */
   public hostConnected(): void {
+    this.previousActive = null;
+    this.cachedEligibleItems = null;
     this.host.addEventListener('keydown', this.boundKeydown, true);
     this.host.addEventListener('focusin', this.boundFocusin, true);
     this.host.addEventListener('focusout', this.boundFocusout, true);
@@ -479,7 +489,13 @@ export class FocusgroupNavigationController implements ReactiveController {
    * @returns Items that participate in roving tabindex and arrow navigation.
    */
   private getEligibleItems(): HTMLElement[] {
-    return this.getRawItems().filter((el) => this.isNavigableItem(el));
+    if (this.cachedEligibleItems) {
+      return this.cachedEligibleItems;
+    }
+    this.cachedEligibleItems = this.getRawItems().filter((el) =>
+      this.isNavigableItem(el)
+    );
+    return this.cachedEligibleItems;
   }
 
   /**
@@ -563,16 +579,16 @@ export class FocusgroupNavigationController implements ReactiveController {
    */
   private applyRovingTabindex(active: HTMLElement): void {
     const items = this.getEligibleItems();
-    const raw = this.getRawItems();
-    for (const el of raw) {
-      if (!items.includes(el)) {
+    const eligibleSet = new Set(items);
+    for (const el of this.getRawItems()) {
+      if (!eligibleSet.has(el)) {
         el.tabIndex = -1;
       }
     }
     if (items.length === 0) {
       return;
     }
-    const safeActive = items.includes(active) ? active : items[0];
+    const safeActive = eligibleSet.has(active) ? active : items[0];
     for (const el of items) {
       if (el === safeActive) {
         el.tabIndex = 0;
@@ -615,6 +631,7 @@ export class FocusgroupNavigationController implements ReactiveController {
     if (this.isNavigating) {
       return;
     }
+    this.cachedEligibleItems = null;
     const target = event.target;
     if (!(target instanceof HTMLElement)) {
       return;
@@ -711,6 +728,7 @@ export class FocusgroupNavigationController implements ReactiveController {
       return;
     }
 
+    this.cachedEligibleItems = null;
     const items = this.getEligibleItems();
     const target = this.resolveManagedKeydownTarget(event, items);
     if (!target) {

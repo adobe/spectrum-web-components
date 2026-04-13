@@ -21,6 +21,7 @@ import {
   type FocusgroupNavigationActiveChangeDetail,
 } from '../index.js';
 import type {
+  DemoFocusgroupDisabledHost,
   DemoFocusgroupDynamic,
   DemoFocusgroupEventTracker,
   DemoFocusgroupPlayground,
@@ -987,5 +988,101 @@ export const DisconnectReconnect: Story = {
         expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Underline');
       }
     );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// DisabledMixin + FocusgroupNavigationController interaction
+// ──────────────────────────────────────────────────────────────
+
+export const DisabledMixinTabindexConflict: Story = {
+  render: () => html`
+    <demo-focusgroup-disabled-host
+      tabindex="0"
+      role="toolbar"
+      aria-label="Disabled mixin test toolbar"
+    ></demo-focusgroup-disabled-host>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DemoFocusgroupDisabledHost>(
+      canvasElement,
+      'demo-focusgroup-disabled-host'
+    );
+
+    await step('child roving tabindex works when host is enabled', async () => {
+      const root = host.shadowRoot!;
+      const buttons = Array.from(
+        root.querySelectorAll<HTMLButtonElement>('button')
+      );
+
+      // First child should be the active tab stop (tabindex=0).
+      expect(buttons[0].tabIndex).toBe(0);
+      expect(buttons[1].tabIndex).toBe(-1);
+      expect(buttons[2].tabIndex).toBe(-1);
+
+      // Arrow navigation works.
+      buttons[0].focus();
+      keydown(buttons[0], 'ArrowRight');
+      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Beta');
+    });
+
+    await step(
+      'disabling host sets aria-disabled and tabindex=-1 on host',
+      async () => {
+        // Record original host tabindex.
+        expect(host.getAttribute('tabindex')).toBe('0');
+
+        host.disabled = true;
+        await host.updateComplete;
+
+        expect(host.getAttribute('aria-disabled')).toBe('true');
+        expect(host.getAttribute('tabindex')).toBe('-1');
+      }
+    );
+
+    await step(
+      'child roving tabindex is preserved while host is disabled',
+      async () => {
+        const root = host.shadowRoot!;
+        const buttons = Array.from(
+          root.querySelectorAll<HTMLButtonElement>('button')
+        );
+
+        // The controller's roving tabindex on children should be unaffected
+        // by the host's DisabledMixin tabindex management.
+        const activeChild = buttons.find((b) => b.tabIndex === 0);
+        expect(activeChild).toBeTruthy();
+
+        // At least one child should still be the active tab stop.
+        const inactiveChildren = buttons.filter((b) => b.tabIndex === -1);
+        expect(inactiveChildren.length).toBe(buttons.length - 1);
+      }
+    );
+
+    await step('re-enabling host restores original tabindex', async () => {
+      host.disabled = false;
+      await host.updateComplete;
+
+      expect(host.hasAttribute('aria-disabled')).toBe(false);
+      expect(host.getAttribute('tabindex')).toBe('0');
+    });
+
+    await step('arrow navigation resumes after re-enabling', async () => {
+      const root = host.shadowRoot!;
+      const buttons = Array.from(
+        root.querySelectorAll<HTMLButtonElement>('button')
+      );
+
+      // Find the current active child and navigate from it.
+      const activeChild = buttons.find((b) => b.tabIndex === 0)!;
+      activeChild.focus();
+      const activeLabel = activeChild.textContent?.trim();
+
+      keydown(activeChild, 'ArrowRight');
+      const newActive = shadowActiveButton(host);
+      expect(newActive).toBeTruthy();
+      // Active item should have changed after arrow key.
+      expect(newActive?.textContent?.trim()).not.toBe(activeLabel);
+    });
   },
 };

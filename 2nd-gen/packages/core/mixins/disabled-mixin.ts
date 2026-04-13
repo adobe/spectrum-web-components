@@ -50,6 +50,8 @@ export function DisabledMixin<T extends Constructor<ReactiveElement>>(
     @property({ type: Boolean, reflect: true })
     disabled = false;
 
+    private prevTabindex: string | undefined;
+
     /**
      * Uses `update()` (not `updated()`) so side effects apply BEFORE render.
      * Using `updated()` would leave a single frame where the component
@@ -64,7 +66,7 @@ export function DisabledMixin<T extends Constructor<ReactiveElement>>(
           // disabled on the inner element in render().
           this.setAttribute('aria-disabled', 'true');
           if (this.hasAttribute('tabindex')) {
-            this.dataset.prevTabindex = this.getAttribute('tabindex')!;
+            this.prevTabindex = this.getAttribute('tabindex')!;
             this.setAttribute('tabindex', '-1');
           }
           if (this.matches(':focus-within')) {
@@ -72,9 +74,9 @@ export function DisabledMixin<T extends Constructor<ReactiveElement>>(
           }
         } else {
           this.removeAttribute('aria-disabled');
-          if (this.dataset.prevTabindex !== undefined) {
-            this.setAttribute('tabindex', this.dataset.prevTabindex);
-            delete this.dataset.prevTabindex;
+          if (this.prevTabindex !== undefined) {
+            this.setAttribute('tabindex', this.prevTabindex);
+            this.prevTabindex = undefined;
           }
         }
       }

@@ -19,6 +19,7 @@ import {
 } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
+import { DisabledMixin } from '../../../mixins/disabled-mixin.js';
 import {
   type FocusgroupDirection,
   focusgroupNavigationActiveChange,
@@ -38,6 +39,7 @@ declare global {
     'demo-focusgroup-text-prefix': DemoFocusgroupTextPrefix;
     'demo-focusgroup-dynamic': DemoFocusgroupDynamic;
     'demo-focusgroup-event-tracker': DemoFocusgroupEventTracker;
+    'demo-focusgroup-disabled-host': DemoFocusgroupDisabledHost;
   }
 }
 
@@ -1132,6 +1134,64 @@ export class DemoFocusgroupEventTracker extends LitElement {
       <button type="button">First</button>
       <button type="button">Second</button>
       <button type="button">Third</button>
+    `;
+  }
+}
+
+// ─────────────────────────────────────
+//     DISABLED HOST WITH CONTROLLER
+// ─────────────────────────────────────
+
+/**
+ * @internal
+ *
+ * Storybook-only host combining {@link DisabledMixin} on the host with
+ * {@link FocusgroupNavigationController} on child items. Used to verify
+ * that host-level disabling and child roving tabindex coexist correctly.
+ */
+@customElement('demo-focusgroup-disabled-host')
+export class DemoFocusgroupDisabledHost extends DisabledMixin(LitElement) {
+  static override styles = css`
+    :host {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    :host([disabled]) {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    button {
+      font: inherit;
+      padding: 8px 12px;
+      border-radius: 4px;
+      border: 1px solid var(--spectrum-gray-400, #ccc);
+      background: var(--spectrum-gray-75, #f5f5f5);
+      cursor: pointer;
+    }
+    button:focus-visible {
+      outline: 2px solid var(--spectrum-blue-800, #0265dc);
+      outline-offset: 2px;
+    }
+  `;
+
+  private readonly navigation = new FocusgroupNavigationController(this, {
+    direction: 'horizontal',
+    wrap: true,
+    getItems: () =>
+      Array.from(this.renderRoot.querySelectorAll<HTMLElement>('button')),
+  });
+
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
+    this.navigation.refresh();
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <button type="button">Alpha</button>
+      <button type="button">Beta</button>
+      <button type="button">Gamma</button>
     `;
   }
 }
