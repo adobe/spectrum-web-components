@@ -16,7 +16,7 @@ import { SpectrumElement } from '@spectrum-web-components/core/element/index.js'
 import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
 
 import {
-  STATUSLIGHT_VALID_SIZES,
+  STATUS_LIGHT_VALID_SIZES,
   type StatusLightVariant,
 } from './StatusLight.types.js';
 
@@ -27,7 +27,7 @@ import {
  * @attribute {ElementSize} size - The size of the status light.
  */
 export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
-  validSizes: STATUSLIGHT_VALID_SIZES,
+  validSizes: STATUS_LIGHT_VALID_SIZES,
   noDefaultSize: true,
 }) {
   // ─────────────────────────
@@ -91,15 +91,14 @@ export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
   //     IMPLEMENTATION
   // ──────────────────────
 
-  protected override updated(changes: PropertyValues): void {
-    super.updated(changes);
+  protected override update(changedProperties: PropertyValues): void {
     if (window.__swc?.DEBUG) {
       const constructor = this.constructor as typeof StatusLightBase;
       if (!constructor.VARIANTS.includes(this.variant)) {
         window.__swc.warn(
           this,
           `<${this.localName}> element expects the "variant" attribute to be one of the following:`,
-          'https://opensource.adobe.com/spectrum-web-components/components/status-light/#variants',
+          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/components-status-light--docs',
           {
             issues: [...constructor.VARIANTS],
           }
@@ -110,12 +109,13 @@ export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
         window.__swc.warn(
           this,
           `<${this.localName}> element does not support the disabled state.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/status-light/#states',
+          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/components-status-light--docs',
           {
             issues: ['disabled is not a supported property in Spectrum 2'],
           }
         );
       }
     }
+    super.update(changedProperties);
   }
 }
