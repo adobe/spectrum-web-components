@@ -10,9 +10,28 @@
  * governing permissions and limitations under the License.
  */
 
+import type { ElementSize } from '@spectrum-web-components/core/mixins/index.js';
+
 export const ILLUSTRATED_MESSAGE_VALID_HEADING_LEVELS = [
   2, 3, 4, 5, 6,
-] as const;
+] as const satisfies readonly number[];
+
+export const ILLUSTRATED_MESSAGE_VALID_SIZES = [
+  's',
+  'm',
+  'l',
+] as const satisfies readonly ElementSize[];
+
+export const ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS = [
+  'vertical',
+  'horizontal',
+] as const satisfies readonly string[];
 
 export type IllustratedMessageHeadingLevel =
   (typeof ILLUSTRATED_MESSAGE_VALID_HEADING_LEVELS)[number];
+
+export type IllustratedMessageSize =
+  (typeof ILLUSTRATED_MESSAGE_VALID_SIZES)[number];
+
+export type IllustratedMessageOrientation =
+  (typeof ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS)[number];

@@ -45,3 +45,27 @@
 }
 
 /* @todo SWC-1838 — description typography (size, weight, line-height, color) */
+
+/* ── Size ───────────────────────────────────────────────────────────────── */
+
+/* @todo SWC-1838 — replace with full S2 token-based size values */
+
+:host([size="s"]) .swc-IllustratedMessage-illustration {
+  /* @todo SWC-1838 */
+}
+
+:host([size="l"]) .swc-IllustratedMessage-illustration {
+  /* @todo SWC-1838 */
+}
+
+/* ── Orientation ─────────────────────────────────────────────────────────── */
+
+/* @todo SWC-1838 — replace with full S2 token-based orientation values */
+
+:host([orientation="horizontal"]) .swc-IllustratedMessage {
+  /* @todo SWC-1838 */
+}
+
+:host([orientation="horizontal"]) .swc-IllustratedMessage-content {
+  /* @todo SWC-1838 */
+}

@@ -203,6 +203,147 @@ export const ValidHeadingLevelNoWarningTest: Story = {
   },
 };
 
+// ──────────────────────────────────────────────────────────────
+// TEST: Size attribute / property
+// ──────────────────────────────────────────────────────────────
+
+export const ValidSizeNoWarningTest: Story = {
+  render: () => html`
+    <swc-illustrated-message>
+      <span slot="heading">Test</span>
+    </swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const illustratedMessage = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    for (const size of IllustratedMessage.VALID_SIZES) {
+      await step(
+        `does not warn and reflects property when size="${size}"`,
+        () =>
+          withWarningSpy(async (warnCalls) => {
+            illustratedMessage.setAttribute('size', size);
+            await illustratedMessage.updateComplete;
+
+            expect(warnCalls.length, `no warnings for size="${size}"`).toBe(0);
+            expect(
+              illustratedMessage.size,
+              `size property reflects "${size}"`
+            ).toBe(size);
+            expect(
+              illustratedMessage.getAttribute('size'),
+              `size attribute reflects "${size}"`
+            ).toBe(size);
+          })
+      );
+    }
+  },
+};
+
+export const InvalidSizeWarningTest: Story = {
+  render: () => html`
+    <swc-illustrated-message>
+      <span slot="heading">Test</span>
+    </swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const illustratedMessage = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step('warns when size is set to an invalid value', () =>
+      withWarningSpy(async (warnCalls) => {
+        illustratedMessage.setAttribute('size', 'xl');
+        await illustratedMessage.updateComplete;
+
+        expect(
+          warnCalls.length,
+          'warning count for invalid size'
+        ).toBeGreaterThan(0);
+        expect(
+          String(warnCalls[0]?.[1] || ''),
+          'warning message mentions size'
+        ).toContain('size');
+      })
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Orientation attribute / property
+// ──────────────────────────────────────────────────────────────
+
+export const ValidOrientationNoWarningTest: Story = {
+  render: () => html`
+    <swc-illustrated-message>
+      <span slot="heading">Test</span>
+    </swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const illustratedMessage = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    for (const orientation of IllustratedMessage.VALID_ORIENTATIONS) {
+      await step(
+        `does not warn and reflects property when orientation="${orientation}"`,
+        () =>
+          withWarningSpy(async (warnCalls) => {
+            illustratedMessage.setAttribute('orientation', orientation);
+            await illustratedMessage.updateComplete;
+
+            expect(
+              warnCalls.length,
+              `no warnings for orientation="${orientation}"`
+            ).toBe(0);
+            expect(
+              illustratedMessage.orientation,
+              `orientation property reflects "${orientation}"`
+            ).toBe(orientation);
+            expect(
+              illustratedMessage.getAttribute('orientation'),
+              `orientation attribute reflects "${orientation}"`
+            ).toBe(orientation);
+          })
+      );
+    }
+  },
+};
+
+export const InvalidOrientationWarningTest: Story = {
+  render: () => html`
+    <swc-illustrated-message>
+      <span slot="heading">Test</span>
+    </swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const illustratedMessage = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step('warns when orientation is set to an invalid value', () =>
+      withWarningSpy(async (warnCalls) => {
+        illustratedMessage.setAttribute('orientation', 'diagonal');
+        await illustratedMessage.updateComplete;
+
+        expect(
+          warnCalls.length,
+          'warning count for invalid orientation'
+        ).toBeGreaterThan(0);
+        expect(
+          String(warnCalls[0]?.[1] || ''),
+          'warning message mentions orientation'
+        ).toContain('orientation');
+      })
+    );
+  },
+};
+
 export const InvalidHeadingSlotWarningTest: Story = {
   render: () => html`
     <swc-illustrated-message>
