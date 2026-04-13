@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, render } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../index.js';
@@ -59,15 +59,11 @@ export const Playground: Story = {
       style="display:flex;flex-direction:column;gap:16px;max-inline-size:600px;"
     >
       <swc-conversation-turn type="outgoing">
-        <swc-user-message>
-          Short user question for the demo.
-        </swc-user-message>
+        <swc-user-message>Short user question for the demo.</swc-user-message>
       </swc-conversation-turn>
       <swc-conversation-turn type="incoming">
         <swc-system-message>
-          <swc-response-status
-            slot="status"
-          ></swc-response-status>
+          <swc-response-status slot="status"></swc-response-status>
           <div class="swc-conversationalAi-systemProse">
             <p>System reply body goes here.</p>
           </div>
@@ -95,9 +91,7 @@ export const Overview: Story = {
       </swc-conversation-turn>
       <swc-conversation-turn type="incoming">
         <swc-system-message>
-          <swc-response-status
-            slot="status"
-          ></swc-response-status>
+          <swc-response-status slot="status"></swc-response-status>
           <div class="swc-conversationalAi-systemProse">
             <p>
               Here is a concise summary based on the files you shared. I grouped
@@ -117,132 +111,282 @@ export const Overview: Story = {
 // ──────────────────────────────────────────
 
 /**
- * Product-style column with grouped user content: three consecutive user
- * messages are stacked in one turn, followed by one system turn
- * (`swc-system-message`) and the **prompt field**.
+ * Interactive simulated chat demo for README docs:
+ * submit a prompt, show loading, then render a hardcoded system response.
  */
 export const FullPattern: Story = {
-  render: () => html`
-    <div
-      style="display:flex;flex-direction:column;gap:24px;max-width:600px;padding:24px;"
-    >
-      <swc-conversation-turn type="outgoing">
-        <swc-user-message>
-          <div style="inline-size:240px;">
-            <swc-conversation-artifact variant="media">
-              <div
-                slot="thumbnail"
-                style="inline-size:100%;block-size:196px;background:linear-gradient(135deg,#6366f1 0%,#a855f7 40%,#ec4899 70%,#f59e0b 100%);"
-                role="img"
-                aria-label="Campaign preview"
-              ></div>
-              <span slot="title">Hilton commercial assets</span>
-              <span slot="subtitle">2026</span>
-            </swc-conversation-artifact>
-          </div>
-        </swc-user-message>
-        <swc-user-message>
-          <swc-conversation-artifact variant="card">
-            <div
-              slot="thumbnail"
-              style="inline-size:36px;block-size:36px;border-radius:4px;background:var(--swc-gray-200);flex-shrink:0;"
-              role="img"
-              aria-label="File"
-            ></div>
-            <span slot="title">Hilton commercial assets</span>
-            <span slot="subtitle">2026</span>
-          </swc-conversation-artifact>
-        </swc-user-message>
-        <swc-user-message>
-          Can you help me create a 45-minute presentation, with animations, for
-          an executive update?
-        </swc-user-message>
-      </swc-conversation-turn>
+  render: () => {
+    type Feedback = 'positive' | 'negative' | undefined;
+    type Message = {
+      id: number;
+      role: 'user' | 'system';
+      text: string;
+      reasoning?: string;
+      loading?: boolean;
+      feedback?: Feedback;
+      suggestions?: string[];
+    };
+    type Artifact = {
+      id: string;
+      title: string;
+      subtitle: string;
+    };
 
-      <swc-conversation-turn type="incoming">
-        <swc-system-message>
-          <swc-response-status
-            slot="status"
-            open
-          >
-            <span slot="reasoning">
-              The user said make a presentation deck but didn't specify duration
-              of deck. Assumption is a brief presentation. I should check
-              previous Hilton executive presentation decks and extract the
-              structure.
-            </span>
-          </swc-response-status>
+    const container = document.createElement('div');
+    let nextId = 1;
 
-          <div class="swc-conversationalAi-systemProse">
-            <p
-              style="font-size:var(--swc-font-size-400);font-weight:800;line-height:var(--swc-line-height-font-size-400);color:var(--swc-gray-900);margin:0;"
-            >
-              Big idea / core narrative: The warmth of welcome
-            </p>
-            <p>
-              Hospitality begins the moment our customers set foot off their
-              plane. We are more than accommodation, and we service a diverse
-              base. We hope to be the anchor and bounce board for all who stay
-              with us.
-            </p>
-            <p
-              style="font-size:var(--swc-font-size-300);font-weight:800;line-height:var(--swc-line-height-font-size-300);color:var(--swc-gray-900);margin:0;"
-            >
-              Belonging happens at Hilton
-            </p>
-            <p>
-              We strive to be familiar but exceed expectations. These assets
-              highlight how belonging is personified.
-            </p>
-            <p
-              style="font-size:var(--swc-font-size-300);font-weight:800;line-height:var(--swc-line-height-font-size-300);color:var(--swc-gray-900);margin:0;"
-            >
-              We are more than accommodation
-            </p>
-            <ul>
-              <li>Airport pick up service</li>
-              <li>Local recommendations</li>
-              <li>Everyday excursions</li>
-              <li>Customizable experience</li>
-            </ul>
-          </div>
+    let draft = '';
+    let sending = false;
+    let artifacts: Artifact[] = [
+      { id: 'a1', title: 'Hilton commercial assets', subtitle: '2026' },
+    ];
+    let messages: Message[] = [
+      {
+        id: nextId++,
+        role: 'user',
+        text: 'Can you help me create a 45-minute presentation, with animations, for an executive update?',
+      },
+      {
+        id: nextId++,
+        role: 'system',
+        text: 'I can help draft your executive update. Share a prompt and I will generate a structured outline.',
+        reasoning:
+          'I am prioritizing a concise executive storyline first, then mapping details into reusable sections for slides.',
+      },
+    ];
 
-          <swc-message-feedback slot="feedback"></swc-message-feedback>
+    const cannedResponses = [
+      'Great direction. I suggest a 12-slide structure: market context, opportunity, strategy, roadmap, and risks with a clear executive summary.',
+      'I can convert this into a 45-minute narrative flow with speaking notes and animation cues per section.',
+      'Would you like me to tailor this for senior leadership or for cross-functional stakeholders?',
+    ];
+    const cannedReasoning = [
+      'I used the uploaded context to prioritize business narrative, measurable outcomes, and leadership-level pacing.',
+      'I translated the request into a timed talk track and grouped content into sections that can be animated progressively.',
+      'I identified ambiguity in audience expectations and proposed a clarifying branch to avoid overfitting the deck.',
+    ];
+    const cannedSuggestions = [
+      'Create a slide deck outline',
+      'Summarize in 3 bullet points',
+      'Turn this into speaker notes',
+    ];
+    const cannedSources = [
+      'Hilton brand email — Q1 campaign 2026',
+      'Market research — hospitality trends 2025',
+      'User research — loyalty programme survey',
+    ];
 
-          <swc-message-sources slot="sources" open>
-            <li><a href="#">Hilton brand email — Q1 campaign 2026</a></li>
-            <li><a href="#">Market research — hospitality trends 2025</a></li>
-            <li><a href="#">User research — loyalty programme survey</a></li>
-          </swc-message-sources>
+    const handleFeedback = (event: Event): void => {
+      const target = event.currentTarget as HTMLElement | null;
+      const messageId = Number(target?.dataset.messageId ?? '');
+      if (!Number.isInteger(messageId)) {
+        return;
+      }
+      const detail = (event as CustomEvent<{ status: 'positive' | 'negative' }>)
+        .detail;
+      messages = messages.map((entry) =>
+        entry.id === messageId ? { ...entry, feedback: detail.status } : entry
+      );
+      rerender();
+    };
 
-          <swc-message-suggestions
-            slot="suggestions"
-            title="What would you like to do next?"
-          >
-            <span>Create a year-over-year growth chart for the next decade</span>
-            <span>Generate a congratulatory poster</span>
-            <span>Summarize development pipeline</span>
-          </swc-message-suggestions>
-        </swc-system-message>
-      </swc-conversation-turn>
+    const handleSuggestion = (event: Event): void => {
+      if (sending) {
+        return;
+      }
+      const target = event.currentTarget as HTMLElement | null;
+      const messageId = Number(target?.dataset.messageId ?? '');
+      if (!Number.isInteger(messageId)) {
+        return;
+      }
+      const detail = (event as CustomEvent<{ index: number }>).detail;
+      const message = messages.find((entry) => entry.id === messageId);
+      const suggestion = message?.suggestions?.[detail.index - 1];
+      if (!suggestion) {
+        return;
+      }
+      draft = suggestion;
+      rerender();
+    };
 
-      <swc-prompt-field sending>
-        <swc-conversation-artifact
-          slot="artifact"
-          variant="card"
-          dismissible
-        >
+    const handlePromptInput = (event: Event): void => {
+      const detail = (event as CustomEvent<{ value: string }>).detail;
+      draft = detail.value;
+      rerender();
+    };
+
+    const handleUploadClick = (): void => {
+      if (artifacts.length >= 2) {
+        return;
+      }
+      artifacts = [
+        ...artifacts,
+        {
+          id: `a${artifacts.length + 1}`,
+          title:
+            artifacts.length === 0 ? 'Brand guidelines' : 'Campaign references',
+          subtitle: artifacts.length === 0 ? 'PDF' : 'ZIP',
+        },
+      ];
+      rerender();
+    };
+
+    const handleArtifactDismiss = (event: Event): void => {
+      const artifact = (event as CustomEvent<{ artifact: Element }>).detail
+        .artifact as HTMLElement;
+      const artifactId = artifact.dataset.artifactId;
+      if (!artifactId) {
+        return;
+      }
+      artifacts = artifacts.filter((entry) => entry.id !== artifactId);
+      rerender();
+    };
+
+    const handleSubmit = (): void => {
+      const nextPrompt = draft.trim();
+      if (!nextPrompt || sending) {
+        return;
+      }
+
+      sending = true;
+      draft = '';
+      messages = [
+        ...messages,
+        { id: nextId++, role: 'user', text: nextPrompt },
+        { id: nextId, role: 'system', text: '', loading: true },
+      ];
+      nextId += 1;
+      rerender();
+
+      window.setTimeout(() => {
+        sending = false;
+        const responseText =
+          cannedResponses[
+            (messages.length + nextPrompt.length) % cannedResponses.length
+          ];
+        messages = messages.map((entry) =>
+          entry.loading
+            ? {
+                ...entry,
+                loading: false,
+                text: responseText,
+                reasoning:
+                  cannedReasoning[
+                    (messages.length + nextPrompt.length) %
+                      cannedReasoning.length
+                  ],
+                suggestions: cannedSuggestions,
+              }
+            : entry
+        );
+        rerender();
+      }, 1200);
+    };
+
+    function rerender(): void {
+      render(
+        html`
           <div
-            slot="thumbnail"
-            style="inline-size:28px;block-size:28px;border-radius:3px;background:var(--swc-gray-200);flex-shrink:0;"
-            role="img"
-            aria-label="File"
-          ></div>
-          <span slot="title">Hilton commercial assets</span>
-          <span slot="subtitle">2026</span>
-        </swc-conversation-artifact>
-      </swc-prompt-field>
-    </div>
-  `,
+            style="display:flex;flex-direction:column;gap:24px;max-width:600px;padding:24px;"
+          >
+            ${messages.map((message) =>
+              message.role === 'user'
+                ? html`
+                    <swc-conversation-turn type="outgoing">
+                      <swc-user-message>${message.text}</swc-user-message>
+                    </swc-conversation-turn>
+                  `
+                : html`
+                    <swc-conversation-turn type="incoming">
+                      <swc-system-message>
+                        <swc-response-status
+                          slot="status"
+                          ?loading=${message.loading === true}
+                        >
+                          ${message.reasoning
+                            ? html`
+                                <span slot="reasoning">
+                                  ${message.reasoning}
+                                </span>
+                              `
+                            : ''}
+                        </swc-response-status>
+                        ${message.loading
+                          ? ''
+                          : html`
+                              <div class="swc-conversationalAi-systemProse">
+                                <p>${message.text}</p>
+                              </div>
+
+                              <swc-message-feedback
+                                slot="feedback"
+                                .status=${message.feedback}
+                                data-message-id=${String(message.id)}
+                                @swc-feedback=${handleFeedback}
+                              ></swc-message-feedback>
+
+                              <swc-message-sources slot="sources" open>
+                                ${cannedSources.map(
+                                  (source) => html`
+                                    <li><a href="#">${source}</a></li>
+                                  `
+                                )}
+                              </swc-message-sources>
+
+                              <swc-message-suggestions
+                                slot="suggestions"
+                                title="What would you like to do next?"
+                                data-message-id=${String(message.id)}
+                                @swc-suggestion=${handleSuggestion}
+                              >
+                                ${(message.suggestions ?? []).map(
+                                  (suggestion) => html`
+                                    <span>${suggestion}</span>
+                                  `
+                                )}
+                              </swc-message-suggestions>
+                            `}
+                      </swc-system-message>
+                    </swc-conversation-turn>
+                  `
+            )}
+
+            <swc-prompt-field
+              .value=${draft}
+              .sending=${sending}
+              @swc-input=${handlePromptInput}
+              @swc-upload-click=${handleUploadClick}
+              @swc-artifact-dismiss=${handleArtifactDismiss}
+              @swc-submit=${handleSubmit}
+            >
+              ${artifacts.map(
+                (artifact) => html`
+                  <swc-conversation-artifact
+                    slot="artifact"
+                    variant="card"
+                    dismissible
+                    data-artifact-id=${artifact.id}
+                  >
+                    <div
+                      slot="thumbnail"
+                      style="inline-size:28px;block-size:28px;border-radius:3px;background:var(--swc-gray-200);flex-shrink:0;"
+                      role="img"
+                      aria-label="File"
+                    ></div>
+                    <span slot="title">${artifact.title}</span>
+                    <span slot="subtitle">${artifact.subtitle}</span>
+                  </swc-conversation-artifact>
+                `
+              )}
+            </swc-prompt-field>
+          </div>
+        `,
+        container
+      );
+    }
+
+    rerender();
+    return container;
+  },
   tags: ['full-pattern'],
 };

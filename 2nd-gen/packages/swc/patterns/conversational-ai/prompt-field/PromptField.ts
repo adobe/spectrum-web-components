@@ -17,11 +17,7 @@ import { SpectrumElement } from '@spectrum-web-components/core/element/index.js'
 
 import '@adobe/spectrum-wc/icon';
 
-import {
-  ChevronUpIcon,
-  PlusIcon,
-  StopIcon,
-} from '../utils/icons/index.js';
+import { ChevronUpIcon, PlusIcon, StopIcon } from '../utils/icons/index.js';
 
 import styles from './prompt-field.css';
 
@@ -46,7 +42,8 @@ export class PromptField extends SpectrumElement {
 
   /** Placeholder text shown inside the textarea. */
   @property({ type: String })
-  public placeholder = 'Ask anything';
+  public placeholder =
+    'Ready to get started? Ask a question, share an idea, or add a task.';
 
   /** The current textarea value. Controlled by the consumer. */
   @property({ type: String })
@@ -68,6 +65,18 @@ export class PromptField extends SpectrumElement {
         detail: { value: this.value },
       })
     );
+  }
+
+  private _handleTextareaKeydown(event: KeyboardEvent): void {
+    if (event.key !== 'Enter' || event.shiftKey) {
+      return;
+    }
+
+    event.preventDefault();
+    if (this.sending) {
+      return;
+    }
+    this._handleSendClick();
   }
 
   private _handleSendClick(): void {
@@ -119,10 +128,7 @@ export class PromptField extends SpectrumElement {
 
   private _renderArtifact(): TemplateResult {
     return html`
-      <div
-        class="swc-PromptField-artifacts"
-        ?hidden=${!this._hasArtifacts}
-      >
+      <div class="swc-PromptField-artifacts" ?hidden=${!this._hasArtifacts}>
         <slot
           name="artifact"
           @slotchange=${this._handleArtifactSlotChange}
@@ -177,6 +183,7 @@ export class PromptField extends SpectrumElement {
                 aria-label=${this.label}
                 rows="1"
                 @input=${this._handleInput}
+                @keydown=${this._handleTextareaKeydown}
               ></textarea>
             </div>
           </div>

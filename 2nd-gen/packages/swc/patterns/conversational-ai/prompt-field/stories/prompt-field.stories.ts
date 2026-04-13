@@ -24,6 +24,8 @@ import '../index.js';
 // ────────────────
 
 const { args, argTypes, template } = getStorybookHelpers('swc-prompt-field');
+const defaultPlaceholder =
+  'Ready to get started? Ask a question, share an idea, or add a task.';
 
 argTypes.sending = {
   ...argTypes.sending,
@@ -62,7 +64,7 @@ export default meta;
 export const Playground: Story = {
   args: {
     label: 'Prompt',
-    placeholder: 'Ask anything',
+    placeholder: defaultPlaceholder,
     value: '',
     sending: false,
   },
@@ -76,7 +78,7 @@ export const Playground: Story = {
 export const Overview: Story = {
   args: {
     label: 'Prompt',
-    placeholder: 'Ask anything',
+    placeholder: defaultPlaceholder,
     value: '',
     sending: false,
   },
@@ -97,7 +99,7 @@ export const Overview: Story = {
 export const Anatomy: Story = {
   args: {
     label: 'Prompt',
-    placeholder: 'Ask anything',
+    placeholder: defaultPlaceholder,
     value: '',
     sending: false,
   },
@@ -122,7 +124,7 @@ export const Sending: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
           label="Prompt"
-          placeholder="Ask anything"
+          placeholder=${defaultPlaceholder}
         ></swc-prompt-field>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
@@ -172,7 +174,10 @@ export const Artifact: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field label="Prompt" placeholder="Ask anything"></swc-prompt-field>
+        <swc-prompt-field
+          label="Prompt"
+          placeholder=${defaultPlaceholder}
+        ></swc-prompt-field>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
@@ -180,12 +185,8 @@ export const Artifact: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field label="Prompt" placeholder="Ask anything">
-          <swc-conversation-artifact
-            slot="artifact"
-            variant="card"
-            dismissible
-          >
+        <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
+          <swc-conversation-artifact slot="artifact" variant="card" dismissible>
             <div
               slot="thumbnail"
               style="background:var(--swc-gray-200);"
@@ -203,7 +204,7 @@ export const Artifact: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field label="Prompt" placeholder="Ask anything">
+        <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
           <swc-conversation-artifact
             slot="artifact"
             variant="media"
@@ -224,12 +225,11 @@ export const Artifact: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field label="Prompt" value="Use attached assets for a launch plan.">
-          <swc-conversation-artifact
-            slot="artifact"
-            variant="card"
-            dismissible
-          >
+        <swc-prompt-field
+          label="Prompt"
+          value="Use attached assets for a launch plan."
+        >
+          <swc-conversation-artifact slot="artifact" variant="card" dismissible>
             <div
               slot="thumbnail"
               style="background:var(--swc-gray-200);"
@@ -327,7 +327,7 @@ export const LeadingActions: Story = {
 export const Accessibility: Story = {
   args: {
     label: 'Prompt',
-    placeholder: 'Ask anything',
+    placeholder: defaultPlaceholder,
     value: '',
     sending: false,
   },

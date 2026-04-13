@@ -43,14 +43,13 @@ export const OverviewTest: Story = {
       'swc-prompt-field'
     );
 
-    await step(
-      'renders with default sending state',
-      async () => {
-        expect(el.sending).toBe(false);
-        expect(el.label).toBe('Prompt');
-        expect(el.placeholder).toBe('Ask anything');
-      }
-    );
+    await step('renders with default sending state', async () => {
+      expect(el.sending).toBe(false);
+      expect(el.label).toBe('Prompt');
+      expect(el.placeholder).toBe(
+        'Ready to get started? Ask a question, share an idea, or add a task.'
+      );
+    });
   },
 };
 
@@ -144,6 +143,54 @@ export const EventsTest: Story = {
     });
 
     await step(
+      'fires swc-submit when Enter is pressed in textarea',
+      async () => {
+        let fired = false;
+        el.addEventListener(
+          'swc-submit',
+          () => {
+            fired = true;
+          },
+          { once: true }
+        );
+
+        const textarea = el.shadowRoot?.querySelector<HTMLTextAreaElement>(
+          '.swc-PromptField-textarea'
+        );
+        textarea?.dispatchEvent(
+          new KeyboardEvent('keydown', { key: 'Enter', bubbles: true })
+        );
+        expect(fired).toBe(true);
+      }
+    );
+
+    await step(
+      'does not fire swc-submit when Shift+Enter is pressed in textarea',
+      async () => {
+        let fired = false;
+        el.addEventListener(
+          'swc-submit',
+          () => {
+            fired = true;
+          },
+          { once: true }
+        );
+
+        const textarea = el.shadowRoot?.querySelector<HTMLTextAreaElement>(
+          '.swc-PromptField-textarea'
+        );
+        textarea?.dispatchEvent(
+          new KeyboardEvent('keydown', {
+            key: 'Enter',
+            shiftKey: true,
+            bubbles: true,
+          })
+        );
+        expect(fired).toBe(false);
+      }
+    );
+
+    await step(
       'fires swc-upload-click when upload button clicked',
       async () => {
         let fired = false;
@@ -182,9 +229,9 @@ export const EventsTest: Story = {
           { once: true }
         );
 
-        const dismissBtn = el.querySelector('swc-conversation-artifact')
-          ?.shadowRoot
-          ?.querySelector<HTMLButtonElement>(
+        const dismissBtn = el
+          .querySelector('swc-conversation-artifact')
+          ?.shadowRoot?.querySelector<HTMLButtonElement>(
             '.swc-ConversationArtifact-dismiss'
           );
         dismissBtn?.click();
