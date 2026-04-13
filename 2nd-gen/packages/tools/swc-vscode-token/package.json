@@ -13,6 +13,22 @@
   "categories": [
     "Other"
   ],
+  "contributes": {
+    "snippets": [
+      {
+        "language": "css",
+        "path": "./snippets/typography.code-snippets"
+      },
+      {
+        "language": "scss",
+        "path": "./snippets/typography.code-snippets"
+      },
+      {
+        "language": "postcss",
+        "path": "./snippets/typography.code-snippets"
+      }
+    ]
+  },
   "contributors": [
     "Stephanie Eckles <5t3ph@users.noreply.github.com>"
   ],
@@ -56,11 +72,12 @@
   },
   "scripts": {
     "build": "node esbuild.config.js",
+    "build:snippets": "node ./scripts/generate-typography-snippets.mjs",
     "deploy": "yarn build && yarn package",
-    "package": "vsce package --no-dependencies",
+    "package": "yarn build:snippets && vsce package --no-dependencies",
     "test": "vitest --run",
     "test:watch": "vitest --watch",
-    "tokens": "swc-tokens --outputType data --out ./tokens.json --prefix swc"
+    "tokens": "swc-tokens --outputType data --out ./tokens.json --prefix swc && yarn build:snippets"
   },
   "version": "0.0.1"
 }
