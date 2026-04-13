@@ -106,6 +106,18 @@ color: token('gray-700');
 color: var(--swc-gray-700);
 ```
 
+### Composite Shadow Tokens
+
+```css
+box-shadow: token('drop-shadow-dragged');
+```
+
+⬇
+
+```css
+box-shadow: var(--swc-drop-shadow-dragged);
+```
+
 ### Nested and Fallback Usage
 
 ```css
