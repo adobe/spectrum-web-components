@@ -34,6 +34,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
      * @internal
      */
     public override shadowRoot!: ShadowRoot;
+    /** @internal */
     public hasVisibleFocusInTree(): boolean {
       const active = getActiveElement(
         this.getRootNode() as Document | ShadowRoot
