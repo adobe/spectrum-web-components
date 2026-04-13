@@ -15,7 +15,7 @@
 - [Quick Migration Checklist](#quick-migration-checklist)
 - [Relationship to this workstream](#relationship-to-this-workstream)
 - [Workflow overview](#workflow-overview)
-- [Refactor path (1st-gen required)](#refactor-path-1st-gen-required)
+- [Starting from 1st-gen (reference, not dependency)](#starting-from-1st-gen-reference-not-dependency)
 - [Core vs SWC: where does code go?](#core-vs-swc-where-does-code-go)
 - [Phase 1: Preparation](#phase-1-preparation)
     - [What to do](#what-to-do)
@@ -30,7 +30,7 @@
 - [Phase 3: API migration](#phase-3-api-migration)
     - [What to do](#what-to-do)
     - [Property migration scenarios](#property-migration-scenarios)
-    - [API patterns (statics, warnings, and 1st-gen exports)](#api-patterns-statics-warnings-and-1st-gen-exports)
+    - [API patterns (statics and warnings)](#api-patterns-statics-and-warnings)
     - [What to check](#what-to-check)
     - [Common problems and solutions](#common-problems-and-solutions)
     - [Quality gate](#quality-gate)
@@ -125,7 +125,7 @@ Use this doc for **what order** to do things and **what to check**; use the link
 | **7. Documentation** | **Step 7: Add stories for 2nd-gen component** + JSDoc and usage docs. |
 | **8. Review** | (No dedicated step — this guide adds checklist and PR.) |
 
-Follow [Refactor path (1st-gen required)](#refactor-path-1st-gen-required) and the linked step-by-step docs for Steps 2–3. If those steps are **already** done, start **Phase 2** at SWC package setup and the Phase 2 “What to do” list.
+Reference to guide to [understand the 1st-gen component structure](../02_step-by-step/02_factor-rendering-out-of-1st-gen-component.md) and the linked step-by-step docs for Steps 2–3. If those steps are **already** done, start **Phase 2** at SWC package setup and the Phase 2 “What to do” list.
 
 ---
 

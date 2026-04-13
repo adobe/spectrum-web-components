@@ -2,4 +2,113 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Accessibility guides/Semantic HTML and ARIA" />
 
-# Semantic HTML and ARIA
+# Semantic HTML, ARIA, and cross-root accessibility
+
+This guide explains how to think about **semantic HTML** and **WAI-ARIA** when building or consuming Spectrum Web Components. It also covers **cross-root ARIA** limitations in shadow DOM and why they matter for custom elements.
+
+## Semantics and HTML
+
+### What semantic HTML means
+
+**Semantic HTML** uses elements whose built-in meaning matches the purpose of the content. Browsers, search engines, and assistive technologies can use that meaning without extra hints. Examples include `button` for an action, `a` for navigation, `main` for primary content, and heading elements (`h1`–`h6`) for document structure.
+
+### Why prefer semantic elements
+
+Native HTML elements carry **roles**, **keyboard behavior**, and **state** that assistive technologies already understand. They tend to be more robust, require less custom code, and age better as platforms improve. Starting with the right element reduces the need for ARIA and lowers the risk of incorrect or incomplete accessibility implementations.
+
+### Semantic vs non-semantic examples
+
+**Prefer** elements whose name matches the job:
+
+```html
+<button type="button">Save</button>
+<a href="/docs">Read the documentation</a>
+<label for="email">Email</label>
+<input id="email" type="email" autocomplete="email" />
+```
+
+**Avoid** generic elements when a native one exists:
+
+```html
+<!-- Avoid: div styled as a button -->
+<div class="button" onclick="save()">Save</div>
+
+<!-- Avoid: span acting as a link without href semantics -->
+<span class="link" onclick="go()">Read the documentation</span>
+```
+
+If you must use a non-interactive wrapper for layout, keep **real** controls as `button`, `a`, or form elements inside it.
+
+### How semantics help assistive technologies
+
+Screen readers and other assistive technologies expose an **accessibility tree** derived from the DOM. Semantic elements map to familiar roles and names (for example, a `button` is announced as a button; a labelled text field exposes its label association). Headings define an **outline** users can navigate by. Landmark regions (`main`, `nav`, `header`, and similar) help users jump to the right part of the page. See [Understanding success criterion 1.3.1: info and relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html) in WCAG 2.2 for why programmatic relationships and structure matter.
+
+## ARIA as a secondary method
+
+### What ARIA is
+
+**WAI-ARIA** (Accessible Rich Internet Applications) is a set of attributes that refine or expose accessibility information in the accessibility tree—roles, states, properties, and relationships between nodes. The formal rules live in [WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-1.2/). Patterns for common widgets are described in the [ARIA authoring practices guide (APG)](https://www.w3.org/WAI/ARIA/apg/).
+
+### When to use ARIA
+
+Use ARIA **only when native HTML cannot express the needed role, state, or relationship**. 
+
+### Appropriate ARIA examples
+
+- **`aria-expanded`**, **`aria-controls`**: on a disclosure or menu button when you need to expose open/closed state and related content (often **in addition** to a native `button`).
+- **`aria-live`** regions: for status messages that update without moving focus, when no native element conveys the update.
+- **`aria-invalid`** and **`aria-describedby`**: tying validation messages to fields when the relationships are not already clear from native labelling.
+
+### Patterns to avoid
+
+- **`role="button"`** on a `div` instead of a real `button`—you lose native keyboard activation and many platform behaviors unless you reimplement them completely.
+- **Redundant ARIA** on elements that already imply the role (for example, `role="button"` on a `button`).
+- **Large `aria-label` values** that duplicate visible text; prefer visible labels and `aria-labelledby` or native `<label>` when possible. See [MDN: ARIA labels](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-label) and the APG [read me first](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/) for naming guidance.
+
+### Custom elements and the host node
+
+Custom elements such as `<swc-*>` are often **not** mapped to a specific HTML role on the host. Components in this library typically project **native** controls inside shadow DOM or expose appropriate ARIA on the host where the implementation supports it. When authoring features, prefer **delegating** to native elements inside the shadow tree and documenting required light-DOM structure (labels, headings) for consumers.
+
+## Cross-root ARIA challenges
+
+### The problem
+
+Many ARIA attributes express **relationships by ID**—for example, `aria-labelledby`, `aria-describedby`, and `aria-controls` reference other elements by `id`. **Shadow DOM** scopes `id` values to a single shadow tree. References do not cross from light DOM into a shadow root, or from one shadow root to another, in the same way as within a single tree. That breaks patterns that work in flat HTML, such as a label in the page referencing an input inside a component’s shadow tree, or two separate components referencing each other’s internal nodes.
+
+This tension between encapsulation and accessibility relationships is explained in [How shadow DOM and accessibility are in conflict](https://blogs.igalia.com/alice/how-shadow-dom-and-accessibility-are-in-conflict/) (Alice Boxhall) and [Shadow DOM and accessibility: the trouble with ARIA](https://nolanlawson.com/2022/11/28/shadow-dom-and-accessibility-the-trouble-with-aria/) (Nolan Lawson).
+
+### Cross-root ARIA delegation (emerging)
+
+**Cross-root ARIA delegation** is a proposed direction that would let authors delegate selected ARIA attributes from a custom element host to nodes inside its shadow tree (similar in spirit to `delegatesFocus`). [Leo Balter](https://github.com/leobalter) maintains an explainer and draft ideas in the [cross-root ARIA delegation repository](https://github.com/leobalter/cross-root-aria-delegation) and [hosted explainer](https://leobalter.github.io/cross-root-aria-delegation/).
+
+**Reference target** (below) is a related, more narrowly scoped proposal for forwarding ID-based references to a single element inside the shadow root. Both remain **forward-looking** until browsers ship them broadly; validate behavior in your target browsers and assistive technology matrix.
+
+### Reference target (cross-root ARIA)
+
+**Reference target** lets a shadow root declare which **internal element** should receive **ID-based references** that point at the **host**—for example, a `<label for="…">` in the light DOM targeting a custom element whose shadow tree contains the real `<input>`. The same resolution model is intended to apply to many **ARIA relationship attributes** (such as `aria-labelledby` and `aria-controls`) and other HTML **element reference** attributes, so the host can stand in for an enclosed native control without exposing shadow internals as separate IDs to the page.
+
+- **Specification and design background**: [Reference target for cross-root ARIA (explainer)](https://github.com/WICG/webcomponents/blob/gh-pages/proposals/reference-target-explainer.md) in the WICG Web Components proposals repository.
+- **Implementation tracking**: [Chrome platform status: reference target](https://cr-status.appspot.com/feature/5188237101891584).
+- **Overview for authors**: [Reference target: having your encapsulation and eating it too](https://blogs.igalia.com/alice/reference-target-having-your-encapsulation-and-eating-it-too/) (Alice Boxhall).
+
+Reference target is **not fully supported** in production browsers yet; availability often depends on version and experimental flags. For the **most up-to-date** support tables, use [Can I use… `shadowrootreferencetarget` on `<template>`](https://caniuse.com/mdn-html_elements_template_shadowrootreferencetarget) rather than relying on a fixed snapshot in this doc.
+
+### Impact on web component accessibility
+
+Until cross-root solutions are widely available, teams often:
+
+- **Duplicate or mirror** accessible names (for example, `aria-label` on the host when internal labelling cannot reference external nodes).
+- **Slot** labelling elements or use **light DOM** for parts that must participate in ID references.
+- **Restructure** UIs so relationships stay within one tree (host + same shadow root).
+
+These workarounds can be fragile or verbose. Documenting **what consumers must provide** (visible text, `for`/`id` pairs in light DOM, heading structure) is part of shipping accessible components.
+
+## Further reading
+
+- [Using ARIA](https://www.w3.org/TR/using-aria/) — including the [first rule of ARIA use](https://www.w3.org/TR/using-aria/#rule1).
+- [ARIA authoring practices guide](https://www.w3.org/WAI/ARIA/apg/) — patterns and keyboard models for composite widgets.
+- [MDN: semantics in HTML](https://developer.mozilla.org/en-US/docs/Glossary/Semantics#semantics_in_html) — glossary entry tying semantics to accessibility.
+- [Cross-root ARIA delegation (explainer)](https://leobalter.github.io/cross-root-aria-delegation/) and [repository](https://github.com/leobalter/cross-root-aria-delegation).
+- [Reference target for cross-root ARIA (WICG explainer)](https://github.com/WICG/webcomponents/blob/gh-pages/proposals/reference-target-explainer.md); [Can I use… `shadowrootreferencetarget`](https://caniuse.com/mdn-html_elements_template_shadowrootreferencetarget) for current support.
+- [How shadow DOM and accessibility are in conflict](https://blogs.igalia.com/alice/how-shadow-dom-and-accessibility-are-in-conflict/) — Alice Boxhall.
+- [Shadow DOM and accessibility: the trouble with ARIA](https://nolanlawson.com/2022/11/28/shadow-dom-and-accessibility-the-trouble-with-aria/) — Nolan Lawson.

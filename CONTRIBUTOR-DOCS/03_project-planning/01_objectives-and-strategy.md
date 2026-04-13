@@ -19,7 +19,7 @@
     - [Continually improve components](#continually-improve-components)
 - [Strategy](#strategy)
     - [Disruptive vs. non-disruptive change](#disruptive-vs-non-disruptive-change)
-    - [Side-by-side development of 1st-gen and 2nd-gen](#side-by-side-development-of-1st-gen-and-2nd-gen)
+    - [Independent development of 1st-gen and 2nd-gen](#independent-development-of-1st-gen-and-2nd-gen)
 
 </details>
 
