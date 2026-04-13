@@ -17,7 +17,11 @@ import { SpectrumElement } from '@spectrum-web-components/core/element/index.js'
 
 import {
   ILLUSTRATED_MESSAGE_VALID_HEADING_LEVELS,
+  ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS,
+  ILLUSTRATED_MESSAGE_VALID_SIZES,
   type IllustratedMessageHeadingLevel,
+  type IllustratedMessageOrientation,
+  type IllustratedMessageSize,
 } from './IllustratedMessage.types.js';
 
 /**
@@ -42,16 +46,39 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
   static readonly VALID_HEADING_LEVELS: readonly IllustratedMessageHeadingLevel[] =
     ILLUSTRATED_MESSAGE_VALID_HEADING_LEVELS;
 
+  /**
+   * @internal
+   */
+  static readonly VALID_SIZES: readonly IllustratedMessageSize[] =
+    ILLUSTRATED_MESSAGE_VALID_SIZES;
+
+  /**
+   * @internal
+   */
+  static readonly VALID_ORIENTATIONS: readonly IllustratedMessageOrientation[] =
+    ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS;
+
   // ──────────────────
   //     SHARED API
   // ──────────────────
 
   /**
-   * The heading level rendered in shadow DOM. Accepts 2–6; values outside
-   * this range are clamped using `Math.max(2, Math.min(6, value))`.
+   * The heading level of the illustrated message title. Accepts 2–6.
    */
   @property({ type: Number, reflect: true, attribute: 'heading-level' })
   public headingLevel: IllustratedMessageHeadingLevel = 2;
+
+  /**
+   * The size of the illustrated message.
+   */
+  @property({ type: String, reflect: true })
+  public size: IllustratedMessageSize = 'm';
+
+  /**
+   * The layout orientation of the illustrated message.
+   */
+  @property({ type: String, reflect: true })
+  public orientation: IllustratedMessageOrientation = 'vertical';
 
   // ──────────────────────
   //     IMPLEMENTATION
@@ -69,6 +96,30 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
     if (window.__swc?.DEBUG) {
+      if (
+        changedProperties.has('size') &&
+        !ILLUSTRATED_MESSAGE_VALID_SIZES.includes(this.size)
+      ) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> received an invalid "size" value of "${this.size}". Valid values are ${ILLUSTRATED_MESSAGE_VALID_SIZES.join(', ')}.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/illustrated-message/',
+          { issues: [`size="${this.size}"`] }
+        );
+      }
+
+      if (
+        changedProperties.has('orientation') &&
+        !ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS.includes(this.orientation)
+      ) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> received an invalid "orientation" value of "${this.orientation}". Valid values are ${ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS.join(', ')}.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/illustrated-message/',
+          { issues: [`orientation="${this.orientation}"`] }
+        );
+      }
+
       if (
         changedProperties.has('headingLevel') &&
         (this.headingLevel < 2 || this.headingLevel > 6)
