@@ -1,0 +1,167 @@
+{
+  "Typography component-l-bold": {
+    "prefix": "type-component-l-bold",
+    "description": "Expand component-l-bold typography token into CSS declarations",
+    "body": [
+      "font-family: token(\"sans-serif-font-family\");",
+      "font-size: token(\"font-size-200\");",
+      "font-weight: token(\"bold-font-weight\");",
+      "line-height: token(\"line-height-font-size-200\");",
+      "letter-spacing: token(\"letter-spacing\");",
+    ],
+  },
+  "Typography component-l-medium": {
+    "prefix": "type-component-l-medium",
+    "description": "Expand component-l-medium typography token into CSS declarations",
+    "body": [
+      "font-family: token(\"sans-serif-font-family\");",
+      "font-size: token(\"font-size-200\");",
+      "font-weight: token(\"medium-font-weight\");",
+      "line-height: token(\"line-height-font-size-200\");",
+      "letter-spacing: token(\"letter-spacing\");",
+    ],
+  },
+  "Typography component-l-regular": {
+    "prefix": "type-component-l-regular",
+    "description": "Expand component-l-regular typography token into CSS declarations",
+    "body": [
+      "font-family: token(\"sans-serif-font-family\");",
+      "font-size: token(\"font-size-200\");",
+      "font-weight: token(\"regular-font-weight\");",
+      "line-height: token(\"line-height-font-size-200\");",
+      "letter-spacing: token(\"letter-spacing\");",
+    ],
+  },
+  "Typography component-m-bold": {
+    "prefix": "type-component-m-bold",
+    "description": "Expand component-m-bold typography token into CSS declarations",
+    "body": [
+      "font-family: token(\"sans-serif-font-family\");",
+      "font-size: token(\"font-size-100\");",
+      "font-weight: token(\"bold-font-weight\");",
+      "line-height: token(\"line-height-font-size-100\");",
+      "letter-spacing: token(\"letter-spacing\");",
+    ],
+  },
+  "Typography component-m-medium": {
+    "prefix": "type-component-m-medium",
+    "description": "Expand component-m-medium typography token into CSS declarations",
+    "body": [
+      "font-family: token(\"sans-serif-font-family\");",
+      "font-size: token(\"font-size-100\");",
+      "font-weight: token(\"medium-font-weight\");",
+      "line-height: token(\"line-height-font-size-100\");",
+      "letter-spacing: token(\"letter-spacing\");",
+    ],
+  },
+  "Typography component-m-regular": {
+    "prefix": "type-component-m-regular",
+    "description": "Expand component-m-regular typography token into CSS declarations",
+    "body": [
+      "font-family: token(\"sans-serif-font-family\");",
+      "font-size: token(\"font-size-100\");",
+      "font-weight: token(\"regular-font-weight\");",
+      "line-height: token(\"line-height-font-size-100\");",
+      "letter-spacing: token(\"letter-spacing\");",
+    ],
+  },
+  "Typography component-s-bold": {
+    "prefix": "type-component-s-bold",
+    "description": "Expand component-s-bold typography token into CSS declarations",
+    "body": [
+      "font-family: token(\"sans-serif-font-family\");",
+      "font-size: token(\"font-size-75\");",
+      "font-weight: token(\"bold-font-weight\");",
+      "line-height: token(\"line-height-font-size-75\");",
+      "letter-spacing: token(\"letter-spacing\");",
+    ],
+  },
+  "Typography component-s-medium": {
+    "prefix": "type-component-s-medium",
+    "description": "Expand component-s-medium typography token into CSS declarations",
+    "body": [
+      "font-family: token(\"sans-serif-font-family\");",
+      "font-size: token(\"font-size-75\");",
+      "font-weight: token(\"medium-font-weight\");",
+      "line-height: token(\"line-height-font-size-75\");",
+      "letter-spacing: token(\"letter-spacing\");",
+    ],
+  },
+  "Typography component-s-regular": {
+    "prefix": "type-component-s-regular",
+    "description": "Expand component-s-regular typography token into CSS declarations",
+    "body": [
+      "font-family: token(\"sans-serif-font-family\");",
+      "font-size: token(\"font-size-75\");",
+      "font-weight: token(\"regular-font-weight\");",
+      "line-height: token(\"line-height-font-size-75\");",
+      "letter-spacing: token(\"letter-spacing\");",
+    ],
+  },
+  "Typography component-xl-bold": {
+    "prefix": "type-component-xl-bold",
+    "description": "Expand component-xl-bold typography token into CSS declarations",
+    "body": [
+      "font-family: token(\"sans-serif-font-family\");",
+      "font-size: token(\"font-size-300\");",
+      "font-weight: token(\"bold-font-weight\");",
+      "line-height: token(\"line-height-font-size-300\");",
+      "letter-spacing: token(\"letter-spacing\");",
+    ],
+  },
+  "Typography component-xl-medium": {
+    "prefix": "type-component-xl-medium",
+    "description": "Expand component-xl-medium typography token into CSS declarations",
+    "body": [
+      "font-family: token(\"sans-serif-font-family\");",
+      "font-size: token(\"font-size-300\");",
+      "font-weight: token(\"medium-font-weight\");",
+      "line-height: token(\"line-height-font-size-300\");",
+      "letter-spacing: token(\"letter-spacing\");",
+    ],
+  },
+  "Typography component-xl-regular": {
+    "prefix": "type-component-xl-regular",
+    "description": "Expand component-xl-regular typography token into CSS declarations",
+    "body": [
+      "font-family: token(\"sans-serif-font-family\");",
+      "font-size: token(\"font-size-300\");",
+      "font-weight: token(\"regular-font-weight\");",
+      "line-height: token(\"line-height-font-size-300\");",
+      "letter-spacing: token(\"letter-spacing\");",
+    ],
+  },
+  "Typography component-xs-bold": {
+    "prefix": "type-component-xs-bold",
+    "description": "Expand component-xs-bold typography token into CSS declarations",
+    "body": [
+      "font-family: token(\"sans-serif-font-family\");",
+      "font-size: token(\"font-size-50\");",
+      "font-weight: token(\"bold-font-weight\");",
+      "line-height: token(\"line-height-font-size-50\");",
+      "letter-spacing: token(\"letter-spacing\");",
+    ],
+  },
+  "Typography component-xs-medium": {
+    "prefix": "type-component-xs-medium",
+    "description": "Expand component-xs-medium typography token into CSS declarations",
+    "body": [
+      "font-family: token(\"sans-serif-font-family\");",
+      "font-size: token(\"font-size-50\");",
+      "font-weight: token(\"medium-font-weight\");",
+      "line-height: token(\"line-height-font-size-50\");",
+      "letter-spacing: token(\"letter-spacing\");",
+    ],
+  },
+  "Typography component-xs-regular": {
+    "prefix": "type-component-xs-regular",
+    "description": "Expand component-xs-regular typography token into CSS declarations",
+    "body": [
+      "font-family: token(\"sans-serif-font-family\");",
+      "font-size: token(\"font-size-50\");",
+      "font-weight: token(\"regular-font-weight\");",
+      "line-height: token(\"line-height-font-size-50\");",
+      "letter-spacing: token(\"letter-spacing\");",
+    ],
+  },
+}

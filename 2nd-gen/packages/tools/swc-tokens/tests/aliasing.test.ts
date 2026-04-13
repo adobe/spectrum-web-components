@@ -69,3 +69,72 @@ describe('normalizePrimitive – set alias protection', () => {
     expect(result).toBe('var(--test-base)');
   });
 });
+
+describe('normalizeCompositeValue', () => {
+  const { normalizeCompositeValue } = __test__;
+
+  it('recursively normalizes nested arrays and objects', () => {
+    const lookup = {
+      color: '{gray-100}',
+      'gray-100': 'rgb(255, 255, 255, 0.5)',
+      shadow: '{shadow-color}',
+      'shadow-color': '{gray-100}',
+    };
+
+    const result = normalizeCompositeValue(
+      [
+        {
+          color: '{color}',
+          nested: {
+            shadow: '{shadow}',
+          },
+        },
+      ],
+      {
+        resolveAliases: true,
+        lookup,
+        prefix: 'test',
+        debug: false,
+      }
+    );
+
+    expect(result).toEqual([
+      {
+        color: 'var(--test-color)',
+        nested: {
+          shadow: 'var(--test-shadow)',
+        },
+      },
+    ]);
+  });
+});
+
+describe('serializeTokenValue', () => {
+  const { serializeTokenValue } = __test__;
+
+  it('formats drop-shadow arrays as box-shadow-ready values', () => {
+    const result = serializeTokenValue([
+      {
+        x: '0px',
+        y: '12px',
+        blur: '16px',
+        spread: '0px',
+        color: {
+          light: 'rgb(0 0 0 / 12%)',
+          dark: 'rgb(0 0 0 / 36%)',
+        },
+      },
+      {
+        x: '0px',
+        y: '6px',
+        blur: '8px',
+        spread: '0px',
+        color: 'var(--test-drop-shadow-transition-color)',
+      },
+    ]);
+
+    expect(result).toBe(
+      '0px 12px 16px 0px light-dark(rgb(0 0 0 / 12%), rgb(0 0 0 / 36%)), 0px 6px 8px 0px var(--test-drop-shadow-transition-color)'
+    );
+  });
+});
