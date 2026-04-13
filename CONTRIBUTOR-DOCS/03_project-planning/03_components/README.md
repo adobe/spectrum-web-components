@@ -27,6 +27,8 @@
 - Asset
     - [Asset migration roadmap](asset/rendering-and-styling-migration-analysis.md)
 - Avatar
+    - [Avatar accessibility migration analysis](avatar/accessibility-migration-analysis.md)
+    - [Avatar — 2nd-Gen Migration Plan](avatar/migration-plan.md)
     - [Avatar migration roadmap](avatar/rendering-and-styling-migration-analysis.md)
 - Badge
     - [Badge accessibility migration analysis](badge/accessibility-migration-analysis.md)
