@@ -11,7 +11,6 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-- [Table of contents](#table-of-contents)
 - [TL;DR](#tldr)
     - [Most blocking open questions](#most-blocking-open-questions)
 - [1st-gen API surface](#1st-gen-api-surface)
@@ -54,20 +53,6 @@
 <!-- Document content (editable) -->
 
 > **SWC-1873** · Planning output. Must be reviewed before implementation begins.
-
----
-
-## Table of contents
-
-- [TL;DR](#tldr)
-- [1st-gen API surface](#1st-gen-api-surface)
-- [Dependencies](#dependencies)
-- [Changes overview](#changes-overview)
-- [2nd-gen API decisions](#2nd-gen-api-decisions)
-- [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
-- [Migration checklist](#migration-checklist)
-- [Blockers and open questions](#blockers-and-open-questions)
-- [References](#references)
 
 ---
 
