@@ -36,8 +36,6 @@
   font-size: var(--swc-statuslight-font-size, token("font-size-100"));
   font-style: token("default-font-style");
   font-weight: token("regular-font-weight");
-  text-box-trim: trim-both;
-  text-box-edge: cap alphabetic;
   line-height: token("line-height-100");
   color: var(--swc-statuslight-content-color, token("neutral-content-color-default"));
 

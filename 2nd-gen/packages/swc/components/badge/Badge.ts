@@ -33,6 +33,8 @@ import styles from './badge.css';
  * @status preview
  * @since 0.0.1
  *
+ * @event click - Emitted when the badge is clicked.
+ *
  * @example
  * <swc-badge variant="positive">New</swc-badge>
  *
