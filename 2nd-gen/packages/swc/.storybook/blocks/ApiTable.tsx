@@ -143,7 +143,7 @@ function PropertiesTable({
                       <>
                         <code>{attr.name}</code>
                         {prop.reflects && (
-                          <small style={{ opacity: 0.6, marginLeft: 4 }}>
+                          <small style={{ opacity: '0.8', marginLeft: 4 }}>
                             (reflects)
                           </small>
                         )}
