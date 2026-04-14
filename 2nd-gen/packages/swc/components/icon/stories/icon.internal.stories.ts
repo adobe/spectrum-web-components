@@ -12,6 +12,7 @@
 import { html, type TemplateResult } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import {
   ICON_VALID_SIZES,
@@ -20,7 +21,6 @@ import {
 
 import '@adobe/spectrum-wc/icon';
 
-import { getStoryHelpers } from '../../../.storybook/helpers/index.js';
 import { Chevron100Icon } from '../elements/index.js';
 import * as iconElements from '../elements/index.js';
 
@@ -28,7 +28,7 @@ import * as iconElements from '../elements/index.js';
 //    METADATA
 // ────────────────
 
-const { args, argTypes, template } = getStoryHelpers('swc-icon');
+const { args, argTypes, template } = getStorybookHelpers('swc-icon');
 
 // Override size argType to provide proper select control
 argTypes.size = {

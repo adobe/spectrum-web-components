@@ -12,18 +12,17 @@
 
 import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Divider } from '@adobe/spectrum-wc/divider';
 
 import '@adobe/spectrum-wc/divider';
 
-import { getStoryHelpers } from '../../../.storybook/helpers/index.js';
-
 // ────────────────
 //    METADATA
 // ────────────────
 
-const { events, args, argTypes, template } = getStoryHelpers('swc-divider');
+const { events, args, argTypes, template } = getStorybookHelpers('swc-divider');
 
 argTypes.size = {
   ...argTypes.size,

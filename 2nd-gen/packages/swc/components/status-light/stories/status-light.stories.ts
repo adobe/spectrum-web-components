@@ -12,6 +12,7 @@
 import { html } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { StatusLight } from '@adobe/spectrum-wc/status-light';
 import {
@@ -24,7 +25,6 @@ import {
 import '@adobe/spectrum-wc/status-light';
 
 import { getTranslationKey } from '../../../.storybook/helpers/get-translation-key.js';
-import { getStoryHelpers } from '../../../.storybook/helpers/index.js';
 import translations from '../../../.storybook/intl/translations.json';
 type TranslationKey = keyof typeof translations;
 
@@ -32,7 +32,7 @@ type TranslationKey = keyof typeof translations;
 //    METADATA
 // ────────────────
 
-const { args, argTypes, template } = getStoryHelpers('swc-status-light');
+const { args, argTypes, template } = getStorybookHelpers('swc-status-light');
 
 argTypes.variant = {
   ...argTypes.variant,

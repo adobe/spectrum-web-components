@@ -12,6 +12,7 @@
 
 import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Badge } from '@adobe/spectrum-wc/badge';
 
@@ -28,13 +29,12 @@ import {
   FIXED_VALUES,
   type FixedValues,
 } from '../../../../core/components/badge/Badge.types.js';
-import { getStoryHelpers } from '../../../.storybook/helpers/index.js';
 
 // ────────────────
 //    METADATA
 // ────────────────
 
-const { args, argTypes, template } = getStoryHelpers('swc-badge');
+const { args, argTypes, template } = getStorybookHelpers('swc-badge');
 
 // @todo: Carry the args table defaultValue pattern to all argTypes in all components. Explore how to get our custom types to properly reflect with this new pattern.
 argTypes.variant = {
