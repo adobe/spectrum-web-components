@@ -20,17 +20,12 @@ import '../index.js';
 //    METADATA
 // ────────────────
 
-const {
-  args: ceArgs,
-  argTypes: ceArgTypes,
-  template,
-} = getStorybookHelpers('swc-message-feedback');
+const { args: ceArgs, template } = getStorybookHelpers('swc-message-feedback');
 
 const args = { ...ceArgs } as Record<string, unknown>;
-const argTypes = { ...ceArgTypes } as Record<string, unknown>;
 
-argTypes.selection = {
-  ...(argTypes.selection as object),
+args.selection = {
+  ...(args.selection as object),
   control: { type: 'select' },
   options: ['none', 'thumb-up', 'thumb-down'],
   table: {
@@ -49,7 +44,6 @@ const meta: Meta = {
   title: 'Conversational AI/Message feedback',
   component: 'swc-message-feedback',
   args: args as Meta['args'],
-  argTypes: argTypes as Meta['argTypes'],
   render: (args) => template(args),
   parameters: {
     docs: {
