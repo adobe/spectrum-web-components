@@ -47,6 +47,7 @@
 }
 
 a {
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
   text-decoration-skip: objects;
   color: var(--highcontrast-link-text-color, var(--mod-link-text-color, var(--mod-link-text-color-primary-default, var(--spectrum-accent-content-color-default))));
   text-decoration: underline;

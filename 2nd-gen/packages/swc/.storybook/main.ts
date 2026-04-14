@@ -77,6 +77,11 @@ if (storybookMode !== 'ci-a11y') {
       directory: 'guides',
       files: '**/!(*documentation).mdx',
       titlePrefix: 'Guides',
+    },
+    {
+      directory: 'contributor-docs',
+      files: '**/*.mdx',
+      titlePrefix: 'Contributor docs',
     }
   );
 }
@@ -124,6 +129,7 @@ const config: StorybookConfig = {
   core: {
     disableTelemetry: true,
   },
+  staticDirs: ['../public'],
   addons,
   experimental_indexers: storybookMode === 'dev' ? [testStoryIndexer] : [],
   viteFinal: async (config) => {

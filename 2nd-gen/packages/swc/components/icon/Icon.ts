@@ -19,6 +19,8 @@ import styles from './icon.css';
  * Minimal icon renderer that accepts slotted SVG markup.
  *
  * @element swc-icon
+ * @status internal
+ * @since 0.0.1
  *
  * @example
  * <swc-icon label="Search">
