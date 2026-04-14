@@ -22,6 +22,9 @@ import styles from './divider.css';
  * @element swc-divider
  * @status preview
  * @since 0.0.1
+ *
+ * @cssprop --swc-divider-background-color - Background color of the divider.
+ * @cssprop --swc-divider-thickness - Thickness of the divider.
  */
 export class Divider extends DividerBase {
   // ──────────────────────────────

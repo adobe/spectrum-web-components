@@ -38,6 +38,11 @@ import styles from './progress-circle.css';
  *
  * @example
  * <swc-progress-circle label="Loading..."></swc-progress-circle>
+ *
+ * @cssprop --swc-progress-circle-size - Inline and block size of the circle.
+ * @cssprop --swc-progress-circle-track-border-color - Color of the track (background ring).
+ * @cssprop --swc-progress-circle-fill-border-color - Color of the fill (progress indicator).
+ * @cssprop --swc-progress-circle-thickness - Stroke width of the circle rings.
  */
 export class ProgressCircle extends ProgressCircleBase {
   // ────────────────────

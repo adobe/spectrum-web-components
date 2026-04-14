@@ -41,6 +41,24 @@ import styles from './badge.css';
  *   <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
  *   Verified
  * </swc-badge>
+ *
+ * @cssprop --swc-badge-height - Minimum block size of the badge.
+ * @cssprop --swc-badge-corner-radius - Corner radius of the badge.
+ * @cssprop --swc-badge-gap - Gap between the icon and label.
+ * @cssprop --swc-badge-padding-block - Block padding.
+ * @cssprop --swc-badge-padding-inline - Inline padding.
+ * @cssprop --swc-badge-padding-inline-start - Inline-start padding; overrides the start side of `--swc-badge-padding-inline`.
+ * @cssprop --swc-badge-font-size - Font size of the label.
+ * @cssprop --swc-badge-line-height - Line height of the label.
+ * @cssprop --swc-badge-icon-size - Size of the icon in the icon slot.
+ * @cssprop --swc-badge-label-icon-color - Color of the label text and icon.
+ * @cssprop --swc-badge-background-color - Background color of the badge.
+ * @cssprop --swc-badge-border-color - Border color; visible on the outline variant.
+ * @cssprop --swc-badge-with-icon-padding-inline - Inline padding when the badge has both an icon and a label.
+ * @cssprop --swc-badge-with-icon-only-padding-inline - Inline padding for icon-only badges.
+ * @cssprop --swc-badge-with-icon-only-padding-block - Block padding for icon-only badges.
+ * @cssprop --swc-badge-outline-background-color - Background color override for the outline variant.
+ * @cssprop --swc-badge-outline-label-icon-color - Label and icon color override for the outline variant.
  */
 export class Badge extends BadgeBase {
   // ────────────────────
