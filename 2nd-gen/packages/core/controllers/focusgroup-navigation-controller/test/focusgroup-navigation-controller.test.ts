@@ -992,6 +992,54 @@ export const DisconnectReconnect: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// Natively disabled items must not become the roving tab stop
+// ──────────────────────────────────────────────────────────────
+
+export const DisabledButtonNeverTabStop: Story = {
+  ...HorizontalToolbar,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<HTMLElement>(
+      canvasElement,
+      'demo-focusgroup-horizontal'
+    );
+    const root = host.shadowRoot!;
+    const buttons = Array.from(
+      root.querySelectorAll<HTMLButtonElement>('button')
+    );
+
+    await step(
+      'tabindex="0" skips natively disabled first item and lands on next',
+      async () => {
+        // Natively disable the first button.
+        buttons[0].disabled = true;
+
+        // Trigger a tabindex recalculation by focusing and blurring.
+        buttons[1].focus();
+        buttons[1].blur();
+
+        // The disabled button must NOT have tabindex="0" since it can't
+        // receive focus, which would make the group unreachable via Tab.
+        expect(buttons[0].tabIndex).not.toBe(0);
+
+        // Another eligible button must be the tab stop.
+        const tabStop = buttons.find((b) => b.tabIndex === 0 && !b.disabled);
+        expect(tabStop).toBeTruthy();
+      }
+    );
+
+    await step(
+      're-enabling the button allows it to become the tab stop again',
+      async () => {
+        buttons[0].disabled = false;
+        buttons[0].focus();
+
+        expect(buttons[0].tabIndex).toBe(0);
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // DisabledMixin + FocusgroupNavigationController interaction
 // ──────────────────────────────────────────────────────────────
 

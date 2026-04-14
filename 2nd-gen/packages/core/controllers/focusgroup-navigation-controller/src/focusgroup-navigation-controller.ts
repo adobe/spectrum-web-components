@@ -571,8 +571,21 @@ export class FocusgroupNavigationController implements ReactiveController {
   }
 
   /**
+   * Whether `el` is natively disabled and therefore unable to receive focus
+   * regardless of its `tabindex` value.
+   */
+  private isNativelyDisabled(el: HTMLElement): boolean {
+    return 'disabled' in el && (el as HTMLButtonElement).disabled === true;
+  }
+
+  /**
    * Sets `tabindex="-1"` on ineligible raw items, then assigns `tabindex="0"` to
    * `active` (or the first eligible item if `active` is not eligible) and `-1` to the rest.
+   *
+   * When `skipDisabled` is false, natively disabled items remain in the eligible list
+   * for arrow navigation but are never chosen as the roving tab stop because they
+   * cannot receive focus. The tab stop falls through to the nearest non-disabled item.
+   *
    * Dispatches the active-change event and {@link FocusgroupNavigationOptions.onActiveItemChange}.
    *
    * @param active - Preferred item to mark as the single tab stop when eligible.
@@ -588,7 +601,17 @@ export class FocusgroupNavigationController implements ReactiveController {
     if (items.length === 0) {
       return;
     }
-    const safeActive = eligibleSet.has(active) ? active : items[0];
+
+    let safeActive = eligibleSet.has(active) ? active : items[0];
+
+    // Natively disabled elements cannot receive focus even with tabindex="0".
+    // Fall through to the first non-disabled eligible item so the group
+    // remains reachable via Tab.
+    if (this.isNativelyDisabled(safeActive)) {
+      safeActive =
+        items.find((el) => !this.isNativelyDisabled(el)) ?? safeActive;
+    }
+
     for (const el of items) {
       if (el === safeActive) {
         el.tabIndex = 0;
