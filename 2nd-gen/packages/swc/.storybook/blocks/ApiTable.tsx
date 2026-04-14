@@ -65,8 +65,6 @@ function isField(member: ClassMember): member is MemberWithReflects {
 /** Storybook argType shape (subset we care about). */
 interface ArgType {
   options?: string[];
-  description?: string;
-  eventDetail?: string;
   table?: {
     type?: { summary?: string };
   };
@@ -181,18 +179,8 @@ function SlotsTable({ slots }: { slots: Slot[] }) {
   );
 }
 
-function EventsTable({
-  events,
-  argTypes,
-}: {
-  events: CemEvent[];
-  argTypes: Record<string, ArgType>;
-}) {
+function EventsTable({ events }: { events: CemEvent[] }) {
   if (events.length === 0) return null;
-
-  const hasDetail = events.some(
-    (event) => argTypes[event.name]?.eventDetail
-  );
 
   return (
     <>
@@ -201,25 +189,18 @@ function EventsTable({
         <thead>
           <tr>
             <th>Name</th>
-            {hasDetail && <th>Detail</th>}
             <th>Description</th>
           </tr>
         </thead>
         <tbody>
-          {events.map((event) => {
-            const detail = argTypes[event.name]?.eventDetail;
-            return (
-              <tr key={event.name}>
-                <td>
-                  <code>{event.name}</code>
-                </td>
-                {hasDetail && (
-                  <td>{detail ? <code>{detail}</code> : '-'}</td>
-                )}
-                <td>{event.description ?? ''}</td>
-              </tr>
-            );
-          })}
+          {events.map((event) => (
+            <tr key={event.name}>
+              <td>
+                <code>{event.name}</code>
+              </td>
+              <td>{event.description ?? ''}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </>
@@ -327,10 +308,7 @@ export function ApiTable() {
         argTypes={argTypes as Record<string, ArgType>}
       />
       <SlotsTable slots={slots} />
-      <EventsTable
-        events={events}
-        argTypes={argTypes as Record<string, ArgType>}
-      />
+      <EventsTable events={events} />
       <CssPropsTable cssProps={cssProps} />
       <CssPartsTable cssParts={cssParts} />
     </>
