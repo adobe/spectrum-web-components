@@ -367,7 +367,7 @@ export const FullPattern: Story = {
       render(
         html`
           <div
-            style="display:flex;flex-direction:column;gap:24px;max-width:600px;padding:24px;"
+            style="display:flex; flex-direction:column;gap:24px;max-width:800px; margin: auto; padding: 24px 24px 0;"
           >
             ${messages.map((message) =>
               message.role === 'user'
@@ -503,6 +503,7 @@ export const FullPattern: Story = {
               @swc-files-selected=${handleFilesSelected}
               @swc-dismiss=${handleArtifactDismiss}
               @swc-submit=${handleSubmit}
+              style="position: sticky; bottom: 16px; z-index: 1; padding-block-end: 16px;"
             >
               ${artifacts.map((artifact) => {
                 const isMedia = getUploadArtifactType(artifact) === 'media';
@@ -573,4 +574,7 @@ export const FullPattern: Story = {
     return container;
   },
   tags: ['full-pattern'],
+  parameters: {
+    layout: 'fullscreen',
+  },
 };

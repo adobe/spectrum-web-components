@@ -57,7 +57,7 @@
   line-height: token("line-height-200");
   color: token("gray-800");
   background: token("gray-50");
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
 /* Card content uses tighter padding to frame the card thumbnail/metadata */

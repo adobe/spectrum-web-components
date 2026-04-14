@@ -36,8 +36,15 @@
   transition: background 130ms ease;
 }
 
-.swc-SuggestionItem:hover {
-  background: token("gray-100");
+.swc-SuggestionItem:hover,
+.swc-SuggestionItem:focus,
+.swc-SuggestionItem:active {
+  background: token("gray-200");
+}
+
+.swc-SuggestionItem:focus {
+  outline: 2px solid token("focus-indicator-color");
+  outline-offset: 2px;
 }
 
 .swc-SuggestionItem:active {
