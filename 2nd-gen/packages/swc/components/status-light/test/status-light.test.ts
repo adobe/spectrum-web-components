@@ -21,9 +21,19 @@ import { StatusLight } from '@adobe/spectrum-wc/status-light';
 
 import '@adobe/spectrum-wc/status-light';
 
+import {
+  STATUSLIGHT_VARIANTS_COLOR,
+  STATUSLIGHT_VARIANTS_SEMANTIC,
+} from '../../../../core/components/status-light/StatusLight.types.js';
 import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
-import { meta } from '../stories/status-light.stories.js';
-import { Overview, Playground } from '../stories/status-light.stories.js';
+import {
+  Anatomy,
+  meta,
+  NonSemanticVariants,
+  Overview,
+  Playground,
+  SemanticVariants,
+} from '../stories/status-light.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
@@ -49,9 +59,36 @@ export const DefaultTest: Story = {
     );
 
     await step('renders default properties and slot content', async () => {
-      expect(statusLight.variant).toBe('info');
-      expect(statusLight.size).toBe('m');
-      expect(statusLight.textContent?.trim()).toBeTruthy();
+      expect(statusLight.variant, 'default variant is info').toBe('info');
+      expect(statusLight.size, 'default size is m').toBe('m');
+      expect(
+        statusLight.textContent?.trim(),
+        'default slot has text content'
+      ).toBeTruthy();
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Slots
+// ──────────────────────────────────────────────────────────────
+
+export const AnatomyTest: Story = {
+  ...Anatomy,
+  play: async ({ canvasElement, step }) => {
+    const statusLight = await getComponent<StatusLight>(
+      canvasElement,
+      'swc-status-light'
+    );
+
+    await step('renders with correct variant and slot content', async () => {
+      expect(statusLight.variant, 'anatomy story variant is positive').toBe(
+        'positive'
+      );
+      expect(
+        statusLight.textContent?.trim(),
+        'default slot text content is present'
+      ).toBeTruthy();
     });
   },
 };
@@ -70,13 +107,24 @@ export const SizesTest: Story = {
   `,
   play: async ({ canvasElement, step }) => {
     await step('renders and reflects each size correctly', async () => {
-      StatusLight.VALID_SIZES.forEach((size) => {
+      for (const size of StatusLight.VALID_SIZES) {
         const statusLight = canvasElement.querySelector(
           `swc-status-light[size="${size}"]`
-        ) as StatusLight;
-        expect(statusLight.variant).toBe('info');
-        expect(statusLight.size).toBe(size);
-      });
+        ) as StatusLight | null;
+        expect(
+          statusLight,
+          `status light with size="${size}" is rendered`
+        ).toBeTruthy();
+        await statusLight?.updateComplete;
+        expect(
+          statusLight?.variant,
+          `status light with size="${size}" has variant info`
+        ).toBe('info');
+        expect(
+          statusLight?.size,
+          `status light size property is "${size}"`
+        ).toBe(size);
+      }
     });
   },
 };
@@ -105,10 +153,112 @@ export const ComposedComponentTest: Story = {
     );
 
     await step('renders within composed content', async () => {
-      expect(statusLight.variant).toBe('positive');
-      expect(statusLight.size).toBe('m');
-      expect(statusLight.textContent?.trim()).toBeTruthy();
+      expect(
+        statusLight.variant,
+        'variant is positive in composed context'
+      ).toBe('positive');
+      expect(statusLight.size, 'size is m in composed context').toBe('m');
+      expect(
+        statusLight.textContent?.trim(),
+        'slot content is present in composed context'
+      ).toBeTruthy();
     });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Variants / States
+// ──────────────────────────────────────────────────────────────
+
+export const SemanticVariantsTest: Story = {
+  ...SemanticVariants,
+  play: async ({ canvasElement, step }) => {
+    await step('renders all semantic variants', async () => {
+      for (const variant of STATUSLIGHT_VARIANTS_SEMANTIC) {
+        const statusLight = canvasElement.querySelector(
+          `swc-status-light[variant="${variant}"]`
+        ) as StatusLight | null;
+        expect(
+          statusLight,
+          `status light with variant="${variant}" is rendered`
+        ).toBeTruthy();
+        await statusLight?.updateComplete;
+        expect(
+          statusLight?.variant,
+          `status light variant property is "${variant}"`
+        ).toBe(variant);
+      }
+    });
+  },
+};
+
+export const NonSemanticVariantsTest: Story = {
+  ...NonSemanticVariants,
+  play: async ({ canvasElement, step }) => {
+    await step('renders all non-semantic color variants', async () => {
+      for (const variant of STATUSLIGHT_VARIANTS_COLOR) {
+        const statusLight = canvasElement.querySelector(
+          `swc-status-light[variant="${variant}"]`
+        ) as StatusLight | null;
+        expect(
+          statusLight,
+          `status light with variant="${variant}" is rendered`
+        ).toBeTruthy();
+        await statusLight?.updateComplete;
+        expect(
+          statusLight?.variant,
+          `status light variant property is "${variant}"`
+        ).toBe(variant);
+      }
+    });
+  },
+};
+
+export const VariantMutationTest: Story = {
+  render: () => html`
+    <swc-status-light variant="info" size="m">Active</swc-status-light>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const statusLight = await getComponent<StatusLight>(
+      canvasElement,
+      'swc-status-light'
+    );
+
+    await step(
+      'reflects variant attribute after mutation to positive',
+      async () => {
+        statusLight.variant = 'positive';
+        await statusLight.updateComplete;
+        expect(
+          statusLight.getAttribute('variant'),
+          'variant attribute is positive after mutation'
+        ).toBe('positive');
+      }
+    );
+
+    await step(
+      'reflects variant attribute after mutation to negative',
+      async () => {
+        statusLight.variant = 'negative';
+        await statusLight.updateComplete;
+        expect(
+          statusLight.getAttribute('variant'),
+          'variant attribute is negative after second mutation'
+        ).toBe('negative');
+      }
+    );
+
+    await step(
+      'reflects variant attribute after mutation to non-semantic color variant',
+      async () => {
+        statusLight.variant = 'seafoam';
+        await statusLight.updateComplete;
+        expect(
+          statusLight.getAttribute('variant'),
+          'variant attribute is seafoam after mutation to color variant'
+        ).toBe('seafoam');
+      }
+    );
   },
 };
 
@@ -130,12 +280,63 @@ export const UnsupportedVariantWarningTest: Story = {
         statusLight.setAttribute('variant', 'accent');
         await statusLight.updateComplete;
 
-        expect(warnCalls.length).toBeGreaterThan(0);
-        expect(warnCalls[0][0]).toBe(statusLight);
-        expect(warnCalls[0][1]).toBe(
+        expect(
+          warnCalls.length,
+          'at least one warning is emitted for unsupported variant'
+        ).toBeGreaterThan(0);
+        expect(
+          warnCalls[0][0],
+          'warning is emitted from the status light element'
+        ).toBe(statusLight);
+        expect(
+          warnCalls[0][1],
+          'warning message references the variant attribute'
+        ).toBe(
           `<${statusLight.localName}> element expects the "variant" attribute to be one of the following:`
         );
       })
+    );
+  },
+};
+
+export const ValidVariantNoWarningTest: Story = {
+  render: () => html`
+    <swc-status-light variant="info">Active</swc-status-light>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const statusLight = await getComponent<StatusLight>(
+      canvasElement,
+      'swc-status-light'
+    );
+
+    await step(
+      'does not warn when a valid semantic variant is set in DEBUG mode',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          for (const variant of STATUSLIGHT_VARIANTS_SEMANTIC) {
+            statusLight.variant = variant;
+            await statusLight.updateComplete;
+          }
+
+          expect(
+            warnCalls.length,
+            'no warnings are emitted for valid semantic variants'
+          ).toBe(0);
+        })
+    );
+
+    await step(
+      'does not warn when a valid color variant is set in DEBUG mode',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          statusLight.variant = 'seafoam';
+          await statusLight.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'no warnings are emitted for valid color variants'
+          ).toBe(0);
+        })
     );
   },
 };
