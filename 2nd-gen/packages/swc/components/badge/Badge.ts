@@ -66,31 +66,10 @@ export class Badge extends BadgeBase {
    * The variant of the badge.
    *
    * @todo - Implement new badge variants (notification, indicator) introduced in S2. Jira ticket: SWC-1831
+   * Implement as separate component based on React https://github.com/adobe/react-spectrum/blob/main/packages/%40react-spectrum/s2/src/NotificationBadge.tsx
    */
   @property({ type: String, reflect: true })
   public override variant: BadgeVariant = 'neutral';
-
-  // ───────────────────
-  //     API ADDITIONS
-  // ───────────────────
-
-  /**
-   * Whether the badge is subtle.
-   *
-   * @todo This can be moved to the base class once we are no longer maintaining 1st-gen.
-   */
-  @property({ type: Boolean, reflect: true })
-  public subtle: boolean = false;
-
-  /**
-   * Whether the badge is outlined.
-   *
-   * Can only be used with semantic variants.
-   *
-   * @todo This can be moved to the base class once we are no longer maintaining 1st-gen.
-   */
-  @property({ type: Boolean, reflect: true })
-  public outline: boolean = false;
 
   // ──────────────────────────────
   //     RENDERING & STYLING
