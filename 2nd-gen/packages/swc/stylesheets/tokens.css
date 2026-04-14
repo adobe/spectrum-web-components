@@ -457,6 +457,22 @@
     rgb(0 0 0 / 16%),
     rgb(0 0 0 / 48%)
   );
+  --swc-drop-shadow-emphasized:
+    0px 2px 8px 0px var(--swc-drop-shadow-ambient-color),
+    0px 1px 4px 0px var(--swc-drop-shadow-transition-color),
+    0px 0px 1px 0px var(--swc-drop-shadow-emphasized-key-color);
+  --swc-drop-shadow-emphasized-hover:
+    0px 4px 12px 0px var(--swc-drop-shadow-ambient-color),
+    0px 2px 6px 0px var(--swc-drop-shadow-transition-color),
+    0px 0px 2px 0px var(--swc-drop-shadow-emphasized-key-color);
+  --swc-drop-shadow-elevated:
+    0px 4px 12px 0px var(--swc-drop-shadow-ambient-color),
+    0px 2px 6px 0px var(--swc-drop-shadow-transition-color),
+    0px 0px 2px 0px var(--swc-drop-shadow-elevated-key-color);
+  --swc-drop-shadow-dragged:
+    0px 12px 16px 0px var(--swc-drop-shadow-ambient-color),
+    0px 6px 8px 0px var(--swc-drop-shadow-transition-color),
+    0px 0px 6px 0px var(--swc-drop-shadow-dragged-key-color);
   --swc-swatch-border-color: var(--swc-gray-1000);
   --swc-swatch-border-opacity: 0.42;
   --swc-swatch-disabled-icon-border-color: var(--swc-black);
