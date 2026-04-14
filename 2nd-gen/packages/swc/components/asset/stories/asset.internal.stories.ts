@@ -22,7 +22,7 @@ import '@adobe/spectrum-wc/asset';
 //    METADATA
 // ────────────────
 
-const { events, args, argTypes, template } = getStorybookHelpers('swc-asset');
+const { args, argTypes, template } = getStorybookHelpers('swc-asset');
 
 argTypes.variant = {
   ...argTypes.variant,
@@ -39,9 +39,6 @@ const meta: Meta = {
   component: 'swc-asset',
   args,
   argTypes,
-  actions: {
-    handles: events,
-  },
   parameters: {
     docs: {
       subtitle: `Visually represent files, folders, or images in your application`,
@@ -49,7 +46,6 @@ const meta: Meta = {
     flexLayout: 'row-nowrap',
   },
   render: (args) => template(args),
-  tags: ['migrated'],
 };
 
 export default meta;
