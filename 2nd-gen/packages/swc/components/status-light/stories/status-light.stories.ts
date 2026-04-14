@@ -16,12 +16,10 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { StatusLight } from '@adobe/spectrum-wc/status-light';
 import {
-  STATUS_LIGHT_VALID_SIZES,
-  STATUS_LIGHT_VARIANTS_COLOR_S2,
-  STATUS_LIGHT_VARIANTS_SEMANTIC_S2,
-  StatusLightColorVariantS2,
-  StatusLightSemanticVariantS2,
-  type StatusLightSize,
+  STATUSLIGHT_VARIANTS_COLOR,
+  STATUSLIGHT_VARIANTS_SEMANTIC,
+  StatusLightColorVariant,
+  StatusLightSemanticVariant,
 } from '@spectrum-web-components/core/components/status-light';
 
 import '@adobe/spectrum-wc/status-light';
@@ -40,29 +38,20 @@ argTypes.variant = {
   ...argTypes.variant,
   control: { type: 'select' },
   options: StatusLight.VARIANTS,
-  table: {
-    category: 'attributes',
-    defaultValue: {
-      summary: 'info',
-    },
-  },
 };
 
 argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
   options: StatusLight.VALID_SIZES,
-  table: {
-    category: 'attributes',
-    defaultValue: {
-      summary: 'm',
-    },
-  },
 };
 
 /**
  * Status lights describe the condition of an entity. Much like [badges](../?path=/docs/components-badge--readme), they can be used to convey semantic meaning, such as statuses and categories.
  */
+args['default-slot'] = 'Status light';
+args.size = 'm';
+
 export const meta: Meta = {
   title: 'Status light',
   component: 'swc-status-light',
@@ -101,7 +90,7 @@ const semanticLabels = {
   positive: 'Approved',
   notice: 'Pending approval',
   negative: 'Rejected',
-} as const satisfies Record<StatusLightSemanticVariantS2, string>;
+} as const satisfies Record<StatusLightSemanticVariant, string>;
 
 const nonSemanticLabels = {
   yellow: 'Operations',
@@ -118,14 +107,7 @@ const nonSemanticLabels = {
   brown: 'Facilities',
   cinnamon: 'Compliance',
   silver: 'Version 1.2.10',
-} as const satisfies Record<StatusLightColorVariantS2, string>;
-
-const sizeLabels = {
-  s: 'Small',
-  m: 'Medium',
-  l: 'Large',
-  xl: 'Extra-large',
-} as const satisfies Record<StatusLightSize, string>;
+} as const satisfies Record<StatusLightColorVariant, string>;
 
 // ────────────────────
 //    AUTODOCS STORY
@@ -134,17 +116,21 @@ const sizeLabels = {
 export const Playground: Story = {
   tags: ['autodocs', 'dev'],
   args: {
+    size: 'm',
+    variant: 'info',
     'default-slot': 'Active',
   },
 };
 
 // ────────────────────
-//    OVERVIEW STORIES
+//    OVERVIEW STORY
 // ────────────────────
 
 export const Overview: Story = {
   tags: ['overview'],
   args: {
+    size: 'm',
+    variant: 'info',
     'default-slot': 'Active',
   },
 };
@@ -172,6 +158,9 @@ export const Anatomy: Story = {
     })}
   `,
   tags: ['anatomy'],
+  args: {
+    size: 'm',
+  },
 };
 
 // ──────────────────────────
@@ -190,13 +179,10 @@ export const Anatomy: Story = {
  */
 export const Sizes: Story = {
   render: (args) => html`
-    ${STATUS_LIGHT_VALID_SIZES.map((size) =>
-      template({
-        ...args,
-        size,
-        'default-slot': sizeLabels[size],
-      })
-    )}
+    ${template({ ...args, size: 's', 'default-slot': 'Small' })}
+    ${template({ ...args, size: 'm', 'default-slot': 'Medium' })}
+    ${template({ ...args, size: 'l', 'default-slot': 'Large' })}
+    ${template({ ...args, size: 'xl', 'default-slot': 'Extra-large' })}
   `,
   parameters: { 'section-order': 1 },
   tags: ['options'],
@@ -215,13 +201,12 @@ export const Sizes: Story = {
  */
 export const SemanticVariants: Story = {
   render: (args) => html`
-    ${STATUS_LIGHT_VARIANTS_SEMANTIC_S2.map(
-      (variant: StatusLightSemanticVariantS2) =>
-        template({
-          ...args,
-          variant,
-          'default-slot': semanticLabels[variant],
-        })
+    ${STATUSLIGHT_VARIANTS_SEMANTIC.map((variant: StatusLightSemanticVariant) =>
+      template({
+        ...args,
+        variant,
+        'default-slot': semanticLabels[variant],
+      })
     )}
   `,
   parameters: {
@@ -249,7 +234,7 @@ export const SemanticVariants: Story = {
  */
 export const NonSemanticVariants: Story = {
   render: (args) => html`
-    ${STATUS_LIGHT_VARIANTS_COLOR_S2.map((variant: StatusLightColorVariantS2) =>
+    ${STATUSLIGHT_VARIANTS_COLOR.map((variant: StatusLightColorVariant) =>
       template({
         ...args,
         variant,
