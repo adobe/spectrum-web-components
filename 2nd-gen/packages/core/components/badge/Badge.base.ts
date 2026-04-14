@@ -106,6 +106,20 @@ export abstract class BadgeBase extends SizedMixin(
   @property({ type: String, reflect: true })
   public fixed?: FixedValues;
 
+  /**
+   * Whether the badge is subtle.
+   */
+  @property({ type: Boolean, reflect: true })
+  public subtle: boolean = false;
+
+  /**
+   * Whether the badge is outlined.
+   *
+   * Can only be used with semantic variants.
+   */
+  @property({ type: Boolean, reflect: true })
+  public outline: boolean = false;
+
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────

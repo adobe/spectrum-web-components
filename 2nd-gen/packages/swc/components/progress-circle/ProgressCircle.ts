@@ -15,9 +15,9 @@ import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import {
-  PROGRESS_CIRCLE_STATIC_COLORS_S2,
+  PROGRESS_CIRCLE_STATIC_COLORS,
   ProgressCircleBase,
-  type ProgressCircleStaticColorS2,
+  type ProgressCircleStaticColor,
 } from '@spectrum-web-components/core/components/progress-circle';
 import { capitalize } from '@spectrum-web-components/core/utils/index.js';
 
@@ -47,7 +47,7 @@ export class ProgressCircle extends ProgressCircleBase {
   /**
    * @internal
    */
-  static override readonly STATIC_COLORS = PROGRESS_CIRCLE_STATIC_COLORS_S2;
+  static override readonly STATIC_COLORS = PROGRESS_CIRCLE_STATIC_COLORS;
 
   /**
    * Static color variant for use on different backgrounds.
@@ -57,7 +57,7 @@ export class ProgressCircle extends ProgressCircleBase {
    * When set to 'black', the component uses black styling for images with a light tinted background.
    */
   @property({ reflect: true, attribute: 'static-color' })
-  public override staticColor?: ProgressCircleStaticColorS2;
+  public override staticColor?: ProgressCircleStaticColor;
 
   // ──────────────────────────────
   //     RENDERING & STYLING
