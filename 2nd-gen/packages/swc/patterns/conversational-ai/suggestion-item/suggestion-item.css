@@ -24,17 +24,14 @@
   display: inline-flex;
   gap: 0;
   align-items: center;
-  padding-block: 10px;
-  padding-inline-start: 13px;
-  padding-inline-end: 15px;
   font-family: token("sans-serif-font");
   font-size: token("font-size-200");
   font-weight: token("medium-font-weight");
   line-height: token("line-height-font-size-200");
-  color: token("gray-900");
-  background: token("gray-50");
+  color: token("neutral-content-color-default");
+  background: token("gray-100");
   border: none;
-  border-radius: 9px;
+  border-radius: 16px;
   cursor: pointer;
   transition: background 130ms ease;
 }
@@ -43,14 +40,24 @@
   background: token("gray-100");
 }
 
+.swc-SuggestionItem:active {
+  transform: perspective(64px) translate3d(0, 0, -1px);
+  transition: transform 0.2s ease;
+  will-change: transform;
+}
+
 .swc-SuggestionItem swc-icon {
-  --swc-icon-inline-size: 22px;
-  --swc-icon-block-size: 22px;
+  --swc-icon-inline-size: 20px;
+  --swc-icon-block-size: 20px;
 
   flex-shrink: 0;
+  margin-inline-start: 14px;
   margin-inline-end: 6px;
 }
 
 .swc-SuggestionItem-label {
   display: inline-flex;
+  padding-block: 7px;
+  padding-inline-end: 16px;
+  text-align: left;
 }

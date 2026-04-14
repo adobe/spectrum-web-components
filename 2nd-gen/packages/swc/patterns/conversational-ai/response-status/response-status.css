@@ -23,7 +23,7 @@
 .swc-ResponseStatus {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: token("spacing-100");
 }
 
 /* ─────────────────────────────────────
@@ -32,7 +32,7 @@
 
 .swc-ResponseStatus-row {
   display: flex;
-  gap: 8px;
+  gap: token("spacing-100");
   align-items: center;
   block-size: 32px;
 }
@@ -45,23 +45,12 @@
   cursor: pointer;
 }
 
-/* Spinner — animated loading indicator */
+/* Progress circle — indeterminate loading indicator */
 
-.swc-ResponseStatus-spinner {
-  display: inline-block;
+.swc-ResponseStatus-loadingSlot {
+  display: inline-flex;
   flex-shrink: 0;
-  inline-size: 16px;
-  block-size: 16px;
-  border: 2px solid token("gray-300");
-  border-block-start-color: token("gray-700");
-  border-radius: 50%;
-  animation: swc-spinner 0.8s linear infinite;
-}
-
-@keyframes swc-spinner {
-  to {
-    transform: rotate(360deg);
-  }
+  align-items: center;
 }
 
 .swc-ResponseStatus-label {
@@ -69,7 +58,7 @@
   font-size: token("font-size-100");
   font-weight: token("regular-font-weight");
   line-height: token("line-height-font-size-100");
-  color: token("gray-600");
+  color: token("neutral-subdued-content-color-default");
 }
 
 .swc-ResponseStatus-row--button:hover .swc-ResponseStatus-label {
@@ -98,5 +87,5 @@
   font-size: token("font-size-100");
   font-weight: token("regular-font-weight");
   line-height: token("line-height-font-size-100");
-  color: token("gray-600");
+  color: token("neutral-subdued-content-color-default");
 }

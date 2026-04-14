@@ -64,7 +64,7 @@ argTypes.completeLabel = {
 };
 
 /**
- * Displays AI response progress with a loading spinner and optional reasoning disclosure.
+ * Displays AI response progress with an indeterminate progress circle and optional reasoning disclosure.
  */
 const meta: Meta = {
   title: 'Conversational AI/Response status',
@@ -91,7 +91,7 @@ export const Playground: Story = {
   args: {
     loading: true,
     open: false,
-    loadingLabel: 'Thinking…',
+    loadingLabel: 'Generating response',
     completeLabel: 'Response generated',
   },
   tags: ['autodocs', 'dev'],
@@ -105,7 +105,7 @@ export const Overview: Story = {
   args: {
     loading: true,
     open: false,
-    loadingLabel: 'Thinking…',
+    loadingLabel: 'Generating response',
     completeLabel: 'Response generated',
   },
   tags: ['overview'],
@@ -118,14 +118,14 @@ export const Overview: Story = {
 /**
  * A response status indicator consists of:
  *
- * 1. **Status row** — An animated spinner (loading) or checkmark (complete) with a label
+ * 1. **Status row** — An indeterminate progress circle (loading) or checkmark (complete) with a label
  * 2. **Reasoning toggle** — Optional expandable disclosure for chain-of-thought content
  */
 export const Anatomy: Story = {
   args: {
     loading: true,
     open: false,
-    loadingLabel: 'Thinking…',
+    loadingLabel: 'Generating response',
     completeLabel: 'Response generated',
   },
   tags: ['anatomy'],
@@ -138,7 +138,7 @@ export const Anatomy: Story = {
 /**
  * The `loading` attribute controls which indicator is shown:
  *
- * - **`loading=true`** — Animated spinner + "Thinking…" label
+ * - **`loading=true`** — Indeterminate progress circle + "Thinking…" label
  * - **`loading=false`** — Checkmark + "Response generated" label
  * - Set `loading-label` or `complete-label` to customize row text per state
  */
@@ -222,7 +222,7 @@ export const Reasoning: Story = {
  *
  * #### Status announcement
  *
- * - The spinner element carries `role="status"` and `aria-label="Thinking"` for screen reader announcement
+ * - The loading slot carries `role="status"` and `aria-label` matching the status label for screen reader announcement
  * - The reasoning toggle uses `aria-expanded` and `aria-controls` to communicate panel state
  * - The reasoning panel uses `role="region"` with `aria-label="Reasoning"`
  */

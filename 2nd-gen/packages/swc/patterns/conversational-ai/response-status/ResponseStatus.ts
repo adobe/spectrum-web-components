@@ -16,6 +16,7 @@ import { property } from 'lit/decorators.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 import '@adobe/spectrum-wc/icon';
+import '@adobe/spectrum-wc/progress-circle';
 
 import { Chevron75Icon } from '../../../components/icon/elements/index.js';
 import { CheckCircleIcon } from '../utils/icons/index.js';
@@ -31,7 +32,7 @@ import styles from './response-status.css';
  * @slot - Optional reasoning content shown when `loading` is `false` and `open` is `true`.
  */
 export class ResponseStatus extends SpectrumElement {
-  /** `true`: spinner + status label, `false`: checkmark + status label. */
+  /** `true`: progress circle + status label, `false`: checkmark + status label. */
   @property({ type: Boolean, reflect: true })
   public loading = false;
 
@@ -39,7 +40,7 @@ export class ResponseStatus extends SpectrumElement {
    * Status row label text shown while `loading=true`.
    */
   @property({ type: String, reflect: true })
-  public loadingLabel = 'Thinking…';
+  public loadingLabel = 'Generating response';
 
   /**
    * Status row label text shown while `loading=false`.
@@ -80,10 +81,16 @@ export class ResponseStatus extends SpectrumElement {
     return html`
       <div class="swc-ResponseStatus-row">
         <span
-          class="swc-ResponseStatus-spinner"
+          class="swc-ResponseStatus-loadingSlot"
           role="status"
           aria-label=${label}
-        ></span>
+        >
+          <swc-progress-circle
+            size="s"
+            indeterminate
+            aria-hidden="true"
+          ></swc-progress-circle>
+        </span>
         <span class="swc-ResponseStatus-label">${label}</span>
       </div>
     `;

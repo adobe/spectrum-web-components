@@ -23,7 +23,7 @@
 .swc-Suggestion {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: token("spacing-100");
 }
 
 .swc-Suggestion-title {
@@ -38,7 +38,7 @@
 .swc-Suggestion-items {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: token("spacing-100");
 }
 
 .swc-Suggestion-items ::slotted(*) {

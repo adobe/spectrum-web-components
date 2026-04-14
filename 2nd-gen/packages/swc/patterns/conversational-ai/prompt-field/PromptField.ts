@@ -203,6 +203,11 @@ export class PromptField extends SpectrumElement {
             ${showStop ? this._renderStopButton() : this._renderSendButton()}
           </div>
         </div>
+        <div class="swc-PromptField-footer">
+          <p class="swc-PromptField-legal-disclaimer">
+            Responses are generated using AI, and may be inaccurate. Check before using. <a target="_blank" href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html">AI User Guidelines</a>
+          </p>
+        </div>
       </div>
     `;
   }

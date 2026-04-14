@@ -13,7 +13,7 @@
 @layer swc-global-elements {
   swc-message-sources li a {
     font-size: token("font-size-100");
-    color: token("gray-800");
+    color: token("neutral-content-color-default");
     text-decoration: underline;
     text-underline-offset: 2px;
   }
