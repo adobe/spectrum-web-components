@@ -587,6 +587,7 @@ Allowed differences:
 - [1st-gen README](../../../../1st-gen/packages/button/README.md)
 - [2nd-gen global button stylesheet](../../../../2nd-gen/packages/swc/stylesheets/global/global-button.css)
 - [2nd-gen global elements stylesheet](../../../../2nd-gen/packages/swc/stylesheets/global/global-elements.css)
+- [React Spectrum S2 Button](https://react-spectrum.adobe.com/Button)
 - [Global element styling guide](../../../../2nd-gen/packages/swc/.storybook/guides/customization/global-elements.mdx)
 - [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
 - [spectrum-css migration PR #3246](https://github.com/adobe/spectrum-css/pull/3246)
