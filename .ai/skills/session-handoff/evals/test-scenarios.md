@@ -41,7 +41,7 @@ I can continue later.
 
 - [ ] Skill triggers (recognizes "create a handoff")
 - [ ] Runs `create_handoff.py` script
-- [ ] Creates file in `.cursor/handoffs/`
+- [ ] Creates file in `.ai/handoffs/`
 - [ ] Pre-fills metadata (timestamp, project path, git branch)
 - [ ] Prompts user to complete TODO sections
 - [ ] Mentions validation step
