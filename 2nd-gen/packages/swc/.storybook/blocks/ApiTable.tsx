@@ -59,6 +59,19 @@ function isField(member: ClassMember): member is MemberWithReflects {
 }
 
 // ────────────────────────────
+//   Shared
+// ────────────────────────────
+
+const scrollStyle: React.CSSProperties = {
+  overflowX: 'auto',
+  width: '100%',
+};
+
+const tableStyle: React.CSSProperties = {
+  width: '100%',
+};
+
+// ────────────────────────────
 //   Sub-tables
 // ────────────────────────────
 
@@ -99,55 +112,57 @@ function PropertiesTable({
   return (
     <>
       <h3>Properties</h3>
-      <table style={{ width: '100%' }}>
-        <thead>
-          <tr>
-            <th>Property</th>
-            <th>Attribute</th>
-            <th>Type</th>
-            <th>Default</th>
-            <th style={{ minWidth: 300 }}>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.map((prop) => {
-            const attr = attrByField.get(prop.name);
-            const argType = argTypes[prop.name] ?? argTypes[attr?.name ?? ''];
+      <div style={scrollStyle}>
+        <table style={tableStyle}>
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Attribute</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th style={{ minWidth: 300 }}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {props.map((prop) => {
+              const attr = attrByField.get(prop.name);
+              const argType = argTypes[prop.name] ?? argTypes[attr?.name ?? ''];
 
-            // Prefer expanded options from argTypes, fall back to CEM type text.
-            const typeName = argType?.options
-              ? argType.options.map((o) => `'${o}'`).join(' | ')
-              : (prop.type?.text ?? '');
+              // Prefer expanded options from argTypes, fall back to CEM type text.
+              const typeName = argType?.options
+                ? argType.options.map((o) => `'${o}'`).join(' | ')
+                : (prop.type?.text ?? '');
 
-            return (
-              <tr key={prop.name}>
-                <td>
-                  <code>{prop.name}</code>
-                </td>
-                <td>
-                  {attr ? (
-                    <>
-                      <code>{attr.name}</code>
-                      {prop.reflects && (
-                        <small style={{ opacity: 0.6, marginLeft: 4 }}>
-                          (reflects)
-                        </small>
-                      )}
-                    </>
-                  ) : (
-                    '-'
-                  )}
-                </td>
-                <td>{typeName && <code>{typeName}</code>}</td>
-                <td>
-                  {prop.default != null ? <code>{prop.default}</code> : '-'}
-                </td>
-                <td>{prop.description ?? ''}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+              return (
+                <tr key={prop.name}>
+                  <td>
+                    <code>{prop.name}</code>
+                  </td>
+                  <td>
+                    {attr ? (
+                      <>
+                        <code>{attr.name}</code>
+                        {prop.reflects && (
+                          <small style={{ opacity: 0.6, marginLeft: 4 }}>
+                            (reflects)
+                          </small>
+                        )}
+                      </>
+                    ) : (
+                      '-'
+                    )}
+                  </td>
+                  <td>{typeName && <code>{typeName}</code>}</td>
+                  <td>
+                    {prop.default != null ? <code>{prop.default}</code> : '-'}
+                  </td>
+                  <td>{prop.description ?? ''}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 }
@@ -157,24 +172,26 @@ function SlotsTable({ slots }: { slots: Slot[] }) {
   return (
     <>
       <h3>Slots</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {slots.map((slot) => (
-            <tr key={slot.name || 'default'}>
-              <td>
-                <code>{slot.name || '(default)'}</code>
-              </td>
-              <td>{slot.description ?? ''}</td>
+      <div style={scrollStyle}>
+        <table style={tableStyle}>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {slots.map((slot) => (
+              <tr key={slot.name || 'default'}>
+                <td>
+                  <code>{slot.name || '(default)'}</code>
+                </td>
+                <td>{slot.description ?? ''}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 }
@@ -185,24 +202,26 @@ function EventsTable({ events }: { events: CemEvent[] }) {
   return (
     <>
       <h3>Events</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {events.map((event) => (
-            <tr key={event.name}>
-              <td>
-                <code>{event.name}</code>
-              </td>
-              <td>{event.description ?? ''}</td>
+      <div style={scrollStyle}>
+        <table style={tableStyle}>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {events.map((event) => (
+              <tr key={event.name}>
+                <td>
+                  <code>{event.name}</code>
+                </td>
+                <td>{event.description ?? ''}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 }
@@ -212,28 +231,30 @@ function CssPropsTable({ cssProps }: { cssProps: CssCustomProperty[] }) {
   return (
     <>
       <h3>CSS Custom Properties</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Default</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cssProps.map((prop) => (
-            <tr key={prop.name}>
-              <td>
-                <code>{prop.name}</code>
-              </td>
-              <td>
-                {prop.default != null ? <code>{prop.default}</code> : '-'}
-              </td>
-              <td>{prop.description ?? ''}</td>
+      <div style={scrollStyle}>
+        <table style={tableStyle}>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Default</th>
+              <th>Description</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {cssProps.map((prop) => (
+              <tr key={prop.name}>
+                <td>
+                  <code>{prop.name}</code>
+                </td>
+                <td>
+                  {prop.default != null ? <code>{prop.default}</code> : '-'}
+                </td>
+                <td>{prop.description ?? ''}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 }
@@ -243,24 +264,26 @@ function CssPartsTable({ cssParts }: { cssParts: CssPart[] }) {
   return (
     <>
       <h3>CSS Parts</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cssParts.map((part) => (
-            <tr key={part.name}>
-              <td>
-                <code>{part.name}</code>
-              </td>
-              <td>{part.description ?? ''}</td>
+      <div style={scrollStyle}>
+        <table style={tableStyle}>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {cssParts.map((part) => (
+              <tr key={part.name}>
+                <td>
+                  <code>{part.name}</code>
+                </td>
+                <td>{part.description ?? ''}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 }
