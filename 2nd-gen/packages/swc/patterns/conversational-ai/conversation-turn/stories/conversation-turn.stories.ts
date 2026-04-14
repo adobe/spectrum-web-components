@@ -16,7 +16,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import '../index.js';
 import '../../system-message/index.js';
 import '../../user-message/index.js';
-import '../../conversation-artifact/index.js';
+import '../../upload-artifact/index.js';
 import '../../prompt-field/index.js';
 import '../../response-status/index.js';
 import '../../message-feedback/index.js';
@@ -122,6 +122,7 @@ export const FullPattern: Story = {
       id: number;
       role: 'user' | 'system';
       text: string;
+      uploads?: Artifact[];
       reasoning?: string;
       loading?: boolean;
       feedback?: Feedback;
@@ -131,30 +132,14 @@ export const FullPattern: Story = {
       id: string;
       title: string;
       subtitle: string;
+      mimeType: string;
+      size: number;
+      file: File;
+      previewUrl?: string;
     };
 
     const container = document.createElement('div');
     let nextId = 1;
-
-    let draft = '';
-    let sending = false;
-    let artifacts: Artifact[] = [
-      { id: 'a1', title: 'Hilton commercial assets', subtitle: '2026' },
-    ];
-    let messages: Message[] = [
-      {
-        id: nextId++,
-        role: 'user',
-        text: 'Can you help me create a 45-minute presentation, with animations, for an executive update?',
-      },
-      {
-        id: nextId++,
-        role: 'system',
-        text: 'I can help draft your executive update. Share a prompt and I will generate a structured outline.',
-        reasoning:
-          'I am prioritizing a concise executive storyline first, then mapping details into reusable sections for slides.',
-      },
-    ];
 
     const cannedResponses = [
       'Great direction. I suggest a 12-slide structure: market context, opportunity, strategy, roadmap, and risks with a clear executive summary.',
@@ -177,6 +162,43 @@ export const FullPattern: Story = {
       'User research — loyalty programme survey',
     ];
 
+    let draft = '';
+    let sending = false;
+    let artifacts: Artifact[] = [];
+    let messages: Message[] = [
+      {
+        id: nextId++,
+        role: 'user',
+        text: 'Can you help me create a 45-minute presentation, with animations, for an executive update?',
+      },
+      {
+        id: nextId++,
+        role: 'system',
+        text: 'I can help draft your executive update. Share a prompt and I will generate a structured outline.',
+        reasoning:
+          'I am prioritizing a concise executive storyline first, then mapping details into reusable sections for slides.',
+        suggestions: cannedSuggestions,
+      },
+    ];
+
+    const getArtifactTypeLabel = (artifact: Artifact): string => {
+      if (artifact.mimeType.startsWith('application/pdf')) {
+        return 'PDF';
+      }
+      if (artifact.mimeType.startsWith('video/')) {
+        return 'VID';
+      }
+      if (artifact.mimeType.startsWith('audio/')) {
+        return 'AUD';
+      }
+
+      const extension = artifact.title.split('.').pop()?.trim();
+      return extension ? extension.slice(0, 4).toUpperCase() : 'FILE';
+    };
+
+    const getUploadArtifactType = (artifact: Artifact): 'card' | 'media' =>
+      artifact.mimeType.startsWith('image/') ? 'media' : 'card';
+
     const handleFeedback = (event: Event): void => {
       const target = event.currentTarget as HTMLElement | null;
       const messageId = Number(target?.dataset.messageId ?? '');
@@ -191,67 +213,39 @@ export const FullPattern: Story = {
       rerender();
     };
 
-    const handleSuggestion = (event: Event): void => {
+    const sendConversationTurn = (
+      nextPromptValue: string,
+      submittedArtifacts: Artifact[] = []
+    ): void => {
+      const nextPrompt = nextPromptValue.trim();
       if (sending) {
         return;
       }
-      const target = event.currentTarget as HTMLElement | null;
-      const messageId = Number(target?.dataset.messageId ?? '');
-      if (!Number.isInteger(messageId)) {
-        return;
-      }
-      const suggestion = (event as CustomEvent<{ label: string }>).detail.label;
-      if (!suggestion) {
-        return;
-      }
-      draft = suggestion;
-      rerender();
-    };
-
-    const handlePromptInput = (event: Event): void => {
-      const detail = (event as CustomEvent<{ value: string }>).detail;
-      draft = detail.value;
-      rerender();
-    };
-
-    const handleUploadClick = (): void => {
-      if (artifacts.length >= 2) {
-        return;
-      }
-      artifacts = [
-        ...artifacts,
-        {
-          id: `a${artifacts.length + 1}`,
-          title:
-            artifacts.length === 0 ? 'Brand guidelines' : 'Campaign references',
-          subtitle: artifacts.length === 0 ? 'PDF' : 'ZIP',
-        },
-      ];
-      rerender();
-    };
-
-    const handleArtifactDismiss = (event: Event): void => {
-      const artifact = (event as CustomEvent<{ artifact: Element }>).detail
-        .artifact as HTMLElement;
-      const artifactId = artifact.dataset.artifactId;
-      if (!artifactId) {
-        return;
-      }
-      artifacts = artifacts.filter((entry) => entry.id !== artifactId);
-      rerender();
-    };
-
-    const handleSubmit = (): void => {
-      const nextPrompt = draft.trim();
-      if (!nextPrompt || sending) {
+      if (!nextPrompt && submittedArtifacts.length === 0) {
         return;
       }
 
       sending = true;
       draft = '';
+      artifacts = [];
+      const nextUserMessages: Message[] = [];
+
+      if (submittedArtifacts.length > 0) {
+        nextUserMessages.push({
+          id: nextId++,
+          role: 'user',
+          text: '',
+          uploads: submittedArtifacts,
+        });
+      }
+
+      if (nextPrompt) {
+        nextUserMessages.push({ id: nextId++, role: 'user', text: nextPrompt });
+      }
+
       messages = [
         ...messages,
-        { id: nextId++, role: 'user', text: nextPrompt },
+        ...nextUserMessages,
         { id: nextId, role: 'system', text: '', loading: true },
       ];
       nextId += 1;
@@ -282,6 +276,93 @@ export const FullPattern: Story = {
       }, 1200);
     };
 
+    const handleSuggestion = (event: Event): void => {
+      const target = event.currentTarget as HTMLElement | null;
+      const messageId = Number(target?.dataset.messageId ?? '');
+      if (!Number.isInteger(messageId)) {
+        return;
+      }
+      const suggestion = (event as CustomEvent<{ label: string }>).detail.label;
+      if (!suggestion) {
+        return;
+      }
+      sendConversationTurn(suggestion);
+    };
+
+    const handlePromptInput = (event: Event): void => {
+      const detail = (event as CustomEvent<{ value: string }>).detail;
+      draft = detail.value;
+      rerender();
+    };
+
+    const handleFilesSelected = (event: Event): void => {
+      const detail = (
+        event as CustomEvent<{
+          artifactValues: Array<{
+            id: string;
+            name: string;
+            mimeType: string;
+            size: number;
+            file: File;
+          }>;
+        }>
+      ).detail;
+
+      if (!detail.artifactValues.length) {
+        return;
+      }
+
+      artifacts = [
+        ...artifacts,
+        ...detail.artifactValues.map((artifact) => ({
+          mimeType: artifact.mimeType || 'application/octet-stream',
+          id: artifact.id,
+          title: artifact.name,
+          subtitle: `${Math.max(1, Math.round(artifact.size / 1024))} KB`,
+          size: artifact.size,
+          file: artifact.file,
+          previewUrl:
+            artifact.mimeType.startsWith('image/') ||
+            artifact.mimeType.startsWith('video/')
+              ? URL.createObjectURL(artifact.file)
+              : undefined,
+        })),
+      ];
+      rerender();
+    };
+
+    const handleArtifactDismiss = (event: Event): void => {
+      const artifact = (event as CustomEvent<{ artifact: Element }>).detail
+        .artifact as HTMLElement;
+      const artifactId = artifact.dataset.artifactId;
+      if (!artifactId) {
+        return;
+      }
+      const removed = artifacts.find((entry) => entry.id === artifactId);
+      if (removed?.previewUrl) {
+        URL.revokeObjectURL(removed.previewUrl);
+      }
+      artifacts = artifacts.filter((entry) => entry.id !== artifactId);
+      rerender();
+    };
+
+    const handleSubmit = (event: Event): void => {
+      const submitDetail = (
+        event as CustomEvent<{
+          value: string;
+          artifactValues: Array<{
+            id: string;
+            name: string;
+            mimeType: string;
+            size: number;
+            file: File;
+          }>;
+        }>
+      ).detail;
+      const submittedArtifacts = artifacts;
+      sendConversationTurn(submitDetail.value, submittedArtifacts);
+    };
+
     function rerender(): void {
       render(
         html`
@@ -292,7 +373,65 @@ export const FullPattern: Story = {
               message.role === 'user'
                 ? html`
                     <swc-conversation-turn type="user">
-                      <swc-user-message>${message.text}</swc-user-message>
+                      <swc-user-message>
+                        ${message.uploads?.length
+                          ? html`
+                              <div
+                                style="display:flex;flex-direction:column;gap:8px;inline-size:100%;"
+                              >
+                                ${message.uploads.map((artifact) => {
+                                  const type = getUploadArtifactType(artifact);
+                                  return html`
+                                    <swc-upload-artifact type=${type}>
+                                      ${artifact.previewUrl
+                                        ? artifact.mimeType.startsWith('image/')
+                                          ? html`
+                                              <img
+                                                slot="thumbnail"
+                                                src=${artifact.previewUrl}
+                                                alt=${artifact.title}
+                                                style="object-fit:cover;display:block;border-radius:${type ===
+                                                'media'
+                                                  ? '10px'
+                                                  : '4px'};${type === 'card'
+                                                  ? 'inline-size:32px;block-size:32px;'
+                                                  : ''}"
+                                              />
+                                            `
+                                          : html`
+                                              <video
+                                                slot="thumbnail"
+                                                src=${artifact.previewUrl}
+                                                muted
+                                                playsinline
+                                                preload="metadata"
+                                                aria-label=${artifact.title}
+                                                style="inline-size:32px;block-size:32px;border-radius:4px;object-fit:cover;display:block;background:var(--swc-gray-200);"
+                                              ></video>
+                                            `
+                                        : html`
+                                            <div
+                                              slot="thumbnail"
+                                              style="display:flex;align-items:center;justify-content:center;inline-size:32px;block-size:32px;border-radius:4px;background:var(--swc-gray-200);color:var(--swc-gray-700);font-size:10px;font-weight:700;letter-spacing:0.02em;flex-shrink:0;"
+                                              role="img"
+                                              aria-label=${`${getArtifactTypeLabel(artifact)} file`}
+                                            >
+                                              ${getArtifactTypeLabel(artifact)}
+                                            </div>
+                                          `}
+                                      <span slot="title">
+                                        ${artifact.title}
+                                      </span>
+                                      <span slot="subtitle">
+                                        ${artifact.subtitle}
+                                      </span>
+                                    </swc-upload-artifact>
+                                  `;
+                                })}
+                              </div>
+                            `
+                          : message.text}
+                      </swc-user-message>
                     </swc-conversation-turn>
                   `
                 : html`
@@ -353,30 +492,76 @@ export const FullPattern: Story = {
             <swc-prompt-field
               .value=${draft}
               .sending=${sending}
+              .artifactValues=${artifacts.map((artifact) => ({
+                id: artifact.id,
+                name: artifact.title,
+                mimeType: artifact.mimeType,
+                size: artifact.size,
+                file: artifact.file,
+              }))}
               @swc-input=${handlePromptInput}
-              @swc-upload-click=${handleUploadClick}
+              @swc-files-selected=${handleFilesSelected}
               @swc-dismiss=${handleArtifactDismiss}
               @swc-submit=${handleSubmit}
             >
-              ${artifacts.map(
-                (artifact) => html`
-                  <swc-conversation-artifact
+              ${artifacts.map((artifact) => {
+                const isMedia = getUploadArtifactType(artifact) === 'media';
+                return html`
+                  <swc-upload-artifact
                     slot="artifact"
-                    variant="card"
+                    type=${getUploadArtifactType(artifact)}
                     dismissible
                     data-artifact-id=${artifact.id}
                   >
-                    <div
-                      slot="thumbnail"
-                      style="inline-size:28px;block-size:28px;border-radius:3px;background:var(--swc-gray-200);flex-shrink:0;"
-                      role="img"
-                      aria-label="File"
-                    ></div>
-                    <span slot="title">${artifact.title}</span>
-                    <span slot="subtitle">${artifact.subtitle}</span>
-                  </swc-conversation-artifact>
-                `
-              )}
+                    ${isMedia && artifact.previewUrl
+                      ? html`
+                          <img
+                            slot="thumbnail"
+                            src=${artifact.previewUrl}
+                            alt=${artifact.title}
+                            style="object-fit:cover;display:block;"
+                          />
+                        `
+                      : artifact.previewUrl
+                        ? artifact.mimeType.startsWith('image/')
+                          ? html`
+                              <img
+                                slot="thumbnail"
+                                src=${artifact.previewUrl}
+                                alt=${artifact.title}
+                                style="inline-size:32px;block-size:32px;border-radius:4px;object-fit:cover;display:block;"
+                              />
+                            `
+                          : html`
+                              <video
+                                slot="thumbnail"
+                                src=${artifact.previewUrl}
+                                muted
+                                playsinline
+                                preload="metadata"
+                                aria-label=${artifact.title}
+                                style="inline-size:32px;block-size:32px;border-radius:4px;object-fit:cover;display:block;background:var(--swc-gray-200);"
+                              ></video>
+                            `
+                        : html`
+                            <div
+                              slot="thumbnail"
+                              style="display:flex;align-items:center;justify-content:center;inline-size:32px;block-size:32px;border-radius:4px;background:var(--swc-gray-200);color:var(--swc-gray-700);font-size:10px;font-weight:700;letter-spacing:0.02em;flex-shrink:0;"
+                              role="img"
+                              aria-label=${`${getArtifactTypeLabel(artifact)} file`}
+                            >
+                              ${getArtifactTypeLabel(artifact)}
+                            </div>
+                          `}
+                    ${isMedia
+                      ? ''
+                      : html`
+                          <span slot="title">${artifact.title}</span>
+                          <span slot="subtitle">${artifact.subtitle}</span>
+                        `}
+                  </swc-upload-artifact>
+                `;
+              })}
             </swc-prompt-field>
           </div>
         `,

@@ -17,24 +17,24 @@ import { SpectrumElement } from '@spectrum-web-components/core/element/index.js'
 
 import '@adobe/spectrum-wc/icon';
 
-import { CrossIcon, ThreeDotsIcon } from '../utils/icons/index.js';
+import { CrossIcon } from '../utils/icons/index.js';
 
-import styles from './conversation-artifact.css';
+import styles from './upload-artifact.css';
 
 /**
- * Shared conversation artifact primitive with card and media variants.
+ * Shared upload artifact primitive with card and media types.
  *
- * @element swc-conversation-artifact
+ * @element swc-upload-artifact
  *
- * @slot thumbnail - Shared visual slot for icon/thumbnail/preview media.
+ * @slot thumbnail - Shared visual slot for icon/thumbnail/preview image.
  * @slot title - Primary text label.
  * @slot subtitle - Secondary text label.
  * @slot actions - Optional trailing actions.
  */
-export class ConversationArtifact extends SpectrumElement {
-  /** Visual treatment variant for this artifact. */
+export class UploadArtifact extends SpectrumElement {
+  /** Visual treatment type for this artifact. */
   @property({ type: String, reflect: true })
-  public variant: 'card' | 'media' = 'card';
+  public type: 'card' | 'media' = 'card';
 
   /** When `true`, show a dismiss affordance and emit `swc-dismiss` on click. */
   @property({ type: Boolean, reflect: true })
@@ -73,7 +73,7 @@ export class ConversationArtifact extends SpectrumElement {
 
   private _syncTextMetaSlots(): void {
     const root = this.shadowRoot;
-    if (!root || this.variant !== 'media') {
+    if (!root || this.type !== 'media') {
       this._hideTextMeta = false;
       this.removeAttribute('data-preview-only');
       return;
@@ -109,7 +109,7 @@ export class ConversationArtifact extends SpectrumElement {
   }
 
   protected override updated(changed: Map<string, unknown>): void {
-    if (changed.has('variant')) {
+    if (changed.has('type')) {
       this._syncTextMetaSlots();
     }
   }
@@ -152,14 +152,13 @@ export class ConversationArtifact extends SpectrumElement {
   }
 
   protected override render(): TemplateResult {
-    const isMedia = this.variant === 'media';
+    const isMedia = this.type === 'media';
     const hideMediaMeta = isMedia && this._hideTextMeta === true;
-    const showDefaultActions = !this._hasActions && !hideMediaMeta;
 
     return html`
-      <div class="swc-ConversationArtifact">
+      <div class="swc-UploadArtifact">
         <button
-          class="swc-ConversationArtifact-dismiss"
+          class="swc-UploadArtifact-dismiss"
           aria-label="Remove attachment"
           ?hidden=${!this.dismissible}
           @click=${this._handleDismissClick}
@@ -167,62 +166,39 @@ export class ConversationArtifact extends SpectrumElement {
           <swc-icon label="Remove">${CrossIcon()}</swc-icon>
         </button>
 
-        <div class="swc-ConversationArtifact-surface">
-          <div class="swc-ConversationArtifact-thumbnail">
+        <div class="swc-UploadArtifact-surface">
+          <div class="swc-UploadArtifact-thumbnail">
             <slot name="thumbnail"></slot>
           </div>
 
           ${isMedia
             ? html`
-                <div
-                  class="swc-ConversationArtifact-meta"
-                  ?hidden=${hideMediaMeta}
-                >
-                  <div class="swc-ConversationArtifact-header">
-                    <div class="swc-ConversationArtifact-title">
+                <div class="swc-UploadArtifact-meta" ?hidden=${hideMediaMeta}>
+                  <div class="swc-UploadArtifact-header">
+                    <div class="swc-UploadArtifact-title">
                       <slot name="title"></slot>
                     </div>
-                    <div class="swc-ConversationArtifact-actions">
+                    <div class="swc-UploadArtifact-actions">
                       <slot name="actions"></slot>
-                      ${showDefaultActions
-                        ? html`
-                            <span
-                              class="swc-ConversationArtifact-default-action"
-                              aria-hidden="true"
-                            >
-                              ${ThreeDotsIcon()}
-                            </span>
-                          `
-                        : ''}
                     </div>
                   </div>
-                  <div class="swc-ConversationArtifact-subtitle">
+                  <div class="swc-UploadArtifact-subtitle">
                     <slot name="subtitle"></slot>
                   </div>
                 </div>
               `
             : html`
-                <div class="swc-ConversationArtifact-meta">
-                  <div class="swc-ConversationArtifact-title">
+                <div class="swc-UploadArtifact-meta">
+                  <div class="swc-UploadArtifact-title">
                     <slot name="title"></slot>
                   </div>
-                  <div class="swc-ConversationArtifact-subtitle">
+                  <div class="swc-UploadArtifact-subtitle">
                     <slot name="subtitle"></slot>
                   </div>
                 </div>
 
-                <div class="swc-ConversationArtifact-actions">
+                <div class="swc-UploadArtifact-actions">
                   <slot name="actions"></slot>
-                  ${showDefaultActions
-                    ? html`
-                        <span
-                          class="swc-ConversationArtifact-default-action"
-                          aria-hidden="true"
-                        >
-                          ${ThreeDotsIcon()}
-                        </span>
-                      `
-                    : ''}
                 </div>
               `}
         </div>

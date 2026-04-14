@@ -11,14 +11,14 @@
  */
 import { defineElement } from '@spectrum-web-components/core/element/index.js';
 
-import { ConversationArtifact } from './ConversationArtifact.js';
+import { UploadArtifact } from './UploadArtifact.js';
 
-export * from './ConversationArtifact.js';
+export * from './UploadArtifact.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'swc-conversation-artifact': ConversationArtifact;
+    'swc-upload-artifact': UploadArtifact;
   }
 }
 
-defineElement('swc-conversation-artifact', ConversationArtifact);
+defineElement('swc-upload-artifact', UploadArtifact);

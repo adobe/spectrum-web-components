@@ -12,6 +12,7 @@
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
@@ -21,6 +22,25 @@ import { ChevronUpIcon, PlusIcon, StopIcon } from '../utils/icons/index.js';
 
 import styles from './prompt-field.css';
 
+export interface PromptFieldArtifactValue {
+  id: string;
+  name: string;
+  mimeType: string;
+  size: number;
+  file: File;
+}
+
+export interface PromptFieldFilesSelectedDetail {
+  files: File[];
+  artifactValues: PromptFieldArtifactValue[];
+  allArtifactValues: PromptFieldArtifactValue[];
+}
+
+export interface PromptFieldSubmitDetail {
+  value: string;
+  artifactValues: PromptFieldArtifactValue[];
+}
+
 /**
  * Prompt entry surface for conversational AI flows.
  *
@@ -29,7 +49,8 @@ import styles from './prompt-field.css';
  * @element swc-prompt-field
  *
  * @slot artifact - Optional attachment preview(s); supports multiple slotted artifacts.
- * @slot leading-actions - Optional additional actions shown next to the upload button.
+ *
+ * @event swc-submit - Fires when the send button is clicked or Enter is pressed in the textarea.
  */
 export class PromptField extends SpectrumElement {
   /** When `true`, show the stop action in place of send. */
@@ -49,7 +70,24 @@ export class PromptField extends SpectrumElement {
   @property({ type: String })
   public value = '';
 
+  /**
+   * Controlled attachment values associated with the current draft.
+   * Updated automatically when files are selected through the built-in file picker.
+   */
+  @property({ attribute: false })
+  public artifactValues: PromptFieldArtifactValue[] = [];
+
+  /** Comma-separated file MIME types/extensions accepted by the picker. */
+  @property({ type: String })
+  public accept = '';
+
+  /** When true, picker allows selecting multiple files. */
+  @property({ type: Boolean })
+  public multiple = true;
+
   private _hasArtifacts = false;
+  private _artifactCount = 0;
+  private _artifactIdCounter = 0;
 
   public static override get styles(): CSSResultArray {
     return [styles];
@@ -84,7 +122,14 @@ export class PromptField extends SpectrumElement {
       return;
     }
     this.dispatchEvent(
-      new CustomEvent('swc-submit', { bubbles: true, composed: true })
+      new CustomEvent<PromptFieldSubmitDetail>('swc-submit', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          value: this.value,
+          artifactValues: this.artifactValues,
+        },
+      })
     );
   }
 
@@ -95,9 +140,52 @@ export class PromptField extends SpectrumElement {
   }
 
   private _handleUploadClick(): void {
-    this.dispatchEvent(
-      new CustomEvent('swc-upload-click', { bubbles: true, composed: true })
+    const uploadClickEvent = new CustomEvent('swc-upload-click', {
+      bubbles: true,
+      composed: true,
+      cancelable: true,
+    });
+    this.dispatchEvent(uploadClickEvent);
+    if (uploadClickEvent.defaultPrevented) {
+      return;
+    }
+    const fileInput = this.shadowRoot?.querySelector<HTMLInputElement>(
+      '.swc-PromptField-file-input'
     );
+    fileInput?.click();
+  }
+
+  private _handleFileInputChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const files = Array.from(input.files ?? []);
+    if (files.length === 0) {
+      return;
+    }
+
+    const nextArtifactValues = files.map((file) => ({
+      id: `artifact-${++this._artifactIdCounter}`,
+      name: file.name,
+      mimeType: file.type || 'application/octet-stream',
+      size: file.size,
+      file,
+    }));
+
+    this.artifactValues = [...this.artifactValues, ...nextArtifactValues];
+
+    this.dispatchEvent(
+      new CustomEvent<PromptFieldFilesSelectedDetail>('swc-files-selected', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          files,
+          artifactValues: nextArtifactValues,
+          allArtifactValues: this.artifactValues,
+        },
+      })
+    );
+
+    // Allow selecting the same file again in subsequent picker interactions.
+    input.value = '';
   }
 
   private _syncArtifactPresenceFromSlot(slot?: HTMLSlotElement): void {
@@ -105,11 +193,16 @@ export class PromptField extends SpectrumElement {
       slot ??
       this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="artifact"]');
 
-    const hasArtifacts =
-      (artifactSlot?.assignedElements({ flatten: true })?.length ?? 0) > 0;
+    const artifactCount =
+      artifactSlot?.assignedElements({ flatten: true })?.length ?? 0;
+    const hasArtifacts = artifactCount > 0;
 
-    if (hasArtifacts !== this._hasArtifacts) {
+    if (
+      hasArtifacts !== this._hasArtifacts ||
+      artifactCount !== this._artifactCount
+    ) {
       this._hasArtifacts = hasArtifacts;
+      this._artifactCount = artifactCount;
       this.requestUpdate();
     }
   }
@@ -119,7 +212,11 @@ export class PromptField extends SpectrumElement {
   }
 
   private get _isPopulated(): boolean {
-    return this.value.trim().length > 0 || this._hasArtifacts;
+    return (
+      this.value.trim().length > 0 ||
+      this._hasArtifacts ||
+      this.artifactValues.length > 0
+    );
   }
 
   protected override firstUpdated(): void {
@@ -127,8 +224,13 @@ export class PromptField extends SpectrumElement {
   }
 
   private _renderArtifact(): TemplateResult {
+    const artifactClass =
+      this._artifactCount <= 1
+        ? 'swc-PromptField-artifacts is-single'
+        : 'swc-PromptField-artifacts is-multiple';
+
     return html`
-      <div class="swc-PromptField-artifacts" ?hidden=${!this._hasArtifacts}>
+      <div class=${artifactClass} ?hidden=${!this._hasArtifacts}>
         <slot
           name="artifact"
           @slotchange=${this._handleArtifactSlotChange}
@@ -197,7 +299,14 @@ export class PromptField extends SpectrumElement {
               >
                 <swc-icon label="Add">${PlusIcon()}</swc-icon>
               </button>
-              <slot name="leading-actions"></slot>
+              <input
+                class="swc-PromptField-file-input"
+                type="file"
+                ?multiple=${this.multiple}
+                accept=${ifDefined(this.accept || undefined)}
+                tabindex="-1"
+                @change=${this._handleFileInputChange}
+              />
             </div>
 
             ${showStop ? this._renderStopButton() : this._renderSendButton()}
@@ -205,7 +314,14 @@ export class PromptField extends SpectrumElement {
         </div>
         <div class="swc-PromptField-footer">
           <p class="swc-PromptField-legal-disclaimer">
-            Responses are generated using AI, and may be inaccurate. Check before using. <a target="_blank" href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html">AI User Guidelines</a>
+            Responses are generated using AI, and may be inaccurate. Check
+            before using.
+            <a
+              target="_blank"
+              href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
+            >
+              AI User Guidelines
+            </a>
           </p>
         </div>
       </div>

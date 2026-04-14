@@ -21,7 +21,7 @@ import styles from './user-message.css';
  * User-authored conversation bubble for conversational AI pattern exploration.
  *
  * @element swc-user-message
- * @slot - Message content. Slotted `swc-conversation-artifact[variant]` drives bubble layout inference.
+ * @slot - Message content. Slotted `swc-upload-artifact[type]` drives bubble layout inference.
  */
 export class UserMessage extends SpectrumElement {
   @state()
@@ -31,17 +31,14 @@ export class UserMessage extends SpectrumElement {
     return [styles];
   }
 
-  private _elementHasArtifactVariant(
+  private _elementHasArtifactType(
     element: Element,
-    variant: 'card' | 'media'
+    type: 'card' | 'media'
   ): boolean {
-    if (element.matches(`swc-conversation-artifact[variant="${variant}"]`)) {
+    if (element.matches(`swc-upload-artifact[type="${type}"]`)) {
       return true;
     }
-    return (
-      element.querySelector(`swc-conversation-artifact[variant="${variant}"]`) !==
-      null
-    );
+    return element.querySelector(`swc-upload-artifact[type="${type}"]`) !== null;
   }
 
   private _inferContentKind(slot?: HTMLSlotElement): 'copy' | 'card' | 'media' {
@@ -51,7 +48,7 @@ export class UserMessage extends SpectrumElement {
 
     if (
       assigned.some((element) =>
-        this._elementHasArtifactVariant(element, 'media')
+        this._elementHasArtifactType(element, 'media')
       )
     ) {
       return 'media';
@@ -59,7 +56,7 @@ export class UserMessage extends SpectrumElement {
 
     if (
       assigned.some((element) =>
-        this._elementHasArtifactVariant(element, 'card')
+        this._elementHasArtifactType(element, 'card')
       )
     ) {
       return 'card';

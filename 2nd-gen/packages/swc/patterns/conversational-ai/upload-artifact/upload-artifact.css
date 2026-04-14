@@ -21,7 +21,7 @@
   box-sizing: border-box;
 }
 
-.swc-ConversationArtifact-dismiss {
+.swc-UploadArtifact-dismiss {
   display: flex;
   position: absolute;
   inset-block-start: -12px;
@@ -39,36 +39,36 @@
   cursor: pointer;
 }
 
-.swc-ConversationArtifact-dismiss[hidden] {
+.swc-UploadArtifact-dismiss[hidden] {
   display: none;
 }
 
-.swc-ConversationArtifact-dismiss:hover {
+.swc-UploadArtifact-dismiss:hover {
   background: token("gray-300");
 }
 
-.swc-ConversationArtifact-dismiss swc-icon {
+.swc-UploadArtifact-dismiss swc-icon {
   --swc-icon-inline-size: 10px;
   --swc-icon-block-size: 10px;
 }
 
-.swc-ConversationArtifact-surface {
+.swc-UploadArtifact-surface {
   display: flex;
   background: token("gray-50");
 }
 
-.swc-ConversationArtifact-meta {
+.swc-UploadArtifact-meta {
   display: flex;
   flex-direction: column;
   gap: 2px;
   min-inline-size: 0;
 }
 
-.swc-ConversationArtifact-meta[hidden] {
+.swc-UploadArtifact-meta[hidden] {
   display: none;
 }
 
-.swc-ConversationArtifact-title {
+.swc-UploadArtifact-title {
   font-family: token("sans-serif-font");
   font-size: token("font-size-100");
   font-weight: token("bold-font-weight");
@@ -76,7 +76,7 @@
   color: token("gray-900");
 }
 
-.swc-ConversationArtifact-subtitle {
+.swc-UploadArtifact-subtitle {
   font-family: token("sans-serif-font");
   font-size: token("font-size-75");
   font-weight: token("regular-font-weight");
@@ -84,31 +84,17 @@
   color: token("gray-800");
 }
 
-.swc-ConversationArtifact-actions {
+.swc-UploadArtifact-actions {
   display: flex;
   align-items: center;
 }
 
-.swc-ConversationArtifact-actions ::slotted(*) {
+.swc-UploadArtifact-actions ::slotted(*) {
   display: inline-flex;
   align-items: center;
 }
 
-.swc-ConversationArtifact-default-action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  inline-size: 20px;
-  block-size: 20px;
-  color: token("gray-800");
-}
-
-.swc-ConversationArtifact-default-action svg {
-  inline-size: 20px;
-  block-size: 20px;
-}
-
-:host([variant="card"]) .swc-ConversationArtifact-surface {
+:host([type="card"]) .swc-UploadArtifact-surface {
   gap: token("spacing-300");
   align-items: center;
   min-block-size: 68px;
@@ -116,27 +102,27 @@
   border-radius: 12px;
 }
 
-:host([variant="card"]) .swc-ConversationArtifact-thumbnail {
+:host([type="card"]) .swc-UploadArtifact-thumbnail {
   display: flex;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
 }
 
-:host([variant="card"]) .swc-ConversationArtifact-thumbnail ::slotted(*) {
+:host([type="card"]) .swc-UploadArtifact-thumbnail ::slotted(*) {
   flex-shrink: 0;
   inline-size: 32px;
   block-size: 32px;
   border-radius: token("corner-radius-75");
 }
 
-:host([variant="card"]) .swc-ConversationArtifact-meta {
+:host([type="card"]) .swc-UploadArtifact-meta {
   flex: 1;
   align-items: flex-start;
 }
 
-:host([variant="card"]) .swc-ConversationArtifact-title,
-:host([variant="card"]) .swc-ConversationArtifact-subtitle {
+:host([type="card"]) .swc-UploadArtifact-title,
+:host([type="card"]) .swc-UploadArtifact-subtitle {
   inline-size: 100%;
   text-align: start;
   white-space: nowrap;
@@ -144,69 +130,69 @@
   text-overflow: ellipsis;
 }
 
-:host([variant="media"]) .swc-ConversationArtifact-surface {
+:host([type="media"]) .swc-UploadArtifact-surface {
   flex-direction: column;
   gap: token("spacing-100");
 }
 
-:host([variant="media"]) .swc-ConversationArtifact-thumbnail {
+:host([type="media"]) .swc-UploadArtifact-thumbnail {
   border-radius: token("spacing-200");
   overflow: hidden;
 }
 
-:host([variant="media"]) .swc-ConversationArtifact-thumbnail ::slotted(img) {
+:host([type="media"]) .swc-UploadArtifact-thumbnail ::slotted(img) {
   display: block;
   inline-size: 100%;
   block-size: auto;
   object-fit: cover;
 }
 
-:host([variant="media"]) .swc-ConversationArtifact-meta {
+:host([type="media"]) .swc-UploadArtifact-meta {
   inline-size: 100%;
 }
 
-:host([variant="media"]) .swc-ConversationArtifact-header {
+:host([type="media"]) .swc-UploadArtifact-header {
   display: flex;
   gap: token("spacing-100");
   align-items: flex-start;
   justify-content: space-between;
 }
 
-:host([variant="media"]) .swc-ConversationArtifact-header > div {
+:host([type="media"]) .swc-UploadArtifact-header > div {
   min-inline-size: 0;
 }
 
-:host([variant="media"]) .swc-ConversationArtifact-title {
+:host([type="media"]) .swc-UploadArtifact-title {
   line-height: token("line-height-font-size-100");
 }
 
-:host([variant="media"]) .swc-ConversationArtifact-subtitle {
+:host([type="media"]) .swc-UploadArtifact-subtitle {
   line-height: token("line-height-font-size-75");
 }
 
 /* Preview-only media (no title/subtitle) fills hosts like prompt-field tiles. */
-:host([variant="media"][data-preview-only]) {
-  inline-size: var(--swc-conversation-artifact-preview-size, 68px);
-  block-size: var(--swc-conversation-artifact-preview-size, 68px);
+:host([type="media"][data-preview-only]) {
+  inline-size: var(--swc-upload-artifact-preview-size, 68px);
+  block-size: var(--swc-upload-artifact-preview-size, 68px);
 }
 
-:host([variant="media"][data-preview-only]) .swc-ConversationArtifact {
+:host([type="media"][data-preview-only]) .swc-UploadArtifact {
   inline-size: 100%;
   block-size: 100%;
 }
 
-:host([variant="media"][data-preview-only]) .swc-ConversationArtifact-surface {
+:host([type="media"][data-preview-only]) .swc-UploadArtifact-surface {
   gap: 0;
   inline-size: 100%;
   block-size: 100%;
 }
 
-:host([variant="media"][data-preview-only]) .swc-ConversationArtifact-thumbnail {
+:host([type="media"][data-preview-only]) .swc-UploadArtifact-thumbnail {
   inline-size: 100%;
   block-size: 100%;
 }
 
-:host([variant="media"][data-preview-only]) .swc-ConversationArtifact-thumbnail ::slotted(*) {
+:host([type="media"][data-preview-only]) .swc-UploadArtifact-thumbnail ::slotted(*) {
   display: block;
   inline-size: 100%;
   block-size: 100%;

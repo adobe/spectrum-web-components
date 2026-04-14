@@ -72,7 +72,11 @@
   display: flex;
   flex-wrap: wrap;
   gap: token("spacing-100");
-  align-items: flex-start;
+  align-items: start;
+}
+
+.swc-PromptField-artifacts > slot {
+  display: contents;
 }
 
 /* Mixed card/media artifacts support horizontal flow with wrapping. */
@@ -80,21 +84,26 @@
   flex: 0 0 auto;
 }
 
+/* Figma (node 2:2035): single card artifact is 324px wide. */
+.swc-PromptField-artifacts.is-single > slot::slotted([type="card"]) {
+  flex: 0 1 324px;
+  inline-size: min(100%, 324px);
+  max-inline-size: 324px;
+}
+
+/* Multi-artifact card layout targets 3+ cards per row responsively. */
+.swc-PromptField-artifacts.is-multiple > slot::slotted([type="card"]) {
+  flex: 1 1 160px;
+  min-inline-size: 160px;
+}
+
 /* Prompt-field media artifact uses 68×68 preview tile. */
-.swc-PromptField-artifacts > slot::slotted([variant="media"]) {
+.swc-PromptField-artifacts > slot::slotted([type="media"]) {
   inline-size: 68px;
   min-inline-size: 68px;
   block-size: 68px;
   min-block-size: 68px;
   aspect-ratio: 1 / 1;
-}
-
-/* Card artifacts can grow but wrap naturally in multi-artifact sets. */
-.swc-PromptField-artifacts > slot::slotted([variant="card"]) {
-  flex: 1 1 324px;
-  inline-size: auto;
-  min-inline-size: min(324px, 100%);
-  max-inline-size: 100%;
 }
 
 /* ─────────────────────────────────────
@@ -154,9 +163,8 @@
   align-items: center;
 }
 
-.swc-PromptField-leading-actions ::slotted(*) {
-  display: inline-flex;
-  align-items: center;
+.swc-PromptField-file-input {
+  display: none;
 }
 
 /* Upload button (quiet, left side) */

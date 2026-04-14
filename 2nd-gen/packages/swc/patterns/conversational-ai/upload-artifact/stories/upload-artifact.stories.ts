@@ -16,12 +16,10 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '../index.js';
 
-const { args, argTypes, template } = getStorybookHelpers(
-  'swc-conversation-artifact'
-);
+const { args, argTypes, template } = getStorybookHelpers('swc-upload-artifact');
 
-argTypes.variant = {
-  ...argTypes.variant,
+argTypes.type = {
+  ...argTypes.type,
   control: { type: 'select' },
   options: ['card', 'media'],
   table: {
@@ -31,19 +29,19 @@ argTypes.variant = {
 };
 
 /**
- * Shared artifact primitive used across conversational AI surfaces such as prompt field and user message.
- * Supports both **`card`** and **`media`** variants with a unified slot model.
+ * Shared upload artifact primitive used across conversational AI surfaces such as prompt field and user message.
+ * Supports both **`card`** and **`media`** types with a unified slot model.
  */
 const meta: Meta = {
-  title: 'Conversational AI/Conversation artifact',
-  component: 'swc-conversation-artifact',
+  title: 'Conversational AI/Upload artifact',
+  component: 'swc-upload-artifact',
   args,
   argTypes,
   render: (args) => template(args),
   parameters: {
     docs: {
       subtitle:
-        'Shared artifact primitive with card and media variants, plus optional dismiss and trailing actions.',
+        'Shared upload artifact primitive with card and media types, plus optional dismiss and trailing actions.',
     },
     layout: 'padded',
   },
@@ -54,7 +52,7 @@ export default meta;
 
 export const Playground: Story = {
   args: {
-    variant: 'card',
+    type: 'card',
     dismissible: false,
     'thumbnail-slot':
       '<div slot="thumbnail" style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);" role="img" aria-label="File thumbnail"></div>',
@@ -66,7 +64,7 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   args: {
-    variant: 'card',
+    type: 'card',
     dismissible: true,
     'thumbnail-slot':
       '<div slot="thumbnail" style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);" role="img" aria-label="File thumbnail"></div>',
@@ -77,12 +75,12 @@ export const Overview: Story = {
 };
 
 /**
- * Card variant uses a compact thumbnail with horizontal text layout.
+ * Card type uses a compact thumbnail with horizontal text layout.
  */
 export const Card: Story = {
   render: () => html`
     <div style="max-inline-size:360px;">
-      <swc-conversation-artifact variant="card" dismissible>
+      <swc-upload-artifact type="card" dismissible>
         <div
           slot="thumbnail"
           style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);"
@@ -91,19 +89,19 @@ export const Card: Story = {
         ></div>
         <span slot="title">Hilton commercial assets</span>
         <span slot="subtitle">2026</span>
-      </swc-conversation-artifact>
+      </swc-upload-artifact>
     </div>
   `,
   tags: ['options'],
 };
 
 /**
- * Media variant uses a larger thumbnail region with metadata below.
+ * Media type uses a larger thumbnail region with metadata below.
  */
 export const Media: Story = {
   render: () => html`
     <div style="inline-size:240px;">
-      <swc-conversation-artifact variant="media" dismissible>
+      <swc-upload-artifact type="media" dismissible>
         <div
           slot="thumbnail"
           style="inline-size:100%;block-size:196px;background:linear-gradient(135deg,#a78bfa,#f472b6);"
@@ -112,7 +110,7 @@ export const Media: Story = {
         ></div>
         <span slot="title">Hilton commercial assets</span>
         <span slot="subtitle">2026</span>
-      </swc-conversation-artifact>
+      </swc-upload-artifact>
     </div>
   `,
   tags: ['options'],

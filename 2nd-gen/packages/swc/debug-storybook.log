@@ -1,30 +1,25 @@
-[12:57:32.546] [INFO] storybook v10.2.8
-[12:57:34.255] [DEBUG] Getting package.json info for /Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/packages/swc/package.json...
-[12:57:34.345] [INFO] Starting...
-[12:57:34.824] [DEBUG] Starting preview..
-[12:57:35.661] [WARN] 🚨 Unable to index ./patterns/conversational-ai/prompt-field/stories/prompt-field.stories.ts:
-  SyntaxError: Unexpected token, expected "," (132:11)
-    at constructor (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/storybook/dist/_node-chunks/chunk-DQ5I5L6R.js:12175:21)
-    at Parser.raise (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/storybook/dist/_node-chunks/chunk-DQ5I5L6R.js:16355:71)
-    at Parser.unexpected (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/storybook/dist/_node-chunks/chunk-DQ5I5L6R.js:16372:20)
-    at Parser.expect (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/storybook/dist/_node-chunks/chunk-DQ5I5L6R.js:16580:32)
-    at Parser.parseObjectLike (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/storybook/dist/_node-chunks/chunk-DQ5I5L6R.js:19573:25)
-    at Parser.parseExprAtom (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/storybook/dist/_node-chunks/chunk-DQ5I5L6R.js:19302:25)
-    at Parser.parseExprAtom (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/storybook/dist/_node-chunks/chunk-DQ5I5L6R.js:15099:181)
-    at Parser.parseExprSubscripts (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/storybook/dist/_node-chunks/chunk-DQ5I5L6R.js:19165:105)
-    at Parser.parseUpdate (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/storybook/dist/_node-chunks/chunk-DQ5I5L6R.js:19156:57)
-    at Parser.parseMaybeUnary (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/storybook/dist/_node-chunks/chunk-DQ5I5L6R.js:19141:25)
-[12:57:35.665] [ERROR] Failed to build the preview
-[12:57:35.665] [ERROR] Error: Unable to index ./patterns/conversational-ai/prompt-field/stories/prompt-field.stories.ts
-    at _StoryIndexGenerator.getIndexAndStats (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/storybook/dist/core-server/index.js:6082:15)
-    at async _StoryIndexGenerator.getIndex (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/storybook/dist/core-server/index.js:6071:13)
-    at async getOptimizeDeps (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/@storybook/builder-vite/dist/index.js:1862:15)
-    at async createViteServer (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/@storybook/builder-vite/dist/index.js:1888:19)
-    at async Module.start (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/@storybook/builder-vite/dist/index.js:1923:17)
-    at async storybookDevServer (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/storybook/dist/core-server/index.js:7207:83)
-    at async buildOrThrow (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/storybook/dist/core-server/index.js:4504:12)
+[11:45:52.845] [INFO] storybook v10.2.8
+[11:45:54.394] [DEBUG] Getting package.json info for /Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/packages/swc/package.json...
+[11:45:54.535] [DEBUG] Serving static files from [36m2nd-gen/packages/swc/public[39m at [36m/[39m
+[11:45:54.536] [INFO] Starting...
+[11:45:55.838] [ERROR] [38;2;241;97;97mSB_CORE-SERVER_0004 (NoMatchingExportError): There was an exports mismatch error when trying to build Storybook.
+Please check whether the versions of your Storybook packages match whenever possible, as this might be the cause.
+
+Problematic example:
+{ "@storybook/react": "7.5.3", "@storybook/react-vite": "7.4.5", "storybook": "7.3.0" }
+
+Correct example:
+{ "@storybook/react": "7.5.3", "@storybook/react-vite": "7.5.3", "storybook": "7.5.3" }
+
+Please run `npx storybook doctor` for guidance on how to fix this issue.
+
+More info: 
+[39m
+    at buildOrThrow (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/storybook/dist/core-server/index.js:4509:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
     at async buildDevStandalone (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/storybook/dist/core-server/index.js:7577:66)
     at async withTelemetry (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/storybook/dist/_node-chunks/chunk-KIOKJLL5.js:218:12)
     at async dev (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/storybook/dist/bin/core.js:2734:3)
-[12:57:35.666] [WARN] Broken build, fix the error above.
+    at async _Command.<anonymous> (file:///Users/ttomar/Documents/work/ai-component/spectrum-web-components/2nd-gen/node_modules/storybook/dist/bin/core.js:2803:92)
+[11:45:55.841] [WARN] Broken build, fix the error above.
 You may need to refresh the browser.

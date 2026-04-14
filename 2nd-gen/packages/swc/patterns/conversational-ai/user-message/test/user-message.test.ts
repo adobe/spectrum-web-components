@@ -13,7 +13,7 @@
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../../conversation-artifact/index.js';
+import '../../upload-artifact/index.js';
 import '../index.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
@@ -54,9 +54,9 @@ export const SlotInferenceTest: Story = {
 
     await step('infers card from slotted card artifact', async () => {
       el.innerHTML = `
-        <swc-conversation-artifact variant="card">
+        <swc-upload-artifact type="card">
           <span slot="title">Brand guidelines</span>
-        </swc-conversation-artifact>
+        </swc-upload-artifact>
       `;
       await el.updateComplete;
       await Promise.resolve();
@@ -66,9 +66,9 @@ export const SlotInferenceTest: Story = {
     await step('infers media from slotted media artifact', async () => {
       el.innerHTML = `
         <div>
-          <swc-conversation-artifact variant="media">
+          <swc-upload-artifact type="media">
             <div slot="thumbnail" role="img" aria-label="Preview"></div>
-          </swc-conversation-artifact>
+          </swc-upload-artifact>
         </div>
       `;
       await el.updateComplete;

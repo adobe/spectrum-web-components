@@ -14,7 +14,7 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '../../conversation-artifact/index.js';
+import '../../upload-artifact/index.js';
 import '../../conversation-turn/index.js';
 import '../index.js';
 
@@ -85,7 +85,7 @@ export const Overview: Story = {
  * A user message consists of:
  *
  * 1. **Bubble** — Rounded container with a neutral gray background (`gray-50`)
- * 2. **Default slot** — The message content: plain text, a card attachment, or media-first content
+ * 2. **Default slot** — The message content: plain text, a card attachment, or image-first content
  */
 export const Anatomy: Story = {
   args: {
@@ -103,8 +103,8 @@ export const Anatomy: Story = {
  * Bubble sizing and padding are inferred from slotted content:
  *
  * - **Copy** — default text-only content
- * - **Card** — inferred when slotted content contains `swc-conversation-artifact[variant="card"]`
- * - **Media** — inferred when slotted content contains `swc-conversation-artifact[variant="media"]`
+ * - **Card** — inferred when slotted content contains `swc-upload-artifact[type="card"]`
+ * - **Media** — inferred when slotted content contains `swc-upload-artifact[type="media"]`
  */
 export const Content: Story = {
   render: () => html`
@@ -127,7 +127,7 @@ export const Content: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-conversation-turn type="user">
           <swc-user-message>
-            <swc-conversation-artifact variant="card">
+            <swc-upload-artifact type="card">
               <div
                 slot="thumbnail"
                 style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);flex-shrink:0;"
@@ -136,7 +136,7 @@ export const Content: Story = {
               ></div>
               <span slot="title">Hilton commercial assets</span>
               <span slot="subtitle">2026</span>
-            </swc-conversation-artifact>
+            </swc-upload-artifact>
           </swc-user-message>
         </swc-conversation-turn>
         <span
@@ -149,7 +149,7 @@ export const Content: Story = {
         <swc-conversation-turn type="user">
           <swc-user-message>
             <div style="inline-size:240px;">
-              <swc-conversation-artifact variant="media">
+              <swc-upload-artifact type="media">
                 <div
                   slot="thumbnail"
                   style="inline-size:100%;block-size:196px;background:linear-gradient(135deg,#a78bfa,#f472b6);"
@@ -158,7 +158,7 @@ export const Content: Story = {
                 ></div>
                 <span slot="title">Hilton commercial assets</span>
                 <span slot="subtitle">2026</span>
-              </swc-conversation-artifact>
+              </swc-upload-artifact>
             </div>
           </swc-user-message>
         </swc-conversation-turn>
@@ -186,7 +186,7 @@ export const Content: Story = {
  * #### Semantic structure
  *
  * - The bubble is rendered as a `<div>` acting as a visual container
- * - The default slot accepts any content; consumers are responsible for providing meaningful text alternatives when slotting non-text content (cards, media)
+ * - The default slot accepts any content; consumers are responsible for providing meaningful text alternatives when slotting non-text content (cards, images)
  *
  * ### Best practices
  *

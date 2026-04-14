@@ -18,8 +18,8 @@
  *
  * Content kind is inferred from slotted markup and exposed via
  * `data-content-kind` on host:
- * - media: any slotted `swc-conversation-artifact[variant="media"]`
- * - card: any slotted `swc-conversation-artifact[variant="card"]` (when no media)
+ * - media: any slotted `swc-upload-artifact[type="media"]`
+ * - card: any slotted `swc-upload-artifact[type="card"]` (when no media)
  * - copy: default fallback
  */
 
@@ -30,14 +30,14 @@
 }
 
 /* Card: fixed 324px per Figma spec (card content is always 308px = 324px - 2×8px padding) */
-:host([data-content-kind='card']) {
+:host([data-content-kind="card"]) {
   inline-size: 324px;
   min-inline-size: 272px;
   max-inline-size: 528px;
 }
 
-/* Media: shrinks to preview content + padding; min 272px (240px image + 2×16px padding) */
-:host([data-content-kind='media']) {
+/* Image: shrinks to preview content + padding; min 272px (240px image + 2×16px padding) */
+:host([data-content-kind="media"]) {
   inline-size: fit-content;
   min-inline-size: 272px;
 }
@@ -61,7 +61,7 @@
 }
 
 /* Card content uses tighter padding to frame the card thumbnail/metadata */
-:host([data-content-kind='card']) .swc-UserMessage {
+:host([data-content-kind="card"]) .swc-UserMessage {
   padding-block: 4px;
   padding-inline: 8px;
 }

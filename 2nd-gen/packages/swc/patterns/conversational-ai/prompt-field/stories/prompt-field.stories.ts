@@ -14,9 +14,7 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '@spectrum-web-components/action-menu/sp-action-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '../../conversation-artifact/index.js';
+import '../../upload-artifact/index.js';
 import '../index.js';
 
 // ────────────────
@@ -26,6 +24,33 @@ import '../index.js';
 const { args, argTypes, template } = getStorybookHelpers('swc-prompt-field');
 const defaultPlaceholder =
   'Ready to get started? Ask a question, share an idea, or add a task.';
+
+argTypes.artifactValues = {
+  ...argTypes.artifactValues,
+  control: false,
+  table: {
+    category: 'properties',
+    defaultValue: { summary: '[]' },
+  },
+};
+
+argTypes.accept = {
+  ...argTypes.accept,
+  control: { type: 'text' },
+  table: {
+    category: 'attributes',
+    defaultValue: { summary: "''" },
+  },
+};
+
+argTypes.multiple = {
+  ...argTypes.multiple,
+  control: { type: 'boolean' },
+  table: {
+    category: 'attributes',
+    defaultValue: { summary: 'true' },
+  },
+};
 
 argTypes.sending = {
   ...argTypes.sending,
@@ -66,6 +91,9 @@ export const Playground: Story = {
     label: 'Prompt',
     placeholder: defaultPlaceholder,
     value: '',
+    artifactValues: [],
+    accept: '',
+    multiple: true,
     sending: false,
   },
   tags: ['autodocs', 'dev'],
@@ -80,6 +108,9 @@ export const Overview: Story = {
     label: 'Prompt',
     placeholder: defaultPlaceholder,
     value: '',
+    artifactValues: [],
+    accept: '',
+    multiple: true,
     sending: false,
   },
   tags: ['overview'],
@@ -94,13 +125,16 @@ export const Overview: Story = {
  *
  * 1. **Box** — White card with shadow and 16px border radius
  * 2. **Input area** — Optional artifact preview + prompt label + textarea
- * 3. **Action bar** — Upload button + optional `leading-actions` slot content (left), and send/stop button (right)
+ * 3. **Action bar** — Upload button (left), and send/stop button (right)
  */
 export const Anatomy: Story = {
   args: {
     label: 'Prompt',
     placeholder: defaultPlaceholder,
     value: '',
+    artifactValues: [],
+    accept: '',
+    multiple: true,
     sending: false,
   },
   tags: ['anatomy'],
@@ -165,8 +199,13 @@ export const Sending: Story = {
  * Artifact layout is inferred from the **`artifact`** slot content and supports multiple mixed items:
  *
  * - No slot content: no artifact region
- * - `swc-conversation-artifact variant="card"`: file-style card artifact
- * - `swc-conversation-artifact variant="media"`: media tile artifact
+ * - `swc-upload-artifact type="card"`: file-style card artifact
+ * - `swc-upload-artifact type="media"`: media tile artifact
+ *
+ * Upload button behavior:
+ *
+ * - Emits cancelable `swc-upload-click` before opening picker
+ * - Opens internal file picker and emits `swc-files-selected` with selected files
  *
  * Artifacts own dismiss behavior via `dismissible` and emit `swc-dismiss`.
  */
@@ -186,7 +225,7 @@ export const Artifact: Story = {
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
-          <swc-conversation-artifact slot="artifact" variant="card" dismissible>
+          <swc-upload-artifact slot="artifact" type="card" dismissible>
             <div
               slot="thumbnail"
               style="background:var(--swc-gray-200);"
@@ -195,7 +234,7 @@ export const Artifact: Story = {
             ></div>
             <span slot="title">Hilton commercial assets</span>
             <span slot="subtitle">2026</span>
-          </swc-conversation-artifact>
+          </swc-upload-artifact>
         </swc-prompt-field>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
@@ -205,18 +244,14 @@ export const Artifact: Story = {
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
-          <swc-conversation-artifact
-            slot="artifact"
-            variant="media"
-            dismissible
-          >
+          <swc-upload-artifact slot="artifact" type="media" dismissible>
             <div
               slot="thumbnail"
               style="inline-size:100%;block-size:100%;min-block-size:0;background:linear-gradient(135deg,#a78bfa,#f472b6);"
               role="img"
               aria-label="Attachment preview"
             ></div>
-          </swc-conversation-artifact>
+          </swc-upload-artifact>
         </swc-prompt-field>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
@@ -229,7 +264,7 @@ export const Artifact: Story = {
           label="Prompt"
           value="Use attached assets for a launch plan."
         >
-          <swc-conversation-artifact slot="artifact" variant="card" dismissible>
+          <swc-upload-artifact slot="artifact" type="card" dismissible>
             <div
               slot="thumbnail"
               style="background:var(--swc-gray-200);"
@@ -238,31 +273,23 @@ export const Artifact: Story = {
             ></div>
             <span slot="title">Brand guidelines</span>
             <span slot="subtitle">PDF</span>
-          </swc-conversation-artifact>
-          <swc-conversation-artifact
-            slot="artifact"
-            variant="media"
-            dismissible
-          >
+          </swc-upload-artifact>
+          <swc-upload-artifact slot="artifact" type="media" dismissible>
             <div
               slot="thumbnail"
               style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#6366f1,#ec4899);"
               role="img"
               aria-label="Campaign still"
             ></div>
-          </swc-conversation-artifact>
-          <swc-conversation-artifact
-            slot="artifact"
-            variant="media"
-            dismissible
-          >
+          </swc-upload-artifact>
+          <swc-upload-artifact slot="artifact" type="media" dismissible>
             <div
               slot="thumbnail"
               style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#0ea5e9,#22c55e);"
               role="img"
               aria-label="Storyboard frame"
             ></div>
-          </swc-conversation-artifact>
+          </swc-upload-artifact>
         </swc-prompt-field>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
@@ -277,26 +304,39 @@ export const Artifact: Story = {
 };
 
 /**
- * Use the `leading-actions` slot to add optional controls next to upload on the left side
- * (for example quick actions, overflow menu, or custom tooling).
+ * File picker behavior can be tuned with:
+ *
+ * - `accept`: file MIME type/extension filter
+ * - `multiple`: allow one or many files
  */
-export const LeadingActions: Story = {
+export const FilePicker: Story = {
   render: () => html`
-    <swc-prompt-field
-      label="Prompt"
-      value="Summarize the API changes in this branch."
-    >
-      <sp-action-menu
-        slot="leading-actions"
-        quiet
-        label="Prompt options"
-        style="inline-size:32px;block-size:32px;"
-      >
-        <sp-menu-item value="rewrite">Rewrite text</sp-menu-item>
-        <sp-menu-item value="shorten">Shorten</sp-menu-item>
-        <sp-menu-item value="expand">Expand</sp-menu-item>
-      </sp-action-menu>
-    </swc-prompt-field>
+    <div style="display:flex;flex-direction:column;gap:32px;">
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          label="Prompt"
+          value="Attach references for the summary."
+        ></swc-prompt-field>
+        <span
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+        >
+          Default picker (multiple=true, accept="")
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          label="Prompt"
+          value="Attach one image for style guidance."
+          accept="image/*"
+          ?multiple=${false}
+        ></swc-prompt-field>
+        <span
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+        >
+          Restricted picker (accept="image/*", multiple=false)
+        </span>
+      </div>
+    </div>
   `,
   parameters: { 'section-order': 3 },
   tags: ['options'],
@@ -322,13 +362,15 @@ export const LeadingActions: Story = {
  * - Always provide a meaningful `label` value
  * - Use `placeholder` as a hint, not a replacement for the label
  * - Ensure artifact content slotted into `artifact` slot includes descriptive text
- * - Provide `aria-label` values for interactive elements added to the `leading-actions` slot
  */
 export const Accessibility: Story = {
   args: {
     label: 'Prompt',
     placeholder: defaultPlaceholder,
     value: '',
+    artifactValues: [],
+    accept: '',
+    multiple: true,
     sending: false,
   },
   tags: ['a11y'],

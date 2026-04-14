@@ -27,7 +27,7 @@ const { args, argTypes, template } = getStorybookHelpers('swc-suggestion-item');
  * Label content is provided via the default slot.
  */
 const meta: Meta = {
-  title: 'Conversational AI/Suggestion item',
+  title: 'Conversational AI/Suggestion/Suggestion item',
   component: 'swc-suggestion-item',
   args: {
     ...args,
