@@ -41,36 +41,18 @@ argTypes.variant = {
   ...argTypes.variant,
   control: { type: 'select' },
   options: Badge.VARIANTS,
-  table: {
-    category: 'properties',
-    defaultValue: {
-      summary: 'informative',
-    },
-  },
 };
 
 argTypes.fixed = {
   ...argTypes.fixed,
   control: { type: 'select' },
   options: ['', ...Badge.FIXED_VALUES],
-  table: {
-    category: 'properties',
-    defaultValue: {
-      summary: '',
-    },
-  },
 };
 
 argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
   options: Badge.VALID_SIZES,
-  table: {
-    category: 'properties',
-    defaultValue: {
-      summary: 'm',
-    },
-  },
 };
 
 /**

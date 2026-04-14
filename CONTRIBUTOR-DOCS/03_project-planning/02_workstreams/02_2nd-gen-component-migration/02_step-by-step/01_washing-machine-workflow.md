@@ -455,7 +455,7 @@ Follow the two-file layout (`test/<component>.test.ts`, `test/<component>.a11y.s
 ### What to do
 
 1. **JSDoc:** Every public prop, slot, event, and the element itself. Use `@element`, `@example`, `@internal` for non-public.
-2. **Storybook stories:** Use `getStoryHelpers`, METADATA (args, argTypes, meta), stories for variants/sizes. Reference `badge/stories/badge.stories.ts`, `divider/stories/divider.stories.ts`.
+2. **Storybook stories:** Use `getStorybookHelpers`, METADATA (args, argTypes, meta), stories for variants/sizes. Reference `badge/stories/badge.stories.ts`, `divider/stories/divider.stories.ts`.
 3. **Size/variant controls:** Ensure controls drive the component. If the attribute comes from a mixin (e.g. `SizedMixin`), declare it on the SWC class with `@property({ reflect: true })` so the CEM includes it; run `yarn analyze` to regenerate the manifest.
 4. **Review, usage docs, migration notes:** Confirm stories; add usage docs; document API changes from 1st-gen.
 
@@ -563,7 +563,7 @@ Use Badge as the reference implementation:
 | **Concrete class** | — | — | `Badge.ts` (extends BadgeBase, render, styles) |
 | **Types** | Own types | `Badge.types.ts` (VARIANTS_*, FixedValues, BadgeVariant) | Imports from core |
 | **CSS** | `badge.css.ts` (Constructable) | — | `badge.css` (plain CSS module) |
-| **Stories** | `stories/badge.stories.ts` | — | `stories/badge.stories.ts` (getStoryHelpers, argTypes from component) |
+| **Stories** | `stories/badge.stories.ts` | — | `stories/badge.stories.ts` (getStorybookHelpers, argTypes from component) |
 | **Tests** | `test/badge.test.ts`, `badge.a11y.spec.ts` | — | `test/badge.test.ts`, `test/badge.a11y.spec.ts` |
 
 **Paths:**
