@@ -66,6 +66,7 @@ export class Badge extends BadgeBase {
    * The variant of the badge.
    *
    * @todo - Implement new badge variants (notification, indicator) introduced in S2. Jira ticket: SWC-1831
+   * Implement as separate component based on React https://github.com/adobe/react-spectrum/blob/main/packages/%40react-spectrum/s2/src/NotificationBadge.tsx
    */
   @property({ type: String, reflect: true })
   public override variant: BadgeVariant = 'neutral';
