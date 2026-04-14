@@ -99,14 +99,14 @@ function PropertiesTable({
   return (
     <>
       <h3>Properties</h3>
-      <table>
+      <table style={{ width: '100%' }}>
         <thead>
           <tr>
             <th>Property</th>
             <th>Attribute</th>
             <th>Type</th>
             <th>Default</th>
-            <th>Description</th>
+            <th style={{ minWidth: 300 }}>Description</th>
           </tr>
         </thead>
         <tbody>
