@@ -42,6 +42,13 @@ import {
 export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
   validSizes: PROGRESS_CIRCLE_VALID_SIZES,
 }) {
+  /**
+   * The size of the progress circle.
+   *
+   * @default m
+   */
+  declare public size: (typeof PROGRESS_CIRCLE_VALID_SIZES)[number];
+
   // ─────────────────────────
   //     API TO OVERRIDE
   // ─────────────────────────
