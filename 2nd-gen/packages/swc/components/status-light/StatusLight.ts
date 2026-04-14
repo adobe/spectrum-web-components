@@ -31,6 +31,9 @@ import styles from './status-light.css';
  * @status preview
  * @since 0.0.1
  *
+ * @property {string} variant - Semantic or non-semantic color variant for the status dot.
+ * @attribute {ElementSize} size - The size of the status light.
+ *
  * @example
  * <swc-status-light variant="positive">Approved</swc-status-light>
  *
