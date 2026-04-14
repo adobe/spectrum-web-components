@@ -44,27 +44,26 @@ export const OverviewTest: Story = {
       'swc-illustrated-message'
     );
 
-    await step('renders with default heading-level 2', async () => {
-      expect(illustratedMessage.headingLevel, 'default heading level').toBe(2);
-    });
+    await step('consumer owns the heading element in light DOM', async () => {
+      const headingInLight = illustratedMessage.querySelector('[slot="heading"]');
+      expect(headingInLight, 'heading element in light DOM').not.toBeNull();
 
-    await step('renders an h2 element in shadow DOM by default', async () => {
-      expect(
-        illustratedMessage.shadowRoot?.querySelector('h2'),
-        'h2 in shadow DOM'
-      ).not.toBeNull();
+      const headingInShadow = illustratedMessage.shadowRoot?.querySelector(
+        'h1, h2, h3, h4, h5, h6'
+      );
+      expect(headingInShadow, 'no heading element in shadow DOM').toBeNull();
     });
   },
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Properties / Attributes
+// TEST: Heading slot — valid usage
 // ──────────────────────────────────────────────────────────────
 
-export const AllHeadingLevelsTest: Story = {
+export const HeadingSlotValidElementsTest: Story = {
   render: () => html`
     <swc-illustrated-message>
-      <span slot="heading">Heading level test</span>
+      <h2 slot="heading">Heading test</h2>
     </swc-illustrated-message>
   `,
   play: async ({ canvasElement, step }) => {
@@ -73,30 +72,33 @@ export const AllHeadingLevelsTest: Story = {
       'swc-illustrated-message'
     );
 
-    for (const level of [3, 4, 5, 6] as const) {
-      await step(
-        `renders h${level} when heading-level is set to ${level}`,
-        async () => {
-          illustratedMessage.setAttribute('heading-level', String(level));
+    for (const tag of ['h2', 'h3', 'h4', 'h5', 'h6'] as const) {
+      await step(`does not warn when heading slot contains <${tag}>`, () =>
+        withWarningSpy(async (warnCalls) => {
+          const heading = document.createElement(tag);
+          heading.setAttribute('slot', 'heading');
+          heading.textContent = `Heading as ${tag}`;
+
+          illustratedMessage.querySelector('[slot="heading"]')?.remove();
+          illustratedMessage.appendChild(heading);
+          illustratedMessage.requestUpdate();
           await illustratedMessage.updateComplete;
-          expect(
-            illustratedMessage.shadowRoot?.querySelector(`h${level}`),
-            `h${level} in shadow DOM`
-          ).not.toBeNull();
-          expect(
-            illustratedMessage.shadowRoot?.querySelector(`h${level - 1}`),
-            `h${level - 1} absent after heading-level change`
-          ).toBeNull();
-        }
+
+          expect(warnCalls.length, `no warning for valid <${tag}>`).toBe(0);
+        })
       );
     }
   },
 };
 
-export const HeadingLevelClampTest: Story = {
+// ──────────────────────────────────────────────────────────────
+// TEST: Heading slot — invalid usage
+// ──────────────────────────────────────────────────────────────
+
+export const HeadingSlotInvalidElementWarningTest: Story = {
   render: () => html`
     <swc-illustrated-message>
-      <span slot="heading">Clamped heading</span>
+      <div slot="heading">Not a heading</div>
     </swc-illustrated-message>
   `,
   play: async ({ canvasElement, step }) => {
@@ -105,18 +107,21 @@ export const HeadingLevelClampTest: Story = {
       'swc-illustrated-message'
     );
 
-    await step('clamps heading-level="1" to h2, never renders h1', async () => {
-      illustratedMessage.setAttribute('heading-level', '1');
-      await illustratedMessage.updateComplete;
-      expect(
-        illustratedMessage.shadowRoot?.querySelector('h1'),
-        'h1 must not exist in shadow DOM'
-      ).toBeNull();
-      expect(
-        illustratedMessage.shadowRoot?.querySelector('h2'),
-        'h2 rendered after clamping'
-      ).not.toBeNull();
-    });
+    await step('warns when heading slot contains a non-heading element', () =>
+      withWarningSpy(async (warnCalls) => {
+        illustratedMessage.requestUpdate();
+        await illustratedMessage.updateComplete;
+
+        expect(
+          warnCalls.length,
+          'warning fired for invalid heading slot element'
+        ).toBeGreaterThan(0);
+        expect(
+          String(warnCalls[0]?.[1] ?? ''),
+          'warning message mentions heading slot'
+        ).toContain('heading');
+      })
+    );
   },
 };
 
@@ -127,6 +132,7 @@ export const HeadingLevelClampTest: Story = {
 export const DescriptionSlotTest: Story = {
   render: () => html`
     <swc-illustrated-message>
+      <h2 slot="heading">Heading</h2>
       <span slot="description">Description text here.</span>
     </swc-illustrated-message>
   `,
@@ -147,70 +153,13 @@ export const DescriptionSlotTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Dev mode warnings
-// ──────────────────────────────────────────────────────────────
-
-export const InvalidHeadingLevelWarningTest: Story = {
-  render: () => html`
-    <swc-illustrated-message>
-      <span slot="heading">Test</span>
-    </swc-illustrated-message>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const illustratedMessage = await getComponent<IllustratedMessage>(
-      canvasElement,
-      'swc-illustrated-message'
-    );
-
-    await step('warns when heading-level is set to an out-of-range value', () =>
-      withWarningSpy(async (warnCalls) => {
-        illustratedMessage.setAttribute('heading-level', '1');
-        await illustratedMessage.updateComplete;
-
-        expect(
-          warnCalls.length,
-          'warning count for invalid heading-level'
-        ).toBeGreaterThan(0);
-        expect(
-          String(warnCalls[0]?.[1] || ''),
-          'warning message mentions heading-level'
-        ).toContain('heading-level');
-      })
-    );
-  },
-};
-
-export const ValidHeadingLevelNoWarningTest: Story = {
-  render: () => html`
-    <swc-illustrated-message>
-      <span slot="heading">Test</span>
-    </swc-illustrated-message>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const illustratedMessage = await getComponent<IllustratedMessage>(
-      canvasElement,
-      'swc-illustrated-message'
-    );
-
-    await step('does not warn when a valid heading-level is set', () =>
-      withWarningSpy(async (warnCalls) => {
-        illustratedMessage.setAttribute('heading-level', '3');
-        await illustratedMessage.updateComplete;
-
-        expect(warnCalls.length, 'no warnings for valid heading-level').toBe(0);
-      })
-    );
-  },
-};
-
-// ──────────────────────────────────────────────────────────────
 // TEST: Size attribute / property
 // ──────────────────────────────────────────────────────────────
 
 export const ValidSizeNoWarningTest: Story = {
   render: () => html`
     <swc-illustrated-message>
-      <span slot="heading">Test</span>
+      <h2 slot="heading">Test</h2>
     </swc-illustrated-message>
   `,
   play: async ({ canvasElement, step }) => {
@@ -245,7 +194,7 @@ export const ValidSizeNoWarningTest: Story = {
 export const InvalidSizeWarningTest: Story = {
   render: () => html`
     <swc-illustrated-message>
-      <span slot="heading">Test</span>
+      <h2 slot="heading">Test</h2>
     </swc-illustrated-message>
   `,
   play: async ({ canvasElement, step }) => {
@@ -264,7 +213,7 @@ export const InvalidSizeWarningTest: Story = {
           'warning count for invalid size'
         ).toBeGreaterThan(0);
         expect(
-          String(warnCalls[0]?.[1] || ''),
+          String(warnCalls[0]?.[1] ?? ''),
           'warning message mentions size'
         ).toContain('size');
       })
@@ -279,7 +228,7 @@ export const InvalidSizeWarningTest: Story = {
 export const ValidOrientationNoWarningTest: Story = {
   render: () => html`
     <swc-illustrated-message>
-      <span slot="heading">Test</span>
+      <h2 slot="heading">Test</h2>
     </swc-illustrated-message>
   `,
   play: async ({ canvasElement, step }) => {
@@ -317,7 +266,7 @@ export const ValidOrientationNoWarningTest: Story = {
 export const InvalidOrientationWarningTest: Story = {
   render: () => html`
     <swc-illustrated-message>
-      <span slot="heading">Test</span>
+      <h2 slot="heading">Test</h2>
     </swc-illustrated-message>
   `,
   play: async ({ canvasElement, step }) => {
@@ -336,39 +285,9 @@ export const InvalidOrientationWarningTest: Story = {
           'warning count for invalid orientation'
         ).toBeGreaterThan(0);
         expect(
-          String(warnCalls[0]?.[1] || ''),
+          String(warnCalls[0]?.[1] ?? ''),
           'warning message mentions orientation'
         ).toContain('orientation');
-      })
-    );
-  },
-};
-
-export const InvalidHeadingSlotWarningTest: Story = {
-  render: () => html`
-    <swc-illustrated-message>
-      <h3 slot="heading">Heading as h3</h3>
-    </swc-illustrated-message>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const illustratedMessage = await getComponent<IllustratedMessage>(
-      canvasElement,
-      'swc-illustrated-message'
-    );
-
-    await step('warns when heading slot contains a non-span element', () =>
-      withWarningSpy(async (warnCalls) => {
-        illustratedMessage.requestUpdate();
-        await illustratedMessage.updateComplete;
-
-        expect(
-          warnCalls.length,
-          'warning count for non-span heading slot'
-        ).toBeGreaterThan(0);
-        expect(
-          String(warnCalls[0]?.[1] || ''),
-          'warning message mentions heading slot'
-        ).toContain('heading');
       })
     );
   },

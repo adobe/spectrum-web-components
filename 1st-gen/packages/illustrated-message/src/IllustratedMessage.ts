@@ -36,6 +36,17 @@ export class IllustratedMessage extends SpectrumElement {
     return [headingStyles, bodyStyles, messageStyles];
   }
 
+  protected override firstUpdated(): void {
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `<${this.localName}> has been deprecated and will be removed from the project in an upcoming version. Learn more about Spectrum 2 (https://s2.spectrum.adobe.com/) as an alternative.`,
+        'https://s2.spectrum.adobe.com/',
+        { level: 'deprecation' }
+      );
+    }
+  }
+
   @property()
   public heading = '';
 

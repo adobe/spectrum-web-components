@@ -16,10 +16,8 @@ import { property } from 'lit/decorators.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 import {
-  ILLUSTRATED_MESSAGE_VALID_HEADING_LEVELS,
   ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS,
   ILLUSTRATED_MESSAGE_VALID_SIZES,
-  type IllustratedMessageHeadingLevel,
   type IllustratedMessageOrientation,
   type IllustratedMessageSize,
 } from './IllustratedMessage.types.js';
@@ -30,8 +28,10 @@ import {
  *
  * @slot - Decorative or informative SVG illustration. Decorative SVGs should include
  *   `aria-hidden="true"`; informative SVGs should include `role="img"` and `aria-label`.
- * @slot heading - Heading text. Must be a single `<span>` element — the shadow DOM owns the
- *   heading tag and level. Consumers who previously slotted an `<h2>` must switch to `<span>`.
+ * @slot heading - The heading element. Must be an `<h2>`–`<h6>` element. The consumer owns
+ *   the heading tag and level.
+ *   @todo SWC-1943 Add slot constraints once the CEM slot constraints work is complete:
+ *   `{required} {allowedChildren: h2, h3, h4, h5, h6} {maxChildren: 1}`
  * @slot description - Description text. Links must be real `<a>` elements or link components
  *   with visible names.
  */
@@ -39,12 +39,6 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
   // ─────────────────────────
   //     API TO OVERRIDE
   // ─────────────────────────
-
-  /**
-   * @internal
-   */
-  static readonly VALID_HEADING_LEVELS: readonly IllustratedMessageHeadingLevel[] =
-    ILLUSTRATED_MESSAGE_VALID_HEADING_LEVELS;
 
   /**
    * @internal
@@ -63,12 +57,6 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
   // ──────────────────
 
   /**
-   * The heading level of the illustrated message title. Accepts 2–6.
-   */
-  @property({ type: Number, reflect: true, attribute: 'heading-level' })
-  public headingLevel: IllustratedMessageHeadingLevel = 2;
-
-  /**
    * The size of the illustrated message.
    */
   @property({ type: String, reflect: true })
@@ -83,15 +71,6 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
-
-  /**
-   * Returns a valid heading level clamped to 2–6.
-   *
-   * @internal
-   */
-  protected getHeadingLevel(): number {
-    return Math.max(2, Math.min(6, this.headingLevel));
-  }
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
@@ -120,30 +99,6 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
         );
       }
 
-      if (
-        changedProperties.has('headingLevel') &&
-        (this.headingLevel < 2 || this.headingLevel > 6)
-      ) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> received an invalid "heading-level" value of "${this.headingLevel}". Valid values are 2–6. The value has been clamped to ${this.getHeadingLevel()}.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/illustrated-message/',
-          { issues: [`heading-level="${this.headingLevel}"`] }
-        );
-      }
-
-      const headingSlot = this.shadowRoot?.querySelector<HTMLSlotElement>(
-        'slot[name="heading"]'
-      );
-      const assigned = headingSlot?.assignedElements() ?? [];
-      if (assigned.length > 0 && assigned[0].tagName.toLowerCase() !== 'span') {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> expects the "heading" slot to contain a single <span> element. The shadow DOM owns the heading tag. Received: <${assigned[0].tagName.toLowerCase()}>.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/illustrated-message/',
-          { issues: [`heading slot: <${assigned[0].tagName.toLowerCase()}>`] }
-        );
-      }
     }
   }
 }
