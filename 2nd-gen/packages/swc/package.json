@@ -106,7 +106,7 @@
     "react-dom": "19.1.1",
     "remark-gfm": "4.0.0",
     "rimraf": "6.0.1",
-    "storybook": "10.3.5",
+    "storybook": "patch:storybook@npm%3A10.3.5#~/.yarn/patches/storybook-npm-10.3.5.patch",
     "typescript": "5.9.2",
     "vite": "8.0.8",
     "vite-plugin-dts": "4.5.4",

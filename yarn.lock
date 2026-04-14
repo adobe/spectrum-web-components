@@ -226,7 +226,7 @@ __metadata:
     react-dom: "npm:19.1.1"
     remark-gfm: "npm:4.0.0"
     rimraf: "npm:6.0.1"
-    storybook: "npm:10.3.5"
+    storybook: "patch:storybook@npm%3A10.3.5#~/.yarn/patches/storybook-npm-10.3.5.patch"
     typescript: "npm:5.9.2"
     vite: "npm:8.0.8"
     vite-plugin-dts: "npm:4.5.4"
@@ -29673,6 +29673,34 @@ __metadata:
     sb: ./bin/index.cjs
     storybook: ./bin/index.cjs
   checksum: 10c0/a39d5ca1c3fecb4e6d5b7867d510e9a31524b48053dcea485afffbeaf7fe8ced883fd2d44e1b5076a2f3044eeb095fe49282793f1041124a9aa2b47fa675c956
+  languageName: node
+  linkType: hard
+
+"storybook@patch:storybook@npm%3A10.3.5#~/.yarn/patches/storybook-npm-10.3.5.patch":
+  version: 10.3.5
+  resolution: "storybook@patch:storybook@npm%3A10.3.5#~/.yarn/patches/storybook-npm-10.3.5.patch::version=10.3.5&hash=b4e676"
+  dependencies:
+    "@storybook/global": "npm:^5.0.0"
+    "@storybook/icons": "npm:^2.0.1"
+    "@testing-library/jest-dom": "npm:^6.9.1"
+    "@testing-library/user-event": "npm:^14.6.1"
+    "@vitest/expect": "npm:3.2.4"
+    "@vitest/spy": "npm:3.2.4"
+    "@webcontainer/env": "npm:^1.1.1"
+    esbuild: "npm:^0.18.0 || ^0.19.0 || ^0.20.0 || ^0.21.0 || ^0.22.0 || ^0.23.0 || ^0.24.0 || ^0.25.0 || ^0.26.0 || ^0.27.0"
+    open: "npm:^10.2.0"
+    recast: "npm:^0.23.5"
+    semver: "npm:^7.7.3"
+    use-sync-external-store: "npm:^1.5.0"
+    ws: "npm:^8.18.0"
+  peerDependencies:
+    prettier: ^2 || ^3
+  peerDependenciesMeta:
+    prettier:
+      optional: true
+  bin:
+    storybook: ./dist/bin/dispatcher.js
+  checksum: 10c0/281e134d38b2e96e8e55901aec3336932348aca196a5cb91d6bb4ccb228f29334190c1c1cbd150fccaf6fb9eb93f2ead170bc5f27bcf22eddc0b73077aec8a24
   languageName: node
   linkType: hard
 
