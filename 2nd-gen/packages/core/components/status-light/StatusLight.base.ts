@@ -105,17 +105,6 @@ export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
           }
         );
       }
-      // Check disabled property if it exists (S1 only)
-      if (this.hasAttribute('disabled') && !('disabled' in this)) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> element does not support the disabled state.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/status-light/#states',
-          {
-            issues: ['disabled is not a supported property in Spectrum 2'],
-          }
-        );
-      }
     }
   }
 }

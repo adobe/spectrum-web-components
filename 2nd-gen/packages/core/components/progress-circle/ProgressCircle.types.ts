@@ -17,17 +17,7 @@ export const PROGRESS_CIRCLE_VALID_SIZES = [
   'm',
   'l',
 ] as const satisfies ElementSize[];
-export const PROGRESS_CIRCLE_STATIC_COLORS_S1 = ['white'] as const;
-export const PROGRESS_CIRCLE_STATIC_COLORS_S2 = [
-  ...PROGRESS_CIRCLE_STATIC_COLORS_S1,
-  'black',
-] as const;
+export const PROGRESS_CIRCLE_STATIC_COLORS = ['white', 'black'] as const;
 
-export type ProgressCircleStaticColorS1 =
-  (typeof PROGRESS_CIRCLE_STATIC_COLORS_S1)[number];
-export type ProgressCircleStaticColorS2 =
-  (typeof PROGRESS_CIRCLE_STATIC_COLORS_S2)[number];
 export type ProgressCircleStaticColor =
-  | ProgressCircleStaticColorS1
-  | ProgressCircleStaticColorS2;
-export type ProgressCircleSize = (typeof PROGRESS_CIRCLE_VALID_SIZES)[number];
+  (typeof PROGRESS_CIRCLE_STATIC_COLORS)[number];

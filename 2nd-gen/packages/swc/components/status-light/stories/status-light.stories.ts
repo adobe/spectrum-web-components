@@ -17,10 +17,10 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 import { StatusLight } from '@adobe/spectrum-wc/status-light';
 import {
   STATUSLIGHT_VALID_SIZES,
-  STATUSLIGHT_VARIANTS_COLOR_S2,
-  STATUSLIGHT_VARIANTS_SEMANTIC_S2,
-  StatusLightColorVariantS2,
-  StatusLightSemanticVariantS2,
+  STATUSLIGHT_VARIANTS_COLOR,
+  STATUSLIGHT_VARIANTS_SEMANTIC,
+  StatusLightColorVariant,
+  StatusLightSemanticVariant,
   type StatusLightSize,
 } from '@spectrum-web-components/core/components/status-light';
 
@@ -101,7 +101,7 @@ const semanticLabels = {
   positive: 'Approved',
   notice: 'Pending approval',
   negative: 'Rejected',
-} as const satisfies Record<StatusLightSemanticVariantS2, string>;
+} as const satisfies Record<StatusLightSemanticVariant, string>;
 
 const nonSemanticLabels = {
   yellow: 'Operations',
@@ -118,7 +118,7 @@ const nonSemanticLabels = {
   brown: 'Facilities',
   cinnamon: 'Compliance',
   silver: 'Version 1.2.10',
-} as const satisfies Record<StatusLightColorVariantS2, string>;
+} as const satisfies Record<StatusLightColorVariant, string>;
 
 const sizeLabels = {
   s: 'Small',
@@ -215,13 +215,12 @@ export const Sizes: Story = {
  */
 export const SemanticVariants: Story = {
   render: (args) => html`
-    ${STATUSLIGHT_VARIANTS_SEMANTIC_S2.map(
-      (variant: StatusLightSemanticVariantS2) =>
-        template({
-          ...args,
-          variant,
-          'default-slot': semanticLabels[variant],
-        })
+    ${STATUSLIGHT_VARIANTS_SEMANTIC.map((variant: StatusLightSemanticVariant) =>
+      template({
+        ...args,
+        variant,
+        'default-slot': semanticLabels[variant],
+      })
     )}
   `,
   parameters: {
@@ -249,7 +248,7 @@ export const SemanticVariants: Story = {
  */
 export const NonSemanticVariants: Story = {
   render: (args) => html`
-    ${STATUSLIGHT_VARIANTS_COLOR_S2.map((variant: StatusLightColorVariantS2) =>
+    ${STATUSLIGHT_VARIANTS_COLOR.map((variant: StatusLightColorVariant) =>
       template({
         ...args,
         variant,

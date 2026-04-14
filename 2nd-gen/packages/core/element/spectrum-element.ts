@@ -33,6 +33,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
      * @internal
      */
     public override shadowRoot!: ShadowRoot;
+    /** @internal */
     public hasVisibleFocusInTree(): boolean {
       const getAncestors = (root: Document = document): HTMLElement[] => {
         let currentNode = root.activeElement as HTMLElement;
