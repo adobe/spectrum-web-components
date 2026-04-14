@@ -70,24 +70,6 @@ export class Badge extends BadgeBase {
   @property({ type: String, reflect: true })
   public override variant: BadgeVariant = 'neutral';
 
-  // ───────────────────
-  //     API ADDITIONS
-  // ───────────────────
-
-  /**
-   * Whether the badge is subtle.
-   */
-  @property({ type: Boolean, reflect: true })
-  public subtle: boolean = false;
-
-  /**
-   * Whether the badge is outlined.
-   *
-   * Can only be used with semantic variants.
-   */
-  @property({ type: Boolean, reflect: true })
-  public outline: boolean = false;
-
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────
