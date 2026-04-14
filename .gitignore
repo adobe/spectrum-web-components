@@ -1,6 +1,10 @@
 # logging / private config
 .cursor/mcp.json
 .cursor/handoffs
+.ai/handoffs
+.claude/handoffs
+.claude/settings.local.json
+.claude/worktrees
 yarn-error.log
 build-storybook.log
 .DS_STORE

@@ -85,6 +85,10 @@ function findVarContext(prefix: string) {
   return /var\(\s*([^)]*)$/.exec(prefix);
 }
 
+function createTokenCall(tokenName: string) {
+  return `token("${tokenName.trim()}")`;
+}
+
 function isSoloVarValue(fullVarText: string): boolean {
   return !fullVarText.includes(',');
 }
@@ -421,30 +425,22 @@ export function getCompletions(
   const tokenMatch = findTokenContext(prefix);
   if (tokenMatch) {
     const rawPartial = tokenMatch[2] ?? '';
+    const openingQuote = tokenMatch[1]; // may be ' or "
     const start = offset - rawPartial.length;
     const partial = rawPartial.trimStart(); // allow completion after spaces
 
-    const openingQuote = tokenMatch[1]; // may be ' or "
-
     return store.filter(partial).map((tok) => {
-      let replacement = tok.trim(); // remove trailing spaces automatically
-
-      // Determine if we need closing quote
       const nextChar = text[offset] ?? '';
-      if (openingQuote && nextChar !== openingQuote) {
-        replacement = replacement + openingQuote; // add closing quote
-      }
-
-      // Only prepend opening quote if user hasn't typed one
-      if (!openingQuote) {
-        replacement = `'${replacement}'`;
-      }
+      const replacementStart = openingQuote ? start - 1 : start;
+      const replacementEnd =
+        openingQuote && nextChar === openingQuote ? offset + 1 : offset;
+      const replacement = `"${tok.trim()}"`;
 
       return {
         label: tok,
         kind: CompletionItemKind.Value,
         textEdit: TextEdit.replace(
-          rangeFromOffsets(doc, start, offset),
+          rangeFromOffsets(doc, replacementStart, replacementEnd),
           replacement
         ),
       };
@@ -484,7 +480,7 @@ export function getCompletions(
     const tokenItems = store.filter(partial).map((k) => ({
       label: k,
       kind: CompletionItemKind.Value,
-      textEdit: TextEdit.replace(replacementRange, `token('${k.trim()}')`), // auto-trim token here too
+      textEdit: TextEdit.replace(replacementRange, createTokenCall(k)),
     }));
 
     return [...localItems, ...tokenItems];
@@ -516,7 +512,7 @@ export function getCompletions(
       label: k,
       kind: CompletionItemKind.Value,
       sortText: '1',
-      textEdit: TextEdit.replace(replacementRange, `token('${k.trim()}')`), // auto-trim token here too
+      textEdit: TextEdit.replace(replacementRange, createTokenCall(k)),
     }));
 
     return [...localItems, ...tokenItems];
@@ -680,7 +676,7 @@ export function startServer() {
           diagnostic: {
             severity: DiagnosticSeverity.Error,
             range: { start, end },
-            message: `Token name must be quoted: expected token('name')`,
+            message: 'Token name must be quoted: expected token("name")',
           },
         });
         continue;
