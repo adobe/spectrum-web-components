@@ -22,8 +22,8 @@ import {
   getComponents,
   withWarningSpy,
 } from '../../../utils/test-utils.js';
-import meta from '../stories/asset.stories.js';
-import { Overview, Variants } from '../stories/asset.stories.js';
+import meta from '../stories/asset.internal.stories.js';
+import { Overview, Variants } from '../stories/asset.internal.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
