@@ -62,12 +62,24 @@ function isField(member: ClassMember): member is MemberWithReflects {
 //   Sub-tables
 // ────────────────────────────
 
+/** Storybook argType shape (subset we care about). */
+interface ArgType {
+  options?: string[];
+  description?: string;
+  eventDetail?: string;
+  table?: {
+    type?: { summary?: string };
+  };
+}
+
 function PropertiesTable({
   members,
   attributes,
+  argTypes,
 }: {
   members: ClassMember[];
   attributes: Attribute[];
+  argTypes: Record<string, ArgType>;
 }) {
   const attrByField = new Map<string, Attribute>();
   for (const attr of attributes) {
@@ -102,7 +114,13 @@ function PropertiesTable({
         <tbody>
           {props.map((prop) => {
             const attr = attrByField.get(prop.name);
-            const typeName = prop.type?.text ?? '';
+            const argType = argTypes[prop.name] ?? argTypes[attr?.name ?? ''];
+
+            // Prefer expanded options from argTypes, fall back to CEM type text.
+            const typeName = argType?.options
+              ? argType.options.map((o) => `'${o}'`).join(' | ')
+              : (prop.type?.text ?? '');
+
             return (
               <tr key={prop.name}>
                 <td>
@@ -163,8 +181,19 @@ function SlotsTable({ slots }: { slots: Slot[] }) {
   );
 }
 
-function EventsTable({ events }: { events: CemEvent[] }) {
+function EventsTable({
+  events,
+  argTypes,
+}: {
+  events: CemEvent[];
+  argTypes: Record<string, ArgType>;
+}) {
   if (events.length === 0) return null;
+
+  const hasDetail = events.some(
+    (event) => argTypes[event.name]?.eventDetail
+  );
+
   return (
     <>
       <h3>Events</h3>
@@ -172,24 +201,25 @@ function EventsTable({ events }: { events: CemEvent[] }) {
         <thead>
           <tr>
             <th>Name</th>
-            <th>Type</th>
+            {hasDetail && <th>Detail</th>}
             <th>Description</th>
           </tr>
         </thead>
         <tbody>
-          {events.map((event) => (
-            <tr key={event.name}>
-              <td>
-                <code>{event.name}</code>
-              </td>
-              <td>
-                {(event.type as { text?: string } | undefined)?.text && (
-                  <code>{(event.type as { text: string }).text}</code>
+          {events.map((event) => {
+            const detail = argTypes[event.name]?.eventDetail;
+            return (
+              <tr key={event.name}>
+                <td>
+                  <code>{event.name}</code>
+                </td>
+                {hasDetail && (
+                  <td>{detail ? <code>{detail}</code> : '-'}</td>
                 )}
-              </td>
-              <td>{event.description ?? ''}</td>
-            </tr>
-          ))}
+                <td>{event.description ?? ''}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </>
@@ -265,8 +295,12 @@ function CssPartsTable({ cssParts }: { cssParts: CssPart[] }) {
  */
 export function ApiTable() {
   const resolvedOf = useOf('meta', ['meta']);
-  const tagName = (resolvedOf.csfFile?.meta as { component?: string })
-    ?.component;
+  const meta = resolvedOf.csfFile?.meta as {
+    component?: string;
+    argTypes?: Record<string, ArgType>;
+  };
+  const tagName = meta?.component;
+  const argTypes = resolvedOf.preparedMeta?.argTypes ?? meta?.argTypes ?? {};
 
   const cem = window.__STORYBOOK_CUSTOM_ELEMENTS_MANIFEST__;
   if (!cem || !tagName) {
@@ -287,9 +321,16 @@ export function ApiTable() {
 
   return (
     <>
-      <PropertiesTable members={members} attributes={attributes} />
+      <PropertiesTable
+        members={members}
+        attributes={attributes}
+        argTypes={argTypes as Record<string, ArgType>}
+      />
       <SlotsTable slots={slots} />
-      <EventsTable events={events} />
+      <EventsTable
+        events={events}
+        argTypes={argTypes as Record<string, ArgType>}
+      />
       <CssPropsTable cssProps={cssProps} />
       <CssPartsTable cssParts={cssParts} />
     </>
