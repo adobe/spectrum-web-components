@@ -11,6 +11,11 @@
  */
 /** @type { import('@storybook/web-components').Preview } */
 import { setCustomElementsManifest } from '@storybook/web-components';
+
+/** Detect the Chromatic capture environment via user-agent string. */
+const isChromatic =
+  typeof window !== 'undefined' &&
+  !!window.navigator.userAgent.match(/Chromatic/);
 import {
   type Options,
   setStorybookHelpersConfig,
@@ -127,10 +132,10 @@ const preview = {
     withLanguageWrapper,
     withStaticColorPlayground,
     withStaticColorsDemo,
-    withFlexLayout,
+    ...(isChromatic ? [] : [withFlexLayout]),
   ],
   parameters: {
-    layout: 'centered',
+    layout: isChromatic ? 'fullscreen' : 'centered',
     backgrounds: { disable: true }, // Use custom context switches
     controls: {
       expanded: true,
@@ -174,7 +179,7 @@ const preview = {
       },
       canvas: {
         withToolbar: true,
-        layout: 'centered',
+        layout: isChromatic ? 'fullscreen' : 'centered',
         sourceState: 'shown',
       },
       source: {
