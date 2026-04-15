@@ -18,7 +18,7 @@ test.describe('MessageFeedback - ARIA Snapshots', () => {
   test('should have correct accessibility tree', async ({ page }) => {
     const root = await gotoStory(
       page,
-      'conversational-ai-message-feedback--overview',
+      'patterns-conversational-ai-message-feedback--overview',
       'swc-message-feedback'
     );
     await expect(root).toMatchAriaSnapshot(`

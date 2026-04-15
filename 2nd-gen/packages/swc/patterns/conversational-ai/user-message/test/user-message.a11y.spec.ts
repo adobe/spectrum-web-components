@@ -29,7 +29,7 @@ test.describe('UserMessage - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'conversational-ai-user-message--overview',
+      'patterns-conversational-ai-user-message--overview',
       'swc-user-message'
     );
     await expect(root).toMatchAriaSnapshot(`

@@ -20,12 +20,12 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'conversational-ai-response-status--overview',
+      'patterns-conversational-ai-response-status--overview',
       'swc-response-status'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - status "Thinking"
-      - text: Thinking…
+      - status "Generating response"
+      - text: Generating response
     `);
   });
 });

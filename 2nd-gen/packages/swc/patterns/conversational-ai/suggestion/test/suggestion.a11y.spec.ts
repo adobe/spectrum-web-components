@@ -18,13 +18,14 @@ test.describe('Suggestion - ARIA Snapshots', () => {
   test('should have correct accessibility tree', async ({ page }) => {
     const root = await gotoStory(
       page,
-      'conversational-ai-suggestion--overview',
+      'patterns-conversational-ai-suggestion--overview',
       'swc-suggestion'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - button: /Create a slide deck/
-      - button: /Summarize in/
-      - button: /Translate to/
+      - group "Follow-up suggestions":
+        - button "Create a slide deck from this"
+        - button "Summarize in 3 bullet points"
+        - button "Translate to Spanish"
     `);
   });
 });

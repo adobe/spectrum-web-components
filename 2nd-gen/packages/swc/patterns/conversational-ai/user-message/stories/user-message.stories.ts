@@ -49,6 +49,7 @@ const meta: Meta = {
   excludeStories: ['meta'],
 };
 
+export { meta };
 export default meta;
 
 // ────────────────────

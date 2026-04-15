@@ -29,7 +29,7 @@ test.describe('PromptField - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'conversational-ai-prompt-field--overview',
+      'patterns-conversational-ai-prompt-field--overview',
       'swc-prompt-field'
     );
     await expect(root).toMatchAriaSnapshot(`

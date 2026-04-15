@@ -20,12 +20,23 @@ test.describe('MessageSources - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'conversational-ai-message-sources--overview',
+      'patterns-conversational-ai-message-sources--overview',
       'swc-message-sources'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - button "Collapse sources" [expanded=true]
-      - list "Sources"
+      - button "Collapse sources Sources" [expanded]:
+        - img "Collapse sources"
+        - text: Sources
+      - list "Sources":
+        - listitem:
+          - link "Adobe Experience Manager documentation":
+            - /url: "#"
+        - listitem:
+          - link "Creative Cloud release notes 2026":
+            - /url: "#"
+        - listitem:
+          - link "Firefly API getting started guide":
+            - /url: "#"
     `);
   });
 });
