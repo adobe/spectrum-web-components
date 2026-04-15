@@ -47,6 +47,14 @@ argTypes['static-color'] = {
   options: [undefined, ...ProgressCircle.STATIC_COLORS],
 };
 
+argTypes.indeterminate = {
+  ...argTypes.indeterminate,
+  table: {
+    category: 'attributes',
+    defaultValue: { summary: 'true' },
+  },
+};
+
 /**
  * They can represent determinate or indeterminate progress.
  */
@@ -91,7 +99,9 @@ const sizeLabels = {
 export const Playground: Story = {
   tags: ['autodocs', 'dev'],
   args: {
-    label: 'Uploading document',
+    indeterminate: true,
+    size: 'm',
+    label: 'Processing request',
   },
 };
 
@@ -102,7 +112,8 @@ export const Playground: Story = {
 export const Overview: Story = {
   tags: ['overview'],
   args: {
-    label: 'Uploading document',
+    indeterminate: true,
+    label: 'Processing request',
   },
 };
 
@@ -165,7 +176,7 @@ export const Sizes: Story = {
   `,
   tags: ['options'],
   args: {
-    progress: 25,
+    indeterminate: true,
   },
 };
 
@@ -185,7 +196,7 @@ export const StaticColors: Story = {
     )}
   `,
   args: {
-    progress: 60,
+    indeterminate: true,
     label: 'Processing media',
   },
   tags: ['options'],
@@ -198,6 +209,29 @@ export const StaticColors: Story = {
 // ──────────────────────────
 //    STATES STORIES
 // ──────────────────────────
+
+/**
+ * Progress circles can show specific progress values from 0% to 100%.
+ * Set the `progress` attribute to a value between 0 and 100 to represent determinate progress.
+ * This automatically sets `aria-valuenow` to the provided value for screen readers.
+ */
+export const ProgressValues: Story = {
+  render: (args) => html`
+    ${template({ ...args, progress: 0, label: 'Starting download' })}
+    ${template({ ...args, progress: 25, label: 'Downloading (25%)' })}
+    ${template({ ...args, progress: 50, label: 'Downloading (50%)' })}
+    ${template({ ...args, progress: 75, label: 'Downloading (75%)' })}
+    ${template({ ...args, progress: 100, label: 'Download complete' })}
+  `,
+  tags: ['states'],
+  args: {
+    size: 'm',
+  },
+  parameters: {
+    'section-order': 2,
+  },
+};
+ProgressValues.storyName = 'Progress values';
 
 /**
  * When no `progress` value is set, the component displays an animated indeterminate
@@ -214,35 +248,6 @@ export const Indeterminate: Story = {
   tags: ['states'],
   args: {
     label: 'Processing request',
-  },
-  parameters: {
-    'section-order': 1,
-  },
-};
-
-/**
- * Progress circles can show specific progress values from 0% to 100%.
- * Set the `progress` attribute to a value between 0 and 100 to represent determinate progress.
- * This automatically sets `aria-valuenow` to the provided value for screen readers.
- */
-export const ProgressValues: Story = {
-  render: () => html`
-    <swc-progress-circle
-      progress="0"
-      label="Starting download"
-    ></swc-progress-circle>
-    <swc-progress-circle
-      progress="25"
-      label="Downloading (25%)"
-    ></swc-progress-circle>
-    <swc-progress-circle
-      progress="50"
-      label="Downloading (50%)"
-    ></swc-progress-circle>
-  `,
-  tags: ['states'],
-  parameters: {
-    'section-order': 2,
   },
 };
 
@@ -371,8 +376,8 @@ InButton.storyName = 'Progress circle in a button';
 export const Accessibility: Story = {
   tags: ['a11y'],
   args: {
-    progress: 60,
+    indeterminate: true,
     size: 'l',
-    label: 'Uploading presentation slides',
+    label: 'Syncing files',
   },
 };
