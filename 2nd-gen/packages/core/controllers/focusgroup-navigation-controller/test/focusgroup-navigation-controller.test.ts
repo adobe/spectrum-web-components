@@ -1040,6 +1040,184 @@ export const DisabledButtonNeverTabStop: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// Memory off: Tab re-entry resets to first item
+// ──────────────────────────────────────────────────────────────
+
+export const MemoryOffTabReentry: Story = {
+  render: () => html`
+    <demo-focusgroup-playground
+      .direction=${'horizontal'}
+      .wrap=${true}
+      .memory=${false}
+    ></demo-focusgroup-playground>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DemoFocusgroupPlayground>(
+      canvasElement,
+      'demo-focusgroup-playground'
+    );
+    const root = host.shadowRoot!;
+
+    await step(
+      'when memory is false, Tab re-entry resets to the first item',
+      async () => {
+        const buttons = Array.from(
+          root.querySelectorAll<HTMLButtonElement>('button')
+        );
+        // Navigate to the second item (Italic).
+        buttons[0].focus();
+        keydown(buttons[0], 'ArrowRight');
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Italic');
+
+        // Blur to simulate tabbing away from the group.
+        (document.activeElement as HTMLElement)?.blur();
+
+        // With memory off, tabindex="0" should reset to the first eligible item.
+        const tabbable = buttons.filter((b) => b.tabIndex === 0);
+        expect(tabbable.length).toBe(1);
+        expect(tabbable[0].textContent?.trim()).toBe('Bold');
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// skipDisabled: false with first item natively disabled
+// ──────────────────────────────────────────────────────────────
+
+export const SkipDisabledFalseFirstItemDisabled: Story = {
+  ...VerticalMenu,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<HTMLElement>(
+      canvasElement,
+      'demo-focusgroup-vertical'
+    );
+    const root = host.shadowRoot!;
+    const buttons = Array.from(
+      root.querySelectorAll<HTMLButtonElement>('button')
+    );
+
+    await step(
+      'when skipDisabled is false and first item is natively disabled, tab stop falls through',
+      async () => {
+        // Natively disable the first button (Copy).
+        buttons[0].disabled = true;
+
+        // Trigger a tabindex refresh by focusing and blurring another item.
+        buttons[1].focus();
+        buttons[1].blur();
+
+        // The first button is natively disabled and cannot hold tabindex="0".
+        expect(buttons[0].tabIndex).not.toBe(0);
+
+        // The tab stop should fall through to the next non-disabled eligible item.
+        const tabStop = buttons.find((b) => b.tabIndex === 0 && !b.disabled);
+        expect(tabStop).toBeTruthy();
+        expect(tabStop!.textContent?.trim()).toBe('Paste');
+      }
+    );
+
+    await step(
+      'arrow navigation still includes aria-disabled items when skipDisabled is false',
+      async () => {
+        const tabStop = buttons.find((b) => b.tabIndex === 0 && !b.disabled)!;
+        tabStop.focus();
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Paste');
+
+        // Arrow down should reach the aria-disabled item (Cut (unavailable)).
+        keydown(shadowActiveButton(host)!, 'ArrowDown');
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe(
+          'Cut (unavailable)'
+        );
+        expect(shadowActiveButton(host)?.getAttribute('aria-disabled')).toBe(
+          'true'
+        );
+      }
+    );
+
+    await step('cleanup: re-enable first button', async () => {
+      buttons[0].disabled = false;
+      buttons[0].focus();
+      expect(buttons[0].tabIndex).toBe(0);
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// Visibility hidden and display none items are excluded
+// ──────────────────────────────────────────────────────────────
+
+export const HiddenItemsSkipped: Story = {
+  render: () => html`
+    <demo-focusgroup-dynamic
+      role="toolbar"
+      aria-label="Hidden items test toolbar"
+    ></demo-focusgroup-dynamic>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DemoFocusgroupDynamic>(
+      canvasElement,
+      'demo-focusgroup-dynamic'
+    );
+    const root = host.shadowRoot!;
+
+    await step(
+      'visibility: hidden item is skipped during arrow navigation',
+      async () => {
+        const buttons = Array.from(
+          root.querySelectorAll<HTMLButtonElement>('button')
+        );
+        expect(buttons.length).toBe(4);
+
+        // Hide the second item with visibility: hidden.
+        buttons[1].style.visibility = 'hidden';
+        host.callRefresh();
+
+        buttons[0].focus();
+        keydown(buttons[0], 'ArrowRight');
+        // Should skip "Beta" (hidden) and land on "Gamma".
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Gamma');
+
+        // Restore.
+        buttons[1].style.visibility = '';
+        host.callRefresh();
+      }
+    );
+
+    await step(
+      'display: none item is skipped during arrow navigation',
+      async () => {
+        const buttons = Array.from(
+          root.querySelectorAll<HTMLButtonElement>('button')
+        );
+
+        // Hide the second item with display: none.
+        buttons[1].style.display = 'none';
+        host.callRefresh();
+
+        buttons[0].focus();
+        keydown(buttons[0], 'ArrowRight');
+        // Should skip "Beta" (display: none) and land on "Gamma".
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Gamma');
+
+        // Restore.
+        buttons[1].style.display = '';
+        host.callRefresh();
+      }
+    );
+
+    await step('after restoring, item is navigable again', async () => {
+      const buttons = Array.from(
+        root.querySelectorAll<HTMLButtonElement>('button')
+      );
+      buttons[0].focus();
+      keydown(buttons[0], 'ArrowRight');
+      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Beta');
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // DisabledMixin + FocusgroupNavigationController interaction
 // ──────────────────────────────────────────────────────────────
 

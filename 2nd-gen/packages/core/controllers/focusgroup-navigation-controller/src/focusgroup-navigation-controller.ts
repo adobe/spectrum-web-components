@@ -61,10 +61,18 @@ export type FocusgroupNavigationOptions = {
   memory?: boolean;
 
   /**
-   * When true, items that are disabled for interaction are skipped for arrow
-   * navigation and are not chosen as the roving tab stop. When false, disabled
-   * items remain in sequence (useful for patterns such as menus where disabled
-   * items may still be focusable per APG guidance).
+   * When true, both natively `disabled` and `aria-disabled="true"` items are
+   * skipped for arrow navigation and are not chosen as the roving tab stop.
+   * When false (default), disabled items remain in sequence — useful for
+   * patterns such as menus where disabled items may still be focusable per
+   * APG guidance.
+   *
+   * **Note:** Regardless of this flag, natively `disabled` elements are never
+   * chosen as the roving tab stop (`tabindex="0"`) because they cannot receive
+   * browser focus; see {@link applyRovingTabindex}. A future revision may
+   * decouple native `disabled` and `aria-disabled` into separate options if
+   * component migrations surface the need.
+   *
    * Defaults to false.
    */
   skipDisabled?: boolean;
@@ -266,6 +274,12 @@ export class FocusgroupNavigationController implements ReactiveController {
    */
   private cachedEligibleItems: HTMLElement[] | null = null;
 
+  /**
+   * Cached result of {@link buildRows}, populated on first access within a
+   * keydown cycle and cleared alongside {@link cachedEligibleItems}.
+   */
+  private cachedRows: HTMLElement[][] | null = null;
+
   // ─────────────────────────
   //     PUBLIC API
   // ─────────────────────────
@@ -317,6 +331,7 @@ export class FocusgroupNavigationController implements ReactiveController {
    */
   public refresh(): void {
     this.cachedEligibleItems = null;
+    this.cachedRows = null;
     const items = this.getEligibleItems();
     if (items.length === 0) {
       for (const el of this.getRawItems()) {
@@ -406,6 +421,7 @@ export class FocusgroupNavigationController implements ReactiveController {
   public hostConnected(): void {
     this.previousActive = null;
     this.cachedEligibleItems = null;
+    this.cachedRows = null;
     this.host.addEventListener('keydown', this.boundKeydown, true);
     this.host.addEventListener('focusin', this.boundFocusin, true);
     this.host.addEventListener('focusout', this.boundFocusout, true);
@@ -496,6 +512,21 @@ export class FocusgroupNavigationController implements ReactiveController {
       this.isNavigableItem(el)
     );
     return this.cachedEligibleItems;
+  }
+
+  /**
+   * {@link buildRows} with per-cycle caching, cleared alongside
+   * {@link cachedEligibleItems}.
+   *
+   * @param items - Eligible items to lay out as a grid.
+   * @returns Cached row-major array of rows.
+   */
+  private getRows(items: HTMLElement[]): HTMLElement[][] {
+    if (this.cachedRows) {
+      return this.cachedRows;
+    }
+    this.cachedRows = this.buildRows(items);
+    return this.cachedRows;
   }
 
   /**
@@ -655,6 +686,7 @@ export class FocusgroupNavigationController implements ReactiveController {
       return;
     }
     this.cachedEligibleItems = null;
+    this.cachedRows = null;
     const target = event.target;
     if (!(target instanceof HTMLElement)) {
       return;
@@ -687,6 +719,16 @@ export class FocusgroupNavigationController implements ReactiveController {
       this.getRawItems().includes(target)
     ) {
       this.lastFocused = target;
+    }
+    // When memory is off, reset the roving tab stop to the first eligible
+    // item so Tab re-entry always starts from the beginning.
+    if (!this.options.memory) {
+      this.cachedEligibleItems = null;
+      this.cachedRows = null;
+      const items = this.getEligibleItems();
+      if (items.length > 0) {
+        this.applyRovingTabindex(items[0]);
+      }
     }
   }
 
@@ -752,6 +794,7 @@ export class FocusgroupNavigationController implements ReactiveController {
     }
 
     this.cachedEligibleItems = null;
+    this.cachedRows = null;
     const items = this.getEligibleItems();
     const target = this.resolveManagedKeydownTarget(event, items);
     if (!target) {
@@ -759,7 +802,7 @@ export class FocusgroupNavigationController implements ReactiveController {
     }
 
     const isGrid = this.options.direction === 'grid';
-    const rows = isGrid ? this.buildRows(items) : null;
+    const rows = isGrid ? this.getRows(items) : null;
 
     if (
       isGrid &&
@@ -884,7 +927,7 @@ export class FocusgroupNavigationController implements ReactiveController {
    */
   private getEffectivePageMagnitude(): number | null {
     const raw = this.options.pageStep;
-    if (raw === undefined || raw === null) {
+    if (raw === undefined) {
       return null;
     }
     const n = Math.trunc(Number(raw));
