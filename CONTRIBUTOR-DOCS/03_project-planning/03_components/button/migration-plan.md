@@ -241,7 +241,7 @@ These are derived from the 1st-gen implementation, current deprecations, the Fig
 | `pending` | `boolean` | `false` | `pending` | **Confirmed.** Keep public API; while pending, the button remains focusable but is otherwise unavailable. |
 | `pendingLabel` | `string` | derived from the resolved non-busy accessible name + busy suffix | `pending-label` | **Adjusted for `SWC-459`.** Distinct from the control name; overrides the default busy-state announcement when supplied. |
 | `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | `type` | **Confirmed.** Keep existing form-facing API. |
-| `label` | deprecated | n/a | `label` | **Planned removal.** Prefer `aria-label` / `aria-labelledby` to avoid ambiguity with `pending-label`. |
+| `label` | deprecated | n/a | `label` | **Planned removal.** Prefer `aria-label` to avoid ambiguity with `pending-label`. |
 | `iconOnly` | `boolean` | `false` | `icon-only` | **Proposed.** Keep for backwards compatibility and styling clarity, even if some detection can be automatic. |
 | `truncate` | `boolean` | `false` | `truncate` | **Proposed rename.** Replaces legacy `no-wrap` with a more explicit name for the actual behavior: single-line truncation instead of wrapping. |
 | `active` | internal styling state | n/a | maybe none / internal only | **Proposed.** Do not preserve as a documented consumer-controlled API unless styling proves it necessary. |
@@ -292,7 +292,7 @@ Pending-state naming should resolve in this order:
 2. Resolved non-busy accessible name + busy suffix
 3. Fixed fallback such as `"Busy"`
 
-The resolved non-busy accessible name should come from the same sources used for the control itself, e.g. `aria-label`, `aria-labelledby`, or visible text.
+The resolved non-busy accessible name should come from the same sources used for the control itself, e.g. `aria-label` or visible text.
 
 ### Accessibility semantics notes (2nd-gen)
 
@@ -315,7 +315,7 @@ Using an internal semantic `<button>` also means:
 - the host should not remain the primary tab stop when the internal native button is present
 - host `disabled` reflects API state, while the internal `<button disabled>` enforces native disabled behavior
 - pending should not use native `disabled` on the internal button if focusability must be preserved
-- host `aria-label` / `aria-labelledby` and other button-relevant semantics should be forwarded intentionally, not assumed
+- host `aria-label` and other button-relevant semantics should be forwarded intentionally, not assumed
 - native button keyboard/click behavior should be reused where possible rather than reimplemented on the host
 
 ---
@@ -371,7 +371,7 @@ Lightweight example:
 // core/components/button/Button.base.ts
 export abstract class ButtonBase extends SpectrumElement {
   protected getResolvedAccessibleName(): string | null {
-    // derive from aria-label, aria-labelledby, or visible text
+    // derive from aria-label or visible text
   }
 
   protected getPendingAccessibleName(): string {
@@ -434,7 +434,7 @@ Allowed differences:
 - [ ] `Button.types.ts`: define canonical `ButtonVariant`, `ButtonTreatment`, `ButtonStaticColor`, and `ButtonSize`
 - [ ] `Button.base.ts`: retain `size`, `variant`, `treatment`, `staticColor`, `disabled`, `pending`, `pendingLabel`, `type`, and accessible-name handling
 - [ ] Rename legacy `noWrap` to `truncate` in the 2nd-gen API
-- [ ] Remove `label` in favor of `aria-label` / `aria-labelledby`
+- [ ] Remove `label` in favor of `aria-label`
 - [ ] Remove deprecated link API (`href`, `target`, `download`, `referrerpolicy`, `rel`) from the 2nd-gen public surface
 - [ ] Remove deprecated `variant` aliases (`cta`, `overBackground`, `white`, `black`)
 - [ ] Do not carry forward `quiet` as a 2nd-gen visual API; document migration to explicit `treatment="outline"` where the Figma matrix allows it
@@ -486,7 +486,7 @@ Allowed differences:
 #### Naming and semantics
 
 - [ ] Create `accessibility-migration-analysis.md` for Button; this plan currently has no component-specific a11y analysis to cite
-- [ ] Ensure icon-only usage has a reliable accessible name via `aria-label` or `aria-labelledby`
+- [ ] Ensure icon-only usage has a reliable accessible name via `aria-label`
 - [ ] Pending state must set `aria-disabled="true"` because the control cannot be activated while pending (`SWC-459`)
 - [ ] Pending state must use a descriptive default accessible label based on the resolved non-busy accessible name plus a busy suffix, not bare `"Pending"` (`SWC-459`)
 - [ ] Pending state must be announced to screen readers, even if the final implementation uses more than just an accessible-name change
@@ -495,8 +495,7 @@ Allowed differences:
 - [ ] Ensure the internal native button, not the host, is the semantic control exposed to assistive technology
 - [ ] Preserve keyboard activation for Space and Enter through native button semantics
 - [ ] Avoid duplicating native button activation logic on the host when the internal button already provides it
-- [ ] Forward host `aria-label` / `aria-labelledby` to the internal semantic button when those attributes are used
-- [ ] Account for shadow-root ARIA limitations when mapping `aria-labelledby` / `aria-describedby` to the internal control
+- [ ] Forward host `aria-label` to the internal semantic button when those attributes are used
 
 #### State verification
 
@@ -516,7 +515,7 @@ Allowed differences:
 - [ ] Add unit coverage for pending accessible-name transitions, including the new default busy-label behavior (`SWC-459`)
 - [ ] Add unit/accessibility coverage for `aria-disabled="true"` while pending (`SWC-459`)
 - [ ] Add coverage proving pending buttons remain focusable while press and hover interactions are suppressed
-- [ ] Add unit coverage for icon-only accessible naming via `aria-label` / `aria-labelledby`
+- [ ] Add unit coverage for icon-only accessible naming via `aria-label`
 - [ ] Add unit coverage for `type="submit"` / `type="reset"` behavior against outer forms
 - [ ] Add coverage proving host semantics do not duplicate or conflict with the internal button semantics
 - [ ] Add coverage proving the host is not the primary semantic/button focus target once the internal native button is present
