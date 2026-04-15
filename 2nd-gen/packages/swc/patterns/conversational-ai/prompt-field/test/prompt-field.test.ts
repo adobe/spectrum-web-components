@@ -43,8 +43,8 @@ export const OverviewTest: Story = {
       'swc-prompt-field'
     );
 
-    await step('renders with default sending state', async () => {
-      expect(el.sending).toBe(false);
+    await step('renders with default mode state', async () => {
+      expect(el.mode).toBe('default');
       expect(el.label).toBe('Prompt');
       expect(el.placeholder).toBe(
         'Ready to get started? Ask a question, share an idea, or add a task.'
@@ -68,14 +68,14 @@ export const PropertyMutationTest: Story = {
       'swc-prompt-field'
     );
 
-    await step('sending reflects to attribute after mutation', async () => {
-      el.sending = true;
+    await step('mode reflects to attribute after mutation', async () => {
+      el.mode = 'loading';
       await el.updateComplete;
-      expect(el.hasAttribute('sending')).toBe(true);
+      expect(el.getAttribute('mode')).toBe('loading');
 
-      el.sending = false;
+      el.mode = 'default';
       await el.updateComplete;
-      expect(el.hasAttribute('sending')).toBe(false);
+      expect(el.getAttribute('mode')).toBe('default');
     });
 
     await step(
@@ -118,7 +118,7 @@ export const EventsTest: Story = {
   args: {
     ...Overview.args,
     value: 'Summarize the API changes in this branch.',
-    sending: false,
+    mode: 'default',
   },
   play: async ({ canvasElement, step }) => {
     const el = await getComponent<PromptField>(

@@ -147,6 +147,11 @@
   color: token("gray-600");
 }
 
+.swc-PromptField-textarea:disabled {
+  color: token("gray-500");
+  cursor: default;
+}
+
 /* ─────────────────────────────────────
    Action bar
    ───────────────────────────────────── */
@@ -186,6 +191,12 @@
 .swc-PromptField-upload:hover {
   color: token("gray-800");
   background: token("gray-75");
+}
+
+.swc-PromptField-upload:disabled {
+  color: token("gray-400");
+  background: transparent;
+  cursor: default;
 }
 
 .swc-PromptField-upload swc-icon {

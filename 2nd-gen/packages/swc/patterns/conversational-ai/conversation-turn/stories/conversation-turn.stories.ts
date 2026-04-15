@@ -491,7 +491,7 @@ export const FullPattern: Story = {
 
             <swc-prompt-field
               .value=${draft}
-              .sending=${sending}
+              mode=${sending ? 'loading' : 'default'}
               .artifactValues=${artifacts.map((artifact) => ({
                 id: artifact.id,
                 name: artifact.title,

@@ -52,12 +52,13 @@ argTypes.multiple = {
   },
 };
 
-argTypes.sending = {
-  ...argTypes.sending,
-  control: { type: 'boolean' },
+argTypes.mode = {
+  ...argTypes.mode,
+  control: { type: 'select' },
+  options: ['default', 'loading', 'disabled', 'error'],
   table: {
     category: 'attributes',
-    defaultValue: { summary: 'false' },
+    defaultValue: { summary: 'default' },
   },
 };
 
@@ -94,7 +95,7 @@ export const Playground: Story = {
     artifactValues: [],
     accept: '',
     multiple: true,
-    sending: false,
+    mode: 'default',
   },
   tags: ['autodocs', 'dev'],
 };
@@ -111,7 +112,7 @@ export const Overview: Story = {
     artifactValues: [],
     accept: '',
     multiple: true,
-    sending: false,
+    mode: 'default',
   },
   tags: ['overview'],
 };
@@ -135,7 +136,7 @@ export const Anatomy: Story = {
     artifactValues: [],
     accept: '',
     multiple: true,
-    sending: false,
+    mode: 'default',
   },
   tags: ['anatomy'],
 };
@@ -145,14 +146,16 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 /**
- * The `sending` attribute controls the right-side action:
+ * The `mode` attribute controls interaction and action state:
  *
- * - **`false`** — Send button is shown
- * - **`true`** — Stop button is shown while the AI is generating a response
+ * - **`default`** — Send button shown, normal interactivity
+ * - **`loading`** — Stop button shown while generation is in progress
+ * - **`disabled`** — Input/upload/send are disabled
+ * - **`error`** — Reserved for error-state styling/behavior (currently behaves like default)
  *
  * The send button enablement is derived internally from prompt content (value or artifact).
  */
-export const Sending: Story = {
+export const Modes: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
@@ -163,7 +166,7 @@ export const Sending: Story = {
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
-          'sending=false' with empty value
+          mode="default" with empty value
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
@@ -174,19 +177,31 @@ export const Sending: Story = {
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
-          'sending=false' with entered value
+          mode="default" with entered value
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
-          sending
+          mode="loading"
           label="Prompt"
           value="Summarize the API changes in this branch."
         ></swc-prompt-field>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
-          'sending=true' (input remains editable)
+          mode="loading" (input remains editable)
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          mode="disabled"
+          label="Prompt"
+          value="This input is disabled."
+        ></swc-prompt-field>
+        <span
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+        >
+          mode="disabled" (input and controls disabled)
         </span>
       </div>
     </div>
@@ -371,7 +386,7 @@ export const Accessibility: Story = {
     artifactValues: [],
     accept: '',
     multiple: true,
-    sending: false,
+    mode: 'default',
   },
   tags: ['a11y'],
 };

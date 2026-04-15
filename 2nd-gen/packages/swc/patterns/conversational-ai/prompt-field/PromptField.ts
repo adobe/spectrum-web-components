@@ -41,6 +41,8 @@ export interface PromptFieldSubmitDetail {
   artifactValues: PromptFieldArtifactValue[];
 }
 
+export type PromptFieldMode = 'default' | 'loading' | 'disabled' | 'error';
+
 /**
  * Prompt entry surface for conversational AI flows.
  *
@@ -49,13 +51,11 @@ export interface PromptFieldSubmitDetail {
  * @element swc-prompt-field
  *
  * @slot artifact - Optional attachment preview(s); supports multiple slotted artifacts.
- *
- * @event swc-submit - Fires when the send button is clicked or Enter is pressed in the textarea.
  */
 export class PromptField extends SpectrumElement {
-  /** When `true`, show the stop action in place of send. */
-  @property({ type: Boolean, reflect: true })
-  public sending = false;
+  /** Visual mode for the prompt field action/interaction state. */
+  @property({ type: String, reflect: true })
+  public mode: PromptFieldMode = 'default';
 
   /** Accessible label shown above the textarea. */
   @property({ type: String })
@@ -111,14 +111,14 @@ export class PromptField extends SpectrumElement {
     }
 
     event.preventDefault();
-    if (this.sending) {
+    if (this._isLoading || this._isDisabled) {
       return;
     }
     this._handleSendClick();
   }
 
   private _handleSendClick(): void {
-    if (!this._isPopulated) {
+    if (!this._isPopulated || this._isDisabled) {
       return;
     }
     this.dispatchEvent(
@@ -140,6 +140,9 @@ export class PromptField extends SpectrumElement {
   }
 
   private _handleUploadClick(): void {
+    if (this._isDisabled) {
+      return;
+    }
     const uploadClickEvent = new CustomEvent('swc-upload-click', {
       bubbles: true,
       composed: true,
@@ -219,6 +222,14 @@ export class PromptField extends SpectrumElement {
     );
   }
 
+  private get _isLoading(): boolean {
+    return this.mode === 'loading';
+  }
+
+  private get _isDisabled(): boolean {
+    return this.mode === 'disabled';
+  }
+
   protected override firstUpdated(): void {
     this._syncArtifactPresenceFromSlot();
   }
@@ -243,7 +254,7 @@ export class PromptField extends SpectrumElement {
     return html`
       <button
         class="swc-PromptField-send"
-        ?disabled=${!this._isPopulated}
+        ?disabled=${!this._isPopulated || this._isDisabled}
         aria-label="Send"
         @click=${this._handleSendClick}
       >
@@ -265,7 +276,7 @@ export class PromptField extends SpectrumElement {
   }
 
   protected override render(): TemplateResult {
-    const showStop = this.sending;
+    const showStop = this._isLoading;
 
     return html`
       <div class="swc-PromptField">
@@ -283,6 +294,7 @@ export class PromptField extends SpectrumElement {
                 .value=${this.value}
                 placeholder=${this.placeholder}
                 aria-label=${this.label}
+                ?disabled=${this._isDisabled}
                 rows="1"
                 @input=${this._handleInput}
                 @keydown=${this._handleTextareaKeydown}
@@ -295,6 +307,7 @@ export class PromptField extends SpectrumElement {
               <button
                 class="swc-PromptField-upload"
                 aria-label="Add attachment"
+                ?disabled=${this._isDisabled}
                 @click=${this._handleUploadClick}
               >
                 <swc-icon label="Add">${PlusIcon()}</swc-icon>
@@ -303,6 +316,7 @@ export class PromptField extends SpectrumElement {
                 class="swc-PromptField-file-input"
                 type="file"
                 ?multiple=${this.multiple}
+                ?disabled=${this._isDisabled}
                 accept=${ifDefined(this.accept || undefined)}
                 tabindex="-1"
                 @change=${this._handleFileInputChange}
