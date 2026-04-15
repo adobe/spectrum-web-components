@@ -503,7 +503,7 @@ export const FullPattern: Story = {
               @swc-files-selected=${handleFilesSelected}
               @swc-dismiss=${handleArtifactDismiss}
               @swc-submit=${handleSubmit}
-              style="position: sticky; bottom: 16px; z-index: 1; padding-block-end: 16px;"
+              style="position: sticky; bottom: 16px; z-index: 1; padding-block-end: 16px; padding-block-start: 24px;"
             >
               ${artifacts.map((artifact) => {
                 const isMedia = getUploadArtifactType(artifact) === 'media';

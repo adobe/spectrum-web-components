@@ -24,9 +24,11 @@
  */
 
 :host {
-  display: block;
+  display: flex;
+  justify-content: flex-end;
   inline-size: 100%; /* copy fills the full column width */
   max-inline-size: 536px;
+  padding-inline-end: 24px;
 }
 
 /* Card: fixed 324px per Figma spec (card content is always 308px = 324px - 2×8px padding) */
