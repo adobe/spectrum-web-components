@@ -55,13 +55,13 @@ export const OverviewTest: Story = {
     );
 
     await step(
-      'renders determinate progress with an accessible label',
+      'renders indeterminate progress with an accessible label',
       async () => {
         expect(progressCircle.getAttribute('role')).toBe('progressbar');
         expect(progressCircle.getAttribute('aria-label')).toBe(
           progressCircle.label
         );
-        expect(progressCircle.hasAttribute('progress')).toBe(false);
+        expect(progressCircle.getAttribute('aria-valuenow')).toBeNull();
       }
     );
   },
