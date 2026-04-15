@@ -50,10 +50,19 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
 }
 
 export class SpectrumElement extends SpectrumMixin(LitElement) {
+  /**
+   * @internal
+   */
   static VERSION = version;
 
+  /**
+   * @internal
+   */
   static CORE_VERSION = coreVersion;
 
+  /**
+   * @internal
+   */
   public override get dir(): CSSStyleDeclaration['direction'] {
     return getComputedStyle(this).direction ?? 'ltr';
   }

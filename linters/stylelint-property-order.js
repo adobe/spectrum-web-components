@@ -284,6 +284,9 @@ const propertyGroups = [
    */
   {
     properties: [
+      'text-box',
+      'text-box-trim',
+      'text-box-edge',
       'line-height',
       'vertical-align',
       'alignment-baseline',
