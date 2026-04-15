@@ -179,7 +179,7 @@ const preview = {
       },
       source: {
         excludeDecorators: true,
-        type: 'auto',
+        type: 'dynamic',
         language: 'html',
         transform: async (source: string) => {
           try {

@@ -16,8 +16,9 @@ export const PROGRESS_CIRCLE_VALID_SIZES = [
   's',
   'm',
   'l',
-] as const satisfies ElementSize[];
+] as const satisfies readonly ElementSize[];
 export const PROGRESS_CIRCLE_STATIC_COLORS = ['white', 'black'] as const;
 
 export type ProgressCircleStaticColor =
   (typeof PROGRESS_CIRCLE_STATIC_COLORS)[number];
+export type ProgressCircleSize = (typeof PROGRESS_CIRCLE_VALID_SIZES)[number];
