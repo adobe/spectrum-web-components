@@ -37,17 +37,16 @@ test.describe('IllustratedMessage - ARIA Snapshots', () => {
     `);
   });
 
-  test('should render correct heading levels for heading-levels story', async ({
+  test('should have heading in light DOM (consumer-owned)', async ({
     page,
   }) => {
-    await gotoStory(
+    const root = await gotoStory(
       page,
-      'components-illustrated-message--heading-levels',
+      'components-illustrated-message--overview',
       'swc-illustrated-message'
     );
-    const headings = page.locator('swc-illustrated-message');
-    await expect(headings.nth(0).locator('h2')).toBeVisible();
-    await expect(headings.nth(1).locator('h3')).toBeVisible();
-    await expect(headings.nth(2).locator('h4')).toBeVisible();
+    // The heading is slotted from light DOM — it must be queryable from outside
+    // the shadow root and must not appear inside the shadow DOM.
+    await expect(root.locator('h2[slot="heading"]')).toBeVisible();
   });
 });

@@ -20,12 +20,14 @@ describe('Illustrated Message', () => {
   describe('dev mode', () => {
     let consoleWarnStub!: ReturnType<typeof stub>;
     before(() => {
+      window.__swc.verbose = true;
       consoleWarnStub = stub(console, 'warn');
     });
     afterEach(() => {
       consoleWarnStub.resetHistory();
     });
     after(() => {
+      window.__swc.verbose = false;
       consoleWarnStub.restore();
     });
     it('warns of deprecation', async () => {
