@@ -17,12 +17,16 @@ import customElements from '../custom-elements.json' with { type: 'json' };
 // Register the badge component for use in the docs iframe
 import '../../components/badge/index.js';
 
-type Status = 'preview' | 'deprecated' | 'internal';
+type Status = 'preview' | 'deprecated' | 'internal' | 'unsupported';
 
-const STATUS_CONFIG: Record<Status, { label: string; variant: string }> = {
-  preview: { label: 'Preview', variant: 'notice' },
-  deprecated: { label: 'Deprecated', variant: 'negative' },
-  internal: { label: 'Internal', variant: 'neutral' },
+const STATUS_CONFIG: Record<
+  Status,
+  { label: string; variant: string; outline?: boolean }
+> = {
+  preview: { label: 'Preview', variant: 'fuchsia' },
+  deprecated: { label: 'Deprecated', variant: 'negative', outline: true },
+  internal: { label: 'Internal', variant: 'neutral', outline: true },
+  unsupported: { label: 'Unsupported', variant: 'negative' },
 };
 
 /**
@@ -108,7 +112,12 @@ export const StatusBadge = ({ of }: { of?: any }) => {
         </Badge>
       )}
       {statusConfig && (
-        <Badge variant={statusConfig.variant}>{statusConfig.label}</Badge>
+        <Badge
+          variant={statusConfig.variant}
+          outline={statusConfig?.outline ?? false}
+        >
+          {statusConfig.label}
+        </Badge>
       )}
     </div>
   );
