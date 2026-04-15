@@ -1,6 +1,6 @@
 # Spectrum Web Components - Spectrum 1 Full API Reference
 
-> Generated 2026-04-13. For the link index see [llms.txt](https://opensource.adobe.com/spectrum-web-components/llms.txt).
+> Generated 2026-04-15. For the link index see [llms.txt](https://opensource.adobe.com/spectrum-web-components/llms.txt).
 
 All public `sp-*` components with their full attribute, slot, event, and CSS
 custom property tables. Useful when you want the entire API in one context window.
