@@ -225,7 +225,7 @@ export const AvailableIcons: Story = {
       )}
     `;
   },
-  tags: ['options', '!test'],
+  tags: ['options'],
   parameters: {
     docs: {
       canvas: {
