@@ -53,7 +53,7 @@
     },
     "./controllers/focus-group-navigation-controller.js": {
       "types": "./dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.d.ts",
-      "import": "./dist/controllers/ocus-group-navigation-controller/focus-group-navigation-controller.js"
+      "import": "./dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.js"
     },
     "./controllers/index.js": {
       "types": "./dist/controllers/index.d.ts",
