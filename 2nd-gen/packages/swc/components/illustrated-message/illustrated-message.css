@@ -10,8 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-/* @todo SWC-1838 — replace with full S2 token-based styles */
-
 :host {
   display: block;
 }
@@ -21,28 +19,131 @@
 }
 
 .swc-IllustratedMessage {
+  --_swc-im-illustration-to-content: var(
+    --swc-illustrated-message-illustration-to-content,
+    token("spacing-200")
+  );
+
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  gap: var(--_swc-im-illustration-to-content);
+  max-inline-size: var(
+    --swc-illustrated-message-max-inline-size,
+    token("illustrated-message-vertical-maximum-width")
+  );
+  margin-inline: auto;
 }
 
 .swc-IllustratedMessage-illustration {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
+  align-self: center;
   justify-content: center;
+  inline-size: var(--swc-illustrated-message-illustration-size, 96px);
+  block-size: var(--swc-illustrated-message-illustration-size, 96px);
+  color: var(
+    --swc-illustrated-message-illustration-color,
+    token("neutral-content-color-default")
+  );
 }
 
 .swc-IllustratedMessage-content {
   display: flex;
   flex-direction: column;
+  gap: token("spacing-75");
+  text-align: center;
+}
+
+.swc-IllustratedMessage-description {
+  font-size: var(
+    --swc-illustrated-message-description-font-size,
+    token("illustrated-message-medium-body-font-size")
+  );
+  font-weight: token("regular-font-weight");
+  line-height: var(
+    --swc-illustrated-message-description-line-height,
+    token("body-line-height")
+  );
+  color: token("body-color");
+}
+
+/* ── Size: small ─────────────────────────────────────────────────────────── */
+
+:host([size="s"]) {
+  --swc-illustrated-message-illustration-size: 96px;
+  --swc-illustrated-message-illustration-to-content: token("spacing-200");
+  --swc-illustrated-message-heading-font-size: token(
+    "illustrated-message-small-title-font-size"
+  );
+  --swc-illustrated-message-description-font-size: token(
+    "illustrated-message-small-body-font-size"
+  );
+}
+
+/* ── Size: large ─────────────────────────────────────────────────────────── */
+
+:host([size="l"]) {
+  --swc-illustrated-message-illustration-size: 160px;
+  --swc-illustrated-message-illustration-to-content: token("spacing-100");
+  --swc-illustrated-message-heading-font-size: token(
+    "illustrated-message-large-title-font-size"
+  );
+  --swc-illustrated-message-description-font-size: token(
+    "illustrated-message-large-body-font-size"
+  );
+}
+
+/* ── CJK language support ────────────────────────────────────────────────── */
+
+:host:lang(ja),
+:host:lang(ko),
+:host:lang(zh) {
+  --swc-illustrated-message-heading-font-size: token(
+    "illustrated-message-medium-cjk-title-font-size"
+  );
+  --swc-illustrated-message-heading-line-height: token("cjk-line-height-100");
+  --swc-illustrated-message-description-line-height: token("cjk-line-height-200");
+}
+
+:host:where([size="s"]):lang(ja),
+:host:where([size="s"]):lang(ko),
+:host:where([size="s"]):lang(zh) {
+  --swc-illustrated-message-heading-font-size: token(
+    "illustrated-message-small-cjk-title-font-size"
+  );
+}
+
+:host:where([size="l"]):lang(ja),
+:host:where([size="l"]):lang(ko),
+:host:where([size="l"]):lang(zh) {
+  --swc-illustrated-message-heading-font-size: token(
+    "illustrated-message-large-cjk-title-font-size"
+  );
+}
+
+/* ── Orientation: horizontal ─────────────────────────────────────────────── */
+
+:host([orientation="horizontal"]) {
+  --swc-illustrated-message-max-inline-size: token(
+    "illustrated-message-horizontal-maximum-width"
+  );
+}
+
+:host([orientation="horizontal"]) .swc-IllustratedMessage {
+  flex-direction: row;
   align-items: center;
 }
 
-/* @todo SWC-1838 — heading typography (size, weight, line-height, color) */
+:host([orientation="horizontal"]) .swc-IllustratedMessage-content {
+  align-items: flex-start;
+  text-align: start;
+}
+
+/* ── Slotted content ─────────────────────────────────────────────────────── */
 
 /*
- * Reset native heading styles (font-size, font-weight, margin) so component tokens can take over.
+ * Reset native heading styles so component tokens can take over.
  * The :not([class]) guard leaves intentionally-classed headings untouched.
  */
 ::slotted(h2:not([class])),
@@ -51,31 +152,38 @@
 ::slotted(h5:not([class])),
 ::slotted(h6:not([class])) {
   margin: 0;
-  font: inherit;
+  font-size: var(
+    --swc-illustrated-message-heading-font-size,
+    token("illustrated-message-medium-title-font-size")
+  );
+  font-style: token("title-sans-serif-font-style");
+  font-weight: token("title-sans-serif-font-weight");
+  line-height: var(
+    --swc-illustrated-message-heading-line-height,
+    token("title-line-height")
+  );
+  color: token("heading-color");
+  border: 0;
 }
 
-/* @todo SWC-1838 — description typography (size, weight, line-height, color) */
-
-/* ── Size ───────────────────────────────────────────────────────────────── */
-
-/* @todo SWC-1838 — replace with full S2 token-based size values */
-
-:host([size="s"]) .swc-IllustratedMessage-illustration {
-  /* @todo SWC-1838 */
+/*
+ * Ensure slotted SVG illustrations fill the illustration container
+ * and use the component illustration color via currentcolor.
+ */
+::slotted(svg) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  fill: currentcolor;
+  stroke: currentcolor;
 }
 
-:host([size="l"]) .swc-IllustratedMessage-illustration {
-  /* @todo SWC-1838 */
-}
+/* ── Forced colors ───────────────────────────────────────────────────────── */
 
-/* ── Orientation ─────────────────────────────────────────────────────────── */
+@media (forced-colors: active) {
+  .swc-IllustratedMessage-illustration {
+    --swc-illustrated-message-illustration-color: CanvasText;
 
-/* @todo SWC-1838 — replace with full S2 token-based orientation values */
-
-:host([orientation="horizontal"]) .swc-IllustratedMessage {
-  /* @todo SWC-1838 */
-}
-
-:host([orientation="horizontal"]) .swc-IllustratedMessage-content {
-  /* @todo SWC-1838 */
+    forced-color-adjust: none;
+  }
 }
