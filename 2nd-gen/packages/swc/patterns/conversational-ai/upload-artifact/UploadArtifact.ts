@@ -43,8 +43,6 @@ export class UploadArtifact extends SpectrumElement {
   /** `null` until first slot sync to avoid early false-negative hiding. */
   @state()
   private _hideTextMeta: boolean | null = null;
-  @state()
-  private _hasActions = false;
 
   public static override get styles(): CSSResultArray {
     return [styles];
@@ -97,17 +95,6 @@ export class UploadArtifact extends SpectrumElement {
     }
   }
 
-  private _syncActionsSlot(): void {
-    const root = this.shadowRoot;
-    if (!root) {
-      return;
-    }
-    const actionsSlot = root.querySelector<HTMLSlotElement>(
-      'slot[name="actions"]'
-    );
-    this._hasActions = this._slotHasAssignedContent(actionsSlot);
-  }
-
   protected override updated(changed: Map<string, unknown>): void {
     if (changed.has('type')) {
       this._syncTextMetaSlots();
@@ -129,16 +116,11 @@ export class UploadArtifact extends SpectrumElement {
     const subtitleSlot = root.querySelector<HTMLSlotElement>(
       'slot[name="subtitle"]'
     );
-    const actionsSlot = root.querySelector<HTMLSlotElement>(
-      'slot[name="actions"]'
-    );
     titleSlot?.addEventListener('slotchange', () => this._syncTextMetaSlots());
     subtitleSlot?.addEventListener('slotchange', () =>
       this._syncTextMetaSlots()
     );
-    actionsSlot?.addEventListener('slotchange', () => this._syncActionsSlot());
     this._syncTextMetaSlots();
-    this._syncActionsSlot();
   }
 
   private _handleDismissClick(): void {
