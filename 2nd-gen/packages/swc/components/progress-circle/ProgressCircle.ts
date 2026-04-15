@@ -107,7 +107,7 @@ export class ProgressCircle extends ProgressCircleBase {
             typeof this.staticColor !== 'undefined',
         })}
       >
-        <svg fill="none" width="100%" height="100%">
+        <svg aria-hidden="true" fill="none" width="100%" height="100%">
           <circle
             cx="50%"
             cy="50%"

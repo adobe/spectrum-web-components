@@ -210,16 +210,16 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
     super.updated(changes);
 
     if (changes.has('progress')) {
-      if (this.progress === null) {
-        this.removeAttribute('aria-valuemin');
-        this.removeAttribute('aria-valuemax');
-        this.removeAttribute('aria-valuenow');
-        this.removeAttribute('aria-valuetext');
-      } else {
+      if (this.progress !== null && this.progress >= 0) {
         this.setAttribute('aria-valuemin', '0');
         this.setAttribute('aria-valuemax', '100');
         this.setAttribute('aria-valuenow', String(this.progress));
         this.setAttribute('aria-valuetext', this.formatProgress());
+      } else {
+        this.removeAttribute('aria-valuemin');
+        this.removeAttribute('aria-valuemax');
+        this.removeAttribute('aria-valuenow');
+        this.removeAttribute('aria-valuetext');
       }
     }
 
