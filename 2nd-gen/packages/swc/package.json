@@ -78,6 +78,7 @@
     "@adobe/postcss-token": "workspace:*",
     "@adobe/swc-tokens": "workspace:*",
     "@axe-core/playwright": "4.10.2",
+    "@chromatic-com/storybook": "5.0.1",
     "@custom-elements-manifest/analyzer": "0.10.8",
     "@storybook/addon-a11y": "10.2.8",
     "@storybook/addon-designs": "11.1.2",

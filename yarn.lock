@@ -196,6 +196,7 @@ __metadata:
     "@adobe/postcss-token": "workspace:*"
     "@adobe/swc-tokens": "workspace:*"
     "@axe-core/playwright": "npm:4.10.2"
+    "@chromatic-com/storybook": "npm:5.0.1"
     "@custom-elements-manifest/analyzer": "npm:0.10.8"
     "@spectrum-web-components/core": "npm:0.0.4"
     "@storybook/addon-a11y": "npm:10.2.8"
@@ -2149,6 +2150,21 @@ __metadata:
     human-id: "npm:^4.1.1"
     prettier: "npm:^2.7.1"
   checksum: 10c0/311f4d0e536d1b5f2d3f9053537d62b2d4cdbd51e1d2767807ac9d1e0f380367f915d2ad370e5c73902d5a54bffd282d53fff5418c8ad31df51751d652bea826
+  languageName: node
+  linkType: hard
+
+"@chromatic-com/storybook@npm:5.0.1":
+  version: 5.0.1
+  resolution: "@chromatic-com/storybook@npm:5.0.1"
+  dependencies:
+    "@neoconfetti/react": "npm:^1.0.0"
+    chromatic: "npm:^13.3.4"
+    filesize: "npm:^10.0.12"
+    jsonfile: "npm:^6.1.0"
+    strip-ansi: "npm:^7.1.0"
+  peerDependencies:
+    storybook: ^0.0.0-0 || ^10.1.0 || ^10.1.0-0 || ^10.2.0-0 || ^10.3.0-0
+  checksum: 10c0/feb76f32347b09cc45bde04e2dc4374510bbcd9410f4cef67b08f82be4d2ae625da2347f9495e7bb5cfa368fd5af40f97ef2fcd054313365d3bd20c175cf3975
   languageName: node
   linkType: hard
 
@@ -4715,6 +4731,13 @@ __metadata:
     "@emnapi/runtime": "npm:^1.4.3"
     "@tybys/wasm-util": "npm:^0.10.0"
   checksum: 10c0/6d07922c0613aab30c6a497f4df297ca7c54e5b480e00035e0209b872d5c6aab7162fc49477267556109c2c7ed1eb9c65a174e27e9b87568106a87b0a6e3ca7d
+  languageName: node
+  linkType: hard
+
+"@neoconfetti/react@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@neoconfetti/react@npm:1.0.0"
+  checksum: 10c0/dfa487965b69f88b39562ccd910114cd68b00a90c7eb79cfb1a483c7ac717b720f9f095e5aea13cef8a9b9bea05533d380ddff5e44d3bc3f7dc4d5c66716765c
   languageName: node
   linkType: hard
 
@@ -12594,6 +12617,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"chromatic@npm:^13.3.4":
+  version: 13.3.5
+  resolution: "chromatic@npm:13.3.5"
+  peerDependencies:
+    "@chromatic-com/cypress": ^0.*.* || ^1.0.0
+    "@chromatic-com/playwright": ^0.*.* || ^1.0.0
+  peerDependenciesMeta:
+    "@chromatic-com/cypress":
+      optional: true
+    "@chromatic-com/playwright":
+      optional: true
+  bin:
+    chroma: dist/bin.js
+    chromatic: dist/bin.js
+    chromatic-cli: dist/bin.js
+  checksum: 10c0/58b3d7984db000f8c7b605788569a24c3f3cd41bb6b2d3a94f18acc9ff11ce6c6881f795c8390a94ff721ccfcf8a2d7942e78a54a1f70294a7b3d35ccc382154
+  languageName: node
+  linkType: hard
+
 "chrome-launcher@npm:^0.15.0":
   version: 0.15.2
   resolution: "chrome-launcher@npm:0.15.2"
@@ -16508,7 +16550,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"filesize@npm:^10.1.6":
+"filesize@npm:^10.0.12, filesize@npm:^10.1.6":
   version: 10.1.6
   resolution: "filesize@npm:10.1.6"
   checksum: 10c0/9a196d64da4e947b8c0d294be09a3dfa7a634434a1fc5fb3465f1c9acc1237ea0363f245ba6e24477ea612754d942bc964d86e0e500905a72e9e0e17ae1bbdbc
@@ -20265,7 +20307,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsonfile@npm:^6.0.1":
+"jsonfile@npm:^6.0.1, jsonfile@npm:^6.1.0":
   version: 6.2.0
   resolution: "jsonfile@npm:6.2.0"
   dependencies:
