@@ -1,10 +1,10 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Button / `sp-button` Migration Plan
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Button / Button Migration Plan
 
 <!-- Document title (editable) -->
 
-# `sp-button` Migration Plan
+# Button Migration Plan
 
 <!-- Generated TOC - DO NOT EDIT -->
 
@@ -28,6 +28,7 @@
     - [Public API](#public-api)
     - [Behavioral semantics](#behavioral-semantics)
     - [Pending accessible-name rule (2nd-gen)](#pending-accessible-name-rule-2nd-gen)
+    - [Accessibility semantics notes (2nd-gen)](#accessibility-semantics-notes-2nd-gen)
     - [Form behavior note (2nd-gen)](#form-behavior-note-2nd-gen)
     - [Internal semantic button implications](#internal-semantic-button-implications)
 - [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
@@ -293,6 +294,14 @@ Pending-state naming should resolve in this order:
 
 The resolved non-busy accessible name should come from the same sources used for the control itself, e.g. `aria-label`, `aria-labelledby`, or visible text.
 
+### Accessibility semantics notes (2nd-gen)
+
+- the internal native `<button>` should be the semantic control and primary tab stop
+- the host should not duplicate `role="button"` semantics when an internal button already exists
+- host-facing naming and description APIs must be intentionally mapped to the internal control because cross-root IDREF relationships such as `aria-labelledby` / `aria-describedby` do not cross shadow boundaries
+- pending should remain button semantics; it should not expose progressbar semantics unless it truly represents measurable progress
+- pending announcements should prefer accessible-name updates and, if needed, one concise polite status pattern rather than multiple competing live regions
+
 ### Form behavior note (2nd-gen)
 
 Using an internal semantic `<button>` improves semantics and keyboard behavior, but it should not be assumed to preserve outer-form `submit` / `reset` behavior by itself. The 1st-gen implementation explicitly proxies these behaviors through a temporary light-DOM native button, and 2nd-gen should verify whether equivalent proxying is still needed.
@@ -303,6 +312,7 @@ Using an internal semantic `<button>` also means:
 
 - the internal button is the semantic source of truth for button role, focus, and disabled behavior
 - host-level button semantics must not compete with the internal button
+- the host should not remain the primary tab stop when the internal native button is present
 - host `disabled` reflects API state, while the internal `<button disabled>` enforces native disabled behavior
 - pending should not use native `disabled` on the internal button if focusability must be preserved
 - host `aria-label` / `aria-labelledby` and other button-relevant semantics should be forwarded intentionally, not assumed
@@ -437,6 +447,7 @@ Allowed differences:
 - [ ] When `pending`, expose unavailable state to assistive tech via `aria-disabled="true"` even when the button is not otherwise `disabled` (`SWC-459`)
 - [ ] Replace the default pending accessible label with a descriptive busy-state pattern derived from the resolved non-busy accessible name, while still allowing `pending-label` override (`SWC-459`)
 - [ ] Keep semantic helpers reusable in `core` so later button-like components can share behavior without sharing `sp-button` DOM or styling
+- [ ] Do not recreate proxy patterns where the host carries button semantics while a different hidden internal control handles real activation
 
 #### Alignment checks
 
@@ -481,15 +492,18 @@ Allowed differences:
 - [ ] Pending state must be announced to screen readers, even if the final implementation uses more than just an accessible-name change
 - [ ] Pending state must remain focusable while otherwise unavailable, matching current React Spectrum behavior
 - [ ] Ensure host and internal button semantics do not conflict in the accessibility tree
+- [ ] Ensure the internal native button, not the host, is the semantic control exposed to assistive technology
 - [ ] Preserve keyboard activation for Space and Enter through native button semantics
 - [ ] Avoid duplicating native button activation logic on the host when the internal button already provides it
 - [ ] Forward host `aria-label` / `aria-labelledby` to the internal semantic button when those attributes are used
+- [ ] Account for shadow-root ARIA limitations when mapping `aria-labelledby` / `aria-describedby` to the internal control
 
 #### State verification
 
 - [ ] Verify disabled state removes focusability and prevents interaction
 - [ ] Verify Windows High Contrast uses disabled/unavailable colors while pending (`SWC-459`)
 - [ ] Confirm host vs internal-control semantics in snapshots (`button` role, accessible name, disabled state)
+- [ ] Document whether delayed pending visuals and reduced-motion treatment ship now or remain deferred
 
 ### Testing
 
@@ -505,6 +519,7 @@ Allowed differences:
 - [ ] Add unit coverage for icon-only accessible naming via `aria-label` / `aria-labelledby`
 - [ ] Add unit coverage for `type="submit"` / `type="reset"` behavior against outer forms
 - [ ] Add coverage proving host semantics do not duplicate or conflict with the internal button semantics
+- [ ] Add coverage proving the host is not the primary semantic/button focus target once the internal native button is present
 - [ ] Add coverage proving host `visibility: hidden` also hides the button label (`SWC-701`)
 - [ ] Remove or replace tests that depend on deprecated `href` mode
 
@@ -525,6 +540,8 @@ Allowed differences:
 - [ ] Document the rename from `no-wrap` to `truncate` and its relationship to the spec’s wrapped-text presentation
 - [ ] Document the approved background treatment for static white outline examples so contrast is maintained on hover (`SWC-1139`)
 - [ ] Document pending-state accessibility behavior: `aria-disabled`, default busy-label pattern, and high-contrast disabled styling (`SWC-459`)
+- [ ] Document that 2nd-gen Button semantics and focus land on a real internal native `<button>`, not the custom-element host
+- [ ] Document supported naming/description APIs at the host level and how they map to the internal control
 - [ ] Document that focus indication uses `outline` so it remains visible for truncated buttons (`SWC-886`)
 - [ ] Update global element guidance so button-styled native elements and `sp-button` describe the same visual API and any intentional limitations
 
@@ -560,17 +577,18 @@ Allowed differences:
 | # | Item | Blocking? | Status | Owner |
 |---|---|---|---|---|
 | **Q6** | Should `truncate` be a pure rename of legacy `no-wrap`, or must it guarantee ellipsis-style truncation with overflow handling and tooltip guidance when content is clipped? | No | Open | Button migration reviewer |
-| **Q7** | What exact default busy-label wording should Button use when `pending-label` is not supplied: e.g. `"[name], busy"` or another reviewed phrasing? | No | Open | Design + accessibility reviewer |
+| **Q7** | What exact default busy-label wording should Button use when `pending-label` is not supplied: e.g. `"[name], busy"` or another reviewed phrasing? | No | Open | Accessibility reviewer |
 | **Q8** | If shared source/imports between component Button styles and [`global-button.css`](../../../../2nd-gen/packages/swc/stylesheets/global/global-button.css) are not feasible, what fallback sync strategy is acceptable? | No | Open | Button migration reviewer |
 | **Q9** | Can 2nd-gen rely on an internal semantic `<button>` alone for outer-form `submit` / `reset`, or should it plan to retain explicit proxy behavior like 1st-gen? | Yes | Open | Design + implementation |
+| **Q10** | Should pending announcement rely on accessible-name updates alone, or should Button also define a single polite status-region pattern for long-running work? | No | Open | Accessibility reviewer |
 
 ### Scope and prerequisites
 
 | # | Item | Blocking? | Status | Owner |
 |---|---|---|---|---|
-| **Q10** | Is `sp-clear-button` / `sp-close-button` intentionally out of scope for this ticket, or should their migration planning be bundled with Button package work? | No | Open | Ticket owner |
-| **Q11** | Button-specific accessibility analysis doc is missing in this branch. | Yes | Blocked until authored or deferred | Ticket owner |
-| **Q12** | Should the 2nd-gen Button core semantic foundation be treated as the intended reuse base for later button-like migrations (`ActionButton`, `ClearButton`, `CloseButton`, `PickerButton`, `InfieldButton`), even though their rendering and styling remain separate? | Yes | Open | Architecture reviewer |
+| **Q11** | Is `sp-clear-button` / `sp-close-button` intentionally out of scope for this ticket, or should their migration planning be bundled with Button package work? | No | Open | Ticket owner |
+| **Q12** | Button-specific accessibility analysis doc is missing in this branch. | Yes | Blocked until authored or deferred | Ticket owner |
+| **Q13** | Should the 2nd-gen Button core semantic foundation be treated as the intended reuse base for later button-like migrations (`ActionButton`, `ClearButton`, `CloseButton`, `PickerButton`, `InfieldButton`), even though their rendering and styling remain separate? | Yes | Open | Architecture reviewer |
 
 ---
 
@@ -590,7 +608,6 @@ Allowed differences:
 - [React Spectrum S2 Button](https://react-spectrum.adobe.com/Button)
 - [Global element styling guide](../../../../2nd-gen/packages/swc/.storybook/guides/customization/global-elements.mdx)
 - [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
-- [spectrum-css migration PR #3246](https://github.com/adobe/spectrum-css/pull/3246)
 - SWC-1139: ensure contrast ratio for static white, outline on :hover
 - SWC-459: pending state a11y criteria
 - SWC-701: issue with label and visibility: hidden
