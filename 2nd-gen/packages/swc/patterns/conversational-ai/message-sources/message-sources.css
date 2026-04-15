@@ -94,12 +94,12 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  inline-size: 12px;
+  inline-size: 16px;
   block-size: 20px;
   font-size: token("font-size-50");
   font-weight: token("bold-font-weight");
   color: token("gray-700");
   background: token("gray-100");
-  border-radius: 4px;
+  border-radius: token("corner-radius-100");
   content: counter(sources);
 }
