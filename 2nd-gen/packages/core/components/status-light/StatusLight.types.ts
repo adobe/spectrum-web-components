@@ -10,20 +10,16 @@
  * governing permissions and limitations under the License.
  */
 
-/**
- * @todo Rename STATUSLIGHT_ prefix to STATUS_LIGHT_ to align with type prefix
- * naming convention (use underscore separators for multi-word names).
- */
 import type { ElementSize } from '@spectrum-web-components/core/mixins/index.js';
 
-export const STATUSLIGHT_VALID_SIZES = [
+export const STATUS_LIGHT_VALID_SIZES = [
   's',
   'm',
   'l',
   'xl',
 ] as const satisfies readonly ElementSize[];
 
-export const STATUSLIGHT_VARIANTS_SEMANTIC = [
+export const STATUS_LIGHT_VARIANTS_SEMANTIC = [
   'neutral',
   'info',
   'positive',
@@ -31,7 +27,7 @@ export const STATUSLIGHT_VARIANTS_SEMANTIC = [
   'notice',
 ] as const;
 
-export const STATUSLIGHT_VARIANTS_COLOR = [
+export const STATUS_LIGHT_VARIANTS_COLOR = [
   'fuchsia',
   'indigo',
   'magenta',
@@ -48,15 +44,15 @@ export const STATUSLIGHT_VARIANTS_COLOR = [
   'silver',
 ] as const;
 
-export const STATUSLIGHT_VARIANTS = [
-  ...STATUSLIGHT_VARIANTS_SEMANTIC,
-  ...STATUSLIGHT_VARIANTS_COLOR,
+export const STATUS_LIGHT_VARIANTS = [
+  ...STATUS_LIGHT_VARIANTS_SEMANTIC,
+  ...STATUS_LIGHT_VARIANTS_COLOR,
 ] as const;
 
 export type StatusLightSemanticVariant =
-  (typeof STATUSLIGHT_VARIANTS_SEMANTIC)[number];
+  (typeof STATUS_LIGHT_VARIANTS_SEMANTIC)[number];
 
 export type StatusLightColorVariant =
-  (typeof STATUSLIGHT_VARIANTS_COLOR)[number];
+  (typeof STATUS_LIGHT_VARIANTS_COLOR)[number];
 
-export type StatusLightVariant = (typeof STATUSLIGHT_VARIANTS)[number];
+export type StatusLightVariant = (typeof STATUS_LIGHT_VARIANTS)[number];

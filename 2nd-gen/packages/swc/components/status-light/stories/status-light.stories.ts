@@ -16,9 +16,9 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { StatusLight } from '@adobe/spectrum-wc/status-light';
 import {
-  STATUSLIGHT_VALID_SIZES,
-  STATUSLIGHT_VARIANTS_COLOR,
-  STATUSLIGHT_VARIANTS_SEMANTIC,
+  STATUS_LIGHT_VALID_SIZES,
+  STATUS_LIGHT_VARIANTS_COLOR,
+  STATUS_LIGHT_VARIANTS_SEMANTIC,
   StatusLightColorVariant,
   StatusLightSemanticVariant,
   type StatusLightSize,
@@ -190,7 +190,7 @@ export const Anatomy: Story = {
  */
 export const Sizes: Story = {
   render: (args) => html`
-    ${STATUSLIGHT_VALID_SIZES.map((size) =>
+    ${STATUS_LIGHT_VALID_SIZES.map((size) =>
       template({
         ...args,
         size,
@@ -215,7 +215,7 @@ export const Sizes: Story = {
  */
 export const SemanticVariants: Story = {
   render: (args) => html`
-    ${STATUSLIGHT_VARIANTS_SEMANTIC.map((variant: StatusLightSemanticVariant) =>
+    ${STATUS_LIGHT_VARIANTS_SEMANTIC.map((variant: StatusLightSemanticVariant) =>
       template({
         ...args,
         variant,
@@ -248,7 +248,7 @@ export const SemanticVariants: Story = {
  */
 export const NonSemanticVariants: Story = {
   render: (args) => html`
-    ${STATUSLIGHT_VARIANTS_COLOR.map((variant: StatusLightColorVariant) =>
+    ${STATUS_LIGHT_VARIANTS_COLOR.map((variant: StatusLightColorVariant) =>
       template({
         ...args,
         variant,
