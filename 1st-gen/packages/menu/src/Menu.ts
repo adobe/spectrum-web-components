@@ -25,7 +25,7 @@ import {
 import type { Overlay } from '@spectrum-web-components/overlay';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
-import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow100.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow500.js';
 
 import menuStyles from './menu.css.js';
 import type {
@@ -209,14 +209,25 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
   }
 
   private _triggerMobileTransition(direction: 'forward' | 'back'): void {
-    this.removeAttribute('mobile-transition');
-    requestAnimationFrame(() => {
-      this.setAttribute('mobile-transition', direction);
+    this.updateComplete.then(() => {
+      const wrapper = this.shadowRoot?.querySelector(
+        '.mobile-submenu-animation-wrapper'
+      );
+      if (!wrapper) {
+        return;
+      }
+      wrapper.removeAttribute('mobile-transition');
+      requestAnimationFrame(() => {
+        wrapper.setAttribute('mobile-transition', direction);
+      });
     });
   }
 
-  private _handleTransitionEnd = (): void => {
-    this.removeAttribute('mobile-transition');
+  private _handleTransitionEnd = (event: AnimationEvent): void => {
+    const target = event.target as HTMLElement;
+    if (target?.classList?.contains('mobile-submenu-animation-wrapper')) {
+      target.removeAttribute('mobile-transition');
+    }
   };
 
   public resetMobileSubmenus(): void {
@@ -291,10 +302,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     backItem.setAttribute('data-mobile-back', '');
     backItem.textContent = 'Back';
 
-    const icon = document.createElement('sp-icon-arrow100');
+    const icon = document.createElement('sp-icon-arrow500');
     icon.slot = 'icon';
     icon.style.transform = 'rotate(180deg)';
     backItem.prepend(icon);
+
+    backItem.style.marginBottom = 'calc(4px * var(--swc-scale-factor))';
+    backItem.style.marginTop = 'calc(4px * var(--swc-scale-factor))';
 
     backItem.addEventListener('click', (event: Event) => {
       event.stopPropagation();
@@ -1294,7 +1308,9 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
       </div>
       ${hasMobileSubmenu
         ? html`
-            <slot name="mobile-submenu"></slot>
+            <div class="mobile-submenu-animation-wrapper">
+              <slot name="mobile-submenu"></slot>
+            </div>
           `
         : ''}
     `;
