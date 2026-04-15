@@ -16,7 +16,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { ProgressCircle } from '@adobe/spectrum-wc/progress-circle';
 import {
-  PROGRESS_CIRCLE_STATIC_COLORS_S2,
+  PROGRESS_CIRCLE_STATIC_COLORS,
   PROGRESS_CIRCLE_VALID_SIZES,
   type ProgressCircleSize,
 } from '@spectrum-web-components/core/components/progress-circle';
@@ -30,10 +30,10 @@ import '@adobe/spectrum-wc/progress-circle';
 const { args, argTypes, template } = getStorybookHelpers('swc-progress-circle');
 
 // @todo Blurring the range control seems to cause a catastrophic Storybook render failure, so using number input for now. React spectrum has the range control working, check their implementation for a solution.
-argTypes.progress = {
-  ...argTypes.progress,
-  control: { type: 'number', min: 0, max: 100, step: 1 },
-};
+// argTypes.progress = {
+//   ...argTypes.progress,
+//   control: { type: 'number', min: 0, max: 100, step: 1 },
+// };
 
 argTypes.size = {
   ...argTypes.size,
@@ -97,7 +97,6 @@ const sizeLabels = {
 export const Playground: Story = {
   tags: ['autodocs', 'dev'],
   args: {
-    progress: 50,
     label: 'Uploading document',
   },
 };
@@ -109,7 +108,6 @@ export const Playground: Story = {
 export const Overview: Story = {
   tags: ['overview'],
   args: {
-    progress: 50,
     label: 'Uploading document',
   },
 };
@@ -123,29 +121,25 @@ export const Overview: Story = {
  *
  * 1. **Track** - Background ring showing the full progress range
  * 2. **Fill** - Colored ring segment showing current progress
- * 3. **Label** - Accessible text describing the operation (not visually rendered), provided via the `label` attribute or property, or `aria-label` / `aria-labelledby` on the host
+ * 3. **Label** - Accessible text describing the operation (not visually rendered).
  *
- * ### Content
+ * > **A11y Note:** Light DOM children are not projected into the shadow tree, so content between the opening and closing tags does not supply an accessible name. Use the `label` attribute or property, or `aria-label` / `aria-labelledby` on the host.
  *
- * - **Label**: Accessible text describing what is loading or progressing (not visually rendered)
  */
 export const Anatomy: Story = {
-  render: (args) => html`
-    ${template({
-      ...args,
-      progress: 0,
-      label: 'Starting upload',
-    })}
-    ${template({
-      ...args,
-      progress: 50,
-      label: 'Uploading document',
-    })}
-    ${template({
-      ...args,
-      progress: 100,
-      label: 'Upload complete',
-    })}
+  render: () => html`
+    <swc-progress-circle
+      progress="0"
+      label="Starting upload"
+    ></swc-progress-circle>
+    <swc-progress-circle
+      progress="50"
+      label="Uploading document"
+    ></swc-progress-circle>
+    <swc-progress-circle
+      progress="100"
+      label="Upload complete"
+    ></swc-progress-circle>
   `,
   tags: ['anatomy'],
   args: {
@@ -180,9 +174,6 @@ export const Sizes: Story = {
   args: {
     progress: 25,
   },
-  parameters: {
-    'section-order': 1,
-  },
 };
 
 /**
@@ -194,7 +185,7 @@ export const Sizes: Story = {
 // @todo: capture the Chromatic VRTs for all sizes of progress circles for both static color options and WHCM. SWC-1848
 export const StaticColors: Story = {
   render: (args) => html`
-    ${PROGRESS_CIRCLE_STATIC_COLORS_S2.map(
+    ${PROGRESS_CIRCLE_STATIC_COLORS.map(
       (color) => html`
         ${template({ ...args, 'static-color': color })}
       `
@@ -210,36 +201,16 @@ export const StaticColors: Story = {
     'section-order': 2,
   },
 };
-StaticColors.storyName = 'Static colors';
 
 // ──────────────────────────
 //    STATES STORIES
 // ──────────────────────────
 
 /**
- * Progress circles can show specific progress values from 0% to 100%.
- * Set the `progress` attribute to a value between 0 and 100 to represent determinate progress.
- * This automatically sets `aria-valuenow` to the provided value for screen readers.
- */
-export const ProgressValues: Story = {
-  render: (args) => html`
-    ${template({ ...args, progress: 0, label: 'Starting download' })}
-    ${template({ ...args, progress: 25, label: 'Downloading (25%)' })}
-    ${template({ ...args, progress: 50, label: 'Downloading (50%)' })}
-    ${template({ ...args, progress: 75, label: 'Downloading (75%)' })}
-    ${template({ ...args, progress: 100, label: 'Download complete' })}
-  `,
-  tags: ['states'],
-  parameters: {
-    'section-order': 1,
-  },
-};
-ProgressValues.storyName = 'Progress values';
-
-/**
- * The indeterminate state shows an animated loading indicator when progress is unknown or cannot be determined.
- * Set the `indeterminate` attribute to `true` to activate this state.
- * This removes `aria-valuenow` from the element and provides appropriate feedback to assistive technologies.
+ * When no `progress` value is set, the component displays an animated indeterminate
+ * loading indicator. This is the default state.
+ * The `aria-valuenow` attribute is removed, signaling to assistive technologies
+ * that the operation duration is unknown.
  *
  * Use indeterminate progress when:
  * - The operation duration is unknown
@@ -249,9 +220,34 @@ ProgressValues.storyName = 'Progress values';
 export const Indeterminate: Story = {
   tags: ['states'],
   args: {
-    indeterminate: true,
     label: 'Processing request',
   },
+  parameters: {
+    'section-order': 1,
+  },
+};
+
+/**
+ * Progress circles can show specific progress values from 0% to 100%.
+ * Set the `progress` attribute to a value between 0 and 100 to represent determinate progress.
+ * This automatically sets `aria-valuenow` to the provided value for screen readers.
+ */
+export const ProgressValues: Story = {
+  render: () => html`
+    <swc-progress-circle
+      progress="0"
+      label="Starting download"
+    ></swc-progress-circle>
+    <swc-progress-circle
+      progress="25"
+      label="Downloading (25%)"
+    ></swc-progress-circle>
+    <swc-progress-circle
+      progress="50"
+      label="Downloading (50%)"
+    ></swc-progress-circle>
+  `,
+  tags: ['states'],
   parameters: {
     'section-order': 2,
   },
@@ -273,7 +269,7 @@ export const Indeterminate: Story = {
  * 3. **Progress state** (determinate):
  *     - Sets `aria-valuenow` with the current `progress` value
  * 4. **Loading state** (indeterminate):
- *     - Removes `aria-valuenow` when `indeterminate="true"`
+ *     - When no `progress` value is set, `aria-valuenow` is omitted
  *     - Screen readers understand this as an ongoing operation with unknown duration
  * 5. **Status communication**: Screen readers announce progress updates as values change
  *
@@ -283,7 +279,7 @@ export const Indeterminate: Story = {
  * - High contrast mode is supported with appropriate color overrides
  * - Static color variants ensure sufficient contrast on different backgrounds
  *
- *  #### Non-interactive element
+ * #### Non-interactive element
  *
  * - Progress circles have no interactive behavior and are not focusable
  * - Screen readers will announce the progress circle content as static text

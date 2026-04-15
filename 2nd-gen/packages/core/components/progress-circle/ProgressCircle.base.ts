@@ -9,6 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
@@ -23,6 +24,14 @@ import {
   PROGRESS_CIRCLE_VALID_SIZES,
   ProgressCircleStaticColor,
 } from './ProgressCircle.types.js';
+
+/**
+ * @todo SWC-1891 Extract shared progress logic (ARIA, label, clamping, formatting,
+ * indeterminate derivation) into a `ProgressBase` mixin or abstract class in
+ * `core/components/progress/` so that both `ProgressCircleBase` and a future
+ * `ProgressBarBase` can extend it. Also add `formatOptions` support for
+ * progress-bar's custom value labels (e.g. "3 of 10", "45 MB / 100 MB").
+ */
 
 /**
  * A progress circle component that visually represents the completion progress of a task.
@@ -69,19 +78,14 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
   // ──────────────────
 
   /**
-   * @todo Revisit the default API for `indeterminate` and `progress`. SWC-1891
-   *
-   * Whether the progress circle shows indeterminate progress (loading state).
-   *
-   * When true, displays an animated loading indicator instead of a specific progress value.
-   */
-  @property({ type: Boolean, reflect: true })
-  public indeterminate = false;
-
-  /**
    * Accessible label for the progress circle.
    *
    * Used to provide context about what is loading or progressing.
+   * When no accessible name is provided (no label, aria-label, or
+   * aria-labelledby), a default "Loading" label is applied.
+   *
+   * @todo Localize the default "Loading" fallback via LanguageResolutionController
+   * once a runtime i18n system for static strings is available.
    */
   @property({ type: String })
   public label = '';
@@ -89,17 +93,27 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
   /**
    * Progress value from 0 to 100.
    *
-   * Only relevant when indeterminate is false. Values outside that range or
-   * non-finite numbers are clamped to 0–100 (non-finite becomes 0).
+   * When `null` (indeterminate), the component shows a loading animation.
+   * Setting a number switches to determinate mode. Removing the `progress`
+   * attribute or setting this property to `null` returns to indeterminate.
+   * Values outside 0–100 or non-finite numbers are clamped (non-finite becomes 0).
+   *
+   * Reflected to the `progress` attribute when set; the attribute is omitted when indeterminate.
    */
-  @property({ type: Number })
-  public progress = 0;
+  @property({ type: Number, reflect: true })
+  public progress: number | null = null;
 
   private languageResolver = new LanguageResolutionController(this);
 
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
+
+  /**
+   * @todo Localize via LanguageResolutionController once a runtime i18n
+   * system for static strings is available.
+   */
+  private static readonly DEFAULT_LABEL = 'Loading';
 
   /** True when light DOM has element nodes or non-whitespace text (no default slot). */
   private static hasMeaningfulLightDomChildren(host: HTMLElement): boolean {
@@ -112,6 +126,28 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
       }
     }
     return false;
+  }
+
+  private hasAccessibleName(): boolean {
+    return Boolean(
+      this.label ||
+      this.getAttribute('aria-label') ||
+      this.getAttribute('aria-labelledby')
+    );
+  }
+
+  private static clampProgress(value: number): number {
+    if (!Number.isFinite(value)) {
+      return 0;
+    }
+    return Math.min(100, Math.max(0, value));
+  }
+
+  private formatProgress(): string {
+    return new Intl.NumberFormat(this.languageResolver.language, {
+      style: 'percent',
+      unitDisplay: 'narrow',
+    }).format((this.progress ?? 0) / 100);
   }
 
   private warnDeprecatedLightDomChildren(): void {
@@ -129,15 +165,27 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
     );
   }
 
-  private static clampProgress(value: number): number {
-    if (!Number.isFinite(value)) {
-      return 0;
+  private warnMissingAccessibleName(): void {
+    if (!window.__swc?.DEBUG) {
+      return;
     }
-    return Math.min(100, Math.max(0, value));
+    window.__swc?.warn(
+      this,
+      `<${this.localName}> requires an accessible name. A default label of "${ProgressCircleBase.DEFAULT_LABEL}" has been applied, but a more specific label should be provided via:`,
+      'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/components-progress-circle--docs',
+      {
+        type: 'accessibility',
+        issues: [
+          'value supplied to the "label" attribute, which will be displayed visually as part of the element, or',
+          'value supplied to the "aria-label" attribute, which will only be provided to screen readers, or',
+          'an element ID reference supplied to the "aria-labelledby" attribute, which will be provided by screen readers and will need to be managed manually by the parent application.',
+        ],
+      }
+    );
   }
 
   protected override willUpdate(changes: PropertyValues): void {
-    if (changes.has('progress')) {
+    if (changes.has('progress') && this.progress !== null) {
       const clamped = ProgressCircleBase.clampProgress(this.progress);
       if (clamped !== this.progress) {
         this.progress = clamped;
@@ -148,22 +196,14 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
 
   protected override firstUpdated(changes: PropertyValues): void {
     super.firstUpdated(changes);
-    if (!this.hasAttribute('role')) {
-      this.setAttribute('role', 'progressbar');
-    }
-  }
-
-  private formatProgress(): string {
-    return new Intl.NumberFormat(this.languageResolver.language, {
-      style: 'percent',
-      unitDisplay: 'narrow',
-    }).format(this.progress / 100);
+    this.setAttribute('role', 'progressbar');
   }
 
   protected override updated(changes: PropertyValues): void {
     super.updated(changes);
-    if (changes.has('indeterminate')) {
-      if (this.indeterminate) {
+
+    if (changes.has('progress')) {
+      if (this.progress === null) {
         this.removeAttribute('aria-valuemin');
         this.removeAttribute('aria-valuemax');
         this.removeAttribute('aria-valuenow');
@@ -175,13 +215,11 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
         this.setAttribute('aria-valuetext', this.formatProgress());
       }
     }
-    if (!this.indeterminate && changes.has('progress')) {
-      this.setAttribute('aria-valuenow', String(this.progress));
+
+    if (this.progress !== null && changes.has(languageResolverUpdatedSymbol)) {
       this.setAttribute('aria-valuetext', this.formatProgress());
     }
-    if (!this.indeterminate && changes.has(languageResolverUpdatedSymbol)) {
-      this.setAttribute('aria-valuetext', this.formatProgress());
-    }
+
     if (changes.has('label')) {
       if (this.label.length) {
         this.setAttribute('aria-label', this.label);
@@ -190,31 +228,14 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
       }
     }
 
-    const hasAccessibleName = (): boolean => {
-      return Boolean(
-        this.label ||
-        this.getAttribute('aria-label') ||
-        this.getAttribute('aria-labelledby')
-      );
-    };
+    // Apply default accessible name fallback after handling explicit label changes.
+    if (changes.has('label') && !this.hasAccessibleName()) {
+      this.setAttribute('aria-label', ProgressCircleBase.DEFAULT_LABEL);
+      this.warnMissingAccessibleName();
+    }
 
     if (window.__swc?.DEBUG) {
       this.warnDeprecatedLightDomChildren();
-      if (!hasAccessibleName() && this.getAttribute('role') === 'progressbar') {
-        window.__swc?.warn(
-          this,
-          `<${this.localName}> elements need one of the following to be accessible:`,
-          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/components-progress-circle--docs',
-          {
-            type: 'accessibility',
-            issues: [
-              'value supplied to the "label" attribute, which will be displayed visually as part of the element, or',
-              'value supplied to the "aria-label" attribute, which will only be provided to screen readers, or',
-              'an element ID reference supplied to the "aria-labelledby" attribute, which will be provided by screen readers and will need to be managed manually by the parent application.',
-            ],
-          }
-        );
-      }
     }
   }
 }

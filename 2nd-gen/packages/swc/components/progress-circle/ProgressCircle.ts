@@ -13,6 +13,7 @@
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
   PROGRESS_CIRCLE_STATIC_COLORS,
@@ -25,6 +26,7 @@ import styles from './progress-circle.css';
 
 /**
  * Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way.
+ *
  * They can represent determinate (with a specific progress value) or indeterminate (loading) progress.
  *
  * @element swc-progress-circle
@@ -32,8 +34,7 @@ import styles from './progress-circle.css';
  * @since 0.0.1
  *
  * @property {string} staticColor - Reflected as the `static-color` attribute. Static color variant for use on different backgrounds.
- * @property {number} progress - Progress value between 0 and 100.
- * @property {boolean} indeterminate - Indeterminate state for loading.
+ * @property {number | null} progress - Progress between 0 and 100, reflected as the `progress` attribute when set. When `null` (indeterminate), the attribute is omitted.
  * @property {string} size - Size of the component.
  * @property {string} label - Label for the component.
  *
@@ -41,9 +42,7 @@ import styles from './progress-circle.css';
  * <swc-progress-circle progress="75" label="Loading progress"></swc-progress-circle>
  *
  * @example
- * <swc-progress-circle indeterminate label="Loading..."></swc-progress-circle>
- *
- * Light DOM children are not projected into the shadow tree. Use the `label` attribute or property, or `aria-label` / `aria-labelledby` on the host, for an accessible name.
+ * <swc-progress-circle label="Loading..."></swc-progress-circle>
  */
 export class ProgressCircle extends ProgressCircleBase {
   // ────────────────────
@@ -73,26 +72,37 @@ export class ProgressCircle extends ProgressCircleBase {
     return [styles];
   }
 
+  /**
+   * Compute the SVG stroke-dashoffset for the fill circle.
+   *
+   * - **Indeterminate** (`progress` is `null`): returns `undefined` so CSS
+   *   animation keyframes fully control the offset.
+   * - **0%**: returns 98 instead of 100. A dashoffset of 100 hides the fill
+   *   entirely, which fails WCAG 1.4.11 non-text contrast (the track alone
+   *   may not meet 3:1 against the background). The 2-unit fill keeps the
+   *   graphical element perceivable. `aria-valuenow` stays at 0.
+   * - **1–100%**: returns `100 - progress`.
+   */
+  private computeDashOffset(): number | undefined {
+    if (this.progress === null) {
+      return undefined;
+    }
+    if (this.progress === 0) {
+      return 98;
+    }
+    return 100 - this.progress;
+  }
+
   protected override render(): TemplateResult {
     const strokeWidth = this.size === 's' ? 2 : this.size === 'l' ? 6 : 4;
     // SVG strokes are centered, so subtract half the stroke width from the radius to create an inner stroke.
     const radius = `calc(50% - ${strokeWidth / 2}px)`;
 
-    // At progress=0, a dashoffset of 100 makes the fill fully invisible, which fails WCAG 1.4.11
-    // non-text contrast (the track alone may not meet 3:1 against the background).
-    // Clamp to 98 to show a minimum 2-unit fill so the graphical element remains perceivable.
-    // aria-valuenow stays at 0 — this is a visual-only adjustment.
-    const dashOffset = this.indeterminate
-      ? 100 - this.progress
-      : this.progress === 0
-        ? 98
-        : 100 - this.progress;
-
     return html`
       <div
         class=${classMap({
           ['swc-ProgressCircle']: true,
-          ['swc-ProgressCircle--indeterminate']: this.indeterminate,
+          ['swc-ProgressCircle--indeterminate']: this.progress === null,
           [`swc-ProgressCircle--static${capitalize(this.staticColor)}`]:
             typeof this.staticColor !== 'undefined',
         })}
@@ -117,7 +127,7 @@ export class ProgressCircle extends ProgressCircleBase {
             class="swc-ProgressCircle-fill"
             pathLength="100"
             stroke-dasharray="100 200"
-            stroke-dashoffset=${dashOffset}
+            stroke-dashoffset=${ifDefined(this.computeDashOffset())}
             stroke-linecap="round"
           />
         </svg>
