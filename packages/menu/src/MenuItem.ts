@@ -328,7 +328,7 @@ export class MenuItem extends LikeAnchor(
             return false;
         }
 
-        if (this.shouldProxyClick()) {
+        if (this.shouldProxyClick(event as MouseEvent)) {
             return;
         }
     }
@@ -343,9 +343,13 @@ export class MenuItem extends LikeAnchor(
         this.focus();
     };
 
-    private shouldProxyClick(): boolean {
+    private shouldProxyClick(event?: MouseEvent): boolean {
         let handled = false;
         if (this.anchorElement) {
+            const path = event?.composedPath() || [];
+            if (path.includes(this.anchorElement)) {
+                return false;
+            }
             this.anchorElement.click();
             handled = true;
         }
