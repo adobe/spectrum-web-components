@@ -33,7 +33,10 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
      * @internal
      */
     public override shadowRoot!: ShadowRoot;
-    /** @internal */
+
+    /**
+     * @internal
+     */
     public hasVisibleFocusInTree(): boolean {
       const getAncestors = (root: Document = document): HTMLElement[] => {
         let currentNode = root.activeElement as HTMLElement;
@@ -74,10 +77,19 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
 }
 
 export class SpectrumElement extends SpectrumMixin(LitElement) {
+  /**
+   * @internal
+   */
   static VERSION = version;
 
+  /**
+   * @internal
+   */
   static CORE_VERSION = coreVersion;
 
+  /**
+   * @internal
+   */
   public override get dir(): CSSStyleDeclaration['direction'] {
     return getComputedStyle(this).direction ?? 'ltr';
   }
