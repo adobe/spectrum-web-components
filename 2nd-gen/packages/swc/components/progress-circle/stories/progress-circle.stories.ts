@@ -29,12 +29,6 @@ import '@adobe/spectrum-wc/progress-circle';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-progress-circle');
 
-// @todo Blurring the range control seems to cause a catastrophic Storybook render failure, so using number input for now. React spectrum has the range control working, check their implementation for a solution.
-// argTypes.progress = {
-//   ...argTypes.progress,
-//   control: { type: 'number', min: 0, max: 100, step: 1 },
-// };
-
 argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
@@ -291,12 +285,13 @@ export const ProgressValues: Story = {
  * - Use specific, meaningful labels (e.g., "Uploading profile photo" instead of "Loading")
  * - Use determinate progress (`progress="50"`) when possible to give users a clear sense of completion
  * - For determinate progress, ensure the `progress` value accurately reflects the actual progress
- * - Use indeterminate progress only when duration is truly unknown
+ * - Use indeterminate progress only when duration is truly unknown or when the wait is less than 3 seconds.
  * - Consider using `size="l"` for primary loading states to improve visibility
  * - Ensure sufficient color contrast between the progress circle and its background
  * - Use `static-color="white"` on dark backgrounds or `static-color="black"` on light backgrounds
  * - Test with screen readers to verify progress announcements are clear and timely
  * - Avoid updating progress values more frequently than every 1-2 seconds to prevent announcement overload
+ * - Do not force live region announcements for progress durations that are 3 seconds or less.  Instead, consider status messages when progress is complete or there is an error
  */
 export const Accessibility: Story = {
   tags: ['a11y'],
