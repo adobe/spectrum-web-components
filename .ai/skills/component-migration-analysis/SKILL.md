@@ -42,6 +42,6 @@ Create comprehensive migration documentation for the **analyze rendering and sty
 
 For the exact document structure, heading levels, collapsible sections, CSS⇒SWC mapping table format (columns, status values, ordering), DOM comparison format, and output format notes, read:
 
-**.cursor/skills/component-migration-analysis/references/migration-analysis-prompt.md**
+**.ai/skills/component-migration-analysis/references/migration-analysis-prompt.md**
 
 That document is the single source of truth for file organization, component documentation structure, comparison format, summary sections, and resources placeholder.

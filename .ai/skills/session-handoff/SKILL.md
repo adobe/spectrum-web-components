@@ -27,26 +27,26 @@ Determine which mode applies:
 
 ### Step 1: Generate Scaffold
 
-Run the smart scaffold script **from the project root** so handoffs are created in the project's `.cursor/handoffs/` directory:
+Run the smart scaffold script **from the project root** so handoffs are created in the project's `.ai/handoffs/` directory:
 
 ```bash
 cd /path/to/spectrum-web-components
-python .cursor/skills/session-handoff/scripts/create_handoff.py [task-slug]
+python .ai/skills/session-handoff/scripts/create_handoff.py [task-slug]
 ```
 
-Example: `python .cursor/skills/session-handoff/scripts/create_handoff.py implementing-user-auth`
+Example: `python .ai/skills/session-handoff/scripts/create_handoff.py implementing-user-auth`
 
 **For continuation handoffs** (linking to previous work):
 
 ```bash
-python .cursor/skills/session-handoff/scripts/create_handoff.py "auth-part-2" --continues-from 2024-01-15-auth.md
+python .ai/skills/session-handoff/scripts/create_handoff.py "auth-part-2" --continues-from 2024-01-15-auth.md
 ```
 
-The script uses the current working directory as the project path. Running from project root ensures handoffs live at `project-root/.cursor/handoffs/`.
+The script uses the current working directory as the project path. Running from project root ensures handoffs live at `project-root/.ai/handoffs/`.
 
 The script will:
 
-- Create `.cursor/handoffs/` at project root if needed
+- Create `.ai/handoffs/` at project root if needed
 - Generate timestamped filename
 - Pre-fill: timestamp, project path, git branch, recent commits, modified files
 - Add handoff chain links if continuing from previous
@@ -68,7 +68,7 @@ Use the template structure in [references/handoff-template.md](references/handof
 Run the validation script (from project root; pass path to handoff file):
 
 ```bash
-python .cursor/skills/session-handoff/scripts/validate_handoff.py .cursor/handoffs/<handoff-file>
+python .ai/skills/session-handoff/scripts/validate_handoff.py .ai/handoffs/<handoff-file>
 ```
 
 The validator checks:
@@ -96,23 +96,23 @@ Report to user:
 
 ### Step 1: Find Available Handoffs
 
-List handoffs (run from project root so the script finds `.cursor/handoffs/`):
+List handoffs (run from project root so the script finds `.ai/handoffs/`):
 
 ```bash
 cd /path/to/spectrum-web-components
-python .cursor/skills/session-handoff/scripts/list_handoffs.py
+python .ai/skills/session-handoff/scripts/list_handoffs.py
 ```
 
 This shows all handoffs with dates, titles, and completion status.
 
-**When Python or the scripts are unavailable:** List handoffs manually from the project root's `.cursor/handoffs/` (naming: `YYYY-MM-DD-HHMMSS-[slug].md`), then load and verify context using the resume checklist.
+**When Python or the scripts are unavailable:** List handoffs manually from the project root's `.ai/handoffs/` (naming: `YYYY-MM-DD-HHMMSS-[slug].md`), then load and verify context using the resume checklist.
 
 ### Step 2: Check Staleness
 
 Before loading, check how current the handoff is (from project root):
 
 ```bash
-python .cursor/skills/session-handoff/scripts/check_staleness.py .cursor/handoffs/<handoff-file>
+python .ai/skills/session-handoff/scripts/check_staleness.py .ai/handoffs/<handoff-file>
 ```
 
 Staleness levels:
@@ -186,7 +186,7 @@ When resuming from a chain, read the most recent handoff first, then reference p
 
 ## Storage Location
 
-Handoffs are stored in the **project root's** `.cursor/handoffs/` directory. Run the create script from project root so new handoffs go there.
+Handoffs are stored in the **project root's** `.ai/handoffs/` directory. Run the create script from project root so new handoffs go there.
 
 Naming convention: `YYYY-MM-DD-HHMMSS-[slug].md`
 

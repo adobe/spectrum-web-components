@@ -42,7 +42,7 @@ The header is required. Scope is optional. All lines must stay under 100 charact
 
 ## Commit Types
 
-Use the types defined in `.cursor/config.json` under `git.types`.
+Use the types defined in `.ai/config.json` under `git.types`.
 
 | Type       | Purpose                                       |
 | ---------- | --------------------------------------------- |
@@ -58,7 +58,7 @@ Use the types defined in `.cursor/config.json` under `git.types`.
 | `style`    | Code style and formatting                     |
 | `test`     | Tests added, updated or improved              |
 
-Source list: `.cursor/config.json` → `git.types`.
+Source list: `.ai/config.json` → `git.types`.
 
 ## Subject Line Rules
 

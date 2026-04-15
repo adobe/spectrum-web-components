@@ -40,6 +40,6 @@ Run the regeneration script to update breadcrumbs and TOCs in CONTRIBUTOR-DOCS, 
 
 For complete Operator and Maintainer workflows, debugging, link-verification handling, script behavior details, and the testing checklist, read:
 
-**.cursor/skills/contributor-docs-nav/references/ai-agent-instructions.md**
+**.ai/skills/contributor-docs-nav/references/ai-agent-instructions.md**
 
 That document is the single source of truth for when to run, how to run, responsibilities, debugging, handling link verification errors, maintainer process, script architecture, and testing checklist.
