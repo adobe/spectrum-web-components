@@ -246,6 +246,82 @@ export const ProgressValues: Story = {
   },
 };
 
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+/**
+ * ### Progress circle in a button
+ *
+ * A common pattern is pairing a progress circle with a button to communicate
+ * that an action is in progress after the user clicks. Use `size="s"` to match
+ * typical button heights and `static-color="white"` on high-emphasis (filled)
+ * buttons where the icon sits on a colored background.
+ *
+ * Use `indeterminate` when the duration is unknown — the most common case for
+ * button loading states.
+ */
+export const InButton: Story = {
+  render: (args) => html`
+    <button
+      style="
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 16px;
+        border: none;
+        border-radius: 16px;
+        background: var(--spectrum-accent-background-color-default, #378ef0);
+        color: #fff;
+        font: inherit;
+        font-size: 14px;
+        cursor: default;
+        opacity: 0.9;
+      "
+      disabled
+    >
+      ${template({
+        ...args,
+        size: 's',
+        'static-color': 'white',
+        indeterminate: true,
+        label: 'Saving',
+      })}
+      Saving…
+    </button>
+    <button
+      style="
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 16px;
+        border: 2px solid var(--spectrum-accent-background-color-default, #378ef0);
+        border-radius: 16px;
+        background: transparent;
+        color: var(--spectrum-accent-background-color-default, #378ef0);
+        font: inherit;
+        font-size: 14px;
+        cursor: default;
+        opacity: 0.9;
+      "
+      disabled
+    >
+      ${template({
+        ...args,
+        size: 's',
+        indeterminate: true,
+        label: 'Processing',
+      })}
+      Processing…
+    </button>
+  `,
+  parameters: {
+    flexLayout: true,
+  },
+  tags: ['behaviors'],
+};
+InButton.storyName = 'Progress circle in a button';
+
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────

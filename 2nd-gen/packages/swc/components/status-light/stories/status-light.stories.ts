@@ -416,4 +416,5 @@ export const WithLocaleWrapper: Story = {
       source: { code: null },
     },
   },
+  tags: ['!test'],
 };

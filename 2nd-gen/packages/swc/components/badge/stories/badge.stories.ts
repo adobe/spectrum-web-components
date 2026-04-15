@@ -86,6 +86,28 @@ argTypes['icon-slot'] = {
     'Accepts an icon element. The control is disabled. Use the Anatomy story to see icon usage. Enhancements to this control will be added in a future release.',
 };
 
+argTypes.outline = {
+  ...argTypes.outline,
+  control: { type: 'boolean' },
+  table: {
+    category: 'attributes',
+    defaultValue: {
+      summary: 'false',
+    },
+  },
+};
+
+argTypes.subtle = {
+  ...argTypes.subtle,
+  control: { type: 'boolean' },
+  table: {
+    category: 'attributes',
+    defaultValue: {
+      summary: 'false',
+    },
+  },
+};
+
 /**
  * Similar to [status lights](/docs/components-status-light--readme), they use color and text to convey status or category information.
  *
@@ -437,6 +459,51 @@ export const TextWrapping: Story = {
   `,
   tags: ['behaviors'],
 };
+
+/**
+ * Badges flow naturally within prose text to annotate inline content such as headings,
+ * labels, list items, or table cells.
+ *
+ * Because `<swc-badge>` renders as `inline-flex`, it participates in the normal
+ * text flow without any extra wrapper styling required. Use small (`s`) badges in
+ * most inline contexts to avoid disrupting line height.
+ */
+export const Inline: Story = {
+  render: (args) => html`
+    <p>
+      Design system components
+      ${template({
+        ...args,
+        variant: 'accent',
+        'default-slot': 'Beta',
+        size: 's',
+      })}
+    </p>
+    <p>
+      API documentation
+      ${template({
+        ...args,
+        variant: 'positive',
+        'default-slot': 'Stable',
+        size: 's',
+      })}
+    </p>
+    <p>
+      Legacy components
+      ${template({
+        ...args,
+        variant: 'notice',
+        'default-slot': 'Deprecated',
+        size: 's',
+      })}
+    </p>
+  `,
+  parameters: {
+    flexLayout: 'column-stretch',
+  },
+  tags: ['behaviors'],
+};
+
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
