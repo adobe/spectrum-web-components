@@ -18,8 +18,7 @@ import styles from './illustrated-message.css';
 
 /**
  * @element swc-illustrated-message
- * @status preview
- * @todo SWC-1944 Update to `@status unsupported`.
+ * @status unsupported
  * @since 0.0.1
  *
  * @example
