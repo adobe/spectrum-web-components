@@ -60,12 +60,6 @@ argTypes.fixed = {
   ...argTypes.fixed,
   control: { type: 'select' },
   options: ['', ...Badge.FIXED_VALUES],
-  table: {
-    category: 'attributes',
-    defaultValue: {
-      summary: '',
-    },
-  },
 };
 
 argTypes.size = {

@@ -30,17 +30,10 @@ import * as iconElements from '../elements/index.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-icon');
 
-// Override size argType to provide proper select control
 argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
   options: ICON_VALID_SIZES,
-  table: {
-    category: 'attributes',
-    defaultValue: {
-      summary: 'm',
-    },
-  },
 };
 
 /**

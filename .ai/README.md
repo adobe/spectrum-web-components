@@ -219,11 +219,61 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: On the analyze-rendering-and-styling step for one or more components; creating one markdown file per component at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`
 - Provides: Workflow summary (specs from CSS + SWC, three-way DOM comparison, CSS⇒SWC mapping table, summary). Full instructions in `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_analyze-rendering-and-styling/cursor_prompt.md`
 
-#### Washing machine migration workflow
+#### Migration — phase 1: prep (`migration-prep`)
 
-- **purpose**: End-to-end 1st-gen → 2nd-gen migration sequence (phases, checklists, links to step docs and style guides)
-- **Doc**: `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md`
-- Use when: Planning or executing a component migration in the 2nd-gen component migration workstream
+- **purpose**: Understand the component, plan breaking changes, and define scope before any refactoring begins
+- **How to invoke**: Say "start migration prep for [component]", "plan the migration for [component]", or "phase 1 migration for [component]"
+- Use when: Beginning a 1st-gen → 2nd-gen component migration; before any files are created or code is moved
+- Provides: Research checklist (1st-gen API, usage, tests), breaking-change analysis, scope definition, written plan for review
+
+#### Migration — phase 2: setup (`migration-setup`)
+
+- **purpose**: Create the 2nd-gen file and folder structure, wire up exports, and confirm the build passes before implementation begins
+- **How to invoke**: Say "set up 2nd-gen structure for [component]", "create the file structure for [component]", or "phase 2 migration for [component]"
+- Use when: After prep is complete; creating the scaffolding a component needs before any logic is ported
+- Provides: File/folder creation checklist, export wiring steps, build-passes verification
+
+#### Migration — phase 3: API (`migration-api`)
+
+- **purpose**: Move properties, methods, and types from 1st-gen to 2nd-gen while maintaining a clear public API
+- **How to invoke**: Say "migrate the API for [component]", "port properties and methods for [component]", or "phase 3 migration for [component]"
+- Use when: Scaffolding is in place and it's time to define the component's public contract in 2nd-gen
+- Provides: Property/method porting workflow, type definition guidance, API contract review
+
+#### Migration — phase 4: styling (`migration-styling`)
+
+- **purpose**: Migrate CSS to the 2nd-gen structure, apply Spectrum 2 tokens, and ensure stylelint passes
+- **How to invoke**: Say "migrate styling for [component]", "port CSS for [component]", or "phase 4 migration for [component]"
+- Use when: API is in place; translating 1st-gen CSS to 2nd-gen with Spectrum 2 design tokens
+- Provides: CSS migration checklist, token mapping guidance, stylelint validation steps
+
+#### Migration — phase 5: accessibility (`migration-a11y`)
+
+- **purpose**: Implement WCAG-aligned semantics, ARIA, keyboard support, and focus management, and document accessibility behavior
+- **How to invoke**: Say "migrate accessibility for [component]", "implement a11y for [component]", or "phase 5 migration for [component]"
+- Use when: Styling is complete; hardening the component's accessibility implementation
+- Provides: WCAG checklist, ARIA pattern guidance, keyboard/focus requirements, a11y documentation template
+
+#### Migration — phase 6: testing (`migration-testing`)
+
+- **purpose**: Write unit tests, accessibility tests, and Storybook play functions for a migrated component
+- **How to invoke**: Say "write tests for [component] migration", "add migration tests for [component]", or "phase 6 migration for [component]"
+- Use when: Implementation is feature-complete; adding test coverage before review
+- Provides: Test coverage checklist, unit/a11y/play-function patterns, test-running verification
+
+#### Migration — phase 7: documentation (`migration-documentation`)
+
+- **purpose**: Write JSDoc, Storybook stories, and usage docs so the component is usable and understandable by others
+- **How to invoke**: Say "write docs for [component] migration", "document [component] for 2nd-gen", or "phase 7 migration for [component]"
+- Use when: Tests pass; creating the Storybook stories and usage documentation for the migrated component
+- Provides: JSDoc guidelines, stories scaffolding, README/usage doc structure, documentation checklist
+
+#### Migration — phase 8: review (`migration-review`)
+
+- **purpose**: Run final checks, verify lint/tests/build/Storybook, update the workstream status table, and open a PR
+- **How to invoke**: Say "review [component] migration", "final checks for [component]", or "phase 8 migration for [component]"
+- Use when: Documentation is complete; preparing the migration for code review and merge
+- Provides: Pre-PR checklist (lint, tests, build, Storybook), workstream status update steps, PR description guidance
 
 #### Deep understanding
 
