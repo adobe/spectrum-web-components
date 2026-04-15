@@ -86,8 +86,8 @@ if (storybookMode === 'dev') {
 }
 
 /**
- * The local screen-reader addon is useful in normal Storybook, but it imports
- * 1st-gen components we intentionally avoid in CI a11y mode.
+ * ci-a11y mode needs docs (for MDX parsing) and a11y; everything else
+ * (designs, vitest, chromatic, screen-reader) is unnecessary overhead.
  */
 const addons: StorybookConfig['addons'] = [
   {
@@ -102,12 +102,15 @@ const addons: StorybookConfig['addons'] = [
     },
   },
   '@storybook/addon-a11y',
-  '@storybook/addon-designs',
-  '@storybook/addon-vitest',
 ];
 
 if (storybookMode !== 'ci-a11y') {
-  addons.push(resolve(__dirname, './addons/screen-reader-addon'));
+  addons.push(
+    '@storybook/addon-designs',
+    '@storybook/addon-vitest',
+    '@chromatic-com/storybook',
+    resolve(__dirname, './addons/screen-reader-addon')
+  );
 }
 
 const config: StorybookConfig = {
@@ -118,6 +121,15 @@ const config: StorybookConfig = {
   framework: '@storybook/web-components-vite',
   core: {
     disableTelemetry: true,
+  },
+  build: {
+    test: {
+      // Chromatic's addon sets SB_TESTBUILD=true which disables addon-docs,
+      // breaking our custom DocumentTemplate.mdx. Keep docs enabled but
+      // disable addons that are not needed for visual regression testing.
+      // See: https://github.com/storybookjs/storybook/issues/31699
+      disabledAddons: [],
+    },
   },
   staticDirs: ['../public'],
   addons,
