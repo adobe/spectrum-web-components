@@ -89,9 +89,7 @@
 - Switch
     - [Switch migration roadmap](switch/rendering-and-styling-migration-analysis.md)
 - Tabs
-    - [Tabs accessibility migration analysis](tabs/accessibility-migration-analysis.md)
-    - [Tabs — 2nd-gen migration plan](tabs/migration-plan.md)
-    - [Tabs migration roadmap](tabs/rendering-and-styling-migration-analysis.md)
+    - [`sp-tabs` Migration Plan](tabs/migration-plan.md)
 - Tag
     - [Tag migration roadmap](tag/rendering-and-styling-migration-analysis.md)
 - Tags
