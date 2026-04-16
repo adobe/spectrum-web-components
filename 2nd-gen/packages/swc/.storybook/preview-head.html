@@ -104,6 +104,7 @@
 
     h1 {
       font-size: var(--swc-heading-size-xxl) !important;
+      line-height: var(--swc-heading-line-height) !important;
     }
 
     h2:not(.sbdocs-subtitle) {
@@ -146,6 +147,10 @@
     .toc-list-item {
       font-size: 0.875rem !important;
     }
+
+    table code {
+      font-size: 0.75rem !important;
+    }
   }
 
   /* Ensure an adaptive-capable background */
@@ -154,6 +159,16 @@
       --swc-gray-25,
       light-dark(rgb(255 255 255), rgb(17 17 17))
     ) !important;
+  }
+
+  .sbdocs-preview-actions {
+    /* Allow focus outline to be fully visible */
+    overflow: visible !important;
+    margin-block-start: -30px !important;
+
+    > div {
+      flex-wrap: wrap;
+    }
   }
 
   .sbdocs-toc--custom {
