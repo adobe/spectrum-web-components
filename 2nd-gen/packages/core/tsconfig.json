@@ -9,7 +9,13 @@
     },
     "rootDir": "./"
   },
-  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.stories.ts"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts",
+    "**/*.stories.ts",
+    "**/stories/**"
+  ],
   "extends": "../../tsconfig.json",
   "include": ["**/*.ts"]
 }

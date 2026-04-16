@@ -17,13 +17,13 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import {
-  PROGRESS_CIRCLE_STATIC_COLORS_S1,
-  ProgressCircleBase,
-  type ProgressCircleStaticColorS1,
-} from '@spectrum-web-components/core/components/progress-circle';
 
 import progressCircleStyles from './progress-circle.css.js';
+import { ProgressCircleBase } from './ProgressCircle.base.js';
+import {
+  PROGRESS_CIRCLE_STATIC_COLORS_S1,
+  type ProgressCircleStaticColorS1,
+} from './ProgressCircle.types.js';
 
 /**
  * @element sp-progress-circle
