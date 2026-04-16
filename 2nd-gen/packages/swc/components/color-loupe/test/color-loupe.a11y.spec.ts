@@ -18,13 +18,16 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
  * Accessibility tests for ColorLoupe component (2nd generation)
  *
  * The color loupe is a purely visual, non-interactive component.
- * Its SVG is aria-hidden="true" so the accessibility tree should
- * be empty. aXe WCAG compliance and color contrast validation are
- * run via test-storybook (see .storybook/test-runner.ts).
+ * Its SVG carries aria-hidden="true" so the loupe graphic is fully
+ * hidden from the accessibility tree. These tests assert that
+ * attribute directly rather than using toMatchAriaSnapshot, which
+ * does not accept an empty string even when the tree is legitimately
+ * empty. aXe WCAG compliance and color contrast validation are run
+ * via test-storybook (see .storybook/test-runner.ts).
  */
 
 test.describe('ColorLoupe - ARIA Snapshots', () => {
-  test('should have an empty accessibility tree for overview', async ({
+  test('should hide SVG from the accessibility tree for overview', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -32,10 +35,13 @@ test.describe('ColorLoupe - ARIA Snapshots', () => {
       'components-color-loupe--overview',
       'swc-color-loupe'
     );
-    await expect(root).toMatchAriaSnapshot(``);
+    await expect(root.locator('svg').first()).toHaveAttribute(
+      'aria-hidden',
+      'true'
+    );
   });
 
-  test('should have an empty accessibility tree for accessibility story', async ({
+  test('should hide SVG from the accessibility tree for accessibility story', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -43,6 +49,9 @@ test.describe('ColorLoupe - ARIA Snapshots', () => {
       'components-color-loupe--accessibility',
       'swc-color-loupe'
     );
-    await expect(root).toMatchAriaSnapshot(``);
+    await expect(root.locator('svg').first()).toHaveAttribute(
+      'aria-hidden',
+      'true'
+    );
   });
 });

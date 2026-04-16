@@ -15,29 +15,27 @@
   position: absolute;
   inset-block-end: calc((token("color-handle-size") - token("color-handle-outer-border-width")) + var(--swc-color-loupe-offset, token("color-loupe-bottom-to-color-handle")));
   inset-inline-end: calc(50% - (token("color-loupe-width") / 2));
-  inline-size: token("color-loupe-width");
-  block-size: token("color-loupe-height");
-  pointer-events: none;
-  opacity: 0;
-  filter: drop-shadow(var(--swc-color-loupe-drop-shadow-x, token("drop-shadow-elevated-x")) var(--swc-color-loupe-drop-shadow-y, token("drop-shadow-elevated-y")) var(--swc-color-loupe-drop-shadow-blur, token("drop-shadow-elevated-blur")) var(--swc-color-loupe-drop-shadow-color, token("drop-shadow-elevated-color")));
-  transform: translateY(var(--swc-color-loupe-animation-distance, 8px));
-  transform-origin: bottom center;
-  transition:
-    transform 100ms ease-in-out,
-    opacity 125ms ease-in-out;
-}
-
-:host(:dir(rtl)) {
-  inset-inline-end: calc(50% - (token("color-loupe-width") / 2) - 1px);
-}
-
-:host([open]) {
-  opacity: 1;
-  transform: translate(0, 0);
 }
 
 * {
   box-sizing: border-box;
+}
+
+.swc-ColorLoupe {
+  --_swc-color-loupe-opacity: var(--swc-color-loupe-opacity, 0);
+  --_swc-color-loupe-transform: var(--swc-color-loupe-transform, translateY(var(--swc-color-loupe-animation-distance, 8px)));
+
+  position: relative;
+  inline-size: token("color-loupe-width");
+  block-size: token("color-loupe-height");
+  pointer-events: none;
+  opacity: var(--_swc-color-loupe-opacity);
+  filter: drop-shadow(var(--swc-color-loupe-drop-shadow-x, token("drop-shadow-elevated-x")) var(--swc-color-loupe-drop-shadow-y, token("drop-shadow-elevated-y")) var(--swc-color-loupe-drop-shadow-blur, token("drop-shadow-elevated-blur")) var(--swc-color-loupe-drop-shadow-color, token("drop-shadow-elevated-color")));
+  transform: var(--_swc-color-loupe-transform);
+  transform-origin: bottom center;
+  transition:
+    transform 100ms ease-in-out,
+    opacity 125ms ease-in-out;
 }
 
 /* Opacity checkerboard shown behind transparent picked colors.
@@ -85,12 +83,22 @@
 /* Outer border: unfilled with wider stroke */
 .swc-ColorLoupe-outerBorder {
   fill: none;
-  stroke: var(--highcontrast-color-loupe-outer-border-color, var(--swc-color-loupe-outer-border-color, token("color-loupe-outer-border")));
+  stroke: var(--swc-color-loupe-outer-border-color, token("color-loupe-outer-border"));
   stroke-width: calc(var(--swc-color-loupe-outer-border-width, token("color-loupe-outer-border-width")) + 2px);
 }
 
+/* Compensates for sub-pixel rounding in RTL that shifts the loupe */
+:host(:dir(rtl)) {
+  inset-inline-end: calc(50% - (token("color-loupe-width") / 2) - 1px);
+}
+
+:host([open]) {
+  --swc-color-loupe-opacity: 1;
+  --swc-color-loupe-transform: translate(0, 0);
+}
+
 @media (forced-colors: active) {
-  :host {
-    --highcontrast-color-loupe-outer-border-color: CanvasText;
+  .swc-ColorLoupe-outerBorder {
+    --swc-color-loupe-outer-border-color: CanvasText;
   }
 }
