@@ -215,6 +215,8 @@ const preview = {
         order: [
           'Learn about SWC',
           ['Overview', 'When to use SWC', '1st-gen vs 2nd-gen'],
+          'Core',
+          ['Overview', 'Controllers'],
           'Components',
           'Guides',
           [
@@ -255,6 +257,7 @@ const preview = {
               'Using stackblitz',
               '2nd-gen testing',
               'Tools vs packages',
+              'Focus management',
             ],
             'Style guide',
             [
@@ -314,6 +317,7 @@ const preview = {
                   'Step by step',
                   [
                     'Analyze rendering and styling',
+                    'Washing machine workflow',
                     'Factor rendering out of 1st gen component',
                     'Move base class to 2nd gen core',
                     'Formalize spectrum data model',
@@ -321,6 +325,7 @@ const preview = {
                     'Migrate rendering and styles',
                     'Add stories for 2nd gen component',
                   ],
+                  'Migration project planning',
                 ],
                 'Accessibility improvements',
                 'Component improvements',
@@ -337,9 +342,16 @@ const preview = {
                 'Asset',
                 ['Rendering and styling migration analysis'],
                 'Avatar',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Migration plan',
+                  'Rendering and styling migration analysis',
+                ],
                 'Badge',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Button',
                 ['Rendering and styling migration analysis'],
                 'Button group',
@@ -349,7 +361,10 @@ const preview = {
                 'Color field',
                 ['Rendering and styling migration analysis'],
                 'Divider',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Dropzone',
                 ['Rendering and styling migration analysis'],
                 'Field group',
@@ -377,7 +392,10 @@ const preview = {
                 'Progress bar',
                 ['Rendering and styling migration analysis'],
                 'Progress circle',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Radio',
                 ['Rendering and styling migration analysis'],
                 'Search',
@@ -385,7 +403,10 @@ const preview = {
                 'Slider',
                 ['Rendering and styling migration analysis'],
                 'Status light',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Swatch',
                 ['Rendering and styling migration analysis'],
                 'Swatch group',
@@ -404,12 +425,22 @@ const preview = {
                 ['Rendering and styling migration analysis'],
               ],
               'Milestones',
+              'Strategies',
+              ['Focus management strategy rfc'],
             ],
           ],
           // GENERATED:CONTRIBUTOR-DOCS-SORT-END
         ],
       },
     },
+  },
+  // Hide SpectrumElement infrastructure members from every component's API table.
+  // These are internal properties that consumers should not configure directly.
+  argTypes: {
+    dir: { table: { disable: true } },
+    VERSION: { table: { disable: true } },
+    CORE_VERSION: { table: { disable: true } },
+    hasVisibleFocusInTree: { table: { disable: true } },
   },
   tags: ['!autodocs', '!dev'], // We only want the playground stories to be visible in the docs and sidenav. Since a majority of our stories are tagged with '!autodocs' and '!dev', we set those tags globally. We can opt in to visibility by adding the 'autodocs' or 'dev' tags to individual stories.
   loaders: [FontLoader],

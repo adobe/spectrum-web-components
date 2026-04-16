@@ -114,9 +114,17 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     }
 
     if (this.anchorElement) {
+      // Check if the click already went through the anchor element.
+      // If so, the browser will handle navigation naturally and we
+      // don't need to proxy the click (which would cause double navigation).
+      const path = event?.composedPath() || [];
+      if (path.includes(this.anchorElement)) {
+        return false;
+      }
       // Click HTML anchor element by proxy, but only for non-modified clicks
       this.anchorElement.click();
       handled = true;
+      return handled;
       // if the button type is `submit` or `reset`
     } else if (this.type !== 'button') {
       // create an HTML Button Element by proxy, click it, and remove it
@@ -159,11 +167,9 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     switch (code) {
       case 'Space':
         event.preventDefault();
-        // allows button to activate when `Space` is pressed
-        if (typeof this.href === 'undefined') {
-          this.addEventListener('keyup', this.handleKeyup);
-          this.active = true;
-        }
+        // allows button or link to activate when `Space` is pressed
+        this.addEventListener('keyup', this.handleKeyup);
+        this.active = true;
         break;
       default:
         break;

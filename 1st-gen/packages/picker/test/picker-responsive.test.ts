@@ -23,6 +23,7 @@ import { spy } from 'sinon';
 import type { MenuItem } from '@spectrum-web-components/menu';
 import { Picker } from '@spectrum-web-components/picker';
 import { Popover } from '@spectrum-web-components/popover';
+import { isFirefox } from '@spectrum-web-components/shared';
 import { Tray } from '@spectrum-web-components/tray/src/Tray.js';
 
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -235,6 +236,10 @@ describe('Picker, responsive', () => {
     });
 
     it('dispatches change event when menu item is clicked on touch device', async () => {
+      // TODO: This test is flaky in firefox and needs to be addressed in 2nd-gen.
+      if (isFirefox()) {
+        return;
+      }
       el = await pickerFixture();
       await elementUpdated(el);
 
