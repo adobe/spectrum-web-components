@@ -12,9 +12,9 @@
 
 @import url("./spectrum-color-loupe.css");
 
-svg {
-  width: inherit;
-  height: inherit;
+.spectrum-ColorLoupe {
+  inline-size: inherit;
+  block-size: inherit;
 }
 
 .loupe-clipped {
