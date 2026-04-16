@@ -46,9 +46,7 @@ test.describe('Tabs - ARIA Snapshots', () => {
     page,
   }) => {
     const root = await gotoStory(page, 'components-tabs--anatomy', 'swc-tabs');
-    const firstTabGroup = root.locator(
-      'swc-tabs[label="Text-only example"]'
-    );
+    const firstTabGroup = root.locator('swc-tabs[label="Text-only example"]');
     await expect(firstTabGroup).toMatchAriaSnapshot(`
       - tablist "Text-only example":
         - tab "Overview" [selected]
