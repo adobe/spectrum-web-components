@@ -1,4 +1,48 @@
+<!-- Generated breadcrumbs - DO NOT EDIT -->
+
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Illustrated Message / `sp-illustrated-message` Migration Plan
+
+<!-- Document title (editable) -->
+
 # `sp-illustrated-message` Migration Plan
+
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
+
+- [Table of contents](#table-of-contents)
+- [1st-gen API surface](#1st-gen-api-surface)
+    - [Properties / attributes](#properties--attributes)
+    - [Methods](#methods)
+    - [Events](#events)
+    - [Slots](#slots)
+    - [CSS custom properties](#css-custom-properties)
+    - [Shadow DOM output (rendered HTML)](#shadow-dom-output-rendered-html)
+- [Dependencies](#dependencies)
+- [Changes overview](#changes-overview)
+    - [Must ship — breaking or a11y-required](#must-ship--breaking-or-a11y-required)
+    - [Additive — ships when ready, zero breakage for consumers already on 2nd-gen](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)
+- [2nd-gen API decisions](#2nd-gen-api-decisions)
+    - [Properties / attributes (2nd-gen)](#properties--attributes-2nd-gen)
+    - [Slots (2nd-gen)](#slots-2nd-gen)
+    - [CSS custom properties (2nd-gen)](#css-custom-properties-2nd-gen)
+- [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
+- [Migration checklist](#migration-checklist)
+    - [Preparation (this ticket)](#preparation-this-ticket)
+    - [Setup](#setup)
+    - [API](#api)
+    - [Styling](#styling)
+    - [Accessibility](#accessibility)
+    - [Testing](#testing)
+    - [Documentation](#documentation)
+    - [Review](#review)
+- [Blockers and open questions](#blockers-and-open-questions)
+- [References](#references)
+
+</details>
+
+<!-- Document content (editable) -->
 
 > **SWC-1834** · Planning output. Must be reviewed before implementation begins.
 
