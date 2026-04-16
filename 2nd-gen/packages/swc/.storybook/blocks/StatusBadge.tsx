@@ -105,7 +105,14 @@ export const StatusBadge = ({ of }: { of?: any }) => {
   const statusConfig = hasStatus ? STATUS_CONFIG[status as Status] : undefined;
 
   return (
-    <div style={{ display: 'flex', gap: '6px', marginBottom: '12px', marginTop: '12px' }}>
+    <div
+      style={{
+        display: 'flex',
+        gap: '6px',
+        marginBottom: '12px',
+        marginTop: '12px',
+      }}
+    >
       {since && (
         <Badge variant="neutral" outline>
           {`Since ${since}`}

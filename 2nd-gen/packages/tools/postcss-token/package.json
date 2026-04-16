@@ -28,10 +28,10 @@
     "@adobe/swc-tokens": "workspace:*"
   },
   "peerDependencies": {
-    "postcss": "8.5.6"
+    "postcss": "8.5.9"
   },
   "devDependencies": {
-    "postcss": "8.5.6",
+    "postcss": "8.5.9",
     "vitest": "4.0.15"
   },
   "keywords": [
