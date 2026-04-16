@@ -1,0 +1,112 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ── Tablist container ─────────────────────────────────── */
+
+.tablist {
+  display: flex;
+  position: relative;
+  align-items: center;
+  border-block-end: 2px solid var(--swc-tabs-divider-color, token("gray-300"));
+}
+
+/* ── Vertical direction ────────────────────────────────── */
+
+:host([direction="vertical"]) {
+  flex-direction: row;
+}
+
+:host([direction="vertical"]) .tablist {
+  flex-direction: column;
+  align-items: flex-start;
+  border-block-end: none;
+  border-inline-end: 2px solid var(--swc-tabs-divider-color, token("gray-300"));
+}
+
+/* ── Selection indicator ───────────────────────────────── */
+
+.selection-indicator {
+  position: absolute;
+  background-color: var(--swc-tabs-indicator-color, token("accent-color-900"));
+  border-radius: token("corner-radius-full");
+  transition: transform 130ms ease-in-out;
+}
+
+:host([direction="horizontal"]) .selection-indicator {
+  inset-block-end: 0;
+  inline-size: 0;
+  block-size: 2px;
+}
+
+:host([direction="vertical"]) .selection-indicator {
+  inset-inline-end: 0;
+  inline-size: 2px;
+  block-size: 0;
+}
+
+/* ── Quiet variant ─────────────────────────────────────── */
+
+:host([quiet]) .tablist {
+  border-block-end-color: transparent;
+  border-inline-end-color: transparent;
+}
+
+/* ── Disabled state ────────────────────────────────────── */
+
+:host([disabled]) {
+  pointer-events: none;
+}
+
+:host([disabled]) .tablist {
+  opacity: var(--swc-tabs-disabled-opacity, 0.4);
+}
+
+/* ── Size variants ─────────────────────────────────────── */
+
+:host([size="s"]) .tablist {
+  gap: var(--swc-tabs-gap, 16px);
+}
+
+:host([size="m"]) .tablist {
+  gap: var(--swc-tabs-gap, 24px);
+}
+
+:host([size="l"]) .tablist {
+  gap: var(--swc-tabs-gap, 28px);
+}
+
+:host([size="xl"]) .tablist {
+  gap: var(--swc-tabs-gap, 32px);
+}
+
+/* ── High contrast ─────────────────────────────────────── */
+
+@media (forced-colors: active) {
+  .tablist {
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
+    border-color: CanvasText;
+  }
+
+  .selection-indicator {
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
+    background-color: Highlight;
+  }
+}
