@@ -51,6 +51,10 @@
       "types": "./dist/controllers/index.d.ts",
       "import": "./dist/controllers/index.js"
     },
+    "./controllers/focus-group-navigation-controller.js": {
+      "types": "./dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.d.ts",
+      "import": "./dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.js"
+    },
     "./controllers/index.js": {
       "types": "./dist/controllers/index.d.ts",
       "import": "./dist/controllers/index.js"
@@ -155,6 +159,9 @@
       ],
       "controllers": [
         "dist/controllers/index.d.ts"
+      ],
+      "controllers/focus-group-navigation-controller/focus-group-navigation-controller.js": [
+        "dist/controllers/ocus-group-navigation-controller/focus-group-navigation-controller.d.ts"
       ],
       "controllers/index.js": [
         "dist/controllers/index.d.ts"

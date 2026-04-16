@@ -10,4 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-export { formatTitle } from './format-title.js';
+export {
+  focusgroupNavigationActiveChange,
+  FocusgroupNavigationController,
+  type FocusgroupDirection,
+  type FocusgroupNavigationActiveChangeDetail,
+  type FocusgroupNavigationOptions,
+} from './src/focusgroup-navigation-controller.js';
