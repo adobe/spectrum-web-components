@@ -18,22 +18,25 @@ import { fileURLToPath } from 'url';
 import { mergeConfig } from 'vite';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-type StorybookMode = 'dev' | 'build' | 'ci-a11y';
+type StorybookMode = 'dev' | 'build' | 'ci-a11y' | 'chromatic';
 
 // Modes:
-// - dev: full local Storybook, including docs and test stories
-// - build: production Storybook build, excluding internal and test stories
+// - dev: full local Storybook, including docs, test, and VRT stories
+// - build: production Storybook build (docs site), excluding internal, test, and VRT stories
 // - ci-a11y: minimal component-only Storybook used by CI accessibility checks
+// - chromatic: full Storybook plus VRT stories, used for the Chromatic-deployed preview and snapshots
 const storybookMode: StorybookMode =
   process.env.SWC_STORYBOOK_MODE === 'ci-a11y'
     ? 'ci-a11y'
-    : process.env.NODE_ENV === 'production'
-      ? 'build'
-      : 'dev';
+    : process.env.SWC_STORYBOOK_MODE === 'chromatic'
+      ? 'chromatic'
+      : process.env.NODE_ENV === 'production'
+        ? 'build'
+        : 'dev';
 
-// Custom indexer to allow .test.ts files to be treated as story files.
+// Custom indexer to allow .test.ts and .vrt.ts files to be treated as story files.
 const testStoryIndexer: Indexer = {
-  test: /\.test\.ts$/,
+  test: /\.(test|vrt)\.ts$/,
   createIndex: async (fileName, options) => {
     const csfFile = await readCsf(fileName, options);
     return csfFile.parse().indexInputs;
@@ -86,16 +89,16 @@ if (storybookMode !== 'ci-a11y') {
   );
 }
 
-// Test stories are dev-only fixtures and should not ship in production Storybook.
-if (storybookMode === 'dev') {
+// Test and VRT stories are fixtures for local dev and Chromatic; they should not ship in the production docs Storybook.
+if (storybookMode === 'dev' || storybookMode === 'chromatic') {
   stories.push({
     directory: '../components',
-    files: '**/*.test.ts',
+    files: '**/*.{test,vrt}.ts',
     titlePrefix: 'Components',
   });
   stories.push({
     directory: '../../core',
-    files: '**/stories/**/*.test.ts',
+    files: '**/stories/**/*.{test,vrt}.ts',
     titlePrefix: 'Core',
   });
 }
@@ -148,7 +151,10 @@ const config: StorybookConfig = {
   },
   staticDirs: ['../public'],
   addons,
-  experimental_indexers: storybookMode === 'dev' ? [testStoryIndexer] : [],
+  experimental_indexers:
+    storybookMode === 'dev' || storybookMode === 'chromatic'
+      ? [testStoryIndexer]
+      : [],
   viteFinal: async (config) => {
     return mergeConfig(config, {
       plugins: [
