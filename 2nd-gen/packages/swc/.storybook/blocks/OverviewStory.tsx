@@ -1,7 +1,7 @@
 import { Canvas, Story, useOf } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import type { ActionItem } from 'storybook/internal/components';
-import { formatComponentName } from '../helpers/index.js';
+import { formatTitle } from '../helpers/index.js';
 
 export const OverviewStory = () => {
   const resolvedOf = useOf('meta', ['meta']);
@@ -14,7 +14,7 @@ export const OverviewStory = () => {
   primaryStory.args = null;
 
   // Extract component name and create GitHub link
-  const componentName = formatComponentName(resolvedOf.preparedMeta?.title);
+  const componentName = formatTitle(resolvedOf.preparedMeta?.title);
   const githubBaseUrl =
     'https://github.com/adobe/spectrum-web-components/tree/main/2nd-gen/packages/swc/components';
 
