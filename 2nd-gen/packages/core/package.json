@@ -47,6 +47,18 @@
       "types": "./dist/components/status-light/index.d.ts",
       "import": "./dist/components/status-light/index.js"
     },
+    "./components/tab": {
+      "types": "./dist/components/tab/index.d.ts",
+      "import": "./dist/components/tab/index.js"
+    },
+    "./components/tab-panel": {
+      "types": "./dist/components/tab-panel/index.d.ts",
+      "import": "./dist/components/tab-panel/index.js"
+    },
+    "./components/tabs": {
+      "types": "./dist/components/tabs/index.d.ts",
+      "import": "./dist/components/tabs/index.js"
+    },
     "./controllers": {
       "types": "./dist/controllers/index.d.ts",
       "import": "./dist/controllers/index.js"
@@ -152,6 +164,15 @@
       ],
       "components/status-light": [
         "dist/components/status-light/index.d.ts"
+      ],
+      "components/tab": [
+        "dist/components/tab/index.d.ts"
+      ],
+      "components/tab-panel": [
+        "dist/components/tab-panel/index.d.ts"
+      ],
+      "components/tabs": [
+        "dist/components/tabs/index.d.ts"
       ],
       "controllers": [
         "dist/controllers/index.d.ts"
