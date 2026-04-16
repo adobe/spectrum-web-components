@@ -32,8 +32,7 @@ const { args, argTypes, template } = getStorybookHelpers(
  * ### Heading level
  *
  * Provide the appropriate `<h2>`–`<h6>` element directly in the `heading`
- * slot to match the document outline. The component does not control the
- * heading level — the consumer does.
+ * slot to match the document outline. The component does not control the heading level.
  */
 export const meta: Meta = {
   title: 'Illustrated Message',

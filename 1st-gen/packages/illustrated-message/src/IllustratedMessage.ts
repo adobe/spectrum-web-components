@@ -36,22 +36,51 @@ export class IllustratedMessage extends SpectrumElement {
     return [headingStyles, bodyStyles, messageStyles];
   }
 
-  protected override firstUpdated(): void {
-    if (window.__swc?.DEBUG) {
+  /**
+   * @deprecated Use `<h2 slot="heading">` instead.
+   */
+  @property()
+  public get heading(): string {
+    return this._heading;
+  }
+
+  public set heading(value: string) {
+    if (window.__swc?.DEBUG && value) {
       window.__swc.warn(
         this,
-        `<${this.localName}> has been deprecated and will be removed from the project in an upcoming version. Learn more about Spectrum 2 (https://s2.spectrum.adobe.com/) as an alternative.`,
-        'https://s2.spectrum.adobe.com/',
+        `The "heading" property on <${this.localName}> has been deprecated and will be removed in a future release. Use <h2 slot="heading"> instead.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/illustrated-message/',
         { level: 'deprecation' }
       );
     }
+    this._heading = value;
+    this.requestUpdate('heading', this._heading);
   }
 
-  @property()
-  public heading = '';
+  private _heading = '';
 
+  /**
+   * @deprecated Use `<span slot="description">` instead.
+   */
   @property()
-  public description = '';
+  public get description(): string {
+    return this._description;
+  }
+
+  public set description(value: string) {
+    if (window.__swc?.DEBUG && value) {
+      window.__swc.warn(
+        this,
+        `The "description" property on <${this.localName}> has been deprecated and will be removed in a future release. Use <span slot="description"> instead.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/illustrated-message/',
+        { level: 'deprecation' }
+      );
+    }
+    this._description = value;
+    this.requestUpdate('description', this._description);
+  }
+
+  private _description = '';
 
   protected override render(): TemplateResult {
     return html`
