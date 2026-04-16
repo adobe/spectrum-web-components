@@ -30,7 +30,7 @@
 /* ── Selected state ────────────────────────────────────── */
 
 :host([selected]) {
-  color: var(--swc-tab-text-color-selected, token("accent-color-900"));
+  color: var(--swc-tab-text-color-selected, token("accent-color-1000"));
 }
 
 /* ── Hover state ───────────────────────────────────────── */

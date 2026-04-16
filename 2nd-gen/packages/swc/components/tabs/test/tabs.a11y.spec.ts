@@ -37,20 +37,36 @@ test.describe('Tabs - ARIA Snapshots', () => {
         - tab "Overview" [selected]
         - tab "Specifications"
         - tab "Guidelines"
-      - tabpanel:
+      - tabpanel "Overview":
         - paragraph: Overview content for the selected tab.
     `);
   });
 
-  test('should handle anatomy with disabled tab', async ({ page }) => {
+  test('should handle anatomy with multiple tab variations', async ({
+    page,
+  }) => {
     const root = await gotoStory(page, 'components-tabs--anatomy', 'swc-tabs');
-    await expect(root).toMatchAriaSnapshot(`
-      - tablist "Feature details":
-        - tab "Tab label" [selected]
-        - tab "Another tab"
-        - tab "Disabled tab" [disabled]
-      - tabpanel:
-        - paragraph: Panel content for the first tab.
+    const firstTabGroup = root.locator(
+      'swc-tabs[label="Text-only example"]'
+    );
+    await expect(firstTabGroup).toMatchAriaSnapshot(`
+      - tablist "Text-only example":
+        - tab "Overview" [selected]
+        - tab "Specifications"
+        - tab "Guidelines"
+      - tabpanel "Overview":
+        - paragraph: Overview content for the selected tab.
+    `);
+    const iconTabGroup = root.locator(
+      'swc-tabs[label="Icon and text example"]'
+    );
+    await expect(iconTabGroup).toMatchAriaSnapshot(`
+      - tablist "Icon and text example":
+        - tab "Dashboard" [selected]
+        - tab "Reports"
+        - tab "Settings"
+      - tabpanel "Dashboard":
+        - paragraph: Dashboard content.
     `);
   });
 
@@ -64,21 +80,22 @@ test.describe('Tabs - ARIA Snapshots', () => {
       .toMatchAriaSnapshot(`
       - tablist "Vertical example":
         - tab "Overview" [selected]
-        - tab "Details"
-        - tab "Settings"
-      - tabpanel:
-        - paragraph: Vertical tab content.
+        - tab "Specifications"
+        - tab "Guidelines"
+      - tabpanel "Overview":
+        - paragraph: Overview content for the selected tab.
     `);
   });
 
   test('should handle disabled container', async ({ page }) => {
     const root = await gotoStory(page, 'components-tabs--states', 'swc-tabs');
     await expect(root.locator('swc-tabs[disabled]')).toMatchAriaSnapshot(`
-      - tablist "Disabled tabs" [disabled]:
+      - tablist "Disabled container" [disabled]:
         - tab "Overview" [selected]
-        - tab "Details"
-      - tabpanel:
-        - paragraph: All interaction is disabled.
+        - tab "Specifications"
+        - tab "Guidelines"
+      - tabpanel "Overview":
+        - paragraph: Overview content for the selected tab.
     `);
   });
 
