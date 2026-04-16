@@ -18,7 +18,7 @@
     - [updated() — Post-render validation](#updated--post-render-validation)
     - [connectedCallback() — Environment validation](#connectedcallback--environment-validation)
 - [Deprecation warnings](#deprecation-warnings)
-    - [Warning structure](#warning-structure)
+    - [Deprecation warning structure](#deprecation-warning-structure)
     - [Testing deprecation warnings](#testing-deprecation-warnings)
 - [Warning message format](#warning-message-format)
 
@@ -208,7 +208,7 @@ Use `{ level: 'deprecation' }` when a property or attribute has been superseded 
 - An attribute is being removed, or replaced by a different attribute
 
 
-### Warning structure
+### Deprecation warning structure
 
 The key difference from other warnings is `{ level: 'deprecation' }` instead of `{ issues: [...] }`.
 
