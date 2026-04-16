@@ -24,7 +24,7 @@ type StorybookMode = 'dev' | 'build' | 'ci-a11y' | 'chromatic';
 // - dev: full local Storybook, including docs, test, and VRT stories
 // - build: production Storybook build (docs site), excluding internal, test, and VRT stories
 // - ci-a11y: minimal component-only Storybook used by CI accessibility checks
-// - chromatic: full Storybook plus VRT stories, used for the Chromatic-deployed preview and snapshots
+// - chromatic: VRT-only Storybook used as the Chromatic-deployed build; no docs, no playground, no test stories
 const storybookMode: StorybookMode =
   process.env.SWC_STORYBOOK_MODE === 'ci-a11y'
     ? 'ci-a11y'
@@ -43,8 +43,24 @@ const testStoryIndexer: Indexer = {
   },
 };
 
-const stories: StorybookConfig['stories'] = [
-  {
+const stories: StorybookConfig['stories'] = [];
+
+if (storybookMode === 'chromatic') {
+  // Chromatic mode indexes only VRT stories so the Chromatic UI reflects only what is snapshotted.
+  stories.push(
+    {
+      directory: '../components',
+      files: '**/*.vrt.ts',
+      titlePrefix: 'Components',
+    },
+    {
+      directory: '../../core',
+      files: '**/stories/**/*.vrt.ts',
+      titlePrefix: 'Core',
+    }
+  );
+} else {
+  stories.push({
     directory: '../components',
     // Production-style builds exclude internal-only stories; local/dev keeps the full set.
     files:
@@ -52,55 +68,55 @@ const stories: StorybookConfig['stories'] = [
         ? '**/!(*.internal).stories.ts'
         : '**/*.stories.ts',
     titlePrefix: 'Components',
-  },
-];
-
-/**
- * The CI a11y mode trims docs/guides
- * that can pull in 1st-gen-linked dependencies the test build does not need.
- */
-if (storybookMode !== 'ci-a11y') {
-  stories.push(
-    {
-      directory: '../../core',
-      files: '**/*.mdx',
-      titlePrefix: 'Core',
-    },
-    {
-      directory: '../../core',
-      files: '**/stories/*.stories.ts',
-      titlePrefix: 'Core',
-    },
-    {
-      directory: 'learn-about-swc',
-      files: '*.mdx',
-      titlePrefix: 'Learn about SWC',
-    },
-    {
-      directory: 'guides',
-      files: '**/!(*documentation).mdx',
-      titlePrefix: 'Guides',
-    },
-    {
-      directory: 'contributor-docs',
-      files: '**/*.mdx',
-      titlePrefix: 'Contributor docs',
-    }
-  );
-}
-
-// Test and VRT stories are fixtures for local dev and Chromatic; they should not ship in the production docs Storybook.
-if (storybookMode === 'dev' || storybookMode === 'chromatic') {
-  stories.push({
-    directory: '../components',
-    files: '**/*.{test,vrt}.ts',
-    titlePrefix: 'Components',
   });
-  stories.push({
-    directory: '../../core',
-    files: '**/stories/**/*.{test,vrt}.ts',
-    titlePrefix: 'Core',
-  });
+
+  /**
+   * The CI a11y mode trims docs/guides
+   * that can pull in 1st-gen-linked dependencies the test build does not need.
+   */
+  if (storybookMode !== 'ci-a11y') {
+    stories.push(
+      {
+        directory: '../../core',
+        files: '**/*.mdx',
+        titlePrefix: 'Core',
+      },
+      {
+        directory: '../../core',
+        files: '**/stories/*.stories.ts',
+        titlePrefix: 'Core',
+      },
+      {
+        directory: 'learn-about-swc',
+        files: '*.mdx',
+        titlePrefix: 'Learn about SWC',
+      },
+      {
+        directory: 'guides',
+        files: '**/!(*documentation).mdx',
+        titlePrefix: 'Guides',
+      },
+      {
+        directory: 'contributor-docs',
+        files: '**/*.mdx',
+        titlePrefix: 'Contributor docs',
+      }
+    );
+  }
+
+  // Test and VRT stories are dev-only fixtures; production docs and ci-a11y exclude them.
+  if (storybookMode === 'dev') {
+    stories.push({
+      directory: '../components',
+      files: '**/*.{test,vrt}.ts',
+      titlePrefix: 'Components',
+    });
+    stories.push({
+      directory: '../../core',
+      files: '**/stories/**/*.{test,vrt}.ts',
+      titlePrefix: 'Core',
+    });
+  }
 }
 
 /**

@@ -132,8 +132,6 @@ const preview = {
   parameters: {
     layout: 'centered',
     backgrounds: { disable: true }, // Use custom context switches
-    // Chromatic snapshots are opt-in: only `.vrt.ts` stories re-enable snapshots via their meta.
-    chromatic: { disableSnapshot: true },
     controls: {
       expanded: true,
       hideNoControlsWarning: true,

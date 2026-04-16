@@ -22,9 +22,8 @@ import {
 } from '../../../../core/components/badge/Badge.types.js';
 import { meta } from '../stories/badge.stories.js';
 
-// VRT stories are the single source of Chromatic snapshots. Everything else is
-// opted out of snapshots globally in `.storybook/preview.ts`; this meta re-enables
-// them for stories defined in this file.
+// Only `.vrt.ts` files are indexed in the Chromatic build (see `.storybook/main.ts`),
+// so every story here is snapshotted.
 export default {
   ...meta,
   title: 'Badge/VRT',
@@ -34,7 +33,6 @@ export default {
     layout: 'padded',
     // The permutations grid handles its own layout; turn off the shared flex decorator.
     flexLayout: false,
-    chromatic: { disableSnapshot: false },
   },
   tags: ['!autodocs', 'dev'],
 } as Meta;
