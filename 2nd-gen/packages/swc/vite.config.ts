@@ -81,6 +81,7 @@ export default defineConfig({
     }),
   ],
   css: {
+    transformer: 'postcss',
     postcss: {
       plugins: postcssPlugins,
     },

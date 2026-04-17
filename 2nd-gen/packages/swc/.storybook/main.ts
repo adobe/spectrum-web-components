@@ -151,6 +151,9 @@ const config: StorybookConfig = {
   experimental_indexers: storybookMode === 'dev' ? [testStoryIndexer] : [],
   viteFinal: async (config) => {
     return mergeConfig(config, {
+      css: {
+        transformer: 'postcss',
+      },
       plugins: [
         {
           name: 'css-hmr',
