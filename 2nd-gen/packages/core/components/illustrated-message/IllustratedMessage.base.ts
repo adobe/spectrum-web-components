@@ -98,20 +98,23 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
           { issues: [`orientation="${this.orientation}"`] }
         );
       }
+    }
+  }
 
-      const headingSlot = this.shadowRoot?.querySelector<HTMLSlotElement>(
-        'slot[name="heading"]'
-      );
-      if (headingSlot) {
-        for (const el of headingSlot.assignedElements()) {
-          if (!['H2', 'H3', 'H4', 'H5', 'H6'].includes(el.tagName)) {
-            window.__swc.warn(
-              this,
-              `<${this.localName}> heading slot received a <${el.tagName.toLowerCase()}> element. Only <h2>–<h6> elements are allowed in the heading slot.`,
-              'https://opensource.adobe.com/spectrum-web-components/components/illustrated-message/',
-              { issues: [`heading slot: <${el.tagName.toLowerCase()}>`] }
-            );
-          }
+  /**
+   * @internal
+   */
+  protected handleHeadingSlotChange(event: Event): void {
+    if (window.__swc?.DEBUG) {
+      const headingSlot = event.target as HTMLSlotElement;
+      for (const el of headingSlot.assignedElements()) {
+        if (!['H2', 'H3', 'H4', 'H5', 'H6'].includes(el.tagName)) {
+          window.__swc.warn(
+            this,
+            `<${this.localName}> heading slot received a <${el.tagName.toLowerCase()}> element. Only <h2>–<h6> elements are allowed in the heading slot.`,
+            'https://opensource.adobe.com/spectrum-web-components/components/illustrated-message/',
+            { issues: [`heading slot: <${el.tagName.toLowerCase()}>`] }
+          );
         }
       }
     }
