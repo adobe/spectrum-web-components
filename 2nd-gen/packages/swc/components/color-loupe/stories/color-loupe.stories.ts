@@ -199,7 +199,7 @@ export const Colors: Story = {
  * The transition between states is animated with CSS transitions on
  * `opacity` (125 ms) and `transform` (100 ms).
  */
-export const States: Story = {
+export const OpenAndClosedStates: Story = {
   render: (args) => html`
     <div
       style="position: relative; min-block-size: 120px; display: flex; gap: 80px;"
@@ -233,7 +233,6 @@ export const States: Story = {
 // ──────────────────────────────
 
 /**
- * ### Parent-driven visibility
  *
  * The color loupe's `open` state is entirely managed by its parent color
  * component — the loupe does not manage its own visibility:
