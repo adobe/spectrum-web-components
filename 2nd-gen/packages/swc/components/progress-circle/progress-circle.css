@@ -100,8 +100,10 @@
   --swc-progress-circle-fill-border-color: token("static-black-track-indicator-color");
 }
 
+/* @todo Come back to this when we discuss reduce motion animations */
 @media (prefers-reduced-motion: reduce) {
   .swc-ProgressCircle--indeterminate .swc-ProgressCircle-fill {
+    stroke-dashoffset: 75px;
     animation: none;
   }
 }
