@@ -26,6 +26,13 @@ import { ICON_VALID_SIZES } from './Icon.types.js';
 export abstract class IconBase extends SizedMixin(SpectrumElement, {
   validSizes: [...ICON_VALID_SIZES],
 }) {
+  /**
+   * T-shirt icon size.
+   *
+   * @default m
+   */
+  declare public size: (typeof ICON_VALID_SIZES)[number];
+
   // ──────────────────
   //     SHARED API
   // ──────────────────
