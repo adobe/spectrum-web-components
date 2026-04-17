@@ -10,17 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-/* Sizing per inferred content type sourced from Figma spec (node 5-2328), full-screen modality.
+/* Sizing per explicit user-message type sourced from Figma spec (node 5-2281), full-screen modality.
  *
  * copy  — fills available column width, capped at 536px (text reflows naturally)
- * card  — shrinks to card content, capped at 528px, min 272px
- * media — shrinks to media content, min 272px
- *
- * Content kind is inferred from slotted markup and exposed via
- * `data-content-kind` on host:
- * - media: any slotted `swc-upload-artifact[type="media"]`
- * - card: any slotted `swc-upload-artifact[type="card"]` (when no media)
- * - copy: default fallback
+ * card  — fixed 324px (content 292px = 324px − 2×16px padding), capped at 440px
+ * media — shrinks to the fixed 180×180px inner card + 2×8px padding ≈ 196px square
  */
 
 :host {
@@ -31,17 +25,16 @@
   padding-inline-end: 24px;
 }
 
-/* Card: fixed 324px per Figma spec (card content is always 308px = 324px - 2×8px padding) */
-:host([data-content-kind="card"]) {
+/* Card: fixed 324px per Figma spec (content 292px = 324px − 2×16px padding). */
+:host([type="card"]) {
   inline-size: 324px;
-  min-inline-size: 272px;
-  max-inline-size: 528px;
+  min-inline-size: 212px;
+  max-inline-size: 440px;
 }
 
-/* Image: shrinks to preview content + padding; min 272px (240px image + 2×16px padding) */
-:host([data-content-kind="media"]) {
+/* Image: shrinks to the fixed 180px inner card + 2×8px padding. */
+:host([type="media"]) {
   inline-size: fit-content;
-  min-inline-size: 272px;
 }
 
 *,
@@ -62,8 +55,116 @@
   border-radius: 12px;
 }
 
-/* Card content uses tighter padding to frame the card thumbnail/metadata */
-:host([data-content-kind="card"]) .swc-UserMessage {
-  padding-block: 4px;
-  padding-inline: 8px;
+/* Card: 16px padding all sides, 16px gap (from Figma node 9019:9872). */
+:host([type="card"]) .swc-UserMessage {
+  padding: 16px;
+}
+
+/* Media: 8px padding all sides (from Figma node 9019:8965). */
+:host([type="media"]) .swc-UserMessage {
+  padding: 8px;
+}
+
+.swc-UserMessage-attachment {
+  display: flex;
+  min-inline-size: 0;
+}
+
+.swc-UserMessage-attachment--card {
+  gap: 16px;
+  align-items: center;
+}
+
+/* Media inner card is fixed 180 × 180px, constrained by min/max (Figma spec). */
+.swc-UserMessage-attachment--media {
+  flex-direction: column;
+  gap: 8px;
+  inline-size: 180px;
+  min-inline-size: 150px;
+  max-inline-size: 210px;
+  block-size: 180px;
+  min-block-size: 135px;
+}
+
+.swc-UserMessage-thumbnail {
+  min-inline-size: 0;
+}
+
+.swc-UserMessage-thumbnail ::slotted(*) {
+  display: block;
+}
+
+:host([type="card"]) .swc-UserMessage-thumbnail {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+:host([type="card"]) .swc-UserMessage-thumbnail ::slotted(*) {
+  flex-shrink: 0;
+  inline-size: 32px;
+  block-size: 32px;
+  border-radius: token("corner-radius-75");
+  object-fit: cover;
+}
+
+/* Thumbnail fills the available vertical space, image covers it fully. */
+:host([type="media"]) .swc-UserMessage-thumbnail {
+  position: relative;
+  flex: 1 0 0;
+  inline-size: 100%;
+  min-block-size: 0;
+  background: token("gray-100");
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+:host([type="media"]) .swc-UserMessage-thumbnail ::slotted(*) {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.swc-UserMessage-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-inline-size: 0;
+}
+
+:host([type="card"]) .swc-UserMessage-meta {
+  flex: 1;
+  align-items: flex-start;
+}
+
+:host([type="media"]) .swc-UserMessage-meta {
+  inline-size: 100%;
+}
+
+.swc-UserMessage-title {
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-100");
+  font-weight: token("bold-font-weight");
+  line-height: token("line-height-font-size-100");
+  color: token("gray-900");
+}
+
+.swc-UserMessage-subtitle {
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-75");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-font-size-75");
+  color: token("gray-800");
+}
+
+:host([type="card"]) .swc-UserMessage-title,
+:host([type="card"]) .swc-UserMessage-subtitle {
+  inline-size: 100%;
+  text-align: start;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

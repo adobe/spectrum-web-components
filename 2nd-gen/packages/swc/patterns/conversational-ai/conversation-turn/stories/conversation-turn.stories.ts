@@ -236,6 +236,52 @@ export const FullPattern: Story = {
     const getUploadArtifactType = (artifact: Artifact): 'card' | 'media' =>
       artifact.mimeType.startsWith('image/') ? 'media' : 'card';
 
+    const renderUserMessageArtifact = (artifact: Artifact) => {
+      const type = getUploadArtifactType(artifact);
+
+      return html`
+        <swc-user-message type=${type}>
+          ${artifact.previewUrl
+            ? artifact.mimeType.startsWith('image/')
+              ? html`
+                  <img
+                    slot="thumbnail"
+                    src=${artifact.previewUrl}
+                    alt=${artifact.title}
+                    style="${type === 'card'
+                      ? 'inline-size:32px;block-size:32px;border-radius:4px;'
+                      : ''}object-fit:cover;display:block;"
+                  />
+                `
+              : html`
+                  <video
+                    slot="thumbnail"
+                    src=${artifact.previewUrl}
+                    muted
+                    playsinline
+                    preload="metadata"
+                    aria-label=${artifact.title}
+                    style="${type === 'card'
+                      ? 'inline-size:32px;block-size:32px;border-radius:4px;'
+                      : ''}object-fit:cover;display:block;background:var(--swc-gray-200);"
+                  ></video>
+                `
+            : html`
+                <div
+                  slot="thumbnail"
+                  style="display:flex;align-items:center;justify-content:center;inline-size:32px;block-size:32px;border-radius:4px;background:var(--swc-gray-200);color:var(--swc-gray-700);font-size:10px;font-weight:700;letter-spacing:0.02em;flex-shrink:0;"
+                  role="img"
+                  aria-label=${`${getArtifactTypeLabel(artifact)} file`}
+                >
+                  ${getArtifactTypeLabel(artifact)}
+                </div>
+              `}
+          <span slot="title">${artifact.title}</span>
+          <span slot="subtitle">${artifact.subtitle}</span>
+        </swc-user-message>
+      `;
+    };
+
     const handleFeedback = (event: Event): void => {
       const target = event.currentTarget as HTMLElement | null;
       const messageId = Number(target?.dataset.messageId ?? '');
@@ -410,65 +456,14 @@ export const FullPattern: Story = {
               message.role === 'user'
                 ? html`
                     <swc-conversation-turn type="user">
-                      <swc-user-message>
-                        ${message.uploads?.length
-                          ? html`
-                              <div
-                                style="display:flex;flex-direction:column;gap:8px;inline-size:100%;"
-                              >
-                                ${message.uploads.map((artifact) => {
-                                  const type = getUploadArtifactType(artifact);
-                                  return html`
-                                    <swc-upload-artifact type=${type}>
-                                      ${artifact.previewUrl
-                                        ? artifact.mimeType.startsWith('image/')
-                                          ? html`
-                                              <img
-                                                slot="thumbnail"
-                                                src=${artifact.previewUrl}
-                                                alt=${artifact.title}
-                                                style="object-fit:cover;display:block;border-radius:${type ===
-                                                'media'
-                                                  ? '10px'
-                                                  : '4px'};${type === 'card'
-                                                  ? 'inline-size:32px;block-size:32px;'
-                                                  : ''}"
-                                              />
-                                            `
-                                          : html`
-                                              <video
-                                                slot="thumbnail"
-                                                src=${artifact.previewUrl}
-                                                muted
-                                                playsinline
-                                                preload="metadata"
-                                                aria-label=${artifact.title}
-                                                style="inline-size:32px;block-size:32px;border-radius:4px;object-fit:cover;display:block;background:var(--swc-gray-200);"
-                                              ></video>
-                                            `
-                                        : html`
-                                            <div
-                                              slot="thumbnail"
-                                              style="display:flex;align-items:center;justify-content:center;inline-size:32px;block-size:32px;border-radius:4px;background:var(--swc-gray-200);color:var(--swc-gray-700);font-size:10px;font-weight:700;letter-spacing:0.02em;flex-shrink:0;"
-                                              role="img"
-                                              aria-label=${`${getArtifactTypeLabel(artifact)} file`}
-                                            >
-                                              ${getArtifactTypeLabel(artifact)}
-                                            </div>
-                                          `}
-                                      <span slot="title">
-                                        ${artifact.title}
-                                      </span>
-                                      <span slot="subtitle">
-                                        ${artifact.subtitle}
-                                      </span>
-                                    </swc-upload-artifact>
-                                  `;
-                                })}
-                              </div>
-                            `
-                          : message.text}
-                      </swc-user-message>
+                      ${message.uploads?.map((artifact) =>
+                        renderUserMessageArtifact(artifact)
+                      ) ?? ''}
+                      ${message.text
+                        ? html`
+                            <swc-user-message>${message.text}</swc-user-message>
+                          `
+                        : ''}
                     </swc-conversation-turn>
                   `
                 : html`

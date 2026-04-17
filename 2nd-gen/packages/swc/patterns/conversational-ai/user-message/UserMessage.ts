@@ -11,86 +11,56 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import { state } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 import styles from './user-message.css';
 
+export type UserMessageType = 'copy' | 'card' | 'media';
+
 /**
  * User-authored conversation bubble for conversational AI pattern exploration.
  *
  * @element swc-user-message
- * @slot - Message content. Slotted `swc-upload-artifact[type]` drives bubble layout inference.
+ * @slot - Message copy content when `type="copy"`.
+ * @slot thumbnail - Attachment preview when `type="card"` or `type="media"`.
+ * @slot title - Attachment title when `type="card"` or `type="media"`.
+ * @slot subtitle - Attachment subtitle when `type="card"` or `type="media"`.
  */
 export class UserMessage extends SpectrumElement {
-  @state()
-  private _contentKind: 'copy' | 'card' | 'media' = 'copy';
+  /**
+   * Visual content type for the user message bubble.
+   */
+  @property({ type: String, reflect: true })
+  public type: UserMessageType = 'copy';
 
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
-  private _elementHasArtifactType(
-    element: Element,
-    type: 'card' | 'media'
-  ): boolean {
-    if (element.matches(`swc-upload-artifact[type="${type}"]`)) {
-      return true;
-    }
-    return element.querySelector(`swc-upload-artifact[type="${type}"]`) !== null;
-  }
-
-  private _inferContentKind(slot?: HTMLSlotElement): 'copy' | 'card' | 'media' {
-    const defaultSlot =
-      slot ?? this.shadowRoot?.querySelector<HTMLSlotElement>('slot');
-    const assigned = defaultSlot?.assignedElements({ flatten: true }) ?? [];
-
-    if (
-      assigned.some((element) =>
-        this._elementHasArtifactType(element, 'media')
-      )
-    ) {
-      return 'media';
-    }
-
-    if (
-      assigned.some((element) =>
-        this._elementHasArtifactType(element, 'card')
-      )
-    ) {
-      return 'card';
-    }
-
-    return 'copy';
-  }
-
-  private _syncContentKind(slot?: HTMLSlotElement): void {
-    const nextKind = this._inferContentKind(slot);
-    if (nextKind === this._contentKind) {
-      return;
-    }
-
-    this._contentKind = nextKind;
-    this.requestUpdate();
-  }
-
-  private _handleDefaultSlotChange(event: Event): void {
-    this._syncContentKind(event.target as HTMLSlotElement);
-  }
-
-  protected override firstUpdated(): void {
-    this._syncContentKind();
-  }
-
-  protected override updated(): void {
-    this.setAttribute('data-content-kind', this._contentKind);
+  private _renderAttachment(): TemplateResult {
+    return html`
+      <div class="swc-UserMessage-attachment swc-UserMessage-attachment--${this.type}">
+        <div class="swc-UserMessage-thumbnail">
+          <slot name="thumbnail"></slot>
+        </div>
+        <div class="swc-UserMessage-meta">
+          <div class="swc-UserMessage-title">
+            <slot name="title"></slot>
+          </div>
+          <div class="swc-UserMessage-subtitle">
+            <slot name="subtitle"></slot>
+          </div>
+        </div>
+      </div>
+    `;
   }
 
   protected override render(): TemplateResult {
     return html`
       <div class="swc-UserMessage">
-        <slot @slotchange=${this._handleDefaultSlotChange}></slot>
+        ${this.type === 'copy' ? html`<slot></slot>` : this._renderAttachment()}
       </div>
     `;
   }

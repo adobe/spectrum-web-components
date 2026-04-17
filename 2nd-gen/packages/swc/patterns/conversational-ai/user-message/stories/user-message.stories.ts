@@ -14,7 +14,6 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '../../upload-artifact/index.js';
 import '../../conversation-turn/index.js';
 import '../index.js';
 
@@ -25,6 +24,16 @@ import '../index.js';
 const { args, argTypes, template } = getStorybookHelpers('swc-user-message');
 delete (args as Record<string, unknown>).content;
 delete (argTypes as Record<string, unknown>).content;
+
+argTypes.type = {
+  ...argTypes.type,
+  control: { type: 'select' },
+  options: ['copy', 'card', 'media'],
+  table: {
+    category: 'attributes',
+    defaultValue: { summary: 'copy' },
+  },
+};
 
 // Wraps a single swc-user-message in a conversation turn for proper alignment.
 const withUserTurn = (story: () => unknown) => html`
@@ -58,6 +67,7 @@ export default meta;
 
 export const Playground: Story = {
   args: {
+    type: 'copy',
     'default-slot':
       'Can you help me create a 45-minute presentation, with animations, for an executive update?',
   },
@@ -71,6 +81,7 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   args: {
+    type: 'copy',
     'default-slot':
       'Can you help me create a 45-minute presentation, with animations, for an executive update?',
   },
@@ -103,9 +114,9 @@ export const Anatomy: Story = {
 /**
  * Bubble sizing and padding are inferred from slotted content:
  *
- * - **Copy** — default text-only content
- * - **Card** — inferred when slotted content contains `swc-upload-artifact[type="card"]`
- * - **Media** — inferred when slotted content contains `swc-upload-artifact[type="media"]`
+ * - **Copy** — default text-only content with the bubble's default width and padding
+ * - **Card** — compact attachment layout with thumbnail, title, and subtitle
+ * - **Media** — larger preview-first attachment layout with metadata beneath the preview
  */
 export const Content: Story = {
   render: () => html`
@@ -127,17 +138,15 @@ export const Content: Story = {
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-conversation-turn type="user">
-          <swc-user-message>
-            <swc-upload-artifact type="card">
-              <div
-                slot="thumbnail"
-                style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);flex-shrink:0;"
-                role="img"
-                aria-label="File"
-              ></div>
-              <span slot="title">Hilton commercial assets</span>
-              <span slot="subtitle">2026</span>
-            </swc-upload-artifact>
+          <swc-user-message type="card">
+            <div
+              slot="thumbnail"
+              style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);flex-shrink:0;"
+              role="img"
+              aria-label="File"
+            ></div>
+            <span slot="title">Hilton commercial assets</span>
+            <span slot="subtitle">2026</span>
           </swc-user-message>
         </swc-conversation-turn>
         <span
@@ -148,19 +157,15 @@ export const Content: Story = {
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-conversation-turn type="user">
-          <swc-user-message>
-            <div style="inline-size:240px;">
-              <swc-upload-artifact type="media">
-                <div
-                  slot="thumbnail"
-                  style="inline-size:100%;block-size:196px;background:linear-gradient(135deg,#a78bfa,#f472b6);"
-                  role="img"
-                  aria-label="Campaign preview"
-                ></div>
-                <span slot="title">Hilton commercial assets</span>
-                <span slot="subtitle">2026</span>
-              </swc-upload-artifact>
-            </div>
+          <swc-user-message type="media">
+            <div
+              slot="thumbnail"
+              style="background:linear-gradient(135deg,#a78bfa,#f472b6);"
+              role="img"
+              aria-label="Campaign preview"
+            ></div>
+            <span slot="title">Hilton commercial assets</span>
+            <span slot="subtitle">2026</span>
           </swc-user-message>
         </swc-conversation-turn>
         <span
@@ -187,15 +192,17 @@ export const Content: Story = {
  * #### Semantic structure
  *
  * - The bubble is rendered as a `<div>` acting as a visual container
- * - The default slot accepts any content; consumers are responsible for providing meaningful text alternatives when slotting non-text content (cards, images)
+ * - `type="copy"` uses the default slot for message text
+ * - `type="card"` and `type="media"` use named slots for thumbnail, title, and subtitle
  *
  * ### Best practices
  *
  * - Ensure message text is descriptive and self-contained
- * - For slotted artifacts, ensure titles/subtitles and `aria-label`/`alt` text are present for previews
+ * - For card and media attachments, ensure titles/subtitles and `aria-label`/`alt` text are present for previews
  */
 export const Accessibility: Story = {
   args: {
+    type: 'copy',
     'default-slot':
       'Can you help me create a 45-minute presentation, with animations, for an executive update?',
   },
