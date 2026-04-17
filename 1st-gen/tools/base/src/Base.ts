@@ -63,6 +63,8 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
       // selector will throw on the following test (Safari, older things).
       // Some won't throw, but will be focusing item rather than the menu and
       // will rely on the polyfill to know whether focus is "visible" or not.
+      // .focus-visible polyfill class will intentionally not be checked in 2nd-gen.
+      // 2nd-gen targets browsers with native support for :focus-visible.
       return (
         activeElement.matches(':focus-visible') ||
         activeElement.matches('.focus-visible')
