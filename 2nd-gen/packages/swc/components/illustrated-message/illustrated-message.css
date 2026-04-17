@@ -40,8 +40,18 @@
 }
 
 /* @todo SWC-1838 — heading typography (size, weight, line-height, color) */
-.swc-IllustratedMessage-heading {
+
+/*
+ * Reset native heading styles (font-size, font-weight, margin) so component tokens can take over.
+ * The :not([class]) guard leaves intentionally-classed headings untouched.
+ */
+::slotted(h2:not([class])),
+::slotted(h3:not([class])),
+::slotted(h4:not([class])),
+::slotted(h5:not([class])),
+::slotted(h6:not([class])) {
   margin: 0;
+  font: inherit;
 }
 
 /* @todo SWC-1838 — description typography (size, weight, line-height, color) */
