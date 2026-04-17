@@ -9,21 +9,11 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export const formatComponentName = (
-  title: string,
-  typeCase: 'kebab' | 'pascal' = 'kebab'
-) => {
-  const formattedComponentName = title
-    .split('/')
-    .pop()
-    ?.toLowerCase()
-    .replace(/\s+/g, '-');
 
-  if (typeCase === 'pascal') {
-    return formattedComponentName
-      ?.split('-')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join('');
-  }
-  return formattedComponentName;
-};
+export {
+  focusgroupNavigationActiveChange,
+  FocusgroupNavigationController,
+  type FocusgroupDirection,
+  type FocusgroupNavigationActiveChangeDetail,
+  type FocusgroupNavigationOptions,
+} from './src/focusgroup-navigation-controller.js';

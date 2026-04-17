@@ -11,6 +11,18 @@
  */
 
 export { FocusGroupController, type FocusGroupConfig } from './focus-group.js';
+
+/**
+ * Public exports for Lit reactive controllers shared across 2nd-gen packages.
+ */
+
+export {
+  focusgroupNavigationActiveChange,
+  FocusgroupNavigationController,
+  type FocusgroupDirection,
+  type FocusgroupNavigationActiveChangeDetail,
+  type FocusgroupNavigationOptions,
+} from './focusgroup-navigation-controller/index.js';
 export {
   LanguageResolutionController,
   languageResolverUpdatedSymbol,
