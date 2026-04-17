@@ -33,13 +33,13 @@
   flex-shrink: 0;
 }
 
-:host([is-mobile-view]) {
+:host([mobile-view]) {
   display: block;
   inline-size: 100%;
   overflow: hidden;
 }
 
-:host([is-mobile-view]) ::slotted([slot="mobile-submenu"]) {
+:host([mobile-view]) ::slotted([slot="mobile-submenu"]) {
   inline-size: 100%;
 }
 

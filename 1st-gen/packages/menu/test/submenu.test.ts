@@ -1098,7 +1098,7 @@ describe('Submenu', () => {
         this.submenuChanged(event.target.value);
       };
       this.el = await fixture<Menu>(html`
-        <sp-menu is-mobile-view @change=${handleRootChange}>
+        <sp-menu mobile-view @change=${handleRootChange}>
           <sp-menu-item>No submenu</sp-menu-item>
           <sp-menu-item class="root">
             Has submenu
@@ -1116,7 +1116,7 @@ describe('Submenu', () => {
     });
     it('opens submenu via click (drill-down replaces content)', async function () {
       const menu = this.el as Menu;
-      expect(menu.isMobileView).to.be.true;
+      expect(menu.mobileView).to.be.true;
       expect(menu.currentMobileSubmenu).to.be.undefined;
 
       await mouseClickOn(this.rootItem);
@@ -1233,7 +1233,7 @@ describe('Submenu', () => {
         subSubmenuChanged(event.target.value);
       };
       const el = await fixture<Menu>(html`
-        <sp-menu is-mobile-view>
+        <sp-menu mobile-view>
           <sp-menu-item class="level1">
             Level 1
             <sp-menu slot="submenu">
@@ -1269,6 +1269,67 @@ describe('Submenu', () => {
 
       el.closeMobileSubmenu();
       await elementUpdated(el);
+      expect(el.currentMobileSubmenu).to.be.undefined;
+    });
+    it('closes submenu via Escape key', async function () {
+      const menu = this.el as Menu;
+
+      menu.openMobileSubmenu(this.rootItem);
+      await elementUpdated(menu);
+      expect(menu.currentMobileSubmenu).to.equal(this.rootItem);
+
+      await sendKeys({ press: 'Escape' });
+      await elementUpdated(menu);
+
+      expect(menu.currentMobileSubmenu).to.be.undefined;
+    });
+    it('handleKeydown does not eat ArrowDown/ArrowUp at the root level', async function () {
+      const menu = this.el as Menu;
+      const input = document.createElement('input');
+      menu.insertAdjacentElement('beforebegin', input);
+
+      await sendTabKey();
+      await elementUpdated(input);
+      await sendTabKey();
+      await elementUpdated(menu);
+      await waitUntil(
+        () => document.activeElement === menu.children[0],
+        'focuses first menu item after tab'
+      );
+
+      const firstItem = menu.children[0] as MenuItem;
+      expect(firstItem.focused).to.be.true;
+
+      await sendKeys({ press: 'ArrowDown' });
+      await elementUpdated(menu);
+
+      expect(this.rootItem.focused).to.be.true;
+
+      input.remove();
+    });
+    it('navigates correctly in RTL mode', async function () {
+      const el = await fixture<Menu>(html`
+        <sp-menu mobile-view dir="rtl">
+          <sp-menu-item class="rtl-root">
+            Has submenu
+            <sp-menu slot="submenu">
+              <sp-menu-item class="rtl-sub-item">Sub item</sp-menu-item>
+            </sp-menu>
+          </sp-menu-item>
+        </sp-menu>
+      `);
+      await elementUpdated(el);
+
+      const rootItem = el.querySelector('.rtl-root') as MenuItem;
+      await elementUpdated(rootItem);
+
+      el.openMobileSubmenu(rootItem);
+      await elementUpdated(el);
+      expect(el.currentMobileSubmenu).to.equal(rootItem);
+
+      await sendKeys({ press: 'ArrowRight' });
+      await elementUpdated(el);
+
       expect(el.currentMobileSubmenu).to.be.undefined;
     });
   });

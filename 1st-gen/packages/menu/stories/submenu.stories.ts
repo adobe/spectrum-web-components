@@ -453,7 +453,7 @@ export const mobileView = (): TemplateResult => {
         (event.target as HTMLElement).toggleAttribute('open', true);
       }}
     >
-      <sp-menu is-mobile-view>
+      <sp-menu mobile-view>
         <sp-menu-item>Home</sp-menu-item>
         <sp-menu-item>
           File

@@ -21,6 +21,7 @@ import {
 import {
   property,
   query,
+  state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import type { Overlay } from '@spectrum-web-components/overlay';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
@@ -73,11 +74,12 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     return this.slot === 'submenu';
   }
 
+  private asMenu(element: HTMLElement): Menu {
+    return element as HTMLElement as Menu;
+  }
+
   private get _mobileViewRoot(): Menu | null {
-    if (this.slot === 'mobile-submenu') {
-      return this.parentElement as Menu | null;
-    }
-    return null;
+    return this.closest('sp-menu[mobile-view]') as Menu | null;
   }
 
   protected rovingTabindexController?: RovingTabindexController<MenuItem>;
@@ -196,7 +198,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
     const backItem = backElements[0] as MenuItem;
     await backItem.updateComplete;
-    const submenu = submenuEl as unknown as Menu;
+    const submenu = this.asMenu(submenuEl);
     await submenu.updateComplete;
 
     submenu.childItems.forEach((child) => {
@@ -254,10 +256,15 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
       currentlyVisible.setAttribute('slot', 'mobile-submenu-stacked');
     }
 
-    item._mobileSubmenuProjected = true;
-    this._mobileSubmenuOriginalParents.set(submenuEl, submenuEl.parentElement!);
+    const parentElement = submenuEl.parentElement;
+    if (!parentElement) {
+      return;
+    }
 
-    const submenu = submenuEl as unknown as Menu;
+    item._mobileSubmenuProjected = true;
+    this._mobileSubmenuOriginalParents.set(submenuEl, parentElement);
+
+    const submenu = this.asMenu(submenuEl);
     const savedChildItems = new Set(submenu.childItemSet);
 
     submenuEl.setAttribute('slot', 'mobile-submenu');
@@ -279,7 +286,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
     this._removeMobileBackElements(submenuEl);
 
-    const submenu = submenuEl as unknown as Menu;
+    const submenu = this.asMenu(submenuEl);
     const originalParent = this._mobileSubmenuOriginalParents.get(submenuEl);
     if (originalParent) {
       const savedChildItems = new Set(submenu.childItemSet);
@@ -300,11 +307,12 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
     const backItem = document.createElement('sp-menu-item') as MenuItem;
     backItem.setAttribute('data-mobile-back', '');
-    backItem.textContent = 'Back';
+    backItem.textContent = this.mobileBackLabel;
 
     const icon = document.createElement('sp-icon-arrow500');
     icon.slot = 'icon';
-    icon.style.transform = 'rotate(180deg)';
+    const isRtl = this.dir === 'rtl';
+    icon.style.transform = isRtl ? 'rotate(0deg)' : 'rotate(180deg)';
     backItem.prepend(icon);
 
     backItem.style.marginBottom = 'calc(4px * var(--swc-scale-factor))';
@@ -362,10 +370,16 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
    * the current menu content with the submenu's children (drill-down) instead
    * of opening a flyout overlay.
    */
-  @property({ type: Boolean, attribute: 'is-mobile-view', reflect: true })
-  public isMobileView = false;
+  @property({ type: Boolean, attribute: 'mobile-view', reflect: true })
+  public mobileView = false;
 
-  @property({ attribute: false })
+  /**
+   * Label for the mobile back button, used for localization.
+   */
+  @property({ type: String, attribute: 'mobile-back-label' })
+  public mobileBackLabel = 'Back';
+
+  @state()
   private _mobileSubmenuStack: MenuItem[] = [];
 
   /**
@@ -910,11 +924,11 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
   }
 
   public handleSubmenuClosed = (event: Event): void => {
-    if (this.isMobileView) {
+    event.stopPropagation();
+    if (this.mobileView) {
       this.resetMobileSubmenus();
       return;
     }
-    event.stopPropagation();
     const target = event.composedPath()[0] as Overlay;
     target.dispatchEvent(
       new Event('sp-menu-submenu-closed', {
@@ -1062,7 +1076,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
       key === 'Escape';
     const lastFocusedItem = root as MenuItem;
 
-    if (this.isMobileView) {
+    if (this.mobileView) {
       if (shouldOpenSubmenu && lastFocusedItem?.hasSubmenu) {
         event.stopPropagation();
         this.openMobileSubmenu(lastFocusedItem);
@@ -1107,7 +1121,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     if (event.defaultPrevented || !this.rovingTabindexController) {
       return;
     }
-    if (this.isMobileView && this._mobileSubmenuStack.length > 0) {
+    if (this.mobileView && this._mobileSubmenuStack.length > 0) {
       const { key } = event as MenuItemKeydownEvent;
       const dir = this.dir;
       const shouldClose =
@@ -1144,7 +1158,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     if (openSubmenuKey && root?.hasSubmenu && !root.open) {
       event.preventDefault();
       const mobileRoot = this._mobileViewRoot;
-      if (this.isMobileView) {
+      if (this.mobileView) {
         this.openMobileSubmenu(root);
       } else if (mobileRoot) {
         mobileRoot.openMobileSubmenu(root);
@@ -1273,9 +1287,9 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         if (typeof item.triggerUpdate !== 'undefined') {
           item.triggerUpdate();
         } else if (
-          typeof (item as unknown as Menu).childItems !== 'undefined'
+          typeof this.asMenu(item).childItems !== 'undefined'
         ) {
-          (item as unknown as Menu).childItems.forEach((child) => {
+          this.asMenu(item).childItems.forEach((child) => {
             child.triggerUpdate();
           });
         }
@@ -1299,7 +1313,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
   public override render(): TemplateResult {
     const hasMobileSubmenu =
-      this.isMobileView && this._mobileSubmenuStack.length > 0;
+      this.mobileView && this._mobileSubmenuStack.length > 0;
     return html`
       <div
         class=${hasMobileSubmenu ? 'mobile-slot-hidden' : 'mobile-slot-wrapper'}
@@ -1308,7 +1322,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
       </div>
       ${hasMobileSubmenu
         ? html`
-            <div class="mobile-submenu-animation-wrapper">
+            <div class="mobile-submenu-animation-wrapper"
+              role="region"
+              aria-live="polite"
+            >
               <slot name="mobile-submenu"></slot>
             </div>
           `

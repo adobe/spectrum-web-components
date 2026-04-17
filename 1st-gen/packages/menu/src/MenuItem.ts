@@ -375,15 +375,15 @@ export class MenuItem extends LikeAnchor(
   }
 
   /**
-   * Returns the root sp-menu with is-mobile-view, traversing up from
+   * Returns the root sp-menu with mobile-view, traversing up from
    * either the focusRoot or the DOM tree.
    */
   private get _mobileRootMenu(): Menu | null {
     const focusRoot = this.menuData.focusRoot;
-    if (focusRoot?.isMobileView) {
+    if (focusRoot?.mobileView) {
       return focusRoot;
     }
-    return this.closest('sp-menu[is-mobile-view]') as Menu | null;
+    return this.closest('sp-menu[mobile-view]') as Menu | null;
   }
 
   protected renderSubmenu(): TemplateResult {
