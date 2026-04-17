@@ -15,6 +15,7 @@
 - [How controllers work](#how-controllers-work)
 - [Available controllers](#available-controllers)
 - [Planned controllers](#planned-controllers)
+- [FocusgroupNavigationController](#focusgroupnavigationcontroller)
 - [LanguageResolutionController](#languageresolutioncontroller)
 - [Using a controller in a component](#using-a-controller-in-a-component)
 - [Controller vs mixin](#controller-vs-mixin)
@@ -60,6 +61,7 @@ To attach a controller, call `host.addController(this)` in the constructor. This
 
 | Controller | Location | Purpose |
 |-----------|----------|---------|
+| `FocusgroupNavigationController` | `core/controllers/focus-group-navigation-controller.ts` | Roving tabindex and directional keyboard navigation for composites |
 | `LanguageResolutionController` | `core/controllers/language-resolution.ts` | Resolve locale for formatting |
 
 ## Planned controllers
@@ -68,7 +70,7 @@ The following controllers exist in 1st-gen and may be recreated in 2nd-gen core 
 
 | Controller | 1st-gen location | Purpose |
 |-----------|-----------------|---------|
-| `RovingTabindexController` | `1st-gen/packages/shared/` | Keyboard navigation |
+| `RovingTabindexController` | `1st-gen/packages/shared/` | Keyboard navigation (see `FocusgroupNavigationController` in 2nd-gen for a related pattern) |
 | `PlacementController` | `1st-gen/packages/overlay/` | Overlay positioning |
 | `MatchMediaController` | `1st-gen/packages/picker/` | Device-adaptive behavior |
 | `PendingStateController` | `1st-gen/packages/button/` | Loading states |
@@ -79,9 +81,26 @@ The following controllers exist in 1st-gen and may be recreated in 2nd-gen core 
 | `ColorController` | `1st-gen/tools/reactive-controllers/` | Color validation/conversion |
 | `GridController` | `1st-gen/tools/grid/` | Grid layout with virtual scrolling |
 
+## FocusgroupNavigationController
+
+**File:** `core/controllers/focus-group-navigation-controller.ts`
+
+**What it does:**
+
+1. Collapses roving `tabindex` to one tab stop in a composite (`tabindex="0"` on the active item, `-1` on others it manages).
+2. Handles Arrow keys, Home, and End for horizontal, vertical, **`both`** (horizontal and vertical arrows on the same linear order), or **grid** layouts; optional **`pageStep`** enables Page Up / Page Down by that many items (linear) or rows (**grid**); in **grid** mode, Ctrl+Home / Ctrl+End jump to the first cell of the first row or the last cell of the last row.
+3. Optional **`skipDisabled`**: omit native **`disabled`** and **`aria-disabled="true"`** items from roving tabindex and arrow navigation (story **Skip disabled menu**).
+4. Optionally wraps at ends and remembers the last focused item for Tab re-entry (similar to Open UI `focusgroup` semantics).
+
+**Public API:** `setOptions`, `getActiveItem`, `refresh`, `setActiveItem` (roving `tabindex` only — call `getActiveItem()?.focus()` to move focus), `focusFirstItemByTextPrefix` (typeahead label match for roving `tabindex` only — same follow-up), plus `hostConnected` / `hostDisconnected` via `ReactiveController`.
+
+**Events:** Dispatches `swc-focusgroup-navigation-active-change` when the active item changes.
+
+**Docs:** See `core/controllers/focus-group-navigation-demos/focus-group-navigation-controller.md` and Storybook **Core / Focus group navigation controller**.
+
 ## LanguageResolutionController
 
-The main controller currently in 2nd-gen is `LanguageResolutionController`. It resolves the component's language/locale for formatting numbers, dates, and accessibility text.
+The main controller for locale in 2nd-gen is `LanguageResolutionController`. It resolves the component's language/locale for formatting numbers, dates, and accessibility text.
 
 **File:** `core/controllers/language-resolution.ts`
 
