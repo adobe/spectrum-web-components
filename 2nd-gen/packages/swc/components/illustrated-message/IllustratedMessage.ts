@@ -44,6 +44,12 @@ export class IllustratedMessage extends IllustratedMessageBase {
     return [styles];
   }
 
+  protected override get headingSlot(): TemplateResult {
+    return html`
+      <slot name="heading" @slotchange=${this.handleHeadingSlotChange}></slot>
+    `;
+  }
+
   protected override render(): TemplateResult {
     return html`
       <div class="swc-IllustratedMessage">
@@ -51,7 +57,7 @@ export class IllustratedMessage extends IllustratedMessageBase {
           <slot></slot>
         </div>
         <div class="swc-IllustratedMessage-content">
-          <slot name="heading"></slot>
+          ${this.headingSlot}
           <div class="swc-IllustratedMessage-description">
             <slot name="description"></slot>
           </div>

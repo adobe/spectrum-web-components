@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { PropertyValues } from 'lit';
+import { PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
@@ -72,19 +72,6 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
   //     IMPLEMENTATION
   // ──────────────────────
 
-  protected override firstUpdated(changedProperties: PropertyValues): void {
-    super.firstUpdated(changedProperties);
-    const headingSlot = this.shadowRoot?.querySelector<HTMLSlotElement>(
-      'slot[name="heading"]'
-    );
-    if (headingSlot) {
-      headingSlot.addEventListener('slotchange', () =>
-        this.warnInvalidHeadingSlot(headingSlot)
-      );
-      this.warnInvalidHeadingSlot(headingSlot);
-    }
-  }
-
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
     if (window.__swc?.DEBUG) {
@@ -114,7 +101,21 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
     }
   }
 
-  private warnInvalidHeadingSlot(headingSlot: HTMLSlotElement): void {
+  /**
+   * Template for the `heading` slot. Subclasses must implement this getter and
+   * render the result somewhere in their template. The returned template is
+   * expected to wire `@slotchange=${this.handleHeadingSlotChange}` so the base
+   * can validate the assigned elements.
+   *
+   * @internal
+   */
+  protected abstract get headingSlot(): TemplateResult;
+
+  /**
+   * @internal
+   */
+  protected handleHeadingSlotChange(event: Event): void {
+    const headingSlot = event.target as HTMLSlotElement;
     if (!window.__swc?.DEBUG) {
       return;
     }
