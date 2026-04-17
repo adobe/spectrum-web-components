@@ -64,6 +64,8 @@
     - Thumbnail
     - Tooltip
 - [Milestones](04_milestones/README.md)
+- Strategies
+    - [Focus Management Strategy: 2nd-Gen Proposal](05_strategies/focus-management-strategy-rfc.md)
 
 </details>
 

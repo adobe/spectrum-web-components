@@ -77,7 +77,7 @@ function runCase({
     return (
       label === expectedLabel ||
       replacement === select ||
-      replacement === `token('${expectedLabel}')`
+      replacement === `token("${expectedLabel}")`
     );
   });
 
@@ -104,38 +104,48 @@ describe('CSS completions (integration)', () => {
     {
       input: 'color: token(│)',
       select: 'accent-color',
-      expected: "color: token('accent-color')",
+      expected: 'color: token("accent-color")',
     },
     {
       input: `color: token('│)`,
       select: 'accent-color',
-      expected: "color: token('accent-color')",
+      expected: 'color: token("accent-color")',
+    },
+    {
+      input: 'color: token("│)',
+      select: 'accent-color',
+      expected: 'color: token("accent-color")',
     },
     {
       input: 'padding: calc(1rem + token(│))',
       select: 'spacing-small',
-      expected: "padding: calc(1rem + token('spacing-small'))",
+      expected: 'padding: calc(1rem + token("spacing-small"))',
     },
     {
       input: 'padding: var(--my-var, token(│))',
       select: 'spacing-small',
-      expected: "padding: var(--my-var, token('spacing-small'))",
+      expected: 'padding: var(--my-var, token("spacing-small"))',
     },
     // Resume completions while typing inside quotes
     {
       input: "color: token('accent-│')",
       select: 'accent-color',
-      expected: "color: token('accent-color')",
+      expected: 'color: token("accent-color")',
+    },
+    {
+      input: 'color: token("accent-│")',
+      select: 'accent-color',
+      expected: 'color: token("accent-color")',
     },
     {
       input: "padding: calc(token('spacing-│'))",
       select: 'spacing-small',
-      expected: "padding: calc(token('spacing-small'))",
+      expected: 'padding: calc(token("spacing-small"))',
     },
     {
       input: "padding: var(--my-var, token('spacing-│'))",
       select: 'spacing-small',
-      expected: "padding: var(--my-var, token('spacing-small'))",
+      expected: 'padding: var(--my-var, token("spacing-small"))',
     },
     // Validate extension doesn't clobber regular custom property replacement
     // Ensure any `select` values are included in the `localVars` arr

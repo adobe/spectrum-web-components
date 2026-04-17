@@ -215,6 +215,8 @@ const preview = {
         order: [
           'Learn about SWC',
           ['Overview', 'When to use SWC', '1st-gen vs 2nd-gen'],
+          'Core',
+          ['Overview', 'Controllers'],
           'Components',
           'Guides',
           [
@@ -255,6 +257,7 @@ const preview = {
               'Using stackblitz',
               '2nd-gen testing',
               'Tools vs packages',
+              'Focus management',
             ],
             'Style guide',
             [
@@ -339,7 +342,11 @@ const preview = {
                 'Asset',
                 ['Rendering and styling migration analysis'],
                 'Avatar',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Migration plan',
+                  'Rendering and styling migration analysis',
+                ],
                 'Badge',
                 [
                   'Accessibility migration analysis',
@@ -418,12 +425,22 @@ const preview = {
                 ['Rendering and styling migration analysis'],
               ],
               'Milestones',
+              'Strategies',
+              ['Focus management strategy rfc'],
             ],
           ],
           // GENERATED:CONTRIBUTOR-DOCS-SORT-END
         ],
       },
     },
+  },
+  // Hide SpectrumElement infrastructure members from every component's API table.
+  // These are internal properties that consumers should not configure directly.
+  argTypes: {
+    dir: { table: { disable: true } },
+    VERSION: { table: { disable: true } },
+    CORE_VERSION: { table: { disable: true } },
+    hasVisibleFocusInTree: { table: { disable: true } },
   },
   tags: ['!autodocs', '!dev'], // We only want the playground stories to be visible in the docs and sidenav. Since a majority of our stories are tagged with '!autodocs' and '!dev', we set those tags globally. We can opt in to visibility by adding the 'autodocs' or 'dev' tags to individual stories.
   loaders: [FontLoader],
