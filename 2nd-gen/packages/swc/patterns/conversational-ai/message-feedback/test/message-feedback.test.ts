@@ -116,7 +116,7 @@ export const InteractionTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Keyboard (FocusGroupController)
+// TEST: Keyboard (FocusgroupNavigationController)
 // ──────────────────────────────────────────────────────────────
 
 export const KeyboardNavigationTest: Story = {

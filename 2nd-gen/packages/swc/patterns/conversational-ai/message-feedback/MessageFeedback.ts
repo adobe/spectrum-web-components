@@ -13,7 +13,7 @@
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { FocusGroupController } from '@spectrum-web-components/core/controllers/index.js';
+import { FocusgroupNavigationController } from '@spectrum-web-components/core/controllers/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 import '@adobe/spectrum-wc/icon';
@@ -25,7 +25,7 @@ import styles from './message-feedback.css';
 /**
  * Binary positive / negative feedback control for AI responses.
  *
- * Arrow keys use `FocusGroupController` (horizontal) so focus and selection
+ * Arrow keys use `FocusgroupNavigationController` (horizontal) so focus and selection
  * follow the radiogroup pattern (roving `tabindex` on the two buttons).
  *
  * @element swc-message-feedback
@@ -43,21 +43,12 @@ export class MessageFeedback extends SpectrumElement {
   @property({ type: String, reflect: true })
   public status?: 'positive' | 'negative';
 
-  private focusGroupController = new FocusGroupController<HTMLButtonElement>(
+  private focusgroupNavigationController = new FocusgroupNavigationController(
     this,
     {
       direction: 'horizontal',
-      elements: () => this._feedbackButtons(),
-      focusInIndex: (elements) => {
-        if (this.status === 'negative' && elements.length > 1) {
-          return 1;
-        }
-        return 0;
-      },
-      elementEnterAction: (el) => {
-        el.click();
-      },
-      stopKeyEventPropagation: true,
+      wrap: true,
+      getItems: () => this._feedbackButtons(),
     }
   );
 
@@ -66,7 +57,8 @@ export class MessageFeedback extends SpectrumElement {
   }
 
   public override focus(options?: FocusOptions): void {
-    this.focusGroupController.focus(options);
+    this._syncRovingFocusTarget();
+    this.focusgroupNavigationController.getActiveItem()?.focus(options);
   }
 
   private _feedbackButtons(): HTMLButtonElement[] {
@@ -83,16 +75,62 @@ export class MessageFeedback extends SpectrumElement {
     changedProperties: PropertyValues<this>
   ): void {
     super.firstUpdated(changedProperties);
-    this.focusGroupController.clearElementCache();
-    this.focusGroupController.reset();
+    this._syncRovingFocusTarget();
   }
 
   protected override updated(changedProperties: PropertyValues<this>): void {
     super.updated(changedProperties);
     if (changedProperties.has('status')) {
-      this.focusGroupController.clearElementCache();
-      this.focusGroupController.reset();
+      this._syncRovingFocusTarget();
     }
+  }
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener('keydown', this._handleKeyboardSelection);
+  }
+
+  public override disconnectedCallback(): void {
+    this.removeEventListener('keydown', this._handleKeyboardSelection);
+    super.disconnectedCallback();
+  }
+
+  private _syncRovingFocusTarget(): void {
+    this.focusgroupNavigationController.refresh();
+    const buttons = this._feedbackButtons();
+    if (!buttons.length) {
+      return;
+    }
+
+    const selectedButton =
+      this.status === 'negative' && buttons.length > 1
+        ? buttons[1]
+        : buttons[0];
+    this.focusgroupNavigationController.setActiveItem(selectedButton);
+  }
+
+  private _handleKeyboardSelection = (event: KeyboardEvent): void => {
+    if (!event.defaultPrevented || !this._isKeyboardNavigationKey(event.key)) {
+      return;
+    }
+
+    const active = this.focusgroupNavigationController.getActiveItem();
+    if (!active) {
+      return;
+    }
+
+    active.click();
+    // Keep arrow-key handling scoped to this radiogroup.
+    event.stopPropagation();
+  };
+
+  private _isKeyboardNavigationKey(key: string): boolean {
+    return (
+      key === 'ArrowLeft' ||
+      key === 'ArrowRight' ||
+      key === 'Home' ||
+      key === 'End'
+    );
   }
 
   private _handlePositive(): void {

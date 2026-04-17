@@ -10,8 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-export { FocusGroupController, type FocusGroupConfig } from './focus-group.js';
-
 /**
  * Public exports for Lit reactive controllers shared across 2nd-gen packages.
  */

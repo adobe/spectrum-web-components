@@ -63,10 +63,6 @@
       "types": "./dist/controllers/language-resolution.d.ts",
       "import": "./dist/controllers/language-resolution.js"
     },
-    "./controllers/focus-group.js": {
-      "types": "./dist/controllers/focus-group.d.ts",
-      "import": "./dist/controllers/focus-group.js"
-    },
     "./element": {
       "types": "./dist/element/index.d.ts",
       "import": "./dist/element/index.js"
@@ -172,9 +168,6 @@
       ],
       "controllers/language-resolution.js": [
         "dist/controllers/language-resolution.d.ts"
-      ],
-      "controllers/focus-group.js": [
-        "dist/controllers/focus-group.d.ts"
       ],
       "element": [
         "dist/element/index.d.ts"
