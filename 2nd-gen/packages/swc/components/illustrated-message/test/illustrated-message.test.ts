@@ -124,9 +124,11 @@ export const HeadingSlotInvalidElementWarningTest: Story = {
           })
         );
 
+        // Replace the slotted element to trigger slotchange
         const div = document.createElement('div');
         div.setAttribute('slot', 'heading');
         div.textContent = 'Not a heading';
+
         illustratedMessage.querySelector('[slot="heading"]')?.remove();
         illustratedMessage.appendChild(div);
 
