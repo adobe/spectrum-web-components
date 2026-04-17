@@ -126,7 +126,7 @@
     "component",
     "css"
   ],
-  "customElements": "custom-elements.json",
+  "customElements": ".storybook/custom-elements.json",
   "publishConfig": {
     "access": "public"
   }

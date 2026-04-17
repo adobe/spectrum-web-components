@@ -9399,10 +9399,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/vscode@npm:1.109.0":
-  version: 1.109.0
-  resolution: "@types/vscode@npm:1.109.0"
-  checksum: 10c0/25c533178746ee6e647313773b0d30fbb6819a097a3be2e104aeacdb60df00adb2e6e5b6337fc13b281e2673df57af6f49e9622de15a256240428ff9fb9433cd
+"@types/vscode@npm:1.100.0":
+  version: 1.100.0
+  resolution: "@types/vscode@npm:1.100.0"
+  checksum: 10c0/9c9111a4582a1e3f49c7c7a376dde4c9f484db08d2c3aff4889e1768e11cb07254ec10b250e432761a81ddaf93fc7c6e7bbae966cf0970d5baf806084e457cf4
   languageName: node
   linkType: hard
 
@@ -30379,7 +30379,7 @@ __metadata:
   dependencies:
     "@adobe/swc-tokens": "workspace:*"
     "@types/node": "npm:25.2.3"
-    "@types/vscode": "npm:1.109.0"
+    "@types/vscode": "npm:1.100.0"
     esbuild: "npm:0.27.3"
     typescript: "npm:5.9.2"
     vitest: "npm:4.0.15"
