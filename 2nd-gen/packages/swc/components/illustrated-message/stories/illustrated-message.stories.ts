@@ -77,7 +77,7 @@ const cloudSvg = (a11yAttrs: string) =>
   `<svg slot="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" ${a11yAttrs}>\n${cloudPath}\n</svg>`;
 
 // ────────────────────
-//    STORIES
+//    AUTODOCS STORY
 // ────────────────────
 
 const defaultSlots = html`
@@ -93,16 +93,101 @@ export const Playground: Story = {
   args: {
     orientation: 'vertical',
   },
-
   render: (args) => template(args, defaultSlots),
   tags: ['autodocs', 'dev'],
 };
+
+// ──────────────────────────
+//    OVERVIEW STORY
+// ──────────────────────────
 
 export const Overview: Story = {
   render: (args) => template(args, defaultSlots),
   tags: ['overview'],
 };
 
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+/**
+ * Illustrated messages come in three sizes:
+ *
+ * - **Small (s)**: 96px illustration, compact spacing — for space-constrained contexts
+ * - **Medium (m)**: 96px illustration, standard spacing — the default
+ * - **Large (l)**: 160px illustration, reduced spacing — for prominent empty states
+ */
+export const Sizes: Story = {
+  render: (args) => html`
+    ${template(
+      { ...args, size: 's' },
+      html`
+        ${unsafeHTML(cloudSvg('aria-hidden="true"'))}
+        <h2 slot="heading">Small</h2>
+        <span slot="description">Size s — 96px illustration</span>
+      `
+    )}
+    ${template(
+      { ...args, size: 'm' },
+      html`
+        ${unsafeHTML(cloudSvg('aria-hidden="true"'))}
+        <h2 slot="heading">Medium</h2>
+        <span slot="description">Size m — 96px illustration (default)</span>
+      `
+    )}
+    ${template(
+      { ...args, size: 'l' },
+      html`
+        ${unsafeHTML(cloudSvg('aria-hidden="true"'))}
+        <h2 slot="heading">Large</h2>
+        <span slot="description">Size l — 160px illustration</span>
+      `
+    )}
+  `,
+  tags: ['options'],
+  parameters: {
+    flexLayout: true,
+    'section-order': 1,
+  },
+};
+
+/**
+ * Illustrated messages support two layout orientations:
+ *
+ * - **Vertical** (default): illustration stacked above the heading and description,
+ *   centered — use for full-page or centered empty states
+ * - **Horizontal**: illustration beside the heading and description in a row,
+ *   left-aligned — use for inline or sidebar empty states
+ */
+export const Orientation: Story = {
+  render: (args) => html`
+    ${template(
+      { ...args, orientation: 'vertical' },
+      html`
+        ${unsafeHTML(cloudSvg('aria-hidden="true"'))}
+        <h2 slot="heading">Vertical (default)</h2>
+        <span slot="description">Illustration stacked above the content.</span>
+      `
+    )}
+    ${template(
+      { ...args, orientation: 'horizontal' },
+      html`
+        ${unsafeHTML(cloudSvg('aria-hidden="true"'))}
+        <h2 slot="heading">Horizontal</h2>
+        <span slot="description">Illustration beside the content.</span>
+      `
+    )}
+  `,
+  tags: ['options'],
+  parameters: {
+    styles: { display: 'flex', 'flex-direction': 'column', gap: '2rem' },
+    'section-order': 2,
+  },
+};
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
 
 /**
  * SVGs slotted into the illustration slot should declare their accessibility
@@ -131,7 +216,9 @@ export const IllustrationAccessibility: Story = {
     ${template(
       args,
       html`
-        ${unsafeHTML(cloudSvg('role="img" aria-label="Cloud storage illustration"'))}
+        ${unsafeHTML(
+          cloudSvg('role="img" aria-label="Cloud storage illustration"')
+        )}
         <h2 slot="heading">Illustrated message title</h2>
         <span slot="description">
           The icon above uses
