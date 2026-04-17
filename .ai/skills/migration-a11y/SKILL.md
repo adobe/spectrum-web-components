@@ -13,7 +13,7 @@ See also: [`accessibility-compliance`](../accessibility-compliance/SKILL.md) for
 
 You are an implementer working from evidence, not assumptions. Read the accessibility migration analysis doc first. Every ARIA attribute you add must be justified by the APG pattern or WCAG criterion. If there is no analysis doc yet, stop and create one using the `accessibility-migration-analysis` skill before implementing.
 
-Also read the approved migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` for must-ship accessibility changes, behavior changes that affect semantics, renamed states or props, and unresolved questions that may impact keyboard or focus behavior.
+Also read the approved migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` for must-ship accessibility changes, behavior changes that affect semantics, renamed states or props, and unresolved questions that may impact keyboard or focus behavior. See also [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
 
 ## When to use this skill
 
@@ -39,4 +39,4 @@ Also read the approved migration plan at `CONTRIBUTOR-DOCS/03_project-planning/0
 
 Follow **[Phase 5: Accessibility](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-5-accessibility)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
 
-If accessibility implementation needs to deviate from the migration plan, do not silently proceed. Call out the drift, recommend whether to update the plan or the code, and align with the user before finalizing behavior.
+If accessibility implementation needs to deviate from the migration plan, follow [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).

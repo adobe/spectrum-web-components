@@ -57,10 +57,32 @@ Review these sources before filling out the plan:
 - Relevant bug tickets and prior migration decisions
 - Relevant Figma and React Spectrum references for naming, variants, and expected behavior
 
-If there are API inconsistencies, prefer the following order, and make explicit to the user/in content where the recommendation comes from if it introduces a rename, deprecation, or breaking change.
+## Readiness threshold
+
+You may draft a partial plan with explicit blockers when some inputs are missing, but do not present the plan as review-ready until all of the following are available:
+
+- 1st-gen source
+- Rendering and styling migration analysis
+- Figma reference image(s) or equivalent approved visual reference
+- Epic or ticket context if renames, deprecations, or breaking changes are proposed
+
+If these inputs are missing, keep drafting focused on known facts, mark the gaps clearly, and add them to blockers or prerequisites.
+
+## Source priority
+
+If there are inconsistencies, use category-specific source priority and make explicit in the plan where the recommendation comes from if it introduces a rename, deprecation, or breaking change.
+
+For API naming, behavior, and migration ergonomics:
 
 1. React implementation
 2. Figma visual spec
+3. `spectrum-css` at `spectrum-two` branch component CSS and the render found in `[component]/stories/template`
+4. 1st-gen implementation
+
+For visual decisions and supported presentation modes:
+
+1. Figma visual spec
+2. React implementation
 3. `spectrum-css` at `spectrum-two` branch component CSS and the render found in `[component]/stories/template`
 4. 1st-gen implementation
 

@@ -16,6 +16,7 @@ AGENT TEMPLATE PREP INSTRUCTIONS (delete this comment block after copying the te
 14. Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material.
 15. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
 16. For fuller workflow, review posture, and escalation guidance, refer to `.ai/skills/migration-prep/SKILL.md`.
+17. Later migration phases should also follow `.ai/skills/migration-prep/references/migration-plan-contract.md` so implementation, tests, docs, and review stay aligned with this approved plan.
 -->
 
 <!-- Generated breadcrumbs - DO NOT EDIT -->

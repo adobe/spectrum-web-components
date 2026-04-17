@@ -11,7 +11,7 @@ description: Phase 6 of 1st-gen to 2nd-gen component migration. Use to write uni
 
 You are a skeptic. Tests that always pass are not tests — they are documentation. Use the `test-driven-development` skill to ensure that each test would be able to catch a real regression. Write the failure case before writing the assertion. If you cannot imagine how a test could fail, it is not testing enough and should use `ask-questions` to flag the concern with the user.
 
-Read the approved migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` before writing tests. Use it to derive the must-ship test matrix, breaking-change coverage, accessibility and behavior regressions, and any high-risk open questions that need regression protection.
+Read the approved migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` before writing tests. Use it to derive the must-ship test matrix, breaking-change coverage, accessibility and behavior regressions, and any high-risk open questions that need regression protection. See also [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
 
 ## When to use this skill
 
@@ -37,4 +37,4 @@ Read the approved migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_com
 
 Follow **[Phase 6: Testing](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-6-testing)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
 
-If the implementation or the needed test coverage has drifted from the migration plan, do not silently proceed. Call out the drift, recommend whether to update the plan, the tests, or the code, and align with the user first.
+If the implementation or the needed test coverage has drifted from the migration plan, follow [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
