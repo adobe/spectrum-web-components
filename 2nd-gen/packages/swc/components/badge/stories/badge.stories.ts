@@ -432,6 +432,7 @@ export const TextWrapping: Story = {
   `,
   tags: ['behaviors'],
 };
+
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
