@@ -15,15 +15,30 @@ import { addons, makeDecorator, useEffect } from '@storybook/preview-api';
 import type {} from '../storybook-env';
 
 const DEFAULT_KIT_ID = 'obc6cux';
+const RTL_LANGS = new Set(['ar', 'fa', 'he']);
 
 let languageListenerAttached = false;
 
+function resolveTextDirection(
+  lang: string | false,
+  textDirection: string | undefined
+): 'ltr' | 'rtl' {
+  if (textDirection === 'ltr' || textDirection === 'rtl') {
+    return textDirection;
+  }
+
+  return RTL_LANGS.has(String(lang ?? 'en-US')) ? 'rtl' : 'ltr';
+}
+
 /**
- * Applies the selected language (lang/dir) to the document and loads the corresponding
+ * Applies the selected language/dir to the document and loads the corresponding
  * Adobe Fonts kit if needed. Safe to call from the decorator or from a toolbar listener
  * so that font loading works even when the decorator does not re-run (e.g. on some docs pages).
  */
-function applyLanguageAndFontKit(lang: string | false, isRTL: boolean): void {
+function applyLanguageAndFontKit(
+  lang: string | false,
+  textDirection: 'ltr' | 'rtl'
+): void {
   const langAttr = lang ? String(lang) : 'en-US';
   const root = document.documentElement;
 
@@ -33,7 +48,10 @@ function applyLanguageAndFontKit(lang: string | false, isRTL: boolean): void {
     root.setAttribute('lang', langAttr);
     hasChanged = true;
   }
-  root.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
+
+  // Apply both semantic and CSS direction so docs/stories and bidi behavior stay aligned.
+  root.setAttribute('dir', textDirection);
+  root.style.direction = textDirection;
 
   // If the fonts are actively loading, do not re-trigger the load
   if (window.FontsLoading === true) {
@@ -173,35 +191,41 @@ function attachLanguageChangeListener(): void {
   languageListenerAttached = true;
   try {
     const channel = addons.getChannel();
-    channel.on('globalsUpdated', (payload: { globals?: { lang?: string } }) => {
-      const lang = payload?.globals?.lang ?? 'en-US';
-      const isRTL = ['ar', 'fa', 'he'].includes(lang);
-      applyLanguageAndFontKit(lang, isRTL);
-    });
+    channel.on(
+      'globalsUpdated',
+      (payload: { globals?: { lang?: string; textDirection?: string } }) => {
+        const lang = payload?.globals?.lang ?? 'en-US';
+        const textDirection = resolveTextDirection(
+          lang,
+          payload?.globals?.textDirection
+        );
+        applyLanguageAndFontKit(lang, textDirection);
+      }
+    );
   } catch {
     // Storybook event bus not available (e.g. in test env); decorator-only path still works.
   }
 }
 
-/**
- * @type import('@storybook/csf').DecoratorFunction<import('@storybook/web-components').WebComponentsFramework>
- **/
 export const withLanguageWrapper = makeDecorator({
   name: 'withLanguageWrapper',
   parameterName: 'lang',
   wrapper: (StoryFn, context) => {
-    const { globals: { lang = false } = {}, id, viewMode } = context;
+    const {
+      globals: { lang = false, textDirection = 'auto' } = {},
+      id,
+      viewMode,
+    } = context;
 
-    // Add a textDirection property to the globals for use in the stories
-    // fa/Farsi is currently not included in the storybook toolbar map
-    const isRTL = ['ar', 'fa', 'he'].includes(lang);
-    context.globals.textDirection = isRTL ? 'rtl' : 'ltr';
+    // Keep an explicit, resolved direction available for stories.
+    const resolvedTextDirection = resolveTextDirection(lang, textDirection);
+    context.globals.resolvedTextDirection = resolvedTextDirection;
 
     attachLanguageChangeListener();
 
     useEffect(() => {
-      applyLanguageAndFontKit(lang, isRTL);
-    }, [lang, id, viewMode]);
+      applyLanguageAndFontKit(lang, resolvedTextDirection);
+    }, [lang, resolvedTextDirection, id, viewMode]);
 
     return StoryFn(context);
   },
