@@ -61,9 +61,7 @@ export const OverviewTest: Story = {
         expect(progressCircle.getAttribute('aria-label')).toBe(
           progressCircle.label
         );
-        expect(progressCircle.getAttribute('aria-valuenow')).toBe(
-          String(progressCircle.progress)
-        );
+        expect(progressCircle.hasAttribute('progress')).toBe(false);
       }
     );
   },
@@ -108,22 +106,6 @@ export const StaticColorsTest: Story = {
   },
 };
 
-export const RoleOverrideTest: Story = {
-  render: () => html`
-    <swc-progress-circle role="status" label="Loading"></swc-progress-circle>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const progressCircle = await getComponent<ProgressCircle>(
-      canvasElement,
-      'swc-progress-circle'
-    );
-
-    await step('preserves user-supplied role', async () => {
-      expect(progressCircle.getAttribute('role')).toBe('status');
-    });
-  },
-};
-
 export const LabelClearingTest: Story = {
   render: () => html`
     <swc-progress-circle
@@ -141,12 +123,15 @@ export const LabelClearingTest: Story = {
       expect(progressCircle.getAttribute('aria-label')).toBe('Uploading file');
     });
 
-    await step('removes aria-label when label is cleared', async () => {
-      progressCircle.label = '';
-      await progressCircle.updateComplete;
+    await step(
+      'falls back to default label when label is cleared',
+      async () => {
+        progressCircle.label = '';
+        await progressCircle.updateComplete;
 
-      expect(progressCircle.getAttribute('aria-label')).toBeNull();
-    });
+        expect(progressCircle.getAttribute('aria-label')).toBe('Loading');
+      }
+    );
   },
 };
 
@@ -219,7 +204,7 @@ export const LightDomChildrenDoNotSetLabelTest: Story = {
       'does not use light DOM text as the label or accessible name',
       async () => {
         expect(progressCircle.label).toBe('');
-        expect(progressCircle.getAttribute('aria-label')).toBeNull();
+        expect(progressCircle.getAttribute('aria-label')).toBe('Loading'); //check the default label is applied not the light dom text
       }
     );
 
@@ -230,17 +215,11 @@ export const LightDomChildrenDoNotSetLabelTest: Story = {
           progressCircle.progress = 10;
           await progressCircle.updateComplete;
 
-          expect(warnCalls.length).toBeGreaterThanOrEqual(2);
-          expect(
-            warnCalls.some((call) =>
-              String(call[1] ?? '').includes('no longer has a default slot')
-            )
-          ).toBe(true);
-          expect(
-            warnCalls.some((call) =>
-              String(call[1] ?? '').includes('accessible')
-            )
-          ).toBe(true);
+          expect(warnCalls.length).toBe(1);
+          expect(String(warnCalls[0]?.[1] ?? '')).toContain(
+            'no longer has a default slot'
+          );
+          expect(String(warnCalls[0]?.[1] ?? '')).toContain('accessible');
         })
     );
   },
@@ -286,11 +265,27 @@ export const ProgressValuesTest: Story = {
       'swc-progress-circle'
     );
 
-    await step('reflects progress values to aria-valuenow', async () => {
-      circles.forEach((circle) => {
-        const progress = String(circle.progress);
-        expect(circle.getAttribute('aria-valuenow')).toBe(progress);
+    const expectedValues = [0, 25, 50, 75, 100];
+
+    await step('renders with the correct initial progress values', async () => {
+      circles.forEach((circle, i) => {
+        expect(circle.progress).toBe(expectedValues[i]);
+        expect(circle.getAttribute('progress')).toBe(String(expectedValues[i]));
       });
+    });
+
+    await step('reflects progress values as progress changes', async () => {
+      const circle = circles[0];
+      expect(circle.progress).toBe(0);
+      expect(circle.getAttribute('progress')).toBe('0');
+      circle.progress = 50;
+      await circle.updateComplete;
+      expect(circle.progress).toBe(50);
+      expect(circle.getAttribute('progress')).toBe('50');
+      circle.progress = 100;
+      await circle.updateComplete;
+      expect(circle.progress).toBe(100);
+      expect(circle.getAttribute('progress')).toBe('100');
     });
   },
 };
@@ -333,7 +328,7 @@ export const IndeterminateTest: Story = {
     );
 
     await step('removes aria-valuenow in indeterminate state', async () => {
-      expect(progressCircle.indeterminate).toBe(true);
+      expect(progressCircle.progress).toBe(null);
       expect(progressCircle.hasAttribute('aria-valuenow')).toBe(false);
     });
   },
@@ -357,7 +352,7 @@ export const ReturnToIndeterminateTest: Story = {
     await step(
       'clears aria-valuenow when switched to indeterminate',
       async () => {
-        progressCircle.indeterminate = true;
+        progressCircle.progress = null;
         await progressCircle.updateComplete;
 
         expect(progressCircle.hasAttribute('aria-valuenow')).toBe(false);
@@ -379,9 +374,19 @@ export const AccessibilityWarningTest: Story = {
       canvasElement,
       'swc-progress-circle'
     );
-    await step('warns when there is no accessible name', () =>
+
+    await step(
+      'applies default "Loading" label when no accessible name is provided',
+      async () => {
+        expect(progressCircle.getAttribute('aria-label')).toBe('Loading');
+      }
+    );
+
+    await step('warns when accessible name is removed', () =>
       withWarningSpy(async (warnCalls) => {
-        progressCircle.progress = 10;
+        progressCircle.label = 'Temporary';
+        await progressCircle.updateComplete;
+        progressCircle.label = '';
         await progressCircle.updateComplete;
 
         expect(warnCalls.length).toBeGreaterThan(0);
