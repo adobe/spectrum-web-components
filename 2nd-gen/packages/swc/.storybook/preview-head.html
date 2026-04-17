@@ -96,102 +96,35 @@
 </script>
 
 <style>
-  /* Force Adobe Clean font on all Storybook elements */
-  body,
-  html,
-  #storybook-root,
-  #storybook-docs,
-  #stories,
-  .sb-show-main,
-  .sbdocs,
-  .sbdocs-wrapper,
-  .sbdocs-content,
-  .sbdocs-title,
-  .sbdocs-toc--custom,
-  .docs-story,
-  button,
-  h1,
-  h2:not(.typography-samples *),
-  h3,
-  h4,
-  h5,
-  h6,
-  p:not(.typography-samples *),
-  li,
-  ul,
-  ol,
-  table,
-  input,
-  select,
-  textarea,
-  nav {
-    font-family: var(--swc-sans-font-family-stack) !important;
-
-    &:lang(ar) {
-      font-family: var(--swc-font-family-arabic) !important;
+  /* Docs styles that should not impact stories directly */
+  @scope (body) to (.sbdocs-preview, #storybook-root) {
+    *:not(pre *, code) {
+      font-family: var(--swc-sans-font-family-stack) !important;
     }
 
-    &:lang(he) {
-      font-family: var(--swc-font-family-hebrew) !important;
-    }
-
-    &:lang(zh),
-    &:lang(zh-Hant) {
-      font-family: var(--swc-font-family-chinese-traditional) !important;
-    }
-
-    &:lang(zh-Hans),
-    &:lang(zh-CN),
-    &:lang(zh-SG) {
-      font-family: var(--swc-font-family-chinese-simplified) !important;
-    }
-
-    &:lang(zh-HK) {
-      font-family: var(--swc-font-family-hong-kong) !important;
-    }
-
-    &:lang(ja) {
-      font-family: var(--swc-font-family-japanese) !important;
-    }
-
-    &:lang(ko) {
-      font-family: var(--swc-font-family-korean) !important;
-    }
-  }
-
-  table,
-  input,
-  select,
-  textarea,
-  nav,
-  sp-table *,
-  .toc-list-item {
-    font-size: 0.875rem !important;
-  }
-
-  :not(.typography-samples *, .docblock-argstable-body *) {
-    &:is(html, p, li, ul, ol) {
-      font-size: 1rem !important;
-    }
-
-    h1& {
+    h1 {
       font-size: var(--swc-heading-size-xxl) !important;
+      line-height: var(--swc-heading-line-height) !important;
     }
 
-    h2:not(.sbdocs-subtitle)& {
+    h2:not(.sbdocs-subtitle) {
       font-size: var(--swc-heading-size-l) !important;
     }
 
-    h3& {
+    h3 {
       font-size: var(--swc-heading-size-m) !important;
     }
 
-    h4& {
+    h4 {
       font-size: var(--swc-heading-size-s) !important;
     }
 
+    :is(html, p, li, ul, ol) {
+      font-size: 1.15rem !important;
+    }
+
     #stories,
-    .sbdocs-content h2:not(.sbdocs-subtitle)& {
+    .sbdocs-content h2:not(.sbdocs-subtitle) {
       font-size: var(--swc-heading-size-l) !important;
       margin: 1.25rem 0px 2rem;
       -webkit-font-smoothing: antialiased;
@@ -204,32 +137,37 @@
       letter-spacing: unset;
       line-height: unset;
     }
+
+    table,
+    input,
+    select,
+    textarea,
+    nav,
+    sp-table *,
+    .toc-list-item {
+      font-size: 0.875rem !important;
+    }
+
+    table code {
+      font-size: 0.75rem !important;
+    }
   }
 
-  .typography-samples {
-    #storybook-root & {
-      background-color: var(--swc-gray-25);
-      padding: 1.5rem;
-    }
+  /* Ensure an adaptive-capable background */
+  .sbdocs-preview {
+    background-color: var(
+      --swc-gray-25,
+      light-dark(rgb(255 255 255), rgb(17 17 17))
+    ) !important;
+  }
 
-    &.typography-samples--grid {
-      display: grid;
-      gap: 1rem;
-    }
+  .sbdocs-preview-actions {
+    /* Allow focus outline to be fully visible */
+    overflow: visible !important;
+    margin-block-start: -30px !important;
 
-    .typography-row {
-      display: grid;
-      gap: 0.5rem;
-    }
-
-    .typography-meta {
-      display: flex;
-      align-items: last baseline;
-      gap: 0.5rem;
-    }
-
-    code {
-      display: inline-block;
+    > div {
+      flex-wrap: wrap;
     }
   }
 
@@ -282,11 +220,31 @@
     }
   }
 
-  /* Ensure an adaptive-capable background */
-  .sbdocs-preview {
-    background-color: var(
-      --swc-gray-25,
-      light-dark(rgb(255 255 255), rgb(17 17 17))
-    ) !important;
+  /* Story display utilities */
+  .typography-samples {
+    #storybook-root & {
+      background-color: var(--swc-gray-25);
+      padding: 1.5rem;
+    }
+
+    &.typography-samples--grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .typography-row {
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .typography-meta {
+      display: flex;
+      align-items: last baseline;
+      gap: 0.5rem;
+    }
+
+    code {
+      display: inline-block;
+    }
   }
 </style>
