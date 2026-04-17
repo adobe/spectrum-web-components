@@ -131,7 +131,31 @@ export const InteractionTest: Story = {
       expect(captured?.detail.open).toBe(true);
     });
 
+    await step(
+      'collapsed complete state keeps the reasoning panel in the DOM but hidden',
+      async () => {
+        el.open = false;
+        await el.updateComplete;
+
+        const button = el.shadowRoot?.querySelector<HTMLButtonElement>(
+          '.swc-ResponseStatus-row--button'
+        );
+        const panel = el.shadowRoot?.querySelector<HTMLElement>(
+          '#swc-reasoning-panel'
+        );
+
+        expect(button?.getAttribute('aria-controls')).toBe(
+          'swc-reasoning-panel'
+        );
+        expect(button?.getAttribute('aria-expanded')).toBe('false');
+        expect(panel).toBeTruthy();
+        expect(panel?.hidden).toBe(true);
+      }
+    );
+
     await step('default slot content renders in reasoning panel', async () => {
+      el.open = true;
+      await el.updateComplete;
       const panel = el.shadowRoot?.querySelector(
         '#swc-reasoning-panel'
       ) as HTMLElement | null;
@@ -143,6 +167,11 @@ export const InteractionTest: Story = {
       expect(
         assigned?.some((node) => node.textContent?.includes('Reasoning'))
       ).toBe(true);
+    });
+
+    await step('complete-state check icon is decorative only', async () => {
+      const checkIcon = el.shadowRoot?.querySelectorAll('swc-icon')[1];
+      expect(checkIcon?.getAttribute('aria-hidden')).toBe('true');
     });
   },
 };

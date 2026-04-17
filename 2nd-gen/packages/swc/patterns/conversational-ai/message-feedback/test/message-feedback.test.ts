@@ -155,6 +155,8 @@ export const KeyboardNavigationTest: Story = {
           events.push(customEvent.detail.status);
         }) as EventListener);
 
+        el.status = 'negative';
+        await el.updateComplete;
         el.focus();
         await el.updateComplete;
         await userEvent.keyboard('{ArrowLeft}');

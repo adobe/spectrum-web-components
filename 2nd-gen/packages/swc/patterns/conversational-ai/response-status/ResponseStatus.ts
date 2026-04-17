@@ -80,10 +80,7 @@ export class ResponseStatus extends SpectrumElement {
   private _renderLoadingRow(label: string): TemplateResult {
     return html`
       <div class="swc-ResponseStatus-row">
-        <span
-          class="swc-ResponseStatus-loadingSlot"
-          role="status"
-        >
+        <span class="swc-ResponseStatus-loadingSlot" role="status">
           <swc-progress-circle
             size="s"
             indeterminate
@@ -119,7 +116,7 @@ export class ResponseStatus extends SpectrumElement {
           <span class="swc-ResponseStatus-label">${label}</span>
           <swc-icon
             style="--swc-icon-inline-size:20px;--swc-icon-block-size:20px;"
-            label=${label}
+            aria-hidden="true"
           >
             ${CheckCircleIcon()}
           </swc-icon>
@@ -131,7 +128,7 @@ export class ResponseStatus extends SpectrumElement {
       <div class="swc-ResponseStatus-row">
         <swc-icon
           style="--swc-icon-inline-size:20px;--swc-icon-block-size:20px;"
-          label=${label}
+          aria-hidden="true"
         >
           ${CheckCircleIcon()}
         </swc-icon>
@@ -142,7 +139,6 @@ export class ResponseStatus extends SpectrumElement {
 
   protected override render(): TemplateResult {
     const isLoading = this.loading;
-    const showReasoningPanel = !isLoading && this.open;
     const statusLabel = this._getStatusLabel();
 
     return html`
@@ -150,13 +146,14 @@ export class ResponseStatus extends SpectrumElement {
         ${isLoading
           ? this._renderLoadingRow(statusLabel)
           : this._renderCompleteRow(statusLabel)}
-        ${showReasoningPanel
+        ${!isLoading
           ? html`
               <div
                 id="swc-reasoning-panel"
                 class="swc-ResponseStatus-reasoning-panel"
                 role="region"
                 aria-label="Reasoning"
+                ?hidden=${!this.open}
               >
                 <slot></slot>
               </div>

@@ -14,18 +14,22 @@ import { expect, test } from '@playwright/test';
 
 import { gotoStory } from '../../../../utils/a11y-helpers.js';
 
-test.describe('ResponseStatus - ARIA Snapshots', () => {
-  test('should have correct accessibility tree for loading state', async ({
-    page,
-  }) => {
+test.describe('ConversationTurn - ARIA Snapshots', () => {
+  test('should expose user and assistant turn labels', async ({ page }) => {
     const root = await gotoStory(
       page,
-      'patterns-conversational-ai-response-status--overview',
-      'swc-response-status'
+      'patterns-conversational-ai-conversation-turn--accessibility',
+      'swc-conversation-turn'
     );
-    await expect(root).toMatchAriaSnapshot(`
-      - status
-      - text: Generating response
+
+    const turns = root.locator('swc-conversation-turn');
+
+    await expect(turns.nth(0)).toMatchAriaSnapshot(`
+      - group "User message"
+    `);
+
+    await expect(turns.nth(1)).toMatchAriaSnapshot(`
+      - group "Assistant message"
     `);
   });
 });

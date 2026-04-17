@@ -68,5 +68,47 @@ export const OpenMutationTest: Story = {
       await el.updateComplete;
       expect(el.hasAttribute('open')).toBe(true);
     });
+
+    await step(
+      'collapsed state keeps the controlled panel in the DOM but hidden',
+      async () => {
+        el.open = false;
+        await el.updateComplete;
+
+        const toggle = el.shadowRoot?.querySelector<HTMLButtonElement>(
+          '.swc-MessageSources-toggle'
+        );
+        const panel =
+          el.shadowRoot?.querySelector<HTMLOListElement>('#swc-sources-panel');
+
+        expect(toggle?.getAttribute('aria-controls')).toBe('swc-sources-panel');
+        expect(toggle?.getAttribute('aria-expanded')).toBe('false');
+        expect(panel).toBeTruthy();
+        expect(panel?.hidden).toBe(true);
+      }
+    );
+
+    await step('clicking the toggle emits swc-sources-toggle', async () => {
+      let detail: { open: boolean } | undefined;
+      el.addEventListener(
+        'swc-sources-toggle',
+        (event) => {
+          detail = (event as CustomEvent<{ open: boolean }>).detail;
+        },
+        { once: true }
+      );
+
+      const toggle = el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-MessageSources-toggle'
+      );
+      toggle?.click();
+      await el.updateComplete;
+
+      const panel =
+        el.shadowRoot?.querySelector<HTMLOListElement>('#swc-sources-panel');
+      expect(detail?.open).toBe(true);
+      expect(el.open).toBe(true);
+      expect(panel?.hidden).toBe(false);
+    });
   },
 };

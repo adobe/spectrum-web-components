@@ -14,18 +14,20 @@ import { expect, test } from '@playwright/test';
 
 import { gotoStory } from '../../../../utils/a11y-helpers.js';
 
-test.describe('ResponseStatus - ARIA Snapshots', () => {
-  test('should have correct accessibility tree for loading state', async ({
+test.describe('SuggestionItem - ARIA Snapshots', () => {
+  test('should expose a button named from the suggestion label', async ({
     page,
   }) => {
     const root = await gotoStory(
       page,
-      'patterns-conversational-ai-response-status--overview',
-      'swc-response-status'
+      'patterns-conversational-ai-suggestion-suggestion-item--accessibility',
+      'swc-suggestion-item'
     );
-    await expect(root).toMatchAriaSnapshot(`
-      - status
-      - text: Generating response
+
+    const item = root.locator('swc-suggestion-item').first();
+
+    await expect(item).toMatchAriaSnapshot(`
+      - button "Create a slide deck from this"
     `);
   });
 });

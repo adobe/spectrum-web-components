@@ -51,7 +51,7 @@ export class SuggestionItem extends SpectrumElement {
         class="swc-SuggestionItem"
         @click=${this._handleClick}
       >
-        <swc-icon>${ArrowCurvedIcon()}</swc-icon>
+        <swc-icon aria-hidden="true">${ArrowCurvedIcon()}</swc-icon>
         <span class="swc-SuggestionItem-label">
           <slot></slot>
         </span>

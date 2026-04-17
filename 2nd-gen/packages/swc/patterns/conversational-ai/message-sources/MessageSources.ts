@@ -24,8 +24,8 @@ import styles from './message-sources.css';
 /**
  * Collapsible list of sources used to generate an AI response.
  *
- * Slot source items as `<a>` elements or any inline content inside the default slot.
- * Each slotted item will be wrapped with a numbered badge automatically via CSS counters.
+ * Slot source items as `<li>` elements, typically containing links.
+ * Each slotted list item will be wrapped with a numbered badge automatically via CSS counters.
  *
  * @element swc-message-sources
  * @slot - Source link items (rendered as a numbered list when expanded)
@@ -76,18 +76,15 @@ export class MessageSources extends SpectrumElement {
           Sources
         </button>
 
-        ${isExpanded
-          ? html`
-              <ol
-                id="swc-sources-panel"
-                class="swc-MessageSources-list"
-                role="list"
-                aria-label="Sources"
-              >
-                <slot></slot>
-              </ol>
-            `
-          : ''}
+        <ol
+          id="swc-sources-panel"
+          class="swc-MessageSources-list"
+          role="list"
+          aria-label="Sources"
+          ?hidden=${!isExpanded}
+        >
+          <slot></slot>
+        </ol>
       </div>
     `;
   }
