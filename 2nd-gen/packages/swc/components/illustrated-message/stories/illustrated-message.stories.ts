@@ -91,7 +91,7 @@ const defaultSlots = html`
 
 export const Playground: Story = {
   args: {
-    orientation: 'horizontal',
+    orientation: 'vertical',
   },
 
   render: (args) => template(args, defaultSlots),
