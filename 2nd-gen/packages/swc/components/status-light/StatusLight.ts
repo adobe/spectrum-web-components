@@ -15,9 +15,9 @@ import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import {
-  STATUSLIGHT_VARIANTS,
-  STATUSLIGHT_VARIANTS_COLOR,
-  STATUSLIGHT_VARIANTS_SEMANTIC,
+  STATUS_LIGHT_VARIANTS,
+  STATUS_LIGHT_VARIANTS_COLOR,
+  STATUS_LIGHT_VARIANTS_SEMANTIC,
   StatusLightBase,
   type StatusLightVariant,
 } from '@spectrum-web-components/core/components/status-light';
@@ -47,17 +47,17 @@ export class StatusLight extends StatusLightBase {
   /**
    * @internal
    */
-  static override readonly VARIANTS_COLOR = STATUSLIGHT_VARIANTS_COLOR;
+  static override readonly VARIANTS_COLOR = STATUS_LIGHT_VARIANTS_COLOR;
 
   /**
    * @internal
    */
-  static override readonly VARIANTS_SEMANTIC = STATUSLIGHT_VARIANTS_SEMANTIC;
+  static override readonly VARIANTS_SEMANTIC = STATUS_LIGHT_VARIANTS_SEMANTIC;
 
   /**
    * @internal
    */
-  static override readonly VARIANTS = STATUSLIGHT_VARIANTS;
+  static override readonly VARIANTS = STATUS_LIGHT_VARIANTS;
 
   /**
    * Changes the color of the status dot. The variant list includes both semantic and non-semantic options.

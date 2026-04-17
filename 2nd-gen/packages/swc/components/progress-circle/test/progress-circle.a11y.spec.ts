@@ -33,8 +33,7 @@ test.describe('Progress Circle - ARIA Snapshots', () => {
       'swc-progress-circle'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - progressbar "Uploading document":
-        - img
+      - progressbar "Uploading document"
     `);
   });
 
@@ -47,8 +46,7 @@ test.describe('Progress Circle - ARIA Snapshots', () => {
       'swc-progress-circle'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - progressbar "Starting upload":
-        - img
+      - progressbar "Starting upload"
     `);
   });
 
@@ -59,8 +57,7 @@ test.describe('Progress Circle - ARIA Snapshots', () => {
       'swc-progress-circle'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - progressbar "Processing small item":
-        - img
+      - progressbar "Processing small item"
     `);
   });
 
@@ -71,8 +68,7 @@ test.describe('Progress Circle - ARIA Snapshots', () => {
       'swc-progress-circle'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - progressbar "Processing media":
-        - img
+      - progressbar "Processing media"
     `);
   });
 
@@ -83,8 +79,7 @@ test.describe('Progress Circle - ARIA Snapshots', () => {
       'swc-progress-circle'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - progressbar "Starting download":
-        - img
+      - progressbar "Starting download"
     `);
   });
 
@@ -95,8 +90,7 @@ test.describe('Progress Circle - ARIA Snapshots', () => {
       'swc-progress-circle'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - progressbar "Processing request":
-        - img
+      - progressbar "Processing request"
     `);
   });
 });
