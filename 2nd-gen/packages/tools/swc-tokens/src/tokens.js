@@ -548,7 +548,10 @@ export async function generateCSS(prefix, debug = false) {
     if (typeof value === 'string' || typeof value === 'number') {
       write(
         name,
-        !isVar(value) && name.includes('font-family') && !name.includes('stack')
+        !isVar(value) &&
+          name.includes('font-family') &&
+          !name.includes('stack') &&
+          !String(value).includes(',')
           ? `'${value}'`
           : value,
         nonScaling

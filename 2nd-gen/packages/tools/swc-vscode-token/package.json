@@ -41,7 +41,7 @@
   "devDependencies": {
     "@adobe/swc-tokens": "workspace:*",
     "@types/node": "25.2.3",
-    "@types/vscode": "1.109.0",
+    "@types/vscode": "1.100.0",
     "esbuild": "0.27.3",
     "typescript": "5.9.2",
     "vitest": "4.0.15",
@@ -49,7 +49,7 @@
   },
   "displayName": "SWC token() Intellisense",
   "engines": {
-    "vscode": "^1.109.0"
+    "vscode": "^1.100.0"
   },
   "homepage": "https://opensource.adobe.com/spectrum-web-components/",
   "icon": "resources/icon.png",

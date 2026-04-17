@@ -12,6 +12,7 @@
 
 import { LitElement, ReactiveElement } from 'lit';
 
+import { getActiveElement } from '../utils/get-active-element.js';
 import { coreVersion, version } from './version.js';
 
 type Constructor<T = Record<string, unknown>> = {
@@ -38,39 +39,11 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
      * @internal
      */
     public hasVisibleFocusInTree(): boolean {
-      const getAncestors = (root: Document = document): HTMLElement[] => {
-        let currentNode = root.activeElement as HTMLElement;
-        while (
-          currentNode?.shadowRoot &&
-          currentNode.shadowRoot.activeElement
-        ) {
-          currentNode = currentNode.shadowRoot.activeElement as HTMLElement;
-        }
-        const ancestors: HTMLElement[] = currentNode ? [currentNode] : [];
-        while (currentNode) {
-          const ancestor =
-            currentNode.assignedSlot ||
-            currentNode.parentElement ||
-            (currentNode.getRootNode() as ShadowRoot)?.host;
-          if (ancestor) {
-            ancestors.push(ancestor as HTMLElement);
-          }
-          currentNode = ancestor as HTMLElement;
-        }
-        return ancestors;
-      };
-      const activeElement = getAncestors(this.getRootNode() as Document)[0];
-      if (!activeElement) {
-        return false;
-      }
-      // Browsers without support for the `:focus-visible`
-      // selector will throw on the following test (Safari, older things).
-      // Some won't throw, but will be focusing item rather than the menu and
-      // will rely on the polyfill to know whether focus is "visible" or not.
-      return (
-        activeElement.matches(':focus-visible') ||
-        activeElement.matches('.focus-visible')
+      const active = getActiveElement(
+        this.getRootNode() as Document | ShadowRoot
       );
+
+      return active?.matches(':focus-visible') ?? false;
     }
   }
   return SpectrumMixinElement;
