@@ -110,6 +110,20 @@ export const HeadingSlotInvalidElementWarningTest: Story = {
 
     await step('warns when heading slot contains a non-heading element', () =>
       withWarningSpy(async (warnCalls) => {
+        const headingSlot =
+          illustratedMessage.shadowRoot?.querySelector<HTMLSlotElement>(
+            'slot[name="heading"]'
+          );
+        if (!headingSlot) {
+          return;
+        }
+
+        const slotChanged = new Promise<void>((resolve) =>
+          headingSlot.addEventListener('slotchange', () => resolve(), {
+            once: true,
+          })
+        );
+
         // Replace the slotted element to trigger slotchange
         const div = document.createElement('div');
         div.setAttribute('slot', 'heading');
@@ -117,6 +131,8 @@ export const HeadingSlotInvalidElementWarningTest: Story = {
 
         illustratedMessage.querySelector('[slot="heading"]')?.remove();
         illustratedMessage.appendChild(div);
+
+        await slotChanged;
 
         expect(
           warnCalls.length,

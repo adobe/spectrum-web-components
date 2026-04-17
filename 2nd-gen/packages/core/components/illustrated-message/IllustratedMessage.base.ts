@@ -74,16 +74,14 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
-    if (window.__swc?.DEBUG) {
-      const headingSlot = this.shadowRoot?.querySelector<HTMLSlotElement>(
-        'slot[name="heading"]'
+    const headingSlot = this.shadowRoot?.querySelector<HTMLSlotElement>(
+      'slot[name="heading"]'
+    );
+    if (headingSlot) {
+      headingSlot.addEventListener('slotchange', () =>
+        this.warnInvalidHeadingSlot(headingSlot)
       );
-      if (headingSlot) {
-        headingSlot.addEventListener('slotchange', () =>
-          this.warnInvalidHeadingSlot(headingSlot)
-        );
-        this.warnInvalidHeadingSlot(headingSlot);
-      }
+      this.warnInvalidHeadingSlot(headingSlot);
     }
   }
 
@@ -117,6 +115,9 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
   }
 
   private warnInvalidHeadingSlot(headingSlot: HTMLSlotElement): void {
+    if (!window.__swc?.DEBUG) {
+      return;
+    }
     for (const el of headingSlot.assignedElements()) {
       if (!['H2', 'H3', 'H4', 'H5', 'H6'].includes(el.tagName)) {
         window.__swc?.warn(
