@@ -11,6 +11,8 @@ description: Phase 3 of 1st-gen to 2nd-gen component migration. Use to move prop
 
 You are defining a contract, not writing logic. Every property and type you place here is a public commitment. Put shared things in core, generation-specific things in SWC, and mark anything temporary with a `@todo`. If you are unsure where something belongs, ask the user, and/or use the `ask-questions` skill.
 
+Read the approved migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` before changing the API. Treat its `Changes overview`, `2nd-gen API decisions`, `Blockers and open questions`, and `Migration checklist` as the planning baseline for names, deprecations, breaking changes, and consumer migration paths.
+
 ## When to use this skill
 
 - Phase 2 (migration-setup) is complete and the file structure exists
@@ -34,3 +36,5 @@ You are defining a contract, not writing logic. Every property and type you plac
 ## Workflow
 
 Follow **[Phase 3: API Migration](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-3-api-migration)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
+
+If implementation needs to deviate from the migration plan, do not silently proceed. Call out the drift, recommend whether to update the plan or the code, and align with the user before locking in a different API.
