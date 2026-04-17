@@ -9,5 +9,9 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+export * from './Tab.base.js';
+export * from './Tab.types.js';
+export * from './TabPanel.base.js';
+export * from './TabPanel.types.js';
 export * from './Tabs.base.js';
 export * from './Tabs.types.js';

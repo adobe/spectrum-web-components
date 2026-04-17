@@ -11,12 +11,20 @@
  */
 import { defineElement } from '@spectrum-web-components/core/element/index.js';
 
+import { Tab } from './Tab.js';
+import { TabPanel } from './TabPanel.js';
 import { Tabs } from './Tabs.js';
 
+export * from './Tab.js';
+export * from './TabPanel.js';
 export * from './Tabs.js';
 declare global {
   interface HTMLElementTagNameMap {
+    'swc-tab': Tab;
+    'swc-tab-panel': TabPanel;
     'swc-tabs': Tabs;
   }
 }
+defineElement('swc-tab', Tab);
+defineElement('swc-tab-panel', TabPanel);
 defineElement('swc-tabs', Tabs);

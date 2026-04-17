@@ -11,7 +11,7 @@
  */
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { TabPanelBase } from '@spectrum-web-components/core/components/tab-panel';
+import { TabPanelBase } from '@spectrum-web-components/core/components/tabs';
 
 import styles from './tab-panel.css';
 

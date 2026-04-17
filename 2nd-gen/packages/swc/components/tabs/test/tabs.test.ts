@@ -13,12 +13,8 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Tab } from '@adobe/spectrum-wc/tab';
-import { TabPanel } from '@adobe/spectrum-wc/tab-panel';
-import { Tabs } from '@adobe/spectrum-wc/tabs';
+import { Tab, TabPanel, Tabs } from '@adobe/spectrum-wc/tabs';
 
-import '@adobe/spectrum-wc/tab';
-import '@adobe/spectrum-wc/tab-panel';
 import '@adobe/spectrum-wc/tabs';
 
 import { TABS_DIRECTIONS } from '../../../../core/components/tabs/Tabs.types.js';

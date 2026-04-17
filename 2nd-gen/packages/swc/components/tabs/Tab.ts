@@ -11,7 +11,7 @@
  */
 import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 
-import { TabBase } from '@spectrum-web-components/core/components/tab';
+import { TabBase } from '@spectrum-web-components/core/components/tabs';
 
 import styles from './tab.css';
 

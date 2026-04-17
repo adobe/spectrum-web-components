@@ -34,10 +34,8 @@ import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
 
-// After
+// After (single import registers all three elements)
 import '@adobe/spectrum-wc/tabs';
-import '@adobe/spectrum-wc/tab';
-import '@adobe/spectrum-wc/tab-panel';
 ```
 
 ---

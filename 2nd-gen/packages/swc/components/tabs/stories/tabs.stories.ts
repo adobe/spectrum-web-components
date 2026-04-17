@@ -15,8 +15,6 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '@adobe/spectrum-wc/tabs';
-import '@adobe/spectrum-wc/tab';
-import '@adobe/spectrum-wc/tab-panel';
 
 import {
   TABS_DIRECTIONS,
