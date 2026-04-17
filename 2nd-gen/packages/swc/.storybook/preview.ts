@@ -215,6 +215,8 @@ const preview = {
         order: [
           'Learn about SWC',
           ['Overview', 'When to use SWC', '1st-gen vs 2nd-gen'],
+          'Core',
+          ['Overview', 'Controllers'],
           'Components',
           'Guides',
           [
@@ -255,6 +257,7 @@ const preview = {
               'Using stackblitz',
               '2nd-gen testing',
               'Tools vs packages',
+              'Focus management',
             ],
             'Style guide',
             [
@@ -422,6 +425,8 @@ const preview = {
                 ['Rendering and styling migration analysis'],
               ],
               'Milestones',
+              'Strategies',
+              ['Focus management strategy rfc'],
             ],
           ],
           // GENERATED:CONTRIBUTOR-DOCS-SORT-END
