@@ -1286,9 +1286,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
       assignedElements.forEach((item) => {
         if (typeof item.triggerUpdate !== 'undefined') {
           item.triggerUpdate();
-        } else if (
-          typeof this.asMenu(item).childItems !== 'undefined'
-        ) {
+        } else if (typeof this.asMenu(item).childItems !== 'undefined') {
           this.asMenu(item).childItems.forEach((child) => {
             child.triggerUpdate();
           });
@@ -1322,7 +1320,8 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
       </div>
       ${hasMobileSubmenu
         ? html`
-            <div class="mobile-submenu-animation-wrapper"
+            <div
+              class="mobile-submenu-animation-wrapper"
               role="region"
               aria-live="polite"
             >
