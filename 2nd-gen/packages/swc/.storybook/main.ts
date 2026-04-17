@@ -9,32 +9,13 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import postcssToken from '@adobe/postcss-token';
 import { readCsf } from '@storybook/core/csf-tools';
 import type { Indexer } from '@storybook/types';
 import type { StorybookConfig } from '@storybook/web-components-vite';
-import autoprefixer from 'autoprefixer';
 import { dirname, resolve } from 'path';
-import postcssPresetEnv from 'postcss-preset-env';
 import remarkGfm from 'remark-gfm';
 import { fileURLToPath } from 'url';
 import { mergeConfig } from 'vite';
-
-const postcssPlugins = [
-  postcssToken({ prefix: 'swc' }),
-  autoprefixer(),
-  postcssPresetEnv({
-    stage: 2,
-    features: {
-      'nesting-rules': false,
-      'custom-properties': false,
-      'light-dark-function': false,
-      'logical-properties-and-values': false,
-      'is-pseudo-class': false,
-      'cascade-layers': false,
-    },
-  }),
-];
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 type StorybookMode = 'dev' | 'build' | 'ci-a11y';
@@ -172,9 +153,6 @@ const config: StorybookConfig = {
     return mergeConfig(config, {
       css: {
         transformer: 'postcss',
-        postcss: {
-          plugins: postcssPlugins,
-        },
       },
       build: {
         cssMinify: 'esbuild',

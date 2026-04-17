@@ -117,6 +117,7 @@ export default defineConfig({
       },
     },
     target: 'es2018',
+    cssMinify: 'esbuild',
     sourcemap: true,
     emptyOutDir: true,
     outDir: 'dist',
