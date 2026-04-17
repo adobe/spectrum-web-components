@@ -221,10 +221,10 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 
 #### Migration — phase 1: prep (`migration-prep`)
 
-- **purpose**: Understand the component, plan breaking changes, and define scope before any refactoring begins
-- **How to invoke**: Say "start migration prep for [component]", "plan the migration for [component]", or "phase 1 migration for [component]"
+- **purpose**: Understand the component, critically assess the current API and behavior, plan breaking changes, and define migration scope before any refactoring begins
+- **How to invoke**: Say "start migration prep for [component]", "plan the migration for [component]", "create a migration plan for [component]", "draft the Phase 1 plan for [component]", or "phase 1 migration for [component]"
 - Use when: Beginning a 1st-gen → 2nd-gen component migration; before any files are created or code is moved
-- Provides: Research checklist (1st-gen API, usage, tests), breaking-change analysis, scope definition, written plan for review
+- Provides: Template-backed migration plan workflow, research checklist (1st-gen API, usage, tests, analyses, React/Figma references), breaking-change analysis, source-confidence and contradiction checks, path/link verification, and staff-level API/naming review with explicit escalation for inconsistencies
 
 #### Migration — phase 2: setup (`migration-setup`)
 
