@@ -27,11 +27,18 @@ import styles from './conversation-turn.css';
  * User-message widths are applied by layout context (full screen, split rail,
  * panel) while system content remains full width.
  *
+ * The inner layout root is exposed as **`role="group"`** with an **`aria-label`**
+ * derived from **`type`** (**"User message"** / **"Assistant message"**) so assistive
+ * technology can distinguish user turns from assistant turns, not only alignment.
+ *
  * @element swc-conversation-turn
  * @slot - Turn body (message stack or bubble)
  */
 export class ConversationTurn extends SpectrumElement {
-  /** `user` — end-aligned; `system` — start-aligned, full width of the column. */
+  /**
+   * `user` — end-aligned; `system` — start-aligned, full width of the column.
+   * Drives the accessible name of the turn (`User message` vs `Assistant message`).
+   */
   @property({ type: String, reflect: true })
   public type: 'system' | 'user' = 'user';
 
@@ -39,9 +46,17 @@ export class ConversationTurn extends SpectrumElement {
     return [styles];
   }
 
+  private get _turnAriaLabel(): string {
+    return this.type === 'user' ? 'User message' : 'Assistant message';
+  }
+
   protected override render(): TemplateResult {
     return html`
-      <div class="swc-ConversationTurn">
+      <div
+        class="swc-ConversationTurn"
+        role="group"
+        aria-label=${this._turnAriaLabel}
+      >
         <slot></slot>
       </div>
     `;

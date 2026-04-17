@@ -108,6 +108,42 @@ export const Overview: Story = {
   tags: ['overview'],
 };
 
+// ────────────────────────────────
+//    ACCESSIBILITY STORY
+// ────────────────────────────────
+
+/**
+ * ### Features
+ *
+ * Each `<swc-conversation-turn>` exposes a single **`role="group"`** landmark in
+ * the shadow tree with **`aria-label`** set from **`type`**:
+ *
+ * - **`type="user"`** → **"User message"**
+ * - **`type="system"`** → **"Assistant message"** (assistant / system reply, not the end user)
+ *
+ * Sighted users infer the speaker from alignment; this label gives screen reader
+ * users the same turn context before the slotted message content is read.
+ */
+export const Accessibility: Story = {
+  render: () => html`
+    <div
+      style="display:flex;flex-direction:column;gap:16px;max-inline-size:600px;"
+    >
+      <swc-conversation-turn type="user">
+        <swc-user-message>Example user text.</swc-user-message>
+      </swc-conversation-turn>
+      <swc-conversation-turn type="system">
+        <swc-system-message>
+          <div class="swc-conversationalAi-systemProse">
+            <p>Example assistant reply.</p>
+          </div>
+        </swc-system-message>
+      </swc-conversation-turn>
+    </div>
+  `,
+  tags: ['a11y'],
+};
+
 // ──────────────────────────────────────────
 //    FULL PATTERN STORY
 // ──────────────────────────────────────────

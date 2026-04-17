@@ -83,7 +83,6 @@ export class ResponseStatus extends SpectrumElement {
         <span
           class="swc-ResponseStatus-loadingSlot"
           role="status"
-          aria-label=${label}
         >
           <swc-progress-circle
             size="s"

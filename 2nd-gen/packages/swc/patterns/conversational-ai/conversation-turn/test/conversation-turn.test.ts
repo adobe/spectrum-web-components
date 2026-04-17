@@ -44,5 +44,24 @@ export const OverviewTest: Story = {
       await first.updateComplete;
       expect(first.getAttribute('type')).toBe('system');
     });
+
+    await step(
+      'turn exposes role group and aria-label for screen readers',
+      async () => {
+        first.type = 'user';
+        await first.updateComplete;
+        const root = first.shadowRoot?.querySelector('.swc-ConversationTurn');
+        expect(root).toBeTruthy();
+        expect(root?.getAttribute('role')).toBe('group');
+        expect(root?.getAttribute('aria-label')).toBe('User message');
+
+        first.type = 'system';
+        await first.updateComplete;
+        const rootAfter = first.shadowRoot?.querySelector(
+          '.swc-ConversationTurn'
+        );
+        expect(rootAfter?.getAttribute('aria-label')).toBe('Assistant message');
+      }
+    );
   },
 };

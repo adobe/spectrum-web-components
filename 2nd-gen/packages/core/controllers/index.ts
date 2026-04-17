@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+export { FocusGroupController, type FocusGroupConfig } from './focus-group.js';
 export {
   LanguageResolutionController,
   languageResolverUpdatedSymbol,

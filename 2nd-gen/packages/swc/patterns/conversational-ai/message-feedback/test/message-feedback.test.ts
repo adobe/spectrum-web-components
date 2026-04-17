@@ -114,3 +114,54 @@ export const InteractionTest: Story = {
     );
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Keyboard (FocusGroupController)
+// ──────────────────────────────────────────────────────────────
+
+export const KeyboardNavigationTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<MessageFeedback>(
+      canvasElement,
+      'swc-message-feedback'
+    );
+
+    await step(
+      'ArrowRight from first option emits swc-feedback for negative',
+      async () => {
+        const events: Array<string> = [];
+        el.addEventListener('swc-feedback', ((event: Event) => {
+          const customEvent = event as CustomEvent<{ status: string }>;
+          events.push(customEvent.detail.status);
+        }) as EventListener);
+
+        el.focus();
+        await el.updateComplete;
+
+        await userEvent.keyboard('{ArrowRight}');
+        await el.updateComplete;
+
+        expect(events.at(-1)).toBe('negative');
+      }
+    );
+
+    await step(
+      'ArrowLeft wraps to positive and emits swc-feedback',
+      async () => {
+        const events: Array<string> = [];
+        el.addEventListener('swc-feedback', ((event: Event) => {
+          const customEvent = event as CustomEvent<{ status: string }>;
+          events.push(customEvent.detail.status);
+        }) as EventListener);
+
+        el.focus();
+        await el.updateComplete;
+        await userEvent.keyboard('{ArrowLeft}');
+        await el.updateComplete;
+
+        expect(events.at(-1)).toBe('positive');
+      }
+    );
+  },
+};

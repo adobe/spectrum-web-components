@@ -11,6 +11,7 @@
  */
 
 import { html } from 'lit';
+import { ref } from 'lit/directives/ref.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -138,6 +139,80 @@ export const Status: Story = {
   tags: ['options'],
 };
 
+// ──────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────
+
+const wiredSwcFeedbackDemos = new WeakSet<Element>();
+
+/**
+ * Event handlers can be registered on `<swc-message-feedback>` (or on an
+ * ancestor, because **`swc-feedback`** **bubbles** and is **`composed`**).
+ *
+ * Each click dispatches **`swc-feedback`** with **`event.detail.status`**
+ * set to **`'positive'`** or **`'negative'`**. The host does not apply that
+ * value by itself: keep **`status`** controlled from your layer—set
+ * **`feedback.status`** (or the `status` attribute) when you handle the
+ * event, the same way you would wire **`change`** on
+ * [`sp-radio-group`](https://opensource.adobe.com/spectrum-web-components/components/radio-group/#behaviors).
+ *
+ * ```js
+ * feedback.addEventListener('swc-feedback', (event) => {
+ *   const { status } = event.detail;
+ *   feedback.status = status;
+ * });
+ * ```
+ */
+export const HandlingEvents: Story = {
+  render: () => {
+    const wireDemo = ref((readout: Element | undefined) => {
+      if (!(readout instanceof HTMLElement)) {
+        return;
+      }
+      const root = readout.closest('[data-swc-message-feedback-behavior]');
+      const feedback = root?.querySelector('swc-message-feedback');
+      if (
+        !(feedback instanceof HTMLElement) ||
+        wiredSwcFeedbackDemos.has(feedback)
+      ) {
+        return;
+      }
+      wiredSwcFeedbackDemos.add(feedback);
+      readout.textContent =
+        'Click a thumb. The handler below listens for swc-feedback and sets .status on the host.';
+
+      feedback.addEventListener('swc-feedback', (event: Event) => {
+        const { status } = (event as CustomEvent<{ status: 'positive' | 'negative' }>)
+          .detail;
+        (feedback as HTMLElement & { status?: string }).status = status;
+        readout.textContent = `Last swc-feedback: detail.status = "${status}" (mirrored to host .status).`;
+      });
+    });
+
+    return html`
+      <div
+        data-swc-message-feedback-behavior
+        style="display:flex;flex-direction:column;gap:16px;max-inline-size:480px;"
+      >
+        <swc-message-feedback></swc-message-feedback>
+        <p
+          ${wireDemo}
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-800);margin:0;"
+        ></p>
+        <p
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-50);color:var(--swc-gray-600);margin:0;"
+        >
+          In production you would persist the choice, call an API, or update app
+          state instead of only echoing the event here.
+        </p>
+      </div>
+    `;
+  },
+  parameters: { 'section-order': 1 },
+  tags: ['behaviors'],
+  storyName: 'Handling events',
+};
+
 // ────────────────────────────────
 //    ACCESSIBILITY STORY
 // ────────────────────────────────
@@ -152,6 +227,12 @@ export const Status: Story = {
  * - The group uses `role="radiogroup"` with `aria-label="Response feedback"`
  * - Each option uses `role="radio"` with `aria-checked` to communicate selection
  * - Each option carries a descriptive label: "Positive response" / "Negative response"
+ *
+ * #### Keyboard
+ *
+ * - **Tab** moves focus into the group on a single tab stop (**roving `tabindex`** on the two controls)
+ * - **Arrow Left** / **Arrow Right** move focus and dispatch **`swc-feedback`** for the newly focused option (radio authoring practice)
+ * - **Home** / **End** move to the first or last option, respectively, and dispatch **`swc-feedback`** for that option
  */
 export const Accessibility: Story = {
   args: {},

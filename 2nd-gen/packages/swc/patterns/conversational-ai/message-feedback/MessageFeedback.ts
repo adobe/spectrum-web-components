@@ -10,9 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
+import { FocusGroupController } from '@spectrum-web-components/core/controllers/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 import '@adobe/spectrum-wc/icon';
@@ -23,6 +24,9 @@ import styles from './message-feedback.css';
 
 /**
  * Binary positive / negative feedback control for AI responses.
+ *
+ * Arrow keys use `FocusGroupController` (horizontal) so focus and selection
+ * follow the radiogroup pattern (roving `tabindex` on the two buttons).
  *
  * @element swc-message-feedback
  * @fires {CustomEvent} swc-feedback - Dispatched when the user selects positive or negative feedback.
@@ -39,8 +43,56 @@ export class MessageFeedback extends SpectrumElement {
   @property({ type: String, reflect: true })
   public status?: 'positive' | 'negative';
 
+  private focusGroupController = new FocusGroupController<HTMLButtonElement>(
+    this,
+    {
+      direction: 'horizontal',
+      elements: () => this._feedbackButtons(),
+      focusInIndex: (elements) => {
+        if (this.status === 'negative' && elements.length > 1) {
+          return 1;
+        }
+        return 0;
+      },
+      elementEnterAction: (el) => {
+        el.click();
+      },
+      stopKeyEventPropagation: true,
+    }
+  );
+
   public static override get styles(): CSSResultArray {
     return [styles];
+  }
+
+  public override focus(options?: FocusOptions): void {
+    this.focusGroupController.focus(options);
+  }
+
+  private _feedbackButtons(): HTMLButtonElement[] {
+    const root = this.renderRoot as ShadowRoot | undefined;
+    if (!root) {
+      return [];
+    }
+    return Array.from(
+      root.querySelectorAll<HTMLButtonElement>('.swc-MessageFeedback-button')
+    );
+  }
+
+  protected override firstUpdated(
+    changedProperties: PropertyValues<this>
+  ): void {
+    super.firstUpdated(changedProperties);
+    this.focusGroupController.clearElementCache();
+    this.focusGroupController.reset();
+  }
+
+  protected override updated(changedProperties: PropertyValues<this>): void {
+    super.updated(changedProperties);
+    if (changedProperties.has('status')) {
+      this.focusGroupController.clearElementCache();
+      this.focusGroupController.reset();
+    }
   }
 
   private _handlePositive(): void {
