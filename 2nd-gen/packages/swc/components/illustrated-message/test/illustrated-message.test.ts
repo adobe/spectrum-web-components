@@ -45,7 +45,8 @@ export const OverviewTest: Story = {
     );
 
     await step('consumer owns the heading element in light DOM', async () => {
-      const headingInLight = illustratedMessage.querySelector('[slot="heading"]');
+      const headingInLight =
+        illustratedMessage.querySelector('[slot="heading"]');
       expect(headingInLight, 'heading element in light DOM').not.toBeNull();
 
       const headingInShadow = illustratedMessage.shadowRoot?.querySelector(
@@ -109,8 +110,13 @@ export const HeadingSlotInvalidElementWarningTest: Story = {
 
     await step('warns when heading slot contains a non-heading element', () =>
       withWarningSpy(async (warnCalls) => {
-        illustratedMessage.requestUpdate();
-        await illustratedMessage.updateComplete;
+        // Replace the slotted element to trigger slotchange
+        const div = document.createElement('div');
+        div.setAttribute('slot', 'heading');
+        div.textContent = 'Not a heading';
+
+        illustratedMessage.querySelector('[slot="heading"]')?.remove();
+        illustratedMessage.appendChild(div);
 
         expect(
           warnCalls.length,
