@@ -1491,23 +1491,10 @@ export class Picker extends SizedMixin(ExpandableElement, {
   }
 
   /**
-   * Handles Escape key press to close the picker overlay.
-   *
-   * @param event - The keyboard event
-   */
-  protected handleEscape = (
-    event: MenuItemKeydownEvent | KeyboardEvent
-  ): void => {
-    if (event.key === 'Escape' && this.open) {
-      event.stopPropagation();
-      event.preventDefault();
-      this.toggle(false);
-    }
-  };
-
-  /**
    * Enhanced keyboard handler that supports arrow key navigation to cycle
    * through options without opening the menu (in addition to base navigation).
+   *
+   * Escape is handled natively by `popover="auto"` light dismiss.
    *
    * @param event - The keyboard event
    */
@@ -1520,7 +1507,6 @@ export class Picker extends SizedMixin(ExpandableElement, {
       'ArrowRight',
       'Enter',
       ' ',
-      'Escape',
     ].includes(key);
     const openKeys = ['ArrowUp', 'ArrowDown', 'Enter', ' '].includes(key);
     const arrowKeys = [
@@ -1530,10 +1516,6 @@ export class Picker extends SizedMixin(ExpandableElement, {
       'ArrowRight',
     ].includes(key);
     this.focused = true;
-    if ('Escape' === key) {
-      this.handleEscape(event);
-      return;
-    }
     if (!handledKeys || this.readonly || this.pending) {
       return;
     }
@@ -1903,15 +1885,29 @@ export class Picker extends SizedMixin(ExpandableElement, {
     return html`
       <sp-popover
         id="popover"
-        popover="manual"
+        popover="auto"
         role="presentation"
         style=${styleMap(this.containerStyles)}
         placement=${this.placement}
+        @toggle=${this.handleNativeToggle}
       >
         ${accessibleMenu}
       </sp-popover>
     `;
   }
+
+  /**
+   * Syncs `this.open` with the browser's native popover state.
+   * Fires when the invoker toggles it, when light dismiss closes it,
+   * or when we call showPopover()/hidePopover() ourselves.
+   */
+  private handleNativeToggle = (event: Event): void => {
+    const toggleEvent = event as ToggleEvent;
+    const isOpen = toggleEvent.newState === 'open';
+    if (isOpen !== this.open) {
+      this.open = isOpen;
+    }
+  };
 
   /**
    * Show/hide the native popover, sync sp-popover.open, and
@@ -1999,24 +1995,16 @@ export class Picker extends SizedMixin(ExpandableElement, {
     }
   }
 
-  /** Click outside → close. */
-  private handleLightDismiss = (event: Event): void => {
-    if (!this.open) {
-      return;
-    }
-    if (!event.composedPath().includes(this)) {
-      this.close();
-      this.button?.focus();
-    }
-  };
-
   /**
-   * Pointerdown-to-open enables click-and-drag item selection.
-   * A flag prevents the subsequent click from re-closing.
+   * Native toggling is handled by the button's `popovertarget` attribute
+   * (fires on click) and `popover="auto"` handles click-outside/Escape.
+   *
+   * To additionally support press-and-drag-to-select (press button, drag
+   * into menu, release on item), we open on `pointerdown` ourselves and
+   * then suppress the subsequent click so the browser's invoker activation
+   * doesn't immediately toggle the popover back closed.
    */
   public override bindEvents(): void {
-    let openedViaPointerdown = false;
-
     this.button?.addEventListener('pointerdown', (event: PointerEvent) => {
       if (
         event.button !== 0 ||
@@ -2027,23 +2015,19 @@ export class Picker extends SizedMixin(ExpandableElement, {
         return;
       }
       if (!this.open) {
-        openedViaPointerdown = true;
         this.toggle(true);
+        // Suppress the next click so the browser's popovertarget activation
+        // doesn't toggle the popover back closed.
+        this.button?.addEventListener(
+          'click',
+          (clickEvent: MouseEvent) => {
+            clickEvent.preventDefault();
+            clickEvent.stopImmediatePropagation();
+          },
+          { once: true, capture: true }
+        );
       }
     });
-
-    this.button?.addEventListener('click', () => {
-      if (this.disabled || this.readonly || this.pending) {
-        return;
-      }
-      if (openedViaPointerdown) {
-        openedViaPointerdown = false;
-        return;
-      }
-      this.toggle();
-    });
-
-    document.addEventListener('pointerdown', this.handleLightDismiss);
   }
 
   /** Work without InteractionController. */
@@ -2079,6 +2063,7 @@ export class Picker extends SizedMixin(ExpandableElement, {
         aria-haspopup="true"
         aria-labelledby="icon label applied-label pending-label"
         id="button"
+        popovertarget="popover"
         class=${ifDefined(
           this.labelAlignment ? `label-${this.labelAlignment}` : undefined
         )}
@@ -2269,7 +2254,6 @@ export class Picker extends SizedMixin(ExpandableElement, {
         .selected=${this.value ? [this.value] : []}
         .shouldSupportDragAndSelect=${!this.isTouchDevice.matches}
         size=${this.size}
-        @sp-menu-item-keydown=${this.handleEscape}
         @sp-menu-item-added-or-updated=${this.shouldManageSelection}
       >
         <slot @slotchange=${this.shouldScheduleManageSelection}></slot>
