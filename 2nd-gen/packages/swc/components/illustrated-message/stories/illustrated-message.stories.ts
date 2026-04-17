@@ -15,9 +15,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { IllustratedMessage } from '@adobe/spectrum-wc/illustrated-message';
-
-import '../../icon';
+import '@adobe/spectrum-wc/illustrated-message';
 
 // ────────────────
 //    METADATA
@@ -27,28 +25,14 @@ const { args, argTypes, template } = getStorybookHelpers(
   'swc-illustrated-message'
 );
 
-argTypes['heading-level'] = {
-  ...argTypes['heading-level'],
-  control: { type: 'select' },
-  options: IllustratedMessage.VALID_HEADING_LEVELS,
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: '2' },
-  },
-};
-
 /**
  * An illustrated message displays an illustration and a message, typically
  * used in empty states or error pages.
  *
  * ### Heading level
  *
- * The `heading-level` attribute controls the semantic heading level rendered
- * in shadow DOM (`h2`–`h6`) to match the document outline. It does not affect
- * the visual appearance — all levels render at the same size.
- *
- * Set `heading-level` based on the heading hierarchy of the page, not visual
- * preference.
+ * Provide the appropriate `<h2>`–`<h6>` element directly in the `heading`
+ * slot to match the document outline. The component does not control the heading level.
  */
 export const meta: Meta = {
   title: 'Illustrated Message',
@@ -84,7 +68,7 @@ const cloudIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="95" height="95
 
 const defaultSlots = html`
   <span slot="">${unsafeHTML(cloudIcon)}</span>
-  <span slot="heading">Illustrated message title</span>
+  <h2 slot="heading">Illustrated message title</h2>
   <span slot="description">
     Illustrated message description. Give more information about what a user can
     do, expect, or how to make items appear.
@@ -102,23 +86,6 @@ export const Overview: Story = {
 };
 
 /**
- * The `heading-level` attribute controls the semantic heading level rendered
- * in shadow DOM (`h2`–`h6`) to match the document outline. It does not affect
- * the visual appearance — all levels render at the same size.
- *
- * Set `heading-level` based on the heading hierarchy of the page, not visual
- * preference.
- */
-export const HeadingLevels: Story = {
-  render: (args) => html`
-    ${IllustratedMessage.VALID_HEADING_LEVELS.map((level) =>
-      template({ ...args, 'heading-level': level }, defaultSlots)
-    )}
-  `,
-  tags: ['options'],
-};
-
-/**
  * SVGs slotted into the illustration slot should declare their accessibility
  * intent explicitly:
  *
@@ -133,7 +100,7 @@ export const IllustrationAccessibility: Story = {
       args,
       html`
         <span slot="">${unsafeHTML(cloudIcon)}</span>
-        <span slot="heading">Illustrated message title</span>
+        <h2 slot="heading">Illustrated message title</h2>
         <span slot="description">
           The icon above uses
           <code>aria-hidden="true"</code>
@@ -146,7 +113,7 @@ export const IllustrationAccessibility: Story = {
       args,
       html`
         <span slot="">${unsafeHTML(cloudIcon)}</span>
-        <span slot="heading">Illustrated message title</span>
+        <h2 slot="heading">Illustrated message title</h2>
         <span slot="description">
           The icon above uses
           <code>role="img"</code>
