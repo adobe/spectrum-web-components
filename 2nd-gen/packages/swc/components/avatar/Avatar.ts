@@ -36,6 +36,10 @@ import styles from './avatar.css';
  * <swc-avatar src="/path/to/image.jpg" alt="Jane Doe" outline></swc-avatar>
  */
 export class Avatar extends AvatarBase {
+  // ──────────────────────────────
+  //     RENDERING & STYLING
+  // ──────────────────────────────
+
   public static override get styles(): CSSResultArray {
     return [styles];
   }

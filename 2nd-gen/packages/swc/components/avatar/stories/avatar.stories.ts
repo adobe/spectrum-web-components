@@ -73,9 +73,9 @@ export default {
   excludeStories: ['meta'],
 } as Meta;
 
-// ────────────────
-//    STORIES
-// ────────────────
+// ────────────────────
+//    HELPERS
+// ────────────────────
 
 const PLACEHOLDER_SRC = 'https://picsum.photos/id/64/500/500';
 
@@ -86,18 +86,18 @@ const PLACEHOLDER_SRC = 'https://picsum.photos/id/64/500/500';
 // alt ?? '' guards against undefined produced by Storybook controls when
 // the user clears the alt field. Explicit stories use typed args that are always defined.
 export const Playground: Story = {
-  render: ({ src, alt, size, outline, disabled }) => html`
+  render: (args) => html`
     <div
-      style=${outline
+      style=${args.outline
         ? 'padding:16px;background:linear-gradient(to right,rgb(15,23,42),rgb(51,65,85));border-radius:8px;'
         : ''}
     >
       <swc-avatar
-        src=${src}
-        alt=${alt ?? ''}
-        size=${size}
-        ?outline=${outline}
-        ?disabled=${disabled}
+        src=${args.src}
+        alt=${args.alt ?? ''}
+        size=${args.size}
+        ?outline=${args.outline}
+        ?disabled=${args.disabled}
       ></swc-avatar>
     </div>
   `,
@@ -112,13 +112,11 @@ export const Playground: Story = {
 };
 
 // ──────────────────────────
-//    OVERVIEW STORY
+//    OVERVIEW STORIES
 // ──────────────────────────
 
 export const Overview: Story = {
-  render: ({ src, alt, size }) => html`
-    <swc-avatar src=${src} alt=${alt} size=${size}></swc-avatar>
-  `,
+  render: (args) => template({ ...args }),
   tags: ['overview'],
   args: {
     src: PLACEHOLDER_SRC,
@@ -143,9 +141,14 @@ export const Overview: Story = {
  * - `size`: Numeric size token (50–1500). Defaults to `500` (40 px).
  */
 export const Anatomy: Story = {
-  render: () => html`
-    <swc-avatar src=${PLACEHOLDER_SRC} alt="Jane Doe" size="500"></swc-avatar>
+  render: (args) => html`
+    <swc-avatar src=${args.src} alt=${args.alt} size=${args.size}></swc-avatar>
   `,
+  args: {
+    src: PLACEHOLDER_SRC,
+    alt: 'Jane Doe',
+    size: '500',
+  },
   tags: ['anatomy'],
 };
 
@@ -160,17 +163,20 @@ export const Anatomy: Story = {
  * The default size is `500` (40 px).
  */
 export const Sizes: Story = {
-  render: () => html`
+  render: (args) => html`
     ${AVATAR_VALID_SIZES.map(
       (size) => html`
         <swc-avatar
-          src=${PLACEHOLDER_SRC}
+          src=${args.src}
           alt="Jane Doe, size ${size}"
           size=${size}
         ></swc-avatar>
       `
     )}
   `,
+  args: {
+    src: PLACEHOLDER_SRC,
+  },
   parameters: {
     flexLayout: 'row-wrap',
     'section-order': 1,
@@ -186,15 +192,19 @@ export const Sizes: Story = {
  * (e.g., their name appears next to the avatar).
  */
 export const Decorative: Story = {
-  render: () => html`
+  render: (args) => html`
     <swc-avatar
-      src=${PLACEHOLDER_SRC}
+      src=${args.src}
       alt=""
-      size="500"
+      size=${args.size}
       decorative
     ></swc-avatar>
     Jane Doe
   `,
+  args: {
+    src: PLACEHOLDER_SRC,
+    size: '500',
+  },
   parameters: { 'section-order': 2 },
   tags: ['options'],
 };
@@ -211,15 +221,24 @@ export const Decorative: Story = {
  * migrated to 2nd-gen.
  */
 export const InActionButton: Story = {
-  render: () => html`
+  render: (args) => html`
     <button
       type="button"
       style="display:inline-flex;align-items:center;gap:8px;padding:4px 12px;cursor:pointer;"
     >
-      <swc-avatar src=${PLACEHOLDER_SRC} alt="Jane Doe" size="100"></swc-avatar>
+      <swc-avatar
+        src=${args.src}
+        alt=${args.alt}
+        size=${args.size}
+      ></swc-avatar>
       Jane Doe
     </button>
   `,
+  args: {
+    src: PLACEHOLDER_SRC,
+    alt: 'Jane Doe',
+    size: '100',
+  },
   tags: ['behaviors'],
 };
 
@@ -232,24 +251,28 @@ export const InActionButton: Story = {
  * defaults to `true` to visually separate stacked avatars.
  */
 export const Outline: Story = {
-  render: () => html`
+  render: (args) => html`
     <div
       style="display:inline-flex;gap:8px;align-items:center;padding:16px;background:linear-gradient(to right,rgb(15,23,42),rgb(51,65,85));border-radius:8px;"
     >
       <swc-avatar
-        src=${PLACEHOLDER_SRC}
-        alt="Jane Doe"
+        src=${args.src}
+        alt=${args.alt}
         size="500"
         outline
       ></swc-avatar>
       <swc-avatar
-        src=${PLACEHOLDER_SRC}
-        alt="Jane Doe"
+        src=${args.src}
+        alt=${args.alt}
         size="1000"
         outline
       ></swc-avatar>
     </div>
   `,
+  args: {
+    src: PLACEHOLDER_SRC,
+    alt: 'Jane Doe',
+  },
   parameters: { 'section-order': 3 },
   tags: ['options'],
 };
@@ -261,14 +284,19 @@ export const Outline: Story = {
  * accessibility tree — `disabled` is purely visual.
  */
 export const Disabled: Story = {
-  render: () => html`
+  render: (args) => html`
     <swc-avatar
-      src=${PLACEHOLDER_SRC}
-      alt="Jane Doe"
-      size="500"
+      src=${args.src}
+      alt=${args.alt}
+      size=${args.size}
       disabled
     ></swc-avatar>
   `,
+  args: {
+    src: PLACEHOLDER_SRC,
+    alt: 'Jane Doe',
+    size: '500',
+  },
   parameters: { 'section-order': 4 },
   tags: ['options'],
 };
@@ -294,9 +322,13 @@ export const Disabled: Story = {
  * - Keep alt text short and descriptive: prefer `"Jane Doe"` over `"Profile photo of Jane Doe"`
  */
 export const Accessibility: Story = {
-  render: () => html`
-    <swc-avatar src=${PLACEHOLDER_SRC} alt="Jane Doe" size="500"></swc-avatar>
-    <swc-avatar src=${PLACEHOLDER_SRC} alt="" size="500"></swc-avatar>
+  render: (args) => html`
+    <swc-avatar src=${args.src} alt="Jane Doe" size=${args.size}></swc-avatar>
+    <swc-avatar src=${args.src} alt="" size=${args.size}></swc-avatar>
   `,
+  args: {
+    src: PLACEHOLDER_SRC,
+    size: '500',
+  },
   tags: ['a11y'],
 };

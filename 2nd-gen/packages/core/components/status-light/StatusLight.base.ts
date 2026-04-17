@@ -16,7 +16,7 @@ import { SpectrumElement } from '@spectrum-web-components/core/element/index.js'
 import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
 
 import {
-  STATUSLIGHT_VALID_SIZES,
+  STATUS_LIGHT_VALID_SIZES,
   type StatusLightVariant,
 } from './StatusLight.types.js';
 
@@ -27,7 +27,7 @@ import {
  * @attribute {ElementSize} size - The size of the status light.
  */
 export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
-  validSizes: STATUSLIGHT_VALID_SIZES,
+  validSizes: STATUS_LIGHT_VALID_SIZES,
   noDefaultSize: true,
 }) {
   // ─────────────────────────
