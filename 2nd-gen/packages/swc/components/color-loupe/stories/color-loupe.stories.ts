@@ -24,14 +24,19 @@ const { events, args, argTypes, template } =
   getStorybookHelpers('swc-color-loupe');
 
 /**
- * A color loupe is a visual magnifier that displays the currently picked
- * color inside a teardrop-shaped container. It includes an opacity
- * checkerboard behind transparent colors and animated open/close
- * transitions. The loupe is a non-interactive companion to color
- * selection controls such as a color field or color slider.
+ * An `<swc-color-loupe>` shows the output color that would otherwise be
+ * covered by a cursor, stylus, or finger during color selection. It is a
+ * visual-only companion to color selection controls such as
+ * [Color Area](../?path=/docs/color-area--readme),
+ * [Color Slider](../?path=/docs/color-slider--readme), and
+ * [Color Wheel](../?path=/docs/color-wheel--readme).
+ *
+ * The loupe includes an opacity checkerboard behind transparent colors and
+ * animated open/close transitions. It is non-interactive — accessibility
+ * semantics are provided by the parent color component.
  */
 const meta: Meta = {
-  title: 'Color Loupe',
+  title: 'Color Components/Color Loupe',
   component: 'swc-color-loupe',
   args: {
     ...args,
@@ -43,7 +48,7 @@ const meta: Meta = {
   },
   parameters: {
     docs: {
-      subtitle: `Visual magnifier showing the picked color in a loupe shape`,
+      subtitle: `Visual magnifier showing the picked color during color selection`,
     },
     styles: {
       position: 'relative',
@@ -87,13 +92,13 @@ export const Overview: Story = {
 /**
  * ### Visual structure
  *
- * A color loupe consists of:
+ * A color loupe consists of two main parts:
  *
- * 1. **Opacity checkerboard** — a repeating pattern visible behind transparent colors
- * 2. **Color fill** — the picked color rendered over the checkerboard
- * 3. **Inner border** — a thin stroke separating color from the loupe edge
- * 4. **Outer border** — a wider stroke forming the loupe outline
- * 5. **Teardrop shape** — an SVG clip-path that defines the loupe silhouette
+ * 1. **Floating loupe element** — a teardrop-shaped container positioned above
+ *    the interaction point, formed by an SVG clip-path with an inner and outer border
+ * 2. **Color preview** — reflects the color currently sampled by the parent
+ *    color component, rendered over an opacity checkerboard that shows through
+ *    when the color has alpha transparency
  *
  * ### Technical structure
  *
@@ -101,8 +106,9 @@ export const Overview: Story = {
  *
  * #### Properties
  *
- * - **open**: Controls visibility with an animated transition
- * - **color**: CSS color string displayed inside the loupe
+ * - **open**: Controls visibility with animated CSS transitions on `opacity` and `transform`
+ * - **color**: CSS color string displayed inside the loupe; supports any valid format
+ *   including named colors, hex, `rgba()`, and `hsl()`
  */
 export const Anatomy: Story = {
   render: (args) => html`
@@ -118,6 +124,69 @@ export const Anatomy: Story = {
 };
 
 // ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+/**
+ * The `color` property accepts any valid CSS color string:
+ *
+ * - **Named colors**: `yellow`, `red`, `blue`, etc.
+ * - **Hex**: `#ff0000`
+ * - **RGB/RGBA**: `rgba(44, 62, 224, 0.81)` — alpha transparency reveals the checkerboard
+ * - **HSL**: `hsl(111, 82%, 56%)`
+ *
+ * When using transparent colors, the opacity checkerboard pattern shows through,
+ * giving a clear visual indication of the transparency level.
+ *
+ * All color formats shown below for comparison.
+ */
+export const Colors: Story = {
+  render: (args) => html`
+    <div
+      style="position: relative; min-block-size: 120px; display: flex; gap: 80px;"
+    >
+      <div style="position: relative; inline-size: 48px; block-size: 64px;">
+        ${template({ ...args, open: true, color: 'yellow' })}
+        <span
+          style="position: absolute; inset-block-end: -24px; white-space: nowrap; font-size: 12px;"
+        >
+          Named
+        </span>
+      </div>
+      <div style="position: relative; inline-size: 48px; block-size: 64px;">
+        ${template({ ...args, open: true, color: '#ff0000' })}
+        <span
+          style="position: absolute; inset-block-end: -24px; white-space: nowrap; font-size: 12px;"
+        >
+          Hex
+        </span>
+      </div>
+      <div style="position: relative; inline-size: 48px; block-size: 64px;">
+        ${template({ ...args, open: true, color: 'rgba(44, 62, 224, 0.81)' })}
+        <span
+          style="position: absolute; inset-block-end: -24px; white-space: nowrap; font-size: 12px;"
+        >
+          RGBA
+        </span>
+      </div>
+      <div style="position: relative; inline-size: 48px; block-size: 64px;">
+        ${template({ ...args, open: true, color: 'hsl(111, 82%, 56%)' })}
+        <span
+          style="position: absolute; inset-block-end: -24px; white-space: nowrap; font-size: 12px;"
+        >
+          HSL
+        </span>
+      </div>
+    </div>
+  `,
+  tags: ['options'],
+  parameters: {
+    flexLayout: true,
+    'section-order': 1,
+  },
+};
+
+// ──────────────────────────
 //    STATES STORIES
 // ──────────────────────────
 
@@ -128,7 +197,7 @@ export const Anatomy: Story = {
  * - **Closed** (default): Hidden via `opacity: 0` and a downward transform
  *
  * The transition between states is animated with CSS transitions on
- * `opacity` (125ms) and `transform` (100ms).
+ * `opacity` (125 ms) and `transform` (100 ms).
  */
 export const States: Story = {
   render: (args) => html`
@@ -164,32 +233,46 @@ export const States: Story = {
 // ──────────────────────────────
 
 /**
- * ### Color display
- *
- * The `color` property accepts any valid CSS color string. When the color
- * includes alpha transparency, the opacity checkerboard pattern shows
- * through, giving a visual indication of the transparency level.
- *
  * ### Parent-driven visibility
  *
- * The loupe is controlled by its parent component (typically a color
- * field or color area). The parent sets `open` to `true` when the user
- * is actively selecting a color and `false` when the interaction ends.
- * The loupe itself does not manage its own visibility state.
+ * The color loupe's `open` state is entirely managed by its parent color
+ * component — the loupe does not manage its own visibility:
+ *
+ * - **Touch input**: The loupe automatically appears during touch interactions
+ *   with any color component (`<swc-color-area>`, `<swc-color-slider>`,
+ *   `<swc-color-wheel>`) to prevent the finger from obscuring the selected color
+ * - **Mouse/stylus input**: The loupe remains hidden by default for precision
+ *   pointing devices
+ * - **Parent control**: The parent sets `open` to `true` when the user is actively
+ *   selecting a color and back to `false` when the interaction ends
+ *
+ * ### Open/close transition
+ *
+ * The loupe animates its visibility with CSS transitions:
+ *
+ * - `opacity` transitions over 125 ms
+ * - `transform` (vertical offset) transitions over 100 ms
  */
-export const ColorDisplay: Story = {
+export const ParentDrivenVisibility: Story = {
   render: (args) => html`
     <div
       style="position: relative; min-block-size: 120px; display: flex; gap: 80px;"
     >
       <div style="position: relative; inline-size: 48px; block-size: 64px;">
-        ${template({ ...args, open: true, color: 'rgb(255, 0, 0)' })}
+        ${template({ ...args, open: true, color: 'rgba(0, 200, 100, 0.8)' })}
+        <span
+          style="position: absolute; inset-block-end: -24px; white-space: nowrap; font-size: 12px;"
+        >
+          Touch active
+        </span>
       </div>
       <div style="position: relative; inline-size: 48px; block-size: 64px;">
-        ${template({ ...args, open: true, color: 'rgba(0, 128, 255, 0.5)' })}
-      </div>
-      <div style="position: relative; inline-size: 48px; block-size: 64px;">
-        ${template({ ...args, open: true, color: 'rgba(0, 200, 100, 0.3)' })}
+        ${template({ ...args, open: false, color: 'rgba(0, 200, 100, 0.8)' })}
+        <span
+          style="position: absolute; inset-block-end: -24px; white-space: nowrap; font-size: 12px;"
+        >
+          Idle
+        </span>
       </div>
     </div>
   `,
@@ -212,26 +295,27 @@ export const ColorDisplay: Story = {
  *
  * - **SVG is `aria-hidden="true"`**: The loupe graphic is decorative and
  *   hidden from the accessibility tree
- * - **Not focusable**: The component has no tab stop and no keyboard
- *   interaction
+ * - **Not focusable**: The component has no tab stop and no keyboard interaction
  *
  * #### Accessibility model
  *
  * The loupe does not represent a standalone accessible control.
  * Accessibility semantics (name, value, role) are provided by the
- * **parent** color selection component (e.g. color field, color area,
- * color slider). The loupe simply reflects the currently picked color
- * as a visual aid.
+ * **parent** color selection component — for example, `<swc-color-area>`,
+ * `<swc-color-slider>`, or `<swc-color-wheel>`. The loupe simply reflects
+ * the currently picked color as a visual aid during touch interactions.
  *
  * ### Best practices
  *
  * - Never use the color loupe as the sole means of communicating a color
  *   value — always pair it with labeled controls that expose the value
  *   to assistive technology
- * - The parent control should provide `aria-label` or visible label text
- *   describing the color being selected
+ * - Ensure the parent color component provides appropriate labeling via
+ *   visible text or ARIA (for example, `aria-label` on `<swc-color-area>`)
  * - Do not add `role`, `aria-label`, or focus management to the loupe
  *   itself — it is intentionally inert
+ * - Avoid conveying meaning through the loupe color alone; pair color
+ *   selection with text labels or other indicators as appropriate
  */
 export const Accessibility: Story = {
   args: {

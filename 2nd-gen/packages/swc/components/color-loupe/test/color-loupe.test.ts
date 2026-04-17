@@ -23,7 +23,7 @@ import { Overview } from '../stories/color-loupe.stories.js';
 
 export default {
   ...meta,
-  title: 'Color Loupe/Tests',
+  title: 'Color Components/Color Loupe/Tests',
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },
