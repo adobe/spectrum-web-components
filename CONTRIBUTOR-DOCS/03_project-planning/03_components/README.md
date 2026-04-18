@@ -89,7 +89,7 @@
 - Switch
     - [Switch migration roadmap](switch/rendering-and-styling-migration-analysis.md)
 - Tabs
-    - [`sp-tabs` Migration Plan](tabs/migration-plan.md)
+    - [Tabs migration plan](tabs/migration-plan.md)
 - Tag
     - [Tag migration roadmap](tag/rendering-and-styling-migration-analysis.md)
 - Tags
