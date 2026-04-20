@@ -174,7 +174,7 @@ export const StaticColorToggleTest: Story = {
     await step('renders with static-color attribute', async () => {
       expect(
         divider.getAttribute('static-color'),
-        'static-color attribute is black initially'
+        'initial static-color attribute'
       ).toBe('black');
     });
 
