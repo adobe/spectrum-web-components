@@ -9,11 +9,21 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { setProjectAnnotations } from '@storybook/web-components-vite';
+export const formatTitle = (
+  title: string,
+  typeCase: 'kebab' | 'pascal' = 'kebab'
+) => {
+  const formattedTitle = title
+    .split('/')
+    .pop()
+    ?.toLowerCase()
+    .replace(/\s+/g, '-');
 
-import preview from './preview';
-
-// This is an important step to apply the right configuration when testing your stories.
-// More info at: https://storybook.js.org/docs/api/portable-stories/portable-stories-vitest#setprojectannotations
-// @ts-expect-error Preview object shape is valid at runtime; Storybook types are too strict here.
-setProjectAnnotations([preview]);
+  if (typeCase === 'pascal') {
+    return formattedTitle
+      ?.split('-')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join('');
+  }
+  return formattedTitle;
+};

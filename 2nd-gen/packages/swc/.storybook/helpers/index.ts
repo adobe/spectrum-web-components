@@ -10,4 +10,4 @@
  * governing permissions and limitations under the License.
  */
 
-export { formatComponentName } from './format-component-name.js';
+export { formatTitle } from './format-title.js';
