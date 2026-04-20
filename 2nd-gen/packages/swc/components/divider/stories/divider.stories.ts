@@ -44,12 +44,9 @@ argTypes['static-color'] = {
 
 argTypes.vertical = {
   ...argTypes.vertical,
-  control: { type: 'boolean' },
   table: {
-    category: 'attributes',
-    defaultValue: {
-      summary: 'false',
-    },
+    ...argTypes.vertical?.table,
+    defaultValue: { summary: 'false' },
   },
 };
 
@@ -235,49 +232,34 @@ StaticColors.storyName = 'Static colors';
 // ──────────────────────────────
 
 /**
- * ### Automatic ARIA role
+ * ### Layout orientation
  *
- * The `<swc-divider>` element automatically sets `role="separator"` on the host,
- * providing the correct semantic meaning for assistive technologies without any
- * additional markup required.
+ * Dividers can be oriented **horizontally** (default) or **vertically** to match
+ * the layout they serve:
  *
- * ### Vertical orientation and layout
+ * - **Horizontal dividers** separate stacked content, such as sections beneath headings
+ * - **Vertical dividers** separate side-by-side items in a flex row (e.g., navigation breadcrumbs, toolbars)
  *
- * When `vertical` is set, the component automatically sets `aria-orientation="vertical"`.
- *
- * Vertical dividers are designed to separate **horizontally adjacent** content.
- * The component CSS sets `block-size: 100%` so the divider fills its container's
- * height — but the parent flex row must have an **explicit height** for that
- * percentage to resolve. Without a defined height, the divider collapses to zero
- * and is invisible.
- *
- * ```html
- * <div style="display: flex; align-items: center; gap: 8px; block-size: 24px;">
- *   <span>Files</span>
- *   <swc-divider vertical size="s"></swc-divider>
- *   <span>Folders</span>
- * </div>
- * ```
+ * Vertical dividers require the parent to have an **explicit height** (`block-size`) —
+ * without it, `block-size: 100%` resolves to zero and the divider is invisible.
  */
-export const VerticalLayout: Story = {
+export const LayoutOrientation: Story = {
   render: (args) => html`
-    <div
+    <nav
       style="display: flex; align-items: center; gap: 8px; block-size: 24px;"
     >
+      <span>Overview</span>
+      ${template({ ...args, size: 's', vertical: true })}
       <span>Files</span>
       ${template({ ...args, size: 's', vertical: true })}
-      <span>Folders</span>
-      ${template({ ...args, size: 's', vertical: true })}
-      <span>Recently shared</span>
-    </div>
-    <div
-      style="display: flex; align-items: center; gap: 8px; block-size: 24px;"
-    >
-      <span>Home</span>
-      ${template({ ...args, size: 'm', vertical: true })}
-      <span>Projects</span>
-      ${template({ ...args, size: 'm', vertical: true })}
-      <span>Reports</span>
+      <span>Settings</span>
+    </nav>
+    <div style="margin-block-start: 16px;">
+      <h4 style="margin: 0 0 8px 0;">Project details</h4>
+      ${template({ ...args, size: 'l' })}
+      <p style="margin: 8px 0 0 0;">
+        Review the project timeline and deliverables.
+      </p>
     </div>
   `,
   parameters: {
@@ -285,7 +267,7 @@ export const VerticalLayout: Story = {
   },
   tags: ['behaviors'],
 };
-VerticalLayout.storyName = 'Vertical layout';
+LayoutOrientation.storyName = 'Layout orientation';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

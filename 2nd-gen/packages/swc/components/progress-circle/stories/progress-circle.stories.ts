@@ -47,14 +47,6 @@ argTypes['static-color'] = {
   options: [undefined, ...ProgressCircle.STATIC_COLORS],
 };
 
-argTypes.indeterminate = {
-  ...argTypes.indeterminate,
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'true' },
-  },
-};
-
 /**
  * They can represent determinate or indeterminate progress.
  */
@@ -99,7 +91,6 @@ const sizeLabels = {
 export const Playground: Story = {
   tags: ['autodocs', 'dev'],
   args: {
-    indeterminate: true,
     size: 'm',
     label: 'Processing request',
   },
@@ -112,7 +103,6 @@ export const Playground: Story = {
 export const Overview: Story = {
   tags: ['overview'],
   args: {
-    indeterminate: true,
     label: 'Processing request',
   },
 };
@@ -175,9 +165,6 @@ export const Sizes: Story = {
     )}
   `,
   tags: ['options'],
-  args: {
-    indeterminate: true,
-  },
 };
 
 /**
@@ -196,7 +183,6 @@ export const StaticColors: Story = {
     )}
   `,
   args: {
-    indeterminate: true,
     label: 'Processing media',
   },
   tags: ['options'],
@@ -234,12 +220,11 @@ export const ProgressValues: Story = {
 ProgressValues.storyName = 'Progress values';
 
 /**
- * When no `progress` value is set, the component displays an animated indeterminate
- * loading indicator. This is the default state.
- * The `aria-valuenow` attribute is removed, signaling to assistive technologies
- * that the operation duration is unknown.
+ * The default state — when `progress` is not set, the component displays an animated
+ * loading indicator. The `aria-valuenow` attribute is omitted, signaling to assistive
+ * technologies that the operation duration is unknown.
  *
- * Use indeterminate progress when:
+ * Use the default (no `progress`) when:
  * - The operation duration is unknown
  * - Progress cannot be accurately measured
  * - Multiple sub-operations are running in parallel
@@ -263,8 +248,9 @@ export const Indeterminate: Story = {
  * typical button heights and `static-color="white"` on high-emphasis (filled)
  * buttons where the icon sits on a colored background.
  *
- * Use `indeterminate` when the duration is unknown — the most common case for
- * button loading states.
+ * Button loading states typically omit `progress` since the duration is unknown.
+ *
+ * @todo Refactor to use `<swc-button>` once the button component is available.
  */
 export const InButton: Story = {
   render: (args) => html`
@@ -289,7 +275,6 @@ export const InButton: Story = {
         ...args,
         size: 's',
         'static-color': 'white',
-        indeterminate: true,
         label: 'Saving',
       })}
       Saving…
@@ -314,7 +299,6 @@ export const InButton: Story = {
       ${template({
         ...args,
         size: 's',
-        indeterminate: true,
         label: 'Processing',
       })}
       Processing…
@@ -342,7 +326,7 @@ InButton.storyName = 'Progress circle in a button';
  * 2. **Labeling**: Uses the `label` attribute value as `aria-label`, or rely on `aria-label` / `aria-labelledby` you set on the host
  * 3. **Progress state** (determinate):
  *     - Sets `aria-valuenow` with the current `progress` value
- * 4. **Loading state** (indeterminate):
+ * 4. **Loading state** (indeterminate — default when `progress` is unset):
  *     - When no `progress` value is set, `aria-valuenow` is omitted
  *     - Screen readers understand this as an ongoing operation with unknown duration
  * 5. **Status communication**: Screen readers announce progress updates as values change
@@ -376,7 +360,6 @@ InButton.storyName = 'Progress circle in a button';
 export const Accessibility: Story = {
   tags: ['a11y'],
   args: {
-    indeterminate: true,
     size: 'l',
     label: 'Syncing files',
   },

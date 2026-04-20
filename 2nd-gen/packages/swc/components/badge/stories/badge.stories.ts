@@ -88,23 +88,17 @@ argTypes['icon-slot'] = {
 
 argTypes.outline = {
   ...argTypes.outline,
-  control: { type: 'boolean' },
   table: {
-    category: 'attributes',
-    defaultValue: {
-      summary: 'false',
-    },
+    ...argTypes.outline?.table,
+    defaultValue: { summary: 'false' },
   },
 };
 
 argTypes.subtle = {
   ...argTypes.subtle,
-  control: { type: 'boolean' },
   table: {
-    category: 'attributes',
-    defaultValue: {
-      summary: 'false',
-    },
+    ...argTypes.subtle?.table,
+    defaultValue: { summary: 'false' },
   },
 };
 
