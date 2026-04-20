@@ -30,6 +30,8 @@ import styles from './upload-artifact.css';
  * @slot title - Primary text label.
  * @slot subtitle - Secondary text label.
  * @slot actions - Optional trailing actions.
+ * @fires swc-dismiss - Dispatched when the dismiss button is pressed.
+ * Detail: `{ artifact: this }`
  */
 export class UploadArtifact extends SpectrumElement {
   /** Visual treatment type for this artifact. */

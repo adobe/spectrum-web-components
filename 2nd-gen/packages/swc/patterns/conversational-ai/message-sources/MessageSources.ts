@@ -29,7 +29,8 @@ import styles from './message-sources.css';
  *
  * @element swc-message-sources
  * @slot - Source link items (rendered as a numbered list when expanded)
- * @fires swc-sources-toggle - Dispatched when the panel is toggled. Detail: `{ open: boolean }`
+ * @fires swc-sources-toggle - Dispatched when the panel is toggled.
+ * Detail: `{ open: boolean }`
  */
 export class MessageSources extends SpectrumElement {
   /**

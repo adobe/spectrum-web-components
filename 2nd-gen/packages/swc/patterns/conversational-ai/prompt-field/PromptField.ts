@@ -51,6 +51,16 @@ export type PromptFieldMode = 'default' | 'loading' | 'disabled' | 'error';
  * @element swc-prompt-field
  *
  * @slot artifact - Optional attachment preview(s); supports multiple slotted artifacts.
+ * @fires swc-input - Dispatched when the textarea value changes.
+ * Detail: `{ value: string }`
+ * @fires swc-submit - Dispatched when send is triggered with text and/or artifacts.
+ * Detail: `{ value: string, artifactValues: PromptFieldArtifactValue[] }`
+ * @fires swc-stop - Dispatched when stop generation is requested in loading mode.
+ * @fires swc-upload-click - Dispatched before opening the native file picker.
+ * Cancel this event to prevent the picker from opening.
+ * @fires swc-files-selected - Dispatched after files are chosen from the picker.
+ * Detail:
+ * `{ files: File[], artifactValues: PromptFieldArtifactValue[], allArtifactValues: PromptFieldArtifactValue[] }`
  */
 export class PromptField extends SpectrumElement {
   /** Visual mode for the prompt field action/interaction state. */

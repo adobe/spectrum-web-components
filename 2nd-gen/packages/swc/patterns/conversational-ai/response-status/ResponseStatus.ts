@@ -30,6 +30,8 @@ import styles from './response-status.css';
  *
  * @element swc-response-status
  * @slot - Optional reasoning content shown when `loading` is `false` and `open` is `true`.
+ * @fires swc-toggle - Dispatched when the reasoning panel is expanded or collapsed.
+ * Detail: `{ open: boolean }`
  */
 export class ResponseStatus extends SpectrumElement {
   /** `true`: progress circle + status label, `false`: checkmark + status label. */

@@ -29,7 +29,8 @@ import styles from './message-feedback.css';
  * follow the radiogroup pattern (roving `tabindex` on the two buttons).
  *
  * @element swc-message-feedback
- * @fires {CustomEvent} swc-feedback - Dispatched when the user selects positive or negative feedback.
+ * @fires swc-feedback - Dispatched when the user selects positive or negative feedback.
+ * Detail: `{ status: 'positive' | 'negative' }`
  */
 export class MessageFeedback extends SpectrumElement {
   /**
