@@ -67,7 +67,7 @@ export const meta: Meta = {
       type: 'figma',
       url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=20032-601&p=f&t=v3YDUMXflgtF0NtJ-0',
     },
-    // @todo Add Stackblitz link: stackblitz: { url: '<stackblitz-url>' }
+    // @todo SWC-1992 Add Stackblitz link: stackblitz: { url: '<stackblitz-url>' }
   },
   tags: ['migrated'],
 };
