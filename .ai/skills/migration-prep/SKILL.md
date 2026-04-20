@@ -77,6 +77,54 @@ You may draft a partial plan with explicit blockers when some inputs are missing
 
 If these inputs are missing, keep drafting focused on known facts, mark the gaps clearly, and add them to blockers or prerequisites.
 
+## Must-ask before drafting materially
+
+Before drafting more than scaffold-level content, explicitly ask the user for any missing critical inputs below.
+
+Critical inputs:
+
+- Figma spec images or another approved visual reference
+- Epic number
+- Ticket numbers and summaries for any known breaking changes, or copied ticket descriptions the agent can evaluate
+- Accessibility migration analysis, if not already available
+- Confirmation or decision input when a dependency, extension, or shared-base relationship could materially change migration order, API shape, or shared-base strategy
+
+Do not wait until the end of the plan to summarize these gaps. Ask for them early and directly.
+
+If a critical input is missing:
+
+- Pause and ask for it, or
+- Offer a concrete fallback the user can provide immediately
+- Continue only with clearly labeled provisional scaffolding, not with a review-ready recommendation
+
+## Missing-input severity
+
+Treat missing inputs in two categories:
+
+- Materially blocking: visual references, accessibility analysis, dependency-order decisions, and breaking-change ticket context
+- Required before finalizing: Epic number, version strings, exact source paths, and supplementary references
+
+Materially blocking inputs should trigger an immediate user prompt.
+Required-before-finalizing inputs may be recorded temporarily, but must still be explicitly requested before finalizing.
+
+## Missing-input prompt style
+
+When a critical input is missing, prompt the user with a direct request that explains why it matters.
+
+Preferred pattern:
+
+- what is missing
+- why it materially affects the plan
+- what the user can provide right now as the fastest acceptable fallback
+
+Example prompts:
+
+- "Provide Figma spec images or another approved visual reference so I can make a comprehensive recommendation on visual API and supported presentation modes."
+- "Provide the Epic number so I can complete the migration plan header and references without leaving hidden placeholders."
+- "Provide the ticket numbers and summaries for suspected breaking changes, or paste the ticket descriptions here and I can assess impact and migration risk from that text."
+- "This component appears to depend on or extend from [X], which may change migration order and shared-base strategy. Confirm whether that dependency is intentional, or I can recommend a migration order based on the current source relationships."
+- "The accessibility migration analysis is missing, and that can materially affect API and behavior decisions. Provide it if available, or I can proceed with provisional notes and explicitly mark accessibility-dependent decisions as unresolved."
+
 ## Source priority
 
 If there are inconsistencies, use category-specific source priority and make explicit in the plan where the recommendation comes from if it introduces a rename, deprecation, or breaking change.
@@ -111,6 +159,22 @@ Pause and actively discuss with the user when you find any of the following:
 
 In these cases, do not just document the ambiguity. Recommend a preferred path, explain the tradeoff, and identify what evidence or review would resolve it.
 
+If a dependency, inheritance, or shared-base relationship could materially change:
+
+- migration order
+- API design
+- component boundaries
+- shared core extraction
+
+do not proceed as if the issue is settled.
+
+Instead:
+
+1. state the dependency clearly
+2. ask the user whether a decision already exists
+3. if not, offer to recommend a path based on current evidence
+4. mark the resulting plan sections as provisional until resolved
+
 ## Output
 
 - Copy the template at [assets/migration-prep-template.md](assets/migration-prep-template.md)
@@ -126,6 +190,25 @@ In these cases, do not just document the ambiguity. Recommend a preferred path, 
 - Keep `TL;DR`, `Most blocking open questions`, `Changes overview`, `2nd-gen API decisions`, and `References` populated. If information is unavailable, say so explicitly instead of leaving them blank
 - Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material or guided by the user
 - Call out any dependency-aware sequencing decisions, such as whether the component extends from another migrated component, should become a shared base, or should wait on a prerequisite migration
+- Do not replace `Epic SWC-####` with `TBD` or another soft placeholder without explicitly prompting the user first
+
+## Template preservation rules
+
+Preserve the template structure unless the user explicitly asks for structural changes.
+
+Do not:
+
+- replace prescribed tables with bullets
+- remove pre-populated checklist items that are intended to remain stable
+- remove table columns such as `Blocking?` or `Owner`
+- rewrite section scaffolding that is marked as stable guidance
+- drop pre-populated explanatory text unless it is clearly wrong for the component
+
+You may:
+
+- add rows to existing tables
+- add bullets beneath a section when the template invites additive detail
+- mark non-applicable items as `N/A` with a brief reason
 
 ## Workflow
 
@@ -136,11 +219,13 @@ In these cases, do not just document the ambiguity. Recommend a preferred path, 
 5. Fill out the template with concrete references, decisions, breaking changes, and open questions.
 6. Mark decisions as confirmed, inferred, or open questions, and cite supporting sources for any breaking-change recommendation.
 7. Make dependency-aware sequencing explicit: note whether the component depends on another migration, should become a shared base, or should be migrated ahead of related components.
-8. Make assumptions explicit and link blockers to the relevant section in the plan.
-9. Check for contradictions across `Changes overview`, `2nd-gen API decisions`, and `Migration checklist` so the same decision is reflected consistently.
-10. Verify key links, remove unresolved placeholders, and ensure each blocker or open question has clear status, owner, and next action where possible.
-11. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
-12. Stop after producing the written plan unless the user explicitly asks to move into implementation.
+8. Ask the user early for any missing critical inputs instead of only summarizing them at the end.
+9. Make assumptions explicit and link blockers to the relevant section in the plan.
+10. Check for contradictions across `Changes overview`, `2nd-gen API decisions`, and `Migration checklist` so the same decision is reflected consistently.
+11. Verify key links, remove unresolved placeholders, and ensure each blocker or open question has clear status, owner, and next action where possible.
+12. Preserve the template's stable tables, checklist items, and section structure unless the user explicitly asks for structural changes.
+13. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
+14. Stop after producing the written plan unless the user explicitly asks to move into implementation.
 
 ## Staff review checklist
 

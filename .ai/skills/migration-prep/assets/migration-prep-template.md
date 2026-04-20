@@ -11,13 +11,17 @@ AGENT TEMPLATE PREP INSTRUCTIONS (delete this comment block after copying the te
 9. If links or file paths do not resolve after replacing placeholders, verify the actual repo naming before proceeding. Try likely variants such as kebab-case (`action-button`), PascalCase (`ActionButton`), or the spaced display name (`Action Button`). Prefer real existing repo paths over user phrasing. If multiple matches exist or none resolve, pause and ask the user for the exact component slug or source path.
 10. Mark recommendations and decisions as confirmed, inferred, or open questions based on the quality of the source material. Do not present inferred details as settled facts.
 11. If proposing a rename, deprecation, or breaking change, include at least one concrete supporting source. If no support is available, keep it as an open question.
-12. Before finalizing, sweep for unresolved placeholders such as `[component]`, `[Component]`, `[component-version]`, and `Epic SWC-####`.
-13. Before finalizing, check that `TL;DR`, `Most blocking open questions`, `Changes overview`, `2nd-gen API decisions`, and `References` are populated. If information is missing, say so explicitly instead of leaving sections blank.
-14. Check for contradictions across `Changes overview`, `2nd-gen API decisions`, and `Migration checklist` so the same decision is reflected consistently.
-15. Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material or guided by the user.
-16. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
-17. For fuller workflow, review posture, and escalation guidance, refer to `.ai/skills/migration-prep/SKILL.md`.
-18. Later migration phases should also follow `.ai/skills/migration-prep/references/migration-plan-contract.md` so implementation, tests, docs, and review stay aligned with this approved plan.
+12. Ask early for any missing critical inputs instead of only summarizing them at the end. This includes visual references, Epic number, accessibility analysis, dependency-order decisions, and breaking-change ticket context.
+13. If critical inputs are missing, prompt the user directly and explain why they materially affect the plan. Offer the fastest acceptable fallback the user can provide right away.
+14. Do not replace `Epic SWC-####` with `TBD` or another soft placeholder without explicitly prompting the user first.
+15. Before finalizing, sweep for unresolved placeholders such as `[component]`, `[Component]`, `[component-version]`, and `Epic SWC-####`.
+16. Before finalizing, check that `TL;DR`, `Most blocking open questions`, `Changes overview`, `2nd-gen API decisions`, and `References` are populated. If information is missing, say so explicitly instead of leaving sections blank.
+17. Check for contradictions across `Changes overview`, `2nd-gen API decisions`, and `Migration checklist` so the same decision is reflected consistently.
+18. Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material or guided by the user.
+19. Preserve the template structure unless the user explicitly asks for structural changes. Do not replace prescribed tables with bullets, remove stable checklist items, remove columns like `Blocking?` or `Owner`, or discard pre-populated guidance that is intended to remain stable.
+20. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
+21. For fuller workflow, review posture, and escalation guidance, refer to `.ai/skills/migration-prep/SKILL.md`.
+22. Later migration phases should also follow `.ai/skills/migration-prep/references/migration-plan-contract.md` so implementation, tests, docs, and review stay aligned with this approved plan.
 -->
 
 <!-- Generated breadcrumbs - DO NOT EDIT -->
@@ -151,6 +155,7 @@ This full modifier surface will not be carried forward to 2nd-gen.
 ## Migration sequencing and prerequisites
 
 <!-- Document whether this component should extend from another 2nd-gen component or shared base, whether another migration depends on it, and whether migration order should change as a result. Use the status table and related analyses as evidence. -->
+<!-- If this materially changes the plan, ask the user whether a decision already exists. If not, offer to recommend a migration order or shared-base strategy based on current evidence. -->
 
 ### Dependency-aware recommendation
 
@@ -285,7 +290,7 @@ Initial expectation for [Component] is a small reviewed set.
 
 Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core/SWC split.
 
-<!-- This table should stay fairly consistent, update if needed. -->
+<!-- This table should stay fairly consistent, update if needed. Use the prescribed table format below; do not convert this section to bullets. -->
 
 | Layer    | Path                                            | Contains                                                                                                                                                                                |
 | -------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -305,7 +310,7 @@ Planned rendering shape:
 
 ## Migration checklist
 
-<!-- Adjust the following checklists as needed. New sections may be added under API for clarity. -->
+<!-- Adjust the following checklists as needed. New sections may be added under API for clarity. Keep the stable baseline checklist items unless they are truly not applicable; prefer additive edits over removing them. -->
 
 ### Preparation (this ticket)
 
@@ -413,6 +418,8 @@ Owner examples:
 
 # Format: **Q{#}** (sequential across sections, do not start re-numbering under a new section)
 -->
+
+<!-- Keep the table structure and columns (`Blocking?`, `Status`, `Owner`). Add rows rather than replacing the schema with prose or a different format. -->
 
 ### Design
 
