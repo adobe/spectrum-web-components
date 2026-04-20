@@ -6,17 +6,18 @@ AGENT TEMPLATE PREP INSTRUCTIONS (delete this comment block after copying the te
 4. The areas marked "DO NOT EDIT" will be updated by another process, you do not need to manually manage them. Also do not remove them or add extra content.
 5. Refer to HTML comments throughout for additional guidance on filling out that section. Any non-commented content is intended to be fairly stable, unless it really doesn't make sense for the component.
 6. Ensure you receive the required inputs, which are linked in the References section, plus Figma spec images or another approved visual reference from the user when local design references are unavailable.
-7. If a section is not applicable, prefer writing "N/A" with a brief reason instead of removing the section unless the user explicitly asks for a different structure.
-8. If links or file paths do not resolve after replacing placeholders, verify the actual repo naming before proceeding. Try likely variants such as kebab-case (`action-button`), PascalCase (`ActionButton`), or the spaced display name (`Action Button`). Prefer real existing repo paths over user phrasing. If multiple matches exist or none resolve, pause and ask the user for the exact component slug or source path.
-9. Mark recommendations and decisions as confirmed, inferred, or open questions based on the quality of the source material. Do not present inferred details as settled facts.
-10. If proposing a rename, deprecation, or breaking change, include at least one concrete supporting source. If no support is available, keep it as an open question.
-11. Before finalizing, sweep for unresolved placeholders such as `[component]`, `[Component]`, `[component-version]`, and `Epic SWC-####`.
-12. Before finalizing, check that `TL;DR`, `Most blocking open questions`, `Changes overview`, `2nd-gen API decisions`, and `References` are populated. If information is missing, say so explicitly instead of leaving sections blank.
-13. Check for contradictions across `Changes overview`, `2nd-gen API decisions`, and `Migration checklist` so the same decision is reflected consistently.
-14. Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material or guided by the user.
-15. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
-16. For fuller workflow, review posture, and escalation guidance, refer to `.ai/skills/migration-prep/SKILL.md`.
-17. Later migration phases should also follow `.ai/skills/migration-prep/references/migration-plan-contract.md` so implementation, tests, docs, and review stay aligned with this approved plan.
+7. During discovery, check whether this component should extend from another 2nd-gen component or shared base, whether another component depends on it, or whether it should wait on a prerequisite migration. Use the status table, source relationships, and related component analyses to make that explicit in the plan.
+8. If a section is not applicable, prefer writing "N/A" with a brief reason instead of removing the section unless the user explicitly asks for a different structure.
+9. If links or file paths do not resolve after replacing placeholders, verify the actual repo naming before proceeding. Try likely variants such as kebab-case (`action-button`), PascalCase (`ActionButton`), or the spaced display name (`Action Button`). Prefer real existing repo paths over user phrasing. If multiple matches exist or none resolve, pause and ask the user for the exact component slug or source path.
+10. Mark recommendations and decisions as confirmed, inferred, or open questions based on the quality of the source material. Do not present inferred details as settled facts.
+11. If proposing a rename, deprecation, or breaking change, include at least one concrete supporting source. If no support is available, keep it as an open question.
+12. Before finalizing, sweep for unresolved placeholders such as `[component]`, `[Component]`, `[component-version]`, and `Epic SWC-####`.
+13. Before finalizing, check that `TL;DR`, `Most blocking open questions`, `Changes overview`, `2nd-gen API decisions`, and `References` are populated. If information is missing, say so explicitly instead of leaving sections blank.
+14. Check for contradictions across `Changes overview`, `2nd-gen API decisions`, and `Migration checklist` so the same decision is reflected consistently.
+15. Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material or guided by the user.
+16. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
+17. For fuller workflow, review posture, and escalation guidance, refer to `.ai/skills/migration-prep/SKILL.md`.
+18. Later migration phases should also follow `.ai/skills/migration-prep/references/migration-plan-contract.md` so implementation, tests, docs, and review stay aligned with this approved plan.
 -->
 
 <!-- Generated breadcrumbs - DO NOT EDIT -->
@@ -42,6 +43,7 @@ AGENT TEMPLATE PREP INSTRUCTIONS (delete this comment block after copying the te
   - [CSS custom properties](#css-custom-properties)
   - [Shadow DOM output (rendered HTML)](#shadow-dom-output-rendered-html)
 - [Dependencies](#dependencies)
+- [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites)
 - [Changes overview](#changes-overview)
   - [Must ship — breaking or a11y-required](#must-ship--breaking-or-a11y-required)
   - [Additive — ships when ready, zero breakage for consumers already on 2nd-gen](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)
@@ -143,6 +145,20 @@ This full modifier surface will not be carried forward to 2nd-gen.
 
 | Package | Version | Role |
 | ------- | ------- | ---- |
+
+---
+
+## Migration sequencing and prerequisites
+
+<!-- Document whether this component should extend from another 2nd-gen component or shared base, whether another migration depends on it, and whether migration order should change as a result. Use the status table and related analyses as evidence. -->
+
+### Dependency-aware recommendation
+
+<!-- Example directions: migrate first because other components should extend from it; wait until a shared base exists; proceed independently; split shared logic into a prerequisite utility/base. -->
+
+### Related components and ordering notes
+
+<!-- List related components, shared bases, or prerequisite migrations that affect sequencing or API decisions. -->
 
 ---
 
@@ -423,6 +439,7 @@ Owner examples:
 <!-- Do not leave this section sparse. Include the analysis docs, 1st-gen implementation references, relevant design references, and any bug tickets that informed decisions. -->
 
 - [Washing machine workflow](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md)
+- [2nd-gen migration status table](../../02_workstreams/02_2nd-gen-component-migration/01_status.md)
 - [Accessibility migration analysis](./accessibility-migration-analysis.md)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)

@@ -51,11 +51,20 @@ Prompt the user to ensure they have checked out `spectrum-css` at `spectrum-two`
 Review these sources before filling out the plan:
 
 - The Phase 1 workflow guidance in **[Phase 1: Preparation](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-1-preparation)**
+- The 2nd-gen migration status table in `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/01_status.md`
 - The component's rendering and styling analysis doc in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/`
 - The component's accessibility migration analysis doc in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/`, if available
 - The 1st-gen source, tests, README, and any shared mixins or helpers it depends on
 - Relevant bug tickets and prior migration decisions
 - Relevant Figma and React Spectrum references for naming, variants, and expected behavior
+
+During discovery, explicitly check whether the component should:
+
+- extend from another 2nd-gen component or shared base that is already planned or in progress
+- be migrated before another component that depends on it
+- wait on a prerequisite component or shared base to avoid duplicated work or conflicting APIs
+
+Use the status table, existing component analyses, and source relationships to make these dependency and ordering calls explicit in the plan.
 
 ## Readiness threshold
 
@@ -95,6 +104,7 @@ Pause and actively discuss with the user when you find any of the following:
 - API naming that conflicts with React, Figma, or established repo conventions
 - A 1st-gen behavior that appears confusing, inconsistent, or not worth carrying forward
 - Multiple plausible component boundaries, such as one component vs several
+- A component dependency or extension relationship changes the recommended migration order
 - Breaking changes that may be justified now to avoid a worse migration later
 - Inconsistencies between source materials that change the recommended API or behavior
 - Missing information that prevents a confident recommendation
@@ -115,6 +125,7 @@ In these cases, do not just document the ambiguity. Recommend a preferred path, 
 - Before finalizing, verify the highest-value links and references in the completed plan: 1st-gen source, analysis docs, tests, README, workflow doc, and React S2 component docs
 - Keep `TL;DR`, `Most blocking open questions`, `Changes overview`, `2nd-gen API decisions`, and `References` populated. If information is unavailable, say so explicitly instead of leaving them blank
 - Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material or guided by the user
+- Call out any dependency-aware sequencing decisions, such as whether the component extends from another migrated component, should become a shared base, or should wait on a prerequisite migration
 
 ## Workflow
 
@@ -124,11 +135,12 @@ In these cases, do not just document the ambiguity. Recommend a preferred path, 
 4. Resolve the component's actual repo naming before finalizing links and paths. Prefer existing repo paths over the user's phrasing.
 5. Fill out the template with concrete references, decisions, breaking changes, and open questions.
 6. Mark decisions as confirmed, inferred, or open questions, and cite supporting sources for any breaking-change recommendation.
-7. Make assumptions explicit and link blockers to the relevant section in the plan.
-8. Check for contradictions across `Changes overview`, `2nd-gen API decisions`, and `Migration checklist` so the same decision is reflected consistently.
-9. Verify key links, remove unresolved placeholders, and ensure each blocker or open question has clear status, owner, and next action where possible.
-10. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
-11. Stop after producing the written plan unless the user explicitly asks to move into implementation.
+7. Make dependency-aware sequencing explicit: note whether the component depends on another migration, should become a shared base, or should be migrated ahead of related components.
+8. Make assumptions explicit and link blockers to the relevant section in the plan.
+9. Check for contradictions across `Changes overview`, `2nd-gen API decisions`, and `Migration checklist` so the same decision is reflected consistently.
+10. Verify key links, remove unresolved placeholders, and ensure each blocker or open question has clear status, owner, and next action where possible.
+11. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
+12. Stop after producing the written plan unless the user explicitly asks to move into implementation.
 
 ## Staff review checklist
 
