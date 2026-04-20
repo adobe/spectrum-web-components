@@ -47,6 +47,16 @@ export const OverviewTest: Story = {
       expect(turns[2]?.getAttribute('tabindex')).toBe('-1');
     });
 
+    await step('focusin syncs roving focus to the focused turn', async () => {
+      turns[1]?.focus();
+      await el.updateComplete;
+
+      expect(el.activeIndex).toBe(1);
+      expect(turns[0]?.getAttribute('tabindex')).toBe('-1');
+      expect(turns[1]?.getAttribute('tabindex')).toBe('0');
+      expect(turns[2]?.getAttribute('tabindex')).toBe('-1');
+    });
+
     await step('ArrowDown moves focus to the next turn', async () => {
       el.focus();
       await el.updateComplete;

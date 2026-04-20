@@ -78,7 +78,7 @@ export const InteractionTest: Story = {
         });
         await userEvent.click(positiveRadio);
         await el.updateComplete;
-        expect(events.at(-1)).toBe('positive');
+        expect(events[events.length - 1]).toBe('positive');
         expect(el.status).toBeUndefined();
       }
     );
@@ -109,7 +109,7 @@ export const InteractionTest: Story = {
         });
         await userEvent.click(negativeRadio);
         await el.updateComplete;
-        expect(events.at(-1)).toBe('negative');
+        expect(events[events.length - 1]).toBe('negative');
       }
     );
   },
@@ -126,9 +126,16 @@ export const KeyboardNavigationTest: Story = {
       canvasElement,
       'swc-message-feedback'
     );
+    const shadow = el.shadowRoot;
+    if (!shadow) {
+      throw new Error('swc-message-feedback: expected shadow root');
+    }
+    const buttons = Array.from(
+      shadow.querySelectorAll<HTMLButtonElement>('.swc-MessageFeedback-button')
+    );
 
     await step(
-      'ArrowRight from first option emits swc-feedback for negative',
+      'ArrowRight from first option moves focus without emitting swc-feedback',
       async () => {
         const events: Array<string> = [];
         el.addEventListener('swc-feedback', ((event: Event) => {
@@ -142,12 +149,14 @@ export const KeyboardNavigationTest: Story = {
         await userEvent.keyboard('{ArrowRight}');
         await el.updateComplete;
 
-        expect(events.at(-1)).toBe('negative');
+        expect(events.length).toBe(0);
+        expect(shadow.activeElement).toBe(buttons[1]);
+        expect(el.status).toBeUndefined();
       }
     );
 
     await step(
-      'ArrowLeft wraps to positive and emits swc-feedback',
+      'ArrowLeft wraps focus to positive without emitting swc-feedback',
       async () => {
         const events: Array<string> = [];
         el.addEventListener('swc-feedback', ((event: Event) => {
@@ -162,7 +171,9 @@ export const KeyboardNavigationTest: Story = {
         await userEvent.keyboard('{ArrowLeft}');
         await el.updateComplete;
 
-        expect(events.at(-1)).toBe('positive');
+        expect(events.length).toBe(0);
+        expect(shadow.activeElement).toBe(buttons[0]);
+        expect(el.status).toBe('negative');
       }
     );
   },

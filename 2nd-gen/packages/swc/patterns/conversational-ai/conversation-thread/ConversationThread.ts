@@ -44,10 +44,12 @@ export class ConversationThread extends SpectrumElement {
   public override connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('keydown', this._handleKeydown);
+    this.addEventListener('focusin', this._handleFocusIn);
   }
 
   public override disconnectedCallback(): void {
     this.removeEventListener('keydown', this._handleKeydown);
+    this.removeEventListener('focusin', this._handleFocusIn);
     this._resetManagedTabIndex();
     super.disconnectedCallback();
   }
@@ -192,6 +194,23 @@ export class ConversationThread extends SpectrumElement {
   private _handleSlotChange(): void {
     this._syncFocusableItems();
   }
+
+  private _handleFocusIn = (event: FocusEvent): void => {
+    this._syncFocusableItems();
+    if (!this._items.length) {
+      return;
+    }
+
+    const focusedIndex = this._getCurrentItemIndex(event.target);
+    if (focusedIndex === -1) {
+      return;
+    }
+
+    if (focusedIndex !== this.activeIndex) {
+      this.activeIndex = focusedIndex;
+    }
+    this._applyRovingTabIndex(focusedIndex);
+  };
 
   protected override render(): TemplateResult {
     return html`

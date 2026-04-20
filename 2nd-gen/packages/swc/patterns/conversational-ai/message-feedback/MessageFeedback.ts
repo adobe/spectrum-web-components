@@ -86,16 +86,6 @@ export class MessageFeedback extends SpectrumElement {
     }
   }
 
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    this.addEventListener('keydown', this._handleKeyboardSelection);
-  }
-
-  public override disconnectedCallback(): void {
-    this.removeEventListener('keydown', this._handleKeyboardSelection);
-    super.disconnectedCallback();
-  }
-
   private _syncRovingFocusTarget(): void {
     this.focusgroupNavigationController.refresh();
     const buttons = this._feedbackButtons();
@@ -108,30 +98,6 @@ export class MessageFeedback extends SpectrumElement {
         ? buttons[1]
         : buttons[0];
     this.focusgroupNavigationController.setActiveItem(selectedButton);
-  }
-
-  private _handleKeyboardSelection = (event: KeyboardEvent): void => {
-    if (!event.defaultPrevented || !this._isKeyboardNavigationKey(event.key)) {
-      return;
-    }
-
-    const active = this.focusgroupNavigationController.getActiveItem();
-    if (!active) {
-      return;
-    }
-
-    active.click();
-    // Keep arrow-key handling scoped to this radiogroup.
-    event.stopPropagation();
-  };
-
-  private _isKeyboardNavigationKey(key: string): boolean {
-    return (
-      key === 'ArrowLeft' ||
-      key === 'ArrowRight' ||
-      key === 'Home' ||
-      key === 'End'
-    );
   }
 
   private _handlePositive(): void {

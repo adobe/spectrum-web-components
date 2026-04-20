@@ -47,6 +47,12 @@
   overflow: hidden;
 }
 
+/* Show a keyboard-only ring when the textarea receives tab focus. */
+.swc-PromptField-box:has(.swc-PromptField-textarea:focus-visible) {
+  outline: 2px solid token("focus-indicator-color");
+  outline-offset: 2px;
+}
+
 /* ─────────────────────────────────────
    Input area (artifact + text area)
    ───────────────────────────────────── */
