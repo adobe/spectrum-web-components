@@ -27,7 +27,7 @@ function resolveTextDirection(
     return textDirection;
   }
 
-  return RTL_LANGS.has(String(lang ?? 'en-US')) ? 'rtl' : 'ltr';
+  return RTL_LANGS.has(lang || 'en-US') ? 'rtl' : 'ltr';
 }
 
 /**
@@ -49,9 +49,7 @@ function applyLanguageAndFontKit(
     hasChanged = true;
   }
 
-  // Apply both semantic and CSS direction so docs/stories and bidi behavior stay aligned.
   root.setAttribute('dir', textDirection);
-  root.style.direction = textDirection;
 
   // If the fonts are actively loading, do not re-trigger the load
   if (window.FontsLoading === true) {
@@ -217,9 +215,7 @@ export const withLanguageWrapper = makeDecorator({
       viewMode,
     } = context;
 
-    // Keep an explicit, resolved direction available for stories.
     const resolvedTextDirection = resolveTextDirection(lang, textDirection);
-    context.globals.resolvedTextDirection = resolvedTextDirection;
 
     attachLanguageChangeListener();
 
