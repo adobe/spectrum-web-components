@@ -82,7 +82,7 @@ export const SizesTest: Story = {
     await step('renders expected size attributes', async () => {
       circles.forEach((circle) => {
         const size = circle.getAttribute('size');
-        expect(size).toBeTruthy();
+        expect(size, `progress circle has a size attribute`).toBeTruthy();
       });
     });
   },
@@ -99,8 +99,14 @@ export const StaticColorsTest: Story = {
     await step('reflects expected static-color attribute values', async () => {
       circles.forEach((circle) => {
         const staticColor = circle.getAttribute('static-color');
-        expect(staticColor).toBeTruthy();
-        expect(['white', 'black']).toContain(staticColor);
+        expect(
+          staticColor,
+          'progress circle has a static-color attribute'
+        ).toBeTruthy();
+        expect(
+          ['white', 'black'],
+          `static-color "${staticColor}" is a valid value`
+        ).toContain(staticColor);
       });
     });
   },
@@ -120,7 +126,10 @@ export const LabelClearingTest: Story = {
     );
 
     await step('initially has aria-label set from label', async () => {
-      expect(progressCircle.getAttribute('aria-label')).toBe('Uploading file');
+      expect(
+        progressCircle.getAttribute('aria-label'),
+        'aria-label is set from the label property'
+      ).toBe('Uploading file');
     });
 
     await step(
@@ -154,7 +163,10 @@ export const AriaLabelAccessibleNameTest: Story = {
           progressCircle.progress = 40;
           await progressCircle.updateComplete;
 
-          expect(warnCalls.length).toBe(0);
+          expect(
+            warnCalls.length,
+            'no warnings are emitted when aria-label provides the accessible name'
+          ).toBe(0);
         })
     );
   },
@@ -180,7 +192,10 @@ export const AriaLabelledbyAccessibleNameTest: Story = {
           progressCircle.progress = 70;
           await progressCircle.updateComplete;
 
-          expect(warnCalls.length).toBe(0);
+          expect(
+            warnCalls.length,
+            'no warnings are emitted when aria-labelledby provides the accessible name'
+          ).toBe(0);
         })
     );
   },
@@ -244,10 +259,14 @@ export const LightDomWithLabelDeprecationOnlyTest: Story = {
           progressCircle.progress = 6;
           await progressCircle.updateComplete;
 
-          expect(warnCalls.length).toBe(1);
-          expect(String(warnCalls[0]?.[1] ?? '')).toContain(
-            'no longer has a default slot'
-          );
+          expect(
+            warnCalls.length,
+            'exactly one warning is emitted for light DOM when label provides the accessible name'
+          ).toBe(1);
+          expect(
+            String(warnCalls[0]?.[1] ?? ''),
+            'the warning message references the removed default slot'
+          ).toContain('no longer has a default slot');
         })
     );
   },
@@ -308,13 +327,25 @@ export const ProgressClampTest: Story = {
     );
 
     await step('clamps progress above 100 to 100', async () => {
-      expect(circles[0].progress).toBe(100);
-      expect(circles[0].getAttribute('aria-valuenow')).toBe('100');
+      expect(
+        circles[0].progress,
+        'progress property is clamped to 100 when set to 150'
+      ).toBe(100);
+      expect(
+        circles[0].getAttribute('aria-valuenow'),
+        'aria-valuenow reflects clamped value of 100'
+      ).toBe('100');
     });
 
     await step('clamps progress below 0 to 0', async () => {
-      expect(circles[1].progress).toBe(0);
-      expect(circles[1].getAttribute('aria-valuenow')).toBe('0');
+      expect(
+        circles[1].progress,
+        'progress property is clamped to 0 when set to -20'
+      ).toBe(0);
+      expect(
+        circles[1].getAttribute('aria-valuenow'),
+        'aria-valuenow reflects clamped value of 0'
+      ).toBe('0');
     });
   },
 };
@@ -345,8 +376,14 @@ export const ReturnToIndeterminateTest: Story = {
     );
 
     await step('renders determinate progress with aria-valuenow', async () => {
-      expect(progressCircle.hasAttribute('aria-valuenow')).toBe(true);
-      expect(progressCircle.getAttribute('aria-valuenow')).toBe('50');
+      expect(
+        progressCircle.hasAttribute('aria-valuenow'),
+        'aria-valuenow is present in determinate state'
+      ).toBe(true);
+      expect(
+        progressCircle.getAttribute('aria-valuenow'),
+        'aria-valuenow reflects the initial progress of 50'
+      ).toBe('50');
     });
 
     await step(
@@ -355,7 +392,10 @@ export const ReturnToIndeterminateTest: Story = {
         progressCircle.progress = null;
         await progressCircle.updateComplete;
 
-        expect(progressCircle.hasAttribute('aria-valuenow')).toBe(false);
+        expect(
+          progressCircle.hasAttribute('aria-valuenow'),
+          'aria-valuenow is removed after switching to indeterminate'
+        ).toBe(false);
       }
     );
   },
@@ -389,8 +429,14 @@ export const AccessibilityWarningTest: Story = {
         progressCircle.label = '';
         await progressCircle.updateComplete;
 
-        expect(warnCalls.length).toBeGreaterThan(0);
-        expect(String(warnCalls[0]?.[1] || '')).toContain('accessible');
+        expect(
+          warnCalls.length,
+          'at least one warning is emitted when there is no accessible name'
+        ).toBeGreaterThan(0);
+        expect(
+          String(warnCalls[0]?.[1] || ''),
+          'the warning message references the accessible name requirement'
+        ).toContain('accessible');
       })
     );
   },

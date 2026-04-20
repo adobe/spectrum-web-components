@@ -84,7 +84,7 @@ argTypes['icon-slot'] = {
  * Choose one style consistently within a product - `outline` and `subtle` fill draw similar attention levels.
  * Reserve bold fill for high-attention badging only.
  */
-export const meta: Meta = {
+const meta: Meta = {
   title: 'Badge',
   component: 'swc-badge',
   args,
@@ -106,11 +106,7 @@ export const meta: Meta = {
   tags: ['migrated'],
 };
 
-export default {
-  ...meta,
-  title: 'Badge',
-  excludeStories: ['meta'],
-} as Meta;
+export default meta;
 
 // ────────────────────
 //    HELPERS
