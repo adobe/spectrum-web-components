@@ -81,6 +81,7 @@ export default defineConfig({
     }),
   ],
   css: {
+    transformer: 'postcss',
     postcss: {
       plugins: postcssPlugins,
     },
@@ -119,6 +120,7 @@ export default defineConfig({
       },
     },
     target: 'es2018',
+    cssMinify: 'esbuild',
     sourcemap: true,
     emptyOutDir: true,
     outDir: 'dist',
