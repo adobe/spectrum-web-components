@@ -48,6 +48,7 @@ AGENT TEMPLATE PREP INSTRUCTIONS (delete this comment block after copying the te
 - [2nd-gen API decisions](#2nd-gen-api-decisions)
   - [Public API](#public-api)
   - [Behavioral semantics](#behavioral-semantics)
+  - [Accessibility semantics notes (2nd-gen)](#accessibility-semantics-notes-2nd-gen)
 - [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
 - [Migration checklist](#migration-checklist)
   - [Preparation (this ticket)](#preparation-this-ticket)
