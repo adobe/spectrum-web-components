@@ -47,44 +47,70 @@ const meta: Meta = {
 export { meta };
 export default meta;
 
+const threadExampleSource = `<swc-conversation-thread style="max-inline-size: 720px;">
+  <swc-conversation-turn type="user">
+    <swc-user-message>
+      Can you help me create a 45-minute presentation, with animations, for an executive update?
+    </swc-user-message>
+  </swc-conversation-turn>
+  <swc-conversation-turn type="system">
+    <swc-system-message>
+      <swc-response-status slot="status"></swc-response-status>
+      <div class="swc-conversationalAi-systemProse">
+        <h3>Big idea/core narrative: The warmth of welcome</h3>
+        <p>Hospitality begins the moment our customers set foot off their plane.</p>
+      </div>
+      <swc-message-feedback slot="feedback"></swc-message-feedback>
+      <swc-message-sources slot="sources">
+        <li><a href="#source-1">Brand brief Q1 2026</a></li>
+      </swc-message-sources>
+    </swc-system-message>
+  </swc-conversation-turn>
+  <swc-conversation-turn type="user">
+    <swc-user-message>Great. Can you shorten that into three slides?</swc-user-message>
+  </swc-conversation-turn>
+</swc-conversation-thread>`;
+
+const renderThread = () => html`
+  <swc-conversation-thread style="max-inline-size: 720px;">
+    <swc-conversation-turn type="user">
+      <swc-user-message>
+        Can you help me create a 45-minute presentation, with animations, for an
+        executive update?
+      </swc-user-message>
+    </swc-conversation-turn>
+
+    <swc-conversation-turn type="system">
+      <swc-system-message>
+        <swc-response-status slot="status"></swc-response-status>
+        <div class="swc-conversationalAi-systemProse">
+          <h3>Big idea/core narrative: The warmth of welcome</h3>
+          <p>
+            Hospitality begins the moment our customers set foot off their
+            plane.
+          </p>
+        </div>
+        <swc-message-feedback slot="feedback"></swc-message-feedback>
+        <swc-message-sources slot="sources">
+          <li><a href="#source-1">Brand brief Q1 2026</a></li>
+        </swc-message-sources>
+      </swc-system-message>
+    </swc-conversation-turn>
+
+    <swc-conversation-turn type="user">
+      <swc-user-message>
+        Great. Can you shorten that into three slides?
+      </swc-user-message>
+    </swc-conversation-turn>
+  </swc-conversation-thread>
+`;
+
 // ────────────────────
 //    AUTODOCS STORY
 // ────────────────────
 
 export const Playground: Story = {
-  render: () => html`
-    <swc-conversation-thread style="max-inline-size: 720px;">
-      <swc-conversation-turn type="user">
-        <swc-user-message>
-          Can you help me create a 45-minute presentation, with animations, for
-          an executive update?
-        </swc-user-message>
-      </swc-conversation-turn>
-
-      <swc-conversation-turn type="system">
-        <swc-system-message>
-          <swc-response-status slot="status"></swc-response-status>
-          <div class="swc-conversationalAi-systemProse">
-            <h3>Big idea/core narrative: The warmth of welcome</h3>
-            <p>
-              Hospitality begins the moment our customers set foot off their
-              plane.
-            </p>
-          </div>
-          <swc-message-feedback slot="feedback"></swc-message-feedback>
-          <swc-message-sources slot="sources">
-            <li><a href="#source-1">Brand brief Q1 2026</a></li>
-          </swc-message-sources>
-        </swc-system-message>
-      </swc-conversation-turn>
-
-      <swc-conversation-turn type="user">
-        <swc-user-message>
-          Great. Can you shorten that into three slides?
-        </swc-user-message>
-      </swc-conversation-turn>
-    </swc-conversation-thread>
-  `,
+  render: renderThread,
   tags: ['autodocs', 'dev'],
 };
 
@@ -93,8 +119,15 @@ export const Playground: Story = {
 // ──────────────────────────────
 
 export const Overview: Story = {
-  ...Playground,
+  render: renderThread,
   tags: ['overview'],
+  parameters: {
+    docs: {
+      source: {
+        code: threadExampleSource,
+      },
+    },
+  },
 };
 
 // ────────────────────────────────
@@ -114,6 +147,13 @@ export const Overview: Story = {
  * - Exactly one turn is tabbable at a time.
  */
 export const Accessibility: Story = {
-  ...Playground,
+  render: renderThread,
   tags: ['a11y'],
+  parameters: {
+    docs: {
+      source: {
+        code: threadExampleSource,
+      },
+    },
+  },
 };

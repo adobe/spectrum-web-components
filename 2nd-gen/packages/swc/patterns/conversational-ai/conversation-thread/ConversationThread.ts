@@ -13,6 +13,7 @@
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
+import { FocusgroupNavigationController } from '@spectrum-web-components/core/controllers/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 import styles from './conversation-thread.css';
@@ -36,27 +37,25 @@ export class ConversationThread extends SpectrumElement {
   public activeIndex = 0;
 
   private _items: HTMLElement[] = [];
+  private focusgroupNavigationController = new FocusgroupNavigationController(
+    this,
+    {
+      direction: 'vertical',
+      getItems: () => this._getItemsFromSlot(),
+      onActiveItemChange: (active) => this._syncActiveIndex(active),
+    }
+  );
 
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    this.addEventListener('keydown', this._handleKeydown);
-    this.addEventListener('focusin', this._handleFocusIn);
-  }
-
-  public override disconnectedCallback(): void {
-    this.removeEventListener('keydown', this._handleKeydown);
-    this.removeEventListener('focusin', this._handleFocusIn);
-    this._resetManagedTabIndex();
-    super.disconnectedCallback();
-  }
-
   public override focus(options?: FocusOptions): void {
     this._syncFocusableItems();
-    this._focusItem(this.activeIndex, options);
+    const active =
+      this.focusgroupNavigationController.getActiveItem() ??
+      this._items[this._clampIndex(this.activeIndex)];
+    active?.focus(options);
   }
 
   protected override firstUpdated(): void {
@@ -66,7 +65,7 @@ export class ConversationThread extends SpectrumElement {
   protected override updated(changedProperties: PropertyValues<this>): void {
     super.updated(changedProperties);
     if (changedProperties.has('activeIndex')) {
-      this._applyRovingTabIndex(this._clampIndex(this.activeIndex));
+      this._syncActiveItemFromProperty();
     }
   }
 
@@ -81,24 +80,12 @@ export class ConversationThread extends SpectrumElement {
     );
   }
 
-  private _resetManagedTabIndex(): void {
-    for (const item of this._items) {
-      item.removeAttribute('tabindex');
-    }
-  }
-
   private _clampIndex(index: number): number {
     if (!this._items.length) {
       return 0;
     }
 
     return Math.min(Math.max(index, 0), this._items.length - 1);
-  }
-
-  private _applyRovingTabIndex(index: number): void {
-    this._items.forEach((item, itemIndex) => {
-      item.tabIndex = itemIndex === index ? 0 : -1;
-    });
   }
 
   private _syncFocusableItems(): void {
@@ -115,102 +102,41 @@ export class ConversationThread extends SpectrumElement {
       return;
     }
 
-    const clampedIndex = this._clampIndex(this.activeIndex);
-    if (clampedIndex !== this.activeIndex) {
-      this.activeIndex = clampedIndex;
-    }
-    this._applyRovingTabIndex(clampedIndex);
+    this.focusgroupNavigationController.refresh();
+    this._syncActiveIndex(this.focusgroupNavigationController.getActiveItem());
   }
 
-  private _focusItem(index: number, options?: FocusOptions): void {
+  private _syncActiveItemFromProperty(): void {
     if (!this._items.length) {
       return;
     }
 
-    const nextIndex = this._clampIndex(index);
-    this.activeIndex = nextIndex;
-    this._applyRovingTabIndex(nextIndex);
-    this._items[nextIndex]?.focus(options);
+    const nextIndex = this._clampIndex(this.activeIndex);
+    const nextActive = this._items[nextIndex];
+    if (!nextActive) {
+      return;
+    }
+    this.focusgroupNavigationController.setActiveItem(nextActive);
+    this._syncActiveIndex(this.focusgroupNavigationController.getActiveItem());
   }
-
-  private _getCurrentItemIndex(eventTarget: EventTarget | null): number {
-    if (!this._items.length) {
-      return -1;
-    }
-
-    const targetNode = eventTarget instanceof Node ? eventTarget : null;
-    if (targetNode) {
-      const targetIndex = this._items.findIndex(
-        (item) => item === targetNode || item.contains(targetNode)
-      );
-      if (targetIndex !== -1) {
-        return targetIndex;
-      }
-    }
-
-    const activeElement = this.ownerDocument.activeElement;
-    return this._items.findIndex((item) => item === activeElement);
-  }
-
-  private _handleKeydown = (event: KeyboardEvent): void => {
-    if (
-      event.key !== 'ArrowDown' &&
-      event.key !== 'ArrowUp' &&
-      event.key !== 'Home' &&
-      event.key !== 'End'
-    ) {
-      return;
-    }
-
-    this._syncFocusableItems();
-    if (!this._items.length) {
-      return;
-    }
-
-    const indexedTarget = this._getCurrentItemIndex(event.target);
-    const currentIndex =
-      indexedTarget === -1 ? this._clampIndex(this.activeIndex) : indexedTarget;
-
-    let nextIndex = currentIndex;
-    if (event.key === 'ArrowDown') {
-      nextIndex = Math.min(currentIndex + 1, this._items.length - 1);
-    } else if (event.key === 'ArrowUp') {
-      nextIndex = Math.max(currentIndex - 1, 0);
-    } else if (event.key === 'Home') {
-      nextIndex = 0;
-    } else if (event.key === 'End') {
-      nextIndex = this._items.length - 1;
-    }
-
-    if (nextIndex === currentIndex) {
-      return;
-    }
-
-    event.preventDefault();
-    event.stopPropagation();
-    this._focusItem(nextIndex);
-  };
 
   private _handleSlotChange(): void {
     this._syncFocusableItems();
   }
 
-  private _handleFocusIn = (event: FocusEvent): void => {
-    this._syncFocusableItems();
-    if (!this._items.length) {
+  private _syncActiveIndex(active: HTMLElement | null): void {
+    if (!active) {
+      if (this.activeIndex !== 0) {
+        this.activeIndex = 0;
+      }
       return;
     }
 
-    const focusedIndex = this._getCurrentItemIndex(event.target);
-    if (focusedIndex === -1) {
-      return;
+    const index = this._items.indexOf(active);
+    if (index !== -1 && index !== this.activeIndex) {
+      this.activeIndex = index;
     }
-
-    if (focusedIndex !== this.activeIndex) {
-      this.activeIndex = focusedIndex;
-    }
-    this._applyRovingTabIndex(focusedIndex);
-  };
+  }
 
   protected override render(): TemplateResult {
     return html`
