@@ -175,6 +175,23 @@ Instead:
 3. if not, offer to recommend a path based on current evidence
 4. mark the resulting plan sections as provisional until resolved
 
+## Must-confirm decisions
+
+Do not treat the following as implicitly approved, even if you can make a strong recommendation:
+
+- whether this component should extend from another migrated component or shared base
+- whether another component should extend from this one
+- whether migration order should change because of a dependency relationship
+- whether shared logic should be extracted before this migration proceeds
+- whether a major dependency concern should remain separate rather than being unified
+
+For these cases:
+
+1. state the recommendation clearly
+2. explain the tradeoff briefly
+3. explicitly ask the user to confirm, reject, or request a stronger recommendation
+4. mark the affected sections as provisional until the user responds
+
 ## Output
 
 - Copy the template at [assets/migration-prep-template.md](assets/migration-prep-template.md)
@@ -210,6 +227,33 @@ You may:
 - add bullets beneath a section when the template invites additive detail
 - mark non-applicable items as `N/A` with a brief reason
 
+## Final review prompt
+
+After drafting the plan, always give the user a concise review prompt that:
+
+- summarizes the most important unresolved or provisional decisions
+- asks for feedback on any major recommendations
+- explicitly invites refinement of the plan before implementation
+- calls out any missing critical resources and how to continue once they are available
+
+Preferred pattern:
+
+- what to review now
+- what is still provisional
+- what to provide next if the user wants the plan tightened further
+
+## Resume hooks for missing resources
+
+If the plan is provisional because critical inputs are missing, end with explicit next-step prompts the user can act on later.
+
+Example resume hooks:
+
+- "When you have Figma spec images or another approved visual reference, send them and I’ll update the visual API and supported presentation modes."
+- "When you have the accessibility migration analysis, send it and I’ll tighten the semantics, state, and testing recommendations."
+- "When you have the Epic number, send it and I’ll finalize the header and references."
+- "If you can paste the breaking-change ticket descriptions, I can evaluate likely impact and update the plan’s migration-risk guidance."
+- "If there is already a team decision on the shared dependency / extension relationship, send it and I’ll update the sequencing and architecture sections accordingly."
+
 ## Workflow
 
 1. Follow **[Phase 1: Preparation](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-1-preparation)** in the washing machine workflow doc.
@@ -224,8 +268,9 @@ You may:
 10. Check for contradictions across `Changes overview`, `2nd-gen API decisions`, and `Migration checklist` so the same decision is reflected consistently.
 11. Verify key links, remove unresolved placeholders, and ensure each blocker or open question has clear status, owner, and next action where possible.
 12. Preserve the template's stable tables, checklist items, and section structure unless the user explicitly asks for structural changes.
-13. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
-14. Stop after producing the written plan unless the user explicitly asks to move into implementation.
+13. End with a concise review prompt that asks the user to confirm or refine any major provisional decisions and explains what missing resources can be provided next to tighten the plan.
+14. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
+15. Stop after producing the written plan unless the user explicitly asks to move into implementation.
 
 ## Staff review checklist
 

@@ -19,9 +19,12 @@ AGENT TEMPLATE PREP INSTRUCTIONS (delete this comment block after copying the te
 17. Check for contradictions across `Changes overview`, `2nd-gen API decisions`, and `Migration checklist` so the same decision is reflected consistently.
 18. Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material or guided by the user.
 19. Preserve the template structure unless the user explicitly asks for structural changes. Do not replace prescribed tables with bullets, remove stable checklist items, remove columns like `Blocking?` or `Owner`, or discard pre-populated guidance that is intended to remain stable.
-20. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
-21. For fuller workflow, review posture, and escalation guidance, refer to `.ai/skills/migration-prep/SKILL.md`.
-22. Later migration phases should also follow `.ai/skills/migration-prep/references/migration-plan-contract.md` so implementation, tests, docs, and review stay aligned with this approved plan.
+20. If a major dependency, extension, shared-base, or migration-order recommendation is involved, do not treat it as implicitly approved. Ask the user to confirm, reject, or request a stronger recommendation, and mark the affected plan sections as provisional until they respond.
+21. End with a concise review prompt that summarizes the most important provisional decisions, asks for feedback on major recommendations, and tells the user what missing resources they can provide next to tighten the plan.
+22. If critical resources are still missing, give the user explicit resume hooks, such as: send visual references, send the accessibility analysis, send the Epic number, paste breaking-change ticket descriptions, or confirm the dependency/shared-base decision so the plan can be tightened further.
+23. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
+24. For fuller workflow, review posture, and escalation guidance, refer to `.ai/skills/migration-prep/SKILL.md`.
+25. Later migration phases should also follow `.ai/skills/migration-prep/references/migration-plan-contract.md` so implementation, tests, docs, and review stay aligned with this approved plan.
 -->
 
 <!-- Generated breadcrumbs - DO NOT EDIT -->
@@ -164,6 +167,10 @@ This full modifier surface will not be carried forward to 2nd-gen.
 ### Related components and ordering notes
 
 <!-- List related components, shared bases, or prerequisite migrations that affect sequencing or API decisions. -->
+
+### User confirmation needed
+
+<!-- Record any sequencing, shared-base, inheritance, or dependency recommendation that requires explicit user or team approval before this plan is treated as settled. -->
 
 ---
 
