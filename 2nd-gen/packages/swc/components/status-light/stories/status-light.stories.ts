@@ -63,7 +63,7 @@ argTypes.size = {
 /**
  * Status lights describe the condition of an entity. Much like [badges](../?path=/docs/components-badge--readme), they can be used to convey semantic meaning, such as statuses and categories.
  */
-export const meta: Meta = {
+const meta: Meta = {
   title: 'Status light',
   component: 'swc-status-light',
   parameters: {
@@ -85,11 +85,7 @@ export const meta: Meta = {
   tags: ['migrated'],
 };
 
-export default {
-  ...meta,
-  title: 'Status light',
-  excludeStories: ['meta'],
-} as Meta;
+export default meta;
 
 // ────────────────────
 //    HELPERS
@@ -215,12 +211,13 @@ export const Sizes: Story = {
  */
 export const SemanticVariants: Story = {
   render: (args) => html`
-    ${STATUS_LIGHT_VARIANTS_SEMANTIC.map((variant: StatusLightSemanticVariant) =>
-      template({
-        ...args,
-        variant,
-        'default-slot': semanticLabels[variant],
-      })
+    ${STATUS_LIGHT_VARIANTS_SEMANTIC.map(
+      (variant: StatusLightSemanticVariant) =>
+        template({
+          ...args,
+          variant,
+          'default-slot': semanticLabels[variant],
+        })
     )}
   `,
   parameters: {
