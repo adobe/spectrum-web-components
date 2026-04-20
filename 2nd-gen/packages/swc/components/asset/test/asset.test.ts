@@ -131,7 +131,7 @@ export const LabelMutationTest: Story = {
         const svg = asset.shadowRoot?.querySelector('svg');
         expect(
           svg?.getAttribute('aria-label'),
-          'SVG aria-label reflects updated label property'
+          'SVG aria-label after label update'
         ).toBe('Q4 Budget Report');
       }
     );
