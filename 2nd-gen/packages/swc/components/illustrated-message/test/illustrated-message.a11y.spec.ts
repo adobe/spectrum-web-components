@@ -89,9 +89,9 @@ test.describe('IllustratedMessage - ARIA Snapshots', () => {
     );
     // The first component has aria-hidden="true" on its SVG.
     // It must not produce an img role in the accessibility tree.
-    const first = root.locator('swc-illustrated-message').first();
+    const first = root.first();
     await expect(first.getByRole('img')).toHaveCount(0);
-    // Heading is still accessible.
+    // Heading is still accessible
     await expect(first).toMatchAriaSnapshot(`
       - heading "Illustrated message title" [level=2]
     `);
@@ -107,7 +107,7 @@ test.describe('IllustratedMessage - ARIA Snapshots', () => {
     );
     // The second component has role="img" + aria-label on its SVG.
     // It must appear as a named image in the accessibility tree.
-    const second = root.locator('swc-illustrated-message').nth(1);
+    const second = root.nth(1);
     await expect(
       second.getByRole('img', { name: 'Cloud storage illustration' })
     ).toBeVisible();
