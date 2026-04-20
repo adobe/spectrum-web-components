@@ -22,13 +22,12 @@ import { StatusLight } from '@adobe/spectrum-wc/status-light';
 import '@adobe/spectrum-wc/status-light';
 
 import {
-  STATUSLIGHT_VARIANTS_COLOR,
-  STATUSLIGHT_VARIANTS_SEMANTIC,
+  STATUS_LIGHT_VARIANTS_COLOR,
+  STATUS_LIGHT_VARIANTS_SEMANTIC,
 } from '../../../../core/components/status-light/StatusLight.types.js';
 import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
-import {
+import meta, {
   Anatomy,
-  meta,
   NonSemanticVariants,
   Overview,
   Playground,
@@ -174,7 +173,7 @@ export const SemanticVariantsTest: Story = {
   ...SemanticVariants,
   play: async ({ canvasElement, step }) => {
     await step('renders all semantic variants', async () => {
-      for (const variant of STATUSLIGHT_VARIANTS_SEMANTIC) {
+      for (const variant of STATUS_LIGHT_VARIANTS_SEMANTIC) {
         const statusLight = canvasElement.querySelector(
           `swc-status-light[variant="${variant}"]`
         ) as StatusLight | null;
@@ -196,7 +195,7 @@ export const NonSemanticVariantsTest: Story = {
   ...NonSemanticVariants,
   play: async ({ canvasElement, step }) => {
     await step('renders all non-semantic color variants', async () => {
-      for (const variant of STATUSLIGHT_VARIANTS_COLOR) {
+      for (const variant of STATUS_LIGHT_VARIANTS_COLOR) {
         const statusLight = canvasElement.querySelector(
           `swc-status-light[variant="${variant}"]`
         ) as StatusLight | null;
@@ -313,7 +312,7 @@ export const ValidVariantNoWarningTest: Story = {
       'does not warn when a valid semantic variant is set in DEBUG mode',
       () =>
         withWarningSpy(async (warnCalls) => {
-          for (const variant of STATUSLIGHT_VARIANTS_SEMANTIC) {
+          for (const variant of STATUS_LIGHT_VARIANTS_SEMANTIC) {
             statusLight.variant = variant;
             await statusLight.updateComplete;
           }

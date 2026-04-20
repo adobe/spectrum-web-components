@@ -29,8 +29,7 @@ import {
   getComponents,
   withWarningSpy,
 } from '../../../utils/test-utils.js';
-import { meta } from '../stories/badge.stories.js';
-import {
+import meta, {
   Anatomy,
   Fixed,
   NonSemanticVariants,
