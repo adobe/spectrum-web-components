@@ -30,56 +30,21 @@ argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
   options: Avatar.VALID_SIZES.map(String),
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: '500' },
-  },
 };
 
 argTypes.outline = {
   ...argTypes.outline,
   control: { type: 'boolean' },
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'false' },
-  },
 };
 
 argTypes.disabled = {
   ...argTypes.disabled,
   control: { type: 'boolean' },
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'false' },
-  },
-};
-
-argTypes.alt = {
-  ...argTypes.alt,
-  description: 'Text description of the avatar image.',
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'undefined' },
-  },
 };
 
 argTypes.decorative = {
   ...argTypes.decorative,
-  description:
-    'Marks the avatar as decorative, hiding it from assistive technology.',
   control: { type: 'boolean' },
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'false' },
-  },
-};
-
-argTypes.src = {
-  ...argTypes.src,
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: "''" },
-  },
 };
 
 /**

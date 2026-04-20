@@ -59,6 +59,16 @@ const stories: StorybookConfig['stories'] = [
 if (storybookMode !== 'ci-a11y') {
   stories.push(
     {
+      directory: '../../core',
+      files: '**/*.mdx',
+      titlePrefix: 'Core',
+    },
+    {
+      directory: '../../core',
+      files: '**/stories/*.stories.ts',
+      titlePrefix: 'Core',
+    },
+    {
       directory: 'learn-about-swc',
       files: '*.mdx',
       titlePrefix: 'Learn about SWC',
@@ -83,11 +93,16 @@ if (storybookMode === 'dev') {
     files: '**/*.test.ts',
     titlePrefix: 'Components',
   });
+  stories.push({
+    directory: '../../core',
+    files: '**/stories/**/*.test.ts',
+    titlePrefix: 'Core',
+  });
 }
 
 /**
- * The local screen-reader addon is useful in normal Storybook, but it imports
- * 1st-gen components we intentionally avoid in CI a11y mode.
+ * ci-a11y mode needs docs (for MDX parsing) and a11y; everything else
+ * (designs, vitest, chromatic, screen-reader) is unnecessary overhead.
  */
 const addons: StorybookConfig['addons'] = [
   {
@@ -102,12 +117,15 @@ const addons: StorybookConfig['addons'] = [
     },
   },
   '@storybook/addon-a11y',
-  '@storybook/addon-designs',
-  '@storybook/addon-vitest',
 ];
 
 if (storybookMode !== 'ci-a11y') {
-  addons.push(resolve(__dirname, './addons/screen-reader-addon'));
+  addons.push(
+    '@storybook/addon-designs',
+    '@storybook/addon-vitest',
+    '@chromatic-com/storybook',
+    resolve(__dirname, './addons/screen-reader-addon')
+  );
 }
 
 const config: StorybookConfig = {
@@ -119,11 +137,26 @@ const config: StorybookConfig = {
   core: {
     disableTelemetry: true,
   },
+  build: {
+    test: {
+      // Chromatic's addon sets SB_TESTBUILD=true which disables addon-docs,
+      // breaking our custom DocumentTemplate.mdx. Keep docs enabled but
+      // disable addons that are not needed for visual regression testing.
+      // See: https://github.com/storybookjs/storybook/issues/31699
+      disabledAddons: [],
+    },
+  },
   staticDirs: ['../public'],
   addons,
   experimental_indexers: storybookMode === 'dev' ? [testStoryIndexer] : [],
   viteFinal: async (config) => {
     return mergeConfig(config, {
+      css: {
+        transformer: 'postcss',
+      },
+      build: {
+        cssMinify: 'esbuild',
+      },
       plugins: [
         {
           name: 'css-hmr',
