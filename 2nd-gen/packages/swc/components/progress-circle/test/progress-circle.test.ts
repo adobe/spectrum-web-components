@@ -26,7 +26,6 @@ import meta from '../stories/progress-circle.stories.js';
 import {
   Indeterminate,
   Overview,
-  ProgressValues,
   Sizes,
   StaticColors,
 } from '../stories/progress-circle.stories.js';
@@ -277,7 +276,17 @@ export const LightDomWithLabelDeprecationOnlyTest: Story = {
 // ──────────────────────────────────────────────────────────────
 
 export const ProgressValuesTest: Story = {
-  ...ProgressValues,
+  render: () => html`
+    ${[0, 25, 50, 75, 100].map(
+      (progress) => html`
+        <swc-progress-circle
+          progress=${progress}
+          label="Progress ${progress}%"
+          size="m"
+        ></swc-progress-circle>
+      `
+    )}
+  `,
   play: async ({ canvasElement, step }) => {
     const circles = await getComponents<ProgressCircle>(
       canvasElement,
