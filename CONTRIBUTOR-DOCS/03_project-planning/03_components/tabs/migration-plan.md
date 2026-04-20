@@ -55,7 +55,7 @@
 
 ## TL;DR
 
-- Tabs is a three-element architecture (`swc-tabs`, `swc-tab`, `swc-tab-panel`) plus an optional overflow wrapper (`swc-tabs-overflow`)
+- Tabs is a three-element architecture (`swc-tabs`, `swc-tab`, `swc-tab-panel`). Overflow is deferred to phase 2.
 - Keyboard navigation migrates from `RovingTabindexController` to a 2nd-gen controller, fixing 1st-gen bugs with direction, RTL, and orientation
 - Disabled tabs use `aria-disabled="true"` (not native `disabled`) so they remain discoverable by assistive technology
 - `aria-orientation` must be co-located with `role="tablist"` (fixing a 1st-gen bug where they were on different elements)
@@ -63,7 +63,7 @@
 - `compact` boolean renamed to `density` (`'compact' | 'regular'`) to align with Figma/React Spectrum (Q17)
 - `emphasized`, `quiet`, and `size` are **not in the S2 API** and are removed unless design confirms otherwise (Q18)
 - `direction="vertical-right"` is a 1st-gen SWC addition not in Spectrum CSS; removal is a breaking change for consumers using it (Q4)
-- S2 overflow behavior changes from scroll-based (`sp-tabs-overflow`) to Picker-based collapse (Q19)
+- S2 overflow changes from scroll-based to Picker-based collapse — **deferred to phase 2** (Q5, Q19 resolved)
 - Several public API surfaces are removed: `rovingTabindexController` field, `focusElement` getter (if `Focusable` dropped), module-level exports, CSS deep imports
 - `change` event rename to `swc-change` would silently break all consumers — strongly recommend keeping `change`
 
@@ -72,11 +72,8 @@
 - `Q1` in [Architecture and behavior](#architecture-and-behavior): 2nd-gen keyboard controller readiness — is [#6129](https://github.com/adobe/spectrum-web-components/pull/6129) merged?
 - `Q2` in [Architecture and behavior](#architecture-and-behavior): `Focusable` mixin disposition — is it needed in 2nd-gen?
 - `Q3` in [Architecture and behavior](#architecture-and-behavior): cross-root ARIA — how will `aria-controls` / `aria-labelledby` ID references resolve if DOM arrangement changes?
-- `Q5` in [Scope and prerequisites](#scope-and-prerequisites): should `swc-tabs-overflow` be migrated in this epic or deferred?
 - `Q7` in [Architecture and behavior](#architecture-and-behavior): `change` event rename would silently break all consumers
-- `Q14` in [Scope and prerequisites](#scope-and-prerequisites): public scroll API disposition — `TabsOverflow` depends on it
 - `Q18` in [Architecture and behavior](#architecture-and-behavior): `emphasized`, `quiet`, and `size` not in S2 API — confirm removal
-- `Q19` in [Scope and prerequisites](#scope-and-prerequisites): overflow pattern changes from scroll to Picker-based collapse in S2
 
 ---
 
@@ -362,7 +359,7 @@ This full modifier surface will not be carried forward to 2nd-gen. Consumers mus
 | **B23** | `emphasized` removed | `emphasized` boolean attribute for visually emphasized style. | **Not in S2 API.** Removed. | Remove `emphasized` attribute. See Q18. |
 | **B24** | `quiet` removed | `quiet` boolean attribute for divider-less display. | **Not in S2 API.** Removed. | Remove `quiet` attribute. See Q18. |
 | **B25** | `size` removed | `SizedMixin` with t-shirt sizes (`s`, `m`, `l`, `xl`). | **Not in S2 API.** Tabs no longer have t-shirt sizing. | Remove `size` attribute. See Q18. |
-| **B26** | Overflow pattern change | `sp-tabs-overflow` uses scroll buttons to navigate overflowing tabs. | S2 replaces scroll-based overflow with Picker-based collapse. Tabs collapse into a dropdown menu when space is insufficient. | Replace `<sp-tabs-overflow>` wrapping pattern. See Q19. |
+| **B26** | Overflow pattern change | `sp-tabs-overflow` uses scroll buttons to navigate overflowing tabs. | S2 replaces scroll-based overflow with Picker-based collapse. **Deferred to phase 2** — `sp-tabs-overflow` is not ported in the initial migration. | Continue using 1st-gen `sp-tabs-overflow` until phase 2 delivers the Picker-based collapse. See Q5, Q19. |
 
 #### API removals and surface changes
 
@@ -772,15 +769,15 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 
 | # | Item | Blocking? | Status | Owner |
 |---|---|---|---|---|
-| **Q5** | Should `sp-tabs-overflow` be migrated in this epic or deferred? Depends on `swc-action-button` availability. | Yes | Open | Ticket owner |
+| **Q5** | ~~Should `sp-tabs-overflow` be migrated in this epic or deferred?~~ **Resolved: deferred to phase 2.** S2 Picker-based collapse requires design alignment and `swc-picker` availability. Porting scroll-based overflow would be throwaway work. | No | **Resolved** | — |
 | **Q9** | Module-level exports (`ScaledIndicator`, scroll helpers) — carry forward as public API, internalize, or drop? | No | Open | API reviewer |
 | **Q10** | `selectionIndicatorStyle` / `shouldAnimate` (`attribute: false` properties) — confirm not carried forward. | No | Open | Implementation |
 | **Q11** | `<label>` element inside `sp-tab` shadow DOM — consumers targeting via CSS may break when removed. Document as internal DOM change. | No | Open | Migration guide author |
 | **Q12** | `--highcontrast-tabs-*` tokens — verify whether Spectrum 2 handles automatically or needs explicit migration. | No | Open | CSS reviewer |
 | **Q13** | 1st-gen test gaps (no RTL tests, no `memory` re-entry test, limited disabled tests) — ensure 2nd-gen tests fill these. | No | Open | Test author |
-| **Q14** | Public scroll API (`scrollTabs`, `scrollToSelection`, `scrollState`) — carry forward, internalize, or drop? `TabsOverflow` depends on these methods, and consumers may use them directly. | Yes | Open | API reviewer |
+| **Q14** | ~~Public scroll API (`scrollTabs`, `scrollToSelection`, `scrollState`)~~ **Resolved: not ported in phase 1.** Scroll API only exists to support `sp-tabs-overflow`, which is deferred. Will be revisited in phase 2 alongside the Picker-based collapse implementation. | No | **Resolved** | — |
 | **Q15** | `slot="tab-panel"` auto-assignment — 1st-gen sets `this.slot = 'tab-panel'` in `firstUpdated`. Should 2nd-gen preserve this or require explicit `slot` attributes? Changing this silently breaks all existing tab-panel usage. | No | Open | Implementation |
-| **Q19** | Overflow pattern: S2 replaces scroll-based overflow (`sp-tabs-overflow`) with Picker-based collapse. Tabs collapse into a dropdown when space is insufficient. See [React Spectrum overflow](https://react-spectrum.adobe.com/Tabs#overflow-behavior) and [Spectrum CSS overflow story](https://64762974a45b8bc5ca1705a2-yypcfpggii.chromatic.com/?path=/story/components-tabs--default&args=orientation:overflow). Does `swc-tabs-overflow` carry forward at all, or is it replaced by built-in Picker collapse in `swc-tabs`? | **Yes** | Open | Design / Architecture |
+| **Q19** | ~~Overflow pattern: does `swc-tabs-overflow` carry forward or is it replaced by Picker collapse?~~ **Resolved: deferred to phase 2.** Scroll-based `sp-tabs-overflow` will not be ported. Phase 2 will implement the S2 Picker-based collapse pattern once design alignment and `swc-picker` are available. Consumers should remain on the 1st-gen `sp-tabs-overflow` until then. | No | **Resolved** | — |
 | **Q20** | Storybook documentation structure: Tabs is the first multi-element component. Should all child component APIs (`swc-tab`, `swc-tab-panel`) be documented on a single "Tabs" Storybook page, or should each have its own page? | No | Open | Documentation / Team |
 
 ---
