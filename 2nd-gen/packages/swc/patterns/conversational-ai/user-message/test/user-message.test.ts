@@ -52,9 +52,11 @@ export const TypeAndSlotTest: Story = {
       'swc-user-message'
     );
 
-    await step('type reflects to the host and drives card structure', async () => {
-      el.type = 'card';
-      el.innerHTML = `
+    await step(
+      'type reflects to the host and drives card structure',
+      async () => {
+        el.type = 'card';
+        el.innerHTML = `
         <div
           slot="thumbnail"
           role="img"
@@ -63,32 +65,38 @@ export const TypeAndSlotTest: Story = {
         <span slot="title">Brand guidelines</span>
         <span slot="subtitle">PDF</span>
       `;
-      await el.updateComplete;
-      await Promise.resolve();
+        await el.updateComplete;
+        await Promise.resolve();
 
-      const title = el.shadowRoot?.querySelector('.swc-UserMessage-title');
-      const subtitle = el.shadowRoot?.querySelector('.swc-UserMessage-subtitle');
-      expect(el.getAttribute('type')).toBe('card');
-      expect(title).toBeTruthy();
-      expect(subtitle).toBeTruthy();
-    });
+        const title = el.shadowRoot?.querySelector('.swc-UserMessage-title');
+        const subtitle = el.shadowRoot?.querySelector(
+          '.swc-UserMessage-subtitle'
+        );
+        expect(el.getAttribute('type')).toBe('card');
+        expect(title).toBeTruthy();
+        expect(subtitle).toBeTruthy();
+      }
+    );
 
-    await step('media type renders the media attachment container', async () => {
-      el.type = 'media';
-      el.innerHTML = `
+    await step(
+      'media type renders the media attachment container',
+      async () => {
+        el.type = 'media';
+        el.innerHTML = `
         <div slot="thumbnail" role="img" aria-label="Preview"></div>
         <span slot="title">Preview image</span>
         <span slot="subtitle">PNG</span>
       `;
-      await el.updateComplete;
-      await Promise.resolve();
+        await el.updateComplete;
+        await Promise.resolve();
 
-      const attachment = el.shadowRoot?.querySelector(
-        '.swc-UserMessage-attachment--media'
-      );
-      expect(el.getAttribute('type')).toBe('media');
-      expect(attachment).toBeTruthy();
-    });
+        const attachment = el.shadowRoot?.querySelector(
+          '.swc-UserMessage-attachment--media'
+        );
+        expect(el.getAttribute('type')).toBe('media');
+        expect(attachment).toBeTruthy();
+      }
+    );
 
     await step('copy type uses the default slot text path', async () => {
       el.type = 'copy';
@@ -96,9 +104,8 @@ export const TypeAndSlotTest: Story = {
       await el.updateComplete;
       await Promise.resolve();
 
-      const textSlot = el.shadowRoot?.querySelector<HTMLSlotElement>(
-        'slot:not([name])'
-      );
+      const textSlot =
+        el.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
       const assignedText = textSlot
         ?.assignedNodes({ flatten: true })
         .map((node) => node.textContent ?? '')

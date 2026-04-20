@@ -149,7 +149,7 @@ export const Loading: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-response-status loading></swc-response-status>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Loading
         </span>
@@ -160,7 +160,7 @@ export const Loading: Story = {
           business messages.
         </swc-response-status>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Complete (default label)
         </span>
@@ -171,7 +171,7 @@ export const Loading: Story = {
           business messages.
         </swc-response-status>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Complete (custom label)
         </span>
@@ -197,7 +197,7 @@ export const Reasoning: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-response-status></swc-response-status>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Complete without reasoning content (no disclosure chevron)
         </span>
@@ -208,7 +208,7 @@ export const Reasoning: Story = {
           business messages.
         </swc-response-status>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Reasoning collapsed
         </span>
@@ -219,7 +219,7 @@ export const Reasoning: Story = {
           Step 3: Composing response.
         </swc-response-status>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Reasoning expanded
         </span>

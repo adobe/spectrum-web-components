@@ -112,7 +112,7 @@ export const Status: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-message-feedback></swc-message-feedback>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Unset
         </span>
@@ -120,7 +120,7 @@ export const Status: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-message-feedback status="positive"></swc-message-feedback>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Positive
         </span>
@@ -128,7 +128,7 @@ export const Status: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-message-feedback status="negative"></swc-message-feedback>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Negative
         </span>
@@ -201,7 +201,7 @@ export const HandlingEvents: Story = {
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-800);margin:0;"
         ></p>
         <p
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-50);color:var(--swc-gray-600);margin:0;"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-50);color:var(--swc-gray-700);margin:0;"
         >
           In production you would persist the choice, call an API, or update app
           state instead of only echoing the event here.

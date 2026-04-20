@@ -115,7 +115,10 @@ export class ResponseStatus extends SpectrumElement {
     `;
   }
 
-  private _renderCompleteRow(label: string, showDisclosure: boolean): TemplateResult {
+  private _renderCompleteRow(
+    label: string,
+    showDisclosure: boolean
+  ): TemplateResult {
     const expanded = this.open;
 
     if (showDisclosure) {

@@ -165,7 +165,7 @@ export const Modes: Story = {
           placeholder=${defaultPlaceholder}
         ></swc-prompt-field>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           mode="default" with empty value
         </span>
@@ -176,7 +176,7 @@ export const Modes: Story = {
           value="Summarize the API changes in this branch."
         ></swc-prompt-field>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           mode="default" with entered value
         </span>
@@ -188,7 +188,7 @@ export const Modes: Story = {
           value="Summarize the API changes in this branch."
         ></swc-prompt-field>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           mode="loading" (input remains editable)
         </span>
@@ -200,7 +200,7 @@ export const Modes: Story = {
           value="This input is disabled."
         ></swc-prompt-field>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           mode="disabled" (input and controls disabled)
         </span>
@@ -234,7 +234,7 @@ export const Artifact: Story = {
           placeholder=${defaultPlaceholder}
         ></swc-prompt-field>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           None
         </span>
@@ -253,7 +253,7 @@ export const Artifact: Story = {
           </swc-upload-artifact>
         </swc-prompt-field>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Card
         </span>
@@ -270,7 +270,7 @@ export const Artifact: Story = {
           </swc-upload-artifact>
         </swc-prompt-field>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Media
         </span>
@@ -308,7 +308,7 @@ export const Artifact: Story = {
           </swc-upload-artifact>
         </swc-prompt-field>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Mixed multi-artifact set (wrapping layout)
         </span>
@@ -334,7 +334,7 @@ export const FilePicker: Story = {
           value="Attach references for the summary."
         ></swc-prompt-field>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Default picker (multiple=true, accept="")
         </span>
@@ -347,7 +347,7 @@ export const FilePicker: Story = {
           ?multiple=${false}
         ></swc-prompt-field>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Restricted picker (accept="image/*", multiple=false)
         </span>

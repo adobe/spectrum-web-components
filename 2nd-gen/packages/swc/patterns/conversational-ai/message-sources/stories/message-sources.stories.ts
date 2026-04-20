@@ -132,7 +132,7 @@ export const Open: Story = {
           <li><a href="#">Creative Cloud release notes 2026</a></li>
         </swc-message-sources>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Collapsed
         </span>
@@ -144,7 +144,7 @@ export const Open: Story = {
           <li><a href="#">Firefly API getting started guide</a></li>
         </swc-message-sources>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Expanded
         </span>
@@ -155,7 +155,7 @@ export const Open: Story = {
           <li><a href="#">Creative Cloud release notes 2026</a></li>
         </swc-message-sources>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Expanded with custom label
         </span>

@@ -102,9 +102,9 @@ export const OpenMutationTest: Story = {
         expect(toggle?.getAttribute('aria-expanded')).toBe('false');
         expect(panel).toBeTruthy();
         expect(panel?.hidden).toBe(true);
-        expect(
-          panel ? getComputedStyle(panel).display : undefined
-        ).toBe('none');
+        expect(panel ? getComputedStyle(panel).display : undefined).toBe(
+          'none'
+        );
       }
     );
 

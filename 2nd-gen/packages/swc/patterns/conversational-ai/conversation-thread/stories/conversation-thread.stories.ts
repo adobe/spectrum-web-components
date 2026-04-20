@@ -84,7 +84,10 @@ const renderThread = () => html`
 
     <swc-conversation-turn type="system">
       <swc-system-message>
-        <swc-response-status slot="status">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</swc-response-status>
+        <swc-response-status slot="status">
+          I interpreted your request as an executive narrative task and
+          prioritized a concise, audience-ready structure.
+        </swc-response-status>
         <div class="swc-conversationalAi-systemProse">
           <h3>Big idea/core narrative: The warmth of welcome</h3>
           <p>
@@ -152,7 +155,10 @@ const renderFullPattern = () => html`
       </swc-conversation-turn>
       <swc-conversation-turn type="system">
         <swc-system-message>
-          <swc-response-status slot="status">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</swc-response-status>
+          <swc-response-status slot="status">
+            I interpreted your request as an executive narrative task and
+            prioritized a concise, audience-ready structure.
+          </swc-response-status>
           <div class="swc-conversationalAi-systemProse">
             <p>Great direction. I suggest a 12-slide structure...</p>
           </div>

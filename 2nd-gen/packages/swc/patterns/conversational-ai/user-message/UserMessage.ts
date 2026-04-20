@@ -41,7 +41,10 @@ export class UserMessage extends SpectrumElement {
 
   private _renderAttachment(): TemplateResult {
     return html`
-      <div class="swc-UserMessage-attachment swc-UserMessage-attachment--${this.type}">
+      <div
+        class="swc-UserMessage-attachment swc-UserMessage-attachment--${this
+          .type}"
+      >
         <div class="swc-UserMessage-thumbnail">
           <slot name="thumbnail"></slot>
         </div>
@@ -60,7 +63,11 @@ export class UserMessage extends SpectrumElement {
   protected override render(): TemplateResult {
     return html`
       <div class="swc-UserMessage">
-        ${this.type === 'copy' ? html`<slot></slot>` : this._renderAttachment()}
+        ${this.type === 'copy'
+          ? html`
+              <slot></slot>
+            `
+          : this._renderAttachment()}
       </div>
     `;
   }

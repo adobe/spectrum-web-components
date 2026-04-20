@@ -92,7 +92,7 @@ export const Labels: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-suggestion-item>Short action</swc-suggestion-item>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Short label
         </span>
@@ -102,7 +102,7 @@ export const Labels: Story = {
           Create a year-over-year growth chart for the next decade
         </swc-suggestion-item>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Long label
         </span>

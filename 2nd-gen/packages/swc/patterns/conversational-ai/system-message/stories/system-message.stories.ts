@@ -168,7 +168,7 @@ export const Loading: Story = {
           </swc-system-message>
         </swc-conversation-turn>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Generating response
         </span>
@@ -193,7 +193,7 @@ export const Loading: Story = {
           </swc-system-message>
         </swc-conversation-turn>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Response complete
         </span>

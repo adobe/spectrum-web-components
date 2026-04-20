@@ -106,7 +106,7 @@ export const SuggestionCount: Story = {
           </swc-suggestion-item>
         </swc-suggestion>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           One suggestion
         </span>
@@ -122,7 +122,7 @@ export const SuggestionCount: Story = {
           <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
         </swc-suggestion>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Three suggestions (recommended)
         </span>
@@ -138,7 +138,7 @@ export const SuggestionCount: Story = {
           <swc-suggestion-item>Suggest a subject line</swc-suggestion-item>
         </swc-suggestion>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Five suggestions (wraps)
         </span>
@@ -166,7 +166,7 @@ export const Title: Story = {
           <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
         </swc-suggestion>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Default title
         </span>
@@ -182,7 +182,7 @@ export const Title: Story = {
           <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
         </swc-suggestion>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Custom title
         </span>

@@ -131,7 +131,7 @@ export const Content: Story = {
           </swc-user-message>
         </swc-conversation-turn>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Copy
         </span>
@@ -150,7 +150,7 @@ export const Content: Story = {
           </swc-user-message>
         </swc-conversation-turn>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Card
         </span>
@@ -169,7 +169,7 @@ export const Content: Story = {
           </swc-user-message>
         </swc-conversation-turn>
         <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
           Media
         </span>

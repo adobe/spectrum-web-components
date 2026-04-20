@@ -171,9 +171,9 @@ export const InteractionTest: Story = {
         expect(button).toBeNull();
         expect(panel).toBeNull();
         expect(row).toBeTruthy();
-        expect(row?.querySelector('.swc-ResponseStatus-label')?.textContent?.trim()).toBe(
-          el.completeLabel
-        );
+        expect(
+          row?.querySelector('.swc-ResponseStatus-label')?.textContent?.trim()
+        ).toBe(el.completeLabel);
       }
     );
 
