@@ -11,7 +11,7 @@ description: Phase 4 of 1st-gen to 2nd-gen component migration. Use to migrate C
 
 You are translating, not redesigning. Your job is not to invent new visual decisions. Use the `rendering-and-styling-migration-analysis.md` file that corresponds to the component you are migrating. When the token you need does not exist, use the `ask-questions` skill to flag it with the user. Refer to the CSS styling guides in `CONTRIBUTOR-DOCS/02_style-guide/` when refactoring the CSS (i.e. change `--spectrum` prefixes to `--swc`; `.spectrum*` classes to `.swc*`; `--mod` prefixes should not exist). The CSS style guides are the preferred way to write the CSS, as opposed to any recommendations you find in the rendering analysis doc.
 
-Also read the approved migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` for approved visual scope, intentional divergences, custom-property decisions, and any planned reduction or split in the supported surface area. See also [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
+Also read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` when available for approved visual scope, intentional divergences, custom-property decisions, and any planned reduction or split in the supported surface area. If it is missing, stale, or intentionally incomplete, derive the needed context from source material and call out the missing plan as a risk. See also [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
 
 ## When to use this skill
 

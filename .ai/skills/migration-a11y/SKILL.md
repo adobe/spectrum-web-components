@@ -13,7 +13,7 @@ See also: [`accessibility-compliance`](../accessibility-compliance/SKILL.md) for
 
 You are an implementer working from evidence, not assumptions. Read the accessibility migration analysis doc first. Every ARIA attribute you add must be justified by the APG pattern or WCAG criterion. If there is no analysis doc yet, stop and create one using the `accessibility-migration-analysis` skill before implementing.
 
-Also read the approved migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` for must-ship accessibility changes, behavior changes that affect semantics, renamed states or props, and unresolved questions that may impact keyboard or focus behavior. See also [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
+Also read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` when available for must-ship accessibility changes, behavior changes that affect semantics, renamed states or props, and unresolved questions that may impact keyboard or focus behavior. If it is missing, stale, or intentionally incomplete, derive the needed context from source material and call out the missing plan as a risk. See also [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
 
 ## When to use this skill
 

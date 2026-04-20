@@ -2,18 +2,18 @@
 AGENT TEMPLATE PREP INSTRUCTIONS (delete this comment block after copying the template):
 1. Ensure you have the component name to use for filepath/naming purposes, ex. "Button" as well as the Jira Epic ticket number.
 2. Copy this template to `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md`
-3. Find/replace all [component] and [Component] with the correctly case-matched versions of the component name acquired from step 1. This will also help resolve any links that depend on the correct component name. Also update [Epic SWC-####] to the received ticket number, such as SWC-####.
+3. Find/replace all [component] and [Component] with the correctly case-matched versions of the component name acquired from step 1. This will also help resolve any links that depend on the correct component name. Also update Epic SWC-#### to the received ticket number, such as SWC-####.
 4. The areas marked "DO NOT EDIT" will be updated by another process, you do not need to manually manage them. Also do not remove them or add extra content.
 5. Refer to HTML comments throughout for additional guidance on filling out that section. Any non-commented content is intended to be fairly stable, unless it really doesn't make sense for the component.
-6. Ensure you receive the required inputs, which are linked in the References section with the exception of Figma, which the user will need to provide spec images from.
+6. Ensure you receive the required inputs, which are linked in the References section, plus Figma spec images or another approved visual reference from the user when local design references are unavailable.
 7. If a section is not applicable, prefer writing "N/A" with a brief reason instead of removing the section unless the user explicitly asks for a different structure.
 8. If links or file paths do not resolve after replacing placeholders, verify the actual repo naming before proceeding. Try likely variants such as kebab-case (`action-button`), PascalCase (`ActionButton`), or the spaced display name (`Action Button`). Prefer real existing repo paths over user phrasing. If multiple matches exist or none resolve, pause and ask the user for the exact component slug or source path.
 9. Mark recommendations and decisions as confirmed, inferred, or open questions based on the quality of the source material. Do not present inferred details as settled facts.
 10. If proposing a rename, deprecation, or breaking change, include at least one concrete supporting source. If no support is available, keep it as an open question.
-11. Before finalizing, sweep for unresolved placeholders such as `[component]`, `[Component]`, `[component-version]`, and `[Epic SWC-####]`.
+11. Before finalizing, sweep for unresolved placeholders such as `[component]`, `[Component]`, `[component-version]`, and `Epic SWC-####`.
 12. Before finalizing, check that `TL;DR`, `Most blocking open questions`, `Changes overview`, `2nd-gen API decisions`, and `References` are populated. If information is missing, say so explicitly instead of leaving sections blank.
 13. Check for contradictions across `Changes overview`, `2nd-gen API decisions`, and `Migration checklist` so the same decision is reflected consistently.
-14. Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material.
+14. Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material or guided by the user.
 15. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
 16. For fuller workflow, review posture, and escalation guidance, refer to `.ai/skills/migration-prep/SKILL.md`.
 17. Later migration phases should also follow `.ai/skills/migration-prep/references/migration-plan-contract.md` so implementation, tests, docs, and review stay aligned with this approved plan.
@@ -25,7 +25,7 @@ AGENT TEMPLATE PREP INSTRUCTIONS (delete this comment block after copying the te
 
 <!-- Document title (editable) -->
 
-# [Component] Migration Plan
+# [Component] migration plan
 
 <!-- Generated TOC - DO NOT EDIT -->
 
@@ -69,7 +69,7 @@ AGENT TEMPLATE PREP INSTRUCTIONS (delete this comment block after copying the te
 
 <!-- Document content (editable) -->
 
-> **[Epic SWC-####]** · Planning output. Must be reviewed before implementation begins.
+> **Epic SWC-####** · Planning output. Must be reviewed before implementation begins.
 >
 > Copy this template into `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` before editing so the relative links, breadcrumbs, and generated sections resolve correctly.
 >
@@ -377,7 +377,7 @@ Example content for this section.
 
 - [ ] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
 - [ ] Status table in workstream doc updated
-- [ ] PR created with description referencing [Epic SWC-####]
+- [ ] PR created with description referencing Epic SWC-####
 - [ ] Peer engineer sign-off
 
 ---
@@ -433,6 +433,6 @@ Owner examples:
 - [1st-gen README](../../../../1st-gen/packages/[component]/README.md)
 - [React Spectrum S2 [Component]](https://react-spectrum.adobe.com/[Component])
 - [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
-- [Epic SWC-####]: [Component] Epic
+- Epic: SWC-#### - [Component] epic
 
 <!-- Include in the list bug tickets with summary if applicable, ex. "SWC-459: pending state a11y criteria" -->

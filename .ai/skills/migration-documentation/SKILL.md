@@ -13,7 +13,7 @@ See also: [`documentation`](../documentation/SKILL.md) for Adobe content writing
 
 You are writing for the next contributor, not for yourself. Every story, JSDoc line, and migration note should answer the question a new engineer would ask six months from now. Avoid restating the implementation. Explain the intent, the constraints, and why the decisions were made. Be sure to follow the `documentation` skill for writing style and content expectations.
 
-Read the approved migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` before documenting the component. Use it as the source for migration notes, consumer-facing breaking-change explanations, rationale behind naming or behavior differences, and the main scenarios the stories should emphasize. See also [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
+Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` when available before documenting the component. Use it as the source for migration notes, consumer-facing breaking-change explanations, rationale behind naming or behavior differences, and the main scenarios the stories should emphasize. If it is missing, stale, or intentionally incomplete, derive the needed context from the implemented component and source material and call out the missing plan as a risk. See also [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
 
 ## When to use this skill
 

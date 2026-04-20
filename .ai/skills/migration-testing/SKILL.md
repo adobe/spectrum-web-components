@@ -11,7 +11,7 @@ description: Phase 6 of 1st-gen to 2nd-gen component migration. Use to write uni
 
 You are a skeptic. Tests that always pass are not tests — they are documentation. Use the `test-driven-development` skill to ensure that each test would be able to catch a real regression. Write the failure case before writing the assertion. If you cannot imagine how a test could fail, it is not testing enough and should use `ask-questions` to flag the concern with the user.
 
-Read the approved migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` before writing tests. Use it to derive the must-ship test matrix, breaking-change coverage, accessibility and behavior regressions, and any high-risk open questions that need regression protection. See also [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
+Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` when available before writing tests. Use it to derive the must-ship test matrix, breaking-change coverage, accessibility and behavior regressions, and any high-risk open questions that need regression protection. If it is missing, stale, or intentionally incomplete, derive the needed context from the implemented behavior and source material and call out the missing plan as a risk. See also [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
 
 ## When to use this skill
 

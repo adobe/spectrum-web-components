@@ -105,15 +105,16 @@ In these cases, do not just document the ambiguity. Recommend a preferred path, 
 
 - Copy the template at [assets/migration-prep-template.md](assets/migration-prep-template.md)
 - Save the filled-in plan to `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md`
+- Treat [references/migration-plan-contract.md](references/migration-plan-contract.md) as the shared baseline later migration phases will use to stay aligned with the approved plan
 - Replace all `[component]` and `[Component]` placeholders before finalizing
 - Prefer marking truly inapplicable sections as `N/A` instead of deleting them unless the user explicitly wants sections removed
 - Verify that key references resolve after replacing placeholders. If they do not, try likely repo naming variants such as kebab-case, PascalCase, or the spaced display name before asking the user for the exact component slug or source path
 - Do not present inferred details as confirmed. Mark decisions as confirmed, inferred, or open questions based on the quality of the source material
 - For any proposed rename, deprecation, or breaking change, include at least one concrete supporting source. If you cannot support it, keep it as an open question instead of presenting it as settled
-- Before finalizing, remove or replace unresolved placeholders such as `[component]`, `[Component]`, `[component-version]`, and `[Epic SWC-####]`
+- Before finalizing, remove or replace unresolved placeholders such as `[component]`, `[Component]`, `[component-version]`, and `Epic SWC-####`
 - Before finalizing, verify the highest-value links and references in the completed plan: 1st-gen source, analysis docs, tests, README, workflow doc, and React S2 component docs
 - Keep `TL;DR`, `Most blocking open questions`, `Changes overview`, `2nd-gen API decisions`, and `References` populated. If information is unavailable, say so explicitly instead of leaving them blank
-- Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material
+- Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material or guided by the user
 
 ## Workflow
 

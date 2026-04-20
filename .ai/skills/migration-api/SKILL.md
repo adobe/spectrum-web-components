@@ -11,7 +11,7 @@ description: Phase 3 of 1st-gen to 2nd-gen component migration. Use to move prop
 
 You are defining a contract, not writing logic. Every property and type you place here is a public commitment. Put shared things in core, generation-specific things in SWC, and mark anything temporary with a `@todo`. If you are unsure where something belongs, ask the user, and/or use the `ask-questions` skill.
 
-Read the approved migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` before changing the API. Use it as the planning baseline for names, deprecations, breaking changes, and consumer migration paths. See also [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
+Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` when available and use it as the planning baseline for names, deprecations, breaking changes, and consumer migration paths. If it is missing, stale, or intentionally incomplete, derive the needed context from source material and call out the missing plan as a risk. See also [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
 
 ## When to use this skill
 
