@@ -49,7 +49,7 @@ export const OverviewTest: Story = {
       const img = asset.querySelector('img');
       expect(
         asset.variant,
-        'variant is undefined when not set'
+        'variant when not set'
       ).toBeUndefined();
       expect(img, 'slotted img element is rendered').toBeTruthy();
       expect(
