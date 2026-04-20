@@ -23,10 +23,9 @@ import {
   getComponents,
   withWarningSpy,
 } from '../../../utils/test-utils.js';
-import {
+import meta, {
   Decorative,
   Disabled,
-  meta,
   Overview,
   Sizes,
 } from '../stories/avatar.stories.js';

@@ -50,7 +50,7 @@ argTypes.decorative = {
 /**
  * An avatar displays a circular profile image representing a person or entity.
  */
-export const meta: Meta = {
+const meta: Meta = {
   title: 'Avatar',
   component: 'swc-avatar',
   args,
@@ -67,11 +67,7 @@ export const meta: Meta = {
   tags: ['migrated'],
 };
 
-export default {
-  ...meta,
-  title: 'Avatar',
-  excludeStories: ['meta'],
-} as Meta;
+export default meta;
 
 // ────────────────────
 //    HELPERS
