@@ -16,15 +16,16 @@ AGENT TEMPLATE PREP INSTRUCTIONS (delete this comment block after copying the te
 14. Do not replace `Epic SWC-####` with `TBD` or another soft placeholder without explicitly prompting the user first.
 15. Before finalizing, sweep for unresolved placeholders such as `[component]`, `[Component]`, `[component-version]`, and `Epic SWC-####`.
 16. Before finalizing, check that `TL;DR`, `Most blocking open questions`, `Changes overview`, `2nd-gen API decisions`, and `References` are populated. If information is missing, say so explicitly instead of leaving sections blank.
-17. Check for contradictions across `Changes overview`, `2nd-gen API decisions`, and `Migration checklist` so the same decision is reflected consistently.
-18. Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material or guided by the user.
-19. Preserve the template structure unless the user explicitly asks for structural changes. Do not replace prescribed tables with bullets, remove stable checklist items, remove columns like `Blocking?` or `Owner`, or discard pre-populated guidance that is intended to remain stable.
-20. If a major dependency, extension, shared-base, or migration-order recommendation is involved, do not treat it as implicitly approved. Ask the user to confirm, reject, or request a stronger recommendation, and mark the affected plan sections as provisional until they respond.
-21. End with a concise review prompt that summarizes the most important provisional decisions, asks for feedback on major recommendations, and tells the user what missing resources they can provide next to tighten the plan.
-22. If critical resources are still missing, give the user explicit resume hooks, such as: send visual references, send the accessibility analysis, send the Epic number, paste breaking-change ticket descriptions, or confirm the dependency/shared-base decision so the plan can be tightened further.
-23. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
-24. For fuller workflow, review posture, and escalation guidance, refer to `.ai/skills/migration-prep/SKILL.md`.
-25. Later migration phases should also follow `.ai/skills/migration-prep/references/migration-plan-contract.md` so implementation, tests, docs, and review stay aligned with this approved plan.
+17. Keep blocker numbering in the required `Q{#}` format and continue it sequentially across all blocker sections. In `Most blocking open questions`, reuse those exact `Q{#}` IDs verbatim instead of inventing a second numbering scheme or section-specific labels.
+18. Check for contradictions across `Changes overview`, `2nd-gen API decisions`, and `Migration checklist` so the same decision is reflected consistently.
+19. Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material or guided by the user.
+20. Preserve the template structure unless the user explicitly asks for structural changes. Do not replace prescribed tables with bullets, remove stable checklist items, remove columns like `Blocking?` or `Owner`, or discard pre-populated guidance that is intended to remain stable.
+21. If a major dependency, extension, shared-base, or migration-order recommendation is involved, do not treat it as implicitly approved. Ask the user to confirm, reject, or request a stronger recommendation, and mark the affected plan sections as provisional until they respond.
+22. End with a concise review prompt that summarizes the most important provisional decisions, asks for feedback on major recommendations, and tells the user what missing resources they can provide next to tighten the plan.
+23. If critical resources are still missing, give the user explicit resume hooks, such as: send visual references, send the accessibility analysis, send the Epic number, paste breaking-change ticket descriptions, or confirm the dependency/shared-base decision so the plan can be tightened further.
+24. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
+25. For fuller workflow, review posture, and escalation guidance, refer to `.ai/skills/migration-prep/SKILL.md`.
+26. Later migration phases should also follow `.ai/skills/migration-prep/references/migration-plan-contract.md` so implementation, tests, docs, and review stay aligned with this approved plan.
 -->
 
 <!-- Generated breadcrumbs - DO NOT EDIT -->
@@ -94,6 +95,7 @@ AGENT TEMPLATE PREP INSTRUCTIONS (delete this comment block after copying the te
 ### Most blocking open questions
 
 <!-- List of links and summaries of specific questions that are identified as blocking for the "must do" work. Example format: "Q1-Q2 in [Design](#design): public naming for the neutral family and whether to keep `treatment` or adopt `fillStyle`" -->
+<!-- Use the exact same `Q{#}` IDs that appear later in `Blockers and open questions`. Do not renumber them here and do not switch to a different naming scheme. -->
 <!-- Do not leave this section blank. If there are no blockers, write "None currently." -->
 <!-- Each listed blocker should link to the detailed open question entry and summarize why it blocks must-ship work. -->
 
@@ -297,16 +299,16 @@ Initial expectation for [Component] is a small reviewed set.
 
 Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core/SWC split.
 
-<!-- This table should stay fairly consistent, update if needed. Use the prescribed table format below; do not convert this section to bullets. -->
+<!-- Use the prescribed table format below; do not convert this section to bullets or another schema. -->
 
 | Layer    | Path                                            | Contains                                                                                                                                                                                |
 | -------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Core** | `2nd-gen/packages/core/components/[component]/` | `[Component].base.ts`, `[Component].types.ts`, validation, state, accessible-name logic, attribute forwarding, pending-label behavior, and other reusable semantic rules. No rendering. |
 | **SWC**  | `2nd-gen/packages/swc/components/[component]/`  | `[Component].ts`, `[component].css`, element registration, stories, tests, and the specific S2 rendering/styling for `sp-[component]`.                                                  |
 
-Planned rendering shape:
+<!-- Retain this section with any clarifying notes, using existing bullets as a starting point. -->
 
-<!-- Add any clarifying notes -->
+Planned rendering shape:
 
 - Core owns API normalization and warnings
 - SWC renders ...
@@ -381,7 +383,7 @@ Planned rendering shape:
 #### Visual regression
 
 <!--
-Example content for this section.
+Retain this section for any components with visual rendering, modifying as needed for the component's specs and variants.
 
 - [ ] Add VRT coverage for size, variant, treatment, static color, and pending combinations
 - [ ] Add visual regression coverage for static white outline on its approved background, including hover state (`SWC-1139`)

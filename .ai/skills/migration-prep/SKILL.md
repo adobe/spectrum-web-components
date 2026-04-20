@@ -205,6 +205,7 @@ For these cases:
 - Before finalizing, remove or replace unresolved placeholders such as `[component]`, `[Component]`, `[component-version]`, and `Epic SWC-####`
 - Before finalizing, verify the highest-value links and references in the completed plan: 1st-gen source, analysis docs, tests, README, workflow doc, and React S2 component docs
 - Keep `TL;DR`, `Most blocking open questions`, `Changes overview`, `2nd-gen API decisions`, and `References` populated. If information is unavailable, say so explicitly instead of leaving them blank
+- Keep blocker numbering in the template's required `Q{#}` format. Number open questions sequentially across all blocker sections, and reuse those exact `Q{#}` IDs in `Most blocking open questions`. Do not invent a second numbering scheme there or deviate from the existing `Q{#}` format.
 - Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material or guided by the user
 - Call out any dependency-aware sequencing decisions, such as whether the component extends from another migrated component, should become a shared base, or should wait on a prerequisite migration
 - Do not replace `Epic SWC-####` with `TBD` or another soft placeholder without explicitly prompting the user first
