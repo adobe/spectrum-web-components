@@ -17,9 +17,17 @@ import { IllustratedMessage } from '@adobe/spectrum-wc/illustrated-message';
 
 import '@adobe/spectrum-wc/illustrated-message';
 
-import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
-import meta from '../stories/illustrated-message.stories.js';
-import { Overview } from '../stories/illustrated-message.stories.js';
+import {
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '../../../utils/test-utils.js';
+import meta, {
+  IllustrationAccessibility,
+  Orientation,
+  Overview,
+  Sizes,
+} from '../stories/illustrated-message.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
@@ -44,7 +52,7 @@ export const OverviewTest: Story = {
       'swc-illustrated-message'
     );
 
-    await step('consumer owns the heading element in light DOM', async () => {
+    await step('confirms heading element lives in light DOM', async () => {
       const headingInLight =
         illustratedMessage.querySelector('[slot="heading"]');
       expect(headingInLight, 'heading element in light DOM').not.toBeNull();
@@ -57,9 +65,162 @@ export const OverviewTest: Story = {
   },
 };
 
+export const DefaultValuesTest: Story = {
+  render: () => html`
+    <swc-illustrated-message></swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const illustratedMessage = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step('reflects default size "m" as attribute', async () => {
+      expect(illustratedMessage.size, 'default size property').toBe('m');
+      expect(
+        illustratedMessage.getAttribute('size'),
+        'default size attribute'
+      ).toBe('m');
+    });
+
+    await step(
+      'reflects default orientation "vertical" as attribute',
+      async () => {
+        expect(
+          illustratedMessage.orientation,
+          'default orientation property'
+        ).toBe('vertical');
+        expect(
+          illustratedMessage.getAttribute('orientation'),
+          'default orientation attribute'
+        ).toBe('vertical');
+      }
+    );
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
-// TEST: Heading slot — valid usage
+// TEST: Properties / Attributes
 // ──────────────────────────────────────────────────────────────
+
+export const PropertyMutationTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const illustratedMessage = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step(
+      'size reflects to attribute after direct property mutation',
+      async () => {
+        illustratedMessage.size = 's';
+        await illustratedMessage.updateComplete;
+        expect(
+          illustratedMessage.getAttribute('size'),
+          'size attribute reflects "s"'
+        ).toBe('s');
+
+        illustratedMessage.size = 'l';
+        await illustratedMessage.updateComplete;
+        expect(
+          illustratedMessage.getAttribute('size'),
+          'size attribute reflects "l"'
+        ).toBe('l');
+
+        illustratedMessage.size = 'm';
+        await illustratedMessage.updateComplete;
+        expect(
+          illustratedMessage.getAttribute('size'),
+          'size attribute restores to "m"'
+        ).toBe('m');
+      }
+    );
+
+    await step(
+      'orientation reflects to attribute after direct property mutation',
+      async () => {
+        illustratedMessage.orientation = 'horizontal';
+        await illustratedMessage.updateComplete;
+        expect(
+          illustratedMessage.getAttribute('orientation'),
+          'orientation attribute reflects "horizontal"'
+        ).toBe('horizontal');
+
+        illustratedMessage.orientation = 'vertical';
+        await illustratedMessage.updateComplete;
+        expect(
+          illustratedMessage.getAttribute('orientation'),
+          'orientation attribute reflects "vertical"'
+        ).toBe('vertical');
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Slots
+// ──────────────────────────────────────────────────────────────
+
+export const DefaultSlotIllustrationTest: Story = {
+  render: () => html`
+    <swc-illustrated-message>
+      <svg
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 160 160"
+      >
+        <path d="M0 0" />
+      </svg>
+      <h2 slot="heading">Test heading</h2>
+    </swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const illustratedMessage = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step('renders illustration content in the default slot', async () => {
+      const svg = illustratedMessage.querySelector('svg');
+      expect(svg, 'svg element present in default slot').not.toBeNull();
+    });
+
+    await step(
+      'verifies decorative illustration is hidden from assistive tech',
+      async () => {
+        const svg = illustratedMessage.querySelector('svg');
+        expect(
+          svg?.getAttribute('aria-hidden'),
+          'aria-hidden on decorative svg'
+        ).toBe('true');
+      }
+    );
+  },
+};
+
+export const DescriptionSlotTest: Story = {
+  render: () => html`
+    <swc-illustrated-message>
+      <h2 slot="heading">Heading</h2>
+      <span slot="description">Description text here.</span>
+    </swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const illustratedMessage = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step('renders description slot content', async () => {
+      const slotted = illustratedMessage.querySelector('[slot="description"]');
+      expect(slotted, 'description slot element').not.toBeNull();
+      expect(slotted?.textContent?.trim(), 'description text').toBe(
+        'Description text here.'
+      );
+    });
+  },
+};
 
 export const HeadingSlotValidElementsTest: Story = {
   render: () => html`
@@ -93,89 +254,113 @@ export const HeadingSlotValidElementsTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Heading slot — invalid usage
+// TEST: Variants / States
 // ──────────────────────────────────────────────────────────────
 
-export const HeadingSlotInvalidElementWarningTest: Story = {
-  render: () => html`
-    <swc-illustrated-message>
-      <div slot="heading">Not a heading</div>
-    </swc-illustrated-message>
-  `,
+export const SizesTest: Story = {
+  ...Sizes,
   play: async ({ canvasElement, step }) => {
-    const illustratedMessage = await getComponent<IllustratedMessage>(
+    const elements = await getComponents<IllustratedMessage>(
       canvasElement,
       'swc-illustrated-message'
     );
 
-    await step('warns when heading slot contains a non-heading element', () =>
-      withWarningSpy(async (warnCalls) => {
-        const headingSlot =
-          illustratedMessage.shadowRoot?.querySelector<HTMLSlotElement>(
-            'slot[name="heading"]'
-          );
-        if (!headingSlot) {
-          return;
-        }
-
-        const slotChanged = new Promise<void>((resolve) =>
-          headingSlot.addEventListener('slotchange', () => resolve(), {
-            once: true,
-          })
-        );
-
-        // Replace the slotted element to trigger slotchange
-        const div = document.createElement('div');
-        div.setAttribute('slot', 'heading');
-        div.textContent = 'Not a heading';
-
-        illustratedMessage.querySelector('[slot="heading"]')?.remove();
-        illustratedMessage.appendChild(div);
-
-        await slotChanged;
-
-        expect(
-          warnCalls.length,
-          'warning fired for invalid heading slot element'
-        ).toBeGreaterThan(0);
-        expect(
-          String(warnCalls[0]?.[1] ?? ''),
-          'warning message mentions heading slot'
-        ).toContain('heading');
-      })
-    );
-  },
-};
-
-// ──────────────────────────────────────────────────────────────
-// TEST: Slots
-// ──────────────────────────────────────────────────────────────
-
-export const DescriptionSlotTest: Story = {
-  render: () => html`
-    <swc-illustrated-message>
-      <h2 slot="heading">Heading</h2>
-      <span slot="description">Description text here.</span>
-    </swc-illustrated-message>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const illustratedMessage = await getComponent<IllustratedMessage>(
-      canvasElement,
-      'swc-illustrated-message'
-    );
-
-    await step('renders description slot content', async () => {
-      const slotted = illustratedMessage.querySelector('[slot="description"]');
-      expect(slotted, 'description slot element').not.toBeNull();
-      expect(slotted?.textContent?.trim(), 'description text').toBe(
-        'Description text here.'
+    await step('renders one component per valid size', async () => {
+      expect(elements.length, 'number of size variants rendered').toBe(
+        IllustratedMessage.VALID_SIZES.length
       );
     });
+
+    await step(
+      'each component reflects its size as a property and attribute',
+      async () => {
+        for (const size of IllustratedMessage.VALID_SIZES) {
+          const el = elements.find(
+            (item) => item.getAttribute('size') === size
+          );
+          expect(el, `component with size="${size}"`).not.toBeUndefined();
+          expect(el?.size, `size property is "${size}"`).toBe(size);
+        }
+      }
+    );
+  },
+};
+
+export const OrientationTest: Story = {
+  ...Orientation,
+  play: async ({ canvasElement, step }) => {
+    const elements = await getComponents<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step('renders one component per valid orientation', async () => {
+      expect(elements.length, 'number of orientation variants rendered').toBe(
+        IllustratedMessage.VALID_ORIENTATIONS.length
+      );
+    });
+
+    await step(
+      'each component reflects its orientation as a property and attribute',
+      async () => {
+        for (const orientation of IllustratedMessage.VALID_ORIENTATIONS) {
+          const el = elements.find(
+            (item) => item.getAttribute('orientation') === orientation
+          );
+          expect(
+            el,
+            `component with orientation="${orientation}"`
+          ).not.toBeUndefined();
+          expect(
+            el?.orientation,
+            `orientation property is "${orientation}"`
+          ).toBe(orientation);
+        }
+      }
+    );
+  },
+};
+
+export const IllustrationAccessibilityTest: Story = {
+  ...IllustrationAccessibility,
+  play: async ({ canvasElement, step }) => {
+    const elements = await getComponents<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step(
+      'first component has a decorative illustration (aria-hidden)',
+      async () => {
+        const [first] = elements;
+        const decorativeSvg = first?.querySelector('svg[aria-hidden="true"]');
+        expect(
+          decorativeSvg,
+          'decorative svg with aria-hidden="true" in first component'
+        ).not.toBeNull();
+      }
+    );
+
+    await step(
+      'second component has an informative illustration (role="img" + aria-label)',
+      async () => {
+        const [, second] = elements;
+        const informativeSvg = second?.querySelector('svg[role="img"]');
+        expect(
+          informativeSvg,
+          'informative svg with role="img" in second component'
+        ).not.toBeNull();
+        expect(
+          informativeSvg?.getAttribute('aria-label'),
+          'informative svg has aria-label'
+        ).not.toBeNull();
+      }
+    );
   },
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Size attribute / property
+// TEST: Dev mode warnings
 // ──────────────────────────────────────────────────────────────
 
 export const ValidSizeNoWarningTest: Story = {
@@ -243,10 +428,6 @@ export const InvalidSizeWarningTest: Story = {
   },
 };
 
-// ──────────────────────────────────────────────────────────────
-// TEST: Orientation attribute / property
-// ──────────────────────────────────────────────────────────────
-
 export const ValidOrientationNoWarningTest: Story = {
   render: () => html`
     <swc-illustrated-message>
@@ -310,6 +491,94 @@ export const InvalidOrientationWarningTest: Story = {
           String(warnCalls[0]?.[1] ?? ''),
           'warning message mentions orientation'
         ).toContain('orientation');
+      })
+    );
+  },
+};
+
+export const HeadingSlotInvalidElementWarningTest: Story = {
+  render: () => html`
+    <swc-illustrated-message>
+      <div slot="heading">Not a heading</div>
+    </swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const illustratedMessage = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step('warns when heading slot contains a non-heading element', () =>
+      withWarningSpy(async (warnCalls) => {
+        const headingSlot =
+          illustratedMessage.shadowRoot?.querySelector<HTMLSlotElement>(
+            'slot[name="heading"]'
+          );
+        if (!headingSlot) {
+          return;
+        }
+
+        const slotChanged = new Promise<void>((resolve) =>
+          headingSlot.addEventListener('slotchange', () => resolve(), {
+            once: true,
+          })
+        );
+
+        const div = document.createElement('div');
+        div.setAttribute('slot', 'heading');
+        div.textContent = 'Not a heading';
+
+        illustratedMessage.querySelector('[slot="heading"]')?.remove();
+        illustratedMessage.appendChild(div);
+
+        await slotChanged;
+
+        expect(
+          warnCalls.length,
+          'warning fired for invalid heading slot element'
+        ).toBeGreaterThan(0);
+        expect(
+          String(warnCalls[0]?.[1] ?? ''),
+          'warning message mentions heading slot'
+        ).toContain('heading');
+      })
+    );
+  },
+};
+
+export const HeadingSlotEmptyNoWarningTest: Story = {
+  render: () => html`
+    <swc-illustrated-message>
+      <h2 slot="heading">Initial heading</h2>
+    </swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const illustratedMessage = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step('does not warn when heading slot is empty', () =>
+      withWarningSpy(async (warnCalls) => {
+        const headingSlot =
+          illustratedMessage.shadowRoot?.querySelector<HTMLSlotElement>(
+            'slot[name="heading"]'
+          );
+        if (!headingSlot) {
+          return;
+        }
+
+        const slotChanged = new Promise<void>((resolve) =>
+          headingSlot.addEventListener('slotchange', () => resolve(), {
+            once: true,
+          })
+        );
+
+        illustratedMessage.querySelector('[slot="heading"]')?.remove();
+
+        await slotChanged;
+
+        expect(warnCalls.length, 'no warning for empty heading slot').toBe(0);
       })
     );
   },

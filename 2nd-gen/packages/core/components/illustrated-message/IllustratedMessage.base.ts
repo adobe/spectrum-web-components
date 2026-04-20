@@ -26,14 +26,11 @@ import {
  * An illustrated message displays an illustration and a message, typically
  * used in empty states or error pages.
  *
- * @slot - Decorative or informative SVG illustration. Decorative SVGs should include
- *   `aria-hidden="true"`; informative SVGs should include `role="img"` and `aria-label`.
- * @slot heading - The heading element. Must be an `<h2>`–`<h6>` element. The consumer owns
- *   the heading tag and level.
+ * @slot - Decorative or informative SVG illustration
+ * @slot heading - The heading element, h2–h6
  *   @todo SWC-1943 Add slot constraints once the CEM slot constraints work is complete:
  *   `{required} {allowedChildren: h2, h3, h4, h5, h6} {maxChildren: 1}`
- * @slot description - Description text. Links must be real `<a>` elements or link components
- *   with visible names.
+ * @slot description - Supporting description text
  */
 export abstract class IllustratedMessageBase extends SpectrumElement {
   // ─────────────────────────
@@ -57,13 +54,13 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
   // ──────────────────
 
   /**
-   * The size of the illustrated message.
+   * The size of the message
    */
   @property({ type: String, reflect: true })
   public size: IllustratedMessageSize = 'm';
 
   /**
-   * The layout orientation of the illustrated message.
+   * The layout orientation
    */
   @property({ type: String, reflect: true })
   public orientation: IllustratedMessageOrientation = 'vertical';
@@ -101,14 +98,14 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
     }
   }
 
- /**
-  * Validates that the heading slot only contains `<h2>`–`<h6>` elements.
-  * Rendering subclasses must wire this to the heading slot's `slotchange`
-  * event (e.g. `<slot name="heading" @slotchange=${this.handleHeadingSlotChange}>`)
-  * for the validation warning to fire.
-  *
-  * @internal
-  */     
+  /**
+   * @internal
+   *
+   * Validates that the heading slot only contains `<h2>`–`<h6>` elements.
+   * Rendering subclasses must wire this to the heading slot's `slotchange`
+   * event (e.g. `<slot name="heading" @slotchange=${this.handleHeadingSlotChange}>`)
+   * for the validation warning to fire.
+   */
   protected handleHeadingSlotChange(event: Event): void {
     if (window.__swc?.DEBUG) {
       const headingSlot = event.target as HTMLSlotElement;
