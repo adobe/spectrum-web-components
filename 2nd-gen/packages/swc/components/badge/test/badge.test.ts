@@ -286,21 +286,19 @@ export const NonSemanticVariantsTest: Story = {
   ...NonSemanticVariants,
   play: async ({ canvasElement, step }) => {
     await step('renders all color variant values', async () => {
-      await Promise.all(
-        BADGE_VARIANTS_COLOR.map(async (variant) => {
-          const badge = canvasElement.querySelector(
-            `swc-badge[variant="${variant}"]`
-          ) as Badge | null;
-          expect(
-            badge,
-            `badge with variant="${variant}" is rendered`
-          ).toBeTruthy();
-          await badge?.updateComplete;
-          expect(badge?.variant, `badge variant property is "${variant}"`).toBe(
-            variant
-          );
-        })
-      );
+      for (const variant of BADGE_VARIANTS_COLOR) {
+        const badge = canvasElement.querySelector(
+          `swc-badge[variant="${variant}"]`
+        ) as Badge | null;
+        expect(
+          badge,
+          `badge with variant="${variant}" is rendered`
+        ).toBeTruthy();
+        await badge?.updateComplete;
+        expect(badge?.variant, `badge variant property is "${variant}"`).toBe(
+          variant
+        );
+      }
     });
   },
 };

@@ -88,7 +88,7 @@ export const VerticalTest: Story = {
     const dividers = await getComponents<Divider>(canvasElement, 'swc-divider');
 
     await step('reflects vertical orientation attributes', async () => {
-      dividers.forEach((divider) => {
+      for (const divider of dividers) {
         expect(
           divider.hasAttribute('vertical'),
           'divider has vertical attribute'
@@ -97,7 +97,7 @@ export const VerticalTest: Story = {
           divider.getAttribute('aria-orientation'),
           'aria-orientation is set to vertical'
         ).toBe('vertical');
-      });
+      }
     });
   },
 };
@@ -152,14 +152,14 @@ export const StaticColorsTest: Story = {
     );
 
     await step('reflects expected static-color attribute values', async () => {
-      dividers.forEach((divider) => {
+      for (const divider of dividers) {
         const staticColor = divider.getAttribute('static-color');
         expect(staticColor, 'static-color attribute is present').toBeTruthy();
         expect(
           ['white', 'black'],
           `static-color "${staticColor}" is a valid value`
         ).toContain(staticColor);
-      });
+      }
     });
   },
 };

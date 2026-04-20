@@ -22,6 +22,7 @@ import { StatusLight } from '@adobe/spectrum-wc/status-light';
 import '@adobe/spectrum-wc/status-light';
 
 import {
+  STATUS_LIGHT_VALID_SIZES,
   STATUS_LIGHT_VARIANTS_COLOR,
   STATUS_LIGHT_VARIANTS_SEMANTIC,
 } from '../../../../core/components/status-light/StatusLight.types.js';
@@ -32,6 +33,7 @@ import meta, {
   Overview,
   Playground,
   SemanticVariants,
+  Sizes,
 } from '../stories/status-light.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
@@ -97,16 +99,10 @@ export const AnatomyTest: Story = {
 // ──────────────────────────────────────────────────────────────
 
 export const SizesTest: Story = {
-  render: () => html`
-    ${StatusLight.VALID_SIZES.map(
-      (size) => html`
-        <swc-status-light size=${size} variant="info">${size}</swc-status-light>
-      `
-    )}
-  `,
+  ...Sizes,
   play: async ({ canvasElement, step }) => {
     await step('renders and reflects each size correctly', async () => {
-      for (const size of StatusLight.VALID_SIZES) {
+      for (const size of STATUS_LIGHT_VALID_SIZES) {
         const statusLight = canvasElement.querySelector(
           `swc-status-light[size="${size}"]`
         ) as StatusLight | null;
