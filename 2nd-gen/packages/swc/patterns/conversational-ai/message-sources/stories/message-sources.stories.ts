@@ -37,6 +37,15 @@ argTypes.open = {
   },
 };
 
+argTypes.label = {
+  ...argTypes.label,
+  control: { type: 'text' },
+  table: {
+    category: 'attributes',
+    defaultValue: { summary: 'Sources' },
+  },
+};
+
 /**
  * A collapsible list of sources that informed an AI response.
  * Slot `<li>` elements into the default slot; they will be numbered automatically.
@@ -47,6 +56,7 @@ const meta: Meta = {
   args: {
     ...args,
     open: false,
+    label: 'Sources',
     'default-slot': defaultListItems,
   },
   argTypes,
@@ -89,7 +99,7 @@ export const Overview: Story = {
 /**
  * A message sources component consists of:
  *
- * 1. **Toggle button** — Chevron + "Sources" label, acts as a disclosure button
+ * 1. **Toggle button** — Chevron + configurable label, acts as a disclosure button
  * 2. **Sources list** — Numbered list of linked source items (visible when expanded)
  */
 export const Anatomy: Story = {
@@ -106,10 +116,12 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 /**
- * The `open` attribute controls whether the sources list is visible:
+ * The `open` attribute controls whether the sources list is visible, and
+ * the `label` attribute customizes the button/list label:
  *
  * - **`open=false`** — Only the toggle button is shown (default)
  * - **`open=true`** — The numbered source list is revealed below the toggle
+ * - **`label="References"`** — Replaces "Sources" in visible UI and ARIA labels
  */
 export const Open: Story = {
   render: () => html`
@@ -137,6 +149,17 @@ export const Open: Story = {
           Expanded
         </span>
       </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-message-sources open label="References">
+          <li><a href="#">Adobe Experience Manager documentation</a></li>
+          <li><a href="#">Creative Cloud release notes 2026</a></li>
+        </swc-message-sources>
+        <span
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+        >
+          Expanded with custom label
+        </span>
+      </div>
     </div>
   `,
   parameters: { 'section-order': 1 },
@@ -156,7 +179,7 @@ export const Open: Story = {
  *
  * - The toggle button uses `aria-expanded` to communicate open/closed state
  * - The toggle button uses `aria-controls` pointing to the panel `id`
- * - The sources panel uses `role="list"` with `aria-label="Sources"`
+ * - The sources panel uses `role="list"` with `aria-label` set from `label`
  */
 export const Accessibility: Story = {
   args: {

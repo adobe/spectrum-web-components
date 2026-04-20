@@ -25,8 +25,8 @@ import styles from './message-feedback.css';
 /**
  * Binary positive / negative feedback control for AI responses.
  *
- * Arrow keys use `FocusgroupNavigationController` (horizontal) so focus and selection
- * follow the radiogroup pattern (roving `tabindex` on the two buttons).
+ * Arrow keys use `FocusgroupNavigationController` (horizontal) for roving focus
+ * between options. Selection is activation-based (click, Enter, or Space).
  *
  * @element swc-message-feedback
  * @fires swc-feedback - Dispatched when the user selects positive or negative feedback.

@@ -20,6 +20,8 @@ import '../../user-message/index.js';
 import '../../response-status/index.js';
 import '../../message-feedback/index.js';
 import '../../message-sources/index.js';
+import '../../prompt-field/index.js';
+import '../../upload-artifact/index.js';
 
 import '../../system-prose-demo.css';
 
@@ -55,7 +57,7 @@ const threadExampleSource = `<swc-conversation-thread style="max-inline-size: 72
   </swc-conversation-turn>
   <swc-conversation-turn type="system">
     <swc-system-message>
-      <swc-response-status slot="status"></swc-response-status>
+      <swc-response-status slot="status">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</swc-response-status>
       <div class="swc-conversationalAi-systemProse">
         <h3>Big idea/core narrative: The warmth of welcome</h3>
         <p>Hospitality begins the moment our customers set foot off their plane.</p>
@@ -82,7 +84,7 @@ const renderThread = () => html`
 
     <swc-conversation-turn type="system">
       <swc-system-message>
-        <swc-response-status slot="status"></swc-response-status>
+        <swc-response-status slot="status">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</swc-response-status>
         <div class="swc-conversationalAi-systemProse">
           <h3>Big idea/core narrative: The warmth of welcome</h3>
           <p>
@@ -103,6 +105,78 @@ const renderThread = () => html`
       </swc-user-message>
     </swc-conversation-turn>
   </swc-conversation-thread>
+`;
+
+const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
+  <swc-conversation-thread style="--swc-conversation-thread-gap:24px;">
+    <swc-conversation-turn type="user">
+      <swc-user-message>Can you help me create a 45-minute presentation?</swc-user-message>
+    </swc-conversation-turn>
+    <swc-conversation-turn type="system">
+      <swc-system-message>
+        <swc-response-status slot="status">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</swc-response-status>
+        <div class="swc-conversationalAi-systemProse">
+          <p>Great direction. I suggest a 12-slide structure...</p>
+        </div>
+        <swc-message-feedback slot="feedback"></swc-message-feedback>
+        <swc-message-sources slot="sources">
+          <li><a href="#">Brand brief Q1 2026</a></li>
+        </swc-message-sources>
+      </swc-system-message>
+    </swc-conversation-turn>
+  </swc-conversation-thread>
+
+  <swc-prompt-field>
+    <swc-upload-artifact slot="artifact" type="card" dismissible>
+      <div
+        slot="thumbnail"
+        role="img"
+        aria-label="File thumbnail"
+        style="background:var(--swc-gray-200);"
+      ></div>
+      <span slot="title">Hilton commercial assets</span>
+      <span slot="subtitle">2026</span>
+    </swc-upload-artifact>
+  </swc-prompt-field>
+</div>`;
+
+const renderFullPattern = () => html`
+  <div
+    style="max-width:800px; margin:auto; padding:24px; display:flex; flex-direction:column; gap:16px;"
+  >
+    <swc-conversation-thread style="--swc-conversation-thread-gap:24px;">
+      <swc-conversation-turn type="user">
+        <swc-user-message>
+          Can you help me create a 45-minute presentation?
+        </swc-user-message>
+      </swc-conversation-turn>
+      <swc-conversation-turn type="system">
+        <swc-system-message>
+          <swc-response-status slot="status">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</swc-response-status>
+          <div class="swc-conversationalAi-systemProse">
+            <p>Great direction. I suggest a 12-slide structure...</p>
+          </div>
+          <swc-message-feedback slot="feedback"></swc-message-feedback>
+          <swc-message-sources slot="sources">
+            <li><a href="#">Brand brief Q1 2026</a></li>
+          </swc-message-sources>
+        </swc-system-message>
+      </swc-conversation-turn>
+    </swc-conversation-thread>
+
+    <swc-prompt-field>
+      <swc-upload-artifact slot="artifact" type="card" dismissible>
+        <div
+          slot="thumbnail"
+          role="img"
+          aria-label="File thumbnail"
+          style="background:var(--swc-gray-200);"
+        ></div>
+        <span slot="title">Hilton commercial assets</span>
+        <span slot="subtitle">2026</span>
+      </swc-upload-artifact>
+    </swc-prompt-field>
+  </div>
 `;
 
 // ────────────────────
@@ -153,6 +227,22 @@ export const Accessibility: Story = {
     docs: {
       source: {
         code: threadExampleSource,
+      },
+    },
+  },
+};
+
+// ──────────────────────────────
+//    FULL PATTERN STORY
+// ──────────────────────────────
+
+export const FullPattern: Story = {
+  render: renderFullPattern,
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      source: {
+        code: fullPatternSource,
       },
     },
   },

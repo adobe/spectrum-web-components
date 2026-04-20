@@ -15,7 +15,7 @@ import { expect, test } from '@playwright/test';
 import { gotoStory } from '../../../../utils/a11y-helpers.js';
 
 test.describe('ConversationTurn - ARIA Snapshots', () => {
-  test('should expose user and assistant turn labels', async ({ page }) => {
+  test('should expose default and overridden turn labels', async ({ page }) => {
     const root = await gotoStory(
       page,
       'patterns-conversational-ai-conversation-turn--accessibility',
@@ -29,7 +29,7 @@ test.describe('ConversationTurn - ARIA Snapshots', () => {
     `);
 
     await expect(turns.nth(1)).toMatchAriaSnapshot(`
-      - group "Assistant message"
+      - group "Mensaje del asistente"
     `);
   });
 });

@@ -21,7 +21,7 @@ import styles from './conversation-turn.css';
  * Aligns one turn in a chat column: user content toward the end (right in LTR)
  * and system content toward the start at full width.
  *
- * Slot **`swc-user-message`**, **`swc-system-message`**, or custom markup inside each turn
+ * Slot **`swc-user-message`** or **`swc-system-message`** inside each turn
  * Multiple slotted messages are stacked automatically with
  * `--swc-conversation-turn-group-gap` spacing.
  * User-message widths are applied by layout context (full screen, split rail,
@@ -30,6 +30,7 @@ import styles from './conversation-turn.css';
  * The inner layout root is exposed as **`role="group"`** with an **`aria-label`**
  * derived from **`type`** (**"User message"** / **"Assistant message"**) so assistive
  * technology can distinguish user turns from assistant turns, not only alignment.
+ * Use `accessible-label` to override this label (for localization or product-specific phrasing).
  *
  * @element swc-conversation-turn
  * @slot - Turn body (message stack or bubble)
@@ -42,11 +43,21 @@ export class ConversationTurn extends SpectrumElement {
   @property({ type: String, reflect: true })
   public type: 'system' | 'user' = 'user';
 
+  /**
+   * Optional accessible label override for the turn group.
+   * When omitted, the label falls back to `type` ("User message" / "Assistant message").
+   */
+  @property({ type: String, attribute: 'accessible-label' })
+  public accessibleLabel = '';
+
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
   private get _turnAriaLabel(): string {
+    if (this.accessibleLabel.trim().length > 0) {
+      return this.accessibleLabel.trim();
+    }
     return this.type === 'user' ? 'User message' : 'Assistant message';
   }
 

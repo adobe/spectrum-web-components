@@ -43,6 +43,7 @@ export const OverviewTest: Story = {
 
     await step('renders with open state in overview', async () => {
       expect(el.open).toBe(true);
+      expect(el.label).toBe('Sources');
     });
   },
 };
@@ -69,6 +70,22 @@ export const OpenMutationTest: Story = {
       expect(el.hasAttribute('open')).toBe(true);
     });
 
+    await step('label updates visible and ARIA labels', async () => {
+      el.label = 'References';
+      await el.updateComplete;
+
+      const toggle = el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-MessageSources-toggle'
+      );
+      const panel =
+        el.shadowRoot?.querySelector<HTMLOListElement>('#swc-sources-panel');
+      const icon = el.shadowRoot?.querySelector('swc-icon');
+
+      expect(toggle?.textContent?.trim()).toBe('References');
+      expect(panel?.getAttribute('aria-label')).toBe('References');
+      expect(icon?.getAttribute('label')).toContain('References');
+    });
+
     await step(
       'collapsed state keeps the controlled panel in the DOM but hidden',
       async () => {
@@ -85,6 +102,9 @@ export const OpenMutationTest: Story = {
         expect(toggle?.getAttribute('aria-expanded')).toBe('false');
         expect(panel).toBeTruthy();
         expect(panel?.hidden).toBe(true);
+        expect(
+          panel ? getComputedStyle(panel).display : undefined
+        ).toBe('none');
       }
     );
 

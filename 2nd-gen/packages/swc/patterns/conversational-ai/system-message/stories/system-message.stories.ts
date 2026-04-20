@@ -91,7 +91,7 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
-      subtitle: 'Layout container for a single system (AI) reply.',
+      subtitle: 'Layout container for a single system reply.',
       afterApi: systemMessageSlotDocs,
     },
     layout: 'padded',
@@ -140,7 +140,7 @@ export const Overview: Story = {
  */
 export const Anatomy: Story = {
   args: {
-    'status-slot': `<swc-response-status slot="status"></swc-response-status>`,
+    'status-slot': `<swc-response-status slot="status">I used the prompt and source context to draft a concise, presentation-ready response structure.</swc-response-status>`,
     'default-slot': `<div class="swc-conversationalAi-systemProse"><p>Here is the AI-generated response content.</p></div>`,
     'feedback-slot': slotFeedback,
     'sources-slot': `<swc-message-sources slot="sources"><li><a href="#">Source one</a></li></swc-message-sources>`,
@@ -176,7 +176,10 @@ export const Loading: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-conversation-turn type="system">
           <swc-system-message>
-            <swc-response-status slot="status"></swc-response-status>
+            <swc-response-status slot="status">
+              I used the prompt and source context to draft a concise,
+              presentation-ready response structure.
+            </swc-response-status>
             <div class="swc-conversationalAi-systemProse">
               <p>
                 According to the assets, there is a clear journey from beginning
@@ -223,7 +226,7 @@ export const Loading: Story = {
  */
 export const Accessibility: Story = {
   args: {
-    'status-slot': `<swc-response-status slot="status"></swc-response-status>`,
+    'status-slot': `<swc-response-status slot="status">I used the prompt and source context to draft a concise, presentation-ready response structure.</swc-response-status>`,
     'default-slot': `<div class="swc-conversationalAi-systemProse"><p>According to the assets, there is a clear journey from beginning to end. Let's start with overarching themes and build from there.</p></div>`,
     'feedback-slot': slotFeedback,
     'sources-slot': `<swc-message-sources slot="sources" open><li><a href="#">Adobe Experience Manager documentation</a></li><li><a href="#">Creative Cloud release notes 2026</a></li></swc-message-sources>`,

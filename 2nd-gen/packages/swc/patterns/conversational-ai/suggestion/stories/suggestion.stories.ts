@@ -39,7 +39,7 @@ const meta: Meta = {
   args: {
     ...args,
     'default-slot': threeSuggestionItems,
-    title: '',
+    title: 'What would you like to do next?',
   },
   argTypes,
   render: (args) => template(args),
@@ -100,7 +100,7 @@ export const SuggestionCount: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-suggestion>
+        <swc-suggestion title="What would you like to do next?">
           <swc-suggestion-item>
             Create a slide deck from this
           </swc-suggestion-item>
@@ -112,7 +112,7 @@ export const SuggestionCount: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-suggestion>
+        <swc-suggestion title="What would you like to do next?">
           <swc-suggestion-item>
             Create a slide deck from this
           </swc-suggestion-item>
@@ -128,7 +128,7 @@ export const SuggestionCount: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-suggestion>
+        <swc-suggestion title="What would you like to do next?">
           <swc-suggestion-item>
             Refine the executive summary
           </swc-suggestion-item>
@@ -150,27 +150,11 @@ export const SuggestionCount: Story = {
 };
 
 /**
- * When `title` is provided, a heading appears above the item row.
+ * The `title` heading sits above the suggestion row and can be customized per context.
  */
 export const Title: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-suggestion>
-          <swc-suggestion-item>
-            Create a slide deck from this
-          </swc-suggestion-item>
-          <swc-suggestion-item>
-            Summarize in 3 bullet points
-          </swc-suggestion-item>
-          <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
-        </swc-suggestion>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
-        >
-          No title
-        </span>
-      </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-suggestion title="What would you like to do next?">
           <swc-suggestion-item>
@@ -184,7 +168,23 @@ export const Title: Story = {
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
-          With title
+          Default title
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-suggestion title="Suggested next actions">
+          <swc-suggestion-item>
+            Create a slide deck from this
+          </swc-suggestion-item>
+          <swc-suggestion-item>
+            Summarize in 3 bullet points
+          </swc-suggestion-item>
+          <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
+        </swc-suggestion>
+        <span
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+        >
+          Custom title
         </span>
       </div>
     </div>
@@ -208,6 +208,7 @@ export const Title: Story = {
  */
 export const Accessibility: Story = {
   args: {
+    title: 'What would you like to do next?',
     'default-slot': threeSuggestionItems,
   },
   tags: ['a11y'],

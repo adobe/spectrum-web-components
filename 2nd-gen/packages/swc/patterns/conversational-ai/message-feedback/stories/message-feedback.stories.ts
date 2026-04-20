@@ -182,8 +182,9 @@ export const HandlingEvents: Story = {
         'Click a thumb. The handler below listens for swc-feedback and sets .status on the host.';
 
       feedback.addEventListener('swc-feedback', (event: Event) => {
-        const { status } = (event as CustomEvent<{ status: 'positive' | 'negative' }>)
-          .detail;
+        const { status } = (
+          event as CustomEvent<{ status: 'positive' | 'negative' }>
+        ).detail;
         (feedback as HTMLElement & { status?: string }).status = status;
         readout.textContent = `Last swc-feedback: detail.status = "${status}" (mirrored to host .status).`;
       });
@@ -231,8 +232,9 @@ export const HandlingEvents: Story = {
  * #### Keyboard
  *
  * - **Tab** moves focus into the group on a single tab stop (**roving `tabindex`** on the two controls)
- * - **Arrow Left** / **Arrow Right** move focus and dispatch **`swc-feedback`** for the newly focused option (radio authoring practice)
- * - **Home** / **End** move to the first or last option, respectively, and dispatch **`swc-feedback`** for that option
+ * - **Arrow Left** / **Arrow Right** move focus between options
+ * - **Home** / **End** move focus to the first or last option
+ * - **Space** or **Enter** on a focused option dispatches **`swc-feedback`**
  */
 export const Accessibility: Story = {
   args: {},

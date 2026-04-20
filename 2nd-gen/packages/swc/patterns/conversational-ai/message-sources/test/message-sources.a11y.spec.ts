@@ -24,8 +24,8 @@ test.describe('MessageSources - ARIA Snapshots', () => {
       'swc-message-sources'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - button "Collapse sources Sources" [expanded]:
-        - img "Collapse sources"
+      - button "Collapse Sources Sources" [expanded]:
+        - img "Collapse Sources"
         - text: Sources
       - list "Sources":
         - listitem:

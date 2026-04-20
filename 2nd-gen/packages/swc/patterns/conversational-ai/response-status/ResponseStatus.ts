@@ -29,7 +29,8 @@ import styles from './response-status.css';
  * While **`loading`** is `true`, reasoning is not shown.
  *
  * @element swc-response-status
- * @slot - Optional reasoning content shown when `loading` is `false` and `open` is `true`.
+ * @slot - Optional reasoning content. Disclosure UI is shown only when slot has content
+ * and `loading` is `false`; content is visible when `open` is `true`.
  * @fires swc-toggle - Dispatched when the reasoning panel is expanded or collapsed.
  * Detail: `{ open: boolean }`
  */
@@ -62,7 +63,7 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   private _handleToggle(): void {
-    if (this.loading) {
+    if (this.loading || !this._hasReasoningContent()) {
       return;
     }
     this.open = !this.open;
@@ -77,6 +78,26 @@ export class ResponseStatus extends SpectrumElement {
 
   private _getStatusLabel(): string {
     return this.loading ? this.loadingLabel : this.completeLabel;
+  }
+
+  private _hasReasoningContent(): boolean {
+    for (const node of this.childNodes) {
+      if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
+        return true;
+      }
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private _handleReasoningSlotChange(): void {
+    if (!this._hasReasoningContent() && this.open) {
+      this.open = false;
+    }
+    this.requestUpdate();
   }
 
   private _renderLoadingRow(label: string): TemplateResult {
@@ -94,8 +115,7 @@ export class ResponseStatus extends SpectrumElement {
     `;
   }
 
-  private _renderCompleteRow(label: string): TemplateResult {
-    const showDisclosure = true;
+  private _renderCompleteRow(label: string, showDisclosure: boolean): TemplateResult {
     const expanded = this.open;
 
     if (showDisclosure) {
@@ -142,13 +162,15 @@ export class ResponseStatus extends SpectrumElement {
   protected override render(): TemplateResult {
     const isLoading = this.loading;
     const statusLabel = this._getStatusLabel();
+    const hasReasoningContent = this._hasReasoningContent();
+    const showDisclosure = !isLoading && hasReasoningContent;
 
     return html`
       <div class="swc-ResponseStatus">
         ${isLoading
           ? this._renderLoadingRow(statusLabel)
-          : this._renderCompleteRow(statusLabel)}
-        ${!isLoading
+          : this._renderCompleteRow(statusLabel, showDisclosure)}
+        ${showDisclosure
           ? html`
               <div
                 id="swc-reasoning-panel"
@@ -157,7 +179,7 @@ export class ResponseStatus extends SpectrumElement {
                 aria-label="Reasoning"
                 ?hidden=${!this.open}
               >
-                <slot></slot>
+                <slot @slotchange=${this._handleReasoningSlotChange}></slot>
               </div>
             `
           : ''}

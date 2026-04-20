@@ -39,6 +39,12 @@ export class MessageSources extends SpectrumElement {
   @property({ type: Boolean, reflect: true })
   public open = false;
 
+  /**
+   * Label shown in the disclosure button and applied to list ARIA labelling.
+   */
+  @property({ type: String })
+  public label = 'Sources';
+
   public static override get styles(): CSSResultArray {
     return [styles];
   }
@@ -56,6 +62,7 @@ export class MessageSources extends SpectrumElement {
 
   protected override render(): TemplateResult {
     const isExpanded = this.open;
+    const label = this.label.trim() || 'Sources';
 
     return html`
       <div class="swc-MessageSources">
@@ -70,18 +77,18 @@ export class MessageSources extends SpectrumElement {
               ? 'swc-MessageSources-chevron swc-MessageSources-chevron--down'
               : 'swc-MessageSources-chevron'}
             style="--swc-icon-inline-size:10px;--swc-icon-block-size:10px;"
-            label=${isExpanded ? 'Collapse sources' : 'Expand sources'}
+            label=${isExpanded ? `Collapse ${label}` : `Expand ${label}`}
           >
             ${Chevron75Icon()}
           </swc-icon>
-          Sources
+          ${label}
         </button>
 
         <ol
           id="swc-sources-panel"
           class="swc-MessageSources-list"
           role="list"
-          aria-label="Sources"
+          aria-label=${label}
           ?hidden=${!isExpanded}
         >
           <slot></slot>

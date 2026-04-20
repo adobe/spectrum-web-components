@@ -49,6 +49,7 @@ export const OverviewTest: Story = {
       'turn exposes role group and aria-label for screen readers',
       async () => {
         first.type = 'user';
+        first.accessibleLabel = '';
         await first.updateComplete;
         const root = first.shadowRoot?.querySelector('.swc-ConversationTurn');
         expect(root).toBeTruthy();
@@ -63,5 +64,19 @@ export const OverviewTest: Story = {
         expect(rootAfter?.getAttribute('aria-label')).toBe('Assistant message');
       }
     );
+
+    await step('accessible-label overrides type-derived label', async () => {
+      first.type = 'system';
+      first.accessibleLabel = 'Mensaje del asistente';
+      await first.updateComplete;
+
+      const root = first.shadowRoot?.querySelector('.swc-ConversationTurn');
+      expect(first.accessibleLabel).toBe('Mensaje del asistente');
+      expect(root?.getAttribute('aria-label')).toBe('Mensaje del asistente');
+
+      first.accessibleLabel = '   ';
+      await first.updateComplete;
+      expect(root?.getAttribute('aria-label')).toBe('Assistant message');
+    });
   },
 };

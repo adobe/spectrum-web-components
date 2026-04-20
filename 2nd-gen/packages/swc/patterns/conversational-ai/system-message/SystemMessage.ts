@@ -17,7 +17,7 @@ import { SpectrumElement } from '@spectrum-web-components/core/element/index.js'
 import styles from './system-message.css';
 
 /**
- * Layout container for a single system (AI) reply: status, body, feedback, sources, and suggestions.
+ * Layout container for a single system reply: status, body, feedback, sources, and suggestions.
  *
  * **Presentation order is fixed** by this element's shadow tree: **status -> default content -> feedback -> sources -> suggestions**,
  * regardless of the order slotted nodes appear in the host DOM (each child must use the correct **`slot`** name).

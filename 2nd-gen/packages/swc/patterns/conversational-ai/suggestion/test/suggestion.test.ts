@@ -39,8 +39,8 @@ export const OverviewTest: Story = {
   play: async ({ canvasElement, step }) => {
     const el = await getComponent<Suggestion>(canvasElement, 'swc-suggestion');
 
-    await step('renders with empty title by default', async () => {
-      expect(el.title).toBe('');
+    await step('renders with title in overview examples', async () => {
+      expect(el.title).toBe('What would you like to do next?');
     });
 
     await step(

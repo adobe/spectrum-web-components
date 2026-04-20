@@ -75,6 +75,11 @@
   counter-reset: sources;
 }
 
+/* Keep hidden state effective when panel is collapsed. */
+.swc-MessageSources-list[hidden] {
+  display: none;
+}
+
 /* Each slotted item is expected to be a <li> */
 ::slotted(li) {
   display: flex;

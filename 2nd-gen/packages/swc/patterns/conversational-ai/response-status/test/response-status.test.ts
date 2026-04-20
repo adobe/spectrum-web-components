@@ -153,15 +153,42 @@ export const InteractionTest: Story = {
       }
     );
 
+    await step(
+      'complete state without reasoning content does not render disclosure controls',
+      async () => {
+        el.textContent = '';
+        el.requestUpdate();
+        await el.updateComplete;
+
+        const button = el.shadowRoot?.querySelector<HTMLButtonElement>(
+          '.swc-ResponseStatus-row--button'
+        );
+        const panel = el.shadowRoot?.querySelector<HTMLElement>(
+          '#swc-reasoning-panel'
+        );
+        const row = el.shadowRoot?.querySelector('.swc-ResponseStatus-row');
+
+        expect(button).toBeNull();
+        expect(panel).toBeNull();
+        expect(row).toBeTruthy();
+        expect(row?.querySelector('.swc-ResponseStatus-label')?.textContent?.trim()).toBe(
+          el.completeLabel
+        );
+      }
+    );
+
     await step('default slot content renders in reasoning panel', async () => {
+      el.textContent = 'Reasoning details here.';
+      el.requestUpdate();
       el.open = true;
       await el.updateComplete;
       const panel = el.shadowRoot?.querySelector(
         '#swc-reasoning-panel'
       ) as HTMLElement | null;
-      const assigned = el.shadowRoot
-        ?.querySelector('#swc-reasoning-panel slot')
-        ?.assignedNodes({ flatten: true });
+      const slot = el.shadowRoot?.querySelector<HTMLSlotElement>(
+        '#swc-reasoning-panel slot'
+      );
+      const assigned = slot?.assignedNodes({ flatten: true });
 
       expect(panel).toBeTruthy();
       expect(

@@ -155,7 +155,10 @@ export const Loading: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-response-status></swc-response-status>
+        <swc-response-status>
+          I grouped your request into a presentation outline and prioritized key
+          business messages.
+        </swc-response-status>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
@@ -163,7 +166,10 @@ export const Loading: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-response-status complete-label="Ready"></swc-response-status>
+        <swc-response-status complete-label="Ready">
+          I grouped your request into a presentation outline and prioritized key
+          business messages.
+        </swc-response-status>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
@@ -182,6 +188,7 @@ export const Loading: Story = {
  * - **`open=false`** — reasoning collapsed
  * - **`open=true`** — reasoning expanded
  *
+ * The disclosure chevron only appears when default-slot reasoning content exists.
  * While **`loading=true`**, reasoning UI is not shown.
  */
 export const Reasoning: Story = {
@@ -189,6 +196,17 @@ export const Reasoning: Story = {
     <div style="display:flex;flex-direction:column;gap:24px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-response-status></swc-response-status>
+        <span
+          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
+        >
+          Complete without reasoning content (no disclosure chevron)
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-response-status>
+          I grouped your request into a presentation outline and prioritized key
+          business messages.
+        </swc-response-status>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-600);"
         >
@@ -224,7 +242,7 @@ export const Reasoning: Story = {
  * #### Status announcement
  *
  * - The loading slot carries `role="status"` and `aria-label` matching the status label for screen reader announcement
- * - The reasoning toggle uses `aria-expanded` and `aria-controls` to communicate panel state
+ * - When reasoning content exists, the reasoning toggle uses `aria-expanded` and `aria-controls` to communicate panel state
  * - The reasoning panel uses `role="region"` with `aria-label="Reasoning"`
  */
 export const Accessibility: Story = {
@@ -233,6 +251,8 @@ export const Accessibility: Story = {
     open: false,
     loadingLabel: 'Thinking…',
     completeLabel: 'Response generated',
+    'default-slot':
+      'I grouped your request into a presentation outline and prioritized key business messages.',
   },
   tags: ['a11y'],
 };
