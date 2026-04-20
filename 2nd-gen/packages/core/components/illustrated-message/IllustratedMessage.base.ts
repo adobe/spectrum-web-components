@@ -101,9 +101,14 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
     }
   }
 
-  /**
-   * @internal
-   */
+ /**
+  * Validates that the heading slot only contains `<h2>`–`<h6>` elements.
+  * Rendering subclasses must wire this to the heading slot's `slotchange`
+  * event (e.g. `<slot name="heading" @slotchange=${this.handleHeadingSlotChange}>`)
+  * for the validation warning to fire.
+  *
+  * @internal
+  */     
   protected handleHeadingSlotChange(event: Event): void {
     if (window.__swc?.DEBUG) {
       const headingSlot = event.target as HTMLSlotElement;

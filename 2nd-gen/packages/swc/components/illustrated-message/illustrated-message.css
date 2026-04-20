@@ -74,23 +74,23 @@
 
 /* ── CJK language support ────────────────────────────────────────────────── */
 
-:host:lang(ja),
-:host:lang(ko),
-:host:lang(zh) {
+:host(:lang(ja)),
+:host(:lang(ko)),
+:host(:lang(zh)) {
   --swc-illustrated-message-heading-font-size: token("illustrated-message-medium-cjk-title-font-size");
   --swc-illustrated-message-heading-line-height: token("cjk-line-height-100");
   --swc-illustrated-message-description-line-height: token("cjk-line-height-200");
 }
 
-:host:where([size="s"]):lang(ja),
-:host:where([size="s"]):lang(ko),
-:host:where([size="s"]):lang(zh) {
+:host([size="s"]:lang(ja)),
+:host([size="s"]:lang(ko)),
+:host([size="s"]:lang(zh)) {
   --swc-illustrated-message-heading-font-size: token("illustrated-message-small-cjk-title-font-size");
 }
 
-:host:where([size="l"]):lang(ja),
-:host:where([size="l"]):lang(ko),
-:host:where([size="l"]):lang(zh) {
+:host([size="l"]:lang(ja)),
+:host([size="l"]:lang(ko)),
+:host([size="l"]:lang(zh)) {
   --swc-illustrated-message-heading-font-size: token("illustrated-message-large-cjk-title-font-size");
 }
 
@@ -126,26 +126,16 @@ slot[name="heading"] {
 }
 
 /*
- * Within a layer, direct slotted headings to inherit from the slot element.
+ * Direct slotted headings to inherit from the slot element.
  * The :not([class]) guard leaves intentionally-classed headings untouched.
- */
-@layer typography {
-  ::slotted([slot="heading"]:not([class])) {
-    margin: 0;
-    font: inherit;
-    color: inherit;
-  }
-}
-
-/*
- * Force the inherited values to win over any light DOM styles targeting
+ * !important is required to win over any light DOM styles targeting
  * the slotted heading (e.g. global h2 resets from the host document).
  */
 ::slotted([slot="heading"]:not([class])) {
-  margin: revert-layer !important;
-  font: revert-layer !important;
+  margin: 0 !important;
+  font: inherit !important;
   /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
-  color: revert-layer !important;
+  color: inherit !important;
 }
 
 /*
