@@ -504,7 +504,6 @@ export const Inline: Story = {
   tags: ['behaviors'],
 };
 
-
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
