@@ -11,4 +11,6 @@
  */
 
 export { capitalize } from './capitalize.js';
+export { getActiveElement } from './get-active-element.js';
+export { focusableSelector, tabbableSelector } from './focusable-selectors.js';
 export { getLabelFromSlot } from './get-label-from-slot.js';

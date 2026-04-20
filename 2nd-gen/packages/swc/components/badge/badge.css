@@ -45,6 +45,7 @@
 .swc-Badge-label {
   font-size: var(--swc-badge-font-size, token("font-size-100"));
   font-weight: token("medium-font-weight");
+  text-box: cap alphabetic;
   line-height: var(--swc-badge-line-height, token("line-height-100"));
 
   &:lang(ja),
