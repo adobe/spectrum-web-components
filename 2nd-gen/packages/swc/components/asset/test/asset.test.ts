@@ -81,7 +81,7 @@ export const DefaultLabelFallbackTest: Story = {
       expect(svg, 'file asset has an SVG in shadow DOM').toBeTruthy();
       expect(
         svg?.getAttribute('aria-label'),
-        'file asset SVG defaults to "File" aria-label'
+        'file asset SVG aria-label'
       ).toBe('File');
     });
 
