@@ -14,6 +14,7 @@ import { html, render } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../index.js';
+import '../../conversation-thread/index.js';
 import '../../system-message/index.js';
 import '../../user-message/index.js';
 import '../../upload-artifact/index.js';
@@ -293,7 +294,7 @@ export const FullPattern: Story = {
       messages = messages.map((entry) =>
         entry.id === messageId ? { ...entry, feedback: detail.status } : entry
       );
-      rerender();
+      rerender({ scrollToBottom: true });
     };
 
     const sendConversationTurn = (
@@ -332,7 +333,7 @@ export const FullPattern: Story = {
         { id: nextId, role: 'system', text: '', loading: true },
       ];
       nextId += 1;
-      rerender();
+      rerender({ scrollToBottom: true });
 
       window.setTimeout(() => {
         sending = false;
@@ -355,7 +356,7 @@ export const FullPattern: Story = {
               }
             : entry
         );
-        rerender();
+        rerender({ scrollToBottom: true });
       }, 1200);
     };
 
@@ -375,7 +376,7 @@ export const FullPattern: Story = {
     const handlePromptInput = (event: Event): void => {
       const detail = (event as CustomEvent<{ value: string }>).detail;
       draft = detail.value;
-      rerender();
+      rerender({ scrollToBottom: false });
     };
 
     const handleFilesSelected = (event: Event): void => {
@@ -411,7 +412,7 @@ export const FullPattern: Story = {
               : undefined,
         })),
       ];
-      rerender();
+      rerender({ scrollToBottom: false });
     };
 
     const handleArtifactDismiss = (event: Event): void => {
@@ -426,7 +427,7 @@ export const FullPattern: Story = {
         URL.revokeObjectURL(removed.previewUrl);
       }
       artifacts = artifacts.filter((entry) => entry.id !== artifactId);
-      rerender();
+      rerender({ scrollToBottom: false });
     };
 
     const handleSubmit = (event: Event): void => {
@@ -446,80 +447,102 @@ export const FullPattern: Story = {
       sendConversationTurn(submitDetail.value, submittedArtifacts);
     };
 
-    function rerender(): void {
+    function rerender(options?: { scrollToBottom?: boolean }): void {
+      const scrollToBottom = options?.scrollToBottom ?? false;
       render(
         html`
+          <style>
+            .swc-conversationalAi-threadViewport {
+              scrollbar-width: none;
+              -ms-overflow-style: none;
+            }
+
+            .swc-conversationalAi-threadViewport::-webkit-scrollbar {
+              display: none;
+            }
+          </style>
           <div
-            style="display:flex; flex-direction:column;gap:24px;max-width:800px; margin: auto; padding: 24px 24px 0;"
+            style="max-width:800px; margin:auto; padding:24px; block-size:100vh; min-block-size:560px; box-sizing:border-box; display:flex; flex-direction:column; gap:16px;"
           >
-            ${messages.map((message) =>
-              message.role === 'user'
-                ? html`
-                    <swc-conversation-turn type="user">
-                      ${message.uploads?.map((artifact) =>
-                        renderUserMessageArtifact(artifact)
-                      ) ?? ''}
-                      ${message.text
-                        ? html`
-                            <swc-user-message>${message.text}</swc-user-message>
-                          `
-                        : ''}
-                    </swc-conversation-turn>
-                  `
-                : html`
-                    <swc-conversation-turn type="system">
-                      <swc-system-message>
-                        <swc-response-status
-                          slot="status"
-                          ?loading=${message.loading === true}
-                        >
-                          ${message.reasoning
+            <div
+              class="swc-conversationalAi-threadViewport"
+              style="flex:1 1 auto; min-block-size:0; overflow:auto; overflow-x:hidden; padding-inline:4px;"
+            >
+              <swc-conversation-thread
+                style="--swc-conversation-thread-gap:24px;"
+              >
+                ${messages.map((message) =>
+                  message.role === 'user'
+                    ? html`
+                        <swc-conversation-turn type="user">
+                          ${message.uploads?.map((artifact) =>
+                            renderUserMessageArtifact(artifact)
+                          ) ?? ''}
+                          ${message.text
                             ? html`
-                                <span>${message.reasoning}</span>
+                                <swc-user-message>
+                                  ${message.text}
+                                </swc-user-message>
                               `
                             : ''}
-                        </swc-response-status>
-                        ${message.loading
-                          ? ''
-                          : html`
-                              <div class="swc-conversationalAi-systemProse">
-                                <p>${message.text}</p>
-                              </div>
-
-                              <swc-message-feedback
-                                slot="feedback"
-                                .status=${message.feedback}
-                                data-message-id=${String(message.id)}
-                                @swc-feedback=${handleFeedback}
-                              ></swc-message-feedback>
-
-                              <swc-message-sources slot="sources" open>
-                                ${cannedSources.map(
-                                  (source) => html`
-                                    <li><a href="#">${source}</a></li>
+                        </swc-conversation-turn>
+                      `
+                    : html`
+                        <swc-conversation-turn type="system">
+                          <swc-system-message>
+                            <swc-response-status
+                              slot="status"
+                              ?loading=${message.loading === true}
+                            >
+                              ${message.reasoning
+                                ? html`
+                                    <span>${message.reasoning}</span>
                                   `
-                                )}
-                              </swc-message-sources>
+                                : ''}
+                            </swc-response-status>
+                            ${message.loading
+                              ? ''
+                              : html`
+                                  <div class="swc-conversationalAi-systemProse">
+                                    <p>${message.text}</p>
+                                  </div>
 
-                              <swc-suggestion
-                                slot="suggestions"
-                                title="What would you like to do next?"
-                                data-message-id=${String(message.id)}
-                                @swc-suggestion=${handleSuggestion}
-                              >
-                                ${(message.suggestions ?? []).map(
-                                  (suggestion) => html`
-                                    <swc-suggestion-item>
-                                      ${suggestion}
-                                    </swc-suggestion-item>
-                                  `
-                                )}
-                              </swc-suggestion>
-                            `}
-                      </swc-system-message>
-                    </swc-conversation-turn>
-                  `
-            )}
+                                  <swc-message-feedback
+                                    slot="feedback"
+                                    .status=${message.feedback}
+                                    data-message-id=${String(message.id)}
+                                    @swc-feedback=${handleFeedback}
+                                  ></swc-message-feedback>
+
+                                  <swc-message-sources slot="sources" open>
+                                    ${cannedSources.map(
+                                      (source) => html`
+                                        <li><a href="#">${source}</a></li>
+                                      `
+                                    )}
+                                  </swc-message-sources>
+
+                                  <swc-suggestion
+                                    slot="suggestions"
+                                    title="What would you like to do next?"
+                                    data-message-id=${String(message.id)}
+                                    @swc-suggestion=${handleSuggestion}
+                                  >
+                                    ${(message.suggestions ?? []).map(
+                                      (suggestion) => html`
+                                        <swc-suggestion-item>
+                                          ${suggestion}
+                                        </swc-suggestion-item>
+                                      `
+                                    )}
+                                  </swc-suggestion>
+                                `}
+                          </swc-system-message>
+                        </swc-conversation-turn>
+                      `
+                )}
+              </swc-conversation-thread>
+            </div>
 
             <swc-prompt-field
               .value=${draft}
@@ -535,7 +558,7 @@ export const FullPattern: Story = {
               @swc-files-selected=${handleFilesSelected}
               @swc-dismiss=${handleArtifactDismiss}
               @swc-submit=${handleSubmit}
-              style="position: sticky; bottom: 16px; z-index: 1; padding-block-end: 16px; padding-block-start: 24px;"
+              style="flex:0 0 auto; padding-block-end:8px;"
             >
               ${artifacts.map((artifact) => {
                 const isMedia = getUploadArtifactType(artifact) === 'media';
@@ -600,9 +623,21 @@ export const FullPattern: Story = {
         `,
         container
       );
+
+      if (scrollToBottom) {
+        window.requestAnimationFrame(() => {
+          const viewport = container.querySelector<HTMLElement>(
+            '.swc-conversationalAi-threadViewport'
+          );
+          if (!viewport) {
+            return;
+          }
+          viewport.scrollTop = viewport.scrollHeight;
+        });
+      }
     }
 
-    rerender();
+    rerender({ scrollToBottom: true });
     return container;
   },
   tags: ['full-pattern'],
