@@ -39,7 +39,7 @@ function applyLanguageAndFontKit(
   lang: string | false,
   textDirection: 'ltr' | 'rtl'
 ): void {
-  const langAttr = lang ? String(lang) : 'en-US';
+  const langAttr = lang || 'en-US';
   const root = document.documentElement;
 
   // Set the language on the document root and track if it has changed
