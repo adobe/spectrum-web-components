@@ -133,6 +133,8 @@ type DemoTurn = {
   text: string;
   artifacts?: DemoArtifact[];
   loading?: boolean;
+  statusOpen?: boolean;
+  sourcesOpen?: boolean;
   feedbackStatus?: 'positive' | 'negative';
 };
 
@@ -166,6 +168,8 @@ class ConversationFullPatternDemo extends HTMLElement {
       id: 'system-1',
       role: 'system',
       text: 'I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.',
+      statusOpen: false,
+      sourcesOpen: false,
     },
   ];
 
@@ -184,6 +188,8 @@ class ConversationFullPatternDemo extends HTMLElement {
       this.addEventListener('swc-feedback', this.handleFeedback);
       this.addEventListener('swc-suggestion', this.handleSuggestion);
       this.addEventListener('swc-dismiss', this.handleDismiss);
+      this.addEventListener('swc-toggle', this.handleStatusToggle);
+      this.addEventListener('swc-sources-toggle', this.handleSourcesToggle);
     }
     this.render();
   }
@@ -196,6 +202,8 @@ class ConversationFullPatternDemo extends HTMLElement {
     this.removeEventListener('swc-feedback', this.handleFeedback);
     this.removeEventListener('swc-suggestion', this.handleSuggestion);
     this.removeEventListener('swc-dismiss', this.handleDismiss);
+    this.removeEventListener('swc-toggle', this.handleStatusToggle);
+    this.removeEventListener('swc-sources-toggle', this.handleSourcesToggle);
     this.listenersAttached = false;
   }
 
@@ -217,6 +225,8 @@ class ConversationFullPatternDemo extends HTMLElement {
       role: 'system',
       text: '',
       loading: true,
+      statusOpen: false,
+      sourcesOpen: false,
     };
 
     this.turns = [...this.turns, userTurn, systemTurn];
@@ -323,7 +333,7 @@ class ConversationFullPatternDemo extends HTMLElement {
           : `<swc-message-feedback slot="feedback" data-feedback-id="${turn.id}" status="${turn.feedbackStatus ?? ''}"></swc-message-feedback>`;
         const sources = turn.loading
           ? ''
-          : `<swc-message-sources slot="sources"><li><a href="#">Brand brief Q1 2026</a></li><li><a href="#">Market research summary</a></li></swc-message-sources>`;
+          : `<swc-message-sources slot="sources" data-sources-id="${turn.id}"${turn.sourcesOpen ? ' open' : ''}><li><a href="#">Brand brief Q1 2026</a></li><li><a href="#">Market research summary</a></li></swc-message-sources>`;
         const suggestions = turn.loading
           ? ''
           : `<swc-suggestion slot="suggestions" heading="What would you like to do next?">
@@ -334,7 +344,7 @@ class ConversationFullPatternDemo extends HTMLElement {
             </swc-suggestion>`;
         const status = turn.loading
           ? '<swc-response-status slot="status" loading></swc-response-status>'
-          : `<swc-response-status slot="status">Draft complete. I used your latest prompt to generate this response.</swc-response-status>`;
+          : `<swc-response-status slot="status" data-status-id="${turn.id}"${turn.statusOpen ? ' open' : ''}>Draft complete. I used your latest prompt to generate this response.</swc-response-status>`;
         const body = turn.loading
           ? ''
           : `<div class="swc-conversationalAi-systemProse"><p>${escapeHtml(turn.text)}</p></div>`;
@@ -404,7 +414,10 @@ class ConversationFullPatternDemo extends HTMLElement {
           min-block-size: 0;
           overflow-y: auto;
           overflow-x: hidden;
-          padding-block-end: 16px;
+          padding-inline: 4px 8px;
+          padding-block-end: 24px;
+          scroll-padding-inline-end: 8px;
+          scroll-padding-block-end: 24px;
           overscroll-behavior: contain;
           scrollbar-width: none;
           -ms-overflow-style: none;
@@ -421,7 +434,7 @@ class ConversationFullPatternDemo extends HTMLElement {
       </style>
       <div class="swc-ConversationFullPatternDemo-shell">
         <div class="swc-ConversationFullPatternDemo-scroll">
-          <swc-conversation-thread style="--swc-conversation-thread-gap:24px;">
+          <swc-conversation-thread style="--swc-conversation-thread-gap:24px;padding:4px;">
             ${this.renderTurns()}
           </swc-conversation-thread>
         </div>
@@ -529,6 +542,34 @@ class ConversationFullPatternDemo extends HTMLElement {
       return;
     }
     this.artifacts = this.artifacts.filter((item) => item.id !== artifactId);
+    this.render();
+  };
+
+  private handleStatusToggle = (event: Event): void => {
+    const toggleEvent = event as CustomEvent<{ open?: boolean }>;
+    const statusHost = event.target as HTMLElement | null;
+    const turnId = statusHost?.getAttribute('data-status-id');
+    const open = toggleEvent.detail?.open;
+    if (!turnId || typeof open !== 'boolean') {
+      return;
+    }
+    this.turns = this.turns.map((turn) =>
+      turn.id === turnId ? { ...turn, statusOpen: open } : turn
+    );
+    this.render();
+  };
+
+  private handleSourcesToggle = (event: Event): void => {
+    const toggleEvent = event as CustomEvent<{ open?: boolean }>;
+    const sourcesHost = event.target as HTMLElement | null;
+    const turnId = sourcesHost?.getAttribute('data-sources-id');
+    const open = toggleEvent.detail?.open;
+    if (!turnId || typeof open !== 'boolean') {
+      return;
+    }
+    this.turns = this.turns.map((turn) =>
+      turn.id === turnId ? { ...turn, sourcesOpen: open } : turn
+    );
     this.render();
   };
 }
