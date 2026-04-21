@@ -12,19 +12,19 @@ AGENT TEMPLATE PREP INSTRUCTIONS (delete this comment block after copying the te
 10. Mark recommendations and decisions as confirmed, inferred, or open questions based on the quality of the source material. Do not present inferred details as settled facts.
 11. If proposing a rename, deprecation, or breaking change, include at least one concrete supporting source. If no support is available, keep it as an open question.
 12. Ask early for any missing critical inputs instead of only summarizing them at the end. This includes visual references, Epic number, accessibility analysis, dependency-order decisions, and breaking-change ticket context.
-13. If critical inputs are missing, prompt the user directly and explain why they materially affect the plan. Offer the fastest acceptable fallback the user can provide right away.
-14. Do not replace `Epic SWC-####` with `TBD` or another soft placeholder without explicitly prompting the user first.
-15. Before finalizing, sweep for unresolved placeholders such as `[component]`, `[Component]`, `[component-version]`, and `Epic SWC-####`.
-16. Before finalizing, check that `TL;DR`, `Most blocking open questions`, `Changes overview`, `2nd-gen API decisions`, and `References` are populated. If information is missing, say so explicitly instead of leaving sections blank.
-17. Keep blocker numbering in the required `Q{#}` format and continue it sequentially across all blocker sections. In `Most blocking open questions`, reuse those exact `Q{#}` IDs verbatim instead of inventing a second numbering scheme or section-specific labels.
-18. Check for contradictions across `Changes overview`, `2nd-gen API decisions`, and `Migration checklist` so the same decision is reflected consistently.
-19. Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material or guided by the user.
-20. Preserve the template structure unless the user explicitly asks for structural changes. Do not replace prescribed tables with bullets, remove stable checklist items, remove columns like `Blocking?` or `Owner`, or discard pre-populated guidance that is intended to remain stable.
-21. If a major dependency, extension, shared-base, or migration-order recommendation is involved, do not treat it as implicitly approved. Ask the user to confirm, reject, or request a stronger recommendation, and mark the affected plan sections as provisional until they respond.
-22. End with a concise review prompt that summarizes the most important provisional decisions, asks for feedback on major recommendations, and tells the user what missing resources they can provide next to tighten the plan.
-23. If critical resources are still missing, give the user explicit resume hooks, such as: send visual references, send the accessibility analysis, send the Epic number, paste breaking-change ticket descriptions, or confirm the dependency/shared-base decision so the plan can be tightened further.
-24. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
-25. For fuller workflow, review posture, and escalation guidance, refer to `.ai/skills/migration-prep/SKILL.md`.
+13. If materially blocking inputs are missing, stop early and prompt with a numbered list of required next actions. Do not bury them in a closing summary sentence.
+14. For each blocking input, explain why it matters, give the fastest acceptable fallback, and ask whether the user wants to provide it now or proceed explicitly with a provisional plan.
+15. Do not replace `Epic SWC-####` with `TBD` or another soft placeholder without explicitly prompting the user first.
+16. Before finalizing, sweep for unresolved placeholders such as `[component]`, `[Component]`, `[component-version]`, and `Epic SWC-####`.
+17. Before finalizing, check that `TL;DR`, `Most blocking open questions`, `Changes overview`, `2nd-gen API decisions`, and `References` are populated. If information is missing, say so explicitly instead of leaving sections blank.
+18. Keep blocker numbering in the required `Q{#}` format and continue it sequentially across all blocker sections. In `Most blocking open questions`, reuse those exact `Q{#}` IDs verbatim instead of inventing a second numbering scheme or section-specific labels.
+19. Check for contradictions across `Changes overview`, `2nd-gen API decisions`, and `Migration checklist` so the same decision is reflected consistently.
+20. Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material or guided by the user.
+21. Preserve the template structure unless the user explicitly asks for structural changes. Do not replace prescribed tables with bullets, remove stable checklist items, remove columns like `Blocking?` or `Owner`, or discard pre-populated guidance that is intended to remain stable.
+22. If a major dependency, extension, shared-base, or migration-order recommendation is involved, do not treat it as implicitly approved. Ask the user to confirm, reject, or request a stronger recommendation, and mark the affected plan sections as provisional until they respond.
+23. End with a concise review prompt that summarizes the most important provisional decisions, asks for feedback on major recommendations, and tells the user what missing resources they can provide next to tighten the plan.
+24. If critical resources are still missing, give the user explicit resume hooks, such as: send visual references, send the accessibility analysis, send the Epic number, paste breaking-change ticket descriptions, or confirm the dependency/shared-base decision so the plan can be tightened further.
+25. For fuller workflow, escalation guidance, and review posture, refer to `.ai/skills/migration-prep/SKILL.md`.
 26. Later migration phases should also follow `.ai/skills/migration-prep/references/migration-plan-contract.md` so implementation, tests, docs, and review stay aligned with this approved plan.
 -->
 

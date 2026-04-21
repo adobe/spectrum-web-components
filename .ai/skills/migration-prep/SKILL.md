@@ -68,14 +68,14 @@ Use the status table, existing component analyses, and source relationships to m
 
 ## Readiness threshold
 
-You may draft a partial plan with explicit blockers when some inputs are missing, but do not present the plan as review-ready until all of the following are available:
+Do not present the plan as review-ready until all of the following are available:
 
 - 1st-gen source
 - Rendering and styling migration analysis
 - Figma reference image(s) or equivalent approved visual reference
 - Epic or ticket context if renames, deprecations, or breaking changes are proposed
 
-If these inputs are missing, keep drafting focused on known facts, mark the gaps clearly, and add them to blockers or prerequisites.
+If any are missing, follow `Critical missing-input handling`.
 
 ## Must-ask before drafting materially
 
@@ -97,33 +97,66 @@ If a critical input is missing:
 - Offer a concrete fallback the user can provide immediately
 - Continue only with clearly labeled provisional scaffolding, not with a review-ready recommendation
 
-## Missing-input severity
+## Critical missing-input handling
 
-Treat missing inputs in two categories:
+When a critical input is missing, decide first whether it is materially blocking or only required before finalizing.
 
-- Materially blocking: visual references, accessibility analysis, dependency-order decisions, and breaking-change ticket context
-- Required before finalizing: Epic number, version strings, exact source paths, and supplementary references
+Materially blocking inputs:
 
-Materially blocking inputs should trigger an immediate user prompt.
-Required-before-finalizing inputs may be recorded temporarily, but must still be explicitly requested before finalizing.
+- visual references
+- accessibility analysis
+- dependency-order or shared-base decisions
+- breaking-change ticket context
 
-## Missing-input prompt style
+Required-before-finalizing inputs:
 
-When a critical input is missing, prompt the user with a direct request that explains why it matters.
+- Epic number
+- version strings
+- exact source paths
+- supplementary references
 
-Preferred pattern:
+### For materially blocking inputs
 
-- what is missing
-- why it materially affects the plan
-- what the user can provide right now as the fastest acceptable fallback
+Stop before drafting substantial recommendations.
 
-Example prompts:
+Prompt the user immediately with a numbered action list.
 
-- "Provide Figma spec images or another approved visual reference so I can make a comprehensive recommendation on visual API and supported presentation modes."
-- "Provide the Epic number so I can complete the migration plan header and references without leaving hidden placeholders."
-- "Provide the ticket numbers and summaries for suspected breaking changes, or paste the ticket descriptions here and I can assess impact and migration risk from that text."
-- "This component appears to depend on or extend from [X], which may change migration order and shared-base strategy. Confirm whether that dependency is intentional, or I can recommend a migration order based on the current source relationships."
-- "The accessibility migration analysis is missing, and that can materially affect API and behavior decisions. Provide it if available, or I can proceed with provisional notes and explicitly mark accessibility-dependent decisions as unresolved."
+The prompt must:
+
+1. state that the plan cannot yet be comprehensive or review-ready
+2. list each missing item as a numbered action
+3. explain why each item materially affects the plan
+4. offer the fastest acceptable fallback the user can provide now
+5. ask whether the user wants to provide the inputs now or proceed explicitly with a provisional plan
+
+Do not bury materially blocking inputs in a closing summary sentence.
+
+### For required-before-finalizing inputs
+
+You may continue with provisional scaffolding, but you must still explicitly request the missing information before finalizing. Do not silently replace placeholders such as `Epic SWC-####` with soft values like `TBD`.
+
+### Preferred prompt pattern
+
+Use this structure:
+
+- short blocker statement
+- numbered list of required next actions
+- one sentence on how the user can resume once they have the inputs
+
+Example:
+
+"I’m missing a few materially blocking inputs, so I should pause before treating this plan as comprehensive or review-ready.
+
+Please provide these to continue:
+
+1. Approved visual reference
+   Send Figma spec images or another approved visual reference so I can validate visual API and supported presentation modes.
+2. Accessibility migration analysis
+   Send the analysis if available, or confirm that I should proceed provisionally and leave accessibility-dependent recommendations unresolved.
+3. Breaking-change ticket context
+   Send ticket numbers and summaries, or paste the ticket descriptions here and I can assess likely impact from that text.
+
+If you want to proceed provisionally instead, tell me that explicitly and I’ll keep the unresolved areas clearly marked."
 
 ## Source priority
 
@@ -159,23 +192,7 @@ Pause and actively discuss with the user when you find any of the following:
 
 In these cases, do not just document the ambiguity. Recommend a preferred path, explain the tradeoff, and identify what evidence or review would resolve it.
 
-If a dependency, inheritance, or shared-base relationship could materially change:
-
-- migration order
-- API design
-- component boundaries
-- shared core extraction
-
-do not proceed as if the issue is settled.
-
-Instead:
-
-1. state the dependency clearly
-2. ask the user whether a decision already exists
-3. if not, offer to recommend a path based on current evidence
-4. mark the resulting plan sections as provisional until resolved
-
-## Must-confirm decisions
+### Must-confirm decisions
 
 Do not treat the following as implicitly approved, even if you can make a strong recommendation:
 
@@ -191,6 +208,22 @@ For these cases:
 2. explain the tradeoff briefly
 3. explicitly ask the user to confirm, reject, or request a stronger recommendation
 4. mark the affected sections as provisional until the user responds
+
+If a dependency, inheritance, or shared-base relationship could materially change:
+
+- migration order
+- API design
+- component boundaries
+- shared core extraction
+
+do not proceed as if the issue is settled.
+
+Instead:
+
+1. state the dependency clearly
+2. ask the user whether a decision already exists
+3. if not, offer to recommend a path based on current evidence
+4. mark the resulting plan sections as provisional until resolved
 
 ## Output
 
@@ -209,6 +242,16 @@ For these cases:
 - Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material or guided by the user
 - Call out any dependency-aware sequencing decisions, such as whether the component extends from another migrated component, should become a shared base, or should wait on a prerequisite migration
 - Do not replace `Epic SWC-####` with `TBD` or another soft placeholder without explicitly prompting the user first
+
+## Definition of done
+
+Before the plan is considered complete:
+
+- key references have been verified
+- unresolved placeholders have been removed or explicitly addressed with the user
+- required sections are populated or explicitly marked with a reason
+- dependency-aware sequencing decisions are called out
+- major provisional decisions are surfaced back to the user for review
 
 ## Template preservation rules
 
@@ -264,14 +307,15 @@ Example resume hooks:
 5. Fill out the template with concrete references, decisions, breaking changes, and open questions.
 6. Mark decisions as confirmed, inferred, or open questions, and cite supporting sources for any breaking-change recommendation.
 7. Make dependency-aware sequencing explicit: note whether the component depends on another migration, should become a shared base, or should be migrated ahead of related components.
-8. Ask the user early for any missing critical inputs instead of only summarizing them at the end.
-9. Make assumptions explicit and link blockers to the relevant section in the plan.
-10. Check for contradictions across `Changes overview`, `2nd-gen API decisions`, and `Migration checklist` so the same decision is reflected consistently.
-11. Verify key links, remove unresolved placeholders, and ensure each blocker or open question has clear status, owner, and next action where possible.
-12. Preserve the template's stable tables, checklist items, and section structure unless the user explicitly asks for structural changes.
-13. End with a concise review prompt that asks the user to confirm or refine any major provisional decisions and explains what missing resources can be provided next to tighten the plan.
-14. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
-15. Stop after producing the written plan unless the user explicitly asks to move into implementation.
+8. If materially blocking inputs are missing, follow `Critical missing-input handling` before drafting substantial recommendations.
+9. Ask the user early for any missing critical inputs instead of only summarizing them at the end.
+10. Make assumptions explicit and link blockers to the relevant section in the plan.
+11. Check for contradictions across `Changes overview`, `2nd-gen API decisions`, and `Migration checklist` so the same decision is reflected consistently.
+12. Ensure each blocker or open question has clear status, owner, and next action where possible.
+13. Preserve the template's stable tables, checklist items, and section structure unless the user explicitly asks for structural changes.
+14. End with a concise review prompt that asks the user to confirm or refine any major provisional decisions and explains what missing resources can be provided next to tighten the plan.
+15. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
+16. Stop after producing the written plan unless the user explicitly asks to move into implementation.
 
 ## Staff review checklist
 
