@@ -1,31 +1,12 @@
 <!--
-AGENT TEMPLATE PREP INSTRUCTIONS (delete this comment block after copying the template):
-1. Ensure you have the component name to use for filepath/naming purposes, ex. "Button" as well as the Jira Epic ticket number.
-2. Copy this template to `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md`
-3. Find/replace all [component] and [Component] with the correctly case-matched versions of the component name acquired from step 1. This will also help resolve any links that depend on the correct component name. Also update Epic SWC-#### to the received ticket number, such as SWC-####.
-4. The areas marked "DO NOT EDIT" will be updated by another process, you do not need to manually manage them. Also do not remove them or add extra content.
-5. Refer to HTML comments throughout for additional guidance on filling out that section. Any non-commented content is intended to be fairly stable, unless it really doesn't make sense for the component.
-6. Ensure you receive the required inputs, which are linked in the References section, plus Figma spec images or another approved visual reference from the user when local design references are unavailable.
-7. During discovery, check whether this component should extend from another 2nd-gen component or shared base, whether another component depends on it, or whether it should wait on a prerequisite migration. Use the status table, source relationships, and related component analyses to make that explicit in the plan.
-8. If a section is not applicable, prefer writing "N/A" with a brief reason instead of removing the section unless the user explicitly asks for a different structure.
-9. If links or file paths do not resolve after replacing placeholders, verify the actual repo naming before proceeding. Try likely variants such as kebab-case (`action-button`), PascalCase (`ActionButton`), or the spaced display name (`Action Button`). Prefer real existing repo paths over user phrasing. If multiple matches exist or none resolve, pause and ask the user for the exact component slug or source path.
-10. Mark recommendations and decisions as confirmed, inferred, or open questions based on the quality of the source material. Do not present inferred details as settled facts.
-11. If proposing a rename, deprecation, or breaking change, include at least one concrete supporting source. If no support is available, keep it as an open question.
-12. Ask early for any missing critical inputs instead of only summarizing them at the end. This includes visual references, Epic number, accessibility analysis, dependency-order decisions, and breaking-change ticket context.
-13. If materially blocking inputs are missing, stop early and prompt with a numbered list of required next actions. Do not bury them in a closing summary sentence.
-14. For each blocking input, explain why it matters, give the fastest acceptable fallback, and ask whether the user wants to provide it now or proceed explicitly with a provisional plan.
-15. Do not replace `Epic SWC-####` with `TBD` or another soft placeholder without explicitly prompting the user first.
-16. Before finalizing, sweep for unresolved placeholders such as `[component]`, `[Component]`, `[component-version]`, and `Epic SWC-####`.
-17. Before finalizing, check that `TL;DR`, `Most blocking open questions`, `Changes overview`, `2nd-gen API decisions`, and `References` are populated. If information is missing, say so explicitly instead of leaving sections blank.
-18. Keep blocker numbering in the required `Q{#}` format and continue it sequentially across all blocker sections. In `Most blocking open questions`, reuse those exact `Q{#}` IDs verbatim instead of inventing a second numbering scheme or section-specific labels.
-19. Check for contradictions across `Changes overview`, `2nd-gen API decisions`, and `Migration checklist` so the same decision is reflected consistently.
-20. Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material or guided by the user.
-21. Preserve the template structure unless the user explicitly asks for structural changes. Do not replace prescribed tables with bullets, remove stable checklist items, remove columns like `Blocking?` or `Owner`, or discard pre-populated guidance that is intended to remain stable.
-22. If a major dependency, extension, shared-base, or migration-order recommendation is involved, do not treat it as implicitly approved. Ask the user to confirm, reject, or request a stronger recommendation, and mark the affected plan sections as provisional until they respond.
-23. End with a concise review prompt that summarizes the most important provisional decisions, asks for feedback on major recommendations, and tells the user what missing resources they can provide next to tighten the plan.
-24. If critical resources are still missing, give the user explicit resume hooks, such as: send visual references, send the accessibility analysis, send the Epic number, paste breaking-change ticket descriptions, or confirm the dependency/shared-base decision so the plan can be tightened further.
-25. For fuller workflow, escalation guidance, and review posture, refer to `.ai/skills/migration-prep/SKILL.md`.
-26. Later migration phases should also follow `.ai/skills/migration-prep/references/migration-plan-contract.md` so implementation, tests, docs, and review stay aligned with this approved plan.
+AGENT / CONTRIBUTOR QUICK START:
+1. Copy this template to `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` before editing.
+2. Replace `[component]`, `[Component]`, and `Epic SWC-####` with the correct values.
+3. Do not edit or remove sections marked `DO NOT EDIT`.
+4. Preserve the template structure: keep prescribed tables, stable checklist items, and blocker columns unless the user explicitly wants structural changes.
+5. If materially blocking inputs are missing, stop early and ask for them with a numbered action list instead of burying them in a closing summary.
+6. Do not replace `Epic SWC-####` with `TBD` without explicitly prompting the user first.
+7. For full workflow, escalation rules, and review posture, refer to `.ai/skills/migration-prep/SKILL.md`.
 -->
 
 <!-- Generated breadcrumbs - DO NOT EDIT -->
