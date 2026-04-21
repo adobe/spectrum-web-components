@@ -1,7 +1,7 @@
 ---
 name: consumer-migration-guide
 description: Use when creating a per-component migration guide for application developers upgrading from 1st-gen Spectrum Web Components to 2nd-gen components.
-globs: CONTRIBUTOR-DOCS/**/consumer-migration-guide.md
+globs: 2nd-gen/packages/swc/components/*/consumer-migration-guide.mdx
 alwaysApply: false
 ---
 
@@ -25,10 +25,24 @@ Create per-component migration guidance for application developers upgrading app
 
 ### Output
 
-- **One markdown file per component** at:
-  `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/consumer-migration-guide.md`
-- **Pairing:** Link to `./rendering-and-styling-migration-analysis.md` and `./accessibility-migration-analysis.md` when those docs exist and help the reader
-- **Nav:** After adding the file or changing `##` / `###` headings, run `node update-nav.js` from `CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs`. Register the doc in `03_components/README.md` when introducing a new component folder.
+- **One `.mdx` file per component** at:
+  `2nd-gen/packages/swc/components/[component-name]/consumer-migration-guide.mdx`
+- The file is Storybook-renderable MDX. Start every guide with this template so it picks up the `Components` title prefix wired in `2nd-gen/packages/swc/.storybook/main.ts`:
+
+  ```mdx
+  import { Meta } from '@storybook/addon-docs/blocks';
+
+  <Meta title="[Component name]/Consumer migration guide" />
+
+  # [Component name] consumer migration guide
+  ```
+
+  Use sentence case for `[Component name]` (for example `Badge`, `Action button`). Do **not** include `Components/` in the `<Meta title>` — `titlePrefix` already adds it, so the doc renders at `Components/[Component name]/Consumer migration guide`.
+
+- Consumer migration guides live alongside the 2nd-gen component source so the doc ships with the component code. Do **not** add them to `CONTRIBUTOR-DOCS/`.
+- **Pairing:** Link to the maintainer-facing analysis docs in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/` (`rendering-and-styling-migration-analysis.md` and `accessibility-migration-analysis.md`) when those exist and help the reader. Use repo-root-relative paths from the guide's location (e.g. `../../../../../CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/...`).
+- **Nav:** The consumer migration guide lives in the component directory, so the `CONTRIBUTOR-DOCS` `update-nav.js` script does not manage it. Do not register it in `CONTRIBUTOR-DOCS/03_project-planning/03_components/README.md`, and do not include auto-generated breadcrumbs or TOC markers intended for that script.
+- **MDX gotchas:** Keep bare tag names (`<sp-badge>`, `<swc-badge>`, etc.) wrapped in backticks in prose, and keep HTML/JS examples inside fenced code blocks. Avoid loose `{` / `}` outside code blocks; MDX parses them as JS expressions.
 
 ### Required source inputs
 

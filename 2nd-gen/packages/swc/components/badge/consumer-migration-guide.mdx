@@ -1,49 +1,8 @@
-<!-- Generated breadcrumbs - DO NOT EDIT -->
+import { Meta } from '@storybook/addon-docs/blocks';
 
-[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Badge / Badge consumer migration guide
-
-<!-- Document title (editable) -->
+<Meta title="Badge/Consumer migration guide" />
 
 # Badge consumer migration guide
-
-<!-- Generated TOC - DO NOT EDIT -->
-
-<details open>
-<summary><strong>In this doc</strong></summary>
-
-- [Overview](#overview)
-    - [Also read](#also-read)
-    - [Who this guide is for](#who-this-guide-is-for)
-    - [Migration in one sentence](#migration-in-one-sentence)
-- [Before you migrate](#before-you-migrate)
-    - [Confirm the replacement component](#confirm-the-replacement-component)
-    - [Inventory your current usage](#inventory-your-current-usage)
-    - [Plan the migration strategy](#plan-the-migration-strategy)
-- [What changed](#what-changed)
-- [Update your code](#update-your-code)
-    - [Replace the component in markup](#replace-the-component-in-markup)
-    - [Update attributes, properties, and events](#update-attributes-properties-and-events)
-    - [Update slots and content structure](#update-slots-and-content-structure)
-    - [Before and after examples](#before-and-after-examples)
-- [Styling and customization changes](#styling-and-customization-changes)
-    - [CSS classes and DOM assumptions](#css-classes-and-dom-assumptions)
-    - [CSS custom properties, tokens, and supported theming hooks](#css-custom-properties-tokens-and-supported-theming-hooks)
-    - [Unsupported customization patterns](#unsupported-customization-patterns)
-- [Accessibility and behavior changes](#accessibility-and-behavior-changes)
-    - [Accessibility improvements and new expectations](#accessibility-improvements-and-new-expectations)
-    - [Behavior changes to validate in product](#behavior-changes-to-validate-in-product)
-    - [Cases that may need product review](#cases-that-may-need-product-review)
-- [Testing and rollout guidance](#testing-and-rollout-guidance)
-    - [Visual QA](#visual-qa)
-    - [Accessibility QA](#accessibility-qa)
-    - [Automated tests to update](#automated-tests-to-update)
-    - [Rollout and fallback strategy](#rollout-and-fallback-strategy)
-- [Migration checklist](#migration-checklist)
-- [References](#references)
-
-</details>
-
-<!-- Document content (editable) -->
 
 ## Overview
 
@@ -51,8 +10,8 @@ This guide covers migrating `<sp-badge>` (1st-gen) to `<swc-badge>` (2nd-gen). I
 
 ### Also read
 
-- [Badge migration roadmap](./rendering-and-styling-migration-analysis.md) — DOM structure, CSS selectors, and Spectrum 2 CSS-to-SWC mapping
-- [Badge accessibility migration analysis](./accessibility-migration-analysis.md) — ARIA, WCAG guidelines, and testing expectations
+- [Badge migration roadmap](../../../../../CONTRIBUTOR-DOCS/03_project-planning/03_components/badge/rendering-and-styling-migration-analysis.md) — DOM structure, CSS selectors, and Spectrum 2 CSS-to-SWC mapping
+- [Badge accessibility migration analysis](../../../../../CONTRIBUTOR-DOCS/03_project-planning/03_components/badge/accessibility-migration-analysis.md) — ARIA, WCAG guidelines, and testing expectations
 
 ### Who this guide is for
 
@@ -97,16 +56,16 @@ There is no staged fallback required unless you are migrating a large codebase i
 
 ## What changed
 
-| Area | What changed | What consumers need to do |
-|------|-------------|--------------------------|
-| Element name | `sp-badge` → `swc-badge` | Replace all tag occurrences |
-| Import path | `@spectrum-web-components/badge/sp-badge.js` | Update to `@adobe/spectrum-wc/badge` |
-| Base class import | `import { Badge } from '@spectrum-web-components/badge'` | Update to `import { Badge } from '@adobe/spectrum-wc/badge'` |
-| New style attributes | No `subtle` or `outline` in 1st-gen | Optionally add `subtle` or `outline` to adopt new Spectrum 2 styles |
-| `outline` constraint | N/A | `outline` only applies to semantic variants; ignore or remove when used with color variants |
-| New non-semantic color variants | 1st-gen did not have `pink`, `turquoise`, `brown`, `cinnamon`, `silver` | No action required unless you want to use these new variants |
-| Internal CSS class names | `spectrum-Badge*` → `swc-Badge*` | Remove any selectors targeting `spectrum-Badge*` classes |
-| `--mod-badge-*` custom properties | Same property names, same behavior | No action required if using supported `--mod-badge-*` properties |
+| Area                              | What changed                                                            | What consumers need to do                                                                   |
+| --------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| Element name                      | `sp-badge` → `swc-badge`                                                | Replace all tag occurrences                                                                 |
+| Import path                       | `@spectrum-web-components/badge/sp-badge.js`                            | Update to `@adobe/spectrum-wc/badge`                                                        |
+| Base class import                 | `import { Badge } from '@spectrum-web-components/badge'`                | Update to `import { Badge } from '@adobe/spectrum-wc/badge'`                                |
+| New style attributes              | No `subtle` or `outline` in 1st-gen                                     | Optionally add `subtle` or `outline` to adopt new Spectrum 2 styles                         |
+| `outline` constraint              | N/A                                                                     | `outline` only applies to semantic variants; ignore or remove when used with color variants |
+| New non-semantic color variants   | 1st-gen did not have `pink`, `turquoise`, `brown`, `cinnamon`, `silver` | No action required unless you want to use these new variants                                |
+| Internal CSS class names          | `spectrum-Badge*` → `swc-Badge*`                                        | Remove any selectors targeting `spectrum-Badge*` classes                                    |
+| `--mod-badge-*` custom properties | Same property names, same behavior                                      | No action required if using supported `--mod-badge-*` properties                            |
 
 ---
 
@@ -130,9 +89,9 @@ All 1st-gen attributes (`variant`, `size`, `fixed`) map directly to 2nd-gen with
 
 **New optional attributes in 2nd-gen:**
 
-| Attribute | Type | Description |
-|-----------|------|-------------|
-| `subtle` | boolean | Softer background fill; available for all variants |
+| Attribute | Type    | Description                                                            |
+| --------- | ------- | ---------------------------------------------------------------------- |
+| `subtle`  | boolean | Softer background fill; available for all variants                     |
 | `outline` | boolean | Transparent background with a border; only valid for semantic variants |
 
 Do not use `outline` with non-semantic color variants (`fuchsia`, `indigo`, etc.). The component will emit a debug warning and the style will not apply.
@@ -143,10 +102,10 @@ Badges have no events. No event handler updates are needed.
 
 Slot names are unchanged:
 
-| Slot | 1st-gen | 2nd-gen |
-|------|---------|---------|
-| Default | Text label | Text label (unchanged) |
-| `icon` | `slot="icon"` | `slot="icon"` (unchanged) |
+| Slot    | 1st-gen       | 2nd-gen                   |
+| ------- | ------------- | ------------------------- |
+| Default | Text label    | Text label (unchanged)    |
+| `icon`  | `slot="icon"` | `slot="icon"` (unchanged) |
 
 Replace any `<sp-icon-*>` elements in the `icon` slot with the equivalent icons from the 2nd-gen icon package if you are also migrating your icon imports. The slot name itself does not change.
 
@@ -247,12 +206,12 @@ import { Badge } from '@adobe/spectrum-wc/badge';
 
 Do not target internal `spectrum-Badge*` class names. These have changed to `swc-Badge*` in 2nd-gen, and internal class names are not part of the public API.
 
-| 1st-gen internal class | Status in 2nd-gen |
-|-----------------------|-------------------|
-| `.spectrum-Badge` | Renamed to `.swc-Badge` — do not target |
-| `.spectrum-Badge-label` | Renamed to `.swc-Badge-label` — do not target |
-| `.spectrum-Badge-icon` | Renamed to `.swc-Badge-icon` — do not target |
-| `.spectrum-Badge--*` modifiers | Renamed to `.swc-Badge--*` — do not target |
+| 1st-gen internal class         | Status in 2nd-gen                             |
+| ------------------------------ | --------------------------------------------- |
+| `.spectrum-Badge`              | Renamed to `.swc-Badge` — do not target       |
+| `.spectrum-Badge-label`        | Renamed to `.swc-Badge-label` — do not target |
+| `.spectrum-Badge-icon`         | Renamed to `.swc-Badge-icon` — do not target  |
+| `.spectrum-Badge--*` modifiers | Renamed to `.swc-Badge--*` — do not target    |
 
 Remove any CSS rules in your application that select these classes. If you need to style a badge, apply styles to the host element (`swc-badge`) using the supported `--mod-badge-*` custom properties.
 
@@ -273,7 +232,7 @@ Commonly used modifier properties:
 - `--mod-badge-subtle-background-color-*` — subtle variant background overrides
 - `--mod-badge-outline-border-color-*` — outline variant border color overrides
 
-See the [Badge migration roadmap](./rendering-and-styling-migration-analysis.md) for the full list of modifier properties.
+See the [Badge migration roadmap](../../../../../CONTRIBUTOR-DOCS/03_project-planning/03_components/badge/rendering-and-styling-migration-analysis.md) for the full list of modifier properties.
 
 ### Unsupported customization patterns
 
@@ -303,7 +262,10 @@ Without a visible text label or `aria-label`, an icon-only badge has no accessib
 
 ```html
 <swc-badge variant="positive">
-  <sp-icon-checkmark-circle aria-hidden="true" slot="icon"></sp-icon-checkmark-circle>
+  <sp-icon-checkmark-circle
+    aria-hidden="true"
+    slot="icon"
+  ></sp-icon-checkmark-circle>
   Approved
 </swc-badge>
 ```
@@ -386,8 +348,8 @@ If your team runs visual regression tests (VRTs), approve the updated snapshots 
 
 ## References
 
-- [1st-gen badge README](../../../../1st-gen/packages/badge/README.md)
-- [Badge migration roadmap](./rendering-and-styling-migration-analysis.md)
-- [Badge accessibility migration analysis](./accessibility-migration-analysis.md)
+- [1st-gen badge README](../../../../../1st-gen/packages/badge/README.md)
+- [Badge migration roadmap](../../../../../CONTRIBUTOR-DOCS/03_project-planning/03_components/badge/rendering-and-styling-migration-analysis.md)
+- [Badge accessibility migration analysis](../../../../../CONTRIBUTOR-DOCS/03_project-planning/03_components/badge/accessibility-migration-analysis.md)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
 - [WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-1.2/)

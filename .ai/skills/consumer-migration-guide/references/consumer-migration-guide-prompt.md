@@ -2,7 +2,11 @@
 
 # Spectrum consumer migration guide prompt
 
-For the **[COMPONENT_NAME]** component(s), create one consumer-facing migration guide per component at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/consumer-migration-guide.md`.
+For the **[COMPONENT_NAME]** component(s), create one consumer-facing migration guide per component at `2nd-gen/packages/swc/components/[component-name]/consumer-migration-guide.mdx`.
+
+The file must be **MDX**, not plain Markdown. Storybook's config (`2nd-gen/packages/swc/.storybook/main.ts`) picks up `**/*.mdx` under `../components` with `titlePrefix: 'Components'`, so the guide renders as a docs page at `Components/[Component name]/Consumer migration guide`.
+
+The guide ships alongside the 2nd-gen component source. Do **not** create or move this file under `CONTRIBUTOR-DOCS/`; the maintainer-facing `rendering-and-styling-migration-analysis.md` and `accessibility-migration-analysis.md` stay in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/`, but the consumer guide lives with the component.
 
 These guides are for **application developers upgrading their code** from 1st-gen Spectrum Web Components to 2nd-gen components. Internal maintainers may also use them, but the primary question every section should answer is:
 
@@ -32,21 +36,35 @@ Before writing, verify the component against the real repo sources that apply:
 - **2nd-gen component docs and public API**
   - `2nd-gen/packages/swc/components/[component-name]/src/`
   - stories and tests when needed to confirm public behavior
-- **Migration analysis documents**
-  - `./rendering-and-styling-migration-analysis.md`
-  - `./accessibility-migration-analysis.md`
+- **Migration analysis documents** (in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/`)
+  - `rendering-and-styling-migration-analysis.md`
+  - `accessibility-migration-analysis.md`
 
 If a claim is not confirmed by source, docs, or related migration analysis, do not present it as fact. Either omit it or call out the uncertainty explicitly.
 
 ## File and heading format
 
-- Create a level 1 heading in this format:
+- Start every guide with this exact template so Storybook picks it up under the component:
 
-  `# [Component name] consumer migration guide`
+  ```mdx
+  import { Meta } from '@storybook/addon-docs/blocks';
 
-- Use sentence case for headings
-- Separate major sections with `---` where the surrounding contributor docs use that pattern
+  <Meta title="[Component name]/Consumer migration guide" />
+
+  # [Component name] consumer migration guide
+  ```
+
+  - Use sentence case for `[Component name]` in both the `<Meta title>` and the H1 (for example `Badge`, `Action button`, `Progress circle`).
+  - Do **not** prefix `<Meta title>` with `Components/` — the Storybook config supplies the `Components` title prefix automatically.
+
+- Use sentence case for all other headings too
+- Separate major sections with `---`
 - Prefer short paragraphs, bullets, tables, and code examples that scan well
+- **MDX rules** to keep the file parseable:
+  - Wrap bare tag names in inline code (`` `<sp-badge>` ``, `` `<swc-badge>` ``) when referenced in prose
+  - Put HTML and JS examples inside fenced code blocks (` ```html ` / ` ```js `)
+  - Do not leave loose `{` / `}` outside code blocks; MDX treats them as JS expressions
+  - Do not add generated-breadcrumb or TOC blocks from the `CONTRIBUTOR-DOCS` nav script; they are not applicable here
 
 ## Required section order
 
@@ -77,8 +95,9 @@ Start with a short paragraph that names:
 Use these **`###` subheadings** when they fit:
 
 - `### Also read`
-  - Link to `./rendering-and-styling-migration-analysis.md`
-  - Link to `./accessibility-migration-analysis.md` when present
+  - Link to the component's `rendering-and-styling-migration-analysis.md` in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/`
+  - Link to `accessibility-migration-analysis.md` in the same `CONTRIBUTOR-DOCS` folder when present
+  - Use a repo-root-relative path from the consumer guide's location (e.g. `../../../../../CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`)
 - `### Who this guide is for`
   - State that it is for application developers upgrading product code
 - `### Migration in one sentence`
