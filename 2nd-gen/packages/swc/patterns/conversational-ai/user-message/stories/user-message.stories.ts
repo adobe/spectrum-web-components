@@ -42,6 +42,11 @@ const withUserTurn = (story: () => unknown) => html`
 
 /**
  * User-authored message bubble. Use inside `<swc-conversation-turn type="user">` for thread alignment.
+ *
+ *
+ * Note: This component does not sanitize slotted content. When rendering user-provided
+ * or AI-generated markup, consumers must sanitize input to prevent XSS and
+ * validate link targets. This is the consumer's responsibility.
  */
 const meta: Meta = {
   title: 'Conversational AI/User message',

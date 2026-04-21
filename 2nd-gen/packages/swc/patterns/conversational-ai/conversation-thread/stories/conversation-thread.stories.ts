@@ -32,6 +32,13 @@ import '../../system-prose-demo.css';
 /**
  * Vertical thread wrapper for chat turns with arrow-key navigation.
  * Use `ArrowUp` / `ArrowDown` to move across turns and `Home` / `End` to jump.
+ *
+ *
+ * Note: `swc-conversation-thread` uses a per-instance navigation controller that
+ * queries slotted items on slot changes and keyboard events. Virtualization is
+ * explicitly out of scope for this component; it is a presentational layer
+ * only. Products should implement virtualization at the data or model layer
+ * and feed only visible subsets to the thread.
  */
 const meta: Meta = {
   title: 'Conversational AI/Conversation thread',

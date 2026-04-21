@@ -28,27 +28,6 @@ import '../../system-prose-demo.css';
 //    METADATA
 // ────────────────
 
-const systemMessageSlotDocs = `
-### Default slot — reply body
-
-Put the AI reply in the **default slot** as **semantic HTML** (and optional app components) styled with Spectrum **\`var(--swc-*)\`** tokens.
-
-#### Markup
-
-- **\`<p>\`** for body copy; reset vertical margins so stacked paragraphs match design.
-- **\`<ul>\`** / **\`<ol>\`** for lists; set **margin** and **padding-inline-start** to match design specs.
-- **Headings** (\`<h2>\`–\`<h4>\`) only when the outline matters for assistive tech; otherwise a **\`<p>\`** with stronger **font-size** / **font-weight** for in-flow section titles.
-- **\`<a href>\`** for links; accent colour and underline.
-
-#### Typography (tokens)
-
-| Role | Suggested variables |
-| --- | --- |
-| Body | \`--swc-font-size-200\`, \`--swc-line-height-font-size-200\`, \`--swc-regular-font-weight\`, \`--swc-gray-800\`, \`--swc-sans-serif-font\` |
-| In-flow emphasis | \`--swc-font-size-300\` or \`--swc-font-size-400\`, heavier weight, \`--swc-gray-900\` |
-| Links | \`--swc-accent-color-900\`, \`text-decoration: underline\`, \`text-underline-offset: 2px\` |
-`.trim();
-
 const { args, argTypes, template } = getStorybookHelpers('swc-system-message');
 
 const slotStatusRich = `<swc-response-status slot="status" open>The user said make a presentation deck but didn't specify duration of deck. Assumption is a brief presentation. I should check previous Hilton executive presentation decks and extract the structure.</swc-response-status>`;
@@ -78,7 +57,6 @@ const withSystemTurn = (story: () => unknown) => html`
  * **Presentation order is fixed** by the component (shadow slot order); host children may appear in any order if
  * each uses the correct **`slot`** name. For thread alignment, wrap in `<swc-conversation-turn type="system">`.
  *
- * **Default slot:** semantic HTML and typography guidance appears **after the API table** on this page.
  */
 const meta: Meta = {
   title: 'Conversational AI/System message',
@@ -92,7 +70,6 @@ const meta: Meta = {
   parameters: {
     docs: {
       subtitle: 'Layout container for a single system reply.',
-      afterApi: systemMessageSlotDocs,
     },
     layout: 'padded',
   },
@@ -132,11 +109,23 @@ export const Overview: Story = {
  *
  * ### Slots
  *
- * - **Default slot** — System reply body (semantic HTML; see **after API** on this docs page)
+ * - **Default slot** — System reply body as semantic HTML and optional app components
  * - **`status`** — `<swc-response-status>`
  * - **`feedback`** — `<swc-message-feedback>`
  * - **`sources`** — `<swc-message-sources>`
  * - **`suggestions`** — `<swc-suggestion>`
+ *
+ * ### Default slot guidance
+ *
+ * Put the AI reply in the **default slot** as semantic HTML styled with Spectrum
+ * token variables.
+ *
+ * - **`<p>`** for body copy; reset vertical margins for predictable stacking.
+ * - **`<ul>` / `<ol>`** for lists; set **margin** and **padding-inline-start**
+ *   to match design specs.
+ * - **Headings** (`<h2>`–`<h4>`) only when semantic outline matters; otherwise use
+ *   stronger paragraph typography for in-flow section titles.
+ * - **`<a href>`** for links; use accent colour and underline treatment.
  */
 export const Anatomy: Story = {
   args: {
