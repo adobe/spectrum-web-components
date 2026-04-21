@@ -47,6 +47,10 @@ const meta: Meta = {
     handles: events,
   },
   parameters: {
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=13065-162',
+    },
     docs: {
       subtitle: `Visual magnifier showing the picked color during color selection`,
     },
