@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
-import { expect } from '@storybook/test';
+import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { ColorLoupe } from '@adobe/spectrum-wc/color-loupe';
@@ -89,14 +89,12 @@ export const OpenAttributeTest: Story = {
       expect(loupe.hasAttribute('open')).toBe(false);
     });
 
-    await step(
-      'inner .swc-ColorLoupe has opacity 0 when closed',
-      async () => {
-        const innerLoupe = getInnerLoupe();
-        expect(innerLoupe).toBeTruthy();
-        expect(getComputedStyle(innerLoupe).opacity).toBe('0');
-      }
-    );
+    await step('inner .swc-ColorLoupe has opacity 0 when closed', async () => {
+      const innerLoupe = getInnerLoupe();
+      expect(innerLoupe).toBeTruthy();
+      // Initial state: no transition in flight, value should already be 0.
+      expect(getComputedStyle(innerLoupe).opacity).toBe('0');
+    });
 
     await step(
       'reflects open attribute when set programmatically',
@@ -107,9 +105,12 @@ export const OpenAttributeTest: Story = {
       }
     );
 
+    // The loupe animates opacity over 125 ms, so poll via waitFor until the
+    // transition settles at the target value.
     await step('inner .swc-ColorLoupe has opacity 1 when open', async () => {
-      const innerLoupe = getInnerLoupe();
-      expect(getComputedStyle(innerLoupe).opacity).toBe('1');
+      await waitFor(() => {
+        expect(getComputedStyle(getInnerLoupe()).opacity).toBe('1');
+      });
     });
 
     await step('removes open attribute when set to false', async () => {
@@ -121,8 +122,9 @@ export const OpenAttributeTest: Story = {
     await step(
       'inner .swc-ColorLoupe returns to opacity 0 when closed again',
       async () => {
-        const innerLoupe = getInnerLoupe();
-        expect(getComputedStyle(innerLoupe).opacity).toBe('0');
+        await waitFor(() => {
+          expect(getComputedStyle(getInnerLoupe()).opacity).toBe('0');
+        });
       }
     );
   },
