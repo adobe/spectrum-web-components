@@ -151,7 +151,6 @@ export default mergeConfig(
               instances: resolvedBrowserInstances,
             },
             globals: true,
-            setupFiles: ['./.storybook/vitest.setup.ts'],
           },
         },
       ],

@@ -1,8 +1,8 @@
-diff --git a/dist/_browser-chunks/chunk-2N4WE3KZ.js b/dist/_browser-chunks/chunk-2N4WE3KZ.js
-index 9b09cad2689865e94445bf8e35191a38a3016caf..3f4c4bd100790615a6fae6e59c920dd8fbc17911 100644
---- a/dist/_browser-chunks/chunk-2N4WE3KZ.js
-+++ b/dist/_browser-chunks/chunk-2N4WE3KZ.js
-@@ -1758,7 +1758,7 @@ var StoryRender = class {
+diff --git a/dist/_browser-chunks/chunk-SZQXB3JV.js b/dist/_browser-chunks/chunk-SZQXB3JV.js
+index 3cfc32a9d03ab3a77dc18035cd9fe7e3de03de52..827d00a7a46d09a93276d34cdd85e5fef402bc5d 100644
+--- a/dist/_browser-chunks/chunk-SZQXB3JV.js
++++ b/dist/_browser-chunks/chunk-SZQXB3JV.js
+@@ -1771,7 +1771,7 @@
        }, onUnhandledRejection = (event) => {
          event.reason && unhandledErrors.add(event.reason);
        };
@@ -12,10 +12,10 @@ index 9b09cad2689865e94445bf8e35191a38a3016caf..3f4c4bd100790615a6fae6e59c920dd8
          try {
            if (isMountDestructured ? await playFunction(context) : (context.mount = async () => {
 diff --git a/dist/preview/runtime.js b/dist/preview/runtime.js
-index 4db3972f6b5077c992467ce50923e0157e1b186e..89b9e35866e84cfb742046d6832bf63215b53af8 100644
+index 8f604257f47817b904d6005bf20d10a1ade6de00..1d69e9b54efe7709d5a9b9bd61b5727387a53b09 100644
 --- a/dist/preview/runtime.js
 +++ b/dist/preview/runtime.js
-@@ -36000,7 +36000,7 @@ var StoryRender = class {
+@@ -34023,7 +34023,7 @@
        }, onUnhandledRejection = (event) => {
          event.reason && unhandledErrors.add(event.reason);
        };

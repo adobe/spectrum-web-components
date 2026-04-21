@@ -12,7 +12,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { __test__ } from '../src/tokens.js';
+import { __test__, generateCSS } from '../src/tokens.js';
 
 describe('extractTokenValues', () => {
   const { extractTokenValues } = __test__;
@@ -153,6 +153,75 @@ describe('extractTokenValues', () => {
       },
     });
   });
+
+  it('resolves aliases inside drop-shadow layer arrays', () => {
+    const json = {
+      'drop-shadow-ambient-color': {
+        sets: {
+          light: { value: 'rgb(0, 0, 0, 0.12)' },
+          dark: { value: 'rgb(0, 0, 0, 0.36)' },
+        },
+      },
+      'drop-shadow-dragged-key-color': {
+        sets: {
+          light: { value: 'rgb(0, 0, 0, 0.16)' },
+          dark: { value: 'rgb(0, 0, 0, 0.48)' },
+        },
+      },
+      'drop-shadow-dragged': {
+        value: [
+          {
+            x: '0px',
+            y: '12px',
+            blur: '16px',
+            spread: '0px',
+            color: '{drop-shadow-ambient-color}',
+          },
+          {
+            x: '0px',
+            y: '0px',
+            blur: '6px',
+            spread: '0px',
+            color: '{drop-shadow-dragged-key-color}',
+          },
+        ],
+      },
+    };
+
+    const result = extractTokenValues(json, true, 'test');
+    expect(result).toEqual({
+      'drop-shadow-ambient-color': {
+        light: 'rgb(0 0 0 / 12%)',
+        dark: 'rgb(0 0 0 / 36%)',
+      },
+      'drop-shadow-dragged-key-color': {
+        light: 'rgb(0 0 0 / 16%)',
+        dark: 'rgb(0 0 0 / 48%)',
+      },
+      'drop-shadow-dragged': [
+        {
+          x: '0px',
+          y: '12px',
+          blur: '16px',
+          spread: '0px',
+          color: {
+            light: 'rgb(0 0 0 / 12%)',
+            dark: 'rgb(0 0 0 / 36%)',
+          },
+        },
+        {
+          x: '0px',
+          y: '0px',
+          blur: '6px',
+          spread: '0px',
+          color: {
+            light: 'rgb(0 0 0 / 16%)',
+            dark: 'rgb(0 0 0 / 48%)',
+          },
+        },
+      ],
+    });
+  });
 });
 
 describe('extractRenamedTokenValues', () => {
@@ -178,6 +247,16 @@ describe('extractRenamedTokenValues', () => {
     expect(extractRenamedTokenValues(json)).toEqual({
       oldToken: 'new-token',
     });
+  });
+});
+
+describe('generateCSS', () => {
+  it('does not wrap comma-separated font-family stacks in extra quotes', async () => {
+    const css = await generateCSS('swc');
+
+    expect(css).toContain(
+      "--swc-font-family-hebrew: adobe-clean-hebrew, 'Adobe Clean Hebrew', myriad-hebrew, 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;"
+    );
   });
 });
 
