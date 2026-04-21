@@ -9,21 +9,17 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export const formatComponentName = (
-  title: string,
-  typeCase: 'kebab' | 'pascal' = 'kebab'
-) => {
-  const formattedComponentName = title
-    .split('/')
-    .pop()
-    ?.toLowerCase()
-    .replace(/\s+/g, '-');
 
-  if (typeCase === 'pascal') {
-    return formattedComponentName
-      ?.split('-')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join('');
-  }
-  return formattedComponentName;
-};
+/**
+ * Valid numeric size values for the Avatar component.
+ *
+ * Sizes 50–700 match 1st-gen. Sizes 800–1500 are new in Spectrum 2.
+ */
+export const AVATAR_VALID_SIZES = [
+  50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300,
+  1400, 1500,
+] as const;
+
+export type AvatarSize = (typeof AVATAR_VALID_SIZES)[number];
+
+export const AVATAR_DEFAULT_SIZE = 500 as const satisfies AvatarSize;

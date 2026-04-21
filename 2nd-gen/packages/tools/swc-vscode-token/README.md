@@ -1,10 +1,11 @@
 # Token Intellisense
 
-VS Code extension providing autocomplete and diagnostics for `token('...')` values sourced from `tokens.json` as provided via `@adobe/swc-tokens`.
+VS Code extension providing autocomplete and diagnostics for `token("...")` values sourced from `tokens.json` as provided via `@adobe/swc-tokens`.
 
 ## Features
 
-- Partial, case‑insensitive autocomplete for `token('...')`
+- Partial, case‑insensitive autocomplete for `token("...")`
+- True snippets for grouped typography tokens like `type-component-m-regular`
 - Quote balancing and automatic trimming of trailing whitespace
 - Completions resume after editing inside an existing token
 - Deprecated token detection with "renamed to..." diagnostics
@@ -26,15 +27,29 @@ Recognizes `token()` in the following file/language types:
 
 Valid completion replacements handled by the extension:
 
-| Input before completion          | Completion selected | Output after completion                        |
-| -------------------------------- | ------------------- | ---------------------------------------------- |
-| `color: token(│`                 | `accent-color-100`  | `color: token('accent-color-100')`             |
-| `color: token('│`                | `accent-color-100`  | `color: token('accent-color-100')`             |
-| `color: token('accent-│')`       | `accent-color-100`  | `color: token('accent-color-100')`             |
-| `padding: calc(1rem + token(│`   | `spacing-100`       | `padding: calc(1rem + token('spacing-100'))`   |
-| `padding: var(--my-var, token(│` | `spacing-100`       | `padding: var(--my-var, token('spacing-100'))` |
+| Input before completion          | Completion selected | Output after completion                                                                 |
+| -------------------------------- | ------------------- | --------------------------------------------------------------------------------------- |
+| `color: token(│`                 | `accent-color-100`  | `color: token("accent-color-100")`                                                      |
+| `color: token('│`                | `accent-color-100`  | `color: token("accent-color-100")`                                                      |
+| `color: token('accent-│')`       | `accent-color-100`  | `color: token("accent-color-100")`                                                      |
+| `padding: calc(1rem + token(│`   | `spacing-100`       | `padding: calc(1rem + token("spacing-100"))`                                            |
+| `padding: var(--my-var, token(│` | `spacing-100`       | `padding: var(--my-var, token("spacing-100"))`                                          |
+| `type-component-m-regular│`      | `Tab`               | `font-family`, `font-size`, `font-weight`, `letter-spacing`, `line-height` declarations |
 
 <small>`|` represents cursor position</small>
+
+Typography snippets are currently scoped to CSS-family languages and are generated from grouped typography tokens in `tokens.json`.
+
+Example expansion:
+
+<!-- prettier-ignore -->
+```css
+font-family: token("sans-serif-font-family");
+font-size: token("font-size-100");
+font-weight: token("regular-font-weight");
+letter-spacing: token("letter-spacing");
+line-height: token("line-height-font-size-100");
+```
 
 ## Local extension install
 
@@ -55,7 +70,7 @@ Ensure tokens are updated to the latest by running the following command at the 
 yarn tokens:update
 ```
 
-This will update the extension-relative `tokens.json`.
+This will update the extension-relative `tokens.json` and regenerate the typography snippet definitions.
 
 ### Deploy extension
 
@@ -92,5 +107,5 @@ Test files are located under `src/server/tests`.
 
 **Integration tests** simulate a TextDocument with cursor positions, ensuring:
 
-- Completions inside `token('...')` quotes resume after editing
+- Completions inside `token("...")` quotes resume after editing
 - Correct replacement text is applied for CSS, `calc(...)`, and `var(...)` scenarios
