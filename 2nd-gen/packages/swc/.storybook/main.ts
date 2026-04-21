@@ -40,25 +40,37 @@ const testStoryIndexer: Indexer = {
   },
 };
 
+const COMPONENT_STORY_ROOT = {
+  directory: '../components',
+  titlePrefix: 'Components',
+} as const;
+
+const PATTERN_STORY_ROOT = {
+  directory: '../patterns',
+  titlePrefix: 'Patterns',
+} as const;
+
+const CORE_STORY_ROOT = {
+  directory: '../../core',
+  titlePrefix: 'Core',
+} as const;
+
 const stories: StorybookConfig['stories'] = [
   {
-    directory: '../components',
+    ...COMPONENT_STORY_ROOT,
     // Production-style builds exclude internal-only stories; local/dev keeps the full set.
     files:
       storybookMode === 'build'
         ? '**/!(*.internal).stories.ts'
         : '**/*.stories.ts',
-    titlePrefix: 'Components',
   },
   {
-    directory: '../patterns',
+    ...PATTERN_STORY_ROOT,
     files: '**/*.stories.ts',
-    titlePrefix: 'Patterns',
   },
   {
-    directory: '../patterns',
+    ...PATTERN_STORY_ROOT,
     files: '**/*.mdx',
-    titlePrefix: 'Patterns',
   },
 ];
 
@@ -69,14 +81,12 @@ const stories: StorybookConfig['stories'] = [
 if (storybookMode !== 'ci-a11y') {
   stories.push(
     {
-      directory: '../../core',
+      ...CORE_STORY_ROOT,
       files: '**/*.mdx',
-      titlePrefix: 'Core',
     },
     {
-      directory: '../../core',
+      ...CORE_STORY_ROOT,
       files: '**/stories/*.stories.ts',
-      titlePrefix: 'Core',
     },
     {
       directory: 'learn-about-swc',
@@ -99,19 +109,16 @@ if (storybookMode !== 'ci-a11y') {
 // Test stories are dev-only fixtures and should not ship in production Storybook.
 if (storybookMode === 'dev') {
   stories.push({
-    directory: '../components',
+    ...COMPONENT_STORY_ROOT,
     files: '**/*.test.ts',
-    titlePrefix: 'Components',
   });
   stories.push({
-    directory: '../patterns',
+    ...PATTERN_STORY_ROOT,
     files: '**/*.test.ts',
-    titlePrefix: 'Patterns',
   });
   stories.push({
-    directory: '../../core',
+    ...CORE_STORY_ROOT,
     files: '**/stories/**/*.test.ts',
-    titlePrefix: 'Core',
   });
 }
 
