@@ -12,6 +12,11 @@ All rules and skills now live in **`.ai/`** — a tool-agnostic, plain-markdown 
 - No sync step, no duplication, no drift between tools
 - New contributors or tools start from `AGENTS.md` at the repo root, which bootstraps everything
 
+## CI integration
+
+- `yarn lint:ai` runs `.ai/scripts/validate.js`, which checks story tags, AGENTS.md paths, and config schema. Catches broken internal links, symlinks, and misconfigured rules before merge
+- Pre-commit hook runs the contributor docs nav script to keep breadcrumbs and TOCs in sync automatically
+
 ## Rules
 
 Rules defined in the `config.json` follow this structure:
@@ -365,6 +370,58 @@ Editing any `.ai/rules/*.md` file immediately updates what both Cursor and Claud
 1. Create `.ai/skills/<skill-name>/SKILL.md`.
 2. Register it in the skills catalog below and in [`AGENTS.md`](../AGENTS.md).
 3. Both `.cursor/skills/` and `.claude/skills/` pick it up automatically via directory symlinks.
+
+### Symlink setup
+
+The symlinks in `.cursor/` and `.claude/` are committed to the repo, so **no setup is required after cloning**. Rules and skills should work automatically for all contributors.
+
+#### Recreating broken symlinks
+
+If a symlink is accidentally deleted or broken (e.g. after a file was deleted and recreated rather than edited in place), recreate it with the commands below.
+
+##### Claude Code
+
+```sh
+mkdir -p .claude
+ln -s ../.ai/rules .claude/rules
+ln -s ../.ai/skills .claude/skills
+```
+
+Claude Code reads `.md` files, so directory-level symlinks work directly. Verify:
+
+```sh
+ls -la .claude/
+# rules -> ../.ai/rules
+# skills -> ../.ai/skills
+```
+
+##### Cursor
+
+> **Cursor requires per-file symlinks for rules.** Cursor expects `.mdc` files and does not follow a directory symlink that contains `.md` files. Each rule needs its own symlink with the `.mdc` extension pointing back to the `.md` source.
+
+```sh
+mkdir -p .cursor/rules
+for f in .ai/rules/*.md; do
+  name=$(basename "$f" .md)
+  ln -s "../../.ai/rules/${name}.md" ".cursor/rules/${name}.mdc"
+done
+
+ln -s ../.ai/skills .cursor/skills
+```
+
+Verify:
+
+```sh
+ls -la .cursor/rules/
+# branch-naming.mdc -> ../../.ai/rules/branch-naming.md
+# styles.mdc -> ../../.ai/rules/styles.md
+# ... (one entry per rule)
+
+ls -la .cursor/
+# skills -> ../.ai/skills
+```
+
+If Cursor does not pick up the rules after symlinking, reload the window: `Cmd+Shift+P` → "Developer: Reload Window".
 
 ### Using rules and skills in other environments
 
