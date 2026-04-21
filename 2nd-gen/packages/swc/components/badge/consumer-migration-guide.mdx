@@ -72,10 +72,10 @@ Add `aria-hidden="true"` to decorative icons paired with text so screen readers 
 
 ```html
 <!-- Before -->
-<swc-badge variant="positive">
+<sp-badge variant="positive">
   <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
   Approved
-</swc-badge>
+</sp-badge>
 <!-- After -->
 <swc-badge variant="positive">
   <sp-icon-checkmark-circle
@@ -87,6 +87,8 @@ Add `aria-hidden="true"` to decorative icons paired with text so screen readers 
 ```
 
 ### 4. (Optional) Adopt new styles
+
+The `outline` attribute can only be used with semantic variants (`accent`, `informative`, `neutral`, `positive`, `notice`, `negative`).
 
 ```html
 <!-- Before -->
