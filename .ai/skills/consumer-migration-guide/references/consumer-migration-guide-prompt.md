@@ -45,6 +45,14 @@ Before writing, verify claims against:
 
 If a claim is not confirmed by source, omit it.
 
+### Source precedence
+
+When sources disagree, follow this order of authority:
+
+1. **The shipped 2nd-gen source** (`2nd-gen/packages/swc/components/[component-name]/` and `2nd-gen/packages/core/components/[component-name]/`) — ground truth for what the component actually does.
+2. **The CSS style guide** (`CONTRIBUTOR-DOCS/02_style-guide/` and `.ai/rules/styles.md`) — recommendations here **outweigh** anything in a component's `rendering-and-styling-migration-analysis.md`. The analysis docs are early, component-specific planning artifacts; the style guide is the canonical, cross-component rule set and supersedes them when they conflict (for example on custom-property naming, prefixing, and public-vs-private boundaries).
+3. **`rendering-and-styling-migration-analysis.md`** and other maintainer-facing analysis docs — use only for context and rationale. If an analysis doc suggests a public API shape that the 2nd-gen source or the CSS style guide contradicts, trust the source and the style guide, not the analysis.
+
 ## File and heading format
 
 Start every guide with this exact template:
@@ -126,7 +134,13 @@ Document the **2nd-gen component's actual public custom properties** — not 1st
 
 Cover only:
 
-- The public custom properties the 2nd-gen component exposes (bulleted list of names).
+- The public custom properties the 2nd-gen component exposes, as a **table** with `Custom property | Description | Notes` columns. Use the Notes column to call out scope constraints (e.g. "semantic variants only", "outline variants only", exclusions mandated by the CSS style guide). Leave Notes empty for properties with no constraint.
+- Include this JSX comment immediately above the table so future passes can replace the hand-written descriptions with the canonical copy once it lands:
+
+  ```mdx
+  {/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-[component]>`'s CEM entry once they are added in a follow-up PR. */}
+  ```
+
 - **Required amber "breaking change" callout at the top** (immediately after the section intro sentence, before the property list) **if** the 1st-gen component used a different custom-property prefix (e.g. `--mod-*`) and 2nd-gen does not. Tells consumers their 1st-gen overrides won't apply. Template:
 
   ```mdx
