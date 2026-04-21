@@ -211,7 +211,7 @@ export const HandlingEvents: Story = {
   },
   parameters: { 'section-order': 1 },
   tags: ['behaviors'],
-  storyName: 'Handling events',
+  name: 'Handling events',
 };
 
 // ────────────────────────────────

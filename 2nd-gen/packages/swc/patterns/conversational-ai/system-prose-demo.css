@@ -35,9 +35,3 @@
   padding-inline-start: 20px;
   margin: 0;
 }
-
-.swc-conversationalAi-systemProse a {
-  color: var(--swc-accent-color-900);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}

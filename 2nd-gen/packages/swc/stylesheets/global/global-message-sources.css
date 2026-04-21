@@ -17,4 +17,31 @@
     text-decoration: underline;
     text-underline-offset: 2px;
   }
+
+  .swc-conversationalAi-systemProse {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-family: var(--swc-sans-serif-font);
+    font-size: token("font-size-200");
+    font-weight: var(--swc-regular-font-weight);
+    line-height: token("line-height-font-size-200");
+    color: token("neutral-content-color-default");
+  }
+
+  .swc-conversationalAi-systemProse h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    margin: 0;
+  }
+
+  .swc-conversationalAi-systemProse ul,
+  .swc-conversationalAi-systemProse ol {
+    padding-inline-start: 20px;
+    margin: 0;
+  }
 }
