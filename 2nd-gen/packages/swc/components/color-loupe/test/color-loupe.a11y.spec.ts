@@ -32,7 +32,7 @@ test.describe('ColorLoupe - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'components-color-loupe--overview',
+      'components-color-components-color-loupe--overview',
       'swc-color-loupe'
     );
     await expect(root.locator('svg').first()).toHaveAttribute(
@@ -46,7 +46,7 @@ test.describe('ColorLoupe - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'components-color-loupe--accessibility',
+      'components-color-components-color-loupe--accessibility',
       'swc-color-loupe'
     );
     await expect(root.locator('svg').first()).toHaveAttribute(
