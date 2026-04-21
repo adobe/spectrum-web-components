@@ -303,6 +303,13 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: Explaining how code works, teaching about the codebase, or when the user asks “how does this work?”
 - Approach: Analogy → diagram → step-by-step walkthrough → highlight gotchas
 
+#### Session retrospective
+
+- **purpose**: Document lessons learned after completing work, especially when the user corrected planning documents or implementation; maintains persistent lesson files in `.ai/memory/` that future agents read at session start
+- **How to invoke**: Say "document what you learned", "add to lessons", "remember this", or "run a retrospective". Also triggered when the user corrects your work or you encounter a surprising constraint.
+- Use when: User corrects your work, you hit a non-obvious tool limitation, or at session end after substantial work
+- Provides: Workflow for capturing lessons, format guidelines, naming convention (`<descriptor>-lessons.md` in `.ai/memory/`)
+
 #### Session handoff
 
 - **purpose**: Create handoff documents so another agent (or a later session) can continue work with full context
