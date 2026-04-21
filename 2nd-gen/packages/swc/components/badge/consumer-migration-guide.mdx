@@ -8,16 +8,30 @@ Replace `<sp-badge>` with `<swc-badge>` and update the import. The public API is
 
 ## What changed
 
-| Area       | Change                                                                                                                                         |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| Tag        | `sp-badge` → `swc-badge`                                                                                                                       |
-| Import     | `@spectrum-web-components/badge` → `@adobe/spectrum-wc/badge`                                                                                  |
-| Attributes | `variant`, `size`, `fixed` unchanged                                                                                                           |
-| Default    | `variant` defaults to `informative`                                                                                                            |
-| New in S2  | `subtle`, `outline`; colors `pink`, `turquoise`, `brown`, `cinnamon`, `silver`                                                                 |
-| Constraint | `outline` applies only to semantic variants (`accent`, `informative`, `neutral`, `positive`, `notice`, `negative`); invalid combinations warn. |
-| Slots      | Default and `icon` unchanged                                                                                                                   |
-| Events     | None                                                                                                                                           |
+### Renamed
+
+| Area             | 1st-gen (`sp-badge`)                   | 2nd-gen (`swc-badge`)                     |
+| ---------------- | -------------------------------------- | ----------------------------------------- |
+| Tag              | `sp-badge`                             | `swc-badge`                               |
+| Import path      | `@spectrum-web-components/badge`       | `@adobe/spectrum-wc/badge`                |
+| CSS custom props | `--mod-badge-*` / `--spectrum-badge-*` | `--swc-badge-*` (see [Styling](#styling)) |
+
+### Added in 2nd-gen
+
+| Addition                                                           | Notes                                                                          |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `subtle` boolean attribute                                         | Softer background fill; works with all variants                                |
+| `outline` boolean attribute                                        | Transparent background with border; **semantic variants only**                 |
+| Color variants: `pink`, `turquoise`, `brown`, `cinnamon`, `silver` | Non-semantic color options                                                     |
+| Custom properties for new styles                                   | `--swc-badge-outline-background-color`, `--swc-badge-outline-label-icon-color` |
+
+### Removed in 2nd-gen
+
+| Removed                                                                           | Replacement                                                                        |
+| --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `--mod-badge-*` custom properties (e.g. `--mod-badge-background-color-positive`)  | `--swc-badge-*` (per-variant overrides now set one `--swc-badge-background-color`) |
+| `--highcontrast-badge-border-color`                                               | No 1:1 replacement — 2nd-gen badge has no forced-colors override hook              |
+| Top-level exports `BADGE_VARIANTS`, `FIXED_VALUES`, `BadgeVariant`, `FixedValues` | Use `Badge.VARIANTS`, `Badge.FIXED_VALUES`, or `typeof Badge.prototype.variant`    |
 
 ## Update your code
 
@@ -39,26 +53,71 @@ import '@adobe/spectrum-wc/badge';
 <swc-badge variant="positive">Approved</swc-badge>
 ```
 
-### 3. Add `aria-label` to icon-only badges
+### 3. Fix consumer-facing accessibility gaps
+
+Add `aria-label` to icon-only badges so assistive tech announces a name:
 
 ```html
+<!-- Before -->
+<swc-badge size="m">
+  <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
+</swc-badge>
+<!-- After -->
 <swc-badge size="m" aria-label="Approved">
   <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
 </swc-badge>
 ```
 
-For icon + text badges, mark the decorative icon with `aria-hidden="true"`.
+Add `aria-hidden="true"` to decorative icons paired with text so screen readers don't announce the icon and label as duplicate content:
+
+```html
+<!-- Before -->
+<swc-badge variant="positive">
+  <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
+  Approved
+</swc-badge>
+<!-- After -->
+<swc-badge variant="positive">
+  <sp-icon-checkmark-circle
+    aria-hidden="true"
+    slot="icon"
+  ></sp-icon-checkmark-circle>
+  Approved
+</swc-badge>
+```
 
 ### 4. (Optional) Adopt new styles
 
 ```html
+<!-- Before -->
+<swc-badge variant="informative">Active</swc-badge>
+<swc-badge variant="positive">Approved</swc-badge>
+<!-- After -->
 <swc-badge variant="informative" subtle>Active</swc-badge>
 <swc-badge variant="positive" outline>Approved</swc-badge>
 ```
 
 ## Styling
 
-2nd-gen exposes a new set of public CSS custom properties on `<swc-badge>`. The 1st-gen `--mod-badge-*` properties **do not apply** and must be replaced if your app used them.
+2nd-gen exposes a new set of public CSS custom properties on `<swc-badge>`.
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to 2nd-gen. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> 1st-gen <code>{'--mod-badge-*'}</code>{' '}
+  properties <strong>do not apply</strong> to <code>{'<swc-badge>'}</code>.
+  Remove or replace every <code>{'--mod-badge-*'}</code> override with the{' '}
+  <code>{'--swc-badge-*'}</code> equivalents below. Not every 1st-gen property
+  has a 1:1 replacement, so read the list below carefully.
+</div>
 
 Public custom properties:
 
@@ -76,30 +135,25 @@ Public custom properties:
 - `--swc-badge-icon-size`
 - `--swc-badge-outline-background-color`, `--swc-badge-outline-label-icon-color` (outline variants only)
 
-Do not target internal classes, `--_swc-badge-*` private properties, or shadow DOM — none are public API.
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-badge-*'}</code> private properties, and shadow DOM are{' '}
+  <strong>not public API</strong>. Styling applied to them will break without
+  warning on minor releases.
+</div>
 
 ## Accessibility
 
-- **Icon-only badges** must have `aria-label` on the host.
-
-  ```html
-  <swc-badge size="m" aria-label="Approved">
-    <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
-  </swc-badge>
-  ```
-
-- **Decorative icons** paired with text should use `aria-hidden="true"` so screen readers don't announce duplicate content.
-
-  ```html
-  <swc-badge variant="positive">
-    <sp-icon-checkmark-circle
-      aria-hidden="true"
-      slot="icon"
-    ></sp-icon-checkmark-circle>
-    Approved
-  </swc-badge>
-  ```
-
+- **Icon-only badges** must have `aria-label` on the host. See [step 3](#3-fix-consumer-facing-accessibility-gaps).
+- **Decorative icons** paired with text should use `aria-hidden="true"` so screen readers don't announce duplicate content. See [step 3](#3-fix-consumer-facing-accessibility-gaps).
 - Badges are non-interactive. Refactor any focusable or clickable badges to `<swc-action-button>`, `<swc-tag>`, or a native button.
 
 ## Checklist

@@ -66,7 +66,9 @@ The guide must be **short, direct, and consumer-focused**. Optimize for scannabi
 
 **Testing is out of scope.** Do not include sections on test selector updates, ARIA snapshot changes, or VRT approval. Consumers own their own tests; the guide's job is to explain what changed in the component, not how to re-test a consumer's app.
 
-**Accessibility bullets need examples.** Each consumer-facing a11y action that changes markup must include a minimal code example showing the corrected pattern.
+**Accessibility bullets do not duplicate code examples.** If an a11y action is already covered as a numbered step in `## Update your code` (which must include before/after snippets), the Accessibility bullet links to that step instead of repeating the snippet. Only include a code example in `## Accessibility` for an action that is not covered in `## Update your code`.
+
+**Do not include an `### Unchanged` sub-section in `## What changed`.** Unchanged API requires no consumer action and adds noise. Limit `## What changed` to `### Renamed`, `### Added in 2nd-gen`, and `### Removed in 2nd-gen` (omit any sub-section with no entries).
 
 **Include (public API):**
 

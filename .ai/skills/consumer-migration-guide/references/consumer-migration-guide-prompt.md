@@ -67,6 +67,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 - Wrap bare tag names in backticks in prose (`` `<sp-badge>` ``, `` `<swc-badge>` ``)
 - Put all HTML/JS examples inside fenced code blocks
 - Do not leave loose `{` / `}` outside code blocks
+- Inside JSX elements (e.g. callout `<div>`s), wrap any `<code>` content that contains `*`, `_`, or `<`/`>` in a JSX expression literal (e.g. `<code>{'--mod-badge-*'}</code>`). Otherwise MDX parses the markdown inside the JSX children and throws an "Expected the closing tag" indexing error.
 - Do not include `CONTRIBUTOR-DOCS` breadcrumbs or TOCs
 
 ## Required sections
@@ -74,13 +75,13 @@ import { Meta } from '@storybook/addon-docs/blocks';
 Use exactly this **H2** order. Omit any section that has no component-specific content rather than writing filler.
 
 1. `# [Component name] consumer migration guide` — H1, followed by **one sentence** summarizing the migration.
-2. `## What changed` — a single summary table.
-3. `## Update your code` — numbered steps in the order the consumer performs them.
+2. `## What changed` — up to three tables (`### Renamed`, `### Added in 2nd-gen`, `### Removed in 2nd-gen`). Omit any sub-section with no entries. **Never** include an `### Unchanged` sub-section.
+3. `## Update your code` — numbered steps in the order the consumer performs them. Every step includes a before/after snippet.
 4. `## Styling` — only public CSS custom properties and a one-line "don't target internals" caution. Skip if nothing changed.
-5. `## Accessibility` — consumer-facing a11y actions only, each with a minimal code example. Skip if nothing changed.
+5. `## Accessibility` — consumer-facing a11y actions only. Do not repeat code examples already shown in `## Update your code` — link back to the relevant step instead. Skip if nothing changed.
 6. `## Checklist` — `- [ ]` task list of the concrete actions the consumer must take.
 
-Do **not** add: `Overview`, `Before you migrate`, `Migration in one sentence`, `Who this guide is for`, `Also read`, `Testing`, `References`, or separator `---` rules between every section. Keep the document tight.
+Do **not** add: `Overview`, `Before you migrate`, `Migration in one sentence`, `Who this guide is for`, `Also read`, `Testing`, `References`, `Unchanged`, or separator `---` rules between every section. Keep the document tight.
 
 **Testing is out of scope.** Consumers are responsible for updating their own tests; the guide should not include test-update instructions, snapshot guidance, or VRT approval steps.
 
@@ -98,26 +99,26 @@ Replace `<sp-badge>` with `<swc-badge>` and update the import. The public API is
 
 ### `## What changed`
 
-A single table with two columns: `Area | Change`. Cover only the areas that actually changed:
+Use up to three `###` sub-section tables — **only include a sub-section if it has entries**. Each sub-section is a table focused on one kind of change:
 
-- tag name
-- import path
-- attributes and accepted values
-- slots
-- events
-- anything new in 2nd-gen the consumer may want to adopt
-- any constraint the consumer must respect
+- **`### Renamed`** — tag, import path, property prefixes, or other 1:1 renames. Columns: `Area | 1st-gen | 2nd-gen`.
+- **`### Added in 2nd-gen`** — new attributes, variants, slots, or custom properties the consumer may adopt. Columns: `Addition | Notes`.
+- **`### Removed in 2nd-gen`** — removed public API with replacement guidance. Columns: `Removed | Replacement`.
+
+Do **not** include an `### Unchanged` sub-section. Unchanged API requires no consumer action and adds noise.
+
+Cover only **public API** — tags, import paths, attributes and accepted values, slots, events, documented CSS custom properties, and consumer-observable behavior. Do not list shadow-DOM internals, private `--_*` properties, internal class renames, or attributes set on shadow-DOM elements that consumers cannot select.
 
 ### `## Update your code`
 
-Numbered `###` subheadings, in the order the consumer performs them, each with a minimal before/after snippet. Typical order:
+Numbered `###` subheadings, in the order the consumer performs them. **Every step must include a minimal before/after snippet** using `<!-- Before -->` / `<!-- After -->` comments inside a single fenced code block. Typical order:
 
 1. Update the import
 2. Rename the tag
 3. Fix consumer-facing accessibility gaps (only if applicable)
 4. (Optional) Adopt new attributes (only if applicable)
 
-Skip any step that does not apply — do not write "no changes needed" filler.
+Skip any step that does not apply — do not write "no changes needed" filler. For optional adoption steps, the "before" can be the 1st-gen markup without the new attribute and the "after" is the 2nd-gen markup with it.
 
 ### `## Styling`
 
@@ -126,14 +127,59 @@ Document the **2nd-gen component's actual public custom properties** — not 1st
 Cover only:
 
 - The public custom properties the 2nd-gen component exposes (bulleted list of names).
-- If the 1st-gen component used a different prefix (e.g. `--mod-*`) and 2nd-gen does not, call that out explicitly so consumers know to replace their overrides.
-- A one-line caution: "Do not target internal classes, private `--_*` properties, or shadow DOM — none are public API."
+- **Required amber "breaking change" callout at the top** (immediately after the section intro sentence, before the property list) **if** the 1st-gen component used a different custom-property prefix (e.g. `--mod-*`) and 2nd-gen does not. Tells consumers their 1st-gen overrides won't apply. Template:
+
+  ```mdx
+  <div
+    style={{
+      borderLeft: '4px solid #dba842',
+      background: 'rgba(219, 168, 66, 0.12)',
+      padding: '12px 16px',
+      margin: '16px 0',
+      borderRadius: '4px',
+    }}
+  >
+    <strong>⚠️ Breaking change.</strong> 1st-gen{' '}
+    <code>{'--mod-[component]-*'}</code> properties{' '}
+    <strong>do not apply</strong> to <code>{'<swc-[component]>'}</code>. Remove
+    or replace every <code>{'--mod-[component]-*'}</code> override with the{' '}
+    <code>{'--swc-[component]-*'}</code> equivalents below. Not every 1st-gen
+    property has a 1:1 replacement, so read the list below carefully.
+  </div>
+  ```
+
+- **Required red "do not target internals" callout at the bottom** of the section, always — regardless of whether custom properties changed. Template:
+
+  ```mdx
+  <div
+    style={{
+      borderLeft: '4px solid #e34850',
+      background: 'rgba(227, 72, 80, 0.10)',
+      padding: '12px 16px',
+      margin: '16px 0',
+      borderRadius: '4px',
+    }}
+  >
+    <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+    <code>{'--_swc-[component]-*'}</code> private properties, and shadow DOM are{' '}
+    <strong>not public API</strong>. Styling applied to them will break without
+    warning on minor releases.
+  </div>
+  ```
+
+  Replace `[component]` in each template with the 2nd-gen tag root (e.g. `badge` → `<swc-badge>`, `--_swc-badge-*`, `--mod-badge-*`). Both callouts use inline-styled JSX divs, not blockquotes — blockquotes are not visually distinct enough for consumer-critical warnings.
+
+  Immediately before the first callout in the section, include this JSX comment so every guide carries the same follow-up task:
+
+  ```mdx
+  {/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to 2nd-gen. */}
+  ```
 
 Skip this section only if the component has no public styling hooks in either version.
 
 ### `## Accessibility`
 
-Bulleted list of consumer-facing actions. **Each bullet with a concrete behavior change must include a minimal code example** showing the corrected markup. Non-code bullets (e.g. "refactor interactive uses to X") can remain text-only.
+Bulleted list of consumer-facing actions. **Do not duplicate code examples that already appear in `## Update your code`.** If the a11y action is represented as a numbered step above (e.g. "add `aria-label` to icon-only badges"), the bullet should summarize the rule and link to the step (`See [step N](#n-step-slug)`) — no snippet. Only include a code example for a11y actions that are **not** covered in `## Update your code`. Non-code bullets (e.g. "refactor interactive uses to X") remain text-only.
 
 ### `## Checklist`
 
