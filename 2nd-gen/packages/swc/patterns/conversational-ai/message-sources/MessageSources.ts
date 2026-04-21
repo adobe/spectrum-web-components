@@ -33,6 +33,10 @@ import styles from './message-sources.css';
  * Detail: `{ open: boolean }`
  */
 export class MessageSources extends SpectrumElement {
+  private static panelIdCounter = 0;
+
+  private readonly panelId = `swc-sources-panel-${++MessageSources.panelIdCounter}`;
+
   /**
    * Whether the sources list is open.
    */
@@ -69,7 +73,7 @@ export class MessageSources extends SpectrumElement {
         <button
           class="swc-MessageSources-toggle"
           aria-expanded=${isExpanded}
-          aria-controls="swc-sources-panel"
+          aria-controls=${this.panelId}
           @click=${this._handleToggle}
         >
           <swc-icon
@@ -85,7 +89,7 @@ export class MessageSources extends SpectrumElement {
         </button>
 
         <ol
-          id="swc-sources-panel"
+          id=${this.panelId}
           class="swc-MessageSources-list"
           role="list"
           aria-label=${label}

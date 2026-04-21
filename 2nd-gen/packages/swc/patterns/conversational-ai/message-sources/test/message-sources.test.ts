@@ -77,8 +77,9 @@ export const OpenMutationTest: Story = {
       const toggle = el.shadowRoot?.querySelector<HTMLButtonElement>(
         '.swc-MessageSources-toggle'
       );
-      const panel =
-        el.shadowRoot?.querySelector<HTMLOListElement>('#swc-sources-panel');
+      const panel = el.shadowRoot?.querySelector<HTMLOListElement>(
+        '.swc-MessageSources-list'
+      );
       const icon = el.shadowRoot?.querySelector('swc-icon');
 
       expect(toggle?.textContent?.trim()).toBe('References');
@@ -95,10 +96,11 @@ export const OpenMutationTest: Story = {
         const toggle = el.shadowRoot?.querySelector<HTMLButtonElement>(
           '.swc-MessageSources-toggle'
         );
-        const panel =
-          el.shadowRoot?.querySelector<HTMLOListElement>('#swc-sources-panel');
+        const panel = el.shadowRoot?.querySelector<HTMLOListElement>(
+          '.swc-MessageSources-list'
+        );
 
-        expect(toggle?.getAttribute('aria-controls')).toBe('swc-sources-panel');
+        expect(toggle?.getAttribute('aria-controls')).toBe(panel?.id);
         expect(toggle?.getAttribute('aria-expanded')).toBe('false');
         expect(panel).toBeTruthy();
         expect(panel?.hidden).toBe(true);
@@ -124,8 +126,9 @@ export const OpenMutationTest: Story = {
       toggle?.click();
       await el.updateComplete;
 
-      const panel =
-        el.shadowRoot?.querySelector<HTMLOListElement>('#swc-sources-panel');
+      const panel = el.shadowRoot?.querySelector<HTMLOListElement>(
+        '.swc-MessageSources-list'
+      );
       expect(detail?.open).toBe(true);
       expect(el.open).toBe(true);
       expect(panel?.hidden).toBe(false);

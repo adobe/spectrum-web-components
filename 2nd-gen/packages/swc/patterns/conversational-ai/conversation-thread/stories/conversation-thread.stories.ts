@@ -326,7 +326,7 @@ class ConversationFullPatternDemo extends HTMLElement {
           : `<swc-message-sources slot="sources"><li><a href="#">Brand brief Q1 2026</a></li><li><a href="#">Market research summary</a></li></swc-message-sources>`;
         const suggestions = turn.loading
           ? ''
-          : `<swc-suggestion slot="suggestions" title="What would you like to do next?">
+          : `<swc-suggestion slot="suggestions" heading="What would you like to do next?">
               ${DEMO_SUGGESTIONS.map(
                 (item) =>
                   `<swc-suggestion-item data-suggestion="${escapeHtml(item)}">${escapeHtml(item)}</swc-suggestion-item>`

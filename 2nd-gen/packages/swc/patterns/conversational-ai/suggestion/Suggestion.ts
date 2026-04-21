@@ -28,7 +28,7 @@ import styles from './suggestion.css';
 export class Suggestion extends SpectrumElement {
   /** Optional heading shown above suggestion items. */
   @property({ type: String, reflect: true })
-  public override title = '';
+  public heading = '';
 
   public static override get styles(): CSSResultArray {
     return [styles];
@@ -37,9 +37,9 @@ export class Suggestion extends SpectrumElement {
   protected override render(): TemplateResult {
     return html`
       <div class="swc-Suggestion">
-        ${this.title
+        ${this.heading
           ? html`
-              <p class="swc-Suggestion-title">${this.title}</p>
+              <p class="swc-Suggestion-title">${this.heading}</p>
             `
           : ''}
         <div
