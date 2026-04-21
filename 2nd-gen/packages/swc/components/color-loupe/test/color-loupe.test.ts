@@ -81,10 +81,22 @@ export const OpenAttributeTest: Story = {
       'swc-color-loupe'
     );
 
+    const getInnerLoupe = (): HTMLElement =>
+      loupe.shadowRoot?.querySelector('.swc-ColorLoupe') as HTMLElement;
+
     await step('defaults to closed (open = false)', async () => {
       expect(loupe.open).toBe(false);
       expect(loupe.hasAttribute('open')).toBe(false);
     });
+
+    await step(
+      'inner .swc-ColorLoupe has opacity 0 when closed',
+      async () => {
+        const innerLoupe = getInnerLoupe();
+        expect(innerLoupe).toBeTruthy();
+        expect(getComputedStyle(innerLoupe).opacity).toBe('0');
+      }
+    );
 
     await step(
       'reflects open attribute when set programmatically',
@@ -95,11 +107,24 @@ export const OpenAttributeTest: Story = {
       }
     );
 
+    await step('inner .swc-ColorLoupe has opacity 1 when open', async () => {
+      const innerLoupe = getInnerLoupe();
+      expect(getComputedStyle(innerLoupe).opacity).toBe('1');
+    });
+
     await step('removes open attribute when set to false', async () => {
       loupe.open = false;
       await loupe.updateComplete;
       expect(loupe.hasAttribute('open')).toBe(false);
     });
+
+    await step(
+      'inner .swc-ColorLoupe returns to opacity 0 when closed again',
+      async () => {
+        const innerLoupe = getInnerLoupe();
+        expect(getComputedStyle(innerLoupe).opacity).toBe('0');
+      }
+    );
   },
 };
 

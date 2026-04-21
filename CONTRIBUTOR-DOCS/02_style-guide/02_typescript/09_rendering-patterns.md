@@ -15,6 +15,7 @@
 - [Size modifier pattern](#size-modifier-pattern)
 - [Inline SVG](#inline-svg)
 - [classMap patterns](#classmap-patterns)
+- [Inline CSS strings from component properties](#inline-css-strings-from-component-properties)
 
 </details>
 
@@ -217,4 +218,40 @@ class=${classMap({
   'swc-Badge': true,                  // Unbracketed
   [`swc-Badge--${this.variant}`]: true, // Bracketed
 })}
+```
+
+## Inline CSS strings from component properties
+
+Some components accept a property whose value is a CSS string — for example, `<swc-color-loupe>` exposes a `color` property that accepts any valid CSS color:
+
+```ts
+// ColorLoupe.ts
+<div
+  class="swc-ColorLoupe-colorFill swc-ColorLoupe--clipped"
+  style="background: ${this.color}"
+></div>
+```
+
+When interpolating a property directly into a `style` attribute, the value is forwarded verbatim to the browser's CSS parser. That means:
+
+- **Only accept CSS strings from trusted sources.** Component properties that participate in an inline `style` (or a template string, or a `styleMap` entry) must be treated as trusted input. Do not expose such properties to arbitrary user-generated content without validation at the call site.
+- **Prefer structured inputs wherever possible.** If a property has a small set of known-good values (variant, size, semantic color), drive styling through `classMap` and design tokens instead of a free-form CSS string.
+- **Use a CSS custom property for the value, not a full declaration.** Set `--swc-<component>-<role>: ${value}` via `styleMap` rather than interpolating an entire declaration. This scopes what the property can affect to what the component's CSS explicitly consumes.
+- **Document the contract on the property.** The property's JSDoc must state that the value is passed to the CSS parser as-is and that callers are responsible for ensuring it is a valid, trusted CSS value.
+
+```ts
+// ✅ Preferred — structured input via classMap
+class=${classMap({
+  [`swc-Badge--${this.variant}`]: this.variant != null,
+})}
+
+// ✅ Acceptable — typed CSS property, scoped via a custom property
+style=${styleMap({
+  '--swc-color-loupe-picked-color': this.color,
+})}
+
+// ⚠️ Use with care — full inline declaration interpolated from a property.
+//    Only do this when the component's API contract explicitly declares
+//    the property as a trusted CSS string and the JSDoc documents that.
+style="background: ${this.color}"
 ```
