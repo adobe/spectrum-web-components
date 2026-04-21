@@ -238,7 +238,7 @@ Instead:
 - Before finalizing, remove or replace unresolved placeholders such as `[component]`, `[Component]`, `[component-version]`, and `Epic SWC-####`
 - Before finalizing, verify the highest-value links and references in the completed plan: 1st-gen source, analysis docs, tests, README, workflow doc, and React S2 component docs
 - Keep `TL;DR`, `Most blocking open questions`, `Changes overview`, `2nd-gen API decisions`, and `References` populated. If information is unavailable, say so explicitly instead of leaving them blank
-- Keep blocker numbering in the template's required `Q{#}` format. Number open questions sequentially across all blocker sections, and reuse those exact `Q{#}` IDs in `Most blocking open questions`. Do not invent a second numbering scheme there or deviate from the existing `Q{#}` format.
+- Keep blocker numbering in the template's required `Q{#}` format. Number open questions sequentially across all blocker sections, and reuse those exact `Q{#}` IDs in `Most blocking open questions`. Do not invent a second numbering scheme there or deviate from the existing `Q{#}` format. Do not create empty links for questions.
 - Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material or guided by the user
 - Call out any dependency-aware sequencing decisions, such as whether the component extends from another migrated component, should become a shared base, or should wait on a prerequisite migration
 - Do not replace `Epic SWC-####` with `TBD` or another soft placeholder without explicitly prompting the user first
@@ -259,11 +259,11 @@ Preserve the template structure unless the user explicitly asks for structural c
 
 Do not:
 
-- replace prescribed tables with bullets
+- replace prescribed tables with bullets or prose
 - remove pre-populated checklist items that are intended to remain stable
 - remove table columns such as `Blocking?` or `Owner`
 - rewrite section scaffolding that is marked as stable guidance
-- drop pre-populated explanatory text unless it is clearly wrong for the component
+- drop pre-populated text unless it is clearly wrong for the component
 
 You may:
 
@@ -317,7 +317,7 @@ Example resume hooks:
 15. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
 16. Stop after producing the written plan unless the user explicitly asks to move into implementation.
 
-## Staff review checklist
+## Final review checklist
 
 Before finalizing the plan, assess whether:
 
