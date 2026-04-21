@@ -4,6 +4,11 @@ This guide covers everything you need to move from the 1st-gen `sp-asset` compon
 (`@spectrum-web-components/asset`) to the 2nd-gen `swc-asset` component
 (`@adobe/spectrum-wc/asset`).
 
+> **Note:** `swc-asset` is marked `@status unsupported` in 2nd-gen. The component was
+> migrated to Spectrum 2 infrastructure, but no Spectrum 2 design spec exists for it yet.
+> The visual output is unchanged from 1st-gen, and the component is safe to use — however,
+> it may be revised or replaced once a Spectrum 2 spec is published.
+
 ---
 
 ## Installation
@@ -43,6 +48,7 @@ import '@adobe/spectrum-wc/asset';
 | Package               | `@spectrum-web-components/asset`            | `@adobe/spectrum-wc`                                                                   |
 | `variant` attribute   | `'file' \| 'folder'`                        | `'file' \| 'folder'` — unchanged                                                       |
 | `label` attribute     | `label="…"`                                 | `label="…"` — unchanged                                                                |
+| Default slot          | `<img>` or other content when no `variant`  | Unchanged — slot renders when no `variant` is set                                      |
 | CSS custom properties | `--mod-asset-*`                             | Not directly exposed — see [CSS custom properties](#css-custom-properties)             |
 | Shadow DOM classes    | `.file`, `.folder`, `.fileBackground`, etc. | `.swc-Asset-file`, `.swc-Asset-folder`, etc. — see [Shadow DOM](#shadow-dom-structure) |
 | Dark mode             | Manual via color overrides                  | Automatic via `light-dark()`                                                           |

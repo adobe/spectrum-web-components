@@ -41,6 +41,7 @@ import '@adobe/spectrum-wc/badge';
 | --------------------- | -------------------------------------------------------- | -------------------------------------------------------------------- |
 | Tag name              | `sp-badge`                                               | `swc-badge`                                                          |
 | Package               | `@spectrum-web-components/badge`                         | `@adobe/spectrum-wc`                                                 |
+| Default `variant`     | `'informative'`                                          | `'neutral'` — see [Default variant](#default-variant)                |
 | `variant` attribute   | 14 color variants                                        | 19 color variants — 5 new colors added                               |
 | `size` attribute      | `s \| m \| l \| xl`                                      | `s \| m \| l \| xl` — unchanged                                      |
 | `fixed` attribute     | `block-start \| block-end \| inline-start \| inline-end` | `block-start \| block-end \| inline-start \| inline-end` — unchanged |
@@ -52,6 +53,22 @@ import '@adobe/spectrum-wc/badge';
 ---
 
 ## Breaking changes
+
+### Default variant
+
+The default `variant` has changed from `'informative'` to `'neutral'`. Any `<sp-badge>` (or
+`<swc-badge>`) rendered without an explicit `variant` attribute will now appear neutral gray
+instead of blue.
+
+```html
+<!-- Before: renders informative (blue) -->
+<sp-badge>Active</sp-badge>
+
+<!-- After: renders neutral (gray) — add variant="informative" to preserve the previous appearance -->
+<swc-badge variant="informative">Active</swc-badge>
+```
+
+---
 
 ### Tag name
 

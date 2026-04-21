@@ -11,7 +11,6 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';
 
@@ -20,7 +19,6 @@ import {
   BADGE_VARIANTS,
   BADGE_VARIANTS_COLOR,
   BadgeBase,
-  type BadgeVariant,
 } from '@spectrum-web-components/core/components/badge';
 
 import styles from './badge.css';
@@ -80,14 +78,8 @@ export class Badge extends BadgeBase {
    */
   static override readonly VALID_SIZES = BADGE_VALID_SIZES;
 
-  /**
-   * The variant of the badge.
-   *
-   * @todo - Implement new badge variants (notification, indicator) introduced in S2. Jira ticket: SWC-1831
-   * Implement as separate component based on React https://github.com/adobe/react-spectrum/blob/main/packages/%40react-spectrum/s2/src/NotificationBadge.tsx
-   */
-  @property({ type: String, reflect: true })
-  public override variant: BadgeVariant = 'neutral';
+  // @todo - Implement new badge variants (notification, indicator) introduced in S2. Jira ticket: SWC-1831
+  // Implement as separate component based on React https://github.com/adobe/react-spectrum/blob/main/packages/%40react-spectrum/s2/src/NotificationBadge.tsx
 
   // ──────────────────────────────
   //     RENDERING & STYLING
