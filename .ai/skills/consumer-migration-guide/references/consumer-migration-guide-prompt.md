@@ -4,243 +4,153 @@
 
 For the **[COMPONENT_NAME]** component(s), create one consumer-facing migration guide per component at `2nd-gen/packages/swc/components/[component-name]/consumer-migration-guide.mdx`.
 
-The file must be **MDX**, not plain Markdown. Storybook's config (`2nd-gen/packages/swc/.storybook/main.ts`) picks up `**/*.mdx` under `../components` with `titlePrefix: 'Components'`, so the guide renders as a docs page at `Components/[Component name]/Consumer migration guide`.
+The file must be **MDX**, not plain Markdown. Storybook's config (`2nd-gen/packages/swc/.storybook/main.ts`) picks up `**/*.mdx` under `../components` with `titlePrefix: 'Components'`, so the guide renders at `Components/[Component name]/Consumer migration guide`.
 
-The guide ships alongside the 2nd-gen component source. Do **not** create or move this file under `CONTRIBUTOR-DOCS/`; the maintainer-facing `rendering-and-styling-migration-analysis.md` and `accessibility-migration-analysis.md` stay in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/`, but the consumer guide lives with the component.
+The guide ships alongside the 2nd-gen component source. Do **not** create or move this file under `CONTRIBUTOR-DOCS/`.
 
-These guides are for **application developers upgrading their code** from 1st-gen Spectrum Web Components to 2nd-gen components. Internal maintainers may also use them, but the primary question every section should answer is:
+These guides are for **application developers upgrading their code** from 1st-gen to 2nd-gen. The only question each section should answer is: **"What do I change in my product code?"**
 
-**"What do I need to change in my product code, styling, tests, and rollout plan?"**
+## Scope and length
 
-## Documentation goal
+Keep the guide **short, direct, and scannable**. A consumer should be able to complete a simple migration in under 5 minutes of reading. Prefer a single change table, short numbered steps, and before/after snippets over prose.
 
-The guide should help consumers:
+### Include (public API only)
 
-1. Identify the 1st-gen component they are replacing
-2. Understand the 2nd-gen replacement and any important conceptual shifts
-3. Update markup, attributes, properties, slots, events, and imports
-4. Adjust styling and customization patterns that changed in 2nd-gen
-5. Validate accessibility and behavior changes in their application
-6. Roll out the migration safely with testing and fallback guidance
+- Tag name and import path changes
+- Attributes, properties, and accepted values
+- Slots and content-rendering properties
+- Events
+- Supported CSS custom properties (documented `--mod-*` and other public theming hooks)
+- Accessibility changes that affect consumer markup (e.g. where to place `aria-label`, when to hide decorative icons)
+- Observable behavior changes (focus, wrapping, positioning)
 
-Do not write this as an internal implementation roadmap. Keep the language practical, direct, and upgrade-oriented.
+### Exclude
 
-## Source verification requirements
+- Internal shadow DOM structure or diffs between versions
+- Internal class-name renames (e.g. `spectrum-*` → `swc-*`). One brief "do not target internal classes or shadow DOM" caution is enough
+- `::part()` shadow parts unless a part is explicitly public API
+- Maintainer-facing migration rationale or sequencing
+- **Links to `CONTRIBUTOR-DOCS/` project-planning docs.** Those are maintainer-facing. Do not include them in the guide.
 
-Before writing, verify the component against the real repo sources that apply:
+### Structure steps logically
 
-- **1st-gen component docs and public API**
-  - `1st-gen/packages/[component-name]/README.md`
-  - public custom element entry points such as `sp-*.ts`
-  - stories or tests when needed to confirm public behavior
-- **2nd-gen component docs and public API**
-  - `2nd-gen/packages/swc/components/[component-name]/src/`
-  - stories and tests when needed to confirm public behavior
-- **Migration analysis documents** (in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/`)
-  - `rendering-and-styling-migration-analysis.md`
-  - `accessibility-migration-analysis.md`
+In "Update your code", present **numbered steps in the order the consumer performs them** (for example: 1. update imports, 2. rename tags, 3. fix consumer-facing accessibility gaps, 4. optionally adopt new attributes). Do not split into parallel subsections when a short numbered flow reads better.
 
-If a claim is not confirmed by source, docs, or related migration analysis, do not present it as fact. Either omit it or call out the uncertainty explicitly.
+## Source verification
+
+Before writing, verify claims against:
+
+- `1st-gen/packages/[component-name]/README.md` and public element files (`sp-*.ts`)
+- `2nd-gen/packages/swc/components/[component-name]/src/`, stories, and tests
+
+If a claim is not confirmed by source, omit it.
 
 ## File and heading format
 
-- Start every guide with this exact template so Storybook picks it up under the component:
+Start every guide with this exact template:
 
-  ```mdx
-  import { Meta } from '@storybook/addon-docs/blocks';
+```mdx
+import { Meta } from '@storybook/addon-docs/blocks';
 
-  <Meta title="[Component name]/Consumer migration guide" />
+<Meta title="[Component name]/Consumer migration guide" />
 
-  # [Component name] consumer migration guide
-  ```
+# [Component name] consumer migration guide
+```
 
-  - Use sentence case for `[Component name]` in both the `<Meta title>` and the H1 (for example `Badge`, `Action button`, `Progress circle`).
-  - Do **not** prefix `<Meta title>` with `Components/` — the Storybook config supplies the `Components` title prefix automatically.
+- Use sentence case for `[Component name]` (for example `Badge`, `Action button`).
+- Do **not** prefix `<Meta title>` with `Components/` — `titlePrefix` supplies it.
+- Use sentence case for all other headings.
+- Prefer tables, bullets, and fenced code blocks over prose.
 
-- Use sentence case for all other headings too
-- Separate major sections with `---`
-- Prefer short paragraphs, bullets, tables, and code examples that scan well
-- **MDX rules** to keep the file parseable:
-  - Wrap bare tag names in inline code (`` `<sp-badge>` ``, `` `<swc-badge>` ``) when referenced in prose
-  - Put HTML and JS examples inside fenced code blocks (` ```html ` / ` ```js `)
-  - Do not leave loose `{` / `}` outside code blocks; MDX treats them as JS expressions
-  - Do not add generated-breadcrumb or TOC blocks from the `CONTRIBUTOR-DOCS` nav script; they are not applicable here
+**MDX rules:**
 
-## Required section order
+- Wrap bare tag names in backticks in prose (`` `<sp-badge>` ``, `` `<swc-badge>` ``)
+- Put all HTML/JS examples inside fenced code blocks
+- Do not leave loose `{` / `}` outside code blocks
+- Do not include `CONTRIBUTOR-DOCS` breadcrumbs or TOCs
 
-Use this **H2** order:
+## Required sections
 
-1. `## Overview`
-2. `## Before you migrate`
-3. `## What changed`
-4. `## Update your code`
-5. `## Styling and customization changes`
-6. `## Accessibility and behavior changes`
-7. `## Testing and rollout guidance`
-8. `## Migration checklist`
-9. `## References`
+Use exactly this **H2** order. Omit any section that has no component-specific content rather than writing filler.
 
-Do not skip sections that apply. If a section truly has no component-specific content, say so briefly rather than silently omitting it.
+1. `# [Component name] consumer migration guide` — H1, followed by **one sentence** summarizing the migration.
+2. `## What changed` — a single summary table.
+3. `## Update your code` — numbered steps in the order the consumer performs them.
+4. `## Styling` — only public CSS custom properties and a one-line "don't target internals" caution. Skip if nothing changed.
+5. `## Accessibility` — consumer-facing a11y actions only, each with a minimal code example. Skip if nothing changed.
+6. `## Checklist` — `- [ ]` task list of the concrete actions the consumer must take.
+
+Do **not** add: `Overview`, `Before you migrate`, `Migration in one sentence`, `Who this guide is for`, `Also read`, `Testing`, `References`, or separator `---` rules between every section. Keep the document tight.
+
+**Testing is out of scope.** Consumers are responsible for updating their own tests; the guide should not include test-update instructions, snapshot guidance, or VRT approval steps.
 
 ## Section requirements
 
-### 1. Overview
+### H1 + one-sentence summary
 
-Start with a short paragraph that names:
+Example:
 
-- the 1st-gen component
-- the 2nd-gen replacement
-- the purpose of the guide
+```mdx
+# Badge consumer migration guide
 
-Use these **`###` subheadings** when they fit:
+Replace `<sp-badge>` with `<swc-badge>` and update the import. The public API is unchanged.
+```
 
-- `### Also read`
-  - Link to the component's `rendering-and-styling-migration-analysis.md` in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/`
-  - Link to `accessibility-migration-analysis.md` in the same `CONTRIBUTOR-DOCS` folder when present
-  - Use a repo-root-relative path from the consumer guide's location (e.g. `../../../../../CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`)
-- `### Who this guide is for`
-  - State that it is for application developers upgrading product code
-- `### Migration in one sentence`
-  - Give a concise summary of the main shift, for example API rename, markup change, styling model change, or behavior change
+### `## What changed`
 
-### 2. Before you migrate
+A single table with two columns: `Area | Change`. Cover only the areas that actually changed:
 
-Prepare the consumer before they start editing code.
-
-Use these **`###` subheadings**:
-
-- `### Confirm the replacement component`
-  - State the target 2nd-gen component and note if there is not a one-to-one mapping
-- `### Inventory your current usage`
-  - Tell readers what to search for in their codebase: tag names, attributes, slot usage, CSS selectors, tests, and any wrappers
-- `### Plan the migration strategy`
-  - Call out whether migration is usually straightforward, staged, or likely to need wrapper components, feature flags, or coordinated visual QA
-
-### 3. What changed
-
-Summarize changes in a **table** with these columns:
-
-`Area | What changed | What consumers need to do`
-
-Cover the areas that apply:
-
-- element or import name
-- markup structure
-- attributes and properties
-- slots or content model
+- tag name
+- import path
+- attributes and accepted values
+- slots
 - events
-- styling hooks, classes, or CSS custom properties
-- accessibility semantics
-- test assumptions
+- anything new in 2nd-gen the consumer may want to adopt
+- any constraint the consumer must respect
 
-This section is the executive summary. Keep it tight and actionable.
+### `## Update your code`
 
-### 4. Update your code
+Numbered `###` subheadings, in the order the consumer performs them, each with a minimal before/after snippet. Typical order:
 
-This is the main consumer migration section.
+1. Update the import
+2. Rename the tag
+3. Fix consumer-facing accessibility gaps (only if applicable)
+4. (Optional) Adopt new attributes (only if applicable)
 
-Use these **`###` subheadings** in order when they apply:
+Skip any step that does not apply — do not write "no changes needed" filler.
 
-- `### Replace the component in markup`
-- `### Update attributes, properties, and events`
-- `### Update slots and content structure`
-- `### Before and after examples`
+### `## Styling`
 
-Requirements:
+Document the **2nd-gen component's actual public custom properties** — not 1st-gen's. The 2nd-gen implementation supersedes 1st-gen: verify the real property names, prefixes, and behavior directly in `2nd-gen/packages/swc/components/[component-name]/[component].css` and `2nd-gen/packages/core/components/[component-name]/`. Do **not** carry over 1st-gen `--mod-*` names unless the 2nd-gen CSS actually uses them.
 
-- Use concrete before/after code snippets
-- Prefer real tag names and realistic usage patterns from the repo
-- If multiple common migration patterns exist, show more than one example
-- If something from 1st-gen has no 2nd-gen equivalent, say that plainly and give the recommended replacement or workaround
+Cover only:
 
-### 5. Styling and customization changes
+- The public custom properties the 2nd-gen component exposes (bulleted list of names).
+- If the 1st-gen component used a different prefix (e.g. `--mod-*`) and 2nd-gen does not, call that out explicitly so consumers know to replace their overrides.
+- A one-line caution: "Do not target internal classes, private `--_*` properties, or shadow DOM — none are public API."
 
-Explain how consumers need to update app-level styling or customization.
+Skip this section only if the component has no public styling hooks in either version.
 
-Use these **`###` subheadings** when they apply:
+### `## Accessibility`
 
-- `### CSS classes and DOM assumptions`
-- `### CSS custom properties, tokens, and supported theming hooks`
-- `### Unsupported customization patterns`
+Bulleted list of consumer-facing actions. **Each bullet with a concrete behavior change must include a minimal code example** showing the corrected markup. Non-code bullets (e.g. "refactor interactive uses to X") can remain text-only.
 
-Requirements:
+### `## Checklist`
 
-- Call out when 1st-gen consumers relied on internal Shadow DOM structure, classes, or selectors that should no longer be targeted
-- Explain any move from ad hoc styling to supported tokens, component APIs, or documented hooks
-- If styling customization is intentionally more constrained in 2nd-gen, say so directly
-- Link back to the rendering-and-styling migration analysis doc for deeper maintainer detail instead of duplicating it
-
-### 6. Accessibility and behavior changes
-
-Explain changes that affect product behavior or accessibility expectations.
-
-Use these **`###` subheadings** when they apply:
-
-- `### Accessibility improvements and new expectations`
-- `### Behavior changes to validate in product`
-- `### Cases that may need product review`
-
-Requirements:
-
-- Focus on what consumers need to validate in their application, not only on implementation details
-- Call out changed semantics, focus behavior, labels, announcements, or interaction patterns
-- Mention when consumers may need to update surrounding markup, accessible names, helper text, or testing expectations
-- Link to the accessibility migration analysis doc for deeper background when available
-
-### 7. Testing and rollout guidance
-
-This section must include practical rollout advice, not just test reminders.
-
-Use these **`###` subheadings** in order:
-
-- `### Visual QA`
-- `### Accessibility QA`
-- `### Automated tests to update`
-- `### Rollout and fallback strategy`
-
-Requirements:
-
-- Tell consumers what visual changes to expect and verify
-- Include accessibility checks that matter for this component
-- Call out test categories likely to break: selectors, snapshots, ARIA assertions, event expectations, or interaction flows
-- When appropriate, recommend phased rollout, wrapper-based fallback, feature flags, or side-by-side verification
-- If fallback guidance is not component-specific, provide a concise default recommendation rather than leaving the section empty
-
-### 8. Migration checklist
-
-Use a markdown task list (`- [ ]`) with concrete, verifiable actions. Cover:
-
-- code updates
-- styling updates
-- accessibility review
-- automated test updates
-- rollout or release readiness
-
-### 9. References
-
-Include the most relevant sources used to write the guide.
-
-At minimum, link to:
-
-- the component's 1st-gen README or public docs when available
-- the component's related migration analysis docs when available
-- any relevant internal contributor docs that support the migration guidance
+`- [ ]` task list of the concrete actions the consumer must take. Each item should map 1:1 to a step above. Keep it to the minimum viable list — no "consider" or "review" filler.
 
 ## Writing style
 
-- Write for readers who are migrating product code, not building the component internals
-- Prefer direct instructions such as "Replace", "Remove", "Verify", and "Do not rely on"
-- Avoid vague statements like "may differ" when the source shows exactly what changed
-- Avoid duplicating deep implementation detail from the analysis docs; summarize the impact and link out
-- Use Adobe documentation standards and plain, scannable wording
+- Use imperative voice: "Replace", "Rename", "Add", "Do not".
+- Cut adjectives, hedges, and any sentence that does not tell the consumer what to do.
+- Do not duplicate information across sections.
+- Do not include rollout playbooks, fallback strategies, or staged-migration advice unless the component genuinely requires it.
 
 ## Quality bar
 
-Before finishing, confirm the guide answers these questions clearly:
+Before finishing, confirm:
 
-- What component should I migrate to?
-- What code do I need to change?
-- What styling assumptions might break?
-- What accessibility or behavior changes should I verify?
-- What tests do I need to update?
-- How should I roll this out safely?
+- The guide fits on roughly one screen when scrolled, or reads in under 5 minutes.
+- Every sentence tells the consumer something they must do, check, or know to migrate.
+- No shadow DOM, internal class, or maintainer-facing content is present.
+- No links to `CONTRIBUTOR-DOCS/` are present.
