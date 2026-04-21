@@ -43,9 +43,15 @@
     color 130ms ease;
 }
 
-.swc-MessageFeedback-button:hover {
+.swc-MessageFeedback-button:hover,
+.swc-MessageFeedback-button:focus-visible {
   color: token("gray-800");
-  background: token("gray-100");
+  background: token("gray-200");
+}
+
+.swc-MessageFeedback-button:focus-visible {
+  outline: 2px solid token("focus-indicator-color");
+  outline-offset: 2px;
 }
 
 .swc-MessageFeedback-button[data-selected] {
