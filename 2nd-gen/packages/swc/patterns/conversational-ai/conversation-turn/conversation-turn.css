@@ -17,6 +17,10 @@
   container-type: inline-size;
 }
 
+:host(:focus-visible) {
+  outline: none;
+}
+
 *,
 *::before,
 *::after {
@@ -58,4 +62,11 @@
   flex: 1 1 100%;
   min-inline-size: 0;
   max-inline-size: 100%;
+}
+
+/* Keep focus semantics on the turn host, but render the ring on message surfaces. */
+:host(:focus-visible) ::slotted(*) {
+  border-radius: 16px;
+  outline: 2px solid token("blue-500");
+  outline-offset: 2px;
 }

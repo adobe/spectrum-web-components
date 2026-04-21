@@ -31,9 +31,3 @@
   gap: var(--swc-conversation-thread-gap, 16px);
   inline-size: 100%;
 }
-
-::slotted(swc-conversation-turn:focus-visible) {
-  border-radius: 16px;
-  outline: 2px solid token("blue-500");
-  outline-offset: 2px;
-}

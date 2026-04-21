@@ -20,9 +20,15 @@
 :host {
   display: flex;
   justify-content: flex-end;
-  inline-size: 100%; /* copy fills the full column width */
+
+  /* Hug the inner bubble so focus outlines and hit-areas match the visible surface;
+   * text still reflows up to max-inline-size. */
+  inline-size: fit-content;
   max-inline-size: 536px;
-  padding-inline-end: 24px;
+
+  /* Offset from the column edge sits outside the host box so focus outlines
+   * hug the bubble instead of extending past it. */
+  margin-inline-end: 24px;
 }
 
 /* Card: fixed 324px per Figma spec (content 292px = 324px − 2×16px padding). */
