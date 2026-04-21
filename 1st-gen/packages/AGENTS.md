@@ -1,6 +1,6 @@
 # 1st-gen/packages
 
-59 component packages and 10 shared tool packages. Components live in `packages/`; shared behavior and utilities live in `tools/` — check there before writing new code.
+69 component packages and 9 shared tool packages. Components live in `packages/`; shared behavior and utilities live in `tools/` — check there before writing new code.
 
 ## Structure
 
@@ -9,7 +9,7 @@ packages/
 ├── accordion/    # Component packages (alphabetical)
 ├── badge/
 ├── button/
-└── ...           # 59 total
+└── ...           # 69 total
 
 tools/
 ├── base/                  # SpectrumElement, SizedMixin, Lit re-exports

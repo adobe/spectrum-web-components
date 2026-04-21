@@ -8,7 +8,7 @@ If a change belongs in both generations, make it in `2nd-gen/packages/core/` so 
 
 ```text
 1st-gen/
-├── packages/   # 69 component packages + 10 shared tool packages
+├── packages/   # 69 component packages + 9 shared tool packages
 ├── tools/      # Shared base classes, mixins, reactive controllers
 ├── projects/   # Non-component workspaces (docs, VRT, templates, types)
 ├── storybook/  # Storybook configuration
