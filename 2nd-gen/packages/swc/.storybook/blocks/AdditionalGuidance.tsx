@@ -14,9 +14,10 @@ import { Markdown, useOf } from '@storybook/addon-docs/blocks';
 import React from 'react';
 
 /**
- * Renders `parameters.docs.afterApi` (markdown) immediately after the API / Controls table.
+ * Renders additional markdown guidance from `parameters.docs.afterApi`
+ * immediately after the API / Controls table.
  */
-export const DocsAfterApiMarkdown = () => {
+export const AdditionalGuidance = () => {
   const resolvedOf = useOf('meta', ['meta']);
   const md = resolvedOf.preparedMeta?.parameters?.docs?.afterApi;
 
