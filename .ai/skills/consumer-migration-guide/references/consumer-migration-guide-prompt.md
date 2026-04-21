@@ -6,9 +6,9 @@ For the **[COMPONENT_NAME]** component(s), create one consumer-facing migration 
 
 The file must be **MDX**, not plain Markdown. Storybook's config (`2nd-gen/packages/swc/.storybook/main.ts`) picks up `**/*.mdx` under `../components` with `titlePrefix: 'Components'`, so the guide renders at `Components/[Component name]/Consumer migration guide`.
 
-The guide ships alongside the 2nd-gen component source. Do **not** create or move this file under `CONTRIBUTOR-DOCS/`.
+The guide ships alongside the Spectrum 2 component source. Do **not** create or move this file under `CONTRIBUTOR-DOCS/`.
 
-These guides are for **application developers upgrading their code** from 1st-gen to 2nd-gen. The only question each section should answer is: **"What do I change in my product code?"**
+These guides are for **application developers upgrading their code** from Spectrum 1 to Spectrum 2. The only question each section should answer is: **"What do I change in my product code?"**
 
 ## Scope and length
 
@@ -49,9 +49,9 @@ If a claim is not confirmed by source, omit it.
 
 When sources disagree, follow this order of authority:
 
-1. **The shipped 2nd-gen source** (`2nd-gen/packages/swc/components/[component-name]/` and `2nd-gen/packages/core/components/[component-name]/`) — ground truth for what the component actually does.
+1. **The shipped Spectrum 2 source** (`2nd-gen/packages/swc/components/[component-name]/` and `2nd-gen/packages/core/components/[component-name]/`) — ground truth for what the component actually does.
 2. **The CSS style guide** (`CONTRIBUTOR-DOCS/02_style-guide/` and `.ai/rules/styles.md`) — recommendations here **outweigh** anything in a component's `rendering-and-styling-migration-analysis.md`. The analysis docs are early, component-specific planning artifacts; the style guide is the canonical, cross-component rule set and supersedes them when they conflict (for example on custom-property naming, prefixing, and public-vs-private boundaries).
-3. **`rendering-and-styling-migration-analysis.md`** and other maintainer-facing analysis docs — use only for context and rationale. If an analysis doc suggests a public API shape that the 2nd-gen source or the CSS style guide contradicts, trust the source and the style guide, not the analysis.
+3. **`rendering-and-styling-migration-analysis.md`** and other maintainer-facing analysis docs — use only for context and rationale. If an analysis doc suggests a public API shape that the Spectrum 2 source or the CSS style guide contradicts, trust the source and the style guide, not the analysis.
 
 ## File and heading format
 
@@ -83,10 +83,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
 Use exactly this **H2** order. Omit any section that has no component-specific content rather than writing filler.
 
 1. `# [Component name] consumer migration guide` — H1, followed by **one sentence** summarizing the migration.
-2. `## What changed` — up to three tables (`### Renamed`, `### Added in 2nd-gen`, `### Removed in 2nd-gen`). Omit any sub-section with no entries. **Never** include an `### Unchanged` sub-section.
+2. `## What changed` — up to three tables (`### Renamed`, `### Added in Spectrum 2`, `### Removed in Spectrum 2`). Omit any sub-section with no entries. **Never** include an `### Unchanged` sub-section.
 3. `## Update your code` — numbered steps in the order the consumer performs them. Every step includes a before/after snippet.
-4. `## Styling` — only public CSS custom properties and a one-line "don't target internals" caution. Skip if nothing changed.
-5. `## Accessibility` — consumer-facing a11y actions only. Do not repeat code examples already shown in `## Update your code` — link back to the relevant step instead. Skip if nothing changed.
+4. `## Accessibility` — consumer-facing a11y actions only. Do not repeat code examples already shown in `## Update your code` — link back to the relevant step instead. Skip if nothing changed.
+5. `## Styling` — only public CSS custom properties and a one-line "don't target internals" caution. Skip if nothing changed.
 6. `## Checklist` — `- [ ]` task list of the concrete actions the consumer must take.
 
 Do **not** add: `Overview`, `Before you migrate`, `Migration in one sentence`, `Who this guide is for`, `Also read`, `Testing`, `References`, `Unchanged`, or separator `---` rules between every section. Keep the document tight.
@@ -109,9 +109,9 @@ Replace `<sp-badge>` with `<swc-badge>` and update the import. The public API is
 
 Use up to three `###` sub-section tables — **only include a sub-section if it has entries**. Each sub-section is a table focused on one kind of change:
 
-- **`### Renamed`** — tag, import path, property prefixes, or other 1:1 renames. Columns: `Area | 1st-gen | 2nd-gen`.
-- **`### Added in 2nd-gen`** — new attributes, variants, slots, or custom properties the consumer may adopt. Columns: `Addition | Notes`.
-- **`### Removed in 2nd-gen`** — removed public API with replacement guidance. Columns: `Removed | Replacement`.
+- **`### Renamed`** — tag, import path, property prefixes, or other 1:1 renames. Columns: `Area | Spectrum 1 | Spectrum 2`.
+- **`### Added in Spectrum 2`** — new attributes, variants, slots, or custom properties the consumer may adopt. Columns: `Addition | Notes`.
+- **`### Removed in Spectrum 2`** — removed public API with replacement guidance. Columns: `Removed | Replacement`.
 
 Do **not** include an `### Unchanged` sub-section. Unchanged API requires no consumer action and adds noise.
 
@@ -126,22 +126,26 @@ Numbered `###` subheadings, in the order the consumer performs them. **Every ste
 3. Fix consumer-facing accessibility gaps (only if applicable)
 4. (Optional) Adopt new attributes (only if applicable)
 
-Skip any step that does not apply — do not write "no changes needed" filler. For optional adoption steps, the "before" can be the 1st-gen markup without the new attribute and the "after" is the 2nd-gen markup with it.
+Skip any step that does not apply — do not write "no changes needed" filler. For optional adoption steps, the "before" can be the Spectrum 1 markup without the new attribute and the "after" is the Spectrum 2 markup with it.
+
+### `## Accessibility`
+
+Bulleted list of consumer-facing actions. **Do not duplicate code examples that already appear in `## Update your code`.** If the a11y action is represented as a numbered step above (e.g. "add `aria-label` to icon-only badges"), the bullet should summarize the rule and link to the step (`See [step N](#n-step-slug)`) — no snippet. Only include a code example for a11y actions that are **not** covered in `## Update your code`. Non-code bullets (e.g. "refactor interactive uses to X") remain text-only.
 
 ### `## Styling`
 
-Document the **2nd-gen component's actual public custom properties** — not 1st-gen's. The 2nd-gen implementation supersedes 1st-gen: verify the real property names, prefixes, and behavior directly in `2nd-gen/packages/swc/components/[component-name]/[component].css` and `2nd-gen/packages/core/components/[component-name]/`. Do **not** carry over 1st-gen `--mod-*` names unless the 2nd-gen CSS actually uses them.
+Document the **Spectrum 2 component's actual public custom properties** — not Spectrum 1's. The Spectrum 2 implementation supersedes Spectrum 1: verify the real property names, prefixes, and behavior directly in `2nd-gen/packages/swc/components/[component-name]/[component].css` and `2nd-gen/packages/core/components/[component-name]/`. Do **not** carry over Spectrum 1 `--mod-*` names unless the Spectrum 2 CSS actually uses them.
 
 Cover only:
 
-- The public custom properties the 2nd-gen component exposes, as a **table** with `Custom property | Description | Notes` columns. Use the Notes column to call out scope constraints (e.g. "semantic variants only", "outline variants only", exclusions mandated by the CSS style guide). Leave Notes empty for properties with no constraint.
+- The public custom properties the Spectrum 2 component exposes, as a **table** with `Custom property | Description | Notes` columns. Use the Notes column to call out scope constraints (e.g. "semantic variants only", "outline variants only", exclusions mandated by the CSS style guide). Leave Notes empty for properties with no constraint.
 - Include this JSX comment immediately above the table so future passes can replace the hand-written descriptions with the canonical copy once it lands:
 
   ```mdx
   {/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-[component]>`'s CEM entry once they are added in a follow-up PR. */}
   ```
 
-- **Required amber "breaking change" callout at the top** (immediately after the section intro sentence, before the property list) **if** the 1st-gen component used a different custom-property prefix (e.g. `--mod-*`) and 2nd-gen does not. Tells consumers their 1st-gen overrides won't apply. Template:
+- **Required amber "breaking change" callout at the top** (immediately after the section intro sentence, before the property list) **if** the Spectrum 1 component used a different custom-property prefix (e.g. `--mod-*`) and Spectrum 2 does not. Tells consumers their Spectrum 1 overrides won't apply. Template:
 
   ```mdx
   <div
@@ -153,11 +157,11 @@ Cover only:
       borderRadius: '4px',
     }}
   >
-    <strong>⚠️ Breaking change.</strong> 1st-gen{' '}
+    <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
     <code>{'--mod-[component]-*'}</code> properties{' '}
     <strong>do not apply</strong> to <code>{'<swc-[component]>'}</code>. Remove
     or replace every <code>{'--mod-[component]-*'}</code> override with the{' '}
-    <code>{'--swc-[component]-*'}</code> equivalents below. Not every 1st-gen
+    <code>{'--swc-[component]-*'}</code> equivalents below. Not every Spectrum 1
     property has a 1:1 replacement, so read the list below carefully.
   </div>
   ```
@@ -181,19 +185,15 @@ Cover only:
   </div>
   ```
 
-  Replace `[component]` in each template with the 2nd-gen tag root (e.g. `badge` → `<swc-badge>`, `--_swc-badge-*`, `--mod-badge-*`). Both callouts use inline-styled JSX divs, not blockquotes — blockquotes are not visually distinct enough for consumer-critical warnings.
+  Replace `[component]` in each template with the Spectrum 2 tag root (e.g. `badge` → `<swc-badge>`, `--_swc-badge-*`, `--mod-badge-*`). Both callouts use inline-styled JSX divs, not blockquotes — blockquotes are not visually distinct enough for consumer-critical warnings.
 
   Immediately before the first callout in the section, include this JSX comment so every guide carries the same follow-up task:
 
   ```mdx
-  {/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to 2nd-gen. */}
+  {/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
   ```
 
 Skip this section only if the component has no public styling hooks in either version.
-
-### `## Accessibility`
-
-Bulleted list of consumer-facing actions. **Do not duplicate code examples that already appear in `## Update your code`.** If the a11y action is represented as a numbered step above (e.g. "add `aria-label` to icon-only badges"), the bullet should summarize the rule and link to the step (`See [step N](#n-step-slug)`) — no snippet. Only include a code example for a11y actions that are **not** covered in `## Update your code`. Non-code bullets (e.g. "refactor interactive uses to X") remain text-only.
 
 ### `## Checklist`
 
