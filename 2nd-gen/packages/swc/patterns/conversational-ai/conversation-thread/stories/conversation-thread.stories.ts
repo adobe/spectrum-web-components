@@ -295,7 +295,8 @@ class ConversationFullPatternDemo extends HTMLElement {
           const artifactMessages = (turn.artifacts ?? [])
             .map((artifact) => {
               if (artifact.thumbnailUrl) {
-                return `<swc-user-message type="media">
+                return `<swc-conversation-turn type="user">
+                  <swc-user-message type="media">
                   <img
                     slot="thumbnail"
                     src="${artifact.thumbnailUrl}"
@@ -304,9 +305,11 @@ class ConversationFullPatternDemo extends HTMLElement {
                   />
                   <span slot="title">${escapeHtml(artifact.title)}</span>
                   <span slot="subtitle">${escapeHtml(artifact.subtitle)}</span>
-                </swc-user-message>`;
+                </swc-user-message>
+                </swc-conversation-turn>`;
               }
-              return `<swc-user-message type="card">
+              return `<swc-conversation-turn type="user">
+                <swc-user-message type="card">
                 <div
                   slot="thumbnail"
                   role="img"
@@ -315,17 +318,14 @@ class ConversationFullPatternDemo extends HTMLElement {
                 ></div>
                 <span slot="title">${escapeHtml(artifact.title)}</span>
                 <span slot="subtitle">${escapeHtml(artifact.subtitle)}</span>
-              </swc-user-message>`;
+              </swc-user-message>
+              </swc-conversation-turn>`;
             })
             .join('');
           const copyMessage = turn.text
-            ? `<swc-user-message>${escapeHtml(turn.text)}</swc-user-message>`
+            ? `<swc-conversation-turn type="user"><swc-user-message>${escapeHtml(turn.text)}</swc-user-message></swc-conversation-turn>`
             : '';
-          return `
-            <swc-conversation-turn type="user">
-              ${artifactMessages}${copyMessage}
-            </swc-conversation-turn>
-          `;
+          return `${artifactMessages}${copyMessage}`;
         }
 
         const feedback = turn.loading
