@@ -61,7 +61,7 @@
     "playwright": "1.53.1"
   },
   "devDependencies": {
-    "@axe-core/playwright": "4.11.0",
+    "@axe-core/playwright": "4.11.2",
     "@changesets/cli": "2.29.7",
     "@commitlint/cli": "19.8.1",
     "@commitlint/config-conventional": "19.8.1",
