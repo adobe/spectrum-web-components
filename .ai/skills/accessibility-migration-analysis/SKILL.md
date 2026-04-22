@@ -42,7 +42,7 @@ Use these existing docs when matching structure, headings, tables, and phrasing:
 
 ## File location and discovery
 
-- **Path:** `CONTRIBUTOR-DOCS/03_project-planning/03_components/<component-name>/accessibility-migration-analysis.md`
+- **Path:** `CONTRIBUTOR-DOCS/03_project-planning/03_components/accordion/accessibility-migration-analysis.md`
 - **Pairing:** Link to `./rendering-and-styling-migration-analysis.md` from **Overview → Also read**.
 - **Nav:** After adding a file or changing `##` / `###` headings, run `node update-nav.js` from `CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs` (see **contributor-doc-update** rule). Register the doc in `03_components/README.md` when introducing a new component folder.
 
