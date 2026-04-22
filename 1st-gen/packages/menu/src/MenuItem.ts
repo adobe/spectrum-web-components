@@ -131,6 +131,15 @@ export class MenuItemKeydownEvent extends KeyboardEvent {
   public override get shiftKey(): boolean {
     return this._event?.shiftKey || false;
   }
+
+  /**
+   * Original `KeyboardEvent` that triggered this forwarded event,
+   * exposed so listeners on the parent menu can call
+   * `preventDefault()`/`stopPropagation()` on the underlying event.
+   */
+  public get nativeEvent(): KeyboardEvent | undefined {
+    return this._event;
+  }
 }
 
 export type MenuItemChildren = { icon: Element[]; content: Node[] };
@@ -238,12 +247,23 @@ export class MenuItem extends LikeAnchor(
   @query('sp-overlay')
   public overlayElement!: Overlay;
 
+  /**
+   * Reference to the slotted submenu element, captured by `manageSubmenu`.
+   * Public so the parent `<sp-menu>` can project this submenu for mobile
+   * drill-down and so tests can assert on its contents.
+   *
+   * @internal
+   */
   public submenuElement?: HTMLElement;
 
   /**
-   * Set by the parent Menu when the submenu element is projected to
-   * the mobile-submenu slot. Guards against manageSubmenu clearing
-   * hasSubmenu when the slot appears empty during projection.
+   * Set by the parent Menu when the submenu element is projected to the
+   * mobile-submenu slot. Guards against `manageSubmenu` clearing
+   * `hasSubmenu` when the slot appears empty during projection.
+   * Cross-class implementation detail; do not depend on it from outside
+   * the `@spectrum-web-components/menu` package.
+   *
+   * @internal
    */
   public _mobileSubmenuProjected = false;
 
@@ -552,6 +572,9 @@ export class MenuItem extends LikeAnchor(
 
     if (this.isMobileView) {
       this._mobileRootMenu?.openMobileSubmenu(this);
+      // Defer clearing the flag until after the synthetic `click`
+      // dispatched by the same touch sequence has been handled, so
+      // `handleSubmenuClick` can suppress that duplicate activation.
       setTimeout(() => {
         this._touchHandledViaPointerup = false;
       }, 0);
@@ -564,6 +587,8 @@ export class MenuItem extends LikeAnchor(
       this.openOverlay();
     }
 
+    // Same rationale as above: keep the suppression flag set through
+    // the trailing `click` event before resetting it.
     setTimeout(() => {
       this._touchHandledViaPointerup = false;
     }, 0);
@@ -692,7 +717,12 @@ export class MenuItem extends LikeAnchor(
     const { target, key } = event;
     const openSubmenuKey =
       this.hasSubmenu && !this.open && [' ', 'Enter'].includes(key);
-    if (target === this) {
+    // Forward the keydown when focus is on this item or any of its
+    // slotted descendants (e.g. the back-arrow icon inside a mobile
+    // back button), so the parent menu still receives the event.
+    const targetIsThisItem =
+      target === this || (target instanceof Node && this.contains(target));
+    if (targetIsThisItem) {
       if (
         ['ArrowLeft', 'ArrowRight', 'Escape'].includes(key) ||
         openSubmenuKey

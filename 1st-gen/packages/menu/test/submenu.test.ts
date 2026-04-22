@@ -1307,6 +1307,52 @@ describe('Submenu', () => {
 
       input.remove();
     });
+    it('Arrow Up from first nested item focuses the back row', async function () {
+      const menu = this.el as Menu;
+
+      menu.openMobileSubmenu(this.rootItem);
+      await elementUpdated(menu);
+      expect(menu.currentMobileSubmenu).to.equal(this.rootItem);
+
+      const submenuEl = this.rootItem.submenuElement as Menu;
+      const backItem = submenuEl.querySelector(
+        '.mobile-back-button'
+      ) as MenuItem;
+      const firstItem = submenuEl.querySelector('.submenu-item-1') as MenuItem;
+
+      const submenu = submenuEl as unknown as Menu;
+      submenu.rovingTabindexController?.focusOnItem(firstItem);
+      await elementUpdated(firstItem);
+      expect(document.activeElement === firstItem).to.be.true;
+
+      await sendKeys({ press: 'ArrowUp' });
+      await elementUpdated(menu);
+
+      expect(document.activeElement === backItem).to.be.true;
+    });
+    it('Arrow Down from back row focuses first nested item', async function () {
+      const menu = this.el as Menu;
+
+      menu.openMobileSubmenu(this.rootItem);
+      await elementUpdated(menu);
+      expect(menu.currentMobileSubmenu).to.equal(this.rootItem);
+
+      const submenuEl = this.rootItem.submenuElement as Menu;
+      const backItem = submenuEl.querySelector(
+        '.mobile-back-button'
+      ) as MenuItem;
+      const firstItem = submenuEl.querySelector('.submenu-item-1') as MenuItem;
+
+      const submenu = submenuEl as unknown as Menu;
+      submenu.rovingTabindexController?.focusOnItem(backItem);
+      await elementUpdated(backItem);
+      expect(document.activeElement === backItem).to.be.true;
+
+      await sendKeys({ press: 'ArrowDown' });
+      await elementUpdated(menu);
+
+      expect(document.activeElement === firstItem).to.be.true;
+    });
     it('navigates correctly in RTL mode', async function () {
       const el = await fixture<Menu>(html`
         <sp-menu mobile-view dir="rtl">

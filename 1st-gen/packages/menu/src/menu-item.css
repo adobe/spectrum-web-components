@@ -81,3 +81,16 @@ sp-popover {
   box-shadow: none;
   outline: none;
 }
+
+/* Mobile drill-down back button: spacing and icon orientation */
+:host(.mobile-back-button) {
+  margin-block: calc(4px * var(--swc-scale-factor));
+}
+
+:host(.mobile-back-button) ::slotted(.mobile-back-icon) {
+  transform: rotate(180deg);
+}
+
+:host(.mobile-back-button:dir(rtl)) ::slotted(.mobile-back-icon) {
+  transform: rotate(0deg);
+}

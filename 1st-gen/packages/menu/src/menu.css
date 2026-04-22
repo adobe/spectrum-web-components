@@ -88,3 +88,10 @@
   display: block;
   animation: mobile-slide-in-left 200ms ease-out;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-submenu-animation-wrapper[mobile-transition="forward"],
+  .mobile-submenu-animation-wrapper[mobile-transition="back"] {
+    animation: none;
+  }
+}
