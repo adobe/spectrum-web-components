@@ -4,17 +4,40 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Badge consumer migration guide
 
-Replace `<sp-badge>` with `<swc-badge>` and update the import. The public API is unchanged.
+Replace `<sp-badge>` with `<swc-badge>`, update the import, and check any badges that relied on the `informative` default variant — the default is now `neutral`.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/badge
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/badge/sp-badge.js';
+
+// After
+import '@adobe/spectrum-wc/badge';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/badge`) loads only that component's bundle.
 
 ## What changed
 
 ### Renamed
 
-| Area             | Spectrum 1 (`sp-badge`)                | Spectrum 2 (`swc-badge`)                  |
-| ---------------- | -------------------------------------- | ----------------------------------------- |
-| Tag              | `sp-badge`                             | `swc-badge`                               |
-| Import path      | `@spectrum-web-components/badge`       | `@adobe/spectrum-wc/badge`                |
-| CSS custom props | `--mod-badge-*` / `--spectrum-badge-*` | `--swc-badge-*` (see [Styling](#styling)) |
+| Area              | Spectrum 1 (`sp-badge`)                | Spectrum 2 (`swc-badge`)                                 |
+| ----------------- | -------------------------------------- | -------------------------------------------------------- |
+| Tag               | `sp-badge`                             | `swc-badge`                                              |
+| Import path       | `@spectrum-web-components/badge`       | `@adobe/spectrum-wc/badge`                               |
+| CSS custom props  | `--mod-badge-*` / `--spectrum-badge-*` | `--swc-badge-*` (see [Styling](#styling))                |
+| Default `variant` | `'informative'`                        | `'neutral'` — see [step 2](#2-check-the-default-variant) |
 
 ### Added in Spectrum 2
 
@@ -35,22 +58,25 @@ Replace `<sp-badge>` with `<swc-badge>` and update the import. The public API is
 
 ## Update your code
 
-### 1. Update the import
-
-```js
-// Before
-import '@spectrum-web-components/badge/sp-badge.js';
-// After
-import '@adobe/spectrum-wc/badge';
-```
-
-### 2. Rename the tag
+### 1. Rename the tag
 
 ```html
 <!-- Before -->
 <sp-badge variant="positive">Approved</sp-badge>
 <!-- After -->
 <swc-badge variant="positive">Approved</swc-badge>
+```
+
+### 2. Check the default variant
+
+Badges that omit `variant` now render as `neutral` instead of `informative`. Add an explicit `variant` to any badge that should stay informative:
+
+```html
+<!-- Before (renders informative in Spectrum 1) -->
+<sp-badge>Active</sp-badge>
+
+<!-- After (add variant explicitly if informative style is intended) -->
+<swc-badge variant="informative">Active</swc-badge>
 ```
 
 ### 3. Fix consumer-facing accessibility gaps
@@ -127,7 +153,24 @@ Spectrum 2 exposes a new set of public CSS custom properties on `<swc-badge>`.
   property has a 1:1 replacement, so read the list below carefully.
 </div>
 
-Public custom properties:
+### Removed `--mod-badge-*` properties
+
+Replace every `--mod-badge-*` property with its `--swc-badge-*` equivalent:
+
+| Removed (Spectrum 1)                        | Replacement (Spectrum 2)       |
+| ------------------------------------------- | ------------------------------ |
+| `--mod-badge-height`                        | `--swc-badge-height`           |
+| `--mod-badge-corner-radius`                 | `--swc-badge-corner-radius`    |
+| `--mod-badge-label-icon-color`              | `--swc-badge-label-icon-color` |
+| `--mod-badge-font-size`                     | `--swc-badge-font-size`        |
+| `--mod-badge-line-height`                   | `--swc-badge-line-height`      |
+| `--mod-badge-workflow-icon-size`            | `--swc-badge-icon-size`        |
+| `--mod-badge-label-spacing-vertical-top`    | `--swc-badge-padding-block`    |
+| `--mod-badge-label-spacing-vertical-bottom` | `--swc-badge-padding-block`    |
+| `--mod-badge-label-spacing-horizontal`      | `--swc-badge-padding-inline`   |
+| `--mod-badge-icon-text-spacing`             | `--swc-badge-gap`              |
+
+### Public custom properties
 
 {/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-badge>`'s CEM entry once they are added in a follow-up PR. */}
 
@@ -167,6 +210,7 @@ Public custom properties:
 
 - [ ] Update imports
 - [ ] Rename all `<sp-badge>` to `<swc-badge>`
+- [ ] Add `variant="informative"` to any badge that relied on the old default
 - [ ] Replace `--mod-badge-*` overrides on semantic variants with `--swc-badge-*`; retoken globally for non-semantic color variants
 - [ ] Add `aria-label` to icon-only badges
 - [ ] Add `aria-hidden="true"` to decorative icons

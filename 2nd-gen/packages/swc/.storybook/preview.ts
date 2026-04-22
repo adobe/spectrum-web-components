@@ -275,6 +275,7 @@ const preview = {
               'Using stackblitz',
               '2nd-gen testing',
               'Tools vs packages',
+              'Writing migration guides',
               'Focus management',
             ],
             'Style guide',
