@@ -1314,14 +1314,19 @@ describe('Submenu', () => {
       await elementUpdated(menu);
       expect(menu.currentMobileSubmenu).to.equal(this.rootItem);
 
-      const submenuEl = this.rootItem.submenuElement as Menu;
+      const submenuEl = this.rootItem.submenuElement as HTMLElement;
       const backItem = submenuEl.querySelector(
         '.mobile-back-button'
       ) as MenuItem;
       const firstItem = submenuEl.querySelector('.submenu-item-1') as MenuItem;
+      await elementUpdated(backItem);
+      await elementUpdated(firstItem);
 
-      const submenu = submenuEl as unknown as Menu;
-      submenu.rovingTabindexController?.focusOnItem(firstItem);
+      backItem.tabIndex = -1;
+      backItem.focused = false;
+      firstItem.tabIndex = 0;
+      firstItem.focused = true;
+      firstItem.focus();
       await elementUpdated(firstItem);
       expect(document.activeElement === firstItem).to.be.true;
 
@@ -1337,14 +1342,19 @@ describe('Submenu', () => {
       await elementUpdated(menu);
       expect(menu.currentMobileSubmenu).to.equal(this.rootItem);
 
-      const submenuEl = this.rootItem.submenuElement as Menu;
+      const submenuEl = this.rootItem.submenuElement as HTMLElement;
       const backItem = submenuEl.querySelector(
         '.mobile-back-button'
       ) as MenuItem;
       const firstItem = submenuEl.querySelector('.submenu-item-1') as MenuItem;
+      await elementUpdated(backItem);
+      await elementUpdated(firstItem);
 
-      const submenu = submenuEl as unknown as Menu;
-      submenu.rovingTabindexController?.focusOnItem(backItem);
+      // _focusProjectedSubmenu already focuses the back row on open,
+      // but make the precondition explicit for the assertion below.
+      backItem.tabIndex = 0;
+      backItem.focused = true;
+      backItem.focus();
       await elementUpdated(backItem);
       expect(document.activeElement === backItem).to.be.true;
 

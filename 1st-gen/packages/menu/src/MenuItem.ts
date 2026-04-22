@@ -717,11 +717,16 @@ export class MenuItem extends LikeAnchor(
     const { target, key } = event;
     const openSubmenuKey =
       this.hasSubmenu && !this.open && [' ', 'Enter'].includes(key);
-    // Forward the keydown when focus is on this item or any of its
-    // slotted descendants (e.g. the back-arrow icon inside a mobile
-    // back button), so the parent menu still receives the event.
+    // Forward the keydown when this item is the closest `sp-menu-item`
+    // ancestor of the event target. That covers both focus on the item
+    // itself and focus on any of its non-menu-item descendants (e.g.
+    // the back-arrow icon inside a mobile back button), while
+    // preventing a parent item from double-dispatching events that
+    // originated inside its slotted submenu (whose menu items are
+    // also descendants in the light DOM tree).
     const targetIsThisItem =
-      target === this || (target instanceof Node && this.contains(target));
+      target === this ||
+      (target instanceof Element && target.closest('sp-menu-item') === this);
     if (targetIsThisItem) {
       if (
         ['ArrowLeft', 'ArrowRight', 'Escape'].includes(key) ||
