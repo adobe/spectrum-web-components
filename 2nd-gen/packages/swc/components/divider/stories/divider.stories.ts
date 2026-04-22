@@ -42,6 +42,14 @@ argTypes['static-color'] = {
   options: [undefined, ...Divider.STATIC_COLORS],
 };
 
+argTypes.vertical = {
+  ...argTypes.vertical,
+  table: {
+    ...argTypes.vertical?.table,
+    defaultValue: { summary: 'false' },
+  },
+};
+
 /**
  * A divider is a visual separator that brings clarity to a layout by grouping and dividing
  * content in close proximity. Dividers help establish rhythm and hierarchy, making it easier
@@ -218,6 +226,48 @@ export const StaticColors: Story = {
   tags: ['options'],
 };
 StaticColors.storyName = 'Static colors';
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+/**
+ * ### Layout orientation
+ *
+ * Dividers can be oriented **horizontally** (default) or **vertically** to match
+ * the layout they serve:
+ *
+ * - **Horizontal dividers** separate stacked content, such as sections beneath headings
+ * - **Vertical dividers** separate side-by-side items in a flex row (e.g., navigation breadcrumbs, toolbars)
+ *
+ * Vertical dividers require the parent to have an **explicit height** (`block-size`) —
+ * without it, `block-size: 100%` resolves to zero and the divider is invisible.
+ */
+export const LayoutOrientation: Story = {
+  render: (args) => html`
+    <nav
+      style="display: flex; align-items: center; gap: 8px; block-size: 24px;"
+    >
+      <span>Overview</span>
+      ${template({ ...args, size: 's', vertical: true })}
+      <span>Files</span>
+      ${template({ ...args, size: 's', vertical: true })}
+      <span>Settings</span>
+    </nav>
+    <div style="margin-block-start: 16px;">
+      <h4 style="margin: 0 0 8px 0;">Project details</h4>
+      ${template({ ...args, size: 'l' })}
+      <p style="margin: 8px 0 0 0;">
+        Review the project timeline and deliverables.
+      </p>
+    </div>
+  `,
+  parameters: {
+    flexLayout: 'column-stretch',
+  },
+  tags: ['behaviors'],
+};
+LayoutOrientation.storyName = 'Layout orientation';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

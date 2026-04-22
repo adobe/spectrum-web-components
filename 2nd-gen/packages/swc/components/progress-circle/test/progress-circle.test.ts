@@ -26,7 +26,6 @@ import meta from '../stories/progress-circle.stories.js';
 import {
   Indeterminate,
   Overview,
-  ProgressValues,
   Sizes,
   StaticColors,
 } from '../stories/progress-circle.stories.js';
@@ -55,13 +54,13 @@ export const OverviewTest: Story = {
     );
 
     await step(
-      'renders determinate progress with an accessible label',
+      'renders indeterminate progress with an accessible label',
       async () => {
         expect(progressCircle.getAttribute('role')).toBe('progressbar');
         expect(progressCircle.getAttribute('aria-label')).toBe(
           progressCircle.label
         );
-        expect(progressCircle.hasAttribute('progress')).toBe(false);
+        expect(progressCircle.getAttribute('aria-valuenow')).toBeNull();
       }
     );
   },
@@ -277,7 +276,17 @@ export const LightDomWithLabelDeprecationOnlyTest: Story = {
 // ──────────────────────────────────────────────────────────────
 
 export const ProgressValuesTest: Story = {
-  ...ProgressValues,
+  render: () => html`
+    ${[0, 25, 50, 75, 100].map(
+      (progress) => html`
+        <swc-progress-circle
+          progress=${progress}
+          label="Progress ${progress}%"
+          size="m"
+        ></swc-progress-circle>
+      `
+    )}
+  `,
   play: async ({ canvasElement, step }) => {
     const circles = await getComponents<ProgressCircle>(
       canvasElement,

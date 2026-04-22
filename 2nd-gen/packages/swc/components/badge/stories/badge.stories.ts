@@ -77,6 +77,31 @@ argTypes['icon-slot'] = {
     'Accepts an icon element. The control is disabled. Use the Anatomy story to see icon usage. Enhancements to this control will be added in a future release.',
 };
 
+// @todo: create a select dropdown with all available/acceptable icons for a component.
+// For now, this arg is turned off in the control table since the string doesn't get parsed as HTML: SWC-1853
+argTypes['icon-slot'] = {
+  ...argTypes['icon-slot'],
+  control: false,
+  description:
+    'Accepts an icon element. The control is disabled. Use the Anatomy story to see icon usage. Enhancements to this control will be added in a future release.',
+};
+
+argTypes.outline = {
+  ...argTypes.outline,
+  table: {
+    ...argTypes.outline?.table,
+    defaultValue: { summary: 'false' },
+  },
+};
+
+argTypes.subtle = {
+  ...argTypes.subtle,
+  table: {
+    ...argTypes.subtle?.table,
+    defaultValue: { summary: 'false' },
+  },
+};
+
 /**
  * Similar to [status lights](/docs/components-status-light--readme), they use color and text to convey status or category information.
  *
@@ -426,6 +451,50 @@ export const TextWrapping: Story = {
       style: 'max-inline-size: 120px',
     })}
   `,
+  tags: ['behaviors'],
+};
+
+/**
+ * Badges flow naturally within prose text to annotate inline content such as headings,
+ * labels, list items, or table cells.
+ *
+ * Because `<swc-badge>` renders as `inline-flex`, it participates in the normal
+ * text flow without any extra wrapper styling required. Use small (`s`) badges in
+ * most inline contexts to avoid disrupting line height.
+ */
+export const Inline: Story = {
+  render: (args) => html`
+    <p>
+      Design system components
+      ${template({
+        ...args,
+        variant: 'accent',
+        'default-slot': 'Beta',
+        size: 's',
+      })}
+    </p>
+    <p>
+      API documentation
+      ${template({
+        ...args,
+        variant: 'positive',
+        'default-slot': 'Stable',
+        size: 's',
+      })}
+    </p>
+    <p>
+      Legacy components
+      ${template({
+        ...args,
+        variant: 'notice',
+        'default-slot': 'Deprecated',
+        size: 's',
+      })}
+    </p>
+  `,
+  parameters: {
+    flexLayout: 'column-stretch',
+  },
   tags: ['behaviors'],
 };
 
