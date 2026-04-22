@@ -42,7 +42,7 @@ Include the SWC stylesheet once at the application root. It ships Spectrum 2 des
 <link rel="stylesheet" href="/node_modules/@adobe/spectrum-wc/swc.css" />
 ```
 
-For deeper customization (theme and scale contexts, fonts, application background overrides), see [Customization](/docs/guides-customization-getting-started--docs).
+For deeper customization (theme and scale contexts, fonts, application background overrides), see [Customization: Getting Started](../../2nd-gen/packages/swc/.storybook/guides/customization/getting-started.mdx).
 
 ## Your first component
 
@@ -56,7 +56,7 @@ React wrappers are planned. No plans for Vue or Svelte support at this time. For
 
 ## Where to go next
 
-- **Components** — browse the full catalog in [Storybook](/docs/components--docs)
-- **Customization** — override tokens, themes, and fonts in [Customization guides](/docs/guides-customization-getting-started--docs)
-- **Accessibility** — review [accessibility guidance](/docs/guides-accessibility-guides-overview--docs) for consumers
+- **Components** — browse the component catalog in Storybook (`yarn storybook` locally, or the deployed docs site)
+- **Customization** — override tokens, themes, and fonts. Start with [Customization: Getting Started](../../2nd-gen/packages/swc/.storybook/guides/customization/getting-started.mdx)
+- **Accessibility** — review [accessibility guides](../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/overview.mdx) for consumers
 - **Contributing** — see [Contributor guides](../01_contributor-guides/README.md) if you want to contribute upstream
