@@ -18,6 +18,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
+- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
 - [Recommendations: `<swc-badge>`](#recommendations-swc-badge)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -64,6 +65,14 @@ This doc tells you how **`swc-badge`** should work for **accessibility**. It mat
 | [Contrast (WCAG 1.4.3)](https://www.w3.org/TR/WCAG22/#contrast-minimum) | Text and icons should be **easy to see** against the background. |
 
 **Bottom line:** Treat **`swc-badge`** as **static content** on the page. Do not turn the core badge into a custom interactive control.
+
+---
+
+## Related 1st-gen accessibility (Jira)
+
+| Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
+|------|------|-------------------|-------------------------|---------|
+| [SWC-1136](https://jira.corp.adobe.com/browse/SWC-1136) | Bug | To Do | Unresolved | [Accessibility] Text content lacks 4.5:1 contrast ratio — `sp-badge` (semantic) |
 
 ---
 

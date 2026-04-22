@@ -30,9 +30,7 @@
 - Asset
     - [Asset migration roadmap](asset/rendering-and-styling-migration-analysis.md)
 - Avatar
-    - [Avatar accessibility migration analysis](avatar/accessibility-migration-analysis.md)
-    - [Avatar — 2nd-Gen Migration Plan](avatar/migration-plan.md)
-    - [Avatar migration roadmap](avatar/rendering-and-styling-migration-analysis.md)
+    - [Avatar accessibility migration analysis](avatar/rendering-and-styling-migration-analysis.md)
 - Badge
     - [Badge accessibility migration analysis](badge/accessibility-migration-analysis.md)
     - [Badge migration roadmap](badge/rendering-and-styling-migration-analysis.md)
@@ -44,6 +42,8 @@
     - [Checkbox migration roadmap](checkbox/rendering-and-styling-migration-analysis.md)
 - Color Field
     - [Color field migration roadmap](color-field/rendering-and-styling-migration-analysis.md)
+- Color Loupe
+    - [Color loupe accessibility migration analysis](color-loupe/accessibility-migration-analysis.md)
 - Divider
     - [Divider accessibility migration analysis](divider/accessibility-migration-analysis.md)
     - [Divider migration roadmap](divider/rendering-and-styling-migration-analysis.md)
@@ -56,6 +56,7 @@
 - Help Text
     - [Help text migration roadmap](help-text/rendering-and-styling-migration-analysis.md)
 - Illustrated Message
+    - [Illustrated message accessibility migration analysis](illustrated-message/accessibility-migration-analysis.md)
     - [Illustrated message migration roadmap](illustrated-message/rendering-and-styling-migration-analysis.md)
 - Infield Button
     - [In-field button migration roadmap](infield-button/rendering-and-styling-migration-analysis.md)
@@ -72,6 +73,7 @@
 - Picker Button
     - [Picker button migration roadmap](picker-button/rendering-and-styling-migration-analysis.md)
 - Progress Bar
+    - [Progress bar accessibility migration analysis](progress-bar/accessibility-migration-analysis.md)
     - [Progress bar migration roadmap](progress-bar/rendering-and-styling-migration-analysis.md)
 - Progress Circle
     - [Progress circle accessibility migration analysis](progress-circle/accessibility-migration-analysis.md)
