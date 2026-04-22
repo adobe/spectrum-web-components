@@ -138,3 +138,6 @@ jobs:
           if [ -n "$FILES" ]; then
             yarn prettier --check $FILES
           fi
+
+      - name: Validate AI tooling
+        run: yarn lint:ai

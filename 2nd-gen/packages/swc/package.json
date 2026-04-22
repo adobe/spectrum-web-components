@@ -77,7 +77,7 @@
   "devDependencies": {
     "@adobe/postcss-token": "workspace:*",
     "@adobe/swc-tokens": "workspace:*",
-    "@axe-core/playwright": "4.10.2",
+    "@axe-core/playwright": "4.11.2",
     "@chromatic-com/storybook": "5.0.1",
     "@custom-elements-manifest/analyzer": "0.10.8",
     "@storybook/addon-a11y": "10.3.5",

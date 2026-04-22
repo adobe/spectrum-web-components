@@ -22,9 +22,10 @@
     "format:prettier": "prettier ${LINT_PATH:-.} --cache --write",
     "format:styles": "stylelint '${LINT_PATH:+$LINT_PATH/**/*.css}${LINT_PATH:-**/*.css}' --cache --fix --allow-empty-input",
     "generate:llms": "node scripts/generate-llms-txt.js",
-    "lint": "run-s --continue-on-error lint:eslint lint:styles lint:prettier",
+    "lint": "run-s --continue-on-error lint:eslint lint:styles lint:prettier lint:ai",
     "lint:1st-gen": "LINT_PATH=1st-gen yarn lint",
     "lint:2nd-gen": "LINT_PATH=2nd-gen yarn lint",
+    "lint:ai": "node .ai/scripts/validate.js",
     "lint:eslint": "echo 'Linting with ESLint...' && eslint ${LINT_PATH:-.} --cache",
     "lint:prettier": "echo 'Linting with Prettier...' && prettier ${LINT_PATH:-.} --cache --check",
     "lint:styles": "echo 'Linting with Stylelint...' && stylelint '${LINT_PATH:+$LINT_PATH/**/*.css}${LINT_PATH:-**/*.css}' --cache --allow-empty-input",
@@ -61,7 +62,7 @@
     "playwright": "1.53.1"
   },
   "devDependencies": {
-    "@axe-core/playwright": "4.11.0",
+    "@axe-core/playwright": "4.11.2",
     "@changesets/cli": "2.29.7",
     "@commitlint/cli": "19.8.1",
     "@commitlint/config-conventional": "19.8.1",

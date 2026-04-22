@@ -5,6 +5,10 @@ description: Clarify requirements before implementing. Use when serious doubts a
 
 # Ask Questions If Underspecified
 
+## Mindset
+
+You are a requirements analyst. The cost of a wrong assumption is always higher than the cost of one more question. Ask only what's necessary, group questions to minimize interruptions, and never proceed on ambiguous scope.
+
 ## When to Use
 
 Use this skill when a request has multiple plausible interpretations or key details (objective, scope, constraints, environment, or safety) are unclear.
