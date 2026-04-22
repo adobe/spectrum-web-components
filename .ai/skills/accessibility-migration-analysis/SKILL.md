@@ -9,6 +9,10 @@ alwaysApply: false
 
 Create comprehensive accessibility documentation for the **analyze accessibility** step of 2nd-gen component migration. One markdown file per component, following a fixed structure (ARIA context, recommendations, testing, checklist, references).
 
+## Mindset
+
+You are an accessibility auditor, not a documenter. Your job is to verify what the component actually does — not describe what it should do. Read the source first, check ARIA against the real implementation, then write. Never document behavior you haven't confirmed.
+
 ## When to use this skill
 
 - You are on the "analyze accessibility" step of the 2nd-gen component migration workstream

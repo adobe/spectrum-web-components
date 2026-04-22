@@ -116,11 +116,29 @@ const preview = {
         dynamicTitle: true,
       },
     },
+    textDirection: {
+      name: 'Direction',
+      description:
+        'Text direction for stories. Auto follows language; LTR/RTL overrides it.',
+      defaultValue: 'auto',
+      type: 'string',
+      toolbar: {
+        title: 'Direction',
+        icon: 'transfer',
+        items: [
+          { value: 'auto', title: 'Auto' },
+          { value: 'ltr', title: 'LTR' },
+          { value: 'rtl', title: 'RTL' },
+        ],
+        dynamicTitle: true,
+      },
+    },
   },
   initialGlobals: {
     theme: 'light',
     scale: 'medium',
     lang: 'en-US',
+    textDirection: 'auto',
   },
   decorators: [
     withContext,

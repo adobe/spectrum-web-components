@@ -41,6 +41,7 @@
     - [Category B: Focus delegates to an inner element (use `delegatesFocus: true`)](#category-b-focus-delegates-to-an-inner-element-use-delegatesfocus-true)
     - [Category C: Focus group containers (use `FocusgroupNavigationController`)](#category-c-focus-group-containers-use-focusgroupnavigationcontroller)
 - [7. What's Removed and Why](#7-whats-removed-and-why)
+    - [If you're looking for](#if-youre-looking-for)
 - [8. 1st-Gen vs 2nd-Gen Comparison](#8-1st-gen-vs-2nd-gen-comparison)
 - [9. Open Questions](#9-open-questions)
 - [Appendix A: Code Sketches](#appendix-a-code-sketches)
@@ -81,21 +82,21 @@ Accepting this strategy resolves known accessibility defects, improves the consu
 
 ### Consumer Experience
 
-5. **Removes "stranded focus" states.** In 1st-gen, clicking on non-interactive regions of a component (padding, decorative areas) can leave focus in an ambiguous state because `Focusable` relies on JavaScript `focus()`/`blur()` overrides to route clicks. With `delegatesFocus: true`, the browser natively forwards any click on the host to the first focusable child — no JavaScript routing needed, no edge cases where focus lands nowhere.
+1. **Removes "stranded focus" states.** In 1st-gen, clicking on non-interactive regions of a component (padding, decorative areas) can leave focus in an ambiguous state because `Focusable` relies on JavaScript `focus()`/`blur()` overrides to route clicks. With `delegatesFocus: true`, the browser natively forwards any click on the host to the first focusable child — no JavaScript routing needed, no edge cases where focus lands nowhere.
 
-6. **Ensures consistent behavior across browsers.** 1st-gen carries Safari-specific workarounds (e.g., `SAFARI_FOCUS_RING_CLASS` in Picker's `MobileController`) and Firefox-era `delegatesFocus` fallbacks. These platform-specific code paths create inconsistencies that surface as product bugs. The 2nd-gen approach relies on browser features that have been stable across all targets for 4+ years, eliminating the need for platform branching.
+2. **Ensures consistent behavior across browsers.** 1st-gen carries Safari-specific workarounds (e.g., `SAFARI_FOCUS_RING_CLASS` in Picker's `MobileController`) and Firefox-era `delegatesFocus` fallbacks. These platform-specific code paths create inconsistencies that surface as product bugs. The 2nd-gen approach relies on browser features that have been stable across all targets for 4+ years, eliminating the need for platform branching.
 
-7. **Makes disabled components behave predictably.** Because `aria-disabled` doesn't block click events (unlike native `disabled`), 1st-gen has no enforced pattern for guarding click handlers — some components check, some don't. `DisabledMixin` establishes a clear contract: the mixin handles host-level ARIA and tabindex; the component guards its own interaction handlers. This prevents the consumer-facing bug where clicking a "disabled" button still triggers its action.
+3. **Makes disabled components behave predictably.** Because `aria-disabled` doesn't block click events (unlike native `disabled`), 1st-gen has no enforced pattern for guarding click handlers — some components check, some don't. `DisabledMixin` establishes a clear contract: the mixin handles host-level ARIA and tabindex; the component guards its own interaction handlers. This prevents the consumer-facing bug where clicking a "disabled" button still triggers its action.
 
 ### Author Maintenance
 
-8. **Reduces the component authoring surface.** A 1st-gen focusable component must: extend `Focusable`, implement a `focusElement` getter (runtime-only enforcement), understand when `selfManageFocusElement` applies, avoid conflicting with `manipulatingTabindex`, and manually re-dispatch focus/blur events. A 2nd-gen component adds `delegatesFocus: true` (one line) and optionally mixes in `DisabledMixin`. The focusElement getter, tabIndex interception, and polyfill coordination are gone entirely.
+1. **Reduces the component authoring surface.** A 1st-gen focusable component must: extend `Focusable`, implement a `focusElement` getter (runtime-only enforcement), understand when `selfManageFocusElement` applies, avoid conflicting with `manipulatingTabindex`, and manually re-dispatch focus/blur events. A 2nd-gen component adds `delegatesFocus: true` (one line) and optionally mixes in `DisabledMixin`. The focusElement getter, tabIndex interception, and polyfill coordination are gone entirely.
 
-9. **Eliminates the runtime-only `focusElement` contract.** The 1st-gen `focusElement` getter throws at runtime if not implemented — there is no compile-time enforcement. This means missing or incorrect implementations are only caught during manual testing. 2nd-gen eliminates this contract: `delegatesFocus` delegates to the first focusable child by template order, which is verifiable by reading the template.
+2. **Eliminates the runtime-only `focusElement` contract.** The 1st-gen `focusElement` getter throws at runtime if not implemented — there is no compile-time enforcement. This means missing or incorrect implementations are only caught during manual testing. 2nd-gen eliminates this contract: `delegatesFocus` delegates to the first focusable child by template order, which is verifiable by reading the template.
 
-10. **Unblocks migration of all 24 focusable components.** Every component extending `Focusable` is blocked until the replacement primitives exist. This proposal delivers those primitives and categorizes all 24 components into three migration patterns (A/B/C in [§6](#6-component-migration-guide)), providing a concrete path for each.
+3. **Unblocks migration of all 24 focusable components.** Every component extending `Focusable` is blocked until the replacement primitives exist. This proposal delivers those primitives and categorizes all 24 components into three migration patterns (A/B/C in [§6](#6-component-migration-guide)), providing a concrete path for each.
 
-11. **Aligns with the platform trajectory.** `FocusgroupNavigationController` mirrors the [Open UI `focusgroup` attribute](https://open-ui.org/components/focusgroup.explainer/) so that when browsers ship native focus-group behavior, the controller can be progressively deprecated rather than wholesale replaced — reducing future migration cost.
+4. **Aligns with the platform trajectory.** `FocusgroupNavigationController` mirrors the [Open UI `focusgroup` attribute](https://open-ui.org/components/focusgroup.explainer/) so that when browsers ship native focus-group behavior, the controller can be progressively deprecated rather than wholesale replaced — reducing future migration cost.
 
 ---
 
@@ -215,6 +216,7 @@ class MyTextfield extends DisabledMixin(SpectrumElement) {
 **When to use:** Any interactive component that can be disabled — buttons, inputs, links, menu items, sliders, etc.
 
 **What it does:**
+
 - Adds `disabled` as a reflected boolean property
 - Sets `aria-disabled="true"` when disabled
 - Removes element from tab order (`tabindex="-1"`) when disabled
@@ -231,6 +233,7 @@ class MyTextfield extends DisabledMixin(SpectrumElement) {
 | Screen readers | Announces disabled + unavailable | Announces disabled, element still discoverable |
 
 For **web components**, `aria-disabled` is the right default because:
+
 - Custom elements are not native form controls — the browser's `disabled` attribute has no built-in effect on a custom element host. We'd be reimplementing the behavior either way.
 - Keeping the host discoverable (focusable + announced) is generally better UX — screen reader users can still find the element, understand what it does, and learn why it's disabled via surrounding context or tooltips.
 - Components that wrap a native form control (e.g., textfield wrapping `<input>`) should **also** set the native `disabled` on the inner element to get correct platform behavior (no value submission, native styling). The mixin handles the host; the component's `render()` handles the inner element.
@@ -251,6 +254,7 @@ See [Appendix A.1](#a1-disabledmixin) for the full implementation sketch.
 This is the primary mechanism for focus delegation in 2nd-gen, replacing the entire `Focusable` base class and its `focusElement` getter pattern.
 
 **What it does:**
+
 - Calling `.focus()` on the host automatically focuses the first focusable child in the shadow DOM — custom `focus()` and `blur()` overrides become redundant
 - Clicks anywhere on the host element — including padding areas and decorative regions outside the inner control — automatically forward focus to the first focusable child, eliminating "stranded focus" states
 - The host matches `:focus` and `:focus-within` when any inner element is focused, enabling unified focus styling via CSS alone (no JavaScript class toggling needed)
@@ -277,7 +281,7 @@ class MyTextfield extends DisabledMixin(SpectrumElement) {
 
 1. **Do not set `tabindex` on the host element.** When `delegatesFocus` is active, adding `tabindex="0"` to the host creates **two tab stops** — the host receives focus first, then the inner element. This breaks keyboard navigation. `DisabledMixin` should only set `tabindex="-1"` (to remove from tab order when disabled), never `tabindex="0"`.
 
-2. **Focus/blur events do not bubble out of the shadow root.** `delegatesFocus` handles focus *routing* but not event *bubbling*. Native `focus` and `blur` events are trapped inside the shadow boundary. Components that need to expose `focus`/`blur` events to consumers must re-dispatch them as composed, bubbling events from the host:
+2. **Focus/blur events do not bubble out of the shadow root.** `delegatesFocus` handles focus _routing_ but not event _bubbling_. Native `focus` and `blur` events are trapped inside the shadow boundary. Components that need to expose `focus`/`blur` events to consumers must re-dispatch them as composed, bubbling events from the host:
 
    ```typescript
    private _handleFocus(event: FocusEvent): void {
@@ -356,6 +360,7 @@ Use this flowchart to determine which approach a component should use:
 **When to use:** Composite widgets that should appear as a **single tab stop** with arrow key navigation between children — following WAI-ARIA patterns for toolbars, tablists, menu bars, listboxes, and grids.
 
 **What it handles:**
+
 - Arrow key navigation across four direction modes: `horizontal`, `vertical`, `both`, and `grid`
 - RTL-aware — horizontal arrow keys respect the host's `dir` attribute
 - Home/End key jumps (Ctrl+Home / Ctrl+End in grid mode jump to first/last cell)
@@ -395,6 +400,7 @@ Tab out, then Tab back in → returns to B (memory: true):
 ```
 
 **Examples:**
+
 - `<sp-action-group>` — roving across action buttons (horizontal)
 - `<sp-radio-group>` — roving across radios with auto-selection via `onActiveItemChange`
 - `<sp-tabs>` — roving across tab elements
@@ -498,6 +504,7 @@ public hasVisibleFocusInTree(): boolean {
 > CSS selector strings matching focusable and tabbable DOM elements per the HTML spec.
 
 Two exports:
+
 - `focusableSelector` — matches elements that can receive focus programmatically (via `.focus()`)
 - `tabbableSelector` — subset reachable via Tab key (excludes `tabindex="-1"`)
 
@@ -505,7 +512,7 @@ Two exports:
 
 See [Appendix A.5](#a5-focusable-selectorsts) for the full selector definitions.
 
-#### `first-focusable-in.ts` *(low priority)*
+#### `first-focusable-in.ts` _(low priority)_
 
 > Finds the first focusable element in a DOM subtree or among a slot's assigned nodes.
 
@@ -526,11 +533,11 @@ See [Appendix A.5](#a5-focusable-selectorsts) for the full selector definitions.
 
 ### Phase 2: Controller
 
-4. Add `FocusgroupNavigationController` to `controllers/` (consolidates 1st-gen `FocusGroupController` + `RovingTabindexController`, aligned with Open UI `focusgroup`)
+Add `FocusgroupNavigationController` to `controllers/` (consolidates 1st-gen `FocusGroupController` + `RovingTabindexController`, aligned with Open UI `focusgroup`)
 
 ### Phase 3: Mixin
 
-5. Add `DisabledMixin` to `mixins/`
+Add `DisabledMixin` to `mixins/`
 
 ### Phase 4: Component Migration
 
@@ -649,7 +656,7 @@ The following 1st-gen concepts are **not carried forward** to 2nd-gen. Each remo
 
 - **`selfManageFocusElement`** — A boolean getter override used by exactly two components (ActionMenu and Picker) to opt out of `Focusable`'s automatic tabIndex management. It exists because `Focusable`'s tabIndex interception conflicts with `RovingTabindexController` when both try to manage the same element's tabIndex. The conflict is structural to the inheritance approach — `Focusable` assumes it owns tabIndex, but the controller also needs to set it. In 2nd-gen, `Focusable`'s tabIndex interception is gone entirely, so the conflict cannot occur and the escape hatch is unnecessary.
 
-- **1st-gen `FocusGroupController` / `RovingTabindexController`** — Two separate controllers with overlapping responsibilities (`FocusGroupController` as a base class, `RovingTabindexController` as a subclass). The split forced components to understand which class to use and created an inconsistent API surface. Superseded by `FocusgroupNavigationController`, which consolidates both into a single controller aligned with the Open UI `focusgroup` attribute, adding bounding-rect grid layout, RTL support, typeahead, and page navigation. See the [design evolution note in §4.4](#design-evolution-rovingtabindexcontroller--focusgroupnavigationcontroller) for the full API mapping.
+- **1st-gen `FocusGroupController` / `RovingTabindexController`** — Two separate controllers with overlapping responsibilities (`FocusGroupController` as a base class, `RovingTabindexController` as a subclass). The split forced components to understand which class to use and created an inconsistent API surface. Superseded by `FocusgroupNavigationController`, which consolidates both into a single controller aligned with the Open UI `focusgroup` attribute, adding bounding-rect grid layout, RTL support, typeahead, and page navigation. See [§4.4](#44-focusgroupnavigationcontroller) for the full API mapping.
 
 - **`focus-visible.ts`** — The entire polyfill loader file: script injection, `data-js-focus-visible` attribute management, and global event listeners for tracking focus method (keyboard vs pointer). All of this is replaced by the browser's native `:focus-visible` pseudo-class, which requires no JavaScript.
 
@@ -657,7 +664,7 @@ The following 1st-gen concepts are **not carried forward** to 2nd-gen. Each remo
 
 - **Autofocus synthetic KeyboardEvent hack** — 1st-gen dispatched a synthetic `KeyboardEvent` followed by two `requestAnimationFrame` waits to trick the polyfill into showing a focus ring on autofocused elements. Browsers now correctly apply `:focus-visible` to programmatically focused elements, making the hack unnecessary.
 
-#### If you're looking for...
+### If you're looking for
 
 | 1st-gen API | 2nd-gen replacement | Notes |
 |---|---|---|
@@ -667,7 +674,7 @@ The following 1st-gen concepts are **not carried forward** to 2nd-gen. Each remo
 | `selfManageFocusElement` | Not needed | Conflict no longer exists |
 | `[focusable]` attribute | Not needed | Host is natively focusable via delegation |
 | `FocusGroupController` | `FocusgroupNavigationController` | See [§4.4](#44-focusgroupnavigationcontroller) |
-| `RovingTabindexController` (1st-gen) | `FocusgroupNavigationController` | See [§4.4 evolution note](#design-evolution-rovingtabindexcontroller--focusgroupnavigationcontroller) |
+| `RovingTabindexController` (1st-gen) | `FocusgroupNavigationController` | See [§4.4](#44-focusgroupnavigationcontroller) |
 | `FocusVisiblePolyfillMixin` | Native `:focus-visible` | No import needed |
 | `hasVisibleFocusInTree()` | Same method, simplified | Uses `getActiveElement()` internally |
 
@@ -696,7 +703,7 @@ The following 1st-gen concepts are **not carried forward** to 2nd-gen. Each remo
    - Not included in the initial `FocusgroupNavigationController`. Will be added (or extracted to a subclass) when a virtualizing component is migrated.
 
 3. **Components where the focus target is not the first focusable child:**
-   - SidenavItem, BreadcrumbItem, and AccordionItem currently delegate to inner elements that may not be first in the shadow DOM. 
+   - SidenavItem, BreadcrumbItem, and AccordionItem currently delegate to inner elements that may not be first in the shadow DOM.
    - **During migration, their templates should be restructured so the intended focus target comes first.**
    - If restructuring isn't feasible for a specific component, that component can override `focus()` directly as a one-off.
 
@@ -920,7 +927,7 @@ class SpTabs extends SpectrumElement {
 
 ### A.5 `focusable-selectors.ts`
 
-Referenced from [§4.5 focusable-selectors.ts](#focusable-selectorsts).
+Referenced from [§4.5 focusable-selectors.ts](#45-utilities).
 
 ```typescript
 /** Matches elements that can receive focus programmatically (via .focus()). */
@@ -949,7 +956,7 @@ export const tabbableSelector = focusableSelector
 
 ### A.6 `get-active-element.ts`
 
-Referenced from [§4.5 get-active-element.ts](#get-active-elementts).
+Referenced from [§4.5 get-active-element.ts](#45-utilities).
 
 ```typescript
 /**
@@ -971,7 +978,7 @@ export function getActiveElement(
 
 ### A.7 Updated `hasVisibleFocusInTree()`
 
-Referenced from [§4.5 get-active-element.ts](#get-active-elementts) and [§2](#2-what-exists-in-2nd-gen-today).
+Referenced from [§4.5 get-active-element.ts](#45-utilities) and [§2](#2-what-exists-in-2nd-gen-today).
 
 Shows how the existing `SpectrumMixin` method simplifies by using `getActiveElement()`:
 
@@ -1017,6 +1024,7 @@ public hasVisibleFocusInTree(): boolean {
 This section documents the target architecture for when overlay/dialog/dropdown components are migrated. It is not part of the core focus management work.
 
 **Target approach:**
+
 - Use `<dialog>.showModal()` for modals (native focus trap + Escape handling + `::backdrop`)
 - Use `inert` attribute on background content for non-dialog modals
 - Restore focus to trigger element on close via a `returnFocus()` utility

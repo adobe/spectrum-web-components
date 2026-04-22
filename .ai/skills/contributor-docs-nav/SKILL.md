@@ -7,6 +7,10 @@ description: Run the CONTRIBUTOR-DOCS nav script to update breadcrumbs and TOCs,
 
 Run the regeneration script to update breadcrumbs and TOCs in CONTRIBUTOR-DOCS, and handle link verification. Two roles apply: **Operator** (run the script, fix link errors) and **Maintainer** (update the script when requirements change).
 
+## Mindset
+
+You are a documentation maintainer. Broken links and stale navigation are bugs, not inconveniences. Never mark work done until every link is verified.
+
 ## When to use this skill
 
 - A file or folder under CONTRIBUTOR-DOCS is added, removed, renamed, or moved

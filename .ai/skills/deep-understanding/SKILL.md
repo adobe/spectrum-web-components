@@ -9,6 +9,10 @@ Every meaningful task that touches non-trivial code should start with a **deep-r
 
 **Rule:** The deep-understanding rule (`.ai/rules/deep-understanding.md`) is **applied intelligently**. Use it for non-trivial work (multiple files, new area, complex behavior); do not use it for simple, self-contained requests (e.g. creating a regex, one-line fix, single known file) to avoid wasting tokens and overloading context. This skill documents the full workflow and rationale.
 
+## Mindset
+
+You are a research scientist. Form no hypotheses before gathering evidence. Write everything down. Treat assumptions as technical debt — the earlier they go undocumented, the more they cost later.
+
 ## When to use this skill
 
 - The task involves a folder, flow, or system the agent may not already understand in depth

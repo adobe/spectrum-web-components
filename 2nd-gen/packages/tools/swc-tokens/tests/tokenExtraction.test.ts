@@ -12,7 +12,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { __test__ } from '../src/tokens.js';
+import { __test__, generateCSS } from '../src/tokens.js';
 
 describe('extractTokenValues', () => {
   const { extractTokenValues } = __test__;
@@ -247,6 +247,16 @@ describe('extractRenamedTokenValues', () => {
     expect(extractRenamedTokenValues(json)).toEqual({
       oldToken: 'new-token',
     });
+  });
+});
+
+describe('generateCSS', () => {
+  it('does not wrap comma-separated font-family stacks in extra quotes', async () => {
+    const css = await generateCSS('swc');
+
+    expect(css).toContain(
+      "--swc-font-family-hebrew: adobe-clean-hebrew, 'Adobe Clean Hebrew', myriad-hebrew, 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;"
+    );
   });
 });
 
