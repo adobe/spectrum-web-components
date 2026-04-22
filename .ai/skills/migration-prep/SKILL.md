@@ -308,18 +308,15 @@ You may:
 
 ## Final review prompt
 
-After drafting the plan, always give the user a concise review prompt that:
+After drafting the plan, always end with a structured review prompt. Present it as three clearly labeled sections so the user can act on each area independently — do not collapse them into a single paragraph.
 
-- summarizes the most important unresolved or provisional decisions
-- asks for feedback on any major recommendations
-- explicitly invites refinement of the plan before implementation
-- calls out any missing critical resources and how to continue once they are available
+**Required sections:**
 
-Preferred pattern:
+1. **Breaking changes to verify** — list each proposed breaking change and ask the user to confirm it is accurately scoped, that a ticket exists or is needed, and whether any requires team sign-off before the plan is treated as settled
+2. **What is still provisional** — call out every decision marked as inferred or open question that could materially change the plan; name which sections would be affected if the decision resolves differently
+3. **What to provide next** — list missing resources or unresolved blockers as numbered actions the user can respond to by number, and explain what each unlocks in the plan
 
-- what to review now
-- what is still provisional
-- what to provide next if the user wants the plan tightened further
+If there are no breaking changes, say so explicitly rather than omitting the section.
 
 ## Resume hooks for missing resources
 
