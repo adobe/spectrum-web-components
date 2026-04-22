@@ -42,7 +42,7 @@ Include the SWC stylesheet once at the application root. It ships Spectrum 2 des
 <link rel="stylesheet" href="/node_modules/@adobe/spectrum-wc/swc.css" />
 ```
 
-For deeper customization (theme and scale contexts, fonts, application background overrides), see [Customization](/docs/guides-customization-getting-started--docs).
+For deeper customization (theme and scale contexts, fonts, application background overrides), see [Customization](/docs/learn-customization-getting-started--docs).
 
 ## Your first component
 
@@ -57,6 +57,6 @@ React wrappers are planned. No plans for Vue or Svelte support at this time. For
 ## Where to go next
 
 - **Components** — browse the component catalog in the **Components** section of the sidebar
-- **Customization** — override tokens, themes, and fonts in [Customization guides](/docs/guides-customization-getting-started--docs)
-- **Accessibility** — review [accessibility guidance](/docs/guides-accessibility-guides-overview--docs) for consumers
+- **Customization** — override tokens, themes, and fonts in [Customization guides](/docs/learn-customization-getting-started--docs)
+- **Accessibility** — review [accessibility guidance](/docs/learn-accessibility-guides-overview--docs) for consumers
 - **Contributing** — see [Contributor guides](../01_contributor-guides/README.md) if you want to contribute upstream

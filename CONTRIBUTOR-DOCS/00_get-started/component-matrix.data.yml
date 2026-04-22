@@ -1,0 +1,22 @@
+# Component matrix overrides
+#
+# Rows + status + since come from CEM automatically. Only add an entry here when
+# you need to:
+#   - parity: override the "RSP 2 parity" default (`partial`) with `full`,
+#             `none`, or a short note. Temporary — will move to an `@RSPparity`
+#             JSDoc tag on each component class once the MVP-5 CEM plugin lands.
+#   - notes:  optional short note shown in the Notes column.
+#
+# Regenerate the matrix with: yarn generate:component-matrix
+
+asset:
+  notes: Will be considered when Card component is migrated
+  
+divider:
+  notes: Horizontal and vertical orientations
+
+icon:
+  notes: Internal status; prefer icon packages directly
+
+progress-circle:
+  notes: Indeterminate + determinate

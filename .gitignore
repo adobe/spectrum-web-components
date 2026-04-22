@@ -131,6 +131,7 @@ test/*
 2nd-gen/packages/*/storybook-static
 2nd-gen/packages/swc/.storybook/contributor-docs/
 2nd-gen/packages/swc/.storybook/get-started/
+2nd-gen/packages/swc/.storybook/learn-about-swc/component-status.mdx
 2nd-gen/packages/swc/public/llms.txt
 2nd-gen/packages/swc/public/llms-full.txt
 2nd-gen/packages/swc/public/sitemap.xml

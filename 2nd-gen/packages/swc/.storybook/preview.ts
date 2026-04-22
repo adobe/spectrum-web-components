@@ -232,13 +232,13 @@ const preview = {
         method: 'alphabetical-by-kind',
         order: [
           'Get started',
-          'Learn about SWC',
-          ['Overview', 'When to use SWC', '1st-gen vs 2nd-gen'],
-          'Core',
-          ['Overview', 'Controllers'],
           'Components',
-          'Guides',
+          'Learn',
           [
+            'Overview',
+            'Component status',
+            'When to use SWC',
+            '1st-gen vs 2nd-gen',
             'Accessibility guides',
             [
               'Overview',
@@ -258,12 +258,14 @@ const preview = {
               'Global Element Styling',
             ],
           ],
-          'Contributor docs',
+          'Core',
+          ['Overview', 'Controllers'],
+          'Contribute',
           // GENERATED:CONTRIBUTOR-DOCS-SORT - Do not edit manually. Run `yarn generate:contributor-docs` to update.
           [
             'Contributor documentation',
             'Get started',
-            ['For consumers'],
+            ['Component matrix', 'For consumers'],
             'Contributor guides',
             [
               'Getting involved',

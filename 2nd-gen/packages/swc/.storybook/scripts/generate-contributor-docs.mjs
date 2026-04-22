@@ -39,6 +39,7 @@ const CONTRIBUTOR_DOCS_DIR = resolve(
 );
 const OUTPUT_DIR = resolve(STORYBOOK_DIR, 'contributor-docs');
 const GET_STARTED_OUTPUT_DIR = resolve(STORYBOOK_DIR, 'get-started');
+const LEARN_OUTPUT_DIR = resolve(STORYBOOK_DIR, 'learn-about-swc');
 const PREVIEW_FILE = resolve(STORYBOOK_DIR, 'preview.ts');
 const REPO_ROOT = resolve(STORYBOOK_DIR, '../../../..');
 const GITHUB_REPO_URL =
@@ -62,6 +63,12 @@ const MIRROR_EMITS = [
     // "Get started (for consumers)" serves the contributor-docs variant;
     // the landing page uses the concise form).
     heading: 'Get started',
+  },
+  {
+    source: '00_get-started/component-matrix.md',
+    outputDir: LEARN_OUTPUT_DIR,
+    outputFile: 'component-status.mdx',
+    title: 'Component status',
   },
 ];
 
@@ -191,8 +198,12 @@ function pathToTitle(filePath) {
 /**
  * Convert a title to a Storybook doc ID.
  *
+ * The `contribute-` prefix matches the `titlePrefix: 'Contribute'` registered
+ * for the generated `contributor-docs/` tree in `main.ts`. If that titlePrefix
+ * is ever renamed, update this prefix to match or links will 404.
+ *
  * @param {string} title - The Storybook title
- * @returns {string} The doc ID (e.g., "contributor-docs-contributor-guides-getting-involved--readme")
+ * @returns {string} The doc ID (e.g., "contribute-contributor-guides-getting-involved--readme")
  */
 function titleToDocId(title) {
   const fullTitle = title;
@@ -201,7 +212,7 @@ function titleToDocId(title) {
     .replace(/\//g, '-')
     .replace(/\s+/g, '-')
     .replace(/[^a-z0-9-]/g, '');
-  return `contributor-docs-${id}--readme`;
+  return `contribute-${id}--readme`;
 }
 
 /**

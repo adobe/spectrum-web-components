@@ -17,6 +17,7 @@
 <summary><strong>Beneath this doc</strong></summary>
 
 - [Get started](00_get-started/README.md)
+    - [Component status](00_get-started/component-matrix.md)
     - [Get started (for consumers)](00_get-started/for-consumers.md)
 - [Contributor guides](01_contributor-guides/README.md)
     - [Getting involved](01_contributor-guides/01_getting-involved.md)

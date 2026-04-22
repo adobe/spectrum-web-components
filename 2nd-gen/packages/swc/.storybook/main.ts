@@ -81,17 +81,22 @@ if (storybookMode !== 'ci-a11y') {
     {
       directory: 'learn-about-swc',
       files: '*.mdx',
-      titlePrefix: 'Learn about SWC',
+      titlePrefix: 'Learn',
     },
     {
       directory: 'guides',
       files: '**/!(*documentation).mdx',
-      titlePrefix: 'Guides',
+      titlePrefix: 'Learn',
     },
     {
       directory: 'contributor-docs',
-      files: '**/*.mdx',
-      titlePrefix: 'Contributor docs',
+      // Maintainer-only project-planning subtree is excluded from production builds.
+      // Local `yarn dev` / `yarn storybook` still shows the full tree.
+      files:
+        storybookMode === 'build'
+          ? '{*.mdx,!(03_project-planning)/**/*.mdx}'
+          : '**/*.mdx',
+      titlePrefix: 'Contribute',
     }
   );
 }
