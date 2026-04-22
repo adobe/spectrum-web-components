@@ -262,6 +262,8 @@ const preview = {
           // GENERATED:CONTRIBUTOR-DOCS-SORT - Do not edit manually. Run `yarn generate:contributor-docs` to update.
           [
             'Contributor documentation',
+            'Get started',
+            ['For consumers'],
             'Contributor guides',
             [
               'Getting involved',
@@ -271,6 +273,7 @@ const preview = {
               'Participating in PR reviews',
               'Releasing SWC',
               'Authoring contributor docs',
+              ['Templates', ['Consumer quickstart']],
               'Patching dependencies',
               'Accessibility testing',
               'Using stackblitz',
@@ -379,6 +382,8 @@ const preview = {
                 ['Rendering and styling migration analysis'],
                 'Color field',
                 ['Rendering and styling migration analysis'],
+                'Color loupe',
+                ['Accessibility migration analysis'],
                 'Divider',
                 [
                   'Accessibility migration analysis',
@@ -393,7 +398,10 @@ const preview = {
                 'Help text',
                 ['Rendering and styling migration analysis'],
                 'Illustrated message',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Infield button',
                 ['Rendering and styling migration analysis'],
                 'Infield progress circle',
@@ -409,7 +417,10 @@ const preview = {
                 'Picker button',
                 ['Rendering and styling migration analysis'],
                 'Progress bar',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Progress circle',
                 [
                   'Accessibility migration analysis',

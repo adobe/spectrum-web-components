@@ -36,11 +36,6 @@ argTypes['static-color'] = {
   options: [undefined, ...Divider.STATIC_COLORS],
 };
 
-/**
- * A divider is a visual separator that brings clarity to a layout by grouping and dividing
- * content in close proximity. Dividers help establish rhythm and hierarchy, making it easier
- * for users to scan and understand content structure.
- */
 const meta: Meta = {
   title: 'Divider',
   component: 'swc-divider',
@@ -52,9 +47,6 @@ const meta: Meta = {
   parameters: {
     actions: {
       handles: events,
-    },
-    docs: {
-      subtitle: `Visual separator for grouping and dividing content`,
     },
     design: {
       type: 'figma',

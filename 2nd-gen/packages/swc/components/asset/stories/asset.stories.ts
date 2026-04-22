@@ -30,10 +30,6 @@ argTypes.variant = {
   options: [undefined, ...Asset.VARIANTS],
 };
 
-/**
- * The `file` and `folder` variants center themselves horizontally and vertically in the space provided.
- * Images are contained within the element, growing to the element's full height while centering within the width provided.
- */
 const meta: Meta = {
   title: 'Asset',
   component: 'swc-asset',
@@ -43,9 +39,6 @@ const meta: Meta = {
     handles: events,
   },
   parameters: {
-    docs: {
-      subtitle: `Visually represent files, folders, or images in your application`,
-    },
     flexLayout: 'row-nowrap',
   },
   render: (args) => template(args),

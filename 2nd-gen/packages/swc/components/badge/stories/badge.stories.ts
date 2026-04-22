@@ -55,13 +55,6 @@ argTypes.size = {
   options: Badge.VALID_SIZES,
 };
 
-/**
- * Similar to [status lights](/docs/components-status-light--readme), they use color and text to convey status or category information.
- *
- * Badges come in three styles: bold fill (default), subtle fill, and outline.
- * Choose one style consistently within a product - `outline` and `subtle` fill draw similar attention levels.
- * Reserve bold fill for high-attention badging only.
- */
 export const meta: Meta = {
   title: 'Badge',
   component: 'swc-badge',
@@ -69,9 +62,6 @@ export const meta: Meta = {
   argTypes,
   render: (args) => template(args),
   parameters: {
-    docs: {
-      subtitle: `Display small amounts of color-categorized metadata to get a user's attention.`,
-    },
     design: {
       type: 'figma',
       url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=36806-6551',

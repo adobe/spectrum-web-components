@@ -16,7 +16,12 @@ import { IconBase } from '@spectrum-web-components/core/components/icon';
 import styles from './icon.css';
 
 /**
- * Minimal icon renderer that accepts slotted SVG markup.
+ * Internal icon renderer for shared SVG templates.
+ *
+ * **Internal-only component.**
+ *
+ * The `<swc-icon>` element renders icons from shared inline SVG templates.
+ * Use shared templates from `../elements/index.js` for consistent rendering and avoid duplicating SVG markup in each component.
  *
  * @element swc-icon
  * @status internal

@@ -26,8 +26,13 @@ import {
 import styles from './badge.css';
 
 /**
- * A badge component that displays short, descriptive information about an element.
- * Badges are typically used to indicate status, categories, or provide supplementary information.
+ * Display small amounts of color-categorized metadata to get a user's attention.
+ *
+ * Similar to [status lights](/docs/components-status-light--readme), they use color and text to convey status or category information.
+ *
+ * Badges come in three styles: bold fill (default), subtle fill, and outline.
+ * Choose one style consistently within a product — `outline` and `subtle` fill draw similar attention levels.
+ * Reserve bold fill for high-attention badging only.
  *
  * @element swc-badge
  * @status preview

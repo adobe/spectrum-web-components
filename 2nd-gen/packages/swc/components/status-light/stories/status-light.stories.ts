@@ -46,9 +46,6 @@ argTypes.size = {
   options: StatusLight.VALID_SIZES,
 };
 
-/**
- * Status lights describe the condition of an entity. Much like [badges](../?path=/docs/components-badge--readme), they can be used to convey semantic meaning, such as statuses and categories.
- */
 args['default-slot'] = 'Status light';
 args.size = 'm';
 
@@ -56,9 +53,6 @@ export const meta: Meta = {
   title: 'Status light',
   component: 'swc-status-light',
   parameters: {
-    docs: {
-      subtitle: `Status lights convey semantic meaning through colored dots accompanied by descriptive text.`,
-    },
     design: {
       type: 'figma',
       url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=36797-954',

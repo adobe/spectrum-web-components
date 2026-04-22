@@ -19,9 +19,24 @@ import { capitalize } from '@spectrum-web-components/core/utils/index.js';
 import styles from './divider.css';
 
 /**
+ * Visual separator for grouping and dividing content.
+ *
+ * A divider is a visual separator that brings clarity to a layout by grouping and dividing
+ * content in close proximity. Dividers help establish rhythm and hierarchy, making it easier
+ * for users to scan and understand content structure.
+ *
  * @element swc-divider
  * @status preview
  * @since 0.0.1
+ *
+ * @example
+ * <swc-divider size="m"></swc-divider>
+ *
+ * @example
+ * <swc-divider vertical></swc-divider>
+ *
+ * @example
+ * <swc-divider size="l" static-color="white"></swc-divider>
  */
 export class Divider extends DividerBase {
   // ──────────────────────────────

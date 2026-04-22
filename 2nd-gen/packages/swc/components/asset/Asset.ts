@@ -55,6 +55,11 @@ const folder = (label: string): TemplateResult => html`
 `;
 
 /**
+ * Visually represent files, folders, or images in your application.
+ *
+ * The `file` and `folder` variants center themselves horizontally and vertically in the space provided.
+ * Images are contained within the element, growing to the element's full height while centering within the width provided.
+ *
  * @element swc-asset
  * @status unsupported
  * @slot - content to be displayed when no `variant` is set (typically an `<img>` element)

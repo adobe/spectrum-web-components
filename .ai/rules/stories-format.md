@@ -142,14 +142,6 @@ Each section only renders if stories with the corresponding tag exist. The templ
 ### Required fields
 
 ```typescript
-/**
- * Component description explaining its purpose and key features.
- *
- * This description is displayed in the Overview story. It should provide context about
- * what the component does and when to use it. If referencing other components, link to
- * their Storybook paths using relative URLs (e.g., `<swc-badge>` becomes
- * `[Badge](../?path=/docs/badge--overview)`).
- */
 const meta: Meta = {
   title: 'Component name',
   component: 'swc-component-name',
@@ -158,9 +150,6 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     actions: { handles: events }, // If events exist
-    docs: {
-      subtitle: `Component description`, // Required - displayed in Overview, cannot include links
-    },
     design: { type: 'figma', url: 'https://www.figma.com/...' }, // Recommended
     stackblitz: { url: 'https://stackblitz.com/...' }, // Recommended
   },
@@ -170,10 +159,8 @@ const meta: Meta = {
 
 **Important notes:**
 
-- **JSDoc description above meta**: Displayed in the Overview story. Can include markdown links to other components.
-- **`parameters.docs.subtitle`**: Displayed as the subtitle in the Overview story. Cannot include links (plain text only).
-- **Avoid repetition**: The subtitle and JSDoc description should complement each other, not duplicate content. The subtitle is a brief summary; the JSDoc provides fuller context.
-- **Component links**: When referencing other components in the JSDoc description, use relative Storybook paths: `[ComponentName](../?path=/docs/component-name--overview)`
+- **No JSDoc above `meta`, no `parameters.docs.subtitle`**: Component-level description is owned exclusively by the class JSDoc on the composite class (e.g., `2nd-gen/packages/swc/components/badge/Badge.ts` — the class carrying `@element swc-*`, which Storybook resolves via `component: 'swc-*'`). CEM emits a separate entry per class and does **not** propagate JSDoc from base to subclass, so prose on `Component.base.ts` is invisible to Storybook's subtitle and docs page. Do not add component-level prose in the story file or it will drift from the class.
+- **Stories describe executable configurations, not concepts**: Anything explaining what the component _is_ or _when to use it_ belongs in the composite class JSDoc or the per-entity `README.mdx` — not in stories.
 
 ## Layout and decorators
 
@@ -641,8 +628,8 @@ See `asset.stories.ts` for complete examples.
 ### ❌ Don't
 
 - Add JSDoc to Playground or Overview story
+- Add JSDoc above `meta` or a `parameters.docs.subtitle` — component-level description lives on the class JSDoc
 - Use 'usage' tag (deprecated)
-- Omit `subtitle` in meta parameters
 - Use placeholder text
 - Demonstrate inaccessible patterns
 
@@ -658,9 +645,9 @@ See `asset.stories.ts` for complete examples.
 
 - [ ] Copyright header (2025)
 - [ ] Visual separators between sections
-- [ ] Meta: title, component, args, argTypes, render, `parameters.docs.subtitle`, `tags: ['migrated']`
-- [ ] Meta JSDoc description above meta object (with component links if applicable)
-- [ ] Subtitle is concise and non-repetitive (plain text only, no links)
+- [ ] Meta: title, component, args, argTypes, render, `tags: ['migrated']`
+- [ ] No JSDoc above `meta` and no `parameters.docs.subtitle` (component description comes from the class JSDoc via CEM)
+- [ ] Composite class `Component.ts` (the `@element swc-*` class under `2nd-gen/packages/swc/components/*/`) has a JSDoc description — the SSOT for component-level prose, consumed by CEM and rendered by Storybook
 - [ ] Overview: `['overview']` tag, common use case args, no JSDoc on story itself
 - [ ] Playground: `['autodocs', 'dev']` tags, no JSDoc, common use case args
 - [ ] Anatomy: all slots + content properties, `['anatomy']` tag, `flexLayout: true`

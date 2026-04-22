@@ -47,9 +47,6 @@ argTypes.decorative = {
   control: { type: 'boolean' },
 };
 
-/**
- * An avatar displays a circular profile image representing a person or entity.
- */
 export const meta: Meta = {
   title: 'Avatar',
   component: 'swc-avatar',
@@ -57,9 +54,6 @@ export const meta: Meta = {
   argTypes,
   render: (args) => template(args),
   parameters: {
-    docs: {
-      subtitle: 'A circular profile image for identifying a person or entity.',
-    },
     // @todo Add Figma design link: design: { type: 'figma', url: '<avatar-node-url>' }
     // @todo Add Stackblitz link: stackblitz: { url: '<stackblitz-url>' }
     flexLayout: 'row-wrap',

@@ -88,28 +88,11 @@ const allLabels = { ...semanticLabels, ...colorLabels };
 
 **Purpose**: Quick introduction showing the component in its most common use case.
 
-**Documentation**: The Overview story content comes from two sources:
-
-1. **JSDoc description above meta**: Provides the main description of what the component does and when to use it. This description:
-   - Is displayed as the primary documentation for the Overview story
-   - Can include markdown formatting and links to other components
-   - Should reference other components using Storybook paths: `[Badge](../?path=/docs/badge--readme)`
-   - Should provide fuller context than the subtitle
-
-2. **`parameters.docs.subtitle`**: Provides a brief summary displayed as the subtitle. This subtitle:
-   - Cannot include links (plain text only)
-   - Should be concise and to-the-point
-   - Should not repeat the JSDoc description verbatim
-   - Complements the JSDoc description
+**Documentation**: The Overview story's component-level description comes from a **single source of truth** — the JSDoc on the composite class (e.g. `2nd-gen/packages/swc/components/badge/Badge.ts`), which is the class carrying `@element swc-badge`. Storybook resolves `component: 'swc-badge'` to that class, and CEM emits a separate entry per class with **no JSDoc propagation** from base to subclass — so prose on `Badge.base.ts` is invisible to the Storybook subtitle and docs page. Do **not** add a JSDoc above `meta` or a `parameters.docs.subtitle` in the story file — they will drift from the class.
 
 **Pattern**:
 
 ```typescript
-/**
- * A badge is a non-interactive visual label that displays a status, category, or attribute.
- * Badges can be used to highlight important information or to categorize items. For interactive
- * labels, see [Button](../?path=/docs/button--readme).
- */
 const meta: Meta = {
   title: 'Badge',
   component: 'swc-badge',
@@ -117,8 +100,7 @@ const meta: Meta = {
   argTypes,
   render: (args) => template(args),
   parameters: {
-    docs: { subtitle: `Visual label for status, category, or attribute` },
-    // ... other parameters
+    // ... design, stackblitz, flexLayout, etc. — no docs.subtitle
   },
   tags: ['migrated'],
 };
@@ -135,7 +117,21 @@ export const Overview: Story = {
 };
 ```
 
-**Note**: No JSDoc comment needed on the Overview story itself - the meta JSDoc and subtitle provide the documentation.
+The corresponding composite class (`2nd-gen/packages/swc/components/badge/Badge.ts`) owns the description:
+
+```typescript
+/**
+ * A badge is a non-interactive visual label that displays a status, category, or attribute.
+ * Badges can be used to highlight important information or to categorize items.
+ *
+ * @element swc-badge
+ * @status preview
+ * @since 0.0.1
+ */
+export class Badge extends BadgeBase {}
+```
+
+**Note**: No JSDoc comment is needed on the Overview story itself — the class JSDoc provides the documentation.
 
 ### Anatomy
 
@@ -644,8 +640,8 @@ grep "VALID_SIZES" 2nd-gen/packages/core/components/badge/Badge.types.ts
 After creating or updating documentation:
 
 1. **Read the component source files:**
-   - Base class implementation (`2nd-gen/packages/core/components/*/Component.base.ts`)
-   - Component-specific implementation (`2nd-gen/packages/swc/components/*/Component.ts`)
+   - Composite class implementation (`2nd-gen/packages/swc/components/*/Component.ts`) — this is the `@element swc-*` class; its JSDoc is the SSOT for the component description rendered by Storybook
+   - Base class implementation (`2nd-gen/packages/core/components/*/Component.base.ts`) — holds cross-generation behavior and shared API
    - TypeScript type definitions (`2nd-gen/packages/core/components/*/Component.types.ts`)
    - CSS stylesheets (`2nd-gen/packages/swc/components/*/component.css`)
 
@@ -763,25 +759,23 @@ After verifying accuracy:
 
 ### Component linking
 
-When referencing other components in the JSDoc description above meta:
+When the composite class JSDoc (e.g. `2nd-gen/packages/swc/components/badge/Badge.ts`) references other components:
 
-- **Use Storybook paths**: Link to the component's overview story using relative paths
+- **Use Storybook paths**: Link to the target's overview story using relative paths
 - **Format**: `[ComponentName](../?path=/docs/component-name--readme)`
 - **Component name format**: Use kebab-case in the path (e.g., `action-button`, `progress-circle`)
 - **Always link to readme**: Use `--readme` as the story anchor
 
-**Examples**:
+**Examples** (inside `Badge.ts`):
 
 ```typescript
 /**
  * A `<swc-badge>` is a non-interactive visual label. For interactive labels,
  * see [Action Button](../?path=/docs/action-button--readme).
+ *
+ * @element swc-badge
  */
-
-/**
- * Progress circles are commonly used with [Button](../?path=/docs/button--readme)
- * and [Card](../?path=/docs/card--readme) components to show loading states.
- */
+export class Badge extends BadgeBase {}
 ```
 
 ### Code examples
@@ -812,8 +806,7 @@ This ensures proper hierarchy since JSDoc content is rendered within the story c
 When creating or updating documentation:
 
 - [ ] Overview story with common use case
-- [ ] JSDoc description above meta (explains component purpose, links to related components)
-- [ ] `parameters.docs.subtitle` is concise and non-repetitive (plain text, no links)
+- [ ] Class JSDoc on the composite `Component.ts` (under `2nd-gen/packages/swc/components/*/`, the class carrying `@element swc-*`) is the SSOT for component description (no JSDoc above `meta`, no `parameters.docs.subtitle`). CEM does not propagate base-class JSDoc, so descriptions on `Component.base.ts` are invisible to Storybook.
 - [ ] Helpers section for shared label mappings and utilities (if applicable)
 - [ ] Anatomy with both visual and technical structure
 - [ ] All slots documented with descriptions

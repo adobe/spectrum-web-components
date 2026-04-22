@@ -16,11 +16,9 @@ import { AvatarBase } from '@spectrum-web-components/core/components/avatar';
 import styles from './avatar.css';
 
 /**
- * A static avatar component that displays a circular user profile image.
+ * A circular profile image for identifying a person or entity.
  *
- * Provide `alt` with a description of the person or entity depicted.
- * Pass `alt=""` to treat the image as decorative and hide it from assistive
- * technology.
+ * An avatar displays a circular profile image representing a person or entity.
  *
  * @element swc-avatar
  * @status preview

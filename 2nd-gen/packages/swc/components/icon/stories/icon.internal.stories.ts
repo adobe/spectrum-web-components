@@ -36,23 +36,12 @@ argTypes.size = {
   options: ICON_VALID_SIZES,
 };
 
-/**
- * **Internal-only component.**
- *
- * The `<swc-icon>` element renders icons from shared inline SVG templates.
- * Use shared templates from `../elements/index.js` for consistent rendering and avoid duplicating SVG markup in each component.
- */
 const meta: Meta = {
   title: 'Icon',
   component: 'swc-icon',
   args,
   argTypes,
   render: (args) => template(args),
-  parameters: {
-    docs: {
-      subtitle: `Internal icon renderer for shared SVG templates.`,
-    },
-  },
 };
 
 export default meta;
