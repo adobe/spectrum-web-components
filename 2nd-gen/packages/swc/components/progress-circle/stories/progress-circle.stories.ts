@@ -91,7 +91,8 @@ const sizeLabels = {
 export const Playground: Story = {
   tags: ['autodocs', 'dev'],
   args: {
-    label: 'Uploading document',
+    size: 'm',
+    label: 'Processing request',
   },
 };
 
@@ -102,7 +103,7 @@ export const Playground: Story = {
 export const Overview: Story = {
   tags: ['overview'],
   args: {
-    label: 'Uploading document',
+    label: 'Processing request',
   },
 };
 
@@ -118,7 +119,6 @@ export const Overview: Story = {
  * 3. **Label** - Accessible text describing the operation (not visually rendered).
  *
  * > **A11y Note:** Light DOM children are not projected into the shadow tree, so content between the opening and closing tags does not supply an accessible name. Use the `label` attribute or property, or `aria-label` / `aria-labelledby` on the host.
- *
  */
 export const Anatomy: Story = {
   render: () => html`
@@ -165,9 +165,6 @@ export const Sizes: Story = {
     )}
   `,
   tags: ['options'],
-  args: {
-    progress: 25,
-  },
 };
 
 /**
@@ -186,7 +183,6 @@ export const StaticColors: Story = {
     )}
   `,
   args: {
-    progress: 60,
     label: 'Processing media',
   },
   tags: ['options'],
@@ -201,12 +197,34 @@ export const StaticColors: Story = {
 // ──────────────────────────
 
 /**
- * When no `progress` value is set, the component displays an animated indeterminate
- * loading indicator. This is the default state.
- * The `aria-valuenow` attribute is removed, signaling to assistive technologies
- * that the operation duration is unknown.
+ * Progress circles can show specific progress values from 0% to 100%.
+ * Set the `progress` attribute to a value between 0 and 100 to represent determinate progress.
+ * This automatically sets `aria-valuenow` to the provided value for screen readers.
+ */
+export const ProgressValues: Story = {
+  render: (args) => html`
+    ${template({ ...args, progress: 0, label: 'Starting download' })}
+    ${template({ ...args, progress: 25, label: 'Downloading (25%)' })}
+    ${template({ ...args, progress: 50, label: 'Downloading (50%)' })}
+    ${template({ ...args, progress: 75, label: 'Downloading (75%)' })}
+    ${template({ ...args, progress: 100, label: 'Download complete' })}
+  `,
+  tags: ['states'],
+  args: {
+    size: 'm',
+  },
+  parameters: {
+    'section-order': 2,
+  },
+};
+ProgressValues.storyName = 'Progress values';
+
+/**
+ * The default state — when `progress` is not set, the component displays an animated
+ * loading indicator. The `aria-valuenow` attribute is omitted, signaling to assistive
+ * technologies that the operation duration is unknown.
  *
- * Use indeterminate progress when:
+ * Use the default (no `progress`) when:
  * - The operation duration is unknown
  * - Progress cannot be accurately measured
  * - Multiple sub-operations are running in parallel
@@ -216,36 +234,80 @@ export const Indeterminate: Story = {
   args: {
     label: 'Processing request',
   },
-  parameters: {
-    'section-order': 1,
-  },
 };
 
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
 /**
- * Progress circles can show specific progress values from 0% to 100%.
- * Set the `progress` attribute to a value between 0 and 100 to represent determinate progress.
- * This automatically sets `aria-valuenow` to the provided value for screen readers.
+ * A common pattern is pairing a progress circle with a button to communicate
+ * that an action is in progress after the user clicks. Use `size="s"` to match
+ * typical button heights and `static-color="white"` on high-emphasis (filled)
+ * buttons where the icon sits on a colored background.
+ *
+ * Button loading states typically omit `progress` since the duration is unknown.
+ *
+ * @todo Refactor to use `<swc-button>` once the button component is available.
  */
-export const ProgressValues: Story = {
-  render: () => html`
-    <swc-progress-circle
-      progress="0"
-      label="Starting download"
-    ></swc-progress-circle>
-    <swc-progress-circle
-      progress="25"
-      label="Downloading (25%)"
-    ></swc-progress-circle>
-    <swc-progress-circle
-      progress="50"
-      label="Downloading (50%)"
-    ></swc-progress-circle>
+export const LoadingButton: Story = {
+  render: (args) => html`
+    <button
+      style="
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 16px;
+        border: none;
+        border-radius: 16px;
+        background: var(--spectrum-accent-background-color-default, #378ef0);
+        color: #fff;
+        font: inherit;
+        font-size: 14px;
+        cursor: default;
+        opacity: 0.9;
+      "
+      disabled
+    >
+      ${template({
+        ...args,
+        size: 's',
+        'static-color': 'white',
+        label: 'Saving',
+      })}
+      Saving…
+    </button>
+    <button
+      style="
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 16px;
+        border: 2px solid var(--spectrum-accent-background-color-default, #378ef0);
+        border-radius: 16px;
+        background: transparent;
+        color: var(--spectrum-accent-background-color-default, #378ef0);
+        font: inherit;
+        font-size: 14px;
+        cursor: default;
+        opacity: 0.9;
+      "
+      disabled
+    >
+      ${template({
+        ...args,
+        size: 's',
+        label: 'Processing',
+      })}
+      Processing…
+    </button>
   `,
-  tags: ['states'],
   parameters: {
-    'section-order': 2,
+    flexLayout: true,
   },
+  tags: ['behaviors'],
 };
+LoadingButton.storyName = 'Loading button';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
@@ -262,7 +324,7 @@ export const ProgressValues: Story = {
  * 2. **Labeling**: Uses the `label` attribute value as `aria-label`, or rely on `aria-label` / `aria-labelledby` you set on the host
  * 3. **Progress state** (determinate):
  *     - Sets `aria-valuenow` with the current `progress` value
- * 4. **Loading state** (indeterminate):
+ * 4. **Loading state** (indeterminate — default when `progress` is unset):
  *     - When no `progress` value is set, `aria-valuenow` is omitted
  *     - Screen readers understand this as an ongoing operation with unknown duration
  * 5. **Status communication**: Screen readers announce progress updates as values change
@@ -296,8 +358,7 @@ export const ProgressValues: Story = {
 export const Accessibility: Story = {
   tags: ['a11y'],
   args: {
-    progress: 60,
     size: 'l',
-    label: 'Uploading presentation slides',
+    label: 'Syncing files',
   },
 };

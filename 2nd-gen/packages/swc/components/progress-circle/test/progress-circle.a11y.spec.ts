@@ -33,7 +33,7 @@ test.describe('Progress Circle - ARIA Snapshots', () => {
       'swc-progress-circle'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - progressbar "Uploading document"
+      - progressbar "Processing request"
     `);
   });
 
