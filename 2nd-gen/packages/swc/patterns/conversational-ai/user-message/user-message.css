@@ -20,15 +20,12 @@
 :host {
   display: flex;
   justify-content: flex-end;
+}
 
-  /* Hug the inner bubble so focus outlines and hit-areas match the visible surface;
-   * text still reflows up to max-inline-size. */
-  inline-size: fit-content;
-  max-inline-size: 536px;
-
-  /* Offset from the column edge sits outside the host box so focus outlines
-   * hug the bubble instead of extending past it. */
-  margin-inline-end: 24px;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 /* Card: fixed 324px per Figma spec (content 292px = 324px − 2×16px padding). */
@@ -43,15 +40,18 @@
   inline-size: fit-content;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 .swc-UserMessage {
+  inline-size: fit-content;
+
+  /* Hug the inner bubble so focus outlines and hit-areas match the visible surface;
+  * text still reflows up to max-inline-size. */
+  max-inline-size: 536px;
   padding-block: 8px;
   padding-inline: 16px;
+
+  /* Offset from the column edge sits outside the host box so focus outlines
+  * hug the bubble instead of extending past it. */
+  margin-inline-end: 24px;
   font-family: token("sans-serif-font");
   font-size: token("font-size-200");
   font-weight: token("regular-font-weight");

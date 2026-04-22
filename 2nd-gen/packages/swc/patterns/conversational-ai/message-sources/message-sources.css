@@ -14,10 +14,6 @@
   display: block;
 }
 
-:host ::slotted(a) {
-  color: token("gray-800");
-}
-
 *,
 *::before,
 *::after {
@@ -27,7 +23,7 @@
 .swc-MessageSources {
   display: flex;
   flex-direction: column;
-  gap: token("spacing-75");
+  gap: var(--swc-message-sources-gap, 8px);
 }
 
 /* ─────────────────────────────────────

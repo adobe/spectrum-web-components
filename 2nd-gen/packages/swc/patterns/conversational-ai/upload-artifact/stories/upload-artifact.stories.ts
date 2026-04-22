@@ -55,7 +55,7 @@ export const Playground: Story = {
     type: 'card',
     dismissible: false,
     'thumbnail-slot':
-      '<div slot="thumbnail" style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);" role="img" aria-label="File thumbnail"></div>',
+      '<div slot="thumbnail" role="img" aria-label="File thumbnail"></div>',
     'title-slot': '<span slot="title">Hilton commercial assets</span>',
     'subtitle-slot': '<span slot="subtitle">2026</span>',
   },
@@ -67,7 +67,7 @@ export const Overview: Story = {
     type: 'card',
     dismissible: true,
     'thumbnail-slot':
-      '<div slot="thumbnail" style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);" role="img" aria-label="File thumbnail"></div>',
+      '<div slot="thumbnail" role="img" aria-label="File thumbnail"></div>',
     'title-slot': '<span slot="title">Hilton commercial assets</span>',
     'subtitle-slot': '<span slot="subtitle">2026</span>',
   },
@@ -81,12 +81,7 @@ export const Card: Story = {
   render: () => html`
     <div style="max-inline-size:360px;">
       <swc-upload-artifact type="card" dismissible>
-        <div
-          slot="thumbnail"
-          style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);"
-          role="img"
-          aria-label="File thumbnail"
-        ></div>
+        <div slot="thumbnail" role="img" aria-label="File thumbnail"></div>
         <span slot="title">Hilton commercial assets</span>
         <span slot="subtitle">2026</span>
       </swc-upload-artifact>

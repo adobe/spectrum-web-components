@@ -137,7 +137,6 @@ export class MessageFeedback extends SpectrumElement {
         >
           <swc-icon
             label="Positive response"
-            style="--swc-icon-inline-size:16px;--swc-icon-block-size:16px;"
           >
             ${ThumbUpIcon()}
           </swc-icon>
@@ -152,7 +151,6 @@ export class MessageFeedback extends SpectrumElement {
         >
           <swc-icon
             label="Negative response"
-            style="--swc-icon-inline-size:16px;--swc-icon-block-size:16px;"
           >
             ${ThumbDownIcon()}
           </swc-icon>

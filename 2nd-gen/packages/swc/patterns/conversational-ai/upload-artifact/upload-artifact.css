@@ -113,6 +113,7 @@
   flex-shrink: 0;
   inline-size: 32px;
   block-size: 32px;
+  background: linear-gradient(135deg, #a78bfa, #f472b6);
   border-radius: token("corner-radius-75");
 }
 
@@ -136,7 +137,7 @@
 }
 
 :host([type="media"]) .swc-UploadArtifact-thumbnail {
-  border-radius: token("spacing-200");
+  border-radius: token("corner-radius-200");
   overflow: hidden;
 }
 

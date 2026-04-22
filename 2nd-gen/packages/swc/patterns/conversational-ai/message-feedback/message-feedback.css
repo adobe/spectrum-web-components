@@ -30,10 +30,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  inline-size: 28px;
-  block-size: 28px;
+  inline-size: 32px;
+  block-size: 32px;
   padding: 0;
-  color: token("gray-700");
+  color: token("neutral-content-color-default");
   background: transparent;
   border: none;
   border-radius: 6px;
@@ -56,9 +56,9 @@
 
 .swc-MessageFeedback-button[data-selected] {
   color: token("gray-25");
-  background: token("gray-800");
+  background: token("neutral-background-color-selected-default");
 }
 
 .swc-MessageFeedback-button[data-selected]:hover {
-  background: token("gray-700");
+  background: token("neutral-background-color-selected-hover");
 }
