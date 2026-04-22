@@ -241,8 +241,6 @@ export const Indeterminate: Story = {
 // ──────────────────────────────
 
 /**
- * ### Progress circle in a button
- *
  * A common pattern is pairing a progress circle with a button to communicate
  * that an action is in progress after the user clicks. Use `size="s"` to match
  * typical button heights and `static-color="white"` on high-emphasis (filled)
@@ -252,7 +250,7 @@ export const Indeterminate: Story = {
  *
  * @todo Refactor to use `<swc-button>` once the button component is available.
  */
-export const InButton: Story = {
+export const LoadingButton: Story = {
   render: (args) => html`
     <button
       style="
@@ -309,7 +307,7 @@ export const InButton: Story = {
   },
   tags: ['behaviors'],
 };
-InButton.storyName = 'Progress circle in a button';
+LoadingButton.storyName = 'Loading button';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
