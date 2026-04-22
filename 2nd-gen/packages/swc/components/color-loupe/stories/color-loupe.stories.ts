@@ -26,14 +26,8 @@ const { events, args, argTypes, template } =
 /**
  * An `<swc-color-loupe>` shows the output color that would otherwise be
  * covered by a cursor, stylus, or finger during color selection. It is a
- * visual-only companion to color selection controls such as
- * [Color Area](../?path=/docs/color-area--readme),
- * [Color Slider](../?path=/docs/color-slider--readme), and
- * [Color Wheel](../?path=/docs/color-wheel--readme).
- *
- * The loupe includes an opacity checkerboard behind transparent colors and
- * animated open/close transitions. It is non-interactive — accessibility
- * semantics are provided by the parent color component.
+ * visual-only companion to color selection components such as color area,
+ * color slider, and color wheel — visibility is managed by the parent.
  */
 const meta: Meta = {
   title: 'Color Components/Color Loupe',
@@ -64,6 +58,41 @@ const meta: Meta = {
 };
 
 export default meta;
+
+// ────────────────────
+//    HELPERS
+// ────────────────────
+
+/**
+ * Loupes default to `position: absolute` (they normally float above a color
+ * handle). In stories we override to `position: static` so they flow inline
+ * and participate in flex layout, matching how other component stories are
+ * composed.
+ */
+const LOUPE_STORY_STYLE = 'position: static;';
+
+const COLOR_FORMAT_SAMPLES = [
+  'yellow',
+  '#ff0000',
+  'rgba(44, 62, 224, 0.81)',
+  'hsl(111, 82%, 56%)',
+] as const satisfies readonly string[];
+
+/**
+ * Captioned loupe used by stories where a label disambiguates visually
+ * identical or intentionally invisible variants (e.g. the closed state).
+ */
+const labeledLoupe = (
+  label: string,
+  templateArgs: Record<string, unknown>
+) => html`
+  <figure style="margin: 0; text-align: center;">
+    ${template({ ...templateArgs, style: LOUPE_STORY_STYLE })}
+    <figcaption style="font-size: 12px; margin-block-start: 4px;">
+      ${label}
+    </figcaption>
+  </figure>
+`;
 
 // ────────────────────
 //    AUTODOCS STORY
@@ -104,12 +133,6 @@ export const Anatomy: Story = {
     ${template({ ...args, open: true, color: 'rgba(255, 0, 0, 0.5)' })}
   `,
   tags: ['anatomy'],
-  parameters: {
-    styles: {
-      position: 'relative',
-      'min-block-size': '120px',
-    },
-  },
 };
 
 // ──────────────────────────
@@ -131,46 +154,13 @@ export const Anatomy: Story = {
  */
 export const Colors: Story = {
   render: (args) => html`
-    <div
-      style="position: relative; min-block-size: 120px; display: flex; gap: 80px;"
-    >
-      <div style="position: relative; inline-size: 48px; block-size: 64px;">
-        ${template({ ...args, open: true, color: 'yellow' })}
-        <span
-          style="position: absolute; inset-block-end: -24px; white-space: nowrap; font-size: 12px;"
-        >
-          Named
-        </span>
-      </div>
-      <div style="position: relative; inline-size: 48px; block-size: 64px;">
-        ${template({ ...args, open: true, color: '#ff0000' })}
-        <span
-          style="position: absolute; inset-block-end: -24px; white-space: nowrap; font-size: 12px;"
-        >
-          Hex
-        </span>
-      </div>
-      <div style="position: relative; inline-size: 48px; block-size: 64px;">
-        ${template({ ...args, open: true, color: 'rgba(44, 62, 224, 0.81)' })}
-        <span
-          style="position: absolute; inset-block-end: -24px; white-space: nowrap; font-size: 12px;"
-        >
-          RGBA
-        </span>
-      </div>
-      <div style="position: relative; inline-size: 48px; block-size: 64px;">
-        ${template({ ...args, open: true, color: 'hsl(111, 82%, 56%)' })}
-        <span
-          style="position: absolute; inset-block-end: -24px; white-space: nowrap; font-size: 12px;"
-        >
-          HSL
-        </span>
-      </div>
-    </div>
+    ${COLOR_FORMAT_SAMPLES.map((color) =>
+      template({ ...args, open: true, color, style: LOUPE_STORY_STYLE })
+    )}
   `,
   tags: ['options'],
   parameters: {
-    flexLayout: true,
+    flexLayout: 'row-wrap',
     'section-order': 1,
   },
 };
@@ -190,39 +180,29 @@ export const Colors: Story = {
  */
 export const OpenAndClosedStates: Story = {
   render: (args) => html`
-    <div
-      style="position: relative; min-block-size: 120px; display: flex; gap: 80px;"
-    >
-      <div style="position: relative; inline-size: 48px; block-size: 64px;">
-        ${template({ ...args, open: true, color: 'rgba(0, 128, 255, 0.7)' })}
-        <span
-          style="position: absolute; inset-block-end: -24px; white-space: nowrap; font-size: 12px;"
-        >
-          Open
-        </span>
-      </div>
-      <div style="position: relative; inline-size: 48px; block-size: 64px;">
-        ${template({ ...args, open: false, color: 'rgba(0, 128, 255, 0.7)' })}
-        <span
-          style="position: absolute; inset-block-end: -24px; white-space: nowrap; font-size: 12px;"
-        >
-          Closed
-        </span>
-      </div>
-    </div>
+    ${labeledLoupe('Open', {
+      ...args,
+      open: true,
+      color: 'rgba(0, 128, 255, 0.7)',
+    })}
+    ${labeledLoupe('Closed', {
+      ...args,
+      open: false,
+      color: 'rgba(0, 128, 255, 0.7)',
+    })}
   `,
   tags: ['states'],
   parameters: {
-    flexLayout: true,
+    flexLayout: 'row-wrap',
   },
 };
+OpenAndClosedStates.storyName = 'Open and closed states';
 
 // ──────────────────────────────
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
 /**
- *
  * The color loupe's `open` state is entirely managed by its parent color
  * component — the loupe does not manage its own visibility:
  *
@@ -234,41 +214,28 @@ export const OpenAndClosedStates: Story = {
  * - **Parent control**: The parent sets `open` to `true` when the user is actively
  *   selecting a color and back to `false` when the interaction ends
  *
- * ### Open/close transition
- *
- * The loupe animates its visibility with CSS transitions:
- *
- * - `opacity` transitions over 125 ms
- * - `transform` (vertical offset) transitions over 100 ms
+ * The loupe animates its visibility with CSS transitions: `opacity` over
+ * 125 ms and `transform` (vertical offset) over 100 ms.
  */
 export const ParentDrivenVisibility: Story = {
   render: (args) => html`
-    <div
-      style="position: relative; min-block-size: 120px; display: flex; gap: 80px;"
-    >
-      <div style="position: relative; inline-size: 48px; block-size: 64px;">
-        ${template({ ...args, open: true, color: 'rgba(0, 200, 100, 0.8)' })}
-        <span
-          style="position: absolute; inset-block-end: -24px; white-space: nowrap; font-size: 12px;"
-        >
-          Touch active
-        </span>
-      </div>
-      <div style="position: relative; inline-size: 48px; block-size: 64px;">
-        ${template({ ...args, open: false, color: 'rgba(0, 200, 100, 0.8)' })}
-        <span
-          style="position: absolute; inset-block-end: -24px; white-space: nowrap; font-size: 12px;"
-        >
-          Idle
-        </span>
-      </div>
-    </div>
+    ${labeledLoupe('Touch active', {
+      ...args,
+      open: true,
+      color: 'rgba(0, 200, 100, 0.8)',
+    })}
+    ${labeledLoupe('Idle', {
+      ...args,
+      open: false,
+      color: 'rgba(0, 200, 100, 0.8)',
+    })}
   `,
   tags: ['behaviors'],
   parameters: {
-    flexLayout: true,
+    flexLayout: 'row-wrap',
   },
 };
+ParentDrivenVisibility.storyName = 'Parent-driven visibility';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
@@ -311,10 +278,4 @@ export const Accessibility: Story = {
     color: 'rgba(0, 128, 255, 0.7)',
   },
   tags: ['a11y'],
-  parameters: {
-    styles: {
-      position: 'relative',
-      'min-block-size': '120px',
-    },
-  },
 };
