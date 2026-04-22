@@ -209,6 +209,18 @@ export class PlacementController implements ReactiveController {
       }
     );
 
+    // Recompute placement when the visual viewport diverges from the layout
+    // viewport (iOS URL bar showing/hiding, pinch-zoom, virtual keyboard,
+    // host-app bottom sheets, etc.). Floating UI's `autoUpdate` does not
+    // observe `window.visualViewport`, so without this an open overlay can
+    // drift away from its trigger on iOS WebKit until the next resize.
+    // See `computePlacement` for the corresponding offset compensation.
+    const visualViewport = window.visualViewport;
+    if (visualViewport && isWebKit()) {
+      visualViewport.addEventListener('resize', this.updatePlacement);
+      visualViewport.addEventListener('scroll', this.updatePlacement);
+    }
+
     // Define the cleanup function to remove event listeners and reset placements.
     this.cleanup = () => {
       this.host.elements?.forEach((element) => {
@@ -228,6 +240,10 @@ export class PlacementController implements ReactiveController {
       });
       cleanupAncestorResize();
       cleanupElementResize();
+      if (visualViewport && isWebKit()) {
+        visualViewport.removeEventListener('resize', this.updatePlacement);
+        visualViewport.removeEventListener('scroll', this.updatePlacement);
+      }
     };
   }
 
@@ -357,11 +373,30 @@ export class PlacementController implements ReactiveController {
       }
     );
 
+    // On iOS WebKit (Safari and WKWebView hosts such as the Adobe Express
+    // iOS app) the layout viewport and the visual viewport can diverge by
+    // tens of pixels — for example when the URL bar is showing, when the
+    // page is pinch-zoomed, when the virtual keyboard is open, or when a
+    // native bottom sheet is overlaid. Floating UI computes `(x, y)` from
+    // `getBoundingClientRect()`, which is in layout-viewport coordinates,
+    // but the overlay is rendered in the top layer via the native popover
+    // API and therefore painted relative to the visual viewport. Without
+    // this compensation the overlay lands `visualViewport.offsetTop` px
+    // below (and `offsetLeft` px to the side of) its trigger on iOS while
+    // appearing correct on every other browser.
+    let translateX = x;
+    let translateY = y;
+    const visualViewport = window.visualViewport;
+    if (visualViewport && isWebKit()) {
+      translateX -= visualViewport.offsetLeft;
+      translateY -= visualViewport.offsetTop;
+    }
+
     // Update the overlay's style with the computed position.
     Object.assign(target.style, {
       top: '0px',
       left: '0px',
-      translate: `${roundByDPR(x)}px ${roundByDPR(y)}px`,
+      translate: `${roundByDPR(translateX)}px ${roundByDPR(translateY)}px`,
     });
 
     // Set the 'actual-placement' attribute on the target element.
