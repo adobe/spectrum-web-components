@@ -28,6 +28,14 @@
 
 </details>
 
+<details open>
+<summary><strong>Beneath this doc</strong></summary>
+
+- Templates
+    - [[Quickstart title]](templates/consumer-quickstart.md)
+
+</details>
+
 <!-- Document content (editable) -->
 
 ## Overview

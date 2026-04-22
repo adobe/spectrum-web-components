@@ -1,25 +1,22 @@
-# Spectrum Web Components - Second Generation
+# Spectrum Web Components — Second Generation
 
-This workspace contains the second generation of Spectrum Web Components, built with modern tooling and architecture.
+This workspace contains the second generation of Spectrum Web Components (SWC), built on Spectrum 2 design tokens with modern tooling and architecture.
 
 ## Packages
 
-- **[@spectrum-web-components/core](./packages/core)** - Abstract base classes providing behavior and API for 2nd-gen components
-- **[@adobe/spectrum-wc](./packages/swc)** - Concrete component implementations with styling
-
-## About SWC
-
-```bash
-# Install dependencies from repository root
-yarn install
-
-# Build 2nd-gen packages
-yarn build
-
-# Start Storybook
-yarn storybook
-```
+- **[@spectrum-web-components/core](./packages/core)** — abstract base classes providing behavior and API for 2nd-gen components
+- **[@adobe/spectrum-wc](./packages/swc)** — concrete component implementations with styling
 
 ## Documentation
 
-For comprehensive documentation on architecture, development workflows, and migration guides, see the [CONTRIBUTOR-DOCS](../CONTRIBUTOR-DOCS) directory in the repository root.
+- **[Get started (for consumers)](../CONTRIBUTOR-DOCS/00_get-started/for-consumers.md)** — install and render your first component. The same content renders interactively under **Get started** in Storybook.
+- **[Contributor docs](../CONTRIBUTOR-DOCS/README.md)** — architecture, development workflows, migration guides, and project planning.
+
+## Local development
+
+```bash
+# From the repository root
+yarn install
+yarn build
+yarn storybook
+```

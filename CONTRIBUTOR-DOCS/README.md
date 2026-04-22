@@ -16,6 +16,8 @@
 <details open>
 <summary><strong>Beneath this doc</strong></summary>
 
+- [Get started](00_get-started/README.md)
+    - [Get started (for consumers)](00_get-started/for-consumers.md)
 - [Contributor guides](01_contributor-guides/README.md)
     - [Getting involved](01_contributor-guides/01_getting-involved.md)
     - [Using the issue tracker](01_contributor-guides/02_using-the-issue-tracker.md)
@@ -66,6 +68,8 @@ Spectrum Web Components is currently in transition from its first generation (1s
 These docs contain essential information about the SWC project for both maintainers (members of the core team) and contributors from outside the core team.
 
 The docs are organized into sections to help you find the information you need:
+
+**[Get started](./00_get-started/README.md)** - Quick-start guides for people new to SWC. Start here if you're a consumer installing SWC in your application; the same content renders interactively under **Get started** in Storybook.
 
 **[Contributor Guides](./01_contributor-guides/README.md)** - Topical guides for working on the project. This section includes guides for getting started, understanding processes, and accomplishing specific tasks like adding new components or editing these contributor docs themselves. When you change doc structure or headings, see [Authoring contributor docs](./01_contributor-guides/07_authoring-contributor-docs/README.md) to regenerate navigation and verify links.
 
