@@ -47,7 +47,10 @@
   overflow: hidden;
 }
 
-/* Show a keyboard-only ring when the textarea receives tab focus. */
+/* Show the focus ring whenever the textarea is focused. Per the Selectors L4
+ * `:focus-visible` heuristic, text inputs always match `:focus-visible` while
+ * focused (mouse or keyboard) because they continue to need user attention
+ * for subsequent keystrokes. */
 .swc-PromptField-box:has(.swc-PromptField-textarea:focus-visible) {
   outline: 2px solid token("focus-indicator-color");
   outline-offset: 2px;
@@ -248,8 +251,8 @@
   cursor: default;
 }
 
-.swc-PromptField-send:focus,
-.swc-PromptField-stop:focus {
+.swc-PromptField-send:focus-visible,
+.swc-PromptField-stop:focus-visible {
   outline: 2px solid token("focus-indicator-color");
   outline-offset: 2px;
 }

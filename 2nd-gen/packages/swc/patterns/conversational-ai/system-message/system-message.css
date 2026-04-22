@@ -12,6 +12,11 @@
 
 :host {
   display: block;
+
+  /* Rounds the focus ring rendered by `swc-conversation-turn` on the slotted
+   * host. The host has no background or border, so this only affects the
+   * `box-shadow` corner radius, matching the user-message bubble. */
+  border-radius: 12px;
 }
 
 *,

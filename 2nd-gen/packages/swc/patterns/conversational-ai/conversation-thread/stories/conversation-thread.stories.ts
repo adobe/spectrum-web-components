@@ -421,7 +421,6 @@ class ConversationFullPatternDemo extends HTMLElement {
           overscroll-behavior: contain;
           scrollbar-width: none;
           -ms-overflow-style: none;
-          mask-image: linear-gradient(transparent 0px, rgba(0, 0, 0, 0.01) 8px, rgba(0, 0, 0, 0.047) 16px, rgba(0, 0, 0, 0.106) 23px, rgba(0, 0, 0, 0.176) 29px, rgba(0, 0, 0, 0.26) 35px, rgba(0, 0, 0, 0.353) 41px, rgba(0, 0, 0, 0.45) 47px, rgba(0, 0, 0, 0.55) 53px, rgba(0, 0, 0, 0.647) 59px, rgba(0, 0, 0, 0.74) 65px, rgba(0, 0, 0, 0.824) 71px, rgba(0, 0, 0, 0.894) 78px, rgba(0, 0, 0, 0.953) 85px, rgba(0, 0, 0, 0.99) 92px, black 100px);
         }
 
         .swc-ConversationFullPatternDemo-scroll::-webkit-scrollbar {

@@ -64,9 +64,10 @@
   max-inline-size: 100%;
 }
 
-/* Keep focus semantics on the turn host, but render the ring on message surfaces. */
+/* Keep focus semantics on the turn host, but render the ring on message surfaces.
+ * The ring follows each slotted element's own border-radius so the outline
+ * hugs the visible bubble instead of reshaping it. */
 :host(:focus-visible) ::slotted(*) {
-  border-radius: 16px;
-  outline: 2px solid token("blue-500");
-  outline-offset: 2px;
+  box-shadow: 0 0 0 2px token("blue-500");
+  outline: none;
 }

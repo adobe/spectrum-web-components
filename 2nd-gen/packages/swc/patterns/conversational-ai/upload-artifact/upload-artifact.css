@@ -125,7 +125,20 @@
 :host([type="card"]) .swc-UploadArtifact-title,
 :host([type="card"]) .swc-UploadArtifact-subtitle {
   inline-size: 100%;
+  min-inline-size: 0;
   text-align: start;
+}
+
+:host([type="card"]) .swc-UploadArtifact-title ::slotted(*) {
+  display: block;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+:host([type="card"]) .swc-UploadArtifact-subtitle ::slotted(*) {
+  display: block;
+  min-inline-size: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

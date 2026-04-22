@@ -37,14 +37,14 @@
 }
 
 .swc-SuggestionItem:hover,
-.swc-SuggestionItem:focus,
+.swc-SuggestionItem:focus-visible,
 .swc-SuggestionItem:active {
   background: token("gray-200");
 }
 
 .swc-SuggestionItem:focus-visible {
-  outline: 2px solid token("focus-indicator-color");
-  outline-offset: 2px;
+  box-shadow: 0 0 0 2px token("focus-indicator-color");
+  outline: none;
 }
 
 .swc-SuggestionItem:active {
