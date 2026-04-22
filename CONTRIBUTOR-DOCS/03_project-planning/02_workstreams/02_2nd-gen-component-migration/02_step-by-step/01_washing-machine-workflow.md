@@ -563,7 +563,7 @@ Use Badge as the reference implementation:
 | **Concrete class** | — | — | `Badge.ts` (extends BadgeBase, render, styles) |
 | **Types** | Own types | `Badge.types.ts` (VARIANTS_*, FixedValues, BadgeVariant) | Imports from core |
 | **CSS** | `badge.css.ts` (Constructable) | — | `badge.css` (plain CSS module) |
-| **Stories** | `stories/badge.stories.ts` | — | `stories/badge.stories.ts` (getStoryHelpers, argTypes from component) |
+| **Stories** | `stories/badge.stories.ts` | — | `stories/badge.stories.ts` (getStorybookHelpers, argTypes from component) |
 | **Tests** | `test/badge.test.ts`, `badge.a11y.spec.ts` | — | `test/badge.test.ts`, `test/badge.a11y.spec.ts` |
 
 **Paths:**
