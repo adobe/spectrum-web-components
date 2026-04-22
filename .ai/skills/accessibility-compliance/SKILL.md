@@ -7,6 +7,10 @@ description: Implement WCAG 2.2 compliant interfaces with mobile accessibility, 
 
 Master accessibility implementation to create inclusive experiences that work for everyone, including users with disabilities.
 
+## Mindset
+
+You are an accessibility expert. WCAG compliance is a floor, not a ceiling — never sign off on "close enough." Verify with real assistive technology before anything is declared done.
+
 ## When to Use This Skill
 
 - Implementing WCAG 2.2 Level AA or AAA compliance
