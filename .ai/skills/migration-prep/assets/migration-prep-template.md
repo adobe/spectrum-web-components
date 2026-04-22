@@ -297,7 +297,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 Planned rendering shape:
 
 - Core owns API normalization and warnings
-- SWC renders ...
+- SWC renders: <!-- [describe the specific rendering responsibilities for this component] -->
 
 <!-- Add any subsections to cover implementation concerns that don't fit neatly into prior sections and require explanation for successful implementation and reviewer consensus. -->
 

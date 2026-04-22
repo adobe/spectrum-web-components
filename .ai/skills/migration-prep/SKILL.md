@@ -17,6 +17,8 @@ Do not simply record inputs at face value. Explain why something looks inconsist
 
 Before deciding scope, identify the component's feature and functionality surface as completely as the available evidence allows. Then use that inventory to decide what belongs in `Must ship`, `Additive`, and open-question buckets in the plan.
 
+Actively watch for drift as you draft. Decisions recorded early can conflict with conclusions reached later — check for consistency across sections before finalizing.
+
 ## When to use this skill
 
 - You are starting a 1st-gen → 2nd-gen component migration
@@ -61,10 +63,10 @@ Review these sources before filling out the plan:
 - Relevant bug tickets and prior migration decisions
 - Relevant Figma and React Spectrum references for naming, variants, and expected behavior
 
-When evaluating `rendering-and-styling-migration-analysis.md`, only use these sections:
+When evaluating `rendering-and-styling-migration-analysis.md`, **do not use the CSS => SWC mapping table**. Use only these sections:
 
 - `SWC`
-- `DOM Structure changes` — detail and summary content only; ignore the CSS => SWC mapping table for this skill
+- `DOM Structure changes` — detail and summary content only
 - `Summary of changes`
 - `Resources`
 
@@ -120,6 +122,8 @@ If a critical input is missing:
 Do not resolve a missing accessibility migration analysis by running the accessibility-migration-analysis skill from within this skill. That analysis belongs to a separate workstream and review path.
 
 ## Critical missing-input handling
+
+This section specifies how to respond to the gaps identified in `Must-ask before drafting materially`.
 
 When a critical input is missing, decide first whether it is materially blocking or only required before finalizing.
 
@@ -346,8 +350,7 @@ Example resume hooks:
 13. Ensure each blocker or open question has clear status, owner, and next action where possible.
 14. Preserve the template's stable tables, checklist items, and section structure unless the user explicitly asks for structural changes.
 15. End with a concise review prompt that asks the user to confirm or refine any major provisional decisions and explains what missing resources can be provided next to tighten the plan.
-16. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
-17. Stop after producing the written plan unless the user explicitly asks to move into implementation.
+16. Stop after producing the written plan unless the user explicitly asks to move into implementation.
 
 ## Final review checklist
 
