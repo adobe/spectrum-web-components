@@ -222,36 +222,40 @@ class=${classMap({
 
 ## Inline CSS strings from component properties
 
-Some components accept a property whose value is a CSS string — for example, `<swc-color-loupe>` exposes a `color` property that accepts any valid CSS color:
+Some components accept a property whose value is a CSS string — for example, `<swc-color-loupe>` exposes a `color` property that accepts any valid CSS color. When the value must influence rendering, set it as a **CSS custom property via `styleMap`**, and have the component's stylesheet consume that custom property.
 
 ```ts
 // ColorLoupe.ts
 <div
-  class="swc-ColorLoupe-colorFill swc-ColorLoupe--clipped"
-  style="background: ${this.color}"
+  class="swc-ColorLoupe-colorFill"
+  style=${styleMap({
+    '--swc-color-loupe-picked-color': this.color,
+  })}
 ></div>
 ```
 
-When interpolating a property directly into a `style` attribute, the value is forwarded verbatim to the browser's CSS parser. That means:
+```css
+/* color-loupe.css */
+.swc-ColorLoupe-colorFill {
+  background: var(--swc-color-loupe-picked-color);
+}
+```
 
-- **Only accept CSS strings from trusted sources.** Component properties that participate in an inline `style` (or a template string, or a `styleMap` entry) must be treated as trusted input. Do not expose such properties to arbitrary user-generated content without validation at the call site.
-- **Prefer structured inputs wherever possible.** If a property has a small set of known-good values (variant, size, semantic color), drive styling through `classMap` and design tokens instead of a free-form CSS string.
-- **Use a CSS custom property for the value, not a full declaration.** Set `--swc-<component>-<role>: ${value}` via `styleMap` rather than interpolating an entire declaration. This scopes what the property can affect to what the component's CSS explicitly consumes.
+When a property value reaches an inline `style` attribute — directly or via `styleMap` — the browser's CSS parser reads it verbatim. That means:
+
+- **Only accept CSS strings from trusted sources.** Component properties that participate in an inline `style` (or a `styleMap` entry) must be treated as trusted input. Do not expose such properties to arbitrary user-generated content without validation at the call site.
+- **Use a CSS custom property, not a full declaration.** Set `--swc-<component>-<role>: ${value}` via `styleMap` rather than interpolating an entire declaration. This scopes what the property can affect to what the component's CSS explicitly consumes.
 - **Document the contract on the property.** The property's JSDoc must state that the value is passed to the CSS parser as-is and that callers are responsible for ensuring it is a valid, trusted CSS value.
 
 ```ts
-// ✅ Preferred — structured input via classMap
-class=${classMap({
-  [`swc-Badge--${this.variant}`]: this.variant != null,
-})}
-
-// ✅ Acceptable — typed CSS property, scoped via a custom property
+// ✅ Good — typed CSS property, scoped via a custom property
 style=${styleMap({
   '--swc-color-loupe-picked-color': this.color,
 })}
 
-// ⚠️ Use with care — full inline declaration interpolated from a property.
-//    Only do this when the component's API contract explicitly declares
-//    the property as a trusted CSS string and the JSDoc documents that.
+// ❌ Bad — full inline declaration interpolated from a property.
+//    The entire declaration is re-parsed on every render, and a malformed
+//    value can corrupt adjacent styles. Always route property values through
+//    a custom property that the stylesheet consumes explicitly.
 style="background: ${this.color}"
 ```

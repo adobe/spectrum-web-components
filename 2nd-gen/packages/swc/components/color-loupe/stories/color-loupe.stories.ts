@@ -94,25 +94,10 @@ export const Overview: Story = {
 // ──────────────────────────
 
 /**
- * ### Visual structure
+ * A color loupe consists of:
  *
- * A color loupe consists of two main parts:
- *
- * 1. **Floating loupe element** — a teardrop-shaped container positioned above
- *    the interaction point, formed by an SVG clip-path with an inner and outer border
- * 2. **Color preview** — reflects the color currently sampled by the parent
- *    color component, rendered over an opacity checkerboard that shows through
- *    when the color has alpha transparency
- *
- * ### Technical structure
- *
- * The component has no slots. All rendering is internal.
- *
- * #### Properties
- *
- * - **open**: Controls visibility with animated CSS transitions on `opacity` and `transform`
- * - **color**: CSS color string displayed inside the loupe; supports any valid format
- *   including named colors, hex, `rgba()`, and `hsl()`
+ * 1. **Floating loupe element** - A teardrop-shaped container positioned above the interaction point, with an inner and outer border
+ * 2. **Color preview** - Displays the currently picked color over an opacity checkerboard so transparency is visible
  */
 export const Anatomy: Story = {
   render: (args) => html`
