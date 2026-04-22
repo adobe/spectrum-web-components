@@ -61,6 +61,13 @@ Review these sources before filling out the plan:
 - Relevant bug tickets and prior migration decisions
 - Relevant Figma and React Spectrum references for naming, variants, and expected behavior
 
+When evaluating `rendering-and-styling-migration-analysis.md`, only use these sections:
+
+- `SWC`
+- `DOM Structure changes` — detail and summary content only; ignore the CSS => SWC mapping table for this skill
+- `Summary of changes`
+- `Resources`
+
 Use these sources to build a full-enough feature/functionality inventory first, then classify items through:
 
 - `Must ship` for in-scope work required in this migration
