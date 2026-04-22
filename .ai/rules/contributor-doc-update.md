@@ -1,0 +1,50 @@
+---
+description: Useful for updating auto-generated navigation and validating links in the contributor docs
+globs: CONTRIBUTOR-DOCS/**
+alwaysApply: false
+---
+
+# Contributor docs navigation and link validation
+
+## When to run the nav script
+
+**1. When the user asks** for any of the following:
+
+- Update contributor docs navigation / nav / TOC / breadcrumbs
+- Regenerate contributor docs
+- Validate or verify links in contributor docs
+- Fix broken links in contributor docs
+- CONTRIBUTOR-DOCS or contributor docs with "update", "nav", "links", or "verify"
+
+**2. When you change CONTRIBUTOR-DOCS structure or content:**
+
+- Add, remove, rename, or move files or folders under `CONTRIBUTOR-DOCS/`
+- Change document H1, H2, or H3 headings
+
+## What to do
+
+1. **Run the nav script** from the contributor docs script folder (from project root):
+   ```bash
+   cd CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs
+   node update-nav.js
+   ```
+2. **Confirm** the script completes without errors.
+3. **Fix any link verification errors** reported by the script (fix straightforward cases; consult the user for ambiguous ones).
+4. **Report results** to the user (files updated, link counts, any remaining issues).
+
+**Skill:** For full Operator and Maintainer workflows, use the contributor-docs-nav skill (`.ai/skills/contributor-docs-nav/SKILL.md`); it points to the full instructions below.
+
+Full instructions: `.ai/skills/contributor-docs-nav/references/ai-agent-instructions.md` (Role 1: Operator).
+
+## If the instructions file is missing
+
+If the file above is not found:
+
+1. Search for `**/ai-agent-instructions.md` and find the one under `.ai/skills/contributor-docs-nav/references/`.
+2. Read it to confirm it contains the nav update instructions.
+3. Update this rule with the correct path, inform the user, then run the nav process.
+
+## Quick reference
+
+- Script updates breadcrumbs, TOC, and validates all links (~20–200ms for the tree).
+- Fix broken links automatically when the fix is clear; ask the user when the target is gone or intent is unclear.

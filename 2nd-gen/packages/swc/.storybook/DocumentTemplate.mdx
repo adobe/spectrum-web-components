@@ -10,6 +10,7 @@ import {
   useOf,
 } from '@storybook/addon-docs/blocks';
 import {
+  ApiTable,
   GettingStarted,
   SpectrumStories,
   OverviewStory,
@@ -57,6 +58,36 @@ export const ConditionalSection = ({ tag, title, hideTitle = false }) => {
     );
 
 };
+export const ConditionalAPISection = () => {
+const resolvedOf = useOf('meta', ['meta']);
+const tags = resolvedOf?.csfFile?.meta?.tags ?? [];
+const hasCustomAPIDocs = tags.includes('api') || Object.values(resolvedOf.csfFile.stories).some(
+(story) => story.tags?.includes('api')
+);
+
+    if (!hasCustomAPIDocs) {
+        return (
+          <>
+            <h2>API</h2>
+
+            <Primary />
+            <Controls />
+          </>
+        );
+    }
+
+    return (
+        <>
+            <h2>API</h2>
+            <Primary />
+            <Controls />
+
+            <hr />
+            <SpectrumStories tag="api" hideTitle={true} />
+        </>
+    );
+
+};
 
 export const ConditionalGettingStarted = () => {
     const resolvedOf = useOf('meta', ['meta']);
@@ -78,6 +109,7 @@ export const ConditionalGettingStarted = () => {
 <ConditionalGettingStarted />
 
 <ConditionalSection tag="anatomy" title="Anatomy" hideTitle={true} />
+<ConditionalSection tag="usage" hideTitle={true} />
 <ConditionalSection tag="options" title="Options" />
 <ConditionalSection tag="states" title="States" />
 <ConditionalSection tag="behaviors" title="Behaviors" />
@@ -85,9 +117,9 @@ export const ConditionalGettingStarted = () => {
 
 ## API
 
-<Primary />
-<Controls />
+<ApiTable />
 <AdvancedExamplesStories />
+<ConditionalSection tag="appendix" title="Appendix" hideTitle={true} />
 
 ## Feedback
 
