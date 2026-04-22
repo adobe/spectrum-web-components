@@ -273,7 +273,10 @@ const preview = {
               'Participating in PR reviews',
               'Releasing SWC',
               'Authoring contributor docs',
-              ['Templates', ['Consumer quickstart']],
+              [
+                'Templates',
+                ['Consumer quickstart'],
+              ],
               'Patching dependencies',
               'Accessibility testing',
               'Using stackblitz',

@@ -1,123 +1,52 @@
 ---
-description: Converts contributor documentation from Markdown to MDX for Storybook rendering — adds imports, Meta tag, and converts HTML comments to JSX comments without altering any other content.
+description: Reference for the MD → MDX build step that generates contributor docs and mirrored Storybook landings. The conversion is scripted; do not hand-edit the generated tree.
 globs: '**/*.md,**/*.mdx'
 alwaysApply: false
 ---
 
 # Storybook MDX conversion
 
-Converts markdown files to MDX format compatible with Storybook rendering.
+Contributor docs are converted from Markdown to MDX by a build script, not by hand. This rule exists so agents and contributors know not to hand-edit the generated tree.
 
-## When to apply
+## Source of truth
 
-Apply this rule when converting `.md` files to `.mdx` files for display in Storybook, particularly for documentation pages in the 2nd-gen SWC Storybook guides.
+- **Author in Markdown** under `CONTRIBUTOR-DOCS/` — that tree is the SSOT.
+- **Do not edit** `.mdx` files under `2nd-gen/packages/swc/.storybook/contributor-docs/` or `2nd-gen/packages/swc/.storybook/get-started/index.mdx`. They are generated and gitignored — edits will be overwritten on the next Storybook run.
 
-## Conversion steps
+## How the conversion runs
 
-### 1. File extension and imports
+The script at `2nd-gen/packages/swc/.storybook/scripts/generate-contributor-docs.mjs` runs automatically via:
 
-- Change file extension from `.md` to `.mdx`
-- Add Storybook imports at the top of the file:
-
-```typescript
-import { Meta } from '@storybook/addon-docs/blocks';
+```bash
+# From 2nd-gen/packages/swc
+yarn generate:contributor-docs
 ```
 
-- Add a blank line after imports
+It is wired into `yarn storybook` and `yarn storybook:build`, so a normal dev loop regenerates on every start. The script:
 
-### 2. Meta tag
+- Walks `CONTRIBUTOR-DOCS/` and emits one `.mdx` per `.md` under `.storybook/contributor-docs/`
+- Emits mirrored copies for files configured in `MIRROR_EMITS` (currently: `00_get-started/for-consumers.md` → `.storybook/get-started/index.mdx` with title `Get started`)
+- Strips the auto-generated breadcrumbs + TOC blocks (they belong on GitHub, not Storybook)
+- Rewrites `.md` links to Storybook `/docs/...` paths and source-file links to GitHub URLs
+- Sanitizes HTML for MDX (self-closes void elements, converts `<user@example.com>` to `mailto:` links)
+- Converts HTML comments to JSX comments
+- Adds the `<Meta title="..." />` block that Storybook needs
+- Renames `README.md` → `index.mdx` so each folder has a clean index
+- Updates the `storySort` order in `.storybook/preview.ts` between the `GENERATED:CONTRIBUTOR-DOCS-SORT` markers
 
-- Add a `<Meta title="Your Title Here" />` tag after the imports
-- The title should match the document's main heading
-- Add a blank line after the Meta tag
+## Links in the source Markdown
 
-### 3. Convert HTML comments to JSX comments
+- **`.md` links** within `CONTRIBUTOR-DOCS/` are rewritten to the target doc's Storybook URL.
+- **Source files** (`.ts`, `.js`, `.css`, etc.) are rewritten to GitHub blob URLs.
+- **Stable Storybook paths** (e.g., `/docs/guides-customization-getting-started--docs`) pass through unchanged. Use these when linking from CONTRIBUTOR-DOCS Markdown to hand-authored Storybook `.mdx` pages outside the contributor-docs tree.
+- **Absolute URLs** (`http://`, `https://`, `#anchor`) pass through unchanged.
 
-Replace HTML comments with JSX-style comments:
+## Adding a new mirrored landing page
 
-**Before (Markdown):**
+If a CONTRIBUTOR-DOCS Markdown file should also render at a top-level Storybook location (outside `contributor-docs/`), add an entry to `MIRROR_EMITS` in the script with `source`, `outputDir`, `outputFile`, `title`, and optional `heading`. The source file continues to render in its normal contributor-docs location too.
 
-```markdown
-<!-- Document title (editable) -->
-```
+## Don't
 
-**After (MDX):**
-
-```mdx
-{/* Document title (editable) */}
-```
-
-### 4. Preserve all other content
-
-- Keep all markdown syntax as-is (headings, lists, links, code blocks, etc.)
-- Keep all `<details>` and `<summary>` HTML elements unchanged
-- Keep all list formatting and indentation unchanged
-- Preserve all relative link paths (e.g., `./01_contributor-guides/README.md`)
-- Do not modify any content within `<details>` blocks or navigation lists
-
-## Example transformation
-
-**Before (README.md):**
-
-```markdown
-<!-- Document title (editable) -->
-
-# Contributor Documentation
-
-<!-- Generated TOC - DO NOT EDIT -->
-
-<details open>
-<summary><strong>In this doc</strong></summary>
-
-- [About Spectrum Web Components](#about-spectrum-web-components)
-
-</details>
-
-<!-- Document content (editable) -->
-
-## About Spectrum Web Components
-
-Content here...
-```
-
-**After (README.mdx):**
-
-```mdx
-import { Meta } from '@storybook/addon-docs/blocks';
-
-<Meta title="Contributor Documentation" />
-{/* Document title (editable) */}
-
-# Contributor Documentation
-
-{/* Generated TOC - DO NOT EDIT */}
-
-<details open>
-<summary><strong>In this doc</strong></summary>
-
-- [About Spectrum Web Components](#about-spectrum-web-components)
-
-</details>
-
-{/* Document content (editable) */}
-
-## About Spectrum Web Components
-
-Content here...
-```
-
-## Critical rules
-
-1. **Only add imports and Meta tag** - Do not modify any other structural elements
-2. **Preserve exact formatting** - Keep all whitespace, indentation, and line breaks
-3. **Convert ALL HTML comments** - Every `<!-- comment -->` must become `{/* comment */}`
-4. **Keep markdown links** - Do not convert `.md` links to `.mdx` (Storybook may need the original paths)
-5. **Blank lines matter** - Maintain blank line after imports and after Meta tag
-
-## Common mistakes to avoid
-
-❌ Don't change the document's heading structure
-❌ Don't modify navigation lists or TOC content
-❌ Don't convert markdown to JSX (keep lists as markdown lists)
-❌ Don't add extra formatting or styling
-❌ Don't forget to convert ALL HTML comments to JSX comments
+- Don't hand-edit `.mdx` under `.storybook/contributor-docs/` or `.storybook/get-started/`.
+- Don't commit those paths — they're in `.gitignore`.
+- Don't add the old manual conversion steps (imports + `<Meta>` + HTML-comment rewrites) to your workflow; the script owns them now.

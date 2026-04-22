@@ -38,10 +38,32 @@ const CONTRIBUTOR_DOCS_DIR = resolve(
   '../../../../CONTRIBUTOR-DOCS'
 );
 const OUTPUT_DIR = resolve(STORYBOOK_DIR, 'contributor-docs');
+const GET_STARTED_OUTPUT_DIR = resolve(STORYBOOK_DIR, 'get-started');
 const PREVIEW_FILE = resolve(STORYBOOK_DIR, 'preview.ts');
 const REPO_ROOT = resolve(STORYBOOK_DIR, '../../../..');
 const GITHUB_REPO_URL =
   'https://github.com/adobe/spectrum-web-components/blob/main';
+
+/**
+ * Mirrored emits: a CONTRIBUTOR-DOCS source file that is also rendered
+ * as a top-level Storybook page outside the `contributor-docs/` tree.
+ *
+ * Each entry maps a source .md path (relative to CONTRIBUTOR-DOCS_DIR) to an
+ * additional output location + Storybook Meta title. The source file is still
+ * emitted in its usual place under contributor-docs/.
+ */
+const MIRROR_EMITS = [
+  {
+    source: '00_get-started/for-consumers.md',
+    outputDir: GET_STARTED_OUTPUT_DIR,
+    outputFile: 'index.mdx',
+    title: 'Get started',
+    // Rewrite the first H1 in the mirrored output (the source's H1 of
+    // "Get started (for consumers)" serves the contributor-docs variant;
+    // the landing page uses the concise form).
+    heading: 'Get started',
+  },
+];
 
 // Markers for the auto-generated sort order in preview.ts
 const SORT_ORDER_START_MARKER =
@@ -414,11 +436,12 @@ function rewriteLinks(content, currentFile, linkMap) {
  *
  * @param {string} filePath - Absolute path to the .md file
  * @param {Map<string, {title: string, docId: string}>} linkMap - Map of paths to doc info
+ * @param {{title?: string, heading?: string}} [options] - Optional overrides (e.g., a custom Meta title or H1 for mirrored emits)
  * @returns {{outputPath: string, content: string}} Output path and converted content
  */
-function convertFile(filePath, linkMap) {
+function convertFile(filePath, linkMap, options = {}) {
   const relativePath = relative(CONTRIBUTOR_DOCS_DIR, filePath);
-  const title = pathToTitle(filePath);
+  const title = options.title ?? pathToTitle(filePath);
 
   let content = readFileSync(filePath, 'utf-8');
 
@@ -426,6 +449,10 @@ function convertFile(filePath, linkMap) {
   content = rewriteLinks(content, filePath, linkMap);
   content = sanitizeHtmlForMdx(content);
   content = convertCommentsToJsx(content);
+
+  if (options.heading) {
+    content = content.replace(/^\s*#\s+.+$/m, `# ${options.heading}`);
+  }
 
   const mdxContent = `import { Meta } from '@storybook/addon-docs/blocks';
 
@@ -648,6 +675,27 @@ function main() {
   console.log(
     `\nGenerated ${converted} .mdx files in ${relative(process.cwd(), OUTPUT_DIR)}`
   );
+
+  // Emit mirrored copies (e.g., `get-started/index.mdx` sourced from for-consumers.md).
+  for (const mirror of MIRROR_EMITS) {
+    const sourcePath = resolve(CONTRIBUTOR_DOCS_DIR, mirror.source);
+    if (!existsSync(sourcePath)) {
+      console.warn(
+        `Warning: Mirror source not found: ${mirror.source} — skipping.`
+      );
+      continue;
+    }
+    const { content } = convertFile(sourcePath, linkMap, {
+      title: mirror.title,
+      heading: mirror.heading,
+    });
+    const outputPath = join(mirror.outputDir, mirror.outputFile);
+    ensureDir(mirror.outputDir);
+    writeFileSync(outputPath, content, 'utf-8');
+    console.log(
+      `  ${mirror.source} -> ${relative(STORYBOOK_DIR, outputPath)} (mirror, title="${mirror.title}")`
+    );
+  }
 
   // Update the sort order in preview.ts
   // Structure: ['Contributor documentation', 'Contributor guides', [...], 'Style guide', [...], ...]
