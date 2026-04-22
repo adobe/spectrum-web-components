@@ -14,7 +14,6 @@
 - [Overview](#overview)
     - [Also read](#also-read)
     - [What it is](#what-it-is)
-    - [When to use something else](#when-to-use-something-else)
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
