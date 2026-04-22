@@ -60,7 +60,9 @@ export const OverviewTest: Story = {
         '.swc-ColorLoupe-colorFill'
       ) as HTMLElement;
       expect(fill).toBeTruthy();
-      expect(fill.style.background).toContain('0, 128, 255');
+      expect(
+        fill.style.getPropertyValue('--swc-color-loupe-picked-color')
+      ).toContain('0, 128, 255');
     });
   },
 };
@@ -156,7 +158,9 @@ export const ColorPropertyTest: Story = {
       const fill = loupe.shadowRoot?.querySelector(
         '.swc-ColorLoupe-colorFill'
       ) as HTMLElement;
-      expect(fill.style.background).toContain('0, 255, 0');
+      expect(
+        fill.style.getPropertyValue('--swc-color-loupe-picked-color')
+      ).toContain('0, 255, 0');
     });
   },
 };

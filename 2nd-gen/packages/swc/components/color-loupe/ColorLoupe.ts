@@ -12,6 +12,7 @@
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
+import { styleMap } from 'lit/directives/style-map.js';
 
 import { ColorLoupeBase } from '@spectrum-web-components/core/components/color-loupe';
 
@@ -52,7 +53,9 @@ export class ColorLoupe extends ColorLoupeBase {
         <div class="swc-ColorLoupe-checkerboard swc-ColorLoupe--clipped"></div>
         <div
           class="swc-ColorLoupe-colorFill swc-ColorLoupe--clipped"
-          style="background: ${this.color}"
+          style=${styleMap({
+            '--swc-color-loupe-picked-color': this.color,
+          })}
         ></div>
         <svg aria-hidden="true" class="swc-ColorLoupe-svg" overflow="visible">
           <defs>
