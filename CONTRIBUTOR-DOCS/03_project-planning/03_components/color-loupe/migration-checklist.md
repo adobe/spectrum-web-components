@@ -104,11 +104,12 @@ This checklist tracks the full 2nd-gen migration of the **`<sp-color-loupe>`** c
 - [ ] Required files scaffolded:
   - `ColorLoupe.ts` (swc package — element registration)
   - `ColorLoupe.base.ts` (core package — base class logic)
-  - `ColorLoupe.types.ts` (core package — type definitions)
   - `color-loupe.css` (swc package — S2 styles)
   - `index.ts` (swc package — barrel export)
   - `package.json` (swc package)
   - `tsconfig.json` (swc package)
+
+> **Note**: `ColorLoupe.types.ts` is intentionally omitted — the component has no enums or unions to declare, and bare default values belong with the property in the base class. See [PR #6147 discussion r3119292750](https://github.com/adobe/spectrum-web-components/pull/6147#discussion_r3119292750).
 - [ ] `stories/` directory created with placeholder `color-loupe.stories.ts`
 - [ ] Component registered with `customElements.define('swc-color-loupe', ColorLoupe)`
 - [ ] Entry added to the 2nd-gen package manifest / workspace
@@ -136,7 +137,7 @@ This checklist tracks the full 2nd-gen migration of the **`<sp-color-loupe>`** c
 
 ### TypeScript
 
-- [ ] `ColorLoupe.types.ts` contains any needed type exports (currently minimal — no enums or unions required)
+- [ ] No separate `ColorLoupe.types.ts` — component has no enums or unions
 - [ ] No public methods to migrate
 - [ ] No events to define
 

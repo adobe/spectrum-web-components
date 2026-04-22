@@ -36,9 +36,10 @@ export class ColorLoupe extends ColorLoupeBase {
   //     RENDERING & STYLING
   // ──────────────────────────────
 
-  // TODO: Migrate opacity-checkerboard to 2nd gen and consume it here; checkerboard styling is currently hardcoded in color-loupe.css.
-  // Tracked in SWC-2029.
-
+  /**
+   * @todo SWC-2029 - Migrate opacity-checkerboard to 2nd gen and consume it
+   * here; checkerboard styling is currently hardcoded in color-loupe.css.
+   */
   public static override get styles(): CSSResultArray {
     return [styles];
   }

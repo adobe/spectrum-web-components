@@ -10,4 +10,3 @@
  * governing permissions and limitations under the License.
  */
 export * from './ColorLoupe.base.js';
-export * from './ColorLoupe.types.js';
