@@ -15,6 +15,8 @@ Act as a staff-level migration partner, not a transcription tool. Critically ass
 
 Do not simply record inputs at face value. Explain why something looks inconsistent, what tradeoff it creates, and which resolution path you recommend.
 
+Before deciding scope, identify the component's feature and functionality surface as completely as the available evidence allows. Then use that inventory to decide what belongs in `Must ship`, `Additive`, and open-question buckets in the plan.
+
 ## When to use this skill
 
 - You are starting a 1st-gen → 2nd-gen component migration
@@ -58,6 +60,12 @@ Review these sources before filling out the plan:
 - Relevant bug tickets and prior migration decisions
 - Relevant Figma and React Spectrum references for naming, variants, and expected behavior
 
+Use these sources to build a full-enough feature/functionality inventory first, then classify items through:
+
+- `Must ship` for in-scope work required in this migration
+- `Additive` for deferred or out-of-scope work that is not required for the baseline migration
+- open questions / blockers where scope still needs a decision
+
 During discovery, explicitly check whether the component should:
 
 - extend from another 2nd-gen component or shared base that is already planned or in progress
@@ -65,6 +73,10 @@ During discovery, explicitly check whether the component should:
 - wait on a prerequisite component or shared base to avoid duplicated work or conflicting APIs
 
 Use the status table, existing component analyses, and source relationships to make these dependency and ordering calls explicit in the plan.
+
+Do not jump straight to in-scope work without first inventorying what exists today or is expected in 2nd-gen.
+
+Treat the accessibility migration analysis as a separate-workstream input. If it is missing, do not create it as part of `migration-prep`. Instead, ask the user to provide the existing analysis, or proceed only with clearly provisional accessibility-dependent notes if the user explicitly wants that.
 
 ## Readiness threshold
 
@@ -96,6 +108,8 @@ If a critical input is missing:
 - Pause and ask for it, or
 - Offer a concrete fallback the user can provide immediately
 - Continue only with clearly labeled provisional scaffolding, not with a review-ready recommendation
+
+Do not resolve a missing accessibility migration analysis by running the accessibility-migration-analysis skill from within this skill. That analysis belongs to a separate workstream and review path.
 
 ## Critical missing-input handling
 
@@ -157,6 +171,13 @@ Please provide these to continue:
    Send ticket numbers and summaries, or paste the ticket descriptions here and I can assess likely impact from that text.
 
 If you want to proceed provisionally instead, tell me that explicitly and I’ll keep the unresolved areas clearly marked."
+
+For accessibility analysis specifically:
+
+- ask the user to provide the existing accessibility migration analysis if it exists
+- otherwise ask whether they want to pause until that separate workstream is completed, or proceed with accessibility-dependent recommendations explicitly marked as provisional
+
+Do not generate that analysis inside `migration-prep`.
 
 ## Source priority
 
@@ -242,6 +263,7 @@ Instead:
 - Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material or guided by the user
 - Call out any dependency-aware sequencing decisions, such as whether the component extends from another migrated component, should become a shared base, or should wait on a prerequisite migration
 - Do not replace `Epic SWC-####` with `TBD` or another soft placeholder without explicitly prompting the user first
+- Make the feature/functionality inventory explicit enough to support `Must ship`, `Additive`, and open-question calls before treating the plan as review-ready
 
 ## Definition of done
 
@@ -250,6 +272,7 @@ Before the plan is considered complete:
 - key references have been verified
 - unresolved placeholders have been removed or explicitly addressed with the user
 - required sections are populated or explicitly marked with a reason
+- the feature/functionality inventory is documented well enough to support `Must ship`, `Additive`, and open-question decisions
 - dependency-aware sequencing decisions are called out
 - major provisional decisions are surfaced back to the user for review
 
@@ -304,18 +327,19 @@ Example resume hooks:
 2. Gather the required inputs listed above before drafting.
 3. Copy [assets/migration-prep-template.md](assets/migration-prep-template.md) to the component's `migration-plan.md`.
 4. Resolve the component's actual repo naming before finalizing links and paths. Prefer existing repo paths over the user's phrasing.
-5. Fill out the template with concrete references, decisions, breaking changes, and open questions.
-6. Mark decisions as confirmed, inferred, or open questions, and cite supporting sources for any breaking-change recommendation.
-7. Make dependency-aware sequencing explicit: note whether the component depends on another migration, should become a shared base, or should be migrated ahead of related components.
-8. If materially blocking inputs are missing, follow `Critical missing-input handling` before drafting substantial recommendations.
-9. Ask the user early for any missing critical inputs instead of only summarizing them at the end.
-10. Make assumptions explicit and link blockers to the relevant section in the plan.
-11. Check for contradictions across `Changes overview`, `2nd-gen API decisions`, and `Migration checklist` so the same decision is reflected consistently.
-12. Ensure each blocker or open question has clear status, owner, and next action where possible.
-13. Preserve the template's stable tables, checklist items, and section structure unless the user explicitly asks for structural changes.
-14. End with a concise review prompt that asks the user to confirm or refine any major provisional decisions and explains what missing resources can be provided next to tighten the plan.
-15. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
-16. Stop after producing the written plan unless the user explicitly asks to move into implementation.
+5. Build a feature/functionality inventory from the available sources before deciding what belongs in `Must ship`, `Additive`, or open-question buckets.
+6. Fill out the template with concrete references, decisions, breaking changes, and open questions.
+7. Mark decisions as confirmed, inferred, or open questions, and cite supporting sources for any breaking-change recommendation.
+8. Make dependency-aware sequencing explicit: note whether the component depends on another migration, should become a shared base, or should be migrated ahead of related components.
+9. If materially blocking inputs are missing, follow `Critical missing-input handling` before drafting substantial recommendations.
+10. Ask the user early for any missing critical inputs instead of only summarizing them at the end.
+11. Make assumptions explicit and link blockers to the relevant section in the plan.
+12. Check for contradictions across `Changes overview`, `2nd-gen API decisions`, and `Migration checklist` so the same decision is reflected consistently.
+13. Ensure each blocker or open question has clear status, owner, and next action where possible.
+14. Preserve the template's stable tables, checklist items, and section structure unless the user explicitly asks for structural changes.
+15. End with a concise review prompt that asks the user to confirm or refine any major provisional decisions and explains what missing resources can be provided next to tighten the plan.
+16. Throughout drafting the plan and at its conclusion, address any drift or inconsistencies introduced through edits.
+17. Stop after producing the written plan unless the user explicitly asks to move into implementation.
 
 ## Final review checklist
 

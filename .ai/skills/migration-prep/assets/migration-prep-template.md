@@ -161,6 +161,10 @@ This full modifier surface will not be carried forward to 2nd-gen.
 
 > **Priority framing:**
 >
+> - Use the component's full feature/functionality inventory to decide what belongs here; do not classify scope without first identifying the full surface area.
+> - **Must ship** items define the in-scope work required for this migration.
+> - **Additive** items are typically deferred or out of scope for this migration unless the user explicitly pulls them in.
+> - **Additive / deferred** does not mean deprecated or dropped; it usually means not required to meet the baseline 80% consumer-use needs for this migration.
 > - **Accessibility is non-negotiable** — all a11y requirements ship as part of this migration.
 > - **Breaking changes** are assessed on merit — some must ship now to avoid a second, more disruptive migration event later.
 > - **Additive changes** can be deferred and will not cause consumer breakage when they do ship.
@@ -170,7 +174,7 @@ This full modifier surface will not be carried forward to 2nd-gen.
 <!--
 Summarize must-ship aspects across the following categories.
 
-# Format: **B{#}**
+# Format: **B#**
 -->
 
 #### API and naming
@@ -195,8 +199,9 @@ Summarize must-ship aspects across the following categories.
 <!--
 Summarize additive aspects across the following categories.
 
-# Format: **A{#}**
+# Format: **A#**
 -->
+<!-- These items are usually deferred or out of scope for the current migration unless explicitly included. They are additive/deferred, not deprecated or removed. -->
 
 | #   | What is added | Notes |
 | --- | ------------- | ----- |
@@ -406,7 +411,7 @@ Owner examples:
 - Architecture reviewer
 - Ticket owner
 
-# Format: **Q{#}** (sequential across sections, do not start re-numbering under a new section)
+# Format: **Q#** (sequential across sections, do not start re-numbering under a new section, and do not create per-question anchor links)
 -->
 
 <!-- Keep the table structure and columns (`Blocking?`, `Status`, `Owner`). Add rows rather than replacing the schema with prose or a different format. -->
