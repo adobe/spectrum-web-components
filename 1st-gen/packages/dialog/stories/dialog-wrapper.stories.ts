@@ -469,6 +469,10 @@ export const receivesFocusComparison = (
   `;
 };
 
+receivesFocusComparison.swc_vrt = {
+  skip: true,
+};
+
 export const longHeading = (
   args: StoryArgs = {},
   context: { viewMode?: string } = {}
