@@ -596,8 +596,14 @@ export class Overlay extends ComputedOverlayBase {
     }
     if (targetOpenState) {
       const focusTrap = await import('focus-trap');
+      // When `receives-focus="false"`, pass `initialFocus: false` so the trap
+      // still captures Tab but does not move focus on activation. Without this,
+      // focus-trap would move focus before `applyFocus` runs, bypassing the
+      // `receivesFocus === 'false'` guard there.
+      const initialFocus =
+        this.receivesFocus === 'false' ? false : focusEl || undefined;
       this._focusTrap = focusTrap.createFocusTrap(this.dialogEl, {
-        initialFocus: focusEl || undefined,
+        initialFocus,
         tabbableOptions: {
           getShadowRoot: true,
         },
