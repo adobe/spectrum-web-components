@@ -63,35 +63,33 @@ export default meta;
 //    HELPERS
 // ────────────────────
 
-/**
- * Loupes default to `position: absolute` (they normally float above a color
- * handle). In stories we override to `position: static` so they flow inline
- * and participate in flex layout, matching how other component stories are
- * composed.
- */
-const LOUPE_STORY_STYLE = 'position: static;';
-
-const COLOR_FORMAT_SAMPLES = [
-  'yellow',
-  '#ff0000',
-  'rgba(44, 62, 224, 0.81)',
-  'hsl(111, 82%, 56%)',
-] as const satisfies readonly string[];
+const COLOR_FORMATS = [
+  { label: 'Named', color: 'yellow' },
+  { label: 'Hex', color: '#ff0000' },
+  { label: 'RGBA', color: 'rgba(44, 62, 224, 0.81)' },
+  { label: 'HSL', color: 'hsl(111, 82%, 56%)' },
+] as const satisfies readonly { label: string; color: string }[];
 
 /**
- * Captioned loupe used by stories where a label disambiguates visually
- * identical or intentionally invisible variants (e.g. the closed state).
+ * `<swc-color-loupe>` is `position: absolute` on `:host` because it normally
+ * floats above a color handle. In stories that compare multiple loupes side
+ * by side, each loupe needs its own `position: relative` containing block —
+ * otherwise every loupe computes the same inset offsets and they stack at
+ * the same coordinate. This helper provides that containing block plus an
+ * optional caption below the loupe.
  */
 const labeledLoupe = (
   label: string,
   templateArgs: Record<string, unknown>
 ) => html`
-  <figure style="margin: 0; text-align: center;">
-    ${template({ ...templateArgs, style: LOUPE_STORY_STYLE })}
-    <figcaption style="font-size: 12px; margin-block-start: 4px;">
-      ${label}
-    </figcaption>
-  </figure>
+  <div
+    style="display: flex; flex-direction: column; align-items: center; gap: 4px;"
+  >
+    <div style="position: relative; inline-size: 48px; block-size: 64px;">
+      ${template(templateArgs)}
+    </div>
+    <span style="font-size: 12px;">${label}</span>
+  </div>
 `;
 
 // ────────────────────
@@ -154,8 +152,8 @@ export const Anatomy: Story = {
  */
 export const Colors: Story = {
   render: (args) => html`
-    ${COLOR_FORMAT_SAMPLES.map((color) =>
-      template({ ...args, open: true, color, style: LOUPE_STORY_STYLE })
+    ${COLOR_FORMATS.map(({ label, color }) =>
+      labeledLoupe(label, { ...args, open: true, color })
     )}
   `,
   tags: ['options'],
