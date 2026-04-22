@@ -56,8 +56,7 @@ import '@adobe/spectrum-wc/badge';
 
 ### Default variant
 
-The default `variant` has changed from `'informative'` to `'neutral'`. Any `<sp-badge>` (or
-`<swc-badge>`) rendered without an explicit `variant` attribute will now appear neutral gray
+The default `variant` has changed from `'informative'` to `'neutral'`. Any `<swc-badge>` rendered without an explicit `variant` attribute will now appear neutral gray
 instead of blue.
 
 ```html
