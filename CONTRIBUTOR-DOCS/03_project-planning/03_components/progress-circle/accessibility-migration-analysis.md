@@ -19,6 +19,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
+- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
 - [Recommendations: `<swc-progress-circle>`](#recommendations-swc-progress-circle)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -73,6 +74,16 @@ This doc explains how **`swc-progress-circle`** should work for **accessibility*
 | [Pause, stop, hide (WCAG 2.2.2)](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html) | **Loading animation** (including **indeterminate** spin) must be **perceivable** and controllable per WCAG. Respect **reduced motion** where the platform supports it. Align **motion tokens** with Spectrum guidance across libraries where applicable (for example internal targets such as **~1s** vs **~2s** per revolution for spinner tokens). If **flicker** is a risk, define **fallback** behavior in design and docs. |
 
 **Bottom line:** Ship a **non-focusable** **`progressbar`** with the **determinate** vs **indeterminate** rules in **`ProgressCircleBase`** (`2nd-gen/packages/core/components/progress-circle/ProgressCircle.base.ts`).
+
+---
+
+## Related 1st-gen accessibility (Jira)
+
+| Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
+|------|------|-------------------|-------------------------|---------|
+| [SWC-1125](https://jira.corp.adobe.com/browse/SWC-1125) | Bug | Blocked | Unresolved | [Accessibility] Graphical object lacks 3:1 contrast ratio — `sp-progress-circle` (progress bar and loading indicator) |
+| [SWC-1171](https://jira.corp.adobe.com/browse/SWC-1171) | Bug | Done | Fixed | [Accessibility] ARIA `progressbar` nodes do not have an accessible name — `sp-picker` (loading indicator) |
+| [SWC-1369](https://jira.corp.adobe.com/browse/SWC-1369) | Bug | To Do | Unresolved | `Pending` button not visible in WHCM |
 
 ---
 
