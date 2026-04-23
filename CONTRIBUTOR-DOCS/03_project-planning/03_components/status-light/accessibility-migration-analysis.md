@@ -18,6 +18,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
+- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
 - [Recommendations: `<swc-status-light>`](#recommendations-swc-status-light)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -66,6 +67,15 @@ This doc explains how **`swc-status-light`** should work for **accessibility**. 
 | [`status` role](https://www.w3.org/TR/wai-aria-1.2/#status) | This role means **live updates**. **Do not** put `role="status"` or `aria-live` on a **static** status light—it can announce too often or at the wrong time. |
 
 **Bottom line:** Treat it as **plain content** with a **visible label**. The dot in CSS (`::before`) is **extra visual**; the **words** carry the meaning.
+
+---
+
+## Related 1st-gen accessibility (Jira)
+
+| Jira | Summary (short) | Typical 1st-gen / scope | Notes |
+|------|-----------------|-------------------------|--------|
+
+None of the rows above target **`sp-status-light` / `swc-status-light`** specifically. Add a row when you file or find a Jira issue for this component.
 
 ---
 

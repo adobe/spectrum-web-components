@@ -36,6 +36,7 @@
     - Button Group
     - Checkbox
     - Color Field
+    - Color Loupe
     - Divider
     - Dropzone
     - Field Group
