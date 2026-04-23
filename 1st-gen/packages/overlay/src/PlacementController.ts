@@ -210,15 +210,35 @@ export class PlacementController implements ReactiveController {
     );
 
     // Recompute placement when the visual viewport diverges from the layout
-    // viewport (iOS URL bar showing/hiding, pinch-zoom, virtual keyboard,
-    // host-app bottom sheets, etc.). Floating UI's `autoUpdate` does not
-    // observe `window.visualViewport`, so without this an open overlay can
-    // drift away from its trigger on iOS WebKit until the next resize.
-    // See `computePlacement` for the corresponding offset compensation.
+    // viewport (URL bar showing/hiding, pinch-zoom, virtual keyboard, host-app
+    // bottom sheets, etc.). Floating UI's `autoUpdate` does not observe
+    // `window.visualViewport`, so without this an open overlay can drift away
+    // from its trigger on WebKit (iOS Safari, WKWebView, and desktop Safari
+    // when pinch-zoomed) until the next resize. See `computePlacement` for the
+    // corresponding offset compensation.
+    //
+    // Listeners are passive (we never `preventDefault` in `updatePlacement`)
+    // and rAF-coalesced so a burst of `resize`/`scroll` events during a URL
+    // bar collapse or pinch gesture compresses to one Floating UI compute per
+    // frame.
     const visualViewport = window.visualViewport;
+    let visualViewportRafId = 0;
+    const onVisualViewportChange = (): void => {
+      if (visualViewportRafId) {
+        return;
+      }
+      visualViewportRafId = requestAnimationFrame(() => {
+        visualViewportRafId = 0;
+        this.updatePlacement();
+      });
+    };
     if (visualViewport && isWebKit()) {
-      visualViewport.addEventListener('resize', this.updatePlacement);
-      visualViewport.addEventListener('scroll', this.updatePlacement);
+      visualViewport.addEventListener('resize', onVisualViewportChange, {
+        passive: true,
+      });
+      visualViewport.addEventListener('scroll', onVisualViewportChange, {
+        passive: true,
+      });
     }
 
     // Define the cleanup function to remove event listeners and reset placements.
@@ -241,8 +261,11 @@ export class PlacementController implements ReactiveController {
       cleanupAncestorResize();
       cleanupElementResize();
       if (visualViewport && isWebKit()) {
-        visualViewport.removeEventListener('resize', this.updatePlacement);
-        visualViewport.removeEventListener('scroll', this.updatePlacement);
+        visualViewport.removeEventListener('resize', onVisualViewportChange);
+        visualViewport.removeEventListener('scroll', onVisualViewportChange);
+        if (visualViewportRafId) {
+          cancelAnimationFrame(visualViewportRafId);
+        }
       }
     };
   }
