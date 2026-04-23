@@ -35,6 +35,10 @@ import styles from './response-status.css';
  * Detail: `{ open: boolean }`
  */
 export class ResponseStatus extends SpectrumElement {
+  private static reasoningPanelIdCounter = 0;
+
+  private readonly reasoningPanelId = `swc-reasoning-panel-${++ResponseStatus.reasoningPanelIdCounter}`;
+
   /** `true`: progress circle + status label, `false`: checkmark + status label. */
   @property({ type: Boolean, reflect: true })
   public loading = false;
@@ -126,7 +130,7 @@ export class ResponseStatus extends SpectrumElement {
         <button
           class="swc-ResponseStatus-row swc-ResponseStatus-row--button"
           aria-expanded=${expanded}
-          aria-controls="swc-reasoning-panel"
+          aria-controls=${this.reasoningPanelId}
           @click=${this._handleToggle}
         >
           <swc-icon
@@ -176,7 +180,7 @@ export class ResponseStatus extends SpectrumElement {
         ${showDisclosure
           ? html`
               <div
-                id="swc-reasoning-panel"
+                id=${this.reasoningPanelId}
                 class="swc-ResponseStatus-reasoning-panel"
                 role="region"
                 aria-label="Reasoning"

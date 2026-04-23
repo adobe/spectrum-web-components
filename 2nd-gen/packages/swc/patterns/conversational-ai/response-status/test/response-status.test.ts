@@ -141,12 +141,11 @@ export const InteractionTest: Story = {
           '.swc-ResponseStatus-row--button'
         );
         const panel = el.shadowRoot?.querySelector<HTMLElement>(
-          '#swc-reasoning-panel'
+          '[id^="swc-reasoning-panel-"]'
         );
 
-        expect(button?.getAttribute('aria-controls')).toBe(
-          'swc-reasoning-panel'
-        );
+        expect(panel?.id).toMatch(/^swc-reasoning-panel-\d+$/);
+        expect(button?.getAttribute('aria-controls')).toBe(panel?.id);
         expect(button?.getAttribute('aria-expanded')).toBe('false');
         expect(panel).toBeTruthy();
         expect(panel?.hidden).toBe(true);
@@ -164,7 +163,7 @@ export const InteractionTest: Story = {
           '.swc-ResponseStatus-row--button'
         );
         const panel = el.shadowRoot?.querySelector<HTMLElement>(
-          '#swc-reasoning-panel'
+          '[id^="swc-reasoning-panel-"]'
         );
         const row = el.shadowRoot?.querySelector('.swc-ResponseStatus-row');
 
@@ -183,10 +182,10 @@ export const InteractionTest: Story = {
       el.open = true;
       await el.updateComplete;
       const panel = el.shadowRoot?.querySelector(
-        '#swc-reasoning-panel'
+        '[id^="swc-reasoning-panel-"]'
       ) as HTMLElement | null;
       const slot = el.shadowRoot?.querySelector<HTMLSlotElement>(
-        '#swc-reasoning-panel slot'
+        '[id^="swc-reasoning-panel-"] slot'
       );
       const assigned = slot?.assignedNodes({ flatten: true });
 

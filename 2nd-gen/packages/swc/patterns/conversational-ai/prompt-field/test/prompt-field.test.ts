@@ -52,6 +52,18 @@ export const OverviewTest: Story = {
       expect(el.accept).toBe('');
       expect(el.multiple).toBe(true);
       expect(el.artifactValues).toEqual([]);
+      expect(el.legalText).toBe('');
+      expect(el.legalLinkHref).toBe('');
+      expect(el.legalLinkText).toBe('');
+
+      const legalCopy = el.shadowRoot?.querySelector(
+        '.swc-PromptField-legal-disclaimer'
+      );
+      const legalLink = legalCopy?.querySelector('a');
+      expect(legalCopy?.textContent).toContain(
+        'Responses are generated using AI, and may be inaccurate. Check before using.'
+      );
+      expect(legalLink?.textContent?.trim()).toBe('AI User Guidelines');
     });
   },
 };
@@ -104,6 +116,78 @@ export const PropertyMutationTest: Story = {
         );
         const assigned = slot?.assignedElements({ flatten: true }) ?? [];
         expect(assigned.length).toBe(2);
+      }
+    );
+
+    await step(
+      'legal props render custom legal disclaimer copy and link',
+      async () => {
+        el.legalText = 'Generated content may include mistakes.';
+        el.legalLinkHref = 'https://example.com/legal';
+        el.legalLinkText = 'Usage policy';
+        await el.updateComplete;
+
+        const footer = el.shadowRoot?.querySelector('.swc-PromptField-footer');
+        const legalCopy = el.shadowRoot?.querySelector(
+          '.swc-PromptField-legal-disclaimer'
+        );
+        const legalLink = legalCopy?.querySelector('a');
+
+        expect(footer).toBeTruthy();
+        expect(legalCopy?.textContent).toContain(
+          'Generated content may include mistakes.'
+        );
+        expect(legalLink?.textContent?.trim()).toBe('Usage policy');
+        expect(legalLink?.getAttribute('href')).toBe(
+          'https://example.com/legal'
+        );
+      }
+    );
+
+    await step(
+      'default Adobe legal disclaimer is restored when legal props are cleared',
+      async () => {
+        el.legalText = '';
+        el.legalLinkHref = '';
+        el.legalLinkText = '';
+        await el.updateComplete;
+
+        const legalCopy = el.shadowRoot?.querySelector(
+          '.swc-PromptField-legal-disclaimer'
+        );
+        const legalLink = legalCopy?.querySelector('a');
+
+        expect(legalCopy?.textContent).toContain(
+          'Responses are generated using AI, and may be inaccurate. Check before using.'
+        );
+        expect(legalLink?.textContent?.trim()).toBe('AI User Guidelines');
+      }
+    );
+
+    await step(
+      'legal slot overrides legal props and default fallback',
+      async () => {
+        el.legalText = 'This should be overridden.';
+        el.innerHTML = `
+        <div slot="legal">Custom legal from slot.</div>
+      `;
+        await el.updateComplete;
+
+        const footer = el.shadowRoot?.querySelector('.swc-PromptField-footer');
+        const legalSlot =
+          el.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="legal"]');
+        const assignedText = legalSlot
+          ?.assignedNodes({ flatten: true })
+          .map((node) => node.textContent ?? '')
+          .join('')
+          .trim();
+        const legalCopy = el.shadowRoot?.querySelector(
+          '.swc-PromptField-legal-disclaimer'
+        );
+
+        expect(footer).toBeTruthy();
+        expect(assignedText).toContain('Custom legal from slot.');
+        expect(legalCopy).toBeNull();
       }
     );
   },

@@ -43,6 +43,12 @@ export interface PromptFieldSubmitDetail {
 
 export type PromptFieldMode = 'default' | 'loading' | 'disabled' | 'error';
 
+const DEFAULT_LEGAL_TEXT =
+  'Responses are generated using AI, and may be inaccurate. Check before using.';
+const DEFAULT_LEGAL_LINK_HREF =
+  'https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html';
+const DEFAULT_LEGAL_LINK_TEXT = 'AI User Guidelines';
+
 /**
  * Prompt entry surface for conversational AI flows.
  *
@@ -51,6 +57,8 @@ export type PromptFieldMode = 'default' | 'loading' | 'disabled' | 'error';
  * @element swc-prompt-field
  *
  * @slot artifact - Optional attachment preview(s); supports multiple slotted artifacts.
+ * @slot legal - Optional legal/footer content. When provided, this slot overrides `legal-text`,
+ * and `legal-link-href`/`legal-link-text` fallback content.
  * @fires swc-input - Dispatched when the textarea value changes.
  * Detail: `{ value: string }`
  * @fires swc-submit - Dispatched when send is triggered with text and/or artifacts.
@@ -94,6 +102,18 @@ export class PromptField extends SpectrumElement {
   /** When true, picker allows selecting multiple files. */
   @property({ type: Boolean })
   public multiple = true;
+
+  /** Optional legal disclaimer text shown in the footer. */
+  @property({ type: String, attribute: 'legal-text' })
+  public legalText = '';
+
+  /** Optional legal disclaimer link URL shown in the footer. */
+  @property({ type: String, attribute: 'legal-link-href' })
+  public legalLinkHref = '';
+
+  /** Optional legal disclaimer link label shown in the footer. */
+  @property({ type: String, attribute: 'legal-link-text' })
+  public legalLinkText = '';
 
   private _hasArtifacts = false;
   private _artifactCount = 0;
@@ -244,6 +264,57 @@ export class PromptField extends SpectrumElement {
     this._syncArtifactPresenceFromSlot();
   }
 
+  private _renderLegalFooter(hasSlottedLegal: boolean): TemplateResult | null {
+    if (hasSlottedLegal) {
+      return html`
+        <div class="swc-PromptField-footer">
+          <slot name="legal"></slot>
+        </div>
+      `;
+    }
+
+    const legalText = this.legalText.trim();
+    const legalLinkHref = this.legalLinkHref.trim();
+    const legalLinkText = this.legalLinkText.trim();
+    const hasCustomCopy = legalText.length > 0 || legalLinkText.length > 0;
+
+    if (hasCustomCopy) {
+      return html`
+        <div class="swc-PromptField-footer">
+          <p class="swc-PromptField-legal-disclaimer">
+            ${legalText}
+            ${legalLinkHref.length > 0 && legalLinkText.length > 0
+              ? html`
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href=${legalLinkHref}
+                  >
+                    ${legalLinkText}
+                  </a>
+                `
+              : ''}
+          </p>
+        </div>
+      `;
+    }
+
+    return html`
+      <div class="swc-PromptField-footer">
+        <p class="swc-PromptField-legal-disclaimer">
+          ${DEFAULT_LEGAL_TEXT}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href=${DEFAULT_LEGAL_LINK_HREF}
+          >
+            ${DEFAULT_LEGAL_LINK_TEXT}
+          </a>
+        </p>
+      </div>
+    `;
+  }
+
   private _renderArtifact(): TemplateResult {
     const artifactClass =
       this._artifactCount <= 1
@@ -268,7 +339,7 @@ export class PromptField extends SpectrumElement {
         aria-label="Send"
         @click=${this._handleSendClick}
       >
-        <swc-icon label="Send">${ChevronUpIcon()}</swc-icon>
+        <swc-icon aria-hidden="true">${ChevronUpIcon()}</swc-icon>
       </button>
     `;
   }
@@ -280,13 +351,14 @@ export class PromptField extends SpectrumElement {
         aria-label="Stop generating"
         @click=${this._handleStopClick}
       >
-        <swc-icon label="Stop">${StopIcon()}</swc-icon>
+        <swc-icon aria-hidden="true">${StopIcon()}</swc-icon>
       </button>
     `;
   }
 
   protected override render(): TemplateResult {
     const showStop = this._isLoading;
+    const hasSlottedLegal = this.querySelector('[slot="legal"]') !== null;
 
     return html`
       <div class="swc-PromptField">
@@ -320,7 +392,7 @@ export class PromptField extends SpectrumElement {
                 ?disabled=${this._isDisabled}
                 @click=${this._handleUploadClick}
               >
-                <swc-icon label="Add">${PlusIcon()}</swc-icon>
+                <swc-icon aria-hidden="true">${PlusIcon()}</swc-icon>
               </button>
               <input
                 class="swc-PromptField-file-input"
@@ -336,19 +408,7 @@ export class PromptField extends SpectrumElement {
             ${showStop ? this._renderStopButton() : this._renderSendButton()}
           </div>
         </div>
-        <div class="swc-PromptField-footer">
-          <p class="swc-PromptField-legal-disclaimer">
-            Responses are generated using AI, and may be inaccurate. Check
-            before using.
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
-            >
-              AI User Guidelines
-            </a>
-          </p>
-        </div>
+        ${this._renderLegalFooter(hasSlottedLegal)}
       </div>
     `;
   }
