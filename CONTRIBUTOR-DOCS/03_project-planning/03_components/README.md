@@ -32,7 +32,8 @@
     - [Badge accessibility migration analysis](badge/accessibility-migration-analysis.md)
     - [Badge migration roadmap](badge/rendering-and-styling-migration-analysis.md)
 - Button
-    - [Button Migration Plan](button/migration-plan.md)
+    - [Button migration plan](button/migration-plan.md)
+    - [Button accessibility migration analysis](button/accessibility-migration-analysis.md)
     - [Button migration roadmap](button/rendering-and-styling-migration-analysis.md)
 - Button Group
     - [Button Group migration roadmap](button-group/rendering-and-styling-migration-analysis.md)
