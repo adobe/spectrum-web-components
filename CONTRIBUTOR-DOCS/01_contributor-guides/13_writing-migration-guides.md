@@ -38,54 +38,55 @@ You do not need to wait until the component is feature-complete — guides can b
 Each migration guide lives alongside the component it documents:
 
 ```
-2nd-gen/packages/swc/components/[component-name]/migration.md
+2nd-gen/packages/swc/components/[component-name]/consumer-migration-guide.mdx
 ```
+
+The file is MDX. Storybook's config picks it up automatically and renders it at `Components / [Component name] / Consumer migration guide`.
 
 ## Document structure
 
-Every migration guide follows a consistent structure. The full format specification — including required sections, code example conventions, table formats, and accuracy requirements — is defined in the AI rule at:
+Every migration guide follows a consistent structure. The full format specification — including required sections, code example conventions, table formats, and accuracy requirements — is defined in the skill at:
 
 ```
-.ai/rules/migration-guide.md
+.ai/skills/consumer-migration-guide/references/consumer-migration-guide-prompt.md
 ```
 
 At a high level, every guide includes:
 
-1. **Title and intro** — component names, both packages
-2. **Installation** — remove 1st-gen, add 2nd-gen, update imports
-3. **Quick reference** — table of all changes at a glance
-4. **Breaking changes** — one subsection per breaking change with before/after examples
-5. **New in 2nd-gen** — new attributes, slots, or behaviors (omit if none)
-6. **Accessibility** — component-specific a11y notes
+1. **H1 + one-sentence summary** — what the consumer needs to do, in one line
+2. **What changed** — up to three tables: Renamed, Added in Spectrum 2, Removed in Spectrum 2
+3. **Update your code** — numbered steps in the order the consumer performs them, each with a before/after snippet
+4. **Accessibility** — consumer-facing a11y actions only (omit if nothing changed)
+5. **Styling** — public CSS custom properties and a "do not target internals" callout (omit if nothing changed)
+6. **Checklist** — concrete task list mapping 1:1 to the steps above
 
-Use `---` horizontal rules between all top-level sections. See the examples below for reference.
+Do not include: Installation instructions repeated across every section, `### Unchanged` sub-sections, links to `CONTRIBUTOR-DOCS/`, or test-update instructions.
 
 ## Using AI to generate migration guides
 
-An AI agent (Claude Code, Cursor) will automatically follow the format in `.ai/rules/migration-guide.md` when asked to generate a migration guide. A prompt like the following works well:
+Use the `consumer-migration-guide` skill in Claude Code:
 
 ```
-Write a migration guide for swc-[component] following the migration guide rule.
-Verify all claims against the component source before writing.
+/consumer-migration-guide [component-name]
 ```
 
 The agent will:
 
-- Read the 1st-gen and 2nd-gen component source to identify real breaking changes
+- Read the 1st-gen and 2nd-gen component source to identify real API changes
 - Generate before/after examples for each change
-- Build the quick reference table
-- Write component-specific accessibility notes
+- Build the What changed tables
+- Write component-specific accessibility and styling notes
 
 **Always review AI-generated guides against the source.** Verify that attribute names, CSS custom property names, and behavioral descriptions are accurate before merging.
 
 ## Checklist
 
-- [ ] File is at `2nd-gen/packages/swc/components/[component]/migration.md`
-- [ ] All required sections are present (Installation, Quick reference, Breaking changes, Accessibility)
-- [ ] Every breaking change has a before/after code block
-- [ ] Quick reference table links to relevant breaking change sections
-- [ ] CSS custom properties section includes a full mapping table
-- [ ] `## New in 2nd-gen` is present only if new features exist
+- [ ] File is at `2nd-gen/packages/swc/components/[component]/consumer-migration-guide.mdx`
+- [ ] Starts with the correct MDX header (`import { Meta }` + `<Meta title="...">`)
+- [ ] All required sections are present (What changed, Update your code, Checklist)
+- [ ] Every step in Update your code has a before/after code block
+- [ ] Accessibility section does not duplicate snippets already in Update your code
+- [ ] Styling section lists only public `--swc-*` custom properties verified against the Spectrum 2 source
 - [ ] All claims verified against `1st-gen/packages/[component]/` and `2nd-gen/packages/swc/components/[component]/`
 - [ ] All code examples are accessible and use meaningful content
 
@@ -93,6 +94,6 @@ The agent will:
 
 The following migration guides are good references:
 
-- `2nd-gen/packages/swc/components/avatar/migration.md` — attribute renames, removed variant, CSS custom properties
-- `2nd-gen/packages/swc/components/badge/migration.md` — new attributes, expanded variant list, per-variant CSS override notes
-- `2nd-gen/packages/swc/components/status-light/migration.md` — removed attribute, removed variant, new color variants
+- `2nd-gen/packages/swc/components/badge/consumer-migration-guide.mdx` — default variant change, new attributes, CSS custom properties
+- `2nd-gen/packages/swc/components/avatar/consumer-migration-guide.mdx` — attribute renames, removed feature, CSS custom properties
+- `2nd-gen/packages/swc/components/status-light/consumer-migration-guide.mdx` — removed attribute, new color variants
