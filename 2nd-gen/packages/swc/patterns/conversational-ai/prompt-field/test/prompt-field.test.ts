@@ -55,6 +55,12 @@ export const OverviewTest: Story = {
       expect(el.legalText).toBe('');
       expect(el.legalLinkHref).toBe('');
       expect(el.legalLinkText).toBe('');
+      const textarea = el.shadowRoot?.querySelector<HTMLTextAreaElement>(
+        '.swc-PromptField-textarea'
+      );
+
+      expect(textarea?.getAttribute('aria-placeholder')).toBe(el.placeholder);
+      expect(textarea?.hasAttribute('aria-describedby')).toBe(false);
 
       const legalCopy = el.shadowRoot?.querySelector(
         '.swc-PromptField-legal-disclaimer'

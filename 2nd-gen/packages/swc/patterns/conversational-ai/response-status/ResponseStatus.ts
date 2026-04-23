@@ -138,7 +138,7 @@ export class ResponseStatus extends SpectrumElement {
               ? 'swc-ResponseStatus-chevron swc-ResponseStatus-chevron--down'
               : 'swc-ResponseStatus-chevron'}
             style="--swc-icon-inline-size:10px;--swc-icon-block-size:10px;"
-            label=${expanded ? 'Collapse reasoning' : 'Expand reasoning'}
+            aria-hidden="true"
           >
             ${Chevron75Icon()}
           </swc-icon>

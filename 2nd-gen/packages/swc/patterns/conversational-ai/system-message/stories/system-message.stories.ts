@@ -224,3 +224,25 @@ export const Accessibility: Story = {
   decorators: [withSystemTurn],
   tags: ['a11y'],
 };
+
+/**
+ * Isolated accessibility baseline for `<swc-system-message>`.
+ *
+ * This story intentionally avoids dependent conversational AI subcomponents and
+ * `swc-conversation-turn` so ARIA snapshots only fail when `swc-system-message`
+ * itself changes.
+ */
+export const AccessibilityIsolated: Story = {
+  render: () => html`
+    <swc-system-message>
+      <p slot="status">Response generated</p>
+      <p>Main response content.</p>
+      <button slot="feedback">Give feedback</button>
+      <ul slot="sources">
+        <li><a href="#source-1">Source one</a></li>
+      </ul>
+      <div slot="suggestions">Try a follow-up prompt.</div>
+    </swc-system-message>
+  `,
+  tags: ['a11y'],
+};

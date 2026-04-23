@@ -376,6 +376,7 @@ export class PromptField extends SpectrumElement {
                 .value=${this.value}
                 placeholder=${this.placeholder}
                 aria-label=${this.label}
+                aria-placeholder=${ifDefined(this.placeholder || undefined)}
                 ?disabled=${this._isDisabled}
                 rows="1"
                 @input=${this._handleInput}
