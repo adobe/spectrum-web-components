@@ -16,7 +16,7 @@
   /* Rounds the focus ring rendered by `swc-conversation-turn` on the slotted
    * host. The host has no background or border, so this only affects the
    * `box-shadow` corner radius, matching the user-message bubble. */
-  border-radius: 12px;
+  border-radius: token("corner-radius-large-default");
 }
 
 *,
@@ -32,7 +32,7 @@
 .swc-SystemMessage {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--swc-system-message-gap, token("spacing-300"));
 }
 
 /* ─────────────────────────────────────
@@ -42,7 +42,7 @@
 .swc-SystemMessage-body {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--swc-system-message-body-gap, token("spacing-100"));
 }
 
 /* ─────────────────────────────────────
@@ -52,7 +52,7 @@
 .swc-SystemMessage-output {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--swc-system-message-output-gap, token("spacing-300"));
 }
 
 /* ─────────────────────────────────────
@@ -62,6 +62,6 @@
 .swc-SystemMessage-content {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--swc-system-message-content-gap, token("spacing-100"));
   padding-inline: 16px;
 }

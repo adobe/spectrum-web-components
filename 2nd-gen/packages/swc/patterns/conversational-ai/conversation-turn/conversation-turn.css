@@ -68,6 +68,6 @@
  * The ring follows each slotted element's own border-radius so the outline
  * hugs the visible bubble instead of reshaping it. */
 :host(:focus-visible) ::slotted(*) {
-  box-shadow: 0 0 0 2px token("blue-500");
+  box-shadow: 0 0 0 2px token("focus-indicator-color");
   outline: none;
 }

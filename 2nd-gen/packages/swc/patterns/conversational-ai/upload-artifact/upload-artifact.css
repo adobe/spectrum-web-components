@@ -99,7 +99,7 @@
   align-items: center;
   min-block-size: 68px;
   padding: token("spacing-300");
-  border-radius: 12px;
+  border-radius: token("corner-radius-large-default");
 }
 
 :host([type="card"]) .swc-UploadArtifact-thumbnail {

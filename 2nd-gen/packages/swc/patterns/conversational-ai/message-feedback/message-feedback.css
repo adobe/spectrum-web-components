@@ -22,7 +22,7 @@
 
 .swc-MessageFeedback {
   display: inline-flex;
-  gap: 4px;
+  gap: var(--swc-message-feedback-gap, token("spacing-75"));
   align-items: center;
 }
 
@@ -36,7 +36,7 @@
   color: token("neutral-content-color-default");
   background: transparent;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--swc-message-feedback-button-border-radius, token("corner-radius-300"));
   cursor: pointer;
   transition:
     background 130ms ease,

@@ -28,7 +28,7 @@
 .swc-PromptField {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: token("spacing-200");
   inline-size: 100%;
 }
 

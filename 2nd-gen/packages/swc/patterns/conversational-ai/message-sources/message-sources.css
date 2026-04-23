@@ -23,7 +23,7 @@
 .swc-MessageSources {
   display: flex;
   flex-direction: column;
-  gap: var(--swc-message-sources-gap, 8px);
+  gap: var(--swc-message-sources-gap, token("spacing-100"));
 }
 
 /* ─────────────────────────────────────
@@ -32,7 +32,7 @@
 
 .swc-MessageSources-toggle {
   display: inline-flex;
-  gap: 4px;
+  gap: var(--swc-message-sources-toggle-gap, token("spacing-75"));
   align-items: center;
   padding: 5px 0;
   font-family: token("sans-serif-font");
@@ -64,7 +64,7 @@
 .swc-MessageSources-list {
   display: flex;
   flex-direction: column;
-  gap: token("spacing-75");
+  gap: var(--swc-message-sources-list-gap, token("spacing-75"));
   padding: 0;
   margin: 0;
   list-style: none;

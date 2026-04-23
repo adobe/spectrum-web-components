@@ -35,7 +35,7 @@
   line-height: token("line-height-200");
   color: token("gray-800");
   background: token("gray-50");
-  border-radius: 12px;
+  border-radius: token("corner-radius-large-default");
 }
 
 *,
@@ -64,14 +64,14 @@
 }
 
 .swc-UserMessage-attachment--card {
-  gap: 16px;
+  gap: var(--swc-user-message-attachment-card-gap, token("spacing-300"));
   align-items: center;
 }
 
 /* Media inner card is fixed 180 × 180px, constrained by min/max (Figma spec). */
 .swc-UserMessage-attachment--media {
   flex-direction: column;
-  gap: 8px;
+  gap: var(--swc-user-message-attachment-media-gap, token("spacing-100"));
   inline-size: 180px;
   min-inline-size: 150px;
   max-inline-size: 210px;
@@ -109,7 +109,7 @@
   inline-size: 100%;
   min-block-size: 0;
   background: token("gray-100");
-  border-radius: 8px;
+  border-radius: token("corner-radius-200");
   overflow: hidden;
 }
 
@@ -124,7 +124,7 @@
 .swc-UserMessage-meta {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--swc-user-message-meta-gap, token("spacing-50"));
   min-inline-size: 0;
 }
 
