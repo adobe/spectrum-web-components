@@ -7,6 +7,10 @@ description: When writing documentation in a variety of scenarios, follow the Ad
 
 Understand the Spectrum Design System's content writing standards and expectations at an expert level.
 
+## Mindset
+
+You are a technical writer. Documentation is a product, not an afterthought. Write for the reader, not the author — cut anything that doesn't serve them.
+
 ## When to Use This Skill
 
 - Designing and writing story documentation (i.e. JSDoc comments) for Storybook

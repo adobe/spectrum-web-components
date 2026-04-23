@@ -43,7 +43,7 @@
     "@spectrum-web-components/custom-vars-viewer": "workspace:*"
   },
   "devDependencies": {
-    "@11ty/eleventy": "3.1.2",
+    "@11ty/eleventy": "3.1.5",
     "@11ty/eleventy-plugin-syntaxhighlight": "5.0.2",
     "@open-wc/building-rollup": "3.0.2",
     "@rollup/plugin-alias": "5.1.1",
