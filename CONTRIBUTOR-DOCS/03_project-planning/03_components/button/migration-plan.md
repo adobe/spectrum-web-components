@@ -235,7 +235,7 @@ These are derived from the 1st-gen implementation, current deprecations, the Fig
 |---|---|---|---|---|
 | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'` | `size` | **Confirmed.** Keep existing T-shirt size scale. |
 | `variant` | `'primary' \| 'secondary' \| 'accent' \| 'negative'` | `'primary'` | `variant` | **Confirmed by Design.** Use `primary`; Figma's `default` naming was a typo. |
-| `treatment` | `'fill' \| 'outline'` | `'fill'` | `treatment` | **Confirmed.** `outline` is only spec-backed for `primary` and `secondary` families, including their static white/black equivalents. |
+| `treatment` | `'fill' \| 'outline'` | `'fill'` | `treatment` | **Working plan.** `outline` is only spec-backed for `primary` and `secondary` families, including their static white/black equivalents. Public prop naming is still tracked in `Q1`. |
 | `staticColor` | `'white' \| 'black' \| undefined` | `undefined` | `static-color` | **Confirmed.** Static color is only spec-backed with the `primary` and `secondary` families shown in Design/Figma. |
 | `disabled` | `boolean` | `false` | `disabled` | **Confirmed.** Maps to native disabled behavior on the internal button. |
 | `pending` | `boolean` | `false` | `pending` | **Confirmed.** Keep public API; while pending, the button remains focusable but is otherwise unavailable. |
@@ -542,7 +542,7 @@ Allowed differences:
 - [ ] Document the rename from `no-wrap` to `truncate` and its relationship to the spec’s wrapped-text presentation
 - [ ] Document the approved background treatment for static white outline examples so contrast is maintained on hover (`SWC-1139`)
 - [ ] Document pending-state accessibility behavior: `aria-disabled`, default busy-label pattern, and high-contrast disabled styling (`SWC-459`)
-- [ ] Document that host listeners should rely on `click` and `focusin` / `focusout`; custom `focus` / `blur` events are not part of the initial Button scope
+- [ ] Document the initial host-listener contract: `click` and `focusin` / `focusout`; custom `focus` / `blur` events are not part of the initial Button scope
 - [ ] Document that 2nd-gen Button semantics and focus land on a real internal native `<button>`, not the custom-element host
 - [ ] Document supported naming APIs at the host level (`aria-label` and visible text) and how they map to the internal control
 - [ ] Document that cross-root `aria-labelledby` / `aria-describedby` and form-associated `submit` / `reset` are deferred follow-up work
