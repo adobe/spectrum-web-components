@@ -27,6 +27,8 @@
 - Asset
     - [Asset migration roadmap](asset/rendering-and-styling-migration-analysis.md)
 - Avatar
+    - [Avatar accessibility migration analysis](avatar/accessibility-migration-analysis.md)
+    - [Avatar — 2nd-Gen Migration Plan](avatar/migration-plan.md)
     - [Avatar accessibility migration analysis](avatar/rendering-and-styling-migration-analysis.md)
 - Badge
     - [Badge accessibility migration analysis](badge/accessibility-migration-analysis.md)
@@ -62,6 +64,7 @@
 - Link
     - [Link migration roadmap](link/rendering-and-styling-migration-analysis.md)
 - Meter
+    - [Meter accessibility migration analysis](meter/accessibility-migration-analysis.md)
     - [Meter migration roadmap](meter/rendering-and-styling-migration-analysis.md)
 - Number Field
     - [Number field migration roadmap](number-field/rendering-and-styling-migration-analysis.md)
