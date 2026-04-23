@@ -72,7 +72,6 @@
 
 - `Q3` in [Architecture and behavior](#architecture-and-behavior): cross-root ARIA — how will `aria-controls` / `aria-labelledby` ID references resolve if DOM arrangement changes?
 - `Q7` in [Architecture and behavior](#architecture-and-behavior): `change` event naming — keep `change` or rename to `swc-change`? Needs team alignment.
-- `Q18` in [Architecture and behavior](#architecture-and-behavior): `emphasized`, `quiet`, and `size` not in S2 API — confirm removal
 
 ### Recently resolved
 
@@ -81,6 +80,8 @@
 - `Q5`, `Q14`, `Q19`: Overflow deferred to phase 2.
 - `Q6`: `enableTabsScroll` deferred with overflow.
 - `Q8`: Moot — `size` removed per Q18.
+- `Q11`: Internal DOM changes are not a consumer concern.
+- `Q18`: Downgraded from blocking — S2 evidence is clear, design confirmation can happen during implementation.
 
 ---
 
@@ -768,17 +769,17 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 | **Q8** | ~~Default size: should `size="m"` be set by default, or keep `noDefaultSize`?~~ **Resolved: moot.** `size` is not in the S2 API (Q18, B25). No sizing property means no default size question. If Q18 is reversed and `size` is restored, reopen this. | No | **Resolved** | — |
 | **Q16** | Rename `auto` boolean to `keyboardActivation` (`'automatic' \| 'manual'`) to align with React Spectrum? More descriptive API that clarifies the behavior. | No | Open | API reviewer |
 | **Q17** | Rename `compact` boolean to `density` (`'compact' \| 'regular'`) to align with Figma/React Spectrum? | No | Open | API reviewer / Design |
-| **Q18** | `emphasized`, `quiet`, and `size` do not appear in the S2 API (per 5t3ph review). Confirm removal. If removed, these become breaking changes (B23, B24, B25) for consumers using them. | **Yes** | Open | Design |
+| **Q18** | `emphasized`, `quiet`, and `size` do not appear in the S2 API (per 5t3ph review). Confirm removal. If removed, these become breaking changes (B23, B24, B25) for consumers using them. **Not blocking the plan** — evidence from S2 sources is clear; design confirmation is a formality that can happen during implementation. | No | Open | Design |
 
 ### Scope and prerequisites
 
 | # | Item | Blocking? | Status | Owner |
 |---|---|---|---|---|
 | **Q5** | ~~Should `sp-tabs-overflow` be migrated in this epic or deferred?~~ **Resolved: deferred to phase 2.** S2 Picker-based collapse requires design alignment and `swc-picker` availability. Porting scroll-based overflow would be throwaway work. | No | **Resolved** | — |
-| **Q9** | Module-level exports (`ScaledIndicator`, scroll helpers) — carry forward as public API, internalize, or drop? | No | Open | API reviewer |
-| **Q10** | `selectionIndicatorStyle` / `shouldAnimate` (`attribute: false` properties) — confirm not carried forward. | No | Open | Implementation |
-| **Q11** | `<label>` element inside `sp-tab` shadow DOM — consumers targeting via CSS may break when removed. Document as internal DOM change. | No | Open | Migration guide author |
-| **Q12** | `--highcontrast-tabs-*` tokens — verify whether Spectrum 2 handles automatically or needs explicit migration. | No | Open | CSS reviewer |
+| **Q9** | Module-level exports (`ScaledIndicator`, scroll helpers) — scroll helpers are deferred with overflow (Q5). `ScaledIndicator` is an internal implementation detail. **Resolve during implementation** — default to internalizing unless a consumer use case is identified. | No | Open — resolve in implementation | Implementation |
+| **Q10** | `selectionIndicatorStyle` / `shouldAnimate` (`attribute: false` properties) — these are internal rendering mechanics, not public API. **Resolve during implementation** — re-implement as needed for the selection indicator animation, but do not expose as public properties. | No | Open — resolve in implementation | Implementation |
+| **Q11** | ~~`<label>` element inside `sp-tab` shadow DOM — consumers targeting via CSS may break when removed.~~ **Resolved.** Internal DOM structure is not a consumer API contract. Shadow DOM internals are not documented in consumer migration guides (per 5t3ph). No action needed. | No | **Resolved** | — |
+| **Q12** | `--highcontrast-tabs-*` tokens — per [forced-colors requirements](../../../02_style-guide/01_css/01_component-css.md#forced-colors-requirements), only add overrides if an actual problem is observed. Since Tabs is an invented control (not a native element), we will likely need some forced-colors overrides. Verify during implementation. | No | Open | CSS reviewer / Implementation |
 | **Q13** | 1st-gen test gaps (no RTL tests, no `memory` re-entry test, limited disabled tests) — ensure 2nd-gen tests fill these. | No | Open | Test author |
 | **Q14** | ~~Public scroll API (`scrollTabs`, `scrollToSelection`, `scrollState`)~~ **Resolved: not ported in phase 1.** Scroll API only exists to support `sp-tabs-overflow`, which is deferred. Will be revisited in phase 2 alongside the Picker-based collapse implementation. | No | **Resolved** | — |
 | **Q15** | `slot="tab-panel"` auto-assignment — 1st-gen sets `this.slot = 'tab-panel'` in `firstUpdated`. Should 2nd-gen preserve this or require explicit `slot` attributes? Changing this silently breaks all existing tab-panel usage. | No | Open | Implementation |
