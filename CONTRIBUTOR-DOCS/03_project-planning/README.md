@@ -37,6 +37,7 @@
     - Button Group
     - Checkbox
     - Color Field
+    - Color Loupe
     - Divider
     - Dropzone
     - Field Group
@@ -59,6 +60,7 @@
     - Swatch
     - Swatch Group
     - Switch
+    - Tabs
     - Tag
     - Tags
     - Textfield
