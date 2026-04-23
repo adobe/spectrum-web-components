@@ -60,6 +60,7 @@
     - Swatch
     - Swatch Group
     - Switch
+    - Tabs
     - Tag
     - Tags
     - Textfield

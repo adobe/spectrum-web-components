@@ -93,6 +93,9 @@
     - [Swatch Group migration roadmap](swatch-group/rendering-and-styling-migration-analysis.md)
 - Switch
     - [Switch migration roadmap](switch/rendering-and-styling-migration-analysis.md)
+- Tabs
+    - [Tabs accessibility migration analysis](tabs/accessibility-migration-analysis.md)
+    - [Tabs migration roadmap](tabs/rendering-and-styling-migration-analysis.md)
 - Tag
     - [Tag migration roadmap](tag/rendering-and-styling-migration-analysis.md)
 - Tags
