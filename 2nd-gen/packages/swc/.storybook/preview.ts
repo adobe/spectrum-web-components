@@ -379,6 +379,8 @@ const preview = {
                 ['Rendering and styling migration analysis'],
                 'Color field',
                 ['Rendering and styling migration analysis'],
+                'Color loupe',
+                ['Accessibility migration analysis'],
                 'Divider',
                 [
                   'Accessibility migration analysis',
@@ -393,7 +395,10 @@ const preview = {
                 'Help text',
                 ['Rendering and styling migration analysis'],
                 'Illustrated message',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Infield button',
                 ['Rendering and styling migration analysis'],
                 'Infield progress circle',
@@ -409,7 +414,10 @@ const preview = {
                 'Picker button',
                 ['Rendering and styling migration analysis'],
                 'Progress bar',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Progress circle',
                 [
                   'Accessibility migration analysis',
@@ -432,6 +440,11 @@ const preview = {
                 ['Rendering and styling migration analysis'],
                 'Switch',
                 ['Rendering and styling migration analysis'],
+                'Tabs',
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Tag',
                 ['Rendering and styling migration analysis'],
                 'Tags',
