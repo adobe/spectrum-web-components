@@ -60,6 +60,7 @@
     "disableable",
     "effectful",
     "focusable",
+    "Focusgroup",
     "haspopup",
     "highcontrast",
     "labelledby",
@@ -70,6 +71,8 @@
     "seafoam",
     "sidenav",
     "tabindex",
+    "tabindexes",
+    "unmanage",
     "unsuffixed",
     "valuenow",
     "valuetext"

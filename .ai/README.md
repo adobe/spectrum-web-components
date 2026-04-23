@@ -12,6 +12,11 @@ All rules and skills now live in **`.ai/`** — a tool-agnostic, plain-markdown 
 - No sync step, no duplication, no drift between tools
 - New contributors or tools start from `AGENTS.md` at the repo root, which bootstraps everything
 
+## CI integration
+
+- `yarn lint:ai` runs `.ai/scripts/validate.js`, which checks story tags, AGENTS.md paths, and config schema. Catches broken internal links, symlinks, and misconfigured rules before merge
+- Pre-commit hook runs the contributor docs nav script to keep breadcrumbs and TOCs in sync automatically
+
 ## Rules
 
 Rules defined in the `config.json` follow this structure:
@@ -219,11 +224,70 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: On the analyze-rendering-and-styling step for one or more components; creating one markdown file per component at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`
 - Provides: Workflow summary (specs from CSS + SWC, three-way DOM comparison, CSS⇒SWC mapping table, summary). Full instructions in `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_analyze-rendering-and-styling/cursor_prompt.md`
 
+#### Consumer migration guide
+
+- **purpose**: Create per-component migration guides for application developers upgrading from 1st-gen Spectrum Web Components to 2nd-gen components
+- **How to invoke**: Say “create a consumer migration guide for [component]”, “write an upgrade guide for [component]”, or “document how consumers migrate [component] from 1st-gen to 2nd-gen”.
+- Use when: Writing one Storybook-renderable MDX file per component at `2nd-gen/packages/swc/components/[component-name]/consumer-migration-guide.mdx` with code updates, styling guidance, accessibility notes, testing changes, and rollout advice
+- Provides: Workflow summary (verified source inputs, required section order, before/after examples, migration checklist, rollout guidance). Full instructions in `.ai/skills/consumer-migration-guide/references/consumer-migration-guide-prompt.md`
+
 #### Washing machine migration workflow
 
-- **purpose**: End-to-end 1st-gen → 2nd-gen migration sequence (phases, checklists, links to step docs and style guides)
-- **Doc**: `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md`
-- Use when: Planning or executing a component migration in the 2nd-gen component migration workstream
+#### Migration — phase 1: prep (`migration-prep`)
+
+- **purpose**: Understand the component, plan breaking changes, and define scope before any refactoring begins
+- **How to invoke**: Say "start migration prep for [component]", "plan the migration for [component]", or "phase 1 migration for [component]"
+- Use when: Beginning a 1st-gen → 2nd-gen component migration; before any files are created or code is moved
+- Provides: Research checklist (1st-gen API, usage, tests), breaking-change analysis, scope definition, written plan for review
+
+#### Migration — phase 2: setup (`migration-setup`)
+
+- **purpose**: Create the 2nd-gen file and folder structure, wire up exports, and confirm the build passes before implementation begins
+- **How to invoke**: Say "set up 2nd-gen structure for [component]", "create the file structure for [component]", or "phase 2 migration for [component]"
+- Use when: After prep is complete; creating the scaffolding a component needs before any logic is ported
+- Provides: File/folder creation checklist, export wiring steps, build-passes verification
+
+#### Migration — phase 3: API (`migration-api`)
+
+- **purpose**: Move properties, methods, and types from 1st-gen to 2nd-gen while maintaining a clear public API
+- **How to invoke**: Say "migrate the API for [component]", "port properties and methods for [component]", or "phase 3 migration for [component]"
+- Use when: Scaffolding is in place and it's time to define the component's public contract in 2nd-gen
+- Provides: Property/method porting workflow, type definition guidance, API contract review
+
+#### Migration — phase 4: styling (`migration-styling`)
+
+- **purpose**: Migrate CSS to the 2nd-gen structure, apply Spectrum 2 tokens, and ensure stylelint passes
+- **How to invoke**: Say "migrate styling for [component]", "port CSS for [component]", or "phase 4 migration for [component]"
+- Use when: API is in place; translating 1st-gen CSS to 2nd-gen with Spectrum 2 design tokens
+- Provides: CSS migration checklist, token mapping guidance, stylelint validation steps
+
+#### Migration — phase 5: accessibility (`migration-a11y`)
+
+- **purpose**: Implement WCAG-aligned semantics, ARIA, keyboard support, and focus management, and document accessibility behavior
+- **How to invoke**: Say "migrate accessibility for [component]", "implement a11y for [component]", or "phase 5 migration for [component]"
+- Use when: Styling is complete; hardening the component's accessibility implementation
+- Provides: WCAG checklist, ARIA pattern guidance, keyboard/focus requirements, a11y documentation template
+
+#### Migration — phase 6: testing (`migration-testing`)
+
+- **purpose**: Write unit tests, accessibility tests, and Storybook play functions for a migrated component
+- **How to invoke**: Say "write tests for [component] migration", "add migration tests for [component]", or "phase 6 migration for [component]"
+- Use when: Implementation is feature-complete; adding test coverage before review
+- Provides: Test coverage checklist, unit/a11y/play-function patterns, test-running verification
+
+#### Migration — phase 7: documentation (`migration-documentation`)
+
+- **purpose**: Write JSDoc, Storybook stories, and usage docs so the component is usable and understandable by others
+- **How to invoke**: Say "write docs for [component] migration", "document [component] for 2nd-gen", or "phase 7 migration for [component]"
+- Use when: Tests pass; creating the Storybook stories and usage documentation for the migrated component
+- Provides: JSDoc guidelines, stories scaffolding, README/usage doc structure, documentation checklist
+
+#### Migration — phase 8: review (`migration-review`)
+
+- **purpose**: Run final checks, verify lint/tests/build/Storybook, update the workstream status table, and open a PR
+- **How to invoke**: Say "review [component] migration", "final checks for [component]", or "phase 8 migration for [component]"
+- Use when: Documentation is complete; preparing the migration for code review and merge
+- Provides: Pre-PR checklist (lint, tests, build, Storybook), workstream status update steps, PR description guidance
 
 #### Deep understanding
 
@@ -252,6 +316,13 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - **How to invoke**: Ask “how does this work?”, “explain this code”, “walk me through this”, or “what does this do?”. Not tied to a file type; use on any code or file you want explained.
 - Use when: Explaining how code works, teaching about the codebase, or when the user asks “how does this work?”
 - Approach: Analogy → diagram → step-by-step walkthrough → highlight gotchas
+
+#### Session retrospective
+
+- **purpose**: Document lessons learned after completing work, especially when the user corrected planning documents or implementation; maintains persistent lesson files in `.ai/memory/` that future agents read at session start
+- **How to invoke**: Say "document what you learned", "add to lessons", "remember this", or "run a retrospective". Also triggered when the user corrects your work or you encounter a surprising constraint.
+- Use when: User corrects your work, you hit a non-obvious tool limitation, or at session end after substantial work
+- Provides: Workflow for capturing lessons, format guidelines, naming convention (`<descriptor>-lessons.md` in `.ai/memory/`)
 
 #### Session handoff
 
@@ -308,6 +379,58 @@ Editing any `.ai/rules/*.md` file immediately updates what both Cursor and Claud
 1. Create `.ai/skills/<skill-name>/SKILL.md`.
 2. Register it in the skills catalog below and in [`AGENTS.md`](../AGENTS.md).
 3. Both `.cursor/skills/` and `.claude/skills/` pick it up automatically via directory symlinks.
+
+### Symlink setup
+
+The symlinks in `.cursor/` and `.claude/` are committed to the repo, so **no setup is required after cloning**. Rules and skills should work automatically for all contributors.
+
+#### Recreating broken symlinks
+
+If a symlink is accidentally deleted or broken (e.g. after a file was deleted and recreated rather than edited in place), recreate it with the commands below.
+
+##### Claude Code
+
+```sh
+mkdir -p .claude
+ln -s ../.ai/rules .claude/rules
+ln -s ../.ai/skills .claude/skills
+```
+
+Claude Code reads `.md` files, so directory-level symlinks work directly. Verify:
+
+```sh
+ls -la .claude/
+# rules -> ../.ai/rules
+# skills -> ../.ai/skills
+```
+
+##### Cursor
+
+> **Cursor requires per-file symlinks for rules.** Cursor expects `.mdc` files and does not follow a directory symlink that contains `.md` files. Each rule needs its own symlink with the `.mdc` extension pointing back to the `.md` source.
+
+```sh
+mkdir -p .cursor/rules
+for f in .ai/rules/*.md; do
+  name=$(basename "$f" .md)
+  ln -s "../../.ai/rules/${name}.md" ".cursor/rules/${name}.mdc"
+done
+
+ln -s ../.ai/skills .cursor/skills
+```
+
+Verify:
+
+```sh
+ls -la .cursor/rules/
+# branch-naming.mdc -> ../../.ai/rules/branch-naming.md
+# styles.mdc -> ../../.ai/rules/styles.md
+# ... (one entry per rule)
+
+ls -la .cursor/
+# skills -> ../.ai/skills
+```
+
+If Cursor does not pick up the rules after symlinking, reload the window: `Cmd+Shift+P` → "Developer: Reload Window".
 
 ### Using rules and skills in other environments
 
