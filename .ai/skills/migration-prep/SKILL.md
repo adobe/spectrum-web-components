@@ -63,6 +63,8 @@ Review these sources before filling out the plan:
 - Relevant bug tickets and prior migration decisions
 - Relevant Figma and React Spectrum references for naming, variants, and expected behavior
 
+For the Figma reference specifically, ask for images from the internal Figma file **`S2 / Web (Desktop scale)`**. The preferred artifact is a PNG copied from the **primary frame** that includes the component's **overview**, **properties**, and **variants**. Ask the user to use Figma's **Copy as PNG** on that frame.
+
 When evaluating `rendering-and-styling-migration-analysis.md`, **do not use the CSS => SWC mapping table**. Use only these sections:
 
 - `SWC`
@@ -94,7 +96,7 @@ Do not present the plan as review-ready until all of the following are available
 
 - 1st-gen source
 - Rendering and styling migration analysis
-- Figma reference image(s) or equivalent approved visual reference
+- Figma reference image(s) from **`S2 / Web (Desktop scale)`**, copied as PNG from the primary frame that includes overview, properties, and variants
 - Epic or ticket context if renames, deprecations, or breaking changes are proposed
 
 If any are missing, follow `Critical missing-input handling`.
@@ -105,7 +107,7 @@ Before drafting more than scaffold-level content, explicitly ask the user for an
 
 Critical inputs:
 
-- Figma spec images or another approved visual reference
+- Figma PNG reference from **`S2 / Web (Desktop scale)`**, copied from the primary frame that includes overview, properties, and variants
 - Epic number
 - Ticket numbers and summaries for any known breaking changes, or copied ticket descriptions the agent can evaluate
 - Accessibility migration analysis, if not already available
@@ -129,7 +131,7 @@ When a critical input is missing, decide first whether it is materially blocking
 
 Materially blocking inputs:
 
-- visual references
+- Figma PNG visual references from **`S2 / Web (Desktop scale)`**, copied from the primary frame that includes overview, properties, and variants
 - accessibility analysis
 - dependency-order or shared-base decisions
 - breaking-change ticket context
@@ -176,7 +178,7 @@ Example:
 Please provide these to continue:
 
 1. Approved visual reference
-   Send Figma spec images or another approved visual reference so I can validate visual API and supported presentation modes.
+   Send a PNG copied from the internal Figma file `S2 / Web (Desktop scale)`, using `Copy as PNG` on the primary frame that includes overview, properties, and variants, so I can validate visual API and supported presentation modes.
 2. Accessibility migration analysis
    Send the analysis if available, or confirm that I should proceed provisionally and leave accessibility-dependent recommendations unresolved.
 3. Breaking-change ticket context
@@ -281,10 +283,10 @@ Instead:
 
 Before the plan is considered complete:
 
-- key references have been verified
-- unresolved placeholders have been removed or explicitly addressed with the user
-- required sections are populated or explicitly marked with a reason
-- the feature/functionality inventory is documented well enough to support `Must ship`, `Additive`, and open-question decisions
+- key references have been verified (links resolve, anchors exist, version strings are real)
+- unresolved placeholders have been removed or explicitly addressed with the user (`[component]`, `[Component]`, `[component-version]`, `Epic SWC-####`)
+- required sections are populated or explicitly marked with a reason (`TL;DR`, `Most blocking open questions`, `Changes overview`, `2nd-gen API decisions`, `References`)
+- the feature/functionality inventory is documented well enough across `1st-gen API surface`, `Dependencies`, and `Changes overview` to support `Must ship`, `Additive`, and open-question decisions
 - dependency-aware sequencing decisions are called out
 - major provisional decisions are surfaced back to the user for review
 
@@ -306,25 +308,13 @@ You may:
 - add bullets beneath a section when the template invites additive detail
 - mark non-applicable items as `N/A` with a brief reason
 
-## Final review prompt
-
-After drafting the plan, always end with a structured review prompt. Present it as three clearly labeled sections so the user can act on each area independently — do not collapse them into a single paragraph.
-
-**Required sections:**
-
-1. **Breaking changes to verify** — list each proposed breaking change and ask the user to confirm it is accurately scoped, that a ticket exists or is needed, and whether any requires team sign-off before the plan is treated as settled
-2. **What is still provisional** — call out every decision marked as inferred or open question that could materially change the plan; name which sections would be affected if the decision resolves differently
-3. **What to provide next** — list missing resources or unresolved blockers as numbered actions the user can respond to by number, and explain what each unlocks in the plan
-
-If there are no breaking changes, say so explicitly rather than omitting the section.
-
 ## Resume hooks for missing resources
 
 If the plan is provisional because critical inputs are missing, end with explicit next-step prompts the user can act on later.
 
 Example resume hooks:
 
-- "When you have Figma spec images or another approved visual reference, send them and I’ll update the visual API and supported presentation modes."
+- "When you have the Figma PNG from `S2 / Web (Desktop scale)` copied from the primary frame with overview, properties, and variants, send it and I’ll update the visual API and supported presentation modes."
 - "When you have the accessibility migration analysis, send it and I’ll tighten the semantics, state, and testing recommendations."
 - "When you have the Epic number, send it and I’ll finalize the header and references."
 - "If you can paste the breaking-change ticket descriptions, I can evaluate likely impact and update the plan’s migration-risk guidance."
@@ -351,6 +341,8 @@ Example resume hooks:
 
 ## Final review checklist
 
+This is the **quality reflection** the agent must perform after `Definition of done` is satisfied and before handing the plan to the user for review. Where `Definition of done` is mechanical, this checklist is judgmental — surface concerns to the user when any answer is "no" or unclear, and capture the unresolved item in `Most blocking open questions` if it materially affects the recommendation.
+
 Before finalizing the plan, assess whether:
 
 - The proposed 2nd-gen API is simpler and clearer than the 1st-gen API
@@ -360,3 +352,15 @@ Before finalizing the plan, assess whether:
 - The migration path for consumers is understandable and realistic
 - Open questions are the right questions, not placeholders for analysis the agent should have done
 - The plan gives reviewers a clear recommendation, not just a list of unresolved facts
+
+## Final review prompt
+
+After drafting the plan, always end with a structured review prompt. Present it as three clearly labeled sections so the user can act on each area independently — do not collapse them into a single paragraph.
+
+**Required sections:**
+
+1. **Breaking changes to verify** — list each proposed breaking change and ask the user to confirm it is accurately scoped, that a ticket exists or is needed, and whether any requires team sign-off before the plan is treated as settled
+2. **What is still provisional** — call out every decision marked as inferred or open question that could materially change the plan; name which sections would be affected if the decision resolves differently
+3. **What to provide next** — list missing resources or unresolved blockers as numbered actions the user can respond to by number, and explain what each unlocks in the plan
+
+If there are no breaking changes, say so explicitly rather than omitting the section.

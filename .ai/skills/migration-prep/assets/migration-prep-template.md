@@ -228,7 +228,7 @@ Use lightweight confidence labels where helpful:
 #### Visual matrix (2nd-gen)
 
 <!--
-Example content for this section - may be ommitted if not relevant.
+Refer to the following example content for this section. If not applicable, mark as N/A with a brief reason rather than removing the section.
 
 Based on the visual spec, the supported visual combinations should be planned as:
 
@@ -287,10 +287,10 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 
 <!-- Use the prescribed table format below; do not convert this section to bullets or another schema. -->
 
-| Layer    | Path                                            | Contains                                                                                                                                                                                |
-| -------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Core** | `2nd-gen/packages/core/components/[component]/` | `[Component].base.ts`, `[Component].types.ts`, validation, state, accessible-name logic, attribute forwarding, pending-label behavior, and other reusable semantic rules. No rendering. |
-| **SWC**  | `2nd-gen/packages/swc/components/[component]/`  | `[Component].ts`, `[component].css`, element registration, stories, tests, and the specific S2 rendering/styling for `sp-[component]`.                                                  |
+| Layer    | Path                                            | Contains                                                                                                                                                                                                                                          |
+| -------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Core** | `2nd-gen/packages/core/components/[component]/` | `[Component].base.ts`, `[Component].types.ts`, validation, state, accessible-name logic, attribute forwarding, pending-label behavior, and other reusable semantic rules. No rendering. Add component-specific reusable behaviors here as needed. |
+| **SWC**  | `2nd-gen/packages/swc/components/[component]/`  | `[Component].ts`, `[component].css`, element registration, stories, tests, and the specific S2 rendering/styling for `sp-[component]`.                                                                                                            |
 
 <!-- Retain this section with any clarifying notes, using existing bullets as a starting point. -->
 
@@ -369,12 +369,13 @@ Planned rendering shape:
 #### Visual regression
 
 <!--
-Retain this section for any components with visual rendering, modifying as needed for the component's specs and variants.
+Retain this section for any components with visual rendering, modifying as needed for the component's specs and variants.  Replace the example bullets below with VRT items that match this component, and reference real bug tickets only when they apply to this component.
 
-- [ ] Add VRT coverage for size, variant, treatment, static color, and pending combinations
-- [ ] Add visual regression coverage for static white outline on its approved background, including hover state (`SWC-1139`)
-- [ ] Add visual/high-contrast coverage for the pending state using disabled styling (`SWC-459`)
-- [ ] Add focus-visible regression coverage for truncated buttons so the ring is not clipped (`SWC-886`) -->
+- [ ] Add VRT coverage for the component's size, variant, treatment, and state combinations
+- [ ] Add visual regression coverage for any static color treatments on their approved backgrounds, including hover state (`SWC-####`)
+- [ ] Add visual/high-contrast coverage for any state that relies on shared styling (e.g. pending using disabled styling) (`SWC-####`)
+- [ ] Add focus-visible regression coverage where the focus ring may be clipped or obscured (`SWC-####`)
+-->
 
 ### Documentation
 
@@ -442,15 +443,15 @@ Owner examples:
 
 - [Washing machine workflow](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [2nd-gen migration status table](../../02_workstreams/02_2nd-gen-component-migration/01_status.md)
-- [Accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Accessibility migration analysis](./accessibility-migration-analysis.md) - include only if available, otherwise mark as TODO and leave as plain text
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
 - [1st-gen source](../../../../1st-gen/packages/[component]/src/[Component].ts)
-- [1st-gen shared base / mixins](../../../../1st-gen/packages/[component]/src/)
-- [1st-gen tests](../../../../1st-gen/packages/[component]/test/[component].test.ts)
-- [1st-gen README](../../../../1st-gen/packages/[component]/README.md)
-- [React Spectrum S2 [Component]](https://react-spectrum.adobe.com/[Component])
+- [1st-gen shared base / mixins](../../../../1st-gen/packages/[component]/src/) — include only if the component has shared base or mixin files
+- [1st-gen tests](../../../../1st-gen/packages/[component]/test/[component].test.ts) — include only if a test file exists
+- [1st-gen README](../../../../1st-gen/packages/[component]/README.md) — include only if a README exists
+- [React Spectrum S2 [Component]](https://react-spectrum.adobe.com/[Component]) — confirm the URL slug matches the actual React Spectrum docs page
 - [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
 - Epic: SWC-#### - [Component] epic
 
