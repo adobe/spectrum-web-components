@@ -304,11 +304,13 @@ export class PromptField extends SpectrumElement {
                 .value=${this.value}
                 placeholder=${this.placeholder}
                 aria-label=${this.label}
+                aria-placeholder="placeholder"
                 ?disabled=${this._isDisabled}
                 rows="1"
                 @input=${this._handleInput}
                 @keydown=${this._handleTextareaKeydown}
               ></textarea>
+              <span id="placeholder" hidden>${this.placeholder}</span>
             </div>
           </div>
 

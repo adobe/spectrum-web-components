@@ -41,5 +41,24 @@ export const OverviewTest: Story = {
       expect(el).toBeDefined();
       expect(el.shadowRoot).toBeTruthy();
     });
+
+    await step(
+      'shadow slots are in fixed document order (status → body → feedback → sources → suggestions)',
+      async () => {
+        const shadow = el.shadowRoot;
+        if (!shadow) {
+          throw new Error('swc-system-message: expected shadow root');
+        }
+        const slots = [...shadow.querySelectorAll('slot')];
+        const slotNames = slots.map((slot) => slot.getAttribute('name') ?? '');
+        expect(slotNames).toEqual([
+          'status',
+          '',
+          'feedback',
+          'sources',
+          'suggestions',
+        ]);
+      }
+    );
   },
 };

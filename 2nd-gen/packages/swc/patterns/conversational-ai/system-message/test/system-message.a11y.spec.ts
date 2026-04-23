@@ -23,8 +23,7 @@ test.describe('SystemMessage - ARIA Snapshots', () => {
     );
     await expect(root).toMatchAriaSnapshot(`
       - group "Assistant message":
-        - button "Collapse reasoning Response generated" [expanded]:
-          - img "Collapse reasoning"
+        - button "Response generated" [expanded]:
           - text: Response generated
         - region "Reasoning": The user said make a presentation deck but didn't specify duration of deck. Assumption is a brief presentation. I should check previous Hilton executive presentation decks and extract the structure.
         - paragraph: According to the assets, there is a clear journey from beginning to end. Let's start with overarching themes and build from there.
