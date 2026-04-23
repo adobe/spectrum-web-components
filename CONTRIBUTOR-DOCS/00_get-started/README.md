@@ -12,6 +12,7 @@
 <summary><strong>Beneath this doc</strong></summary>
 
 - [Component status](component-matrix.md)
+- [Customization cheatsheet](customization-cheatsheet.md)
 - [Get started (for consumers)](for-consumers.md)
 
 </details>

@@ -60,7 +60,7 @@ This guide explains when and how to use each primitive, with correct examples an
 
 > **Scope:** This guide covers core focus management for standard components. Overlay, dialog, and dropdown focus concerns (focus trapping, focus restoration, overlay stacking) are **out of scope** and will be documented when those components are migrated.
 
-For the full technical rationale, see the [Focus Management Strategy RFC](../03_project-planning/05_strategies/focus-management-strategy-rfc.md).
+For the full technical rationale, see the [Focus Management Strategy RFC](../rfcs/proposed/2026-04-22-focus-management-strategy.md).
 
 ---
 
@@ -630,7 +630,7 @@ When submitting a PR that affects focus management, you must verify:
 
 ## Resources
 
-- [Focus Management Strategy RFC](../03_project-planning/05_strategies/focus-management-strategy-rfc.md) — Full technical rationale
+- [Focus Management Strategy RFC](../rfcs/proposed/2026-04-22-focus-management-strategy.md) — Full technical rationale
 - [WAI-ARIA Roving Tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex) — The pattern `FocusgroupNavigationController` implements
 - [Open UI Focusgroup Explainer](https://open-ui.org/components/focusgroup.explainer/) — The emerging standard the controller aligns with
 - [Shadow DOM delegatesFocus](https://frontendmasters.com/blog/shadow-dom-focus-delegation-getting-delegatesfocus-right/) — Implementation deep-dive

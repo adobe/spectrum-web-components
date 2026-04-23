@@ -18,6 +18,7 @@
 
 - [Get started](00_get-started/README.md)
     - [Component status](00_get-started/component-matrix.md)
+    - [Customization cheatsheet](00_get-started/customization-cheatsheet.md)
     - [Get started (for consumers)](00_get-started/for-consumers.md)
 - [Contributor guides](01_contributor-guides/README.md)
     - [Getting involved](01_contributor-guides/01_getting-involved.md)
@@ -43,7 +44,11 @@
     - [Workstreams](03_project-planning/02_workstreams/README.md)
     - [Components](03_project-planning/03_components/README.md)
     - [Milestones](03_project-planning/04_milestones/README.md)
-    - Strategies
+- [RFCs](rfcs/README.md)
+    - Accepted
+    - Proposed
+    - Superseded
+    - [[RFC title]](rfcs/template.md)
 
 </details>
 

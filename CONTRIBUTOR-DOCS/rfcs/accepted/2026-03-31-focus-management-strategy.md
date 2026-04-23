@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Project planning](../README.md) / Strategies / Focus Management Strategy: 2nd-Gen Proposal
+[CONTRIBUTOR-DOCS](../../README.md) / [RFCs](../README.md) / Accepted / Focus Management Strategy: 2nd-Gen Proposal
 
 <!-- Document title (editable) -->
 
