@@ -140,7 +140,10 @@ When an icon communicates information not available from surrounding text, add a
 <swc-icon><svg>…</svg></swc-icon>
 Save
 
-<!-- Standalone icon in a button — set label on the icon or the button -->
+<!-- Meaningful standalone icon — set label directly on the icon -->
+<swc-icon label="Search"><svg>…</svg></swc-icon>
+
+<!-- Icon inside an interactive element — label the wrapper instead -->
 <button aria-label="Search">
   <swc-icon><svg>…</svg></swc-icon>
 </button>
@@ -148,8 +151,9 @@ Save
 
 ## Accessibility
 
-- Without `label`, the component sets `aria-hidden="true"` on the host, hiding it from assistive technology. Use this for decorative icons that appear alongside visible text.
-- When `label` is set, the component removes `aria-hidden` and applies `aria-label` and `role="img"` to the slotted SVG so screen readers announce the icon with a meaningful name.
+- The component always sets `role="img"` on the slotted SVG.
+- Without `label`, `aria-hidden="true"` is set on both the host and the slotted SVG, hiding the icon entirely from assistive technology. Use this for decorative icons that appear alongside visible text.
+- When `label` is set, `aria-hidden` is removed from both the host and the SVG, and `aria-label` is applied to the SVG so screen readers announce the icon with a meaningful name.
 - `<swc-icon>` is not focusable. For interactive icons, wrap them in a `<button>` or `<a>` element and set the accessible name on the interactive wrapper rather than on the icon.
 
 ## Styling

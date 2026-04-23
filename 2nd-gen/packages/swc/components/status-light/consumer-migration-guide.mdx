@@ -46,11 +46,11 @@ import '@adobe/spectrum-wc/status-light';
 
 ### Removed in Spectrum 2
 
-| Removed                                 | Replacement                                                               |
-| --------------------------------------- | ------------------------------------------------------------------------- |
-| `disabled` attribute                    | Was deprecated in Spectrum 1; no replacement — remove it from your markup |
-| `accent` semantic variant               | Not part of Spectrum 2; use `neutral` or `info` depending on intent       |
-| `--mod-statuslight-*` custom properties | `--swc-statuslight-*` equivalents (see [Styling](#styling))               |
+| Removed                                 | Replacement                                                                                                                                                                                                                                                                    |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `disabled` attribute                    | Was deprecated in Spectrum 1; no replacement — remove it from your markup                                                                                                                                                                                                      |
+| `accent` semantic variant               | Not part of Spectrum 2; use `neutral` or `info` depending on intent                                                                                                                                                                                                            |
+| `--mod-statuslight-*` custom properties | `--swc-statuslight-*` for semantic variants only — `--swc-statuslight-dot-color` overrides semantic variant dot colors. Non-semantic color variants (`yellow`, `chartreuse`, `celery`, etc.) bake in their dot colors and cannot be overridden here; retoken globally instead. |
 
 ## Update your code
 
@@ -118,35 +118,36 @@ Spectrum 2 exposes a new set of public CSS custom properties on `<swc-status-lig
 
 Replace every `--mod-statuslight-*` property with its `--swc-statuslight-*` equivalent:
 
-| Removed (Spectrum 1)                        | Replacement (Spectrum 2)           |
-| ------------------------------------------- | ---------------------------------- |
-| `--mod-statuslight-height`                  | `--swc-statuslight-height`         |
-| `--mod-statuslight-dot-size`                | `--swc-statuslight-dot-size`       |
-| `--mod-statuslight-font-size`               | `--swc-statuslight-font-size`      |
-| `--mod-statuslight-spacing-dot-to-label`    | `--swc-statuslight-text-to-visual` |
-| `--mod-statuslight-spacing-top-to-dot`      | `--swc-statuslight-top-to-dot`     |
-| `--mod-statuslight-spacing-top-to-label`    | `--swc-statuslight-top-to-text`    |
-| `--mod-statuslight-spacing-bottom-to-label` | `--swc-statuslight-bottom-to-text` |
-| `--mod-statuslight-corner-radius`           | `--swc-statuslight-corner-radius`  |
-| `--mod-statuslight-font-weight`             | `--swc-statuslight-font-weight`    |
-| `--mod-statuslight-content-color-default`   | `--swc-statuslight-content-color`  |
-| `--mod-statuslight-semantic-*-color`        | `--swc-statuslight-dot-color`      |
-| `--mod-statuslight-nonsemantic-*-color`     | `--swc-statuslight-dot-color`      |
+| Removed (Spectrum 1)                        | Replacement (Spectrum 2)                                |
+| ------------------------------------------- | ------------------------------------------------------- |
+| `--mod-statuslight-height`                  | `--swc-statuslight-height`                              |
+| `--mod-statuslight-dot-size`                | `--swc-statuslight-dot-size`                            |
+| `--mod-statuslight-font-size`               | `--swc-statuslight-font-size`                           |
+| `--mod-statuslight-spacing-dot-to-label`    | `--swc-statuslight-text-to-visual`                      |
+| `--mod-statuslight-spacing-top-to-dot`      | `--swc-statuslight-top-to-dot`                          |
+| `--mod-statuslight-spacing-top-to-label`    | `--swc-statuslight-padding-block` (covers top + bottom) |
+| `--mod-statuslight-spacing-bottom-to-label` | `--swc-statuslight-padding-block` (covers top + bottom) |
+| `--mod-statuslight-corner-radius`           | No replacement                                          |
+| `--mod-statuslight-font-weight`             | No replacement                                          |
+| `--mod-statuslight-content-color-default`   | `--swc-statuslight-content-color`                       |
+| `--mod-statuslight-semantic-*-color`        | `--swc-statuslight-dot-color`                           |
+| `--mod-statuslight-nonsemantic-*-color`     | `--swc-statuslight-dot-color`                           |
 
 ### Public custom properties
 
 {/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-status-light>`'s CEM entry once they are added in a follow-up PR. */}
 
-| Custom property                    | Description                                           | Notes |
-| ---------------------------------- | ----------------------------------------------------- | ----- |
-| `--swc-statuslight-height`         | Minimum block size of the component.                  |       |
-| `--swc-statuslight-padding-block`  | Block (top/bottom) padding.                           |       |
-| `--swc-statuslight-top-to-dot`     | Distance from the block-start edge to the dot center. |       |
-| `--swc-statuslight-text-to-visual` | Gap between the indicator dot and the label.          |       |
-| `--swc-statuslight-line-height`    | Line height of the label text.                        |       |
-| `--swc-statuslight-dot-size`       | Size of the indicator dot.                            |       |
-| `--swc-statuslight-dot-color`      | Color of the indicator dot.                           |       |
-| `--swc-statuslight-font-size`      | Font size of the label text.                          |       |
+| Custom property                    | Description                                           | Notes                                                                                                  |
+| ---------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `--swc-statuslight-height`         | Minimum block size of the component.                  |                                                                                                        |
+| `--swc-statuslight-padding-block`  | Block (top/bottom) padding.                           |                                                                                                        |
+| `--swc-statuslight-top-to-dot`     | Distance from the block-start edge to the dot center. |                                                                                                        |
+| `--swc-statuslight-text-to-visual` | Gap between the indicator dot and the label.          |                                                                                                        |
+| `--swc-statuslight-line-height`    | Line height of the label text.                        |                                                                                                        |
+| `--swc-statuslight-dot-size`       | Size of the indicator dot.                            |                                                                                                        |
+| `--swc-statuslight-dot-color`      | Color of the indicator dot.                           | Semantic variants only. Non-semantic color variants bake in their dot color; retoken globally instead. |
+| `--swc-statuslight-content-color`  | Color of the label text.                              |                                                                                                        |
+| `--swc-statuslight-font-size`      | Font size of the label text.                          |                                                                                                        |
 
 <div
   style={{
