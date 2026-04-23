@@ -24,9 +24,7 @@ test.describe('MessageSources - ARIA Snapshots', () => {
       'swc-message-sources'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - button "Collapse Sources Sources" [expanded]:
-        - img "Collapse Sources"
-        - text: Sources
+      - button "Sources" [expanded]
       - list "Sources":
         - listitem:
           - link "Adobe Experience Manager documentation":

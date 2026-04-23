@@ -24,7 +24,7 @@ import styles from './system-message.css';
  *
  * Slots:
  * - `status` — `<swc-response-status>` thinking/complete indicator
- * - default slot — System reply body (semantic HTML; typography after API table on System message Storybook docs)
+ * - default slot — System message body (semantic HTML; styled with Spectrum token variables)
  * - `feedback` — `<swc-message-feedback>` positive/negative feedback
  * - `sources` — `<swc-message-sources>` collapsible source list
  * - `suggestions` — `<swc-suggestion>` follow-up suggestion group
@@ -32,7 +32,7 @@ import styles from './system-message.css';
  * Wrap with `<swc-conversation-turn type="system">` for column alignment in the thread.
  *
  * @element swc-system-message
- * @slot - System reply body (semantic HTML; typography after API table on System message Storybook docs)
+ * @slot - System message body (semantic HTML; styled with Spectrum token variables)
  * @slot status - Response status indicator (thinking / complete)
  * @slot feedback - Positive / negative feedback controls
  * @slot sources - Collapsible list of sources

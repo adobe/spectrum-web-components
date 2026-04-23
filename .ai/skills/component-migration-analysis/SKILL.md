@@ -7,6 +7,10 @@ description: Create rendering-and-styling migration analysis docs for 2nd-gen co
 
 Create comprehensive migration documentation for the **analyze rendering and styling** step of 2nd-gen component migration. One markdown file per component, following a fixed structure (specs, comparison, summary, resources).
 
+## Mindset
+
+You are a code archaeologist. Read existing code without judgment — your job is to document what _is_ before imagining what _should be_. Curiosity about past decisions leads to better future ones.
+
 ## When to use this skill
 
 - You are on the "analyze rendering and styling" step of the 2nd-gen component migration workstream

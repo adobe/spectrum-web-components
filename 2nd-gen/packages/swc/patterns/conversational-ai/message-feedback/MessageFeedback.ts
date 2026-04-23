@@ -135,11 +135,7 @@ export class MessageFeedback extends SpectrumElement {
           aria-checked=${this.status === 'positive'}
           @click=${this._handlePositive}
         >
-          <swc-icon
-            label="Positive response"
-          >
-            ${ThumbUpIcon()}
-          </swc-icon>
+          <swc-icon aria-hidden="true">${ThumbUpIcon()}</swc-icon>
         </button>
         <button
           class="swc-MessageFeedback-button"
@@ -149,11 +145,7 @@ export class MessageFeedback extends SpectrumElement {
           aria-checked=${this.status === 'negative'}
           @click=${this._handleNegative}
         >
-          <swc-icon
-            label="Negative response"
-          >
-            ${ThumbDownIcon()}
-          </swc-icon>
+          <swc-icon aria-hidden="true">${ThumbDownIcon()}</swc-icon>
         </button>
       </div>
     `;

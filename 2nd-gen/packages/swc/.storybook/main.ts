@@ -81,6 +81,11 @@ const stories: StorybookConfig['stories'] = [
 if (storybookMode !== 'ci-a11y') {
   stories.push(
     {
+      directory: '../components',
+      files: '**/*.mdx',
+      titlePrefix: 'Components',
+    },
+    {
       ...CORE_STORY_ROOT,
       files: '**/*.mdx',
     },

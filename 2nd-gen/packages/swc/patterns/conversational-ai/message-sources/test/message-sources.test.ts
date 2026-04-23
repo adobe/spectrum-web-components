@@ -84,7 +84,7 @@ export const OpenMutationTest: Story = {
 
       expect(toggle?.textContent?.trim()).toBe('References');
       expect(panel?.getAttribute('aria-label')).toBe('References');
-      expect(icon?.getAttribute('label')).toContain('References');
+      expect(icon?.getAttribute('aria-hidden')).toBe('true');
     });
 
     await step(

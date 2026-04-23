@@ -81,7 +81,7 @@ export class MessageSources extends SpectrumElement {
               ? 'swc-MessageSources-chevron swc-MessageSources-chevron--down'
               : 'swc-MessageSources-chevron'}
             style="--swc-icon-inline-size:10px;--swc-icon-block-size:10px;"
-            label=${isExpanded ? `Collapse ${label}` : `Expand ${label}`}
+            aria-hidden="true"
           >
             ${Chevron75Icon()}
           </swc-icon>
