@@ -36,7 +36,7 @@
 .swc-ConversationTurn > slot {
   display: flex;
   flex-direction: column;
-  gap: var(--swc-conversation-turn-group-gap, 8px);
+  gap: var(--swc-conversation-turn-group-gap, token("spacing-100"));
   inline-size: 100%;
   min-inline-size: 0;
 }
@@ -68,6 +68,6 @@
  * The ring follows each slotted element's own border-radius so the outline
  * hugs the visible bubble instead of reshaping it. */
 :host(:focus-visible) ::slotted(*) {
-  box-shadow: 0 0 0 2px token("focus-indicator-color");
-  outline: none;
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-indicator-gap");
 }

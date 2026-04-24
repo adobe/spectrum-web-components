@@ -50,8 +50,8 @@
 }
 
 .swc-MessageFeedback-button:focus-visible {
-  outline: 2px solid token("focus-indicator-color");
-  outline-offset: 2px;
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-indicator-gap");
 }
 
 .swc-MessageFeedback-button[data-selected] {

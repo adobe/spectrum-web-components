@@ -53,7 +53,7 @@
  * for subsequent keystrokes. */
 .swc-PromptField-box:has(.swc-PromptField-textarea:focus-visible) {
   outline: 2px solid token("focus-indicator-color");
-  outline-offset: 2px;
+  outline-offset: token("focus-indicator-thickness");
 }
 
 /* ─────────────────────────────────────
@@ -253,8 +253,8 @@
 
 .swc-PromptField-send:focus-visible,
 .swc-PromptField-stop:focus-visible {
-  outline: 2px solid token("focus-indicator-color");
-  outline-offset: 2px;
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-indicator-gap");
 }
 
 .swc-PromptField-send:active,

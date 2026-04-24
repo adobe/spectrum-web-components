@@ -41,8 +41,8 @@
 }
 
 .swc-SuggestionItem:focus-visible {
-  box-shadow: 0 0 0 2px token("focus-indicator-color");
-  outline: none;
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-indicator-gap");
 }
 
 .swc-SuggestionItem:active {
