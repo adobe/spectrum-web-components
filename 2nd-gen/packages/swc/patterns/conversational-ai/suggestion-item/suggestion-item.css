@@ -11,7 +11,7 @@
  */
 
 :host {
-  display: inline-flex;
+  display: inline-block;
 }
 
 *,
@@ -22,7 +22,6 @@
 
 .swc-SuggestionItem {
   display: inline-flex;
-  gap: 0;
   align-items: center;
   font-family: token("sans-serif-font");
   font-size: token("font-size-200");
@@ -31,9 +30,8 @@
   color: token("neutral-content-color-default");
   background: token("gray-100");
   border: none;
-  border-radius: 16px;
+  border-radius: token("corner-radius-extra-large-default");
   cursor: pointer;
-  transition: background 130ms ease;
 }
 
 .swc-SuggestionItem:hover,
@@ -49,22 +47,23 @@
 
 .swc-SuggestionItem:active {
   transform: perspective(64px) translate3d(0, 0, -1px);
-  transition: transform 0.2s ease;
+  transition-timing-function: cubic-bezier(0.45, 0, 0.4, 1);
+  transition-duration: token("animation-duration-200");
   will-change: transform;
 }
 
 .swc-SuggestionItem swc-icon {
-  --swc-icon-inline-size: 20px;
-  --swc-icon-block-size: 20px;
+  --swc-icon-inline-size: token("workflow-icon-size-100");
+  --swc-icon-block-size: token("workflow-icon-size-100");
 
   flex-shrink: 0;
-  margin-inline-start: 14px;
-  margin-inline-end: 6px;
+  margin-inline-start: var(--swc-suggestion-item-icon-margin-inline-start, 14px);
+  margin-inline-end: var(--swc-suggestion-item-icon-margin-inline-end, 6px);
 }
 
 .swc-SuggestionItem-label {
   display: inline-flex;
-  padding-block: 7px;
-  padding-inline-end: 16px;
+  padding-block: var(--swc-suggestion-item-label-padding-block, 7px);
+  padding-inline-end: var(--swc-suggestion-item-label-padding-inline-end, token("spacing-300"));
   text-align: left;
 }

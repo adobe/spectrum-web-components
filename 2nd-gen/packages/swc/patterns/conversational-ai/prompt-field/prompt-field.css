@@ -41,7 +41,7 @@
   flex-direction: column;
   gap: token("spacing-300");
   padding: token("spacing-300");
-  background: token("gray-25");
+  background: token("background-layer-2-color");
   border-radius: token("corner-radius-800");
   box-shadow: token("drop-shadow-emphasized-default-x") token("drop-shadow-emphasized-default-y") token("drop-shadow-emphasized-default-blur") token("drop-shadow-emphasized-default-color");
   overflow: hidden;

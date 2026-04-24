@@ -26,9 +26,9 @@
   display: block;
   inline-size: fit-content;
   max-inline-size: 536px;
-  padding-block: 8px;
-  padding-inline: 16px;
-  margin-inline-end: 24px;
+  padding-block: var(--swc-user-message-padding-block, token("spacing-100"));
+  padding-inline: var(--swc-user-message-padding-inline, token("spacing-300"));
+  margin-inline-end: var(--swc-user-message-margin-inline-end, token("spacing-400"));
   font-family: token("sans-serif-font");
   font-size: token("font-size-200");
   font-weight: token("regular-font-weight");
@@ -49,13 +49,13 @@
   inline-size: 324px;
   min-inline-size: 212px;
   max-inline-size: 440px;
-  padding: 16px;
+  padding: var(--swc-user-message-card-padding, token("spacing-300"));
 }
 
 /* Image: shrinks to the fixed 180px inner card + 2×8px padding. */
 :host([type="media"]) {
   inline-size: fit-content;
-  padding: 8px;
+  padding: var(--swc-user-message-media-padding, token("spacing-100"));
 }
 
 .swc-UserMessage-attachment {
@@ -151,6 +151,7 @@
   font-weight: token("regular-font-weight");
   line-height: token("line-height-font-size-75");
   color: token("gray-800");
+  text-overflow: ellipsis;
 }
 
 :host([type="card"]) .swc-UserMessage-title,
@@ -164,14 +165,9 @@
 /* Long, unbroken tokens (e.g. filenames without spaces) break at any character
  * so the title wraps inside the meta column instead of overflowing the bubble. */
 :host([type="card"]) .swc-UserMessage-title ::slotted(*),
-:host([type="media"]) .swc-UserMessage-title ::slotted(*) {
-  display: block;
-  min-inline-size: 0;
-  overflow-wrap: anywhere;
-  white-space: normal;
-}
-
-:host([type="card"]) .swc-UserMessage-subtitle ::slotted(*) {
+:host([type="media"]) .swc-UserMessage-title ::slotted(*),
+:host([type="card"]) .swc-UserMessage-subtitle ::slotted(*),
+:host([type="media"]) .swc-UserMessage-subtitle ::slotted(*) {
   display: block;
   min-inline-size: 0;
   white-space: nowrap;

@@ -50,7 +50,7 @@
 }
 
 .swc-MessageSources-chevron {
-  transition: transform 130ms ease;
+  transition: transform token("animation-duration-100") ease;
 }
 
 .swc-MessageSources-chevron--down {

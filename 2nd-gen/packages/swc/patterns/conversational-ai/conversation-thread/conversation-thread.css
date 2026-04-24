@@ -21,11 +21,8 @@
   box-sizing: border-box;
 }
 
+/* Flex on the wrapper; the slot is `display: contents` so slotted turns are the flex items. */
 .swc-ConversationThread {
-  inline-size: 100%;
-}
-
-.swc-ConversationThread > slot {
   display: flex;
   flex-direction: column;
   gap: var(--swc-conversation-thread-gap, 16px);

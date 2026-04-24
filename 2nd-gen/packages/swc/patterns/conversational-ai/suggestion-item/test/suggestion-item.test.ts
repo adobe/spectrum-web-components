@@ -10,12 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
+import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
+import '../../suggestion/index.js';
 import '../index.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
+import { Suggestion } from '../../suggestion/Suggestion.js';
 import meta, { Overview } from '../stories/suggestion-item.stories.js';
 import { SuggestionItem } from '../SuggestionItem.js';
 
@@ -88,5 +91,59 @@ export const EventTest: Story = {
         expect(detail?.label).toBe('Create a slide deck from this');
       }
     );
+  },
+};
+
+/**
+ * Suggestion item is typically nested in `swc-suggestion`, which may omit `heading`.
+ */
+export const NoParentHeadingTest: Story = {
+  name: 'Inside swc-suggestion without heading',
+  render: () => html`
+    <swc-suggestion>
+      <swc-suggestion-item>Create a slide deck from this</swc-suggestion-item>
+    </swc-suggestion>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<Suggestion>(
+      canvasElement,
+      'swc-suggestion'
+    );
+    const el = await getComponent<SuggestionItem>(
+      canvasElement,
+      'swc-suggestion-item'
+    );
+
+    await step('parent has no group heading in the shadow tree', async () => {
+      expect(group.heading).toBe('');
+      /* Reflected `heading` may be absent or empty when unset. */
+      expect(group.getAttribute('heading')).toBeFalsy();
+      expect(
+        group.shadowRoot?.querySelector('.swc-Suggestion-title')
+      ).toBeNull();
+    });
+
+    await step('item default slot and click still work', async () => {
+      const slot = el.shadowRoot?.querySelector<HTMLSlotElement>('slot');
+      const assignedText = slot
+        ?.assignedNodes({ flatten: true })
+        .map((node) => node.textContent ?? '')
+        .join('')
+        .trim();
+      expect(assignedText).toBe('Create a slide deck from this');
+
+      let detail: { label: string } | undefined;
+      el.addEventListener(
+        'swc-suggestion',
+        (event) => {
+          detail = (event as CustomEvent<{ label: string }>).detail;
+        },
+        { once: true }
+      );
+      el.shadowRoot
+        ?.querySelector<HTMLButtonElement>('.swc-SuggestionItem')
+        ?.click();
+      expect(detail?.label).toBe('Create a slide deck from this');
+    });
   },
 };

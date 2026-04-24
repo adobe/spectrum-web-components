@@ -75,6 +75,9 @@ export const Playground: Story = {
     type: 'copy',
     'default-slot':
       'Can you help me create a 45-minute presentation, with animations, for an executive update?',
+    'thumbnail-slot': '<img src="https://placehold.co/180x180" alt="Placeholder" />',
+    'title-slot': 'Hilton commercial assets',
+    'subtitle-slot': '2026',
   },
   decorators: [withUserTurn],
   tags: ['autodocs', 'dev'],
@@ -89,6 +92,9 @@ export const Overview: Story = {
     type: 'copy',
     'default-slot':
       'Can you help me create a 45-minute presentation, with animations, for an executive update?',
+    'thumbnail-slot': '<img src="https://placehold.co/180x180" alt="Placeholder" />',
+    'title-slot': 'Hilton commercial assets',
+    'subtitle-slot': '2026',
   },
   decorators: [withUserTurn],
   tags: ['overview'],
