@@ -11,6 +11,8 @@ description: Phase 2 of 1st-gen to 2nd-gen component migration. Use to create th
 
 You are building a foundation, not a feature. Every file you create here is a contract: the right structure now prevents expensive restructuring later. Stub first, verify the build passes, then stop — implementation comes in later phases.
 
+Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` when available and use it as the baseline for component naming, split-vs-single-component decisions, and expected core/SWC structure. If it is missing, stale, or intentionally incomplete, derive those decisions from the best available source material and call out the missing plan as a risk. See also [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
+
 ## When to use this skill
 
 - Phase 1 (migration-prep) is complete and the migration plan is approved
@@ -35,3 +37,5 @@ You are building a foundation, not a feature. Every file you create here is a co
 ## Workflow
 
 Follow **[Phase 2: Setup](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-2-setup)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
+
+If the required file layout or naming in code would drift from the migration plan, follow [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).

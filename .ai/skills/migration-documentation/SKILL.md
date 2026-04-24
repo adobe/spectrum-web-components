@@ -13,6 +13,8 @@ See also: [`documentation`](../documentation/SKILL.md) for Adobe content writing
 
 You are writing for the next contributor, not for yourself. Every story, JSDoc line, and migration note should answer the question a new engineer would ask six months from now. Avoid restating the implementation. Explain the intent, the constraints, and why the decisions were made. Be sure to follow the `documentation` skill for writing style and content expectations.
 
+Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` when available before documenting the component. Use it as the source for migration notes, consumer-facing breaking-change explanations, rationale behind naming or behavior differences, and the main scenarios the stories should emphasize. If it is missing, stale, or intentionally incomplete, derive the needed context from the implemented component and source material and call out the missing plan as a risk. See also [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
+
 ## When to use this skill
 
 - Phase 6 (migration-testing) is complete
@@ -36,3 +38,5 @@ You are writing for the next contributor, not for yourself. Every story, JSDoc l
 ## Workflow
 
 Follow **[Phase 7: Documentation](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-7-documentation)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
+
+If the docs need to describe behavior or migration guidance that differs from the approved migration plan, follow [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
