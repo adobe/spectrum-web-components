@@ -39,15 +39,15 @@ import styles from './status-light.css';
  * @example
  * <swc-status-light variant="silver">Supported in Edge</swc-status-light>
  *
- * @cssprop --swc-statuslight-height - Minimum block size of the status light.
- * @cssprop --swc-statuslight-dot-size - Size of the indicator dot.
- * @cssprop --swc-statuslight-dot-color - Color of the indicator dot.
- * @cssprop --swc-statuslight-font-size - Font size of the label.
- * @cssprop --swc-statuslight-line-height - Line height of the label.
- * @cssprop --swc-statuslight-padding-block - Block padding.
- * @cssprop --swc-statuslight-top-to-dot - Distance from the block-start edge to the center of the dot.
- * @cssprop --swc-statuslight-text-to-visual - Gap between the dot and the label.
- * @cssprop --swc-statuslight-content-color - Color of the label text.
+ * @cssprop --swc-status-light-height - Minimum block size of the status light.
+ * @cssprop --swc-status-light-dot-size - Size of the indicator dot.
+ * @cssprop --swc-status-light-dot-color - Color of the indicator dot.
+ * @cssprop --swc-status-light-font-size - Font size of the label.
+ * @cssprop --swc-status-light-line-height - Line height of the label.
+ * @cssprop --swc-status-light-padding-block - Block padding.
+ * @cssprop --swc-status-light-top-to-dot - Distance from the block-start edge to the center of the dot.
+ * @cssprop --swc-status-light-text-to-visual - Gap between the dot and the label.
+ * @cssprop --swc-status-light-content-color - Color of the label text.
  */
 export class StatusLight extends StatusLightBase {
   // ────────────────────
