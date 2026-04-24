@@ -65,7 +65,7 @@ import '@adobe/spectrum-wc/progress-circle';
 
 ### 2. Replace `indeterminate`
 
-The `indeterminate` boolean attribute has been removed. Omitting the `progress` attribute is now equivalent — the component defaults to indeterminate mode when no `progress` value is set.
+The `indeterminate` boolean attribute has been removed. Omitting the `progress` attribute is now equivalent — the component defaults to indeterminate mode when no `progress` value is set. You can also set `progress` to `null` explicitly to return to indeterminate mode after a value has been assigned.
 
 ```html
 <!-- Before -->
@@ -73,6 +73,14 @@ The `indeterminate` boolean attribute has been removed. Omitting the `progress` 
 
 <!-- After: omit progress entirely -->
 <swc-progress-circle label="Loading"></swc-progress-circle>
+
+<!-- After: or set progress to null explicitly (useful when toggling state in JS) -->
+<swc-progress-circle label="Loading"></swc-progress-circle>
+```
+
+```js
+// Return to indeterminate after a value has been set
+progressCircle.progress = null;
 ```
 
 If you set `indeterminate` and `progress` simultaneously in Spectrum 1, remove `indeterminate` and keep `progress` to render a determinate indicator.
