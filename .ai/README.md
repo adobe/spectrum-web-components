@@ -12,6 +12,11 @@ All rules and skills now live in **`.ai/`** — a tool-agnostic, plain-markdown 
 - No sync step, no duplication, no drift between tools
 - New contributors or tools start from `AGENTS.md` at the repo root, which bootstraps everything
 
+## CI integration
+
+- `yarn lint:ai` runs `.ai/scripts/validate.js`, which checks story tags, AGENTS.md paths, and config schema. Catches broken internal links, symlinks, and misconfigured rules before merge
+- Pre-commit hook runs the contributor docs nav script to keep breadcrumbs and TOCs in sync automatically
+
 ## Rules
 
 Rules defined in the `config.json` follow this structure:
@@ -219,6 +224,15 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: On the analyze-rendering-and-styling step for one or more components; creating one markdown file per component at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`
 - Provides: Workflow summary (specs from CSS + SWC, three-way DOM comparison, CSS⇒SWC mapping table, summary). Full instructions in `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_analyze-rendering-and-styling/cursor_prompt.md`
 
+#### Consumer migration guide
+
+- **purpose**: Create per-component migration guides for application developers upgrading from 1st-gen Spectrum Web Components to 2nd-gen components
+- **How to invoke**: Say “create a consumer migration guide for [component]”, “write an upgrade guide for [component]”, or “document how consumers migrate [component] from 1st-gen to 2nd-gen”.
+- Use when: Writing one Storybook-renderable MDX file per component at `2nd-gen/packages/swc/components/[component-name]/consumer-migration-guide.mdx` with code updates, styling guidance, accessibility notes, testing changes, and rollout advice
+- Provides: Workflow summary (verified source inputs, required section order, before/after examples, migration checklist, rollout guidance). Full instructions in `.ai/skills/consumer-migration-guide/references/consumer-migration-guide-prompt.md`
+
+#### Washing machine migration workflow
+
 #### Migration — phase 1: prep (`migration-prep`)
 
 - **purpose**: Understand the component, critically assess the current API and behavior, plan breaking changes, and define migration scope before any refactoring begins
@@ -303,6 +317,13 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: Explaining how code works, teaching about the codebase, or when the user asks “how does this work?”
 - Approach: Analogy → diagram → step-by-step walkthrough → highlight gotchas
 
+#### Session retrospective
+
+- **purpose**: Document lessons learned after completing work, especially when the user corrected planning documents or implementation; maintains persistent lesson files in `.ai/memory/` that future agents read at session start
+- **How to invoke**: Say "document what you learned", "add to lessons", "remember this", or "run a retrospective". Also triggered when the user corrects your work or you encounter a surprising constraint.
+- Use when: User corrects your work, you hit a non-obvious tool limitation, or at session end after substantial work
+- Provides: Workflow for capturing lessons, format guidelines, naming convention (`<descriptor>-lessons.md` in `.ai/memory/`)
+
 #### Session handoff
 
 - **purpose**: Create handoff documents so another agent (or a later session) can continue work with full context
@@ -358,6 +379,58 @@ Editing any `.ai/rules/*.md` file immediately updates what both Cursor and Claud
 1. Create `.ai/skills/<skill-name>/SKILL.md`.
 2. Register it in the skills catalog below and in [`AGENTS.md`](../AGENTS.md).
 3. Both `.cursor/skills/` and `.claude/skills/` pick it up automatically via directory symlinks.
+
+### Symlink setup
+
+The symlinks in `.cursor/` and `.claude/` are committed to the repo, so **no setup is required after cloning**. Rules and skills should work automatically for all contributors.
+
+#### Recreating broken symlinks
+
+If a symlink is accidentally deleted or broken (e.g. after a file was deleted and recreated rather than edited in place), recreate it with the commands below.
+
+##### Claude Code
+
+```sh
+mkdir -p .claude
+ln -s ../.ai/rules .claude/rules
+ln -s ../.ai/skills .claude/skills
+```
+
+Claude Code reads `.md` files, so directory-level symlinks work directly. Verify:
+
+```sh
+ls -la .claude/
+# rules -> ../.ai/rules
+# skills -> ../.ai/skills
+```
+
+##### Cursor
+
+> **Cursor requires per-file symlinks for rules.** Cursor expects `.mdc` files and does not follow a directory symlink that contains `.md` files. Each rule needs its own symlink with the `.mdc` extension pointing back to the `.md` source.
+
+```sh
+mkdir -p .cursor/rules
+for f in .ai/rules/*.md; do
+  name=$(basename "$f" .md)
+  ln -s "../../.ai/rules/${name}.md" ".cursor/rules/${name}.mdc"
+done
+
+ln -s ../.ai/skills .cursor/skills
+```
+
+Verify:
+
+```sh
+ls -la .cursor/rules/
+# branch-naming.mdc -> ../../.ai/rules/branch-naming.md
+# styles.mdc -> ../../.ai/rules/styles.md
+# ... (one entry per rule)
+
+ls -la .cursor/
+# skills -> ../.ai/skills
+```
+
+If Cursor does not pick up the rules after symlinking, reload the window: `Cmd+Shift+P` → "Developer: Reload Window".
 
 ### Using rules and skills in other environments
 
