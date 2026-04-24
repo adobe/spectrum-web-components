@@ -9189,10 +9189,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prismjs@npm:1.26.5":
-  version: 1.26.5
-  resolution: "@types/prismjs@npm:1.26.5"
-  checksum: 10c0/5619cb449e0d8df098c8759d6f47bf8fdd510abf5dbdfa999e55c6a2545efbd1e209cc85a33d8d9f4ff2898089a1a6d9a70737c9baffaae635c46852c40d384a
+"@types/prismjs@npm:1.26.6":
+  version: 1.26.6
+  resolution: "@types/prismjs@npm:1.26.6"
+  checksum: 10c0/152a27500cb32b114edfb77f9d0dccd03bebc84828d1e92abacaf212b22d3ccdde041ce421dd58b6ec8461bbec7cd76ed5ee773cae4be7ca36a6dd4ddcf0f9e7
   languageName: node
   linkType: hard
 
@@ -14437,7 +14437,7 @@ __metadata:
     "@spectrum-web-components/custom-vars-viewer": "workspace:*"
     "@toycode/markdown-it-class": "npm:1.2.4"
     "@types/lunr": "npm:2.3.7"
-    "@types/prismjs": "npm:1.26.5"
+    "@types/prismjs": "npm:1.26.6"
     "@web/dev-server": "npm:0.4.6"
     "@web/rollup-plugin-copy": "npm:0.5.1"
     "@web/rollup-plugin-html": "npm:2.3.0"
