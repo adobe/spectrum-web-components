@@ -258,13 +258,10 @@ const preview = {
               'Global Element Styling',
             ],
           ],
-          'Core',
-          ['Overview', 'Controllers'],
           'Contribute',
           // GENERATED:CONTRIBUTOR-DOCS-SORT - Do not edit manually. Run `yarn generate:contributor-docs` to update.
           [
             'Contributor documentation',
-            'For agents',
             'For consumers',
             ['Customization cheatsheet', 'Get started'],
             'For contributors',
@@ -272,10 +269,7 @@ const preview = {
               '2nd-gen testing',
               'Accessibility testing',
               'Authoring contributor docs',
-              [
-                'Templates',
-                ['Consumer quickstart'],
-              ],
+              ['Templates', ['Consumer quickstart']],
               'Focus management',
               'Getting involved',
               'Making a pull request',
@@ -333,8 +327,6 @@ const preview = {
               'Using the issue tracker',
               'Working in the SWC repo',
             ],
-            'For internals',
-            'For maintainers',
             'Project planning',
             [
               'Objectives and strategy',
@@ -480,6 +472,13 @@ const preview = {
             ],
           ],
           // GENERATED:CONTRIBUTOR-DOCS-SORT-END
+          'Reference',
+          [
+            'Core',
+            ['Overview', 'Controllers'],
+            'API reference',
+            'Design tokens',
+          ],
         ],
       },
     },

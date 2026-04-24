@@ -71,12 +71,12 @@ if (storybookMode !== 'ci-a11y') {
     {
       directory: '../../core',
       files: '**/*.mdx',
-      titlePrefix: 'Core',
+      titlePrefix: 'Reference/Core',
     },
     {
       directory: '../../core',
       files: '**/stories/*.stories.ts',
-      titlePrefix: 'Core',
+      titlePrefix: 'Reference/Core',
     },
     {
       directory: 'learn-about-swc',
@@ -111,7 +111,7 @@ if (storybookMode === 'dev') {
   stories.push({
     directory: '../../core',
     files: '**/stories/**/*.test.ts',
-    titlePrefix: 'Core',
+    titlePrefix: 'Reference/Core',
   });
 }
 
