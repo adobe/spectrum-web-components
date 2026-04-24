@@ -401,6 +401,8 @@ Retain this section for any components with visual rendering, modifying as neede
 
 ## Blockers and open questions
 
+During drafting, this section tracks active blockers and open questions. In the final review-ready plan, once core migration questions are resolved and deferred tickets exist, replace those drafting-time rows with a concise deferred-ticket table.
+
 <!--
 Include the sections for clarity according to area of concern for the question.
 
@@ -454,6 +456,7 @@ Owner examples:
 - [1st-gen tests](../../../../1st-gen/packages/[component]/test/[component].test.ts) — include only if a test file exists
 - [1st-gen README](../../../../1st-gen/packages/[component]/README.md) — include only if a README exists
 - [React Spectrum S2 [Component]](https://react-spectrum.adobe.com/[Component]) — confirm the URL slug matches the actual React Spectrum docs page
+- [Spectrum CSS — `spectrum-two` branch](https://github.com/adobe/spectrum-css/tree/spectrum-two) — S2 styling source of truth for the component. Replace this generic repo link with the explicit component source you reviewed when possible, typically `spectrum-css/components/[component]/index.css` from a sibling checkout on **`spectrum-two`** (not `/dist`). See the [Setup](#setup) checklist.
 - [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
 - Epic: SWC-#### - [Component] epic
 

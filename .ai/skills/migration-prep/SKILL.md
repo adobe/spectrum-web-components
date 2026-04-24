@@ -265,6 +265,7 @@ Instead:
 - Copy the template at [assets/migration-prep-template.md](assets/migration-prep-template.md)
 - Save the filled-in plan to `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md`
 - Treat [references/migration-plan-contract.md](references/migration-plan-contract.md) as the shared baseline later migration phases will use to stay aligned with the approved plan
+- In `References`, prefer explicit source entries over generic repo-level links when the exact artifact is known. For Spectrum CSS, use the reviewed component source path when possible (typically `spectrum-css/components/[component]/index.css` on the `spectrum-two` branch) rather than only linking the repo root or branch overview
 - Replace all `[component]` and `[Component]` placeholders before finalizing
 - Prefer marking truly inapplicable sections as `N/A` instead of deleting them unless the user explicitly wants sections removed
 - Verify that key references resolve after replacing placeholders. If they do not, try likely repo naming variants such as kebab-case, PascalCase, or the spaced display name before asking the user for the exact component slug or source path
