@@ -114,6 +114,14 @@ export class Button extends ButtonBase {
   protected override update(changedProperties: PropertyValues): void {
     super.update(changedProperties);
     if (window.__swc?.DEBUG) {
+      if (this.iconOnly && !this.getAttribute('aria-label')) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> with "icon-only" must have an "aria-label" attribute to be accessible.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/button/#icon-only',
+          { type: 'accessibility', level: 'high' }
+        );
+      }
       if (!BUTTON_VARIANTS.includes(this.variant)) {
         window.__swc.warn(
           this,

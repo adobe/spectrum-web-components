@@ -439,21 +439,21 @@ Allowed differences:
 - [x] Add `@deprecated` JSDoc to 1st-gen type and const exports (`ButtonVariants`, `ButtonTreatments`, `ButtonStaticColors`, `DeprecatedButtonVariants`, `VALID_VARIANTS`, `VALID_STATIC_COLORS`)
 - [x] Add `@deprecated` JSDoc to 1st-gen `treatment` property; no runtime warn added because `treatment` is set internally by the `quiet` setter and the `overBackground` variant alias, which already emit their own deprecation warnings
 - [x] Add `@deprecated` JSDoc and `window.__swc.warn()` to 1st-gen `quiet` property
-- [ ] Remove `label` in favor of `aria-label`
-- [ ] Remove deprecated link API (`href`, `target`, `download`, `referrerpolicy`, `rel`) from the 2nd-gen public surface
-- [ ] Remove deprecated `variant` aliases (`cta`, `overBackground`, `white`, `black`) from the 2nd-gen public surface — already absent in 2nd-gen `Button.ts`
+- [x] Remove `label` in favor of `aria-label` — 2nd-gen `Button.ts` has no `label` prop; accessible naming uses `aria-label` on the internal element
+- [x] Remove deprecated link API (`href`, `target`, `download`, `referrerpolicy`, `rel`) from the 2nd-gen public surface — absent from 2nd-gen `Button.ts`
+- [x] Remove deprecated `variant` aliases (`cta`, `overBackground`, `white`, `black`) from the 2nd-gen public surface — already absent in 2nd-gen `Button.ts`
 - [x] Do not carry forward `quiet` as a 2nd-gen visual API — `quiet` is absent from 2nd-gen; deprecated in 1st-gen with `@deprecated` JSDoc and `window.__swc.warn()`
 - [ ] Document migration from `no-wrap` to `truncate`
 
 #### Semantics and forms
 
-- [ ] Define which host attributes/semantics are forwarded to the internal button and which remain host-only
-- [ ] When `pending`, expose unavailable state to assistive tech via `aria-disabled="true"` even when the button is not otherwise `disabled` (`SWC-459`)
-- [ ] Replace the default pending accessible label with a descriptive busy-state pattern derived from the resolved non-busy accessible name, while still allowing `pending-label` override (`SWC-459`)
-- [ ] Keep semantic helpers reusable in `core` so later button-like components can share behavior without sharing `sp-button` DOM or styling
-- [ ] Do not recreate proxy patterns where the host carries button semantics while a different hidden internal control handles real activation
+- [ ] Define which host attributes/semantics are forwarded to the internal button and which remain host-only — `getForwardedButtonAttributes()` documents the mapping as an extension hook; formal documentation of the full contract is deferred to Phase 7
+- [x] When `pending`, expose unavailable state to assistive tech via `aria-disabled="true"` even when the button is not otherwise `disabled` (`SWC-459`) — `Button.ts` render template uses `ifDefined(this.pending && !this.disabled ? 'true' : undefined)`
+- [x] Replace the default pending accessible label with a descriptive busy-state pattern derived from the resolved non-busy accessible name, while still allowing `pending-label` override (`SWC-459`) — `ButtonBase.getPendingAccessibleName()` returns `"${resolvedName}, busy"` or `"Busy"` fallback
+- [x] Keep semantic helpers reusable in `core` so later button-like components can share behavior without sharing `sp-button` DOM or styling — `ButtonBase` in core provides `getResolvedAccessibleName()`, `getPendingAccessibleName()`, `getForwardedButtonAttributes()`, `_suppressPendingClick`
+- [x] Do not recreate proxy patterns where the host carries button semantics while a different hidden internal control handles real activation — internal `<button>` is the semantic control; host carries no button semantics
 - [ ] Document `submit` / `reset` and cross-root ARIA mapping as deferred follow-up work rather than initial Button scope
-- [ ] Preserve host-listener support for native `click` and bubbling `focusin` / `focusout` from the internal control
+- [x] Preserve host-listener support for native `click` and bubbling `focusin` / `focusout` from the internal control — `connectedCallback` / `disconnectedCallback` manage a host `click` listener (suppression-only while pending, passes through otherwise); `delegatesFocus: true` means `focusin` / `focusout` bubble from the internal button naturally
 - [ ] Document host-level `focus` / `blur` parity as deferred unless the team decides custom events are needed for compatibility
 
 #### Alignment checks
@@ -492,17 +492,17 @@ Allowed differences:
 
 #### Naming and semantics
 
-- [ ] Align Button implementation with the approved `accessibility-migration-analysis.md`
-- [ ] Ensure icon-only usage has a reliable accessible name via `aria-label`
-- [ ] Pending state must set `aria-disabled="true"` because the control cannot be activated while pending (`SWC-459`)
-- [ ] Pending state must use a descriptive default accessible label based on the resolved non-busy accessible name plus a busy suffix, not bare `"Pending"` (`SWC-459`)
-- [ ] Pending state must be announced to screen readers, even if the final implementation uses more than just an accessible-name change
-- [ ] Pending state must remain focusable while otherwise unavailable, matching current React Spectrum behavior
-- [ ] Ensure host and internal button semantics do not conflict in the accessibility tree
-- [ ] Ensure the internal native button, not the host, is the semantic control exposed to assistive technology
-- [ ] Preserve keyboard activation for Space and Enter through native button semantics
-- [ ] Avoid duplicating native button activation logic on the host when the internal button already provides it
-- [ ] Forward host `aria-label` to the internal semantic button when that attribute is used
+- [ ] Align Button implementation with the approved `accessibility-migration-analysis.md` — analysis doc exists; full alignment verification requires AT testing (see state verification below)
+- [x] Ensure icon-only usage has a reliable accessible name via `aria-label` — `iconOnly` prop JSDoc requires `aria-label`; `Button.ts` `update()` emits a `{ type: 'accessibility', level: 'high' }` debug warning when `icon-only` is set without `aria-label`
+- [x] Pending state must set `aria-disabled="true"` because the control cannot be activated while pending (`SWC-459`) — implemented in `Button.ts` render template
+- [x] Pending state must use a descriptive default accessible label based on the resolved non-busy accessible name plus a busy suffix, not bare `"Pending"` (`SWC-459`) — `ButtonBase.getPendingAccessibleName()` derives `"${resolvedName}, busy"`
+- [ ] Pending state must be announced to screen readers, even if the final implementation uses more than just an accessible-name change — requires AT testing to verify
+- [x] Pending state must remain focusable while otherwise unavailable, matching current React Spectrum behavior — click suppression via `_suppressPendingClick`; `?disabled` binding is only set when `this.disabled` is true
+- [ ] Ensure host and internal button semantics do not conflict in the accessibility tree — requires AT testing to verify
+- [x] Ensure the internal native button, not the host, is the semantic control exposed to assistive technology — `delegatesFocus: true` routes focus to the internal `<button>`; host has no explicit button role
+- [x] Preserve keyboard activation for Space and Enter through native button semantics — provided by the internal native `<button>` element; no custom keyboard handling needed
+- [x] Avoid duplicating native button activation logic on the host when the internal button already provides it — no keyboard event handlers or click dispatching on the host
+- [x] Forward host `aria-label` to the internal semantic button when that attribute is used — `Button.ts` render template binds `aria-label=${this.getAttribute('aria-label') ?? nothing}` when not pending
 
 #### State verification
 
