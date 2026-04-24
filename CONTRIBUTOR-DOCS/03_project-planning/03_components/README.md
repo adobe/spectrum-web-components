@@ -27,12 +27,15 @@
 - Asset
     - [Asset migration roadmap](asset/rendering-and-styling-migration-analysis.md)
 - Avatar
+    - [Avatar accessibility migration analysis](avatar/accessibility-migration-analysis.md)
+    - [Avatar — 2nd-Gen Migration Plan](avatar/migration-plan.md)
     - [Avatar accessibility migration analysis](avatar/rendering-and-styling-migration-analysis.md)
 - Badge
     - [Badge accessibility migration analysis](badge/accessibility-migration-analysis.md)
     - [Badge migration roadmap](badge/rendering-and-styling-migration-analysis.md)
 - Button
     - [Button accessibility migration analysis](button/accessibility-migration-analysis.md)
+    - [Button Migration Plan](button/migration-plan.md)
     - [Button migration roadmap](button/rendering-and-styling-migration-analysis.md)
 - Button Group
     - [Button Group migration roadmap](button-group/rendering-and-styling-migration-analysis.md)

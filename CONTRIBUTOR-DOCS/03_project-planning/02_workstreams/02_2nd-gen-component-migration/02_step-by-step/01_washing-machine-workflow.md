@@ -199,8 +199,8 @@ Before you start, know the split:
 1. **Read or generate the component analysis** — See [Step 1: Analyze rendering and styling](01_analyze-rendering-and-styling/README.md). Analysis docs live under [03_components/](../../../03_components/) (e.g. `badge/rendering-and-styling-migration-analysis.md`). Have **spectrum-css** in the [same workspace](#workspace-setup) so comparisons to Spectrum 2 source are practical. **Optional (AI-assisted):** If you use Cursor, the **component-migration-analysis** skill (when available in your setup) can be used together with Step 1’s [Cursor prompt](01_analyze-rendering-and-styling/README.md#using-the-cursor-prompt) to produce or update the analysis; still follow Step 1 QA before treating the doc as final.
 2. **Read the 1st-gen code** and dependencies (mixins, shared modules).
 3. **List breaking changes** and existing bug tickets; consider severity and whether fixes require breaking changes.
-4. **Write a short migration plan** — scope, risks, order of work.
-5. **Capture “API washing” / naming in the plan** — Note alignment with **Figma** option names, **React Spectrum** where relevant, possible **splits** (e.g. menu vs listbox), and **overlay / event** conventions (`sp-opened`, `sp-closed`, which components may emit them); **get team review on the plan before large refactors** so downstream phases stay aligned.
+4. **Write a short migration plan** — scope, risks, order of work. A reusable template is available at [`.ai/skills/migration-prep/assets/migration-prep-template.md`](../../../../../../.ai/skills/migration-prep/assets/migration-prep-template.md); copy it to `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` before editing so the relative links resolve correctly.
+5. **Capture API washing / naming cleanup in the plan** — Note alignment with **React Spectrum** where relevant, **Figma** option names, possible **splits** (e.g. menu vs listbox), and **overlay / event** conventions (`sp-opened`, `sp-closed`, which components may emit them); **get team review on the plan before large refactors** so downstream phases stay aligned.
 
 ### What to check
 
