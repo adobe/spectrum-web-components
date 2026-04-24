@@ -421,9 +421,9 @@ Allowed differences:
 
 ### Setup
 
-- [ ] Create `2nd-gen/packages/core/components/button/`
-- [ ] Create `2nd-gen/packages/swc/components/button/`
-- [ ] Wire exports in both `package.json` files
+- [x] Create `2nd-gen/packages/core/components/button/`
+- [x] Create `2nd-gen/packages/swc/components/button/`
+- [x] Wire exports in both `package.json` files
 - [ ] Implement Button styles so the component stylesheet and [`global-button.css`](../../../../2nd-gen/packages/swc/stylesheets/global/global-button.css) share source/imports if practical
 - [ ] Treat the current [`global-button.css`](../../../../2nd-gen/packages/swc/stylesheets/global/global-button.css) implementation as replaceable POC code, not as the canonical source of Button styling
 - [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
@@ -432,8 +432,9 @@ Allowed differences:
 
 #### Naming and public surface
 
-- [ ] `Button.types.ts`: define canonical `ButtonVariant`, `ButtonFillStyle`, `ButtonStaticColor`, and `ButtonSize`
-- [ ] `Button.base.ts`: retain `size`, `variant`, `fillStyle`, `staticColor`, `disabled`, `pending`, `pendingLabel`, and accessible-name handling
+- [x] `Button.types.ts`: define canonical `ButtonVariant`, `ButtonFillStyle`, `ButtonStaticColor`, and `ButtonSize`
+- [x] `Button.base.ts` (core): retain `disabled`, `pending`, `pendingLabel`, and accessible-name/pending-label logic — visual API (`size`, `variant`, `fillStyle`, `staticColor`) is intentionally excluded per the [Shared semantics reuse](#shared-semantics-reuse) architectural decision so that `ClearButton`, `CloseButton`, etc. can extend the base without inheriting `sp-button`'s visual surface
+- [x] `Button.ts` (SWC): define `size` (via `SizedMixin(ButtonBase)`), `variant`, `fillStyle`, `staticColor`, `iconOnly`, `truncate`, statics (`VARIANTS`, `FILL_STYLES`, `STATIC_COLORS`, `VALID_SIZES`), and visual combination validation warnings
 - [ ] Rename legacy `noWrap` to `truncate` in the 2nd-gen API
 - [ ] Remove `label` in favor of `aria-label`
 - [ ] Remove deprecated link API (`href`, `target`, `download`, `referrerpolicy`, `rel`) from the 2nd-gen public surface
