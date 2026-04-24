@@ -47,10 +47,7 @@ export const OverviewTest: Story = {
 
     await step('renders slotted content when no variant is set', async () => {
       const img = asset.querySelector('img');
-      expect(
-        asset.variant,
-        'variant when not set'
-      ).toBeUndefined();
+      expect(asset.variant, 'variant when not set').toBeUndefined();
       expect(img, 'slotted img element is rendered').toBeTruthy();
       expect(
         img?.getAttribute('alt')?.length,
@@ -79,10 +76,9 @@ export const DefaultLabelFallbackTest: Story = {
       expect(fileAsset, 'file asset is rendered').toBeTruthy();
       const svg = fileAsset?.shadowRoot?.querySelector('svg');
       expect(svg, 'file asset has an SVG in shadow DOM').toBeTruthy();
-      expect(
-        svg?.getAttribute('aria-label'),
-        'file asset SVG aria-label'
-      ).toBe('File');
+      expect(svg?.getAttribute('aria-label'), 'file asset SVG aria-label').toBe(
+        'File'
+      );
     });
 
     await step('folder variant falls back to default aria-label', async () => {
