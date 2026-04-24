@@ -77,15 +77,6 @@ argTypes['icon-slot'] = {
     'Accepts an icon element. The control is disabled. Use the Anatomy story to see icon usage. Enhancements to this control will be added in a future release.',
 };
 
-// @todo: create a select dropdown with all available/acceptable icons for a component.
-// For now, this arg is turned off in the control table since the string doesn't get parsed as HTML: SWC-1853
-argTypes['icon-slot'] = {
-  ...argTypes['icon-slot'],
-  control: false,
-  description:
-    'Accepts an icon element. The control is disabled. Use the Anatomy story to see icon usage. Enhancements to this control will be added in a future release.',
-};
-
 argTypes.outline = {
   ...argTypes.outline,
   table: {
