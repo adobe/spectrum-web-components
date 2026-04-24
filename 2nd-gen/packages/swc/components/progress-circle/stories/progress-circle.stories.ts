@@ -248,7 +248,9 @@ export const Indeterminate: Story = {
  *
  * Button loading states typically omit `progress` since the duration is unknown.
  *
- * @todo Refactor to use `<swc-button>` once the button component is available.
+ * @todo Refactor to use `<swc-button>` once the button component is available. When doing so,
+ * align styles to S2 global button tokens. No infield/standard differentiation is needed —
+ * React does not distinguish between the two, and there is no current design requirement to do so.
  */
 export const LoadingButton: Story = {
   render: (args) => html`
