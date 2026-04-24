@@ -61,22 +61,22 @@ export const OverviewTest: Story = {
         const rootAfter = first.shadowRoot?.querySelector(
           '.swc-ConversationTurn'
         );
-        expect(rootAfter?.getAttribute('aria-label')).toBe('Assistant message');
+        expect(rootAfter?.getAttribute('aria-label')).toBe('System message');
       }
     );
 
     await step('accessible-label overrides type-derived label', async () => {
       first.type = 'system';
-      first.accessibleLabel = 'Mensaje del asistente';
+      first.accessibleLabel = 'Mensaje del sistema';
       await first.updateComplete;
 
       const root = first.shadowRoot?.querySelector('.swc-ConversationTurn');
-      expect(first.accessibleLabel).toBe('Mensaje del asistente');
-      expect(root?.getAttribute('aria-label')).toBe('Mensaje del asistente');
+      expect(first.accessibleLabel).toBe('Mensaje del sistema');
+      expect(root?.getAttribute('aria-label')).toBe('Mensaje del sistema');
 
       first.accessibleLabel = '   ';
       await first.updateComplete;
-      expect(root?.getAttribute('aria-label')).toBe('Assistant message');
+      expect(root?.getAttribute('aria-label')).toBe('System message');
     });
   },
 };

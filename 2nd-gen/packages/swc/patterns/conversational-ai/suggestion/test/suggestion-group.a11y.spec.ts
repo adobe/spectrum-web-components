@@ -14,15 +14,15 @@ import { expect, test } from '@playwright/test';
 
 import { gotoStory } from '../../../../utils/a11y-helpers.js';
 
-test.describe('Suggestion - ARIA Snapshots', () => {
+test.describe('SuggestionGroup - ARIA Snapshots', () => {
   test('should have correct accessibility tree', async ({ page }) => {
     const root = await gotoStory(
       page,
-      'patterns-conversational-ai-suggestion--overview',
-      'swc-suggestion'
+      'patterns-conversational-ai-suggestion-group--overview',
+      'swc-suggestion-group'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - group "Follow-up suggestions":
+      - group "What would you like to do next?":
         - button "Create a slide deck from this"
         - button "Summarize in 3 bullet points"
         - button "Translate to Spanish"

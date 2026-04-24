@@ -114,5 +114,34 @@ export const OverviewTest: Story = {
       expect(el.activeIndex).toBe(0);
       expect(canvasElement.ownerDocument.activeElement).toBe(turns[0]);
     });
+
+    await step(
+      'slot changes keep roving tabindex correct for added/removed turns',
+      async () => {
+        const addedTurn = document.createElement('swc-conversation-turn');
+        addedTurn.setAttribute('type', 'user');
+        addedTurn.textContent = 'Dynamically added turn';
+        el.append(addedTurn);
+        await el.updateComplete;
+
+        let currentTurns = Array.from(
+          canvasElement.querySelectorAll<HTMLElement>('swc-conversation-turn')
+        );
+        expect(currentTurns.length).toBe(4);
+        expect(currentTurns[0]?.getAttribute('tabindex')).toBe('0');
+        expect(currentTurns[3]?.getAttribute('tabindex')).toBe('-1');
+
+        const removedTurn = currentTurns[0];
+        removedTurn?.remove();
+        await el.updateComplete;
+
+        currentTurns = Array.from(
+          canvasElement.querySelectorAll<HTMLElement>('swc-conversation-turn')
+        );
+        expect(currentTurns.length).toBe(3);
+        expect(removedTurn?.hasAttribute('tabindex')).toBe(false);
+        expect(currentTurns[0]?.getAttribute('tabindex')).toBe('0');
+      }
+    );
   },
 };

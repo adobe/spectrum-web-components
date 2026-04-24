@@ -27,15 +27,17 @@ const threeSuggestionItems =
   `<swc-suggestion-item>Summarize in 3 bullet points</swc-suggestion-item>` +
   `<swc-suggestion-item>Translate to Spanish</swc-suggestion-item>`;
 
-const { args, argTypes, template } = getStorybookHelpers('swc-suggestion');
+const { args, argTypes, template } = getStorybookHelpers(
+  'swc-suggestion-group'
+);
 
 /**
  * Follow-up suggestion group for an AI response.
  * Put one or more `<swc-suggestion-item>` elements in the default slot.
  */
 const meta: Meta = {
-  title: 'Conversational AI/Suggestion',
-  component: 'swc-suggestion',
+  title: 'Conversational AI/Suggestion group',
+  component: 'swc-suggestion-group',
   args: {
     ...args,
     'default-slot': threeSuggestionItems,
@@ -100,11 +102,11 @@ export const SuggestionCount: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-suggestion heading="What would you like to do next?">
+        <swc-suggestion-group heading="What would you like to do next?">
           <swc-suggestion-item>
             Create a slide deck from this
           </swc-suggestion-item>
-        </swc-suggestion>
+        </swc-suggestion-group>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
@@ -112,7 +114,7 @@ export const SuggestionCount: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-suggestion heading="What would you like to do next?">
+        <swc-suggestion-group heading="What would you like to do next?">
           <swc-suggestion-item>
             Create a slide deck from this
           </swc-suggestion-item>
@@ -120,7 +122,7 @@ export const SuggestionCount: Story = {
             Summarize in 3 bullet points
           </swc-suggestion-item>
           <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
-        </swc-suggestion>
+        </swc-suggestion-group>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
@@ -128,7 +130,7 @@ export const SuggestionCount: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-suggestion heading="What would you like to do next?">
+        <swc-suggestion-group heading="What would you like to do next?">
           <swc-suggestion-item>
             Refine the executive summary
           </swc-suggestion-item>
@@ -136,7 +138,7 @@ export const SuggestionCount: Story = {
           <swc-suggestion-item>Shorten for a 5-minute read</swc-suggestion-item>
           <swc-suggestion-item>Export as talking points</swc-suggestion-item>
           <swc-suggestion-item>Suggest a subject line</swc-suggestion-item>
-        </swc-suggestion>
+        </swc-suggestion-group>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
@@ -156,7 +158,7 @@ export const Heading: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-suggestion heading="What would you like to do next?">
+        <swc-suggestion-group heading="What would you like to do next?">
           <swc-suggestion-item>
             Create a slide deck from this
           </swc-suggestion-item>
@@ -164,7 +166,7 @@ export const Heading: Story = {
             Summarize in 3 bullet points
           </swc-suggestion-item>
           <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
-        </swc-suggestion>
+        </swc-suggestion-group>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
@@ -172,7 +174,7 @@ export const Heading: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-suggestion heading="Suggested next actions">
+        <swc-suggestion-group heading="Suggested next actions">
           <swc-suggestion-item>
             Create a slide deck from this
           </swc-suggestion-item>
@@ -180,7 +182,7 @@ export const Heading: Story = {
             Summarize in 3 bullet points
           </swc-suggestion-item>
           <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
-        </swc-suggestion>
+        </swc-suggestion-group>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
         >
@@ -200,10 +202,12 @@ export const Heading: Story = {
 /**
  * ### Features
  *
- * The `<swc-suggestion>` group and `<swc-suggestion-item>` controls implement:
+ * The `<swc-suggestion-group>` container and `<swc-suggestion-item>` controls
+ * implement:
  *
  * - Native `<button>` semantics per suggestion item
- * - Group labeling via `role="group"` and `aria-label="Follow-up suggestions"`
+ * - Group labeling via `aria-labelledby` when `heading` is set, otherwise via
+ *   configurable `accessible-label`
  * - Item click event bubbling from each `<swc-suggestion-item>`
  */
 export const Accessibility: Story = {

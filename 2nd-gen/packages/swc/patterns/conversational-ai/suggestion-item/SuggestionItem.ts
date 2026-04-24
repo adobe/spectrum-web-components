@@ -21,7 +21,7 @@ import { ArrowCurvedIcon } from '../utils/icons/index.js';
 import styles from './suggestion-item.css';
 
 /**
- * Interactive suggestion action chip used inside `<swc-suggestion>`.
+ * Interactive suggestion action chip used inside `<swc-suggestion-group>`.
  *
  * Label content comes from the default slot.
  *

@@ -68,7 +68,6 @@ export const TypeAndSlotTest: Story = {
         <span slot="subtitle">PDF</span>
       `;
         await el.updateComplete;
-        await Promise.resolve();
 
         const title = el.shadowRoot?.querySelector('.swc-UserMessage-title');
         const subtitle = el.shadowRoot?.querySelector(
@@ -90,7 +89,6 @@ export const TypeAndSlotTest: Story = {
         <span slot="subtitle">PNG</span>
       `;
         await el.updateComplete;
-        await Promise.resolve();
 
         const attachment = el.shadowRoot?.querySelector(
           '.swc-UserMessage-attachment--media'
@@ -104,7 +102,6 @@ export const TypeAndSlotTest: Story = {
       el.type = 'copy';
       el.innerHTML = `Can you summarize this document?`;
       await el.updateComplete;
-      await Promise.resolve();
 
       const textSlot =
         el.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
@@ -145,7 +142,6 @@ export const DefaultSlotHiddenForAttachmentTypesTest: Story = {
             'Default copy that must not appear in the bubble for attachment types.'
           );
           await el.updateComplete;
-          await Promise.resolve();
 
           expect(el.shadowRoot?.querySelector('slot:not([name])')).toBeNull();
 
@@ -165,7 +161,6 @@ export const DefaultSlotHiddenForAttachmentTypesTest: Story = {
         el.type = 'copy';
         el.innerHTML = 'Visible copy text';
         await el.updateComplete;
-        await Promise.resolve();
 
         const defaultSlot =
           el.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');

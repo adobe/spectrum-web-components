@@ -23,11 +23,11 @@ import '../index.js';
 const { args, argTypes, template } = getStorybookHelpers('swc-suggestion-item');
 
 /**
- * Interactive follow-up chip action used inside `<swc-suggestion>`.
+ * Interactive follow-up chip action used inside `<swc-suggestion-group>`.
  * Label content is provided via the default slot.
  */
 const meta: Meta = {
-  title: 'Conversational AI/Suggestion/Suggestion item',
+  title: 'Conversational AI/Suggestion group/Suggestion item',
   component: 'swc-suggestion-item',
   args: {
     ...args,

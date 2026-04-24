@@ -28,7 +28,7 @@ import styles from './conversation-turn.css';
  * panel) while system content remains full width.
  *
  * The inner layout root is exposed as **`role="group"`** with an **`aria-label`**
- * derived from **`type`** (**"User message"** / **"Assistant message"**) so assistive
+ * derived from **`type`** (**"User message"** / **"System message"**) so assistive
  * technology can distinguish user turns from assistant turns, not only alignment.
  * Use `accessible-label` to override this label (for localization or product-specific phrasing).
  *
@@ -38,14 +38,14 @@ import styles from './conversation-turn.css';
 export class ConversationTurn extends SpectrumElement {
   /**
    * `user` — end-aligned; `system` — start-aligned, full width of the column.
-   * Drives the accessible name of the turn (`User message` vs `Assistant message`).
+   * Drives the accessible name of the turn (`User message` vs `System message`).
    */
   @property({ type: String, reflect: true })
   public type: 'system' | 'user' = 'user';
 
   /**
    * Optional accessible label override for the turn group.
-   * When omitted, the label falls back to `type` ("User message" / "Assistant message").
+   * When omitted, the label falls back to `type` ("User message" / "System message").
    */
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel = '';
@@ -58,7 +58,7 @@ export class ConversationTurn extends SpectrumElement {
     if (this.accessibleLabel.trim().length > 0) {
       return this.accessibleLabel.trim();
     }
-    return this.type === 'user' ? 'User message' : 'Assistant message';
+    return this.type === 'user' ? 'User message' : 'System message';
   }
 
   protected override render(): TemplateResult {

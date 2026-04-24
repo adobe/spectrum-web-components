@@ -36,4 +36,32 @@ test.describe('UserMessage - ARIA Snapshots', () => {
       - text: /Can you help me/
     `);
   });
+
+  test('should expose accessible card attachment content', async ({ page }) => {
+    const root = await gotoStory(
+      page,
+      'patterns-conversational-ai-user-message--content',
+      'swc-user-message'
+    );
+    const cardMessage = root.locator('swc-user-message').nth(1);
+    await expect(cardMessage).toMatchAriaSnapshot(`
+      - img "File"
+      - text: Hilton commercial assets 2026
+    `);
+  });
+
+  test('should expose accessible media attachment content', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'patterns-conversational-ai-user-message--content',
+      'swc-user-message'
+    );
+    const mediaMessage = root.locator('swc-user-message').nth(2);
+    await expect(mediaMessage).toMatchAriaSnapshot(`
+      - img "Campaign preview"
+      - text: Hilton commercial assets 2026
+    `);
+  });
 });

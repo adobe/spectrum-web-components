@@ -50,16 +50,19 @@ export class ConversationThread extends SpectrumElement {
     return [styles];
   }
 
+  /**
+   * Focuses the current active turn.
+   *
+   * Before focusing, we refresh the slotted turn list and roving-tabindex state so
+   * we never target a stale turn when messages were added/removed just before focus.
+   * Then we focus the controller's active item, with a fallback to `activeIndex`.
+   */
   public override focus(options?: FocusOptions): void {
     this._syncFocusableItems();
     const active =
       this.focusgroupNavigationController.getActiveItem() ??
       this._items[this._clampIndex(this.activeIndex)];
     active?.focus(options);
-  }
-
-  protected override firstUpdated(): void {
-    this._syncFocusableItems();
   }
 
   protected override updated(changedProperties: PropertyValues<this>): void {
