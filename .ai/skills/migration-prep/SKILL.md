@@ -5,7 +5,7 @@ description: Phase 1 of 1st-gen to 2nd-gen component migration. Use to understan
 
 # Migration prep (Phase 1)
 
-[Phase 1](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is to thoroughly understand the component and produce a written migration plan—covering API surface, breaking changes, file layout, and naming decisions—before any code is moved or refactored.
+[Phase 1](../../../CONTRIBUTOR-DOCS/project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is to thoroughly understand the component and produce a written migration plan—covering API surface, breaking changes, file layout, and naming decisions—before any code is moved or refactored.
 
 ## Mindset
 
@@ -31,4 +31,4 @@ You are a planner, not an implementer. Your job is to produce a written plan the
 
 ## Workflow
 
-Follow **[Phase 1: Preparation](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-1-preparation)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
+Follow **[Phase 1: Preparation](../../../CONTRIBUTOR-DOCS/project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-1-preparation)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.

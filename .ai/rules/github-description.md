@@ -227,7 +227,7 @@ Common additional labels include:
 <!---
     Manual accessibility testing is required because automated tools cannot catch all issues (e.g. focus order, screen reader announcements, keyboard flow).
     You must document your keyboard and screen reader testing steps below. Reviewers will use this checklist during review.
-    See: [Accessibility testing guide](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/01_contributor-guides/09_accessibility-testing.md)
+    See: [Accessibility testing guide](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/for-contributors/accessibility-testing.md)
 -->
 
 **Required:** Complete each applicable item and document your testing steps (replace the placeholders with your component-specific instructions).

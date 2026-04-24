@@ -25,7 +25,7 @@ yarn generate:contributor-docs
 It is wired into `yarn storybook` and `yarn storybook:build`, so a normal dev loop regenerates on every start. The script:
 
 - Walks `CONTRIBUTOR-DOCS/` and emits one `.mdx` per `.md` under `.storybook/contributor-docs/`
-- Emits mirrored copies for files configured in `MIRROR_EMITS` (currently: `00_get-started/for-consumers.md` → `.storybook/get-started/index.mdx` with title `Get started`)
+- Emits mirrored copies for files configured in `MIRROR_EMITS` (currently: `for-consumers/get-started.md` → `.storybook/get-started/index.mdx` with title `Get started`)
 - Strips the auto-generated breadcrumbs + TOC blocks (they belong on GitHub, not Storybook)
 - Rewrites `.md` links to Storybook `/docs/...` paths and source-file links to GitHub URLs
 - Sanitizes HTML for MDX (self-closes void elements, converts `<user@example.com>` to `mailto:` links)

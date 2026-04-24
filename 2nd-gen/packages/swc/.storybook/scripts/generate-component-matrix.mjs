@@ -11,7 +11,7 @@
  */
 
 /**
- * Generates CONTRIBUTOR-DOCS/00_get-started/component-matrix.md — a single
+ * Generates CONTRIBUTOR-DOCS/reference/component-status.md — a single
  * at-a-glance view of every 2nd-gen component's migration status, React
  * Spectrum 2 parity, and design/sandbox links.
  *
@@ -22,7 +22,7 @@
  * Inputs:
  *   - CEM (.storybook/custom-elements.json) — tag, status, since (row set + three columns)
  *   - Per-component story files — Figma and Stackblitz URLs
- *   - component-matrix.data.yml — optional RSP parity override + notes
+ *   - component-status.data.yml — optional RSP parity override + notes
  *
  * RSP parity is a human judgment today (set via the YAML, defaulting to
  * `partial` for every component). Once MVP-5 lands, the CEM plugin will parse
@@ -49,11 +49,11 @@ const REPO_ROOT = resolve(STORYBOOK_DIR, '../../../..');
 const CONTRIBUTOR_DOCS_DIR = resolve(REPO_ROOT, 'CONTRIBUTOR-DOCS');
 const DATA_FILE = resolve(
   CONTRIBUTOR_DOCS_DIR,
-  '00_get-started/component-matrix.data.yml'
+  'reference/component-status.data.yml'
 );
 const OUTPUT_FILE = resolve(
   CONTRIBUTOR_DOCS_DIR,
-  '00_get-started/component-matrix.md'
+  'reference/component-status.md'
 );
 const GITHUB_REPO_URL =
   'https://github.com/adobe/spectrum-web-components/tree/main';
@@ -62,7 +62,7 @@ const GENERATED_HEADER = `<!-- GENERATED FILE — DO NOT EDIT DIRECTLY.
 Regenerate with: yarn generate:component-matrix
 Rows + status + since come from CEM (\`.storybook/custom-elements.json\`).
 Figma + Stackblitz URLs come from each component's \`stories/*.stories.ts\`.
-RSP 2 parity is a human judgment set in \`component-matrix.data.yml\` (defaults
+RSP 2 parity is a human judgment set in \`component-status.data.yml\` (defaults
 to \`partial\`). It will move to an \`@RSPparity\` JSDoc tag parsed by CEM once
 the MVP-5 CEM plugin lands. -->`;
 
@@ -225,7 +225,7 @@ function renderMarkdown(rows) {
     '- **Since** — first 2nd-gen package version to ship the component. Derived from CEM (`@since` JSDoc tag).'
   );
   lines.push(
-    '- **RSP 2 parity** — whether the 2nd-gen component reaches feature parity with the equivalent React Spectrum 2 component. Values: `full`, `partial`, `none`, or a short note. Currently a human judgment set in `component-matrix.data.yml`; defaults to `partial` while per-component RSP tracking is being designed. Will move to an `@RSPparity` JSDoc tag parsed by CEM once the MVP-5 plugin lands.'
+    '- **RSP 2 parity** — whether the 2nd-gen component reaches feature parity with the equivalent React Spectrum 2 component. Values: `full`, `partial`, `none`, or a short note. Currently a human judgment set in `component-status.data.yml`; defaults to `partial` while per-component RSP tracking is being designed. Will move to an `@RSPparity` JSDoc tag parsed by CEM once the MVP-5 plugin lands.'
   );
   lines.push('');
 

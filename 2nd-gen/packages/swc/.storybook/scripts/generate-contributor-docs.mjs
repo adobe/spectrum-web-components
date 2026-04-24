@@ -55,7 +55,7 @@ const GITHUB_REPO_URL =
  */
 const MIRROR_EMITS = [
   {
-    source: '00_get-started/for-consumers.md',
+    source: 'for-consumers/get-started.md',
     outputDir: GET_STARTED_OUTPUT_DIR,
     outputFile: 'index.mdx',
     title: 'Get started',
@@ -65,7 +65,7 @@ const MIRROR_EMITS = [
     heading: 'Get started',
   },
   {
-    source: '00_get-started/component-matrix.md',
+    source: 'reference/component-status.md',
     outputDir: LEARN_OUTPUT_DIR,
     outputFile: 'component-status.mdx',
     title: 'Component status',

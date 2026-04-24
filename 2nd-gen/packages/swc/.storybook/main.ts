@@ -94,7 +94,7 @@ if (storybookMode !== 'ci-a11y') {
       // Local `yarn dev` / `yarn storybook` still shows the full tree.
       files:
         storybookMode === 'build'
-          ? '{*.mdx,!(03_project-planning)/**/*.mdx}'
+          ? '{*.mdx,!(project-planning)/**/*.mdx}'
           : '**/*.mdx',
       titlePrefix: 'Contribute',
     }

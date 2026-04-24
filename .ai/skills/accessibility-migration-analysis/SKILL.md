@@ -29,18 +29,18 @@ You are an accessibility auditor, not a documenter. Your job is to verify what t
 ### Output
 
 - **One markdown file per component** at:
-  `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/accessibility-migration-analysis.md`
+  `CONTRIBUTOR-DOCS/project-planning/03_components/[component-name]/accessibility-migration-analysis.md`
 - **Pairing:** Link to `./rendering-and-styling-migration-analysis.md` from **Overview → Also read**
-- **Nav:** After adding the file or changing `##` / `###` headings, run `node update-nav.js` from `CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs`. Register the doc in `03_components/README.md` when introducing a new component folder.
+- **Nav:** After adding the file or changing `##` / `###` headings, run `node update-nav.js` from `CONTRIBUTOR-DOCS/for-contributors/authoring-contributor-docs`. Register the doc in `03_components/README.md` when introducing a new component folder.
 
 ### Reference examples (consistency)
 
 Use these existing docs when matching structure, headings, tables, and phrasing:
 
-- `CONTRIBUTOR-DOCS/03_project-planning/03_components/badge/accessibility-migration-analysis.md`
-- `CONTRIBUTOR-DOCS/03_project-planning/03_components/divider/accessibility-migration-analysis.md`
-- `CONTRIBUTOR-DOCS/03_project-planning/03_components/progress-circle/accessibility-migration-analysis.md`
-- `CONTRIBUTOR-DOCS/03_project-planning/03_components/status-light/accessibility-migration-analysis.md`
+- `CONTRIBUTOR-DOCS/project-planning/03_components/badge/accessibility-migration-analysis.md`
+- `CONTRIBUTOR-DOCS/project-planning/03_components/divider/accessibility-migration-analysis.md`
+- `CONTRIBUTOR-DOCS/project-planning/03_components/progress-circle/accessibility-migration-analysis.md`
+- `CONTRIBUTOR-DOCS/project-planning/03_components/status-light/accessibility-migration-analysis.md`
 
 ### Important
 

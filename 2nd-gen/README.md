@@ -9,7 +9,7 @@ This workspace contains the second generation of Spectrum Web Components (SWC), 
 
 ## Documentation
 
-- **[Get started (for consumers)](../CONTRIBUTOR-DOCS/00_get-started/for-consumers.md)** — install and render your first component. The same content renders interactively under **Get started** in Storybook.
+- **[Get started (for consumers)](../CONTRIBUTOR-DOCS/for-consumers/get-started.md)** — install and render your first component. The same content renders interactively under **Get started** in Storybook.
 - **[Contributor docs](../CONTRIBUTOR-DOCS/README.md)** — architecture, development workflows, migration guides, and project planning.
 
 ## Local development
