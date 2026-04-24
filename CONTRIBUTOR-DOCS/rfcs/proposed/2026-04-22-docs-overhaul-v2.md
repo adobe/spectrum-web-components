@@ -453,7 +453,7 @@ Spectrum 2 design system, web components. Full docs at <https://spectrum-web-com
 See the [Get started](https://spectrum-web-components.adobe.com/?path=/docs/get-started--docs) guide.
 ```
 
-> Note: 2nd-gen's canonical docs URL is <https://spectrum-web-components.adobe.com/>. The legacy `opensource.adobe.com/spectrum-web-components/` URL continues to serve the 1st-gen site; links in v2 assets point to the new host.
+> Note: 2nd-gen's canonical docs URL is [spectrum-web-components.adobe.com](https://spectrum-web-components.adobe.com/). The legacy `opensource.adobe.com/spectrum-web-components/` URL continues to serve the 1st-gen site; links in v2 assets point to the new host.
 
 - Update all `2nd-gen/packages/*/README.md` to the stub pattern
 - Script it where possible (generated stubs); hand-authored where necessary
@@ -731,8 +731,8 @@ Remaining verification items (not "open questions" in the RFC sense; tracked as 
 - No file contains content for more than one audience — `grep -l "for contributors:" for-consumers/` returns nothing; same check in reverse.
 - `generate-contributor-docs.mjs` produces a working Storybook from the new tree; no dead links.
 - The customization cheatsheet is gone from the codebase; its content is distributed across five+ audience-specific files with zero content loss.
-- Package READMEs are all ≤30 lines and point to <https://spectrum-web-components.adobe.com/>.
-- `public/llms.txt` exists and is <5K tokens; `public/llms-full.txt` exists and is <1M tokens; both regenerate on every `yarn storybook` / `yarn storybook:build`.
+- Package READMEs are all ≤30 lines and point to [spectrum-web-components.adobe.com](https://spectrum-web-components.adobe.com/).
+- `public/llms.txt` exists and is under 5K tokens; `public/llms-full.txt` exists and is under 1M tokens; both regenerate on every `yarn storybook` / `yarn storybook:build`.
 - `rfcs/` contains at minimum: `template.md`, `README.md`, `proposed/2026-04-22-docs-overhaul-v2.md` (this RFC), `proposed/2026-04-22-focus-management-strategy.md` (migrated). After this RFC is accepted, it moves to `rfcs/accepted/`.
 - `CONTRIBUTOR-DOCS/README.md` has an auto-generated "Components" section between marker comments (no manual maintenance).
 - `.ai/skills/*` are each tagged `internal` or `public`; only `public` skills are referenced from `for-agents/skill-install.md`.
