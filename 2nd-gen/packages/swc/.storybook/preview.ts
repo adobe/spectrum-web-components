@@ -269,7 +269,10 @@ const preview = {
               '2nd-gen testing',
               'Accessibility testing',
               'Authoring contributor docs',
-              ['Templates', ['Consumer quickstart']],
+              [
+                'Templates',
+                ['Consumer quickstart'],
+              ],
               'Focus management',
               'Getting involved',
               'Making a pull request',

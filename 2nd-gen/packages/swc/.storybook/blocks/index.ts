@@ -10,8 +10,14 @@
  * governing permissions and limitations under the License.
  */
 export * from './ApiTable';
+export * from './CssPartsTable';
+export * from './CssPropsTable';
+export * from './EmbedStory';
+export * from './EventsTable';
 export * from './GettingStarted';
 export * from './OverviewStory';
+export * from './RelatedEntities';
 export * from './SpectrumDocs';
 export * from './SpectrumStories';
 export * from './StatusBadge';
+export * from './Subtitle';
