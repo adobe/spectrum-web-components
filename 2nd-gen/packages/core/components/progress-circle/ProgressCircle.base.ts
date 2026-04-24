@@ -26,7 +26,7 @@ import {
 } from './ProgressCircle.types.js';
 
 /**
- * @todo SWC-1891 Extract shared progress logic (ARIA, label, clamping, formatting,
+ * @todo SWC-2037 Extract shared progress logic (ARIA, label, clamping, formatting,
  * indeterminate derivation) into a `ProgressBase` mixin or abstract class in
  * `core/components/progress/` so that both `ProgressCircleBase` and a future
  * `ProgressBarBase` can extend it. Also add `formatOptions` support for
