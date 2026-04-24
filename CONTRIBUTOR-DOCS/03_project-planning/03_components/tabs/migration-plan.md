@@ -42,8 +42,9 @@
     - [Documentation](#documentation)
     - [Review](#review)
 - [Blockers and open questions](#blockers-and-open-questions)
-    - [Architecture and behavior](#architecture-and-behavior)
-    - [Scope and prerequisites](#scope-and-prerequisites)
+    - [Open — architecture and behavior](#open--architecture-and-behavior)
+    - [Open — scope and prerequisites](#open--scope-and-prerequisites)
+    - [Resolved decisions](#resolved-decisions)
 - [References](#references)
 
 </details>
@@ -70,8 +71,8 @@
 
 ### Most blocking open questions
 
-- `Q3` in [Architecture and behavior](#architecture-and-behavior): cross-root ARIA — how will `aria-controls` / `aria-labelledby` ID references resolve if DOM arrangement changes?
-- `Q7` in [Architecture and behavior](#architecture-and-behavior): `change` event naming — keep `change` or rename to `swc-change`? Needs team alignment.
+- `Q3` in [Open — architecture and behavior](#open--architecture-and-behavior): cross-root ARIA — how will `aria-controls` / `aria-labelledby` ID references resolve if DOM arrangement changes?
+- `Q7` in [Open — architecture and behavior](#open--architecture-and-behavior): `change` event naming — keep `change` or rename to `swc-change`? Needs team alignment.
 
 ### Recently resolved
 
@@ -756,35 +757,40 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 
 ## Blockers and open questions
 
-### Architecture and behavior
+### Open — architecture and behavior
 
-| # | Item | Blocking? | Status | Owner |
-|---|---|---|---|---|
-| **Q1** | ~~2nd-gen keyboard controller readiness — is [#6129](https://github.com/adobe/spectrum-web-components/pull/6129) merged?~~ **Resolved.** `FocusgroupNavigationController` merged into `main` on 2026-04-16. Tabs must use this controller (not invent a new one). It provides roving tabindex, directional navigation (horizontal/vertical/both/grid), RTL support, wrap, skip-disabled, memory, and typeahead. | No | **Resolved** | — |
-| **Q2** | ~~`Focusable` mixin disposition — is it needed in 2nd-gen tabs?~~ **Resolved.** Not needed. `FocusgroupNavigationController` (Q1) manages roving tabindex for the tab collection. `swc-tabs` should use `delegatesFocus` on its shadow root instead of the `Focusable` mixin. The `focusElement` getter is dropped (B10). Individual `swc-tab` elements get their focusability from the controller, not from `Focusable`. | No | **Resolved** | — |
-| **Q3** | Cross-root ARIA: how will `aria-controls` / `aria-labelledby` ID references resolve if 2nd-gen changes the DOM arrangement? | Yes | Open | Implementation |
-| **Q4** | Should `direction="vertical-right"` be carried forward? Not in Spectrum CSS or React Spectrum (RS supports `orientation="vertical"` only, no right-side variant). This is a 1st-gen SWC-only addition that controls which side the selection indicator renders on. **Recommendation: drop it.** Consumers can achieve the same layout with CSS (`direction: rtl` or custom positioning). Keeping it creates API surface with no upstream equivalent. | No | Open — leaning drop | Design |
-| **Q6** | ~~Should `enableTabsScroll` be renamed to a simpler attribute (e.g., `scroll`)?~~ **Resolved: deferred.** `enableTabsScroll` is part of the scroll-based overflow behavior, which is deferred to phase 2 (Q5, Q19). This question will be revisited alongside the Picker-based collapse design. | No | **Resolved** | — |
-| **Q7** | Event naming: keep `change` as-is or rename to `swc-change`? **Recommendation: keep `change`.** Per the [JSDoc standards guide](../../../02_style-guide/02_typescript/07_jsdoc-standards.md), the convention is to use DOM-style names where applicable and prefix with `swc-` only when namespacing is needed to avoid conflicts. `change` matches native `<select>` semantics and renaming would silently break all consumers. The `swc-` prefix is reserved for custom events that have no native equivalent (e.g., `swc-focusgroup-navigation-active-change`). **Needs team alignment — flag for sync discussion.** | **Yes** | Open | API reviewer |
-| **Q8** | ~~Default size: should `size="m"` be set by default, or keep `noDefaultSize`?~~ **Resolved: moot.** `size` is not in the S2 API (Q18, B25). No sizing property means no default size question. If Q18 is reversed and `size` is restored, reopen this. | No | **Resolved** | — |
-| **Q16** | Rename `auto` boolean to `keyboardActivation` (`'automatic' \| 'manual'`) to align with React Spectrum? More descriptive API that clarifies the behavior. | No | Open | API reviewer |
-| **Q17** | Rename `compact` boolean to `density` (`'compact' \| 'regular'`) to align with Figma/React Spectrum? | No | Open | API reviewer / Design |
-| **Q18** | `emphasized`, `quiet`, and `size` do not appear in the S2 API (per 5t3ph review). Confirm removal. If removed, these become breaking changes (B23, B24, B25) for consumers using them. **Not blocking the plan** — evidence from S2 sources is clear; design confirmation is a formality that can happen during implementation. | No | Open | Design |
+| # | Item | Blocking? | Owner |
+|---|---|---|---|
+| **Q3** | Cross-root ARIA: how will `aria-controls` / `aria-labelledby` ID references resolve if 2nd-gen changes the DOM arrangement? | **Yes** | Implementation |
+| **Q4** | Should `direction="vertical-right"` be carried forward? Not in Spectrum CSS or React Spectrum (RS supports `orientation="vertical"` only, no right-side variant). This is a 1st-gen SWC-only addition that controls which side the selection indicator renders on. **Recommendation: drop it.** Consumers can achieve the same layout with CSS. | No | Design |
+| **Q7** | Event naming: keep `change` as-is or rename to `swc-change`? Per the [JSDoc standards guide](../../../02_style-guide/02_typescript/07_jsdoc-standards.md), DOM-style names are preferred and `swc-` is reserved for custom events with no native equivalent. **Needs team alignment — flag for sync discussion.** | **Yes** | API reviewer |
+| **Q16** | Rename `auto` boolean to `keyboardActivation` (`'automatic' \| 'manual'`) to align with React Spectrum? More descriptive API that clarifies the behavior. | No | API reviewer |
+| **Q17** | Rename `compact` boolean to `density` (`'compact' \| 'regular'`) to align with Figma/React Spectrum? | No | API reviewer / Design |
+| **Q18** | `emphasized`, `quiet`, and `size` do not appear in the S2 API (per 5t3ph review). Confirm removal. Breaking changes B23–B25. Evidence is clear; design confirmation can happen during implementation. | No | Design |
 
-### Scope and prerequisites
+### Open — scope and prerequisites
 
-| # | Item | Blocking? | Status | Owner |
-|---|---|---|---|---|
-| **Q5** | ~~Should `sp-tabs-overflow` be migrated in this epic or deferred?~~ **Resolved: deferred to phase 2.** S2 Picker-based collapse requires design alignment and `swc-picker` availability. Porting scroll-based overflow would be throwaway work. | No | **Resolved** | — |
-| **Q9** | Module-level exports (`ScaledIndicator`, scroll helpers) — scroll helpers are deferred with overflow (Q5). `ScaledIndicator` is an internal implementation detail. **Resolve during implementation** — default to internalizing unless a consumer use case is identified. | No | Open — resolve in implementation | Implementation |
-| **Q10** | `selectionIndicatorStyle` / `shouldAnimate` (`attribute: false` properties) — these are internal rendering mechanics, not public API. **Resolve during implementation** — re-implement as needed for the selection indicator animation, but do not expose as public properties. | No | Open — resolve in implementation | Implementation |
-| **Q11** | ~~`<label>` element inside `sp-tab` shadow DOM — consumers targeting via CSS may break when removed.~~ **Resolved.** Internal DOM structure is not a consumer API contract. Shadow DOM internals are not documented in consumer migration guides (per 5t3ph). No action needed. | No | **Resolved** | — |
-| **Q12** | `--highcontrast-tabs-*` tokens — per [forced-colors requirements](../../../02_style-guide/01_css/01_component-css.md#forced-colors-requirements), only add overrides if an actual problem is observed. Since Tabs is an invented control (not a native element), we will likely need some forced-colors overrides. Verify during implementation. | No | Open | CSS reviewer / Implementation |
-| **Q13** | 1st-gen test gaps (no RTL tests, no `memory` re-entry test, limited disabled tests) — ensure 2nd-gen tests fill these. | No | Open | Test author |
-| **Q14** | ~~Public scroll API (`scrollTabs`, `scrollToSelection`, `scrollState`)~~ **Resolved: not ported in phase 1.** Scroll API only exists to support `sp-tabs-overflow`, which is deferred. Will be revisited in phase 2 alongside the Picker-based collapse implementation. | No | **Resolved** | — |
-| **Q15** | `slot="tab-panel"` auto-assignment — 1st-gen sets `this.slot = 'tab-panel'` in `firstUpdated`. Should 2nd-gen preserve this or require explicit `slot` attributes? Changing this silently breaks all existing tab-panel usage. | No | Open | Implementation |
-| **Q19** | ~~Overflow pattern: does `swc-tabs-overflow` carry forward or is it replaced by Picker collapse?~~ **Resolved: deferred to phase 2.** Scroll-based `sp-tabs-overflow` will not be ported. Phase 2 will implement the S2 Picker-based collapse pattern once design alignment and `swc-picker` are available. Consumers should remain on the 1st-gen `sp-tabs-overflow` until then. | No | **Resolved** | — |
-| **Q20** | Storybook documentation structure: Tabs is the first multi-element component. Should all child component APIs (`swc-tab`, `swc-tab-panel`) be documented on a single "Tabs" Storybook page, or should each have its own page? | No | Open | Documentation / Team |
+| # | Item | Blocking? | Owner |
+|---|---|---|---|
+| **Q9** | Module-level exports (`ScaledIndicator`, scroll helpers) — scroll helpers deferred with overflow (Q5). `ScaledIndicator` is an internal detail. Default to internalizing unless a consumer use case is identified. | No | Implementation |
+| **Q10** | `selectionIndicatorStyle` / `shouldAnimate` — internal rendering mechanics, not public API. Re-implement as needed for the selection indicator animation but do not expose as public properties. | No | Implementation |
+| **Q12** | `--highcontrast-tabs-*` tokens — per [forced-colors requirements](../../../02_style-guide/01_css/01_component-css.md#forced-colors-requirements), only add overrides if an actual problem is observed. Tabs is an invented control, so overrides are likely needed. Verify during implementation. | No | CSS reviewer / Implementation |
+| **Q13** | 1st-gen test gaps (no RTL tests, no `memory` re-entry test, limited disabled tests) — ensure 2nd-gen tests fill these. | No | Test author |
+| **Q15** | `slot="tab-panel"` auto-assignment — 1st-gen sets `this.slot = 'tab-panel'` in `firstUpdated`. Should 2nd-gen preserve this or require explicit `slot` attributes? Changing this silently breaks all existing tab-panel usage. | No | Implementation |
+| **Q20** | Storybook documentation structure: Tabs is the first multi-element component. Should all child component APIs (`swc-tab`, `swc-tab-panel`) be documented on a single "Tabs" Storybook page, or should each have its own page? | No | Documentation / Team |
+
+### Resolved decisions
+
+| # | Decision | Resolution |
+|---|---|---|
+| **Q1** | 2nd-gen keyboard controller readiness | `FocusgroupNavigationController` merged into `main` on 2026-04-16 ([#6129](https://github.com/adobe/spectrum-web-components/pull/6129)). Tabs must use this controller. It provides roving tabindex, directional navigation, RTL support, wrap, skip-disabled, memory, and typeahead. |
+| **Q2** | `Focusable` mixin disposition | Not needed. `FocusgroupNavigationController` manages roving tabindex for the tab collection. `swc-tabs` uses `delegatesFocus` on its shadow root instead. The `focusElement` getter is dropped (B10). |
+| **Q5** | `sp-tabs-overflow` migration scope | Deferred to phase 2. S2 Picker-based collapse requires design alignment and `swc-picker` availability. Porting scroll-based overflow would be throwaway work. |
+| **Q6** | `enableTabsScroll` rename | Deferred with overflow to phase 2 (Q5, Q19). |
+| **Q8** | Default size | Moot — `size` is not in the S2 API (Q18, B25). If Q18 is reversed, reopen. |
+| **Q11** | `<label>` element inside `sp-tab` shadow DOM | Internal DOM structure is not a consumer API contract. Shadow DOM internals do not belong in consumer migration guides. No action needed. |
+| **Q14** | Public scroll API (`scrollTabs`, `scrollToSelection`, `scrollState`) | Not ported in phase 1. Scroll API only exists to support `sp-tabs-overflow`, which is deferred. Will be revisited in phase 2. |
+| **Q19** | Overflow pattern (scroll vs Picker collapse) | Deferred to phase 2. Scroll-based `sp-tabs-overflow` will not be ported. Phase 2 will implement S2 Picker-based collapse once design alignment and `swc-picker` are available. Consumers should remain on 1st-gen `sp-tabs-overflow` until then. |
 
 ---
 
