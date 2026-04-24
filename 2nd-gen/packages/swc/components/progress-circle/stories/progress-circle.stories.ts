@@ -243,8 +243,12 @@ export const Indeterminate: Story = {
 /**
  * A common pattern is pairing a progress circle with a button to communicate
  * that an action is in progress after the user clicks. Use `size="s"` to match
- * typical button heights and `static-color="white"` on high-emphasis (filled)
- * buttons where the icon sits on a colored background.
+ * typical button heights.
+ *
+ * In the S2 pending state, the button label is hidden and only the progress circle
+ * is shown. The filled variant uses a neutral gray background; the outline variant
+ * uses a gray border. Both use the default (accent) progress circle color since the
+ * button background is light.
  *
  * Button loading states typically omit `progress` since the duration is unknown.
  *
@@ -258,50 +262,41 @@ export const LoadingButton: Story = {
       style="
         display: inline-flex;
         align-items: center;
-        gap: 8px;
+        justify-content: center;
         padding: 6px 16px;
         border: none;
-        border-radius: 16px;
-        background: var(--spectrum-accent-background-color-default, #378ef0);
-        color: #fff;
-        font: inherit;
-        font-size: 14px;
+        border-radius: 9999px;
+        background: var(--spectrum-gray-200, #e8e8e8);
         cursor: default;
-        opacity: 0.9;
       "
       disabled
+      aria-label="Saving"
     >
       ${template({
         ...args,
         size: 's',
-        'static-color': 'white',
         label: 'Saving',
       })}
-      Saving…
     </button>
     <button
       style="
         display: inline-flex;
         align-items: center;
-        gap: 8px;
+        justify-content: center;
         padding: 6px 16px;
-        border: 2px solid var(--spectrum-accent-background-color-default, #378ef0);
-        border-radius: 16px;
+        border: 1px solid var(--spectrum-gray-400, #ccc);
+        border-radius: 9999px;
         background: transparent;
-        color: var(--spectrum-accent-background-color-default, #378ef0);
-        font: inherit;
-        font-size: 14px;
         cursor: default;
-        opacity: 0.9;
       "
       disabled
+      aria-label="Processing"
     >
       ${template({
         ...args,
         size: 's',
         label: 'Processing',
       })}
-      Processing…
     </button>
   `,
   parameters: {
