@@ -34,6 +34,7 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 // Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
+/* eslint-disable import/no-extraneous-dependencies */
 import '@spectrum-web-components/table/sp-table-body.js';
 import '@spectrum-web-components/table/sp-table-checkbox-cell.js';
 import '@spectrum-web-components/table/sp-table-row.js';

@@ -26,6 +26,7 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
+/* eslint-disable import/no-extraneous-dependencies */
 import '@spectrum-web-components/overlay/sp-overlay.js';
 
 import type { BeforetoggleOpenEvent } from './events.js';

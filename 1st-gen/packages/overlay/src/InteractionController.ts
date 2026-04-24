@@ -76,6 +76,7 @@ export class InteractionController implements ReactiveController {
       this.target[lastInteractionType] = this.type;
     });
 
+    /* eslint-disable import/no-extraneous-dependencies */
     import('@spectrum-web-components/overlay/sp-overlay.js');
   }
 
