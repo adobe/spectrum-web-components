@@ -235,59 +235,59 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 
 #### Migration — phase 1: prep (`migration-prep`)
 
-- **purpose**: Understand the component, plan breaking changes, and define scope before any refactoring begins
-- **How to invoke**: Say "start migration prep for [component]", "plan the migration for [component]", or "phase 1 migration for [component]"
+- **purpose**: Understand the component, critically assess the current API and behavior, plan breaking changes, and define migration scope before any refactoring begins
+- **How to invoke**: Say "start migration prep for [component]", "plan the migration for [component]", "create a migration plan for [component]", "draft the Phase 1 plan for [component]", or "phase 1 migration for [component]"
 - Use when: Beginning a 1st-gen → 2nd-gen component migration; before any files are created or code is moved
-- Provides: Research checklist (1st-gen API, usage, tests), breaking-change analysis, scope definition, written plan for review
+- Provides: Template-backed migration plan workflow, research checklist (1st-gen API, usage, tests, analyses, React/Figma references), breaking-change analysis, source-confidence and contradiction checks, path/link verification, and staff-level API/naming review with explicit escalation for inconsistencies
 
 #### Migration — phase 2: setup (`migration-setup`)
 
 - **purpose**: Create the 2nd-gen file and folder structure, wire up exports, and confirm the build passes before implementation begins
 - **How to invoke**: Say "set up 2nd-gen structure for [component]", "create the file structure for [component]", or "phase 2 migration for [component]"
-- Use when: After prep is complete; creating the scaffolding a component needs before any logic is ported
-- Provides: File/folder creation checklist, export wiring steps, build-passes verification
+- Use when: After prep is complete and the approved `migration-plan.md` is available; creating the scaffolding a component needs before any logic is ported
+- Provides: File/folder creation checklist, export wiring steps, build-passes verification, and plan-aligned naming/structure setup
 
 #### Migration — phase 3: API (`migration-api`)
 
 - **purpose**: Move properties, methods, and types from 1st-gen to 2nd-gen while maintaining a clear public API
 - **How to invoke**: Say "migrate the API for [component]", "port properties and methods for [component]", or "phase 3 migration for [component]"
-- Use when: Scaffolding is in place and it's time to define the component's public contract in 2nd-gen
-- Provides: Property/method porting workflow, type definition guidance, API contract review
+- Use when: Scaffolding is in place and the approved `migration-plan.md` defines the intended public contract for 2nd-gen
+- Provides: Property/method porting workflow, type definition guidance, API contract review, and drift detection against the approved migration plan
 
 #### Migration — phase 4: styling (`migration-styling`)
 
 - **purpose**: Migrate CSS to the 2nd-gen structure, apply Spectrum 2 tokens, and ensure stylelint passes
 - **How to invoke**: Say "migrate styling for [component]", "port CSS for [component]", or "phase 4 migration for [component]"
-- Use when: API is in place; translating 1st-gen CSS to 2nd-gen with Spectrum 2 design tokens
-- Provides: CSS migration checklist, token mapping guidance, stylelint validation steps
+- Use when: API is in place and the approved `migration-plan.md` defines the intended visual scope; translating 1st-gen CSS to 2nd-gen with Spectrum 2 design tokens
+- Provides: CSS migration checklist, token mapping guidance, stylelint validation steps, and checks against approved visual scope and custom-property decisions
 
 #### Migration — phase 5: accessibility (`migration-a11y`)
 
 - **purpose**: Implement WCAG-aligned semantics, ARIA, keyboard support, and focus management, and document accessibility behavior
 - **How to invoke**: Say "migrate accessibility for [component]", "implement a11y for [component]", or "phase 5 migration for [component]"
-- Use when: Styling is complete; hardening the component's accessibility implementation
-- Provides: WCAG checklist, ARIA pattern guidance, keyboard/focus requirements, a11y documentation template
+- Use when: Styling is complete and the approved `migration-plan.md` plus accessibility analysis define the must-ship semantics and behavior
+- Provides: WCAG checklist, ARIA pattern guidance, keyboard/focus requirements, a11y documentation template, and checks against approved accessibility changes in the migration plan
 
 #### Migration — phase 6: testing (`migration-testing`)
 
 - **purpose**: Write unit tests, accessibility tests, and Storybook play functions for a migrated component
 - **How to invoke**: Say "write tests for [component] migration", "add migration tests for [component]", or "phase 6 migration for [component]"
-- Use when: Implementation is feature-complete; adding test coverage before review
-- Provides: Test coverage checklist, unit/a11y/play-function patterns, test-running verification
+- Use when: Implementation is feature-complete and the approved `migration-plan.md` can be used to derive the must-ship test matrix before review
+- Provides: Test coverage checklist, unit/a11y/play-function patterns, test-running verification, and plan-driven coverage checks for breaking changes and regressions
 
 #### Migration — phase 7: documentation (`migration-documentation`)
 
 - **purpose**: Write JSDoc, Storybook stories, and usage docs so the component is usable and understandable by others
 - **How to invoke**: Say "write docs for [component] migration", "document [component] for 2nd-gen", or "phase 7 migration for [component]"
-- Use when: Tests pass; creating the Storybook stories and usage documentation for the migrated component
-- Provides: JSDoc guidelines, stories scaffolding, README/usage doc structure, documentation checklist
+- Use when: Tests pass and the approved `migration-plan.md` can be used as the source of truth for migration notes and rationale
+- Provides: JSDoc guidelines, stories scaffolding, README/usage doc structure, documentation checklist, and plan-aligned migration-note guidance
 
 #### Migration — phase 8: review (`migration-review`)
 
 - **purpose**: Run final checks, verify lint/tests/build/Storybook, update the workstream status table, and open a PR
 - **How to invoke**: Say "review [component] migration", "final checks for [component]", or "phase 8 migration for [component]"
-- Use when: Documentation is complete; preparing the migration for code review and merge
-- Provides: Pre-PR checklist (lint, tests, build, Storybook), workstream status update steps, PR description guidance
+- Use when: Documentation is complete and the approved `migration-plan.md` can be used as the review baseline; preparing the migration for code review and merge
+- Provides: Pre-PR checklist (lint, tests, build, Storybook), workstream status update steps, PR description guidance, and verification that code/docs/tests still match the approved migration plan
 
 #### Deep understanding
 

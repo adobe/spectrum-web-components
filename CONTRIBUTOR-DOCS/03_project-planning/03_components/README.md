@@ -34,6 +34,8 @@
     - [Badge accessibility migration analysis](badge/accessibility-migration-analysis.md)
     - [Badge migration roadmap](badge/rendering-and-styling-migration-analysis.md)
 - Button
+    - [Button accessibility migration analysis](button/accessibility-migration-analysis.md)
+    - [Button Migration Plan](button/migration-plan.md)
     - [Button migration roadmap](button/rendering-and-styling-migration-analysis.md)
 - Button Group
     - [Button Group migration roadmap](button-group/rendering-and-styling-migration-analysis.md)
@@ -92,6 +94,9 @@
     - [Swatch Group migration roadmap](swatch-group/rendering-and-styling-migration-analysis.md)
 - Switch
     - [Switch migration roadmap](switch/rendering-and-styling-migration-analysis.md)
+- Tabs
+    - [Tabs accessibility migration analysis](tabs/accessibility-migration-analysis.md)
+    - [Tabs migration roadmap](tabs/rendering-and-styling-migration-analysis.md)
 - Tag
     - [Tag migration roadmap](tag/rendering-and-styling-migration-analysis.md)
 - Tags
