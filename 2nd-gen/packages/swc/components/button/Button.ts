@@ -18,18 +18,16 @@ import {
   TemplateResult,
 } from 'lit';
 import { property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
   BUTTON_FILL_STYLES,
-  BUTTON_STATIC_COLORS,
-  BUTTON_VALID_SIZES,
   BUTTON_VARIANTS,
   ButtonBase,
   type ButtonFillStyle,
   type ButtonStaticColor,
   type ButtonVariant,
 } from '@spectrum-web-components/core/components/button';
-import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
 
 import styles from './button.css';
 
@@ -46,35 +44,7 @@ import styles from './button.css';
  * @example
  * <swc-button variant="secondary" fill-style="outline">Cancel</swc-button>
  */
-export class Button extends SizedMixin(ButtonBase) {
-  // ────────────────────
-  //     API OVERRIDES
-  // ────────────────────
-
-  /**
-   * @internal
-   */
-  static override readonly VALID_SIZES = BUTTON_VALID_SIZES;
-
-  // ───────────────────
-  //     VISUAL API
-  // ───────────────────
-
-  /**
-   * @internal
-   */
-  static readonly VARIANTS = BUTTON_VARIANTS;
-
-  /**
-   * @internal
-   */
-  static readonly FILL_STYLES = BUTTON_FILL_STYLES;
-
-  /**
-   * @internal
-   */
-  static readonly STATIC_COLORS = BUTTON_STATIC_COLORS;
-
+export class Button extends ButtonBase {
   /**
    * The visual variant of the button.
    *
@@ -126,8 +96,12 @@ export class Button extends SizedMixin(ButtonBase) {
       <button
         class="swc-Button"
         ?disabled=${this.disabled}
-        aria-disabled=${this.pending && !this.disabled ? 'true' : nothing}
-        aria-label=${this.pending ? this.getPendingAccessibleName() : nothing}
+        aria-disabled=${ifDefined(
+          this.pending && !this.disabled ? 'true' : undefined
+        )}
+        aria-label=${this.pending
+          ? this.getPendingAccessibleName()
+          : (this.getAttribute('aria-label') ?? nothing)}
       >
         <slot name="icon"></slot>
         <span class="swc-Button-label">
@@ -140,21 +114,20 @@ export class Button extends SizedMixin(ButtonBase) {
   protected override update(changedProperties: PropertyValues): void {
     super.update(changedProperties);
     if (window.__swc?.DEBUG) {
-      const constructor = this.constructor as typeof Button;
-      if (!constructor.VARIANTS.includes(this.variant)) {
+      if (!BUTTON_VARIANTS.includes(this.variant)) {
         window.__swc.warn(
           this,
           `<${this.localName}> element expects the "variant" attribute to be one of the following:`,
           'https://opensource.adobe.com/spectrum-web-components/components/button/#variants',
-          { issues: [...constructor.VARIANTS] }
+          { issues: [...BUTTON_VARIANTS] }
         );
       }
-      if (!constructor.FILL_STYLES.includes(this.fillStyle)) {
+      if (!BUTTON_FILL_STYLES.includes(this.fillStyle)) {
         window.__swc.warn(
           this,
           `<${this.localName}> element expects the "fill-style" attribute to be one of the following:`,
           'https://opensource.adobe.com/spectrum-web-components/components/button/#fill-style',
-          { issues: [...constructor.FILL_STYLES] }
+          { issues: [...BUTTON_FILL_STYLES] }
         );
       }
       if (
