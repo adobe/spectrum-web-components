@@ -141,7 +141,8 @@ async function main() {
     )) {
         // Extract guide name and directory from the path
         const guideName = /\/([^/]+).md$/.exec(path)[1];
-        const guideDir = path.split('/').at(-2);
+        const pathParts = path.split('/');
+        const guideDir = pathParts[pathParts.length - 2];
         const content = await fs.readFile(path, { encoding: 'utf8' });
         const body = content.replace(/```((.|\s)*?)```/g, '');
         const title = nameToTitle(guideName);

@@ -13,6 +13,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  buildUnknownTokenSuggestions,
   collectLocalVars,
   findCssVarContext,
   findTokenContext,
@@ -20,8 +21,66 @@ import {
   isSoloVarValue,
   shouldWrapLocalVar,
 } from '../server.js';
+import { TokenStore } from '../tokens.js';
 
 describe('server utilities', () => {
+  describe('buildUnknownTokenSuggestions', () => {
+    const store = new TokenStore({
+      tokens: {
+        'accent-color': 'var(--swc-accent-color)',
+        'accent-quiet': 'var(--swc-accent-quiet)',
+      },
+      renamed: {
+        'legacy-accent': 'accent-color',
+      },
+    });
+
+    it('returns top token suggestions for typoed current tokens', () => {
+      const suggestions = buildUnknownTokenSuggestions('accnt-color', store);
+      expect(suggestions[0]).toEqual({
+        token: 'accent-color',
+        fromRenamed: false,
+        replacement: undefined,
+      });
+    });
+
+    it('includes renamed matches with replacement metadata', () => {
+      const suggestions = buildUnknownTokenSuggestions('legcy-accent', store);
+      expect(suggestions[0]).toEqual({
+        token: 'legacy-accent',
+        fromRenamed: true,
+        replacement: 'accent-color',
+      });
+    });
+
+    it('returns no suggestions for very short queries', () => {
+      expect(buildUnknownTokenSuggestions('a', store)).toEqual([]);
+    });
+
+    it('returns exact match quickly from a large candidate set', () => {
+      const manyTokens = Object.fromEntries(
+        Array.from({ length: 600 }, (_, i) => [
+          `token-candidate-${i}`,
+          `var(--swc-token-candidate-${i})`,
+        ])
+      );
+      const largeStore = new TokenStore({
+        tokens: {
+          ...manyTokens,
+          'target-token': 'var(--swc-target-token)',
+        },
+      });
+
+      expect(buildUnknownTokenSuggestions('target-token', largeStore)).toEqual([
+        {
+          token: 'target-token',
+          fromRenamed: false,
+          replacement: undefined,
+        },
+      ]);
+    });
+  });
+
   describe('collectLocalVars', () => {
     it('finds all CSS variable names in text', () => {
       const text = `

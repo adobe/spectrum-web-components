@@ -71,16 +71,61 @@ describe('Button', () => {
 
       const spyCall = consoleWarnStub.getCall(0);
       expect(
-        (spyCall.args.at(0) as string).includes('deprecated'),
+        (spyCall.args[0] as string).includes('deprecated'),
         'confirm deprecated variant warning'
       ).to.be.true;
-      expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        'confirm `data` shape'
+      ).to.deep.equal({
         data: {
           localName: 'sp-button',
           type: 'api',
           level: 'deprecation',
         },
       });
+    });
+
+    it('warns in devMode when href is provided', async () => {
+      const el = await fixture<Button>(html`
+        <sp-button href="https://example.com">Link Button</sp-button>
+      `);
+
+      await elementUpdated(el);
+      expect(consoleWarnStub.called).to.be.true;
+
+      const spyCall = consoleWarnStub.getCall(0);
+      expect(
+        (spyCall.args[0] as string).includes('deprecated'),
+        'confirm deprecated href warning'
+      ).to.be.true;
+      expect(
+        (spyCall.args[0] as string).includes('href'),
+        'warning mentions href attribute'
+      ).to.be.true;
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        'confirm `data` shape'
+      ).to.deep.equal({
+        data: {
+          localName: 'sp-button',
+          type: 'api',
+          level: 'deprecation',
+        },
+      });
+    });
+
+    it('does not warn when href is not provided', async () => {
+      await fixture<Button>(html`
+        <sp-button>Button</sp-button>
+      `);
+
+      const hrefWarnings = Array.from(
+        { length: consoleWarnStub.callCount },
+        (_, i) => consoleWarnStub.getCall(i)
+      ).filter((call) => (call.args[0] as string).includes('href'));
+
+      expect(hrefWarnings.length).to.equal(0);
     });
 
     it('loads default', async () => {

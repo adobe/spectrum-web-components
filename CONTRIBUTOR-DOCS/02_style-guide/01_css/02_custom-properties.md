@@ -31,11 +31,11 @@ This guide explains how to manage **private, internal, and exposed custom proper
 
 ## Naming Conventions
 
-| Prefix | Purpose |
-|--------|---------|
-| `_swc-*` | Private, internal custom property |
-| `--swc-*` | Exposed property available for overrides |
-| `token('name')` | Reference to a design token (no prefix) |
+| Prefix           | Purpose                                  |
+| ---------------- | ---------------------------------------- |
+| `--_swc-*`       | Private, internal custom property        |
+| `--swc-*`        | Exposed property available for overrides |
+| `token('name')`  | Reference to a design token (no prefix)  |
 
 > Private properties are “pseudo-private”: defined on nested shadow elements rather than `:host` to prevent accidental overrides.
 
@@ -52,6 +52,33 @@ This guide explains how to manage **private, internal, and exposed custom proper
 ```
 
 CSS custom properties *normally* can't actually be "private". However, due to shadow DOM encapsulation, we can (partially*) enforce them as private by defining them on a nested wrapper within the component instead of on :host.
+
+**Example from [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css)** — private properties for internal calculations, with exposed properties consumed inline via `var()`:
+
+```css
+.swc-Badge {
+  --_swc-badge-border-width: token("border-width-200");
+  --_swc-badge-border-width-deduction: calc(var(--_swc-badge-border-width) * 2);
+  --_swc-badge-padding-block-start: token("component-top-to-text-100");
+  --_swc-badge-padding-block-end: token("component-bottom-to-text-100");
+
+  padding-block-start: calc(var(--swc-badge-padding-block-start, var(--_swc-badge-padding-block-start)) - var(--_swc-badge-border-width-deduction));
+  padding-block-end: calc(var(--swc-badge-padding-block-end, var(--_swc-badge-padding-block-end)) - var(--_swc-badge-border-width-deduction));
+  background: var(--swc-badge-background-color, token("accent-background-color-default"));
+}
+```
+
+**Example from [Status Light](../../../2nd-gen/packages/swc/components/status-light/status-light.css)** — private properties as passthroughs for size variants:
+
+```css
+.swc-StatusLight {
+  --_swc-statuslight-top-to-text: var(--swc-statuslight-top-to-text, token("component-top-to-text-100"));
+  --_swc-statuslight-bottom-to-text: var(--swc-statuslight-bottom-to-text, token("component-bottom-to-text-100"));
+
+  padding-block-start: var(--_swc-statuslight-top-to-text);
+  padding-block-end: var(--_swc-statuslight-bottom-to-text);
+}
+```
 
 _*"partially" due to possible eventual exposure when we introduce parts_
 
@@ -191,9 +218,9 @@ More examples and further information on how `token()` retrieves and processes t
 
 ### Troubleshooting `token()`
 
-| Error               | Cause                    | Action                                                    |
-| ------------------- | ------------------------ | --------------------------------------------------------- |
-| `token() not found` | Typo, prefix, deprecated | Remove prefix, check spelling, consult `debug-tokens.txt` |
+| Error               | Cause                    | Action                                                             |
+| ------------------- | ------------------------ | ------------------------------------------------------------------ |
+| `token() not found` | Typo, prefix, deprecated | Remove prefix, check spelling, consult `debug-tokens.txt`          |
 | Invalid token value | Cannot resolve to CSS    | Verify against S2 Token Specs; possibly add as custom global token |
 
 - Debug log: `yarn debug:tokens` (from `@adobe/swc-tokens`)

@@ -99,7 +99,7 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
             const excluded = excludedSelectors.some(notExcluded(node));
             return !excluded
               ? // This pass happens at element upgrade and before slot rendering.
-                // Confirm it would exisit in a targeted slot if there was one supplied.
+                // Confirm it would exist in a targeted slot if there was one supplied.
                 slotName
                 ? node.getAttribute('slot') === slotName
                 : !node.hasAttribute('slot')

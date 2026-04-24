@@ -44,7 +44,8 @@ export const gatherUrls = async () => {
   for (const readmePath of await fg([
     `../../node_modules/@spectrum-css/**/metadata/*.yml`,
   ])) {
-    const cssPackageName = readmePath.split('/').at(-3);
+    const readmePathParts = readmePath.split('/');
+    const cssPackageName = readmePathParts[readmePathParts.length - 3];
     const packageName =
       packageNames[
         flatPackageNames.findIndex((name) => name === cssPackageName)

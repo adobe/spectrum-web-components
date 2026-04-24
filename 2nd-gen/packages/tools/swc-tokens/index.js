@@ -20,7 +20,7 @@ import prettier from 'prettier';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
-import { allTokens, generateCSS } from './src/tokens.js';
+import { allTokenData, generateCSS } from './src/tokens.js';
 import { generateTypographyCssFile } from './src/typography.js';
 
 const argv = yargs(hideBin(process.argv))
@@ -99,7 +99,7 @@ if (outputType === 'tokens') {
 } else {
   fs.writeFileSync(
     out,
-    JSON.stringify(await allTokens(prefix, log), '', 4) + '\n',
+    JSON.stringify(await allTokenData(prefix, log), '', 4) + '\n',
     'utf8'
   );
 

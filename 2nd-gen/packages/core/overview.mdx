@@ -1,0 +1,19 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Overview" />
+
+# Core
+
+These pages document **`@spectrum-web-components/core`**: shared element primitives, mixins, utilities, controllers, and base classes used by 2nd-gen components.
+
+## Available documentation
+
+- **[Focus group navigation controller](../?path=/docs/core-focus-group-navigation-controller--readme)** — roving `tabindex`, arrow-key movement (horizontal, vertical, **both**, or grid), optional wrap/memory, prefix / typeahead focus, aligned with APG and the Open UI `focusgroup` explainer.
+
+Add `.mdx` pages or `stories/*.stories.ts` anywhere under `packages/core` to surface them under **Core** in Storybook.
+
+Import paths use the package exports, for example:
+
+```typescript
+import { FocusgroupNavigationController } from '@spectrum-web-components/core/controllers/focus-group-navigation-controller.js';
+```

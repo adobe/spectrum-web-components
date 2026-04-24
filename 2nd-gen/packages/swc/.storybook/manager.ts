@@ -18,6 +18,7 @@ import logo from './assets/logo.svg';
 
 import '../stylesheets/swc.css';
 import '../stylesheets/typography.css';
+import '../stylesheets/global/global-elements.css';
 import './assets/manager.css';
 
 const root = document.body ?? document.documentElement;
@@ -33,5 +34,16 @@ addons.setConfig({
     brandUrl: '?path=/docs/about-swc-overview--readme', // TODO: Add the correct URL once we are publishing 2nd-gen
     brandImage: logo,
     brandTarget: '_self',
+
+    fontBase: 'var(--swc-sans-font-family-stack)',
+
+    // SB did not accept the var here
+    textColor: 'rgb(34 34 34)',
+
+    // Only applies to "Playground" background
+    appPreviewBg:
+      'var( --swc-gray-25, light-dark(rgb(255 255 255), rgb(17 17 17)))',
+
+    inputBorderRadius: 4,
   }),
 });

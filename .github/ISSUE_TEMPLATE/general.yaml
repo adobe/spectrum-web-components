@@ -1,6 +1,6 @@
 name: General
 description: Create a general issue to improve the project
-labels: [triage, needs jira ticket]
+labels: [triage, needs-jira-ticket]
 # assignees:
 body:
   - type: markdown

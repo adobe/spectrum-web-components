@@ -103,7 +103,8 @@ export class Overlay extends ComputedOverlayBase {
    */
   @property({ type: Boolean })
   override get delayed(): boolean {
-    return this.elements.at(-1)?.hasAttribute('delayed') || this._delayed;
+    const lastElement = this.elements[this.elements.length - 1];
+    return lastElement?.hasAttribute('delayed') || this._delayed;
   }
 
   override set delayed(delayed: boolean) {
@@ -397,6 +398,19 @@ export class Overlay extends ComputedOverlayBase {
    */
   @property({ attribute: false })
   triggerInteraction?: TriggerInteraction;
+
+  /**
+   * When set to `'none'`, the overlay will not set `aria-describedby` on the
+   * trigger when open, so the trigger is not described by the overlay content.
+   * Use for hint overlays whose content duplicates the trigger (e.g. truncated
+   * value tooltips) to avoid double announcement by screen readers.
+   *
+   * @internal
+   * @type {"auto" | "none"}
+   * @default "auto"
+   */
+  @property({ attribute: false })
+  describeTrigger: 'auto' | 'none' = 'auto';
 
   /**
    * Configures the open/close heuristics of the Overlay.

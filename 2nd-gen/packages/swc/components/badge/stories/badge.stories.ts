@@ -20,10 +20,10 @@ import '@adobe/spectrum-wc/badge';
 
 import {
   BADGE_VALID_SIZES,
-  BADGE_VARIANTS_COLOR_S2,
-  BADGE_VARIANTS_S2,
+  BADGE_VARIANTS,
+  BADGE_VARIANTS_COLOR,
   BADGE_VARIANTS_SEMANTIC,
-  type BadgeColorVariantS2,
+  type BadgeColorVariant,
   type BadgeSemanticVariant,
   type BadgeSize,
   FIXED_VALUES,
@@ -41,36 +41,18 @@ argTypes.variant = {
   ...argTypes.variant,
   control: { type: 'select' },
   options: Badge.VARIANTS,
-  table: {
-    category: 'attributes',
-    defaultValue: {
-      summary: 'informative',
-    },
-  },
 };
 
 argTypes.fixed = {
   ...argTypes.fixed,
   control: { type: 'select' },
   options: ['', ...Badge.FIXED_VALUES],
-  table: {
-    category: 'attributes',
-    defaultValue: {
-      summary: '',
-    },
-  },
 };
 
 argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
   options: Badge.VALID_SIZES,
-  table: {
-    category: 'attributes',
-    defaultValue: {
-      summary: 'm',
-    },
-  },
 };
 
 /**
@@ -148,7 +130,7 @@ const nonSemanticLabels = {
   brown: 'Facilities',
   cinnamon: 'Compliance',
   silver: 'Version 1.2.10',
-} as const satisfies Record<BadgeColorVariantS2, string>;
+} as const satisfies Record<BadgeColorVariant, string>;
 
 const allVariantsLabels = { ...semanticLabels, ...nonSemanticLabels };
 
@@ -295,7 +277,7 @@ SemanticVariants.storyName = 'Semantic variants';
  */
 export const NonSemanticVariants: Story = {
   render: (args) => html`
-    ${BADGE_VARIANTS_COLOR_S2.map((variant) =>
+    ${BADGE_VARIANTS_COLOR.map((variant) =>
       template({
         ...args,
         variant,
@@ -341,7 +323,7 @@ export const Outline: Story = {
  */
 export const Subtle: Story = {
   render: (args) => html`
-    ${BADGE_VARIANTS_S2.map((variant) =>
+    ${BADGE_VARIANTS.map((variant) =>
       template({
         ...args,
         variant,

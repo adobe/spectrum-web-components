@@ -33,7 +33,6 @@
   min-block-size: var(--swc-statuslight-height, token("component-height-100"));
   padding-block-start: var(--_swc-statuslight-top-to-text);
   padding-block-end: var(--_swc-statuslight-bottom-to-text);
-  font-family: token("sans-font-family-stack");
   font-size: var(--swc-statuslight-font-size, token("font-size-100"));
   font-style: token("default-font-style");
   font-weight: token("regular-font-weight");

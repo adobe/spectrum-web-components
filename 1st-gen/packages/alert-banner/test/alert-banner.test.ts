@@ -197,7 +197,7 @@ describe('AlertBanner', () => {
 
       await elementUpdated(el);
 
-      const warning = consoleStub.getCall(0).args.at(0);
+      const warning = consoleStub.getCall(0).args[0];
       const expectedContent = `<sp-alert-banner> element expects the "variant" attribute to be one of the following`;
 
       expect(consoleStub).to.be.calledOnce;

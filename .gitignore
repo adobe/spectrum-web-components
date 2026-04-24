@@ -1,5 +1,10 @@
 # logging / private config
 .cursor/mcp.json
+.cursor/handoffs
+.ai/handoffs
+.claude/handoffs
+.claude/settings.local.json
+.claude/worktrees
 yarn-error.log
 build-storybook.log
 .DS_STORE
@@ -22,6 +27,7 @@ searchIndex.json
 # dependency folders
 coverage
 lib
+!scripts/lib
 
 # build artifacts
 custom-elements.json
@@ -123,6 +129,11 @@ test/*
 2nd-gen/packages/*/dist/
 2nd-gen/packages/*/custom-elements.json
 2nd-gen/packages/*/storybook-static
+2nd-gen/packages/swc/.storybook/contributor-docs/
+2nd-gen/packages/swc/public/llms.txt
+2nd-gen/packages/swc/public/llms-full.txt
+2nd-gen/packages/swc/public/sitemap.xml
+2nd-gen/packages/swc/public/reference
 
 # npm assets
 node_modules
@@ -133,7 +144,6 @@ package-lock.json
 chromatic.log
 chromatic-build-*.xml
 chromatic-diagnostics*.json
-chromatic.config.json
 
 # Playwright test reports (generated)
 1st-gen/test/playwright-a11y/report/

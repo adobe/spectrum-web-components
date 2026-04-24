@@ -274,6 +274,23 @@ function resolveAliasesInString(str, lookup, prefix, debug) {
   });
 }
 
+function normalizeCompositeValue(value, options) {
+  if (Array.isArray(value)) {
+    return value.map((entry) => normalizeCompositeValue(entry, options));
+  }
+
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, entry]) => [
+        key,
+        normalizeCompositeValue(entry, options),
+      ])
+    );
+  }
+
+  return normalizePrimitive(value, options);
+}
+
 /* -----------------------------------------------------------------------------
  *  Token normalization
  * -------------------------------------------------------------------------- */
@@ -283,6 +300,31 @@ function normalizePrimitive(
   { resolveAliases, lookup, prefix, debug, inSet = false }
 ) {
   // const log = typeof debug === 'function' ? debug : () => {};
+
+  if (Array.isArray(value)) {
+    return value.map((entry) =>
+      normalizeCompositeValue(entry, {
+        resolveAliases,
+        lookup,
+        prefix,
+        debug,
+      })
+    );
+  }
+
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, entry]) => [
+        key,
+        normalizeCompositeValue(entry, {
+          resolveAliases,
+          lookup,
+          prefix,
+          debug,
+        }),
+      ])
+    );
+  }
 
   if (typeof value === 'number') {
     return value.toFixed(2);
@@ -328,6 +370,73 @@ function normalizePrimitive(
   return withRGB;
 }
 
+function isColorSchemeSet(value) {
+  return (
+    value &&
+    typeof value === 'object' &&
+    !Array.isArray(value) &&
+    'light' in value &&
+    'dark' in value
+  );
+}
+
+function isScaleSet(value) {
+  return (
+    value &&
+    typeof value === 'object' &&
+    !Array.isArray(value) &&
+    'desktop' in value &&
+    'mobile' in value
+  );
+}
+
+function isDropShadowLayer(value) {
+  return (
+    value &&
+    typeof value === 'object' &&
+    !Array.isArray(value) &&
+    ['x', 'y', 'blur', 'spread', 'color'].every((key) => key in value)
+  );
+}
+
+function formatDropShadowLayerColor(color) {
+  // This path is reached when a composite shadow token comes from a source
+  // file with resolveAliases enabled and its color alias resolves to a
+  // light/dark set object instead of remaining a var(...) reference.
+  if (isColorSchemeSet(color)) {
+    return `light-dark(${color.light}, ${color.dark})`;
+  }
+
+  return color;
+}
+
+function formatDropShadowValue(value) {
+  if (!Array.isArray(value) || !value.every(isDropShadowLayer)) {
+    return null;
+  }
+
+  return value
+    .map(
+      ({ x, y, blur, spread, color }) =>
+        `${x} ${y} ${blur} ${spread} ${formatDropShadowLayerColor(color)}`
+    )
+    .join(', ');
+}
+
+function serializeTokenValue(value) {
+  const shadow = formatDropShadowValue(value);
+  if (shadow != null) {
+    return shadow;
+  }
+
+  return null;
+}
+
+function buildScaleSetValue(value, prefix) {
+  return `var(--${prefix}-theme--sizeM, ${value.desktop})
+                var(--${prefix}-theme--sizeL, ${value.mobile})`;
+}
+
 function normalizeSetGroup(sets, lookup, prefix, debug) {
   const out = {};
 
@@ -360,7 +469,13 @@ function extractTokenValues(
 
   for (const [name, token] of Object.entries(json)) {
     if (token?.deprecated) {
-      log(`[DEPRECATED] token '${name}'`);
+      if (token?.renamed) {
+        log(
+          `[RENAMED] deprecated token '${name}' renamed to '${token.renamed}'`
+        );
+      } else {
+        log(`[DEPRECATED] token '${name}'`);
+      }
       continue;
     }
 
@@ -390,6 +505,20 @@ function extractTokenValues(
   return out;
 }
 
+function extractRenamedTokenValues(json, debug = false) {
+  const out = {};
+  const log = typeof debug === 'function' ? debug : () => {};
+
+  for (const [name, token] of Object.entries(json)) {
+    if (token?.deprecated && typeof token?.renamed === 'string') {
+      out[name] = token.renamed;
+      log(`[RENAMED-MAP] '${name}' -> '${token.renamed}'`);
+    }
+  }
+
+  return out;
+}
+
 /* -----------------------------------------------------------------------------
  *  CSS Generation
  * -------------------------------------------------------------------------- */
@@ -410,10 +539,19 @@ export async function generateCSS(prefix, debug = false) {
       continue;
     }
 
+    const serialized = serializeTokenValue(value);
+    if (serialized != null) {
+      write(name, serialized, nonScaling);
+      continue;
+    }
+
     if (typeof value === 'string' || typeof value === 'number') {
       write(
         name,
-        !isVar(value) && name.includes('font-family') && !name.includes('stack')
+        !isVar(value) &&
+          name.includes('font-family') &&
+          !name.includes('stack') &&
+          !String(value).includes(',')
           ? `'${value}'`
           : value,
         nonScaling
@@ -423,7 +561,7 @@ export async function generateCSS(prefix, debug = false) {
 
     // Handle multi-value sets
     if (typeof value === 'object' && !Array.isArray(value)) {
-      if (value.light && value.dark) {
+      if (isColorSchemeSet(value)) {
         if (!name.includes('color') && !name.match(/(\d+)$/)) {
           // only colors are eligible for use with light-dark()
           write(`${name}-light`, value.light, nonScaling);
@@ -433,13 +571,8 @@ export async function generateCSS(prefix, debug = false) {
         }
       }
 
-      if (value.desktop && value.mobile) {
-        write(
-          name,
-          `var(--${prefix}-theme--sizeM, ${value.desktop})
-                var(--${prefix}-theme--sizeL, ${value.mobile})`,
-          scaling
-        );
+      if (isScaleSet(value)) {
+        write(name, buildScaleSetValue(value, prefix), scaling);
       }
     }
   }
@@ -487,25 +620,25 @@ async function loadTokenJson(file, src) {
   }
 }
 
-// Load, concat, and resolve all token JSON sources
-async function loadAllTokens(prefix, debug = false) {
+async function loadTokenSources() {
   const sources = [
     ...SPECTRUM_TOKENS.map((t) => ({ ...t, src: 'spectrum' })),
     ...CUSTOM_TOKENS.map((t) => ({ ...t, src: 'custom' })),
   ];
 
-  const rawFiles = await Promise.all(
+  return Promise.all(
     sources.map(async (s) => ({
       ...s,
       raw: await loadTokenJson(s.file, s.src),
     }))
   );
+}
 
-  const globalLookup = Object.assign(
-    {},
-    ...rawFiles.map((f) => buildRawLookup(f.raw))
-  );
+function buildGlobalLookup(rawFiles) {
+  return Object.assign({}, ...rawFiles.map((f) => buildRawLookup(f.raw)));
+}
 
+function extractAllTokenValues(rawFiles, prefix, debug, globalLookup) {
   return Object.assign(
     {},
     ...rawFiles.map((f) =>
@@ -517,8 +650,30 @@ async function loadAllTokens(prefix, debug = false) {
   );
 }
 
+// Load, concat, and resolve all token JSON sources
+async function loadAllTokens(prefix, debug = false) {
+  const rawFiles = await loadTokenSources();
+  const globalLookup = buildGlobalLookup(rawFiles);
+
+  return extractAllTokenValues(rawFiles, prefix, debug, globalLookup);
+}
+
+async function loadAllTokenData(prefix, debug = false) {
+  const rawFiles = await loadTokenSources();
+  const globalLookup = buildGlobalLookup(rawFiles);
+
+  return {
+    tokens: extractAllTokenValues(rawFiles, prefix, debug, globalLookup),
+    renamed: Object.assign(
+      {},
+      ...rawFiles.map((f) => extractRenamedTokenValues(f.raw, debug))
+    ),
+  };
+}
+
 // Cache for loaded tokens (keyed by prefix)
 const tokenCache = new Map();
+const tokenDataCache = new Map();
 
 // Returns combined total token JSON (cached)
 export const allTokens = (prefix, debug = false) => {
@@ -527,6 +682,15 @@ export const allTokens = (prefix, debug = false) => {
     tokenCache.set(cacheKey, loadAllTokens(prefix, debug));
   }
   return tokenCache.get(cacheKey);
+};
+
+// Returns combined token + renamed metadata JSON (cached)
+export const allTokenData = (prefix, debug = false) => {
+  const cacheKey = `${prefix ?? ''}:${debug}`;
+  if (!tokenDataCache.has(cacheKey)) {
+    tokenDataCache.set(cacheKey, loadAllTokenData(prefix, debug));
+  }
+  return tokenDataCache.get(cacheKey);
 };
 
 // Lookup individual token values for use in component styles
@@ -551,7 +715,19 @@ export const __test__ = {
   resolveAlias,
   resolveAliasesInString,
   normalizePrimitive,
+  normalizeCompositeValue,
   normalizeSetGroup,
+  isColorSchemeSet,
+  isScaleSet,
+  isDropShadowLayer,
+  formatDropShadowLayerColor,
+  formatDropShadowValue,
+  serializeTokenValue,
+  buildScaleSetValue,
+  loadTokenSources,
+  buildGlobalLookup,
+  extractAllTokenValues,
   extractTokenValues,
+  extractRenamedTokenValues,
   lookupToken,
 };

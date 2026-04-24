@@ -298,7 +298,6 @@
   "types": "./src/index.d.ts",
   "dependencies": {
     "@spectrum-web-components/base": "1.11.2",
-    "@spectrum-web-components/core": "0.0.4",
     "@spectrum-web-components/styles": "1.11.2"
   },
   "keywords": [

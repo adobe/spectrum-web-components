@@ -79,8 +79,29 @@ const TOKEN_PATCHES = {
 // Centralize CJK language selectors
 const CJK_LANGS = ['zh', 'ja', 'ko'];
 const CJK_NESTED_SELECTOR = CJK_LANGS.map((l) => `&:lang(${l})`).join(', ');
-const CJK_SELECTOR_LIST = CJK_LANGS.map((l) => `:lang(${l})`).join(',\n');
 const CJK_NOT_LIST = CJK_LANGS.map((l) => `:lang(${l})`).join(', ');
+
+// Locale-to-font-token mapping for per-locale font-family rules.
+const LOCALE_FONT_MAP = [
+  { selectors: [':lang(ar)'], fontToken: 'font-family-arabic' },
+  { selectors: [':lang(he)'], fontToken: 'font-family-hebrew' },
+  {
+    selectors: [':lang(zh)', ':lang(zh-Hant)'],
+    fontToken: 'font-family-chinese-traditional',
+  },
+  {
+    selectors: [':lang(zh-Hans)', ':lang(zh-CN)', ':lang(zh-SG)'],
+    fontToken: 'font-family-chinese-simplified',
+  },
+  { selectors: [':lang(zh-HK)'], fontToken: 'font-family-hong-kong' },
+  { selectors: [':lang(ja)'], fontToken: 'font-family-japanese' },
+  { selectors: [':lang(ko)'], fontToken: 'font-family-korean' },
+];
+
+// TODO: determine if we can use this const to disallow certain selectors from the emphasized
+// modifier, like CJK_NOT_LIST (i.e. :not(emphasized))
+// All internationalized locale selectors
+// const INTL_SELECTOR_LIST = LOCALE_FONT_MAP.flatMap(({ selectors }) => selectors).join(', ');
 
 /**
  * Per-variant CJK overrides that should be inherited via the base class.
@@ -158,7 +179,7 @@ function getPatchedTokenName(typeVar, suffix, mode) {
 }
 
 function tokenRefFromName(name) {
-  return name ? `token('${name}')` : null;
+  return name ? `token("${name}")` : null;
 }
 
 function tokenExists(tokens, name) {
@@ -166,7 +187,7 @@ function tokenExists(tokens, name) {
 }
 
 function tokenRefIfExists(tokens, name) {
-  return tokenExists(tokens, name) ? `token('${name}')` : null;
+  return tokenExists(tokens, name) ? `token("${name}")` : null;
 }
 
 function warnMissing(typeVar, what, name, debug) {
@@ -175,7 +196,7 @@ function warnMissing(typeVar, what, name, debug) {
 }
 
 /**
- * Get a token('...') reference by name and warn if missing.
+ * Get a token("...") reference by name and warn if missing.
  * Use for non-variant tokens (e.g. derived line-height-*, cjk-line-height-*, etc.)
  */
 function tokenRefOrWarn(tokens, typeVar, what, tokenName, debug) {
@@ -284,10 +305,6 @@ function cssBlock(selector, decls, nestedBlocks = []) {
 
 function nestedLangBlock(decls) {
   return `  ${CJK_NESTED_SELECTOR} {\n${cssDecls(decls, '    ')}\n  }`;
-}
-
-function langSelectorList(decls) {
-  return `${CJK_SELECTOR_LIST} {\n${cssDecls(decls)}\n}\n`;
 }
 
 function pickValidDecls(decls) {
@@ -496,10 +513,13 @@ export async function generateTypographyCssString(options = {}) {
 
 /* stylelint-ignore */\n\n`;
 
-  // Separate :lang() rule once for font-family only
-  out += `${langSelectorList({
-    'font-family': `token('${fontTokens.cjk}')`,
-  })}\n`;
+  // Per-locale font-family rules
+  for (const { selectors, fontToken } of LOCALE_FONT_MAP) {
+    out += cssBlock(selectors.join(',\n'), {
+      'font-family': `token("${fontToken}") !important`,
+    });
+    out += '\n';
+  }
 
   for (const typeVar of variants) {
     const ctx = makeVariantCtx({ prefix, typeVar });
@@ -612,10 +632,10 @@ export async function generateTypographyCssString(options = {}) {
       }),
       pickValidDecls({
         color: `var(--${cpBase}-font-color, ${colorRef})`,
-        'font-family': `var(--${cpBase}-font-family, token('${defaultFont}'))`,
+        'font-family': `var(--${cpBase}-font-family, token("${defaultFont}"))`,
         'font-weight': sansWeightRef
           ? `var(--${cpBase}-font-weight, ${sansWeightRef})`
-          : `var(--${cpBase}-font-weight, token('regular-font-weight'))`,
+          : `var(--${cpBase}-font-weight, token("regular-font-weight"))`,
         'font-size': mSizeRef
           ? `var(--${cpBase}-font-size, ${mSizeRef})`
           : null,
@@ -741,8 +761,8 @@ export async function generateTypographyCssString(options = {}) {
     // Serif modifier (cascade order wins; no compounding)
     if (tokens[serifWeightTokenName]?.value) {
       out += cssBlock(`.${className}--serif`, {
-        [`--${cpBase}-font-family`]: `token('${fontTokens.serif}')`,
-        [`--${cpBase}-font-weight`]: `token('${serifWeightTokenName}')`,
+        [`--${cpBase}-font-family`]: `token("${fontTokens.serif}")`,
+        [`--${cpBase}-font-weight`]: `token("${serifWeightTokenName}")`,
       });
       out += '\n';
     }
@@ -750,7 +770,7 @@ export async function generateTypographyCssString(options = {}) {
     // Heavy modifier (optional)
     if (tokens[sansHeavyWeightTokenName]?.value) {
       out += cssBlock(`.${className}--heavy`, {
-        [`--${cpBase}-font-weight`]: `token('${sansHeavyWeightTokenName}')`,
+        [`--${cpBase}-font-weight`]: `token("${sansHeavyWeightTokenName}")`,
       });
       out += '\n';
     }
@@ -762,7 +782,7 @@ export async function generateTypographyCssString(options = {}) {
   out += `/* =========================\n  Modifiers\n  ========================= */\n`;
 
   out += `.${prefix}-Typography--emphasized:not(${CJK_NOT_LIST}) {
-  font-style: token('italic-font-style');
+  font-style: token("italic-font-style");
 }\n`;
 
   return out;

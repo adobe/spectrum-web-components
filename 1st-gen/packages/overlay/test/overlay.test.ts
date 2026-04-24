@@ -167,7 +167,7 @@ describe('Overlays', () => {
         );
         button.insertAdjacentElement(
           'afterend',
-          openOverlays.at(-1) as HTMLElement
+          openOverlays[openOverlays.length - 1] as HTMLElement
         );
         await opened;
         expect(await isInteractive(outerPopover)).to.be.true;
@@ -190,7 +190,7 @@ describe('Overlays', () => {
       );
       button.insertAdjacentElement(
         'afterend',
-        openOverlays.at(-1) as HTMLElement
+        openOverlays[openOverlays.length - 1] as HTMLElement
       );
       await opened;
 
@@ -243,7 +243,7 @@ describe('Overlays', () => {
       );
       button.insertAdjacentElement(
         'afterend',
-        openOverlays.at(-1) as HTMLElement
+        openOverlays[openOverlays.length - 1] as HTMLElement
       );
       await opened;
 
@@ -273,7 +273,7 @@ describe('Overlays', () => {
       );
       button.insertAdjacentElement(
         'afterend',
-        openOverlays.at(-1) as HTMLElement
+        openOverlays[openOverlays.length - 1] as HTMLElement
       );
       await opened;
       const end = performance.now();
@@ -302,7 +302,7 @@ describe('Overlays', () => {
       );
       button.insertAdjacentElement(
         'afterend',
-        openOverlays.at(-1) as HTMLElement
+        openOverlays[openOverlays.length - 1] as HTMLElement
       );
       await opened;
       expect(await isOnTopLayer(hoverOverlay)).to.be.true;
@@ -320,7 +320,7 @@ describe('Overlays', () => {
       );
       button.insertAdjacentElement(
         'afterend',
-        openOverlays.at(-1) as HTMLElement
+        openOverlays[openOverlays.length - 1] as HTMLElement
       );
       await opened;
       await closed;
@@ -354,7 +354,7 @@ describe('Overlays', () => {
       );
       button.insertAdjacentElement(
         'afterend',
-        openOverlays.at(-1) as HTMLElement
+        openOverlays[openOverlays.length - 1] as HTMLElement
       );
       await opened;
       expect(await isOnTopLayer(customOverlay)).to.be.true;
@@ -370,7 +370,7 @@ describe('Overlays', () => {
       );
       button.insertAdjacentElement(
         'afterend',
-        openOverlays.at(-1) as HTMLElement
+        openOverlays[openOverlays.length - 1] as HTMLElement
       );
       await opened;
       expect(await isOnTopLayer(clickOverlay), 'click content open').to.be.true;
@@ -398,7 +398,10 @@ describe('Overlays', () => {
         offset: 10,
       })
     );
-    test.insertAdjacentElement('afterend', openOverlays.at(-1) as HTMLElement);
+    test.insertAdjacentElement(
+      'afterend',
+      openOverlays[openOverlays.length - 1] as HTMLElement
+    );
     await opened;
     expect(await isInteractive(el)).to.be.true;
 
@@ -429,7 +432,10 @@ describe('Overlays', () => {
         offset: 10,
       })
     );
-    test.insertAdjacentElement('afterend', openOverlays.at(-1) as HTMLElement);
+    test.insertAdjacentElement(
+      'afterend',
+      openOverlays[openOverlays.length - 1] as HTMLElement
+    );
     await opened;
     expect(await isInteractive(el)).to.be.true;
 
@@ -471,7 +477,7 @@ describe('Overlays', () => {
     );
     trigger.insertAdjacentElement(
       'afterend',
-      openOverlays.at(-1) as HTMLElement
+      openOverlays[openOverlays.length - 1] as HTMLElement
     );
     await opened;
 
@@ -517,7 +523,7 @@ describe('Overlays', () => {
     );
     trigger.insertAdjacentElement(
       'afterend',
-      openOverlays.at(-1) as HTMLElement
+      openOverlays[openOverlays.length - 1] as HTMLElement
     );
     await open;
 

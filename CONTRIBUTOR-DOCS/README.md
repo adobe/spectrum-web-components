@@ -28,14 +28,19 @@
     - [Accessibility testing](01_contributor-guides/09_accessibility-testing.md)
     - [Maintaining StackBlitz examples for Spectrum Web Components](01_contributor-guides/10_using-stackblitz.md)
     - [2nd gen testing](01_contributor-guides/11_2ndgen_testing.md)
+    - [Tools vs packages: where code lives](01_contributor-guides/12_tools-vs-packages.md)
+    - [Focus management](01_contributor-guides/13_focus-management.md)
 - [Style guide](02_style-guide/README.md)
     - [2nd-Gen CSS](02_style-guide/01_css/README.md)
-    - [Linting tools](02_style-guide/02_linting-tools.md)
+    - [2nd-gen TypeScript](02_style-guide/02_typescript/README.md)
+    - [Linting tools](02_style-guide/03_linting-tools.md)
+    - [Testing guide](02_style-guide/04_testing/README.md)
 - [Project planning](03_project-planning/README.md)
     - [Objectives and strategy](03_project-planning/01_objectives-and-strategy.md)
     - [Workstreams](03_project-planning/02_workstreams/README.md)
     - [Components](03_project-planning/03_components/README.md)
     - [Milestones](03_project-planning/04_milestones/README.md)
+    - Strategies
 
 </details>
 
@@ -60,13 +65,13 @@ Spectrum Web Components is currently in transition from its first generation (1s
 
 These docs contain essential information about the SWC project for both maintainers (members of the core team) and contributors from outside the core team.
 
-The docs are organized into three main sections to help you find the information you need:
+The docs are organized into sections to help you find the information you need:
 
 **[Contributor Guides](./01_contributor-guides/README.md)** - Topical guides for working on the project. This section includes guides for getting started, understanding processes, and accomplishing specific tasks like adding new components or editing these contributor docs themselves. When you change doc structure or headings, see [Authoring contributor docs](./01_contributor-guides/07_authoring-contributor-docs/README.md) to regenerate navigation and verify links.
 
 **[Style Guide](./02_style-guide/README.md)** - Comprehensive style guide covering project-wide conventions and area-specific rules. This section is useful for human reference and for AI-assisted work, documenting our approaches to linting, JSDoc conventions, component structure, and other coding standards.
 
-**[Accessibility Guide](./04_accessibility_guides/README.md)** - Accessibility guide covering essential accessibility knowledge and practices for customers and contributors to Spectrum Web Components.
+**[Accessibility testing](./01_contributor-guides/09_accessibility-testing.md)** - Automated accessibility testing, snapshots, and manual testing expectations for pull requests.
 
 **[Project Planning](./03_project-planning/README.md)** - Strategic planning documentation including objectives, workstreams, component roadmaps, and milestones. This section contains:
 

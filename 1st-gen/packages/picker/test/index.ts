@@ -1787,10 +1787,13 @@ export function runPickerTests(): void {
       expect(consoleWarnStub.called).to.be.true;
       const spyCall = consoleWarnStub.getCall(0);
       expect(
-        (spyCall.args.at(0) as string).includes('accessible'),
+        (spyCall.args[0] as string).includes('accessible'),
         'confirm accessibility-centric message'
       ).to.be.true;
-      expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        'confirm `data` shape'
+      ).to.deep.equal({
         data: {
           localName: 'sp-picker',
           type: 'accessibility',
@@ -1806,10 +1809,13 @@ export function runPickerTests(): void {
         expect(consoleWarnStub.called).to.be.true;
         const spyCall = consoleWarnStub.getCall(0);
         expect(
-          (spyCall.args.at(0) as string).includes('<sp-menu>'),
+          (spyCall.args[0] as string).includes('<sp-menu>'),
           'confirm <sp-menu>-centric message'
         ).to.be.true;
-        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+        expect(
+          spyCall.args[spyCall.args.length - 1],
+          'confirm `data` shape'
+        ).to.deep.equal({
           data: {
             localName: 'sp-picker',
             type: 'api',

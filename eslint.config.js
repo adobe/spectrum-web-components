@@ -128,6 +128,7 @@ export default defineConfig([
       '**/.tmp/**',
       '**/playwright-report/**',
       '**/test-results/**',
+      '**/playwright.config.js',
       '**/*.d.ts',
       '1st-gen/packages/icons/src/icons-*.svg.ts',
       // Build outputs
@@ -282,6 +283,8 @@ export default defineConfig([
             'attr', // Attribute shorthand
             'attribute', // Attribute documentation
             'internal', // Internal member marker
+            'status', // Component maturity status (preview, early-access, deprecated)
+            'since', // Version when the component was introduced
           ],
         },
       ],
@@ -409,6 +412,7 @@ export default defineConfig([
       'scripts/**/*',
       '**/scripts/**/*.js',
       '**/scripts/**/*.ts',
+      '**/scripts/**/*.mjs',
       'linters/**/*.js',
       '.github/**/*.js',
       '1st-gen/test/visual/**/*.js',
@@ -425,6 +429,20 @@ export default defineConfig([
     ],
     languageOptions: {
       globals: globals.node,
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // Storybook config files: Node globals and tooling imports
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: ['2nd-gen/packages/swc/.storybook/**/*.ts'],
+    languageOptions: {
+      globals: globals.node,
+    },
+    rules: {
+      'import/no-extraneous-dependencies': 'off',
+      '@typescript-eslint/explicit-function-return-type': 'off',
     },
   },
 
@@ -515,7 +533,12 @@ export default defineConfig([
   // Scripts: allow console.log and devDependencies imports
   // ────────────────────────────────────────────────────────────────────────────
   {
-    files: ['**/scripts/**/*.js', '**/scripts/**/*.ts', 'scripts/**/*'],
+    files: [
+      '**/scripts/**/*.js',
+      '**/scripts/**/*.ts',
+      '**/scripts/**/*.mjs',
+      'scripts/**/*',
+    ],
     rules: {
       'no-console': 'off',
       'import/no-extraneous-dependencies': 'off',
@@ -577,6 +600,11 @@ export default defineConfig([
           hasProperties: ['type'],
           order: packageJsonKeyOrder,
           pathPattern: '^$',
+        },
+        {
+          hasProperties: ['development', 'default'],
+          order: ['development', 'default'],
+          pathPattern: '^exports\\[[^\\]]+\\]$',
         },
         {
           order: { type: 'asc' },

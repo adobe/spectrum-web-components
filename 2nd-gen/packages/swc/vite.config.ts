@@ -33,6 +33,7 @@ const postcssPlugins = [
       'light-dark-function': false,
       'logical-properties-and-values': false,
       'is-pseudo-class': false,
+      'cascade-layers': false,
     },
   }),
 ];
@@ -44,13 +45,16 @@ function processStylesheets(): Plugin {
     apply: 'build',
     async closeBundle() {
       const processor = postcss(postcssPlugins);
-      for (const file of glob.sync(resolve(__dirname, 'stylesheets/*.css'))) {
+      for (const file of glob.sync(
+        resolve(__dirname, 'stylesheets/**/*.css')
+      )) {
         const dest = resolve(__dirname, 'dist', basename(file));
         const result = await processor.process(await readFile(file, 'utf-8'), {
           from: file,
           to: dest,
         });
         await writeFile(dest, result.css);
+        await writeFile(`${dest}.d.ts`, 'export {};\n');
       }
     },
   };
@@ -58,7 +62,7 @@ function processStylesheets(): Plugin {
 
 export default defineConfig({
   plugins: [
-    litCss({ exclude: ['./stylesheets/*.css'] }),
+    litCss({ exclude: ['./stylesheets/**/*.css'] }),
     processStylesheets(),
     dts({
       include: ['**/*.ts'],
@@ -77,6 +81,7 @@ export default defineConfig({
     }),
   ],
   css: {
+    transformer: 'postcss',
     postcss: {
       plugins: postcssPlugins,
     },
@@ -112,6 +117,7 @@ export default defineConfig({
       },
     },
     target: 'es2018',
+    cssMinify: 'esbuild',
     sourcemap: true,
     emptyOutDir: true,
     outDir: 'dist',

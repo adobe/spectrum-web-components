@@ -348,6 +348,72 @@ units.args = {
   value: 24,
 };
 
+export const TruncatedValueTooltip = (args: StoryArgs): TemplateResult => {
+  const value = args.value ?? 123456;
+  return html`
+    <sp-field-label for="truncated-show-stepper">
+      Truncated value (stepper visible)
+    </sp-field-label>
+    <sp-number-field
+      id="truncated-show-stepper"
+      .value=${value}
+      .formatOptions=${{
+        style: 'currency',
+        currency: 'EUR',
+        currencyDisplay: 'code',
+        currencySign: 'accounting',
+      } as unknown as Intl.NumberFormatOptions}
+    ></sp-number-field>
+    <sp-field-label for="truncated-hide-stepper">
+      Truncated value (stepper hidden)
+    </sp-field-label>
+    <sp-number-field
+      id="truncated-hide-stepper"
+      hide-stepper
+      .value=${value}
+      .formatOptions=${{
+        style: 'currency',
+        currency: 'EUR',
+        currencyDisplay: 'code',
+        currencySign: 'accounting',
+      } as unknown as Intl.NumberFormatOptions}
+    ></sp-number-field>
+    <sp-field-label for="truncated-show-stepper-valid">
+      Truncated value (stepper visible, valid)
+    </sp-field-label>
+    <sp-number-field
+      id="truncated-show-stepper-valid"
+      .value=${value}
+      valid
+      .formatOptions=${{
+        style: 'currency',
+        currency: 'EUR',
+        currencyDisplay: 'code',
+        currencySign: 'accounting',
+      } as unknown as Intl.NumberFormatOptions}
+    ></sp-number-field>
+    <sp-field-label for="truncated-hide-stepper-invalid">
+      Truncated value (stepper hidden, invalid)
+    </sp-field-label>
+    <sp-number-field
+      id="truncated-hide-stepper-invalid"
+      hide-stepper
+      invalid
+      .value=${value}
+      .formatOptions=${{
+        style: 'currency',
+        currency: 'EUR',
+        currencyDisplay: 'code',
+        currencySign: 'accounting',
+      } as unknown as Intl.NumberFormatOptions}
+    ></sp-number-field>
+  `;
+};
+
+TruncatedValueTooltip.args = {
+  value: 123456,
+};
+
 export const pixels = (args: StoryArgs): TemplateResult => {
   return html`
     <sp-field-label for="units">Enter a lengths in pixels</sp-field-label>

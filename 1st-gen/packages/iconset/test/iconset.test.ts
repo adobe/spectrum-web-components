@@ -37,10 +37,13 @@ describe('Iconset', () => {
     expect(consoleWarnStub.called).to.be.true;
     const spyCall = consoleWarnStub.getCall(0);
     expect(
-      spyCall.args.at(0).includes('deprecated'),
+      spyCall.args[0].includes('deprecated'),
       'confirm deprecation message'
     ).to.be.true;
-    expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+    expect(
+      spyCall.args[spyCall.args.length - 1],
+      'confirm `data` shape'
+    ).to.deep.equal({
       data: {
         localName: 'sp-icons-medium',
         type: 'api',
