@@ -26,23 +26,44 @@ import {
 import styles from './badge.css';
 
 /**
- * Display small amounts of color-categorized metadata to get a user's attention.
+ * Display short, color-coded status, category, or attribute metadata next to the content it describes.
  *
- * Similar to [status lights](/docs/components-status-light--readme), they use color and text to convey status or category information.
+ * Similar to [status lights](/docs/components-status-light--readme), badges combine color and a short text label to communicate state without the visual weight of an interactive control.
  *
  * Badges come in three styles: bold fill (default), subtle fill, and outline.
  * Choose one style consistently within a product — `outline` and `subtle` fill draw similar attention levels.
  * Reserve bold fill for high-attention badging only.
  *
  * @element swc-badge
+ * @summary Short, color-coded status or category indicator.
+ * @genre component
+ * @category status-display
+ * @related status-light,tag
+ * @RSPparity partial
+ * @a11yPattern non-interactive-color-status
  * @status preview
  * @since 0.0.1
+ *
+ * @cssproperty --swc-badge-background-color - Background color of the badge. Applies to semantic variants only; non-semantic color variants set their own backgrounds and cannot be overridden here.
+ * @cssproperty --swc-badge-label-icon-color - Color applied to the badge label and slotted icon.
+ * @cssproperty --swc-badge-border-color - Border color of the badge.
+ * @cssproperty --swc-badge-corner-radius - Corner radius of the badge. Fixed-edge positioning intentionally clamps the affected corners to `0`.
+ * @cssproperty --swc-badge-font-size - Font size of the label.
+ * @cssproperty --swc-badge-line-height - Line height of the label.
+ * @cssproperty --swc-badge-height - Minimum block size (height) of the badge.
+ * @cssproperty --swc-badge-gap - Gap between the slotted icon and the label.
+ * @cssproperty --swc-badge-padding-block - Block-axis (top/bottom) padding inside the badge.
+ * @cssproperty --swc-badge-padding-inline - Inline-axis (start/end) padding inside the badge.
+ * @cssproperty --swc-badge-with-icon-padding-inline - Inline padding applied when the badge contains a slotted icon.
+ * @cssproperty --swc-badge-icon-size - Size of the slotted icon.
+ * @cssproperty --swc-badge-outline-background-color - Background color used when the `outline` attribute is set. Outline + semantic variants only.
+ * @cssproperty --swc-badge-outline-label-icon-color - Label and icon color used when the `outline` attribute is set. Outline + semantic variants only.
  *
  * @example
  * <swc-badge variant="positive">New</swc-badge>
  *
  * @example
- * <swc-badge variant="neutral" fixed="fill">
+ * <swc-badge variant="neutral" fixed="block-start">
  *   <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
  *   Verified
  * </swc-badge>

@@ -285,6 +285,13 @@ export default defineConfig([
             'internal', // Internal member marker
             'status', // Component maturity status (preview, early-access, deprecated)
             'since', // Version when the component was introduced
+            // SWC docs-overhaul tags (see cem.config.js / swcJsdocTagsPlugin)
+            'summary', // One-line subtitle, surfaced by the <Subtitle /> doc block
+            'genre', // Top-level entity type (component, controller, pattern, token-family)
+            'category', // Sidebar / taxonomy grouping for the entity
+            'related', // Comma-separated list of sibling entity tag names
+            'RSPparity', // React Spectrum 2 parity (full | partial | none | <note>)
+            'a11yPattern', // Accessibility pattern label for the entity
           ],
         },
       ],

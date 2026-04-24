@@ -1,0 +1,82 @@
+{/\*
+Copyright 2026 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+\*/}
+
+import {
+  Description,
+  Meta,
+  Primary,
+  Title,
+} from '@storybook/addon-docs/blocks';
+import {
+  ApiTable,
+  CssPartsTable,
+  CssPropsTable,
+  EmbedStory,
+  EventsTable,
+  GettingStarted,
+  RelatedEntities,
+  StatusBadge,
+  Subtitle,
+} from '../../.storybook/blocks';
+
+import * as Stories from './stories/badge.stories';
+
+<Meta of={Stories} />
+
+<Title />
+<StatusBadge />
+<Subtitle />
+<Description />
+
+<GettingStarted tags={['migrated']} />
+
+## API
+
+<Primary />
+<ApiTable />
+<EventsTable />
+<CssPartsTable />
+<CssPropsTable />
+
+## Usage
+
+### Sizes
+
+Pick the smallest size that still reads in context. The `m` default fits running text and table cells; reserve `l` and `xl` for surfaces that warrant emphasis.
+
+<EmbedStory of={Stories.Sizes} />
+
+### Semantic variants
+
+Semantic variants tie color to meaning. Use them when the badge's color is communicating status — they stay consistent with the rest of Spectrum so a `positive` badge reads the same way everywhere it appears.
+
+<EmbedStory of={Stories.SemanticVariants} />
+
+### Outline
+
+The outline style reduces visual weight without losing semantic meaning. It is supported on semantic variants only — applying `outline` to a non-semantic color variant has no effect.
+
+<EmbedStory of={Stories.Outline} />
+
+## Accessibility
+
+Badges are non-interactive: they are not focusable, expose no implicit role, and convey state through both color and a text label so the meaning survives color-blind viewing and high-contrast mode.
+
+For the same reason, an icon-only badge needs an `aria-label` on the host so assistive tech still announces a name. When an icon accompanies a text label, mark the icon `aria-hidden="true"` to avoid a duplicate announcement. The [consumer migration guide](./?path=/docs/components-badge-consumer-migration-guide--docs) walks through both fixes.
+
+If you need an interactive label-shaped element, reach for `<swc-action-button>`, `<swc-tag>`, or a native button — not a badge.
+
+## Migration
+
+If you are porting a 1st-gen `<sp-badge>` to `<swc-badge>`, see the [Badge consumer migration guide](./?path=/docs/components-badge-consumer-migration-guide--docs) for the full diff (renames, additions, removals, and the `--mod-badge-*` → `--swc-badge-*` mapping).
+
+<RelatedEntities />
