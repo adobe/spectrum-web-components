@@ -11972,6 +11972,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"baseline-browser-mapping@npm:^2.9.0":
+  version: 2.10.21
+  resolution: "baseline-browser-mapping@npm:2.10.21"
+  bin:
+    baseline-browser-mapping: dist/cli.cjs
+  checksum: 10c0/065d90f98099dd0d7b6e1c284f7133d0eaebf571a7ee3e9e0740862dbd64cf040f4447404269bc8b1fd4015dead68c3a026e541a214050375df6bde20706ec8b
+  languageName: node
+  linkType: hard
+
 "basic-ftp@npm:5.2.0":
   version: 5.2.0
   resolution: "basic-ftp@npm:5.2.0"
