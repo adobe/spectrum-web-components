@@ -90,7 +90,7 @@ export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
 
   /**
    * Returns the set of attributes that should be forwarded to the internal
-   * semantic `<button>` element.
+   * semantic `<button>` element, if not otherwise directly managed.
    *
    * @internal
    */
