@@ -17,6 +17,21 @@ The plan's architectural sections also govern **where each property and type lan
 
 **Deferred items are out of scope.** The plan may explicitly defer features to follow-up tickets (e.g. form-associated behavior, cross-root ARIA). Do not implement deferred items in Phase 3 even if they appear in the API section of the plan — mark them as skipped and note the tracking ticket.
 
+**1st-gen changes are limited to deprecation notices only.** When adding deprecation notices to 1st-gen, restrict changes to: (1) `@deprecated` JSDoc on exported types, consts, and properties; and (2) `window.__swc.warn()` calls added inside already-existing setters or other existing code paths. Do not refactor 1st-gen code structure — no new backing types, no converting simple properties to getter/setter patterns, no new private fields. TypeScript TS6385 hints that arise from deprecated types referencing each other internally are an accepted side effect and do not require structural fixes.
+
+**`@deprecated` JSDoc message format** — the washing machine workflow Phase 3 section on "Deprecating 1st-gen type and const exports" says to document migration to class-level inference (e.g. `typeof Badge.prototype.variant`, `typeof Badge.FIXED_VALUES`) when a class static already exists in 1st-gen. Apply this as follows:
+
+- If the 1st-gen class **already** exposes a corresponding static (e.g. `Button.VARIANTS`), use: "The `X` export is deprecated... If needed, you can access the internal `Button.X` property from the constructor."
+- If **no** such static exists, omit the "if needed" clause entirely: "The `X` export is deprecated and will be removed in a future release."
+- Do not add new class statics to 1st-gen just to provide this alternative — that is a refactor and out of scope.
+- For **renames**, note the new name in the JSDoc: "...will be replaced by `newName` in a future release."
+
+For the `window.__swc.warn()` call format and the `{ level: 'deprecation' }` option, follow the **Deprecation warnings** section of [`CONTRIBUTOR-DOCS/02_style-guide/02_typescript/17_debug-validation.md`](../../../CONTRIBUTOR-DOCS/02_style-guide/02_typescript/17_debug-validation.md). Key rules from that guide:
+
+- Use `{ level: 'deprecation' }` instead of `{ issues: [...] }`.
+- If a 1st-gen replacement exists, include `Use "newProp" instead.` at the end of the message. If there is no 1st-gen alternative, omit the "Use" clause.
+- Do not reference 2nd-gen APIs as replacements in runtime warn messages.
+
 ## When to use this skill
 
 - Phase 2 (migration-setup) is complete and the file structure exists

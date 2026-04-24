@@ -435,11 +435,14 @@ Allowed differences:
 - [x] `Button.types.ts`: define canonical `ButtonVariant`, `ButtonFillStyle`, `ButtonStaticColor`, and `ButtonSize`
 - [x] `Button.base.ts` (core): retain `disabled`, `pending`, `pendingLabel`, and accessible-name/pending-label logic — visual API (`size`, `variant`, `fillStyle`, `staticColor`) is intentionally excluded per the [Shared semantics reuse](#shared-semantics-reuse) architectural decision so that `ClearButton`, `CloseButton`, etc. can extend the base without inheriting `sp-button`'s visual surface
 - [x] `Button.ts` (SWC): define `size` (via `SizedMixin(ButtonBase)`), `variant`, `fillStyle`, `staticColor`, `iconOnly`, `truncate`, statics (`VARIANTS`, `FILL_STYLES`, `STATIC_COLORS`, `VALID_SIZES`), and visual combination validation warnings
-- [ ] Rename legacy `noWrap` to `truncate` in the 2nd-gen API
+- [x] Rename legacy `noWrap` to `truncate` in the 2nd-gen API — 2nd-gen `Button.ts` exposes `truncate`; `no-wrap` is deprecated in 1st-gen with `@deprecated` JSDoc and `window.__swc.warn()`
+- [x] Add `@deprecated` JSDoc to 1st-gen type and const exports (`ButtonVariants`, `ButtonTreatments`, `ButtonStaticColors`, `DeprecatedButtonVariants`, `VALID_VARIANTS`, `VALID_STATIC_COLORS`)
+- [x] Add `@deprecated` JSDoc to 1st-gen `treatment` property; no runtime warn added because `treatment` is set internally by the `quiet` setter and the `overBackground` variant alias, which already emit their own deprecation warnings
+- [x] Add `@deprecated` JSDoc and `window.__swc.warn()` to 1st-gen `quiet` property
 - [ ] Remove `label` in favor of `aria-label`
 - [ ] Remove deprecated link API (`href`, `target`, `download`, `referrerpolicy`, `rel`) from the 2nd-gen public surface
-- [ ] Remove deprecated `variant` aliases (`cta`, `overBackground`, `white`, `black`)
-- [ ] Do not carry forward `quiet` as a 2nd-gen visual API; document migration to explicit `fill-style="outline"` where the Figma matrix allows it
+- [ ] Remove deprecated `variant` aliases (`cta`, `overBackground`, `white`, `black`) from the 2nd-gen public surface — already absent in 2nd-gen `Button.ts`
+- [x] Do not carry forward `quiet` as a 2nd-gen visual API — `quiet` is absent from 2nd-gen; deprecated in 1st-gen with `@deprecated` JSDoc and `window.__swc.warn()`
 - [ ] Document migration from `no-wrap` to `truncate`
 
 #### Semantics and forms
