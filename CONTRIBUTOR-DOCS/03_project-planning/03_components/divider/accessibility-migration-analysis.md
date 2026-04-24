@@ -18,6 +18,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
+- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
 - [Recommendations: `<swc-divider>`](#recommendations-swc-divider)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -66,6 +67,13 @@ This doc explains how **`swc-divider`** should work for **accessibility**. It su
 | [Info and relationships (WCAG 1.3.1)](https://www.w3.org/TR/WCAG22/#info-and-relationships) | **Headings** and **landmarks** still define sections. A divider **helps** layout; it **does not replace** a heading. |
 
 **Bottom line:** Keep **`swc-divider`** as a **separator** with the right **orientation**. Do not pretend it is keyboard-driven unless you ship a different, interactive pattern.
+
+---
+
+## Related 1st-gen accessibility (Jira)
+
+| Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
+|------|------|-------------------|-------------------------|---------|
 
 ---
 
