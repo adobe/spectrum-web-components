@@ -95,23 +95,23 @@
 
 /* Figma (node 2:2035): single card artifact is 324px wide. */
 .swc-PromptField-artifacts.is-single > slot::slotted([type="card"]) {
-  flex: 0 1 324px;
+  flex: 0 1 var(--swc-prompt-field-artifact-single-inline-size, 324px);
   inline-size: min(100%, 324px);
-  max-inline-size: 324px;
+  max-inline-size: var(--swc-prompt-field-artifact-single-max-inline-size, 324px);
 }
 
 /* Multi-artifact card layout targets 3+ cards per row responsively. */
 .swc-PromptField-artifacts.is-multiple > slot::slotted([type="card"]) {
-  flex: 1 1 160px;
-  min-inline-size: 160px;
+  flex: 1 1 var(--swc-prompt-field-artifact-multiple-inline-size, 160px);
+  min-inline-size: var(--swc-prompt-field-artifact-min-inline-size, 160px);
 }
 
 /* Prompt-field media artifact uses 68×68 preview tile. */
 .swc-PromptField-artifacts > slot::slotted([type="media"]) {
-  inline-size: 68px;
-  min-inline-size: 68px;
-  block-size: 68px;
-  min-block-size: 68px;
+  inline-size: var(--swc-prompt-field-artifact-media-inline-size, 68px);
+  min-inline-size: var(--swc-prompt-field-artifact-media-min-inline-size, 68px);
+  block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);
+  min-block-size: var(--swc-prompt-field-artifact-media-min-block-size, 68px);
   aspect-ratio: 1 / 1;
 }
 
@@ -122,7 +122,7 @@
 .swc-PromptField-text-area {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: token("spacing-75");
 }
 
 .swc-PromptField-label {
@@ -187,8 +187,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  inline-size: 32px;
-  block-size: 32px;
+  inline-size: var(--swc-prompt-field-upload-inline-size, 32px);
+  block-size: var(--swc-prompt-field-upload-block-size, 32px);
   padding: 0;
   color: token("gray-800");
   background: transparent;
@@ -209,8 +209,8 @@
 }
 
 .swc-PromptField-upload swc-icon {
-  --swc-icon-inline-size: 20px;
-  --swc-icon-block-size: 20px;
+  --swc-icon-inline-size: token("workflow-icon-size-100");
+  --swc-icon-block-size: token("workflow-icon-size-100");
 }
 
 /* Send button (filled circle, right side) */
@@ -219,30 +219,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  inline-size: 32px;
-  block-size: 32px;
+  inline-size: var(--swc-prompt-field-send-inline-size, 32px);
+  block-size: var(--swc-prompt-field-send-block-size, 32px);
   padding: 0;
   color: token("gray-25");
   background: token("neutral-background-color-default");
   border: none;
-  border-radius: 50%;
+  border-radius: token("corner-radius-full");
   cursor: pointer;
-  transition: background 130ms ease;
+  transition: background token("animation-duration-100") ease;
 }
 
 .swc-PromptField-stop {
   display: flex;
   align-items: center;
   justify-content: center;
-  inline-size: 32px;
-  block-size: 32px;
+  inline-size: var(--swc-prompt-field-stop-inline-size, 32px);
+  block-size: var(--swc-prompt-field-stop-block-size, 32px);
   padding: 0;
   color: token("gray-25");
   background: token("gray-900");
   border: none;
-  border-radius: 50%;
+  border-radius: token("corner-radius-full");
   cursor: pointer;
-  transition: background 130ms ease;
+  transition: background token("animation-duration-100") ease;
 }
 
 .swc-PromptField-send:disabled {
@@ -260,7 +260,8 @@
 .swc-PromptField-send:active,
 .swc-PromptField-stop:active {
   transform: perspective(64px) translate3d(0, 0, -1px);
-  transition: transform 0.2s ease;
+  transition: transform token("animation-duration-200") ease;
+  transition-timing-function: token("animation-ease-in-out");
   will-change: transform;
 }
 
@@ -269,8 +270,8 @@
 }
 
 .swc-PromptField-send swc-icon {
-  --swc-icon-inline-size: 20px;
-  --swc-icon-block-size: 20px;
+  --swc-icon-inline-size: token("workflow-icon-size-100");
+  --swc-icon-block-size: token("workflow-icon-size-100");
 }
 
 /* Stop button (filled black circle, right side) */
@@ -280,8 +281,8 @@
 }
 
 .swc-PromptField-stop swc-icon {
-  --swc-icon-inline-size: 20px;
-  --swc-icon-block-size: 20px;
+  --swc-icon-inline-size: token("workflow-icon-size-100");
+  --swc-icon-block-size: token("workflow-icon-size-100");
 }
 
 /* ─────────────────────────────────────

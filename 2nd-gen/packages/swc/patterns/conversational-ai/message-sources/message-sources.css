@@ -95,8 +95,8 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  inline-size: 16px;
-  block-size: 20px;
+  inline-size: var(--swc-message-sources-icon-inline-size, 16px);
+  block-size: var(--swc-message-sources-icon-block-size, 20px);
   font-size: token("font-size-50");
   font-weight: token("bold-font-weight");
   color: token("gray-700");

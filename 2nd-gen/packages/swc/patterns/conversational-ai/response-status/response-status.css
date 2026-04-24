@@ -34,7 +34,7 @@
   display: flex;
   gap: token("spacing-100");
   align-items: center;
-  block-size: 32px;
+  block-size: var(--swc-response-status-row-block-size, 32px);
 }
 
 /* When the row is a button (reasoning toggle) */
@@ -71,7 +71,7 @@
 
 .swc-ResponseStatus-chevron {
   flex-shrink: 0;
-  transition: transform 130ms ease;
+  transition: transform token("animation-duration-100") ease;
 }
 
 .swc-ResponseStatus-chevron--down {

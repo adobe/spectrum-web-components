@@ -47,7 +47,7 @@
 
 .swc-SuggestionItem:active {
   transform: perspective(64px) translate3d(0, 0, -1px);
-  transition-timing-function: cubic-bezier(0.45, 0, 0.4, 1);
+  transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-200");
   will-change: transform;
 }
