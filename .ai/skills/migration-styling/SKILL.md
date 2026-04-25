@@ -11,6 +11,8 @@ description: Phase 4 of 1st-gen to 2nd-gen component migration. Use to migrate C
 
 You are translating, not redesigning. Your job is not to invent new visual decisions. Use the `rendering-and-styling-migration-analysis.md` file that corresponds to the component you are migrating. When the token you need does not exist, use the `ask-questions` skill to flag it with the user. Refer to the CSS styling guides in `CONTRIBUTOR-DOCS/02_style-guide/` when refactoring the CSS (i.e. change `--spectrum` prefixes to `--swc`; `.spectrum*` classes to `.swc*`; `--mod` prefixes should not exist). The CSS style guides are the preferred way to write the CSS, as opposed to any recommendations you find in the rendering analysis doc.
 
+Also read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` when available for approved visual scope, intentional divergences, custom-property decisions, and any planned reduction or split in the supported surface area. If it is missing, stale, or intentionally incomplete, derive the needed context from source material and call out the missing plan as a risk. See also [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
+
 ## When to use this skill
 
 - Phase 3 (migration-api) is complete
@@ -34,3 +36,5 @@ You are translating, not redesigning. Your job is not to invent new visual decis
 ## Workflow
 
 Follow **[Phase 4: Styling](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-4-styling)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
+
+If styling work would diverge from the migration plan's approved visual scope or custom-property decisions, follow [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
