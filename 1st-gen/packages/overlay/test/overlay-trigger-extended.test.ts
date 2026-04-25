@@ -200,7 +200,6 @@ describe('Overlay Trigger - extended', () => {
 
     const trigger = el.querySelector('overlay-trigger') as OverlayTrigger;
     const button = el.querySelector('sp-button') as Button;
-    const link = el.querySelector('a') as HTMLAnchorElement;
 
     button.click();
     await elementUpdated(trigger);
@@ -208,8 +207,8 @@ describe('Overlay Trigger - extended', () => {
 
     expect(
       document.activeElement,
-      'link inside overlay should not receive focus'
-    ).to.not.equal(link);
+      'focus should remain on the trigger when receives-focus="false"'
+    ).to.equal(button);
   });
   it('auto-focuses the first focusable in overlay content when `receives-focus="true"` on a modal', async () => {
     const el = await fixture<HTMLDivElement>(html`

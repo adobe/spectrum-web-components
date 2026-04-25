@@ -428,7 +428,7 @@ export const receivesFocusComparison = (
         </sp-button>
         <sp-dialog-wrapper
           slot="click-content"
-          headline='receives-focus="false"'
+          headline="receives-focus is false"
           dismissable
           underlay
           size="s"
@@ -452,7 +452,7 @@ export const receivesFocusComparison = (
         </sp-button>
         <sp-dialog-wrapper
           slot="click-content"
-          headline='receives-focus="true"'
+          headline="receives-focus is true"
           dismissable
           underlay
           size="s"
