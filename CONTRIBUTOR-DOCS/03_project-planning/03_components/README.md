@@ -27,6 +27,8 @@
 - Asset
     - [Asset migration roadmap](asset/rendering-and-styling-migration-analysis.md)
 - Avatar
+    - [Avatar accessibility migration analysis](avatar/accessibility-migration-analysis.md)
+    - [Avatar — 2nd-Gen Migration Plan](avatar/migration-plan.md)
     - [Avatar accessibility migration analysis](avatar/rendering-and-styling-migration-analysis.md)
 - Badge
     - [Badge accessibility migration analysis](badge/accessibility-migration-analysis.md)
@@ -70,6 +72,9 @@
     - [Opacity Checkerboard migration roadmap](opacity-checkerboard/rendering-and-styling-migration-analysis.md)
 - Picker Button
     - [Picker button migration roadmap](picker-button/rendering-and-styling-migration-analysis.md)
+- Popover
+    - [Popover accessibility migration analysis](popover/accessibility-migration-analysis.md)
+    - [Popover migration roadmap](popover/rendering-and-styling-migration-analysis.md)
 - Progress Bar
     - [Progress bar accessibility migration analysis](progress-bar/accessibility-migration-analysis.md)
     - [Progress bar migration roadmap](progress-bar/rendering-and-styling-migration-analysis.md)
