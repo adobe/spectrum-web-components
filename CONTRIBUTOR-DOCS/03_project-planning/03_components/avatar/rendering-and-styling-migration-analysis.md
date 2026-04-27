@@ -45,7 +45,7 @@ This doc defines how the **avatar image** should work for **accessibility**—th
 1. **SWC style** — Spectrum **CSS** / **design tokens** and **usage guidance** applied to a native **`<img>`** (or equivalent) in **light** DOM.
 2. **Component** — **`<swc-avatar>`** (no **`href`**) that **encapsulates** the same **visual** **language**, **`src`**, **`label`** → shadow **`<img alt>`**, **`isDecorative`**, and **dev** **warnings**, matching **1st-gen** **`<sp-avatar>`** without **`href`** in spirit.
 
-**Linked** avatars (hyperlink affordance) use a **separate** **component**: **`swc-avatar-link`** (see [The linked variant ("avatar-link")](./accessibility-migration-analysis.md#the-linked-variant-avatar-link)).
+**Linked** avatars (hyperlink affordance) use a **separate** **component**: **`swc-avatar-link`** (see [Avatar link accessibility migration analysis](../avatar-link/accessibility-migration-analysis.md)).
 
 **1st-gen** **`<sp-avatar>`** mixes **avatar image** and **`href`** on one tag; **2nd-gen** splits **`<swc-avatar>`** (static) **or** **styled** **`<img>`** from **`swc-avatar-link`**.
 
