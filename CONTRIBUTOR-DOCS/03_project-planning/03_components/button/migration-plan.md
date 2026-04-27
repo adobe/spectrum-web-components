@@ -447,10 +447,10 @@ Allowed differences:
 
 #### Semantics and forms
 
-- [ ] Define which host attributes/semantics are forwarded to the internal button and which remain host-only — `getForwardedButtonAttributes()` documents the mapping as an extension hook; formal documentation of the full contract is deferred to Phase 7
+- [ ] Define which host attributes/semantics are forwarded to the internal button and which remain host-only — `getForwardedButtonAttributes()` documents the mapping as an extension hook; `type="button"` is explicitly set on the internal element (form-associated `submit`/`reset` types tracked in `SWC-2034`); formal documentation of the full contract is deferred to Phase 7
 - [x] When `pending`, expose unavailable state to assistive tech via `aria-disabled="true"` even when the button is not otherwise `disabled` (`SWC-459`) — `Button.ts` render template uses `ifDefined(this.pending && !this.disabled ? 'true' : undefined)`
 - [x] Replace the default pending accessible label with a descriptive busy-state pattern derived from the resolved non-busy accessible name, while still allowing `pending-label` override (`SWC-459`) — `ButtonBase.getPendingAccessibleName()` returns `"${resolvedName}, busy"` or `"Busy"` fallback
-- [x] Keep semantic helpers reusable in `core` so later button-like components can share behavior without sharing `sp-button` DOM or styling — `ButtonBase` in core provides `getResolvedAccessibleName()`, `getPendingAccessibleName()`, `getForwardedButtonAttributes()`, `_suppressPendingClick`
+- [x] Keep semantic helpers reusable in `core` so later button-like components can share behavior without sharing `sp-button` DOM or styling — `ButtonBase` in core provides `getResolvedAccessibleName()`, `getPendingAccessibleName()`, `getForwardedButtonAttributes()`, and `protected _handleClick` (subclasses wire this onto their internal `<button>` via `@click`)
 - [x] Do not recreate proxy patterns where the host carries button semantics while a different hidden internal control handles real activation — internal `<button>` is the semantic control; host carries no button semantics
 - [ ] Document `submit` / `reset` and cross-root ARIA mapping as deferred follow-up work rather than initial Button scope
 - [x] Preserve host-listener support for native `click` and bubbling `focusin` / `focusout` from the internal control — `connectedCallback` / `disconnectedCallback` manage a host `click` listener (suppression-only while pending, passes through otherwise); `delegatesFocus: true` means `focusin` / `focusout` bubble from the internal button naturally
@@ -497,7 +497,7 @@ Allowed differences:
 - [x] Pending state must set `aria-disabled="true"` because the control cannot be activated while pending (`SWC-459`) — implemented in `Button.ts` render template
 - [x] Pending state must use a descriptive default accessible label based on the resolved non-busy accessible name plus a busy suffix, not bare `"Pending"` (`SWC-459`) — `ButtonBase.getPendingAccessibleName()` derives `"${resolvedName}, busy"`
 - [ ] Pending state must be announced to screen readers, even if the final implementation uses more than just an accessible-name change — requires AT testing to verify
-- [x] Pending state must remain focusable while otherwise unavailable, matching current React Spectrum behavior — click suppression via `_suppressPendingClick`; `?disabled` binding is only set when `this.disabled` is true
+- [x] Pending state must remain focusable while otherwise unavailable, matching current React Spectrum behavior — click suppression via `protected _handleClick` (wired via `@click` on the internal `<button>` and as a host listener in `connectedCallback`); `?disabled` binding is only set when `this.disabled` is true
 - [ ] Ensure host and internal button semantics do not conflict in the accessibility tree — requires AT testing to verify
 - [x] Ensure the internal native button, not the host, is the semantic control exposed to assistive technology — `delegatesFocus: true` routes focus to the internal `<button>`; host has no explicit button role
 - [x] Preserve keyboard activation for Space and Enter through native button semantics — provided by the internal native `<button>` element; no custom keyboard handling needed
