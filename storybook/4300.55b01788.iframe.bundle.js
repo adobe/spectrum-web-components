@@ -26,7 +26,7 @@
             `}
         <slot name="label" ?hidden=${!this.hasLabel}></slot>
         <slot name="label-only"></slot>
-      `]}hasAccessibleLabel(){return!!this.label||!!this.getAttribute("aria-label")||!!this.getAttribute("aria-labelledby")||!!this.appliedLabel||this.hasLabel||this.labelOnly}warnNoLabel(){window.__swc.warn(this,`<${this.localName}> needs one of the following to be accessible:`,"https://opensource.adobe.com/spectrum-web-components/components/action-menu/#accessibility",{type:"accessibility",issues:[`an <sp-field-label> element with a \`for\` attribute referencing the \`id\` of the \`<${this.localName}>\`, or`,'value supplied to the "label" attribute, which will be displayed visually as placeholder text','text content supplied in a <span> with slot="label", or, text content supplied in a <span> with slot="label-only"',"which will also be displayed visually as placeholder text."]})}renderOverlay(menu){var _a;const container=this.renderContainer(menu);return this.dependencyManager.add("sp-overlay"),Promise.all([__webpack_require__.e(2067),__webpack_require__.e(3080)]).then(__webpack_require__.bind(__webpack_require__,"./packages/overlay/sp-overlay.dev.js")),index_dev.qy`
+      `]}hasAccessibleLabel(){return!!this.label||!!this.getAttribute("aria-label")||!!this.getAttribute("aria-labelledby")||!!this.appliedLabel||this.hasLabel||this.labelOnly}warnNoLabel(){window.__swc.warn(this,`<${this.localName}> needs one of the following to be accessible:`,"https://opensource.adobe.com/spectrum-web-components/components/action-menu/#accessibility",{type:"accessibility",issues:[`an <sp-field-label> element with a \`for\` attribute referencing the \`id\` of the \`<${this.localName}>\`, or`,'value supplied to the "label" attribute, which will be displayed visually as placeholder text','text content supplied in a <span> with slot="label", or, text content supplied in a <span> with slot="label-only"',"which will also be displayed visually as placeholder text."]})}renderOverlay(menu){var _a;const container=this.renderContainer(menu);return this.dependencyManager.add("sp-overlay"),Promise.all([__webpack_require__.e(2067),__webpack_require__.e(9375)]).then(__webpack_require__.bind(__webpack_require__,"./packages/overlay/sp-overlay.dev.js")),index_dev.qy`
       <sp-overlay
         @slottable-request=${this.handleSlottableRequest}
         @beforetoggle=${this.handleBeforetoggle}
@@ -143,4 +143,4 @@
     <circle cx="29.5" cy="18.2" r="3.4" />
     <circle cx="6.1" cy="18.2" r="3.4" />
   </svg>`}}]);
-//# sourceMappingURL=4300.0f022b78.iframe.bundle.js.map
+//# sourceMappingURL=4300.55b01788.iframe.bundle.js.map
