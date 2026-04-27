@@ -35,7 +35,7 @@ import '@adobe/spectrum-wc/divider';
 | Area             | Spectrum 1 (`sp-divider`)          | Spectrum 2 (`swc-divider`)                  |
 | ---------------- | ---------------------------------- | ------------------------------------------- |
 | Tag              | `sp-divider`                       | `swc-divider`                               |
-| Import path      | `@spectrum-web-components/divider` | `@adobe/spectrum-wc/components/divider`                |
+| Import path      | `@spectrum-web-components/divider` | `@adobe/spectrum-wc/components/divider`     |
 | CSS custom props | `--mod-divider-*`                  | `--swc-divider-*` (see [Styling](#styling)) |
 
 ### Removed in Spectrum 2
@@ -99,13 +99,19 @@ Spectrum 2 exposes a simplified set of public CSS custom properties on `<swc-div
 
 Replace `--mod-divider-*` properties with their `--swc-divider-*` equivalents where available:
 
-| Removed (Spectrum 1)             | Replacement (Spectrum 2)                                   |
-| -------------------------------- | ---------------------------------------------------------- |
-| `--mod-divider-background-color` | `--swc-divider-background-color`                           |
-| `--mod-divider-thickness`        | `--swc-divider-thickness`                                  |
-| `--mod-divider-vertical-align`   | No replacement — `align-self: flex-start` is now hardcoded |
-| `--mod-divider-vertical-height`  | No replacement                                             |
-| `--mod-divider-vertical-margin`  | No replacement                                             |
+| Removed (Spectrum 1)                                 | Replacement (Spectrum 2)                                          |
+| ---------------------------------------------------- | ----------------------------------------------------------------- |
+| `--mod-divider-background-color`                     | `--swc-divider-background-color`                                  |
+| `--mod-divider-thickness`                            | `--swc-divider-thickness`                                         |
+| `--mod-divider-vertical-align`                       | No replacement — `align-self: flex-start` is now hardcoded        |
+| `--mod-divider-vertical-height`                      | No replacement                                                    |
+| `--mod-divider-vertical-margin`                      | No replacement                                                    |
+| `--mod-divider-background-color-small-static-white`  | No replacement — use the `static-color="white"` attribute instead |
+| `--mod-divider-background-color-medium-static-white` | No replacement — use the `static-color="white"` attribute instead |
+| `--mod-divider-background-color-large-static-white`  | No replacement — use the `static-color="white"` attribute instead |
+| `--mod-divider-background-color-small-static-black`  | No replacement — use the `static-color="black"` attribute instead |
+| `--mod-divider-background-color-medium-static-black` | No replacement — use the `static-color="black"` attribute instead |
+| `--mod-divider-background-color-large-static-black`  | No replacement — use the `static-color="black"` attribute instead |
 
 ### Public custom properties
 
