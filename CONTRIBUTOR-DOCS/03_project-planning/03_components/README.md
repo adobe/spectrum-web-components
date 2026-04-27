@@ -67,6 +67,7 @@
 - Infield Progress Circle
     - [In-field progress circle migration roadmap](infield-progress-circle/rendering-and-styling-migration-analysis.md)
 - Link
+    - [Link accessibility migration analysis](link/accessibility-migration-analysis.md)
     - [Link migration roadmap](link/rendering-and-styling-migration-analysis.md)
 - Meter
     - [Meter migration roadmap](meter/rendering-and-styling-migration-analysis.md)
