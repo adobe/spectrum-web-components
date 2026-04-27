@@ -293,6 +293,8 @@ Follow team **TypeScript conventions (Ticket 7)** for naming and structure; use 
 - Use them for: **runtime validation** (e.g. in `update()` or setters—check value is in the list), **Storybook** `argTypes` `options`, and **tests** (assert against the same source of truth).
 - See `2nd-gen/packages/core/components/badge/Badge.base.ts` and `2nd-gen/packages/swc/components/badge/Badge.ts`.
 
+> **When to skip class statics:** If the concrete class is a leaf that is not intended to be subclassed with different valid values, adding `static readonly VARIANTS = BUTTON_VARIANTS` to the class would simply re-point a module-level constant. In that case, referencing the module constant directly in debug/validation code is simpler — and avoids the `(this.constructor as typeof Base).VARIANTS` cast entirely. See `swc-button` (`Button.ts`) as an example: its `update()` references `BUTTON_VARIANTS` and `BUTTON_FILL_STYLES` directly rather than hoisting them as statics.
+
 **`window.__swc.warn()` (debug-only)**
 
 - When `window.__swc?.DEBUG` is enabled, warn on invalid API combinations (e.g. incompatible variant + outline) so developers catch mistakes without affecting production. See `Badge.base.ts` (`update()` and `window.__swc.warn(...)` with structured issue metadata).
@@ -383,6 +385,8 @@ For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheet
 3. **Identify the APG pattern** for your component type (e.g. button, combobox) — [WCAG ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/).
 4. **Implement:** Semantics (prefer native HTML), ARIA where needed, keyboard support, focus management (trap in overlays), screen reader exposure. Test with assistive tech; document in JSDoc.
 5. **Native vs custom controls:** Native form control (e.g. Checkbox) → `delegatesFocus: true`. Custom control (e.g. Radio) → `role` and `aria-*` on host, manage focus/keyboard. See Checkbox and Radio as references.
+6. **Focus delegation on internal control:** When a component wraps a native form control inside its shadow DOM, `delegatesFocus: true` should be set in `createRenderRoot()` so that focus lands on the internal control, not the host. This belongs in the base class if all subclasses share the same host-wraps-native-control structure.
+7. **Accessible name forwarding:** Attributes like `aria-label` on the host do not automatically apply to the internal control — either bind them explicitly in the render template (e.g. `aria-label=${this.getAttribute('aria-label')}`) or derive the accessible name in a protected helper and forward it. See `ButtonBase.getResolvedAccessibleName()` as a reference. Note that implementing these patterns may require adding methods or modifying the render template, so Phase 5 often touches component class files, not only Storybook or docs.
 
 ### What to check
 
