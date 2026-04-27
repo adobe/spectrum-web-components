@@ -52,7 +52,7 @@ This doc defines how the **avatar image** should work for **accessibility**—th
 ### Also read
 
 - [Avatar migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, CSS, and DOM.
-- [The linked variant ("avatar-link")](./accessibility-migration-analysis.md#the-linked-variant-avatar-link) for **`href`**, keyboard, and link naming.
+- [Avatar link accessibility migration analysis](../avatar-link/accessibility-migration-analysis.md) for **`href`**, keyboard, and link naming.
 
 ### Avatar image as an SWC style
 
@@ -172,7 +172,7 @@ This doc defines how the **avatar image** should work for **accessibility**—th
 - [ ] Guidance covers decorative vs informative **`alt`**, **`aria-hidden`**, and **`isDecorative`** / **`label`** on **`<swc-avatar>`**.
 - [ ] **`<swc-avatar>`** uses dev warnings like **1st-gen**; **SWC** **style** path documents optional lint or docs checks.
 - [ ] Avatar image is not keyboard-focusable on either path.
-- [ ] **`swc-avatar-link`** owns linked cases; cross-link [The linked variant ("avatar-link")](./accessibility-migration-analysis.md#the-linked-variant-avatar-link) from Storybook.
+- [ ] **`swc-avatar-link`** owns linked cases; cross-link [Avatar link accessibility migration analysis](../avatar-link/accessibility-migration-analysis.md) from Storybook.
 
 ---
 
@@ -182,5 +182,5 @@ This doc defines how the **avatar image** should work for **accessibility**—th
 - [Understanding 1.1.1 Non-text content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content)
 - [Using ARIA (read this first)](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
 - [Avatar migration roadmap](./rendering-and-styling-migration-analysis.md)
-- [The linked variant ("avatar-link")](./accessibility-migration-analysis.md#the-linked-variant-avatar-link)
+- [Avatar link accessibility migration analysis](../avatar-link/accessibility-migration-analysis.md)
 - [SWC-915](https://jira.corp.adobe.com/browse/SWC-915) (resolved)—**avatar image** accessibility for **`<sp-avatar>`** without **`href`** (Adobe internal Jira)
