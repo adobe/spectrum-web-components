@@ -85,7 +85,7 @@ export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
    * and should be narrowed in each subclass.
    */
   @property({ type: String, reflect: true })
-  public variant: StatusLightVariant = 'info';
+  public variant: StatusLightVariant = 'neutral';
 
   // ──────────────────────
   //     IMPLEMENTATION

@@ -34,6 +34,9 @@ import styles from './status-light.css';
  * @property {string} variant - Semantic or non-semantic color variant for the status dot.
  *
  * @example
+ * <swc-status-light>Archived</swc-status-light>
+ *
+ * @example
  * <swc-status-light variant="positive">Approved</swc-status-light>
  *
  * @example
@@ -73,7 +76,7 @@ export class StatusLight extends StatusLightBase {
    * Changes the color of the status dot. The variant list includes both semantic and non-semantic options.
    */
   @property({ type: String, reflect: true })
-  public override variant: StatusLightVariant = 'info';
+  public override variant: StatusLightVariant = 'neutral';
 
   // ──────────────────────────────
   //     RENDERING & STYLING

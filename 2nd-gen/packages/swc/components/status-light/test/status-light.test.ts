@@ -60,7 +60,9 @@ export const DefaultTest: Story = {
     );
 
     await step('renders default properties and slot content', async () => {
-      expect(statusLight.variant, 'default variant is info').toBe('info');
+      expect(statusLight.variant, 'default variant is neutral').toBe(
+        'neutral'
+      );
       expect(statusLight.size, 'default size is m').toBe('m');
       expect(
         statusLight.textContent?.trim(),
@@ -113,8 +115,8 @@ export const SizesTest: Story = {
         await statusLight?.updateComplete;
         expect(
           statusLight?.variant,
-          `status light with size="${size}" has variant info`
-        ).toBe('info');
+          `status light with size="${size}" has default variant neutral`
+        ).toBe('neutral');
         expect(
           statusLight?.size,
           `status light size property is "${size}"`
@@ -211,7 +213,7 @@ export const NonSemanticVariantsTest: Story = {
 
 export const VariantMutationTest: Story = {
   render: () => html`
-    <swc-status-light variant="info" size="m">Active</swc-status-light>
+    <swc-status-light variant="neutral" size="m">Archived</swc-status-light>
   `,
   play: async ({ canvasElement, step }) => {
     const statusLight = await getComponent<StatusLight>(
@@ -263,7 +265,7 @@ export const VariantMutationTest: Story = {
 
 export const UnsupportedVariantWarningTest: Story = {
   render: () => html`
-    <swc-status-light variant="info">Active</swc-status-light>
+    <swc-status-light variant="neutral">Archived</swc-status-light>
   `,
   play: async ({ canvasElement, step }) => {
     await step('warns when an unsupported variant is set', () =>
@@ -296,7 +298,7 @@ export const UnsupportedVariantWarningTest: Story = {
 
 export const ValidVariantNoWarningTest: Story = {
   render: () => html`
-    <swc-status-light variant="info">Active</swc-status-light>
+    <swc-status-light variant="neutral">Archived</swc-status-light>
   `,
   play: async ({ canvasElement, step }) => {
     const statusLight = await getComponent<StatusLight>(

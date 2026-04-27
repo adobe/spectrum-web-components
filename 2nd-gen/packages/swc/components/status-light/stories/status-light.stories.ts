@@ -43,7 +43,7 @@ argTypes.variant = {
   table: {
     category: 'attributes',
     defaultValue: {
-      summary: 'info',
+      summary: 'neutral',
     },
   },
 };
@@ -130,7 +130,7 @@ const sizeLabels = {
 export const Playground: Story = {
   tags: ['autodocs', 'dev'],
   args: {
-    'default-slot': 'Active',
+    'default-slot': semanticLabels.neutral,
   },
 };
 
@@ -141,7 +141,7 @@ export const Playground: Story = {
 export const Overview: Story = {
   tags: ['overview'],
   args: {
-    'default-slot': 'Active',
+    'default-slot': semanticLabels.neutral,
   },
 };
 
@@ -201,8 +201,8 @@ export const Sizes: Story = {
 /**
  * Semantic variants provide meaning through color:
  *
+ * - **`neutral`**: Default variant — archived, deleted, paused, draft, not started, ended
  * - **`info`**: Active, in use, live, published
- * - **`neutral`**: Archived, deleted, paused, draft, not started, ended
  * - **`positive`**: Approved, complete, success, new, purchased, licensed
  * - **`notice`**: Needs approval, pending, scheduled, syncing, indexing, processing
  * - **`negative`**: Error, alert, rejected, failed
@@ -309,7 +309,7 @@ export const TextWrapping: Story = {
  * ### Best practices
  *
  * - Always provide a descriptive text label that explains the status
- * - Use semantic variants (`info`, `positive`, `negative`, `notice`, `neutral`) when the status has specific meaning
+ * - Use semantic variants (`neutral` (default), `info`, `positive`, `negative`, `notice`) when the status has specific meaning
  * - Status lights are not interactive elements - for interactive status indicators, consider using buttons, tags, or links instead
  * - Use meaningful, specific labels (e.g., "Approved" instead of "Green")
  * - Ensure sufficient color contrast between the status light and its background
