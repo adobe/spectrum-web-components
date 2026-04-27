@@ -56,3 +56,5 @@ export type StatusLightColorVariant =
   (typeof STATUS_LIGHT_VARIANTS_COLOR)[number];
 
 export type StatusLightVariant = (typeof STATUS_LIGHT_VARIANTS)[number];
+
+export type StatusLightSize = (typeof STATUS_LIGHT_VALID_SIZES)[number];

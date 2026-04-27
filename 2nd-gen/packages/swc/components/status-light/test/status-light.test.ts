@@ -60,9 +60,7 @@ export const DefaultTest: Story = {
     );
 
     await step('renders default properties and slot content', async () => {
-      expect(statusLight.variant, 'default variant is neutral').toBe(
-        'neutral'
-      );
+      expect(statusLight.variant, 'default variant is neutral').toBe('neutral');
       expect(statusLight.size, 'default size is m').toBe('m');
       expect(
         statusLight.textContent?.trim(),
