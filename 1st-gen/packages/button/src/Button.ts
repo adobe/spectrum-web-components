@@ -225,7 +225,24 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
    * `truncate` in a future release.
    */
   @property({ type: Boolean, attribute: 'no-wrap', reflect: true })
-  public noWrap = false;
+  public set noWrap(value: boolean) {
+    const oldValue = this._noWrap;
+    this._noWrap = value;
+    this.requestUpdate('noWrap', oldValue);
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `The "no-wrap" attribute on <${this.localName}> has been deprecated and will be replaced by "truncate" in a future release.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/button',
+        { level: 'deprecation' }
+      );
+    }
+  }
+
+  public get noWrap(): boolean {
+    return this._noWrap;
+  }
+  private _noWrap = false;
 
   public get quiet(): boolean {
     return this.treatment === 'outline';
