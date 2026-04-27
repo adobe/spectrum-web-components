@@ -142,7 +142,7 @@ export const Playground: Story = {
     variant: 'informative',
     'default-slot': 'Active',
   },
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────────
