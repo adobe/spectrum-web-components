@@ -53,7 +53,7 @@
     inline-size: var(--_swc-status-light-dot-size);
     block-size: var(--_swc-status-light-dot-size);
     margin-block-start: calc(var(--_swc-status-light-top-to-dot) - var(--_swc-status-light-padding-block));
-    background-color: var(--swc-status-light-dot-color);
+    background-color: var(--swc-status-light-dot-color, token("neutral-visual-color"));
     border-radius: token("corner-radius-full");
     content: "";
   }

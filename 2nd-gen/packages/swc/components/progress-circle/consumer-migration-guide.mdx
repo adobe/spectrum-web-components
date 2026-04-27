@@ -1,0 +1,195 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Progress circle/Consumer migration guide" />
+
+# Progress circle consumer migration guide
+
+Replace `<sp-progress-circle>` with `<swc-progress-circle>`, update the import, and use `progress` omission instead of the `indeterminate` attribute.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/progress-circle
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
+
+// After
+import '@adobe/spectrum-wc/progress-circle';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/progress-circle`) loads only that component's bundle.
+
+## What changed
+
+### Renamed
+
+| Area             | Spectrum 1 (`sp-progress-circle`)          | Spectrum 2 (`swc-progress-circle`)                  |
+| ---------------- | ------------------------------------------ | --------------------------------------------------- |
+| Tag              | `sp-progress-circle`                       | `swc-progress-circle`                               |
+| Import path      | `@spectrum-web-components/progress-circle` | `@adobe/spectrum-wc/progress-circle`                |
+| CSS custom props | `--mod-progress-circle-*`                  | `--swc-progress-circle-*` (see [Styling](#styling)) |
+
+### Added in Spectrum 2
+
+| Addition               | Notes                                                                      |
+| ---------------------- | -------------------------------------------------------------------------- |
+| `static-color="black"` | Use on light static backgrounds; `white` was the only option in Spectrum 1 |
+
+### Removed in Spectrum 2
+
+| Removed                                     | Replacement                                                                                  |
+| ------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `indeterminate` boolean attribute           | Omit the `progress` attribute (or set it to `null`) — see [step 2](#2-replace-indeterminate) |
+| Light DOM children rendered as label        | Use the `label` attribute — see [step 3](#3-move-label-text-to-the-label-attribute)          |
+| `--mod-progress-circle-*` custom properties | `--swc-progress-circle-*` equivalents (see [Styling](#styling))                              |
+
+## Update your code
+
+### 1. Rename the tag
+
+```html
+<!-- Before -->
+<sp-progress-circle progress="50" label="Uploading"></sp-progress-circle>
+<!-- After -->
+<swc-progress-circle progress="50" label="Uploading"></swc-progress-circle>
+```
+
+### 2. Replace `indeterminate`
+
+The `indeterminate` boolean attribute has been removed. Omitting the `progress` attribute is now equivalent — the component defaults to indeterminate mode when no `progress` value is set. You can also set `progress` to `null` explicitly to return to indeterminate mode after a value has been assigned.
+
+```html
+<!-- Before -->
+<sp-progress-circle indeterminate label="Loading"></sp-progress-circle>
+
+<!-- After: omit progress entirely -->
+<swc-progress-circle label="Loading"></swc-progress-circle>
+
+<!-- After: or set progress to null explicitly (useful when toggling state in JS) -->
+<swc-progress-circle label="Loading"></swc-progress-circle>
+```
+
+```js
+// Return to indeterminate after a value has been set
+progressCircle.progress = null;
+```
+
+If you set `indeterminate` and `progress` simultaneously in Spectrum 1, remove `indeterminate` and keep `progress` to render a determinate indicator.
+
+### 3. Move label text to the `label` attribute
+
+In Spectrum 1, text placed as a light DOM child of `<sp-progress-circle>` was rendered as a visible label. In Spectrum 2, light DOM children are not rendered. Use the `label` attribute (or `aria-label`) to provide the accessible name.
+
+```html
+<!-- Before -->
+<sp-progress-circle progress="75">Saving document</sp-progress-circle>
+
+<!-- After -->
+<swc-progress-circle
+  progress="75"
+  label="Saving document"
+></swc-progress-circle>
+```
+
+### 4. (Optional) Use `static-color="black"` for light backgrounds
+
+The `static-color` attribute now accepts `"black"` in addition to `"white"`. Use it when placing the component on a light static background that falls outside the normal theme.
+
+```html
+<!-- On a dark background -->
+<swc-progress-circle static-color="white" label="Loading"></swc-progress-circle>
+
+<!-- On a light static background (new in Spectrum 2) -->
+<swc-progress-circle static-color="black" label="Loading"></swc-progress-circle>
+```
+
+## Accessibility
+
+- Always provide a `label` attribute (or `aria-label`) with a specific description of what is loading. The component applies a fallback `aria-label="Loading"` when no accessible name is found, but a task-specific label ("Uploading document", "Processing payment") is strongly preferred.
+- `<swc-progress-circle>` sets `role="progressbar"` automatically. Do not add a conflicting `role` attribute.
+- In determinate mode, `aria-valuenow`, `aria-valuemin="0"`, `aria-valuemax="100"`, and a locale-aware `aria-valuetext` are set automatically. Do not set these manually.
+- In indeterminate mode, all `aria-value*` attributes are removed so assistive technology correctly treats the component as having no known progress value.
+- Do not wrap `<swc-progress-circle>` in an `aria-live="assertive"` region — it will interrupt screen reader users continuously. Use `aria-live="polite"` only for deliberate status updates.
+
+## Styling
+
+Spectrum 2 exposes a new set of public CSS custom properties on `<swc-progress-circle>`.
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
+  <code>{'--mod-progress-circle-*'}</code> properties{' '}
+  <strong>do not apply</strong> to <code>{'<swc-progress-circle>'}</code>.
+  Remove or replace every <code>{'--mod-progress-circle-*'}</code> override with
+  the <code>{'--swc-progress-circle-*'}</code> equivalents below. Note that when{' '}
+  <code>{'static-color'}</code> is set, the component overrides track and fill
+  colors internally — consumer overrides of those properties will not apply.
+</div>
+
+### Removed `--mod-progress-circle-*` properties
+
+Replace every `--mod-progress-circle-*` property with its `--swc-progress-circle-*` equivalent:
+
+| Removed (Spectrum 1)                                       | Replacement (Spectrum 2)                                                                        |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `--mod-progress-circle-size`                               | `--swc-progress-circle-size`                                                                    |
+| `--mod-progress-circle-thickness`                          | `--swc-progress-circle-thickness`                                                               |
+| `--mod-progress-circle-track-border-color`                 | `--swc-progress-circle-track-border-color`                                                      |
+| `--mod-progress-circle-fill-border-color`                  | `--swc-progress-circle-fill-border-color`                                                       |
+| `--mod-progress-circle-track-border-color-over-background` | No replacement — use the `static-color` attribute instead (`static-color="white"` or `"black"`) |
+| `--mod-progress-circle-fill-border-color-over-background`  | No replacement — use the `static-color` attribute instead (`static-color="white"` or `"black"`) |
+| `--mod-progress-circle-track-border-style`                 | No replacement — S2 uses SVG strokes; border style is not configurable                          |
+| `--mod-progress-circle-position`                           | No replacement                                                                                  |
+
+### Public custom properties
+
+{/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-progress-circle>`'s CEM entry once they are added in a follow-up PR. */}
+
+| Custom property                            | Description                                  | Notes                                                            |
+| ------------------------------------------ | -------------------------------------------- | ---------------------------------------------------------------- |
+| `--swc-progress-circle-size`               | Inline and block size of the circle.         | Set by the `size` attribute; override to use a custom size.      |
+| `--swc-progress-circle-track-border-color` | Color of the background track ring.          | Not applied when `static-color` is set.                          |
+| `--swc-progress-circle-fill-border-color`  | Color of the fill (progress indicator) ring. | Not applied when `static-color` is set.                          |
+| `--swc-progress-circle-thickness`          | Stroke width of both rings.                  | Set by the `size` attribute; override to use a custom thickness. |
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-progress-circle-*'}</code> private properties, and shadow DOM
+  are <strong>not public API</strong>. Styling applied to them will break
+  without warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Update imports
+- [ ] Rename all `<sp-progress-circle>` to `<swc-progress-circle>`
+- [ ] Remove `indeterminate` attribute (omitting `progress` is now equivalent)
+- [ ] Move label text from light DOM children to the `label` attribute
+- [ ] Replace `--mod-progress-circle-*` overrides with `--swc-progress-circle-*` equivalents
+- [ ] Verify every progress circle has a descriptive `label` attribute

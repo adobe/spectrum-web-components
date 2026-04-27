@@ -92,7 +92,6 @@ argTypes.subtle = {
     defaultValue: { summary: 'false' },
   },
 };
-
 /**
  * Similar to [status lights](/docs/components-status-light--readme), they use color and text to convey status or category information.
  *

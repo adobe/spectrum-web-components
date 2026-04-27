@@ -1,0 +1,190 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Avatar/Consumer migration guide" />
+
+# Avatar consumer migration guide
+
+Replace `<sp-avatar>` with `<swc-avatar>`, update the import, and rename several attributes. The `href` (link) capability has been removed.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/avatar
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/avatar/sp-avatar.js';
+
+// After
+import '@adobe/spectrum-wc/avatar';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/avatar`) loads only that component's bundle.
+
+## What changed
+
+### Renamed
+
+| Area                      | Spectrum 1 (`sp-avatar`)                       | Spectrum 2 (`swc-avatar`)                                                     |
+| ------------------------- | ---------------------------------------------- | ----------------------------------------------------------------------------- |
+| Tag                       | `sp-avatar`                                    | `swc-avatar`                                                                  |
+| Import path               | `@spectrum-web-components/avatar/sp-avatar.js` | `@adobe/spectrum-wc/avatar`                                                   |
+| `label` attribute         | Accessible label for the image                 | Renamed to `alt` — see [step 2](#2-rename-label-to-alt)                       |
+| `is-decorative` attribute | Marks avatar as decorative (hides from AT)     | Renamed to `decorative` — see [step 3](#3-rename-is-decorative-to-decorative) |
+| CSS custom props          | `--mod-avatar-*`                               | `--swc-avatar-*` (see [Styling](#styling))                                    |
+
+### Added in Spectrum 2
+
+| Addition                     | Notes                                                |
+| ---------------------------- | ---------------------------------------------------- |
+| `outline` boolean attribute  | Renders a visible border around the avatar           |
+| `disabled` boolean attribute | Applies reduced opacity to indicate a disabled state |
+| Sizes 800–1500               | Valid `size` values expanded from 50–700 to 50–1500  |
+
+### Removed in Spectrum 2
+
+| Removed                            | Replacement                                                                                    |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `href` attribute                   | No replacement — wrap `<swc-avatar>` in an `<a>` element if link behavior is needed            |
+| `--mod-avatar-*` custom properties | `--swc-avatar-*` equivalents (see [Styling](#styling))                                         |
+| Default `size` of `100`            | Default is now `500` — set `size="100"` explicitly if your design requires the smaller default |
+
+## Update your code
+
+### 1. Rename the tag
+
+```html
+<!-- Before -->
+<sp-avatar src="photo.jpg" label="Jane Smith"></sp-avatar>
+<!-- After -->
+<swc-avatar src="photo.jpg" alt="Jane Smith"></swc-avatar>
+```
+
+### 2. Rename `label` to `alt`
+
+The `label` attribute has been renamed to `alt` to align with the native `<img>` convention.
+
+```html
+<!-- Before -->
+<sp-avatar src="photo.jpg" label="Jane Smith"></sp-avatar>
+<!-- After -->
+<swc-avatar src="photo.jpg" alt="Jane Smith"></swc-avatar>
+```
+
+### 3. Rename `is-decorative` to `decorative`
+
+The `is-decorative` attribute has been renamed to `decorative`. Use `alt=""` when you want an accessible but unnamed image (equivalent to `<img alt="">`); use `decorative` when you want to hide the element from assistive technology entirely.
+
+```html
+<!-- Before -->
+<sp-avatar src="photo.jpg" is-decorative></sp-avatar>
+<!-- After -->
+<swc-avatar src="photo.jpg" decorative></swc-avatar>
+```
+
+### 4. Replace `href` with an anchor wrapper
+
+The built-in link capability has been removed. Wrap `<swc-avatar>` in a standard `<a>` element to achieve the same result.
+
+```html
+<!-- Before -->
+<sp-avatar src="photo.jpg" label="Jane Smith" href="/profile/jane"></sp-avatar>
+<!-- After -->
+<a href="/profile/jane" aria-label="Jane Smith's profile">
+  <swc-avatar src="photo.jpg" alt="Jane Smith"></swc-avatar>
+</a>
+```
+
+### 5. Verify your `size` value
+
+The default `size` changed from `100` to `500`. If you relied on the default, set the size explicitly.
+
+```html
+<!-- Before (implicitly size="100") -->
+<sp-avatar src="photo.jpg" label="Jane Smith"></sp-avatar>
+<!-- After — set size explicitly to preserve the previous default -->
+<swc-avatar src="photo.jpg" alt="Jane Smith" size="100"></swc-avatar>
+```
+
+## Accessibility
+
+- Always provide a descriptive `alt` attribute that identifies the person or entity the avatar depicts (e.g., `alt="Jane Smith"`).
+- Set `alt=""` to mark the avatar as decorative when the surrounding context already conveys the same information — the component will then be hidden from assistive technology.
+- A developer warning is logged if neither `alt` nor `decorative` is set, signaling that the accessible name is missing.
+- If you replace `href` with an `<a>` wrapper, add `aria-label` to the anchor when the link destination is not obvious from surrounding content.
+
+## Styling
+
+Spectrum 2 exposes a new set of public CSS custom properties on `<swc-avatar>`.
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
+  <code>{'--mod-avatar-*'}</code> properties <strong>do not apply</strong> to{' '}
+  <code>{'<swc-avatar>'}</code>. Remove or replace every{' '}
+  <code>{'--mod-avatar-*'}</code> override with the{' '}
+  <code>{'--swc-avatar-*'}</code> equivalents below. Not every Spectrum 1
+  property has a 1:1 replacement, so read the list below carefully.
+</div>
+
+### Removed `--mod-avatar-*` properties
+
+Replace every `--mod-avatar-*` property with its `--swc-avatar-*` equivalent:
+
+| Removed (Spectrum 1)        | Replacement (Spectrum 2)     |
+| --------------------------- | ---------------------------- |
+| `--mod-avatar-size`         | `--swc-avatar-size`          |
+| `--mod-avatar-border-color` | `--swc-avatar-outline-color` |
+| `--mod-avatar-border-width` | `--swc-avatar-outline-width` |
+
+### Public custom properties
+
+{/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-avatar>`'s CEM entry once they are added in a follow-up PR. */}
+
+| Custom property                 | Description                                           | Notes                                             |
+| ------------------------------- | ----------------------------------------------------- | ------------------------------------------------- |
+| `--swc-avatar-size`             | Inline and block size of the avatar.                  | Overrides the `size` attribute when set.          |
+| `--swc-avatar-outline-color`    | Color of the outline border.                          | Only visible when the `outline` attribute is set. |
+| `--swc-avatar-outline-width`    | Width of the outline border.                          | Only visible when the `outline` attribute is set. |
+| `--swc-avatar-opacity-disabled` | Opacity applied to the avatar when `disabled` is set. |                                                   |
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-avatar-*'}</code> private properties, and shadow DOM are{' '}
+  <strong>not public API</strong>. Styling applied to them will break without
+  warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Update imports
+- [ ] Rename all `<sp-avatar>` to `<swc-avatar>`
+- [ ] Rename `label` attribute to `alt`
+- [ ] Rename `is-decorative` to `decorative`
+- [ ] Replace `href` with an `<a>` wrapper
+- [ ] Verify `size` value (default changed from `100` to `500`)
+- [ ] Replace `--mod-avatar-*` overrides with `--swc-avatar-*` equivalents
