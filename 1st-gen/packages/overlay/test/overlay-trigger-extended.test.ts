@@ -201,6 +201,7 @@ describe('Overlay Trigger - extended', () => {
     const trigger = el.querySelector('overlay-trigger') as OverlayTrigger;
     const button = el.querySelector('sp-button') as Button;
 
+    button.focus();
     button.click();
     await elementUpdated(trigger);
     await overlayOpened(trigger.clickOverlayElement, 300);
