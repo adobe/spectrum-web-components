@@ -36,7 +36,7 @@
   font-style: token("default-font-style");
   font-weight: token("regular-font-weight");
   line-height: var(--_swc-status-light-line-height);
-  color: token("neutral-content-color-default");
+  color: var(--swc-status-light-content-color, token("gray-600"));
 
   &:lang(ja),
   &:lang(zh),
@@ -91,11 +91,12 @@
 
 /* NOTE: `neutral` is the default variant */
 
-/* Semantic colors */
-:host([variant="neutral"]) {
-  --swc-status-light-content-color: token("gray-600");
+/* Semantic text color: every variant except `neutral` uses the neutral content token. */
+:host(:not([variant="neutral"])) {
+  --swc-status-light-content-color: token("neutral-content-color-default");
 }
 
+/* Semantic colors */
 :host([variant="info"]) {
   --swc-status-light-dot-color: token("informative-visual-color");
 }
