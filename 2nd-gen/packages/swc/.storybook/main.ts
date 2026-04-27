@@ -122,6 +122,7 @@ const addons: StorybookConfig['addons'] = [
     },
   },
   '@storybook/addon-a11y',
+  '@github-ui/storybook-addon-performance-panel/universal',
 ];
 
 if (storybookMode !== 'ci-a11y') {
