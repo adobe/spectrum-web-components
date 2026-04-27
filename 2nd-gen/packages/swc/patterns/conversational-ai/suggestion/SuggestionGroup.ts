@@ -12,22 +12,23 @@
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
-import styles from './suggestion.css';
+import styles from './suggestion-group.css';
 
 /**
  * Groups follow-up suggestions shown below a system response.
  *
  * Add one or more `<swc-suggestion-item>` elements to the default slot.
  *
- * @element swc-suggestion
+ * @element swc-suggestion-group
  * @slot - Suggestion items (recommended: `<swc-suggestion-item>`)
  */
-export class Suggestion extends SpectrumElement {
+export class SuggestionGroup extends SpectrumElement {
   /** Optional heading shown above suggestion items. */
-  @property({ type: String, reflect: true })
+  @property({ type: String })
   public heading = '';
 
   public static override get styles(): CSSResultArray {
@@ -35,17 +36,30 @@ export class Suggestion extends SpectrumElement {
   }
 
   protected override render(): TemplateResult {
+    const heading = this.heading.trim();
+    const hasHeading = heading.length > 0;
+
     return html`
-      <div class="swc-Suggestion">
-        ${this.heading
+      <div class="swc-SuggestionGroup">
+        ${hasHeading
           ? html`
-              <p class="swc-Suggestion-title">${this.heading}</p>
+              <h3
+                id="swc-suggestion-group-heading"
+                class="swc-SuggestionGroup-title"
+              >
+                ${heading}
+              </h3>
             `
           : ''}
         <div
-          class="swc-Suggestion-items"
+          class="swc-SuggestionGroup-items"
           role="group"
-          aria-label="Follow-up suggestions"
+          aria-label=${ifDefined(
+            hasHeading ? undefined : 'Follow-up suggestions'
+          )}
+          aria-labelledby=${ifDefined(
+            hasHeading ? 'swc-suggestion-group-heading' : undefined
+          )}
         >
           <slot></slot>
         </div>

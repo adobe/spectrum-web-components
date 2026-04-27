@@ -122,7 +122,7 @@ export const Overview: Story = {
  * Default labels are derived from **`type`**:
  *
  * - **`type="user"`** → **"User message"**
- * - **`type="system"`** → **"Assistant message"** (assistant / system reply, not the end user)
+ * - **`type="system"`** → **"System message"**
  *
  * You can provide **`accessible-label`** for localization or custom phrasing.
  *
@@ -139,11 +139,11 @@ export const Accessibility: Story = {
       </swc-conversation-turn>
       <swc-conversation-turn
         type="system"
-        accessible-label="Mensaje del asistente"
+        accessible-label="Mensaje del sistema"
       >
         <swc-system-message>
           <div class="swc-conversationalAi-systemProse">
-            <p>Example assistant reply.</p>
+            <p>Example system reply.</p>
           </div>
         </swc-system-message>
       </swc-conversation-turn>

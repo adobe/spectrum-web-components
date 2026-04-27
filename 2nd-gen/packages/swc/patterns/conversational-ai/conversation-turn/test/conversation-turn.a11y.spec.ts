@@ -29,7 +29,7 @@ test.describe('ConversationTurn - ARIA Snapshots', () => {
     `);
 
     await expect(turns.nth(1)).toMatchAriaSnapshot(`
-      - group "Mensaje del asistente"
+      - group "Mensaje del sistema"
     `);
   });
 });

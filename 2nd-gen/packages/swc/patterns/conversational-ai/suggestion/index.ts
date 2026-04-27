@@ -11,14 +11,14 @@
  */
 import { defineElement } from '@spectrum-web-components/core/element/index.js';
 
-import { Suggestion } from './Suggestion.js';
+import { SuggestionGroup } from './SuggestionGroup.js';
 
-export * from './Suggestion.js';
+export * from './SuggestionGroup.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'swc-suggestion': Suggestion;
+    'swc-suggestion-group': SuggestionGroup;
   }
 }
 
-defineElement('swc-suggestion', Suggestion);
+defineElement('swc-suggestion-group', SuggestionGroup);

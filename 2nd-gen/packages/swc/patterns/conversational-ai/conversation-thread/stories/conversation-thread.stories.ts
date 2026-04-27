@@ -336,12 +336,12 @@ class ConversationFullPatternDemo extends HTMLElement {
           : `<swc-message-sources slot="sources" data-sources-id="${turn.id}"${turn.sourcesOpen ? ' open' : ''}><li><a href="#">Brand brief Q1 2026</a></li><li><a href="#">Market research summary</a></li></swc-message-sources>`;
         const suggestions = turn.loading
           ? ''
-          : `<swc-suggestion slot="suggestions" heading="What would you like to do next?">
+          : `<swc-suggestion-group slot="suggestions" heading="What would you like to do next?">
               ${DEMO_SUGGESTIONS.map(
                 (item) =>
                   `<swc-suggestion-item data-suggestion="${escapeHtml(item)}">${escapeHtml(item)}</swc-suggestion-item>`
               ).join('')}
-            </swc-suggestion>`;
+            </swc-suggestion-group>`;
         const status = turn.loading
           ? '<swc-response-status slot="status" loading></swc-response-status>'
           : `<swc-response-status slot="status" data-status-id="${turn.id}"${turn.statusOpen ? ' open' : ''}>Draft complete. I used your latest prompt to generate this response.</swc-response-status>`;

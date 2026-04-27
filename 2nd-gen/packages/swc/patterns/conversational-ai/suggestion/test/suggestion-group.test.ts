@@ -17,12 +17,12 @@ import '../index.js';
 import '../../suggestion-item/index.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
-import { meta, Overview } from '../stories/suggestion.stories.js';
-import { Suggestion } from '../Suggestion.js';
+import { meta, Overview } from '../stories/suggestion-group.stories.js';
+import { SuggestionGroup } from '../SuggestionGroup.js';
 
 export default {
   ...meta,
-  title: 'Conversational AI/Suggestion/Tests',
+  title: 'Conversational AI/Suggestion group/Tests',
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },
@@ -37,10 +37,23 @@ export default {
 export const OverviewTest: Story = {
   ...Overview,
   play: async ({ canvasElement, step }) => {
-    const el = await getComponent<Suggestion>(canvasElement, 'swc-suggestion');
+    const el = await getComponent<SuggestionGroup>(
+      canvasElement,
+      'swc-suggestion-group'
+    );
 
     await step('renders with heading in overview examples', async () => {
       expect(el.heading).toBe('What would you like to do next?');
+
+      const heading = el.shadowRoot?.querySelector(
+        '.swc-SuggestionGroup-title'
+      );
+      const group = el.shadowRoot?.querySelector('.swc-SuggestionGroup-items');
+      expect(heading?.getAttribute('id')).toBe('swc-suggestion-group-heading');
+      expect(group?.getAttribute('aria-labelledby')).toBe(
+        'swc-suggestion-group-heading'
+      );
+      expect(group?.hasAttribute('aria-label')).toBe(false);
     });
 
     await step(
@@ -49,6 +62,42 @@ export const OverviewTest: Story = {
         const slot = el.shadowRoot?.querySelector<HTMLSlotElement>('slot');
         const assigned = slot?.assignedElements({ flatten: true }) ?? [];
         expect(assigned.length).toBe(3);
+      }
+    );
+
+    await step(
+      'uses default fallback aria-label when heading is empty',
+      async () => {
+        el.heading = '';
+        await el.updateComplete;
+
+        const heading = el.shadowRoot?.querySelector(
+          '.swc-SuggestionGroup-title'
+        );
+        const group = el.shadowRoot?.querySelector(
+          '.swc-SuggestionGroup-items'
+        );
+        expect(heading).toBeNull();
+        expect(group?.getAttribute('aria-label')).toBe('Follow-up suggestions');
+        expect(group?.hasAttribute('aria-labelledby')).toBe(false);
+      }
+    );
+
+    await step(
+      'renders no heading and keeps fallback label for blank heading',
+      async () => {
+        el.heading = '';
+        await el.updateComplete;
+
+        const heading = el.shadowRoot?.querySelector(
+          '.swc-SuggestionGroup-title'
+        );
+        const group = el.shadowRoot?.querySelector(
+          '.swc-SuggestionGroup-items'
+        );
+        expect(heading).toBeNull();
+        expect(group?.getAttribute('aria-label')).toBe('Follow-up suggestions');
+        expect(group?.hasAttribute('aria-labelledby')).toBe(false);
       }
     );
   },

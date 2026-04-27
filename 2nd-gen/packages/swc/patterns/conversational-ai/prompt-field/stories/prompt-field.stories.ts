@@ -261,12 +261,12 @@ export const Artifact: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
           <swc-upload-artifact slot="artifact" type="media" dismissible>
-            <div
+            <img
               slot="thumbnail"
-              style="inline-size:100%;block-size:100%;min-block-size:0;background:linear-gradient(135deg,#a78bfa,#f472b6);"
-              role="img"
-              aria-label="Attachment preview"
-            ></div>
+              src="https://placehold.co/160x120/png"
+              alt="Attachment preview"
+              style="inline-size:100%;block-size:100%;min-block-size:0;object-fit:cover;"
+            />
           </swc-upload-artifact>
         </swc-prompt-field>
         <span

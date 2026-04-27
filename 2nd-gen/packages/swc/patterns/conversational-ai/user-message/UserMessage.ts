@@ -21,6 +21,8 @@ export type UserMessageType = 'copy' | 'card' | 'media';
 
 /**
  * User-authored conversation bubble for conversational AI pattern exploration.
+ * Default slot content is rendered only when `type="copy"` and ignored when
+ * `type="card"` or `type="media"`.
  *
  * @element swc-user-message
  * @slot - Message copy content when `type="copy"`.
@@ -39,32 +41,28 @@ export class UserMessage extends SpectrumElement {
     return [styles];
   }
 
-  private _renderAttachment(): TemplateResult {
-    return html`
-      <div
-        class="swc-UserMessage-attachment swc-UserMessage-attachment--${this
-          .type}"
-      >
-        <div class="swc-UserMessage-thumbnail">
-          <slot name="thumbnail"></slot>
-        </div>
-        <div class="swc-UserMessage-meta">
-          <div class="swc-UserMessage-title">
-            <slot name="title"></slot>
-          </div>
-          <div class="swc-UserMessage-subtitle">
-            <slot name="subtitle"></slot>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
   protected override render(): TemplateResult {
     return this.type === 'copy'
       ? html`
           <slot></slot>
         `
-      : this._renderAttachment();
+      : html`
+          <div
+            class="swc-UserMessage-attachment swc-UserMessage-attachment--${this
+              .type}"
+          >
+            <div class="swc-UserMessage-thumbnail">
+              <slot name="thumbnail"></slot>
+            </div>
+            <div class="swc-UserMessage-meta">
+              <div class="swc-UserMessage-title">
+                <slot name="title"></slot>
+              </div>
+              <div class="swc-UserMessage-subtitle">
+                <slot name="subtitle"></slot>
+              </div>
+            </div>
+          </div>
+        `;
   }
 }

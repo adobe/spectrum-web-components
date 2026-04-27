@@ -11,20 +11,20 @@
  */
 
 import { html } from 'lit';
-import { expect } from '@storybook/test';
+import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../../suggestion/index.js';
 import '../index.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
-import { Suggestion } from '../../suggestion/Suggestion.js';
+import { SuggestionGroup } from '../../suggestion/SuggestionGroup.js';
 import meta, { Overview } from '../stories/suggestion-item.stories.js';
 import { SuggestionItem } from '../SuggestionItem.js';
 
 export default {
   ...meta,
-  title: 'Conversational AI/Suggestion/Suggestion item/Tests',
+  title: 'Conversational AI/Suggestion group/Suggestion item/Tests',
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },
@@ -91,23 +91,57 @@ export const EventTest: Story = {
         expect(detail?.label).toBe('Create a slide deck from this');
       }
     );
+
+    await step(
+      'keyboard activation (Enter and Space) emits swc-suggestion',
+      async () => {
+        const button = el.shadowRoot?.querySelector<HTMLButtonElement>(
+          '.swc-SuggestionItem'
+        );
+        expect(button).toBeTruthy();
+
+        let detail: { label: string } | undefined;
+        el.addEventListener(
+          'swc-suggestion',
+          (event) => {
+            detail = (event as CustomEvent<{ label: string }>).detail;
+          },
+          { once: true }
+        );
+        button?.focus();
+        await userEvent.keyboard('{Enter}');
+        expect(detail?.label).toBe('Create a slide deck from this');
+
+        detail = undefined;
+        el.addEventListener(
+          'swc-suggestion',
+          (event) => {
+            detail = (event as CustomEvent<{ label: string }>).detail;
+          },
+          { once: true }
+        );
+        button?.focus();
+        await userEvent.keyboard(' ');
+        expect(detail?.label).toBe('Create a slide deck from this');
+      }
+    );
   },
 };
 
 /**
- * Suggestion item is typically nested in `swc-suggestion`, which may omit `heading`.
+ * Suggestion item is typically nested in `swc-suggestion-group`, which may omit `heading`.
  */
 export const NoParentHeadingTest: Story = {
-  name: 'Inside swc-suggestion without heading',
+  name: 'Inside swc-suggestion-group without heading',
   render: () => html`
-    <swc-suggestion>
+    <swc-suggestion-group>
       <swc-suggestion-item>Create a slide deck from this</swc-suggestion-item>
-    </swc-suggestion>
+    </swc-suggestion-group>
   `,
   play: async ({ canvasElement, step }) => {
-    const group = await getComponent<Suggestion>(
+    const group = await getComponent<SuggestionGroup>(
       canvasElement,
-      'swc-suggestion'
+      'swc-suggestion-group'
     );
     const el = await getComponent<SuggestionItem>(
       canvasElement,
@@ -119,7 +153,7 @@ export const NoParentHeadingTest: Story = {
       /* Reflected `heading` may be absent or empty when unset. */
       expect(group.getAttribute('heading')).toBeFalsy();
       expect(
-        group.shadowRoot?.querySelector('.swc-Suggestion-title')
+        group.shadowRoot?.querySelector('.swc-SuggestionGroup-title')
       ).toBeNull();
     });
 
