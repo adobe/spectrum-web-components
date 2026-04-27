@@ -106,15 +106,19 @@ export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
 
   public override connectedCallback(): void {
     super.connectedCallback();
-    this.addEventListener('click', this._suppressPendingClick);
+    this.addEventListener('click', this._handleClick);
   }
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.removeEventListener('click', this._suppressPendingClick);
+    this.removeEventListener('click', this._handleClick);
   }
 
-  private readonly _suppressPendingClick = (event: Event): void => {
+  /**
+   * Suppresses click activation while the button is in a `pending` state.
+   * Subclasses' templates wire this onto the rendered `<button>` via `@click`.
+   */
+  protected _handleClick = (event: Event): void => {
     if (this.pending) {
       event.stopImmediatePropagation();
     }

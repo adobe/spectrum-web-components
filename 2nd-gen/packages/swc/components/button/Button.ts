@@ -91,10 +91,13 @@ export class Button extends ButtonBase {
     return [styles];
   }
 
+  // @todo SWC-2034: handle form-associated types reset / submit
   protected override render(): TemplateResult {
     return html`
       <button
         class="swc-Button"
+        type="button"
+        @click=${this._handleClick}
         ?disabled=${this.disabled}
         aria-disabled=${ifDefined(
           this.pending && !this.disabled ? 'true' : undefined
