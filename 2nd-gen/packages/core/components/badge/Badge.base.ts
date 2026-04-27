@@ -18,7 +18,9 @@ import { ObserveSlotPresence } from '@spectrum-web-components/core/mixins/observ
 import { ObserveSlotText } from '@spectrum-web-components/core/mixins/observe-slot-text.js';
 
 import {
+  BADGE_VALID_SIZES,
   BADGE_VARIANTS_SEMANTIC,
+  type BadgeSize,
   type BadgeVariant,
   FIXED_VALUES,
   type FixedValues,
@@ -38,9 +40,17 @@ import {
 export abstract class BadgeBase extends SizedMixin(
   ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), ''),
   {
-    noDefaultSize: true,
+    validSizes: BADGE_VALID_SIZES,
+    defaultSize: 's',
   }
 ) {
+  /**
+   * The size of the badge.
+   *
+   * @default s
+   */
+  declare public size: BadgeSize;
+
   // ─────────────────────────
   //     API TO OVERRIDE
   // ─────────────────────────

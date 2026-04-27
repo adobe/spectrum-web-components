@@ -19,6 +19,7 @@ import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
 import {
   DIVIDER_STATIC_COLORS,
   DIVIDER_VALID_SIZES,
+  type DividerSize,
   type DividerStaticColor,
 } from './Divider.types.js';
 
@@ -29,9 +30,14 @@ import {
  */
 export abstract class DividerBase extends SizedMixin(SpectrumElement, {
   validSizes: DIVIDER_VALID_SIZES,
-  /** @todo Size `s` is noted as the default in Spectrum design documentation, so be aware there is a discrepancy between the t-shirt API, which supports `m` as the default, and this component's use of `noDefaultSize` (visual default via CSS). SWC-1847 */
-  noDefaultSize: true,
 }) {
+  /**
+   * The size of the divider.
+   *
+   * @default m
+   */
+  declare public size: DividerSize;
+
   // ──────────────────
   //     SHARED API
   // ──────────────────

@@ -66,6 +66,11 @@ argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
   options: Badge.VALID_SIZES,
+  table: {
+    ...argTypes.size?.table,
+    category: 'attributes',
+    defaultValue: { summary: 's' },
+  },
 };
 
 // @todo: create a select dropdown with all available/acceptable icons for a component.
@@ -92,6 +97,7 @@ argTypes.subtle = {
     defaultValue: { summary: 'false' },
   },
 };
+
 /**
  * Similar to [status lights](/docs/components-status-light--readme), they use color and text to convey status or category information.
  *
@@ -264,12 +270,12 @@ export const Anatomy: Story = {
 /**
  * Badges come in four sizes to fit various contexts:
  *
- * - **Small (`s`)**: Compact spaces, inline with text, or in tables
- * - **Medium (`m`)**: Default size for most common usage scenarios
+ * - **Small (`s`)**: Default size; compact spaces, inline with text, or in tables
+ * - **Medium (`m`)**: Common usage when slightly more emphasis is needed
  * - **Large (`l`)**: Increased emphasis in cards or content areas
  * - **Extra-large (`xl`)**: Maximum visibility for primary status indicators
  *
- * The `m` size is the default and most frequently used option. Use larger sizes sparingly to create a hierarchy of importance on a page.
+ * The `s` size is the default. Use larger sizes sparingly to create a hierarchy of importance on a page.
  */
 
 // @todo - We should make sure to capture icon-only badges in all sizes for VRTs: SWC-1852

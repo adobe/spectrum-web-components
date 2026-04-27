@@ -61,7 +61,7 @@ export const OverviewTest: Story = {
 
     await step('renders expected default values and slot content', async () => {
       expect(badge.variant, 'default variant is neutral').toBe('neutral');
-      expect(badge.size, 'default size is m').toBe('m');
+      expect(badge.size, 'default size is s').toBe('s');
       expect(
         badge.textContent?.trim(),
         'default slot has text content'

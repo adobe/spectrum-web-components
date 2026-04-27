@@ -67,6 +67,8 @@ All attributes (`vertical`, `static-color`, `size`) are unchanged and carry over
 <swc-divider static-color="white"></swc-divider>
 ```
 
+If you omit `size`, `<swc-divider>` reflects **`size="m"`** on the host. Spectrum 1 did not set a default `size` attribute; the line still uses the same medium thickness as before. Adjust DOM selectors or snapshots that assumed no `size` attribute.
+
 ## Accessibility
 
 No accessibility changes are required. `<swc-divider>` continues to render with `role="separator"` and behaves identically to `<sp-divider>` for assistive technology.
