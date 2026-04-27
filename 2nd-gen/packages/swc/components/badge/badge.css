@@ -146,12 +146,10 @@
   --swc-badge-label-icon-color: token("black");
 }
 
+/* NOTE: `neutral` is the default color */
+
 :host([variant="accent"]) {
   --swc-badge-background-color: token("accent-background-color-default");
-}
-
-:host([variant="neutral"]) {
-  --swc-badge-background-color: token("neutral-subdued-background-color-default");
 }
 
 :host([variant="informative"]) {
