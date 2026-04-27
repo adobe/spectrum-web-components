@@ -16,7 +16,6 @@
 <details open>
 <summary><strong>Beneath this doc</strong></summary>
 
-- For Agents
 - For Consumers
     - [Customization cheatsheet](for-consumers/customization-cheatsheet.md)
     - [Get started (for consumers)](for-consumers/get-started.md)
@@ -35,8 +34,6 @@
     - [Maintaining StackBlitz examples for Spectrum Web Components](for-contributors/using-stackblitz.md)
     - [Using the issue tracker](for-contributors/using-the-issue-tracker.md)
     - [Working in the SWC repo](for-contributors/working-in-the-swc-repo.md)
-- For Internals
-- For Maintainers
 - [Project planning](project-planning/README.md)
     - [Objectives and strategy](project-planning/01_objectives-and-strategy.md)
     - [Workstreams](project-planning/02_workstreams/README.md)
