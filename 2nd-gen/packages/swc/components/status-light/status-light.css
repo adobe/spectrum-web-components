@@ -89,10 +89,11 @@
   --swc-status-light-line-height: token("line-height-font-size-300");
 }
 
+/* NOTE: `neutral` is the default variant */
+
 /* Semantic colors */
 :host([variant="neutral"]) {
   --swc-status-light-content-color: token("gray-600");
-  --swc-status-light-dot-color: token("neutral-visual-color");
 }
 
 :host([variant="info"]) {
