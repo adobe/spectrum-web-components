@@ -10,7 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html,LitElement } from 'lit';
+import { state } from 'lit/decorators.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../index.js';
@@ -135,7 +136,7 @@ type DemoTurn = {
   loading?: boolean;
   statusOpen?: boolean;
   sourcesOpen?: boolean;
-  feedbackStatus?: 'positive' | 'negative';
+  feedbackStatus?: 'positive' | 'negative' | undefined;
 };
 
 const DEMO_SUGGESTIONS = [
@@ -144,20 +145,13 @@ const DEMO_SUGGESTIONS = [
   'Summarize development pipeline',
 ] as const;
 
-const escapeHtml = (value: string): string =>
-  value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-
 const buildAssistantReply = (prompt: string): string => {
   const normalized = prompt.trim() || 'your request';
   return `Great direction. Based on "${normalized}", I suggest a 12-slide structure with a clear narrative arc, three supporting proof points, and a concise close with next steps.`;
 };
 
-class ConversationFullPatternDemo extends HTMLElement {
+class ConversationFullPatternDemo extends LitElement {
+  @state()
   private turns: DemoTurn[] = [
     {
       id: 'user-1',
@@ -173,38 +167,40 @@ class ConversationFullPatternDemo extends HTMLElement {
     },
   ];
 
+  @state()
   private artifacts: DemoArtifact[] = [];
 
+  @state()
   private promptValue = '';
+
+  @state()
   private isGenerating = false;
+
   private responseTimer: number | null = null;
   private responseTargetId: string | null = null;
   private lastPrompt = '';
-  private listenersAttached = false;
 
-  public connectedCallback(): void {
-    if (!this.listenersAttached) {
-      this.listenersAttached = true;
-      this.addEventListener('swc-feedback', this.handleFeedback);
-      this.addEventListener('swc-suggestion', this.handleSuggestion);
-      this.addEventListener('swc-dismiss', this.handleDismiss);
-      this.addEventListener('swc-toggle', this.handleStatusToggle);
-      this.addEventListener('swc-sources-toggle', this.handleSourcesToggle);
-    }
-    this.render();
-  }
-
-  public disconnectedCallback(): void {
+  public override disconnectedCallback(): void {
     if (this.responseTimer !== null) {
       window.clearTimeout(this.responseTimer);
       this.responseTimer = null;
     }
-    this.removeEventListener('swc-feedback', this.handleFeedback);
-    this.removeEventListener('swc-suggestion', this.handleSuggestion);
-    this.removeEventListener('swc-dismiss', this.handleDismiss);
-    this.removeEventListener('swc-toggle', this.handleStatusToggle);
-    this.removeEventListener('swc-sources-toggle', this.handleSourcesToggle);
-    this.listenersAttached = false;
+    super.disconnectedCallback();
+  }
+
+  protected override createRenderRoot(): HTMLElement {
+    return this;
+  }
+
+  protected override updated(): void {
+    requestAnimationFrame(() => {
+      const scrollEl = this.querySelector(
+        '.swc-ConversationFullPatternDemo-scroll'
+      );
+      if (scrollEl) {
+        scrollEl.scrollTop = scrollEl.scrollHeight;
+      }
+    });
   }
 
   private submitPrompt(rawValue: string): void {
@@ -237,7 +233,6 @@ class ConversationFullPatternDemo extends HTMLElement {
     this.responseTargetId = systemTurn.id;
     this.promptValue = '';
     this.artifacts = [];
-    this.render();
 
     this.responseTimer = window.setTimeout(() => {
       this.completeGeneration();
@@ -257,10 +252,9 @@ class ConversationFullPatternDemo extends HTMLElement {
     this.responseTargetId = null;
     this.responseTimer = null;
     this.isGenerating = false;
-    this.render();
   }
 
-  private stopGeneration(): void {
+  private stopGeneration = (): void => {
     if (!this.isGenerating) {
       return;
     }
@@ -285,118 +279,241 @@ class ConversationFullPatternDemo extends HTMLElement {
 
     this.responseTargetId = null;
     this.isGenerating = false;
-    this.render();
-  }
+  };
 
-  private renderTurns(): string {
-    return this.turns
-      .map((turn) => {
-        if (turn.role === 'user') {
-          const artifactMessages = (turn.artifacts ?? [])
-            .map((artifact) => {
-              if (artifact.thumbnailUrl) {
-                return `<swc-conversation-turn type="user">
+  private handlePromptInput = (event: Event): void => {
+    const inputEvent = event as CustomEvent<{ value?: string }>;
+    this.promptValue = inputEvent.detail?.value ?? '';
+  };
+
+  private handlePromptSubmit = (event: Event): void => {
+    const submitEvent = event as CustomEvent<{ value?: string }>;
+    this.submitPrompt(submitEvent.detail?.value ?? '');
+  };
+
+  private handleFilesSelected = (event: Event): void => {
+    const filesEvent = event as CustomEvent<{
+      artifactValues?: Array<{
+        name?: string;
+        mimeType?: string;
+        size?: number;
+      }>;
+      files?: File[];
+    }>;
+
+    const rawFiles: File[] = filesEvent.detail?.files ?? [];
+    const nextArtifacts =
+      filesEvent.detail?.artifactValues?.map((artifact, index) => {
+        const mimeType = artifact.mimeType ?? '';
+        const isImage = mimeType.startsWith('image/');
+        const sizeLabel =
+          typeof artifact.size === 'number'
+            ? `${Math.max(1, Math.round(artifact.size / 1024))} KB`
+            : 'Attachment';
+        const rawFile = rawFiles[index];
+        const thumbnailUrl =
+          isImage && rawFile ? URL.createObjectURL(rawFile) : undefined;
+        return {
+          id: `artifact-${Date.now()}-${index}`,
+          title: artifact.name ?? 'Attachment',
+          subtitle: sizeLabel,
+          thumbnailUrl,
+        } satisfies DemoArtifact;
+      }) ?? [];
+
+    if (!nextArtifacts.length) {
+      return;
+    }
+    this.artifacts = [...this.artifacts, ...nextArtifacts];
+  };
+
+  private handleFeedback = (event: Event): void => {
+    const feedbackEvent = event as CustomEvent<{
+      status?: 'positive' | 'negative' | undefined;
+    }>;
+    const feedbackHost = event.target as HTMLElement | null;
+    const turnId = feedbackHost?.getAttribute('data-feedback-id');
+    if (!turnId) {
+      return;
+    }
+    this.turns = this.turns.map((turn) =>
+      turn.id === turnId
+        ? { ...turn, feedbackStatus: feedbackEvent.detail.status }
+        : turn
+    );
+  };
+
+  private handleSuggestion = (event: Event): void => {
+    const suggestionEvent = event as CustomEvent<{ label?: string }>;
+    const label = suggestionEvent.detail?.label?.trim() ?? '';
+    if (!label) {
+      return;
+    }
+    this.submitPrompt(label);
+  };
+
+  private handleDismiss = (event: Event): void => {
+    const artifact = event.target as HTMLElement | null;
+    const artifactId = artifact?.getAttribute('data-artifact-id');
+    if (!artifactId) {
+      return;
+    }
+    this.artifacts = this.artifacts.filter((item) => item.id !== artifactId);
+  };
+
+  private handleStatusToggle = (event: Event): void => {
+    const toggleEvent = event as CustomEvent<{ open?: boolean }>;
+    const statusHost = event.target as HTMLElement | null;
+    const turnId = statusHost?.getAttribute('data-status-id');
+    const open = toggleEvent.detail?.open;
+    if (!turnId || typeof open !== 'boolean') {
+      return;
+    }
+    this.turns = this.turns.map((turn) =>
+      turn.id === turnId ? { ...turn, statusOpen: open } : turn
+    );
+  };
+
+  private handleSourcesToggle = (event: Event): void => {
+    const toggleEvent = event as CustomEvent<{ open?: boolean }>;
+    const sourcesHost = event.target as HTMLElement | null;
+    const turnId = sourcesHost?.getAttribute('data-sources-id');
+    const open = toggleEvent.detail?.open;
+    if (!turnId || typeof open !== 'boolean') {
+      return;
+    }
+    this.turns = this.turns.map((turn) =>
+      turn.id === turnId ? { ...turn, sourcesOpen: open } : turn
+    );
+  };
+
+  private renderTurns() {
+    return this.turns.map((turn) => {
+      if (turn.role === 'user') {
+        return html`
+          ${(turn.artifacts ?? []).map((artifact) =>
+            artifact.thumbnailUrl
+              ? html`<swc-conversation-turn type="user">
                   <swc-user-message type="media">
-                  <img
-                    slot="thumbnail"
-                    src="${artifact.thumbnailUrl}"
-                    alt="${escapeHtml(artifact.title)}"
-                    style="inline-size:100%;block-size:100%;object-fit:cover;"
-                  />
-                  <span slot="title">${escapeHtml(artifact.title)}</span>
-                  <span slot="subtitle">${escapeHtml(artifact.subtitle)}</span>
-                </swc-user-message>
-                </swc-conversation-turn>`;
-              }
-              return `<swc-conversation-turn type="user">
-                <swc-user-message type="card">
-                <div
-                  slot="thumbnail"
-                  role="img"
-                  aria-label="File"
-                  style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);flex-shrink:0;"
-                ></div>
-                <span slot="title">${escapeHtml(artifact.title)}</span>
-                <span slot="subtitle">${escapeHtml(artifact.subtitle)}</span>
-              </swc-user-message>
-              </swc-conversation-turn>`;
-            })
-            .join('');
-          const copyMessage = turn.text
-            ? `<swc-conversation-turn type="user"><swc-user-message>${escapeHtml(turn.text)}</swc-user-message></swc-conversation-turn>`
-            : '';
-          return `${artifactMessages}${copyMessage}`;
-        }
-
-        const feedback = turn.loading
-          ? ''
-          : `<swc-message-feedback slot="feedback" data-feedback-id="${turn.id}" status="${turn.feedbackStatus ?? ''}"></swc-message-feedback>`;
-        const sources = turn.loading
-          ? ''
-          : `<swc-message-sources slot="sources" data-sources-id="${turn.id}"${turn.sourcesOpen ? ' open' : ''}><li><a href="#">Brand brief Q1 2026</a></li><li><a href="#">Market research summary</a></li></swc-message-sources>`;
-        const suggestions = turn.loading
-          ? ''
-          : `<swc-suggestion-group slot="suggestions" heading="What would you like to do next?">
-              ${DEMO_SUGGESTIONS.map(
-                (item) =>
-                  `<swc-suggestion-item data-suggestion="${escapeHtml(item)}">${escapeHtml(item)}</swc-suggestion-item>`
-              ).join('')}
-            </swc-suggestion-group>`;
-        const status = turn.loading
-          ? '<swc-response-status slot="status" loading></swc-response-status>'
-          : `<swc-response-status slot="status" data-status-id="${turn.id}"${turn.statusOpen ? ' open' : ''}>Draft complete. I used your latest prompt to generate this response.</swc-response-status>`;
-        const body = turn.loading
-          ? ''
-          : `<div class="swc-conversationalAi-systemProse"><p>${escapeHtml(turn.text)}</p></div>`;
-
-        return `
-          <swc-conversation-turn type="system">
-            <swc-system-message>
-              ${status}
-              ${body}
-              ${feedback}
-              ${sources}
-              ${suggestions}
-            </swc-system-message>
-          </swc-conversation-turn>
+                    <img
+                      slot="thumbnail"
+                      src=${artifact.thumbnailUrl}
+                      alt=${artifact.title}
+                      style="inline-size:100%;block-size:100%;object-fit:cover;"
+                    />
+                    <span slot="title">${artifact.title}</span>
+                    <span slot="subtitle">${artifact.subtitle}</span>
+                  </swc-user-message>
+                </swc-conversation-turn>`
+              : html`<swc-conversation-turn type="user">
+                  <swc-user-message type="card">
+                    <div
+                      slot="thumbnail"
+                      role="img"
+                      aria-label="File"
+                      style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);flex-shrink:0;"
+                    ></div>
+                    <span slot="title">${artifact.title}</span>
+                    <span slot="subtitle">${artifact.subtitle}</span>
+                  </swc-user-message>
+                </swc-conversation-turn>`
+          )}
+          ${turn.text
+            ? html`<swc-conversation-turn type="user">
+                <swc-user-message>${turn.text}</swc-user-message>
+              </swc-conversation-turn>`
+            : ''}
         `;
-      })
-      .join('');
+      }
+
+      return html`
+        <swc-conversation-turn type="system">
+          <swc-system-message>
+            ${turn.loading
+              ? html`<swc-response-status slot="status" loading></swc-response-status>`
+              : html`<swc-response-status
+                  slot="status"
+                  data-status-id=${turn.id}
+                  ?open=${!!turn.statusOpen}
+                >
+                  Draft complete. I used your latest prompt to generate this
+                  response.
+                </swc-response-status>`}
+            ${turn.loading
+              ? ''
+              : html`<div class="swc-conversationalAi-systemProse">
+                  <p>${turn.text}</p>
+                </div>`}
+            ${turn.loading
+              ? ''
+              : html`<swc-message-feedback
+                  slot="feedback"
+                  data-feedback-id=${turn.id}
+                  status=${turn.feedbackStatus ?? ''}
+                ></swc-message-feedback>`}
+            ${turn.loading
+              ? ''
+              : html`<swc-message-sources
+                  slot="sources"
+                  data-sources-id=${turn.id}
+                  ?open=${!!turn.sourcesOpen}
+                >
+                  <li><a href="#">Brand brief Q1 2026</a></li>
+                  <li><a href="#">Market research summary</a></li>
+                </swc-message-sources>`}
+            ${turn.loading
+              ? ''
+              : html`<swc-suggestion-group
+                  slot="suggestions"
+                  heading="What would you like to do next?"
+                >
+                  ${DEMO_SUGGESTIONS.map(
+                    (item) =>
+                      html`<swc-suggestion-item data-suggestion=${item}
+                        >${item}</swc-suggestion-item
+                      >`
+                  )}
+                </swc-suggestion-group>`}
+          </swc-system-message>
+        </swc-conversation-turn>
+      `;
+    });
   }
 
-  private renderArtifacts(): string {
-    return this.artifacts
-      .map((artifact) => {
-        const thumbnail = artifact.thumbnailUrl
-          ? `<img
-               slot="thumbnail"
-               src="${artifact.thumbnailUrl}"
-               alt="${escapeHtml(artifact.title)}"
-               style="inline-size:40px;block-size:40px;object-fit:cover;border-radius:4px;"
-             />`
-          : `<div
-               slot="thumbnail"
-               role="img"
-               aria-label="File thumbnail"
-               style="inline-size:40px;block-size:40px;background:var(--swc-gray-200);border-radius:4px;"
-             ></div>`;
-
-        return `
-          <swc-upload-artifact slot="artifact" type="card" dismissible data-artifact-id="${artifact.id}">
-            ${thumbnail}
-            <span slot="title">${escapeHtml(artifact.title)}</span>
-            <span slot="subtitle">${escapeHtml(artifact.subtitle)}</span>
-          </swc-upload-artifact>
-        `;
-      })
-      .join('');
+  private renderArtifacts() {
+    return this.artifacts.map(
+      (artifact) => html`
+        <swc-upload-artifact
+          slot="artifact"
+          type="card"
+          dismissible
+          data-artifact-id=${artifact.id}
+        >
+          ${artifact.thumbnailUrl
+            ? html`<img
+                slot="thumbnail"
+                src=${artifact.thumbnailUrl}
+                alt=${artifact.title}
+                style="inline-size:40px;block-size:40px;object-fit:cover;border-radius:4px;"
+              />`
+            : html`<div
+                slot="thumbnail"
+                role="img"
+                aria-label="File thumbnail"
+                style="inline-size:40px;block-size:40px;background:var(--swc-gray-200);border-radius:4px;"
+              ></div>`}
+          <span slot="title">${artifact.title}</span>
+          <span slot="subtitle">${artifact.subtitle}</span>
+        </swc-upload-artifact>
+      `
+    );
   }
 
-  private render(): void {
+  protected override render() {
     this.style.cssText =
       'display:flex;flex-direction:column;block-size:100vh;max-block-size:100vh;overflow:hidden;box-sizing:border-box;';
 
-    this.innerHTML = `
+    return html`
       <style>
         .swc-ConversationFullPatternDemo-shell {
           max-inline-size: 960px;
@@ -432,146 +549,36 @@ class ConversationFullPatternDemo extends HTMLElement {
           padding-block-start: 8px;
         }
       </style>
-      <div class="swc-ConversationFullPatternDemo-shell">
+      <div
+        class="swc-ConversationFullPatternDemo-shell"
+        @swc-message-feedback-change=${this.handleFeedback}
+        @swc-suggestion=${this.handleSuggestion}
+        @swc-upload-artifact-dismiss=${this.handleDismiss}
+        @swc-response-status-toggle=${this.handleStatusToggle}
+        @swc-message-sources-toggle=${this.handleSourcesToggle}
+      >
         <div class="swc-ConversationFullPatternDemo-scroll">
-          <swc-conversation-thread style="--swc-conversation-thread-gap:24px;padding:4px;">
+          <swc-conversation-thread
+            style="--swc-conversation-thread-gap:24px;padding:4px;"
+          >
             ${this.renderTurns()}
           </swc-conversation-thread>
         </div>
         <div class="swc-ConversationFullPatternDemo-composer">
-          <swc-prompt-field mode="${this.isGenerating ? 'loading' : 'default'}">
+          <swc-prompt-field
+            mode=${this.isGenerating ? 'loading' : 'default'}
+            .value=${this.promptValue}
+            @swc-prompt-field-input=${this.handlePromptInput}
+            @swc-prompt-field-submit=${this.handlePromptSubmit}
+            @swc-prompt-field-stop=${this.stopGeneration}
+            @swc-prompt-field-files-selected=${this.handleFilesSelected}
+          >
             ${this.renderArtifacts()}
           </swc-prompt-field>
         </div>
       </div>
     `;
-
-    requestAnimationFrame(() => {
-      const scrollEl = this.querySelector(
-        '.swc-ConversationFullPatternDemo-scroll'
-      );
-      if (scrollEl) {
-        scrollEl.scrollTop = scrollEl.scrollHeight;
-      }
-    });
-
-    const promptField = this.querySelector('swc-prompt-field') as
-      | (HTMLElement & { value?: string })
-      | null;
-    if (promptField) {
-      promptField.value = this.promptValue;
-      promptField.addEventListener('swc-submit', (event: Event) => {
-        const submitEvent = event as CustomEvent<{ value?: string }>;
-        this.submitPrompt(submitEvent.detail?.value ?? '');
-      });
-      promptField.addEventListener('swc-stop', () => {
-        this.stopGeneration();
-      });
-      promptField.addEventListener('swc-files-selected', (event: Event) => {
-        // Preserve any text the user has already typed before re-render destroys the field.
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        this.promptValue = (promptField as any).value ?? this.promptValue;
-
-        const filesEvent = event as CustomEvent<{
-          artifactValues?: Array<{
-            name?: string;
-            mimeType?: string;
-            size?: number;
-          }>;
-        }>;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const rawFiles: File[] = (filesEvent.detail as any)?.files ?? [];
-        const nextArtifacts =
-          filesEvent.detail?.artifactValues?.map((artifact, index) => {
-            const mimeType = artifact.mimeType ?? '';
-            const isImage = mimeType.startsWith('image/');
-            const sizeLabel =
-              typeof artifact.size === 'number'
-                ? `${Math.max(1, Math.round(artifact.size / 1024))} KB`
-                : 'Attachment';
-            const rawFile = rawFiles[index];
-            const thumbnailUrl =
-              isImage && rawFile ? URL.createObjectURL(rawFile) : undefined;
-            return {
-              id: `artifact-${Date.now()}-${index}`,
-              title: artifact.name ?? 'Attachment',
-              subtitle: sizeLabel,
-              thumbnailUrl,
-            } satisfies DemoArtifact;
-          }) ?? [];
-
-        if (!nextArtifacts.length) {
-          return;
-        }
-        this.artifacts = [...this.artifacts, ...nextArtifacts];
-        this.render();
-      });
-    }
   }
-
-  private handleFeedback = (event: Event): void => {
-    const feedbackEvent = event as CustomEvent<{
-      status?: 'positive' | 'negative';
-    }>;
-    const feedbackHost = event.target as HTMLElement | null;
-    const turnId = feedbackHost?.getAttribute('data-feedback-id');
-    if (!turnId || !feedbackEvent.detail?.status) {
-      return;
-    }
-    this.turns = this.turns.map((turn) =>
-      turn.id === turnId
-        ? { ...turn, feedbackStatus: feedbackEvent.detail.status }
-        : turn
-    );
-    this.render();
-  };
-
-  private handleSuggestion = (event: Event): void => {
-    const suggestionEvent = event as CustomEvent<{ label?: string }>;
-    const label = suggestionEvent.detail?.label?.trim() ?? '';
-    if (!label) {
-      return;
-    }
-    this.submitPrompt(label);
-  };
-
-  private handleDismiss = (event: Event): void => {
-    const artifact = event.target as HTMLElement | null;
-    const artifactId = artifact?.getAttribute('data-artifact-id');
-    if (!artifactId) {
-      return;
-    }
-    this.artifacts = this.artifacts.filter((item) => item.id !== artifactId);
-    this.render();
-  };
-
-  private handleStatusToggle = (event: Event): void => {
-    const toggleEvent = event as CustomEvent<{ open?: boolean }>;
-    const statusHost = event.target as HTMLElement | null;
-    const turnId = statusHost?.getAttribute('data-status-id');
-    const open = toggleEvent.detail?.open;
-    if (!turnId || typeof open !== 'boolean') {
-      return;
-    }
-    this.turns = this.turns.map((turn) =>
-      turn.id === turnId ? { ...turn, statusOpen: open } : turn
-    );
-    this.render();
-  };
-
-  private handleSourcesToggle = (event: Event): void => {
-    const toggleEvent = event as CustomEvent<{ open?: boolean }>;
-    const sourcesHost = event.target as HTMLElement | null;
-    const turnId = sourcesHost?.getAttribute('data-sources-id');
-    const open = toggleEvent.detail?.open;
-    if (!turnId || typeof open !== 'boolean') {
-      return;
-    }
-    this.turns = this.turns.map((turn) =>
-      turn.id === turnId ? { ...turn, sourcesOpen: open } : turn
-    );
-    this.render();
-  };
 }
 
 if (!customElements.get('swc-conversation-full-pattern-demo')) {

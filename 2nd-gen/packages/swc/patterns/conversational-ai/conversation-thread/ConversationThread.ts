@@ -11,7 +11,7 @@
  */
 
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, queryAssignedElements } from 'lit/decorators.js';
 
 import { FocusgroupNavigationController } from '@spectrum-web-components/core/controllers/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
@@ -35,6 +35,9 @@ export class ConversationThread extends SpectrumElement {
    */
   @property({ type: Number, attribute: 'active-index' })
   public activeIndex = 0;
+
+  @queryAssignedElements({ flatten: true, selector: 'swc-conversation-turn' })
+  private _assignedTurns!: HTMLElement[];
 
   private _items: HTMLElement[] = [];
   private focusgroupNavigationController = new FocusgroupNavigationController(
@@ -73,14 +76,7 @@ export class ConversationThread extends SpectrumElement {
   }
 
   private _getItemsFromSlot(): HTMLElement[] {
-    const slot = this.shadowRoot?.querySelector<HTMLSlotElement>('slot');
-    const assigned = slot?.assignedElements({ flatten: true }) ?? [];
-
-    return assigned.filter(
-      (element): element is HTMLElement =>
-        element instanceof HTMLElement &&
-        element.tagName.toLowerCase() === 'swc-conversation-turn'
-    );
+    return Array.from(this._assignedTurns ?? []);
   }
 
   private _clampIndex(index: number): number {

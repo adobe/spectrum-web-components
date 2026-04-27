@@ -11,7 +11,7 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import { property, state } from 'lit/decorators.js';
+import { property, queryAssignedNodes } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
@@ -30,7 +30,7 @@ import styles from './upload-artifact.css';
  * @slot title - Primary text label.
  * @slot subtitle - Secondary text label.
  * @slot actions - Optional trailing actions.
- * @fires swc-dismiss - Dispatched when the dismiss button is pressed.
+ * @fires swc-upload-artifact-dismiss - Dispatched when the dismiss button is pressed.
  * Detail: `{ artifact: this }`
  */
 export class UploadArtifact extends SpectrumElement {
@@ -38,23 +38,30 @@ export class UploadArtifact extends SpectrumElement {
   @property({ type: String, reflect: true })
   public type: 'card' | 'media' = 'card';
 
-  /** When `true`, show a dismiss affordance and emit `swc-dismiss` on click. */
+  /** When `true`, show a dismiss affordance and emit `swc-upload-artifact-dismiss` on click. */
   @property({ type: Boolean, reflect: true })
   public dismissible = false;
 
-  /** `null` until first slot sync to avoid early false-negative hiding. */
-  @state()
-  private _hideTextMeta: boolean | null = null;
+  /** Accessible label for the dismiss/remove attachment button. */
+  @property({ type: String, attribute: 'dismiss-label' })
+  public dismissLabel = 'Remove attachment';
+
+  /** Internal flag reflected for preview-only host styling hooks. */
+  @property({ type: Boolean, attribute: 'data-preview-only', reflect: true })
+  private _previewOnly = false;
+
+  @queryAssignedNodes({ slot: 'title', flatten: true })
+  private _assignedTitleNodes!: Node[];
+
+  @queryAssignedNodes({ slot: 'subtitle', flatten: true })
+  private _assignedSubtitleNodes!: Node[];
 
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
-  private _slotHasAssignedContent(slot: HTMLSlotElement | null): boolean {
-    if (!slot) {
-      return false;
-    }
-    for (const node of slot.assignedNodes({ flatten: true })) {
+  private _nodesHaveAssignedContent(nodes: Node[]): boolean {
+    for (const node of nodes) {
       if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
         return true;
       }
@@ -72,29 +79,17 @@ export class UploadArtifact extends SpectrumElement {
   }
 
   private _syncTextMetaSlots(): void {
-    const root = this.shadowRoot;
-    if (!root || this.type !== 'media') {
-      this._hideTextMeta = false;
-      this.removeAttribute('data-preview-only');
+    if (this.type !== 'media') {
+      this._previewOnly = false;
       return;
     }
 
-    const titleSlot = root.querySelector<HTMLSlotElement>('slot[name="title"]');
-    const subtitleSlot = root.querySelector<HTMLSlotElement>(
-      'slot[name="subtitle"]'
-    );
-
     const has =
-      this._slotHasAssignedContent(titleSlot) ||
-      this._slotHasAssignedContent(subtitleSlot);
+      this._nodesHaveAssignedContent(this._assignedTitleNodes ?? []) ||
+      this._nodesHaveAssignedContent(this._assignedSubtitleNodes ?? []);
     const hide = !has;
 
-    const prev = this._hideTextMeta;
-    this._hideTextMeta = hide;
-    this.toggleAttribute('data-preview-only', hide);
-    if (prev !== hide) {
-      this.requestUpdate();
-    }
+    this._previewOnly = hide;
   }
 
   protected override updated(changed: Map<string, unknown>): void {
@@ -103,31 +98,17 @@ export class UploadArtifact extends SpectrumElement {
     }
   }
 
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    queueMicrotask(() => this._syncTextMetaSlots());
+  private _handleTextMetaSlotChange(): void {
+    this._syncTextMetaSlots();
   }
 
   protected override firstUpdated(): void {
-    const root = this.shadowRoot;
-    if (!root) {
-      return;
-    }
-
-    const titleSlot = root.querySelector<HTMLSlotElement>('slot[name="title"]');
-    const subtitleSlot = root.querySelector<HTMLSlotElement>(
-      'slot[name="subtitle"]'
-    );
-    titleSlot?.addEventListener('slotchange', () => this._syncTextMetaSlots());
-    subtitleSlot?.addEventListener('slotchange', () =>
-      this._syncTextMetaSlots()
-    );
     this._syncTextMetaSlots();
   }
 
   private _handleDismissClick(): void {
     this.dispatchEvent(
-      new CustomEvent('swc-dismiss', {
+      new CustomEvent('swc-upload-artifact-dismiss', {
         bubbles: true,
         composed: true,
         detail: { artifact: this },
@@ -137,17 +118,17 @@ export class UploadArtifact extends SpectrumElement {
 
   protected override render(): TemplateResult {
     const isMedia = this.type === 'media';
-    const hideMediaMeta = isMedia && this._hideTextMeta === true;
+    const hideMediaMeta = isMedia && this._previewOnly;
 
     return html`
       <div class="swc-UploadArtifact">
         <button
           class="swc-UploadArtifact-dismiss"
-          aria-label="Remove attachment"
+          aria-label=${this.dismissLabel}
           ?hidden=${!this.dismissible}
           @click=${this._handleDismissClick}
         >
-          <swc-icon label="Remove">${CrossIcon()}</swc-icon>
+          <swc-icon aria-hidden="true">${CrossIcon()}</swc-icon>
         </button>
 
         <div class="swc-UploadArtifact-surface">
@@ -160,24 +141,36 @@ export class UploadArtifact extends SpectrumElement {
                 <div class="swc-UploadArtifact-meta" ?hidden=${hideMediaMeta}>
                   <div class="swc-UploadArtifact-header">
                     <div class="swc-UploadArtifact-title">
-                      <slot name="title"></slot>
+                      <slot
+                        name="title"
+                        @slotchange=${this._handleTextMetaSlotChange}
+                      ></slot>
                     </div>
                     <div class="swc-UploadArtifact-actions">
                       <slot name="actions"></slot>
                     </div>
                   </div>
                   <div class="swc-UploadArtifact-subtitle">
-                    <slot name="subtitle"></slot>
+                    <slot
+                      name="subtitle"
+                      @slotchange=${this._handleTextMetaSlotChange}
+                    ></slot>
                   </div>
                 </div>
               `
             : html`
                 <div class="swc-UploadArtifact-meta">
                   <div class="swc-UploadArtifact-title">
-                    <slot name="title"></slot>
+                    <slot
+                      name="title"
+                      @slotchange=${this._handleTextMetaSlotChange}
+                    ></slot>
                   </div>
                   <div class="swc-UploadArtifact-subtitle">
-                    <slot name="subtitle"></slot>
+                    <slot
+                      name="subtitle"
+                      @slotchange=${this._handleTextMetaSlotChange}
+                    ></slot>
                   </div>
                 </div>
 

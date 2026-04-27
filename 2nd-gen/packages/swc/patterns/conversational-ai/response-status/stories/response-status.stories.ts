@@ -50,7 +50,7 @@ argTypes.loadingLabel = {
   control: { type: 'text' },
   table: {
     category: 'attributes',
-    defaultValue: { summary: 'Thinking…' },
+    defaultValue: { summary: 'Generating response' },
   },
 };
 
@@ -190,6 +190,8 @@ export const Loading: Story = {
  *
  * The disclosure chevron only appears when default-slot reasoning content exists.
  * While **`loading=true`**, reasoning UI is not shown.
+ * If reasoning slot content is later removed, the component automatically resets
+ * `open` to `false`. This internal collapse does not emit `swc-response-status-toggle`.
  */
 export const Reasoning: Story = {
   render: () => html`
@@ -241,9 +243,9 @@ export const Reasoning: Story = {
  *
  * #### Status announcement
  *
- * - The loading slot carries `role="status"` and `aria-label` matching the status label for screen reader announcement
+ * - The loading row carries `role="status"`, so the status label is announced for screen readers
  * - When reasoning content exists, the reasoning toggle uses `aria-expanded` and `aria-controls` to communicate panel state
- * - The reasoning panel uses `role="region"` with `aria-label="Reasoning"`
+ * - The reasoning panel uses `role="group"` with `aria-label="Reasoning"`
  */
 export const Accessibility: Story = {
   args: {

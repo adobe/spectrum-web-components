@@ -11,14 +11,16 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
+import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 import '@adobe/spectrum-wc/icon';
 import '@adobe/spectrum-wc/progress-circle';
 
-import { Chevron75Icon } from '../../../components/icon/elements/index.js';
+import { uniqueId } from '../../../utils/id.js';
 import { CheckCircleIcon } from '../utils/icons/index.js';
 
 import styles from './response-status.css';
@@ -31,13 +33,15 @@ import styles from './response-status.css';
  * @element swc-response-status
  * @slot - Optional reasoning content. Disclosure UI is shown only when slot has content
  * and `loading` is `false`; content is visible when `open` is `true`.
- * @fires swc-toggle - Dispatched when the reasoning panel is expanded or collapsed.
+ * If slot reasoning content is removed while `open=true`, the component collapses itself
+ * by setting `open=false`.
+ * @fires swc-response-status-toggle - Dispatched when the user expands or collapses the reasoning panel.
  * Detail: `{ open: boolean }`
  */
 export class ResponseStatus extends SpectrumElement {
-  private static reasoningPanelIdCounter = 0;
-
-  private readonly reasoningPanelId = `swc-reasoning-panel-${++ResponseStatus.reasoningPanelIdCounter}`;
+  private readonly reasoningPanelId = uniqueId('swc-reasoning-panel');
+  @state()
+  private _hasReasoningContent = false;
 
   /** `true`: progress circle + status label, `false`: checkmark + status label. */
   @property({ type: Boolean, reflect: true })
@@ -56,8 +60,15 @@ export class ResponseStatus extends SpectrumElement {
   public completeLabel = 'Response generated';
 
   /**
+   * Accessible label for the reasoning content group.
+   */
+  @property({ type: String, attribute: 'reasoning-label' })
+  public reasoningLabel = 'Reasoning';
+
+  /**
    * `true`: reasoning expanded; `false`: reasoning collapsed.
-   * Ignored while `loading` is `true`.
+   * Ignored while `loading` is `true`. If reasoning slot content is removed,
+   * `open` is automatically set to `false` and no `swc-response-status-toggle` event is emitted.
    */
   @property({ type: Boolean, reflect: true })
   public open = false;
@@ -66,13 +77,17 @@ export class ResponseStatus extends SpectrumElement {
     return [styles];
   }
 
+  protected override firstUpdated(): void {
+    this._syncReasoningContent();
+  }
+
   private _handleToggle(): void {
-    if (this.loading || !this._hasReasoningContent()) {
+    if (this.loading || !this._hasReasoningContent) {
       return;
     }
     this.open = !this.open;
     this.dispatchEvent(
-      new CustomEvent('swc-toggle', {
+      new CustomEvent('swc-response-status-toggle', {
         bubbles: true,
         composed: true,
         detail: { open: this.open },
@@ -84,8 +99,11 @@ export class ResponseStatus extends SpectrumElement {
     return this.loading ? this.loadingLabel : this.completeLabel;
   }
 
-  private _hasReasoningContent(): boolean {
-    for (const node of this.childNodes) {
+  private _slotHasReasoningContent(slot: HTMLSlotElement | null): boolean {
+    if (!slot) {
+      return false;
+    }
+    for (const node of slot.assignedNodes({ flatten: true })) {
       if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
         return true;
       }
@@ -97,17 +115,29 @@ export class ResponseStatus extends SpectrumElement {
     return false;
   }
 
-  private _handleReasoningSlotChange(): void {
-    if (!this._hasReasoningContent() && this.open) {
+  private _syncReasoningContent(slot?: HTMLSlotElement): void {
+    const reasoningSlot =
+      slot ??
+      this.shadowRoot?.querySelector<HTMLSlotElement>(
+        '.swc-ResponseStatus-reasoning-slot'
+      ) ??
+      null;
+    const hasReasoningContent = this._slotHasReasoningContent(reasoningSlot);
+
+    if (!hasReasoningContent && this.open) {
       this.open = false;
     }
-    this.requestUpdate();
+    this._hasReasoningContent = hasReasoningContent;
+  }
+
+  private _handleReasoningSlotChange(event: Event): void {
+    this._syncReasoningContent(event.target as HTMLSlotElement);
   }
 
   private _renderLoadingRow(label: string): TemplateResult {
     return html`
-      <div class="swc-ResponseStatus-row">
-        <span class="swc-ResponseStatus-loadingSlot" role="status">
+      <div class="swc-ResponseStatus-row" role="status">
+        <span class="swc-ResponseStatus-loadingSlot">
           <swc-progress-circle
             size="s"
             indeterminate
@@ -169,27 +199,25 @@ export class ResponseStatus extends SpectrumElement {
   protected override render(): TemplateResult {
     const isLoading = this.loading;
     const statusLabel = this._getStatusLabel();
-    const hasReasoningContent = this._hasReasoningContent();
-    const showDisclosure = !isLoading && hasReasoningContent;
+    const showDisclosure = !isLoading && this._hasReasoningContent;
 
     return html`
       <div class="swc-ResponseStatus">
         ${isLoading
           ? this._renderLoadingRow(statusLabel)
           : this._renderCompleteRow(statusLabel, showDisclosure)}
-        ${showDisclosure
-          ? html`
-              <div
-                id=${this.reasoningPanelId}
-                class="swc-ResponseStatus-reasoning-panel"
-                role="region"
-                aria-label="Reasoning"
-                ?hidden=${!this.open}
-              >
-                <slot @slotchange=${this._handleReasoningSlotChange}></slot>
-              </div>
-            `
-          : ''}
+        <div
+          id=${this.reasoningPanelId}
+          class="swc-ResponseStatus-reasoning-panel"
+          role=${ifDefined(showDisclosure ? 'group' : undefined)}
+          aria-label=${ifDefined(showDisclosure ? this.reasoningLabel : undefined)}
+          ?hidden=${!showDisclosure || !this.open}
+        >
+          <slot
+            class="swc-ResponseStatus-reasoning-slot"
+            @slotchange=${this._handleReasoningSlotChange}
+          ></slot>
+        </div>
       </div>
     `;
   }

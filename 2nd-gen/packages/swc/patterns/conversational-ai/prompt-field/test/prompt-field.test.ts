@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { expect } from '@storybook/test';
+import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../../upload-artifact/index.js';
@@ -55,12 +55,23 @@ export const OverviewTest: Story = {
       expect(el.legalText).toBe('');
       expect(el.legalLinkHref).toBe('');
       expect(el.legalLinkText).toBe('');
+      expect(el.sendLabel).toBe('Send');
+      expect(el.stopLabel).toBe('Stop generating');
+      expect(el.uploadLabel).toBe('Add attachment');
       const textarea = el.shadowRoot?.querySelector<HTMLTextAreaElement>(
         '.swc-PromptField-textarea'
+      );
+      const uploadButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-PromptField-upload'
+      );
+      const sendButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-PromptField-send'
       );
 
       expect(textarea?.getAttribute('aria-placeholder')).toBe(el.placeholder);
       expect(textarea?.hasAttribute('aria-describedby')).toBe(false);
+      expect(uploadButton?.getAttribute('aria-label')).toBe('Add attachment');
+      expect(sendButton?.getAttribute('aria-label')).toBe('Send');
 
       const legalCopy = el.shadowRoot?.querySelector(
         '.swc-PromptField-legal-disclaimer'
@@ -178,6 +189,8 @@ export const PropertyMutationTest: Story = {
         <div slot="legal">Custom legal from slot.</div>
       `;
         await el.updateComplete;
+        await Promise.resolve();
+        await el.updateComplete;
 
         const footer = el.shadowRoot?.querySelector('.swc-PromptField-footer');
         const legalSlot =
@@ -196,6 +209,24 @@ export const PropertyMutationTest: Story = {
         expect(legalCopy).toBeNull();
       }
     );
+
+    await step('custom action labels override default aria labels', async () => {
+      el.uploadLabel = 'Attach file';
+      el.sendLabel = 'Submit prompt';
+      el.stopLabel = 'Cancel generation';
+      el.mode = 'loading';
+      await el.updateComplete;
+
+      const uploadButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-PromptField-upload'
+      );
+      const stopButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-PromptField-stop'
+      );
+
+      expect(uploadButton?.getAttribute('aria-label')).toBe('Attach file');
+      expect(stopButton?.getAttribute('aria-label')).toBe('Cancel generation');
+    });
   },
 };
 
@@ -216,12 +247,12 @@ export const EventsTest: Story = {
       'swc-prompt-field'
     );
 
-    await step('fires swc-submit when send button clicked', async () => {
+    await step('fires swc-prompt-field-submit when send button clicked', async () => {
       let detail:
         | { value: string; artifactValues: PromptField['artifactValues'] }
         | undefined;
       el.addEventListener(
-        'swc-submit',
+        'swc-prompt-field-submit',
         (event) => {
           detail = (
             event as CustomEvent<{
@@ -242,13 +273,13 @@ export const EventsTest: Story = {
     });
 
     await step(
-      'fires swc-submit when Enter is pressed in textarea',
+      'fires swc-prompt-field-submit when Enter is pressed in textarea',
       async () => {
         let detail:
           | { value: string; artifactValues: PromptField['artifactValues'] }
           | undefined;
         el.addEventListener(
-          'swc-submit',
+          'swc-prompt-field-submit',
           (event) => {
             detail = (
               event as CustomEvent<{
@@ -271,11 +302,11 @@ export const EventsTest: Story = {
     );
 
     await step(
-      'does not fire swc-submit when Shift+Enter is pressed in textarea',
+      'does not fire swc-prompt-field-submit when Shift+Enter is pressed in textarea',
       async () => {
         let fired = false;
         el.addEventListener(
-          'swc-submit',
+          'swc-prompt-field-submit',
           () => {
             fired = true;
           },
@@ -297,12 +328,38 @@ export const EventsTest: Story = {
     );
 
     await step(
-      'fires swc-upload-click and opens picker when upload button clicked',
+      'does not fire swc-prompt-field-submit when Enter is pressed during IME composition',
+      async () => {
+        let fired = false;
+        el.addEventListener(
+          'swc-prompt-field-submit',
+          () => {
+            fired = true;
+          },
+          { once: true }
+        );
+
+        const textarea = el.shadowRoot?.querySelector<HTMLTextAreaElement>(
+          '.swc-PromptField-textarea'
+        );
+        textarea?.dispatchEvent(
+          new KeyboardEvent('keydown', {
+            key: 'Enter',
+            bubbles: true,
+            isComposing: true,
+          })
+        );
+        expect(fired).toBe(false);
+      }
+    );
+
+    await step(
+      'fires swc-prompt-field-upload-click and opens picker when upload button clicked',
       async () => {
         let fired = false;
         let pickerOpened = false;
         el.addEventListener(
-          'swc-upload-click',
+          'swc-prompt-field-upload-click',
           () => {
             fired = true;
           },
@@ -327,12 +384,44 @@ export const EventsTest: Story = {
       }
     );
 
-    await step('swc-upload-click can prevent picker opening', async () => {
+    await step(
+      'upload button supports keyboard activation (Enter and Space)',
+      async () => {
+        let fireCount = 0;
+        let pickerOpenCount = 0;
+
+        el.addEventListener('swc-prompt-field-upload-click', () => {
+          fireCount += 1;
+        });
+
+        const fileInput = el.shadowRoot?.querySelector<HTMLInputElement>(
+          '.swc-PromptField-file-input'
+        );
+        if (fileInput) {
+          fileInput.click = () => {
+            pickerOpenCount += 1;
+          };
+        }
+
+        const uploadBtn = el.shadowRoot?.querySelector<HTMLButtonElement>(
+          '.swc-PromptField-upload'
+        );
+        uploadBtn?.focus();
+        await userEvent.keyboard('{Enter}');
+        uploadBtn?.focus();
+        await userEvent.keyboard(' ');
+
+        expect(fireCount).toBe(2);
+        expect(pickerOpenCount).toBe(2);
+      }
+    );
+
+    await step('swc-prompt-field-upload-click can prevent picker opening', async () => {
       let pickerOpened = false;
       const preventOpen = (event: Event): void => {
         event.preventDefault();
       };
-      el.addEventListener('swc-upload-click', preventOpen, { once: true });
+      el.addEventListener('swc-prompt-field-upload-click', preventOpen, { once: true });
 
       const fileInput = el.shadowRoot?.querySelector<HTMLInputElement>(
         '.swc-PromptField-file-input'
@@ -352,7 +441,7 @@ export const EventsTest: Story = {
     });
 
     await step(
-      'fires swc-files-selected with file and artifact values',
+      'fires swc-prompt-field-files-selected with file and artifact values',
       async () => {
         const file = new File(['demo'], 'brief.pdf', {
           type: 'application/pdf',
@@ -367,7 +456,7 @@ export const EventsTest: Story = {
           | undefined;
 
         el.addEventListener(
-          'swc-files-selected',
+          'swc-prompt-field-files-selected',
           (event) => {
             detail = (
               event as CustomEvent<{
@@ -400,7 +489,7 @@ export const EventsTest: Story = {
       }
     );
 
-    await step('bubbles swc-dismiss from a dismissible artifact', async () => {
+    await step('bubbles swc-upload-artifact-dismiss from a dismissible artifact', async () => {
       el.innerHTML = `
           <swc-upload-artifact slot="artifact" type="media" dismissible>
             <div slot="thumbnail" style="inline-size:100%;block-size:100%;"></div>
@@ -410,7 +499,7 @@ export const EventsTest: Story = {
 
       let fired = false;
       el.addEventListener(
-        'swc-dismiss',
+        'swc-upload-artifact-dismiss',
         () => {
           fired = true;
         },
@@ -424,6 +513,26 @@ export const EventsTest: Story = {
         );
       dismissBtn?.click();
       expect(fired).toBe(true);
+    });
+
+    await step('stop button supports keyboard activation (Enter and Space)', async () => {
+      el.mode = 'loading';
+      await el.updateComplete;
+
+      let stopCount = 0;
+      el.addEventListener('swc-prompt-field-stop', () => {
+        stopCount += 1;
+      });
+
+      const stopBtn = el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-PromptField-stop'
+      );
+      stopBtn?.focus();
+      await userEvent.keyboard('{Enter}');
+      stopBtn?.focus();
+      await userEvent.keyboard(' ');
+
+      expect(stopCount).toBe(2);
     });
   },
 };

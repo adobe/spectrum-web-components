@@ -11,7 +11,7 @@
  */
 
 import { html } from 'lit';
-import { expect } from '@storybook/test';
+import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../index.js';
@@ -43,7 +43,17 @@ export const OverviewTest: Story = {
       async () => {
         expect(el.type).toBe('card');
         expect(el.dismissible).toBe(true);
+        expect(el.dismissLabel).toBe('Remove attachment');
         expect(el.hasAttribute('data-preview-only')).toBe(false);
+
+        const dismissButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
+          '.swc-UploadArtifact-dismiss'
+        );
+        const icon = dismissButton?.querySelector('swc-icon');
+        expect(dismissButton?.getAttribute('aria-label')).toBe(
+          'Remove attachment'
+        );
+        expect(icon?.getAttribute('aria-hidden')).toBe('true');
       }
     );
   },
@@ -58,11 +68,14 @@ export const DismissEventTest: Story = {
     );
 
     await step(
-      'dismiss button emits swc-dismiss with the host artifact',
+      'dismiss button emits swc-upload-artifact-dismiss with the host artifact',
       async () => {
+        el.dismissLabel = 'Delete file';
+        await el.updateComplete;
+
         let detail: { artifact: UploadArtifact } | undefined;
         el.addEventListener(
-          'swc-dismiss',
+          'swc-upload-artifact-dismiss',
           (event) => {
             detail = (event as CustomEvent<{ artifact: UploadArtifact }>)
               .detail;
@@ -73,9 +86,44 @@ export const DismissEventTest: Story = {
         const dismissButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
           '.swc-UploadArtifact-dismiss'
         );
+        expect(dismissButton?.getAttribute('aria-label')).toBe('Delete file');
         dismissButton?.click();
 
         expect(detail?.artifact).toBe(el);
+      }
+    );
+
+    await step(
+      'dismiss button supports keyboard activation (Enter and Space)',
+      async () => {
+        const dismissButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
+          '.swc-UploadArtifact-dismiss'
+        );
+
+        let enterCount = 0;
+        el.addEventListener(
+          'swc-upload-artifact-dismiss',
+          () => {
+            enterCount += 1;
+          },
+          { once: true }
+        );
+
+        dismissButton?.focus();
+        await userEvent.keyboard('{Enter}');
+        expect(enterCount).toBe(1);
+
+        let spaceCount = 0;
+        el.addEventListener(
+          'swc-upload-artifact-dismiss',
+          () => {
+            spaceCount += 1;
+          },
+          { once: true }
+        );
+        dismissButton?.focus();
+        await userEvent.keyboard(' ');
+        expect(spaceCount).toBe(1);
       }
     );
   },

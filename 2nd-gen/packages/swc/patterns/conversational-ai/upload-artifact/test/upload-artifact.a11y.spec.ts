@@ -15,7 +15,7 @@ import { expect, test } from '@playwright/test';
 import { gotoStory } from '../../../../utils/a11y-helpers.js';
 
 test.describe('UploadArtifact - ARIA Snapshots', () => {
-  test('should expose dismissible card content accessibly', async ({
+  test('should match ARIA snapshot for dismissible card content', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -26,11 +26,10 @@ test.describe('UploadArtifact - ARIA Snapshots', () => {
 
     const artifact = root.locator('swc-upload-artifact').first();
 
-    await expect(
-      artifact.getByRole('button', { name: 'Remove attachment' })
-    ).toBeVisible();
-    await expect(artifact.getByLabel('File thumbnail')).toBeVisible();
-    await expect(artifact).toContainText('Hilton commercial assets');
-    await expect(artifact).toContainText('2026');
+    await expect(artifact).toMatchAriaSnapshot(`
+      - button "Remove attachment"
+      - img "File thumbnail"
+      - text: Hilton commercial assets 2026
+    `);
   });
 });

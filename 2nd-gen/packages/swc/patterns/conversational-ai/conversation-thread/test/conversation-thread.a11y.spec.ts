@@ -30,9 +30,9 @@ test.describe('ConversationThread - ARIA Snapshots', () => {
         - button "Response generated"
         - 'heading "Big idea/core narrative: The warmth of welcome" [level=3]'
         - paragraph: Hospitality begins the moment our customers set foot off their plane.
-        - radiogroup "Response feedback":
-          - radio "Positive response"
-          - radio "Negative response"
+        - group "Response feedback":
+          - button "Positive response"
+          - button "Negative response"
         - button "Sources"
       - group "User message": Great. Can you shorten that into three slides?
     `);

@@ -204,7 +204,7 @@ export const Loading: Story = {
  * Accessibility is delegated to the slotted sub-components:
  *
  * - `<swc-response-status>` announces generation state via `role="status"`
- * - `<swc-message-feedback>` exposes `role="radiogroup"` with labelled radio options
+ * - `<swc-message-feedback>` exposes a labelled toggle button group via `role="group"` and `aria-pressed`
  * - `<swc-message-sources>` uses `aria-expanded` on its disclosure toggle
  * - `<swc-suggestion-item>` is a native focusable `<button>` element
  *

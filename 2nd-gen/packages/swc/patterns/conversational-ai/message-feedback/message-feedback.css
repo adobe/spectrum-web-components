@@ -54,11 +54,11 @@
   outline-offset: token("focus-indicator-gap");
 }
 
-.swc-MessageFeedback-button[data-selected] {
+.swc-MessageFeedback-button[aria-pressed="true"] {
   color: token("gray-25");
   background: token("neutral-background-color-selected-default");
 }
 
-.swc-MessageFeedback-button[data-selected]:hover {
+.swc-MessageFeedback-button[aria-pressed="true"]:hover {
   background: token("neutral-background-color-selected-hover");
 }

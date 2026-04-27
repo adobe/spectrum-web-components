@@ -98,6 +98,22 @@ export const BooleanMutationTest: Story = {
         expect(statusLabel?.textContent?.trim()).toBe('Ready');
       }
     );
+
+    await step('label swaps when loading transitions to complete', async () => {
+      el.loadingLabel = 'Thinking...';
+      el.completeLabel = 'Done';
+      el.loading = true;
+      await el.updateComplete;
+
+      let statusLabel = el.shadowRoot?.querySelector('.swc-ResponseStatus-label');
+      expect(statusLabel?.textContent?.trim()).toBe('Thinking...');
+
+      el.loading = false;
+      await el.updateComplete;
+
+      statusLabel = el.shadowRoot?.querySelector('.swc-ResponseStatus-label');
+      expect(statusLabel?.textContent?.trim()).toBe('Done');
+    });
   },
 };
 
@@ -115,9 +131,9 @@ export const InteractionTest: Story = {
       'swc-response-status'
     );
 
-    await step('toggle dispatches swc-toggle with open detail', async () => {
+    await step('toggle dispatches swc-response-status-toggle with open detail', async () => {
       let captured: CustomEvent<{ open: boolean }> | undefined;
-      el.addEventListener('swc-toggle', (event) => {
+      el.addEventListener('swc-response-status-toggle', (event) => {
         captured = event as CustomEvent<{ open: boolean }>;
       });
 
@@ -153,7 +169,7 @@ export const InteractionTest: Story = {
     );
 
     await step(
-      'complete state without reasoning content does not render disclosure controls',
+      'complete state without reasoning content hides disclosure controls',
       async () => {
         el.textContent = '';
         el.requestUpdate();
@@ -168,7 +184,9 @@ export const InteractionTest: Story = {
         const row = el.shadowRoot?.querySelector('.swc-ResponseStatus-row');
 
         expect(button).toBeNull();
-        expect(panel).toBeNull();
+        expect(panel).toBeTruthy();
+        expect(panel?.hidden).toBe(true);
+        expect(panel?.hasAttribute('role')).toBe(false);
         expect(row).toBeTruthy();
         expect(
           row?.querySelector('.swc-ResponseStatus-label')?.textContent?.trim()
@@ -199,5 +217,27 @@ export const InteractionTest: Story = {
       const checkIcon = el.shadowRoot?.querySelectorAll('swc-icon')[1];
       expect(checkIcon?.getAttribute('aria-hidden')).toBe('true');
     });
+
+    await step(
+      'clearing reasoning content auto-collapses open state without firing swc-response-status-toggle',
+      async () => {
+        let toggleCount = 0;
+        el.addEventListener('swc-response-status-toggle', () => {
+          toggleCount += 1;
+        });
+
+        el.textContent = 'Reasoning details here.';
+        el.open = true;
+        await el.updateComplete;
+        expect(el.open).toBe(true);
+
+        el.textContent = '';
+        el.requestUpdate();
+        await el.updateComplete;
+
+        expect(el.open).toBe(false);
+        expect(toggleCount).toBe(0);
+      }
+    );
   },
 };

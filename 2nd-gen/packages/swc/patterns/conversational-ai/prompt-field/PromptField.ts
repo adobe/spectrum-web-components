@@ -11,13 +11,19 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import { property, state } from 'lit/decorators.js';
+import {
+  property,
+  query,
+  queryAssignedElements,
+  state,
+} from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 import '@adobe/spectrum-wc/icon';
 
+import { uniqueId } from '../../../utils/id.js';
 import { ChevronUpIcon, PlusIcon, StopIcon } from '../utils/icons/index.js';
 
 import styles from './prompt-field.css';
@@ -41,7 +47,7 @@ export interface PromptFieldSubmitDetail {
   artifactValues: PromptFieldArtifactValue[];
 }
 
-export type PromptFieldMode = 'default' | 'loading' | 'disabled' | 'error';
+export type PromptFieldMode = 'default' | 'loading' | 'disabled';
 
 const DEFAULT_LEGAL_TEXT =
   'Responses are generated using AI, and may be inaccurate. Check before using.';
@@ -52,25 +58,28 @@ const DEFAULT_LEGAL_LINK_TEXT = 'AI User Guidelines';
 /**
  * Prompt entry surface for conversational AI flows.
  *
- * Fires events for all interactions; consumers are responsible for managing state.
+ * Uncontrolled with mirror pattern: the component updates its own draft state first,
+ * then emits events so consumers can mirror or override that state.
  *
  * @element swc-prompt-field
  *
  * @slot artifact - Optional attachment preview(s); supports multiple slotted artifacts.
  * @slot legal - Optional legal/footer content. When provided, this slot overrides `legal-text`,
  * and `legal-link-href`/`legal-link-text` fallback content.
- * @fires swc-input - Dispatched when the textarea value changes.
+ * @fires swc-prompt-field-input - Dispatched after the textarea value is internally updated.
  * Detail: `{ value: string }`
- * @fires swc-submit - Dispatched when send is triggered with text and/or artifacts.
+ * @fires swc-prompt-field-submit - Dispatched when send is triggered with text and/or artifacts.
  * Detail: `{ value: string, artifactValues: PromptFieldArtifactValue[] }`
- * @fires swc-stop - Dispatched when stop generation is requested in loading mode.
- * @fires swc-upload-click - Dispatched before opening the native file picker.
+ * @fires swc-prompt-field-stop - Dispatched when stop generation is requested in loading mode.
+ * @fires swc-prompt-field-upload-click - Dispatched before opening the native file picker.
  * Cancel this event to prevent the picker from opening.
- * @fires swc-files-selected - Dispatched after files are chosen from the picker.
+ * @fires swc-prompt-field-files-selected - Dispatched after files are chosen from the picker.
  * Detail:
  * `{ files: File[], artifactValues: PromptFieldArtifactValue[], allArtifactValues: PromptFieldArtifactValue[] }`
  */
 export class PromptField extends SpectrumElement {
+  private readonly labelId = uniqueId('swc-prompt-field-label');
+
   /** Visual mode for the prompt field action/interaction state. */
   @property({ type: String, reflect: true })
   public mode: PromptFieldMode = 'default';
@@ -79,17 +88,29 @@ export class PromptField extends SpectrumElement {
   @property({ type: String })
   public label = 'Prompt';
 
+  /** Accessible label for the send action button. */
+  @property({ type: String, attribute: 'send-label' })
+  public sendLabel = 'Send';
+
+  /** Accessible label for the stop action button in loading mode. */
+  @property({ type: String, attribute: 'stop-label' })
+  public stopLabel = 'Stop generating';
+
+  /** Accessible label for the upload button. */
+  @property({ type: String, attribute: 'upload-label' })
+  public uploadLabel = 'Add attachment';
+
   /** Placeholder text shown inside the textarea. */
   @property({ type: String })
   public placeholder =
     'Ready to get started? Ask a question, share an idea, or add a task.';
 
-  /** The current textarea value. Controlled by the consumer. */
+  /** The current textarea value; internally updated and externally mirrorable. */
   @property({ type: String })
   public value = '';
 
   /**
-   * Controlled attachment values associated with the current draft.
+   * Attachment values associated with the current draft.
    * Updated automatically when files are selected through the built-in file picker.
    */
   @property({ attribute: false })
@@ -117,7 +138,18 @@ export class PromptField extends SpectrumElement {
 
   private _hasArtifacts = false;
   private _artifactCount = 0;
-  private _artifactIdCounter = 0;
+
+  @query('.swc-PromptField-file-input')
+  private _fileInput?: HTMLInputElement;
+
+  @queryAssignedElements({ slot: 'artifact', flatten: true })
+  private _assignedArtifactElements!: HTMLElement[];
+
+  @queryAssignedElements({ slot: 'legal', flatten: true })
+  private _assignedLegalElements!: HTMLElement[];
+
+  @state()
+  private _hasSlottedLegal = false;
 
   /** Next textarea focus follows pointerdown on the textarea (click/touch). */
   private _textareaFocusFromPointer = false;
@@ -134,7 +166,7 @@ export class PromptField extends SpectrumElement {
     const textarea = event.target as HTMLTextAreaElement;
     this.value = textarea.value;
     this.dispatchEvent(
-      new CustomEvent('swc-input', {
+      new CustomEvent('swc-prompt-field-input', {
         bubbles: true,
         composed: true,
         detail: { value: this.value },
@@ -164,7 +196,7 @@ export class PromptField extends SpectrumElement {
   }
 
   private _handleTextareaKeydown(event: KeyboardEvent): void {
-    if (event.key !== 'Enter' || event.shiftKey) {
+    if (event.key !== 'Enter' || event.shiftKey || event.isComposing) {
       return;
     }
 
@@ -180,7 +212,7 @@ export class PromptField extends SpectrumElement {
       return;
     }
     this.dispatchEvent(
-      new CustomEvent<PromptFieldSubmitDetail>('swc-submit', {
+      new CustomEvent<PromptFieldSubmitDetail>('swc-prompt-field-submit', {
         bubbles: true,
         composed: true,
         detail: {
@@ -193,7 +225,7 @@ export class PromptField extends SpectrumElement {
 
   private _handleStopClick(): void {
     this.dispatchEvent(
-      new CustomEvent('swc-stop', { bubbles: true, composed: true })
+      new CustomEvent('swc-prompt-field-stop', { bubbles: true, composed: true })
     );
   }
 
@@ -201,7 +233,7 @@ export class PromptField extends SpectrumElement {
     if (this._isDisabled) {
       return;
     }
-    const uploadClickEvent = new CustomEvent('swc-upload-click', {
+    const uploadClickEvent = new CustomEvent('swc-prompt-field-upload-click', {
       bubbles: true,
       composed: true,
       cancelable: true,
@@ -210,10 +242,7 @@ export class PromptField extends SpectrumElement {
     if (uploadClickEvent.defaultPrevented) {
       return;
     }
-    const fileInput = this.shadowRoot?.querySelector<HTMLInputElement>(
-      '.swc-PromptField-file-input'
-    );
-    fileInput?.click();
+    this._fileInput?.click();
   }
 
   private _handleFileInputChange(event: Event): void {
@@ -224,7 +253,7 @@ export class PromptField extends SpectrumElement {
     }
 
     const nextArtifactValues = files.map((file) => ({
-      id: `artifact-${++this._artifactIdCounter}`,
+      id: uniqueId('swc-prompt-field-artifact'),
       name: file.name,
       mimeType: file.type || 'application/octet-stream',
       size: file.size,
@@ -234,7 +263,7 @@ export class PromptField extends SpectrumElement {
     this.artifactValues = [...this.artifactValues, ...nextArtifactValues];
 
     this.dispatchEvent(
-      new CustomEvent<PromptFieldFilesSelectedDetail>('swc-files-selected', {
+      new CustomEvent<PromptFieldFilesSelectedDetail>('swc-prompt-field-files-selected', {
         bubbles: true,
         composed: true,
         detail: {
@@ -249,13 +278,8 @@ export class PromptField extends SpectrumElement {
     input.value = '';
   }
 
-  private _syncArtifactPresenceFromSlot(slot?: HTMLSlotElement): void {
-    const artifactSlot =
-      slot ??
-      this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="artifact"]');
-
-    const artifactCount =
-      artifactSlot?.assignedElements({ flatten: true })?.length ?? 0;
+  private _syncArtifactPresenceFromSlot(): void {
+    const artifactCount = this._assignedArtifactElements?.length ?? 0;
     const hasArtifacts = artifactCount > 0;
 
     if (
@@ -268,8 +292,8 @@ export class PromptField extends SpectrumElement {
     }
   }
 
-  private _handleArtifactSlotChange(event: Event): void {
-    this._syncArtifactPresenceFromSlot(event.target as HTMLSlotElement);
+  private _handleArtifactSlotChange(): void {
+    this._syncArtifactPresenceFromSlot();
   }
 
   private get _isPopulated(): boolean {
@@ -290,13 +314,25 @@ export class PromptField extends SpectrumElement {
 
   protected override firstUpdated(): void {
     this._syncArtifactPresenceFromSlot();
+    this._syncLegalSlotPresence();
   }
 
-  private _renderLegalFooter(hasSlottedLegal: boolean): TemplateResult | null {
-    if (hasSlottedLegal) {
+  private _syncLegalSlotPresence(): void {
+    const hasSlottedLegal = (this._assignedLegalElements?.length ?? 0) > 0;
+    if (hasSlottedLegal !== this._hasSlottedLegal) {
+      this._hasSlottedLegal = hasSlottedLegal;
+    }
+  }
+
+  private _handleLegalSlotChange(): void {
+    this._syncLegalSlotPresence();
+  }
+
+  private _renderLegalFooter(): TemplateResult | null {
+    if (this._hasSlottedLegal) {
       return html`
         <div class="swc-PromptField-footer">
-          <slot name="legal"></slot>
+          <slot name="legal" @slotchange=${this._handleLegalSlotChange}></slot>
         </div>
       `;
     }
@@ -309,6 +345,11 @@ export class PromptField extends SpectrumElement {
     if (hasCustomCopy) {
       return html`
         <div class="swc-PromptField-footer">
+          <slot
+            name="legal"
+            hidden
+            @slotchange=${this._handleLegalSlotChange}
+          ></slot>
           <p class="swc-PromptField-legal-disclaimer">
             ${legalText}
             ${legalLinkHref.length > 0 && legalLinkText.length > 0
@@ -329,6 +370,11 @@ export class PromptField extends SpectrumElement {
 
     return html`
       <div class="swc-PromptField-footer">
+        <slot
+          name="legal"
+          hidden
+          @slotchange=${this._handleLegalSlotChange}
+        ></slot>
         <p class="swc-PromptField-legal-disclaimer">
           ${DEFAULT_LEGAL_TEXT}
           <a
@@ -346,8 +392,8 @@ export class PromptField extends SpectrumElement {
   private _renderArtifact(): TemplateResult {
     const artifactClass =
       this._artifactCount <= 1
-        ? 'swc-PromptField-artifacts is-single'
-        : 'swc-PromptField-artifacts is-multiple';
+        ? 'swc-PromptField-artifacts swc-PromptField-artifacts--single'
+        : 'swc-PromptField-artifacts swc-PromptField-artifacts--multiple';
 
     return html`
       <div class=${artifactClass} ?hidden=${!this._hasArtifacts}>
@@ -364,7 +410,7 @@ export class PromptField extends SpectrumElement {
       <button
         class="swc-PromptField-send"
         ?disabled=${!this._isPopulated || this._isDisabled}
-        aria-label="Send"
+        aria-label=${this.sendLabel}
         @click=${this._handleSendClick}
       >
         <swc-icon aria-hidden="true">${ChevronUpIcon()}</swc-icon>
@@ -376,7 +422,7 @@ export class PromptField extends SpectrumElement {
     return html`
       <button
         class="swc-PromptField-stop"
-        aria-label="Stop generating"
+        aria-label=${this.stopLabel}
         @click=${this._handleStopClick}
       >
         <swc-icon aria-hidden="true">${StopIcon()}</swc-icon>
@@ -386,7 +432,6 @@ export class PromptField extends SpectrumElement {
 
   protected override render(): TemplateResult {
     const showStop = this._isLoading;
-    const hasSlottedLegal = this.querySelector('[slot="legal"]') !== null;
 
     return html`
       <div class="swc-PromptField">
@@ -402,12 +447,14 @@ export class PromptField extends SpectrumElement {
           >
             ${this._renderArtifact()}
             <div class="swc-PromptField-text-area">
-              <span class="swc-PromptField-label">${this.label}</span>
+              <span id=${this.labelId} class="swc-PromptField-label"
+                >${this.label}</span
+              >
               <textarea
                 class="swc-PromptField-textarea"
                 .value=${this.value}
                 placeholder=${this.placeholder}
-                aria-label=${this.label}
+                aria-labelledby=${this.labelId}
                 aria-placeholder=${ifDefined(this.placeholder || undefined)}
                 ?disabled=${this._isDisabled}
                 rows="1"
@@ -417,7 +464,6 @@ export class PromptField extends SpectrumElement {
                 @focusin=${this._handleTextareaFocusIn}
                 @focusout=${this._handleTextareaFocusOut}
               ></textarea>
-              <span id="placeholder" hidden>${this.placeholder}</span>
             </div>
           </div>
 
@@ -425,7 +471,7 @@ export class PromptField extends SpectrumElement {
             <div class="swc-PromptField-leading-actions">
               <button
                 class="swc-PromptField-upload"
-                aria-label="Add attachment"
+                aria-label=${this.uploadLabel}
                 ?disabled=${this._isDisabled}
                 @click=${this._handleUploadClick}
               >
@@ -445,7 +491,7 @@ export class PromptField extends SpectrumElement {
             ${showStop ? this._renderStopButton() : this._renderSendButton()}
           </div>
         </div>
-        ${this._renderLegalFooter(hasSlottedLegal)}
+        ${this._renderLegalFooter()}
       </div>
     `;
   }

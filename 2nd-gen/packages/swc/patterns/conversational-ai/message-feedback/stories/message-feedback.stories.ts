@@ -40,7 +40,10 @@ argTypes.status = {
 
 /**
  * Binary positive / negative feedback control placed below an AI response.
- * This component is controlled: it emits `swc-feedback`, and consumers set `status`.
+ *
+ * This component is **controlled** (not self-managed):
+ * it only emits `swc-message-feedback-change` and does not persist selection internally.
+ * Consumers are responsible for updating `status` in response to each event.
  */
 const meta: Meta = {
   title: 'Conversational AI/Message feedback',
@@ -83,7 +86,7 @@ export const Overview: Story = {
 // ──────────────────────────
 
 /**
- * A message feedback control consists of two quiet radio buttons:
+ * A message feedback control consists of two quiet toggle buttons:
  *
  * 1. **Positive** — "Positive response"
  * 2. **Negative** — "Negative response"
@@ -147,17 +150,16 @@ const wiredSwcFeedbackDemos = new WeakSet<Element>();
 
 /**
  * Event handlers can be registered on `<swc-message-feedback>` (or on an
- * ancestor, because **`swc-feedback`** **bubbles** and is **`composed`**).
+ * ancestor, because **`swc-message-feedback-change`** **bubbles** and is **`composed`**).
  *
- * Each click dispatches **`swc-feedback`** with **`event.detail.status`**
- * set to **`'positive'`** or **`'negative'`**. The host does not apply that
- * value by itself: keep **`status`** controlled from your layer—set
- * **`feedback.status`** (or the `status` attribute) when you handle the
- * event, the same way you would wire **`change`** on
- * [`sp-radio-group`](https://opensource.adobe.com/spectrum-web-components/components/radio-group/#behaviors).
+ * Each click dispatches **`swc-message-feedback-change`** with **`event.detail.status`**
+ * set to **`'positive'`**, **`'negative'`**, or **`undefined`** when the
+ * active option is toggled off. The host does not apply that value by itself:
+ * keep **`status`** controlled from your layer—set **`feedback.status`** (or
+ * the `status` attribute) when you handle the event.
  *
  * ```js
- * feedback.addEventListener('swc-feedback', (event) => {
+ * feedback.addEventListener('swc-message-feedback-change', (event) => {
  *   const { status } = event.detail;
  *   feedback.status = status;
  * });
@@ -179,15 +181,20 @@ export const HandlingEvents: Story = {
       }
       wiredSwcFeedbackDemos.add(feedback);
       readout.textContent =
-        'Click a thumb. The handler below listens for swc-feedback and sets .status on the host.';
+        'Click a thumb. The handler below listens for swc-message-feedback-change and sets .status on the host.';
 
-      feedback.addEventListener('swc-feedback', (event: Event) => {
-        const { status } = (
-          event as CustomEvent<{ status: 'positive' | 'negative' }>
-        ).detail;
-        (feedback as HTMLElement & { status?: string }).status = status;
-        readout.textContent = `Last swc-feedback: detail.status = "${status}" (mirrored to host .status).`;
-      });
+      feedback.addEventListener(
+        'swc-message-feedback-change',
+        (event: Event) => {
+          const { status } = (
+            event as CustomEvent<{
+              status: 'positive' | 'negative' | undefined;
+            }>
+          ).detail;
+          (feedback as HTMLElement & { status?: string }).status = status;
+          readout.textContent = `Last swc-message-feedback-change: detail.status = "${status}" (mirrored to host .status).`;
+        }
+      );
     });
 
     return html`
@@ -223,10 +230,10 @@ export const HandlingEvents: Story = {
  *
  * The `<swc-message-feedback>` element implements the following accessibility features:
  *
- * #### Radio buttons
+ * #### Toggle buttons
  *
- * - The group uses `role="radiogroup"` with `aria-label="Response feedback"`
- * - Each option uses `role="radio"` with `aria-checked` to communicate selection
+ * - The group uses `role="group"` with `aria-label="Response feedback"`
+ * - Each option is a native `<button>` with `aria-pressed` to communicate state
  * - Each option carries a descriptive label: "Positive response" / "Negative response"
  *
  * #### Keyboard
@@ -234,7 +241,7 @@ export const HandlingEvents: Story = {
  * - **Tab** moves focus into the group on a single tab stop (**roving `tabindex`** on the two controls)
  * - **Arrow Left** / **Arrow Right** move focus between options
  * - **Home** / **End** move focus to the first or last option
- * - **Space** or **Enter** on a focused option dispatches **`swc-feedback`**
+ * - **Space** or **Enter** on a focused option dispatches **`swc-message-feedback-change`**
  */
 export const Accessibility: Story = {
   args: {},

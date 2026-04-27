@@ -32,7 +32,7 @@
 
 .swc-MessageSources-toggle {
   display: inline-flex;
-  gap: var(--swc-message-sources-toggle-gap, token("spacing-75"));
+  gap: var(--swc-sources-toggle-gap, token("spacing-75"));
   align-items: center;
   padding: 5px 0;
   font-family: token("sans-serif-font");

@@ -13,11 +13,12 @@
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
+import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 import '@adobe/spectrum-wc/icon';
 
-import { Chevron75Icon } from '../../../components/icon/elements/index.js';
+import { uniqueId } from '../../../utils/id.js';
 
 import styles from './message-sources.css';
 
@@ -29,13 +30,12 @@ import styles from './message-sources.css';
  *
  * @element swc-message-sources
  * @slot - Source link items (rendered as a numbered list when expanded)
- * @fires swc-sources-toggle - Dispatched when the panel is toggled.
+ * @fires swc-message-sources-toggle - Dispatched when the panel is toggled.
  * Detail: `{ open: boolean }`
  */
 export class MessageSources extends SpectrumElement {
-  private static panelIdCounter = 0;
-
-  private readonly panelId = `swc-sources-panel-${++MessageSources.panelIdCounter}`;
+  private readonly panelId = uniqueId('swc-sources-panel');
+  private readonly toggleId = uniqueId('swc-message-sources-toggle');
 
   /**
    * Whether the sources list is open.
@@ -56,7 +56,7 @@ export class MessageSources extends SpectrumElement {
   private _handleToggle(): void {
     this.open = !this.open;
     this.dispatchEvent(
-      new CustomEvent('swc-sources-toggle', {
+      new CustomEvent('swc-message-sources-toggle', {
         bubbles: true,
         composed: true,
         detail: { open: this.open },
@@ -71,6 +71,7 @@ export class MessageSources extends SpectrumElement {
     return html`
       <div class="swc-MessageSources">
         <button
+          id=${this.toggleId}
           class="swc-MessageSources-toggle"
           aria-expanded=${isExpanded}
           aria-controls=${this.panelId}
@@ -91,8 +92,7 @@ export class MessageSources extends SpectrumElement {
         <ol
           id=${this.panelId}
           class="swc-MessageSources-list"
-          role="list"
-          aria-label=${label}
+          aria-labelledby=${this.toggleId}
           ?hidden=${!isExpanded}
         >
           <slot></slot>

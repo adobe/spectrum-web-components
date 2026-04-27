@@ -55,7 +55,7 @@ argTypes.multiple = {
 argTypes.mode = {
   ...argTypes.mode,
   control: { type: 'select' },
-  options: ['default', 'loading', 'disabled', 'error'],
+  options: ['default', 'loading', 'disabled'],
   table: {
     category: 'attributes',
     defaultValue: { summary: 'default' },
@@ -64,7 +64,8 @@ argTypes.mode = {
 
 /**
  * The prompt entry surface for conversational AI flows.
- * Fires events for all interactions — consumers manage state externally.
+ * Uses an uncontrolled-with-mirror model: it updates internal draft state first,
+ * then emits events so consumers can mirror or override that state.
  */
 const meta: Meta = {
   title: 'Conversational AI/Prompt field',
@@ -152,7 +153,6 @@ export const Anatomy: Story = {
  * - **`default`** — Send button shown, normal interactivity
  * - **`loading`** — Stop button shown while generation is in progress
  * - **`disabled`** — Input/upload/send are disabled
- * - **`error`** — Reserved for error-state styling/behavior (currently behaves like default)
  *
  * The send button enablement is derived internally from prompt content (value or artifact).
  */
@@ -220,10 +220,10 @@ export const Modes: Story = {
  *
  * Upload button behavior:
  *
- * - Emits cancelable `swc-upload-click` before opening picker
- * - Opens internal file picker and emits `swc-files-selected` with selected files
+ * - Emits cancelable `swc-prompt-field-upload-click` before opening picker
+ * - Opens internal file picker and emits `swc-prompt-field-files-selected` with selected files
  *
- * Artifacts own dismiss behavior via `dismissible` and emit `swc-dismiss`.
+ * Artifacts own dismiss behavior via `dismissible` and emit `swc-upload-artifact-dismiss`.
  */
 export const Artifact: Story = {
   render: () => html`

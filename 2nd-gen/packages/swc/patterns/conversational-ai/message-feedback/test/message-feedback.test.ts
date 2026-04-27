@@ -65,18 +65,20 @@ export const InteractionTest: Story = {
     const canvas = within(shadow as unknown as HTMLElement);
 
     await step(
-      'clicking positive emits swc-feedback with positive status',
+      'clicking positive emits swc-message-feedback-change with positive status',
       async () => {
-        const events: Array<string> = [];
-        el.addEventListener('swc-feedback', ((event: Event) => {
-          const customEvent = event as CustomEvent<{ status: string }>;
+        const events: Array<'positive' | 'negative' | undefined> = [];
+        el.addEventListener('swc-message-feedback-change', ((event: Event) => {
+          const customEvent = event as CustomEvent<{
+            status: 'positive' | 'negative' | undefined;
+          }>;
           events.push(customEvent.detail.status);
         }) as EventListener);
 
-        const positiveRadio = canvas.getByRole('radio', {
+        const positiveButton = canvas.getByRole('button', {
           name: 'Positive response',
         });
-        await userEvent.click(positiveRadio);
+        await userEvent.click(positiveButton);
         await el.updateComplete;
         expect(events[events.length - 1]).toBe('positive');
         expect(el.status).toBeUndefined();
@@ -88,28 +90,53 @@ export const InteractionTest: Story = {
       async () => {
         el.status = 'positive';
         await el.updateComplete;
-        const positiveRadio = canvas.getByRole('radio', {
+        const positiveButton = canvas.getByRole('button', {
           name: 'Positive response',
         });
-        expect(positiveRadio).toHaveAttribute('aria-checked', 'true');
+        expect(positiveButton).toHaveAttribute('aria-pressed', 'true');
       }
     );
 
     await step(
-      'clicking negative emits swc-feedback with negative status',
+      'clicking negative emits swc-message-feedback-change with negative status',
       async () => {
-        const events: Array<string> = [];
-        el.addEventListener('swc-feedback', ((event: Event) => {
-          const customEvent = event as CustomEvent<{ status: string }>;
+        const events: Array<'positive' | 'negative' | undefined> = [];
+        el.addEventListener('swc-message-feedback-change', ((event: Event) => {
+          const customEvent = event as CustomEvent<{
+            status: 'positive' | 'negative' | undefined;
+          }>;
           events.push(customEvent.detail.status);
         }) as EventListener);
 
-        const negativeRadio = canvas.getByRole('radio', {
+        const negativeButton = canvas.getByRole('button', {
           name: 'Negative response',
         });
-        await userEvent.click(negativeRadio);
+        await userEvent.click(negativeButton);
         await el.updateComplete;
         expect(events[events.length - 1]).toBe('negative');
+      }
+    );
+
+    await step(
+      'clicking selected positive emits swc-message-feedback-change with undefined status',
+      async () => {
+        const events: Array<'positive' | 'negative' | undefined> = [];
+        el.addEventListener('swc-message-feedback-change', ((event: Event) => {
+          const customEvent = event as CustomEvent<{
+            status: 'positive' | 'negative' | undefined;
+          }>;
+          events.push(customEvent.detail.status);
+        }) as EventListener);
+
+        el.status = 'positive';
+        await el.updateComplete;
+        const positiveButton = canvas.getByRole('button', {
+          name: 'Positive response',
+        });
+        await userEvent.click(positiveButton);
+        await el.updateComplete;
+
+        expect(events[events.length - 1]).toBeUndefined();
       }
     );
   },
@@ -135,15 +162,17 @@ export const KeyboardNavigationTest: Story = {
     );
 
     await step(
-      'ArrowRight from first option moves focus without emitting swc-feedback',
+      'ArrowRight from first option moves focus without emitting swc-message-feedback-change',
       async () => {
-        const events: Array<string> = [];
-        el.addEventListener('swc-feedback', ((event: Event) => {
-          const customEvent = event as CustomEvent<{ status: string }>;
+        const events: Array<'positive' | 'negative' | undefined> = [];
+        el.addEventListener('swc-message-feedback-change', ((event: Event) => {
+          const customEvent = event as CustomEvent<{
+            status: 'positive' | 'negative' | undefined;
+          }>;
           events.push(customEvent.detail.status);
         }) as EventListener);
 
-        el.focus();
+        buttons[0]?.focus();
         await el.updateComplete;
 
         await userEvent.keyboard('{ArrowRight}');
@@ -156,17 +185,19 @@ export const KeyboardNavigationTest: Story = {
     );
 
     await step(
-      'ArrowLeft wraps focus to positive without emitting swc-feedback',
+      'ArrowLeft wraps focus to positive without emitting swc-message-feedback-change',
       async () => {
-        const events: Array<string> = [];
-        el.addEventListener('swc-feedback', ((event: Event) => {
-          const customEvent = event as CustomEvent<{ status: string }>;
+        const events: Array<'positive' | 'negative' | undefined> = [];
+        el.addEventListener('swc-message-feedback-change', ((event: Event) => {
+          const customEvent = event as CustomEvent<{
+            status: 'positive' | 'negative' | undefined;
+          }>;
           events.push(customEvent.detail.status);
         }) as EventListener);
 
         el.status = 'negative';
         await el.updateComplete;
-        el.focus();
+        buttons[1]?.focus();
         await el.updateComplete;
         await userEvent.keyboard('{ArrowLeft}');
         await el.updateComplete;

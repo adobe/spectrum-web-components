@@ -10,7 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import { expect } from '@storybook/test';
+import { html } from 'lit';
+import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../index.js';
@@ -83,7 +84,7 @@ export const OpenMutationTest: Story = {
       const icon = el.shadowRoot?.querySelector('swc-icon');
 
       expect(toggle?.textContent?.trim()).toBe('References');
-      expect(panel?.getAttribute('aria-label')).toBe('References');
+      expect(panel?.getAttribute('aria-labelledby')).toBe(toggle?.id);
       expect(icon?.getAttribute('aria-hidden')).toBe('true');
     });
 
@@ -110,10 +111,10 @@ export const OpenMutationTest: Story = {
       }
     );
 
-    await step('clicking the toggle emits swc-sources-toggle', async () => {
+    await step('clicking the toggle emits swc-message-sources-toggle', async () => {
       let detail: { open: boolean } | undefined;
       el.addEventListener(
-        'swc-sources-toggle',
+        'swc-message-sources-toggle',
         (event) => {
           detail = (event as CustomEvent<{ open: boolean }>).detail;
         },
@@ -130,6 +131,68 @@ export const OpenMutationTest: Story = {
         '.swc-MessageSources-list'
       );
       expect(detail?.open).toBe(true);
+      expect(el.open).toBe(true);
+      expect(panel?.hidden).toBe(false);
+    });
+
+    await step('keyboard Enter and Space toggle the list', async () => {
+      const toggle = el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-MessageSources-toggle'
+      );
+
+      expect(toggle).toBeTruthy();
+      if (!toggle) {
+        return;
+      }
+
+      el.open = false;
+      await el.updateComplete;
+      toggle.focus();
+
+      await userEvent.keyboard('{Enter}');
+      await el.updateComplete;
+      expect(el.open).toBe(true);
+
+      await userEvent.keyboard(' ');
+      await el.updateComplete;
+      expect(el.open).toBe(false);
+    });
+  },
+};
+
+export const EmptySlotTest: Story = {
+  render: () => html`<swc-message-sources></swc-message-sources>`,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<MessageSources>(
+      canvasElement,
+      'swc-message-sources'
+    );
+
+    await step('handles an empty default slot without errors', async () => {
+      const toggle = el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-MessageSources-toggle'
+      );
+      const panel = el.shadowRoot?.querySelector<HTMLOListElement>(
+        '.swc-MessageSources-list'
+      );
+
+      expect(panel).toBeTruthy();
+      expect(panel?.querySelectorAll('li').length).toBe(0);
+      expect(toggle?.getAttribute('aria-controls')).toBe(panel?.id);
+      expect(panel?.getAttribute('aria-labelledby')).toBe(toggle?.id);
+      expect(panel?.hidden).toBe(true);
+    });
+
+    await step('toggle still opens the panel with an empty slot', async () => {
+      const toggle = el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-MessageSources-toggle'
+      );
+      const panel = el.shadowRoot?.querySelector<HTMLOListElement>(
+        '.swc-MessageSources-list'
+      );
+
+      toggle?.click();
+      await el.updateComplete;
       expect(el.open).toBe(true);
       expect(panel?.hidden).toBe(false);
     });

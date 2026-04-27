@@ -11,7 +11,7 @@
  */
 
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, queryAll } from 'lit/decorators.js';
 
 import { FocusgroupNavigationController } from '@spectrum-web-components/core/controllers/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
@@ -29,20 +29,36 @@ import styles from './message-feedback.css';
  * between options. Selection is activation-based (click, Enter, or Space).
  *
  * @element swc-message-feedback
- * @fires swc-feedback - Dispatched when the user selects positive or negative feedback.
- * Detail: `{ status: 'positive' | 'negative' }`
+ * @fires swc-message-feedback-change - Dispatched when the user toggles feedback selection.
+ * Detail: `{ status: 'positive' | 'negative' | undefined }`
  */
 export class MessageFeedback extends SpectrumElement {
   /**
    * The currently selected feedback status.
    * - `positive`: positive feedback selected
    * - `negative`: negative feedback selected
+   * - `undefined`: no feedback selected
    *
-   * This is controlled by the consumer. The component dispatches `swc-feedback`
+   * This is controlled by the consumer. The component dispatches `swc-message-feedback-change`
    * on click and expects the parent to update `status`.
    */
   @property({ type: String, reflect: true })
   public status?: 'positive' | 'negative';
+
+  /** Accessible label for the feedback button group. */
+  @property({ type: String, attribute: 'group-label' })
+  public groupLabel = 'Response feedback';
+
+  /** Accessible label for the positive feedback button. */
+  @property({ type: String, attribute: 'positive-label' })
+  public positiveLabel = 'Positive response';
+
+  /** Accessible label for the negative feedback button. */
+  @property({ type: String, attribute: 'negative-label' })
+  public negativeLabel = 'Negative response';
+
+  @queryAll('.swc-MessageFeedback-button')
+  private _feedbackButtonNodes!: NodeListOf<HTMLButtonElement>;
 
   private focusgroupNavigationController = new FocusgroupNavigationController(
     this,
@@ -57,33 +73,13 @@ export class MessageFeedback extends SpectrumElement {
     return [styles];
   }
 
-  public override focus(options?: FocusOptions): void {
-    this._syncRovingFocusTarget();
-    this.focusgroupNavigationController.getActiveItem()?.focus(options);
-  }
-
   private _feedbackButtons(): HTMLButtonElement[] {
-    const root = this.renderRoot as ShadowRoot | undefined;
-    if (!root) {
-      return [];
-    }
-    return Array.from(
-      root.querySelectorAll<HTMLButtonElement>('.swc-MessageFeedback-button')
-    );
-  }
-
-  protected override firstUpdated(
-    changedProperties: PropertyValues<this>
-  ): void {
-    super.firstUpdated(changedProperties);
-    this._syncRovingFocusTarget();
+    return Array.from(this._feedbackButtonNodes ?? []);
   }
 
   protected override updated(changedProperties: PropertyValues<this>): void {
     super.updated(changedProperties);
-    if (changedProperties.has('status')) {
-      this._syncRovingFocusTarget();
-    }
+    this._syncRovingFocusTarget();
   }
 
   private _syncRovingFocusTarget(): void {
@@ -93,57 +89,51 @@ export class MessageFeedback extends SpectrumElement {
       return;
     }
 
-    const selectedButton =
-      this.status === 'negative' && buttons.length > 1
-        ? buttons[1]
-        : buttons[0];
+    const selectedButton = this.status === 'negative' ? buttons[1] : buttons[0];
     this.focusgroupNavigationController.setActiveItem(selectedButton);
   }
 
-  private _handlePositive(): void {
+  private _toggleStatus(next: 'positive' | 'negative'): void {
+    const status = this.status === next ? undefined : next;
     this.dispatchEvent(
-      new CustomEvent('swc-feedback', {
+      new CustomEvent('swc-message-feedback-change', {
         bubbles: true,
         composed: true,
-        detail: { status: 'positive' as const },
+        detail: { status },
       })
     );
   }
 
-  private _handleNegative(): void {
-    this.dispatchEvent(
-      new CustomEvent('swc-feedback', {
-        bubbles: true,
-        composed: true,
-        detail: { status: 'negative' as const },
-      })
-    );
+  private _handlePositiveClick(): void {
+    this._toggleStatus('positive');
+  }
+
+  private _handleNegativeClick(): void {
+    this._toggleStatus('negative');
   }
 
   protected override render(): TemplateResult {
     return html`
       <div
         class="swc-MessageFeedback"
-        role="radiogroup"
-        aria-label="Response feedback"
+        role="group"
+        aria-label=${this.groupLabel}
       >
         <button
+          type="button"
           class="swc-MessageFeedback-button"
-          role="radio"
-          ?data-selected=${this.status === 'positive'}
-          aria-label="Positive response"
-          aria-checked=${this.status === 'positive'}
-          @click=${this._handlePositive}
+          aria-label=${this.positiveLabel}
+          aria-pressed=${this.status === 'positive'}
+          @click=${this._handlePositiveClick}
         >
           <swc-icon aria-hidden="true">${ThumbUpIcon()}</swc-icon>
         </button>
         <button
+          type="button"
           class="swc-MessageFeedback-button"
-          role="radio"
-          ?data-selected=${this.status === 'negative'}
-          aria-label="Negative response"
-          aria-checked=${this.status === 'negative'}
-          @click=${this._handleNegative}
+          aria-label=${this.negativeLabel}
+          aria-pressed=${this.status === 'negative'}
+          @click=${this._handleNegativeClick}
         >
           <swc-icon aria-hidden="true">${ThumbDownIcon()}</swc-icon>
         </button>
