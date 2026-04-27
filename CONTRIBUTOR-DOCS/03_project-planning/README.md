@@ -29,6 +29,7 @@
     - Accordion
     - Action Button
     - Action Group
+    - Action Menu
     - Alert Banner
     - Asset
     - Avatar
