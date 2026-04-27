@@ -67,16 +67,19 @@ import '@adobe/spectrum-wc/badge';
 <swc-badge variant="positive">Approved</swc-badge>
 ```
 
-### 2. Check the default variant
+### 2. Set an explicit `variant`
 
-Badges that omit `variant` now render as `neutral` instead of `informative`. Add an explicit `variant` to any badge that should stay informative:
+Always set `variant` explicitly — omitting it produces a dev-mode warning and relies on an unguaranteed default. The Spectrum 2 default is `neutral`. If a badge previously relied on the Spectrum 1 default of `informative`, add the attribute:
 
 ```html
-<!-- Before (renders informative in Spectrum 1) -->
+<!-- Before (rendered informative by default in Spectrum 1) -->
 <sp-badge>Active</sp-badge>
 
-<!-- After (add variant explicitly if informative style is intended) -->
+<!-- After: use informative if that was the intent -->
 <swc-badge variant="informative">Active</swc-badge>
+
+<!-- Or neutral if that is correct for your context -->
+<swc-badge variant="neutral">Active</swc-badge>
 ```
 
 ### 3. Fix consumer-facing accessibility gaps
@@ -167,7 +170,7 @@ Replace every `--mod-badge-*` property with its `--swc-badge-*` equivalent:
 | `--mod-badge-workflow-icon-size`            | `--swc-badge-icon-size`        |
 | `--mod-badge-label-spacing-vertical-top`    | `--swc-badge-padding-block`    |
 | `--mod-badge-label-spacing-vertical-bottom` | `--swc-badge-padding-block`    |
-| `--mod-badge-icon-spacing-vertical-top` | `--swc-badge-padding-block`    |
+| `--mod-badge-icon-spacing-vertical-top`     | `--swc-badge-padding-block`    |
 | `--mod-badge-label-spacing-horizontal`      | `--swc-badge-padding-inline`   |
 | `--mod-badge-icon-text-spacing`             | `--swc-badge-gap`              |
 
@@ -214,7 +217,7 @@ Replace every `--mod-badge-*` property with its `--swc-badge-*` equivalent:
 
 - [ ] Update imports
 - [ ] Rename all `<sp-badge>` to `<swc-badge>`
-- [ ] Add `variant="informative"` to any badge that relied on the old default
+- [ ] Add an explicit `variant` to every `<swc-badge>` — use `variant="informative"` if that was the Spectrum 1 default intent
 - [ ] Replace `--mod-badge-*` overrides on semantic variants with `--swc-badge-*`; retoken globally for non-semantic color variants
 - [ ] Add `aria-label` to icon-only badges
 - [ ] Add `aria-hidden="true"` to decorative icons
