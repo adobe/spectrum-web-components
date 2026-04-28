@@ -47,7 +47,7 @@ This document sets accessibility expectations for 2nd-gen **Menu separator** in 
 - [Menu accessibility migration analysis](../menu/accessibility-migration-analysis.md) for `swc-menu`, `FocusgroupNavigationController`, and open/close wiring.
 - [Menu item accessibility migration analysis](../menu-item/accessibility-migration-analysis.md) for `menuitem` rows adjacent to separators.
 - [Menu group accessibility migration analysis](../menu-group/accessibility-migration-analysis.md) for labelled **`role="group"`** sections versus a plain **`separator`** line (different structure).
-- [Action menu accessibility migration analysis](../action-menu/accessibility-migration-analysis.md) for composed **`swc-action-menu` + `swc-menu`** trees.
+- [Action menu accessibility migration analysis](../action-menu/accessibility-migration-analysis.md) for the **`swc-action-menu`** **host** (parallel **full** **menu-button** **pattern** to `swc-menu`).
 - [Divider accessibility migration analysis](../divider/accessibility-migration-analysis.md) for generic **`swc-divider`** / **`separator`** semantics outside menus (orientation, misuse as splitter).
 
 ### What the menu separator is (`swc-menu-divider`, 2nd-gen)
@@ -67,7 +67,7 @@ This document sets accessibility expectations for 2nd-gen **Menu separator** in 
 ### Pattern in the APG
 
 - [Menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) — menus allow **`separator`** elements between **`menuitem`** siblings.
-- The [APG **Editor Menubar** example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/) (menubar demo) illustrates **`separator`** usage inside **`role="menu"`** surfaces among **`menuitem`** rows—same **`separator`** semantics **`swc-menu-divider`** targets for command menus (**not** identical layout to **`swc-action-menu`**, but a concrete live reference).
+- The [APG **Editor Menubar** example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/) (menubar demo) illustrates **`separator`** usage inside **`role="menu"`** surfaces among **`menuitem`** rows—same **`separator`** semantics **`swc-menu-divider`** targets in **`swc-menu`** / **`swc-action-menu`** (layout differs from a **top-level** **ActionMenu** **story**, but a concrete live reference).
 - **Checkbox / radio** rows are scoped per [Menu — Migration scope (current)](../menu/accessibility-migration-analysis.md#migration-scope-current); they do **not** change **`separator`** requirements for ordinary command menus.
 
 ### Guidelines that apply
@@ -135,12 +135,12 @@ Intentionally omitted. Separator lines follow **menu** / **popover** motion guid
 
 | Kind of test | What to check |
 | --- | --- |
-| Unit / aXe + Storybook | Host **`role="separator"`**; **no invalid** **`aria-valuemax`** splitter props when not interactive (see **`swc-divider`** tests for separator baseline). Story includes **≥1** **`swc-menu-divider`** between **`swc-menu-item`** rows inside **`swc-menu`** / **`swc-action-menu`**. |
+| Unit / aXe + Storybook | Host **`role="separator"`**; **no invalid** **`aria-valuemax`** splitter props when not interactive (see **`swc-divider`** tests for separator baseline). Story includes **≥1** **`swc-menu-divider`** between **`swc-menu-item`** rows in the **`role="menu"`** **target** of a **full** **`swc-menu`** or **`swc-action-menu`** **host**. |
 | With [`swc-menu`](../menu/accessibility-migration-analysis.md) | Snapshot **accessible name** omission by default when no **`aria-label`**. |
 
 ### Keyboard testing
 
-Follow the 2nd-gen Storybook [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) guide on a composed **menu** path (**`swc-action-menu`** + **`swc-menu`**; see [Menu — Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing)). Confirm **ArrowUp**/**ArrowDown** moves between **`menuitem`** entries **past** separators **without** focusing the separator row as a selectable command.
+Follow the 2nd-gen Storybook [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) guide on a full menu path: either **`swc-menu`** or **`swc-action-menu`** (each a menu-button host with **`swc-popover`** and a **`role="menu"`** target; see [Menu — Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing)). Confirm **ArrowUp**/**ArrowDown** moves between **`menuitem`** entries past separators without focusing the separator row as a selectable command.
 
 ### Manual and screen reader testing
 

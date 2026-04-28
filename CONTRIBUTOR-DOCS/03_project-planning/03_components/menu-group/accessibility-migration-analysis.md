@@ -47,7 +47,7 @@ This document sets accessibility expectations for 2nd-gen **Menu group** in Spec
 - [Menu accessibility migration analysis](../menu/accessibility-migration-analysis.md) for `role="menu"`, `swc-menu`, placement, controller split, and [migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current).
 - [Menu item accessibility migration analysis](../menu-item/accessibility-migration-analysis.md) for `swc-menu-item`, `menuitem` rows, submenus, and link rows.
 - [Menu separator accessibility migration analysis](../menu-separator/accessibility-migration-analysis.md) for **`swc-menu-divider`** (**`separator`** lines between items).
-- [Action menu accessibility migration analysis](../action-menu/accessibility-migration-analysis.md) for the trigger and composed `swc-action-menu` + `swc-menu` tree.
+- [Action menu accessibility migration analysis](../action-menu/accessibility-migration-analysis.md) for **`swc-action-menu`**, a full menu-button **host** parallel to `swc-menu` (ActionMenu / “**more**” **defaults**).
 
 ### What `swc-menu-group` is (2nd-gen)
 
