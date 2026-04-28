@@ -40,7 +40,7 @@
 
 ## Overview
 
-This document sets accessibility expectations for 2nd-gen **Menu group** in Spectrum Web Components: **`swc-menu-group`** as a labeled grouping of [`menuitem`](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) rows inside the **internal** [`role="menu"`](../menu/accessibility-migration-analysis.md) **subtree**—the **element** with **`role="menu"`** **inside** **`swc-menu` / `swc-action-menu`’s** **shadow** **DOM** (**not** on the **custom** **element** **host**). The component uses a **label** **slot** and a **default** **slot** (items); the **group** does **not** own keyboard or roving focus—that stays on the parent **`swc-menu` / `swc-action-menu`** and [`FocusgroupNavigationController`](https://github.com/adobe/spectrum-web-components/pull/6129) (see [Keyboard and focus](#keyboard-and-focus)). It is not a stand-alone widget; it only makes sense **slotted** into that **menu** **surface** (or an **equivalent** **menu** **tree** in **tests**). The target is **WCAG 2.2 Level AA**.
+This document sets accessibility expectations for 2nd-gen **Menu group** in Spectrum Web Components: **`swc-menu-group`** is a labeled grouping of [`menuitem`](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) rows, intended to be slotted into `swc-menu`, `swc-action-menu`, or `swc-menu-item` (for example a submenu list that uses the same primitives; verify in 2nd-gen source). That usage composes with the **internal** [`role="menu"`](../menu/accessibility-migration-analysis.md) **surface**—the `role="menu"` **element** lives in the relevant parent host’s shadow tree (`swc-menu`, `swc-action-menu`, or `swc-menu-item` submenu markup as implemented), not on the CE host (see [Menu](../menu/accessibility-migration-analysis.md) and [Menu item](../menu-item/accessibility-migration-analysis.md)). The component uses a **label** slot and a **default** slot (items); it does not own keyboard or roving focus—the parent `swc-menu` / `swc-action-menu` (or the enclosing submenu implementation as wired) and [`FocusgroupNavigationController`](https://github.com/adobe/spectrum-web-components/pull/6129) do (see [Keyboard and focus](#keyboard-and-focus)). It is not a stand-alone widget; in tests, use a harness that mirrors the same slotted placement and internal `role="menu"` shape. The target is **WCAG 2.2 Level AA**.
 
 ### Also read
 
@@ -51,7 +51,7 @@ This document sets accessibility expectations for 2nd-gen **Menu group** in Spec
 
 ### What `swc-menu-group` is (2nd-gen)
 
-- A **group** is a logical section of a menu: a container with [`role="group"`](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) descended from the internal `role="menu"` surface (`swc-menu` / `swc-action-menu` shadow markup), optionally with a visible label. It organizes `swc-menu-item` / `menuitem` children (default slot). It is not a `menuitem` and does **not** own keyboard handling or roving `tabindex`; the parent `swc-menu` or `swc-action-menu` applies [`FocusgroupNavigationController`](https://github.com/adobe/spectrum-web-components/pull/6129) to slotted rows (see [Keyboard and focus](#keyboard-and-focus)).
+- A **group** is a logical section of a menu: a container with [`role="group"`](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) for use when slotted into `swc-menu`, `swc-action-menu`, or `swc-menu-item`, **composing** with the **parent**’s **internal** `role="menu"` **surface** in **shadow** **DOM** (see [Overview](#overview)), optionally with a visible label. It organizes `swc-menu-item` / `menuitem` children (default slot). It is not a `menuitem` and does **not** own keyboard handling or roving `tabindex`; the parent `swc-menu` or `swc-action-menu` applies [`FocusgroupNavigationController`](https://github.com/adobe/spectrum-web-components/pull/6129) to slotted rows (see [Keyboard and focus](#keyboard-and-focus)).
 - **Slots (2nd-gen):** a **label** slot (section title / face) and a **default** slot for `swc-menu-item`, `swc-menu-separator`, and other list row primitives. Verify default and label slot names in 2nd-gen source.
 - **Shadow DOM (2nd-gen target, verify in source):** the shadow tree should wire:
   1. A container with `role="group"`. It sets `aria-labelledby` to the **`id`** on the presentation label wrapper in the same composed subtree (IDREF to that node).
@@ -72,7 +72,7 @@ This document sets accessibility expectations for 2nd-gen **Menu group** in Spec
 
 ### When to use something else
 
-- **No menu context** — do not use `swc-menu-group` outside the **internal** **`role="menu"`** **subtree** of **`swc-menu` / `swc-action-menu`**; use **field groups**, **headings**, or **lists** in page content instead.
+- **No menu context** — do not use `swc-menu-group` when it is not slotted into `swc-menu`, `swc-action-menu`, or `swc-menu-item` in a valid menu or submenu composition (see [Overview](#overview)); use field groups, headings, or lists in page content instead.
 - **Site navigation or a list of links** — prefer a **navigation** pattern ([disclosure navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/), landmarks, link lists) rather than a command menu; see [Menu — When to use something else](../menu/accessibility-migration-analysis.md#when-to-use-something-else).
 
 ---
