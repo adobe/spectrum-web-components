@@ -272,7 +272,7 @@ export const UnsupportedVariantWarningTest: Story = {
           canvasElement,
           'swc-status-light'
         );
-        statusLight.setAttribute('variant', 'accent');
+        statusLight.setAttribute('variant', 'invalid-variant');
         await statusLight.updateComplete;
 
         expect(
@@ -290,6 +290,41 @@ export const UnsupportedVariantWarningTest: Story = {
           `<${statusLight.localName}> element expects the "variant" attribute to be one of the following:`
         );
       })
+    );
+  },
+};
+
+export const AccentDeprecationWarningTest: Story = {
+  render: () => html`
+    <swc-status-light variant="neutral">Archived</swc-status-light>
+  `,
+  play: async ({ canvasElement, step }) => {
+    await step(
+      'warns with a deprecation notice when accent variant is set',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const statusLight = await getComponent<StatusLight>(
+            canvasElement,
+            'swc-status-light'
+          );
+          statusLight.setAttribute('variant', 'accent');
+          await statusLight.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'at least one warning is emitted for accent variant'
+          ).toBeGreaterThan(0);
+          expect(
+            warnCalls[0][0],
+            'warning is emitted from the status light element'
+          ).toBe(statusLight);
+          expect(
+            warnCalls[0][1],
+            'warning message references accent removal'
+          ).toBe(
+            `<${statusLight.localName}> does not support the "accent" variant in Spectrum 2. Use "neutral" or "info" depending on intent.`
+          );
+        })
     );
   },
 };
