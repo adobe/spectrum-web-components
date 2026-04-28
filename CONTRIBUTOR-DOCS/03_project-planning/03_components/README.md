@@ -81,6 +81,9 @@
     - [Opacity Checkerboard migration roadmap](opacity-checkerboard/rendering-and-styling-migration-analysis.md)
 - Picker Button
     - [Picker button migration roadmap](picker-button/rendering-and-styling-migration-analysis.md)
+- Popover
+    - [Popover accessibility migration analysis](popover/accessibility-migration-analysis.md)
+    - [Popover migration roadmap](popover/rendering-and-styling-migration-analysis.md)
 - Progress Bar
     - [Progress bar accessibility migration analysis](progress-bar/accessibility-migration-analysis.md)
     - [Progress bar migration roadmap](progress-bar/rendering-and-styling-migration-analysis.md)
@@ -104,6 +107,7 @@
     - [Switch migration roadmap](switch/rendering-and-styling-migration-analysis.md)
 - Tabs
     - [Tabs accessibility migration analysis](tabs/accessibility-migration-analysis.md)
+    - [Tabs migration plan](tabs/migration-plan.md)
     - [Tabs migration roadmap](tabs/rendering-and-styling-migration-analysis.md)
 - Tag
     - [Tag migration roadmap](tag/rendering-and-styling-migration-analysis.md)

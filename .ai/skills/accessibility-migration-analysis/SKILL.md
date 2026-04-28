@@ -45,6 +45,7 @@ Use these existing docs when matching structure, headings, tables, and phrasing:
 - `CONTRIBUTOR-DOCS/03_project-planning/03_components/progress-circle/accessibility-migration-analysis.md`
 - `CONTRIBUTOR-DOCS/03_project-planning/03_components/meter/accessibility-migration-analysis.md` (non-focusable component with `### Manual screen reader testing`—**browse** **mode** and Storybook guide)
 - `CONTRIBUTOR-DOCS/03_project-planning/03_components/status-light/accessibility-migration-analysis.md`
+- `CONTRIBUTOR-DOCS/03_project-planning/03_components/popover/accessibility-migration-analysis.md` (subheadings for **template** subsections that **do not apply**, with **Does not apply** / **Intentionally omitted** explanations)
 
 ## File location and discovery
 
@@ -63,7 +64,7 @@ Use these existing docs when matching structure, headings, tables, and phrasing:
 
 ### Required section order
 
-Use this **H2** order. **Do not** skip sections that apply; omit only what truly does not apply (and say so briefly if it helps readers).
+Use this **H2** order. **Do not** skip any of these top-level **H2** blocks for the component; each must appear in the file when that analysis exists.
 
 1. `## Overview`
 2. `## ARIA and WCAG context`
@@ -82,6 +83,14 @@ Under **`## Recommendations`**, use these **`###` subsections** in order:
 5. `### Keyboard and focus`
 
 Separate major sections with a horizontal rule (`---`) where existing docs use it (after Overview, after ARIA and WCAG context, after Related 1st-gen accessibility (Jira) before Recommendations, after Recommendations block before Testing).
+
+### `###` subsections that do not apply (keep the heading)
+
+The **H2** list above is mandatory. **Within** **Recommendations** and **Testing**, the skill and **peer** docs (for example `CONTRIBUTOR-DOCS/03_project-planning/03_components/button/accessibility-migration-analysis.md` and `popover/accessibility-migration-analysis.md`) use additional **`###` subsections**—form association, live regions, motion, extra keyboard boilerplate, Playwright or manual test expectations, and similar.
+
+- **If a template subsection does not apply** to the component, **do not delete the topic**: keep the same **`###` heading** the peer doc or this skill would use, and set the **body** to a short **Does not apply** (or **Intentionally omitted**) explanation: **what** the subsection would normally cover, and **why** it does not apply (wrong interaction model, out of scope, concern already covered only under **Guidelines that apply** or elsewhere).
+- This keeps the **In this doc** table of contents and **side-by-side** reading across components **aligned**, so reviewers are not left wondering whether a topic was forgotten or out of scope.
+- **Exception — “none” is still an answer:** A subsection that exists to record **whether** cross-root or other issues **exist** may use a **minimal** **body** (for example **`### Shadow DOM and cross-root ARIA Issues`** with only the word **`None`**) when the **topic** applies but the **outcome** is _no_ issue. That is **not** the same as a subsection the component **type** never needs. Use **None** for “we checked; nothing to report,” and **Does not apply** for “this subsection’s category is irrelevant to this host.”
 
 ### Overview
 
@@ -164,7 +173,7 @@ See **`CONTRIBUTOR-DOCS/03_project-planning/03_components/progress-circle/access
 
 - **If the component is focusable or has a keyboard pattern:** replace with accurate, component-specific guidance (Tab order, keys, roving tabindex, focus trap, etc.).
 
-- **Do not** put **browse** **mode** or **manual** **screen** **reader** how-to in this subsection. For **non-focusable** components, add `### Manual screen reader testing` under **`## Testing`** (see below).
+- **If that one-sentence “Not focusable” block does not fit** (for example a **shell** or **positioning** host with **no** default keyboard contract, but **not** a static **decoration** like a divider): keep **`### Keyboard and focus`** (or an extra clarifying `###` such as **“Not focusable” (skill boilerplate)**) and explain **why** the boilerplate is **inapplicable**—see `popover/accessibility-migration-analysis.md`. This follows the **\`###\` subsections that do not apply (keep the heading)** rule above.
 
 ## Testing
 
@@ -201,6 +210,7 @@ In the **body**, point to the **Browse mode (document/scan mode)** section. Add 
 - Follow **text-formatting** workspace rules: sentence case for headings (proper nouns such as **ARIA**, **WCAG**, **APG** stay as usual).
 - Prefer plain, scannable wording; avoid duplicating the rendering doc—**link** to it instead.
 - **Verify** behavior and ARIA in **2nd-gen source** before stating what the component exposes.
+- For **template** `###` subsections that **do not apply** to the component, **keep the heading** and add a **Does not apply** (or **Intentionally omitted**) body—**do not** leave readers to infer omission; see **\`###\` subsections that do not apply (keep the heading)** under **Full instructions** above.
 
 ## Related rules and skills
 
