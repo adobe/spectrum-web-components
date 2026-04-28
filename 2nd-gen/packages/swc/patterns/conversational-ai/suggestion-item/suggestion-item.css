@@ -25,7 +25,8 @@
   align-items: center;
   font-family: token("sans-serif-font");
   font-size: token("font-size-200");
-  font-weight: token("medium-font-weight");
+  font-style: token("default-font-style");
+  font-weight: token("regular-font-weight");
   line-height: token("line-height-font-size-200");
   color: token("neutral-content-color-default");
   background: token("gray-100");

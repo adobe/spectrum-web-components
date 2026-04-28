@@ -22,7 +22,7 @@
 
 .swc-MessageFeedback {
   display: inline-flex;
-  gap: var(--swc-message-feedback-gap, token("spacing-75"));
+  gap: var(--swc-message-feedback-gap, token("spacing-100"));
   align-items: center;
 }
 
