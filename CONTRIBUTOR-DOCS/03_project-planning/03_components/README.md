@@ -67,8 +67,10 @@
 - Infield Progress Circle
     - [In-field progress circle migration roadmap](infield-progress-circle/rendering-and-styling-migration-analysis.md)
 - Link
+    - [Link accessibility migration analysis](link/accessibility-migration-analysis.md)
     - [Link migration roadmap](link/rendering-and-styling-migration-analysis.md)
 - Meter
+    - [Meter accessibility migration analysis](meter/accessibility-migration-analysis.md)
     - [Meter migration roadmap](meter/rendering-and-styling-migration-analysis.md)
 - Number Field
     - [Number field migration roadmap](number-field/rendering-and-styling-migration-analysis.md)
@@ -76,6 +78,9 @@
     - [Opacity Checkerboard migration roadmap](opacity-checkerboard/rendering-and-styling-migration-analysis.md)
 - Picker Button
     - [Picker button migration roadmap](picker-button/rendering-and-styling-migration-analysis.md)
+- Popover
+    - [Popover accessibility migration analysis](popover/accessibility-migration-analysis.md)
+    - [Popover migration roadmap](popover/rendering-and-styling-migration-analysis.md)
 - Progress Bar
     - [Progress bar accessibility migration analysis](progress-bar/accessibility-migration-analysis.md)
     - [Progress bar migration roadmap](progress-bar/rendering-and-styling-migration-analysis.md)
