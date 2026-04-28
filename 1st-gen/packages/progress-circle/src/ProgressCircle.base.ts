@@ -157,6 +157,29 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
     };
 
     if (window.__swc?.DEBUG) {
+      if (changes.has('indeterminate') && this.indeterminate) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> the "indeterminate" attribute is deprecated and will be removed in Spectrum 2. Omit the "progress" attribute (or set it to null) to indicate indeterminate progress.`,
+          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/progress-circle-consumer-migration-guide--docs',
+          { level: 'deprecation' }
+        );
+      }
+      const hasLightDomChildren = Array.from(
+        this.slotEl?.assignedNodes() ?? []
+      ).some(
+        (node) =>
+          node.nodeType === Node.ELEMENT_NODE ||
+          (node.nodeType === Node.TEXT_NODE && node.textContent?.trim())
+      );
+      if (hasLightDomChildren) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> light DOM children are deprecated as a labelling mechanism and will not be rendered in Spectrum 2. Use the "label" attribute or "aria-label" on the host instead.`,
+          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/progress-circle-consumer-migration-guide--docs',
+          { level: 'deprecation' }
+        );
+      }
       if (!hasAccessibleName() && this.getAttribute('role') === 'progressbar') {
         window.__swc?.warn(
           this,
