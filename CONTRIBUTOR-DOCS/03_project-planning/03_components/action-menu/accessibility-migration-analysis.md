@@ -62,8 +62,10 @@ Slotted item, group, separator, and **submenu-slot** behaviour and open/close wi
 
 ### When to use something else
 
-- Single-select from a field with or without a textbox — [APG combobox](../menu/accessibility-migration-analysis.md#when-to-use-something-else); not action menu.
-- Page navigation by links only — [disclosure navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/); do not apply `role="menu"` for a plain link list without a menu button contract.
+- Single-select from a closed field with a textbox — [APG combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) (combobox + listbox) `swc-picker` or `swc-combobox`, not `swc-menu`.
+- Site navigation links — [disclosure navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/) (no `role="menu"` on a link list by default); use `uec-sidenav` or `swc-sidenav`.
+- Modal dialog — [dialog (modal) pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/); not a menu surface (may still use shared popover styles on the dialog chrome per [Popover](../popover/accessibility-migration-analysis.md)).
+- Trigger button other than the ellipses / “more” default — use `swc-menu`.
 
 ### What it is not
 
@@ -131,7 +133,7 @@ Normative item-level and submenu detail is in [Menu — Recommendations: `<swc-m
 
 | Topic | What to do |
 | --- | --- |
-| Trigger | Button with `aria-haspopup="menu"`; `aria-expanded` matches open state; name (visible text, `aria-label`, or `aria-labelledby`) even when the default is ellipses-only ([ActionMenu](https://react-spectrum.adobe.com/ActionMenu), `aria-label` on icon-only controls). |
+| Trigger | Button with `aria-haspopup="menu"`; `aria-expanded` matches open state; name (via `aria-label`, with "More..." as the default)([ActionMenu](https://react-spectrum.adobe.com/ActionMenu), `aria-label` on icon-only controls). |
 | Relation to `swc-menu` | Both are full top-level menu-button hosts whose `role="menu"` is on an element inside each component’s shadow DOM (not the CE host): `swc-menu` follows [React Spectrum `Menu`](https://react-spectrum.adobe.com/Menu); `swc-action-menu` follows [React Spectrum `ActionMenu`](https://react-spectrum.adobe.com/ActionMenu) (see [Menu doc](../menu/accessibility-migration-analysis.md)). Do not set `role="listbox"` on that internal menu surface for this pattern. |
 | No shortcut | Action menu is for commands; combobox + listbox is a different import and doc. |
 
