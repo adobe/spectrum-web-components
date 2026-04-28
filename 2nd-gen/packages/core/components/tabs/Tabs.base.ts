@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { PropertyValues } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
@@ -163,6 +163,22 @@ export abstract class TabsBase extends SizedMixin(SpectrumElement, {
   //     IMPLEMENTATION
   // ──────────────────────
 
+  private static readonly INDICATOR_BASE_SIZE = 100;
+
+  /**
+   * Inline style applied to the selection indicator element.
+   * Computed from the selected tab's position and dimensions.
+   */
+  @state()
+  protected selectionIndicatorStyle = '';
+
+  /**
+   * Suppresses the transition on the very first indicator placement
+   * so it doesn't animate from the origin.
+   */
+  @state()
+  protected shouldAnimate = false;
+
   /**
    * Cached list of tab elements managed by this container. Updated
    * via `handleTabSlotChange`.
@@ -180,6 +196,7 @@ export abstract class TabsBase extends SizedMixin(SpectrumElement, {
       .assignedElements()
       .filter((el) => el.getAttribute('role') === 'tab') as TabLike[];
     this.updateCheckedState();
+    this.updateSelectionIndicator();
   }
 
   /**
@@ -438,6 +455,63 @@ export abstract class TabsBase extends SizedMixin(SpectrumElement, {
     }
   }
 
+  // ───────────────────────────────────
+  //     SELECTION INDICATOR
+  // ───────────────────────────────────
+
+  /**
+   * Recalculates the selection indicator's position and size based
+   * on the currently selected tab element. Uses CSS transforms for
+   * smooth animation between tab positions.
+   *
+   * The indicator is a fixed-size element (100px base) that gets
+   * `scaleX`/`scaleY` to match the selected tab's width/height,
+   * and `translateX`/`translateY` to match its offset position.
+   */
+  protected updateSelectionIndicator = async (): Promise<void> => {
+    const selectedElement = this._tabs.find((el) => el.selected);
+    if (!selectedElement) {
+      this.selectionIndicatorStyle =
+        'transform: translateX(0px) scaleX(0) scaleY(0)';
+      return;
+    }
+
+    const tablist = this.shadowRoot?.querySelector('.tablist');
+    if (!tablist) {
+      return;
+    }
+
+    await Promise.all([
+      (selectedElement as HTMLElement & { updateComplete?: Promise<boolean> })
+        .updateComplete ?? Promise.resolve(),
+      document.fonts ? document.fonts.ready : Promise.resolve(),
+    ]);
+
+    const tabRect = selectedElement.getBoundingClientRect();
+    const listRect = tablist.getBoundingClientRect();
+
+    if (this._direction === 'horizontal') {
+      const left = tabRect.left - listRect.left;
+      const scale = tabRect.width / TabsBase.INDICATOR_BASE_SIZE;
+      this.selectionIndicatorStyle = `transform: translateX(${left}px) scaleX(${scale})`;
+    } else {
+      const top = tabRect.top - listRect.top;
+      const scale = tabRect.height / TabsBase.INDICATOR_BASE_SIZE;
+      this.selectionIndicatorStyle = `transform: translateY(${top}px) scaleY(${scale})`;
+    }
+
+    if (!this.shouldAnimate) {
+      await this.updateComplete;
+      this.shouldAnimate = true;
+    }
+  };
+
+  private _resizeObserver?: ResizeObserver;
+
+  // ───────────────────────────────────
+  //     LIFECYCLE
+  // ───────────────────────────────────
+
   protected override willUpdate(changes: PropertyValues): void {
     if (!this.hasUpdated) {
       const selectedChild = this.querySelector(
@@ -474,11 +548,45 @@ export abstract class TabsBase extends SizedMixin(SpectrumElement, {
       if (next) {
         next.selected = true;
       }
+
+      this.updateSelectionIndicator();
     }
 
     if (changes.has('disabled') && this._tabs.length) {
       this.updateCheckedState();
     }
+
+    if (changes.has('direction')) {
+      this.updateSelectionIndicator();
+    }
+  }
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    window.addEventListener('resize', this.updateSelectionIndicator);
+    if ('fonts' in document) {
+      document.fonts.addEventListener(
+        'loadingdone',
+        this.updateSelectionIndicator
+      );
+    }
+    this._resizeObserver = new ResizeObserver(() => {
+      this.updateSelectionIndicator();
+    });
+    this._resizeObserver.observe(this);
+  }
+
+  public override disconnectedCallback(): void {
+    window.removeEventListener('resize', this.updateSelectionIndicator);
+    if ('fonts' in document) {
+      document.fonts.removeEventListener(
+        'loadingdone',
+        this.updateSelectionIndicator
+      );
+    }
+    this._resizeObserver?.disconnect();
+    this._resizeObserver = undefined;
+    super.disconnectedCallback();
   }
 
   protected override firstUpdated(changes: PropertyValues): void {

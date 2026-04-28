@@ -68,7 +68,13 @@ export class Tabs extends TabsBase {
         @keydown=${this.handleKeyDown}
       >
         <slot @slotchange=${this.handleTabSlotChange}></slot>
-        <div class="selection-indicator" role="presentation"></div>
+        <div
+          class="selection-indicator ${this.shouldAnimate
+            ? ''
+            : 'first-position'}"
+          style=${this.selectionIndicatorStyle}
+          role="presentation"
+        ></div>
       </div>
       <slot name="tab-panel" @slotchange=${this.handlePanelSlotChange}></slot>
     `;
