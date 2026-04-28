@@ -105,8 +105,11 @@
 }
 
 .swc-Button__label {
-  /* TODO: resolve alignment for text wrapping */
   text-align: center;
+}
+
+.swc-Button--hasIcon .swc-Button__label {
+  text-align: start;
 }
 
 /* TODO: if swc-icon becomes public, pass size overrides to appropriate custom properties */
@@ -407,6 +410,16 @@ slot[name="icon"]::slotted(*) {
 
 .swc-Button--pendingActive .swc-Button__pendingSpinner {
   display: inline-block;
+}
+
+:host([static-color="white"]) .swc-Button__pendingSpinner {
+  --_swc-pending-spinner-track-border-color: token("static-white-track-color");
+  --_swc-pending-spinner-fill-border-color: token("static-white-track-indicator-color");
+}
+
+:host([static-color="black"]) .swc-Button__pendingSpinner {
+  --_swc-pending-spinner-track-border-color: token("static-black-track-color");
+  --_swc-pending-spinner-fill-border-color: token("static-black-track-indicator-color");
 }
 
 .swc-Button__pendingSpinner-track,

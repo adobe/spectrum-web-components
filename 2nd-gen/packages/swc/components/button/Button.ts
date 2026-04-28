@@ -91,6 +91,7 @@ export class Button extends ButtonBase {
       <button
         class=${classMap({
           'swc-Button': true,
+          'swc-Button--hasIcon': this.hasIcon,
           'swc-Button--iconOnly': this.hasIcon && !this.hasLabel,
           'swc-Button--pendingActive': this._pendingActive,
         })}

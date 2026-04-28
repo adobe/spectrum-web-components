@@ -151,6 +151,16 @@ export const Overview: Story = {
 //    ANATOMY STORIES
 // ──────────────────────────
 
+/**
+ * A button consists of:
+ *
+ * - **Default slot**: Visible text label
+ * - **icon slot**: Optional leading icon
+ *
+ * When only an icon is provided (no label), the button renders as a circular
+ * icon-only button. Icon-only buttons must include an `aria-label` attribute
+ * so the action is announced to screen reader users.
+ */
 export const Anatomy: Story = {
   render: (args) => html`
     ${template({ ...args, 'default-slot': 'Label only' })}
@@ -159,6 +169,21 @@ export const Anatomy: Story = {
       'default-slot': 'Icon and label',
       'icon-slot': addIconSvg,
     })}
+    <swc-button variant=${args.variant} size=${args.size} aria-label="Add">
+      <svg
+        slot="icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 36 36"
+        height="18"
+        width="18"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
+        />
+      </svg>
+    </swc-button>
   `,
   tags: ['anatomy'],
   parameters: { flexLayout: true },
@@ -240,32 +265,24 @@ export const States: Story = {
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-export const IconOnly: Story = {
+export const TextWrapping: Story = {
   render: (args) => html`
-    <swc-button
-      icon-only
-      aria-label="Add"
-      variant=${args.variant ?? 'primary'}
-      size=${args.size ?? 'm'}
-    >
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 36 36"
-        height="18"
-        width="18"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
-        />
-      </svg>
-    </swc-button>
+    ${template({
+      ...args,
+      'default-slot': 'Submit and notify all stakeholders',
+      style: 'max-inline-size: 180px',
+    })}
+    ${template({
+      ...args,
+      'default-slot': 'Submit and notify all stakeholders',
+      'icon-slot': addIconSvg,
+      style: 'max-inline-size: 180px',
+    })}
   `,
   tags: ['behaviors'],
+  parameters: { flexLayout: true },
 };
-IconOnly.storyName = 'Icon only';
+TextWrapping.storyName = 'Text wrapping';
 
 export const Truncate: Story = {
   render: (args) =>
