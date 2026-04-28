@@ -14,14 +14,18 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
-import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
+import {
+  ObserveSlotPresence,
+  ObserveSlotText,
+  SizedMixin,
+} from '@spectrum-web-components/core/mixins/index.js';
 
 import { BUTTON_VALID_SIZES } from './Button.types.js';
 
 /**
  * Abstract base class for all button-like components. Owns shared semantic
- * concerns: interaction state, sizing, accessible-name resolution, and
- * host-to-internal-button attribute forwarding.
+ * concerns: interaction state, sizing, slot-derived icon/label state,
+ * accessible-name resolution, and host-to-internal-button attribute forwarding.
  *
  * Visual API specific to `sp-button` (`variant`, `fill-style`, `static-color`)
  * is intentionally absent so that ActionButton, ClearButton, CloseButton,
@@ -30,10 +34,14 @@ import { BUTTON_VALID_SIZES } from './Button.types.js';
  *
  * @slot - Visible button label.
  * @slot icon - Optional leading icon.
+ *
+ * @todo We currently have 3 levels of mixins on this class, but the mixin
+ * composition guide recommends a maximum of 2. Explore reducing after milestone 2.
  */
-export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
-  validSizes: BUTTON_VALID_SIZES,
-}) {
+export abstract class ButtonBase extends SizedMixin(
+  ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), ''),
+  { validSizes: BUTTON_VALID_SIZES }
+) {
   static override shadowRootOptions: ShadowRootInit = {
     ...SpectrumElement.shadowRootOptions,
     delegatesFocus: true,
@@ -60,6 +68,14 @@ export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
    */
   @property({ type: String, attribute: 'pending-label' })
   public pendingLabel?: string;
+
+  protected get hasIcon(): boolean {
+    return this.slotContentIsPresent;
+  }
+
+  protected get hasLabel(): boolean {
+    return this.slotHasContent;
+  }
 
   /**
    * Resolves the accessible name for the button from `aria-label` or
@@ -134,6 +150,14 @@ export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
           `<${this.localName}> should not set both "pending" and "disabled" simultaneously. Use "pending" to keep the button focusable while unavailable, or "disabled" to fully remove it from the tab order.`,
           'https://opensource.adobe.com/spectrum-web-components/components/button/#pending',
           {}
+        );
+      }
+      if (this.hasIcon && !this.hasLabel && !this.getAttribute('aria-label')) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> with an icon and no label must have an "aria-label" attribute to be accessible.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/button/#icon-only',
+          { type: 'accessibility', level: 'high' }
         );
       }
     }

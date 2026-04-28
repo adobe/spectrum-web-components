@@ -18,6 +18,7 @@ import {
   TemplateResult,
 } from 'lit';
 import { property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
@@ -70,13 +71,6 @@ export class Button extends ButtonBase {
   public staticColor?: ButtonStaticColor;
 
   /**
-   * Whether the button renders with an icon and no visible label. When
-   * `true`, an accessible name via `aria-label` is required.
-   */
-  @property({ type: Boolean, reflect: true, attribute: 'icon-only' })
-  public iconOnly: boolean = false;
-
-  /**
    * Whether overflowing text is truncated with an ellipsis rather than
    * wrapping. Replaces the legacy `no-wrap` attribute from 1st-gen.
    */
@@ -95,7 +89,10 @@ export class Button extends ButtonBase {
   protected override render(): TemplateResult {
     return html`
       <button
-        class="swc-Button"
+        class=${classMap({
+          'swc-Button': true,
+          'swc-Button--iconOnly': this.hasIcon && !this.hasLabel,
+        })}
         type="button"
         @click=${this._handleClick}
         ?disabled=${this.disabled}
@@ -117,14 +114,6 @@ export class Button extends ButtonBase {
   protected override update(changedProperties: PropertyValues): void {
     super.update(changedProperties);
     if (window.__swc?.DEBUG) {
-      if (this.iconOnly && !this.getAttribute('aria-label')) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> with "icon-only" must have an "aria-label" attribute to be accessible.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/button/#icon-only',
-          { type: 'accessibility', level: 'high' }
-        );
-      }
       if (!BUTTON_VARIANTS.includes(this.variant)) {
         window.__swc.warn(
           this,

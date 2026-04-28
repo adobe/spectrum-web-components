@@ -87,15 +87,30 @@ Use `token()` for design token values. Use `--swc-*` only for intentionally expo
 
 ### 4. Attribute Selectors vs Modifier Classes
 
-Use `:host([size="..."])` and `:host([variant="..."])` when you want consumers to still override custom properties. Use `.swc-ComponentName--modifier` only for implementation details that should not expose overrides.
-→ See [02_custom-properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md)
+Use `:host([size="..."])` and `:host([variant="..."])` for consumer-settable attributes that should expose a customization surface. Use `.swc-ComponentName--modifier` for:
 
-### 5. Selector Specificity
+- Implementation details that should not expose overrides (non-semantic color variants, static color, geometric modifiers)
+- **Derived states** — visual modes computed from slot content or internal logic, not set by consumers (e.g. icon-only layout derived from `hasIcon && !hasLabel`). These must never appear as a host attribute; apply them via `classMap` in the template.
+
+```typescript
+// ✅ Derived state as a class modifier — not a consumer attribute
+class=${classMap({ 'swc-Button': true, 'swc-Button--iconOnly': this.hasIcon && !this.hasLabel })}
+```
+
+→ See [01_component-css#when-to-use-classes-vs-attributes](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#when-to-use-classes-vs-attributes)
+
+### 5. Vertical spacing tokens
+
+When migrating block padding, use `component-padding-vertical-{scale}` (S2). **Do not carry forward** `component-top-to-text-{scale}` or `component-bottom-to-text-{scale}` from S1/Spectrum CSS — those were offset hacks to compensate for glyph positioning in the old typeface. Adobe Clean VF corrected the glyph position, so the offsets no longer produce visually centered text in S2 components.
+
+→ See [01_component-css#vertical-spacing-tokens](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#vertical-spacing-tokens-component-padding-vertical--vs-component-top-to-text-)
+
+### 6. Selector specificity
 
 Keep selector specificity at or below `(0,1,0)`. If you need a compounded selector, use `:where()` on the extra class instead of stacking specificity. Don't use higher-specificity selectors to "win."
 → See [01_component-css#managing-specificity](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#managing-specificity) and [05_anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md)
 
-### 6. Forced Colors
+### 7. Forced colors
 
 Only add `@media (forced-colors: active)` if browser defaults are not conveying correct semantic intent, and always put it at the end of the component stylesheet.
 → See [01_component-css#forced-colors-requirements](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css#forced-colors-requirements.md)

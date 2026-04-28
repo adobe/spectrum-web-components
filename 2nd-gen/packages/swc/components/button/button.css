@@ -27,15 +27,15 @@
   position: relative;
   gap: var(--swc-button-gap, token("text-to-visual-100"));
   align-items: center;
-  min-inline-size: calc(var(--_swc-button-height) * token("button-minimum-width-multiplier"));
+  max-inline-size: inherit; /* Inherit from :host to support truncation */
   min-block-size: var(--_swc-button-height);
-  padding-block: 0;
+  padding-block: calc(var(--swc-button-padding-vertical, token("component-padding-vertical-100")) - var(--_swc-button-border-width));
   padding-inline: calc(var(--swc-button-edge-to-text, token("component-pill-edge-to-text-100")) - var(--_swc-button-border-width));
   margin: 0;
   font-family: token("sans-serif-font");
   font-size: var(--swc-button-font-size, token("font-size-100"));
   font-weight: token("bold-font-weight");
-  line-height: token("line-height-100");
+  line-height: round(down, calc(token("line-height-100") * 1em), 1px); /* round() prevents subpixel heights */
   color: var(--swc-button-content-color-default, token("gray-25"));
   text-transform: none;
   text-decoration: none;
@@ -84,19 +84,22 @@
 }
 
 .swc-Button__label {
-  align-self: start;
-  padding-block-start: calc(var(--swc-button-top-to-text, token("component-top-to-text-100")) - var(--_swc-button-border-width));
-  padding-block-end: calc(var(--swc-button-bottom-to-text, token("component-bottom-to-text-100")) - var(--_swc-button-border-width));
-  line-height: token("line-height-100");
   text-align: center;
 }
 
+/* TODO: if swc-icon becomes public, pass size overrides to appropriate custom properties */
 slot[name="icon"]::slotted(*) {
+  --_swc-button-icon-size: var(--swc-button-icon-size, token("workflow-icon-size-100"));
+  --_swc-button-icon-block-size: var(--swc-button-icon-block-size, var(--_swc-button-icon-size));
+
   flex-shrink: 0;
   align-self: flex-start;
-  margin-block-start: calc(var(--swc-button-top-to-icon, token("component-top-to-workflow-icon-100")) - var(--_swc-button-border-width));
+  inline-size: var(--swc-button-icon-inline-size, var(--_swc-button-icon-size));
+  block-size: var(--_swc-button-icon-block-size);
+  margin-block: calc((var(--_swc-button-icon-block-size) - 1lh) / 2 * -1); /* Ensures vertical alignment with text */
   margin-inline-start: calc(var(--swc-button-edge-to-visual, token("component-pill-edge-to-visual-100")) - var(--swc-button-edge-to-text, token("component-pill-edge-to-text-100")));
   color: inherit;
+  fill: currentcolor;
 }
 
 /* ── Sizes ──────────────────────────────────────── */
@@ -108,9 +111,8 @@ slot[name="icon"]::slotted(*) {
   --swc-button-edge-to-text: token("component-pill-edge-to-text-75");
   --swc-button-edge-to-visual: token("component-pill-edge-to-visual-75");
   --swc-button-edge-to-visual-only: token("component-pill-edge-to-visual-only-75");
-  --swc-button-top-to-text: token("component-top-to-text-75");
-  --swc-button-bottom-to-text: token("component-bottom-to-text-75");
-  --swc-button-top-to-icon: token("component-top-to-workflow-icon-75");
+  --swc-button-padding-vertical: token("component-padding-vertical-75");
+  --swc-button-icon-size: token("workflow-icon-size-75");
 }
 
 :host([size="l"]) {
@@ -120,9 +122,8 @@ slot[name="icon"]::slotted(*) {
   --swc-button-edge-to-text: token("component-pill-edge-to-text-200");
   --swc-button-edge-to-visual: token("component-pill-edge-to-visual-200");
   --swc-button-edge-to-visual-only: token("component-pill-edge-to-visual-only-200");
-  --swc-button-top-to-text: token("component-top-to-text-200");
-  --swc-button-bottom-to-text: token("component-bottom-to-text-200");
-  --swc-button-top-to-icon: token("component-top-to-workflow-icon-200");
+  --swc-button-padding-vertical: token("component-padding-vertical-200");
+  --swc-button-icon-size: token("workflow-icon-size-200");
 }
 
 :host([size="xl"]) {
@@ -132,9 +133,8 @@ slot[name="icon"]::slotted(*) {
   --swc-button-edge-to-text: token("component-pill-edge-to-text-300");
   --swc-button-edge-to-visual: token("component-pill-edge-to-visual-300");
   --swc-button-edge-to-visual-only: token("component-pill-edge-to-visual-only-300");
-  --swc-button-top-to-text: token("component-top-to-text-300");
-  --swc-button-bottom-to-text: token("component-bottom-to-text-300");
-  --swc-button-top-to-icon: token("component-top-to-workflow-icon-300");
+  --swc-button-padding-vertical: token("component-padding-vertical-300");
+  --swc-button-icon-size: token("workflow-icon-size-300");
 }
 
 /* ── Variants ────────────────────────────────────── */
@@ -320,17 +320,14 @@ slot[name="icon"]::slotted(*) {
 
 /* ── Icon only ────────────────────────────────────── */
 
-:host([icon-only]) {
+.swc-Button--iconOnly {
   --swc-button-border-radius: token("corner-radius-full");
-}
+  --swc-button-gap: 0;
 
-:host([icon-only]) .swc-Button {
-  min-inline-size: unset;
   padding-inline: calc(var(--swc-button-edge-to-visual-only, token("component-pill-edge-to-visual-only-100")) - var(--_swc-button-border-width));
 }
 
-:host([icon-only]) slot[name="icon"]::slotted(*) {
-  --swc-button-top-to-icon: 0;
+.swc-Button--iconOnly slot[name="icon"]::slotted(*) {
   --swc-button-edge-to-visual: 0;
 
   align-self: center;
