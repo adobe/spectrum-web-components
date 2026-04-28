@@ -100,11 +100,11 @@ Scope: **non-interactive** **`separator`** between **`menuitem`** siblings for c
 | --- | --- |
 | **`role="separator"`** | **Prescribed** on the **`swc-menu-divider`** host (analogous to **`sp-menu-divider`**)—**fixed**, not overridden with **`presentation`** / **`none`** on the shipped default; authors who need content omitted from the accessibility tree should change **structure or content**, not override **`role`** on this primitive without a deliberate pattern change elsewhere. **`swc-menu-divider`** maps to **one** semantic meaning: **separator** inside a **`menu`**—verify final attribute timing in source. |
 | Naming | Omit **accessible name** by default (no **`aria-labelledby`**); add **`aria-label`** only when product requires disambiguating multiple separators (rare). |
-| Placement | Appears only **as** **descendants** of the **internal** **`role="menu"`** **node** (**`swc-menu` / `swc-action-menu` shadow** **markup**) together with **`swc-menu-item`**, **`swc-menu-group`**, etc. |
+| Placement | Slotted `swc-menu-divider` need not be in the same outer DOM as the menu-button trigger ([Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues)). In the exposed accessibility tree, the separator must read as between `menuitem` siblings under `role="menu"` (verify in 2nd-gen source). |
 
 ### Shadow DOM and cross-root ARIA Issues
 
-None
+Slotted row primitives (including `swc-menu-divider`) are covered by [Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues): they do not have to be in the same DOM as the trigger; roving focus and naming still follow the menu and action menu docs.
 
 ### Accessibility tree expectations
 

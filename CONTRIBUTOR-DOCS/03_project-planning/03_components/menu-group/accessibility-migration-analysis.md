@@ -113,7 +113,7 @@ Scope: **`role="group"`** (or equivalent), **optional label**, **`menuitem`** ch
 
 ### Shadow DOM and cross-root ARIA Issues
 
-Keep **`aria-labelledby`** targets in the **same composable subtree** as the group and its label nodes so **IDREFs** do not cross unrelated shadow roots (same rule as [Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues)).
+Follow [Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues): slotted `swc-menu-group` (and its rows) do not have to be in the same DOM as the menu-button trigger or every node in the host tree around the internal `role="menu"`. Within the group, `aria-labelledby` on `role="group"` to the section title `id` should still resolve in the implementation’s composed section; if pairing IDs across roots fails, use `aria-label`, re-home the label node, or other naming strategies 2nd-gen documents in source—not a requirement that all menu list content and the trigger live in one flat subtree.
 
 ### Accessibility tree expectations
 
@@ -162,7 +162,7 @@ Exercise **menu** stories that include **labeled groups**; confirm group **names
 
 - [ ] `swc-menu-group` is used only inside the **internal** **`role="menu"`** **subtree** (**`swc-menu` / `swc-action-menu` shadow** **surface**, **not** the **CE** **host**); **`role="group"`** **`+`** **`aria-labelledby`** reference to a **`role="presentation"`** section-title node (**stable `id`**) **+** sibling **`menuitem`** rows (see [reference HTML](#what-swc-menu-group-is-2nd-gen)); **`aria-label`** alternative matches visible title text.
 - [ ] **`menuitemcheckbox` / `menuitemradio`** groupings are **not** documented as in-scope for this phase ([Menu migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current)).
-- [ ] Cross-root **IDREF** rules match [Menu](../menu/accessibility-migration-analysis.md) / [Action menu](../action-menu/accessibility-migration-analysis.md).
+- [ ] Shadow DOM and IDREF expectations match [Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) and [Action menu](../action-menu/accessibility-migration-analysis.md) (slotted group and rows need not co-locate with the menu-button trigger; group ↔ label pairing still resolves as implemented).
 - [ ] Keyboard testing follows the **menu** composed pattern and Storybook guides above.
 
 ---

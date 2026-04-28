@@ -132,17 +132,17 @@ Normative item-level and submenu detail is in [Menu — Recommendations: `<swc-m
 | Topic | What to do |
 | --- | --- |
 | Trigger | Button with `aria-haspopup="menu"`; `aria-expanded` matches open state; name (visible text, `aria-label`, or `aria-labelledby`) even when the default is ellipses-only ([ActionMenu](https://react-spectrum.adobe.com/ActionMenu), `aria-label` on icon-only controls). |
-| Relation to `swc-menu` | **Both** are full top-level menu-button hosts whose **`role="menu"`** is **on** an **element inside each component’s shadow DOM** (**not** the **CE** **host**): **`swc-menu`** follows [React Spectrum `Menu`](https://react-spectrum.adobe.com/Menu); **`swc-action-menu`** follows [React Spectrum `ActionMenu`](https://react-spectrum.adobe.com/ActionMenu) (see [Menu doc](../menu/accessibility-migration-analysis.md)). **Do not** set `role="listbox"` on that **internal** **menu** **surface** for this pattern. |
+| Relation to `swc-menu` | Both are full top-level menu-button hosts whose `role="menu"` is on an element inside each component’s shadow DOM (not the CE host): `swc-menu` follows [React Spectrum `Menu`](https://react-spectrum.adobe.com/Menu); `swc-action-menu` follows [React Spectrum `ActionMenu`](https://react-spectrum.adobe.com/ActionMenu) (see [Menu doc](../menu/accessibility-migration-analysis.md)). Do not set `role="listbox"` on that internal menu surface for this pattern. |
 | No shortcut | Action menu is for commands; combobox + listbox is a different import and doc. |
 
 ### Shadow DOM and cross-root ARIA Issues
 
-Keep the **trigger** and the **internal** **`role="menu"`** **node** in **`swc-action-menu`’s** **shadow** **tree** (and **popover** or **slot** ID **targets** as **implemented**) in one composable subtree so ID-based ARIA and focus hand-off do not cross unconnected shadow roots. Same rule as [Menu: Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) for **`swc-menu`**.
+The ActionMenu trigger and internal `role="menu"` live in `swc-action-menu`’s structure; slotted rows (`swc-menu-item`, `swc-menu-group`, etc.) do not have to be in the same DOM as that trigger or `role="menu"`. See [Menu: Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) for IDREF/ARIA caveats, roving `tabindex`, and focus across roots. Do not assume in-place light-DOM co-location for all patterns.
 
 ### Accessibility tree expectations
 
 - Closed: focusable trigger; menu not in the tab order; `aria-expanded="false"`.
-- Open: `aria-expanded="true"`; focus moves into the **internal** **`role="menu"`** **surface** (**shadow** **tree**) and **items** as in the [menu doc](../menu/accessibility-migration-analysis.md) (same **menu-button** **pattern** for **`swc-menu`** and **`swc-action-menu`**).
+- Open: `aria-expanded="true"`; focus moves into the internal `role="menu"` surface (shadow tree) and items as in the [menu doc](../menu/accessibility-migration-analysis.md) (same menu-button pattern for `swc-menu` and `swc-action-menu`).
 
 ### Form-associated custom properties (labels, `ElementInternals`)
 
