@@ -11,7 +11,7 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
@@ -119,6 +119,13 @@ export class PromptField extends SpectrumElement {
   private _artifactCount = 0;
   private _artifactIdCounter = 0;
 
+  /** Next textarea focus follows pointerdown on the textarea (click/touch). */
+  private _textareaFocusFromPointer = false;
+
+  /** Outer card ring: Tab / non-pointer focus only (see prompt-field.css). */
+  @state()
+  private _promptBoxKeyboardFocusRing = false;
+
   public static override get styles(): CSSResultArray {
     return [styles];
   }
@@ -133,6 +140,27 @@ export class PromptField extends SpectrumElement {
         detail: { value: this.value },
       })
     );
+  }
+
+  private _handleTextareaPointerDown(event: PointerEvent): void {
+    const textarea = event.currentTarget as HTMLTextAreaElement;
+    if (textarea.matches(':focus')) {
+      this._promptBoxKeyboardFocusRing = false;
+      return;
+    }
+
+    this._textareaFocusFromPointer = true;
+  }
+
+  private _handleTextareaFocusIn(): void {
+    const showRing = !this._textareaFocusFromPointer;
+    this._textareaFocusFromPointer = false;
+    this._promptBoxKeyboardFocusRing = showRing;
+  }
+
+  private _handleTextareaFocusOut(): void {
+    this._promptBoxKeyboardFocusRing = false;
+    this._textareaFocusFromPointer = false;
   }
 
   private _handleTextareaKeydown(event: KeyboardEvent): void {
@@ -362,7 +390,11 @@ export class PromptField extends SpectrumElement {
 
     return html`
       <div class="swc-PromptField">
-        <div class="swc-PromptField-box">
+        <div
+          class="swc-PromptField-box${this._promptBoxKeyboardFocusRing
+            ? ' swc-PromptField-box--keyboard-focus'
+            : ''}"
+        >
           <div
             class="swc-PromptField-input-area${this._hasArtifacts
               ? ' has-artifact'
@@ -381,6 +413,9 @@ export class PromptField extends SpectrumElement {
                 rows="1"
                 @input=${this._handleInput}
                 @keydown=${this._handleTextareaKeydown}
+                @pointerdown=${this._handleTextareaPointerDown}
+                @focusin=${this._handleTextareaFocusIn}
+                @focusout=${this._handleTextareaFocusOut}
               ></textarea>
               <span id="placeholder" hidden>${this.placeholder}</span>
             </div>
