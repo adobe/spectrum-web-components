@@ -31,43 +31,24 @@
   }
 }
 
-:host {
-  display: inline-block;
-  vertical-align: top;
-}
-
-* {
-  box-sizing: border-box;
-}
-
 .swc-Button {
   --_swc-button-border-width: token("border-width-200");
   --_swc-button-height: var(--swc-button-height, token("component-height-100"));
 
-  display: inline-flex;
-  position: relative;
   gap: var(--swc-button-gap, token("text-to-visual-100"));
-  align-items: center;
   max-inline-size: inherit; /* Inherit from :host to support truncation */
   min-block-size: var(--_swc-button-height);
   padding-block: calc(var(--swc-button-padding-vertical, token("component-padding-vertical-100")) - var(--_swc-button-border-width));
   padding-inline: calc(var(--swc-button-edge-to-text, token("component-pill-edge-to-text-100")) - var(--_swc-button-border-width));
-  margin: 0;
   font-family: token("sans-serif-font");
   font-size: var(--swc-button-font-size, token("font-size-100"));
   font-weight: token("bold-font-weight");
   line-height: round(down, calc(token("line-height-100") * 1em), 1px); /* round() prevents subpixel heights */
   color: var(--swc-button-content-color-default, token("gray-25"));
-  text-transform: none;
-  text-decoration: none;
   background-color: var(--swc-button-background-color-default, token("neutral-background-color-default"));
   border-color: var(--swc-button-border-color-default, transparent);
-  border-style: solid;
   border-width: var(--_swc-button-border-width);
   border-radius: var(--swc-button-border-radius, calc(var(--_swc-button-height) / 2));
-  overflow: visible;
-  cursor: pointer;
-  user-select: none;
   transition-timing-function: linear;
   transition-duration: token("animation-duration-100");
   transition-property: outline, border-color, color, background;
@@ -83,8 +64,6 @@
   color: var(--swc-button-content-color-focus, token("gray-25"));
   background-color: var(--swc-button-background-color-focus, token("neutral-background-color-key-focus"));
   border-color: var(--swc-button-border-color-focus, transparent);
-  outline: token("focus-indicator-thickness") solid var(--swc-button-focus-indicator-color, token("focus-indicator-color"));
-  outline-offset: token("focus-indicator-gap");
 }
 
 .swc-Button:active {
@@ -94,14 +73,6 @@
 
   /* TODO: resolve down state calculation */
   transform: translateZ(token("component-size-difference-down"));
-}
-
-.swc-Button:disabled {
-  color: var(--swc-button-content-color-disabled, token("disabled-content-color"));
-  background-color: var(--swc-button-background-color-disabled, token("disabled-background-color"));
-  border-color: var(--swc-button-border-color-disabled, transparent);
-  cursor: default;
-  transform: none;
 }
 
 .swc-Button__label {

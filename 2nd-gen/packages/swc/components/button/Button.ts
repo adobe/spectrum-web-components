@@ -31,6 +31,7 @@ import {
 } from '@spectrum-web-components/core/components/button';
 
 import styles from './button.css';
+import baseStyles from './button-base.css';
 
 /**
  * A button component that triggers an action when activated.
@@ -82,7 +83,7 @@ export class Button extends ButtonBase {
   // ──────────────────────────────
 
   public static override get styles(): CSSResultArray {
-    return [styles];
+    return [baseStyles, styles];
   }
 
   // @todo SWC-2034: handle form-associated types reset / submit
