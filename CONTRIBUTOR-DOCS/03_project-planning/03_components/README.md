@@ -71,6 +71,7 @@
     - [Link migration roadmap](link/rendering-and-styling-migration-analysis.md)
 - Meter
     - [Meter accessibility migration analysis](meter/accessibility-migration-analysis.md)
+    - [Meter migration plan](meter/migration-plan.md)
     - [Meter migration roadmap](meter/rendering-and-styling-migration-analysis.md)
 - Number Field
     - [Number field migration roadmap](number-field/rendering-and-styling-migration-analysis.md)
