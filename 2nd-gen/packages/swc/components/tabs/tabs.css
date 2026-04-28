@@ -25,41 +25,106 @@
   display: flex;
   position: relative;
   align-items: center;
-  border-block-end: 2px solid var(--swc-tabs-divider-color, token("gray-300"));
+}
+
+/* ── Size variants ─────────────────────────────────────── */
+
+:host([size="s"]) {
+  --swc-tab-font-size: var(--swc-tabs-font-size, token("font-size-75"));
+  --swc-tab-icon-size: var(--swc-tabs-icon-size, token("workflow-icon-size-75"));
+
+  & .tablist {
+    gap: var(--swc-tabs-gap, 24px);
+  }
+}
+
+:host(:not([size])),
+:host([size="m"]) {
+  --swc-tab-font-size: var(--swc-tabs-font-size, token("font-size-100"));
+  --swc-tab-icon-size: var(--swc-tabs-icon-size, token("workflow-icon-size-100"));
+
+  & .tablist {
+    gap: var(--swc-tabs-gap, 32px);
+  }
+}
+
+:host([size="l"]) {
+  --swc-tab-font-size: var(--swc-tabs-font-size, token("font-size-200"));
+  --swc-tab-icon-size: var(--swc-tabs-icon-size, token("workflow-icon-size-200"));
+
+  & .tablist {
+    gap: var(--swc-tabs-gap, 36px);
+  }
+}
+
+:host([size="xl"]) {
+  --swc-tab-font-size: var(--swc-tabs-font-size, token("font-size-300"));
+  --swc-tab-icon-size: var(--swc-tabs-icon-size, token("workflow-icon-size-300"));
+
+  & .tablist {
+    gap: var(--swc-tabs-gap, 40px);
+  }
+}
+
+/* ── Compact variant ───────────────────────────────────── */
+
+:host([compact]) .tablist {
+  gap: var(--swc-tabs-compact-gap, 24px);
 }
 
 /* ── Vertical direction ────────────────────────────────── */
 
 :host([direction="vertical"]) {
   flex-direction: row;
+  gap: var(--swc-tabs-vertical-content-gap, 24px);
 }
 
 :host([direction="vertical"]) .tablist {
   flex-direction: column;
+  gap: var(--swc-tabs-vertical-gap, 0);
   align-items: flex-start;
-  border-block-end: none;
-  border-inline-end: 2px solid var(--swc-tabs-divider-color, token("gray-300"));
+  padding-inline-start: var(--swc-tabs-vertical-indicator-space, 12px);
 }
 
 /* ── Selection indicator ───────────────────────────────── */
 
 .selection-indicator {
   position: absolute;
-  background-color: var(--swc-tabs-indicator-color, token("accent-color-900"));
-  border-radius: token("corner-radius-full");
+  background-color: var(--swc-tabs-indicator-color, token("neutral-content-color-default"));
+  border-radius: var(--swc-tabs-indicator-radius, 2px);
   transition: transform 130ms ease-in-out;
 }
 
-:host([direction="horizontal"]) .selection-indicator {
+.selection-indicator.first-position {
+  transition: none;
+}
+
+:host([direction="horizontal"]) .selection-indicator,
+:host(:not([direction])) .selection-indicator {
   inset-block-end: 0;
-  inline-size: 0;
-  block-size: 2px;
+  inset-inline-start: 0;
+  inline-size: 100px;
+  block-size: var(--swc-tabs-indicator-thickness, 2px);
+  transform-origin: left center;
 }
 
 :host([direction="vertical"]) .selection-indicator {
-  inset-inline-end: 0;
-  inline-size: 2px;
-  block-size: 0;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: var(--swc-tabs-indicator-thickness, 2px);
+  block-size: 100px;
+  transform-origin: center top;
+}
+
+/* ── Emphasized variant ────────────────────────────────── */
+
+:host([emphasized]) {
+  --swc-tab-text-color-selected: var(--swc-tabs-text-color-selected-emphasized, token("accent-content-color-default"));
+  --swc-tab-text-color-hover: var(--swc-tabs-text-color-hover-emphasized, token("accent-content-color-hover"));
+}
+
+:host([emphasized]) .selection-indicator {
+  --swc-tabs-indicator-color: var(--swc-tabs-indicator-color-emphasized, token("accent-content-color-default"));
 }
 
 /* ── Quiet variant ─────────────────────────────────────── */
@@ -75,36 +140,13 @@
   pointer-events: none;
 }
 
-:host([disabled]) .tablist {
-  opacity: var(--swc-tabs-disabled-opacity, 0.4);
-}
-
-/* ── Size variants ─────────────────────────────────────── */
-
-:host([size="s"]) .tablist {
-  gap: var(--swc-tabs-gap, 16px);
-}
-
-:host([size="m"]) .tablist {
-  gap: var(--swc-tabs-gap, 24px);
-}
-
-:host([size="l"]) .tablist {
-  gap: var(--swc-tabs-gap, 28px);
-}
-
-:host([size="xl"]) .tablist {
-  gap: var(--swc-tabs-gap, 32px);
+:host([disabled]) .selection-indicator {
+  --swc-tabs-indicator-color: var(--swc-tabs-indicator-color-disabled, token("disabled-border-color"));
 }
 
 /* ── High contrast ─────────────────────────────────────── */
 
 @media (forced-colors: active) {
-  .tablist {
-    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
-    border-color: CanvasText;
-  }
-
   .selection-indicator {
     /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
     background-color: Highlight;
