@@ -55,6 +55,8 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
 
   /**
    * The size of the message
+   *
+   * @default m
    */
   @property({ type: String, reflect: true })
   public size: IllustratedMessageSize = 'm';
