@@ -40,7 +40,7 @@
 
 ## Overview
 
-This document sets accessibility expectations for 2nd-gen **Menu separator** in Spectrum Web Components: **`swc-menu-separator`** as a non-interactive **`role="separator"`** rule between [`menuitem`](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) rows inside the **internal** [`role="menu"`](../menu/accessibility-migration-analysis.md) **subtree**—the **element** with **`role="menu"`** **inside** **`swc-menu` / `swc-action-menu`’s** **shadow** **DOM** (**not** the **CE** **host**). Visually it is the horizontal Spectrum menu section line—the same semantic role browsers expose for **`separator`** in menus. **1st-gen** shipped this behavior on [`sp-menu-separator`](https://github.com/adobe/spectrum-web-components/blob/main/1st-gen/packages/menu/src/MenuDivider.ts) (`role="separator"` on the host in `firstUpdated`); **`swc-menu-separator`** API and shadow wiring should follow the same semantics when 2nd-gen lands (**verify attribute timing and inheritance in repo source before locking contributor copy**). The target is **WCAG 2.2 Level AA**.
+This document sets accessibility expectations for 2nd-gen **Menu separator** in Spectrum Web Components: **`swc-menu-separator`** as a non-interactive **`role="separator"`** rule between [`menuitem`](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) rows. **Parent requirement:** it must be used only as a **row** in a list whose **host** is **`swc-menu`**, **`swc-action-menu`**, or **`swc-menu-item`** (for **submenu** lists when the item’s `submenu` slot is used—the same parent rule as [`swc-menu-group`](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-2nd-gen); verify in 2nd-gen source). It sits inside the **internal** [`role="menu"`](../menu/accessibility-migration-analysis.md) **subtree** of that **parent**—the **`role="menu"`** **node** is **inside** the **host**’s **shadow** **DOM** (**not** the **CE** **host**). Visually it is the horizontal Spectrum menu section line—the same semantic role browsers expose for **`separator`** in menus. **1st-gen** shipped this behavior on [`sp-menu-separator`](https://github.com/adobe/spectrum-web-components/blob/main/1st-gen/packages/menu/src/MenuDivider.ts) (`role="separator"` on the host in `firstUpdated`); **`swc-menu-separator`** API and shadow wiring should follow the same semantics when 2nd-gen lands (**verify attribute timing and inheritance in repo source before locking contributor copy**). The target is **WCAG 2.2 Level AA**.
 
 ### Also read
 
@@ -52,12 +52,12 @@ This document sets accessibility expectations for 2nd-gen **Menu separator** in 
 
 ### What the menu separator is (`swc-menu-separator`, 2nd-gen)
 
-- A **non-interactive separator** authored only **under** the **internal** **`role="menu"`** **list** (**`swc-menu` / `swc-action-menu` shadow** **surface**): exposes [`role="separator"`](https://www.w3.org/TR/wai-aria/#separator) compatible with the APG **[menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)** pattern.
+- A **non-interactive separator** authored only when the **parent** **host** is **`swc-menu`**, **`swc-action-menu`**, or **`swc-menu-item`** ( **submenu** list ), **under** that **parent**’s **internal** **`role="menu"`** **list** in **shadow** **DOM**: exposes [`role="separator"`](https://www.w3.org/TR/wai-aria/#separator) compatible with the APG **[menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)** pattern.
 - **Not** a **`menuitem`**: assistive tech should not treat it as an actionable row; **`FocusgroupNavigationController`** ([PR #6129](https://github.com/adobe/spectrum-web-components/pull/6129)) arrow traversal should jump between adjacent **`menuitem`** stops **without** treating the separator as a roving focus target (consistent with **`sp-menu-separator`** menu tests that advance from item to item across the separator).
 
 ### When to use something else
 
-- **Outside a menu** — use **`swc-separator`** (or structural headings / whitespace) instead; do not place **`swc-menu-separator`** in arbitrary page layouts.
+- **No valid menu parent** — do not use **`swc-menu-separator`** unless its **parent** is **`swc-menu`**, **`swc-action-menu`**, or **`swc-menu-item`** in a **menu** or **submenu** list (see [Overview](#overview)). For non-menu layouts, use **`swc-separator`** (or structural headings / whitespace) instead.
 - **A draggable pane boundary** — use a **[window splitter](https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/)** pattern, not a static separator ([Divider — When to use something else](../divider/accessibility-migration-analysis.md#when-to-use-something-else)).
 
 ---
@@ -77,7 +77,7 @@ This document sets accessibility expectations for 2nd-gen **Menu separator** in 
 | [Name, role, value (4.1.2)](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value) | **`role="separator"`** with **no** progress value semantics (no **`aria-valuenow`**, **`aria-valuemax`**, etc.—not a draggable splitter—see [WAI-ARIA: `separator`](https://www.w3.org/TR/wai-aria/#separator)). Accessible name: usually omit; **`aria-label`** only if authors must verbalize unusual structure (avoid unnecessary verbosity). |
 | [Non-text contrast (1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | The **line** should meet contrast against the menu panel background consistent with **`swc-menu`** styling tokens. |
 
-Bottom line: **`swc-menu-separator`** exposes a **semantic separator**, not keyboard focus chrome; traversal behavior belongs to **`swc-menu`** and **`FocusgroupNavigationController`**.
+Bottom line: **`swc-menu-separator`** exposes a **semantic separator**, not keyboard focus chrome; traversal behavior belongs to the **parent** **`swc-menu`**, **`swc-action-menu`**, or **`swc-menu-item`** (submenu) list and **`FocusgroupNavigationController`**.
 
 ---
 
@@ -104,7 +104,7 @@ Scope: **non-interactive** **`separator`** between **`menuitem`** siblings for c
 
 ### Shadow DOM and cross-root ARIA Issues
 
-[Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) applies: the parent host implements the menu-button trigger and internal `role="menu"` together in `swc-menu` / `swc-action-menu` shadow DOM; `swc-menu-separator` does not need to be in that shadow subtree—light-DOM slotting is fine. Inter-item navigation uses `FocusgroupNavigationController` ([PR #6129](https://github.com/adobe/spectrum-web-components/pull/6129)) and does not need IDREF to each item; other naming notes follow the menu and action menu docs.
+[Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) applies: the **parent** **`swc-menu`**, **`swc-action-menu`**, or **`swc-menu-item`** (submenu) implements the **internal** `role="menu"` in its shadow DOM (with a **top-level** **menu-button** **trigger** on the two **menu** **hosts**); `swc-menu-separator` does not need to be in that shadow subtree—light-DOM slotting is fine. Inter-item navigation uses `FocusgroupNavigationController` ([PR #6129](https://github.com/adobe/spectrum-web-components/pull/6129)) and does not need IDREF to each item; other naming notes follow the menu and action menu docs.
 
 ### Accessibility tree expectations
 
@@ -150,8 +150,9 @@ Compose **menu + separator + items** paths; reconcile with [Menu — Manual and 
 
 ## Summary checklist
 
+- [ ] **Parent** is **`swc-menu`**, **`swc-action-menu`**, or **`swc-menu-item`** (submenu list)—see [Overview](#overview) and [Menu group](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-2nd-gen) for the same rule on **`swc-menu-group`**.
 - [ ] Host **`role="separator"`**, **non-focusable**, **no** draggable **value semantics** (**verify timing** versus **`sp-menu-separator`** in 2nd-gen source).
-- [ ] **`FocusgroupNavigationController`** skips separator for **menuitem** traversal; **manual** sanity on **Escape** returning to trigger still lives on **`swc-menu`** / **`swc-action-menu`** docs.
+- [ ] **`FocusgroupNavigationController`** skips separator for **menuitem** traversal; **manual** sanity on **Escape** returning to trigger or **submenu** **parent** follows the **`swc-menu`** / **`swc-action-menu`** / **`swc-menu-item`** docs.
 - [ ] Visual **contrast** for line versus menu background aligns with **`swc-menu`** tokens.
 - [ ] **`menuitemcheckbox`** / **`menuitemradio`** rows and selection separators **defer** per [menu migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current)—do not document selectable-separator UX here prematurely.
 
