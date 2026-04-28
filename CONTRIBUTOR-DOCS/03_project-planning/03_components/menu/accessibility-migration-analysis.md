@@ -72,13 +72,13 @@ These topics are out of scope for the migration wave documented here until desig
 
 ### When to use something else
 
-- Single-select from a closed field with a textbox — [APG combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/); use combobox + listbox, not `swc-menu`.
-- Site navigation links only — [disclosure navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/) (no `role="menu"` on a link list by default).
+- Single-select from a closed field with a textbox — [APG combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) (combobox + listbox) `swc-picker` or `swc-combobox`, not `swc-menu`.
+- Site navigation links — [disclosure navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/) (no `role="menu"` on a link list by default); use `uec-sidenav` or `swc-sidenav`.
 - Modal dialog — [dialog (modal) pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/); not a menu surface (may still use shared popover styles on the dialog chrome per [Popover](../popover/accessibility-migration-analysis.md)).
 
 ### What it is not
 
-- **Not** the old **list-only** `sp-menu` “drop on the page” without orchestration: 2nd-gen **`swc-menu`** and **`swc-action-menu`** each ship **trigger**, **`swc-popover`** placement, a **`role="menu"`** target, and **slots** together. Do **not** document a **detached** `role="menu"` fragment. **Submenus** use **`swc-menu-item`’s** **`submenu` slot** (not a **nested** top-level **menu** **host** in the list).
+- **Not** the old **list-only** `sp-menu`: 2nd-gen **`swc-menu`** and **`swc-action-menu`** each ship **trigger**, **`swc-popover`** placement, a **`role="menu"`** target, and **slots** together. Do **not** document a **detached** `role="menu"` fragment. **Submenus** use **`swc-menu-item`’s** **`submenu` slot** (not a **nested** top-level **menu** **host** in the list).
 - Not the same as `swc-popover`: popover positions; menu exposes menu semantics to assistive tech.
 - Not a link list widget by default: command menus use `menuitem`; link-like rows are covered below (real link child, not proxy click on the row).
 
@@ -108,7 +108,7 @@ These topics are out of scope for the migration wave documented here until desig
 | [Keyboard (2.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/keyboard) | All actions are available from the keyboard per the menu pattern; no pointer-only submenu chrome (see 1st-gen [SWC-1332](https://jira.corp.adobe.com/browse/SWC-1332), [SWC-671](https://jira.corp.adobe.com/browse/SWC-671)). |
 | [Non-text contrast (1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | Focus ring and icons meet contrast where they convey state (for example [SWC-1517](https://jira.corp.adobe.com/browse/SWC-1517) submenu focus on Safari). |
 
-Bottom line: **`swc-menu`** is a **full** [menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) **host** (trigger + **`swc-popover`** + **`role="menu"`** surface + slotted **groups** / **items** / **separators**), in parallel with **`swc-action-menu`** (ActionMenu defaults) and 1st-gen **`sp-action-menu`**, **not** the **list-only** **`sp-menu`** *primitive* in isolation. **Submenus** are **not** a **nested** **`swc-menu`** **in** the list; they are **on** **`swc-menu-item`’s** **`submenu` slot** (popover + **`role="menu"`**). **Item**-level **behaviour** is in **`swc-menu-item`**, **`swc-menu-group`**, **`swc-menu-divider`**, etc. Open/close and role wiring may be split across a **controller**, **`swc-popover`**, and the **menu**/**action-menu** **or** **submenu**-**item** **hosts** (confirm in implementation). `FocusgroupNavigationController` owns in-list keys. **Anchor** via **`swc-popover`**, not **only** the legacy **overlay** + external trigger pattern around **`sp-menu`**. Mobile tray and item selection (checkbox, radio) remain out of scope ([Migration scope](#migration-scope-current)).
+Bottom line: **`swc-menu`** is a **full** [menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) **host** (trigger + **`swc-popover`** + **`role="menu"`** surface + slotted **groups** / **items** / **separators**), in parallel with **`swc-action-menu`** (ActionMenu defaults) and 1st-gen **`sp-action-menu`**, **not** the **list-only** **`sp-menu`** *primitive* in isolation. **Submenus** are **not** a **nested** **`swc-menu`** **in** the list; they are **on** **`swc-menu-item`’s** **`submenu` slot** (popover + **`role="menu"`**). **Item**-level **behaviour** is in **`swc-menu-item`**, **`swc-menu-group`**, **`swc-menu-divider`**, etc. Open/close and role wiring may be split across a **controller**, **`swc-popover`**, or the **menu**/**action-menu** **or** **submenu**-**item** **hosts** (confirm in implementation). `FocusgroupNavigationController` owns in-list keys. **Anchor** via **`swc-popover`**, not the legacy **overlay** + external trigger pattern around **`sp-menu`**. Mobile tray and item selection (checkbox, radio) remain out of scope ([Migration scope](#migration-scope-current)).
 
 ---
 
