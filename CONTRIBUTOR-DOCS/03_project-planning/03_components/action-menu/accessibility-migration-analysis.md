@@ -137,7 +137,9 @@ Normative item-level and submenu detail is in [Menu — Recommendations: `<swc-m
 
 ### Shadow DOM and cross-root ARIA Issues
 
-The ActionMenu trigger and internal `role="menu"` live in `swc-action-menu`’s structure. Slotted rows (`swc-menu-item`, `swc-menu-group`, etc.) are not required in that shadow tree—authors typically slot them from the light DOM. The menu list does not use IDREF to each item; `FocusgroupNavigationController` handles in-menu roving focus without requiring list rows to be shadow children. See [Menu: Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) for IDREF caveats (for example `aria-activedescendant` across roots) and related notes.
+**Host shell (stays in shadow):** the ActionMenu trigger and the internal `role="menu"` node are implemented together in `swc-action-menu`’s shadow tree (same rule as [Menu — Recommendations: `swc-menu`](../menu/accessibility-migration-analysis.md#recommendations-swc-menu); verify in 2nd-gen source).
+
+**Slotted list content (need not be in that shadow tree):** `swc-menu-item`, `swc-menu-group`, and `swc-menu-divider` are not required in that shadow subtree—authors typically slot them from the light DOM. The menu list does not use IDREF to each item; `FocusgroupNavigationController` handles in-menu roving focus. See [Menu: Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) for IDREF caveats (for example `aria-activedescendant` across roots) and related notes.
 
 ### Accessibility tree expectations
 
