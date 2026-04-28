@@ -137,7 +137,7 @@ Normative item-level and submenu detail is in [Menu — Recommendations: `<swc-m
 
 ### Shadow DOM and cross-root ARIA Issues
 
-The ActionMenu trigger and internal `role="menu"` live in `swc-action-menu`’s structure; slotted rows (`swc-menu-item`, `swc-menu-group`, etc.) do not have to be in the same DOM as that trigger or `role="menu"`. See [Menu: Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) for IDREF/ARIA caveats, roving `tabindex`, and focus across roots. Do not assume in-place light-DOM co-location for all patterns.
+The ActionMenu trigger and internal `role="menu"` live in `swc-action-menu`’s structure. Slotted rows (`swc-menu-item`, `swc-menu-group`, etc.) are not required in that shadow tree—authors typically slot them from the light DOM. The menu list does not use IDREF to each item; `FocusgroupNavigationController` handles in-menu roving focus without requiring list rows to be shadow children. See [Menu: Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) for IDREF caveats (for example `aria-activedescendant` across roots) and related notes.
 
 ### Accessibility tree expectations
 

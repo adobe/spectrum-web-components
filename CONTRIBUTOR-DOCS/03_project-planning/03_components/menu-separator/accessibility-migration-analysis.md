@@ -104,7 +104,7 @@ Scope: **non-interactive** **`separator`** between **`menuitem`** siblings for c
 
 ### Shadow DOM and cross-root ARIA Issues
 
-Slotted row primitives (including `swc-menu-divider`) are covered by [Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues): they do not have to be in the same DOM as the trigger; roving focus and naming still follow the menu and action menu docs.
+Slotted row primitives (including `swc-menu-divider`) are covered by [Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues): they do not have to be in the shadow DOM with the trigger and internal `role="menu"`—light-DOM slotting is fine. Inter-item navigation uses `FocusgroupNavigationController` ([PR #6129](https://github.com/adobe/spectrum-web-components/pull/6129)) and does not need IDREF to each item; other naming notes follow the menu and action menu docs.
 
 ### Accessibility tree expectations
 

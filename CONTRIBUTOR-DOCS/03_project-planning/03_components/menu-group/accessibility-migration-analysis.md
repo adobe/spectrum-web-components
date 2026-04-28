@@ -113,7 +113,7 @@ Scope: **`role="group"`** (or equivalent), **optional label**, **`menuitem`** ch
 
 ### Shadow DOM and cross-root ARIA Issues
 
-Follow [Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues): slotted `swc-menu-group` (and its rows) do not have to be in the same DOM as the menu-button trigger or every node in the host tree around the internal `role="menu"`. Within the group, `aria-labelledby` on `role="group"` to the section title `id` should still resolve in the implementation’s composed section; if pairing IDs across roots fails, use `aria-label`, re-home the label node, or other naming strategies 2nd-gen documents in source—not a requirement that all menu list content and the trigger live in one flat subtree.
+Follow [Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues): a `swc-menu-group` and its child rows may be slotted from the light DOM; they are not required in the shadow DOM with the trigger and internal `role="menu"`, and the menu list does not rely on IDREF to each item (`FocusgroupNavigationController` ([PR #6129](https://github.com/adobe/spectrum-web-components/pull/6129)) and roving `tabindex`). Within the group, `aria-labelledby` on `role="group"` to the section title `id` should still resolve in the implementation’s composed section; if that pairing fails across roots, use `aria-label`, re-home the label node, or other naming strategies 2nd-gen documents in source. That group–label case is separate from per-item IDREF, which the top-level list pattern does not need.
 
 ### Accessibility tree expectations
 

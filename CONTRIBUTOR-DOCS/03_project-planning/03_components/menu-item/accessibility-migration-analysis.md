@@ -115,7 +115,7 @@ Scope: **`menuitem`** rows, **submenu** parents, **separators** as implemented, 
 
 ### Shadow DOM and cross-root ARIA Issues
 
-Follow [Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues): slotted row primitives do not have to be in the same DOM as the parent menu host’s trigger or internal `role="menu"`; 2nd-gen may use controllers, slots, and portals as implemented. IDREF-driven ARIA that depends on pairing IDs across separate subtrees is fragile—prefer roving `tabindex`, focus management, and naming per the menu and action menu docs. For a populated `submenu` slot, the submenu trigger and child `role="menu"` are in `swc-menu-item`’s shadow; submenu content rows follow the same DOM-independence rule—verify in 2nd-gen implementation.
+Follow [Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues): a `swc-menu-item` slotted from the light DOM is valid—the item does not need to be in the same shadow tree as the parent `swc-menu` / `swc-action-menu` trigger and internal `role="menu"`. The menu list pattern does not need IDREF to each item; in-menu movement uses `FocusgroupNavigationController` and roving `tabindex`. IDREF-driven ARIA that pairs IDs across separate roots is still fragile—per the menu and action menu docs, avoid patterns that need that. For a populated `submenu` slot, the submenu trigger and child `role="menu"` are in `swc-menu-item`’s shadow; submenu list rows can likewise be slotted as implemented—verify in 2nd-gen source.
 
 ### Accessibility tree expectations
 
