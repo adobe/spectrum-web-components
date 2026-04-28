@@ -15,16 +15,6 @@
  * This is not a component — Storybook imports it for demos; products should copy or map
  * equivalent rules to their design tokens.
  */
-.swc-conversationalAi-systemProse {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-family: var(--swc-sans-serif-font);
-  font-size: var(--swc-font-size-200);
-  font-weight: var(--swc-regular-font-weight);
-  line-height: var(--swc-line-height-font-size-200);
-  color: var(--swc-gray-800);
-}
 
 .swc-conversationalAi-systemProse p {
   margin: 0;

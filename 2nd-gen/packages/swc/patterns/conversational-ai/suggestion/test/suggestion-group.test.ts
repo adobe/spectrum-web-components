@@ -100,5 +100,36 @@ export const OverviewTest: Story = {
         expect(group?.hasAttribute('aria-labelledby')).toBe(false);
       }
     );
+
+    await step('heading-level renders h2–h6', async () => {
+      el.heading = 'Title';
+
+      el.headingLevel = 2;
+      await el.updateComplete;
+      expect(
+        el.shadowRoot?.querySelector('h2.swc-SuggestionGroup-title')
+      ).toBeTruthy();
+
+      el.setAttribute('heading-level', '5');
+      await el.updateComplete;
+      expect(
+        el.shadowRoot?.querySelector('h5.swc-SuggestionGroup-title')
+      ).toBeTruthy();
+
+      el.headingLevel = 0;
+      await el.updateComplete;
+      expect(
+        el.shadowRoot?.querySelector('h2.swc-SuggestionGroup-title')
+      ).toBeTruthy();
+
+      el.headingLevel = 99;
+      await el.updateComplete;
+      expect(
+        el.shadowRoot?.querySelector('h6.swc-SuggestionGroup-title')
+      ).toBeTruthy();
+
+      el.headingLevel = 3;
+      await el.updateComplete;
+    });
   },
 };

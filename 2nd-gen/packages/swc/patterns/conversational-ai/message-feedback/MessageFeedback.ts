@@ -47,7 +47,7 @@ export class MessageFeedback extends SpectrumElement {
   private focusgroupNavigationController = new FocusgroupNavigationController(
     this,
     {
-      direction: 'horizontal',
+      direction: 'both',
       wrap: true,
       getItems: () => this._feedbackButtons(),
     }

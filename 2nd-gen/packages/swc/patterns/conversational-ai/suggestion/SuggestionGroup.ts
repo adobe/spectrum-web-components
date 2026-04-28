@@ -25,14 +25,78 @@ import styles from './suggestion-group.css';
  *
  * @element swc-suggestion-group
  * @slot - Suggestion items (recommended: `<swc-suggestion-item>`)
+ * @attr heading-level - Semantic heading level for `heading` (`2`–`6`; clamped).
  */
 export class SuggestionGroup extends SpectrumElement {
   /** Optional heading shown above suggestion items. */
   @property({ type: String })
   public heading = '';
 
+  /**
+   * Semantic heading level for the optional title (`h2`–`h6`).
+   */
+  @property({ type: Number, reflect: true, attribute: 'heading-level' })
+  public headingLevel = 3;
+
   public static override get styles(): CSSResultArray {
     return [styles];
+  }
+
+  private _getHeadingLevel(): number {
+    const level = this.headingLevel ?? 3;
+    return Math.max(2, Math.min(6, level));
+  }
+
+  private _renderHeading(text: string): TemplateResult {
+    const level = this._getHeadingLevel();
+
+    switch (level) {
+      case 2:
+        return html`
+          <h2
+            id="swc-suggestion-group-heading"
+            class="swc-SuggestionGroup-title"
+          >
+            ${text}
+          </h2>
+        `;
+      case 4:
+        return html`
+          <h4
+            id="swc-suggestion-group-heading"
+            class="swc-SuggestionGroup-title"
+          >
+            ${text}
+          </h4>
+        `;
+      case 5:
+        return html`
+          <h5
+            id="swc-suggestion-group-heading"
+            class="swc-SuggestionGroup-title"
+          >
+            ${text}
+          </h5>
+        `;
+      case 6:
+        return html`
+          <h6
+            id="swc-suggestion-group-heading"
+            class="swc-SuggestionGroup-title"
+          >
+            ${text}
+          </h6>
+        `;
+      default:
+        return html`
+          <h3
+            id="swc-suggestion-group-heading"
+            class="swc-SuggestionGroup-title"
+          >
+            ${text}
+          </h3>
+        `;
+    }
   }
 
   protected override render(): TemplateResult {
@@ -41,16 +105,7 @@ export class SuggestionGroup extends SpectrumElement {
 
     return html`
       <div class="swc-SuggestionGroup">
-        ${hasHeading
-          ? html`
-              <h3
-                id="swc-suggestion-group-heading"
-                class="swc-SuggestionGroup-title"
-              >
-                ${heading}
-              </h3>
-            `
-          : ''}
+        ${hasHeading ? this._renderHeading(heading) : ''}
         <div
           class="swc-SuggestionGroup-items"
           role="group"
