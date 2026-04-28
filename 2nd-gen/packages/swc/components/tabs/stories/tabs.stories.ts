@@ -100,6 +100,7 @@ export const meta: Meta = {
     actions: { handles: events },
     docs: {
       subtitle: 'Organize content into sections navigated by a tab bar',
+      source: { type: 'dynamic' },
     },
     design: {
       type: 'figma',
@@ -199,7 +200,26 @@ const renderTabGroup = ({
 // ────────────────────
 
 export const Playground: Story = {
-  render: () => renderTabGroup(),
+  args: {
+    size: 'm',
+    direction: 'horizontal',
+    auto: false,
+    compact: false,
+    disabled: false,
+    emphasized: false,
+    quiet: false,
+  },
+
+  render: (args) =>
+    renderTabGroup({
+      size: args.size,
+      direction: args.direction,
+      auto: args.auto,
+      compact: args.compact,
+      disabled: args.disabled,
+      emphasized: args.emphasized,
+      quiet: args.quiet,
+    }),
   tags: ['autodocs', 'dev'],
 };
 
@@ -386,12 +406,10 @@ export const Directions: Story = {
  * - **Quiet**: Removes the divider line for a subtler appearance
  * - **Compact**: Reduces spacing between tabs
  * - **Emphasized**: Applies a visually emphasized style to the selection indicator
+ * - **Quiet + Compact**: The recommended combination for secondary navigation in tight spaces
  *
- * These variants can be combined. The 1st-gen documentation recommends
- * using compact together with quiet for best results (compact alone
- * without quiet is not a recommended pattern).
- *
- * All single variants shown below for comparison.
+ * These variants can be combined. Use quiet together with compact for best results;
+ * compact alone is not a recommended pattern.
  */
 export const VisualVariants: Story = {
   render: () => html`
@@ -403,101 +421,19 @@ export const VisualVariants: Story = {
     <br />
     <p><strong>Emphasized</strong></p>
     ${renderTabGroup({ emphasized: true, label: 'Emphasized tabs' })}
-  `,
-  tags: ['options'],
-  parameters: {
-    'section-order': 3,
-  },
-};
-
-/**
- * Visual variants can be combined for different visual treatments:
- *
- * - **Quiet + Compact**: The recommended combination for secondary
- *   navigation in tight spaces. Removes the divider and reduces spacing.
- * - **Emphasized + Quiet**: Bold selection indicator without the divider.
- *
- * All combinations shown below for comparison.
- */
-export const CombinedVariants: Story = {
-  render: () => html`
+    <br />
     <p><strong>Quiet + Compact</strong></p>
     ${renderTabGroup({
       quiet: true,
       compact: true,
       label: 'Quiet compact tabs',
     })}
-    <br />
-    <p><strong>Emphasized + Quiet</strong></p>
-    ${renderTabGroup({
-      emphasized: true,
-      quiet: true,
-      label: 'Emphasized quiet tabs',
-    })}
-    <br />
-    <p><strong>Emphasized + Compact</strong></p>
-    ${renderTabGroup({
-      emphasized: true,
-      compact: true,
-      label: 'Emphasized compact tabs',
-    })}
-    <br />
-    <p><strong>Quiet + Compact + Emphasized</strong></p>
-    ${renderTabGroup({
-      quiet: true,
-      compact: true,
-      emphasized: true,
-      label: 'All variants combined',
-    })}
   `,
-  tags: ['options', 'dev'],
+  tags: ['options'],
   parameters: {
-    'section-order': 4,
+    'section-order': 3,
   },
 };
-CombinedVariants.storyName = 'Combined variants';
-
-/**
- * Vertical direction works with all visual variants. Each combination
- * changes the layout and styling of the tab list.
- *
- * All vertical variant combinations shown below for comparison.
- */
-export const VerticalVariants: Story = {
-  render: () => html`
-    <p><strong>Vertical</strong></p>
-    ${renderTabGroup({
-      direction: 'vertical',
-      label: 'Vertical tabs',
-    })}
-    <br />
-    <p><strong>Vertical + Quiet</strong></p>
-    ${renderTabGroup({
-      direction: 'vertical',
-      quiet: true,
-      label: 'Vertical quiet tabs',
-    })}
-    <br />
-    <p><strong>Vertical + Compact</strong></p>
-    ${renderTabGroup({
-      direction: 'vertical',
-      compact: true,
-      label: 'Vertical compact tabs',
-    })}
-    <br />
-    <p><strong>Vertical + Emphasized</strong></p>
-    ${renderTabGroup({
-      direction: 'vertical',
-      emphasized: true,
-      label: 'Vertical emphasized tabs',
-    })}
-  `,
-  tags: ['options', 'dev'],
-  parameters: {
-    'section-order': 5,
-  },
-};
-VerticalVariants.storyName = 'Vertical variants';
 
 // ──────────────────────────
 //    STATES STORIES
