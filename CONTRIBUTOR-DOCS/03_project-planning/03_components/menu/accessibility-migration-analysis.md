@@ -206,11 +206,10 @@ When **spot-testing** the menu **surface** in Storybook, use the **full** `swc-m
 
 - [ ] `swc-menu` is a full menu-button host (trigger + `swc-popover` + **shadow-internal** **`role="menu"`** + slots for groups, items, dividers), parallel to `swc-action-menu`; **`role="menu"`** is **not** on the **`<swc-menu>`** **host**; do not document a detached `role="menu"` list. **Submenus** are **on** **`swc-menu-item`’s** **`submenu` slot** ( **submenu** **trigger** and child **`role="menu"`** **in** the **item**’s **shadow** **DOM**; **not** a **nested** **`swc-menu`** in the list).
 - [ ] On the host, the menu-button trigger and internal `role="menu"` are co-located in `swc-menu` / `swc-action-menu` shadow; slotted `swc-menu-item` / `swc-menu-group` / `swc-menu-separator` need not be in that shadow subtree (see [Shadow DOM](#shadow-dom-and-cross-root-aria-issues)).
-- [ ] **Internal** **`role="menu"`** (**shadow** **DOM**, **not** the **CE** **host**), **`menuitem`**, and **`group` / `separator` **as** **needed** per APG for commands in scope; selection and `menuitemcheckbox` / `menuitemradio` defer per [Migration scope](#migration-scope-current).
+- [ ] **Internal** **`role="menu"`** (**shadow** **DOM**, **not** the **CE** **host**), **`menuitem`**, and **`group` / `separator` as needed** per APG for commands in scope; selection and `menuitemcheckbox` / `menuitemradio` defer per [Migration scope](#migration-scope-current).
 - [ ] Open/close + role wiring vs in-list keys: implementation may split across a controller, `swc-popover`, and `swc-menu` / `swc-action-menu` (verify in source); `FocusgroupNavigationController` for in-menu movement; **`swc-popover`** anchors the surface—not **`sp-menu`** slid under the legacy overlay stack alone. Mobile tray is out of scope for the current migration.
 - [ ] No proxy click for link items; link child plus [Cards](https://inclusive-components.design/cards/)-style full-row hit where needed.
 - [ ] 1st-gen defects in the Jira table are retested or superseded in 2nd-gen.
-- [ ] 2nd-gen implementation tracked in Jira as it lands (see program epics such as migration of menu, action menu, and popover positioning).
 
 ---
 
