@@ -51,6 +51,7 @@
     - Number Field
     - Opacity Checkerboard
     - Picker Button
+    - Popover
     - Progress Bar
     - Progress Circle
     - Radio
