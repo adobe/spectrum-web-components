@@ -242,7 +242,7 @@ These are derived from the 1st-gen implementation, current deprecations, the Fig
 | `pendingLabel` | `string` | derived from the resolved non-busy accessible name + busy suffix | `pending-label` | **Adjusted for `SWC-459`.** Distinct from the control name; overrides the default busy-state announcement when supplied. |
 | `type` | deferred beyond initial scope | `'button'` | maybe none / future | **Deferred.** Initial 2nd-gen Button should behave as a regular button; `submit` / `reset` are future work. |
 | `label` | deprecated | n/a | `label` | **Planned removal.** Prefer visible text and `aria-label` to avoid ambiguity with `pending-label`. |
-| `iconOnly` | `boolean` | `false` | `icon-only` | **Proposed.** Keep for backwards compatibility and styling clarity, even if some detection can be automatic. |
+| `iconOnly` | removed | n/a | removed | **Deviation from plan.** Not kept as a consumer attribute. Icon-only layout is now auto-derived from slot presence: `swc-Button--iconOnly` (circular layout) and `swc-Button--hasIcon` (label `text-align: start`) are applied via `classMap` in `ButtonBase`. Matches the CSS style-guide rule that derived states must not appear as host attributes. |
 | `truncate` | `boolean` | `false` | `truncate` | **Confirmed rename.** Replaces legacy `no-wrap` with a more explicit name for the actual behavior: single-line truncation with overflow handling rather than wrapping. Tooltip guidance for clipped content is documentation guidance, not built-in Button behavior. |
 | `active` | internal styling state | n/a | maybe none / internal only | **Proposed.** Do not preserve as a documented consumer-controlled API unless styling proves it necessary. |
 | `href`, `target`, `download`, `referrerpolicy`, `rel` | removed | n/a | removed | **Confirmed removal.** Use native anchors for navigation. |
@@ -465,28 +465,28 @@ Allowed differences:
 
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
-- [ ] Add `.swc-Button` to the internal semantic `<button>` in `render()`; keep styling off `:host`
-- [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `button.css` as baseline
+- [x] Add `.swc-Button` to the internal semantic `<button>` in `render()`; keep styling off `:host`
+- [x] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `button.css` as baseline — cross-referenced spectrum-two branch for token verification; CSS was authored directly from S2 tokens rather than copied verbatim
 
 #### Shared source and drift prevention
 
 - [ ] Reconcile the component stylesheet with existing [`global-button.css`](../../../../2nd-gen/packages/swc/stylesheets/global/global-button.css)
 - [ ] Prefer a shared-source/import strategy for component and global button styles; if styles must be copied, treat the migrated component stylesheet as the source of truth and document the sync mechanism and drift risks in the implementation notes
 - [ ] Fully override or replace the current global button POC styles where needed to match the migrated Button implementation
-- [ ] Update class and custom property prefixes from `.spectrum-` to `.swc-`; remove all `--mod-*` and `--spectrum-*` fallback chains
+- [x] Update class and custom property prefixes from `.spectrum-` to `.swc-`; remove all `--mod-*` and `--spectrum-*` fallback chains
 
 #### Visual model and regressions
 
-- [ ] Migrate icon-only, truncate (previously noWrap), size, static-color, and outline fill-style selectors
-- [ ] Implement truncation behavior explicitly, not just `white-space: nowrap`; confirm overflow ellipsis treatment in S2 CSS
-- [ ] Ensure the button label inherits host visibility, or otherwise does not override it, so `visibility: hidden` on the host hides the label too (`SWC-701`)
-- [ ] Restrict accent and negative styling to fill-only combinations
-- [ ] Restrict static white/black styling to the primary and secondary families shown in Design/Figma
+- [x] Migrate icon-only, truncate (previously noWrap), size, static-color, and outline fill-style selectors — icon-only uses derived `swc-Button--iconOnly` class (not a consumer attribute); see iconOnly API deviation above. A companion `swc-Button--hasIcon` class is also applied whenever an icon is slotted (with or without a label), driving `text-align: start` on the label so wrapped text aligns to the icon rather than centering
+- [x] Implement truncation behavior explicitly, not just `white-space: nowrap`; confirm overflow ellipsis treatment in S2 CSS — `white-space: nowrap; overflow: hidden; text-overflow: ellipsis` on `.swc-Button__label` when `[truncate]`
+- [x] Ensure the button label inherits host visibility, or otherwise does not override it, so `visibility: hidden` on the host hides the label too (`SWC-701`) — current implementation is not setting `visibility` on the label
+- [x] Restrict accent and negative styling to fill-only combinations — CSS has no outline rules for accent/negative; `update()` emits `__swc.warn()` for invalid combinations
+- [x] Restrict static white/black styling to the primary and secondary families shown in Design/Figma — same pattern: CSS + debug warning
 - [ ] For `static-color="white"` + `fill-style="outline"`, define and document approved background color usage so hover-state contrast remains sufficient (`SWC-1139`)
-- [ ] Use `outline` / `outline-offset` for focus indication rather than `box-shadow`, especially where truncation requires `overflow: hidden` (`SWC-886`)
-- [ ] Replace legacy pending indicator styling with the agreed 1-second delayed inline animated SVG spinner
-- [ ] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) if present in S2 source
-- [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
+- [x] Use `outline` / `outline-offset` for focus indication rather than `box-shadow`, especially where truncation requires `overflow: hidden` (`SWC-886`) — `.swc-Button:focus-visible` uses `outline` and `outline-offset`
+- [x] Replace legacy pending indicator styling with the agreed 1-second delayed inline animated SVG spinner — 1-second `_pendingActive` delay in `ButtonBase` (reusable for ActionButton etc.), inline SVG spinner in `Button.ts`, static-color track/fill color overrides in CSS; button inline size is measured just before `_pendingActive` fires and locked via `--_swc-button-pending-inline-size` so the button does not shrink when the label/icon fades out
+- [x] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) if present in S2 source — not present in `spectrum-css` spectrum-two button source; no port needed
+- [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 ### Accessibility
 
@@ -541,7 +541,7 @@ Allowed differences:
 #### General
 
 - [ ] JSDoc on all public props, slots, and CSS custom properties
-- [ ] Storybook stories for primary, secondary, accent, negative, fill/outline where supported, icon-only, static colors, pending, disabled, and wrapping/truncate
+- [x] Storybook stories for primary, secondary, accent, negative, fill/outline where supported, icon-only, static colors, pending, disabled, and wrapping/truncate
 - [ ] Document that `quiet` is not part of the 2nd-gen visual API
 - [ ] Document the rename from `no-wrap` to `truncate` and its relationship to the spec’s wrapped-text presentation
 - [ ] Document the approved background treatment for static white outline examples so contrast is maintained on hover (`SWC-1139`)
