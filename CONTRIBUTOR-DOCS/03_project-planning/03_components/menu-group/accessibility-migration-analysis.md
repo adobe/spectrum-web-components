@@ -40,7 +40,7 @@
 
 ## Overview
 
-This document sets accessibility expectations for 2nd-gen **Menu group** in Spectrum Web Components: **`swc-menu-group`** as a labeled grouping of [`menuitem`](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) rows inside the **internal** [`role="menu"`](../menu/accessibility-migration-analysis.md) **subtree**—the **element** with **`role="menu"`** **inside** **`swc-menu` / `swc-action-menu`’s** **shadow** **DOM** (**not** on the **custom** **element** **host**). It is not a stand-alone widget; it only makes sense **slotted** into that **menu** **surface** (or an **equivalent** **menu** **tree** in **tests**). The target is **WCAG 2.2 Level AA**.
+This document sets accessibility expectations for 2nd-gen **Menu group** in Spectrum Web Components: **`swc-menu-group`** as a labeled grouping of [`menuitem`](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) rows inside the **internal** [`role="menu"`](../menu/accessibility-migration-analysis.md) **subtree**—the **element** with **`role="menu"`** **inside** **`swc-menu` / `swc-action-menu`’s** **shadow** **DOM** (**not** on the **custom** **element** **host**). The component uses a **label** **slot** and a **default** **slot** (items); the **group** does **not** own keyboard or roving focus—that stays on the parent **`swc-menu` / `swc-action-menu`** and [`FocusgroupNavigationController`](https://github.com/adobe/spectrum-web-components/pull/6129) (see [Keyboard and focus](#keyboard-and-focus)). It is not a stand-alone widget; it only makes sense **slotted** into that **menu** **surface** (or an **equivalent** **menu** **tree** in **tests**). The target is **WCAG 2.2 Level AA**.
 
 ### Also read
 
@@ -51,9 +51,13 @@ This document sets accessibility expectations for 2nd-gen **Menu group** in Spec
 
 ### What `swc-menu-group` is (2nd-gen)
 
-- A **group** is a logical section of a menu: a container with [`role="group"`](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) **descended** from the **internal** **`role="menu"`** **surface** (**`swc-menu` / `swc-action-menu` shadow** **markup**), optionally with a visible label. It **organizes** `swc-menu-item` / `menuitem` children; it is **not** itself a `menuitem` and does not receive roving focus as a single stop—focus moves among **items** per the [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) and `FocusgroupNavigationController` (see [PR #6129](https://github.com/adobe/spectrum-web-components/pull/6129)).
-- **Reference implementation (2nd-gen target):** Implement **`swc-menu-group`** like the following structure: a **`role="group"`** container **inside** **`role="menu"`** uses **`aria-labelledby`** pointing at a **dedicated section-title node** (**stable `id`**); that title node carries **`role="presentation"`** (it is **not** a **`menuitem`**) and holds the visible **section label** text; **`menuitem`** rows are **siblings** of the title **inside** the same **`group`** (not a separate nested **`<ul`** after a header row unless the implementation requires it—**verify in 2nd-gen source**).
-
+- A **group** is a logical section of a menu: a container with [`role="group"`](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) descended from the internal `role="menu"` surface (`swc-menu` / `swc-action-menu` shadow markup), optionally with a visible label. It organizes `swc-menu-item` / `menuitem` children (default slot). It is not a `menuitem` and does **not** own keyboard handling or roving `tabindex`; the parent `swc-menu` or `swc-action-menu` applies [`FocusgroupNavigationController`](https://github.com/adobe/spectrum-web-components/pull/6129) to slotted rows (see [Keyboard and focus](#keyboard-and-focus)).
+- **Slots (2nd-gen):** a **label** slot (section title / face) and a **default** slot for `swc-menu-item`, `swc-menu-separator`, and other list row primitives. Verify default and label slot names in 2nd-gen source.
+- **Shadow DOM (2nd-gen target, verify in source):** the shadow tree should wire:
+  1. A container with `role="group"`. It sets `aria-labelledby` to the **`id`** on the presentation label wrapper in the same composed subtree (IDREF to that node).
+  2. A container with `role="presentation"` and a **stable** `id`. It wraps the **label** slot; it is not a `menuitem`. The group’s accessible name is derived from this node via `aria-labelledby`, or from `aria-label` on the `role="group"` node when that pattern is used.
+  3. A **default** slot for **items** (for example `swc-menu-item`, separators), in the order the parent menu’s list model expects.
+- The exposed accessibility **shape** for the section should still match this logical (flattened) example when composed under `role="menu"`:
 ```html
 <div role="menu" aria-label="Example Menu">
   <div role="group" aria-labelledby="group-label">
@@ -64,7 +68,7 @@ This document sets accessibility expectations for 2nd-gen **Menu group** in Spec
 </div>
 ```
 
-- **Naming:** The **group’s** accessible name comes from **`aria-labelledby="group-label"`** (preferred when a visible title exists) **or** **`aria-label`** with the **same string** as the visible section title. Other host-DOM patterns (for example **`li`** **`+`** **`role="none"`** for list-item menus) can be equivalent if they preserve the same **IDREF** and **name** relationships—**`role="presentation"`** on the **label** node above is the **default** pattern for **`swc-menu-group`**.
+- **Naming:** Prefer `aria-labelledby` to the `id` on the `role="presentation"` label wrapper when a visible title exists; otherwise `aria-label` on the `role="group"` node with the same string as the visible title. `role="presentation"` (or `none`) on the label node remains the default; other host patterns are fine if they preserve the same IDREF and name relationship (see [APG](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)).
 
 ### When to use something else
 
@@ -87,7 +91,7 @@ This document sets accessibility expectations for 2nd-gen **Menu group** in Spec
 | [Name, role, value (4.1.2)](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value) | `role="group"` inside `role="menu"` when used; labeled groups expose a **name** via `aria-labelledby` or `aria-label`. |
 | [Info and relationships (1.3.1)](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships) | Visible **section title** text aligns with the **`group`’**s **accessible name** (**`aria-labelledby`** to the title node’s **`id`**, or matching **`aria-label`**). |
 
-Bottom line: **`swc-menu-group`** carries **structure and section labeling**: **`role="group"`** **`+`** **`aria-labelledby`** to a **presentation** (non-**`menuitem`**) **label** node **+** sibling **`menuitem`** rows—navigation and submenu behaviour stay on **menu**, **menu item**, and **action menu** docs.
+Bottom line: `swc-menu-group` supplies structure and section labeling (shadow `role="group"`, `role="presentation"` label slot wrapper, default slot for rows) and does not own in-menu keyboard or focus—the parent menu and [`FocusgroupNavigationController`](https://github.com/adobe/spectrum-web-components/pull/6129) do. Submenu and command row detail stay on the menu, menu item, and action menu docs.
 
 ---
 
@@ -99,31 +103,34 @@ Treat **menu-wide** defects as authoritative in [Menu — Related 1st-gen access
 
 ## Recommendations: `<swc-menu-group>`
 
-Scope: **`role="group"`** (or equivalent), **optional label**, **`menuitem`** children only for this phase—no **`menuitemcheckbox` / `menuitemradio`** selection groups until [Menu migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current) closes.
+Scope: **`role="group"`** (or equivalent), **label** and **default** **slots** as in [What `swc-menu-group` is (2nd-gen)](#what-swc-menu-group-is-2nd-gen), **optional** visible **label** content, `menuitem` **children** **in** the **default** **slot** only for this phase—no **`menuitemcheckbox` / `menuitemradio`** selection groups until [Menu migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current) closes.
 
 ### ARIA roles, states, and properties
 
 | Topic | What to do |
 | --- | --- |
-| Host / surface | **`role="group"`** on the `swc-menu-group` surface (or equivalent wiring—verify in 2nd-gen source). The **containing** **`role="menu"`** **must** be the **internal** **menu** **node** in **`swc-menu` / `swc-action-menu`’s** **shadow** **tree** (**not** the **CE** **host**). |
-| Section title (label) node | **Not** a **`menuitem`**. Use **`role="presentation"`** on the visible **section title** element, give it a **stable `id`**, and reference that **`id`** from **`aria-labelledby`** on the **`role="group"`** host (**see [reference HTML](#what-swc-menu-group-is-2nd-gen)**). Keyboard roving targets **`menuitem`** (and **`separator`**) only. |
-| Group name | The **`swc-menu-group`** host **`aria-labelledby`** must resolve to the section-title **`id`** **or** use **`aria-label`** with the **identical** string as the visible title. Do **not** ship a labeled section with an unnamed **`group`**. |
-| Children | **Inside** the **`group`**: the **title** node (**`role="presentation"`**, **`id`**) **then** **`swc-menu-item`** (**`menuitem`**) and [`swc-menu-separator`](../menu-separator/accessibility-migration-analysis.md) (**`separator`**) as **siblings**—same flat section as the reference markup unless 2nd-gen DOM requires otherwise (**verify in source**). |
-| Checkbox / radio groups | **`menuitemcheckbox` / `menuitemradio`** rows and **selection UX** — **out of scope** this phase; see [Menu — Migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current). |
+| Host / surface | `role="group"` on the shadow **container** that wraps the **label** region and the **default** (items) **slot** (or equivalent wiring—verify in 2nd-gen source). The containing `role="menu"` must be the internal menu node in `swc-menu` / `swc-action-menu`’s shadow tree (not the CE host). |
+| Slots | **Label** slot: projects into the `role="presentation"` **label** wrapper (next row). **Default** slot: `swc-menu-item`, [`swc-menu-separator`](../menu-separator/accessibility-migration-analysis.md), and other list rows. Verify slot API names in 2nd-gen source. |
+| Label region (in shadow) | A `div` (or equivalent) with `role="presentation"`, a **stable** `id`, and the **label** **slot** as its content. It is **not** a `menuitem`. The `role="group"` **ancestor** in the same shadow **subtree** sets `aria-labelledby` to that `id` (IDREF is **local** to `swc-menu-group`’s **composition**—see [Shadow DOM](#shadow-dom-and-cross-root-aria-issues)). The label row is **not** a roving `tabindex` stop; roving targets `menuitem` and `separator` only. |
+| Group name | `aria-labelledby` on the `role="group"` node must resolve to the label wrapper `id`, or use `aria-label` with the same string as the visible title when there is no label slot content. Do not ship a labeled section with an unnamed `group`. |
+| Keyboard and focus | **Not** owned by `swc-menu-group`. Do **not** add a separate focus or arrow-key **controller** on the group: the parent `swc-menu` / `swc-action-menu` and [`FocusgroupNavigationController`](https://github.com/adobe/spectrum-web-components/pull/6129) move focus among **default-slot** item rows. The group only exposes structure and naming (see [Keyboard and focus](#keyboard-and-focus)). |
+| Checkbox / radio groups | `menuitemcheckbox` / `menuitemradio` rows and selection UX — out of scope this phase; see [Menu — Migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current). |
 
 ### Shadow DOM and cross-root ARIA Issues
 
-Follow [Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues). The parent host implements the menu-button trigger and the internal `role="menu"` node together in `swc-menu` / `swc-action-menu` shadow DOM; a `swc-menu-group` and its child rows may be slotted from the light DOM and are not required in that shadow subtree. The menu list does not rely on IDREF to each item (`FocusgroupNavigationController` ([PR #6129](https://github.com/adobe/spectrum-web-components/pull/6129)) and roving `tabindex`). Within the group, `aria-labelledby` on `role="group"` to the section title `id` should still resolve in the implementation’s composed section; if that pairing fails across roots, use `aria-label`, re-home the label node, or other naming strategies 2nd-gen documents in source. That group–label case is separate from per-item IDREF, which the top-level list pattern does not need.
+[Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) governs the parent `swc-menu` / `swc-action-menu` host: trigger and internal `role="menu"`, list content that may be light-DOM slotted, no per-item IDREF for roving focus, and [`FocusgroupNavigationController`](https://github.com/adobe/spectrum-web-components/pull/6129) on the **parent** menu (not on `swc-menu-group`—see [Keyboard and focus](#keyboard-and-focus)).
+
+Inside `swc-menu-group`’s shadow tree, match [What `swc-menu-group` is (2nd-gen)](#what-swc-menu-group-is-2nd-gen): a `div` with `role="group"`, a `div` with `role="presentation"` and a stable `id` that contains the label slot, and a default slot for items. The `role="group"` node sets `aria-labelledby` to the `id` on the presentation `div` in the same composed subtree (verify in 2nd-gen source). This group↔label IDREF is for section naming only, separate from the parent list’s per-item roving model. If a refactor ever split the group and label in a way that broke that IDREF, use `aria-label` on `role="group"`, re-home the label wrapper, or other strategies 2nd-gen documents in source.
 
 ### Accessibility tree expectations
 
-- The **`group`** exposes a **name** (**`aria-labelledby`** to the **`id`** on the presentation title node, or **`aria-label`**).
-- The **section title** uses **`presentation`** (not **`menuitem`**); its **text** supplies the **`group`** name via **`aria-labelledby`**.
-- Child **command rows** expose **`menuitem`** (or separator) per the [menu item doc](../menu-item/accessibility-migration-analysis.md).
+- The `role="group"` node exposes a name (`aria-labelledby` to the `id` on the `role="presentation"` label wrapper that contains the label slot, or `aria-label`).
+- The label region uses `presentation` (not `menuitem`); its text supplies the group name via `aria-labelledby` when used.
+- Default-slot child rows expose `menuitem` (or `separator`) per the [menu item doc](../menu-item/accessibility-migration-analysis.md); focus order follows the parent menu (not additional logic on `swc-menu-group`).
 
 ### Form-associated custom properties (labels, `ElementInternals`)
 
-Does not apply. `swc-menu-group` is not a form-associated control; labeling is **`aria-labelledby`** / **`aria-label`** on the **`group`** and **`id`** / **`presentation`** on the **title** node, not `ElementInternals`.
+Does not apply. `swc-menu-group` is not a form-associated control; labeling is `aria-labelledby` / `aria-label` on the `role="group"` node and `id` + `role="presentation"` on the label **wrapper** (label slot), not `ElementInternals`.
 
 ### Live regions, loading, and announcements
 
@@ -135,7 +142,7 @@ Intentionally omitted. If grouped regions affect motion, follow the **menu** / *
 
 ### Keyboard and focus
 
-Roving **`tabindex`** and **arrow-key** traversal are **managed for `menuitem` descendants** by the shared **menu** navigation model ([`FocusgroupNavigationController`](https://github.com/adobe/spectrum-web-components/pull/6129)); the **group** itself is not an extra Tab stop. Document edge cases where **screen readers** announce the **group label** when moving from a previous section (verify in implementation and manual testing).
+`swc-menu-group` must not implement or override keyboard navigation, arrow keys, or roving `tabindex` for its default-slot `menuitem` / `separator` rows. The parent `swc-menu` or `swc-action-menu` applies [`FocusgroupNavigationController`](https://github.com/adobe/spectrum-web-components/pull/6129) to those rows (see [Menu — Keyboard and focus](../menu/accessibility-migration-analysis.md#keyboard-and-focus)). The `role="presentation"` label wrapper and label slot content are not roving focus stops; the `role="group"` container is not an extra Tab stop. Document screen reader edge cases when crossing into a new section (verify in implementation and manual testing).
 
 ---
 
@@ -145,12 +152,12 @@ Roving **`tabindex`** and **arrow-key** traversal are **managed for `menuitem` d
 
 | Kind of test | What to check |
 | --- | --- |
-| Unit / aXe + Storybook | `role="group"` and label wiring when a label is present; group appears inside menu stories; no **invalid** child roles. |
+| Unit / aXe + Storybook | `role="group"`, `role="presentation"` label `id` and `aria-labelledby` when a label is present; label and default slots per [What `swc-menu-group` is (2nd-gen)](#what-swc-menu-group-is-2nd-gen); group inside menu stories; no invalid child roles. Assert `swc-menu-group` does not add its own focus/keyboard layer (see [Keyboard and focus](#keyboard-and-focus)). |
 | With menu | Run **menu** and **action menu** story coverage; add **group** variants when group-specific bugs are filed. |
 
 ### Keyboard testing
 
-Follow the 2nd-gen Storybook [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) guide on a **composed** path with `swc-menu` (see [Menu — Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing)). Confirm **arrow** navigation across **group boundaries** and that **group labels** do not trap focus or break roving order.
+Follow the 2nd-gen Storybook [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) guide on a **composed** path with `swc-menu` (see [Menu — Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing)). Confirm **arrow** navigation across **group** **boundaries**; roving focus is owned by the parent menu and [`FocusgroupNavigationController`](https://github.com/adobe/spectrum-web-components/pull/6129), with no focus traps and no roving stops on the presentation/label **region** (see [Keyboard and focus](#keyboard-and-focus) on this page).
 
 ### Manual and screen reader testing
 
@@ -160,10 +167,10 @@ Exercise **menu** stories that include **labeled groups**; confirm group **names
 
 ## Summary checklist
 
-- [ ] `swc-menu-group` is used only inside the **internal** **`role="menu"`** **subtree** (**`swc-menu` / `swc-action-menu` shadow** **surface**, **not** the **CE** **host**); **`role="group"`** **`+`** **`aria-labelledby`** reference to a **`role="presentation"`** section-title node (**stable `id`**) **+** sibling **`menuitem`** rows (see [reference HTML](#what-swc-menu-group-is-2nd-gen)); **`aria-label`** alternative matches visible title text.
-- [ ] **`menuitemcheckbox` / `menuitemradio`** groupings are **not** documented as in-scope for this phase ([Menu migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current)).
-- [ ] Shadow DOM and IDREF expectations match [Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) and [Action menu](../action-menu/accessibility-migration-analysis.md) (trigger and internal `role="menu"` co-located on the host in shadow; slotted group and rows need not be; group ↔ label pairing still resolves as implemented).
-- [ ] Keyboard testing follows the **menu** composed pattern and Storybook guides above.
+- [ ] `swc-menu-group` is used only inside the internal `role="menu"` subtree (`swc-menu` / `swc-action-menu` shadow surface, not the CE host). Shadow structure: `role="group"`, `role="presentation"` label wrapper (label slot) with stable `id`, default slot for items; `aria-labelledby` on the group node IDREFs that `id` (see [What `swc-menu-group` is (2nd-gen)](#what-swc-menu-group-is-2nd-gen)); `aria-label` when used matches visible title.
+- [ ] `menuitemcheckbox` / `menuitemradio` groupings are not in scope for this phase ([Menu migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current)).
+- [ ] [Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) and [Action menu](../action-menu/accessibility-migration-analysis.md) parent-host rules **and** this doc’s [Shadow DOM](#shadow-dom-and-cross-root-aria-issues) group↔label IDREF hold in 2nd-gen source.
+- [ ] `swc-menu-group` does not add its own keyboard or focus manager; [Keyboard and focus](#keyboard-and-focus) and [Keyboard testing](#keyboard-testing) align with the parent menu + [`FocusgroupNavigationController`](https://github.com/adobe/spectrum-web-components/pull/6129).
 
 ---
 
