@@ -92,6 +92,7 @@ export class Button extends ButtonBase {
         class=${classMap({
           'swc-Button': true,
           'swc-Button--iconOnly': this.hasIcon && !this.hasLabel,
+          'swc-Button--pendingActive': this._pendingActive,
         })}
         type="button"
         @click=${this._handleClick}
@@ -107,6 +108,35 @@ export class Button extends ButtonBase {
         <span class="swc-Button__label">
           <slot></slot>
         </span>
+        ${this.pending
+          ? html`
+              <svg
+                class="swc-Button__pendingSpinner"
+                width="100%"
+                height="100%"
+                fill="none"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <circle
+                  class="swc-Button__pendingSpinner-track"
+                  cx="50%"
+                  cy="50%"
+                  r="calc(50% - 1px)"
+                />
+                <circle
+                  class="swc-Button__pendingSpinner-fill"
+                  cx="50%"
+                  cy="50%"
+                  r="calc(50% - 1px)"
+                  pathLength="100"
+                  stroke-dasharray="100 200"
+                  stroke-dashoffset="75"
+                  stroke-linecap="round"
+                />
+              </svg>
+            `
+          : nothing}
       </button>
     `;
   }

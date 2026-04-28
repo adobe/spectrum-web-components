@@ -11,7 +11,7 @@
  */
 
 import { PropertyValues } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import {
@@ -68,6 +68,17 @@ export abstract class ButtonBase extends SizedMixin(
    */
   @property({ type: String, attribute: 'pending-label' })
   public pendingLabel?: string;
+
+  /**
+   * Tracks whether the pending visual (disabled colors + spinner) is currently
+   * active. Set to `true` after a 1-second delay once `pending` becomes true,
+   * so the button does not immediately flash to its unavailable appearance.
+   * Protected so subclasses can reference it in their `classMap` binding.
+   */
+  @state()
+  protected _pendingActive: boolean = false;
+
+  private _pendingTimer: number | null = null;
 
   protected get hasIcon(): boolean {
     return this.slotContentIsPresent;
@@ -127,6 +138,11 @@ export abstract class ButtonBase extends SizedMixin(
   }
 
   public override disconnectedCallback(): void {
+    if (this._pendingTimer !== null) {
+      clearTimeout(this._pendingTimer);
+      this._pendingTimer = null;
+    }
+    this._pendingActive = false;
     super.disconnectedCallback();
     this.removeEventListener('click', this._handleClick);
   }
@@ -142,6 +158,32 @@ export abstract class ButtonBase extends SizedMixin(
   };
 
   protected override update(changedProperties: PropertyValues): void {
+    if (changedProperties.has('pending')) {
+      if (this.pending) {
+        this._pendingTimer = setTimeout(() => {
+          if (this.pending) {
+            const internalButton = this.renderRoot.querySelector('button');
+            if (internalButton) {
+              internalButton.style.setProperty(
+                '--_swc-button-pending-inline-size',
+                `${internalButton.offsetWidth}px`
+              );
+            }
+            this._pendingActive = true;
+          }
+          this._pendingTimer = null;
+        }, 1000);
+      } else {
+        if (this._pendingTimer !== null) {
+          clearTimeout(this._pendingTimer);
+          this._pendingTimer = null;
+        }
+        this.renderRoot
+          .querySelector('button')
+          ?.style.removeProperty('--_swc-button-pending-inline-size');
+        this._pendingActive = false;
+      }
+    }
     super.update(changedProperties);
     if (window.__swc?.DEBUG) {
       if (this.pending && this.disabled) {
