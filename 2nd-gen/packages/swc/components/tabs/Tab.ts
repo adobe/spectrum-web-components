@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
+import { CSSResultArray, html, TemplateResult } from 'lit';
 
 import { TabBase } from '@spectrum-web-components/core/components/tabs';
 
@@ -45,10 +45,7 @@ export class Tab extends TabBase {
   protected override render(): TemplateResult {
     return html`
       <slot name="icon"></slot>
-      <span id="label" ?hidden=${!this.label && !this.textContent?.trim()}>
-        ${this.label ? this.label : nothing}
-        <slot></slot>
-      </span>
+      <slot></slot>
     `;
   }
 }
