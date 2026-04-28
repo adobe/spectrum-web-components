@@ -6,16 +6,12 @@ import { formatTitle } from '../helpers/index.js';
  * A block that renders getting started instructions for a Spectrum Web Component.
  * Automatically derives package name and component names from the Storybook meta title.
  *
- * For `migrated` (2nd-gen) stories, instructions use `@adobe/spectrum-wc` and the
- * component subpath export (for example `@adobe/spectrum-wc/tabs`). The tabs module
- * registers three custom elements with one side-effect import.
- *
  * @param of - The Storybook meta or story to resolve the component from
  * @param packageName - Optional override for the package name (defaults to derived kebab-case from title)
  * @param componentName - Optional override for the component class name (defaults to derived PascalCase from title)
  * @param tagName - Optional override for the custom element tag name (defaults to swc-{packageName})
  */
-export const GettingStarted = ({ of, tags }: { of?: any; tags?: string[] }) => {
+export const GettingStarted = ({ of, tags }: { of?: any; tags?: string }) => {
   const resolvedOf = useOf(of || 'meta', ['meta']);
 
   if (tags?.includes('utility')) return null;
@@ -48,54 +44,27 @@ import { ${baseClassName} } from '@spectrum-web-components/core/controllers/${pa
     const baseClassName = formatTitle(resolvedOf.preparedMeta?.title, 'pascal');
 
     const tagName = `swc-${packageName}`;
-    const importPath = `@adobe/spectrum-wc/${packageName}`;
-    const npmPackage = '@adobe/spectrum-wc';
 
-    let markdownContent: string;
-
-    if (packageName === 'tabs') {
-      markdownContent = `## Getting started
+    const markdownContent = `## Getting started
 
 Add the package to your project:
 
 \`\`\`zsh
-yarn add ${npmPackage}
-\`\`\`
-
-One import registers \`<swc-tabs>\`, \`<swc-tab>\`, and \`<swc-tab-panel>\`:
-
-\`\`\`typescript
-import '${importPath}';
-\`\`\`
-
-Import \`Tabs\`, \`Tab\`, and \`TabPanel\` for types or subclassing:
-
-\`\`\`typescript
-import { Tabs, Tab, TabPanel } from '${importPath}';
-\`\`\`
-`;
-    } else {
-      markdownContent = `## Getting started
-
-Add the package to your project:
-
-\`\`\`zsh
-yarn add ${npmPackage}
+yarn add @spectrum-web-components/${packageName}
 \`\`\`
 
 Import the side effectful registration of \`<${tagName}>\` via:
 
 \`\`\`typescript
-import '${importPath}';
+import '@spectrum-web-components/${packageName}/${tagName}.js';
 \`\`\`
 
-When looking to leverage the \`${baseClassName}\` class as a type and/or for extension purposes, do so via:
+When looking to leverage the \`${baseClassName}\` base class as a type and/or for extension purposes, do so via:
 
 \`\`\`typescript
-import { ${baseClassName} } from '${importPath}';
+import { ${baseClassName} } from '@spectrum-web-components/${packageName}';
 \`\`\`
 `;
-    }
 
     return <Markdown>{markdownContent}</Markdown>;
   }
