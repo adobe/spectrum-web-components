@@ -818,6 +818,84 @@ export const AnatomyTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Selection indicator
+// ──────────────────────────────────────────────────────────────
+
+export const SelectionIndicatorTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" label="Indicator test">
+      <swc-tab value="1">Tab 1</swc-tab>
+      <swc-tab value="2">Tab 2</swc-tab>
+      <swc-tab-panel value="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel value="2"><p>Panel 2</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+
+    await step('selection indicator exists in shadow DOM', async () => {
+      const indicator = tabs.shadowRoot?.querySelector('.selection-indicator');
+      expect(indicator, 'indicator element exists').toBeTruthy();
+    });
+
+    await step(
+      'indicator has transform style when a tab is selected',
+      async () => {
+        await new Promise((r) => requestAnimationFrame(r));
+        await tabs.updateComplete;
+
+        const indicator = tabs.shadowRoot?.querySelector(
+          '.selection-indicator'
+        ) as HTMLElement;
+        const style = indicator.getAttribute('style') || '';
+        expect(
+          style.includes('transform'),
+          'indicator style contains transform'
+        ).toBe(true);
+      }
+    );
+
+    await step(
+      'indicator updates position when selection changes',
+      async () => {
+        const indicator = tabs.shadowRoot?.querySelector(
+          '.selection-indicator'
+        ) as HTMLElement;
+        const styleBefore = indicator.getAttribute('style') || '';
+
+        tabs.selected = '2';
+        await tabs.updateComplete;
+        await new Promise((r) => requestAnimationFrame(r));
+        await tabs.updateComplete;
+
+        const styleAfter = indicator.getAttribute('style') || '';
+        expect(
+          styleBefore !== styleAfter,
+          'indicator style changed after selection change'
+        ).toBe(true);
+      }
+    );
+
+    await step(
+      'indicator has first-position class initially then removes it',
+      async () => {
+        const indicator = tabs.shadowRoot?.querySelector(
+          '.selection-indicator'
+        ) as HTMLElement;
+        await tabs.updateComplete;
+        await new Promise((r) => setTimeout(r, 200));
+        await tabs.updateComplete;
+
+        expect(
+          !indicator.classList.contains('first-position'),
+          'first-position class removed after initial render'
+        ).toBe(true);
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Variants / States
 // ──────────────────────────────────────────────────────────────
 
