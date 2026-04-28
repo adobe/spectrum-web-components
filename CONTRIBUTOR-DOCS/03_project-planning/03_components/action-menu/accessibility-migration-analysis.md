@@ -141,7 +141,7 @@ Normative item-level and submenu detail is in [Menu — Recommendations: `<swc-m
 
 **Host shell (stays in shadow):** the ActionMenu trigger and the internal `role="menu"` node are implemented together in `swc-action-menu`’s shadow tree (same rule as [Menu — Recommendations: `swc-menu`](../menu/accessibility-migration-analysis.md#recommendations-swc-menu); verify in 2nd-gen source).
 
-**Slotted list content (need not be in that shadow tree):** `swc-menu-item`, `swc-menu-group`, and `swc-menu-separator` are not required in that shadow subtree—authors typically slot them from the light DOM. The menu list does not use IDREF to each item; `FocusgroupNavigationController` handles in-menu roving focus. See [Menu: Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) for IDREF caveats (for example `aria-activedescendant` across roots) and related notes.
+**Slotted list content (need not be in that shadow tree):** `swc-menu-item`, `swc-menu-group`, and `swc-menu-separator` are not required in that shadow subtree—authors typically slot them from the light DOM. The menu list does not use IDREF to each item; `FocusgroupNavigationController` handles in-menu roving focus. Do not nest one `swc-menu-group` inside another in the same list; groups in submenus are allowed (see [Menu group — What `swc-menu-group` is (2nd-gen)](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-2nd-gen)). See [Menu: Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) for IDREF caveats (for example `aria-activedescendant` across roots) and related notes.
 
 ### Accessibility tree expectations
 
@@ -162,7 +162,13 @@ Intentionally omitted. If popover open/close uses motion, treat it like other la
 
 ### Keyboard and focus
 
-- Open from the trigger per the [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) (Arrow Up/Down, Space, Enter); in-menu navigation in the open **internal** **`role="menu"`** **surface** (**`swc-menu` / `swc-action-menu` shadow** **tree**—**not** the **CE** **host**; or a **test** **harness** that **mirrors** that) via [FocusgroupNavigationController](https://github.com/adobe/spectrum-web-components/pull/6129) (not `aria-activedescendant` in 2nd-gen; see [SWC-617](https://jira.corp.adobe.com/browse/SWC-617)); **submenu** **keys** on **rows** with a **populated** **`submenu` slot** ( **submenu** **trigger** and **child** **`role="menu"`** in **`swc-menu-item`’s** **shadow** **tree** ) per [Menu item — Keyboard and focus](../menu-item/accessibility-migration-analysis.md#keyboard-and-focus).
+- Open from the trigger per the [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) (Arrow Up/Down, Space, Enter); in-menu navigation in the open internal `role="menu"` surface (`swc-menu` / `swc-action-menu` shadow tree, not the CE host; or a test harness) via [FocusgroupNavigationController](https://github.com/adobe/spectrum-web-components/pull/6129) (not `aria-activedescendant` in 2nd-gen; see [SWC-617](https://jira.corp.adobe.com/browse/SWC-617)). Use the same item-collection model as [`swc-menu`](../menu/accessibility-migration-analysis.md#keyboard-and-focus): the controller should look for `swc-menu-item` as direct list children and `swc-menu-item` under each direct `swc-menu-group`, e.g.:
+
+  ```js
+  this.querySelectorAll(':scope > swc-menu-item, :scope > swc-menu-group > swc-menu-item');
+  ```
+
+  (with `this` as the list context the controller binds to; verify in 2nd-gen source). Submenu keys on rows with a populated `submenu` slot per [Menu item — Keyboard and focus](../menu-item/accessibility-migration-analysis.md#keyboard-and-focus).
 - Close: Escape returns focus to the trigger; see [Menu: Testing](../menu/accessibility-migration-analysis.md#testing) and action menu stories for submenu cases.
 
 ---
