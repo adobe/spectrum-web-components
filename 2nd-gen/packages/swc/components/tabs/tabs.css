@@ -119,12 +119,14 @@
 /* ── Emphasized variant ────────────────────────────────── */
 
 :host([emphasized]) {
-  --swc-tab-text-color-selected: var(--swc-tabs-text-color-selected-emphasized, token("accent-content-color-default"));
+  /* Use accent 1000 for selected label so contrast meets WCAG AA on light gray
+     backgrounds (accent 900 on ~gray-50 is slightly below 4.5:1). */
+  --swc-tab-text-color-selected: var(--swc-tabs-text-color-selected-emphasized, token("accent-content-color-down"));
   --swc-tab-text-color-hover: var(--swc-tabs-text-color-hover-emphasized, token("accent-content-color-hover"));
 }
 
 :host([emphasized]) .selection-indicator {
-  --swc-tabs-indicator-color: var(--swc-tabs-indicator-color-emphasized, token("accent-content-color-default"));
+  --swc-tabs-indicator-color: var(--swc-tabs-indicator-color-emphasized, token("accent-content-color-down"));
 }
 
 /* ── Quiet variant ─────────────────────────────────────── */
