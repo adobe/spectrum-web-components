@@ -59,6 +59,11 @@ const stories: StorybookConfig['stories'] = [
 if (storybookMode !== 'ci-a11y') {
   stories.push(
     {
+      directory: '../components',
+      files: '**/*.mdx',
+      titlePrefix: 'Components',
+    },
+    {
       directory: '../../core',
       files: '**/*.mdx',
       titlePrefix: 'Core',
@@ -117,6 +122,7 @@ const addons: StorybookConfig['addons'] = [
     },
   },
   '@storybook/addon-a11y',
+  '@github-ui/storybook-addon-performance-panel/universal',
 ];
 
 if (storybookMode !== 'ci-a11y') {
@@ -151,6 +157,12 @@ const config: StorybookConfig = {
   experimental_indexers: storybookMode === 'dev' ? [testStoryIndexer] : [],
   viteFinal: async (config) => {
     return mergeConfig(config, {
+      css: {
+        transformer: 'postcss',
+      },
+      build: {
+        cssMinify: 'esbuild',
+      },
       plugins: [
         {
           name: 'css-hmr',

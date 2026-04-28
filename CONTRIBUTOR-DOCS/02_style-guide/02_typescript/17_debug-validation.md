@@ -17,6 +17,9 @@
     - [firstUpdated() — One-time setup validation](#firstupdated--one-time-setup-validation)
     - [updated() — Post-render validation](#updated--post-render-validation)
     - [connectedCallback() — Environment validation](#connectedcallback--environment-validation)
+- [Deprecation warnings](#deprecation-warnings)
+    - [Deprecation warning structure](#deprecation-warning-structure)
+    - [Testing deprecation warnings](#testing-deprecation-warnings)
 - [Warning message format](#warning-message-format)
 
 </details>
@@ -192,6 +195,59 @@ public override connectedCallback(): void {
     }
   }
 }
+```
+
+## Deprecation warnings
+
+Use `{ level: 'deprecation' }` when a property or attribute has been superseded by a new API. This signals to consumers that they need to migrate, not just fix a configuration error.
+
+**When to use deprecation warnings:**
+
+- A property is being replaced by a slot (consumer-owned HTML)
+- A property value is being renamed (e.g. `variant="cta"` → `variant="accent"`)
+- An attribute is being removed, or replaced by a different attribute
+
+
+### Deprecation warning structure
+
+The key difference from other warnings is `{ level: 'deprecation' }` instead of `{ issues: [...] }`.
+
+```ts
+if (window.__swc?.DEBUG) {
+  window.__swc.warn(
+    this,
+    `The "oldProp" property on <${this.localName}> has been deprecated and will be removed in a future release. Use "newProp" instead.`,
+    'https://opensource.adobe.com/spectrum-web-components/components/your-component/',
+    { level: 'deprecation' }
+  );
+}
+```
+
+### Testing deprecation warnings
+
+Write separate test cases that verify:
+
+1. The warning fires when the deprecated API is used
+2. The warning does **not** fire when the recommended API is used
+
+```ts
+it('warns when deprecated "heading" property is used', async () => {
+  const el = await fixture(html`
+    <sp-illustrated-message heading="Title"></sp-illustrated-message>
+  `);
+  await elementUpdated(el);
+  expect(consoleWarnStub.called).to.be.true;
+  expect(consoleWarnStub.getCall(0).args[0]).to.include('heading');
+});
+
+it('does not warn when slot-based API is used', async () => {
+  await fixture(html`
+    <sp-illustrated-message>
+      <h2 slot="heading">Title</h2>
+    </sp-illustrated-message>
+  `);
+  expect(consoleWarnStub.called).to.be.false;
+});
 ```
 
 ## Warning message format

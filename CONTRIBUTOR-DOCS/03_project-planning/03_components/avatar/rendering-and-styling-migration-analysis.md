@@ -1,243 +1,186 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Avatar / Avatar migration roadmap
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Avatar / Avatar accessibility migration analysis
 
 <!-- Document title (editable) -->
 
-# Avatar migration roadmap
+# Avatar accessibility migration analysis
 
 <!-- Generated TOC - DO NOT EDIT -->
 
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-- [Component specifications](#component-specifications)
-    - [CSS](#css)
-    - [SWC](#swc)
-- [Comparison](#comparison)
-    - [DOM Structure changes](#dom-structure-changes)
-    - [CSS => SWC mapping](#css--swc-mapping)
-- [Summary of changes](#summary-of-changes)
-    - [CSS => SWC implementation gaps](#css--swc-implementation-gaps)
-    - [CSS Spectrum 2 changes](#css-spectrum-2-changes)
-- [Resources](#resources)
+- [Overview](#overview)
+    - [Also read](#also-read)
+    - [Avatar image as an SWC style](#avatar-image-as-an-swc-style)
+    - [Avatar image as **`<swc-avatar>`** (component)](#avatar-image-as-swc-avatar-component)
+    - [When to use **`swc-avatar-link`** instead](#when-to-use-swc-avatar-link-instead)
+- [ARIA and WCAG context](#aria-and-wcag-context)
+    - [Pattern in the APG](#pattern-in-the-apg)
+    - [Guidelines that apply](#guidelines-that-apply)
+- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Recommendations: avatar image](#recommendations-avatar-image)
+    - [SWC style (native **`<img>`**)](#swc-style-native-img)
+    - [**`<swc-avatar>`** (component)](#swc-avatar-component)
+    - [Shared: tokens and **`swc-avatar-link`**](#shared-tokens-and-swc-avatar-link)
+    - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
+    - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
+    - [Accessibility tree expectations](#accessibility-tree-expectations)
+    - [Keyboard and focus](#keyboard-and-focus)
+- [Known 1st-gen issues](#known-1st-gen-issues)
+- [Testing](#testing)
+    - [Automated tests](#automated-tests)
+- [Summary checklist](#summary-checklist)
+- [References](#references)
 
 </details>
 
 <!-- Document content (editable) -->
 
-## Component specifications
+## Overview
 
-### CSS
+This doc defines how the **avatar image** should work for **accessibility**—the **static**, **non-navigating** photo (not wrapped in a link)—targeting **WCAG 2.2 Level AA**. **2nd-gen** should **offer** the avatar image in **two** ways so teams can choose what fits their stack:
 
-<details>
-<summary>CSS selectors</summary>
+1. **SWC style** — Spectrum **CSS** / **design tokens** and **usage guidance** applied to a native **`<img>`** (or equivalent) in **light** DOM.
+2. **Component** — **`<swc-avatar>`** (no **`href`**) that **encapsulates** the same **visual** **language**, **`src`**, **`label`** → shadow **`<img alt>`**, **`isDecorative`**, and **dev** **warnings**, matching **1st-gen** **`<sp-avatar>`** without **`href`** in spirit.
 
-**Root class**: `.spectrum-Avatar`
+**Linked** avatars (hyperlink affordance) use a **separate** **component**: **`swc-avatar-link`** (see [Avatar link accessibility migration analysis](../avatar-link/accessibility-migration-analysis.md)).
 
-**Elements**:
+**1st-gen** **`<sp-avatar>`** mixes **avatar image** and **`href`** on one tag; **2nd-gen** splits **`<swc-avatar>`** (static) **or** **styled** **`<img>`** from **`swc-avatar-link`**.
 
-- `.spectrum-Avatar-image`
-- `.spectrum-Avatar-link`
+### Also read
 
-**States**:
+- [Avatar migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, CSS, and DOM.
+- [Avatar link accessibility migration analysis](../avatar-link/accessibility-migration-analysis.md) for **`href`**, keyboard, and link naming.
 
-- `.spectrum-Avatar.is-disabled`
-- `.spectrum-Avatar.is-focused:not(.is-disabled):after`
-- `.spectrum-Avatar:not(.is-disabled) .spectrum-Avatar-link:focus-visible:after`
+### Avatar image as an SWC style
 
-**Variants**:
+- **Visual:** circular (or Spectrum-shaped) chrome via shared classes / custom properties (see the rendering roadmap), applied to a standard **`<img>`**.
+- **Semantics:** **`alt`** / **`alt=""`** + **`aria-hidden="true"`** are **author-owned**; optional **ESLint**, Storybook, or docs checks can mirror **1st-gen** **warnings** when **avatar** **styling** is detected.
 
-- `.spectrum-Avatar--size50`
-- `.spectrum-Avatar--size75`
-- `.spectrum-Avatar--size100`
-- `.spectrum-Avatar--size200`
-- `.spectrum-Avatar--size300`
-- `.spectrum-Avatar--size400`
-- `.spectrum-Avatar--size500`
-- `.spectrum-Avatar--size600`
-- `.spectrum-Avatar--size700`
-- `.spectrum-Avatar--size800`
-- `.spectrum-Avatar--size900`
-- `.spectrum-Avatar--size1000`
-- `.spectrum-Avatar--size1100`
-- `.spectrum-Avatar--size1200`
-- `.spectrum-Avatar--size1300`
-- `.spectrum-Avatar--size1400`
-- `.spectrum-Avatar--size1500`
+### Avatar image as **`<swc-avatar>`** (component)
 
-</details>
+- **Visual:** same **tokens** / **stylesheet** surface as the **SWC** **style** path so **`swc-avatar-link`** and **`<swc-avatar>`** stay **visually** **aligned**.
+- **Semantics:** expose **`label`** → shadow **`<img alt>`**, **`isDecorative`** (reflect **`is-decorative`**), and **dev-only** **`window.__swc.warn`** when **`!label && !isDecorative`**, per **1st-gen** **`Avatar.ts`** and resolved **[SWC-915](https://jira.corp.adobe.com/browse/SWC-915)** (Adobe internal Jira).
+- **No `href`** on **`<swc-avatar>`**; navigation is **`swc-avatar-link`** only.
 
-<details>
-<summary>Passthroughs</summary>
+### When to use **`swc-avatar-link`** instead
 
-None found for this component.
+- The avatar image should **navigate** (profile, mailto, external URL). Use **`swc-avatar-link`** so focus, keyboard, and name match a real hyperlink.
 
-</details>
+---
 
-<details>
-<summary>Modifiers *deprecated*</summary>
+## ARIA and WCAG context
 
-- `--mod-avatar-block-size`
-- `--mod-avatar-border-radius`
-- `--mod-avatar-color-opacity`
-- `--mod-avatar-color-opacity-disabled`
-- `--mod-avatar-focus-indicator-color`
-- `--mod-avatar-focus-indicator-gap`
-- `--mod-avatar-focus-indicator-thickness`
-- `--mod-avatar-inline-size`
+### Pattern in the APG
 
-</details>
+- Treat the **avatar image** as an **informative** or **decorative** image ([non-text content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content)). There is no separate APG “avatar” role.
 
-### SWC
+### Guidelines that apply
 
-<details>
-<summary>Attributes</summary>
+| Idea | Plain meaning |
+|------|----------------|
+| [Non-text content (1.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content) | Meaningful avatar images need **`alt`** text; decorative ones use **`alt=""`** and hide from AT when appropriate (**`aria-hidden="true"`**). |
+| [Name, role, value (4.1.2)](https://www.w3.org/TR/WCAG22/#name-role-value) | The meaningful node is the **`<img>`** (name via **`alt`**); the **avatar image** is not an interactive widget. |
 
-- `src` (string) - Source URL for the avatar image
-- `size` (number) - Size of the avatar (50, 75, 100, 200, 300, 400, 500, 600, 700)
-- `href` (string) - Link URL when avatar is clickable
-- `label` (string) - Alt text for the avatar image
-- `disabled` (boolean) - Whether the avatar is disabled
+**Bottom line:** The **avatar image** is not a link or button. Do not put it in the **Tab** order. A native **`<img>`** is not tab-focusable by default; **`<swc-avatar>`** must **not** delegate **focus** to the host or shadow **`<img>`** (fix **1st-gen** **`Focusable`** behavior for the static case).
 
-Note that other link-related attributes are available on the base `LikeAnchor` class, such as `download`, `href`, `referrerpolicy`, `rel`, `target`, and `type` but are not necessarily applicable to the avatar component and so not listed out explicitly here.
+---
 
-</details>
+## Related 1st-gen accessibility (Jira)
 
-<details>
-<summary>Slots</summary>
+| Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
+|------|------|-------------------|-------------------------|---------|
+| [SWC-915](https://jira.corp.adobe.com/browse/SWC-915) | Bug | Done | Done | [Bug][a11y]: Avatar should render an `alt` tag even if no label is specified to avoid a11y violations |
 
-None found for this component.
+---
 
-</details>
+## Recommendations: avatar image
 
-## Comparison
+### SWC style (native **`<img>`**)
 
-### DOM Structure changes
+| Topic | What to do |
+|-------|------------|
+| **Decorative** | **`alt=""`** and **`aria-hidden="true"`** when the image adds no information—same outcome as **`isDecorative`** on **`<swc-avatar>`**. |
+| **Informative** | Non-empty **`alt`** (person name, account role, entity name)—**WCAG 1.1.1**. |
+| **Tooling** | Optional ESLint / Storybook / docs checks flag **`<img>`** with avatar styling that lacks **`alt`** or a decorative pairing. |
+| **Role** | Do not wrap in **`role="button"`** or **`role="link"`** unless interactive (then use **`swc-avatar-link`** or a button). |
 
-<details>
-<summary>Spectrum Web Components</summary>
+### **`<swc-avatar>`** (component)
 
-```html
-<!-- With link -->
-<a id="link" class="link" href="[href]">
-    <img class="image" alt="[label]" src="[src]" />
-</a>
+| Topic | What to do |
+|-------|------------|
+| **`isDecorative`** | Add **`is-decorative`**; **`alt=""`** and **`aria-hidden="true"`** on shadow **`<img>`** when decorative and not linked (match **1st-gen** render rules). |
+| **`label`** | Maps to shadow **`<img alt>`** when the image is informative. |
+| **Dev warning** | **`!label && !isDecorative`** → **`window.__swc.warn`** in dev, as **1st-gen**. |
+| **No `href`** | Reject or ignore **`href`** on **`<swc-avatar>`**; authors use **`swc-avatar-link`**. Consider a dev mode warning for **`href`** on **`<swc-avatar>`** to help teams migrate to **`swc-avatar-link`**.|
+| **Focus** | **Not** **focusable**; do **not** extend **`Focusable`** for the static avatar image, or ensure **`tabIndex`** **-1** and **no** **delegated** **focus** **to** **host**. |
 
-<!-- Without link -->
-<img class="image" alt="[label]" src="[src]" />
-```
+### Shared: tokens and **`swc-avatar-link`**
 
-</details>
+- Ship one **avatar** **appearance** **surface** (CSS + tokens) consumed by **apps**, **`<swc-avatar>`**, and **`swc-avatar-link`** internally.
 
-<details>
-<summary>Legacy (CSS main branch)</summary>
+### ARIA roles, states, and properties
 
-```html
-<!-- With link -->
-<div class="spectrum-Avatar spectrum-Avatar--size700 is-disabled is-focused">
-    <a class="spectrum-Avatar-link" href="#">
-        <img
-            class="spectrum-Avatar-image"
-            data-chromatic="ignore"
-            src="[image]"
-            alt="[altText]"
-        />
-    </a>
-</div>
+| Topic | What to do |
+|-------|------------|
+| **Host** | **`<swc-avatar>`** should **not** expose **`role="button"`** or **`role="link"`**. |
+| **Decorative** | Empty **`alt`** and **`aria-hidden="true"`** on the **`<img>`** when the photo is pure decoration relative to adjacent text. |
 
-<!-- Without link -->
-<div class="spectrum-Avatar spectrum-Avatar--size700 is-disabled is-focused">
-    <img
-        class="spectrum-Avatar-image"
-        data-chromatic="ignore"
-        src="[image]"
-        alt="[altText]"
-    />
-</div>
-```
+### Shadow DOM and cross-root ARIA Issues
 
-</details>
+- **SWC** **style** path: **`<img>`** in **light** DOM—**`alt`** is straightforward.
+- **`<swc-avatar>`**: **`label`** → shadow **`<img>`** **`alt`**; no **cross-root** **`aria-labelledby`** required if **`alt`** is correct.
 
-<details>
-<summary>Spectrum 2 (CSS spectrum-two branch)</summary>
+### Accessibility tree expectations
 
-```html
-<!-- With link -->
-<div class="spectrum-Avatar spectrum-Avatar--size700 is-disabled is-focused">
-    <a class="spectrum-Avatar-link" href="#">
-        <img
-            class="spectrum-Avatar-image"
-            data-chromatic="ignore"
-            src="[image]"
-            alt="[altText]"
-        />
-    </a>
-</div>
+- **Informative:** screen readers announce **`alt`** (from author or **`label`**).
+- **Decorative:** image skipped per **`alt=""`** / **`aria-hidden`**; nearby text carries identity.
 
-<!-- Without link -->
-<div class="spectrum-Avatar spectrum-Avatar--size700 is-disabled is-focused">
-    <img
-        class="spectrum-Avatar-image"
-        data-chromatic="ignore"
-        src="[image]"
-        alt="[altText]"
-    />
-</div>
-```
+### Keyboard and focus
 
-</details>
+**Not focusable.** Keyboard navigation should skip this component and move to the next focusable element.
 
-<details>
-<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
+---
 
-No significant structural changes.
+## Known 1st-gen issues
 
-</details>
+- **Single** **`<sp-avatar>`** supports **`href`** and **`Focusable`**, mixing **avatar image** and **link**—migrate to **`<swc-avatar>`** **or** **SWC** **style** **+** **`img`**, **plus** **`swc-avatar-link`** for links.
+- **Non-link** **`Focusable`** may leave the host as **`focusElement`** when **`#link`** is absent—**`<swc-avatar>`** must not repeat that for static avatar images.
+- **`warnMissingAlt`** and **[SWC-915](https://jira.corp.adobe.com/browse/SWC-915)** define **1st-gen** avatar image rules; **2nd-gen** **`swc-avatar`** should preserve them on the component path, and the **SWC** **style** path should document the same rules for authors and optional lint.
 
-### CSS => SWC mapping
+---
 
-| CSS selector                 | Attribute or slot    | Status                                   |
-| ---------------------------- | -------------------- | ---------------------------------------- |
-| `.spectrum-Avatar--size50`   | `size="50"`          | Implemented                              |
-| `.spectrum-Avatar--size75`   | `size="75"`          | Implemented                              |
-| `.spectrum-Avatar--size100`  | `size="100"`         | Implemented                              |
-| `.spectrum-Avatar--size200`  | `size="200"`         | Implemented                              |
-| `.spectrum-Avatar--size300`  | `size="300"`         | Implemented                              |
-| `.spectrum-Avatar--size400`  | `size="400"`         | Implemented                              |
-| `.spectrum-Avatar--size500`  | `size="500"`         | Implemented                              |
-| `.spectrum-Avatar--size600`  | `size="600"`         | Implemented                              |
-| `.spectrum-Avatar--size700`  | `size="700"`         | Implemented                              |
-| `.spectrum-Avatar-image`     | `src` attribute      | Implemented                              |
-| `.spectrum-Avatar-link`      | `href` attribute     | Implemented                              |
-| `.is-focused`                | Focus state          | Implemented                              |
-| `.is-disabled`               | `disabled` attribute | Implemented                              |
-| `.spectrum-Avatar--size800`  | `size="800"`         | Missing from WC (new size in Spectrum 2) |
-| `.spectrum-Avatar--size900`  | `size="900"`         | Missing from WC (new size in Spectrum 2) |
-| `.spectrum-Avatar--size1000` | `size="1000"`        | Missing from WC (new size in Spectrum 2) |
-| `.spectrum-Avatar--size1100` | `size="1100"`        | Missing from WC (new size in Spectrum 2) |
-| `.spectrum-Avatar--size1200` | `size="1200"`        | Missing from WC (new size in Spectrum 2) |
-| `.spectrum-Avatar--size1300` | `size="1300"`        | Missing from WC (new size in Spectrum 2) |
-| `.spectrum-Avatar--size1400` | `size="1400"`        | Missing from WC (new size in Spectrum 2) |
-| `.spectrum-Avatar--size1500` | `size="1500"`        | Missing from WC (new size in Spectrum 2) |
+## Testing
 
-## Summary of changes
+### Automated tests
 
-### CSS => SWC implementation gaps
+| Kind of test | What to check |
+|--------------|----------------|
+| **Docs / examples** | **SWC** **style:** styled **`<img>`** has **`alt`** or decorative pattern (**`alt=""`** + **`aria-hidden`**). **Component:** **`<swc-avatar>`** stories cover **`label`**, **`isDecorative`**, and dev warnings. |
+| **Unit (`swc-avatar`)** | **`label`** → **`img.alt`**; **`isDecorative`** matches **1st-gen**; **`href`** not supported. |
+| **Focus** | **`<swc-avatar>`** is in the Tab order. |
+| **aXe + Storybook** | Stories cover both **style** and **component** examples with real **`alt`** or explicit decorative markup. |
 
-**CSS features missing from Web Component:**
+---
 
-- Larger size variants (800, 900, 1000, 1100, 1200, 1300, 1400, 1500)
+## Summary checklist
 
-**Web Component features missing from CSS:**
-None found for this component.
+- [ ] **Avatar image** is offered and documented as **both** **SWC** **style** (**`<img>`**) **and** **`<swc-avatar>`** (no **`href`**).
+- [ ] Shared **CSS** / **tokens** keep **`<swc-avatar>`**, **SWC** **style**, and **`swc-avatar-link`** visually aligned.
+- [ ] Guidance covers decorative vs informative **`alt`**, **`aria-hidden`**, and **`isDecorative`** / **`label`** on **`<swc-avatar>`**.
+- [ ] **`<swc-avatar>`** uses dev warnings like **1st-gen**; **SWC** **style** path documents optional lint or docs checks.
+- [ ] Avatar image is not keyboard-focusable on either path.
+- [ ] **`swc-avatar-link`** owns linked cases; cross-link [Avatar link accessibility migration analysis](../avatar-link/accessibility-migration-analysis.md) from Storybook.
 
-### CSS Spectrum 2 changes
+---
 
-No significant structural changes between CSS main and spectrum-two branches. The templates are identical, indicating that the avatar component structure remains consistent across Spectrum 2 migration.
+## References
 
-## Resources
-
-- [CSS migration](https://github.com/adobe/spectrum-css/pull/3355)
-- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-avatar--docs)
-- [React](https://react-spectrum.adobe.com/Avatar)
+- [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
+- [Understanding 1.1.1 Non-text content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content)
+- [Using ARIA (read this first)](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
+- [Avatar migration roadmap](./rendering-and-styling-migration-analysis.md)
+- [Avatar link accessibility migration analysis](../avatar-link/accessibility-migration-analysis.md)
+- [SWC-915](https://jira.corp.adobe.com/browse/SWC-915) (resolved)—**avatar image** accessibility for **`<sp-avatar>`** without **`href`** (Adobe internal Jira)

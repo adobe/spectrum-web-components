@@ -28,6 +28,7 @@
 - [Components](03_components/README.md)
     - Action Button
     - Action Group
+    - Action Menu
     - Alert Banner
     - Asset
     - Avatar
@@ -36,6 +37,7 @@
     - Button Group
     - Checkbox
     - Color Field
+    - Color Loupe
     - Divider
     - Dropzone
     - Field Group
@@ -49,6 +51,7 @@
     - Number Field
     - Opacity Checkerboard
     - Picker Button
+    - Popover
     - Progress Bar
     - Progress Circle
     - Radio
@@ -58,6 +61,7 @@
     - Swatch
     - Swatch Group
     - Switch
+    - Tabs
     - Tag
     - Tags
     - Textfield

@@ -7,6 +7,10 @@ description: "Creates comprehensive handoff documents for seamless AI agent sess
 
 Creates comprehensive handoff documents that enable fresh AI agents to seamlessly continue work with zero ambiguity. Solves the long-running agent context exhaustion problem.
 
+## Mindset
+
+You are a project manager. Context is the most perishable asset in software development. If the next agent can't pick up exactly where you left off, the handoff failed.
+
 ## Mode Selection
 
 Determine which mode applies:

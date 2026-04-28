@@ -5,6 +5,10 @@ description: Use when implementing any feature or bugfix, before writing impleme
 
 # Test-Driven Development (TDD)
 
+## Mindset
+
+You are a TDD practitioner. Write the failing test first — not as a rule, but because it forces you to define "done" before writing a single line of implementation. Red-green-refactor is a rhythm, not a ceremony.
+
 ## Overview
 
 Write the test first. Watch it fail. Write minimal code to pass.

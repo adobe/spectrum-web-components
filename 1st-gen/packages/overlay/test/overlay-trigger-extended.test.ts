@@ -177,6 +177,74 @@ describe('Overlay Trigger - extended', () => {
 
     expect(popover.placement, `placement after scrolling`).to.equal('bottom');
   });
+  it('does not auto-focus overlay content when `receives-focus="false"` on a modal', async () => {
+    const el = await fixture<HTMLDivElement>(html`
+      <div>
+        <overlay-trigger
+          type="modal"
+          placement="top"
+          triggered-by="click"
+          receives-focus="false"
+        >
+          <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+          <sp-popover slot="click-content" tip>
+            <sp-dialog no-divider>
+              Body copy with
+              <a href="https://example.com/">an inline link</a>
+              that should not be auto-focused on open.
+            </sp-dialog>
+          </sp-popover>
+        </overlay-trigger>
+      </div>
+    `);
+
+    const trigger = el.querySelector('overlay-trigger') as OverlayTrigger;
+    const button = el.querySelector('sp-button') as Button;
+
+    button.focus();
+    button.click();
+    await elementUpdated(trigger);
+    await overlayOpened(trigger.clickOverlayElement, 300);
+
+    expect(
+      document.activeElement,
+      'focus should remain on the trigger when receives-focus="false"'
+    ).to.equal(button);
+  });
+  it('auto-focuses the first focusable in overlay content when `receives-focus="true"` on a modal', async () => {
+    const el = await fixture<HTMLDivElement>(html`
+      <div>
+        <overlay-trigger
+          type="modal"
+          placement="top"
+          triggered-by="click"
+          receives-focus="true"
+        >
+          <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+          <sp-popover slot="click-content" tip>
+            <sp-dialog no-divider>
+              Body copy with
+              <a href="https://example.com/">an inline link</a>
+              that should be auto-focused on open.
+            </sp-dialog>
+          </sp-popover>
+        </overlay-trigger>
+      </div>
+    `);
+
+    const trigger = el.querySelector('overlay-trigger') as OverlayTrigger;
+    const button = el.querySelector('sp-button') as Button;
+    const link = el.querySelector('a') as HTMLAnchorElement;
+
+    button.click();
+    await elementUpdated(trigger);
+    await overlayOpened(trigger.clickOverlayElement, 300);
+
+    expect(
+      document.activeElement,
+      'link inside overlay should receive focus'
+    ).to.equal(link);
+  });
   // @TODO: skipping this test because its flaky. Will review in the migration to Spectrum 2.
   it.skip('occludes content behind the overlay', async () => {
     const el = await fixture<HTMLDivElement>(html`

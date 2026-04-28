@@ -10,6 +10,10 @@ metadata:
 
 Follow these conventions when creating commits.
 
+## Mindset
+
+You are writing for the next person who reads this commit log, not for yourself. Clarity and consistency matter more than brevity. Commit subjects should suggest _why_ work was committed, not just what changed.
+
 ## Prerequisites
 
 Before committing, ensure you're working on a feature branch, not the main branch.
@@ -63,8 +67,9 @@ Source list: `.ai/config.json` → `git.types`.
 ## Subject Line Rules
 
 - Use imperative, present tense: "add feature" not "added feature"
-- Start with a lowercase letter — commitlint enforces this (`subject-case` rule forbids sentence-case, start-case, pascal-case, and upper-case)
-- No period or white space at the end
+- **Always lowercase** — commitlint enforces lowercase subjects;
+  sentence-case, start-case, and pascal-case are all rejected
+- No period at the end
 - Maximum 70 characters
 
 ## Body Guidelines
@@ -73,7 +78,7 @@ Source list: `.ai/config.json` → `git.types`.
 - Use imperative mood and present tense
 - Include motivation for the change
 - Contrast with previous behavior when relevant
-- Use a bullet point for each distinct concept or reason — this also handles line length naturally
+- Use a bullet point for each distinct concept or reason (this also handles line length naturally)
 - If a bullet's text exceeds 80 characters, continue on the next line flush with the
   bullet text (no indentation)
 
@@ -85,7 +90,7 @@ The commit contains the following structural elements, to communicate intent to 
 - feat: a commit of the type feat introduces a new feature to the codebase (this correlates with MINOR in Semantic Versioning).
 - BREAKING CHANGE: a commit that has a footer BREAKING CHANGE:, or appends a ! after the type/scope, introduces a breaking API change (correlating with MAJOR in Semantic Versioning). A BREAKING CHANGE can be part of commits of any type.
 - types other than fix: and feat: are allowed, for example @commitlint/config-conventional (based on the Angular convention) recommends build:, chore:, ci:, docs:, style:, refactor:, perf:, test:, and others.
-- footers other than BREAKING CHANGE: <description> may be provided and follow a convention similar to git trailer format.
+- footers other than BREAKING CHANGE: {description} may be provided and follow a convention similar to git trailer format.
 
 ## Examples
 
@@ -116,8 +121,9 @@ or resolved instead of creating a new message
 ```
 refactor: extract common validation logic to shared module
 
-Move duplicate validation code from three endpoints into a shared
-validator class. No behavior change.
+- Move duplicate validation from three endpoints into a shared
+validator class
+- No behavior change
 ```
 
 ### Breaking change
@@ -125,8 +131,8 @@ validator class. No behavior change.
 ```
 feat(api)!: remove deprecated v1 endpoints
 
-Remove all v1 API endpoints that were deprecated in version 23.1.
-Clients should migrate to v2 endpoints.
+- Remove all v1 API endpoints deprecated in version 23.1
+- Clients should migrate to v2 endpoints
 
 BREAKING CHANGE: v1 endpoints no longer available
 ```
@@ -136,9 +142,8 @@ BREAKING CHANGE: v1 endpoints no longer available
 ```
 revert: feat(api): add new endpoint
 
-This reverts commit abc123def456.
-
-Reason: Caused performance regression in production.
+- Reverts commit abc123def456
+- Caused performance regression in production
 ```
 
 ## Principles
