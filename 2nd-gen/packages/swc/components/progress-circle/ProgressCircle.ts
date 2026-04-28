@@ -28,7 +28,7 @@ import styles from './progress-circle.css';
  * They can represent determinate (with a specific progress value) or indeterminate (loading) progress.
  *
  * @element swc-progress-circle
- * @status preview
+ * @status unsupported
  * @since 0.0.1
  *
  * @example

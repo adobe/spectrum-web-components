@@ -20,7 +20,7 @@ import styles from './divider.css';
 
 /**
  * @element swc-divider
- * @status preview
+ * @status unsupported
  * @since 0.0.1
  */
 export class Divider extends DividerBase {
