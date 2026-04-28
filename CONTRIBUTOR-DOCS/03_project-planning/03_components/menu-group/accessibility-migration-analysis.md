@@ -46,7 +46,7 @@ This document sets accessibility expectations for 2nd-gen **Menu group** in Spec
 
 - [Menu accessibility migration analysis](../menu/accessibility-migration-analysis.md) for **`role="menu"`** (**internal** **shadow** **surface**), `swc-menu`, placement, controller split, and [migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current).
 - [Menu item accessibility migration analysis](../menu-item/accessibility-migration-analysis.md) for `swc-menu-item`, `menuitem` rows, submenus, and link rows.
-- [Menu separator accessibility migration analysis](../menu-separator/accessibility-migration-analysis.md) for **`swc-menu-divider`** (**`separator`** lines between items).
+- [Menu separator accessibility migration analysis](../menu-separator/accessibility-migration-analysis.md) for **`swc-menu-separator`** (**`separator`** lines between items).
 - [Action menu accessibility migration analysis](../action-menu/accessibility-migration-analysis.md) for **`swc-action-menu`**, a full menu-button **host** parallel to `swc-menu` (ActionMenu / “**more**” **defaults**).
 
 ### What `swc-menu-group` is (2nd-gen)
@@ -108,7 +108,7 @@ Scope: **`role="group"`** (or equivalent), **optional label**, **`menuitem`** ch
 | Host / surface | **`role="group"`** on the `swc-menu-group` surface (or equivalent wiring—verify in 2nd-gen source). The **containing** **`role="menu"`** **must** be the **internal** **menu** **node** in **`swc-menu` / `swc-action-menu`’s** **shadow** **tree** (**not** the **CE** **host**). |
 | Section title (label) node | **Not** a **`menuitem`**. Use **`role="presentation"`** on the visible **section title** element, give it a **stable `id`**, and reference that **`id`** from **`aria-labelledby`** on the **`role="group"`** host (**see [reference HTML](#what-swc-menu-group-is-2nd-gen)**). Keyboard roving targets **`menuitem`** (and **`separator`**) only. |
 | Group name | The **`swc-menu-group`** host **`aria-labelledby`** must resolve to the section-title **`id`** **or** use **`aria-label`** with the **identical** string as the visible title. Do **not** ship a labeled section with an unnamed **`group`**. |
-| Children | **Inside** the **`group`**: the **title** node (**`role="presentation"`**, **`id`**) **then** **`swc-menu-item`** (**`menuitem`**) and [`swc-menu-divider`](../menu-separator/accessibility-migration-analysis.md) (**`separator`**) as **siblings**—same flat section as the reference markup unless 2nd-gen DOM requires otherwise (**verify in source**). |
+| Children | **Inside** the **`group`**: the **title** node (**`role="presentation"`**, **`id`**) **then** **`swc-menu-item`** (**`menuitem`**) and [`swc-menu-separator`](../menu-separator/accessibility-migration-analysis.md) (**`separator`**) as **siblings**—same flat section as the reference markup unless 2nd-gen DOM requires otherwise (**verify in source**). |
 | Checkbox / radio groups | **`menuitemcheckbox` / `menuitemradio`** rows and **selection UX** — **out of scope** this phase; see [Menu — Migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current). |
 
 ### Shadow DOM and cross-root ARIA Issues
