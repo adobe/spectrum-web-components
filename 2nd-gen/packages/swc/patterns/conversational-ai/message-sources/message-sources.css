@@ -62,18 +62,25 @@
    ───────────────────────────────────── */
 
 .swc-MessageSources-list {
+  interpolate-size: allow-keywords;
   display: flex;
+  visibility: hidden;
   flex-direction: column;
   gap: var(--swc-message-sources-list-gap, token("spacing-75"));
+  block-size: 0;
   padding: 0;
   margin: 0;
+  overflow: hidden;
   list-style: none;
   counter-reset: sources;
+  transition:
+    block-size token("animation-duration-200") token("animation-ease-in-out"),
+    visibility token("animation-duration-200") linear;
 }
 
-/* Keep hidden state effective when panel is collapsed. */
-.swc-MessageSources-list[hidden] {
-  display: none;
+.swc-MessageSources-toggle[aria-expanded="true"] + .swc-MessageSources-list {
+  visibility: visible;
+  block-size: auto;
 }
 
 /* Each slotted item is expected to be a <li> */
