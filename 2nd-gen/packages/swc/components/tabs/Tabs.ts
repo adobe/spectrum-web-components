@@ -34,8 +34,6 @@ import styles from './tabs.css';
  * @slot - Tab items (`swc-tab` elements)
  * @slot tab-panel - Tab panel content (`swc-tab-panel` elements)
  *
- * @csspart tablist - The container element for slotted tab elements
- *
  * @example
  * <swc-tabs selected="1" label="Product details">
  *   <swc-tab value="1">Overview</swc-tab>
@@ -57,7 +55,6 @@ export class Tabs extends TabsBase {
     return html`
       <div
         role="tablist"
-        part="tablist"
         class="tablist"
         aria-label=${this.label || nothing}
         aria-orientation=${ifDefined(
