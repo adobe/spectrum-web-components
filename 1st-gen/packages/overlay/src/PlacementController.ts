@@ -155,6 +155,16 @@ export class PlacementController implements ReactiveController {
   private target!: HTMLElement;
 
   /**
+   * Incremented whenever the active placement session ends (`cleanup`) or a
+   * new session begins, so async `computePlacement` runs that started under an
+   * older session do not write styles after teardown or across stacked
+   * `placeOverlay` calls.
+   *
+   * @private
+   */
+  private placementGeneration = 0;
+
+  /**
    * Creates an instance of the PlacementController.
    *
    * @param {ReactiveElement & { elements: OpenableElement[] }} host - The host element that uses this controller.
@@ -180,6 +190,13 @@ export class PlacementController implements ReactiveController {
     target: HTMLElement = this.target,
     options: OverlayOptionsV1 = this.options
   ): Promise<void> {
+    // If `placeOverlay` runs twice before `hostUpdated` clears the prior
+    // session (rapid open, programmatic toggles), tear down the previous
+    // listeners first so `visualViewport` handlers and pending rAFs cannot
+    // leak.
+    this.cleanup?.();
+    this.cleanup = undefined;
+
     // Set the target and options for the overlay.
     this.target = target;
     this.options = options;
@@ -223,12 +240,16 @@ export class PlacementController implements ReactiveController {
     // frame.
     const visualViewport = window.visualViewport;
     let visualViewportRafId = 0;
+    let visualViewportPlacementCancelled = false;
     const onVisualViewportChange = (): void => {
-      if (visualViewportRafId) {
+      if (visualViewportPlacementCancelled || visualViewportRafId) {
         return;
       }
       visualViewportRafId = requestAnimationFrame(() => {
         visualViewportRafId = 0;
+        if (visualViewportPlacementCancelled) {
+          return;
+        }
         this.updatePlacement();
       });
     };
@@ -243,6 +264,10 @@ export class PlacementController implements ReactiveController {
 
     // Define the cleanup function to remove event listeners and reset placements.
     this.cleanup = () => {
+      this.placementGeneration += 1;
+      // Invalidate any `visualViewport` rAF callback scheduled before this
+      // cleanup runs, so `updatePlacement` cannot start after teardown.
+      visualViewportPlacementCancelled = true;
       this.host.elements?.forEach((element) => {
         element.addEventListener(
           'sp-closed',
@@ -265,6 +290,7 @@ export class PlacementController implements ReactiveController {
         visualViewport.removeEventListener('scroll', onVisualViewportChange);
         if (visualViewportRafId) {
           cancelAnimationFrame(visualViewportRafId);
+          visualViewportRafId = 0;
         }
       }
     };
@@ -321,12 +347,25 @@ export class PlacementController implements ReactiveController {
   async computePlacement(): Promise<void> {
     const { options, target } = this;
 
+    const genAtStart = this.placementGeneration;
+    const placementStillValid = (): boolean =>
+      (this.host as Overlay).open &&
+      this.placementGeneration === genAtStart &&
+      !!this.target &&
+      this.target === target;
+
     // Wait for document fonts to be ready before computing placement.
     await (document.fonts ? document.fonts.ready : Promise.resolve());
+    if (!placementStillValid()) {
+      return;
+    }
 
     if (isWebKit()) {
       // Computing placement requires a frame for layout stability in WebKit
       await new Promise((resolve) => requestAnimationFrame(resolve));
+    }
+    if (!placementStillValid()) {
+      return;
     }
 
     // Determine the flip middleware based on the type of trigger element.
@@ -395,6 +434,9 @@ export class PlacementController implements ReactiveController {
         strategy: 'fixed',
       }
     );
+    if (!placementStillValid()) {
+      return;
+    }
 
     // On iOS WebKit (Safari and WKWebView hosts such as the Adobe Express
     // iOS app) the layout viewport and the visual viewport can diverge by
@@ -416,6 +458,9 @@ export class PlacementController implements ReactiveController {
     }
 
     // Update the overlay's style with the computed position.
+    if (!placementStillValid()) {
+      return;
+    }
     Object.assign(target.style, {
       top: '0px',
       left: '0px',
@@ -437,6 +482,9 @@ export class PlacementController implements ReactiveController {
     });
 
     // Update the tip element's style with the computed arrow position.
+    if (!placementStillValid()) {
+      return;
+    }
     if (tipElement && middlewareData.arrow) {
       const { x: arrowX, y: arrowY } = middlewareData.arrow;
 
