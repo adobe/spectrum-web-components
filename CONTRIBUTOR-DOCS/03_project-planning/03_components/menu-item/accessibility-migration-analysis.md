@@ -58,7 +58,8 @@ This document sets accessibility expectations for 2nd-gen **Menu item** in Spect
 ### What `swc-menu-item` is (2nd-gen)
 
 - A **row** in the menu list: **`role="menuitem"`** for command actions, with a **visible name** and supported **keyboard** activation per the [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/).
-- **Submenu** items use **`aria-haspopup="menu"`** and **`aria-expanded`** when they open a nested `role="menu"` (see [Menu](../menu/accessibility-migration-analysis.md) and [Action menu](../action-menu/accessibility-migration-analysis.md)).
+- **Submenu** **(the `submenu` slot):** **`swc-menu-item`** exposes a **`submenu` slot**. When that **slot** has **child** **nodes**, **this** **item** **is** a **submenu** **parent**: it **renders** its **own** **`swc-popover`** (or equivalent) **and** a **child** **container** with **`role="menu"`** for the **cascading** **menu**—**not** a **second** **nested** **`swc-menu`** or **`swc-action-menu`** **in** the **list**. When the **slot** is **empty**, the **row** behaves as a **plain** **`menuitem`**. **Verify** **DOM** in 2nd-gen **source**.
+- **Submenu** **parent** **ARIA** uses **`aria-haspopup="menu"`** and **`aria-expanded`** **aligned** with **open** state **on** **this** **row**; the **child** **`role="menu"`** **surface** **lives** in **that** **item**-**scoped** **layer** (see [Menu](../menu/accessibility-migration-analysis.md) and [Action menu](../action-menu/accessibility-migration-analysis.md)).
 - Link-like content: when a row must navigate (`href`), use a real `<a href="…">` (or framework link) as descendant content with a clear name; for a full-row click target without double activation, follow [Inclusive Components: Cards](https://inclusive-components.design/cards/)—stretch the link with CSS (for example pseudo-element / positioning) so one interactive surface activates once. In general, for primary site or app navigation by links, authors should consider a navigation component or pattern ([disclosure navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/), landmarks, link lists) instead of modeling a list of links as `role="menu"`—command menus are for actions, not a substitute for nav chrome.
 
 ### When to use something else
@@ -82,7 +83,7 @@ This document sets accessibility expectations for 2nd-gen **Menu item** in Spect
 | [Keyboard (2.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/keyboard) | Activate with **Enter** / **Space** per pattern; **no** pointer-only rows (see 1st-gen [SWC-1332](https://jira.corp.adobe.com/browse/SWC-1332)). |
 | [Link purpose (2.4.4)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context) | Link rows expose a **clear** link **name**; avoid duplicate activations ([SWC-923](https://jira.corp.adobe.com/browse/SWC-923)). |
 
-Bottom line: items participate in **roving tabindex** and **FocusgroupNavigationController** navigation; **submenu** parents coordinate with **open/close** behavior on **action menu** / parent **menuitem** (see menu and action menu docs).
+Bottom line: items participate in **roving tabindex** and **FocusgroupNavigationController** navigation. **Submenu** **parents** coordinate **open/close**, **focus** **return**, and **child** **`role="menu"`** **with** **this** **item**’s **own** **popover** **layer**; the **top-level** **host** is still **`swc-menu`** / **`swc-action-menu`** (see [Menu](../menu/accessibility-migration-analysis.md) and [Action menu](../action-menu/accessibility-migration-analysis.md)).
 
 ---
 
@@ -107,18 +108,18 @@ Scope: **`menuitem`** rows, **submenu** parents, **separators** as implemented, 
 | --- | --- |
 | Plain command | **`role="menuitem"`** with an **accessible name**; keep **one** clear action per row. |
 | Disabled | **`aria-disabled="true"`** when the row is visibly disabled and cannot be invoked. |
-| Submenu parent | **`aria-haspopup="menu"`**, **`aria-expanded`** aligned with submenu **open** state (see action menu / menu docs). |
+| Submenu parent | **Only** when the **`submenu` slot** has **content** (otherwise treat as a **plain** **command** **row**). Use **`aria-haspopup="menu"`** and **`aria-expanded`** **aligned** with the **item-owned** **popover** / **child** **`role="menu"`** **open** state. **Do** **not** **model** **submenus** by **nesting** **`swc-menu`** in the list—**child** **items** and **structure** are **in** the **item**’s **submenu** **surface** (see [Menu: Submenus](../menu/accessibility-migration-analysis.md#recommendations-swc-menu) in the **Recommendations** table). |
 | Separator | Implemented per APG (**`separator`** or host-specific mapping—verify in source); not a **`menuitem`**. |
 | Link row | **No** proxy click on the **host** firing both **menuitem** and **link** behavior ([SWC-923](https://jira.corp.adobe.com/browse/SWC-923)). Prefer a **child** `<a href="…">` with **[Cards](https://inclusive-components.design/cards/)**-style **full-row hit** (**pseudo-element** / **positioning**) so activation is **once**. Prefer **navigation** patterns for **primary** **link** **navigation** where **appropriate** (see Overview). |
 | Checkbox / radio | **`menuitemcheckbox` / `menuitemradio`** and **`aria-checked`** — **out of scope** this phase. |
 
 ### Shadow DOM and cross-root ARIA Issues
 
-Align with [Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues): **`aria-labelledby`**, **`aria-describedby`**, and **IDs** for items should stay in **one composable subtree** with the **trigger** and **menu** so **IDREFs** do not cross unrelated shadow roots.
+Align with [Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues): **`aria-labelledby`**, **`aria-describedby`**, and **IDs** for **items** should stay in **one composable subtree** with the **top-level** **trigger** and **menu** so **IDREFs** do not cross unrelated shadow roots. For a **row** with a **populated** **`submenu` slot**, keep **wiring** that ties **this** **menuitem** to its **own** **popover** and **child** **`role="menu"`** (and **descendant** **items**) **in** a **connected** **composition** so **IDREFs** and **focus** **hand**-**off** are **reliable**—**verify** in 2nd-gen **implementation**.
 
 ### Accessibility tree expectations
 
-- Rows expose **`menuitem`** (or **`separator`**) roles and names; **expanded** submenu parents reflect **open** state.
+- Rows expose **`menuitem`** (or **`separator`**) roles and names. **Submenu** **parent** **rows** (when the **`submenu` slot** is **populated**) expose **`aria-expanded`**, **`aria-haspopup`**, and a **child** **`role="menu"`** with **its** **own** **items** in **this** **item**’s **layer**.
 
 ### Form-associated custom properties (labels, `ElementInternals`)
 
@@ -134,7 +135,7 @@ Intentionally omitted; see **menu** / **popover** for layered UI motion if neede
 
 ### Keyboard and focus
 
-Participate in **roving `tabindex`** on **items** when the menu is **open**; **Enter** / **Space** to **activate**; **arrow** keys, **Home** / **End**, **typeahead** via **`FocusgroupNavigationController`** ([PR #6129](https://github.com/adobe/spectrum-web-components/pull/6129)). **Submenu** keys follow **APG** parent/child expectations (verify with action menu).
+Participate in **roving `tabindex`** on **items** when the **parent** **menu** is **open**; **Enter** / **Space** to **activate** **or** **open** a **submenu** **parent** (when the **`submenu` slot** is **used**), per **APG**; **arrow** keys, **Home** / **End**, **typeahead** via **`FocusgroupNavigationController`** in **each** **`role="menu"`** **list** (top-level and **item-owned** child **surfaces**). **Submenu** **arrow** / **Escape** / **return** **behavior** should **match** **cascading** **menu** **expectations**—**verify** in **stories** **alongside** [Action menu — Keyboard and focus](../action-menu/accessibility-migration-analysis.md#keyboard-and-focus) and [Menu — Keyboard and focus](../menu/accessibility-migration-analysis.md#keyboard-and-focus).
 
 ---
 
@@ -160,7 +161,7 @@ Use [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/a
 ## Summary checklist
 
 - [ ] **`menuitemcheckbox` / `menuitemradio`** not documented as in-scope for this phase ([Menu migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current)).
-- [ ] **`menuitem`** names, disabled state, and submenu **`aria-expanded`** / **`aria-haspopup`** match implementation.
+- [ ] **`menuitem`** names, disabled state, and **submenu**-**parent** **`aria-expanded`** / **`aria-haspopup`** match **implementation** (only when the **`submenu` slot** has **content**; item-owned **popover** + child **`role="menu"`**).
 - [ ] Link rows: **child** `<a>` + **Cards** full-row pattern; **navigation** alternatives called out where links dominate.
 - [ ] SWC-923 duplicate activation guarded in tests; SWC-1332 retested when custom submenu content is in scope.
 
