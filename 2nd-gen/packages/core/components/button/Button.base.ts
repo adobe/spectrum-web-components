@@ -34,9 +34,10 @@ import { BUTTON_VALID_SIZES } from './Button.types.js';
 export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
   validSizes: BUTTON_VALID_SIZES,
 }) {
-  protected override createRenderRoot(): ShadowRoot {
-    return this.attachShadow({ mode: 'open', delegatesFocus: true });
-  }
+  static override shadowRootOptions: ShadowRootInit = {
+    ...SpectrumElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   /**
    * Whether the button is disabled. Removes focusability and prevents

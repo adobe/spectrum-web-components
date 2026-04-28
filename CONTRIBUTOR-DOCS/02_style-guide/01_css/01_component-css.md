@@ -24,6 +24,7 @@
 - [Variant implementation patterns](#variant-implementation-patterns)
 - [State implementation patterns](#state-implementation-patterns)
 - [Size variant patterns](#size-variant-patterns)
+- [Modifier overrides on inner elements](#modifier-overrides-on-inner-elements)
 - [Animation and transition patterns](#animation-and-transition-patterns)
 - [Forced colors requirements](#forced-colors-requirements)
 - [Managing Specificity](#managing-specificity)
@@ -277,6 +278,30 @@ Size variants (s, m, l, xl) use `:host([size="..."])` and update custom properti
 ```
 
 **Why**: Size is part of the customization surface. Consumers can override `swc-badge[size="l"] { --swc-badge-height: 48px; }`.
+
+## Modifier overrides on inner elements
+
+When a structural modifier (like `icon-only`) needs to change inner-element spacing or positioning, set the relevant custom properties in the `:host([attr])` rule rather than writing a new compound selector that re-states the individual properties directly.
+
+```css
+/* ❌ Compound selector re-asserts individual properties */
+:host([icon-only]) slot[name="icon"]::slotted(*) {
+  margin-block-start: 0;
+  margin-inline-start: 0;
+}
+
+/* ✅ Override the custom properties the element already reads */
+:host([icon-only]) slot[name="icon"]::slotted(*) {
+  --swc-button-top-to-icon: 0;
+  --swc-button-edge-to-visual: 0;
+}
+```
+
+The slotted element's base `calc()` expressions already consume `--swc-button-top-to-icon` and `--swc-button-edge-to-visual` through their existing `var()` chains, so they resolve to zero without any additional override rules.
+
+**Why**: Layout logic stays consolidated in the base rule. Modifier states only update values, they do not restate structure. This avoids compound selectors that would need to grow in step with any future changes to the inner element's base rule.
+
+📖 See: [Custom properties → Selector conventions](02_custom-properties.md#selector-conventions)
 
 ## Animation and transition patterns
 

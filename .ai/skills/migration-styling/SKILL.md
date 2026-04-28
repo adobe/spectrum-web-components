@@ -50,4 +50,20 @@ Then use the `rendering-and-styling-migration-analysis.md` file for the componen
 
 **Step 1 — Check for drift before committing to an approach.** If your planned CSS changes would exceed the migration plan's approved visual scope or contradict its custom-property decisions, call out the drift explicitly and follow [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md) before writing any code. Do not silently resolve open questions in CSS.
 
-**Step 2 — Execute the phase.** Follow **[Phase 4: Styling](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-4-styling)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
+**Step 2 — Verify or create the stories file.** The Phase 4 quality gate requires visual verification in Storybook, which needs a stories file. Check whether `2nd-gen/packages/swc/components/[component]/stories/[component].stories.ts` exists.
+
+- **If it exists**, confirm it renders the component in Storybook with no console errors before touching CSS.
+- **If it does not exist**, create it now using [`assets/stories-template.md`](assets/stories-template.md) before starting CSS work. Follow the template's "Decisions to make" section and its checklist.
+
+**Phase 4 stories scope** — the stories file at this phase should contain: Playground, Overview, Anatomy, Options (one story per constant array in the types file), States, and any Behaviors that exercise CSS-visible properties. Do **not** add JSDoc prose to stories (deferred to Phase 7) and do **not** write the Accessibility story body (deferred to the accessibility phase) — leave it as a `// TODO` comment.
+
+**Step 3 — Align render template class names with CSS selectors.** Before writing CSS, read the component's `render()` method and note every class name emitted. The CSS you write must use those exact names. Mismatches cause styles to silently not apply — there is no error.
+
+Common case: migrating from 1st-gen CSS that used single-hyphen separators (e.g. `.swc-Button-label`) to 2nd-gen BEM double-underscore notation (e.g. `.swc-Button__label`). If the CSS target changes, update the class name in `render()` at the same time. Check both directions:
+
+- CSS selector → does `render()` emit this class?
+- `render()` class name → does the CSS have a matching selector?
+
+If a rename is needed, make the template change first, confirm the component still renders correctly in Storybook, then write the CSS.
+
+**Step 4 — Execute the phase.** Follow **[Phase 4: Styling](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-4-styling)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.

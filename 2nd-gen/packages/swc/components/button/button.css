@@ -10,8 +10,406 @@
  * governing permissions and limitations under the License.
  */
 
-/* Styles migrated in Phase 4 (styling). */
-
 :host {
   display: inline-block;
+  vertical-align: top;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.swc-Button {
+  --_swc-button-border-width: token("border-width-200");
+  --_swc-button-height: var(--swc-button-height, token("component-height-100"));
+
+  display: inline-flex;
+  position: relative;
+  gap: var(--swc-button-gap, token("text-to-visual-100"));
+  align-items: center;
+  min-inline-size: calc(var(--_swc-button-height) * token("button-minimum-width-multiplier"));
+  min-block-size: var(--_swc-button-height);
+  padding-block: 0;
+  padding-inline: calc(var(--swc-button-edge-to-text, token("component-pill-edge-to-text-100")) - var(--_swc-button-border-width));
+  margin: 0;
+  font-family: token("sans-serif-font");
+  font-size: var(--swc-button-font-size, token("font-size-100"));
+  font-weight: token("bold-font-weight");
+  line-height: token("line-height-100");
+  color: var(--swc-button-content-color-default, token("gray-25"));
+  text-transform: none;
+  text-decoration: none;
+  background-color: var(--swc-button-background-color-default, token("neutral-background-color-default"));
+  border-color: var(--swc-button-border-color-default, transparent);
+  border-style: solid;
+  border-width: var(--_swc-button-border-width);
+  border-radius: var(--swc-button-border-radius, calc(var(--_swc-button-height) / 2));
+  overflow: visible;
+  cursor: pointer;
+  user-select: none;
+  transition-timing-function: linear;
+  transition-duration: token("animation-duration-100");
+  transition-property: outline, border-color, color, background;
+}
+
+.swc-Button:hover {
+  color: var(--swc-button-content-color-hover, token("gray-25"));
+  background-color: var(--swc-button-background-color-hover, token("neutral-background-color-hover"));
+  border-color: var(--swc-button-border-color-hover, transparent);
+}
+
+.swc-Button:focus-visible {
+  color: var(--swc-button-content-color-focus, token("gray-25"));
+  background-color: var(--swc-button-background-color-focus, token("neutral-background-color-key-focus"));
+  border-color: var(--swc-button-border-color-focus, transparent);
+  outline: token("focus-indicator-thickness") solid var(--swc-button-focus-indicator-color, token("focus-indicator-color"));
+  outline-offset: token("focus-indicator-gap");
+}
+
+.swc-Button:active {
+  color: var(--swc-button-content-color-down, token("gray-25"));
+  background-color: var(--swc-button-background-color-down, token("neutral-background-color-down"));
+  border-color: var(--swc-button-border-color-down, transparent);
+
+  /* TODO: resolve down state calculation */
+  transform: translateZ(token("component-size-difference-down"));
+}
+
+.swc-Button:disabled {
+  color: var(--swc-button-content-color-disabled, token("disabled-content-color"));
+  background-color: var(--swc-button-background-color-disabled, token("disabled-background-color"));
+  border-color: var(--swc-button-border-color-disabled, transparent);
+  cursor: default;
+  transform: none;
+}
+
+.swc-Button__label {
+  align-self: start;
+  padding-block-start: calc(var(--swc-button-top-to-text, token("component-top-to-text-100")) - var(--_swc-button-border-width));
+  padding-block-end: calc(var(--swc-button-bottom-to-text, token("component-bottom-to-text-100")) - var(--_swc-button-border-width));
+  line-height: token("line-height-100");
+  text-align: center;
+}
+
+slot[name="icon"]::slotted(*) {
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-block-start: calc(var(--swc-button-top-to-icon, token("component-top-to-workflow-icon-100")) - var(--_swc-button-border-width));
+  margin-inline-start: calc(var(--swc-button-edge-to-visual, token("component-pill-edge-to-visual-100")) - var(--swc-button-edge-to-text, token("component-pill-edge-to-text-100")));
+  color: inherit;
+}
+
+/* ── Sizes ──────────────────────────────────────── */
+
+:host([size="s"]) {
+  --swc-button-height: token("component-height-75");
+  --swc-button-font-size: token("font-size-75");
+  --swc-button-gap: token("text-to-visual-75");
+  --swc-button-edge-to-text: token("component-pill-edge-to-text-75");
+  --swc-button-edge-to-visual: token("component-pill-edge-to-visual-75");
+  --swc-button-edge-to-visual-only: token("component-pill-edge-to-visual-only-75");
+  --swc-button-top-to-text: token("component-top-to-text-75");
+  --swc-button-bottom-to-text: token("component-bottom-to-text-75");
+  --swc-button-top-to-icon: token("component-top-to-workflow-icon-75");
+}
+
+:host([size="l"]) {
+  --swc-button-height: token("component-height-200");
+  --swc-button-font-size: token("font-size-200");
+  --swc-button-gap: token("text-to-visual-200");
+  --swc-button-edge-to-text: token("component-pill-edge-to-text-200");
+  --swc-button-edge-to-visual: token("component-pill-edge-to-visual-200");
+  --swc-button-edge-to-visual-only: token("component-pill-edge-to-visual-only-200");
+  --swc-button-top-to-text: token("component-top-to-text-200");
+  --swc-button-bottom-to-text: token("component-bottom-to-text-200");
+  --swc-button-top-to-icon: token("component-top-to-workflow-icon-200");
+}
+
+:host([size="xl"]) {
+  --swc-button-height: token("component-height-300");
+  --swc-button-font-size: token("font-size-300");
+  --swc-button-gap: token("text-to-visual-300");
+  --swc-button-edge-to-text: token("component-pill-edge-to-text-300");
+  --swc-button-edge-to-visual: token("component-pill-edge-to-visual-300");
+  --swc-button-edge-to-visual-only: token("component-pill-edge-to-visual-only-300");
+  --swc-button-top-to-text: token("component-top-to-text-300");
+  --swc-button-bottom-to-text: token("component-bottom-to-text-300");
+  --swc-button-top-to-icon: token("component-top-to-workflow-icon-300");
+}
+
+/* ── Variants ────────────────────────────────────── */
+
+:host([variant="accent"]) {
+  --swc-button-content-color-default: token("white");
+  --swc-button-content-color-hover: token("white");
+  --swc-button-content-color-down: token("white");
+  --swc-button-content-color-focus: token("white");
+  --swc-button-background-color-default: token("accent-background-color-default");
+  --swc-button-background-color-hover: token("accent-background-color-hover");
+  --swc-button-background-color-down: token("accent-background-color-down");
+  --swc-button-background-color-focus: token("accent-background-color-key-focus");
+}
+
+:host([variant="negative"]) {
+  --swc-button-content-color-default: token("white");
+  --swc-button-content-color-hover: token("white");
+  --swc-button-content-color-down: token("white");
+  --swc-button-content-color-focus: token("white");
+  --swc-button-background-color-default: token("negative-background-color-default");
+  --swc-button-background-color-hover: token("negative-background-color-hover");
+  --swc-button-background-color-down: token("negative-background-color-down");
+  --swc-button-background-color-focus: token("negative-background-color-key-focus");
+}
+
+:host([variant="secondary"]) {
+  --swc-button-content-color-default: token("neutral-content-color-default");
+  --swc-button-content-color-hover: token("neutral-content-color-hover");
+  --swc-button-content-color-down: token("neutral-content-color-down");
+  --swc-button-content-color-focus: token("neutral-content-color-key-focus");
+  --swc-button-background-color-default: token("gray-100");
+  --swc-button-background-color-hover: token("gray-200");
+  --swc-button-background-color-down: token("gray-200");
+  --swc-button-background-color-focus: token("gray-200");
+}
+
+/* ── Outline (primary and secondary only) ─────────── */
+
+:host([variant="primary"][fill-style="outline"]) {
+  --swc-button-background-color-default: transparent;
+  --swc-button-background-color-hover: token("gray-100");
+  --swc-button-background-color-down: token("gray-100");
+  --swc-button-background-color-focus: token("gray-100");
+  --swc-button-border-color-default: token("gray-800");
+  --swc-button-border-color-hover: token("gray-900");
+  --swc-button-border-color-down: token("gray-900");
+  --swc-button-border-color-focus: token("gray-900");
+  --swc-button-content-color-default: token("neutral-content-color-default");
+  --swc-button-content-color-hover: token("neutral-content-color-hover");
+  --swc-button-content-color-down: token("neutral-content-color-down");
+  --swc-button-content-color-focus: token("neutral-content-color-key-focus");
+  --swc-button-background-color-disabled: transparent;
+  --swc-button-border-color-disabled: token("disabled-border-color");
+}
+
+:host([variant="secondary"][fill-style="outline"]) {
+  --swc-button-background-color-default: transparent;
+  --swc-button-background-color-hover: token("gray-100");
+  --swc-button-background-color-down: token("gray-100");
+  --swc-button-background-color-focus: token("gray-100");
+  --swc-button-border-color-default: token("gray-300");
+  --swc-button-border-color-hover: token("gray-400");
+  --swc-button-border-color-down: token("gray-400");
+  --swc-button-border-color-focus: token("gray-400");
+  --swc-button-background-color-disabled: transparent;
+  --swc-button-border-color-disabled: token("disabled-border-color");
+}
+
+/* ── Static white ─────────────────────────────────── */
+
+:host([static-color="white"]) {
+  --swc-button-focus-indicator-color: token("static-white-focus-indicator-color");
+  --swc-button-background-color-default: token("transparent-white-800");
+  --swc-button-background-color-hover: token("transparent-white-900");
+  --swc-button-background-color-down: token("transparent-white-900");
+  --swc-button-background-color-focus: token("transparent-white-900");
+  --swc-button-content-color-default: token("black");
+  --swc-button-content-color-hover: token("black");
+  --swc-button-content-color-down: token("black");
+  --swc-button-content-color-focus: token("black");
+  --swc-button-background-color-disabled: token("disabled-static-white-background-color");
+  --swc-button-border-color-disabled: transparent;
+  --swc-button-content-color-disabled: token("disabled-static-white-content-color");
+}
+
+:host([static-color="white"][variant="secondary"]) {
+  --swc-button-background-color-default: token("transparent-white-100");
+  --swc-button-background-color-hover: token("transparent-white-200");
+  --swc-button-background-color-down: token("transparent-white-200");
+  --swc-button-background-color-focus: token("transparent-white-200");
+  --swc-button-content-color-default: token("transparent-white-800");
+  --swc-button-content-color-hover: token("transparent-white-900");
+  --swc-button-content-color-down: token("transparent-white-900");
+  --swc-button-content-color-focus: token("transparent-white-900");
+}
+
+:host([static-color="white"][fill-style="outline"]) {
+  --swc-button-background-color-default: token("transparent-white-25");
+  --swc-button-background-color-hover: token("transparent-white-100");
+  --swc-button-background-color-down: token("transparent-white-100");
+  --swc-button-background-color-focus: token("transparent-white-100");
+  --swc-button-border-color-default: token("transparent-white-800");
+  --swc-button-border-color-hover: token("transparent-white-900");
+  --swc-button-border-color-down: token("transparent-white-900");
+  --swc-button-border-color-focus: token("transparent-white-900");
+  --swc-button-content-color-default: token("transparent-white-800");
+  --swc-button-content-color-hover: token("transparent-white-900");
+  --swc-button-content-color-down: token("transparent-white-900");
+  --swc-button-content-color-focus: token("transparent-white-900");
+  --swc-button-background-color-disabled: token("transparent-white-25");
+  --swc-button-border-color-disabled: token("disabled-static-white-border-color");
+  --swc-button-content-color-disabled: token("disabled-static-white-content-color");
+}
+
+:host([static-color="white"][variant="secondary"][fill-style="outline"]) {
+  --swc-button-background-color-default: token("transparent-white-25");
+  --swc-button-background-color-hover: token("transparent-white-100");
+  --swc-button-background-color-down: token("transparent-white-100");
+  --swc-button-background-color-focus: token("transparent-white-100");
+  --swc-button-border-color-default: token("transparent-white-300");
+  --swc-button-border-color-hover: token("transparent-white-400");
+  --swc-button-border-color-down: token("transparent-white-400");
+  --swc-button-border-color-focus: token("transparent-white-400");
+}
+
+/* ── Static black ─────────────────────────────────── */
+
+:host([static-color="black"]) {
+  --swc-button-focus-indicator-color: token("static-black-focus-indicator-color");
+  --swc-button-background-color-default: token("transparent-black-800");
+  --swc-button-background-color-hover: token("transparent-black-900");
+  --swc-button-background-color-down: token("transparent-black-900");
+  --swc-button-background-color-focus: token("transparent-black-900");
+  --swc-button-content-color-default: token("white");
+  --swc-button-content-color-hover: token("white");
+  --swc-button-content-color-down: token("white");
+  --swc-button-content-color-focus: token("white");
+  --swc-button-background-color-disabled: token("disabled-static-black-background-color");
+  --swc-button-border-color-disabled: transparent;
+  --swc-button-content-color-disabled: token("disabled-static-black-content-color");
+}
+
+:host([static-color="black"][variant="secondary"]) {
+  --swc-button-background-color-default: token("transparent-black-100");
+  --swc-button-background-color-hover: token("transparent-black-200");
+  --swc-button-background-color-down: token("transparent-black-200");
+  --swc-button-background-color-focus: token("transparent-black-200");
+  --swc-button-content-color-default: token("transparent-black-800");
+  --swc-button-content-color-hover: token("transparent-black-900");
+  --swc-button-content-color-down: token("transparent-black-900");
+  --swc-button-content-color-focus: token("transparent-black-900");
+}
+
+:host([static-color="black"][fill-style="outline"]) {
+  --swc-button-background-color-default: token("transparent-black-25");
+  --swc-button-background-color-hover: token("transparent-black-100");
+  --swc-button-background-color-down: token("transparent-black-100");
+  --swc-button-background-color-focus: token("transparent-black-100");
+  --swc-button-border-color-default: token("transparent-black-800");
+  --swc-button-border-color-hover: token("transparent-black-900");
+  --swc-button-border-color-down: token("transparent-black-900");
+  --swc-button-border-color-focus: token("transparent-black-900");
+  --swc-button-content-color-default: token("transparent-black-800");
+  --swc-button-content-color-hover: token("transparent-black-900");
+  --swc-button-content-color-down: token("transparent-black-900");
+  --swc-button-content-color-focus: token("transparent-black-900");
+  --swc-button-background-color-disabled: token("transparent-black-25");
+  --swc-button-border-color-disabled: token("disabled-static-black-border-color");
+  --swc-button-content-color-disabled: token("disabled-static-black-content-color");
+}
+
+:host([static-color="black"][variant="secondary"][fill-style="outline"]) {
+  --swc-button-background-color-default: token("transparent-black-25");
+  --swc-button-background-color-hover: token("transparent-black-100");
+  --swc-button-background-color-down: token("transparent-black-100");
+  --swc-button-background-color-focus: token("transparent-black-100");
+  --swc-button-border-color-default: token("transparent-black-300");
+  --swc-button-border-color-hover: token("transparent-black-400");
+  --swc-button-border-color-down: token("transparent-black-400");
+  --swc-button-border-color-focus: token("transparent-black-400");
+}
+
+/* ── Icon only ────────────────────────────────────── */
+
+:host([icon-only]) {
+  --swc-button-border-radius: token("corner-radius-full");
+}
+
+:host([icon-only]) .swc-Button {
+  min-inline-size: unset;
+  padding-inline: calc(var(--swc-button-edge-to-visual-only, token("component-pill-edge-to-visual-only-100")) - var(--_swc-button-border-width));
+}
+
+:host([icon-only]) slot[name="icon"]::slotted(*) {
+  --swc-button-top-to-icon: 0;
+  --swc-button-edge-to-visual: 0;
+
+  align-self: center;
+}
+
+/* ── Truncate ─────────────────────────────────────── */
+
+:host([truncate]) .swc-Button__label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Pending ──────────────────────────────────────── */
+
+/* Pending references disabled vars so outline and static-color variants
+   automatically get their correct unavailable appearance (e.g. transparent
+   background for outline).
+   
+   TODO: Only apply visual adjustments _after_ the delay inherent to pending */
+:host([pending]) {
+  --swc-button-background-color-default: var(--swc-button-background-color-disabled, token("disabled-background-color"));
+  --swc-button-background-color-hover: var(--swc-button-background-color-disabled, token("disabled-background-color"));
+  --swc-button-background-color-down: var(--swc-button-background-color-disabled, token("disabled-background-color"));
+  --swc-button-background-color-focus: var(--swc-button-background-color-disabled, token("disabled-background-color"));
+  --swc-button-border-color-default: var(--swc-button-border-color-disabled, transparent);
+  --swc-button-border-color-hover: var(--swc-button-border-color-disabled, transparent);
+  --swc-button-border-color-down: var(--swc-button-border-color-disabled, transparent);
+  --swc-button-border-color-focus: var(--swc-button-border-color-disabled, transparent);
+  --swc-button-content-color-default: var(--swc-button-content-color-disabled, token("disabled-content-color"));
+  --swc-button-content-color-hover: var(--swc-button-content-color-disabled, token("disabled-content-color"));
+  --swc-button-content-color-down: var(--swc-button-content-color-disabled, token("disabled-content-color"));
+  --swc-button-content-color-focus: var(--swc-button-content-color-disabled, token("disabled-content-color"));
+}
+
+:host([pending]) .swc-Button {
+  cursor: default;
+}
+
+:host([pending]) .swc-Button__label {
+  opacity: 0;
+  transition: opacity token("animation-duration-100") ease-in-out;
+}
+
+:host([pending]) slot[name="icon"]::slotted(*) {
+  opacity: 0;
+  transition: opacity token("animation-duration-100") ease-in-out;
+}
+
+/* ── Forced colors ────────────────────────────────── */
+
+@media (forced-colors: active) {
+  /* :host {
+    --swc-button-border-color-default: ButtonBorder;
+    --swc-button-border-color-hover: ButtonBorder;
+    --swc-button-border-color-focus: ButtonBorder;
+    --swc-button-border-color-down: ButtonBorder;
+    --swc-button-content-color-disabled: GrayText;
+    --swc-button-border-color-disabled: GrayText;
+    --swc-button-background-color-disabled: ButtonFace;
+    --swc-button-focus-indicator-color: ButtonText;
+  } */
+
+  :host([variant="accent"]) {
+    --swc-button-background-color-default: ButtonText;
+    --swc-button-content-color-default: ButtonFace;
+    --swc-button-background-color-hover: Highlight;
+    --swc-button-background-color-down: Highlight;
+    --swc-button-background-color-focus: Highlight;
+    --swc-button-content-color-hover: HighlightText;
+    --swc-button-content-color-down: HighlightText;
+    --swc-button-content-color-focus: HighlightText;
+  }
+
+  /* :host([variant="accent"]) .swc-Button__label {
+    forced-color-adjust: none;
+  }
+
+  .swc-Button:focus-visible {
+    forced-color-adjust: none;
+  } */
 }

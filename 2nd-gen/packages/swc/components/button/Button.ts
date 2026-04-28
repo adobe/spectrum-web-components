@@ -107,7 +107,7 @@ export class Button extends ButtonBase {
           : (this.getAttribute('aria-label') ?? nothing)}
       >
         <slot name="icon"></slot>
-        <span class="swc-Button-label">
+        <span class="swc-Button__label">
           <slot></slot>
         </span>
       </button>
