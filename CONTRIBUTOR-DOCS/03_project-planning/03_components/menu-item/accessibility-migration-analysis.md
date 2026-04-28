@@ -52,7 +52,7 @@ This document sets accessibility expectations for 2nd-gen **Menu item** in Spect
 
 - [Menu accessibility migration analysis](../menu/accessibility-migration-analysis.md) for `swc-menu`, controller split, `FocusgroupNavigationController`, and link-row guidance.
 - [Menu group accessibility migration analysis](../menu-group/accessibility-migration-analysis.md) for **`role="group"`** sections inside a menu.
-- [Menu divider accessibility migration analysis](../menu-divider/accessibility-migration-analysis.md) for **`swc-menu-divider`** (**`separator`** between rows—not a **`menuitem`**).
+- [Menu separator accessibility migration analysis](../menu-separator/accessibility-migration-analysis.md) for **`swc-menu-divider`** (**`separator`** between rows—not a **`menuitem`**).
 - [Action menu accessibility migration analysis](../action-menu/accessibility-migration-analysis.md) for the **trigger** and **`swc-action-menu`** composition.
 
 ### What `swc-menu-item` is (2nd-gen)
@@ -170,7 +170,7 @@ Use [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/a
 
 - [Menu accessibility migration analysis](../menu/accessibility-migration-analysis.md)
 - [Menu group accessibility migration analysis](../menu-group/accessibility-migration-analysis.md)
-- [Menu divider accessibility migration analysis](../menu-divider/accessibility-migration-analysis.md)
+- [Menu separator accessibility migration analysis](../menu-separator/accessibility-migration-analysis.md)
 - [Action menu accessibility migration analysis](../action-menu/accessibility-migration-analysis.md)
 - [Heydon Pickering: Inclusive Components — Cards](https://inclusive-components.design/cards/)
 - [WAI-ARIA APG: Menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)

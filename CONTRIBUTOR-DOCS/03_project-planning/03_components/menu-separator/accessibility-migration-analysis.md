@@ -1,10 +1,10 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Menu Divider / Menu divider accessibility migration analysis
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Menu Separator / Menu separator accessibility migration analysis
 
 <!-- Document title (editable) -->
 
-# Menu divider accessibility migration analysis
+# Menu separator accessibility migration analysis
 
 <!-- Generated TOC - DO NOT EDIT -->
 
@@ -12,9 +12,8 @@
 <summary><strong>In this doc</strong></summary>
 
 - [Overview](#overview)
-    - [Migration scope (this phase)](#migration-scope-this-phase)
     - [Also read](#also-read)
-    - [What `swc-menu-divider` is (2nd-gen)](#what-swc-menu-divider-is-2nd-gen)
+    - [What the menu separator is (`swc-menu-divider`, 2nd-gen)](#what-the-menu-separator-is-swc-menu-divider-2nd-gen)
     - [When to use something else](#when-to-use-something-else)
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
@@ -41,26 +40,20 @@
 
 ## Overview
 
-This document sets accessibility expectations for 2nd-gen **Menu divider** (menu **separator**) in Spectrum Web Components: **`swc-menu-divider`** as a non-interactive **`role="separator"`** rule between [`menuitem`](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) rows inside a [`role="menu"`](../menu/accessibility-migration-analysis.md) surface. Visually it is the horizontal Spectrum menu section line—the same semantic role browsers expose for separators in menus. **1st-gen** shipped this behavior on [`sp-menu-divider`](https://github.com/adobe/spectrum-web-components/blob/main/1st-gen/packages/menu/src/MenuDivider.ts) (`role="separator"` on the host in `firstUpdated`); **`swc-menu-divider`** API and shadow wiring should follow the same semantics when 2nd-gen lands (**verify attribute timing and inheritance in repo source before locking contributor copy**). The target is **WCAG 2.2 Level AA**.
-
-### Migration scope (this phase)
-
-**In scope:** plain **`separator`** placement between command **`menuitem`** rows, consistent with current [menu migration scope](../menu/accessibility-migration-analysis.md).
-
-**Governed elsewhere:** selectable **`menuitemcheckbox` / `menuitemradio`**, selection modes, and **mobile tray**—see [Menu — Migration scope (current)](../menu/accessibility-migration-analysis.md#migration-scope-current).
+This document sets accessibility expectations for 2nd-gen **Menu separator** in Spectrum Web Components: **`swc-menu-divider`** as a non-interactive **`role="separator"`** rule between [`menuitem`](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) rows inside a [`role="menu"`](../menu/accessibility-migration-analysis.md) surface. Visually it is the horizontal Spectrum menu section line—the same semantic role browsers expose for **`separator`** in menus. **1st-gen** shipped this behavior on [`sp-menu-divider`](https://github.com/adobe/spectrum-web-components/blob/main/1st-gen/packages/menu/src/MenuDivider.ts) (`role="separator"` on the host in `firstUpdated`); **`swc-menu-divider`** API and shadow wiring should follow the same semantics when 2nd-gen lands (**verify attribute timing and inheritance in repo source before locking contributor copy**). The target is **WCAG 2.2 Level AA**.
 
 ### Also read
 
 - [Menu accessibility migration analysis](../menu/accessibility-migration-analysis.md) for `swc-menu`, `FocusgroupNavigationController`, and open/close wiring.
 - [Menu item accessibility migration analysis](../menu-item/accessibility-migration-analysis.md) for `menuitem` rows adjacent to separators.
-- [Menu group accessibility migration analysis](../menu-group/accessibility-migration-analysis.md) for labelled **`role="group"`** sections versus a plain divider line (different structure).
+- [Menu group accessibility migration analysis](../menu-group/accessibility-migration-analysis.md) for labelled **`role="group"`** sections versus a plain **`separator`** line (different structure).
 - [Action menu accessibility migration analysis](../action-menu/accessibility-migration-analysis.md) for composed **`swc-action-menu` + `swc-menu`** trees.
 - [Divider accessibility migration analysis](../divider/accessibility-migration-analysis.md) for generic **`swc-divider`** / **`separator`** semantics outside menus (orientation, misuse as splitter).
 
-### What `swc-menu-divider` is (2nd-gen)
+### What the menu separator is (`swc-menu-divider`, 2nd-gen)
 
 - A **non-interactive separator** authored only inside a **`role="menu"`** list: exposes [`role="separator"`](https://www.w3.org/TR/wai-aria/#separator) compatible with the APG **[menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)** pattern.
-- **Not** a **`menuitem`**: assistive tech should not treat it as an actionable row; **`FocusgroupNavigationController`** ([PR #6129](https://github.com/adobe/spectrum-web-components/pull/6129)) arrow traversal should jump between adjacent **`menuitem`** stops **without** treating the divider as a roving focus target (consistent with **`sp-menu-divider`** menu tests that advance from item to item across the divider).
+- **Not** a **`menuitem`**: assistive tech should not treat it as an actionable row; **`FocusgroupNavigationController`** ([PR #6129](https://github.com/adobe/spectrum-web-components/pull/6129)) arrow traversal should jump between adjacent **`menuitem`** stops **without** treating the separator as a roving focus target (consistent with **`sp-menu-divider`** menu tests that advance from item to item across the separator).
 
 ### When to use something else
 
@@ -128,11 +121,11 @@ Does not apply.
 
 ### Motion (dedicated recommendations subsection)
 
-Intentionally omitted. Divider lines follow **menu** / **popover** motion guidance only if surfaced as layered UI elsewhere.
+Intentionally omitted. Separator lines follow **menu** / **popover** motion guidance only if surfaced as layered UI elsewhere.
 
 ### Keyboard and focus
 
-**Not focusable.** Roving **tabindex** and **arrow-key** traversal are **applied to `menuitem` rows** ([`FocusgroupNavigationController`](https://github.com/adobe/spectrum-web-components/pull/6129)); the divider must **not** become a **`tabindex`** roving stop. Keyboard testing should prove **ArrowUp** / **ArrowDown** skips the separator boundary while focus moves between neighbouring **items**.
+**Not focusable.** Roving **tabindex** and **arrow-key** traversal are **applied to `menuitem` rows** ([`FocusgroupNavigationController`](https://github.com/adobe/spectrum-web-components/pull/6129)); the separator host must **not** become a **`tabindex`** roving stop. Keyboard testing should prove **ArrowUp** / **ArrowDown** skips the separator boundary while focus moves between neighbouring **items**.
 
 ---
 
@@ -147,11 +140,11 @@ Intentionally omitted. Divider lines follow **menu** / **popover** motion guidan
 
 ### Keyboard testing
 
-Follow the 2nd-gen Storybook [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) guide on a composed **menu** path (**`swc-action-menu`** + **`swc-menu`**; see [Menu — Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing)). Confirm **ArrowUp**/**ArrowDown** moves between **`menuitem`** entries **past** separators **without** focusing the divider as a selectable row.
+Follow the 2nd-gen Storybook [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) guide on a composed **menu** path (**`swc-action-menu`** + **`swc-menu`**; see [Menu — Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing)). Confirm **ArrowUp**/**ArrowDown** moves between **`menuitem`** entries **past** separators **without** focusing the separator row as a selectable command.
 
 ### Manual and screen reader testing
 
-Compose **menu + divider + items** paths; reconcile with [Menu — Manual and screen reader testing](../menu/accessibility-migration-analysis.md#manual-and-screen-reader-testing-mandatory-host-alone) guidance. Optionally compare announcement patterns with **`sp-menu-divider`** before behaviour parity freezes. Follow [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx).
+Compose **menu + separator + items** paths; reconcile with [Menu — Manual and screen reader testing](../menu/accessibility-migration-analysis.md#manual-and-screen-reader-testing-mandatory-host-alone) guidance. Optionally compare announcement patterns with **`sp-menu-divider`** before behaviour parity freezes. Follow [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx).
 
 ---
 

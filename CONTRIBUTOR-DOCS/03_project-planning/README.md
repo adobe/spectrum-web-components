@@ -48,9 +48,9 @@
     - Infield Progress Circle
     - Link
     - Menu
-    - Menu Divider
     - Menu Group
     - Menu Item
+    - Menu Separator
     - Meter
     - Number Field
     - Opacity Checkerboard

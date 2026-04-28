@@ -12,7 +12,6 @@
 <summary><strong>In this doc</strong></summary>
 
 - [Overview](#overview)
-    - [Migration scope (this phase)](#migration-scope-this-phase)
     - [Also read](#also-read)
     - [What `swc-menu-group` is (2nd-gen)](#what-swc-menu-group-is-2nd-gen)
     - [When to use something else](#when-to-use-something-else)
@@ -43,22 +42,29 @@
 
 This document sets accessibility expectations for 2nd-gen **Menu group** in Spectrum Web Components: **`swc-menu-group`** as a labeled grouping of [`menuitem`](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) rows inside a parent [`role="menu"`](../menu/accessibility-migration-analysis.md) surface. It is not a stand-alone widget; it only makes sense inside `swc-menu` (or an equivalent menu tree). The target is **WCAG 2.2 Level AA**.
 
-### Migration scope (this phase)
-
-- **`menuitemcheckbox` / `menuitemradio` and selection UX** (including groupings of selectable rows) are **out of scope** for this migration phase—align with [Menu — Migration scope (current)](../menu/accessibility-migration-analysis.md#migration-scope-current). This doc addresses **plain command** structure and **`role="group"`** for non-selectable rows only.
-- **Mobile tray**, **menu item selection modes**, and **checkbox / radio** keyboard behavior remain governed by the menu doc’s scope; do not document them as locked for 2nd-gen here.
-
 ### Also read
 
 - [Menu accessibility migration analysis](../menu/accessibility-migration-analysis.md) for `role="menu"`, `swc-menu`, placement, controller split, and [migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current).
 - [Menu item accessibility migration analysis](../menu-item/accessibility-migration-analysis.md) for `swc-menu-item`, `menuitem` rows, submenus, and link rows.
-- [Menu divider accessibility migration analysis](../menu-divider/accessibility-migration-analysis.md) for **`swc-menu-divider`** (**`separator`** lines between items).
+- [Menu separator accessibility migration analysis](../menu-separator/accessibility-migration-analysis.md) for **`swc-menu-divider`** (**`separator`** lines between items).
 - [Action menu accessibility migration analysis](../action-menu/accessibility-migration-analysis.md) for the trigger and composed `swc-action-menu` + `swc-menu` tree.
 
 ### What `swc-menu-group` is (2nd-gen)
 
 - A **group** is a logical section of a menu: a container with [`role="group"`](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) inside `role="menu"`, optionally with a visible label. It **organizes** `swc-menu-item` / `menuitem` children; it is **not** itself a `menuitem` and does not receive roving focus as a single stop—focus moves among **items** per the [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) and `FocusgroupNavigationController` (see [PR #6129](https://github.com/adobe/spectrum-web-components/pull/6129)).
-- **Labeled section (recommended wiring):** Treat the **menu header** row as **not** a command item: in APG-style markup this is commonly an **`li`** with **`role="none"`** holding the visible section title text. The **collection of menuitem rows** that belongs to that section—in markup, often the **`ul`** (or equivalent list surface) **immediately following** that header—must expose the **same** section name on that grouped surface using **`aria-labelledby`** referencing the header’s **`id`** (preferred) **or** **`aria-label`** **with the identical string** so the **group’s accessible name matches the header text verbatim**. **`swc-menu-group`** should realize the same relationships in shadow / light DOM when 2nd-gen lands (**verify attribute wiring in source**); do **not** leave the grouped rows unnamed while a visible header exists.
+- **Reference implementation (2nd-gen target):** Implement **`swc-menu-group`** like the following structure: a **`role="group"`** container **inside** **`role="menu"`** uses **`aria-labelledby`** pointing at a **dedicated section-title node** (**stable `id`**); that title node carries **`role="presentation"`** (it is **not** a **`menuitem`**) and holds the visible **section label** text; **`menuitem`** rows are **siblings** of the title **inside** the same **`group`** (not a separate nested **`<ul`** after a header row unless the implementation requires it—**verify in 2nd-gen source**).
+
+```html
+<div role="menu" aria-label="Example Menu">
+  <div role="group" aria-labelledby="group-label">
+    <div id="group-label" role="presentation">Section Title</div>
+    <div role="menuitem">Item 1</div>
+    <div role="menuitem">Item 2</div>
+  </div>
+</div>
+```
+
+- **Naming:** The **group’s** accessible name comes from **`aria-labelledby="group-label"`** (preferred when a visible title exists) **or** **`aria-label`** with the **same string** as the visible section title. Other host-DOM patterns (for example **`li`** **`+`** **`role="none"`** for list-item menus) can be equivalent if they preserve the same **IDREF** and **name** relationships—**`role="presentation"`** on the **label** node above is the **default** pattern for **`swc-menu-group`**.
 
 ### When to use something else
 
@@ -71,7 +77,7 @@ This document sets accessibility expectations for 2nd-gen **Menu group** in Spec
 
 ### Pattern in the APG
 
-- [Menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) — menus may contain **`group`** elements to organize **`menuitem`** rows; groups can be labeled. Section **headers** in menu markup are often authored as **non-item** rows (**`role="none"`**) with the **following group or list** labelled to **match** the header (**see [Editor Menubar example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/)** for reference patterns).
+- [Menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) — menus may contain **`group`** elements to organize **`menuitem`** rows; groups can be labeled via **`aria-labelledby`** / **`aria-label`**. Section titles are **not** **`menuitem`**—often **`role="presentation"`** (or **`none`**) on a label element **referenced** by the **`group`** (**see [Editor Menubar example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/)** for related patterns).
 - Selection-related **`menuitemcheckbox`** / **`menuitemradio`** groupings are **out of scope** this phase (see [Menu — Migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current)).
 
 ### Guidelines that apply
@@ -79,9 +85,9 @@ This document sets accessibility expectations for 2nd-gen **Menu group** in Spec
 | Idea | Plain meaning |
 | --- | --- |
 | [Name, role, value (4.1.2)](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value) | `role="group"` inside `role="menu"` when used; labeled groups expose a **name** via `aria-labelledby` or `aria-label`. |
-| [Info and relationships (1.3.1)](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships) | Visible **section header** text aligns with the **accessible name** on the **following grouped list / group region** (**`aria-labelledby`** or matching **`aria-label`**—same text as the header). |
+| [Info and relationships (1.3.1)](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships) | Visible **section title** text aligns with the **`group`’**s **accessible name** (**`aria-labelledby`** to the title node’s **`id`**, or matching **`aria-label`**). |
 
-Bottom line: **`swc-menu-group`** carries **structure and section labeling**: a **header** row with **`role="none"`** plus a **named group** whose accessible name matches that header; navigation and submenu behavior stay on **menu**, **menu item**, and **action menu** docs.
+Bottom line: **`swc-menu-group`** carries **structure and section labeling**: **`role="group"`** **`+`** **`aria-labelledby`** to a **presentation** (non-**`menuitem`**) **label** node **+** sibling **`menuitem`** rows—navigation and submenu behaviour stay on **menu**, **menu item**, and **action menu** docs.
 
 ---
 
@@ -100,9 +106,9 @@ Scope: **`role="group"`** (or equivalent), **optional label**, **`menuitem`** ch
 | Topic | What to do |
 | --- | --- |
 | Host / surface | **`role="group"`** on the `swc-menu-group` surface (or equivalent wiring—verify in 2nd-gen source). Parent **must** be a **`role="menu"`** subtree. |
-| Section header row | The **visible header** for the section is **not** a **`menuitem`**: expose it with **`role="none"`** on the header row (APG-style **`li`** pattern) so it does not register as a selectable command. Keyboard roving still targets **`menuitem`** descendants only. |
-| Group name = header text | The **group** for the following **`menuitem`** rows (nested **`ul`** in native examples, or the **`swc-menu-group`** grouping region in SWC) **must** get its accessible name from **`aria-labelledby`** pointing at the header element **or** **`aria-label`**—**same text** as the header. Do **not** use an unlabeled group when a visible header exists. |
-| Children | Command rows: **`swc-menu-item`** (**`menuitem`**) and [`swc-menu-divider`](../menu-divider/accessibility-migration-analysis.md) (**`separator`**) as applicable. **Section header** row: **`role="none"`** (**not** **`menuitem`**). |
+| Section title (label) node | **Not** a **`menuitem`**. Use **`role="presentation"`** on the visible **section title** element, give it a **stable `id`**, and reference that **`id`** from **`aria-labelledby`** on the **`role="group"`** host (**see [reference HTML](#what-swc-menu-group-is-2nd-gen)**). Keyboard roving targets **`menuitem`** (and **`separator`**) only. |
+| Group name | The **`swc-menu-group`** host **`aria-labelledby`** must resolve to the section-title **`id`** **or** use **`aria-label`** with the **identical** string as the visible title. Do **not** ship a labeled section with an unnamed **`group`**. |
+| Children | **Inside** the **`group`**: the **title** node (**`role="presentation"`**, **`id`**) **then** **`swc-menu-item`** (**`menuitem`**) and [`swc-menu-divider`](../menu-separator/accessibility-migration-analysis.md) (**`separator`**) as **siblings**—same flat section as the reference markup unless 2nd-gen DOM requires otherwise (**verify in source**). |
 | Checkbox / radio groups | **`menuitemcheckbox` / `menuitemradio`** rows and **selection UX** — **out of scope** this phase; see [Menu — Migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current). |
 
 ### Shadow DOM and cross-root ARIA Issues
@@ -111,13 +117,13 @@ Keep **`aria-labelledby`** targets in the **same composable subtree** as the gro
 
 ### Accessibility tree expectations
 
-- The group is a **sectioning** node inside the menu: assistive technologies should hear a **stable section name** derived from the header, shared with the grouped list via **`aria-labelledby`** or matching **`aria-label`**.
-- The **header row** contributes **name** (and is **`role="none"`**), not **`menuitem`** semantics.
+- The **`group`** exposes a **name** (**`aria-labelledby`** to the **`id`** on the presentation title node, or **`aria-label`**).
+- The **section title** uses **`presentation`** (not **`menuitem`**); its **text** supplies the **`group`** name via **`aria-labelledby`**.
 - Child **command rows** expose **`menuitem`** (or separator) per the [menu item doc](../menu-item/accessibility-migration-analysis.md).
 
 ### Form-associated custom properties (labels, `ElementInternals`)
 
-Does not apply. `swc-menu-group` is not a form-associated control; **section** labeling is via **`aria-labelledby`** / **`aria-label`** on the **group** (aligned with the **`role="none"`** header row), not `ElementInternals`.
+Does not apply. `swc-menu-group` is not a form-associated control; labeling is **`aria-labelledby`** / **`aria-label`** on the **`group`** and **`id`** / **`presentation`** on the **title** node, not `ElementInternals`.
 
 ### Live regions, loading, and announcements
 
@@ -154,7 +160,7 @@ Exercise **menu** stories that include **labeled groups**; confirm group **names
 
 ## Summary checklist
 
-- [ ] `swc-menu-group` is used only inside a **`role="menu"`** tree; **section header** rows use **`role="none"`**; the **following grouped list / group region** uses **`aria-labelledby`** (or matching **`aria-label`**) so its name **matches the header text**.
+- [ ] `swc-menu-group` is used only inside a **`role="menu"`** tree; **`role="group"`** **`+`** **`aria-labelledby`** reference to a **`role="presentation"`** section-title node (**stable `id`**) **+** sibling **`menuitem`** rows (see [reference HTML](#what-swc-menu-group-is-2nd-gen)); **`aria-label`** alternative matches visible title text.
 - [ ] **`menuitemcheckbox` / `menuitemradio`** groupings are **not** documented as in-scope for this phase ([Menu migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current)).
 - [ ] Cross-root **IDREF** rules match [Menu](../menu/accessibility-migration-analysis.md) / [Action menu](../action-menu/accessibility-migration-analysis.md).
 - [ ] Keyboard testing follows the **menu** composed pattern and Storybook guides above.
@@ -164,11 +170,12 @@ Exercise **menu** stories that include **labeled groups**; confirm group **names
 ## References
 
 - [Menu accessibility migration analysis](../menu/accessibility-migration-analysis.md)
-- [Menu divider accessibility migration analysis](../menu-divider/accessibility-migration-analysis.md)
+- [Menu separator accessibility migration analysis](../menu-separator/accessibility-migration-analysis.md)
 - [Menu item accessibility migration analysis](../menu-item/accessibility-migration-analysis.md)
 - [Action menu accessibility migration analysis](../action-menu/accessibility-migration-analysis.md)
 - [WAI-ARIA APG: Menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)
-- [WAI-ARIA APG: Editor Menubar example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/) (study submenu **section headers** and **`role="none"`** patterns alongside grouped items)
+- [WAI-ARIA APG: Editor Menubar example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/) (study submenu **section titles** alongside grouped **`menuitem`** rows)
+- [WAI-ARIA: `presentation`](https://www.w3.org/TR/wai-aria/#presentation)
 - [spectrum-web-components PR #6129 — Focusgroup navigation controller](https://github.com/adobe/spectrum-web-components/pull/6129)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
 - [2nd-gen Storybook: Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)

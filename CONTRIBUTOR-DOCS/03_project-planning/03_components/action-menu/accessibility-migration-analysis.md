@@ -74,7 +74,7 @@ This document sets accessibility expectations for 2nd-gen Action menu in Spectru
 
 - [Menu accessibility migration analysis](../menu/accessibility-migration-analysis.md) for `swc-menu`, `menuitem`, submenus, link items, and [migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current) (selection variants defer until clarification).
 - [Menu group accessibility migration analysis](../menu-group/accessibility-migration-analysis.md) for `swc-menu-group`.
-- [Menu divider accessibility migration analysis](../menu-divider/accessibility-migration-analysis.md) for `swc-menu-divider`.
+- [Menu separator accessibility migration analysis](../menu-separator/accessibility-migration-analysis.md) for `swc-menu-divider`.
 - [Menu item accessibility migration analysis](../menu-item/accessibility-migration-analysis.md) for `swc-menu-item` rows (including link rows).
 
 ---
