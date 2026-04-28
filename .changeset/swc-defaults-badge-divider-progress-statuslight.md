@@ -1,6 +1,10 @@
 ---
 '@adobe/spectrum-wc': major
 '@spectrum-web-components/core': major
+'@spectrum-web-components/badge': major
+'@spectrum-web-components/divider': major
+'@spectrum-web-components/progress-circle': major
+'@spectrum-web-components/status-light': major
 ---
 
 **Breaking**: `<swc-badge>` migration includes new `subtle`/`outline` styles, additional non-semantic color variants, and default behavior updates (`variant="neutral"` and reflected `size="s"` when omitted). `--mod-badge-*` hooks are removed, and `--swc-badge-*` hooks are **not** a strict 1:1 replacement surface for every previous override. See the badge consumer migration guide.
