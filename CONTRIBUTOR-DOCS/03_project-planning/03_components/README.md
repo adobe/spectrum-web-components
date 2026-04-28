@@ -22,6 +22,9 @@
     - [Action button migration roadmap](action-button/rendering-and-styling-migration-analysis.md)
 - Action Group
     - [Action group migration roadmap](action-group/rendering-and-styling-migration-analysis.md)
+- Action Menu
+    - [Action menu accessibility migration analysis](action-menu/accessibility-migration-analysis.md)
+    - [Action menu migration roadmap](action-menu/rendering-and-styling-migration-analysis.md)
 - Alert Banner
     - [Alert Banner migration roadmap](alert-banner/rendering-and-styling-migration-analysis.md)
 - Asset
@@ -34,6 +37,8 @@
     - [Badge accessibility migration analysis](badge/accessibility-migration-analysis.md)
     - [Badge migration roadmap](badge/rendering-and-styling-migration-analysis.md)
 - Button
+    - [Button accessibility migration analysis](button/accessibility-migration-analysis.md)
+    - [Button Migration Plan](button/migration-plan.md)
     - [Button migration roadmap](button/rendering-and-styling-migration-analysis.md)
 - Button Group
     - [Button Group migration roadmap](button-group/rendering-and-styling-migration-analysis.md)
@@ -62,8 +67,10 @@
 - Infield Progress Circle
     - [In-field progress circle migration roadmap](infield-progress-circle/rendering-and-styling-migration-analysis.md)
 - Link
+    - [Link accessibility migration analysis](link/accessibility-migration-analysis.md)
     - [Link migration roadmap](link/rendering-and-styling-migration-analysis.md)
 - Meter
+    - [Meter accessibility migration analysis](meter/accessibility-migration-analysis.md)
     - [Meter migration roadmap](meter/rendering-and-styling-migration-analysis.md)
 - Number Field
     - [Number field migration roadmap](number-field/rendering-and-styling-migration-analysis.md)
@@ -71,6 +78,9 @@
     - [Opacity Checkerboard migration roadmap](opacity-checkerboard/rendering-and-styling-migration-analysis.md)
 - Picker Button
     - [Picker button migration roadmap](picker-button/rendering-and-styling-migration-analysis.md)
+- Popover
+    - [Popover accessibility migration analysis](popover/accessibility-migration-analysis.md)
+    - [Popover migration roadmap](popover/rendering-and-styling-migration-analysis.md)
 - Progress Bar
     - [Progress bar accessibility migration analysis](progress-bar/accessibility-migration-analysis.md)
     - [Progress bar migration roadmap](progress-bar/rendering-and-styling-migration-analysis.md)
@@ -94,6 +104,7 @@
     - [Switch migration roadmap](switch/rendering-and-styling-migration-analysis.md)
 - Tabs
     - [Tabs accessibility migration analysis](tabs/accessibility-migration-analysis.md)
+    - [Tabs migration plan](tabs/migration-plan.md)
     - [Tabs migration roadmap](tabs/rendering-and-styling-migration-analysis.md)
 - Tag
     - [Tag migration roadmap](tag/rendering-and-styling-migration-analysis.md)
