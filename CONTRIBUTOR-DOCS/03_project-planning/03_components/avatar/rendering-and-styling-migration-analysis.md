@@ -45,14 +45,14 @@ This doc defines how the **avatar image** should work for **accessibility**—th
 1. **SWC style** — Spectrum **CSS** / **design tokens** and **usage guidance** applied to a native **`<img>`** (or equivalent) in **light** DOM.
 2. **Component** — **`<swc-avatar>`** (no **`href`**) that **encapsulates** the same **visual** **language**, **`src`**, **`label`** → shadow **`<img alt>`**, **`isDecorative`**, and **dev** **warnings**, matching **1st-gen** **`<sp-avatar>`** without **`href`** in spirit.
 
-**Linked** avatars (hyperlink affordance) use a **separate** **component**: **`swc-avatar-link`** (see [Avatar link accessibility migration analysis](../avatar-link/accessibility-migration-analysis.md)).
+**Linked** avatars (hyperlink affordance) use a **separate** **component**: **`swc-avatar-link`** (see [Avatar — linked variant (`swc-avatar-link`)](../avatar/accessibility-migration-analysis.md#the-linked-variant-avatar-link)).
 
 **1st-gen** **`<sp-avatar>`** mixes **avatar image** and **`href`** on one tag; **2nd-gen** splits **`<swc-avatar>`** (static) **or** **styled** **`<img>`** from **`swc-avatar-link`**.
 
 ### Also read
 
 - [Avatar migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, CSS, and DOM.
-- [Avatar link accessibility migration analysis](../avatar-link/accessibility-migration-analysis.md) for **`href`**, keyboard, and link naming.
+- [Avatar — linked variant (`swc-avatar-link`)](../avatar/accessibility-migration-analysis.md#the-linked-variant-avatar-link) for **`href`**, keyboard, and link naming.
 
 ### Avatar image as an SWC style
 
@@ -172,7 +172,7 @@ This doc defines how the **avatar image** should work for **accessibility**—th
 - [ ] Guidance covers decorative vs informative **`alt`**, **`aria-hidden`**, and **`isDecorative`** / **`label`** on **`<swc-avatar>`**.
 - [ ] **`<swc-avatar>`** uses dev warnings like **1st-gen**; **SWC** **style** path documents optional lint or docs checks.
 - [ ] Avatar image is not keyboard-focusable on either path.
-- [ ] **`swc-avatar-link`** owns linked cases; cross-link [Avatar link accessibility migration analysis](../avatar-link/accessibility-migration-analysis.md) from Storybook.
+- [ ] **`swc-avatar-link`** owns linked cases; cross-link [Avatar — linked variant (`swc-avatar-link`)](../avatar/accessibility-migration-analysis.md#the-linked-variant-avatar-link) from Storybook.
 
 ---
 
@@ -182,5 +182,5 @@ This doc defines how the **avatar image** should work for **accessibility**—th
 - [Understanding 1.1.1 Non-text content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content)
 - [Using ARIA (read this first)](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
 - [Avatar migration roadmap](./rendering-and-styling-migration-analysis.md)
-- [Avatar link accessibility migration analysis](../avatar-link/accessibility-migration-analysis.md)
+- [Avatar — linked variant (`swc-avatar-link`)](../avatar/accessibility-migration-analysis.md#the-linked-variant-avatar-link)
 - [SWC-915](https://jira.corp.adobe.com/browse/SWC-915) (resolved)—**avatar image** accessibility for **`<sp-avatar>`** without **`href`** (Adobe internal Jira)
