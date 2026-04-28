@@ -41,12 +41,12 @@
 
 ## Overview
 
-This document sets accessibility expectations for 2nd-gen **Menu item** in Spectrum Web Components: **`swc-menu-item`** is **typically** a **`role="menuitem"`** **row** in the **internal** [`role="menu"`](../menu/accessibility-migration-analysis.md) **list** (that menu **`role` lives** in **`swc-menu` / `swc-action-menu`’s** **shadow** **DOM**, **not** on the **CE** **host**). **Nested** **submenus** (when the **`submenu` slot** is **populated**) **render** the **submenu** **trigger** and **child** **`role="menu"`** as **elements** in **`swc-menu-item`’s** **shadow** **DOM**—**not** on the **`<swc-menu-item>`** **host**. **Separator** and **link**-row **patterns** and other **variations** **follow** the **implementation**. The target is **WCAG 2.2 Level AA**.
+This document sets accessibility expectations for 2nd-gen **Menu item** in Spectrum Web Components: **`swc-menu-item`** is **typically** a **`role="menuitem"`** **row** in the **internal** [`role="menu"`](../menu/accessibility-migration-analysis.md) **list** (that menu **`role` lives** in **`swc-menu` / `swc-action-menu`’s** **shadow** **DOM**, **not** on the **CE** **host**). **Nested** **submenus** (when the **`submenu` slot** is **populated**) **render** the **submenu** **trigger** and **child** **`role="menu"`** as **elements** in **`swc-menu-item`’s** **shadow** **DOM**—**not** on the **`<swc-menu-item>`** **host**. **Link**-row **patterns** and other **row** **variations** **follow** the **implementation**; **divider** lines use [`swc-menu-separator`](../menu-separator/accessibility-migration-analysis.md), **not** this **component**. The target is **WCAG 2.2 Level AA**.
 
 ### Migration scope (this phase)
 
 - **`menuitemcheckbox`**, **`menuitemradio`**, **`aria-checked`**, and **selection modes** (single, multiple, persisted state) are **out of scope** for this migration phase. Align with [Menu — Migration scope (current)](../menu/accessibility-migration-analysis.md#migration-scope-current); do not treat selectable rows as **locked** for 2nd-gen until that program work closes.
-- **Plain `menuitem`**, **submenu** parents, **separator** rows (where applicable), and **link** rows (with constraints below) are in scope for this doc.
+- **Plain `menuitem`**, **submenu** parents, and **link** rows (with constraints below) are in scope for this doc.
 
 ### Also read
 
@@ -74,7 +74,7 @@ This document sets accessibility expectations for 2nd-gen **Menu item** in Spect
 
 ### Pattern in the APG
 
-- [Menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) — **`menuitem`**, **`menuitemcheckbox`**, **`menuitemradio`**, **`separator`**; this phase documents **`menuitem`** (and separator handling as implemented). **Checkbox / radio** variants are **out of scope** (see [Migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current)).
+- [Menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) — the pattern includes **`menuitem`**, **`menuitemcheckbox`**, **`menuitemradio`**, and **`separator`**. This doc covers **`swc-menu-item`** as **`menuitem`**. **[`swc-menu-separator`](../menu-separator/accessibility-migration-analysis.md)** covers **`separator`** rows. **Checkbox / radio** variants are **out of scope** (see [Migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current)).
 
 ### Guidelines that apply
 
@@ -101,7 +101,7 @@ See [Menu — Related 1st-gen accessibility (Jira)](../menu/accessibility-migrat
 
 ## Recommendations: `<swc-menu-item>`
 
-Scope: **`menuitem`** rows, **submenu** parents, **separators** as implemented, and **link** rows using the **Cards** pattern; **`menuitemcheckbox` / `menuitemradio`** **out of scope** this phase ([Menu migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current)).
+Scope: **`menuitem`** rows, **submenu** parents, and **link** rows using the **Cards** pattern; **`menuitemcheckbox` / `menuitemradio`** **out of scope** this phase ([Menu migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current)).
 
 ### ARIA roles, states, and properties
 
@@ -110,7 +110,6 @@ Scope: **`menuitem`** rows, **submenu** parents, **separators** as implemented, 
 | Plain command | **`role="menuitem"`** with an **accessible name**; keep **one** clear action per row. |
 | Disabled | **`aria-disabled="true"`** when the row is visibly disabled and cannot be invoked. |
 | Submenu parent | **Only** when the **`submenu` slot** has **content** (otherwise treat as a **plain** **command** **row**). The **submenu** **trigger** and **child** **`role="menu"`** **live** in **`swc-menu-item`’s** **shadow** **tree**—**not** the **item** **CE** **host**; **expose** **`aria-haspopup="menu"`** and **`aria-expanded`** **in** line **with** **open** **state** (**verify** **which** **node** **carries** **ARIA** in 2nd-gen **source**). **Do** **not** **model** **submenus** by **nesting** **`swc-menu`** in the list (see [Menu: Submenus](../menu/accessibility-migration-analysis.md#recommendations-swc-menu) in the **Recommendations** table). |
-| Separator | Implemented per APG (**`separator`** or host-specific mapping—verify in source); not a **`menuitem`**. |
 | Link row | **No** proxy click on the **host** firing both **menuitem** and **link** behavior ([SWC-923](https://jira.corp.adobe.com/browse/SWC-923)). Prefer a **child** `<a href="…">` with **[Cards](https://inclusive-components.design/cards/)**-style **full-row hit** (**pseudo-element** / **positioning**) so activation is **once**. Prefer **navigation** patterns for **primary** **link** **navigation** where **appropriate** (see Overview). |
 | Checkbox / radio | **`menuitemcheckbox` / `menuitemradio`** and **`aria-checked`** — **out of scope** this phase. |
 
@@ -120,7 +119,7 @@ Follow [Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-
 
 ### Accessibility tree expectations
 
-- Rows expose **`menuitem`** (or **`separator`**) roles and names. **Submenu** **parent** **rows** (when the **`submenu` slot** is **populated**) tie **`aria-expanded`** / **`aria-haspopup`** to **submenu** **open** state and **expose** a **child** **`role="menu"`** **(with** **items**)** from **markup** **in** **`swc-menu-item`’s** **shadow** **DOM**—**not** by **assigning** **`role="menu"`** to the **`<swc-menu-item>`** **host**.
+- **Command** and **link** **rows** expose **`menuitem`** and **names**. **Submenu** **parent** **rows** (when the **`submenu` slot** is **populated**) tie **`aria-expanded`** / **`aria-haspopup`** to **submenu** **open** state and **expose** a **child** **`role="menu"`** **(with** **items**)** from **markup** **in** **`swc-menu-item`’s** **shadow** **DOM**—**not** by **assigning** **`role="menu"`** to the **`<swc-menu-item>`** **host**.
 
 ### Form-associated custom properties (labels, `ElementInternals`)
 
