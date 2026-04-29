@@ -13,6 +13,7 @@
 
 - [Overview](#overview)
     - [In short](#in-short)
+    - [Migration scope (current)](#migration-scope-current)
     - [Also read](#also-read)
     - [What `swc-action-menu` is (2nd-gen)](#what-swc-action-menu-is-2nd-gen)
     - [When to use something else](#when-to-use-something-else)
@@ -52,8 +53,16 @@ This page is for 2nd-gen `swc-action-menu` in Spectrum Web Components. It is the
 - `swc-action-menu` is a full [menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) host, like [`swc-menu`](../menu/accessibility-migration-analysis.md). It has a trigger, `swc-popover` (or similar) for the open layer, and a `role="menu"` list in shadow DOM—not on the custom element.
 - The menu slot holds only `swc-menu-item`, `swc-menu-group`, and `swc-menu-separator`. Do not nest another `swc-menu` or `swc-action-menu` in that slot. Submenus use the menu item [`submenu` slot](../menu-item/accessibility-migration-analysis.md#what-swc-menu-item-is-2nd-gen).
 - Mobile tray and checkbox/radio style rows are out of scope for now ([Menu — Migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current)).
+- **Target:** [WCAG 2.2](https://www.w3.org/TR/WCAG22/) Level AA. Menu items that work like checkboxes or radios are out of scope for now ([Migration scope](#migration-scope-current)).
 
 [Popover](../popover/accessibility-migration-analysis.md) only positions the layer. Menu roles and in-menu keys live in `swc-action-menu` / `swc-menu` (see [Menu: What `swc-menu` is](../menu/accessibility-migration-analysis.md#what-swc-menu-is-2nd-gen)).
+
+### Migration scope (current)
+
+These items wait on a single product decision from design and accessibility:
+
+- **Mobile tray** — small-screen / bottom sheet (covered in other docs here).
+- **Selectable menu items** — checkboxes, radios, `aria-checked`, and multi-select. This doc still points to the [APG](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) for when that work ships; do not treat those rows as final for 2nd-gen until that work closes.
 
 ### Also read
 
@@ -63,7 +72,7 @@ This page is for 2nd-gen `swc-action-menu` in Spectrum Web Components. It is the
 
 ### What `swc-action-menu` is (2nd-gen)
 
-- Same parts as `swc-menu` ([Menu doc](../menu/accessibility-migration-analysis.md)): trigger, `swc-popover` for the open layer, `role="menu"` inside the shadow tree, menu slot for item / group / separator. Defaults follow [ActionMenu](https://react-spectrum.adobe.com/ActionMenu) (ellipses / “more”); check 2nd-gen source for final DOM.
+- Same parts as `swc-menu` ([Menu doc](../menu/accessibility-migration-analysis.md)): trigger, `swc-popover` for the open layer, `role="menu"` inside the shadow tree, menu slot for item / group / separator. Defaults follow React Spectrum's [ActionMenu](https://react-spectrum.adobe.com/ActionMenu) (ellipses / “more”); check 2nd-gen source for final DOM.
 - Not a [combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) or [Picker](https://react-spectrum.adobe.com/Picker) field ([When to use something else](../menu/accessibility-migration-analysis.md#when-to-use-something-else) on the menu doc).
 - Use `swc-popover` for placement, not the old overlay stack as the default. Tray and selection rows follow [Menu — Migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current).
 
@@ -76,7 +85,7 @@ This page is for 2nd-gen `swc-action-menu` in Spectrum Web Components. It is the
 
 ### What it is not
 
-- Not `swc-popover` alone: the action menu and menu host own menu ARIA and list keyboard. Popover positions and may help dismiss; see [Menu: What it is not](../menu/accessibility-migration-analysis.md#what-it-is-not).
+- Not `swc-popover` alone: the action menu and menu host own shadow DOM ARIA and list keyboard navigation. Popover positions and may help dismiss; see [Menu: What it is not](../menu/accessibility-migration-analysis.md#what-it-is-not).
 - Not slotted as a child of `swc-menu`, `swc-action-menu`, or `swc-menu-item`. For nested menus, use the menu item `submenu` slot.
 - Not a modal. Modal chrome is covered in the [Popover doc — Overview](../popover/accessibility-migration-analysis.md#overview).
 
@@ -100,7 +109,7 @@ This page is for 2nd-gen `swc-action-menu` in Spectrum Web Components. It is the
 
 | Idea | Plain meaning |
 | --- | --- |
-| [Name, role, value (4.1.2)](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value) | Trigger has button semantics and a name; menu and items are exposed per [Menu](../menu/accessibility-migration-analysis.md). Picker-style label gaps (for example [SWC-1174](https://jira.corp.adobe.com/browse/SWC-1174)) are separate Picker work, not the default for ellipses-only action menus—still require an accessible name on the control. |
+| [Name, role, value (4.1.2)](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value) | Trigger has button semantics and a name; menu and items are exposed per [Menu](../menu/accessibility-migration-analysis.md). Ellipses-only action menus—still require an accessible name on the control. |
 | [Focus order (2.4.3)](https://www.w3.org/WAI/WCAG22/Understanding/focus-order) / [Focus visible (2.4.7)](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible) | Open moves focus into the menu; Escape returns focus to the trigger; roving tabindex in the list (`FocusgroupNavigationController`). |
 | [Keyboard (2.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/keyboard) | All commands from the [menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) pattern; no pointer-only submenus (1st-gen [SWC-1332](https://jira.corp.adobe.com/browse/SWC-1332), [SWC-671](https://jira.corp.adobe.com/browse/SWC-671)). |
 | [Non-text contrast (1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | Focus indicators on items and submenu parents ([SWC-1517](https://jira.corp.adobe.com/browse/SWC-1517)). |
@@ -144,14 +153,14 @@ Item- and submenu-level rules live in [Menu — Recommendations: `swc-menu`](../
 | Host placement | `swc-menu` and `swc-action-menu` are not slotted into `swc-menu`, `swc-action-menu`, or `swc-menu-item`. They are top-level [menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) hosts. |
 | Menu slot (current migration) | Intended children: only `swc-menu-item`, `swc-menu-group`, and `swc-menu-separator`. Do not depend on other types in that slot (check 2nd-gen source). |
 | Trigger | Button: `aria-haspopup="menu"`; `aria-expanded` matches open/closed. Name the control (`aria-label`; icon-only needs a name) ([ActionMenu](https://react-spectrum.adobe.com/ActionMenu) defaults, e.g. “More...”). |
-| Relation to `swc-menu` | Both hosts put `role="menu"` in shadow DOM, not on the custom element. `swc-menu` ~ [Menu](https://react-spectrum.adobe.com/Menu); `swc-action-menu` ~ [ActionMenu](https://react-spectrum.adobe.com/ActionMenu) ([Menu doc](../menu/accessibility-migration-analysis.md)). Do not use `role="listbox"` on the internal list for this pattern. |
+| Relation to `swc-menu` | Both `swc-action menu` nd `swc-menu` hosts put `role="menu"` in shadow DOM, not on the custom element. `swc-menu` ~ [Menu](https://react-spectrum.adobe.com/Menu); `swc-action-menu` ~ [ActionMenu](https://react-spectrum.adobe.com/ActionMenu) ([Menu doc](../menu/accessibility-migration-analysis.md)). Do not use `role="listbox"` on the internal list for this pattern. |
 | No shortcut | Action menu is for commands, not a combobox + listbox. |
 
 ### Shadow DOM and cross-root ARIA Issues
 
 **Host shell (stays in shadow):** the ActionMenu trigger and the internal `role="menu"` node are implemented together in `swc-action-menu`’s shadow tree (same rule as [Menu — Recommendations: `swc-menu`](../menu/accessibility-migration-analysis.md#recommendations-swc-menu); verify in 2nd-gen source).
 
-**Slotted menu content** does not have to sit inside the trigger’s shadow tree, but: do not slot `swc-menu` or `swc-action-menu` into `swc-menu`, `swc-action-menu`, or `swc-menu-item`. The menu slot is for `swc-menu-item`, `swc-menu-group`, and `swc-menu-separator` only. `swc-menu-group` and `swc-menu-separator` are direct list children of those three parents; separators are not in a group’s default slot (see [Menu group](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-2nd-gen) and [Menu separator](../menu-separator/accessibility-migration-analysis.md#what-the-menu-separator-is-swc-menu-separator-2nd-gen)). Roving focus uses `FocusgroupNavigationController`, not IDREF to each item. Do not put one `swc-menu-group` inside another in the same list; a submenu can have its own groups. See [Menu: Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) for cross-root ID issues.
+**Slotted menu content** does not have to sit inside the trigger’s shadow tree, but: do not slot `swc-menu` or `swc-action-menu` into `swc-menu`, `swc-action-menu`, or `swc-menu-item`. The menu slot is for `swc-menu-item`, `swc-menu-group`, and `swc-menu-separator` only. `swc-menu-group` and `swc-menu-separator` are direct list children of those three parents; see [Menu group](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-2nd-gen), [Menu item](../menu-item/accessibility-migration-analysis.md#what-swc-menu-item-is-2nd-gen), and [Menu separator](../menu-separator/accessibility-migration-analysis.md#what-the-menu-separator-is-swc-menu-separator-2nd-gen). Roving focus uses `FocusgroupNavigationController`, not IDREF to each item. See [Menu: Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) for cross-root ID issues.
 
 ### Accessibility tree expectations
 
