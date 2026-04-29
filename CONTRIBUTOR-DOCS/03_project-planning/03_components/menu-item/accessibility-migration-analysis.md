@@ -48,7 +48,7 @@ This page is for 2nd-gen `swc-menu-item` in Spectrum Web Components. Most rows a
 
 - A row is usually a `menuitem` with a clear name. Dividers are [`swc-menu-separator`](../menu-separator/accessibility-migration-analysis.md), not a menu item.
 - When the `submenu` slot has content, the submenu trigger and child `role="menu"` are in `swc-menu-item`’s shadow tree, not the `<swc-menu-item>` host. Do not add a second `swc-menu` in the list to fake a submenu.
-- This doc does not lock checkbox or radio menu rows for 2nd-gen until product work finishes ([scope below](#migration-scope-this-phase)).
+- This doc does not lock checkbox or radio menu rows for 2nd-gen until product work finishes ([scope below](#migration-scope-this-phase)). When they are implemented, using separate components for them  is highly recommended as they function differently and have a different aria-role than regular menu items.
 
 ### Migration scope (this phase)
 
@@ -65,10 +65,10 @@ This page is for 2nd-gen `swc-menu-item` in Spectrum Web Components. Most rows a
 ### What `swc-menu-item` is (2nd-gen)
 
 - A command row: `role="menuitem"` with a name and [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) keys.
-- **Placement:** slotted under `swc-menu`, `swc-action-menu`, `swc-menu-group`, or `swc-menu-item`. **Label** slot: text, icons, etc. (check exposed name in source). **Submenu** slot: only `swc-menu-group`, `swc-menu-item`, and `swc-menu-separator` in current allow-list (source). At most one `swc-menu-group` depth in a list: [Menu group — What it is](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-2nd-gen).
+- **Placement:** slotted under `swc-menu`, `swc-action-menu`, `swc-menu-group`, or `swc-menu-item`. **Label** slot: text, icons, etc. (check exposed name in source). **Submenu** slot: only `swc-menu-group`, `swc-menu-item`, and `swc-menu-separator` in current allow-list (source).
 - **Submenu slot:** with children from that list, the row is a submenu parent. Trigger and child `role="menu"` live in `swc-menu-item`’s shadow DOM, with `swc-popover` (or similar) for the layer—**not** another `swc-menu` in the parent list. Empty slot: plain `menuitem`. Verify DOM in source.
 - **Submenu ARIA:** `aria-haspopup="menu"`; `aria-expanded` matches open state. Which node carries the row ARIA: verify in source. Child `role="menu"` is inside the item’s shadow, not the CE. See [Menu: Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) and [Action menu](../action-menu/accessibility-migration-analysis.md).
-- **Link rows:** use a real `<a href>` (or your framework’s link) with a clear name. For a full row hit, use the [Cards](https://inclusive-components.design/cards/) pattern (one big click, no double fire). For main site nav, consider nav patterns ([disclosure navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/))—menus are for commands, not main nav.
+- **Link rows:** cnsumers should slot a real `<a href>` with a clear name in the label slot. For a full row hit, they can consider using the [Cards](https://inclusive-components.design/cards/) pattern (one big click, no double fire). For main site nav, consider nav patterns ([disclosure navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/))—menus are for commands, not main nav.
 
 ### When to use something else
 
