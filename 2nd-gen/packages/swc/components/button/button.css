@@ -12,11 +12,11 @@
 
 @keyframes swc-pending-spinner-rotate {
   0% {
-    transform: rotate(-90deg);
+    transform: rotate(var(--swc-pending-spinner-rotate-start, -90deg));
   }
 
   100% {
-    transform: rotate(270deg);
+    transform: rotate(var(--swc-pending-spinner-rotate-end, 270deg));
   }
 }
 
@@ -27,7 +27,7 @@
   }
 
   30% {
-    stroke-dashoffset: 20px;
+    stroke-dashoffset: var(--swc-pending-spinner-dashoffset-30, 20px);
   }
 }
 
@@ -427,36 +427,17 @@ slot[name="icon"]::slotted(*) {
   text-overflow: ellipsis;
 }
 
-/* ── Forced colors ────────────────────────────────── */
-
-@media (forced-colors: active) {
-  /* :host {
-    --swc-button-border-color-default: ButtonBorder;
-    --swc-button-border-color-hover: ButtonBorder;
-    --swc-button-border-color-focus: ButtonBorder;
-    --swc-button-border-color-down: ButtonBorder;
-    --swc-button-content-color-disabled: GrayText;
-    --swc-button-border-color-disabled: GrayText;
-    --swc-button-background-color-disabled: ButtonFace;
-    --swc-button-focus-indicator-color: ButtonText;
-  } */
-
-  :host([variant="accent"]) {
-    --swc-button-background-color-default: ButtonText;
-    --swc-button-content-color-default: ButtonFace;
-    --swc-button-background-color-hover: Highlight;
-    --swc-button-background-color-down: Highlight;
-    --swc-button-background-color-focus: Highlight;
-    --swc-button-content-color-hover: HighlightText;
-    --swc-button-content-color-down: HighlightText;
-    --swc-button-content-color-focus: HighlightText;
+@media (prefers-reduced-motion: reduce) {
+  .swc-Button {
+    transition-duration: 0ms;
   }
 
-  /* :host([variant="accent"]) .swc-Button__label {
-    forced-color-adjust: none;
-  }
+  .swc-Button--pendingActive .swc-Button__pendingSpinner-fill {
+    --swc-pending-spinner-dashoffset-30: 0;
+    --swc-pending-spinner-rotate-start: 0deg;
+    --swc-pending-spinner-rotate-end: 360deg;
 
-  .swc-Button:focus-visible {
-    forced-color-adjust: none;
-  } */
+    animation-duration: 15s;
+    animation-timing-function: linear, linear;
+  }
 }
