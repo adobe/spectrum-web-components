@@ -42,13 +42,6 @@ export abstract class ColorLoupeBase extends SpectrumElement {
    *
    * Default is semi-transparent red so the opacity checkerboard is visible
    * when the component is rendered without a `color` attribute.
-   *
-   * @todo Runtime validation is intentionally not performed here. The loupe
-   * always receives its color from a parent color-picker component, which
-   * validates upstream via `validateColorString` on `ColorController`. If
-   * the loupe ever needs standalone validation (e.g. consumed outside a
-   * parent color picker), reuse `ColorController.validateColorString`
-   * rather than adding a separate utility.
    */
   @property({ type: String })
   public color = 'rgba(255, 0, 0, 0.5)';
