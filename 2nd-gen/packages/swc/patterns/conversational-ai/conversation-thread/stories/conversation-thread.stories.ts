@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html,LitElement } from 'lit';
+import { html, LitElement } from 'lit';
 import { state } from 'lit/decorators.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
@@ -25,6 +25,8 @@ import '../../suggestion/index.js';
 import '../../suggestion-item/index.js';
 import '../../prompt-field/index.js';
 import '../../upload-artifact/index.js';
+
+import { uniqueId } from '../../../../utils/id.js';
 
 import '../../system-prose-demo.css';
 
@@ -126,6 +128,7 @@ type DemoArtifact = {
   subtitle: string;
   /** Present only for image uploads; used to render `type="media"` in the thread. */
   thumbnailUrl?: string;
+  objectUrl?: string;
 };
 
 type DemoTurn = {
@@ -176,6 +179,7 @@ class ConversationFullPatternDemo extends LitElement {
   @state()
   private isGenerating = false;
 
+  private readonly fileInputId = `conv-demo-upload-${crypto.randomUUID()}`;
   private responseTimer: number | null = null;
   private responseTargetId: string | null = null;
   private lastPrompt = '';
@@ -232,6 +236,11 @@ class ConversationFullPatternDemo extends LitElement {
       (hasArtifacts ? this.artifacts.map((a) => a.title).join(', ') : '');
     this.responseTargetId = systemTurn.id;
     this.promptValue = '';
+    for (const artifact of this.artifacts) {
+      if (artifact.objectUrl) {
+        URL.revokeObjectURL(artifact.objectUrl);
+      }
+    }
     this.artifacts = [];
 
     this.responseTimer = window.setTimeout(() => {
@@ -291,40 +300,47 @@ class ConversationFullPatternDemo extends LitElement {
     this.submitPrompt(submitEvent.detail?.value ?? '');
   };
 
-  private handleFilesSelected = (event: Event): void => {
-    const filesEvent = event as CustomEvent<{
-      artifactValues?: Array<{
-        name?: string;
-        mimeType?: string;
-        size?: number;
-      }>;
-      files?: File[];
-    }>;
-
-    const rawFiles: File[] = filesEvent.detail?.files ?? [];
-    const nextArtifacts =
-      filesEvent.detail?.artifactValues?.map((artifact, index) => {
-        const mimeType = artifact.mimeType ?? '';
-        const isImage = mimeType.startsWith('image/');
-        const sizeLabel =
-          typeof artifact.size === 'number'
-            ? `${Math.max(1, Math.round(artifact.size / 1024))} KB`
-            : 'Attachment';
-        const rawFile = rawFiles[index];
-        const thumbnailUrl =
-          isImage && rawFile ? URL.createObjectURL(rawFile) : undefined;
-        return {
-          id: `artifact-${Date.now()}-${index}`,
-          title: artifact.name ?? 'Attachment',
-          subtitle: sizeLabel,
-          thumbnailUrl,
-        } satisfies DemoArtifact;
-      }) ?? [];
+  private appendFiles(files: File[]): void {
+    const nextArtifacts = files.map((file, index) => {
+      const mimeType = file.type || '';
+      const lowerName = file.name.toLowerCase();
+      const isImage =
+        mimeType.startsWith('image/') ||
+        /\.(png|jpe?g|gif|webp|bmp|svg|avif)$/.test(lowerName);
+      const objectUrl = isImage ? URL.createObjectURL(file) : undefined;
+      const sizeLabel =
+        typeof file.size === 'number'
+          ? `${Math.max(1, Math.round(file.size / 1024))} KB`
+          : 'Attachment';
+      return {
+        id: uniqueId(`artifact-${index}`),
+        title: file.name || 'Attachment',
+        subtitle: sizeLabel,
+        thumbnailUrl: objectUrl,
+        objectUrl,
+      } satisfies DemoArtifact;
+    });
 
     if (!nextArtifacts.length) {
       return;
     }
     this.artifacts = [...this.artifacts, ...nextArtifacts];
+  }
+
+  private handleUploadClick = (event: Event): void => {
+    event.preventDefault();
+    const input = this.querySelector<HTMLInputElement>(`#${this.fileInputId}`);
+    input?.click();
+  };
+
+  private handleExternalInput = (event: Event): void => {
+    const input = event.target as HTMLInputElement;
+    const files = Array.from(input.files ?? []);
+    if (!files.length) {
+      return;
+    }
+    this.appendFiles(files);
+    input.value = '';
   };
 
   private handleFeedback = (event: Event): void => {
@@ -357,6 +373,10 @@ class ConversationFullPatternDemo extends LitElement {
     const artifactId = artifact?.getAttribute('data-artifact-id');
     if (!artifactId) {
       return;
+    }
+    const removed = this.artifacts.find((item) => item.id === artifactId);
+    if (removed?.objectUrl) {
+      URL.revokeObjectURL(removed.objectUrl);
     }
     this.artifacts = this.artifacts.filter((item) => item.id !== artifactId);
   };
@@ -393,35 +413,41 @@ class ConversationFullPatternDemo extends LitElement {
         return html`
           ${(turn.artifacts ?? []).map((artifact) =>
             artifact.thumbnailUrl
-              ? html`<swc-conversation-turn type="user">
-                  <swc-user-message type="media">
-                    <img
-                      slot="thumbnail"
-                      src=${artifact.thumbnailUrl}
-                      alt=${artifact.title}
-                      style="inline-size:100%;block-size:100%;object-fit:cover;"
-                    />
-                    <span slot="title">${artifact.title}</span>
-                    <span slot="subtitle">${artifact.subtitle}</span>
-                  </swc-user-message>
-                </swc-conversation-turn>`
-              : html`<swc-conversation-turn type="user">
-                  <swc-user-message type="card">
-                    <div
-                      slot="thumbnail"
-                      role="img"
-                      aria-label="File"
-                      style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);flex-shrink:0;"
-                    ></div>
-                    <span slot="title">${artifact.title}</span>
-                    <span slot="subtitle">${artifact.subtitle}</span>
-                  </swc-user-message>
-                </swc-conversation-turn>`
+              ? html`
+                  <swc-conversation-turn type="user">
+                    <swc-user-message type="media">
+                      <img
+                        slot="thumbnail"
+                        src=${artifact.thumbnailUrl}
+                        alt=${artifact.title}
+                        style="inline-size:100%;block-size:100%;object-fit:cover;"
+                      />
+                      <span slot="title">${artifact.title}</span>
+                      <span slot="subtitle">${artifact.subtitle}</span>
+                    </swc-user-message>
+                  </swc-conversation-turn>
+                `
+              : html`
+                  <swc-conversation-turn type="user">
+                    <swc-user-message type="card">
+                      <div
+                        slot="thumbnail"
+                        role="img"
+                        aria-label="File"
+                        style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);flex-shrink:0;"
+                      ></div>
+                      <span slot="title">${artifact.title}</span>
+                      <span slot="subtitle">${artifact.subtitle}</span>
+                    </swc-user-message>
+                  </swc-conversation-turn>
+                `
           )}
           ${turn.text
-            ? html`<swc-conversation-turn type="user">
-                <swc-user-message>${turn.text}</swc-user-message>
-              </swc-conversation-turn>`
+            ? html`
+                <swc-conversation-turn type="user">
+                  <swc-user-message>${turn.text}</swc-user-message>
+                </swc-conversation-turn>
+              `
             : ''}
         `;
       }
@@ -430,50 +456,68 @@ class ConversationFullPatternDemo extends LitElement {
         <swc-conversation-turn type="system">
           <swc-system-message>
             ${turn.loading
-              ? html`<swc-response-status slot="status" loading></swc-response-status>`
-              : html`<swc-response-status
-                  slot="status"
-                  data-status-id=${turn.id}
-                  ?open=${!!turn.statusOpen}
-                >
-                  Draft complete. I used your latest prompt to generate this
-                  response.
-                </swc-response-status>`}
+              ? html`
+                  <swc-response-status
+                    slot="status"
+                    loading
+                  ></swc-response-status>
+                `
+              : html`
+                  <swc-response-status
+                    slot="status"
+                    data-status-id=${turn.id}
+                    ?open=${!!turn.statusOpen}
+                  >
+                    Draft complete. I used your latest prompt to generate this
+                    response.
+                  </swc-response-status>
+                `}
             ${turn.loading
               ? ''
-              : html`<div class="swc-conversationalAi-systemProse swc-Typography--prose">
-                  <p>${turn.text}</p>
-                </div>`}
+              : html`
+                  <div
+                    class="swc-conversationalAi-systemProse swc-Typography--prose"
+                  >
+                    <p>${turn.text}</p>
+                  </div>
+                `}
             ${turn.loading
               ? ''
-              : html`<swc-message-feedback
-                  slot="feedback"
-                  data-feedback-id=${turn.id}
-                  status=${turn.feedbackStatus ?? ''}
-                ></swc-message-feedback>`}
+              : html`
+                  <swc-message-feedback
+                    slot="feedback"
+                    data-feedback-id=${turn.id}
+                    status=${turn.feedbackStatus ?? ''}
+                  ></swc-message-feedback>
+                `}
             ${turn.loading
               ? ''
-              : html`<swc-message-sources
-                  slot="sources"
-                  data-sources-id=${turn.id}
-                  ?open=${!!turn.sourcesOpen}
-                >
-                  <li><a href="#">Brand brief Q1 2026</a></li>
-                  <li><a href="#">Market research summary</a></li>
-                </swc-message-sources>`}
+              : html`
+                  <swc-message-sources
+                    slot="sources"
+                    data-sources-id=${turn.id}
+                    ?open=${!!turn.sourcesOpen}
+                  >
+                    <li><a href="#">Brand brief Q1 2026</a></li>
+                    <li><a href="#">Market research summary</a></li>
+                  </swc-message-sources>
+                `}
             ${turn.loading
               ? ''
-              : html`<swc-suggestion-group
-                  slot="suggestions"
-                  heading="What would you like to do next?"
-                >
-                  ${DEMO_SUGGESTIONS.map(
-                    (item) =>
-                      html`<swc-suggestion-item data-suggestion=${item}
-                        >${item}</swc-suggestion-item
-                      >`
-                  )}
-                </swc-suggestion-group>`}
+              : html`
+                  <swc-suggestion-group
+                    slot="suggestions"
+                    heading="What would you like to do next?"
+                  >
+                    ${DEMO_SUGGESTIONS.map(
+                      (item) => html`
+                        <swc-suggestion-item data-suggestion=${item}>
+                          ${item}
+                        </swc-suggestion-item>
+                      `
+                    )}
+                  </swc-suggestion-group>
+                `}
           </swc-system-message>
         </swc-conversation-turn>
       `;
@@ -485,25 +529,33 @@ class ConversationFullPatternDemo extends LitElement {
       (artifact) => html`
         <swc-upload-artifact
           slot="artifact"
-          type="card"
+          type=${artifact.thumbnailUrl ? 'media' : 'card'}
           dismissible
           data-artifact-id=${artifact.id}
         >
           ${artifact.thumbnailUrl
-            ? html`<img
-                slot="thumbnail"
-                src=${artifact.thumbnailUrl}
-                alt=${artifact.title}
-                style="inline-size:40px;block-size:40px;object-fit:cover;border-radius:4px;"
-              />`
-            : html`<div
-                slot="thumbnail"
-                role="img"
-                aria-label="File thumbnail"
-                style="inline-size:40px;block-size:40px;background:var(--swc-gray-200);border-radius:4px;"
-              ></div>`}
-          <span slot="title">${artifact.title}</span>
-          <span slot="subtitle">${artifact.subtitle}</span>
+            ? html`
+                <img
+                  slot="thumbnail"
+                  src=${artifact.thumbnailUrl}
+                  alt=${artifact.title}
+                  style="inline-size:100%;block-size:100%;object-fit:cover;"
+                />
+              `
+            : html`
+                <div
+                  slot="thumbnail"
+                  role="img"
+                  aria-label="File thumbnail"
+                  style="inline-size:40px;block-size:40px;background:var(--swc-gray-200);border-radius:4px;"
+                ></div>
+              `}
+          ${artifact.thumbnailUrl
+            ? ''
+            : html`
+                <span slot="title">${artifact.title}</span>
+                <span slot="subtitle">${artifact.subtitle}</span>
+              `}
         </swc-upload-artifact>
       `
     );
@@ -571,10 +623,17 @@ class ConversationFullPatternDemo extends LitElement {
             @swc-prompt-field-input=${this.handlePromptInput}
             @swc-prompt-field-submit=${this.handlePromptSubmit}
             @swc-prompt-field-stop=${this.stopGeneration}
-            @swc-prompt-field-files-selected=${this.handleFilesSelected}
+            @swc-prompt-field-upload-click=${this.handleUploadClick}
           >
             ${this.renderArtifacts()}
           </swc-prompt-field>
+          <input
+            id=${this.fileInputId}
+            type="file"
+            multiple
+            hidden
+            @change=${this.handleExternalInput}
+          />
         </div>
       </div>
     `;

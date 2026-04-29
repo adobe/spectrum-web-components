@@ -11,12 +11,7 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import {
-  property,
-  query,
-  queryAssignedElements,
-  state,
-} from 'lit/decorators.js';
+import { property, queryAssignedElements, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
@@ -28,23 +23,8 @@ import { ChevronUpIcon, PlusIcon, StopIcon } from '../utils/icons/index.js';
 
 import styles from './prompt-field.css';
 
-export interface PromptFieldArtifactValue {
-  id: string;
-  name: string;
-  mimeType: string;
-  size: number;
-  file: File;
-}
-
-export interface PromptFieldFilesSelectedDetail {
-  files: File[];
-  artifactValues: PromptFieldArtifactValue[];
-  allArtifactValues: PromptFieldArtifactValue[];
-}
-
 export interface PromptFieldSubmitDetail {
   value: string;
-  artifactValues: PromptFieldArtifactValue[];
 }
 
 export type PromptFieldMode = 'default' | 'loading' | 'disabled';
@@ -61,14 +41,11 @@ export type PromptFieldMode = 'default' | 'loading' | 'disabled';
  * @slot legal - Optional legal/footer content.
  * @fires swc-prompt-field-input - Dispatched after the textarea value is internally updated.
  * Detail: `{ value: string }`
- * @fires swc-prompt-field-submit - Dispatched when send is triggered with text and/or artifacts.
- * Detail: `{ value: string, artifactValues: PromptFieldArtifactValue[] }`
+ * @fires swc-prompt-field-submit - Dispatched when send is triggered.
+ * Detail: `{ value: string }`
  * @fires swc-prompt-field-stop - Dispatched when stop generation is requested in loading mode.
- * @fires swc-prompt-field-upload-click - Dispatched before opening the native file picker.
- * Cancel this event to prevent the picker from opening.
- * @fires swc-prompt-field-files-selected - Dispatched after files are chosen from the picker.
- * Detail:
- * `{ files: File[], artifactValues: PromptFieldArtifactValue[], allArtifactValues: PromptFieldArtifactValue[] }`
+ * @fires swc-prompt-field-upload-click - Dispatched when upload affordance is activated.
+ * Consumers should handle file picker flow externally.
  */
 export class PromptField extends SpectrumElement {
   private readonly labelId = uniqueId('swc-prompt-field-label');
@@ -106,35 +83,11 @@ export class PromptField extends SpectrumElement {
   @property({ type: String })
   public value = '';
 
-  /**
-   * Attachment values associated with the current draft.
-   * Updated automatically when files are selected through the built-in file picker.
-   */
-  @property({ attribute: false })
-  public artifactValues: PromptFieldArtifactValue[] = [];
-
-  /** Comma-separated file MIME types/extensions accepted by the picker. */
-  @property({ type: String })
-  public accept = '';
-
-  /** When true, picker allows selecting multiple files. */
-  @property({ type: Boolean })
-  public multiple = true;
-
-  private _hasArtifacts = false;
-  private _artifactCount = 0;
-
-  @query('.swc-PromptField-file-input')
-  private _fileInput?: HTMLInputElement;
-
   @queryAssignedElements({ slot: 'artifact', flatten: true })
   private _assignedArtifactElements!: HTMLElement[];
 
   @queryAssignedElements({ slot: 'legal', flatten: true })
   private _assignedLegalElements!: HTMLElement[];
-
-  @state()
-  private _hasSlottedLegal = false;
 
   /** Next textarea focus follows pointerdown on the textarea (click/touch). */
   private _textareaFocusFromPointer = false;
@@ -202,7 +155,6 @@ export class PromptField extends SpectrumElement {
         composed: true,
         detail: {
           value: this.value,
-          artifactValues: this.artifactValues,
         },
       })
     );
@@ -218,80 +170,23 @@ export class PromptField extends SpectrumElement {
   }
 
   private _handleUploadClick(): void {
-    if (this._isDisabled) {
-      return;
-    }
-    const uploadClickEvent = new CustomEvent('swc-prompt-field-upload-click', {
-      bubbles: true,
-      composed: true,
-      cancelable: true,
-    });
-    this.dispatchEvent(uploadClickEvent);
-    if (uploadClickEvent.defaultPrevented) {
-      return;
-    }
-    this._fileInput?.click();
-  }
-
-  private _handleFileInputChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const files = Array.from(input.files ?? []);
-    if (files.length === 0) {
-      return;
-    }
-
-    const nextArtifactValues = files.map((file) => ({
-      id: uniqueId('swc-prompt-field-artifact'),
-      name: file.name,
-      mimeType: file.type || 'application/octet-stream',
-      size: file.size,
-      file,
-    }));
-
-    this.artifactValues = [...this.artifactValues, ...nextArtifactValues];
-
     this.dispatchEvent(
-      new CustomEvent<PromptFieldFilesSelectedDetail>(
-        'swc-prompt-field-files-selected',
-        {
-          bubbles: true,
-          composed: true,
-          detail: {
-            files,
-            artifactValues: nextArtifactValues,
-            allArtifactValues: this.artifactValues,
-          },
-        }
-      )
+      new CustomEvent('swc-prompt-field-upload-click', {
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      })
     );
-
-    // Allow selecting the same file again in subsequent picker interactions.
-    input.value = '';
-  }
-
-  private _syncArtifactPresenceFromSlot(): void {
-    const artifactCount = this._assignedArtifactElements?.length ?? 0;
-    const hasArtifacts = artifactCount > 0;
-
-    if (
-      hasArtifacts !== this._hasArtifacts ||
-      artifactCount !== this._artifactCount
-    ) {
-      this._hasArtifacts = hasArtifacts;
-      this._artifactCount = artifactCount;
-      this.requestUpdate();
-    }
   }
 
   private _handleArtifactSlotChange(): void {
-    this._syncArtifactPresenceFromSlot();
+    this.requestUpdate();
   }
 
   private get _isPopulated(): boolean {
     return (
       this.value.trim().length > 0 ||
-      this._hasArtifacts ||
-      this.artifactValues.length > 0
+      (this._assignedArtifactElements?.length ?? 0) > 0
     );
   }
 
@@ -303,24 +198,12 @@ export class PromptField extends SpectrumElement {
     return this.mode === 'disabled';
   }
 
-  protected override firstUpdated(): void {
-    this._syncArtifactPresenceFromSlot();
-    this._syncLegalSlotPresence();
-  }
-
-  private _syncLegalSlotPresence(): void {
-    const hasSlottedLegal = (this._assignedLegalElements?.length ?? 0) > 0;
-    if (hasSlottedLegal !== this._hasSlottedLegal) {
-      this._hasSlottedLegal = hasSlottedLegal;
-    }
-  }
-
   private _handleLegalSlotChange(): void {
-    this._syncLegalSlotPresence();
+    this.requestUpdate();
   }
 
   private _renderLegalFooter(): TemplateResult | null {
-    if (!this._hasSlottedLegal) {
+    if ((this._assignedLegalElements?.length ?? 0) === 0) {
       return html`
         <slot
           name="legal"
@@ -337,13 +220,14 @@ export class PromptField extends SpectrumElement {
   }
 
   private _renderArtifact(): TemplateResult {
+    const artifactCount = this._assignedArtifactElements?.length ?? 0;
     const artifactClass =
-      this._artifactCount <= 1
+      artifactCount <= 1
         ? 'swc-PromptField-artifacts swc-PromptField-artifacts--single'
         : 'swc-PromptField-artifacts swc-PromptField-artifacts--multiple';
 
     return html`
-      <div class=${artifactClass} ?hidden=${!this._hasArtifacts}>
+      <div class=${artifactClass} ?hidden=${artifactCount === 0}>
         <slot
           name="artifact"
           @slotchange=${this._handleArtifactSlotChange}
@@ -429,15 +313,6 @@ export class PromptField extends SpectrumElement {
               >
                 <swc-icon aria-hidden="true">${PlusIcon()}</swc-icon>
               </button>
-              <input
-                class="swc-PromptField-file-input"
-                type="file"
-                ?multiple=${this.multiple}
-                ?disabled=${this._isDisabled}
-                accept=${ifDefined(this.accept || undefined)}
-                tabindex="-1"
-                @change=${this._handleFileInputChange}
-              />
             </div>
 
             ${showStop ? this._renderStopButton() : this._renderSendButton()}

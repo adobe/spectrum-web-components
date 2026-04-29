@@ -11,7 +11,7 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import { property, queryAssignedNodes } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
@@ -50,60 +50,22 @@ export class UploadArtifact extends SpectrumElement {
   @property({ type: Boolean, attribute: 'data-preview-only', reflect: true })
   private _previewOnly = false;
 
-  @queryAssignedNodes({ slot: 'title', flatten: true })
-  private _assignedTitleNodes!: Node[];
-
-  @queryAssignedNodes({ slot: 'subtitle', flatten: true })
-  private _assignedSubtitleNodes!: Node[];
-
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
-  private _nodesHaveAssignedContent(nodes: Node[]): boolean {
-    for (const node of nodes) {
-      if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
-        return true;
-      }
-      if (node.nodeType === Node.ELEMENT_NODE) {
-        const el = node as HTMLElement;
-        if (el.tagName === 'SLOT') {
-          continue;
-        }
-        if (el.textContent?.trim() || el.children.length > 0) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  private _syncTextMetaSlots(): void {
-    if (this.type !== 'media') {
-      this._previewOnly = false;
-      return;
-    }
-
-    const has =
-      this._nodesHaveAssignedContent(this._assignedTitleNodes ?? []) ||
-      this._nodesHaveAssignedContent(this._assignedSubtitleNodes ?? []);
-    const hide = !has;
-
-    this._previewOnly = hide;
+  private _syncMode(): void {
+    this._previewOnly = this.type === 'media';
   }
 
   protected override updated(changed: Map<string, unknown>): void {
     if (changed.has('type')) {
-      this._syncTextMetaSlots();
+      this._syncMode();
     }
   }
 
-  private _handleTextMetaSlotChange(): void {
-    this._syncTextMetaSlots();
-  }
-
   protected override firstUpdated(): void {
-    this._syncTextMetaSlots();
+    this._syncMode();
   }
 
   private _handleDismissClick(): void {
@@ -118,7 +80,6 @@ export class UploadArtifact extends SpectrumElement {
 
   protected override render(): TemplateResult {
     const isMedia = this.type === 'media';
-    const hideMediaMeta = isMedia && this._previewOnly;
 
     return html`
       <div class="swc-UploadArtifact">
@@ -138,39 +99,17 @@ export class UploadArtifact extends SpectrumElement {
 
           ${isMedia
             ? html`
-                <div class="swc-UploadArtifact-meta" ?hidden=${hideMediaMeta}>
-                  <div class="swc-UploadArtifact-header">
-                    <div class="swc-UploadArtifact-title">
-                      <slot
-                        name="title"
-                        @slotchange=${this._handleTextMetaSlotChange}
-                      ></slot>
-                    </div>
-                    <div class="swc-UploadArtifact-actions">
-                      <slot name="actions"></slot>
-                    </div>
-                  </div>
-                  <div class="swc-UploadArtifact-subtitle">
-                    <slot
-                      name="subtitle"
-                      @slotchange=${this._handleTextMetaSlotChange}
-                    ></slot>
-                  </div>
+                <div class="swc-UploadArtifact-actions">
+                  <slot name="actions"></slot>
                 </div>
               `
             : html`
                 <div class="swc-UploadArtifact-meta">
                   <div class="swc-UploadArtifact-title">
-                    <slot
-                      name="title"
-                      @slotchange=${this._handleTextMetaSlotChange}
-                    ></slot>
+                    <slot name="title"></slot>
                   </div>
                   <div class="swc-UploadArtifact-subtitle">
-                    <slot
-                      name="subtitle"
-                      @slotchange=${this._handleTextMetaSlotChange}
-                    ></slot>
+                    <slot name="subtitle"></slot>
                   </div>
                 </div>
 

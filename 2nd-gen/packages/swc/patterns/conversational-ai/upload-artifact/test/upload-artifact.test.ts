@@ -148,20 +148,14 @@ export const MediaPreviewOnlyTest: Story = {
       'swc-upload-artifact'
     );
 
+    await step('media artifacts are always preview-only', async () => {
+      expect(el.hasAttribute('data-preview-only')).toBe(true);
+    });
+
     await step(
-      'media artifacts without text metadata enter preview-only mode',
+      'adding title/subtitle does not change media preview-only behavior',
       async () => {
-        const metaContainer = el.shadowRoot?.querySelector<HTMLElement>(
-          '.swc-UploadArtifact-meta'
-        );
-
-        expect(el.hasAttribute('data-preview-only')).toBe(true);
-        expect(metaContainer?.hidden).toBe(true);
-      }
-    );
-
-    await step('adding a title exits preview-only mode', async () => {
-      el.innerHTML = `
+        el.innerHTML = `
         <div
           slot="thumbnail"
           style="inline-size:100%;block-size:196px;background:linear-gradient(135deg,#a78bfa,#f472b6);"
@@ -169,17 +163,14 @@ export const MediaPreviewOnlyTest: Story = {
           aria-label="Campaign preview"
         ></div>
         <span slot="title">Campaign preview</span>
+        <span slot="subtitle">Should be ignored</span>
       `;
 
-      await el.updateComplete;
-      await Promise.resolve();
+        await el.updateComplete;
+        await Promise.resolve();
 
-      const metaContainer = el.shadowRoot?.querySelector<HTMLElement>(
-        '.swc-UploadArtifact-meta'
-      );
-
-      expect(el.hasAttribute('data-preview-only')).toBe(false);
-      expect(metaContainer?.hidden).toBe(false);
-    });
+        expect(el.hasAttribute('data-preview-only')).toBe(true);
+      }
+    );
   },
 };
