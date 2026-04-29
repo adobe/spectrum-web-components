@@ -41,6 +41,9 @@ import styles from './badge.css';
  *   <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
  *   Verified
  * </swc-badge>
+ * @csspart test-part This is a test part.
+ * @fires test-event This is a test event.
+ * @cssproperty --test-property This is a test property.
  */
 export class Badge extends BadgeBase {
   // ────────────────────

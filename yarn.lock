@@ -212,7 +212,7 @@ __metadata:
     "@vitest/browser-playwright": "npm:4.0.15"
     "@vitest/coverage-v8": "npm:4.0.15"
     "@vitest/ui": "npm:4.0.15"
-    "@wc-toolkit/storybook-helpers": "npm:10.2.3"
+    "@wc-toolkit/storybook-helpers": "patch:@wc-toolkit/storybook-helpers@npm%3A10.2.3#~/.yarn/patches/@wc-toolkit-storybook-helpers-npm-10.2.3-03023714ff.patch"
     aria-query: "npm:5.3.2"
     autoprefixer: "npm:10.4.21"
     dom-accessibility-api: "npm:0.7.0"
@@ -10204,6 +10204,16 @@ __metadata:
     lit: ^2.0.0 || ^3.0.0
     storybook: ">=10.1.11-0 <11.0.0-0"
   checksum: 10c0/7714f801b14f4a453553d494ddf623a2eeec586866732e4876c7cf3b6723dff4ab28b46496a803210dc7391cbb1f6b8936234d718edeb94ae730d39e74c2b224
+  languageName: node
+  linkType: hard
+
+"@wc-toolkit/storybook-helpers@patch:@wc-toolkit/storybook-helpers@npm%3A10.2.3#~/.yarn/patches/@wc-toolkit-storybook-helpers-npm-10.2.3-03023714ff.patch":
+  version: 10.2.3
+  resolution: "@wc-toolkit/storybook-helpers@patch:@wc-toolkit/storybook-helpers@npm%3A10.2.3#~/.yarn/patches/@wc-toolkit-storybook-helpers-npm-10.2.3-03023714ff.patch::version=10.2.3&hash=5da242"
+  peerDependencies:
+    lit: ^2.0.0 || ^3.0.0
+    storybook: ">=10.1.11-0 <11.0.0-0"
+  checksum: 10c0/74f9779b54635ea12f0a7002611fd4d57897205a3fb49af28400d5176b5451a5746d24e3efd2f3d2b276c77f65645df4bfac9db86c4302efe83282fa8f72de9b
   languageName: node
   linkType: hard
 
