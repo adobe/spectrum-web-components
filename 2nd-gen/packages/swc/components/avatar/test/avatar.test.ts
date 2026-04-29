@@ -316,6 +316,32 @@ export const DecorativeTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Accessibility
+// ──────────────────────────────────────────────────────────────
+
+export const NotFocusableTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const avatar = await getComponent<Avatar>(canvasElement, 'swc-avatar');
+
+    await step('is not in the tab order', async () => {
+      expect(avatar.tabIndex, 'tabIndex is -1').toBe(-1);
+    });
+
+    await step(
+      'does not receive focus when focused programmatically',
+      async () => {
+        avatar.focus();
+        expect(
+          document.activeElement,
+          'activeElement is not the avatar'
+        ).not.toBe(avatar);
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Dev mode warnings
 // ──────────────────────────────────────────────────────────────
 

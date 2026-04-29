@@ -304,6 +304,32 @@ export const NonSemanticVariantsTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Accessibility
+// ──────────────────────────────────────────────────────────────
+
+export const NotFocusableTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
+
+    await step('is not in the tab order', async () => {
+      expect(badge.tabIndex, 'tabIndex is -1').toBe(-1);
+    });
+
+    await step(
+      'does not receive focus when focused programmatically',
+      async () => {
+        badge.focus();
+        expect(
+          document.activeElement,
+          'activeElement is not the badge'
+        ).not.toBe(badge);
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Dev mode warnings
 // ──────────────────────────────────────────────────────────────
 
