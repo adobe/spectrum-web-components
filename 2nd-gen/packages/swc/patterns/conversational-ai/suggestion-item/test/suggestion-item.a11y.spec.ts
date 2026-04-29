@@ -20,7 +20,7 @@ test.describe('SuggestionItem - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'patterns-conversational-ai-suggestion-suggestion-item--accessibility',
+      'patterns-conversational-ai-suggestion-group-suggestion-item--accessibility',
       'swc-suggestion-item'
     );
 
