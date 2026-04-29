@@ -13,6 +13,7 @@
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { property, queryAssignedElements, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { styleMap } from 'lit/directives/style-map.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
@@ -82,6 +83,14 @@ export class PromptField extends SpectrumElement {
   /** The current textarea value; internally updated and externally mirrorable. */
   @property({ type: String })
   public value = '';
+
+  /** Minimum visible textarea rows before growth. */
+  @property({ type: Number, attribute: 'min-rows' })
+  public minRows = 1;
+
+  /** Maximum visible textarea rows before internal scrolling. */
+  @property({ type: Number, attribute: 'max-rows' })
+  public maxRows = 4;
 
   @queryAssignedElements({ slot: 'artifact', flatten: true })
   private _assignedArtifactElements!: HTMLElement[];
@@ -190,6 +199,17 @@ export class PromptField extends SpectrumElement {
     );
   }
 
+  private get _normalizedMinRows(): number {
+    return Math.max(1, Math.floor(this.minRows || 1));
+  }
+
+  private get _normalizedMaxRows(): number {
+    return Math.max(
+      this._normalizedMinRows,
+      Math.floor(this.maxRows || this._normalizedMinRows)
+    );
+  }
+
   private get _isLoading(): boolean {
     return this.mode === 'loading';
   }
@@ -263,6 +283,7 @@ export class PromptField extends SpectrumElement {
 
   protected override render(): TemplateResult {
     const showStop = this._isLoading;
+    const hasArtifacts = (this._assignedArtifactElements?.length ?? 0) > 0;
 
     return html`
       <div class="swc-PromptField">
@@ -272,7 +293,7 @@ export class PromptField extends SpectrumElement {
             : ''}"
         >
           <div
-            class="swc-PromptField-input-area${this._hasArtifacts
+            class="swc-PromptField-input-area${hasArtifacts
               ? ' has-artifact'
               : ''}"
           >
@@ -293,7 +314,15 @@ export class PromptField extends SpectrumElement {
                 )}
                 aria-placeholder=${ifDefined(this.placeholder || undefined)}
                 ?disabled=${this._isDisabled}
-                rows="1"
+                rows=${this._normalizedMinRows}
+                style=${styleMap({
+                  '--swc-prompt-field-textarea-min-rows': String(
+                    this._normalizedMinRows
+                  ),
+                  '--swc-prompt-field-textarea-max-rows': String(
+                    this._normalizedMaxRows
+                  ),
+                })}
                 @input=${this._handleInput}
                 @keydown=${this._handleTextareaKeydown}
                 @pointerdown=${this._handleTextareaPointerDown}

@@ -45,6 +45,24 @@ export const OverviewTest: Story = {
       expect(el.stopLabel).toBe('Stop generating');
       expect(el.uploadLabel).toBe('Add attachment');
       expect(el.accessibleLabel).toBe('');
+      expect(el.minRows).toBe(1);
+      expect(el.maxRows).toBe(4);
+    });
+
+    await step('applies min-rows and max-rows to textarea sizing', async () => {
+      el.minRows = 3;
+      el.maxRows = 6;
+      await el.updateComplete;
+
+      const textarea =
+        el.shadowRoot?.querySelector<HTMLTextAreaElement>('textarea');
+      expect(textarea?.rows).toBe(3);
+      expect(
+        textarea?.style.getPropertyValue('--swc-prompt-field-textarea-min-rows')
+      ).toBe('3');
+      expect(
+        textarea?.style.getPropertyValue('--swc-prompt-field-textarea-max-rows')
+      ).toBe('6');
     });
 
     await step('legal slot renders custom legal content', async () => {

@@ -24,8 +24,7 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
       'swc-response-status'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - status
-      - text: Generating response
+      - status "Generating response"
     `);
   });
 });
