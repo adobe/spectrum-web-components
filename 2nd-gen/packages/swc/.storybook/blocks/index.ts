@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 export * from './ApiTable';
+export * from './ContextMarkdownButton';
 export * from './GettingStarted';
 export * from './OverviewStory';
 export * from './SpectrumDocs';
