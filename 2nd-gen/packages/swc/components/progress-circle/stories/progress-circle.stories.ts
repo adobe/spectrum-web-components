@@ -331,6 +331,9 @@ LoadingButton.storyName = 'Loading button';
  * - Progress is shown visually through the fill amount, not relying solely on color
  * - High contrast mode is supported with appropriate color overrides
  * - Static color variants ensure sufficient contrast on different backgrounds
+ * - At `progress="0"`, a small amount of fill is still rendered intentionally. A fully empty circle
+ *   would fail WCAG 1.4.11 (non-text contrast) because the track alone may not meet the required
+ *   3:1 contrast ratio against the background. The `aria-valuenow` attribute still reflects 0
  *
  * #### Non-interactive element
  *
