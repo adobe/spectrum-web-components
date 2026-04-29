@@ -35,7 +35,14 @@ export const ContextMarkdownButton = ({ of }: { of?: any }) => {
 
   // Strip leading `swc-` (or `sp-`) so component dir name matches the URL slug.
   const slug = componentTag?.replace(/^(swc|sp)-/, '');
-  const href = slug ? `/components/${slug}/context.md` : undefined;
+
+  // Resolve relative to `document.baseURI` (not absolute `/components/...`)
+  // so the URL works in both local dev (served from domain root) and CI
+  // preview deploys served under a sub-path like
+  // `/pr-NNNN/docs/second-gen-storybook/`.
+  const href = slug
+    ? new URL(`components/${slug}/context.md`, document.baseURI).href
+    : undefined;
 
   const [exists, setExists] = useState<boolean | null>(null);
 
