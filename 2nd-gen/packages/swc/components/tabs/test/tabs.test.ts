@@ -189,6 +189,97 @@ export const BooleanPropertiesTest: Story = {
   },
 };
 
+/**
+ * Covers toggling `auto` and `disabled` after mount (review: reactive host
+ * properties, not only initial attributes).
+ */
+export const HostAutoDisabledReactiveTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" label="Reactive auto/disabled test">
+      <swc-tab value="1">Tab 1</swc-tab>
+      <swc-tab value="2">Tab 2</swc-tab>
+      <swc-tab-panel value="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel value="2"><p>Panel 2</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const tab1 = canvasElement.querySelector('swc-tab[value="1"]') as Tab;
+    const tab2 = canvasElement.querySelector('swc-tab[value="2"]') as Tab;
+
+    await step(
+      'manual mode: arrow moves focus without changing selection',
+      async () => {
+        expect(tabs.auto, 'starts in manual mode').toBe(false);
+        tab1.focus();
+        tab1.dispatchEvent(
+          new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
+        );
+        await tabs.updateComplete;
+        expect(document.activeElement, 'focus on tab 2').toBe(tab2);
+        expect(tabs.selected, 'selection unchanged in manual mode').toBe('1');
+      }
+    );
+
+    await step('enabling auto: arrow then selects focused tab', async () => {
+      tabs.auto = true;
+      await tabs.updateComplete;
+      expect(tabs.auto, 'auto property is true').toBe(true);
+
+      tab1.focus();
+      tab1.dispatchEvent(
+        new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
+      );
+      await tabs.updateComplete;
+      expect(tabs.selected, 'selection follows focus in auto mode').toBe('2');
+    });
+
+    await step(
+      'disabling host: tablist aria-disabled and flat tabindex',
+      async () => {
+        tabs.disabled = true;
+        await tabs.updateComplete;
+
+        const tablist = tabs.shadowRoot?.querySelector('[role="tablist"]');
+        expect(
+          tablist?.getAttribute('aria-disabled'),
+          'tablist aria-disabled when host disabled'
+        ).toBe('true');
+        expect(
+          tab1.tabIndex,
+          'tab 1 not in tab order when container disabled'
+        ).toBe(-1);
+        expect(
+          tab2.tabIndex,
+          'tab 2 not in tab order when container disabled'
+        ).toBe(-1);
+      }
+    );
+
+    await step(
+      're-enabling host: restores roving tabindex on selected tab',
+      async () => {
+        tabs.disabled = false;
+        await tabs.updateComplete;
+
+        const tablist = tabs.shadowRoot?.querySelector('[role="tablist"]');
+        expect(
+          tablist?.hasAttribute('aria-disabled'),
+          'aria-disabled removed from tablist'
+        ).toBe(false);
+
+        const selected =
+          tabs.selected === '1' ? tab1 : tabs.selected === '2' ? tab2 : null;
+        expect(selected, 'expected a selected tab').toBeTruthy();
+        expect(
+          selected!.tabIndex,
+          'selected tab is in tab order after re-enable'
+        ).toBe(0);
+      }
+    );
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: ARIA roles, states, and properties
 // ──────────────────────────────────────────────────────────────
