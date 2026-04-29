@@ -195,6 +195,32 @@ export const StaticColorToggleTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Accessibility
+// ──────────────────────────────────────────────────────────────
+
+export const NotFocusableTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const divider = await getComponent<Divider>(canvasElement, 'swc-divider');
+
+    await step('is not in the tab order', async () => {
+      expect(divider.tabIndex, 'tabIndex is -1').toBe(-1);
+    });
+
+    await step(
+      'does not receive focus when focused programmatically',
+      async () => {
+        divider.focus();
+        expect(
+          document.activeElement,
+          'activeElement is not the divider'
+        ).not.toBe(divider);
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Dev mode warnings
 // ──────────────────────────────────────────────────────────────
 
