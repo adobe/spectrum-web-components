@@ -24,7 +24,7 @@ import styles from './tab.css';
  * `role="tab"` on the host.
  *
  * @element swc-tab
- * @status preview
+ * @status unsupported
  * @since 0.0.1
  *
  * @slot - Text label of the tab

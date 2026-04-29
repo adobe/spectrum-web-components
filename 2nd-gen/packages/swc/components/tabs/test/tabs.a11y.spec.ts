@@ -97,6 +97,19 @@ test.describe('Tabs - ARIA Snapshots', () => {
     `);
   });
 
+  test('should handle individual disabled tab', async ({ page }) => {
+    const root = await gotoStory(page, 'components-tabs--states', 'swc-tabs');
+    await expect(root.locator('swc-tabs[label="Individual states"]'))
+      .toMatchAriaSnapshot(`
+      - tablist "Individual states":
+        - tab "Default"
+        - tab "Selected" [selected]
+        - tab "Disabled" [disabled]
+      - tabpanel "Selected":
+        - paragraph: Selected tab content.
+    `);
+  });
+
   test('should have correct accessibility tree for sizes', async ({ page }) => {
     const root = await gotoStory(page, 'components-tabs--sizes', 'swc-tabs');
     const tabGroups = root.locator('swc-tabs');

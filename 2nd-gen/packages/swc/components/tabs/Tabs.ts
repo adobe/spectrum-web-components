@@ -28,7 +28,7 @@ import styles from './tabs.css';
  * fixing a 1st-gen bug where they were on different elements.
  *
  * @element swc-tabs
- * @status preview
+ * @status unsupported
  * @since 0.0.1
  *
  * @slot - Tab items (`swc-tab` elements)

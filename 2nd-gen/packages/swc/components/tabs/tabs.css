@@ -142,6 +142,13 @@
   pointer-events: none;
 }
 
+/* Match per-tab disabled visuals when the container is disabled (tabs stay
+   in the light DOM; ::slotted targets the tab hosts from the tablist slot). */
+:host([disabled]) ::slotted(swc-tab) {
+  color: var(--swc-tab-text-color-disabled, token("disabled-content-color"));
+  cursor: default;
+}
+
 :host([disabled]) .selection-indicator {
   --swc-tabs-indicator-color: var(--swc-tabs-indicator-color-disabled, token("disabled-border-color"));
 }

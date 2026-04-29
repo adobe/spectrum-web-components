@@ -69,9 +69,11 @@ export abstract class TabBase extends SpectrumElement {
   /**
    * Whether the tab is displayed in vertical orientation.
    *
-   * @todo Evaluate whether this property is still needed in
-   *   2nd-gen; orientation should be derived from the parent
-   *   container's `direction` attribute via CSS context selectors.
+   * Orientation is primarily driven by the parent `swc-tabs` `direction`
+   * attribute; this property remains for styling and any consumers that read
+   * it explicitly. We can remove it in a future major once vertical layout is
+   * fully parent-driven only—track that cleanup in the component backlog if
+   * it becomes redundant in practice.
    */
   @property({ type: Boolean, reflect: true })
   public vertical = false;
