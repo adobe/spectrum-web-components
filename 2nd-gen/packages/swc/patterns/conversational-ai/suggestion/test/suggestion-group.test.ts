@@ -101,35 +101,23 @@ export const OverviewTest: Story = {
       }
     );
 
-    await step('heading-level renders h2–h6', async () => {
+    await step('heading renders with fixed semantic level', async () => {
       el.heading = 'Title';
-
-      el.headingLevel = 2;
       await el.updateComplete;
       expect(
-        el.shadowRoot?.querySelector('h2.swc-SuggestionGroup-title')
+        el.shadowRoot?.querySelector('h3.swc-SuggestionGroup-title')
       ).toBeTruthy();
+    });
 
-      el.setAttribute('heading-level', '5');
+    await step('accessible-label overrides fallback aria-label', async () => {
+      el.heading = '';
+      el.accessibleLabel = 'Custom suggestions label';
       await el.updateComplete;
-      expect(
-        el.shadowRoot?.querySelector('h5.swc-SuggestionGroup-title')
-      ).toBeTruthy();
 
-      el.headingLevel = 0;
-      await el.updateComplete;
-      expect(
-        el.shadowRoot?.querySelector('h2.swc-SuggestionGroup-title')
-      ).toBeTruthy();
-
-      el.headingLevel = 99;
-      await el.updateComplete;
-      expect(
-        el.shadowRoot?.querySelector('h6.swc-SuggestionGroup-title')
-      ).toBeTruthy();
-
-      el.headingLevel = 3;
-      await el.updateComplete;
+      const group = el.shadowRoot?.querySelector('.swc-SuggestionGroup-items');
+      expect(group?.getAttribute('aria-label')).toBe(
+        'Custom suggestions label'
+      );
     });
   },
 };

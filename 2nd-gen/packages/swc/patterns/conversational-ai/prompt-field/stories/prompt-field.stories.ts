@@ -100,6 +100,14 @@ export const Playground: Story = {
     mode: 'default',
   },
   tags: ['autodocs', 'dev'],
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Provide legal copy via the `legal` slot. If omitted, no legal content is rendered.',
+      },
+    },
+  },
 };
 
 // ──────────────────────────────

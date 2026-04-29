@@ -49,6 +49,10 @@ export class MessageSources extends SpectrumElement {
   @property({ type: String })
   public label = 'Sources';
 
+  /** Optional accessible label override for assistive technologies. */
+  @property({ type: String, attribute: 'accessible-label' })
+  public accessibleLabel = '';
+
   public static override get styles(): CSSResultArray {
     return [styles];
   }
@@ -67,12 +71,17 @@ export class MessageSources extends SpectrumElement {
   protected override render(): TemplateResult {
     const isExpanded = this.open;
     const label = this.label.trim() || 'Sources';
+    const accessibleLabel =
+      this.accessibleLabel.trim().length > 0
+        ? this.accessibleLabel.trim()
+        : label;
 
     return html`
       <div class="swc-MessageSources">
         <button
           id=${this.toggleId}
           class="swc-MessageSources-toggle"
+          aria-label=${accessibleLabel}
           aria-expanded=${isExpanded}
           aria-controls=${this.panelId}
           @click=${this._handleToggle}

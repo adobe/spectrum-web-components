@@ -52,12 +52,10 @@ export const OverviewTest: Story = {
       expect(el.accept).toBe('');
       expect(el.multiple).toBe(true);
       expect(el.artifactValues).toEqual([]);
-      expect(el.legalText).toBe('');
-      expect(el.legalLinkHref).toBe('');
-      expect(el.legalLinkText).toBe('');
       expect(el.sendLabel).toBe('Send');
       expect(el.stopLabel).toBe('Stop generating');
       expect(el.uploadLabel).toBe('Add attachment');
+      expect(el.accessibleLabel).toBe('');
       const textarea = el.shadowRoot?.querySelector<HTMLTextAreaElement>(
         '.swc-PromptField-textarea'
       );
@@ -76,11 +74,7 @@ export const OverviewTest: Story = {
       const legalCopy = el.shadowRoot?.querySelector(
         '.swc-PromptField-legal-disclaimer'
       );
-      const legalLink = legalCopy?.querySelector('a');
-      expect(legalCopy?.textContent).toContain(
-        'Responses are generated using AI, and may be inaccurate. Check before using.'
-      );
-      expect(legalLink?.textContent?.trim()).toBe('AI User Guidelines');
+      expect(legalCopy).toBeNull();
     });
   },
 };
@@ -136,97 +130,63 @@ export const PropertyMutationTest: Story = {
       }
     );
 
-    await step(
-      'legal props render custom legal disclaimer copy and link',
-      async () => {
-        el.legalText = 'Generated content may include mistakes.';
-        el.legalLinkHref = 'https://example.com/legal';
-        el.legalLinkText = 'Usage policy';
-        await el.updateComplete;
-
-        const footer = el.shadowRoot?.querySelector('.swc-PromptField-footer');
-        const legalCopy = el.shadowRoot?.querySelector(
-          '.swc-PromptField-legal-disclaimer'
-        );
-        const legalLink = legalCopy?.querySelector('a');
-
-        expect(footer).toBeTruthy();
-        expect(legalCopy?.textContent).toContain(
-          'Generated content may include mistakes.'
-        );
-        expect(legalLink?.textContent?.trim()).toBe('Usage policy');
-        expect(legalLink?.getAttribute('href')).toBe(
-          'https://example.com/legal'
-        );
-      }
-    );
-
-    await step(
-      'default Adobe legal disclaimer is restored when legal props are cleared',
-      async () => {
-        el.legalText = '';
-        el.legalLinkHref = '';
-        el.legalLinkText = '';
-        await el.updateComplete;
-
-        const legalCopy = el.shadowRoot?.querySelector(
-          '.swc-PromptField-legal-disclaimer'
-        );
-        const legalLink = legalCopy?.querySelector('a');
-
-        expect(legalCopy?.textContent).toContain(
-          'Responses are generated using AI, and may be inaccurate. Check before using.'
-        );
-        expect(legalLink?.textContent?.trim()).toBe('AI User Guidelines');
-      }
-    );
-
-    await step(
-      'legal slot overrides legal props and default fallback',
-      async () => {
-        el.legalText = 'This should be overridden.';
-        el.innerHTML = `
+    await step('legal slot renders custom legal content', async () => {
+      el.innerHTML = `
         <div slot="legal">Custom legal from slot.</div>
       `;
-        await el.updateComplete;
-        await Promise.resolve();
-        await el.updateComplete;
-
-        const footer = el.shadowRoot?.querySelector('.swc-PromptField-footer');
-        const legalSlot =
-          el.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="legal"]');
-        const assignedText = legalSlot
-          ?.assignedNodes({ flatten: true })
-          .map((node) => node.textContent ?? '')
-          .join('')
-          .trim();
-        const legalCopy = el.shadowRoot?.querySelector(
-          '.swc-PromptField-legal-disclaimer'
-        );
-
-        expect(footer).toBeTruthy();
-        expect(assignedText).toContain('Custom legal from slot.');
-        expect(legalCopy).toBeNull();
-      }
-    );
-
-    await step('custom action labels override default aria labels', async () => {
-      el.uploadLabel = 'Attach file';
-      el.sendLabel = 'Submit prompt';
-      el.stopLabel = 'Cancel generation';
-      el.mode = 'loading';
+      await el.updateComplete;
+      await Promise.resolve();
       await el.updateComplete;
 
-      const uploadButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
-        '.swc-PromptField-upload'
-      );
-      const stopButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
-        '.swc-PromptField-stop'
+      const footer = el.shadowRoot?.querySelector('.swc-PromptField-footer');
+      const legalSlot =
+        el.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="legal"]');
+      const assignedText = legalSlot
+        ?.assignedNodes({ flatten: true })
+        .map((node) => node.textContent ?? '')
+        .join('')
+        .trim();
+      const legalCopy = el.shadowRoot?.querySelector(
+        '.swc-PromptField-legal-disclaimer'
       );
 
-      expect(uploadButton?.getAttribute('aria-label')).toBe('Attach file');
-      expect(stopButton?.getAttribute('aria-label')).toBe('Cancel generation');
+      expect(footer).toBeTruthy();
+      expect(assignedText).toContain('Custom legal from slot.');
+      expect(legalCopy).toBeNull();
     });
+
+    await step('accessible-label overrides textarea aria-label', async () => {
+      el.accessibleLabel = 'Custom prompt input';
+      await el.updateComplete;
+
+      const textarea = el.shadowRoot?.querySelector<HTMLTextAreaElement>(
+        '.swc-PromptField-textarea'
+      );
+      expect(textarea?.getAttribute('aria-label')).toBe('Custom prompt input');
+    });
+
+    await step(
+      'custom action labels override default aria labels',
+      async () => {
+        el.uploadLabel = 'Attach file';
+        el.sendLabel = 'Submit prompt';
+        el.stopLabel = 'Cancel generation';
+        el.mode = 'loading';
+        await el.updateComplete;
+
+        const uploadButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
+          '.swc-PromptField-upload'
+        );
+        const stopButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
+          '.swc-PromptField-stop'
+        );
+
+        expect(uploadButton?.getAttribute('aria-label')).toBe('Attach file');
+        expect(stopButton?.getAttribute('aria-label')).toBe(
+          'Cancel generation'
+        );
+      }
+    );
   },
 };
 
@@ -247,30 +207,33 @@ export const EventsTest: Story = {
       'swc-prompt-field'
     );
 
-    await step('fires swc-prompt-field-submit when send button clicked', async () => {
-      let detail:
-        | { value: string; artifactValues: PromptField['artifactValues'] }
-        | undefined;
-      el.addEventListener(
-        'swc-prompt-field-submit',
-        (event) => {
-          detail = (
-            event as CustomEvent<{
-              value: string;
-              artifactValues: PromptField['artifactValues'];
-            }>
-          ).detail;
-        },
-        { once: true }
-      );
+    await step(
+      'fires swc-prompt-field-submit when send button clicked',
+      async () => {
+        let detail:
+          | { value: string; artifactValues: PromptField['artifactValues'] }
+          | undefined;
+        el.addEventListener(
+          'swc-prompt-field-submit',
+          (event) => {
+            detail = (
+              event as CustomEvent<{
+                value: string;
+                artifactValues: PromptField['artifactValues'];
+              }>
+            ).detail;
+          },
+          { once: true }
+        );
 
-      const sendBtn = el.shadowRoot?.querySelector<HTMLButtonElement>(
-        '.swc-PromptField-send'
-      );
-      sendBtn?.click();
-      expect(detail?.value).toBe('Summarize the API changes in this branch.');
-      expect(detail?.artifactValues).toEqual([]);
-    });
+        const sendBtn = el.shadowRoot?.querySelector<HTMLButtonElement>(
+          '.swc-PromptField-send'
+        );
+        sendBtn?.click();
+        expect(detail?.value).toBe('Summarize the API changes in this branch.');
+        expect(detail?.artifactValues).toEqual([]);
+      }
+    );
 
     await step(
       'fires swc-prompt-field-submit when Enter is pressed in textarea',
@@ -416,29 +379,34 @@ export const EventsTest: Story = {
       }
     );
 
-    await step('swc-prompt-field-upload-click can prevent picker opening', async () => {
-      let pickerOpened = false;
-      const preventOpen = (event: Event): void => {
-        event.preventDefault();
-      };
-      el.addEventListener('swc-prompt-field-upload-click', preventOpen, { once: true });
-
-      const fileInput = el.shadowRoot?.querySelector<HTMLInputElement>(
-        '.swc-PromptField-file-input'
-      );
-      if (fileInput) {
-        fileInput.click = () => {
-          pickerOpened = true;
+    await step(
+      'swc-prompt-field-upload-click can prevent picker opening',
+      async () => {
+        let pickerOpened = false;
+        const preventOpen = (event: Event): void => {
+          event.preventDefault();
         };
+        el.addEventListener('swc-prompt-field-upload-click', preventOpen, {
+          once: true,
+        });
+
+        const fileInput = el.shadowRoot?.querySelector<HTMLInputElement>(
+          '.swc-PromptField-file-input'
+        );
+        if (fileInput) {
+          fileInput.click = () => {
+            pickerOpened = true;
+          };
+        }
+
+        const uploadBtn = el.shadowRoot?.querySelector<HTMLButtonElement>(
+          '.swc-PromptField-upload'
+        );
+        uploadBtn?.click();
+
+        expect(pickerOpened).toBe(false);
       }
-
-      const uploadBtn = el.shadowRoot?.querySelector<HTMLButtonElement>(
-        '.swc-PromptField-upload'
-      );
-      uploadBtn?.click();
-
-      expect(pickerOpened).toBe(false);
-    });
+    );
 
     await step(
       'fires swc-prompt-field-files-selected with file and artifact values',
@@ -489,50 +457,56 @@ export const EventsTest: Story = {
       }
     );
 
-    await step('bubbles swc-upload-artifact-dismiss from a dismissible artifact', async () => {
-      el.innerHTML = `
+    await step(
+      'bubbles swc-upload-artifact-dismiss from a dismissible artifact',
+      async () => {
+        el.innerHTML = `
           <swc-upload-artifact slot="artifact" type="media" dismissible>
             <div slot="thumbnail" style="inline-size:100%;block-size:100%;"></div>
           </swc-upload-artifact>
         `;
-      await el.updateComplete;
+        await el.updateComplete;
 
-      let fired = false;
-      el.addEventListener(
-        'swc-upload-artifact-dismiss',
-        () => {
-          fired = true;
-        },
-        { once: true }
-      );
-
-      const dismissBtn = el
-        .querySelector('swc-upload-artifact')
-        ?.shadowRoot?.querySelector<HTMLButtonElement>(
-          '.swc-UploadArtifact-dismiss'
+        let fired = false;
+        el.addEventListener(
+          'swc-upload-artifact-dismiss',
+          () => {
+            fired = true;
+          },
+          { once: true }
         );
-      dismissBtn?.click();
-      expect(fired).toBe(true);
-    });
 
-    await step('stop button supports keyboard activation (Enter and Space)', async () => {
-      el.mode = 'loading';
-      await el.updateComplete;
+        const dismissBtn = el
+          .querySelector('swc-upload-artifact')
+          ?.shadowRoot?.querySelector<HTMLButtonElement>(
+            '.swc-UploadArtifact-dismiss'
+          );
+        dismissBtn?.click();
+        expect(fired).toBe(true);
+      }
+    );
 
-      let stopCount = 0;
-      el.addEventListener('swc-prompt-field-stop', () => {
-        stopCount += 1;
-      });
+    await step(
+      'stop button supports keyboard activation (Enter and Space)',
+      async () => {
+        el.mode = 'loading';
+        await el.updateComplete;
 
-      const stopBtn = el.shadowRoot?.querySelector<HTMLButtonElement>(
-        '.swc-PromptField-stop'
-      );
-      stopBtn?.focus();
-      await userEvent.keyboard('{Enter}');
-      stopBtn?.focus();
-      await userEvent.keyboard(' ');
+        let stopCount = 0;
+        el.addEventListener('swc-prompt-field-stop', () => {
+          stopCount += 1;
+        });
 
-      expect(stopCount).toBe(2);
-    });
+        const stopBtn = el.shadowRoot?.querySelector<HTMLButtonElement>(
+          '.swc-PromptField-stop'
+        );
+        stopBtn?.focus();
+        await userEvent.keyboard('{Enter}');
+        stopBtn?.focus();
+        await userEvent.keyboard(' ');
+
+        expect(stopCount).toBe(2);
+      }
+    );
   },
 };

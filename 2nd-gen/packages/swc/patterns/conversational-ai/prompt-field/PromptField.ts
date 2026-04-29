@@ -49,12 +49,6 @@ export interface PromptFieldSubmitDetail {
 
 export type PromptFieldMode = 'default' | 'loading' | 'disabled';
 
-const DEFAULT_LEGAL_TEXT =
-  'Responses are generated using AI, and may be inaccurate. Check before using.';
-const DEFAULT_LEGAL_LINK_HREF =
-  'https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html';
-const DEFAULT_LEGAL_LINK_TEXT = 'AI User Guidelines';
-
 /**
  * Prompt entry surface for conversational AI flows.
  *
@@ -64,8 +58,7 @@ const DEFAULT_LEGAL_LINK_TEXT = 'AI User Guidelines';
  * @element swc-prompt-field
  *
  * @slot artifact - Optional attachment preview(s); supports multiple slotted artifacts.
- * @slot legal - Optional legal/footer content. When provided, this slot overrides `legal-text`,
- * and `legal-link-href`/`legal-link-text` fallback content.
+ * @slot legal - Optional legal/footer content.
  * @fires swc-prompt-field-input - Dispatched after the textarea value is internally updated.
  * Detail: `{ value: string }`
  * @fires swc-prompt-field-submit - Dispatched when send is triggered with text and/or artifacts.
@@ -87,6 +80,10 @@ export class PromptField extends SpectrumElement {
   /** Accessible label shown above the textarea. */
   @property({ type: String })
   public label = 'Prompt';
+
+  /** Optional accessible label override for the textarea. */
+  @property({ type: String, attribute: 'accessible-label' })
+  public accessibleLabel = '';
 
   /** Accessible label for the send action button. */
   @property({ type: String, attribute: 'send-label' })
@@ -123,18 +120,6 @@ export class PromptField extends SpectrumElement {
   /** When true, picker allows selecting multiple files. */
   @property({ type: Boolean })
   public multiple = true;
-
-  /** Optional legal disclaimer text shown in the footer. */
-  @property({ type: String, attribute: 'legal-text' })
-  public legalText = '';
-
-  /** Optional legal disclaimer link URL shown in the footer. */
-  @property({ type: String, attribute: 'legal-link-href' })
-  public legalLinkHref = '';
-
-  /** Optional legal disclaimer link label shown in the footer. */
-  @property({ type: String, attribute: 'legal-link-text' })
-  public legalLinkText = '';
 
   private _hasArtifacts = false;
   private _artifactCount = 0;
@@ -225,7 +210,10 @@ export class PromptField extends SpectrumElement {
 
   private _handleStopClick(): void {
     this.dispatchEvent(
-      new CustomEvent('swc-prompt-field-stop', { bubbles: true, composed: true })
+      new CustomEvent('swc-prompt-field-stop', {
+        bubbles: true,
+        composed: true,
+      })
     );
   }
 
@@ -263,15 +251,18 @@ export class PromptField extends SpectrumElement {
     this.artifactValues = [...this.artifactValues, ...nextArtifactValues];
 
     this.dispatchEvent(
-      new CustomEvent<PromptFieldFilesSelectedDetail>('swc-prompt-field-files-selected', {
-        bubbles: true,
-        composed: true,
-        detail: {
-          files,
-          artifactValues: nextArtifactValues,
-          allArtifactValues: this.artifactValues,
-        },
-      })
+      new CustomEvent<PromptFieldFilesSelectedDetail>(
+        'swc-prompt-field-files-selected',
+        {
+          bubbles: true,
+          composed: true,
+          detail: {
+            files,
+            artifactValues: nextArtifactValues,
+            allArtifactValues: this.artifactValues,
+          },
+        }
+      )
     );
 
     // Allow selecting the same file again in subsequent picker interactions.
@@ -329,62 +320,18 @@ export class PromptField extends SpectrumElement {
   }
 
   private _renderLegalFooter(): TemplateResult | null {
-    if (this._hasSlottedLegal) {
+    if (!this._hasSlottedLegal) {
       return html`
-        <div class="swc-PromptField-footer">
-          <slot name="legal" @slotchange=${this._handleLegalSlotChange}></slot>
-        </div>
-      `;
-    }
-
-    const legalText = this.legalText.trim();
-    const legalLinkHref = this.legalLinkHref.trim();
-    const legalLinkText = this.legalLinkText.trim();
-    const hasCustomCopy = legalText.length > 0 || legalLinkText.length > 0;
-
-    if (hasCustomCopy) {
-      return html`
-        <div class="swc-PromptField-footer">
-          <slot
-            name="legal"
-            hidden
-            @slotchange=${this._handleLegalSlotChange}
-          ></slot>
-          <p class="swc-PromptField-legal-disclaimer">
-            ${legalText}
-            ${legalLinkHref.length > 0 && legalLinkText.length > 0
-              ? html`
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href=${legalLinkHref}
-                  >
-                    ${legalLinkText}
-                  </a>
-                `
-              : ''}
-          </p>
-        </div>
-      `;
-    }
-
-    return html`
-      <div class="swc-PromptField-footer">
         <slot
           name="legal"
           hidden
           @slotchange=${this._handleLegalSlotChange}
         ></slot>
-        <p class="swc-PromptField-legal-disclaimer">
-          ${DEFAULT_LEGAL_TEXT}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href=${DEFAULT_LEGAL_LINK_HREF}
-          >
-            ${DEFAULT_LEGAL_LINK_TEXT}
-          </a>
-        </p>
+      `;
+    }
+    return html`
+      <div class="swc-PromptField-footer">
+        <slot name="legal" @slotchange=${this._handleLegalSlotChange}></slot>
       </div>
     `;
   }
@@ -447,14 +394,19 @@ export class PromptField extends SpectrumElement {
           >
             ${this._renderArtifact()}
             <div class="swc-PromptField-text-area">
-              <span id=${this.labelId} class="swc-PromptField-label"
-                >${this.label}</span
-              >
+              <span id=${this.labelId} class="swc-PromptField-label">
+                ${this.label}
+              </span>
               <textarea
                 class="swc-PromptField-textarea"
                 .value=${this.value}
                 placeholder=${this.placeholder}
                 aria-labelledby=${this.labelId}
+                aria-label=${ifDefined(
+                  this.accessibleLabel.trim().length > 0
+                    ? this.accessibleLabel.trim()
+                    : undefined
+                )}
                 aria-placeholder=${ifDefined(this.placeholder || undefined)}
                 ?disabled=${this._isDisabled}
                 rows="1"

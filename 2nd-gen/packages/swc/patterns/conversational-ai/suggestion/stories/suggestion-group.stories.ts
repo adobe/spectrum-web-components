@@ -42,20 +42,8 @@ const meta: Meta = {
     ...args,
     'default-slot': threeSuggestionItems,
     heading: 'What would you like to do next?',
-    'heading-level': 3,
   },
-  argTypes: {
-    ...argTypes,
-    'heading-level': {
-      control: { type: 'number', min: 2, max: 6, step: 1 },
-      description:
-        'Semantic heading level for the title (`h2`–`h6`; invalid values clamp to 2–6).',
-      table: {
-        category: 'attributes',
-        defaultValue: { summary: '3' },
-      },
-    },
-  },
+  argTypes,
   render: (args) => template(args),
   parameters: {
     docs: {
@@ -220,7 +208,6 @@ export const Heading: Story = {
  * - Native `<button>` semantics per suggestion item
  * - Group labeling via `aria-labelledby` when `heading` is set, otherwise via
  *   configurable `accessible-label`
- * - Optional `heading-level` (2–6 → `h2`–`h6`) for document outline
  * - Item click event bubbling from each `<swc-suggestion-item>`
  */
 export const Accessibility: Story = {

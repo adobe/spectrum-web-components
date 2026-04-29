@@ -105,7 +105,9 @@ export const BooleanMutationTest: Story = {
       el.loading = true;
       await el.updateComplete;
 
-      let statusLabel = el.shadowRoot?.querySelector('.swc-ResponseStatus-label');
+      let statusLabel = el.shadowRoot?.querySelector(
+        '.swc-ResponseStatus-label'
+      );
       expect(statusLabel?.textContent?.trim()).toBe('Thinking...');
 
       el.loading = false;
@@ -131,21 +133,24 @@ export const InteractionTest: Story = {
       'swc-response-status'
     );
 
-    await step('toggle dispatches swc-response-status-toggle with open detail', async () => {
-      let captured: CustomEvent<{ open: boolean }> | undefined;
-      el.addEventListener('swc-response-status-toggle', (event) => {
-        captured = event as CustomEvent<{ open: boolean }>;
-      });
+    await step(
+      'toggle dispatches swc-response-status-toggle with open detail',
+      async () => {
+        let captured: CustomEvent<{ open: boolean }> | undefined;
+        el.addEventListener('swc-response-status-toggle', (event) => {
+          captured = event as CustomEvent<{ open: boolean }>;
+        });
 
-      const button = el.shadowRoot?.querySelector(
-        '.swc-ResponseStatus-row--button'
-      ) as HTMLButtonElement | null;
-      button?.click();
-      await el.updateComplete;
+        const button = el.shadowRoot?.querySelector(
+          '.swc-ResponseStatus-row--button'
+        ) as HTMLButtonElement | null;
+        button?.click();
+        await el.updateComplete;
 
-      expect(el.open).toBe(true);
-      expect(captured?.detail.open).toBe(true);
-    });
+        expect(el.open).toBe(true);
+        expect(captured?.detail.open).toBe(true);
+      }
+    );
 
     await step(
       'collapsed complete state keeps the reasoning panel in the DOM but hidden',
@@ -160,7 +165,7 @@ export const InteractionTest: Story = {
           '[id^="swc-reasoning-panel-"]'
         );
 
-        expect(panel?.id).toMatch(/^swc-reasoning-panel-\d+$/);
+        expect(panel?.id).toMatch(/^swc-reasoning-panel-[a-f0-9]+$/);
         expect(button?.getAttribute('aria-controls')).toBe(panel?.id);
         expect(button?.getAttribute('aria-expanded')).toBe('false');
         expect(panel).toBeTruthy();

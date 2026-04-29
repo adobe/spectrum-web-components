@@ -10,12 +10,14 @@
  * governing permissions and limitations under the License.
  */
 
-let nextIdValue = 0;
-
 /**
- * Returns a predictable component id with the provided prefix.
+ * Returns a collision-resistant component id with the provided prefix.
+ * Uses getRandomValues() to remain compatible in non-secure contexts.
  */
 export function uniqueId(prefix: string): string {
-  nextIdValue += 1;
-  return `${prefix}-${nextIdValue}`;
+  const randomPart = Array.from(
+    crypto.getRandomValues(new Uint8Array(4)),
+    (b) => `0${(b & 0xff).toString(16)}`.slice(-2)
+  ).join('');
+  return `${prefix}-${randomPart}`;
 }

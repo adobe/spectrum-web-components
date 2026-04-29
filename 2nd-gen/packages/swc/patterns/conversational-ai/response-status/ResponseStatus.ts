@@ -136,7 +136,7 @@ export class ResponseStatus extends SpectrumElement {
 
   private _renderLoadingRow(label: string): TemplateResult {
     return html`
-      <div class="swc-ResponseStatus-row" role="status">
+      <div class="swc-ResponseStatus-row" role="status" aria-label=${label}>
         <span class="swc-ResponseStatus-loadingSlot">
           <swc-progress-circle
             size="s"
@@ -159,6 +159,7 @@ export class ResponseStatus extends SpectrumElement {
       return html`
         <button
           class="swc-ResponseStatus-row swc-ResponseStatus-row--button"
+          aria-label=${label}
           aria-expanded=${expanded}
           aria-controls=${this.reasoningPanelId}
           @click=${this._handleToggle}
@@ -210,7 +211,9 @@ export class ResponseStatus extends SpectrumElement {
           id=${this.reasoningPanelId}
           class="swc-ResponseStatus-reasoning-panel"
           role=${ifDefined(showDisclosure ? 'group' : undefined)}
-          aria-label=${ifDefined(showDisclosure ? this.reasoningLabel : undefined)}
+          aria-label=${ifDefined(
+            showDisclosure ? this.reasoningLabel : undefined
+          )}
           ?hidden=${!showDisclosure || !this.open}
         >
           <slot

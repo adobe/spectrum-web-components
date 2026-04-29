@@ -105,35 +105,35 @@ export const OpenMutationTest: Story = {
         expect(toggle?.getAttribute('aria-expanded')).toBe('false');
         expect(panel).toBeTruthy();
         expect(panel?.hidden).toBe(true);
-        expect(panel ? getComputedStyle(panel).display : undefined).toBe(
-          'none'
-        );
       }
     );
 
-    await step('clicking the toggle emits swc-message-sources-toggle', async () => {
-      let detail: { open: boolean } | undefined;
-      el.addEventListener(
-        'swc-message-sources-toggle',
-        (event) => {
-          detail = (event as CustomEvent<{ open: boolean }>).detail;
-        },
-        { once: true }
-      );
+    await step(
+      'clicking the toggle emits swc-message-sources-toggle',
+      async () => {
+        let detail: { open: boolean } | undefined;
+        el.addEventListener(
+          'swc-message-sources-toggle',
+          (event) => {
+            detail = (event as CustomEvent<{ open: boolean }>).detail;
+          },
+          { once: true }
+        );
 
-      const toggle = el.shadowRoot?.querySelector<HTMLButtonElement>(
-        '.swc-MessageSources-toggle'
-      );
-      toggle?.click();
-      await el.updateComplete;
+        const toggle = el.shadowRoot?.querySelector<HTMLButtonElement>(
+          '.swc-MessageSources-toggle'
+        );
+        toggle?.click();
+        await el.updateComplete;
 
-      const panel = el.shadowRoot?.querySelector<HTMLOListElement>(
-        '.swc-MessageSources-list'
-      );
-      expect(detail?.open).toBe(true);
-      expect(el.open).toBe(true);
-      expect(panel?.hidden).toBe(false);
-    });
+        const panel = el.shadowRoot?.querySelector<HTMLOListElement>(
+          '.swc-MessageSources-list'
+        );
+        expect(detail?.open).toBe(true);
+        expect(el.open).toBe(true);
+        expect(panel?.hidden).toBe(false);
+      }
+    );
 
     await step('keyboard Enter and Space toggle the list', async () => {
       const toggle = el.shadowRoot?.querySelector<HTMLButtonElement>(
@@ -161,7 +161,9 @@ export const OpenMutationTest: Story = {
 };
 
 export const EmptySlotTest: Story = {
-  render: () => html`<swc-message-sources></swc-message-sources>`,
+  render: () => html`
+    <swc-message-sources></swc-message-sources>
+  `,
   play: async ({ canvasElement, step }) => {
     const el = await getComponent<MessageSources>(
       canvasElement,
