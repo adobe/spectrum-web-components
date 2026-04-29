@@ -15,8 +15,6 @@ Together, landmarks and headings form a **navigation map** for people who do not
 
 For a full **shortcut** list, an overview of **screen reader modes** (including **browse** and **focus**), and a testing **workflow**, see [Screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--readme).
 
-**Headings are for structure, not only for looks.** Use real heading elements for **section titles**; use CSS (or design system typography tokens) for **appearance**. A clear **visual** hierarchy that matches the **semantic** hierarchy helps **everyone**, including people with low vision or cognitive disabilities.
-
 The sections that follow go deeper on **markup**: the [related WCAG 2.2 success criteria](#related-wcag-success-criteria) table, **landmarks** (including when **too many** add noise), **heading** levels and `aria` patterns, and [practical notes for Spectrum Web Components](#examples-in-a-spectrum-web-components-context) (for example, **`heading-level`**, slotted vs shadow **headings**). When you are ready to **check** the outline in the browser, the WAVE extension’s **Structure** tab lists **headings** and **regions** and flags gaps or odd levels. See [WAVE toolbar testing](/docs/guides-accessibility-guides-wave-toolbar-testing--readme#structure-tab).
 
 > **Note:** This guide is about **markup and page structure**. It works alongside [screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--readme), [keyboard testing](/docs/guides-accessibility-guides-keyboard-testing--readme), and [semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--readme).
@@ -29,7 +27,11 @@ The **HTML heading elements** are the only reliable way to expose a **section ou
 - **Rank** indicates **level** in the outline: `h1` is the top level, `h2` is a subsection of the nearest higher section, and so on
 - **Organize** content so headings **reflect** the real **structure** of the page, not only font size
 
-### Why skipping levels is usually wrong
+### Use headings semantically
+
+**Headings are for structure, not only for looks.** Use real heading elements for **section titles**; use CSS (or design system typography tokens) for **appearance**. A clear **visual** hierarchy that matches the **semantic** hierarchy helps **everyone**, including people with low vision or cognitive disabilities.
+
+### Avoid skipping heading levels
 
 Jumping from `h1` to `h3` without an `h2` can **break the outline** for users who navigate by heading level. They may think a subsection is missing. Fix **styling** with CSS if you need a smaller visual size while keeping the correct semantic level (for example, an `h2` that **looks** smaller).
 
@@ -41,7 +43,7 @@ Jumping from `h1` to `h3` without an `h2` can **break the outline** for users wh
 
 See [Why prefer semantic elements](/docs/guides-accessibility-guides-semantic-html-aria--readme#why-prefer-semantic-elements) and [ARIA as a secondary method](/docs/guides-accessibility-guides-semantic-html-aria--readme#aria-as-a-secondary-method) in [Semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--readme): prefer native landmark elements when they match the job, and add ARIA only when HTML cannot express the needed role or relationship. In practice, use `main`, `nav`, `header`, `footer`, and `aside` in the **light DOM** (with appropriate **labels** where a landmark type can repeat) instead of generic `div`s with ARIA `role` attributes—unless a pattern in the [ARIA authoring practices guide (APG)](https://www.w3.org/WAI/ARIA/apg/) calls for a specific widget role. The same “prefer HTML” point appears in MDN’s [ARIA `region` role: **Best practices, Prefer HTML**](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/region_role#prefer_html).
 
-### When too many landmarks get in the way
+### Don't overuse landmarks
 
 Landmark roles are meant to label **broad** parts of the layout. Adding **extra** `region` (or `role="region"`) boundaries everywhere can **add noise** in the landmarks list, make the overall structure **harder to understand**, and get in the way of quick navigation—similar to piling on redundant utilities elsewhere in the page. The [ARIA `region` role, **Accessibility concerns**](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/region_role#accessibility_concerns) section on MDN says to use landmarks **sparingly** and to **reconsider the page’s structure** if you need “too many” regions. If no dedicated landmark type fits, prefer revisiting **headings** and the **real** information architecture before defaulting to generic `region` after generic `region`.
 
@@ -61,7 +63,7 @@ For how screen readers use **headings** in browse mode, see [How screen readers 
 
 For a region with a heading, you can associate the heading with the section using `aria-labelledby` on the **sectioning** element, pointing to the heading’s `id`. That strengthens the **programmatic** relationship for assistive technology. See [Semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--readme) for how light-DOM structure fits custom elements; do not use heading markup **only** for visual weight.
 
-### Examples in a Spectrum Web Components context
+## Examples in a Spectrum Web Components context
 
 Custom elements in this library often **compose** with content you provide in the **light DOM**. **You** are responsible for **landmarks, headings, and labels** around those components.
 
