@@ -88,11 +88,10 @@
   display: flex;
   gap: token("spacing-100");
   align-items: center;
-  font-family: token("sans-serif-font");
-  font-size: token("font-size-75");
+  font-size: token("font-size-100") !important;
   font-weight: token("regular-font-weight");
-  line-height: token("line-height-font-size-75");
-  color: token("gray-800");
+  line-height: token("line-height-font-size-100");
+  color: token("neutral-content-color-default");
   list-style: none;
   counter-increment: sources;
 }

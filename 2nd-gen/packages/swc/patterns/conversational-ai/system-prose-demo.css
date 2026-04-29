@@ -16,10 +16,6 @@
  * equivalent rules to their design tokens.
  */
 
-.swc-conversationalAi-systemProse p {
-  margin: 0;
-}
-
 .swc-conversationalAi-systemProse ul,
 .swc-conversationalAi-systemProse ol {
   padding-inline-start: 20px;

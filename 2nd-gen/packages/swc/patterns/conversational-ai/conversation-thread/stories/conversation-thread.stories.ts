@@ -68,7 +68,7 @@ const threadExampleSource = `<swc-conversation-thread style="max-inline-size: 72
   <swc-conversation-turn type="system">
     <swc-system-message>
       <swc-response-status slot="status">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</swc-response-status>
-      <div class="swc-conversationalAi-systemProse">
+      <div class="swc-conversationalAi-systemProse swc-Typography--prose">
         <h3>Big idea/core narrative: The warmth of welcome</h3>
         <p>Hospitality begins the moment our customers set foot off their plane.</p>
       </div>
@@ -98,7 +98,7 @@ const renderThread = () => html`
           I interpreted your request as an executive narrative task and
           prioritized a concise, audience-ready structure.
         </swc-response-status>
-        <div class="swc-conversationalAi-systemProse">
+        <div class="swc-conversationalAi-systemProse swc-Typography--prose">
           <h3>Big idea/core narrative: The warmth of welcome</h3>
           <p>
             Hospitality begins the moment our customers set foot off their
@@ -441,7 +441,7 @@ class ConversationFullPatternDemo extends LitElement {
                 </swc-response-status>`}
             ${turn.loading
               ? ''
-              : html`<div class="swc-conversationalAi-systemProse">
+              : html`<div class="swc-conversationalAi-systemProse swc-Typography--prose">
                   <p>${turn.text}</p>
                 </div>`}
             ${turn.loading
@@ -596,7 +596,7 @@ const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24p
     <swc-conversation-turn type="system">
       <swc-system-message>
         <swc-response-status slot="status">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</swc-response-status>
-        <div class="swc-conversationalAi-systemProse">
+        <div class="swc-conversationalAi-systemProse swc-Typography--prose">
           <p>Great direction. I suggest a 12-slide structure...</p>
         </div>
         <swc-message-feedback slot="feedback"></swc-message-feedback>

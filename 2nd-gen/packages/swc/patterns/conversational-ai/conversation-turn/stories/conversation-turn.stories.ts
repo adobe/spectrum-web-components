@@ -64,7 +64,7 @@ export const Playground: Story = {
             I mapped your request to a concise executive narrative and grouped
             the response by audience and channel themes.
           </swc-response-status>
-          <div class="swc-conversationalAi-systemProse">
+          <div class="swc-conversationalAi-systemProse swc-Typography--prose">
             <p>System reply body goes here.</p>
           </div>
           <swc-message-feedback slot="feedback"></swc-message-feedback>
@@ -95,7 +95,7 @@ export const Overview: Story = {
             I prioritized campaign outcomes, segmented messaging pillars, and
             next-step actions to keep the summary presentation-ready.
           </swc-response-status>
-          <div class="swc-conversationalAi-systemProse">
+          <div class="swc-conversationalAi-systemProse swc-Typography--prose">
             <p>
               Here is a concise summary based on the files you shared. I grouped
               themes by audience and channel.
@@ -142,7 +142,7 @@ export const Accessibility: Story = {
         accessible-label="Mensaje del sistema"
       >
         <swc-system-message>
-          <div class="swc-conversationalAi-systemProse">
+          <div class="swc-conversationalAi-systemProse swc-Typography--prose">
             <p>Example system reply.</p>
           </div>
         </swc-system-message>

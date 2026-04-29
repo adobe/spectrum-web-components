@@ -83,9 +83,22 @@
    ───────────────────────────────────── */
 
 .swc-ResponseStatus-reasoning-panel {
+  interpolate-size: allow-keywords;
+  display: block;
+  visibility: hidden;
+  block-size: 0;
   font-family: token("sans-serif-font");
   font-size: token("font-size-100");
   font-weight: token("regular-font-weight");
   line-height: token("line-height-font-size-100");
   color: token("neutral-subdued-content-color-default");
+  overflow: hidden;
+  transition:
+    block-size token("animation-duration-200") token("animation-ease-in-out"),
+    visibility token("animation-duration-200") linear;
+}
+
+.swc-ResponseStatus-row--button[aria-expanded="true"] + .swc-ResponseStatus-reasoning-panel {
+  visibility: visible;
+  block-size: auto;
 }
