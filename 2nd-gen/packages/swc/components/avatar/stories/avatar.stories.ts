@@ -311,6 +311,13 @@ export const Disabled: Story = {
  * - Provide a descriptive `alt` value identifying the person or entity depicted
  * - Pass `alt=""` and set the `decorative` attribute when the name already appears in context
  *
+ * #### Non-interactive element
+ *
+ * - Avatars have no interactive behavior and are not focusable
+ * - Screen readers announce the image using the `alt` attribute value
+ * - No keyboard interaction is required or expected
+ * - To make an avatar a link, wrap it in a standard `<a>` element and set `aria-label` on the anchor when the destination is not clear from surrounding context
+ *
  * ### Best practices
  *
  * - Always set `alt` — omitting it causes some screen readers to announce the image URL

@@ -338,6 +338,7 @@ LoadingButton.storyName = 'Loading button';
  * - Screen readers will announce the progress circle content as static text
  * - No keyboard interaction is required or expected
  *
+ * > Important: In focus mode, only interactive elements and their associated labels/descriptions are announced. If content is not a label or description for a focusable element, it will not be read. For non-interactive content, screen reader users must [switch to Browse mode](https://swcpreviews.z13.web.core.windows.net/pr-6122/docs/second-gen-storybook/?path=/docs/guides-accessibility-guides-screen-reader-testing--readme#screen-reader-modes). This is expected behavior, not a bug — ensure you test both modes when evaluating component accessibility.
  * ### Best practices
  *
  * - Always provide a descriptive `label` that explains what the progress represents
