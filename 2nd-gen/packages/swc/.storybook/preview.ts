@@ -222,7 +222,7 @@ const preview = {
             [
               'Overview',
               'Semantic HTML and ARIA',
-              'Landmarks and headings',
+              'Headings and landmarks',
               'Accessible pattern libraries',
               'Keyboard testing',
               'Screen reader testing',

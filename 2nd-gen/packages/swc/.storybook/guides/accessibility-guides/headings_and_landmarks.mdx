@@ -1,12 +1,14 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Accessibility guides/Landmarks and headings" />
+<Meta title="Accessibility guides/Headings and landmarks" />
 
-# Landmarks and headings
+# Headings and landmarks
 
 ## Overview
 
 **Landmarks** and **headings** are the two main ways many screen reader users **scan a page** without reading it from top to bottom. Landmarks name large regions (for example, **main** content, **navigation**, **header**). **Headings** (`h1`–`h6`) form a nested outline inside those regions. Together they should match the real **structure** of the screen.
+
+### How screen readers use headings and landmarks
 
 Together, landmarks and headings form a **navigation map** for people who do not use visual scanning. In [browse (or **document**)](/docs/guides-accessibility-guides-screen-reader-testing--readme) mode, screen reader users are not limited to a single linear read-through: they can **jump** to significant structure using **landmarks** and **headings**, often with dedicated **shortcuts**.
 
@@ -37,7 +39,7 @@ Jumping from `h1` to `h3` without an `h2` can **break the outline** for users wh
 
 ## Landmarks
 
-**Landmark regions** identify major areas of a page. In HTML, elements such as `main`, `nav`, `header`, `footer`, and `aside` (and, when **named**, `section`—see [MDN: the `section` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/section#accessibility)) expose familiar roles so assistive technology can list them in a “landmarks” or **rotor** view. How semantics map to the accessibility tree is also summarized in [How semantics help assistive technologies](/docs/guides-accessibility-guides-semantic-html-aria--readme#how-semantics-help-assistive-technologies) in [Semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--readme). For how users **move** by landmark in browse mode, see [How screen readers use landmarks and headings](#how-screen-readers-use-landmarks-and-headings).
+**Landmark regions** identify major areas of a page. In HTML, elements such as `main`, `nav`, `header`, `footer`, and `aside` (and, when **named**, `section`—see [MDN: the `section` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/section#accessibility)) expose familiar roles so assistive technology can list them in a “landmarks” or **rotor** view. How semantics map to the accessibility tree is also summarized in [How semantics help assistive technologies](/docs/guides-accessibility-guides-semantic-html-aria--readme#how-semantics-help-assistive-technologies) in [Semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--readme). For how users **move** by landmark in browse mode, see [How screen readers use headings and landmarks](#how-screen-readers-use-headings-and-landmarks).
 
 ### Prefer native HTML landmarks to ARIA-only landmarks
 
@@ -57,7 +59,7 @@ A **sidebar** or **repeated** block that is the same on every page may use a **s
 
 The **first heading** in **main** content is often the page’s primary topic. If **site-wide navigation** and **banners** come first in the DOM, they should still be **correctly marked** (`nav`, `header`, landmarks) so users can **skip** to `main` (for example, [bypass blocks / skip links](https://www.w3.org/WAI/WCAG22/Understanding/bypass-blocks.html)). **Do not** put the main page `h1` only in a place that is not the primary content if that would misrepresent the document in the **outline**—[WAVE’s **Structure** tab](/docs/guides-accessibility-guides-wave-toolbar-testing--readme#structure-tab) can help you review this.
 
-For how screen readers use **headings** in browse mode, see [How screen readers use landmarks and headings](#how-screen-readers-use-landmarks-and-headings); for platform **shortcuts**, see [Screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--readme).
+For how screen readers use **headings** in browse mode, see [How screen readers use headings and landmarks](#how-screen-readers-use-headings-and-landmarks); for platform **shortcuts**, see [Screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--readme).
 
 ### Sections and `aria-labelledby`
 
