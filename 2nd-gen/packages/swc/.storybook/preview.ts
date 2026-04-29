@@ -198,7 +198,9 @@ const preview = {
       },
       source: {
         excludeDecorators: true,
-        type: 'auto',
+        // Prefer serialized DOM so docs code panels show HTML for stories that use
+        // custom render functions; type "auto" often surfaces raw source instead.
+        type: 'dynamic',
         language: 'html',
         transform: transformDocsSource,
       },
