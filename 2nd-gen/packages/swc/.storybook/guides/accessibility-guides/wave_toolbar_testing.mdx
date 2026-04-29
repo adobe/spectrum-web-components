@@ -1,10 +1,16 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-import waveDetailsTab from './assets/WAVE-details-tab.png';
-import waveStructureTab from './assets/WAVE-structure-tab.png';
-import waveOrderTab from './assets/WAVE-order-tab.png';
-import waveContrastTab from './assets/WAVE-contrast-tab.png';
-import waveContrastDesaturate from './assets/WAVe-contrast-desaturate.png';
+import waveDetailsTab from './assets/images/WAVE-details-tab.png';
+import waveStructureTab from './assets/images/WAVE-structure-tab.png';
+import waveOrderTab from './assets/images/WAVE-order-tab.png';
+import waveContrastTab from './assets/images/WAVE-contrast-tab.png';
+import waveContrastDesaturate from './assets/images/WAVE-contrast-desaturate.png';
+import waveToolbarPinned from './assets/images/WAVE-toolbar-pinned.png';
+
+export const waveToolbarGuideImageStyle = {
+  border: '1px solid var(--spectrum-gray-300, #d0d0d0)',
+  boxSizing: 'border-box',
+};
 
 <Meta title="Accessibility guides/WAVE toolbar testing" />
 
@@ -35,6 +41,18 @@ WAVE is especially helpful for **spot-checking heading levels** and **landmarks*
 2. Choose the install link for your browser (Chrome Web Store, Mozilla Add-ons, or Microsoft Edge Add-ons)
 3. After installation, pin the WAVE icon in the toolbar if you use it often
 
+<figure>
+  <img
+    src={waveToolbarPinned}
+    alt="WAVE icon in browser toolbar"
+    style={waveToolbarGuideImageStyle}
+  />
+  <figcaption>
+    WAVE extension icon pinned in the browser toolbar: a blue circle with a
+    white wave, next to other extension icons.
+  </figcaption>
+</figure>
+
 To allow WAVE on **local files** or in **private/incognito** windows, enable the relevant option in your browser’s extension settings for WAVE (wording varies by browser).
 
 ## Run a WAVE report
@@ -53,10 +71,17 @@ The following sections describe the tabs that are most relevant to **heading str
 
 The **Details** tab summarizes **errors**, **alerts**, **features**, and **structural** information, and overlays icons on the live page so you can see where each item occurs.
 
-<img
-  src={waveDetailsTab}
-  alt="WAVE extension Details tab: summary counts and structural elements, with h1 and h2 icons overlaid on a web page"
-/>
+<figure>
+  <img
+    src={waveDetailsTab}
+    alt="WAVE Details tab"
+    style={waveToolbarGuideImageStyle}
+  />
+  <figcaption>
+    WAVE extension Details tab: summary counts and structural elements, with h1
+    and h2 icons overlaid on a web page
+  </figcaption>
+</figure>
 
 Use it to confirm that headings are detected, that landmark regions are present, and to jump from summary rows to the exact place on the page. It is a good first stop after opening WAVE on a new screen.
 
@@ -64,10 +89,17 @@ Use it to confirm that headings are detected, that landmark regions are present,
 
 The **Structure** tab shows a **hierarchical outline** of headings and regions (for example, `header`, `nav`, `main`, `footer`). It helps you verify that **heading levels form a logical outline**—like a table of contents—and that they match what you intend visually.
 
-<img
-  src={waveStructureTab}
-  alt="WAVE Structure tab: left sidebar lists nested h1 and h2 headings and regions; the page shows h1 and h2 badges beside matching headings"
-/>
+<figure>
+  <img
+    src={waveStructureTab}
+    alt="WAVE Structure tab"
+    style={waveToolbarGuideImageStyle}
+  />
+  <figcaption>
+    WAVE Structure tab: left sidebar lists nested h1 and h2 headings and
+    regions; the page shows h1 and h2 badges beside matching headings
+  </figcaption>
+</figure>
 
 **Why this matters for structure:** Screen reader users often **navigate by heading** and **landmark**. A clear outline of regions and `h1`–`h6` headings lets users jump between parts of the page quickly, and the Structure view makes gaps, skipped levels, or missing regions easier to see than scanning the page by eye alone. W3C WAI rules, landmark and heading practice, WCAG success criteria, and **Spectrum Web Components** (`heading-level`, slots, and similar) live in the companion guide [Landmarks and headings](/docs/guides-accessibility-guides-landmarks-and-headings--readme).
 
@@ -75,10 +107,17 @@ The **Structure** tab shows a **hierarchical outline** of headings and regions (
 
 The **Order** tab lists **navigable** elements in sequence with their **role** and **accessible name**, and can draw a **numbered path** on the page so you can compare **focus and reading order** to **visual placement**.
 
-<img
-  src={waveOrderTab}
-  alt="WAVE Order tab: styles off, numbered arrows show tab order across links and controls on a web page"
-/>
+<figure>
+  <img
+    src={waveOrderTab}
+    alt="WAVE Order tab"
+    style={waveToolbarGuideImageStyle}
+  />
+  <figcaption>
+    WAVE Order tab: styles off, numbered arrows show tab order across links and
+    controls on a web page
+  </figcaption>
+</figure>
 
 Use it to check that users who move with **Tab** and users who follow the **announced order** in a screen reader get a sequence that matches your design. It does not replace keyboard testing, but it highlights mismatches between DOM order and layout.
 
@@ -86,17 +125,31 @@ Use it to check that users who move with **Tab** and users who follow the **anno
 
 The **Contrast** tab lets you set **foreground** and **background** colors (including with the color picker), read the **contrast ratio**, and see **WCAG AA/AAA** pass or fail for normal or large text. WAVE also notes that **gradients**, **filters**, and **transparency** may need **manual** checks with the eyedropper or other tools.
 
-<img
-  src={waveContrastTab}
-  alt="WAVE Contrast tab: foreground and background color inputs, contrast ratio 8.59 to 1, WCAG AA and AAA pass, and Desaturate page link"
-/>
+<figure>
+  <img
+    src={waveContrastTab}
+    alt="WAVE Contrast tab"
+    style={waveToolbarGuideImageStyle}
+  />
+  <figcaption>
+    WAVE Contrast tab: foreground and background color inputs, contrast ratio
+    8.59 to 1, WCAG AA and AAA pass, and Desaturate page link
+  </figcaption>
+</figure>
 
 **Desaturate page** renders the page in **grayscale** to reduce reliance on **hue** when checking hierarchy and meaning. It can surface cases where information or structure depends too much on color. It is **not** a full simulation of all types of color vision deficiency; dedicated **color blindness** browser extensions can simulate **specific** conditions (for example, protanopia, deuteranopia) in more detail.
 
-<img
-  src={waveContrastDesaturate}
-  alt="WAVE Contrast tab with desaturate enabled: same panel with grayscale page content to review layout without color"
-/>
+<figure>
+  <img
+    src={waveContrastDesaturate}
+    alt="WAVE Contrast, desaturate"
+    style={waveToolbarGuideImageStyle}
+  />
+  <figcaption>
+    WAVE Contrast tab with desaturate enabled: same panel with grayscale page
+    content to review layout without color
+  </figcaption>
+</figure>
 
 ## Related guides and external resources
 
