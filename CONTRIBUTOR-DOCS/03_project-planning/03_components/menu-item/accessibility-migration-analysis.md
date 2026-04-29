@@ -143,7 +143,7 @@ Intentionally omitted; see **menu** / **popover** for layered UI motion if neede
 
 ### Keyboard and focus
 
-When the parent menu is open, items take part in roving `tabindex`. **Enter** / **Space** runs a command or opens a submenu (if the `submenu` slot is used). Arrows, Home, End, typeahead: `FocusgroupNavigationController` in each `role="menu"` list. Top list: `swc-menu` / `swc-action-menu` shadow; nested list: in `swc-menu-item`’s shadow. Check 2nd-gen stories. Submenu keys (arrows, Escape, return) should match cascading menu needs—test with [Action menu — Keyboard](../action-menu/accessibility-migration-analysis.md#keyboard-and-focus) and [Menu — Keyboard](../menu/accessibility-migration-analysis.md#keyboard-and-focus).
+When the parent menu is open, items take part in roving `tabindex`. **Enter** / **Space** runs a command or opens a submenu (if the `submenu` slot is used). Arrows, Home, and End: `FocusgroupNavigationController` in each `role="menu"` list. Top list: `swc-menu` / `swc-action-menu` shadow; **nested list** (submenu): the child `role="menu"` in **this** `swc-menu-item`’s shadow should use the **same** optional [printable character navigation](../menu/accessibility-migration-analysis.md#printable-character-navigation-optional-not-typeahead) rules as the top-level menu (not combobox typeahead). Check 2nd-gen stories. Submenu keys (arrows, Escape, return) should match cascading menu needs—test with [Action menu — Keyboard](../action-menu/accessibility-migration-analysis.md#keyboard-and-focus) and [Menu — Keyboard](../menu/accessibility-migration-analysis.md#keyboard-and-focus).
 
 On a parent `role="menu"` list (top-level or submenu surface as implemented), a `swc-menu-item` is in the roving row set when it is a direct list child or a child of a direct `swc-menu-group`. See [Menu — Keyboard and focus](../menu/accessibility-migration-analysis.md#keyboard-and-focus) and the illustrative `this.querySelectorAll(':scope > swc-menu-item, :scope > swc-menu-group > swc-menu-item')` (verify in 2nd-gen source).
 
@@ -160,7 +160,7 @@ On a parent `role="menu"` list (top-level or submenu surface as implemented), a 
 
 ### Keyboard testing
 
-Follow [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) on a composed **trigger + menu** path ([Menu — Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing)). Include **menu item** behaviors: activate, move with arrows, submenu **Escape**/**return** as covered by shared stories.
+Follow [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) on a composed **trigger + menu** path ([Menu — Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing)). Include **menu item** behaviors: activate, move with arrows, submenu **Escape**/**return** as covered by shared stories; if your build implements it, [printable character navigation](../menu/accessibility-migration-analysis.md#printable-character-navigation-optional-not-typeahead) on the submenu list as well as the top-level list.
 
 ### Manual and screen reader testing
 
@@ -171,7 +171,7 @@ Use [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/a
 ## Summary checklist
 
 - [ ] Checkbox / radio `menuitem` not in scope for this doc ([Menu migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current)).
-- [ ] Names, disabled, submenu `aria-expanded` / `aria-haspopup` match implementation when `submenu` has content; trigger + child `role="menu"` in item shadow + popover as built.
+- [ ] Names, disabled, submenu `aria-expanded` / `aria-haspopup` match implementation when `submenu` has content; trigger + child `role="menu"` in item shadow + popover as built. If [printable character navigation](../menu/accessibility-migration-analysis.md#printable-character-navigation-optional-not-typeahead) is implemented, submenu list behavior matches the top-level menu (not typeahead).
 - [ ] Link rows: child `<a>` + Cards; call out nav patterns when links are the main job.
 - [ ] SWC-923 duplicate click guarded in tests; SWC-1332 when custom submenu content is in scope.
 
