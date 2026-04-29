@@ -12,11 +12,11 @@ import waveContrastDesaturate from './assets/WAVe-contrast-desaturate.png';
 
 ## Overview
 
-This guide explains how to use the [WAVE (Web Accessibility Evaluation Tool) browser extension](https://wave.webaim.org/extension/) to test accessibility in the browser, with a focus on **headings** and **landmarks** in the page outline. It pairs with [Accessible landmarks](./accessible_landmarks.mdx) for W3C WAI principles, **landmark** and **heading** structure, how screen readers navigate by both, and Spectrum Web Components patterns—here you learn **where** in WAVE to see the outline and **how** to run a report.
+This guide explains how to use the [WAVE (Web Accessibility Evaluation Tool) browser extension](https://wave.webaim.org/extension/) to test accessibility in the browser, with a focus on **headings** and **landmarks** in the page outline. It pairs with [Landmarks and headings](?path=/docs/guides-accessibility-guides-landmarks-and-headings--readme) for W3C WAI principles, **landmark** and **heading** structure, how screen readers navigate by both, and Spectrum Web Components patterns—here you learn **where** in WAVE to see the outline and **how** to run a report.
 
 WAVE is a free extension for **Chrome**, **Firefox**, and **Edge**. It evaluates the **rendered** page in your browser. No page content is sent to WAVE servers, so reporting stays private. You can use it on local files, password-protected pages, intranets, and pages with dynamic or AJAX content—anywhere the browser can load the final DOM and styles.
 
-> **Note:** WAVE is one of several useful tools. It complements (and does not replace) [keyboard testing](./keyboard_testing.mdx), [screen reader testing](./screen_reader_testing.mdx), and manual review.
+> **Note:** WAVE is one of several useful tools. It complements (and does not replace) [keyboard testing](?path=/docs/guides-accessibility-guides-keyboard-testing--readme), [screen reader testing](?path=/docs/guides-accessibility-guides-screen-reader-testing--readme), and manual review.
 
 ## What the WAVE extension is for
 
@@ -27,7 +27,7 @@ Use WAVE to get quick feedback on accessibility, including:
 - **Reading and tab order** for navigable elements versus visual layout (**Order** tab)
 - **Color contrast** exploration and a **desaturate** view on the **Contrast** tab (see [Contrast tab and color testing](#contrast-tab-and-color-testing))
 
-WAVE is especially helpful for **spot-checking heading levels** and **landmarks** before or alongside screen reader testing. Interpret what you see using [Accessible landmarks](./accessible_landmarks.mdx) so you know which levels, regions, and patterns to aim for in your app.
+WAVE is especially helpful for **spot-checking heading levels** and **landmarks** before or alongside screen reader testing. Interpret what you see using [Landmarks and headings](?path=/docs/guides-accessibility-guides-landmarks-and-headings--readme) so you know which levels, regions, and patterns to aim for in your app.
 
 ## Install the WAVE extension
 
@@ -69,7 +69,7 @@ The **Structure** tab shows a **hierarchical outline** of headings and regions (
   alt="WAVE Structure tab: left sidebar lists nested h1 and h2 headings and regions; the page shows h1 and h2 badges beside matching headings"
 />
 
-**Why this matters for structure:** Screen reader users often **navigate by heading** and **landmark**. A clear outline of regions and `h1`–`h6` headings lets users jump between parts of the page quickly, and the Structure view makes gaps, skipped levels, or missing regions easier to see than scanning the page by eye alone. W3C WAI rules, landmark and heading practice, WCAG success criteria, and **Spectrum Web Components** (`heading-level`, slots, and similar) live in the companion guide [Accessible landmarks](./accessible_landmarks.mdx).
+**Why this matters for structure:** Screen reader users often **navigate by heading** and **landmark**. A clear outline of regions and `h1`–`h6` headings lets users jump between parts of the page quickly, and the Structure view makes gaps, skipped levels, or missing regions easier to see than scanning the page by eye alone. W3C WAI rules, landmark and heading practice, WCAG success criteria, and **Spectrum Web Components** (`heading-level`, slots, and similar) live in the companion guide [Landmarks and headings](?path=/docs/guides-accessibility-guides-landmarks-and-headings--readme).
 
 ### Order tab
 
@@ -102,16 +102,16 @@ The **Contrast** tab lets you set **foreground** and **background** colors (incl
 
 **In Storybook**
 
-- [Overview](./overview.mdx) — all accessibility guides in this section
-- [Accessible landmarks](./accessible_landmarks.mdx) — W3C WAI landmarks and `h1`–`h6` guidance, WCAG criteria, screen readers, and **swc** examples
-- [Screen reader testing](./screen_reader_testing.mdx) — heading shortcuts and testing workflow
-- [Keyboard testing](./keyboard_testing.mdx) — focus order and tab order
-- [Semantic HTML and ARIA](./semantic_html_aria.mdx) — roles, names, and light-DOM expectations
-- [Accessibility resources](./accessibility_resources.mdx) — broader links
+- [Overview](?path=/docs/guides-accessibility-guides-overview--readme) — all accessibility guides in this section
+- [Landmarks and headings](?path=/docs/guides-accessibility-guides-landmarks-and-headings--readme) — W3C WAI landmarks and `h1`–`h6` guidance, WCAG criteria, screen readers, and **swc** examples
+- [Screen reader testing](?path=/docs/guides-accessibility-guides-screen-reader-testing--readme) — heading shortcuts and testing workflow
+- [Keyboard testing](?path=/docs/guides-accessibility-guides-keyboard-testing--readme) — focus order and tab order
+- [Semantic HTML and ARIA](?path=/docs/guides-accessibility-guides-semantic-html-aria--readme) — roles, names, and light-DOM expectations
+- [Accessibility resources](?path=/docs/guides-accessibility-guides-accessibility-resources--readme) — broader links
 
 **WAVE and WebAIM**
 
 - [WAVE browser extension (install and overview)](https://wave.webaim.org/extension/)
 - [WebAIM](https://webaim.org/) — WAVE and accessibility articles
 
-**W3C** heading and page-structure tutorials, plus **WCAG** “Understanding” links, are on [Accessible landmarks](./accessible_landmarks.mdx).
+**W3C** heading and page-structure tutorials, plus **WCAG** “Understanding” links, are on [Landmarks and headings](?path=/docs/guides-accessibility-guides-landmarks-and-headings--readme).
