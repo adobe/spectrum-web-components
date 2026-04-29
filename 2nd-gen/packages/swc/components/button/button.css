@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+/* @global-exclude: pending spinner animations require JS runtime */
 @keyframes swc-pending-spinner-rotate {
   0% {
     transform: rotate(var(--swc-pending-spinner-rotate-start, -90deg));
@@ -31,12 +32,14 @@
   }
 }
 
+/* @global-exclude-end */
+
 .swc-Button {
   --_swc-button-border-width: token("border-width-200");
   --_swc-button-height: var(--swc-button-height, token("component-height-100"));
 
   gap: var(--swc-button-gap, token("text-to-visual-100"));
-  max-inline-size: inherit; /* Inherit from :host to support truncation */
+  max-inline-size: var(--swc-button-max-inline-size, inherit); /* Inherit from :host to support truncation */
   min-block-size: var(--_swc-button-height);
   padding-block: calc(var(--swc-button-padding-vertical, token("component-padding-vertical-100")) - var(--_swc-button-border-width));
   padding-inline: calc(var(--swc-button-edge-to-text, token("component-pill-edge-to-text-100")) - var(--_swc-button-border-width));
@@ -335,6 +338,8 @@ slot[name="icon"]::slotted(*) {
 
 /* ── Pending ──────────────────────────────────────── */
 
+/* @global-exclude: pending state requires JS runtime (ButtonBase._pendingActive) */
+
 /* Cursor changes immediately on [pending]. Disabled colors, label/icon fade,
    and spinner appearance are deferred to .swc-Button--pendingActive, which is
    added by ButtonBase after a 1-second delay so the button does not flash to
@@ -419,6 +424,8 @@ slot[name="icon"]::slotted(*) {
   will-change: transform;
 }
 
+/* @global-exclude-end */
+
 /* ── Truncate ─────────────────────────────────────── */
 
 :host([truncate]) .swc-Button__label {
@@ -432,6 +439,7 @@ slot[name="icon"]::slotted(*) {
     transition-duration: 0ms;
   }
 
+  /* @global-exclude: pending spinner reduced-motion override requires JS runtime */
   .swc-Button--pendingActive .swc-Button__pendingSpinner-fill {
     --swc-pending-spinner-dashoffset-30: 0;
     --swc-pending-spinner-rotate-start: 0deg;
@@ -440,4 +448,6 @@ slot[name="icon"]::slotted(*) {
     animation-duration: 15s;
     animation-timing-function: linear, linear;
   }
+
+  /* @global-exclude-end */
 }
