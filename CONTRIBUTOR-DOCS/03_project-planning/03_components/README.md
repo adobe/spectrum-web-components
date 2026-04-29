@@ -18,6 +18,9 @@
 <details open>
 <summary><strong>Beneath this doc</strong></summary>
 
+- Accordion
+    - [Accordion accessibility migration analysis](accordion/accessibility-migration-analysis.md)
+    - [Accordion migration roadmap](accordion/rendering-and-styling-migration-analysis.md)
 - Action Button
     - [Action button migration roadmap](action-button/rendering-and-styling-migration-analysis.md)
 - Action Group

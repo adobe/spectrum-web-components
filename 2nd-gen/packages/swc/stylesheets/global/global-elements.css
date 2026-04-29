@@ -13,3 +13,4 @@
 @layer swc-global-elements, swc-global-element-overrides;
 
 @import url("./global-button.css");
+@import url("./global-message-sources.css");

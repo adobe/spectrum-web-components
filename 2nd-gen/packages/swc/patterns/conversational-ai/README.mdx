@@ -1,0 +1,38 @@
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import * as ConversationThreadStories from './conversation-thread/stories/conversation-thread.stories';
+
+<Meta title="Conversational AI/README" />
+
+# Conversational AI
+
+A complete set of building blocks for composing AI chat interfaces in 2nd-gen Spectrum Web Components. The pattern covers the full response lifecycle — from user input through AI generation, output, feedback, source attribution, and follow-up suggestions.
+
+---
+
+## Full example
+
+<Canvas of={ConversationThreadStories.FullPattern} sourceState="none" />
+
+---
+
+## Components
+
+| Element                   | Description                                                                                           |
+| ------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `swc-prompt-field`        | Text input surface for entering or refining a prompt                                                  |
+| `swc-upload-artifact`     | Shared upload artifact primitive with `card` and `media` types, used in prompt-field surfaces         |
+| `swc-conversation-thread` | Thread wrapper that stacks turns and enables ArrowUp/ArrowDown keyboard navigation between messages   |
+| `swc-conversation-turn`   | Column alignment for one participant turn; stack consecutive messages in one turn for grouped spacing |
+| `swc-user-message`        | User message bubble with explicit `type="copy\|card\|media"` rendering                                |
+| `swc-system-message`      | System reply stack; **default slot** guidance is after the API table on the System message docs page  |
+| `swc-response-status`     | Loading / generation-complete status indicator                                                        |
+| `swc-message-feedback`    | Positive / negative feedback control                                                                  |
+| `swc-message-sources`     | Collapsible numbered list of response sources                                                         |
+| `swc-suggestion-group`    | Follow-up suggestion group with optional title and slotted suggestion items                           |
+| `swc-suggestion-item`     | Interactive chip action used inside `swc-suggestion-group`; emits bubbled selection event             |
+
+---
+
+## Tokens
+
+All components resolve styles through `token()` calls that map to `var(--swc-*)` custom properties. No hard-coded colours or sizes — set the standard Spectrum token layer to theme the pattern globally.
