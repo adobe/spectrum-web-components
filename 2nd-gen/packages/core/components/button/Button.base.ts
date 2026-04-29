@@ -62,6 +62,13 @@ export abstract class ButtonBase extends SizedMixin(
   public pending: boolean = false;
 
   /**
+   * Accessible label forwarded to the internal `<button>` element as
+   * `aria-label`. Required for icon-only buttons, which have no visible text.
+   */
+  @property({ type: String, attribute: 'accessible-label' })
+  public accessibleLabel?: string;
+
+  /**
    * Custom accessible label used during the pending state. When omitted,
    * the pending label is derived from the resolved non-busy accessible name
    * plus a busy suffix (e.g. "Save, busy").
@@ -89,16 +96,14 @@ export abstract class ButtonBase extends SizedMixin(
   }
 
   /**
-   * Resolves the accessible name for the button from `aria-label` or
+   * Resolves the accessible name for the button from `accessibleLabel` or
    * visible text content. Returns `null` when no accessible name is
    * determinable.
    *
    * @internal
    */
   protected getResolvedAccessibleName(): string | null {
-    return (
-      this.getAttribute('aria-label') ?? (this.textContent?.trim() || null)
-    );
+    return this.accessibleLabel ?? (this.textContent?.trim() || null);
   }
 
   /**
@@ -194,10 +199,10 @@ export abstract class ButtonBase extends SizedMixin(
           {}
         );
       }
-      if (this.hasIcon && !this.hasLabel && !this.getAttribute('aria-label')) {
+      if (this.hasIcon && !this.hasLabel && !this.accessibleLabel) {
         window.__swc.warn(
           this,
-          `<${this.localName}> with an icon and no label must have an "aria-label" attribute to be accessible.`,
+          `<${this.localName}> with an icon and no label must have an "accessible-label" attribute to be accessible.`,
           'https://opensource.adobe.com/spectrum-web-components/components/button/#icon-only',
           { type: 'accessibility', level: 'high' }
         );

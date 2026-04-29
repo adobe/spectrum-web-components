@@ -67,7 +67,7 @@ args.size = 'm';
  * action like submitting a form, saving changes, or triggering a workflow step.
  *
  * For navigation, use a link instead. For icon-only actions, always provide an
- * `aria-label` attribute to ensure the action is announced to screen reader users.
+ * `accessible-label` attribute to ensure the action is announced to screen reader users.
  */
 export const meta: Meta = {
   title: 'Button',
@@ -158,7 +158,7 @@ export const Overview: Story = {
  * - **icon slot**: Optional leading icon
  *
  * When only an icon is provided (no label), the button renders as a circular
- * icon-only button. Icon-only buttons must include an `aria-label` attribute
+ * icon-only button. Icon-only buttons must include an `accessible-label` attribute
  * so the action is announced to screen reader users.
  */
 export const Anatomy: Story = {
@@ -169,7 +169,11 @@ export const Anatomy: Story = {
       'default-slot': 'Icon and label',
       'icon-slot': addIconSvg,
     })}
-    <swc-button variant=${args.variant} size=${args.size} aria-label="Add">
+    <swc-button
+      variant=${args.variant}
+      size=${args.size}
+      accessible-label="Add"
+    >
       <svg
         slot="icon"
         xmlns="http://www.w3.org/2000/svg"

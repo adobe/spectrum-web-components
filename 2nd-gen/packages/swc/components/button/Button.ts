@@ -104,7 +104,7 @@ export class Button extends ButtonBase {
         )}
         aria-label=${this.pending
           ? this.getPendingAccessibleName()
-          : (this.getAttribute('aria-label') ?? nothing)}
+          : (this.accessibleLabel ?? nothing)}
       >
         <slot name="icon"></slot>
         <span class="swc-Button__label">

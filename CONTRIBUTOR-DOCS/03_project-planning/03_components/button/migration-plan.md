@@ -239,9 +239,10 @@ These are derived from the 1st-gen implementation, current deprecations, the Fig
 | `staticColor` | `'white' \| 'black' \| undefined` | `undefined` | `static-color` | **Confirmed.** Static color is only spec-backed with the `primary` and `secondary` families shown in Design/Figma. |
 | `disabled` | `boolean` | `false` | `disabled` | **Confirmed.** Maps to native disabled behavior on the internal button. |
 | `pending` | `boolean` | `false` | `pending` | **Confirmed.** Keep public API; while pending, the button remains focusable but is otherwise unavailable. |
+| `accessibleLabel` | `string \| undefined` | `undefined` | `accessible-label` | **Confirmed.** Replaces both `label` (1st-gen) and ad-hoc `aria-label` on the host. Forwarded as `aria-label` on the internal `<button>`. Required for icon-only usage. |
 | `pendingLabel` | `string` | derived from the resolved non-busy accessible name + busy suffix | `pending-label` | **Adjusted for `SWC-459`.** Distinct from the control name; overrides the default busy-state announcement when supplied. |
 | `type` | deferred beyond initial scope | `'button'` | maybe none / future | **Deferred.** Initial 2nd-gen Button should behave as a regular button; `submit` / `reset` are future work. |
-| `label` | deprecated | n/a | `label` | **Planned removal.** Prefer visible text and `aria-label` to avoid ambiguity with `pending-label`. |
+| `label` | deprecated | n/a | `label` | **Planned removal.** Replaced by `accessible-label` / `accessibleLabel`. |
 | `iconOnly` | removed | n/a | removed | **Deviation from plan.** Not kept as a consumer attribute. Icon-only layout is now auto-derived from slot presence: `swc-Button--iconOnly` (circular layout) and `swc-Button--hasIcon` (label `text-align: start`) are applied via `classMap` in `ButtonBase`. Matches the CSS style-guide rule that derived states must not appear as host attributes. |
 | `truncate` | `boolean` | `false` | `truncate` | **Confirmed rename.** Replaces legacy `no-wrap` with a more explicit name for the actual behavior: single-line truncation with overflow handling rather than wrapping. Tooltip guidance for clipped content is documentation guidance, not built-in Button behavior. |
 | `active` | internal styling state | n/a | maybe none / internal only | **Proposed.** Do not preserve as a documented consumer-controlled API unless styling proves it necessary. |
@@ -292,7 +293,7 @@ Pending-state naming should resolve in this order:
 2. Resolved non-busy accessible name + busy suffix
 3. Fixed fallback such as `"Busy"`
 
-The resolved non-busy accessible name should come from the same sources used for the control itself, e.g. `aria-label` or visible text. Default wording should use the reviewed `busy` suffix pattern, e.g. `"Save, busy"`.
+The resolved non-busy accessible name should come from the same sources used for the control itself, e.g. `accessible-label` or visible text. Default wording should use the reviewed `busy` suffix pattern, e.g. `"Save, busy"`.
 
 ### Accessibility semantics notes (2nd-gen)
 
@@ -315,7 +316,7 @@ Using an internal semantic `<button>` also means:
 - the host should not remain the primary tab stop when the internal native button is present
 - host `disabled` reflects API state, while the internal `<button disabled>` enforces native disabled behavior
 - pending should not use native `disabled` on the internal button if focusability must be preserved
-- host `aria-label` and other button-relevant semantics should be forwarded intentionally, not assumed
+- host `accessible-label` and other button-relevant semantics should be forwarded intentionally, not assumed
 - native button keyboard/click behavior should be reused where possible rather than reimplemented on the host
 - host listeners should continue to observe native `click` and bubbling `focusin` / `focusout` from the internal control; host-level `focus` / `blur` parity is deferred and may require custom events if the team decides that compatibility is necessary
 
@@ -439,7 +440,7 @@ Allowed differences:
 - [x] Add `@deprecated` JSDoc to 1st-gen type and const exports (`ButtonVariants`, `ButtonTreatments`, `ButtonStaticColors`, `DeprecatedButtonVariants`, `VALID_VARIANTS`, `VALID_STATIC_COLORS`)
 - [x] Add `@deprecated` JSDoc to 1st-gen `treatment` property; no runtime warn added because `treatment` is set internally by the `quiet` setter and the `overBackground` variant alias, which already emit their own deprecation warnings
 - [x] Add `@deprecated` JSDoc and `window.__swc.warn()` to 1st-gen `quiet` property
-- [x] Remove `label` in favor of `aria-label` — 2nd-gen `Button.ts` has no `label` prop; accessible naming uses `aria-label` on the internal element
+- [x] Remove `label` in favor of `accessible-label` / `accessibleLabel` — 2nd-gen `ButtonBase` exposes `accessibleLabel` (attribute: `accessible-label`) forwarded as `aria-label` on the internal `<button>`; no `label` prop in 2nd-gen
 - [x] Remove deprecated link API (`href`, `target`, `download`, `referrerpolicy`, `rel`) from the 2nd-gen public surface — absent from 2nd-gen `Button.ts`
 - [x] Remove deprecated `variant` aliases (`cta`, `overBackground`, `white`, `black`) from the 2nd-gen public surface — already absent in 2nd-gen `Button.ts`
 - [x] Do not carry forward `quiet` as a 2nd-gen visual API — `quiet` is absent from 2nd-gen; deprecated in 1st-gen with `@deprecated` JSDoc and `window.__swc.warn()`
@@ -493,7 +494,7 @@ Allowed differences:
 #### Naming and semantics
 
 - [ ] Align Button implementation with the approved `accessibility-migration-analysis.md` — analysis doc exists; full alignment verification requires AT testing (see state verification below)
-- [x] Ensure icon-only usage has a reliable accessible name via `aria-label` — `iconOnly` prop JSDoc requires `aria-label`; `Button.ts` `update()` emits a `{ type: 'accessibility', level: 'high' }` debug warning when `icon-only` is set without `aria-label`
+- [x] Ensure icon-only usage has a reliable accessible name via `accessible-label` — `ButtonBase.update()` emits a `{ type: 'accessibility', level: 'high' }` debug warning when an icon-only button is missing `accessible-label`
 - [x] Pending state must set `aria-disabled="true"` because the control cannot be activated while pending (`SWC-459`) — implemented in `Button.ts` render template
 - [x] Pending state must use a descriptive default accessible label based on the resolved non-busy accessible name plus a busy suffix, not bare `"Pending"` (`SWC-459`) — `ButtonBase.getPendingAccessibleName()` derives `"${resolvedName}, busy"`
 - [ ] Pending state must be announced to screen readers, even if the final implementation uses more than just an accessible-name change — requires AT testing to verify
@@ -502,7 +503,7 @@ Allowed differences:
 - [x] Ensure the internal native button, not the host, is the semantic control exposed to assistive technology — `delegatesFocus: true` routes focus to the internal `<button>`; host has no explicit button role
 - [x] Preserve keyboard activation for Space and Enter through native button semantics — provided by the internal native `<button>` element; no custom keyboard handling needed
 - [x] Avoid duplicating native button activation logic on the host when the internal button already provides it — no keyboard event handlers or click dispatching on the host
-- [x] Forward host `aria-label` to the internal semantic button when that attribute is used — `Button.ts` render template binds `aria-label=${this.getAttribute('aria-label') ?? nothing}` when not pending
+- [x] Forward host `accessible-label` to the internal semantic button — `Button.ts` render template binds `aria-label=${this.accessibleLabel ?? nothing}` when not pending; `accessibleLabel` is a `@property` on `ButtonBase` with `attribute: 'accessible-label'`
 
 #### State verification
 
@@ -548,7 +549,7 @@ Allowed differences:
 - [ ] Document pending-state accessibility behavior: `aria-disabled`, default busy-label pattern, and high-contrast disabled styling (`SWC-459`)
 - [ ] Document the initial host-listener contract: `click` and `focusin` / `focusout`; custom `focus` / `blur` events are not part of the initial Button scope and are deferred to `SWC-2035`
 - [ ] Document that 2nd-gen Button semantics and focus land on a real internal native `<button>`, not the custom-element host
-- [ ] Document supported naming APIs at the host level (`aria-label` and visible text) and how they map to the internal control
+- [ ] Document supported naming APIs at the host level (`accessible-label` and visible text) and how they map to the internal `<button>` via `aria-label`
 - [ ] Document that cross-root `aria-labelledby` / `aria-describedby` and form-associated `submit` / `reset` are deferred follow-up work
 - [ ] Document that focus indication uses `outline` so it remains visible for truncated buttons (`SWC-886`)
 - [ ] Update global element guidance so button-styled native elements and `sp-button` describe the same visual API and any intentional limitations
