@@ -1,6 +1,6 @@
 ---
-"@spectrum-web-components/action-button": minor
-"@spectrum-web-components/styles": minor
+'@spectrum-web-components/action-button': minor
+'@spectrum-web-components/styles': minor
 ---
 
 - **Added**: Introduced global action button element styles in `@spectrum-web-components/styles` via `global-action-button.css`, enabling native links with `.spectrum-ActionButton*` classes to render with Spectrum action button styling.
