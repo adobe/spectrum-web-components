@@ -99,8 +99,10 @@ export const Playground: Story = {
 export const Overview: Story = {
   render: (args) => html`
     <h3>Account settings</h3>
-    ${template({ ...args, size: 'm' })}
     <p>Update your personal details, password, and preferences.</p>
+    ${template({ ...args, size: 'm' })}
+    <h3>Team members</h3>
+    <p>Manage your team roles and access permissions.</p>
   `,
   parameters: {
     flexLayout: 'column-stretch',
@@ -120,8 +122,10 @@ export const Overview: Story = {
 export const Anatomy: Story = {
   render: (args) => html`
     <h4>Account settings</h4>
-    ${template({ ...args, size: 'm' })}
     <p>Update your personal details, password, and preferences.</p>
+    ${template({ ...args, size: 'm' })}
+    <h4>Team members</h4>
+    <p>Manage your team roles and access permissions.</p>
   `,
   tags: ['anatomy'],
   parameters: {
@@ -144,18 +148,24 @@ export const Sizes: Story = {
   render: (args) => html`
     <div>
       <h3>Team members</h3>
-      ${template({ ...args, size: 's' })}
       <p>Manage your team roles and access permissions.</p>
-    </div>
-    <div>
+      ${template({ ...args, size: 's' })}
       <h3>Account settings</h3>
-      ${template({ ...args, size: 'm' })}
       <p>Update your personal details, password, and preferences.</p>
     </div>
     <div>
+      <h3>Account settings</h3>
+      <p>Update your personal details, password, and preferences.</p>
+      ${template({ ...args, size: 'm' })}
+      <h3>Team members</h3>
+      <p>Manage your team roles and access permissions.</p>
+    </div>
+    <div>
       <h3>Projects</h3>
-      ${template({ ...args, size: 'l' })}
       <p>Track progress across your projects.</p>
+      ${template({ ...args, size: 'l' })}
+      <h3>Dashboard</h3>
+      <p>Monitor activity and analytics.</p>
     </div>
   `,
   parameters: {
@@ -170,24 +180,33 @@ export const Sizes: Story = {
  */
 export const Vertical: Story = {
   render: (args) => html`
-    <h4>Profile</h4>
-    ${template({
-      ...args,
-      size: 's',
-    })}
-    <p>Your profile name appears when you log in.</p>
-    <h4>Account settings</h4>
-    ${template({
-      ...args,
-      size: 'm',
-    })}
-    <p>Update your password and preferences.</p>
-    <h4>Projects</h4>
-    ${template({
-      ...args,
-      size: 'l',
-    })}
-    <p>Track progress across your projects.</p>
+    <div
+      style="display: flex; align-items: center; gap: 8px; block-size: 16px;"
+    >
+      <span>Cut</span>
+      ${template({ ...args, size: 's' })}
+      <span>Copy</span>
+      ${template({ ...args, size: 's' })}
+      <span>Paste</span>
+    </div>
+    <div
+      style="display: flex; align-items: center; gap: 8px; block-size: 24px;"
+    >
+      <span>Overview</span>
+      ${template({ ...args, size: 'm' })}
+      <span>Files</span>
+      ${template({ ...args, size: 'm' })}
+      <span>Settings</span>
+    </div>
+    <div
+      style="display: flex; align-items: center; gap: 8px; block-size: 32px;"
+    >
+      <span>Projects</span>
+      ${template({ ...args, size: 'l' })}
+      <span>Teams</span>
+      ${template({ ...args, size: 'l' })}
+      <span>Reports</span>
+    </div>
   `,
   parameters: {
     'section-order': 2,
@@ -210,8 +229,10 @@ export const StaticColors: Story = {
       (color) => html`
         <div>
           <h4>Dashboard settings</h4>
-          ${template({ ...args, 'static-color': color })}
           <p>Configure your dashboard preferences and layout options.</p>
+          ${template({ ...args, 'static-color': color })}
+          <h4>Display options</h4>
+          <p>Adjust your layout and theme settings.</p>
         </div>
       `
     )}
@@ -256,10 +277,12 @@ export const LayoutOrientation: Story = {
     </nav>
     <div style="margin-block-start: 16px;">
       <h4 style="margin: 0 0 8px 0;">Project details</h4>
-      ${template({ ...args, size: 'l' })}
-      <p style="margin: 8px 0 0 0;">
+      <p style="margin: 0 0 8px 0;">
         Review the project timeline and deliverables.
       </p>
+      ${template({ ...args, size: 'l' })}
+      <h4 style="margin: 8px 0 8px 0;">Team members</h4>
+      <p style="margin: 0;">Manage your team roles and access permissions.</p>
     </div>
   `,
   parameters: {
@@ -291,7 +314,7 @@ LayoutOrientation.storyName = 'Layout orientation';
  *
  * ### Best practices
  *
- * - Place medium or large dividers below header text to visually create a section or page title
+ * - Place dividers between complete content sections (heading + body) to create clear visual separation
  * - Use dividers to create meaningful visual separation, not just decorative lines
  * - Use dividers sparingly; excessive use can diminish their visual impact
  * - Ensure sufficient color contrast when using `static-color` variants on colored backgrounds
@@ -300,11 +323,13 @@ LayoutOrientation.storyName = 'Layout orientation';
 export const Accessibility: Story = {
   render: (args) => html`
     <h4>Project overview</h4>
-    ${template({ ...args, size: 'l' })}
     <p>
       Review the project timeline, milestones, and deliverables for the current
       sprint.
     </p>
+    ${template({ ...args, size: 'l' })}
+    <h4>Team members</h4>
+    <p>Manage your team roles and access permissions.</p>
   `,
   parameters: {
     flexLayout: 'column-stretch',
