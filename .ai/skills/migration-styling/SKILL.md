@@ -59,7 +59,7 @@ Then use the `rendering-and-styling-migration-analysis.md` file for the componen
 
 **Step 3 — Align render template class names with CSS selectors.** Before writing CSS, read the component's `render()` method and note every class name emitted. The CSS you write must use those exact names. Mismatches cause styles to silently not apply — there is no error.
 
-Common case: migrating from 1st-gen CSS that used single-hyphen separators (e.g. `.swc-Button-label`) to 2nd-gen BEM double-underscore notation (e.g. `.swc-Button__label`). If the CSS target changes, update the class name in `render()` at the same time. Check both directions:
+Common case: confirming that subcomponent class names follow the single-hyphen separator convention (e.g. `.swc-Button-label`, `.swc-Badge-label`) — not BEM double-underscore. If any class name in `render()` uses `__`, rename it to `-` in both the template and the CSS at the same time. Check both directions:
 
 - CSS selector → does `render()` emit this class?
 - `render()` class name → does the CSS have a matching selector?

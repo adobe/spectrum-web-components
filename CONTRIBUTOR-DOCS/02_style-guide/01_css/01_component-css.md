@@ -319,7 +319,7 @@ For **consumer-set state modifiers** expressed as host attributes (e.g. `pending
 
 ```css
 /* ✅ Use the custom property override pattern on host attribute selectors too */
-:host([pending]) .swc-Button__icon {
+:host([pending]) .swc-Button-icon {
   --swc-button-icon-opacity: 0;
 }
 ```
