@@ -66,15 +66,22 @@ export const meta: Meta = {
     density: 'regular',
     disabled: false,
   },
-  render: (args) =>
-    renderTabGroup({
+  render: (args) => {
+    const raw = args as Record<string, unknown>;
+    // Storybook may store controls under `keyboard-activation` when argTypes use `name`.
+    const keyboardActivation = (raw.keyboardActivation ??
+      raw['keyboard-activation'] ??
+      'manual') as KeyboardActivation;
+
+    return renderTabGroup({
       selected: args.selected as string,
       label: args.label as string,
       direction: args.direction as TabsDirection,
-      keyboardActivation: args.keyboardActivation as KeyboardActivation,
+      keyboardActivation,
       density: args.density as TabDensity,
       disabled: Boolean(args.disabled),
-    }),
+    });
+  },
   parameters: {
     actions: { handles: events },
     docs: {
@@ -150,7 +157,7 @@ const renderTabGroup = ({
     selected=${selected}
     direction=${direction}
     label=${label}
-    keyboardActivation=${keyboardActivation}
+    keyboard-activation=${keyboardActivation}
     density=${density}
     ?disabled=${disabled}
   >

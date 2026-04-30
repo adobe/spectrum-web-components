@@ -294,7 +294,7 @@ export const HostAutoDisabledReactiveTest: Story = {
           new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
         );
         await tabs.updateComplete;
-        expect(document.activeElement, 'focus on tab 2').toBe(tab2);
+        expect(tabs.ownerDocument.activeElement, 'focus on tab 2').toBe(tab2);
         expect(tabs.selected, 'selection unchanged in manual mode').toBe('1');
       }
     );
@@ -311,6 +311,10 @@ export const HostAutoDisabledReactiveTest: Story = {
         new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
       );
       await tabs.updateComplete;
+      expect(
+        tabs.ownerDocument.activeElement,
+        'focus on tab 2 after arrow'
+      ).toBe(tab2);
       expect(tabs.selected, 'selection follows focus in automatic mode').toBe(
         '2'
       );
@@ -359,6 +363,107 @@ export const HostAutoDisabledReactiveTest: Story = {
         ).toBe(0);
       }
     );
+  },
+};
+
+/**
+ * `keyboard-activation` from markup must drive arrow-key selection (Storybook
+ * uses the hyphenated attribute; this guards against args/render drift).
+ */
+export const KeyboardActivationFromAttributeTest: Story = {
+  render: () => html`
+    <div>
+      <swc-tabs
+        id="tabs-keyboard-manual"
+        selected="1"
+        keyboard-activation="manual"
+        label="Manual from attribute"
+      >
+        <swc-tab value="1">One</swc-tab>
+        <swc-tab value="2">Two</swc-tab>
+        <swc-tab-panel value="1"><p>Panel one</p></swc-tab-panel>
+        <swc-tab-panel value="2"><p>Panel two</p></swc-tab-panel>
+      </swc-tabs>
+      <swc-tabs
+        id="tabs-keyboard-automatic"
+        selected="1"
+        keyboard-activation="automatic"
+        label="Automatic from attribute"
+      >
+        <swc-tab value="1">One</swc-tab>
+        <swc-tab value="2">Two</swc-tab>
+        <swc-tab-panel value="1"><p>Panel one</p></swc-tab-panel>
+        <swc-tab-panel value="2"><p>Panel two</p></swc-tab-panel>
+      </swc-tabs>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const manualHost = canvasElement.querySelector(
+      '#tabs-keyboard-manual'
+    ) as Tabs;
+    const autoHost = canvasElement.querySelector(
+      '#tabs-keyboard-automatic'
+    ) as Tabs;
+
+    expect(manualHost, 'manual fixture').toBeTruthy();
+    expect(autoHost, 'automatic fixture').toBeTruthy();
+    await Promise.all([manualHost.updateComplete, autoHost.updateComplete]);
+
+    const doc = manualHost.ownerDocument;
+
+    await step('manual: ArrowRight moves focus only', async () => {
+      expect(manualHost.keyboardActivation, 'mode is manual').toBe('manual');
+
+      const t1 = canvasElement.querySelector(
+        '#tabs-keyboard-manual swc-tab[value="1"]'
+      ) as Tab;
+      const t2 = canvasElement.querySelector(
+        '#tabs-keyboard-manual swc-tab[value="2"]'
+      ) as Tab;
+
+      t1.focus();
+      t1.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          code: 'ArrowRight',
+          bubbles: true,
+          cancelable: true,
+        })
+      );
+      await manualHost.updateComplete;
+
+      expect(doc.activeElement, 'focus moves to tab 2').toBe(t2);
+      expect(manualHost.selected, 'host selection unchanged').toBe('1');
+      expect(t1.selected, 'tab 1 stays selected').toBe(true);
+      expect(t2.selected, 'tab 2 stays unselected').toBe(false);
+    });
+
+    await step('automatic: ArrowRight moves focus and selection', async () => {
+      expect(autoHost.keyboardActivation, 'mode is automatic').toBe(
+        'automatic'
+      );
+
+      const t1 = canvasElement.querySelector(
+        '#tabs-keyboard-automatic swc-tab[value="1"]'
+      ) as Tab;
+      const t2 = canvasElement.querySelector(
+        '#tabs-keyboard-automatic swc-tab[value="2"]'
+      ) as Tab;
+
+      t1.focus();
+      t1.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          code: 'ArrowRight',
+          bubbles: true,
+          cancelable: true,
+        })
+      );
+      await autoHost.updateComplete;
+
+      expect(doc.activeElement, 'focus on tab 2').toBe(t2);
+      expect(autoHost.selected, 'host selection follows focus').toBe('2');
+      expect(t1.selected, 'tab 1 unselected').toBe(false);
+      expect(t2.selected, 'tab 2 selected').toBe(true);
+    });
   },
 };
 
