@@ -80,11 +80,6 @@ argTypes.size = {
   options: [COMPONENT]_VALID_SIZES,
 };
 
-// Set defaults that match the most common real-world usage.
-args['default-slot'] = '[Component]';
-args.variant = '[first-variant]';
-args.size = 'm';
-
 /**
  * [One or two sentences describing what the component does and when to use it.
  * Keep this brief — detailed usage guidance belongs in Phase 7 docs.]

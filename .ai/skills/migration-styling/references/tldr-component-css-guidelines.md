@@ -124,4 +124,4 @@ Keep selector specificity at or below `(0,1,0)`. If you need a compounded select
 ### 7. Forced colors
 
 Only add `@media (forced-colors: active)` if browser defaults are not conveying correct semantic intent, and always put it at the end of the component stylesheet.
-→ See [01_component-css#forced-colors-requirements](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css#forced-colors-requirements.md)
+→ See [01_component-css#forced-colors-requirements](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#forced-colors-requirements)
