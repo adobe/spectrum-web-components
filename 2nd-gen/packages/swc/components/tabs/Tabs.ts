@@ -23,9 +23,8 @@ import styles from './tabs.css';
  * Uses a three-element architecture: `swc-tabs` (container),
  * `swc-tab` (individual tabs), and `swc-tab-panel` (panel content).
  *
- * **Accessibility (B5):** `role="tablist"`, `aria-label`, and
- * `aria-orientation` are co-located on the same inner element,
- * fixing a 1st-gen bug where they were on different elements.
+ * **Accessibility:** `role="tablist"`, `aria-label`, and
+ * `aria-orientation` are co-located on the same inner element.
  *
  * @element swc-tabs
  * @status unsupported
@@ -43,6 +42,16 @@ import styles from './tabs.css';
  * </swc-tabs>
  */
 export class Tabs extends TabsBase {
+  /**
+   * Shadow `delegatesFocus: true` keeps native focus-delegation where supported;
+   * `TabsBase.focus()` focuses the selected slotted tab explicitly so
+   * programmatic `focus()` matches 1st-gen expectations regardless of engine.
+   */
+  public static override shadowRootOptions: ShadowRootInit = {
+    delegatesFocus: true,
+    mode: 'open',
+  };
+
   // ─────────────────────────────
   //     RENDERING & STYLING
   // ─────────────────────────────

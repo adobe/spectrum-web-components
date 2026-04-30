@@ -13,10 +13,8 @@
 /**
  * Valid orientation directions for the tabs component.
  *
- * **Breaking change (B13):** `'vertical-right'` was supported in 1st-gen
- * but is not part of the Spectrum CSS specification and has been removed.
- * Consumers using `direction="vertical-right"` must switch to
- * `direction="vertical"`.
+ * **`vertical-right`** was supported in 1st-gen but is not part of the
+ * S2-aligned `swc-tabs` surface; use `direction="vertical"` instead.
  */
 export const TABS_DIRECTIONS = ['horizontal', 'vertical'] as const;
 
@@ -24,6 +22,28 @@ export type TabsDirection = (typeof TABS_DIRECTIONS)[number];
 
 export const TABS_DEFAULT_DIRECTION =
   'horizontal' as const satisfies TabsDirection;
+
+/**
+ * How keyboard focus interacts with selection (Spectrum Design / S2 naming).
+ *
+ * - **`manual`**: Arrow keys move focus; Enter or Space activates (default).
+ * - **`automatic`**: Selection follows focus as the user arrows between tabs.
+ */
+export const KEYBOARD_ACTIVATIONS = ['manual', 'automatic'] as const;
+
+export type KeyboardActivation = (typeof KEYBOARD_ACTIVATIONS)[number];
+
+export const KEYBOARD_ACTIVATION_DEFAULT =
+  'manual' as const satisfies KeyboardActivation;
+
+/**
+ * Tab list density (Spectrum Design `density` naming).
+ */
+export const TAB_DENSITIES = ['regular', 'compact'] as const;
+
+export type TabDensity = (typeof TAB_DENSITIES)[number];
+
+export const TAB_DENSITY_DEFAULT = 'regular' as const satisfies TabDensity;
 
 /**
  * Structural interface for tab-like elements managed by the tabs

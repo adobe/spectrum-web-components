@@ -24,11 +24,11 @@ let panelIdCounter = 0;
  * focus-in/out behavior that prevents Tab-key trapping inside panel
  * content.
  *
- * **Implementation note (B19):** In 1st-gen, `slot="tab-panel"` was
+ * In 1st-gen, `slot="tab-panel"` was
  * assigned programmatically in `firstUpdated` so consumers never
  * wrote it in markup. This behavior is preserved in 2nd-gen.
  *
- * **Implementation note (B20):** The panel removes its own
+ * The panel removes its own
  * `tabindex` on `focusin` so that Tab presses inside the panel
  * move to the next interactive element rather than being trapped.
  * On `focusout`, `tabindex` is restored so the panel remains

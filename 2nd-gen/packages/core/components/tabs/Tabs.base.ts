@@ -13,9 +13,14 @@ import { PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
-import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
 
 import {
+  KEYBOARD_ACTIVATION_DEFAULT,
+  KEYBOARD_ACTIVATIONS,
+  type KeyboardActivation,
+  TAB_DENSITIES,
+  TAB_DENSITY_DEFAULT,
+  type TabDensity,
   type TabLike,
   type TabPanelLike,
   TABS_DEFAULT_DIRECTION,
@@ -31,13 +36,10 @@ import {
  * supply the stylesheet, render template, and visual behaviors
  * such as the selection indicator.
  *
- * **Breaking change (B12):** In 1st-gen, `SizedMixin` was used with
- * `noDefaultSize: true` so no size attribute was applied unless set
- * explicitly. In 2nd-gen the default is `size="m"` to align with
- * Spectrum 2.
- *
- * @attribute {ElementSize} size - The size of the tabs. Controls
- *   typography and spacing. Defaults to `m`.
+ * Public API follows the Spectrum 2 / Spectrum Design–aligned surface
+ * from the tabs migration plan: `keyboard-activation` and `density`
+ * instead of legacy `auto`, `compact`, `quiet`, `emphasized`, and
+ * t-shirt `size` attributes.
  *
  * @slot - Tab items (elements with `role="tab"`)
  * @slot tab-panel - Tab panel content (elements with `role="tabpanel"`)
@@ -45,9 +47,7 @@ import {
  * @fires change - The selected tab has changed. Cancelable —
  *   calling `preventDefault()` reverts the selection.
  */
-export abstract class TabsBase extends SizedMixin(SpectrumElement, {
-  defaultSize: 'm',
-}) {
+export abstract class TabsBase extends SpectrumElement {
   // ─────────────────────────
   //     SHARED API
   // ─────────────────────────
@@ -60,33 +60,92 @@ export abstract class TabsBase extends SizedMixin(SpectrumElement, {
   static readonly VALID_DIRECTIONS: readonly TabsDirection[] = TABS_DIRECTIONS;
 
   /**
-   * Whether to activate a tab on keyboard focus or require an
-   * explicit activation action.
-   *
-   * When `true`, selection follows focus — as the user arrows between
-   * tabs, the selection updates immediately (automatic activation).
-   * When `false` (default), arrow keys move focus without changing
-   * selection; Enter or Space activates the focused tab (manual
-   * activation).
-   *
-   * Set to `true` only when tab content can be displayed instantly.
+   * @internal
+   */
+  static readonly VALID_KEYBOARD_ACTIVATIONS: readonly KeyboardActivation[] =
+    KEYBOARD_ACTIVATIONS;
+
+  /**
+   * @internal
+   */
+  static readonly VALID_DENSITIES: readonly TabDensity[] = TAB_DENSITIES;
+
+  /**
+   * Whether selection follows keyboard focus (`automatic`) or the user
+   * must press Enter or Space to activate (`manual`, default).
    *
    * @see https://w3c.github.io/aria-practices/#kbd_selection_follows_focus
    */
-  @property({ type: Boolean })
-  public auto = false;
+  @property({ type: String, reflect: true, attribute: 'keyboard-activation' })
+  public get keyboardActivation(): KeyboardActivation {
+    return this._keyboardActivation;
+  }
+
+  public set keyboardActivation(value: string) {
+    const isValid = (KEYBOARD_ACTIVATIONS as readonly string[]).includes(value);
+
+    if (!isValid && window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `<${this.localName}> expects "keyboard-activation" to be one of:`,
+        'https://opensource.adobe.com/spectrum-web-components/components/tabs/',
+        { issues: [...KEYBOARD_ACTIVATIONS] }
+      );
+    }
+
+    const valid = isValid
+      ? (value as KeyboardActivation)
+      : KEYBOARD_ACTIVATION_DEFAULT;
+
+    if (this._keyboardActivation === valid) {
+      return;
+    }
+
+    const old = this._keyboardActivation;
+    this._keyboardActivation = valid;
+    this.requestUpdate('keyboardActivation', old);
+  }
+
+  private _keyboardActivation: KeyboardActivation = KEYBOARD_ACTIVATION_DEFAULT;
 
   /**
-   * Displays the tabs in a compact layout with reduced spacing.
+   * Layout density: `regular` (default) or `compact` (reduced tab spacing).
    */
-  @property({ type: Boolean, reflect: true })
-  public compact = false;
+  @property({ type: String, reflect: true })
+  public get density(): TabDensity {
+    return this._density;
+  }
+
+  public set density(value: string) {
+    const isValid = (TAB_DENSITIES as readonly string[]).includes(value);
+
+    if (!isValid && window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `<${this.localName}> expects "density" to be one of:`,
+        'https://opensource.adobe.com/spectrum-web-components/components/tabs/',
+        { issues: [...TAB_DENSITIES] }
+      );
+    }
+
+    const valid = isValid ? (value as TabDensity) : TAB_DENSITY_DEFAULT;
+
+    if (this._density === valid) {
+      return;
+    }
+
+    const old = this._density;
+    this._density = valid;
+    this.requestUpdate('density', old);
+  }
+
+  private _density: TabDensity = TAB_DENSITY_DEFAULT;
 
   /**
    * The layout direction of the tab list.
    *
-   * **Breaking change (B13):** `'vertical-right'` is no longer
-   * supported. Use `'vertical'` instead.
+   * **Breaking change:** `'vertical-right'` is no longer supported.
+   * Use `'vertical'` instead.
    *
    * @default 'horizontal'
    */
@@ -133,24 +192,11 @@ export abstract class TabsBase extends SizedMixin(SpectrumElement, {
   public disabled = false;
 
   /**
-   * Displays the selected tab with an emphasized visual style.
-   */
-  @property({ type: Boolean, reflect: true })
-  public emphasized = false;
-
-  /**
    * Accessible label for the tablist. Rendered as `aria-label` on the
    * element with `role="tablist"` in the concrete template.
    */
   @property({ type: String })
   public label = '';
-
-  /**
-   * Displays the tab list without a visible divider line, providing
-   * a more subdued appearance.
-   */
-  @property({ type: Boolean, reflect: true })
-  public quiet = false;
 
   /**
    * The `value` of the currently selected tab. Setting this property
@@ -186,6 +232,21 @@ export abstract class TabsBase extends SizedMixin(SpectrumElement, {
   private _tabs: TabLike[] = [];
 
   /**
+   * Whether an assigned node is treated as a tab. `role="tab"` is set in
+   * each tab's `firstUpdated`, so `slotchange` may run before that — accept
+   * known tab host tag names so the tab list and selection indicator sync.
+   */
+  private static isTabSlotNode(el: Element): el is TabLike {
+    if (!(el instanceof HTMLElement)) {
+      return false;
+    }
+    if (el.getAttribute('role') === 'tab') {
+      return true;
+    }
+    return el.localName === 'swc-tab';
+  }
+
+  /**
    * Called by the concrete class when the default slot's content
    * changes. Rebuilds the internal tab list and syncs selection
    * state.
@@ -194,7 +255,7 @@ export abstract class TabsBase extends SizedMixin(SpectrumElement, {
     const slot = event.target as HTMLSlotElement;
     this._tabs = slot
       .assignedElements()
-      .filter((el) => el.getAttribute('role') === 'tab') as TabLike[];
+      .filter(TabsBase.isTabSlotNode) as TabLike[];
     this.updateCheckedState();
     this.updateSelectionIndicator();
   }
@@ -235,13 +296,14 @@ export abstract class TabsBase extends SizedMixin(SpectrumElement, {
   /**
    * Full keyboard handler per WAI-ARIA APG Tabs pattern.
    *
-   * **Horizontal (B6 fix):** Left/Right navigate; Up/Down ignored.
+   * **Horizontal:** Left/Right navigate; Up/Down ignored.
    * **Vertical:** Up/Down navigate; Left/Right ignored.
-   * **RTL (B7 fix):** Left/Right swap in `dir="rtl"`.
+   * **RTL:** Left/Right swap in `dir="rtl"`.
    * **Wrapping:** Navigation wraps from last to first and vice versa.
-   * **Disabled (B9):** Disabled tabs receive focus via arrows but
+   * **Disabled tabs:** Disabled tabs receive focus via arrows but
    * are not activatable by Enter/Space.
-   * **Auto mode:** Selection follows focus on arrow key navigation.
+   * **Automatic activation:** When `keyboard-activation` is `automatic`,
+   * selection follows focus on arrow key navigation.
    * **Home/End:** Jump to first/last tab.
    */
   protected handleKeyDown(event: KeyboardEvent): void {
@@ -311,8 +373,8 @@ export abstract class TabsBase extends SizedMixin(SpectrumElement, {
   /**
    * Moves focus by `delta` positions from the currently focused tab,
    * wrapping around the list. All tabs (including disabled) receive
-   * focus per APG. In auto mode, the newly focused tab is also
-   * selected.
+   * focus per APG. In automatic activation mode, the newly focused tab
+   * is also selected.
    */
   private focusByDelta(delta: number): void {
     if (!this._tabs.length) {
@@ -328,11 +390,9 @@ export abstract class TabsBase extends SizedMixin(SpectrumElement, {
   }
 
   /**
-   * Focuses the tab at the given index and, when in auto mode,
-   * also selects it. Selection happens before focus to match
-   * 1st-gen ordering where `elementEnterAction` runs before
-   * `focus()`, allowing `change` event listeners to see the
-   * pre-focus state via `activeElement`.
+   * Focuses the tab at the given index and, when in automatic
+   * activation mode, also selects it. Selection runs before `focus()`
+   * so `change` listeners observe the updated value before focus moves.
    */
   private focusTabAtIndex(index: number): void {
     if (!this._tabs.length) {
@@ -345,7 +405,7 @@ export abstract class TabsBase extends SizedMixin(SpectrumElement, {
       return;
     }
 
-    if (this.auto && !tab.disabled) {
+    if (this._keyboardActivation === 'automatic' && !tab.disabled) {
       this.selectTarget(tab);
     }
 
@@ -402,8 +462,7 @@ export abstract class TabsBase extends SizedMixin(SpectrumElement, {
    * Ensures at least one tab has `tabindex="0"` for Tab-key entry
    * when the container is not disabled. When the container is
    * disabled, all tabs get `tabindex="-1"` to prevent Tab-key
-   * entry (matching 1st-gen behavior where `isFocusableElement`
-   * returned `false` for all tabs when the container was disabled).
+   * entry into the tab list.
    */
   private updateCheckedState(): void {
     let hasTabStop = false;
@@ -476,7 +535,7 @@ export abstract class TabsBase extends SizedMixin(SpectrumElement, {
       return;
     }
 
-    const tablist = this.shadowRoot?.querySelector('.tablist');
+    const tablist = this.renderRoot?.querySelector('.tablist');
     if (!tablist) {
       return;
     }
@@ -589,6 +648,30 @@ export abstract class TabsBase extends SizedMixin(SpectrumElement, {
     super.disconnectedCallback();
   }
 
+  /**
+   * Focuses the selected tab, or the first tab when none is selected yet.
+   * Slotted tabs live in the light DOM; this is more reliable than relying
+   * only on shadow `delegatesFocus` across browsers and test harnesses.
+   */
+  public override focus(options?: FocusOptions): void {
+    if (this.disabled) {
+      return;
+    }
+
+    const selectedTab = this._tabs.find((tab) => tab.selected);
+    if (selectedTab) {
+      (selectedTab as HTMLElement).focus(options);
+      return;
+    }
+
+    if (this._tabs.length) {
+      (this._tabs[0] as HTMLElement).focus(options);
+      return;
+    }
+
+    super.focus(options);
+  }
+
   protected override firstUpdated(changes: PropertyValues): void {
     super.firstUpdated(changes);
 
@@ -608,8 +691,7 @@ export abstract class TabsBase extends SizedMixin(SpectrumElement, {
 
   /**
    * Waits for all child tab elements to finish their update cycle
-   * before resolving. Matches 1st-gen behavior that ensured child
-   * tabs were fully rendered before the container reported complete.
+   * before resolving so layout-dependent callers see stable geometry.
    */
   public override async getUpdateComplete(): Promise<boolean> {
     const complete = await super.getUpdateComplete();

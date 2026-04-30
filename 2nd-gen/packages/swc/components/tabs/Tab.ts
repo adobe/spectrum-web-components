@@ -18,10 +18,10 @@ import styles from './tab.css';
 /**
  * An individual tab placed inside a `swc-tabs` container.
  *
- * **Breaking change (B8):** The `<label>` wrapper from 1st-gen
- * shadow DOM has been removed. The default slot content renders
- * directly inside a `<span>` to avoid conflicting semantics with
- * `role="tab"` on the host.
+ * The `<label>` wrapper from 1st-gen shadow DOM has been removed. Default
+ * and icon slot content render without an extra wrapper so implicit label
+ * semantics do not conflict with `role="tab"` on the host. See the
+ * [migration guide](../migration.md).
  *
  * @element swc-tab
  * @status unsupported
