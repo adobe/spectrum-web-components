@@ -411,6 +411,35 @@ export const ReturnToIndeterminateTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Accessibility
+// ──────────────────────────────────────────────────────────────
+
+export const NotFocusableTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const progressCircle = await getComponent<ProgressCircle>(
+      canvasElement,
+      'swc-progress-circle'
+    );
+
+    await step('is not in the tab order', async () => {
+      expect(progressCircle.tabIndex, 'tabIndex is -1').toBe(-1);
+    });
+
+    await step(
+      'does not receive focus when focused programmatically',
+      async () => {
+        progressCircle.focus();
+        expect(
+          document.activeElement,
+          'activeElement is not the progress circle'
+        ).not.toBe(progressCircle);
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Dev mode warnings
 // ──────────────────────────────────────────────────────────────
 

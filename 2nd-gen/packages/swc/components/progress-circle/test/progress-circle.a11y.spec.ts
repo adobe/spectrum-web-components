@@ -93,4 +93,16 @@ test.describe('Progress Circle - ARIA Snapshots', () => {
       - progressbar "Processing request"
     `);
   });
+
+  test('should not be keyboard focusable', async ({ page }) => {
+    const root = await gotoStory(
+      page,
+      'components-progress-circle--overview',
+      'swc-progress-circle'
+    );
+    const progressCircle = root.locator('swc-progress-circle');
+    await expect(progressCircle).not.toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(progressCircle).not.toBeFocused();
+  });
 });
