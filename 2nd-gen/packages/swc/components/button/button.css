@@ -33,11 +33,11 @@
 
 .swc-Button {
   --_swc-button-border-width: token("border-width-200");
-  --_swc-button-height: var(--swc-button-height, token("component-height-100"));
+  --_swc-button-min-block-size: var(--swc-button-min-block-size, token("component-height-100"));
 
   gap: var(--swc-button-gap, token("text-to-visual-100"));
   max-inline-size: inherit; /* Inherit from :host to support truncation */
-  min-block-size: var(--_swc-button-height);
+  min-block-size: var(--_swc-button-min-block-size);
   padding-block: calc(var(--swc-button-padding-vertical, token("component-padding-vertical-100")) - var(--_swc-button-border-width));
   padding-inline: calc(var(--swc-button-edge-to-text, token("component-pill-edge-to-text-100")) - var(--_swc-button-border-width));
   font-family: token("sans-serif-font");
@@ -48,7 +48,7 @@
   background-color: var(--swc-button-background-color-default, token("neutral-background-color-default"));
   border-color: var(--swc-button-border-color-default, transparent);
   border-width: var(--_swc-button-border-width);
-  border-radius: var(--swc-button-border-radius, calc(var(--_swc-button-height) / 2));
+  border-radius: var(--swc-button-border-radius, calc(var(--_swc-button-min-block-size) / 2));
   transition-timing-function: linear;
   transition-duration: token("animation-duration-100");
   transition-property: outline, border-color, color, background;
@@ -105,7 +105,7 @@ slot[name="icon"]::slotted(*) {
 /* ── Sizes ──────────────────────────────────────── */
 
 :host([size="s"]) {
-  --swc-button-height: token("component-height-75");
+  --swc-button-min-block-size: token("component-height-75");
   --swc-button-font-size: token("font-size-75");
   --swc-button-gap: token("text-to-visual-75");
   --swc-button-edge-to-text: token("component-pill-edge-to-text-75");
@@ -116,7 +116,7 @@ slot[name="icon"]::slotted(*) {
 }
 
 :host([size="l"]) {
-  --swc-button-height: token("component-height-200");
+  --swc-button-min-block-size: token("component-height-200");
   --swc-button-font-size: token("font-size-200");
   --swc-button-gap: token("text-to-visual-200");
   --swc-button-edge-to-text: token("component-pill-edge-to-text-200");
@@ -127,7 +127,7 @@ slot[name="icon"]::slotted(*) {
 }
 
 :host([size="xl"]) {
-  --swc-button-height: token("component-height-300");
+  --swc-button-min-block-size: token("component-height-300");
   --swc-button-font-size: token("font-size-300");
   --swc-button-gap: token("text-to-visual-300");
   --swc-button-edge-to-text: token("component-pill-edge-to-text-300");
