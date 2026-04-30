@@ -37,7 +37,6 @@ import baseStyles from './button-base.css';
  * A button component that triggers an action when activated.
  *
  * @element swc-button
- * @status alpha
  * @since 0.0.1
  *
  * @slot - Visible button label.
@@ -138,13 +137,13 @@ export class Button extends ButtonBase {
           : (this.accessibleLabel ?? nothing)}
       >
         <slot name="icon"></slot>
-        <span class="swc-Button__label">
+        <span class="swc-Button-label">
           <slot></slot>
         </span>
         ${this.pending
           ? html`
               <svg
-                class="swc-Button__pendingSpinner"
+                class="swc-Button-pendingSpinner"
                 width="100%"
                 height="100%"
                 fill="none"
@@ -152,13 +151,13 @@ export class Button extends ButtonBase {
                 focusable="false"
               >
                 <circle
-                  class="swc-Button__pendingSpinner-track"
+                  class="swc-Button-pendingSpinner-track"
                   cx="50%"
                   cy="50%"
                   r="calc(50% - 1px)"
                 />
                 <circle
-                  class="swc-Button__pendingSpinner-fill"
+                  class="swc-Button-pendingSpinner-fill"
                   cx="50%"
                   cy="50%"
                   r="calc(50% - 1px)"
