@@ -1,0 +1,306 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: block;
+  inline-size: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ─────────────────────────────────────
+   Outer wrapper
+   ───────────────────────────────────── */
+
+.swc-PromptField {
+  display: flex;
+  flex-direction: column;
+  gap: token("spacing-200");
+  inline-size: 100%;
+}
+
+/* ─────────────────────────────────────
+   White card box with shadow
+   ───────────────────────────────────── */
+
+.swc-PromptField-box {
+  display: flex;
+  flex-direction: column;
+  gap: token("spacing-300");
+  padding: token("spacing-300");
+  background: token("background-layer-2-color");
+  border-radius: token("corner-radius-800");
+  box-shadow: token("drop-shadow-emphasized-default-x") token("drop-shadow-emphasized-default-y") token("drop-shadow-emphasized-default-blur") token("drop-shadow-emphasized-default-color");
+  overflow: hidden;
+}
+
+/* Outer ring only for keyboard focus on the textarea (PromptField toggles
+ * `.swc-PromptField-box--keyboard-focus`; `:focus-visible` alone cannot
+ * distinguish Tab vs click on text inputs). */
+.swc-PromptField-box.swc-PromptField-box--keyboard-focus {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-indicator-gap");
+}
+
+/* ─────────────────────────────────────
+   Input area (artifact + text area)
+   ───────────────────────────────────── */
+
+.swc-PromptField-input-area {
+  display: flex;
+  flex-direction: column;
+  gap: token("spacing-300");
+  padding-block-start: 0;
+  padding-inline: token("spacing-100");
+}
+
+/* Figma: input area uses 8px top padding only when an artifact row is shown. */
+.swc-PromptField-input-area.has-artifact {
+  padding-block-start: token("spacing-100");
+}
+
+/* ─────────────────────────────────────
+   Uploaded artifacts
+   ───────────────────────────────────── */
+
+.swc-PromptField-artifacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: token("spacing-100");
+  align-items: start;
+}
+
+.swc-PromptField-artifacts > slot {
+  display: contents;
+}
+
+/* Mixed card/media artifacts support horizontal flow with wrapping. */
+.swc-PromptField-artifacts > slot::slotted(*) {
+  flex: 0 0 auto;
+}
+
+/* Figma (node 2:2035): single card artifact is 324px wide. */
+.swc-PromptField-artifacts--single > slot::slotted([type="card"]) {
+  flex: 0 1 var(--swc-prompt-field-artifact-single-inline-size, 324px);
+  inline-size: min(100%, 324px);
+  max-inline-size: var(--swc-prompt-field-artifact-single-max-inline-size, 324px);
+}
+
+/* Multi-artifact card layout targets 3+ cards per row responsively. */
+.swc-PromptField-artifacts--multiple > slot::slotted([type="card"]) {
+  flex: 1 1 var(--swc-prompt-field-artifact-multiple-inline-size, 160px);
+  min-inline-size: var(--swc-prompt-field-artifact-min-inline-size, 160px);
+}
+
+/* Prompt-field media artifact uses 68×68 preview tile. */
+.swc-PromptField-artifacts > slot::slotted([type="media"]) {
+  inline-size: var(--swc-prompt-field-artifact-media-inline-size, 68px);
+  min-inline-size: var(--swc-prompt-field-artifact-media-min-inline-size, 68px);
+  block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);
+  min-block-size: var(--swc-prompt-field-artifact-media-min-block-size, 68px);
+  aspect-ratio: 1 / 1;
+}
+
+/* ─────────────────────────────────────
+   Text area (label + textarea)
+   ───────────────────────────────────── */
+
+.swc-PromptField-text-area {
+  display: flex;
+  flex-direction: column;
+  gap: token("spacing-75");
+}
+
+.swc-PromptField-label {
+  display: block;
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-100");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-100");
+  color: token("neutral-subdued-content-color-default");
+}
+
+.swc-PromptField-textarea {
+  field-sizing: content;
+  display: block;
+  inline-size: 100%;
+  min-block-size: calc(token("font-size-100") * token("line-height-100") * var(--swc-prompt-field-textarea-min-rows, 1));
+  max-block-size: calc(token("font-size-100") * token("line-height-100") * var(--swc-prompt-field-textarea-max-rows, 4));
+  padding: 0;
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-100");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-100");
+  color: token("gray-900");
+  background: transparent;
+  border: none;
+  resize: none;
+  outline: none;
+}
+
+.swc-PromptField-textarea::placeholder {
+  color: token("gray-600");
+}
+
+.swc-PromptField-textarea:disabled {
+  color: token("gray-500");
+  cursor: default;
+}
+
+/* ─────────────────────────────────────
+   Action bar
+   ───────────────────────────────────── */
+
+.swc-PromptField-action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.swc-PromptField-leading-actions {
+  display: inline-flex;
+  gap: token("spacing-75");
+  align-items: center;
+}
+
+.swc-PromptField-file-input {
+  display: none;
+}
+
+/* Upload button (quiet, left side) */
+
+.swc-PromptField-upload {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--swc-prompt-field-upload-inline-size, 32px);
+  block-size: var(--swc-prompt-field-upload-block-size, 32px);
+  padding: 0;
+  color: token("gray-800");
+  background: transparent;
+  border: none;
+  border-radius: token("corner-radius-500");
+  cursor: pointer;
+}
+
+.swc-PromptField-upload:hover {
+  color: token("gray-800");
+  background: token("gray-75");
+}
+
+.swc-PromptField-upload:disabled {
+  color: token("gray-400");
+  background: transparent;
+  cursor: default;
+}
+
+.swc-PromptField-upload swc-icon {
+  --swc-icon-inline-size: token("workflow-icon-size-100");
+  --swc-icon-block-size: token("workflow-icon-size-100");
+}
+
+/* Send button (filled circle, right side) */
+
+.swc-PromptField-send {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--swc-prompt-field-send-inline-size, 32px);
+  block-size: var(--swc-prompt-field-send-block-size, 32px);
+  padding: 0;
+  color: token("gray-25");
+  background: token("neutral-background-color-default");
+  border: none;
+  border-radius: token("corner-radius-full");
+  cursor: pointer;
+  transition: background token("animation-duration-100") ease;
+}
+
+.swc-PromptField-stop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--swc-prompt-field-stop-inline-size, 32px);
+  block-size: var(--swc-prompt-field-stop-block-size, 32px);
+  padding: 0;
+  color: token("gray-25");
+  background: token("gray-900");
+  border: none;
+  border-radius: token("corner-radius-full");
+  cursor: pointer;
+  transition: background token("animation-duration-100") ease;
+}
+
+.swc-PromptField-send:disabled {
+  color: token("gray-400");
+  background: token("gray-100");
+  cursor: default;
+}
+
+.swc-PromptField-send:focus-visible,
+.swc-PromptField-stop:focus-visible {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-indicator-gap");
+}
+
+.swc-PromptField-send:active,
+.swc-PromptField-stop:active {
+  transform: perspective(64px) translate3d(0, 0, -1px);
+  transition: transform token("animation-duration-200") ease;
+  transition-timing-function: token("animation-ease-in-out");
+  will-change: transform;
+}
+
+.swc-PromptField-send:hover:not(:disabled) {
+  background: token("neutral-background-color-hover");
+}
+
+.swc-PromptField-send swc-icon {
+  --swc-icon-inline-size: token("workflow-icon-size-100");
+  --swc-icon-block-size: token("workflow-icon-size-100");
+}
+
+/* Stop button (filled black circle, right side) */
+
+.swc-PromptField-stop:hover {
+  background: token("gray-800");
+}
+
+.swc-PromptField-stop swc-icon {
+  --swc-icon-inline-size: token("workflow-icon-size-100");
+  --swc-icon-block-size: token("workflow-icon-size-100");
+}
+
+/* ─────────────────────────────────────
+   Footer
+   ───────────────────────────────────── */
+
+.swc-PromptField-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swc-PromptField-legal-disclaimer {
+  margin: 0;
+  font-size: token("font-size-75");
+  line-height: token("line-height-font-size-75");
+  color: token("neutral-subdued-content-color-default");
+}
+
+.swc-PromptField-legal-disclaimer a {
+  color: inherit;
+}

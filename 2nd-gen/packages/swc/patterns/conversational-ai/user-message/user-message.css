@@ -1,0 +1,176 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/* Sizing per explicit user-message type sourced from Figma spec (node 5-2281), full-screen modality.
+ *
+ * copy  — fills available column width, capped at 536px (text reflows naturally)
+ * card  — fixed 324px (content 292px = 324px − 2×16px padding), capped at 440px
+ * media — shrinks to the fixed 180×180px inner card + 2×8px padding ≈ 196px square
+ *
+ * The host IS the visible bubble so focus rings rendered by the parent
+ * `swc-conversation-turn` hug its border box exactly. `margin-inline-end`
+ * stays on the host because margins sit outside the border box and therefore
+ * outside the focus ring.
+ */
+
+:host {
+  display: block;
+  inline-size: fit-content;
+  max-inline-size: 536px;
+  padding-block: var(--swc-user-message-padding-block, token("spacing-100"));
+  padding-inline: var(--swc-user-message-padding-inline, token("spacing-300"));
+  margin-inline-end: var(--swc-user-message-margin-inline-end, token("spacing-400"));
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-200");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-200");
+  color: token("gray-800");
+  background: token("gray-50");
+  border-radius: token("corner-radius-large-default");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Card: fixed 324px per Figma spec (content 292px = 324px − 2×16px padding). */
+:host([type="card"]) {
+  inline-size: 324px;
+  min-inline-size: 212px;
+  max-inline-size: 440px;
+  padding: var(--swc-user-message-card-padding, token("spacing-300"));
+}
+
+/* Image: shrinks to the fixed 180px inner card + 2×8px padding. */
+:host([type="media"]) {
+  inline-size: fit-content;
+  padding: var(--swc-user-message-media-padding, token("spacing-100"));
+}
+
+.swc-UserMessage-attachment {
+  display: flex;
+  min-inline-size: 0;
+}
+
+.swc-UserMessage-attachment--card {
+  gap: var(--swc-user-message-attachment-card-gap, token("spacing-300"));
+  align-items: center;
+}
+
+/* Media inner card is fixed 180 × 180px, constrained by min/max (Figma spec). */
+.swc-UserMessage-attachment--media {
+  flex-direction: column;
+  gap: var(--swc-user-message-attachment-media-gap, token("spacing-100"));
+  inline-size: 180px;
+  min-inline-size: 150px;
+  max-inline-size: 210px;
+  block-size: 180px;
+  min-block-size: 135px;
+}
+
+.swc-UserMessage-thumbnail {
+  min-inline-size: 0;
+}
+
+.swc-UserMessage-thumbnail ::slotted(*) {
+  display: block;
+}
+
+:host([type="card"]) .swc-UserMessage-thumbnail {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+:host([type="card"]) .swc-UserMessage-thumbnail ::slotted(*) {
+  flex-shrink: 0;
+  inline-size: 32px;
+  block-size: 32px;
+  border-radius: token("corner-radius-75");
+  object-fit: cover;
+}
+
+/* Thumbnail fills the available vertical space, image covers it fully. */
+:host([type="media"]) .swc-UserMessage-thumbnail {
+  position: relative;
+  flex: 1 0 0;
+  inline-size: 100%;
+  min-block-size: 0;
+  background: token("gray-100");
+  border-radius: token("corner-radius-200");
+  overflow: hidden;
+}
+
+:host([type="media"]) .swc-UserMessage-thumbnail ::slotted(*) {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.swc-UserMessage-meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--swc-user-message-meta-gap, token("spacing-50"));
+  min-inline-size: 0;
+}
+
+:host([type="card"]) .swc-UserMessage-meta {
+  flex: 1;
+  align-items: flex-start;
+}
+
+:host([type="media"]) .swc-UserMessage-meta {
+  inline-size: 100%;
+}
+
+.swc-UserMessage-title {
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-100");
+  font-weight: token("bold-font-weight");
+  line-height: token("line-height-font-size-100");
+  color: token("gray-900");
+}
+
+.swc-UserMessage-subtitle {
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-75");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-font-size-75");
+  color: token("gray-800");
+  text-overflow: ellipsis;
+}
+
+:host([type="card"]) .swc-UserMessage-title,
+:host([type="card"]) .swc-UserMessage-subtitle,
+:host([type="media"]) .swc-UserMessage-title {
+  inline-size: 100%;
+  min-inline-size: 0;
+  text-align: start;
+}
+
+/* Long, unbroken tokens (e.g. filenames without spaces) break at any character
+ * so the title wraps inside the meta column instead of overflowing the bubble. */
+:host([type="card"]) .swc-UserMessage-title ::slotted(*),
+:host([type="media"]) .swc-UserMessage-title ::slotted(*),
+:host([type="card"]) .swc-UserMessage-subtitle ::slotted(*),
+:host([type="media"]) .swc-UserMessage-subtitle ::slotted(*) {
+  display: block;
+  min-inline-size: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
