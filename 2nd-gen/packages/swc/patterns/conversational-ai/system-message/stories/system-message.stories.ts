@@ -38,7 +38,7 @@ const slotFeedback = `<swc-message-feedback slot="feedback"></swc-message-feedba
 
 const slotSourcesRich = `<swc-message-sources slot="sources"><li><a href="#">Adobe Experience Manager documentation</a></li><li><a href="#">Creative Cloud release notes 2026</a></li><li><a href="#">Firefly API getting started guide</a></li></swc-message-sources>`;
 
-const slotSuggestionsRich = `<swc-suggestion-group slot="suggestions" heading="What would you like to do next?"><swc-suggestion-item>Create a year-over-year growth chart for the next decade</swc-suggestion-item><swc-suggestion-item>Generate a congratulatory poster</swc-suggestion-item><swc-suggestion-item>Summarize development pipeline</swc-suggestion-item></swc-suggestion-group>`;
+const slotSuggestionsRich = `<swc-suggestion-group slot="suggestions"><h3 slot="heading">What would you like to do next?</h3><swc-suggestion-item>Create a year-over-year growth chart for the next decade</swc-suggestion-item><swc-suggestion-item>Generate a congratulatory poster</swc-suggestion-item><swc-suggestion-item>Summarize development pipeline</swc-suggestion-item></swc-suggestion-group>`;
 
 const richSlots = {
   'status-slot': slotStatusRich,
@@ -133,7 +133,7 @@ export const Anatomy: Story = {
     'default-slot': `<div class="swc-conversationalAi-systemProse swc-Typography--prose"><p>Here is the AI-generated response content.</p></div>`,
     'feedback-slot': slotFeedback,
     'sources-slot': `<swc-message-sources slot="sources"><li><a href="#">Source one</a></li></swc-message-sources>`,
-    'suggestions-slot': `<swc-suggestion-group slot="suggestions" heading="What would you like to do next?"><swc-suggestion-item>Follow up suggestion one</swc-suggestion-item><swc-suggestion-item>Follow up suggestion two</swc-suggestion-item></swc-suggestion-group>`,
+    'suggestions-slot': `<swc-suggestion-group slot="suggestions"><h3 slot="heading">What would you like to do next?</h3><swc-suggestion-item>Follow up suggestion one</swc-suggestion-item><swc-suggestion-item>Follow up suggestion two</swc-suggestion-item></swc-suggestion-group>`,
   },
   decorators: [withSystemTurn],
   tags: ['anatomy'],
@@ -219,7 +219,7 @@ export const Accessibility: Story = {
     'default-slot': `<div class="swc-conversationalAi-systemProse swc-Typography--prose"><p>According to the assets, there is a clear journey from beginning to end. Let's start with overarching themes and build from there.</p></div>`,
     'feedback-slot': slotFeedback,
     'sources-slot': `<swc-message-sources slot="sources" open><li><a href="#">Adobe Experience Manager documentation</a></li><li><a href="#">Creative Cloud release notes 2026</a></li></swc-message-sources>`,
-    'suggestions-slot': `<swc-suggestion-group slot="suggestions" heading="What would you like to do next?"><swc-suggestion-item>Create a year-over-year growth chart for the next decade</swc-suggestion-item><swc-suggestion-item>Generate a congratulatory poster</swc-suggestion-item></swc-suggestion-group>`,
+    'suggestions-slot': `<swc-suggestion-group slot="suggestions"><h3 slot="heading">What would you like to do next?</h3><swc-suggestion-item>Create a year-over-year growth chart for the next decade</swc-suggestion-item><swc-suggestion-item>Generate a congratulatory poster</swc-suggestion-item></swc-suggestion-group>`,
   },
   decorators: [withSystemTurn],
   tags: ['a11y'],

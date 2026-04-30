@@ -43,32 +43,51 @@ export const OverviewTest: Story = {
     );
 
     await step('renders with heading in overview examples', async () => {
-      expect(el.heading).toBe('What would you like to do next?');
+      el.innerHTML = `
+        <h3 slot="heading">What would you like to do next?</h3>
+        <swc-suggestion-item>Create a slide deck from this</swc-suggestion-item>
+        <swc-suggestion-item>Summarize in 3 bullet points</swc-suggestion-item>
+        <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
+      `;
+      await el.updateComplete;
 
       const heading = el.shadowRoot?.querySelector(
         '.swc-SuggestionGroup-title'
       );
       const group = el.shadowRoot?.querySelector('.swc-SuggestionGroup-items');
-      expect(heading?.getAttribute('id')).toBe('swc-suggestion-group-heading');
-      expect(group?.getAttribute('aria-labelledby')).toBe(
-        'swc-suggestion-group-heading'
+      const headingSlot = heading?.querySelector('slot[name="heading"]');
+      const headingElements =
+        headingSlot?.assignedElements({ flatten: true }) ?? [];
+      const firstHeading = headingElements[0] as HTMLElement | undefined;
+      expect(firstHeading?.textContent?.trim()).toBe(
+        'What would you like to do next?'
       );
+      expect((firstHeading?.id.length ?? 0) > 0).toBe(true);
+      expect(group?.getAttribute('aria-labelledby')).toBe(firstHeading?.id);
       expect(group?.hasAttribute('aria-label')).toBe(false);
     });
 
     await step(
       'renders three slotted suggestion items by default',
       async () => {
-        const slot = el.shadowRoot?.querySelector<HTMLSlotElement>('slot');
+        const slot = el.shadowRoot?.querySelector<HTMLSlotElement>(
+          '.swc-SuggestionGroup-items slot:not([name])'
+        );
         const assigned = slot?.assignedElements({ flatten: true }) ?? [];
         expect(assigned.length).toBe(3);
       }
     );
 
     await step(
-      'uses default fallback aria-label when heading is empty',
+      'without heading slot the group has no computed accessible name',
       async () => {
-        el.heading = '';
+        el.innerHTML = `
+          <swc-suggestion-item>Create a slide deck from this</swc-suggestion-item>
+          <swc-suggestion-item>Summarize in 3 bullet points</swc-suggestion-item>
+          <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
+        `;
+        await el.updateComplete;
+        await Promise.resolve();
         await el.updateComplete;
 
         const heading = el.shadowRoot?.querySelector(
@@ -77,16 +96,21 @@ export const OverviewTest: Story = {
         const group = el.shadowRoot?.querySelector(
           '.swc-SuggestionGroup-items'
         );
-        expect(heading).toBeNull();
-        expect(group?.getAttribute('aria-label')).toBe('Follow-up suggestions');
+        expect(heading?.hasAttribute('hidden')).toBe(true);
+        expect(group?.hasAttribute('aria-label')).toBe(false);
         expect(group?.hasAttribute('aria-labelledby')).toBe(false);
       }
     );
 
     await step(
-      'renders no heading and keeps fallback label for blank heading',
+      'accessible-label can name the group when heading slot is missing',
       async () => {
-        el.heading = '';
+        el.innerHTML = `
+          <swc-suggestion-item>Create a slide deck from this</swc-suggestion-item>
+        `;
+        el.accessibleLabel = 'Custom suggestions label';
+        await el.updateComplete;
+        await Promise.resolve();
         await el.updateComplete;
 
         const heading = el.shadowRoot?.querySelector(
@@ -95,29 +119,72 @@ export const OverviewTest: Story = {
         const group = el.shadowRoot?.querySelector(
           '.swc-SuggestionGroup-items'
         );
-        expect(heading).toBeNull();
-        expect(group?.getAttribute('aria-label')).toBe('Follow-up suggestions');
+        expect(heading?.hasAttribute('hidden')).toBe(true);
+        expect(group?.getAttribute('aria-label')).toBe(
+          'Custom suggestions label'
+        );
         expect(group?.hasAttribute('aria-labelledby')).toBe(false);
       }
     );
 
-    await step('heading renders with fixed semantic level', async () => {
-      el.heading = 'Title';
+    await step('heading slot allows consumer-defined semantics', async () => {
+      el.innerHTML = `
+        <p slot="heading">Title</p>
+        <swc-suggestion-item>Create a slide deck from this</swc-suggestion-item>
+      `;
       await el.updateComplete;
-      expect(
-        el.shadowRoot?.querySelector('h3.swc-SuggestionGroup-title')
-      ).toBeTruthy();
-    });
-
-    await step('accessible-label overrides fallback aria-label', async () => {
-      el.heading = '';
-      el.accessibleLabel = 'Custom suggestions label';
+      await Promise.resolve();
       await el.updateComplete;
-
-      const group = el.shadowRoot?.querySelector('.swc-SuggestionGroup-items');
-      expect(group?.getAttribute('aria-label')).toBe(
-        'Custom suggestions label'
+      const headingSlot = el.shadowRoot?.querySelector<HTMLSlotElement>(
+        'slot[name="heading"]'
+      );
+      const headingElements =
+        headingSlot?.assignedElements({ flatten: true }) ?? [];
+      expect((headingElements[0] as HTMLElement | undefined)?.tagName).toBe(
+        'P'
       );
     });
+
+    await step(
+      'accessible-label applies when no heading is present',
+      async () => {
+        el.innerHTML = `
+        <swc-suggestion-item>Create a slide deck from this</swc-suggestion-item>
+      `;
+        el.accessibleLabel = 'Custom suggestions label';
+        await el.updateComplete;
+        await Promise.resolve();
+        await el.updateComplete;
+
+        const group = el.shadowRoot?.querySelector(
+          '.swc-SuggestionGroup-items'
+        );
+        expect(group?.getAttribute('aria-label')).toBe(
+          'Custom suggestions label'
+        );
+      }
+    );
+
+    await step(
+      'accessible-label takes precedence over heading slot labeling',
+      async () => {
+        el.innerHTML = `
+          <h3 slot="heading">What would you like to do next?</h3>
+          <swc-suggestion-item>Create a slide deck from this</swc-suggestion-item>
+        `;
+        el.accessibleLabel = 'Overridden suggestions label';
+        await el.updateComplete;
+        await Promise.resolve();
+        await el.updateComplete;
+
+        const group = el.shadowRoot?.querySelector(
+          '.swc-SuggestionGroup-items'
+        );
+        expect(group?.getAttribute('aria-label')).toBe(
+          'Overridden suggestions label'
+        );
+        expect(group?.hasAttribute('aria-labelledby')).toBe(false);
+      }
+    );
   },
 };

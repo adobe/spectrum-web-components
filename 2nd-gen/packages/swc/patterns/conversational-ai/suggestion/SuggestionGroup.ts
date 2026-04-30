@@ -11,61 +11,83 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, queryAssignedElements } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+
+import { uniqueId } from '../../../utils/id.js';
 
 import styles from './suggestion-group.css';
 
 /**
  * Groups follow-up suggestions shown below a system response.
  *
+ * Provide heading content in `slot="heading"` and control semantics
+ * (for example `h2`, `h3`, or `p`) from the consuming context.
+ *
  * Add one or more `<swc-suggestion-item>` elements to the default slot.
  *
  * @element swc-suggestion-group
+ * @slot heading - Required heading content; consumer controls semantic element.
  * @slot - Suggestion items (recommended: `<swc-suggestion-item>`)
  */
 export class SuggestionGroup extends SpectrumElement {
-  /** Optional heading shown above suggestion items. */
-  @property({ type: String })
-  public heading = '';
-
-  /** Accessible label used when no visible heading is provided. */
+  /** Accessible label override for the group name (takes precedence over heading slot text). */
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel = '';
+
+  @queryAssignedElements({ slot: 'heading', flatten: true })
+  private _assignedHeadingElements!: HTMLElement[];
+
+  private readonly _headingId = uniqueId('swc-suggestion-group-heading');
 
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
-  private _renderHeading(text: string): TemplateResult {
-    return html`
-      <h3 id="swc-suggestion-group-heading" class="swc-SuggestionGroup-title">
-        ${text}
-      </h3>
-    `;
+  private _getHeadingElement(): HTMLElement | null {
+    const headingElement = this._assignedHeadingElements?.[0] ?? null;
+    if (!headingElement) {
+      return null;
+    }
+    return headingElement;
+  }
+
+  private _handleHeadingSlotChange(event: Event): void {
+    const slot = event.target as HTMLSlotElement;
+    const headingElement = slot.assignedElements({ flatten: true })[0] as
+      | HTMLElement
+      | undefined;
+    if (headingElement && !headingElement.id) {
+      headingElement.id = this._headingId;
+    }
+    this.requestUpdate();
   }
 
   protected override render(): TemplateResult {
-    const heading = this.heading.trim();
-    const hasHeading = heading.length > 0;
+    const headingElement = this._getHeadingElement();
+    const hasHeading = headingElement !== null;
+    const accessibleLabel = this.accessibleLabel.trim();
+    const hasAccessibleLabel = accessibleLabel.length > 0;
 
-    const fallbackLabel =
-      this.accessibleLabel.trim().length > 0
-        ? this.accessibleLabel.trim()
-        : 'Follow-up suggestions';
+    const computedAriaLabel = hasAccessibleLabel ? accessibleLabel : undefined;
+    const computedAriaLabelledby =
+      hasAccessibleLabel || !hasHeading ? undefined : headingElement?.id;
 
     return html`
       <div class="swc-SuggestionGroup">
-        ${hasHeading ? this._renderHeading(heading) : ''}
+        <div class="swc-SuggestionGroup-title" ?hidden=${!hasHeading}>
+          <slot
+            name="heading"
+            @slotchange=${this._handleHeadingSlotChange}
+          ></slot>
+        </div>
         <div
           class="swc-SuggestionGroup-items"
           role="group"
-          aria-label=${ifDefined(hasHeading ? undefined : fallbackLabel)}
-          aria-labelledby=${ifDefined(
-            hasHeading ? 'swc-suggestion-group-heading' : undefined
-          )}
+          aria-label=${ifDefined(computedAriaLabel)}
+          aria-labelledby=${ifDefined(computedAriaLabelledby)}
         >
           <slot></slot>
         </div>
