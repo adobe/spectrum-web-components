@@ -30,7 +30,7 @@
   line-height: token("line-height-font-size-200");
   color: token("neutral-content-color-default");
   background: token("gray-100");
-  border: none;
+  border: 1px solid transparent;
   border-radius: token("corner-radius-extra-large-default");
   cursor: pointer;
 }

@@ -42,6 +42,7 @@
   gap: token("spacing-300");
   padding: token("spacing-300");
   background: token("background-layer-2-color");
+  border: 1px solid transparent;
   border-radius: token("corner-radius-800");
   box-shadow: token("drop-shadow-emphasized-default-x") token("drop-shadow-emphasized-default-y") token("drop-shadow-emphasized-default-blur") token("drop-shadow-emphasized-default-color");
   overflow: hidden;
@@ -191,7 +192,7 @@
   padding: 0;
   color: token("gray-800");
   background: transparent;
-  border: none;
+  border: 1px solid transparent;
   border-radius: token("corner-radius-500");
   cursor: pointer;
 }
@@ -223,7 +224,7 @@
   padding: 0;
   color: token("gray-25");
   background: token("neutral-background-color-default");
-  border: none;
+  border: 1px solid transparent;
   border-radius: token("corner-radius-full");
   cursor: pointer;
   transition: background token("animation-duration-100") ease;
@@ -238,7 +239,7 @@
   padding: 0;
   color: token("gray-25");
   background: token("gray-900");
-  border: none;
+  border: 1px solid transparent;
   border-radius: token("corner-radius-full");
   cursor: pointer;
   transition: background token("animation-duration-100") ease;

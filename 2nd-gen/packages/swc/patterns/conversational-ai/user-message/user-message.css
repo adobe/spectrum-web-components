@@ -35,6 +35,7 @@
   line-height: token("line-height-200");
   color: token("gray-800");
   background: token("gray-50");
+  border: 1px solid transparent;
   border-radius: token("corner-radius-large-default");
 }
 

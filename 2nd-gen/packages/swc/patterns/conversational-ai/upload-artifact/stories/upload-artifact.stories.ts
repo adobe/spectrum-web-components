@@ -50,14 +50,30 @@ const meta: Meta = {
 
 export default meta;
 
+const playgroundCardThumbnail =
+  '<div slot="thumbnail" role="img" aria-label="File thumbnail"></div>';
+const playgroundMediaThumbnail =
+  '<div slot="thumbnail" role="img" aria-label="Campaign preview"></div>';
+
 export const Playground: Story = {
   args: {
     type: 'card',
     dismissible: false,
-    'thumbnail-slot':
-      '<div slot="thumbnail" role="img" aria-label="File thumbnail"></div>',
     'title-slot': '<span slot="title">Hilton commercial assets</span>',
     'subtitle-slot': '<span slot="subtitle">2026</span>',
+  },
+  render: (args) => {
+    const isMedia = args.type === 'media';
+    return html`
+      <div>
+        ${template({
+          ...args,
+          'thumbnail-slot': isMedia
+            ? playgroundMediaThumbnail
+            : playgroundCardThumbnail,
+        })}
+      </div>
+    `;
   },
   tags: ['autodocs', 'dev'],
 };
@@ -91,7 +107,7 @@ export const Card: Story = {
 };
 
 /**
- * Media type uses a larger preview region without title or subtitle text.
+ * Media type uses a larger preview region; optional title and subtitle appear below the preview when provided.
  */
 export const Media: Story = {
   render: () => html`
@@ -99,10 +115,11 @@ export const Media: Story = {
       <swc-upload-artifact type="media" dismissible>
         <div
           slot="thumbnail"
-          style="inline-size:100%;block-size:196px;background:linear-gradient(135deg,#a78bfa,#f472b6);"
           role="img"
           aria-label="Campaign preview"
         ></div>
+        <span slot="title">Hilton commercial assets</span>
+        <span slot="subtitle">2026</span>
       </swc-upload-artifact>
     </div>
   `,
