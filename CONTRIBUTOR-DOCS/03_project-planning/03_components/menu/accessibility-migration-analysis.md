@@ -51,7 +51,7 @@
 - `swc-menu` follows the [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/): a **trigger** opens a layer that holds the list of actions. The **menu slot** accepts `swc-menu-item`, `swc-menu-group`, and `swc-menu-separator` only.
 - The `role="menu"` node lives in **shadow DOM** inside the component. It is not on the `<swc-menu>` custom element.
 - Do **not** nest another `swc-menu` or `swc-action-menu` in the menu slot. Nested menus use `swc-menu-item` and its `submenu` slot ([menu item doc](../menu-item/accessibility-migration-analysis.md#what-swc-menu-item-is-2nd-gen)).
-- Mobile tray and checkbox/radio style rows are out of scope for now ([Menu — Migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current)).
+- Mobile tray and checkbox/radio style rows are out of scope for now ([Menu — Migration scope](#migration-scope-current)).
 - **Target:** [WCAG 2.2](https://www.w3.org/TR/WCAG22/) Level AA. Menu items that work like checkboxes or radios are out of scope for now ([Migration scope](#migration-scope-current)).
 
 This page states accessibility expectations for 2nd-gen `swc-menu`. `swc-menu` and `swc-action-menu` are built the same way: trigger, `swc-popover` (or similar) to place the open surface, and the real menu list in shadow DOM. In 1st-gen, `sp-menu` was often just the list; 2nd-gen puts the full pattern in one place, like [React Spectrum Menu](https://react-spectrum.adobe.com/Menu). Pick `swc-menu` or `swc-action-menu` for product defaults (general menu vs. “more” / actions) ([What `swc-menu` is (2nd-gen)](#what-swc-menu-is-2nd-gen)).
