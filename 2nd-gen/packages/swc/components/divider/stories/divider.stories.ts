@@ -314,11 +314,11 @@ LayoutOrientation.storyName = 'Layout orientation';
  *
  * ### Best practices
  *
- * - Place dividers between complete content sections (heading + body) to create clear visual separation
- * - Use dividers to create meaningful visual separation, not just decorative lines
+ * - Place dividers between complete content sections, not between a heading and its associated body text
+ * - Use dividers purposefully — they should reinforce existing content groupings, not substitute for clear heading structure
  * - Use dividers sparingly; excessive use can diminish their visual impact
  * - Ensure sufficient color contrast when using `static-color` variants on colored backgrounds
- * - Consider using headings or other semantic elements for screen reader users when dividers mark major content transitions
+ * - Do not rely on dividers alone to communicate section boundaries to screen reader users; heading structure and landmark regions carry that responsibility
  */
 export const Accessibility: Story = {
   render: (args) => html`
