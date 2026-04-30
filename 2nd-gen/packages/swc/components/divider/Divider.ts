@@ -20,7 +20,6 @@ import styles from './divider.css';
 
 /**
  * @element swc-divider
- * @status unsupported
  * @since 0.0.1
  *
  * @cssprop --swc-divider-background-color - Background color of the divider.

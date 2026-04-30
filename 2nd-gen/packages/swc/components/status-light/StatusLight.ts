@@ -28,7 +28,6 @@ import styles from './status-light.css';
  * A status light is a great way to convey semantic meaning and the condition of an entity, such as statuses and categories. It provides visual indicators through colored dots accompanied by descriptive text.
  *
  * @element swc-status-light
- * @status unsupported
  * @since 0.0.1
  *
  * @property {string} variant - Semantic or non-semantic color variant for the status dot.
