@@ -24,7 +24,8 @@ import styles from './suggestion-group.css';
  * Groups follow-up suggestions shown below a system response.
  *
  * Provide heading content in `slot="heading"` and control semantics
- * (for example `h2`, `h3`, or `p`) from the consuming context.
+ * (for example `h2`, `h3`, or `p`) from the consuming context. The heading
+ * slot is required.
  *
  * Add one or more `<swc-suggestion-item>` elements to the default slot.
  *
@@ -33,7 +34,10 @@ import styles from './suggestion-group.css';
  * @slot - Suggestion items (recommended: `<swc-suggestion-item>`)
  */
 export class SuggestionGroup extends SpectrumElement {
-  /** Accessible label override for the group name (takes precedence over heading slot text). */
+  /**
+   * Accessible name override for the `role="group"` region. When set, it takes
+   * precedence over `aria-labelledby` from the heading slot.
+   */
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel = '';
 

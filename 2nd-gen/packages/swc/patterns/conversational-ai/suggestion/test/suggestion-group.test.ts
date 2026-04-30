@@ -55,7 +55,9 @@ export const OverviewTest: Story = {
         '.swc-SuggestionGroup-title'
       );
       const group = el.shadowRoot?.querySelector('.swc-SuggestionGroup-items');
-      const headingSlot = heading?.querySelector('slot[name="heading"]');
+      const headingSlot = heading?.querySelector<HTMLSlotElement>(
+        'slot[name="heading"]'
+      );
       const headingElements =
         headingSlot?.assignedElements({ flatten: true }) ?? [];
       const firstHeading = headingElements[0] as HTMLElement | undefined;
@@ -79,33 +81,10 @@ export const OverviewTest: Story = {
     );
 
     await step(
-      'without heading slot the group has no computed accessible name',
+      'accessible-label overrides the accessible name while heading stays visible',
       async () => {
         el.innerHTML = `
-          <swc-suggestion-item>Create a slide deck from this</swc-suggestion-item>
-          <swc-suggestion-item>Summarize in 3 bullet points</swc-suggestion-item>
-          <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
-        `;
-        await el.updateComplete;
-        await Promise.resolve();
-        await el.updateComplete;
-
-        const heading = el.shadowRoot?.querySelector(
-          '.swc-SuggestionGroup-title'
-        );
-        const group = el.shadowRoot?.querySelector(
-          '.swc-SuggestionGroup-items'
-        );
-        expect(heading?.hasAttribute('hidden')).toBe(true);
-        expect(group?.hasAttribute('aria-label')).toBe(false);
-        expect(group?.hasAttribute('aria-labelledby')).toBe(false);
-      }
-    );
-
-    await step(
-      'accessible-label can name the group when heading slot is missing',
-      async () => {
-        el.innerHTML = `
+          <h3 slot="heading">What would you like to do next?</h3>
           <swc-suggestion-item>Create a slide deck from this</swc-suggestion-item>
         `;
         el.accessibleLabel = 'Custom suggestions label';
@@ -119,7 +98,7 @@ export const OverviewTest: Story = {
         const group = el.shadowRoot?.querySelector(
           '.swc-SuggestionGroup-items'
         );
-        expect(heading?.hasAttribute('hidden')).toBe(true);
+        expect(heading?.hasAttribute('hidden')).toBe(false);
         expect(group?.getAttribute('aria-label')).toBe(
           'Custom suggestions label'
         );
@@ -144,26 +123,6 @@ export const OverviewTest: Story = {
         'P'
       );
     });
-
-    await step(
-      'accessible-label applies when no heading is present',
-      async () => {
-        el.innerHTML = `
-        <swc-suggestion-item>Create a slide deck from this</swc-suggestion-item>
-      `;
-        el.accessibleLabel = 'Custom suggestions label';
-        await el.updateComplete;
-        await Promise.resolve();
-        await el.updateComplete;
-
-        const group = el.shadowRoot?.querySelector(
-          '.swc-SuggestionGroup-items'
-        );
-        expect(group?.getAttribute('aria-label')).toBe(
-          'Custom suggestions label'
-        );
-      }
-    );
 
     await step(
       'accessible-label takes precedence over heading slot labeling',

@@ -129,12 +129,14 @@ export const EventTest: Story = {
 };
 
 /**
- * Suggestion item is typically nested in `swc-suggestion-group`, which may omit `heading`.
+ * Suggestion item is typically nested in `swc-suggestion-group` with a required
+ * `slot="heading"` title.
  */
-export const NoParentHeadingTest: Story = {
-  name: 'Inside swc-suggestion-group without heading',
+export const InsideSuggestionGroupTest: Story = {
+  name: 'Inside swc-suggestion-group',
   render: () => html`
     <swc-suggestion-group>
+      <h3 slot="heading">What would you like to do next?</h3>
       <swc-suggestion-item>Create a slide deck from this</swc-suggestion-item>
     </swc-suggestion-group>
   `,
@@ -148,14 +150,37 @@ export const NoParentHeadingTest: Story = {
       'swc-suggestion-item'
     );
 
-    await step('parent has no group heading in the shadow tree', async () => {
-      expect(group.heading).toBe('');
-      /* Reflected `heading` may be absent or empty when unset. */
-      expect(group.getAttribute('heading')).toBeFalsy();
-      expect(
-        group.shadowRoot?.querySelector('.swc-SuggestionGroup-title')
-      ).toBeNull();
-    });
+    await step(
+      'parent exposes heading and group labeling in the shadow tree',
+      async () => {
+        await group.updateComplete;
+        await Promise.resolve();
+        await group.updateComplete;
+
+        const titleRegion = group.shadowRoot?.querySelector(
+          '.swc-SuggestionGroup-title'
+        );
+        const itemsRegion = group.shadowRoot?.querySelector(
+          '.swc-SuggestionGroup-items'
+        );
+        const headingSlot = titleRegion?.querySelector<HTMLSlotElement>(
+          'slot[name="heading"]'
+        );
+        const headingElements =
+          headingSlot?.assignedElements({ flatten: true }) ?? [];
+        const firstHeading = headingElements[0] as HTMLElement | undefined;
+
+        expect(titleRegion?.hasAttribute('hidden')).toBe(false);
+        expect(firstHeading?.textContent?.trim()).toBe(
+          'What would you like to do next?'
+        );
+        expect((firstHeading?.id.length ?? 0) > 0).toBe(true);
+        expect(itemsRegion?.hasAttribute('aria-label')).toBe(false);
+        expect(itemsRegion?.getAttribute('aria-labelledby')).toBe(
+          firstHeading?.id
+        );
+      }
+    );
 
     await step('item default slot and click still work', async () => {
       const slot = el.shadowRoot?.querySelector<HTMLSlotElement>('slot');
