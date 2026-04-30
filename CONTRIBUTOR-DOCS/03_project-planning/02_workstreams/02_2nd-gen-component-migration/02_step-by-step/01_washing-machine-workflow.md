@@ -376,6 +376,7 @@ For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheet
 
 - [ ] Stories file exists; component renders correctly in Storybook.
 - [ ] Render template class names match CSS selectors (no stale names from 1st-gen).
+- [ ] Every exposed `--swc-*` custom property has a `@cssprop` JSDoc tag on the primary SWC component class (e.g. `@cssprop --swc-button-height - Block size of the button.`). Storybook surfaces these automatically in the API docs panel.
 - [ ] Follows the [full migration steps](../../../../02_style-guide/01_css/04_spectrum-swc-migration.md).
 - [ ] Adheres to the [component styling guidelines](../../../../02_style-guide/01_css/01_component-css.md).
 - [ ] Stylelint passes for the component’s CSS (no 2nd-gen CSS lint errors).
