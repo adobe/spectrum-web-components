@@ -18,7 +18,6 @@ import { Tab, TabPanel, Tabs } from '@adobe/spectrum-wc/tabs';
 import '@adobe/spectrum-wc/tabs';
 
 import { TABS_DIRECTIONS } from '../../../../core/components/tabs/Tabs.types.js';
-import { DEFAULT_ELEMENT_SIZES } from '../../../../core/mixins/sized-mixin.js';
 import {
   fixture,
   getComponent,
@@ -27,10 +26,10 @@ import {
 } from '../../../utils/test-utils.js';
 import {
   Anatomy,
+  DensityVariants,
   Directions,
   meta,
   Overview,
-  Sizes,
   States,
 } from '../stories/tabs.stories.js';
 
@@ -57,11 +56,10 @@ export const OverviewTest: Story = {
       expect(tabs.direction, 'default direction is horizontal').toBe(
         'horizontal'
       );
-      expect(tabs.size, 'default size is m').toBe('m');
-      expect(tabs.auto, 'default auto is false').toBe(false);
-      expect(tabs.compact, 'default compact is false').toBe(false);
-      expect(tabs.emphasized, 'default emphasized is false').toBe(false);
-      expect(tabs.quiet, 'default quiet is false').toBe(false);
+      expect(tabs.keyboardActivation, 'default keyboard activation').toBe(
+        'manual'
+      );
+      expect(tabs.density, 'default density is regular').toBe('regular');
       expect(tabs.disabled, 'default disabled is false').toBe(false);
     });
 
@@ -73,6 +71,32 @@ export const OverviewTest: Story = {
       const tablist = tabs.shadowRoot?.querySelector('[role="tablist"]');
       expect(tablist, 'tablist element exists in shadow DOM').toBeTruthy();
     });
+
+    await step('shadow root delegates focus to slotted tabs', async () => {
+      expect(
+        tabs.shadowRoot?.delegatesFocus,
+        'delegatesFocus matches migration plan'
+      ).toBe(true);
+    });
+
+    await step(
+      'focusing swc-tabs host moves focus to the selected tab',
+      async () => {
+        const selectedTab = canvasElement.querySelector(
+          `swc-tab[value="${tabs.selected}"]`
+        ) as Tab;
+        expect(selectedTab, 'selected tab exists').toBeTruthy();
+
+        tabs.focus();
+        await tabs.updateComplete;
+
+        const doc = tabs.ownerDocument;
+        expect(
+          doc.activeElement,
+          'host focus delegates to roving tab stop'
+        ).toBe(selectedTab);
+      }
+    );
   },
 };
 
@@ -157,9 +181,9 @@ export const SelectedPropertyTest: Story = {
   },
 };
 
-export const BooleanPropertiesTest: Story = {
+export const DensityAndKeyboardActivationTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" label="Boolean test">
+    <swc-tabs selected="1" label="Density / activation test">
       <swc-tab value="1">Tab 1</swc-tab>
       <swc-tab-panel value="1"><p>Panel</p></swc-tab-panel>
     </swc-tabs>
@@ -167,35 +191,89 @@ export const BooleanPropertiesTest: Story = {
   play: async ({ canvasElement, step }) => {
     const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
 
-    await step('compact reflects to attribute', async () => {
-      tabs.compact = true;
+    await step('density compact reflects to attribute', async () => {
+      tabs.density = 'compact';
       await tabs.updateComplete;
-      expect(tabs.hasAttribute('compact'), 'compact attribute set').toBe(true);
+      expect(tabs.getAttribute('density'), 'density attribute').toBe('compact');
     });
 
-    await step('emphasized reflects to attribute', async () => {
-      tabs.emphasized = true;
-      await tabs.updateComplete;
-      expect(tabs.hasAttribute('emphasized'), 'emphasized attribute set').toBe(
-        true
-      );
-    });
-
-    await step('quiet reflects to attribute', async () => {
-      tabs.quiet = true;
-      await tabs.updateComplete;
-      expect(tabs.hasAttribute('quiet'), 'quiet attribute set').toBe(true);
-    });
+    await step(
+      'keyboard activation automatic reflects to attribute',
+      async () => {
+        tabs.keyboardActivation = 'automatic';
+        await tabs.updateComplete;
+        expect(
+          tabs.getAttribute('keyboard-activation'),
+          'keyboard-activation attribute'
+        ).toBe('automatic');
+      }
+    );
   },
 };
 
 /**
- * Covers toggling `auto` and `disabled` after mount (review: reactive host
- * properties, not only initial attributes).
+ * Vertical `.tablist` gap must follow `density` (same tokens as horizontal),
+ * not override it with a fixed zero gap.
+ */
+export const VerticalDensityTablistGapTest: Story = {
+  render: () => html`
+    <div>
+      <swc-tabs
+        selected="1"
+        direction="vertical"
+        density="regular"
+        label="Vertical regular"
+      >
+        <swc-tab value="1">A</swc-tab>
+        <swc-tab value="2">B</swc-tab>
+        <swc-tab-panel value="1"><p>P1</p></swc-tab-panel>
+        <swc-tab-panel value="2"><p>P2</p></swc-tab-panel>
+      </swc-tabs>
+      <swc-tabs
+        selected="1"
+        direction="vertical"
+        density="compact"
+        label="Vertical compact"
+      >
+        <swc-tab value="1">A</swc-tab>
+        <swc-tab value="2">B</swc-tab>
+        <swc-tab-panel value="1"><p>P1</p></swc-tab-panel>
+        <swc-tab-panel value="2"><p>P2</p></swc-tab-panel>
+      </swc-tabs>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const groups = await getComponents<Tabs>(canvasElement, 'swc-tabs');
+    expect(groups.length, 'two tab groups').toBe(2);
+
+    await step(
+      'vertical compact tablist gap is less than regular',
+      async () => {
+        const tablistGap = (t: Tabs) => {
+          const list = t.shadowRoot?.querySelector('.tablist') as HTMLElement;
+          expect(list, 'tablist element').toBeTruthy();
+          const raw = getComputedStyle(list).gap;
+          const n = parseFloat(raw);
+          expect(Number.isFinite(n), `gap parses as number: "${raw}"`).toBe(
+            true
+          );
+          return n;
+        };
+
+        const regularGap = tablistGap(groups[0]);
+        const compactGap = tablistGap(groups[1]);
+        expect(compactGap, 'compact gap').toBeLessThan(regularGap);
+      }
+    );
+  },
+};
+
+/**
+ * Covers toggling `keyboard-activation` and `disabled` after mount.
  */
 export const HostAutoDisabledReactiveTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" label="Reactive auto/disabled test">
+    <swc-tabs selected="1" label="Reactive keyboard/disabled test">
       <swc-tab value="1">Tab 1</swc-tab>
       <swc-tab value="2">Tab 2</swc-tab>
       <swc-tab-panel value="1"><p>Panel 1</p></swc-tab-panel>
@@ -210,7 +288,7 @@ export const HostAutoDisabledReactiveTest: Story = {
     await step(
       'manual mode: arrow moves focus without changing selection',
       async () => {
-        expect(tabs.auto, 'starts in manual mode').toBe(false);
+        expect(tabs.keyboardActivation, 'starts in manual mode').toBe('manual');
         tab1.focus();
         tab1.dispatchEvent(
           new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
@@ -221,17 +299,21 @@ export const HostAutoDisabledReactiveTest: Story = {
       }
     );
 
-    await step('enabling auto: arrow then selects focused tab', async () => {
-      tabs.auto = true;
+    await step('automatic mode: arrow then selects focused tab', async () => {
+      tabs.keyboardActivation = 'automatic';
       await tabs.updateComplete;
-      expect(tabs.auto, 'auto property is true').toBe(true);
+      expect(tabs.keyboardActivation, 'keyboard activation is automatic').toBe(
+        'automatic'
+      );
 
       tab1.focus();
       tab1.dispatchEvent(
         new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
       );
       await tabs.updateComplete;
-      expect(tabs.selected, 'selection follows focus in auto mode').toBe('2');
+      expect(tabs.selected, 'selection follows focus in automatic mode').toBe(
+        '2'
+      );
     });
 
     await step(
@@ -739,7 +821,11 @@ export const EnterSpaceActivationTest: Story = {
 
 export const AutoActivationTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" auto label="Auto activation test">
+    <swc-tabs
+      selected="1"
+      keyboard-activation="automatic"
+      label="Automatic activation test"
+    >
       <swc-tab value="1">Tab 1</swc-tab>
       <swc-tab value="2">Tab 2</swc-tab>
       <swc-tab value="3">Tab 3</swc-tab>
@@ -754,13 +840,16 @@ export const AutoActivationTest: Story = {
 
     tab1.focus();
 
-    await step('arrow key immediately selects tab in auto mode', async () => {
-      tab1.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
-      );
-      await tabs.updateComplete;
-      expect(tabs.selected, 'selection follows focus to tab 2').toBe('2');
-    });
+    await step(
+      'arrow key immediately selects tab in automatic mode',
+      async () => {
+        tab1.dispatchEvent(
+          new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
+        );
+        await tabs.updateComplete;
+        expect(tabs.selected, 'selection follows focus to tab 2').toBe('2');
+      }
+    );
   },
 };
 
@@ -990,16 +1079,14 @@ export const SelectionIndicatorTest: Story = {
 // TEST: Variants / States
 // ──────────────────────────────────────────────────────────────
 
-export const SizesTest: Story = {
-  ...Sizes,
+export const DensityVariantsTest: Story = {
+  ...DensityVariants,
   play: async ({ canvasElement, step }) => {
-    await step('renders all valid sizes', async () => {
+    await step('renders regular and compact density examples', async () => {
       const tabGroups = await getComponents<Tabs>(canvasElement, 'swc-tabs');
-      const renderedSizes = tabGroups.map((t) => t.size);
-
-      for (const size of DEFAULT_ELEMENT_SIZES) {
-        expect(renderedSizes, `size "${size}" is rendered`).toContain(size);
-      }
+      const densities = tabGroups.map((t) => t.density);
+      expect(densities, 'includes regular').toContain('regular');
+      expect(densities, 'includes compact').toContain('compact');
     });
   },
 };

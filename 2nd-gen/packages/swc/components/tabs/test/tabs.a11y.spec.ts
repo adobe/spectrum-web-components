@@ -110,23 +110,17 @@ test.describe('Tabs - ARIA Snapshots', () => {
     `);
   });
 
-  test('should have correct accessibility tree for sizes', async ({ page }) => {
-    const root = await gotoStory(page, 'components-tabs--sizes', 'swc-tabs');
-    const tabGroups = root.locator('swc-tabs');
-    const count = await tabGroups.count();
-    expect(count, 'renders all size variants').toBeGreaterThanOrEqual(4);
-  });
-
-  test('should handle visual variants (quiet, compact, emphasized)', async ({
-    page,
-  }) => {
+  test('should render density variants story', async ({ page }) => {
     const root = await gotoStory(
       page,
-      'components-tabs--visual-variants',
+      'components-tabs--density-variants',
       'swc-tabs'
     );
     const tabGroups = root.locator('swc-tabs');
     const count = await tabGroups.count();
-    expect(count, 'renders all visual variants').toBeGreaterThanOrEqual(3);
+    expect(
+      count,
+      'renders regular and compact examples'
+    ).toBeGreaterThanOrEqual(2);
   });
 });

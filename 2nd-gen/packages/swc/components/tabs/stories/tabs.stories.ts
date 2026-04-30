@@ -12,61 +12,17 @@
 
 import { html, type TemplateResult } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
-import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '@adobe/spectrum-wc/tabs';
 
 import {
+  KEYBOARD_ACTIVATIONS,
+  type KeyboardActivation,
+  TAB_DENSITIES,
+  type TabDensity,
   TABS_DIRECTIONS,
   type TabsDirection,
 } from '../../../../core/components/tabs/Tabs.types.js';
-import {
-  DEFAULT_ELEMENT_SIZES,
-  type DefaultElementSize,
-} from '../../../../core/mixins/sized-mixin.js';
-
-// ────────────────
-//    METADATA
-// ────────────────
-
-const { args, argTypes, template } = getStorybookHelpers('swc-tabs');
-
-argTypes.direction = {
-  ...argTypes.direction,
-  control: { type: 'select' },
-  options: [...TABS_DIRECTIONS],
-};
-
-argTypes.size = {
-  ...argTypes.size,
-  control: { type: 'select' },
-  options: [...DEFAULT_ELEMENT_SIZES],
-};
-
-argTypes.quiet = {
-  ...argTypes.quiet,
-  control: { type: 'boolean' },
-};
-
-argTypes.compact = {
-  ...argTypes.compact,
-  control: { type: 'boolean' },
-};
-
-argTypes.emphasized = {
-  ...argTypes.emphasized,
-  control: { type: 'boolean' },
-};
-
-argTypes.auto = {
-  ...argTypes.auto,
-  control: { type: 'boolean' },
-};
-
-argTypes.disabled = {
-  ...argTypes.disabled,
-  control: { type: 'boolean' },
-};
 
 const events = ['change'];
 
@@ -78,24 +34,47 @@ const events = ['change'];
  * `<swc-tab>` (individual tab items), and `<swc-tab-panel>` (panel content).
  * Tabs and panels are matched by their `value` attributes.
  *
- * **Usage note — breaking changes from 1st-gen:**
- *
- * - **Default size:** 2nd-gen defaults to `size="m"`. 1st-gen had no default size (B12).
- * - **Disabled tabs:** In 2nd-gen, disabled tabs remain focusable via arrow keys per WAI-ARIA APG
- *   but cannot be activated. 1st-gen skipped disabled tabs entirely (B9).
- * - **`vertical-right` removed:** `direction="vertical-right"` is no longer supported.
- *   Use `direction="vertical"` instead (B13).
- * - **Label wrapper removed:** The `<label>` element inside `sp-tab` shadow DOM has been
- *   replaced by a `<span>`. Consumers targeting `label` inside tab shadow DOM must update (B8).
- * - **ARIA fix:** `aria-orientation` is now co-located with `role="tablist"` on the same
- *   inner element, fixing a 1st-gen bug where they were on different nodes (B5).
+ * Breaking changes and migration steps from `sp-tabs` live in the
+ * [consumer migration guide](../migration.md), not in Storybook copy.
  */
 export const meta: Meta = {
   title: 'Tabs',
   component: 'swc-tabs',
-  args,
-  argTypes,
-  render: (args) => template(args),
+  argTypes: {
+    selected: { control: 'text' },
+    label: { control: 'text' },
+    direction: {
+      control: { type: 'select' },
+      options: [...TABS_DIRECTIONS],
+    },
+    keyboardActivation: {
+      name: 'keyboard-activation',
+      control: { type: 'select' },
+      options: [...KEYBOARD_ACTIVATIONS],
+    },
+    density: {
+      control: { type: 'select' },
+      options: [...TAB_DENSITIES],
+    },
+    disabled: { control: 'boolean' },
+  },
+  args: {
+    selected: '1',
+    label: 'Product details',
+    direction: 'horizontal',
+    keyboardActivation: 'manual',
+    density: 'regular',
+    disabled: false,
+  },
+  render: (args) =>
+    renderTabGroup({
+      selected: args.selected as string,
+      label: args.label as string,
+      direction: args.direction as TabsDirection,
+      keyboardActivation: args.keyboardActivation as KeyboardActivation,
+      density: args.density as TabDensity,
+      disabled: Boolean(args.disabled),
+    }),
   parameters: {
     actions: { handles: events },
     docs: {
@@ -123,27 +102,17 @@ export default {
 //    HELPERS
 // ────────────────────
 
-const sizeLabels = {
-  s: 'Small',
-  m: 'Medium',
-  l: 'Large',
-  xl: 'Extra-large',
-} as const satisfies Record<DefaultElementSize, string>;
-
 const directionLabels = {
   horizontal: 'Horizontal',
   vertical: 'Vertical',
 } as const satisfies Record<TabsDirection, string>;
 
 interface TabGroupOptions {
-  size?: DefaultElementSize;
   direction?: TabsDirection;
   label?: string;
   selected?: string;
-  quiet?: boolean;
-  compact?: boolean;
-  emphasized?: boolean;
-  auto?: boolean;
+  keyboardActivation?: KeyboardActivation;
+  density?: TabDensity;
   disabled?: boolean;
   tabs?: TemplateResult;
   panels?: TemplateResult;
@@ -168,27 +137,21 @@ const defaultPanels = html`
 `;
 
 const renderTabGroup = ({
-  size = 'm',
   direction = 'horizontal',
   label = 'Product details',
   selected = '1',
-  quiet = false,
-  compact = false,
-  emphasized = false,
-  auto = false,
+  keyboardActivation = 'manual',
+  density = 'regular',
   disabled = false,
   tabs = defaultTabs,
   panels = defaultPanels,
 }: TabGroupOptions = {}) => html`
   <swc-tabs
     selected=${selected}
-    size=${size}
     direction=${direction}
     label=${label}
-    ?quiet=${quiet}
-    ?compact=${compact}
-    ?emphasized=${emphasized}
-    ?auto=${auto}
+    keyboardActivation=${keyboardActivation}
+    density=${density}
     ?disabled=${disabled}
   >
     ${tabs} ${panels}
@@ -200,26 +163,6 @@ const renderTabGroup = ({
 // ────────────────────
 
 export const Playground: Story = {
-  args: {
-    size: 'm',
-    direction: 'horizontal',
-    auto: false,
-    compact: false,
-    disabled: false,
-    emphasized: false,
-    quiet: false,
-  },
-
-  render: (args) =>
-    renderTabGroup({
-      size: args.size,
-      direction: args.direction,
-      auto: args.auto,
-      compact: args.compact,
-      disabled: args.disabled,
-      emphasized: args.emphasized,
-      quiet: args.quiet,
-    }),
   tags: ['autodocs', 'dev'],
 };
 
@@ -265,14 +208,10 @@ export const Overview: Story = {
  * - **label** (on `swc-tabs`): Accessible name for the tablist
  * - **label** (on `swc-tab`): Fallback text when the default slot is empty
  * - **direction**: Layout direction (`horizontal` or `vertical`)
- * - **size**: Typography and spacing size (`s`, `m`, `l`, `xl`)
+ * - **keyboard-activation**: `manual` (default) or `automatic` (selection follows focus)
+ * - **density**: `regular` (default) or `compact` spacing
  *
- * All variations shown below: text-only tabs, icon with label, and
- * icon-only (with `label` attribute for accessible naming).
- *
- * **Breaking change (B8):** In 1st-gen, the default slot content was wrapped
- * in a `<label>` element inside shadow DOM. The `<label>` has been removed
- * in 2nd-gen to avoid conflicting semantics with `role="tab"`.
+ * Examples below: text-only, icon + text, and icon-only tabs.
  */
 export const Anatomy: Story = {
   render: () => html`
@@ -334,31 +273,15 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 /**
- * Tabs come in 4 sizes to fit various contexts:
- *
- * - **Small (s)**: Compact spaces or secondary navigation
- * - **Medium (m)**: Default size for most use cases
- * - **Large (l)**: Prominent or primary navigation
- * - **Extra-large (xl)**: Maximum emphasis
- *
- * **Breaking change (B12):** In 1st-gen, no default size was applied
- * (`SizedMixin` used `noDefaultSize: true`). In 2nd-gen, the default
- * is `size="m"` to align with Spectrum 2.
- *
- * All sizes shown below for comparison.
+ * `density="compact"` reduces spacing between tabs. Default is `regular`.
  */
-export const Sizes: Story = {
+export const DensityVariants: Story = {
   render: () => html`
-    ${DEFAULT_ELEMENT_SIZES.map(
-      (size) => html`
-        <p><strong>${sizeLabels[size]} (${size})</strong></p>
-        ${renderTabGroup({
-          size,
-          label: `${sizeLabels[size]} size example`,
-        })}
-        <br />
-      `
-    )}
+    <p><strong>Regular (default)</strong></p>
+    ${renderTabGroup({ label: 'Regular density' })}
+    <br />
+    <p><strong>Compact</strong></p>
+    ${renderTabGroup({ density: 'compact', label: 'Compact density' })}
   `,
   tags: ['options'],
   parameters: {
@@ -375,9 +298,8 @@ export const Sizes: Story = {
  *   and Arrow Down navigate between tabs. Sets `aria-orientation="vertical"`
  *   on the tablist element.
  *
- * **Breaking change (B13):** `direction="vertical-right"` was supported
- * in 1st-gen but has been removed in 2nd-gen. It was an SWC addition not
- * present in Spectrum CSS. Use `direction="vertical"` instead.
+ * `direction="vertical-right"` from 1st-gen is not supported; use
+ * `direction="vertical"`. See the [migration guide](../migration.md).
  *
  * Both directions shown below for comparison.
  */
@@ -400,41 +322,6 @@ export const Directions: Story = {
   },
 };
 
-/**
- * Visual variant options modify the tab list appearance:
- *
- * - **Quiet**: Removes the divider line for a subtler appearance
- * - **Compact**: Reduces spacing between tabs
- * - **Emphasized**: Applies a visually emphasized style to the selection indicator
- * - **Quiet + Compact**: The recommended combination for secondary navigation in tight spaces
- *
- * These variants can be combined. Use quiet together with compact for best results;
- * compact alone is not a recommended pattern.
- */
-export const VisualVariants: Story = {
-  render: () => html`
-    <p><strong>Quiet</strong></p>
-    ${renderTabGroup({ quiet: true, label: 'Quiet tabs' })}
-    <br />
-    <p><strong>Compact</strong></p>
-    ${renderTabGroup({ compact: true, label: 'Compact tabs' })}
-    <br />
-    <p><strong>Emphasized</strong></p>
-    ${renderTabGroup({ emphasized: true, label: 'Emphasized tabs' })}
-    <br />
-    <p><strong>Quiet + Compact</strong></p>
-    ${renderTabGroup({
-      quiet: true,
-      compact: true,
-      label: 'Quiet compact tabs',
-    })}
-  `,
-  tags: ['options'],
-  parameters: {
-    'section-order': 3,
-  },
-};
-
 // ──────────────────────────
 //    STATES STORIES
 // ──────────────────────────
@@ -451,13 +338,8 @@ export const VisualVariants: Story = {
  * - **Disabled (container)**: The entire tab list is disabled. All interaction
  *   is suppressed and `aria-disabled="true"` is set on the tablist element.
  *
- * **Breaking change (B9):** In 1st-gen, disabled tabs were skipped entirely
- * by keyboard navigation (`RovingTabindexController` filtered them out). In
- * 2nd-gen, disabled tabs are focusable via arrow keys but not activatable
- * (Enter, Space, and click are guarded). This is a behavioral reversal —
- * disabled tabs change from invisible-to-keyboard to focusable-but-inert.
- *
- * All states shown below for comparison.
+ * Disabled tabs remain focusable via arrow keys but cannot be activated; see
+ * the [migration guide](../migration.md).
  */
 export const States: Story = {
   render: () => html`
@@ -497,32 +379,22 @@ export const States: Story = {
 // ──────────────────────────────
 
 /**
- * ### Activation modes
  *
- * The `auto` property controls how tabs are activated:
+ * `keyboard-activation="manual"` (default): Arrow keys move focus between
+ * tabs without changing the selected tab until Enter or Space.
  *
- * - **Manual (default)**: Arrow keys move focus between tabs without
- *   changing the selected tab. Enter or Space activates the focused tab.
- *   Use manual activation when loading tab content is expensive (e.g.,
- *   network requests).
- * - **Automatic**: Selection follows focus — as the user arrows between
- *   tabs, the selection updates immediately. Use automatic activation
- *   only when tab content can be displayed instantly.
+ * `keyboard-activation="automatic"`: Selection follows focus when arrowing.
  *
  * ### Events
  *
- * - **change**: Fired when the selected tab changes. This event is
- *   cancelable — calling `preventDefault()` reverts the selection.
+ * - **change**: Fired when the selected tab changes. Cancelable via
+ *   `preventDefault()` to revert selection.
  *
  * ```javascript
  * tabs.addEventListener('change', (event) => {
  *   console.log('Selected:', event.target.selected);
- *   // Optionally prevent the change:
- *   // event.preventDefault();
  * });
  * ```
- *
- * Both activation modes shown below for comparison.
  */
 export const ActivationModes: Story = {
   render: () => html`
@@ -540,7 +412,7 @@ export const ActivationModes: Story = {
     <br />
     <p><strong>Automatic activation</strong></p>
     ${renderTabGroup({
-      auto: true,
+      keyboardActivation: 'automatic',
       label: 'Automatic activation',
       panels: html`
         <swc-tab-panel value="1">
@@ -575,7 +447,7 @@ export const ActivationModes: Story = {
  * - <kbd>Home</kbd>: Moves focus to the first tab
  * - <kbd>End</kbd>: Moves focus to the last tab
  * - <kbd>Space</kbd> / <kbd>Enter</kbd>: Activates the focused tab
- *   (manual mode only; in auto mode, tabs activate on focus)
+ *   (manual mode). In automatic activation, tabs activate when focused via arrows.
  *
  * #### ARIA implementation
  *
@@ -584,9 +456,8 @@ export const ActivationModes: Story = {
  * 2. **Labeling**: `aria-label` on the tablist from the `label` property
  * 3. **States**: `aria-selected` on tabs, `aria-disabled` on disabled
  *    tabs and on the tablist when the container is disabled
- * 4. **Orientation**: `aria-orientation="vertical"` set on the same
- *    element as `role="tablist"` when `direction="vertical"` (fixing a
- *    1st-gen bug where they were on different elements, B5)
+ * 4. **Orientation**: `aria-orientation="vertical"` on the same node as
+ *    `role="tablist"` when `direction="vertical"`.
  * 5. **Relationships**: `aria-controls` on tabs and `aria-labelledby`
  *    on panels link each tab to its associated panel
  *
