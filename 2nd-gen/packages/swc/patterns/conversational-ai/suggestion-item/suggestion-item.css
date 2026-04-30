@@ -68,3 +68,9 @@
   padding-inline-end: var(--swc-suggestion-item-label-padding-inline-end, token("spacing-300"));
   text-align: left;
 }
+
+@media (forced-colors: active) {
+  .swc-SuggestionItem:focus-visible {
+    outline-color: CanvasText;
+  }
+}

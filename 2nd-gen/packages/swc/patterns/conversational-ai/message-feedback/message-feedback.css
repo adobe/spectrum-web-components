@@ -62,3 +62,9 @@
 .swc-MessageFeedback-button[aria-pressed="true"]:hover {
   background: token("neutral-background-color-selected-hover");
 }
+
+@media (forced-colors: active) {
+  .swc-MessageFeedback-button:focus-visible {
+    outline-color: CanvasText;
+  }
+}
