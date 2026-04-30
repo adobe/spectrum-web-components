@@ -88,7 +88,10 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: glob.sync(resolve(__dirname, 'components/*/index.ts')).reduce(
+      entry: [
+        ...glob.sync(resolve(__dirname, 'components/*/index.ts')),
+        ...glob.sync(resolve(__dirname, 'patterns/*/*/index.ts')),
+      ].reduce(
         (entries, file) => {
           const name = file
             .replace(resolve(__dirname) + '/', '')

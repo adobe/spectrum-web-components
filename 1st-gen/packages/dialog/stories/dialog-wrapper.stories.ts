@@ -360,6 +360,119 @@ export const longContent = (
 
 longContent.decorators = [isOverlayOpen];
 
+const scrollableDialogBody = html`
+  <p>
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed ac dolor sit
+    amet purus malesuada congue. Donec quis nibh at felis congue commodo. Ut
+    enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit
+    laboriosam, nisi ut aliquid ex ea commodi consequatur? Sed ac dolor sit amet
+    purus malesuada congue. Nam libero tempore, cum soluta nobis est eligendi
+    optio cumque nihil impedit quo minus id quod maxime placeat facere possimus,
+    omnis voluptas assumenda est, omnis dolor repellendus.
+  </p>
+  <p>
+    Curabitur ligula sapien, pulvinar a vestibulum quis, facilisis vel sapien.
+    Fusce nibh. Proin pede metus, vulputate nec, fermentum fringilla, vehicula
+    vitae, justo. Aenean placerat. Aliquam erat volutpat. Et harum quidem rerum
+    facilis est et expedita distinctio. Fusce nibh. Temporibus autem quibusdam
+    et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et
+    voluptates repudiandae sint et molestiae non recusandae.
+  </p>
+  <p>
+    Curabitur vitae diam non enim vestibulum interdum. Sed elit dui,
+    pellentesque a, faucibus vel, interdum nec, diam. Praesent vitae arcu tempor
+    neque lacinia pretium. Ut tempus purus at lorem. Phasellus rhoncus.
+    Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus
+    saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.
+  </p>
+  <p>
+    Integer vulputate sem a nibh rutrum consequat. Class aptent taciti sociosqu
+    ad litora torquent per conubia nostra, per inceptos hymenaeos. Duis
+    bibendum, lectus ut viverra rhoncus, dolor nunc faucibus libero, eget
+    facilisis enim ipsum id lacus. Aliquam erat volutpat. Aenean id metus id
+    velit ullamcorper pulvinar. Morbi scelerisque luctus velit. Aliquam erat
+    volutpat. Fusce dui leo, imperdiet in, aliquam sit amet, feugiat eu, orci.
+  </p>
+  <p>
+    Sed elit dui, pellentesque a, faucibus vel, interdum nec, diam. Praesent
+    vitae arcu tempor neque lacinia pretium. Etiam dictum tincidunt diam. Et
+    harum quidem rerum facilis est et expedita distinctio. Duis ante orci,
+    molestie vitae vehicula venenatis, tincidunt ac pede. Integer lacinia.
+    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+    deserunt mollit anim id est laborum.
+  </p>
+  <p>
+    <a href="#example">an inline link near the bottom of the dialog</a>
+  </p>
+  <p>
+    Mauris tincidunt sem sed arcu. Praesent in mauris eu tortor porttitor
+    accumsan. Aenean id metus id velit ullamcorper pulvinar. Donec iaculis
+    gravida nulla. Duis bibendum, lectus ut viverra rhoncus, dolor nunc faucibus
+    libero, eget facilisis enim ipsum id lacus.
+  </p>
+`;
+
+export const receivesFocusComparison = (
+  args: StoryArgs = {}
+): TemplateResult => {
+  return html`
+    <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+      <overlay-trigger
+        type="modal"
+        @close=${handleClose(args)}
+        triggered-by="click"
+        .receivesFocus=${'false'}
+      >
+        <sp-button slot="trigger" variant="primary">
+          Open with receives-focus="false"
+        </sp-button>
+        <sp-dialog-wrapper
+          slot="click-content"
+          headline="receives-focus is false"
+          dismissable
+          underlay
+          size="s"
+        >
+          <p>
+            The dialog opens scrolled to the top. Focus stays on the trigger
+            button — the inline link further down is NOT auto-focused, so the
+            dialog body does not auto-scroll to reveal it.
+          </p>
+          ${scrollableDialogBody}
+        </sp-dialog-wrapper>
+      </overlay-trigger>
+      <overlay-trigger
+        type="modal"
+        @close=${handleClose(args)}
+        triggered-by="click"
+        .receivesFocus=${'true'}
+      >
+        <sp-button slot="trigger" variant="primary">
+          Open with receives-focus="true"
+        </sp-button>
+        <sp-dialog-wrapper
+          slot="click-content"
+          headline="receives-focus is true"
+          dismissable
+          underlay
+          size="s"
+        >
+          <p>
+            When this dialog opens, focus moves to the first focusable element —
+            the link further down — so the body scrolls to reveal it. This is
+            the default auto-focus behavior.
+          </p>
+          ${scrollableDialogBody}
+        </sp-dialog-wrapper>
+      </overlay-trigger>
+    </div>
+  `;
+};
+
+receivesFocusComparison.swc_vrt = {
+  skip: true,
+};
+
 export const longHeading = (
   args: StoryArgs = {},
   context: { viewMode?: string } = {}
