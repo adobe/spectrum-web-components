@@ -154,7 +154,7 @@ function buildModifier(attrName, value) {
 }
 
 /**
- * Transforms `slot[name="X"]::slotted(*)` occurrences to `.block__X`.
+ * Transforms `slot[name="X"]::slotted(*)` occurrences to `.block-X`.
  *
  * @param {string} fragment
  * @param {string} block
@@ -163,7 +163,7 @@ function buildModifier(attrName, value) {
 function transformSlotted(fragment, block) {
   return fragment.replace(
     /slot\[name="([^"]+)"\]::slotted\([^)]*\)/g,
-    (_, name) => `.${block}__${name}`
+    (_, name) => `.${block}-${name}`
   );
 }
 
@@ -176,7 +176,7 @@ function transformSlotted(fragment, block) {
  *   :host([attr="value"])        → .block--value   (value becomes modifier)
  *   :host([boolAttr])            → .block--boolAttr (attr name becomes modifier)
  *   :host([a="x"][b="y"])        → .block--x.block--y (compound, same element)
- *   :host([a="x"]) .block__el   → .block--x .block__el
+ *   :host([a="x"]) .block__el   → .block--x .block-el
  *   slot[name="X"]::slotted(*)  → .block__X
  *
  * @param {string} selector

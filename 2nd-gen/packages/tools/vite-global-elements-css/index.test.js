@@ -58,25 +58,25 @@ describe('transformSelector — basic', () => {
     ).toBe('.swc-Button--primary.swc-Button--outline');
   });
 
-  it(':host .block__el → .block .block__el', () => {
-    expect(transformSelector(':host .swc-Button__label', 'swc-Button')).toBe(
-      '.swc-Button .swc-Button__label'
+  it(':host .block-el → .block .block-el', () => {
+    expect(transformSelector(':host .swc-Button-label', 'swc-Button')).toBe(
+      '.swc-Button .swc-Button-label'
     );
   });
 
-  it(':host([attr="value"]) .block__el → .block--value .block__el', () => {
+  it(':host([attr="value"]) .block-el → .block--value .block-el', () => {
     expect(
       transformSelector(
-        ':host([variant="primary"]) .swc-Button__label',
+        ':host([variant="primary"]) .swc-Button-label',
         'swc-Button'
       )
-    ).toBe('.swc-Button--primary .swc-Button__label');
+    ).toBe('.swc-Button--primary .swc-Button-label');
   });
 
-  it('slot[name="X"]::slotted(*) → .block__X', () => {
+  it('slot[name="X"]::slotted(*) → .block-X', () => {
     expect(
       transformSelector('slot[name="icon"]::slotted(*)', 'swc-Button')
-    ).toBe('.swc-Button__icon');
+    ).toBe('.swc-Button-icon');
   });
 
   it('handles comma-separated selectors', () => {
@@ -89,8 +89,8 @@ describe('transformSelector — basic', () => {
   });
 
   it('passes through non-host, non-slotted selectors unchanged', () => {
-    expect(transformSelector('.swc-Button__label', 'swc-Button')).toBe(
-      '.swc-Button__label'
+    expect(transformSelector('.swc-Button-label', 'swc-Button')).toBe(
+      '.swc-Button-label'
     );
   });
 });
@@ -364,7 +364,7 @@ describe('deriveCSS — selector transformation', () => {
       'slot[name="icon"]::slotted(*) { color: inherit; }',
       'swc-Button'
     );
-    expect(result).toContain('.swc-Button__icon');
+    expect(result).toContain('.swc-Button-icon');
     expect(result).not.toContain('::slotted');
   });
 

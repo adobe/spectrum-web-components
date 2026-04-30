@@ -21,8 +21,8 @@ Transformations are derived from BEM conventions with no per-component mapping r
 | `:host([variant="primary"])`                         | `.swc-[Component]--primary`                                                         |
 | `:host([truncate])`                                  | `.swc-[Component]--truncate` (boolean attr → attr name as modifier)                 |
 | `:host([variant="secondary"][fill-style="outline"])` | `.swc-[Component]--secondary.swc-[Component]--outline` (compound → chained classes) |
-| `:host([variant="primary"]) .swc-[Component]__label` | `.swc-[Component]--primary .swc-[Component]__label`                                 |
-| `slot[name="icon"]::slotted(*)`                      | `.swc-[Component]__icon` (slot name → BEM element)                                  |
+| `:host([variant="primary"]) .swc-[Component]-label`  | `.swc-[Component]--primary .swc-[Component]-label`                                  |
+| `slot[name="icon"]::slotted(*)`                      | `.swc-[Component]-icon` (slot name → BEM element)                                   |
 
 The modifier value comes from:
 
@@ -89,7 +89,7 @@ Fences work at any nesting depth. A fence inside an `@media` block strips only t
   }
 
   /* @global-exclude: pending spinner override requires JS runtime */
-  .swc-Button--pendingActive .swc-Button__pendingSpinner-fill {
+  .swc-Button--pendingActive .swc-Button-pendingSpinner-fill {
     animation-duration: 15s;
   }
   /* @global-exclude-end */

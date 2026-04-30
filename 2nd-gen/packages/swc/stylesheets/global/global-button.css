@@ -24,7 +24,7 @@
   gap: var(--swc-button-gap, token("text-to-visual-100"));
   align-items: center;
   max-inline-size: var(--swc-button-max-inline-size, inherit);
-  min-block-size: var(--_swc-button-height);
+  min-block-size: var(--_swc-button-min-block-size);
   padding-block: calc(var(--swc-button-padding-vertical, token("component-padding-vertical-100")) - var(--_swc-button-border-width));
   padding-inline: calc(var(--swc-button-edge-to-text, token("component-pill-edge-to-text-100")) - var(--_swc-button-border-width));
   margin: 0;
@@ -39,7 +39,7 @@
   border-color: var(--swc-button-border-color-default, transparent);
   border-style: solid;
   border-width: var(--_swc-button-border-width);
-  border-radius: var(--swc-button-border-radius, calc(var(--_swc-button-height) / 2));
+  border-radius: var(--swc-button-border-radius, calc(var(--_swc-button-min-block-size) / 2));
   overflow: visible;
   cursor: pointer;
   user-select: none;
@@ -48,7 +48,7 @@
   transition-property: outline, border-color, color, background;
 
   --_swc-button-border-width: token("border-width-200");
-  --_swc-button-height: var(--swc-button-height, token("component-height-100"));
+  --_swc-button-min-block-size: var(--swc-button-min-block-size, token("component-height-100"));
 }
 
 .swc-Button:disabled {
@@ -77,19 +77,19 @@
   color: var(--swc-button-content-color-down, token("gray-25"));
   background-color: var(--swc-button-background-color-down, token("neutral-background-color-down"));
   border-color: var(--swc-button-border-color-down, transparent);
-  transform: translateZ(token("component-size-difference-down"));
+  scale: 0.95;
 }
 
-.swc-Button__label {
+.swc-Button-label {
   text-align: center;
 }
 
-.swc-Button--hasIcon .swc-Button__label {
+.swc-Button--hasIcon .swc-Button-label {
   text-align: start;
 }
 
-.swc-Button__icon,
-.swc-Button__pendingSpinner {
+.swc-Button-icon,
+.swc-Button-pendingSpinner {
   --_swc-button-icon-size: var(--swc-button-icon-size, token("workflow-icon-size-100"));
   --_swc-button-icon-block-size: var(--swc-button-icon-block-size, var(--_swc-button-icon-size));
 
@@ -101,13 +101,13 @@
   margin-inline-start: calc(var(--swc-button-edge-to-visual, token("component-pill-edge-to-visual-100")) - var(--swc-button-edge-to-text, token("component-pill-edge-to-text-100")));
 }
 
-.swc-Button__icon {
+.swc-Button-icon {
   color: inherit;
   fill: currentcolor;
 }
 
 .swc-Button--sizeS {
-  --swc-button-height: token("component-height-75");
+  --swc-button-min-block-size: token("component-height-75");
   --swc-button-font-size: token("font-size-75");
   --swc-button-gap: token("text-to-visual-75");
   --swc-button-edge-to-text: token("component-pill-edge-to-text-75");
@@ -118,7 +118,7 @@
 }
 
 .swc-Button--sizeL {
-  --swc-button-height: token("component-height-200");
+  --swc-button-min-block-size: token("component-height-200");
   --swc-button-font-size: token("font-size-200");
   --swc-button-gap: token("text-to-visual-200");
   --swc-button-edge-to-text: token("component-pill-edge-to-text-200");
@@ -129,7 +129,7 @@
 }
 
 .swc-Button--sizeXl {
-  --swc-button-height: token("component-height-300");
+  --swc-button-min-block-size: token("component-height-300");
   --swc-button-font-size: token("font-size-300");
   --swc-button-gap: token("text-to-visual-300");
   --swc-button-edge-to-text: token("component-pill-edge-to-text-300");
@@ -319,13 +319,13 @@
   padding-inline: calc(var(--swc-button-edge-to-visual-only, token("component-pill-edge-to-visual-only-100")) - var(--_swc-button-border-width));
 }
 
-.swc-Button--iconOnly .swc-Button__icon {
+.swc-Button--iconOnly .swc-Button-icon {
   --swc-button-edge-to-visual: 0;
 
   align-self: center;
 }
 
-.swc-Button--truncate .swc-Button__label {
+.swc-Button--truncate .swc-Button-label {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
