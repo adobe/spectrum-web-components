@@ -44,7 +44,10 @@ export const firstGenA11yProject: PlaywrightTestConfig['projects'][number] = {
 export const secondGenA11yProject: PlaywrightTestConfig['projects'][number] = {
   name: '2nd-gen',
   testDir: './2nd-gen/',
-  testMatch: '**/packages/swc/components/*/test/**/*.a11y.spec.ts',
+  testMatch: [
+    '**/packages/swc/components/*/test/**/*.a11y.spec.ts',
+    '**/packages/swc/patterns/conversational-ai/*/test/**/*.a11y.spec.ts',
+  ],
   use: {
     ...devices['Desktop Chrome'],
     baseURL: 'http://localhost:6006',

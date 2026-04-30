@@ -52,7 +52,7 @@ This doc explains how **`swc-progress-bar`** should work for **accessibility**. 
 
 ### What it is not
 
-- A **meter** showing a scalar measurement (for example disk usage)—see [Meter migration roadmap](../meter/rendering-and-styling-migration-analysis.md).
+- A **meter** showing a scalar measurement (for example disk usage)—see [Meter accessibility migration analysis](../meter/accessibility-migration-analysis.md) and [Meter migration roadmap](../meter/rendering-and-styling-migration-analysis.md).
 - The **small spinner** inside a **button** or **field** pending state—use an **icon** pattern there, not a full progress bar.
 
 ### Related

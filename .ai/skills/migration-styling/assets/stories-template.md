@@ -13,7 +13,7 @@ A minimal `[component].stories.ts` file for visual verification of 2nd-gen CSS d
 
 ## Decisions to make before writing
 
-**From the component's types file** (`Button.types.ts`), identify which constant arrays exist:
+**From the component's types file** (`[Component].types.ts`), identify which constant arrays exist:
 
 - `[COMPONENT]_VALID_SIZES` → add a `Sizes` story and a `sizeLabels` helper
 - `[COMPONENT]_VARIANTS` → add a `Variants` story and a `variantLabels` helper; if variants split into semantic/non-semantic, add two stories
@@ -80,11 +80,6 @@ argTypes.size = {
   options: [COMPONENT]_VALID_SIZES,
 };
 
-// Set defaults that match the most common real-world usage.
-args['default-slot'] = '[Component]';
-args.variant = '[first-variant]';
-args.size = 'm';
-
 /**
  * [One or two sentences describing what the component does and when to use it.
  * Keep this brief — detailed usage guidance belongs in Phase 7 docs.]
@@ -96,6 +91,9 @@ export const meta: Meta = {
     docs: {
       subtitle: `[Plain-text one-liner displayed as the subtitle — no links, no markdown.]`,
     },
+    // design: { type: 'figma', url: 'https://www.figma.com/...' },
+    // stackblitz: { url: 'https://stackblitz.com/...' },
+    // flexLayout: true, // set here to apply to all stories; use 'row-wrap' if items should wrap
   },
   args,
   argTypes,
@@ -122,10 +120,23 @@ const sizeLabels = {
   xl: 'Extra-large',
 } as const satisfies Record<[Component]Size, string>;
 
+// If variants split into semantic and non-semantic groups, use two maps and combine:
 const variantLabels = {
   // [first-variant]: '[Label]',
   // …one entry per variant
 } as const satisfies Record<[Component]Variant, string>;
+
+// Example split pattern (delete if not applicable):
+// const semanticLabels = {
+//   positive: 'Approved', informative: 'Active', neutral: 'Archived',
+//   notice: 'Pending', negative: 'Rejected',
+// } as const satisfies Record<[Component]SemanticVariant, string>;
+//
+// const nonSemanticLabels = {
+//   indigo: 'Engineering', magenta: 'Design', // …
+// } as const satisfies Record<[Component]ColorVariant, string>;
+//
+// const allVariantLabels = { ...semanticLabels, ...nonSemanticLabels };
 
 // ────────────────────
 //    AUTODOCS STORY
@@ -165,7 +176,6 @@ export const Anatomy: Story = {
     ${/* Add or remove combinations to match this component's actual slots */}
   `,
   tags: ['anatomy'],
-  parameters: { flexLayout: true },
   args: {
     variant: '[first-variant]',
     size: 'm',
@@ -185,7 +195,7 @@ export const Sizes: Story = {
       template({ ...args, size, 'default-slot': sizeLabels[size] })
     )}
   `,
-  parameters: { flexLayout: true, 'section-order': 1 },
+  parameters: { 'section-order': 1 },
   tags: ['options'],
 };
 
@@ -195,9 +205,10 @@ export const Variants: Story = {
       template({ ...args, variant, 'default-slot': variantLabels[variant] })
     )}
   `,
-  parameters: { flexLayout: true, 'section-order': 2 },
+  parameters: { 'section-order': 2 },
   tags: ['options'],
 };
+Variants.storyName = 'Variants'; // rename if PascalCase doesn't read as sentence case (e.g. 'Semantic variants', 'Non-semantic variants')
 
 // Add additional Options stories here (Outline, StaticColors, etc.)
 // For StaticColors, use: tags: ['options', '!test'] and parameters: { staticColorsDemo: true }
@@ -212,7 +223,6 @@ export const States: Story = {
     ${template({ ...args, disabled: true, 'default-slot': 'Disabled' })}
     ${/* Add pending, selected, invalid, or other states as applicable */}
   `,
-  parameters: { flexLayout: true },
   tags: ['states'],
 };
 
@@ -220,14 +230,24 @@ export const States: Story = {
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-// Add stories for properties that change rendering in non-obvious ways
-// (icon-only, truncate, text-wrapping, etc.). Prefer template() over raw html``.
+// Add one story per behavior that changes rendering in a non-obvious way
+// (text wrapping, truncation, icon-only layout, etc.).
+// Prefer template({ ...args, prop: value }) over raw html`` where possible.
+
+// Example — text wrapping (common for text-bearing components):
+// export const TextWrapping: Story = {
+//   render: (args) => html`
+//     ${template({ ...args, 'default-slot': 'A label long enough to demonstrate wrapping behavior', style: 'max-inline-size: 120px' })}
+//   `,
+//   tags: ['behaviors'],
+// };
+// TextWrapping.storyName = 'Text wrapping';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-// TODO: will complete in separate accessibility phase
+// TODO: will complete in separate accessibility pass of phase 5
 ```
 
 ## Checklist before moving to CSS work

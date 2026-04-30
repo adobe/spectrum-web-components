@@ -12,6 +12,38 @@
 
 import type { Locator, Page } from '@playwright/test';
 
+const TRANSIENT_RETRY_COUNT = 3;
+
+function isTransientNavigationError(error: unknown): boolean {
+  const message = error instanceof Error ? error.message : String(error);
+  return (
+    message.includes('Execution context was destroyed') ||
+    message.includes('Target page, context or browser has been closed')
+  );
+}
+
+async function waitForStoryReadyWithRetries(
+  page: Page,
+  callback: () => Promise<Locator>
+): Promise<Locator> {
+  for (let attempt = 0; attempt < TRANSIENT_RETRY_COUNT; attempt++) {
+    try {
+      return await callback();
+    } catch (error) {
+      const isLastAttempt = attempt === TRANSIENT_RETRY_COUNT - 1;
+      if (!isTransientNavigationError(error) || isLastAttempt) {
+        throw error;
+      }
+
+      // Storybook can trigger a quick iframe reload while optimizing deps.
+      await page.waitForLoadState('domcontentloaded');
+      await page.waitForTimeout(200 * (attempt + 1));
+    }
+  }
+
+  throw new Error('Failed to wait for story readiness after retries.');
+}
+
 /**
  * Wait for a custom element to be fully defined and upgraded.
  * This is more deterministic than waiting for visibility alone.
@@ -40,28 +72,30 @@ export async function waitForStoryReady(
   page: Page,
   elementSelector: string
 ): Promise<Locator> {
-  const tagName = elementSelector.split(/[.#\s[\]]/)[0];
+  return waitForStoryReadyWithRetries(page, async () => {
+    const tagName = elementSelector.split(/[.#\s[\]]/)[0];
 
-  // Step 1: Wait for the custom element to be defined in the registry
-  await waitForCustomElement(page, tagName);
+    // Step 1: Wait for the custom element to be defined in the registry
+    await waitForCustomElement(page, tagName);
 
-  // Step 2: Wait for Storybook's story rendering to complete
-  await page.waitForFunction(() => {
-    const root = document.querySelector('#storybook-root');
-    return root && root.children.length > 0;
+    // Step 2: Wait for Storybook's story rendering to complete
+    await page.waitForFunction(() => {
+      const root = document.querySelector('#storybook-root');
+      return root && root.children.length > 0;
+    });
+
+    const element = page.locator(elementSelector).first();
+    await element.waitFor({ state: 'visible' });
+
+    // Step 3: Wait for the web component to be fully upgraded
+    await element.evaluate(async (el) => {
+      if (el.tagName.includes('-')) {
+        await customElements.whenDefined(el.tagName.toLowerCase());
+      }
+    });
+
+    return page.locator('#storybook-root');
   });
-
-  const element = page.locator(elementSelector).first();
-  await element.waitFor({ state: 'visible' });
-
-  // Step 4: Wait for Web Component to be fully upgraded
-  await element.evaluate(async (el) => {
-    if (el.tagName.includes('-')) {
-      await customElements.whenDefined(el.tagName.toLowerCase());
-    }
-  });
-
-  return page.locator('#storybook-root');
 }
 
 /**

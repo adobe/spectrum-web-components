@@ -40,15 +40,16 @@
   user-select: none;
 }
 
-.swc-Button:disabled {
+.swc-Button:focus-visible {
+  outline: token("focus-indicator-thickness") solid var(--swc-button-focus-indicator-color, token("focus-indicator-color"));
+  outline-offset: token("focus-indicator-gap");
+}
+
+/* Inflated specificity to prevent variant override */
+.swc-Button:disabled:is(*, :hover) {
   color: var(--swc-button-content-color-disabled, token("disabled-content-color"));
   background-color: var(--swc-button-background-color-disabled, token("disabled-background-color"));
   border-color: var(--swc-button-border-color-disabled, transparent);
   cursor: default;
   transform: none;
-}
-
-.swc-Button:focus-visible {
-  outline: token("focus-indicator-thickness") solid var(--swc-button-focus-indicator-color, token("focus-indicator-color"));
-  outline-offset: token("focus-indicator-gap");
 }

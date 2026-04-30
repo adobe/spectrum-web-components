@@ -1,0 +1,70 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: inline-block;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.swc-SuggestionItem {
+  display: inline-flex;
+  align-items: center;
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-200");
+  font-style: token("default-font-style");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-font-size-200");
+  color: token("neutral-content-color-default");
+  background: token("gray-100");
+  border: none;
+  border-radius: token("corner-radius-extra-large-default");
+  cursor: pointer;
+}
+
+.swc-SuggestionItem:hover,
+.swc-SuggestionItem:focus-visible,
+.swc-SuggestionItem:active {
+  background: token("gray-200");
+}
+
+.swc-SuggestionItem:focus-visible {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-indicator-gap");
+}
+
+.swc-SuggestionItem:active {
+  transform: perspective(64px) translate3d(0, 0, -1px);
+  transition-timing-function: token("animation-ease-in-out");
+  transition-duration: token("animation-duration-200");
+  will-change: transform;
+}
+
+.swc-SuggestionItem swc-icon {
+  --swc-icon-inline-size: token("workflow-icon-size-100");
+  --swc-icon-block-size: token("workflow-icon-size-100");
+
+  flex-shrink: 0;
+  margin-inline-start: var(--swc-suggestion-item-icon-margin-inline-start, 14px);
+  margin-inline-end: var(--swc-suggestion-item-icon-margin-inline-end, 6px);
+}
+
+.swc-SuggestionItem-label {
+  display: inline-flex;
+  padding-block: var(--swc-suggestion-item-label-padding-block, 7px);
+  padding-inline-end: var(--swc-suggestion-item-label-padding-inline-end, token("spacing-300"));
+  text-align: left;
+}
