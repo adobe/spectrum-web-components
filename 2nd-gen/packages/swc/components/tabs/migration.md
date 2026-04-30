@@ -42,18 +42,21 @@ import '@adobe/spectrum-wc/tabs';
 
 ## Quick reference
 
-| What changed          | Before (1st-gen)                                         | After (2nd-gen)                                                                                      |
-| --------------------- | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| Tag names             | `sp-tabs`, `sp-tab`, `sp-tab-panel`                      | `swc-tabs`, `swc-tab`, `swc-tab-panel`                                                               |
-| Package               | `@spectrum-web-components/tabs`                          | `@adobe/spectrum-wc`                                                                                 |
-| Import paths          | `@spectrum-web-components/tabs/sp-tabs.js` (per-element) | `@adobe/spectrum-wc/tabs` (single import)                                                            |
-| Default size          | None (no default)                                        | `m` — see [Default size changed](#default-size-changed)                                              |
-| `direction` values    | `horizontal`, `vertical`, `vertical-right`               | `horizontal`, `vertical` — see [`vertical-right` removed](#vertical-right-removed)                   |
-| Disabled tab keyboard | Skipped by arrow keys                                    | Focusable but not activatable — see [Disabled tab behavior](#disabled-tab-keyboard-behavior-changed) |
-| Scroll event          | `sp-tabs-scroll`                                         | Not yet available — see [Overflow not yet migrated](#overflow-not-yet-migrated)                      |
-| CSS custom properties | `--mod-tabs-*`, `--spectrum-tabs-*`                      | `--swc-tabs-*` — see [CSS custom properties](#css-custom-properties)                                 |
-| Module-level exports  | `ScaledIndicator`, scroll helpers                        | Removed — see [Module-level exports removed](#module-level-exports-removed)                          |
-| CSS deep imports      | `@spectrum-web-components/tabs/src/tabs.css.js`          | Removed — see [CSS deep imports removed](#css-deep-imports-removed)                                  |
+| What changed                                                       | Before (1st-gen)                                         | After (2nd-gen)                                                                                                     |
+| ------------------------------------------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Tag names                                                          | `sp-tabs`, `sp-tab`, `sp-tab-panel`                      | `swc-tabs`, `swc-tab`, `swc-tab-panel`                                                                              |
+| Package                                                            | `@spectrum-web-components/tabs`                          | `@adobe/spectrum-wc`                                                                                                |
+| Import paths                                                       | `@spectrum-web-components/tabs/sp-tabs.js` (per-element) | `@adobe/spectrum-wc/tabs` (single import)                                                                           |
+| Default size                                                       | None (no `size` on host in 1st-gen)                      | **No `size` API** — typography uses the S2 default scale only (see [S2-aligned public API](#s2-aligned-public-api)) |
+| `auto` / `compact` / `quiet` / `emphasized` / `size` on `swc-tabs` | 1st-gen booleans / `SizedMixin` sizes                    | **Removed** — use `keyboard-activation` and `density` instead (see [S2-aligned public API](#s2-aligned-public-api)) |
+| `keyboard-activation`                                              | N/A (1st-gen used boolean `auto`)                        | `manual` (default) or `automatic` — see [Activation model](#activation-model)                                       |
+| `density`                                                          | N/A (1st-gen used boolean `compact`)                     | `regular` (default) or `compact` — see [Density](#density)                                                          |
+| `direction` values                                                 | `horizontal`, `vertical`, `vertical-right`               | `horizontal`, `vertical` — see [`vertical-right` removed](#vertical-right-removed)                                  |
+| Disabled tab keyboard                                              | Skipped by arrow keys                                    | Focusable but not activatable — see [Disabled tab behavior](#disabled-tab-keyboard-behavior-changed)                |
+| Scroll event                                                       | `sp-tabs-scroll`                                         | Not yet available — see [Overflow not yet migrated](#overflow-not-yet-migrated)                                     |
+| CSS custom properties                                              | `--mod-tabs-*`, `--spectrum-tabs-*`                      | `--swc-tabs-*` — see [CSS custom properties](#css-custom-properties)                                                |
+| Module-level exports                                               | `ScaledIndicator`, scroll helpers                        | Removed — see [Module-level exports removed](#module-level-exports-removed)                                         |
+| CSS deep imports                                                   | `@spectrum-web-components/tabs/src/tabs.css.js`          | Removed — see [CSS deep imports removed](#css-deep-imports-removed)                                                 |
 
 ---
 
@@ -91,23 +94,44 @@ Find and replace all instances of the three element tag names in your templates 
 
 ---
 
-### Default size changed
+### S2-aligned public API
 
-In 1st-gen, `SizedMixin` was used with `noDefaultSize: true`, so no `size`
-attribute was applied unless set explicitly. In 2nd-gen, the default is
-`size="m"` to align with the Spectrum 2 specification.
+`swc-tabs` follows the Spectrum 2 / Spectrum Design–aligned surface from the
+[tabs migration plan](../../../../CONTRIBUTOR-DOCS/03_project-planning/03_components/tabs/migration-plan.md):
 
-If you relied on the implicit no-size behavior, verify the visual appearance
-is acceptable or set `size` explicitly:
+- **No** `size`, `quiet`, or `emphasized` attributes on the host. Typography and
+  the selection indicator use the default S2 token scale; customize with
+  documented `--swc-tabs-*` / `--swc-tab-*` custom properties if needed.
+- **`keyboard-activation`** (attribute `keyboard-activation`): `manual` (default)
+  or `automatic`. Replaces the boolean **`auto`** from 1st-gen (`auto` →
+  `keyboard-activation="automatic"`).
+- **`density`**: `regular` (default) or `compact`. Replaces the boolean **`compact`**
+  from 1st-gen (`compact` → `density="compact"`).
+
+#### Activation model
 
 ```html
-<!-- Before: no size attribute, rendered at implicit medium styling -->
-<sp-tabs selected="1" label="Example">
+<!-- Before: automatic activation -->
+<sp-tabs selected="1" auto label="Example">
   <sp-tab value="1">Tab</sp-tab>
 </sp-tabs>
 
-<!-- After: size="m" is now the explicit default -->
-<swc-tabs selected="1" label="Example">
+<!-- After -->
+<swc-tabs selected="1" keyboard-activation="automatic" label="Example">
+  <swc-tab value="1">Tab</swc-tab>
+</swc-tabs>
+```
+
+#### Density
+
+```html
+<!-- Before: compact spacing -->
+<sp-tabs selected="1" compact label="Example">
+  <sp-tab value="1">Tab</sp-tab>
+</sp-tabs>
+
+<!-- After -->
+<swc-tabs selected="1" density="compact" label="Example">
   <swc-tab value="1">Tab</swc-tab>
 </swc-tabs>
 ```
@@ -173,9 +197,8 @@ In 1st-gen, `sp-tab` wrapped the default slot content in a
 `<label id="item-label">` element inside shadow DOM. This implicit `<label>`
 semantics conflicted with the `role="tab"` on the host element.
 
-In 2nd-gen, the `<label>` has been replaced by a `<span>`. This is an internal
-shadow DOM change, but consumers targeting the `label` element inside tab
-shadow DOM (via `::part()` or other selectors) must update.
+In 2nd-gen, default and icon content are projected with slots only (no wrapper
+element). Consumers targeting a `label` inside tab shadow DOM must update.
 
 ```html
 <!-- 1st-gen shadow DOM (internal) -->
@@ -191,9 +214,7 @@ shadow DOM (via `::part()` or other selectors) must update.
 <swc-tab>
   #shadow-root
   <slot name="icon"></slot>
-  <span id="label">
-    <slot>Tab text</slot>
-  </span>
+  <slot>Tab text</slot>
 </swc-tab>
 ```
 
@@ -316,6 +337,8 @@ const focusable = tabsEl.focusElement;
 tabsEl.focus();
 ```
 
+**`TabsBase.focus()`** focuses the **selected slotted tab** (same outcome 1st-gen authors expected from **`focusElement`** + **`focus()`**). The host is not given a default **`tabindex`**, so **Tab** still reaches the roving tab stop (**`tabindex="0"`** on the active tab) in document order. Shadow **`delegatesFocus`** remains for engines that delegate host focus to slotted tabs when authors do focus the host.
+
 ---
 
 ### Overflow not yet migrated
@@ -340,20 +363,22 @@ All public properties from 1st-gen and their 2nd-gen status:
 
 ### `swc-tabs`
 
-| Property                  | Status    | Notes                       |
-| ------------------------- | --------- | --------------------------- |
-| `auto`                    | Unchanged | Automatic activation mode   |
-| `compact`                 | Unchanged | Compact layout              |
-| `direction`               | Changed   | `vertical-right` removed    |
-| `disabled`                | Unchanged | Disables entire tablist     |
-| `emphasized`              | Unchanged | Emphasized visual style     |
-| `label`                   | Unchanged | Accessible name for tablist |
-| `quiet`                   | Unchanged | Removes divider line        |
-| `selected`                | Unchanged | Value of the selected tab   |
-| `size`                    | Changed   | Default is now `m`          |
-| `enableTabsScroll`        | Deferred  | Not yet migrated (overflow) |
-| `selectionIndicatorStyle` | Removed   | Internal property           |
-| `shouldAnimate`           | Removed   | Internal property           |
+| Property                  | Status    | Notes                                                        |
+| ------------------------- | --------- | ------------------------------------------------------------ |
+| `keyboard-activation`     | **New**   | `manual` (default) or `automatic`; replaces boolean `auto`   |
+| `density`                 | **New**   | `regular` (default) or `compact`; replaces boolean `compact` |
+| `direction`               | Changed   | `vertical-right` removed                                     |
+| `disabled`                | Unchanged | Disables entire tablist                                      |
+| `label`                   | Unchanged | Accessible name for tablist                                  |
+| `selected`                | Unchanged | Value of the selected tab                                    |
+| `auto`                    | Removed   | Use `keyboard-activation="automatic"`                        |
+| `compact`                 | Removed   | Use `density="compact"`                                      |
+| `quiet`                   | Removed   | Not part of S2 surface; style with CSS tokens if needed      |
+| `emphasized`              | Removed   | Not part of S2 surface; style with CSS tokens if needed      |
+| `size`                    | Removed   | Not part of S2 surface; default typography only              |
+| `enableTabsScroll`        | Deferred  | Not yet migrated (overflow)                                  |
+| `selectionIndicatorStyle` | Removed   | Internal property                                            |
+| `shouldAnimate`           | Removed   | Internal property                                            |
 
 ### `swc-tab`
 
