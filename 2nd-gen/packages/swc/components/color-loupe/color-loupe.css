@@ -32,8 +32,6 @@
   pointer-events: none;
   opacity: 0;
   filter: drop-shadow(token("drop-shadow-elevated-x") token("drop-shadow-elevated-y") token("drop-shadow-elevated-blur") token("drop-shadow-elevated-color"));
-
-  /* TODO: replace 8px with a forthcoming animation-distance token (matches Spectrum CSS S2). */
   transform: translateY(8px);
   transform-origin: bottom center;
   transition:
