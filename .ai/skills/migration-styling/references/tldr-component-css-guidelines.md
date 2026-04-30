@@ -83,6 +83,17 @@ Follow the prescribed stylesheet order to manage specificity and reduce selector
 ### 3. Custom Properties
 
 Use `token()` for design token values. Use `--swc-*` only for intentionally exposed override points, and `--_swc-*` for internal/private properties. Do not keep old `--mod-*` chains.
+
+Every exposed `--swc-*` property must be documented with a `@cssprop` JSDoc tag on the primary component class export (the SWC layer class, not the core base). Storybook picks these up automatically and surfaces them in the API docs panel.
+
+```ts
+/**
+ * @cssprop --swc-button-height - Block size of the button. Defaults to the medium component height token.
+ * @cssprop --swc-button-border-radius - Corner radius. Defaults to half the component height (pill shape).
+ */
+export class Button extends ButtonBase { … }
+```
+
 → See [02_custom-properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md)
 
 ### 4. Attribute Selectors vs Modifier Classes

@@ -37,8 +37,38 @@ import baseStyles from './button-base.css';
  * A button component that triggers an action when activated.
  *
  * @element swc-button
- * @status alpha
  * @since 0.0.1
+ *
+ * @slot - Visible button label.
+ * @slot icon - Leading icon displayed before the label.
+ *
+ * @cssprop --swc-button-min-block-size - Minimum block size of the button.
+ * @cssprop --swc-button-border-radius - Corner radius. Defaults to half the height (pill shape).
+ * @cssprop --swc-button-padding-vertical - Block padding (adjusted for border width).
+ * @cssprop --swc-button-edge-to-text - Inline padding from edge to text.
+ * @cssprop --swc-button-edge-to-visual - Inline padding from edge to icon when label is also present.
+ * @cssprop --swc-button-edge-to-visual-only - Inline padding from edge to icon when no label is present.
+ * @cssprop --swc-button-font-size - Font size of the button label.
+ * @cssprop --swc-button-gap - Gap between icon and label.
+ * @cssprop --swc-button-icon-size - Size (inline and block) of the slotted icon.
+ * @cssprop --swc-button-icon-inline-size - Inline size override for the slotted icon.
+ * @cssprop --swc-button-icon-block-size - Block size override for the slotted icon.
+ * @cssprop --swc-button-focus-indicator-color - Color of the focus ring outline.
+ * @cssprop --swc-button-background-color-default - Background color in the default state.
+ * @cssprop --swc-button-border-color-default - Border color in the default state.
+ * @cssprop --swc-button-content-color-default - Text and icon color in the default state.
+ * @cssprop --swc-button-background-color-hover - Background color on hover.
+ * @cssprop --swc-button-border-color-hover - Border color on hover.
+ * @cssprop --swc-button-content-color-hover - Text and icon color on hover.
+ * @cssprop --swc-button-background-color-focus - Background color when focused.
+ * @cssprop --swc-button-border-color-focus - Border color when focused.
+ * @cssprop --swc-button-content-color-focus - Text and icon color when focused.
+ * @cssprop --swc-button-background-color-down - Background color when pressed.
+ * @cssprop --swc-button-border-color-down - Border color when pressed.
+ * @cssprop --swc-button-content-color-down - Text and icon color when pressed.
+ * @cssprop --swc-button-background-color-disabled - Background color when disabled or pending.
+ * @cssprop --swc-button-border-color-disabled - Border color when disabled or pending.
+ * @cssprop --swc-button-content-color-disabled - Text and icon color when disabled or pending.
  *
  * @example
  * <swc-button>Save</swc-button>
@@ -107,13 +137,13 @@ export class Button extends ButtonBase {
           : (this.accessibleLabel ?? nothing)}
       >
         <slot name="icon"></slot>
-        <span class="swc-Button__label">
+        <span class="swc-Button-label">
           <slot></slot>
         </span>
         ${this.pending
           ? html`
               <svg
-                class="swc-Button__pendingSpinner"
+                class="swc-Button-pendingSpinner"
                 width="100%"
                 height="100%"
                 fill="none"
@@ -121,13 +151,13 @@ export class Button extends ButtonBase {
                 focusable="false"
               >
                 <circle
-                  class="swc-Button__pendingSpinner-track"
+                  class="swc-Button-pendingSpinner-track"
                   cx="50%"
                   cy="50%"
                   r="calc(50% - 1px)"
                 />
                 <circle
-                  class="swc-Button__pendingSpinner-fill"
+                  class="swc-Button-pendingSpinner-fill"
                   cx="50%"
                   cy="50%"
                   r="calc(50% - 1px)"
