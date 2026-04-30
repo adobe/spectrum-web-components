@@ -13,6 +13,16 @@
 :host {
   display: flex;
   flex-direction: column;
+
+  --swc-tab-font-size: var(--swc-tabs-font-size, token("font-size-100"));
+  --swc-tab-icon-size: var(--swc-tabs-icon-size, token("workflow-icon-size-100"));
+
+  /* Tablist gap: density switches this; vertical reuses it unless --swc-tabs-vertical-gap is set. */
+  --swc-tabs-tablist-gap-effective: var(--swc-tabs-gap, 32px);
+}
+
+:host([density="compact"]) {
+  --swc-tabs-tablist-gap-effective: var(--swc-tabs-compact-gap, 24px);
 }
 
 * {
@@ -24,52 +34,8 @@
 .tablist {
   display: flex;
   position: relative;
+  gap: var(--swc-tabs-tablist-gap-effective);
   align-items: center;
-}
-
-/* ── Size variants ─────────────────────────────────────── */
-
-:host([size="s"]) {
-  --swc-tab-font-size: var(--swc-tabs-font-size, token("font-size-75"));
-  --swc-tab-icon-size: var(--swc-tabs-icon-size, token("workflow-icon-size-75"));
-
-  & .tablist {
-    gap: var(--swc-tabs-gap, 24px);
-  }
-}
-
-:host(:not([size])),
-:host([size="m"]) {
-  --swc-tab-font-size: var(--swc-tabs-font-size, token("font-size-100"));
-  --swc-tab-icon-size: var(--swc-tabs-icon-size, token("workflow-icon-size-100"));
-
-  & .tablist {
-    gap: var(--swc-tabs-gap, 32px);
-  }
-}
-
-:host([size="l"]) {
-  --swc-tab-font-size: var(--swc-tabs-font-size, token("font-size-200"));
-  --swc-tab-icon-size: var(--swc-tabs-icon-size, token("workflow-icon-size-200"));
-
-  & .tablist {
-    gap: var(--swc-tabs-gap, 36px);
-  }
-}
-
-:host([size="xl"]) {
-  --swc-tab-font-size: var(--swc-tabs-font-size, token("font-size-300"));
-  --swc-tab-icon-size: var(--swc-tabs-icon-size, token("workflow-icon-size-300"));
-
-  & .tablist {
-    gap: var(--swc-tabs-gap, 40px);
-  }
-}
-
-/* ── Compact variant ───────────────────────────────────── */
-
-:host([compact]) .tablist {
-  gap: var(--swc-tabs-compact-gap, 24px);
 }
 
 /* ── Vertical direction ────────────────────────────────── */
@@ -79,9 +45,13 @@
   gap: var(--swc-tabs-vertical-content-gap, 24px);
 }
 
+:host([direction="vertical"][density="compact"]) {
+  gap: var(--swc-tabs-vertical-content-gap-compact, 16px);
+}
+
 :host([direction="vertical"]) .tablist {
   flex-direction: column;
-  gap: var(--swc-tabs-vertical-gap, 0);
+  gap: var(--swc-tabs-vertical-gap, var(--swc-tabs-tablist-gap-effective));
   align-items: flex-start;
   padding-inline-start: var(--swc-tabs-vertical-indicator-space, 12px);
 }
@@ -90,8 +60,10 @@
 
 .selection-indicator {
   position: absolute;
+  z-index: 1;
   background-color: var(--swc-tabs-indicator-color, token("neutral-content-color-default"));
   border-radius: var(--swc-tabs-indicator-radius, 2px);
+  pointer-events: none;
   transition: transform 130ms ease-in-out;
 }
 
@@ -114,26 +86,6 @@
   inline-size: var(--swc-tabs-indicator-thickness, 2px);
   block-size: 100px;
   transform-origin: center top;
-}
-
-/* ── Emphasized variant ────────────────────────────────── */
-
-:host([emphasized]) {
-  /* Use accent 1000 for selected label so contrast meets WCAG AA on light gray
-     backgrounds (accent 900 on ~gray-50 is slightly below 4.5:1). */
-  --swc-tab-text-color-selected: var(--swc-tabs-text-color-selected-emphasized, token("accent-content-color-down"));
-  --swc-tab-text-color-hover: var(--swc-tabs-text-color-hover-emphasized, token("accent-content-color-hover"));
-}
-
-:host([emphasized]) .selection-indicator {
-  --swc-tabs-indicator-color: var(--swc-tabs-indicator-color-emphasized, token("accent-content-color-down"));
-}
-
-/* ── Quiet variant ─────────────────────────────────────── */
-
-:host([quiet]) .tablist {
-  border-block-end-color: transparent;
-  border-inline-end-color: transparent;
 }
 
 /* ── Disabled state ────────────────────────────────────── */
