@@ -61,9 +61,9 @@
 - **Component**: `<sp-meter>` (1st-gen, `@spectrum-web-components/meter@1.11.2`) → `<swc-meter>` (2nd-gen).
 - **What this is**: a non-focusable, read-only bar that shows a value (`value`, default range 0–100) inside a fixed range. ARIA pattern is **`role="meter"`**, distinct from `progressbar` task progress (separate component).
 - **Architecture**: independent component. **No shared base** with progress-bar / progress-circle. Bar/track/fill styles live in `meter.css`, copied from `spectrum-css` `spectrum-two` (`progressbar/index.css` + `meter/index.css`). Core layer holds `MeterBase` for API, ARIA plumbing, and locale-aware formatting; SWC layer renders S2 markup against the `swc-Meter` wrapper class.
-- **API alignment**: 2nd-gen aligns with [React Spectrum S2 Meter](https://react-spectrum.adobe.com/Meter.html) and the Figma `S2 / Web (Desktop scale)` Meter frame supplied with this plan. Net effect: rename `progress` → `value`, add `minValue`/`maxValue`, replace `side-label` boolean with `label-position` enum, expose `value-label` and a flat `format` shorthand attribute, align `variant` set to `{informative (default), positive, notice, negative}`, expose `static-color` as `{white, black}`, and add a `help-text` slot.
+- **API alignment**: 2nd-gen aligns with [React Spectrum S2 Meter](https://react-spectrum.adobe.com/Meter.html) and the Figma `S2 / Web (Desktop scale)` Meter frame supplied with this plan. Net effect: rename `progress` → `value`, add `minValue`/`maxValue`, replace `side-label` boolean with `label-position` enum, expose `value-label`, expose `formatOptions` (`Intl.NumberFormatOptions`) as a JS property, align `variant` set to `{informative (default), positive, notice, negative}`, expose `static-color` as `{white, black}`, and add a `help-text` string attribute.
 - **Must-ship breaking/a11y**: tag rename `<sp-meter>` → `<swc-meter>`; replace 1st-gen's invalid combined `role="meter progressbar"` with `role="meter"` only; add `aria-valuemin`, `aria-valuemax`, and `aria-valuetext` (localized formatted value); drop `--mod-*` passthroughs in favor of a reviewed `--swc-meter-*` set; render inside a `<div class="swc-Meter">` wrapper instead of styling the host.
-- **Net-new from S2/React**: arbitrary numeric range (`minValue`/`maxValue`); custom `value-label` (e.g. `"1 of 4"`); flat `format` shorthand attribute (`percent` default, `decimal`, `currency-<ISO>`, `unit-<cldr-unit>`); `static-color="black"`; `help-text` slot for composing `<sp-help-text>` (1st-gen) below the bar inside the meter's S2 `helptext` region.
+- **Net-new from S2/React**: arbitrary numeric range (`minValue`/`maxValue`); custom `value-label` (e.g. `"1 of 4"`); custom `formatOptions` (`Intl.NumberFormatOptions`, JS property only — full pass-through to `Intl.NumberFormat`); `static-color="black"`; `help-text` string attribute rendered inside the meter's S2 helptext region.
 - **Field-label rendering**: 1st-gen renders internal `<sp-field-label>` for label and percent. 2nd-gen renders plain `<label class="swc-Meter-label">` / `<label class="swc-Meter-value">` (SWC-prefixed selectors per the [contributor docs selector patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#selector-patterns)) until `<swc-field-label>` is migrated.
 - **Accessible name simplification**: Replace 1st-gen's `label` attribute + raw `aria-*` passthroughs with two inputs only — default slot (primary visible label) and `accessible-label` attribute (a11y-only fallback).
 
@@ -174,7 +174,7 @@ Rationale:
 - **Progress bar** ([`1st-gen/packages/progress-bar`](../../../../1st-gen/packages/progress-bar/)) — independent migration on its own epic. No coupling to this work.
 - **Progress circle** ([`2nd-gen/packages/swc/components/progress-circle`](../../../../2nd-gen/packages/swc/components/progress-circle/)) — already migrated. Used as the structural precedent for `aria-value*` plumbing, slot-as-label hoisting, locale-aware formatting, and the dev-mode accessible-name warning. Not extended.
 - **Field label** — internal render dependency; not migrated. 2nd-gen `<swc-meter>` renders plain `<label class="swc-Meter-label">` / `<label class="swc-Meter-value">` (SWC-namespaced selectors per the [contributor docs selector patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#selector-patterns)). No dependency on `<swc-field-label>`.
-- **Help text** — 1st-gen `<sp-help-text>` package is not migrated. The `help-text` slot in `<swc-meter>` accepts any DOM, so consumers can place 1st-gen `<sp-help-text>` or any composed help-text element until `<swc-help-text>` exists.
+- **Help text** — exposed as a `help-text` string attribute on `<swc-meter>` (not a slot). Renders as plain text inside the internal `swc-Meter-helptext` region. Consumers needing rich/interactive help-text content compose externally and wire `aria-describedby` themselves.
 
 ### User confirmation needed
 
@@ -224,9 +224,9 @@ None outstanding. All architecture and dependency decisions are settled per dire
 | #  | What is added | Notes |
 | -- | ------------- | ----- |
 | **A1** | `static-color="black"` | `spectrum-css` `spectrum-two` adds the `staticBlack` modifier (`progressbar/index.css` line 189). 1st-gen has white only. Ships in this migration. |
-| **A2** | `help-text` slot | New for S2 (`spectrum-css` `spectrum-two` adds the helptext region inside the meter HTML; ported as `swc-Meter-helptext` in `meter.css`). Public API: a named slot `slot="help-text"` so consumers can compose `<sp-help-text>` (or any element) inside the meter's helptext region. React Spectrum exposes help text via composition + `aria-describedby`; the slot mirrors that pattern. Ships in this migration. |
+| **A2** | `help-text` string attribute | New for S2 (`spectrum-css` `spectrum-two` adds the helptext region inside the meter HTML; ported as `swc-Meter-helptext` in `meter.css`). Public API: a `help-text` string attribute / `helpText` property. Renders as plain text inside the internal `swc-Meter-helptext` region. The component wires `aria-describedby` to that internal element when `helpText` is non-empty. Ships in this migration. |
 | **A3** | `value-label` (string attribute). _(Source: React Spectrum S2 `valueLabel`.)_ | New for S2/React. Replaces the auto-formatted percentage. `<swc-meter value-label="1 of 4">` overrides the rendered value text and feeds `aria-valuetext`. String only — matches React's `valueLabel` API; no slot version. Auto-formatting (Intl.NumberFormat) remains the default when omitted. |
-| **A4** | `format` flat shorthand attribute. _(Source: adapts React Spectrum's `formatOptions` object to a string attribute usable in HTML.)_ | Single string attribute, default `"percent"`. Syntax: `<style>` or `<style>-<arg>`. Recognized: `decimal`, `percent`, `currency-<ISO>` (e.g. `currency-USD`), `unit-<cldr-unit>` (e.g. `unit-inch`, `unit-kilometer-per-hour`). Parsed internally into `Intl.NumberFormatOptions` and fed to `Intl.NumberFormat(language, opts)`. Drives both the rendered value text and `aria-valuetext`. Ignored when `value-label` is set. |
+| **A4** | `formatOptions` JS property. _(Source: React Spectrum S2 `formatOptions`.)_ | `Intl.NumberFormatOptions` object — JS property only, not a string attribute. Full pass-through to `Intl.NumberFormat` so the API stays in sync with the native spec as new fields ship (`notation`, `roundingMode`, `signDisplay`, future additions). Default `{ style: 'percent' }`. Drives both the rendered value text and `aria-valuetext`. Ignored when `value-label` is set. |
 
 ---
 
@@ -249,7 +249,8 @@ These are derived from the 1st-gen implementation, the rendering and styling roa
 | `maxValue`      | `number`                                                      | `100`         | `max-value`       | **Confirmed.** Reflected. Top of the value range. Mirrors React Spectrum `maxValue`. |
 | `accessibleLabel` | `string`                                                    | `''`          | `accessible-label` | **Confirmed.** Reflected. Optional. Used when there is no visible label in the default slot. Default slot text takes precedence when both are present. |
 | `valueLabel`    | `string \| undefined`                                         | `undefined`   | `value-label`     | **Confirmed.** Custom value text (e.g. `"1 of 4"`). Overrides the auto-formatted percent in both rendered text and `aria-valuetext`. Mirrors React Spectrum `valueLabel`. |
-| `format`        | `string`                                                      | `'percent'`   | `format`          | **Confirmed.** Flat shorthand: `decimal`, `percent`, `currency-<ISO>` (e.g. `currency-USD`), `unit-<cldr-unit>` (e.g. `unit-inch`, `unit-kilometer-per-hour`). Parsed internally into `Intl.NumberFormatOptions`. Drives the auto-formatted value text and `aria-valuetext` when `value-label` is not set. String attribute usable in HTML — no JS-only object property. |
+| `formatOptions` | `Intl.NumberFormatOptions \| undefined`                       | `{ style: 'percent' }` | _(property only)_ | **Confirmed.** JS property only — full pass-through to `Intl.NumberFormat`. Avoids flattening or remapping native spec fields (`notation`, `roundingMode`, `signDisplay`, etc.). Drives the auto-formatted value text and `aria-valuetext` when `value-label` is not set. |
+| `helpText`      | `string`                                                      | `''`          | `help-text`       | **Confirmed.** Reflected. Renders as plain text inside the internal `swc-Meter-helptext` region. When non-empty, the component wires `aria-describedby` on the host to the internal element. |
 | `variant`       | `'informative' \| 'positive' \| 'notice' \| 'negative'`       | `'informative'` | `variant`       | **Confirmed.** Reflected. Default is the named `informative` value (1st-gen used the empty string for this case). |
 | `labelPosition` | `'top' \| 'side'`                                             | `'top'`       | `label-position`  | **Confirmed.** Reflected. Replaces 1st-gen `side-label` boolean. |
 | `staticColor`   | `'white' \| 'black' \| undefined`                             | `undefined`   | `static-color`    | **Confirmed.** Reflected. `'auto'` from React Spectrum is **deferred** — `spectrum-css` `spectrum-two` does not include a `staticAuto` modifier. |
@@ -259,7 +260,7 @@ These are derived from the 1st-gen implementation, the rendering and styling roa
 
 Confirmed against the Figma `S2 / Web (Desktop scale)` Meter primary frame supplied with this plan, the React Spectrum S2 Meter API, and `spectrum-css` `spectrum-two`.
 
-All variants (`informative` default, `positive`, `notice`, `negative`) support all sizes (`s`, `m` default, `l`, `xl`), both `label-position` values (`top` default, `side`), both `static-color` values (`white`, `black`), the full `value` range (0–100, including 0%/25%/50%/75%/100%), and the `help-text` slot. There are no variant-restricted features.
+All variants (`informative` default, `positive`, `notice`, `negative`) support all sizes (`s`, `m` default, `l`, `xl`), both `label-position` values (`top` default, `side`), both `static-color` values (`white`, `black`), the full `value` range (0–100, including 0%/25%/50%/75%/100%), and the `help-text` attribute. There are no variant-restricted features.
 
 `label-position="side"` is exposed via `spectrum-css` `spectrum-two` `progressbar/index.css` `.spectrum-ProgressBar--sideLabel` (line 144), even though the Figma Desktop frame focuses on top-label. Side-label coverage in implementation/tests is required for parity with React Spectrum.
 
@@ -268,7 +269,6 @@ All variants (`informative` default, `positive`, `notice`, `negative`) support a
 | Slot          | Content              | Notes |
 | ------------- | -------------------- | ----- |
 | (default)     | Primary visible meter label | **Confirmed.** Default slot is the **primary** visible label and primary a11y name source. Slot text hoists into `accessibleLabel` via `slotchange` + `getLabelFromSlot` only when `accessibleLabel` is unset. |
-| `help-text`   | Optional help text   | **Confirmed.** Renders inside the meter's helptext region (`swc-Meter-helptext`, ported from `spectrum-css` `spectrum-two`). Consumers compose `<sp-help-text>` (1st-gen, until `<swc-help-text>` exists) or any DOM. Wire to `aria-describedby` if the slot is non-empty. |
 
 #### CSS custom properties (2nd-gen)
 
@@ -288,7 +288,7 @@ Initial expected set for `<swc-meter>` (final list locked in implementation):
 
 - **Read-only display.** Host is not focusable. No `tabindex`. Keyboard skips the component.
 - **Value clamping.** `value` is clamped into `[minValue, maxValue]` for both rendering (`fill` width as `(value − minValue) / (maxValue − minValue)`) and `aria-valuenow`. `minValue` defaults to `0`, `maxValue` to `100`; default behavior matches the 1st-gen 0–100 range.
-- **Locale-aware formatting.** When `value-label` is unset, parse the `format` shorthand into `Intl.NumberFormatOptions` and call `new Intl.NumberFormat(language, opts)`. Parser: split on first `-`; first segment is `style` (`decimal` | `percent` | `currency` | `unit`); remainder maps to `currency` (ISO code, uppercased) when `style=currency`, or `unit` (CLDR unit name) when `style=unit`. Default when `format` unset or invalid: `{ style: 'percent' }`. For percent formatting, feed the normalized fraction `(value − minValue) / (maxValue − minValue)`. Re-format on language-resolver updates and on any of `value`, `minValue`, `maxValue`, `valueLabel`, `format` changing.
+- **Locale-aware formatting.** When `value-label` is unset, format the visible value and `aria-valuetext` via `new Intl.NumberFormat(language, formatOptions ?? { style: 'percent' })`. The `language` argument comes from the shared `LanguageResolutionController` (subscribed in `MeterBase`); on `language-resolver-updated`, the formatted value + `aria-valuetext` are re-rendered. For percent style, feed the normalized fraction `(value − minValue) / (maxValue − minValue)`. Re-format on any of `value`, `minValue`, `maxValue`, `valueLabel`, `formatOptions` changing.
 - **`value-label` precedence.** Non-empty `value-label` attribute overrides auto-formatted text in both the visible value cell and `aria-valuetext`. String only — no slot version (matches React's `valueLabel` API).
 - **Variant validation.** `variant` is a typed enum; unknown values fall back to `'informative'`. Tracked in `Meter.types.ts` rather than via the 1st-gen string-coercing setter.
 - **No custom events.** No `dispatchEvent` calls; behavior parity with 1st-gen.
@@ -301,7 +301,7 @@ Sourced from [`accessibility-migration-analysis.md`](./accessibility-migration-a
 - `aria-valuemin=<minValue>`, `aria-valuemax=<maxValue>`, `aria-valuenow=<value>` (clamped), `aria-valuetext=<formatted value>` set on host. Update on every relevant property change and on locale change.
 - **Placement rationale.** `role` + `aria-value*` live on the host (not on the shadow `.swc-Meter` wrapper) so consumer-supplied IDREFs bind correctly. Cross-root ARIA (Reference Target / cross-root ARIA spec) is not yet shipped in stable browsers.
 - **Accessible name** from one of: default slot text (primary), or the `accessible-label` attribute (fallback). Slot wins when both are present. The component sets `aria-label` on the host internally to expose the resolved name. Raw `aria-label`/`aria-labelledby` passthroughs are not part of the public API.
-- **Description.** When `slot="help-text"` is non-empty, the meter wires `aria-describedby` to the slotted node's id (or generates an internal id). Raw `aria-describedby`/`aria-details` passthroughs are not part of the public API.
+- **Description.** When the `help-text` attribute is non-empty, the meter renders the text in the internal `swc-Meter-helptext` region and wires `aria-describedby` on the host to that element's internal id. Raw `aria-describedby`/`aria-details` passthroughs are not part of the public API.
 - DEBUG-mode console warning when no accessible name is provable (precedent: `ProgressCircleBase`).
 - No `aria-live` by default. The accessibility analysis explicitly forbids `aria-live="assertive"`; `polite` is reserved for rare primary-announcement cases and is not part of the baseline.
 - Non-text contrast: track and fill must meet **3:1**, including the at-risk `value=minValue` state (visually 0%). Mitigate per `Loading animation discovery` Figma guidance for the bar-and-track treatment.
@@ -316,7 +316,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 
 | Layer    | Path                                              | Contains                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | -------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Core** | `2nd-gen/packages/core/components/meter/`         | `Meter.base.ts`, `Meter.types.ts`, `index.ts`. Owns: typed property declarations (`value`, `minValue`, `maxValue`, `accessibleLabel`, `valueLabel`, `format`, `variant`, `labelPosition`, `staticColor`, `size`); `value` clamping; `format`-shorthand parser into `Intl.NumberFormatOptions`; locale-aware formatting via `LanguageResolutionController`; `aria-value*` plumbing on the host (not on the `.swc-Meter` wrapper, to keep consumer IDREFs working until cross-root ARIA ships); `role="meter"` assignment on host in `firstUpdated`; default-slot-as-name hoisting via `getLabelFromSlot` into `accessibleLabel`; DEBUG-mode accessible-name warning; constants `METER_VALID_SIZES`, `METER_STATIC_COLORS_S2`, `METER_VARIANTS`, `METER_LABEL_POSITIONS`, `METER_FORMAT_STYLES`. **No rendering.** **No JSX/Lit template.** |
+| **Core** | `2nd-gen/packages/core/components/meter/`         | `Meter.base.ts`, `Meter.types.ts`, `index.ts`. Owns: typed property declarations (`value`, `minValue`, `maxValue`, `accessibleLabel`, `valueLabel`, `formatOptions`, `helpText`, `variant`, `labelPosition`, `staticColor`, `size`); `value` clamping; locale-aware formatting via `LanguageResolutionController` (rename to `LocaleResolutionController` tracked as a deferred cross-cutting follow-up); `aria-value*` plumbing on the host (not on the `.swc-Meter` wrapper, to keep consumer IDREFs working until cross-root ARIA ships); `role="meter"` assignment on host in `firstUpdated`; default-slot-as-name hoisting via `getLabelFromSlot` into `accessibleLabel`; `aria-describedby` wiring to the internal `swc-Meter-helptext` element when `helpText` is non-empty; DEBUG-mode accessible-name warning; constants `METER_VALID_SIZES`, `METER_STATIC_COLORS_S2`, `METER_VARIANTS`, `METER_LABEL_POSITIONS`. **No rendering.** **No JSX/Lit template.** |
 | **SWC**  | `2nd-gen/packages/swc/components/meter/`          | `Meter.ts` (extends `MeterBase`), `meter.css`, `index.ts`, element registration `swc-meter`, `stories/`, `test/`, `consumer-migration-guide.mdx`. Owns: S2 rendering with the `swc-Meter` wrapper, S2 token bindings, `static-color="white"`/`static-color="black"` classes, all visual styling.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 
 Planned rendering shape for `Meter.ts.render()`:
@@ -334,8 +334,8 @@ Planned rendering shape for `Meter.ts.render()`:
   <div class="swc-Meter-track">
     <div class="swc-Meter-fill" style="inline-size: <fillPercent>%;"></div>
   </div>
-  <div class="swc-Meter-helptext">
-    <slot name="help-text"></slot>
+  <div class="swc-Meter-helptext" id="<internal-id>" hidden=${!helpText}>
+    {helpText}
   </div>
 </div>
 ```
@@ -343,7 +343,7 @@ Planned rendering shape for `Meter.ts.render()`:
 Notes:
 
 - `<fillPercent>` is `((value − minValue) / (maxValue − minValue)) * 100`, clamped to `[0, 100]`.
-- The `helptext` wrapper renders unconditionally. Style slotted content with `::slotted([slot="help-text"])`; the `<slot>` element's default `display: contents` keeps an empty slot inert (no layout, no spacing) without extra JS.
+- The `helptext` wrapper carries an internal id and is hidden via the `hidden` attribute when `helpText` is empty (skip rendering / drop spacing). When non-empty, the host's `aria-describedby` references this id.
 - All labeling (`swc-Meter-label`, `swc-Meter-value`, `swc-Meter-helptext`) is supported across every variant and `static-color` mode — full label parity with React Spectrum + `spectrum-css` `spectrum-two`. The Figma `Static white` / `Static black` panels omit text for visual simplicity only; that is not a spec constraint.
 - Class names use the `swc-` prefix per [contributor docs selector patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#selector-patterns). The S2 CSS rules from `spectrum-css` `spectrum-two` are ported into `meter.css` with selectors rewritten to the SWC namespace; values/tokens are preserved.
 
@@ -372,13 +372,13 @@ Notes:
 #### Naming and public surface
 
 - [ ] `Meter.types.ts`: define `METER_VALID_SIZES = ['s','m','l','xl'] as const`, `METER_STATIC_COLORS = ['white','black'] as const`, `METER_VARIANTS = ['informative','positive','notice','negative'] as const`, `METER_LABEL_POSITIONS = ['top','side'] as const`, and the corresponding `MeterSize`, `MeterStaticColor`, `MeterVariant`, `MeterLabelPosition` types
-- [ ] `Meter.base.ts`: declare typed properties — `value` (number, default 0), `minValue` (number, default 0), `maxValue` (number, default 100), `accessibleLabel` (string, default `''`, attr `accessible-label`), `valueLabel` (string, optional), `format` (string shorthand, default `'percent'`, attr `format`), `variant` (typed enum, default `'informative'`), `labelPosition` (typed enum, default `'top'`), `staticColor` (typed, optional), `size` (typed, default `'m'` via `SizedMixin`)
+- [ ] `Meter.base.ts`: declare typed properties — `value` (number, default 0), `minValue` (number, default 0), `maxValue` (number, default 100), `accessibleLabel` (string, default `''`, attr `accessible-label`), `valueLabel` (string, optional), `formatOptions` (`Intl.NumberFormatOptions`, default `{ style: 'percent' }`, JS property only — no attribute), `helpText` (string, default `''`, attr `help-text`), `variant` (typed enum, default `'informative'`), `labelPosition` (typed enum, default `'top'`), `staticColor` (typed, optional), `size` (typed, default `'m'` via `SizedMixin`)
 - [ ] `Meter.base.ts` `firstUpdated`: set `role="meter"` on host (always; no conditional)
 - [ ] `Meter.base.ts` `updated`: maintain `aria-valuemin=<minValue>`, `aria-valuemax=<maxValue>`, `aria-valuenow=<clamped value>`, `aria-valuetext=<formatted value>`, and `aria-label=<resolved name>` (slot text > `accessibleLabel`) per [Accessibility semantics notes](#accessibility-semantics-notes-2nd-gen)
 - [ ] `Meter.base.ts`: clamp `value` into `[minValue, maxValue]` for both rendering and ARIA
-- [ ] `Meter.base.ts`: parse `format` shorthand into `Intl.NumberFormatOptions` (`<style>` or `<style>-<arg>`; supported styles: `decimal`, `percent`, `currency`, `unit`); default `{ style: 'percent' }` when `format` unset or invalid; format value via `Intl.NumberFormat(language, opts)`; for percent style, feed normalized fraction
+- [ ] `Meter.base.ts`: format value via `Intl.NumberFormat(language, formatOptions ?? { style: 'percent' })`; for percent style, feed normalized fraction
 - [ ] `Meter.base.ts`: handle default-slot `slotchange` to hoist slot text into the resolved a11y name via `getLabelFromSlot` (slot wins over `accessibleLabel`; precedent: `ProgressCircleBase.handleSlotchange`)
-- [ ] `Meter.base.ts`: when `slot="help-text"` is non-empty, set `aria-describedby` on the host pointing at the slotted node (or an internal id assigned to it)
+- [ ] `Meter.base.ts`: when `helpText` is non-empty, render text inside the internal `swc-Meter-helptext` element and set `aria-describedby` on the host to that element's internal id
 - [ ] `Meter.base.ts`: emit DEBUG-mode warning when no accessible name is provable, mirroring `ProgressCircleBase`
 
 #### Alignment checks
@@ -387,7 +387,7 @@ Notes:
 - [ ] `staticColor` set matches `spectrum-css` `spectrum-two` (`staticWhite`, `staticBlack`) and Figma `Static white` / `Static black` panels; React's `'auto'` is deferred (no S2 CSS support)
 - [ ] `labelPosition` matches React Spectrum (`top` default, `side`); side-label coverage backed by `spectrum-css` `spectrum-two` `progressbar/index.css` `.spectrum-ProgressBar--sideLabel`
 - [ ] `value-label` attribute matches React Spectrum `valueLabel` (string only — no slot)
-- [ ] `format` shorthand attribute (`percent` default, `decimal`, `currency-<ISO>`, `unit-<cldr-unit>`) parses to a subset of React Spectrum `formatOptions` (style + currency or unit). Power-user `Intl.NumberFormatOptions` fields (e.g. `notation`, `roundingMode`) not supported in this iteration; tracked as deferred follow-up.
+- [ ] `formatOptions` matches React Spectrum `formatOptions` (JS property only — no string serialization; full `Intl.NumberFormatOptions` pass-through, no remapping).
 
 ### Styling
 
@@ -399,7 +399,7 @@ Notes:
 - [ ] Variant fill colors via tokens (`positive-visual-color`, `notice-visual-color`, `negative-visual-color`; `accent-content-color-default` for the `informative` default)
 - [ ] Static-color rules for both `staticWhite` and `staticBlack` modifiers
 - [ ] `label-position="side"` layout rule (`.swc-Meter--sideLabel`) mirroring `spectrum-css` `spectrum-two` `.spectrum-ProgressBar--sideLabel`
-- [ ] Help-text spacing rule (`--swc-meter-help-text-spacing`) and visibility gating when `slot="help-text"` is empty
+- [ ] Help-text spacing rule (`--swc-meter-help-text-spacing`) and visibility gating via `hidden` attribute when `helpText` is empty
 
 #### Visual model and regressions
 
@@ -414,13 +414,13 @@ Notes:
 - [ ] Single `role="meter"` on host. No combined role string.
 - [ ] `aria-valuemin=<minValue>`, `aria-valuemax=<maxValue>`, `aria-valuenow=<clamped value>`, `aria-valuetext=<formatted value>` on host
 - [ ] Accessible name from default slot text (primary) or `accessible-label` attribute (fallback). No raw `aria-label`/`aria-labelledby` passthrough.
-- [ ] `aria-describedby` wired to the `slot="help-text"` content when non-empty
+- [ ] `aria-describedby` wired to the internal `swc-Meter-helptext` element when `helpText` is non-empty
 - [ ] DEBUG warning when no accessible name is provable
 - [ ] Non-focusable: no `tabindex`, host receives no interactive role
 
 #### State verification
 
-- [ ] `aria-valuetext` re-formats on `language-resolver-updated` and on changes to `value`/`minValue`/`maxValue`/`valueLabel`/`format`
+- [ ] `aria-valuetext` re-formats on `language-resolver-updated` and on changes to `value`/`minValue`/`maxValue`/`valueLabel`/`formatOptions`
 - [ ] `aria-valuenow` and `aria-valuetext` update in lockstep on `value` change
 - [ ] `value-label` attribute overrides auto-formatted text in both visible value and `aria-valuetext`
 - [ ] No `aria-live` regions added by default
@@ -428,7 +428,7 @@ Notes:
 ### Testing
 
 - [ ] Port `1st-gen/packages/meter/test/meter.test.ts` coverage that still applies, adapted to the new API (variant validation, label-from-slot, `value`→`aria-valuenow`, locale resolution `en-US` and `ar-sa`)
-- [ ] Add Playwright `meter.a11y.spec.ts` with `toMatchAriaSnapshot` covering size × variant × `label-position` × static-color × key `value` values (0%, 50%, 100%) × help-text presence
+- [ ] Add Playwright `meter.a11y.spec.ts` with `toMatchAriaSnapshot` covering size × variant × `label-position` × static-color × key `value` values (0%, 50%, 100%) × `help-text` presence
 
 #### Behavior
 
@@ -437,7 +437,7 @@ Notes:
 - [ ] Custom `minValue`/`maxValue` clamps `value` correctly and feeds ARIA accordingly
 - [ ] `aria-valuetext` matches default percent format in `en-US` (e.g. `50%`) and `ar-sa` (Arabic-Indic digits + `٪`)
 - [ ] `value-label` (attribute) overrides auto-formatted text
-- [ ] `format` drives auto-formatted text (`format="currency-USD"` → currency formatting; `format="unit-inch"` → unit formatting; `format="decimal"` → plain number; default `format="percent"`)
+- [ ] `formatOptions` drives auto-formatted text (e.g. `{ style: 'currency', currency: 'USD' }`, `{ style: 'unit', unit: 'inch' }`, `{ style: 'decimal' }`; default `{ style: 'percent' }`)
 - [ ] `label-position="side"` lays out label inline with value and bar
 - [ ] DEBUG warning fires when no accessible name is provable; does not fire when default slot text or `accessible-label` is present
 - [ ] Host is not focusable (`document.activeElement` skips it on `Tab`)
@@ -447,7 +447,7 @@ Notes:
 - [ ] Add VRT coverage for size × variant × `label-position` combinations
 - [ ] Add VRT coverage for both `static-color` values on their approved backgrounds (per Figma `Static white` / `Static black` panels)
 - [ ] Add VRT coverage for `value = 0%`, `25%`, `50%`, `75%`, `100%` (3:1 contrast checks at 0%)
-- [ ] Add VRT coverage for the `help-text` slot present vs absent
+- [ ] Add VRT coverage for `help-text` attribute set vs unset
 - [ ] Add forced-colors / high-contrast VRT coverage
 
 ### Documentation
@@ -479,7 +479,7 @@ All drafting-time questions are resolved. Resolutions:
 - **Q1 (architecture)** — Closed. Independent `<swc-meter>` with no shared base. Bar styles live in `meter.css`. Reflected in [Architecture: core vs SWC split](#architecture-core-vs-swc-split) and [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites).
 - **Q2 (variants)** — Closed. `{informative (default), positive, notice, negative}` per React Spectrum S2 + Figma. Reflected in [Public API](#public-api) and B5.
 - **Q3 (static colors)** — Closed. `{white, black}` per `spectrum-css` `spectrum-two` + Figma. React's `'auto'` deferred (no S2 CSS support). Reflected in [Public API](#public-api), A1, and the deferred-ticket table below.
-- **Q4 (help text)** — Closed. Named slot `slot="help-text"` rendered inside the meter's S2 helptext region; consumer composes their help-text element. Reflected in A2 and the rendering shape in [Architecture: core vs SWC split](#architecture-core-vs-swc-split).
+- **Q4 (help text)** — Closed. `help-text` is a string attribute / `helpText` JS property; rendered as plain text in the internal `swc-Meter-helptext` region; component wires `aria-describedby` to that element when non-empty. Reflected in A2 and the rendering shape in [Architecture: core vs SWC split](#architecture-core-vs-swc-split).
 - **Q5 (field-label)** — Closed. Render plain `<label class="swc-Meter-label">` / `<label class="swc-Meter-value">` (SWC-namespaced selectors). No dependency on `<swc-field-label>`. Reflected in B8.
 - **Q6 (Jira tickets)** — Closed. Confirmed via `mcp__corp-jira__search_jira_issues` against SWC-2005: 11 children exist (SWC-2006 through SWC-2016) covering accessibility recommendations, planning, setup, API, accessibility implementation, visual fidelity, code style, testing, documentation, consumer migration guide, and final review. All breaking changes (B1–B6, B8–B11) and additives (A1, A2, A3, A4) ship within these phase tickets — no separate breaking-change tickets are required.
 
