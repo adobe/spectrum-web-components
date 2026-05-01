@@ -190,7 +190,6 @@ export const Anatomy: Story = {
     </swc-button>
   `,
   tags: ['anatomy'],
-  parameters: { flexLayout: true },
   args: {
     variant: 'primary',
     size: 'm',
