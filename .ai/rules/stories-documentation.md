@@ -188,7 +188,7 @@ export const Anatomy: Story = {
   `,
   tags: ['anatomy'],
   parameters: {
-    flexLayout: true,
+    flexLayout: 'row-wrap',
   },
 };
 ```
@@ -213,7 +213,7 @@ export const Anatomy: Story = {
 - All semantic variants → single `SemanticVariants` story
 - All non-semantic variants → single `NonSemanticVariants` story
 
-**Layout requirement**: Use `flexLayout: true` for stories displaying multiple variations.
+**Layout requirement**: Use `flexLayout: 'row-wrap'` for stories displaying multiple variations.
 
 **Pattern for sizes**:
 
@@ -236,7 +236,7 @@ export const Sizes: Story = {
   `,
   tags: ['options'],
   parameters: {
-    flexLayout: true,
+    flexLayout: 'row-wrap',
     'section-order': 1,
   },
 };
@@ -267,7 +267,7 @@ export const SemanticVariants: Story = {
   `,
   tags: ['options'],
   parameters: {
-    flexLayout: true,
+    flexLayout: 'row-wrap',
     'section-order': 2,
   },
 };
@@ -334,7 +334,7 @@ export const States: Story = {
   `,
   tags: ['states'],
   parameters: {
-    flexLayout: true,
+    flexLayout: 'row-wrap',
   },
 };
 ```
@@ -394,7 +394,7 @@ export const TextWrapping: Story = {
   `,
   tags: ['behaviors'],
   parameters: {
-    flexLayout: true,
+    flexLayout: 'row-wrap',
   },
 };
 ```
