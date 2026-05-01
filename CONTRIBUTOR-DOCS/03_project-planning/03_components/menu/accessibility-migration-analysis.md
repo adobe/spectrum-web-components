@@ -174,7 +174,7 @@ For nested submenus (when `swc-menu-item`’s `submenu` slot is used), the subme
 ### Accessibility tree expectations
 
 - Closed: menu hidden; focus on trigger (or parent item).
-- Open: internal `role="menu"` exposed to assistive technologies; first keystroke lands on an item per pattern; items expose roles and names. A `swc-menu-item` that is disabled and must not run sets `aria-disabled="true"`, in line with [Menu item — ARIA: Disabled row](../menu-item/accessibility-migration-analysis.md#aria-roles-states-and-properties) (roving focus may still visit the row; the pattern prevents activation when disabled).
+- Open: internal `role="menu"` exposed to assistive technologies; first keystroke lands on an item per pattern; items expose roles and names. A `swc-menu-item` that is disabled and must not run sets `aria-disabled="true"`, in line with [Menu item — ARIA: Disabled row](../menu-item/accessibility-migration-analysis.md#aria-roles-states-and-properties) (roving focus may still visit the row; the pattern prevents activation when disabled). Keeping disabled items in the roving set allows screen reader users to discover that an option exists but is currently unavailable, giving them more context about the menu's full capabilities. (See WAI/ARIA Authoring Practice Guide's [Focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols).)
 
 ### Form-associated custom properties (labels, `ElementInternals`)
 
