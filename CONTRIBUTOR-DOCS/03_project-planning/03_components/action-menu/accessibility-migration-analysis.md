@@ -12,28 +12,31 @@
 <summary><strong>In this doc</strong></summary>
 
 - [Overview](#overview)
-- [Also read](#also-read)
-- [What it is not](#what-it-is-not)
-- [Pattern in the WAI-ARIA APG](#pattern-in-the-wai-aria-apg)
-- [Guidelines](#guidelines)
-- [Related Jira issues](#related-jira-issues)
-- [Recommendations](#recommendations)
-    - [Roles for `swc-menu` and children](#roles-for-swc-menu-and-children)
-    - [Composition and labelling](#composition-and-labelling)
-    - [Viewport and presentation (tray vs popover)](#viewport-and-presentation-tray-vs-popover)
-    - [Focus and navigation](#focus-and-navigation)
-    - [Submenus](#submenus)
-    - [Actions vs navigation](#actions-vs-navigation)
-- [Shadow DOM and cross-root accessibility](#shadow-dom-and-cross-root-accessibility)
-- [Tree expectations](#tree-expectations)
-- [Keyboard](#keyboard)
-- [Assistive technology and Escape](#assistive-technology-and-escape)
+    - [In short](#in-short)
+    - [Migration scope (current)](#migration-scope-current)
+    - [Also read](#also-read)
+    - [What `swc-action-menu` is (2nd-gen)](#what-swc-action-menu-is-2nd-gen)
+    - [When to use something else](#when-to-use-something-else)
+    - [What it is not](#what-it-is-not)
+    - [Related](#related)
+- [ARIA and WCAG context](#aria-and-wcag-context)
+    - [Pattern in the APG](#pattern-in-the-apg)
+    - [Guidelines that apply](#guidelines-that-apply)
+- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Recommendations: `<swc-action-menu>`](#recommendations-swc-action-menu)
+    - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
+    - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
+    - [Accessibility tree expectations](#accessibility-tree-expectations)
+    - [Form-associated custom properties (labels, `ElementInternals`)](#form-associated-custom-properties-labels-elementinternals)
+    - [Live regions, loading, and announcements](#live-regions-loading-and-announcements)
+    - [Motion (dedicated recommendations subsection)](#motion-dedicated-recommendations-subsection)
+    - [Keyboard and focus](#keyboard-and-focus)
 - [Testing](#testing)
-    - [Rules, snapshots, and axe](#rules-snapshots-and-axe)
-    - [Keyboard navigation](#keyboard-navigation)
-    - [Radio and checkbox items](#radio-and-checkbox-items)
-    - [Nested menu tests](#nested-menu-tests)
-    - [Manual testing](#manual-testing)
+    - [Automated tests](#automated-tests)
+    - [Keyboard testing](#keyboard-testing)
+    - [Playwright-only or host-only accessibility gates](#playwright-only-or-host-only-accessibility-gates)
+    - [Manual and screen reader testing](#manual-and-screen-reader-testing)
+    - [Submenu (submenu slot) tests](#submenu-submenu-slot-tests)
 - [Summary checklist](#summary-checklist)
 - [References](#references)
 
@@ -43,199 +46,208 @@
 
 ## Overview
 
-**`<swc-action-menu>`** (2nd-gen) is the Spectrum surface for a **menu button** that opens commands or choices in an overlay. On **smaller viewports** the menu should open in a **tray** by default for touch targets, readability, and escape from cramped layouts; on larger viewports it typically uses a **popover** unless the author **forces** popover (or tray) via API. It composes a trigger (typically a button) with `aria-haspopup="menu"`, `aria-expanded`, and `aria-controls` (or equivalent wiring) and a **`swc-menu`** that exposes **`role="menu"`** to assistive technologies regardless of tray vs popover presentation. The trigger and menu must share one DOM or shadow root because cross-root ARIA is not supported in browsers today.
+This page is for 2nd-gen `swc-action-menu` in Spectrum Web Components. It is the [ActionMenu](https://react-spectrum.adobe.com/ActionMenu)-flavored host (often a “more” or ellipses control). The goal is [WCAG 2.2](https://www.w3.org/TR/WCAG22/) Level AA.
 
-**`<swc-menu>`** must not be used as a standalone surface in product. Screen readers often announce guidance such as “Escape to close,” and a menu without a controlling trigger has no defined focus return or close affordance. Menus opened from action buttons or menubar entries are always embedded in a parent component that owns open/close, focus management, and labelling.
+### In short
 
-Treat **application command menus** (action menu) and **site navigation** patterns as separate 2nd-gen components or documented compositions. Their keyboard contracts, roles, and user expectations differ; conflating them encourages incorrect `role="menu"` on link lists and confusing screen reader interaction modes.
+- `swc-action-menu` is a full [menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) host, like [`swc-menu`](../menu/accessibility-migration-analysis.md). It has a trigger, `swc-popover` (or similar) for the open layer, and a `role="menu"` list in shadow DOM—not on the custom element.
+- The menu slot holds only `swc-menu-item`, `swc-menu-group`, and `swc-menu-separator`. Do not nest another `swc-menu` or `swc-action-menu` in that slot. Submenus use the menu item [`submenu` slot](../menu-item/accessibility-migration-analysis.md#what-swc-menu-item-is-2nd-gen).
+- Mobile tray and checkbox/radio style rows are out of scope for now ([Menu — Migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current)).
+- **Target:** [WCAG 2.2](https://www.w3.org/TR/WCAG22/) Level AA. Menu items that work like checkboxes or radios are out of scope for now ([Migration scope](#migration-scope-current)).
 
-## Also read
+[Popover](../popover/accessibility-migration-analysis.md) only positions the layer. Menu roles and in-menu keys live in `swc-action-menu` / `swc-menu` (see [Menu: What `swc-menu` is](../menu/accessibility-migration-analysis.md#what-swc-menu-is-2nd-gen)).
 
-- [Action menu migration roadmap](./rendering-and-styling-migration-analysis.md) — 2nd-gen DOM, CSS, and API migration (placeholder until expanded).
+### Migration scope (current)
 
-## What it is not
+These items wait on a single product decision from design and accessibility:
 
-- **Not** a select or listbox: **`swc-menu`** used with **`swc-action-menu`** must expose **`role="menu"`** only. Do not add conditional **`role="listbox"`** or dual semantics on the same container; Picker and combobox patterns use different APG patterns and components.
-- **Not** primary site navigation by default: for collections of links that navigate pages, the APG [disclosure navigation menu example](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/) explicitly avoids **`role="menu"`** because typical site navigation does not implement the full menu keyboard contract, and **`menu`** triggers interaction modes screen readers reserve for application widgets.
-- **Not** `aria-activedescendant` for focus in 2nd-gen: cross-root ARIA does not solve active descendant across shadow boundaries reliably, and `aria-activedescendant` has known limitations on iOS VoiceOver. Action menu should use the proposed **`FocusgroupNavigationController`** (and related focus group work) as in [spectrum-web-components#6129](https://github.com/adobe/spectrum-web-components/pull/6129), not `aria-activedescendant`, for roving tabindex and arrow navigation inside the menu.
+- **Mobile tray** — small-screen / bottom sheet (covered in other docs here).
+- **Selectable menu items** — checkboxes, radios, `aria-checked`, and multi-select. This doc still points to the [APG](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) for when that work ships; do not treat those rows as final for 2nd-gen until that work closes.
 
-## Pattern in the WAI-ARIA APG
+### Also read
 
-| Pattern | APG example | When to use |
-| --- | --- | --- |
-| Menu button (actions) | [Actions menu button example](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/examples/menu-button-actions/) | Commands (cut, copy), choices that execute actions without navigating away as plain links. Trigger opens **`role="menu"`**; items are **`menuitem`**, **`menuitemradio`**, or **`menuitemcheckbox`**. |
-| Menubar (navigation style) | [Navigation menubar example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/) | Horizontal bar of menus where structure matches menubar plus menu subtrees. Different layout and focus model than a single action menu button. |
-| Menubar (editor — groups, radios, separators) | [Editor menubar example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/) | Reference for **`menuitemradio`**, **`group`**, and separator inside menus; informs item variants and section structure. |
-| Disclosure navigation | [Example disclosure navigation menu](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/) | Top-level sections revealing lists of links. No **`role="menu"`**; buttons, **`aria-expanded`**, and link lists in **`nav`**. |
+- [Action menu migration roadmap](./rendering-and-styling-migration-analysis.md) for DOM, CSS, and API.
+- [Menu a11y doc](../menu/accessibility-migration-analysis.md) — `swc-menu` as a parallel top-level host, `FocusgroupNavigationController`, [Migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current), link rows ([Cards](https://inclusive-components.design/cards/)).
+- [Popover a11y doc](../popover/accessibility-migration-analysis.md) — `swc-popover` and layering; it does not replace the internal `role="menu"` wiring in menu hosts.
 
-**Takeaway:** use **`menu`** and **`menuitem`** family roles when behavior matches the menu button or menubar patterns. Use disclosure plus native links (or tabs or other patterns) when the primary job is in-page or multi-page navigation without application menu semantics.
+### What `swc-action-menu` is (2nd-gen)
 
-## Guidelines
+- Same parts as `swc-menu` ([Menu doc](../menu/accessibility-migration-analysis.md)): trigger, `swc-popover` for the open layer, `role="menu"` inside the shadow tree, menu slot for item / group / separator. Defaults follow React Spectrum's [ActionMenu](https://react-spectrum.adobe.com/ActionMenu) (ellipses / “more”); check 2nd-gen source for final DOM.
+- Not a [combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) or [Picker](https://react-spectrum.adobe.com/Picker) field ([When to use something else](../menu/accessibility-migration-analysis.md#when-to-use-something-else) on the menu doc).
+- Use `swc-popover` for placement, not the old overlay stack as the default. Tray and selection rows follow [Menu — Migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current).
 
-| Guideline | Target for 2nd-gen |
+### When to use something else
+
+- Picker with a text field — [APG combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/); `swc-picker` or `swc-combobox`, not the menu.
+- Main site nav — [disclosure navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/); e.g. `uec-sidenav` or `swc-sidenav`.
+- Modal work — [dialog (modal) pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/); you may still reuse popover-style chrome on the frame ([Popover](../popover/accessibility-migration-analysis.md)).
+- A control that is not the ActionMenu / “more” look — use [`swc-menu`](../menu/accessibility-migration-analysis.md) with the right trigger.
+
+### What it is not
+
+- Not `swc-popover` alone: the action menu and menu host own shadow DOM ARIA and list keyboard navigation. Popover positions and may help dismiss; see [Menu: What it is not](../menu/accessibility-migration-analysis.md#what-it-is-not).
+- Not slotted as a child of `swc-menu`, `swc-action-menu`, or `swc-menu-item`. For nested menus, use the menu item `submenu` slot.
+- Not a modal. Modal chrome is covered in the [Popover doc — Overview](../popover/accessibility-migration-analysis.md#overview).
+
+### Related
+
+- [Menu a11y doc](../menu/accessibility-migration-analysis.md) — `swc-menu`, items, submenus, links, [scope](../menu/accessibility-migration-analysis.md#migration-scope-current).
+- [Menu group a11y doc](../menu-group/accessibility-migration-analysis.md) — `swc-menu-group` under `swc-menu`, `swc-action-menu`, or `swc-menu-item` (submenu list).
+- [Menu separator a11y doc](../menu-separator/accessibility-migration-analysis.md) — `swc-menu-separator` as a direct list row, not under a group; in docs, prefer it between [labelled groups](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-2nd-gen) ([Overview](../menu-separator/accessibility-migration-analysis.md#overview)).
+- [Menu item a11y doc](../menu-item/accessibility-migration-analysis.md) — rows, `submenu` slot, link rows.
+
+---
+
+## ARIA and WCAG context
+
+### Pattern in the APG
+
+- [Menu button / actions](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) — trigger opens `role="menu"`; plain items use `menuitem`; `menuitemcheckbox` / `menuitemradio` and selection UX sync with [Menu migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current) when that work lands.
+- [Menubar](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/) — for submenu keystrokes and **child** `role="menu"` **surfaces** in **cascading** **menus** where relevant (item **`submenu` slot**; see [Menu item](../menu-item/accessibility-migration-analysis.md) and [Menu](../menu/accessibility-migration-analysis.md)).
+
+### Guidelines that apply
+
+| Idea | Plain meaning |
 | --- | --- |
-| WCAG 2.2 | Level AA where applicable (keyboard, name, role, value, focus order, labels). |
-| WAI-ARIA APG | [Menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/), [Menubar](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/), and — for link nav — [Disclosure](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/) navigation example above. |
-| Browser / AT | Verify VoiceOver (macOS and iOS), NVDA, JAWS; avoid patterns known to fail on iOS (for example `aria-activedescendant` for this use case). |
-| Responsive presentation | On **smaller viewports**, open the menu in a **tray** unless a **popover** is **forced** by author API; tray and popover must both preserve **menu** semantics, focus return to the trigger, and Escape to close. |
-| Single root for trigger + menu | **Trigger** and **`swc-menu`** share one DOM or shadow root; **cross-root ARIA** (ID references across shadow boundaries) is not supported in browsers today. |
+| [Name, role, value (4.1.2)](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value) | Trigger has button semantics and a name; menu and items are exposed per [Menu](../menu/accessibility-migration-analysis.md). Ellipses-only action menus still need a name. Disabled `swc-menu-item` rows use `aria-disabled="true"` when the row is disabled and cannot be activated, same as [Menu item — ARIA: Disabled row](../menu-item/accessibility-migration-analysis.md#aria-roles-states-and-properties) and [Menu — Guidelines that apply](../menu/accessibility-migration-analysis.md#guidelines-that-apply). |
+| [Focus order (2.4.3)](https://www.w3.org/WAI/WCAG22/Understanding/focus-order) / [Focus visible (2.4.7)](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible) | Open moves focus into the menu; Escape returns focus to the trigger; roving tabindex in the list (`FocusgroupNavigationController`). |
+| [Keyboard (2.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/keyboard) | All commands from the [menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) pattern; no pointer-only submenus (1st-gen [SWC-1332](https://jira.corp.adobe.com/browse/SWC-1332), [SWC-671](https://jira.corp.adobe.com/browse/SWC-671)). |
+| [Non-text contrast (1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | Focus indicators on items and submenu parents ([SWC-1517](https://jira.corp.adobe.com/browse/SWC-1517)). |
 
-## Related Jira issues
+**Bottom line:** `swc-action-menu` is a full menu-button host like `swc-menu` (trigger, `swc-popover`, `role="menu"` in shadow DOM, items / groups / separators in the menu slot). Submenus sit on `swc-menu-item` in its shadow tree, not a second `swc-menu` in the list. Row and submenu details are in the [menu item doc](../menu-item/accessibility-migration-analysis.md) and [menu doc](../menu/accessibility-migration-analysis.md). This doc centers ActionMenu trigger defaults, wiring, and tests. Tray and selectable rows follow [Migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current).
 
-| Type | Key | Status | Summary |
-| --- | --- | --- | --- |
-| Bug | [SWC-617](https://jira.corp.adobe.com/browse/SWC-617) | Done | Remove `aria-activedescendant` from action menu; use roving tabindex / focus group approach. |
-| Bug | [SWC-572](https://jira.corp.adobe.com/browse/SWC-572) | Done | Action menu / picker VoiceOver issues. |
-| Bug | [SWC-1488](https://jira.corp.adobe.com/browse/SWC-1488) | Done | Safari crash opening Picker/ActionMenu with VoiceOver. |
-| Bug | [SWC-1448](https://jira.corp.adobe.com/browse/SWC-1448) | Done | Refactor Picker/Action Menu dependency split. |
-| Bug | [SWC-230](https://jira.corp.adobe.com/browse/SWC-230) | Done | Arrow keys when opened by mouse (Picker/Action-Menu). |
-| Bug | [SWC-60](https://jira.corp.adobe.com/browse/SWC-60) | Done | Keyboard navigation should start at first menu item. |
-| Bug | [SWC-553](https://jira.corp.adobe.com/browse/SWC-553) | To Do | Picker and action menu untranslatable strings. |
-| Story | [SWC-577](https://jira.corp.adobe.com/browse/SWC-577) | Done | Research accessible menu navigation. |
+---
 
-## Recommendations
+## Related 1st-gen accessibility (Jira)
 
-### Roles for `swc-menu` and children
+| Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
+| --- | --- | --- | --- | --- |
+| [SWC-617](https://jira.corp.adobe.com/browse/SWC-617) | Bug | — | Fixed | Remove `aria-activedescendant`; roving tabindex / focus group |
+| [SWC-572](https://jira.corp.adobe.com/browse/SWC-572) | Bug | — | Fixed | Action menu / picker VoiceOver |
+| [SWC-1488](https://jira.corp.adobe.com/browse/SWC-1488) | Bug | — | Fixed | Safari crash ActionMenu + VoiceOver |
+| [SWC-1448](https://jira.corp.adobe.com/browse/SWC-1448) | Bug | — | Fixed | Refactor Picker / action menu split |
+| [SWC-230](https://jira.corp.adobe.com/browse/SWC-230) | Bug | — | Fixed | Arrow keys when opened by mouse |
+| [SWC-60](https://jira.corp.adobe.com/browse/SWC-60) | Bug | — | Fixed | Keyboard should start at first item |
+| [SWC-923](https://jira.corp.adobe.com/browse/SWC-923) | Bug | To Do | Unresolved | `menu-item` + `href` double link (see [Menu](../menu/accessibility-migration-analysis.md)) |
+| [SWC-1332](https://jira.corp.adobe.com/browse/SWC-1332) | Bug | To Do | Unresolved | Submenu custom content not keyboard accessible |
+| [SWC-1941](https://jira.corp.adobe.com/browse/SWC-1941) | Bug | To Do | Unresolved | Space/Enter on menu item in modal + popover |
+| [SWC-933](https://jira.corp.adobe.com/browse/SWC-933) / [SWC-932](https://jira.corp.adobe.com/browse/SWC-932) | Bug | Blocked / To Do | Unresolved | Picker arrow in popover list |
+| [SWC-686](https://jira.corp.adobe.com/browse/SWC-686) | Bug | — | Unresolved | iOS submenu + VoiceOver closes tray |
+| [SWC-671](https://jira.corp.adobe.com/browse/SWC-671) | Bug | Blocked | Unresolved | Submenus on mobile visibility |
+| [SWC-1517](https://jira.corp.adobe.com/browse/SWC-1517) | Bug | To Do | Unresolved | Submenu item focus on hover Safari |
+| [SWC-1174](https://jira.corp.adobe.com/browse/SWC-1174) | — | To Do | Unresolved | Picker visible label (Menu-related) |
+| [SWC-89](https://jira.corp.adobe.com/browse/SWC-89) | Story | — | Unresolved | Touch submenu UI |
+| [SWC-553](https://jira.corp.adobe.com/browse/SWC-553) | Bug | To Do | Unresolved | i18n strings (Picker + action menu context) |
+| [SWC-577](https://jira.corp.adobe.com/browse/SWC-577) | Story | — | Done | Research accessible menu navigation |
 
-- **`swc-menu`** (when used with **`swc-action-menu`** or an equivalent menu host): **`role="menu"`** only. No listbox branch on the same primitive.
-- Allowed descendant roles (WAI-ARIA menu content): **`menuitem`**, **`menuitemradio`**, **`menuitemcheckbox`**, **`separator`**, **`group`**. Each role implies different keyboard and state behavior (toggle, radio group, section label, divider). Consider separate 2nd-gen components or clear variants per role so behavior and tests stay correct — for example **`swc-menu-item`** (`menuitem`), **`swc-menu-item-checkbox`**, **`swc-menu-item-radio`**, **`swc-menu-group`**, **`swc-menu-separator`** (`separator`).
-- Do not use **`role="listitem"`** on rows inside **`role="menu"`**. **`listitem`** belongs under **`list`**; menu rows must use **`menuitem`** or the checkbox or radio variants per [APG menu patterns](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/).
+---
 
-### Composition and labelling
+## Recommendations: `<swc-action-menu>`
 
-- Always compose **`swc-menu`** inside a parent that provides open/close, focus return to the trigger, and `aria-labelledby` or `aria-label` for the menu where needed.
-- **Trigger and menu must share one root:** the trigger (button) and the **`swc-menu`** surface must live in the same tree root (for example both inside the **`swc-action-menu`** shadow root or the same light-DOM subtree owned by that host). **Cross-root ARIA** — ID references such as **`aria-controls`**, **`aria-labelledby`**, and **`aria-activedescendant`** across separate shadow roots — is not supported in browsers today, so splitting the trigger and menu across unrelated custom element boundaries breaks those relationships.
-- Trigger should mirror APG menu button attributes (`aria-haspopup`, `aria-expanded`, `aria-controls` when appropriate).
+Item- and submenu-level rules live in [Menu — Recommendations: `swc-menu`](../menu/accessibility-migration-analysis.md#recommendations-swc-menu). Here: the `swc-action-menu` host and ActionMenu trigger defaults. Where `role="menu"` lives and how the `submenu` slot works match `swc-menu`—same [menu slot rules](../menu/accessibility-migration-analysis.md#recommendations-swc-menu) (no nested `swc-menu` / `swc-action-menu`; only item, group, separator in the menu slot for current scope).
 
-### Viewport and presentation (tray vs popover)
+### ARIA roles, states, and properties
 
-- **Default on small viewports:** present the menu in a **tray** (bottom sheet or equivalent Spectrum pattern) so content is usable on narrow screens and does not rely on a floating popover that can clip or obscure the trigger awkwardly.
-- **Popover when forced:** when the author **forces** popover presentation (API or attribute — exact name TBD in implementation), use the popover overlay even on small viewports; document that this is opt-in because it can hurt usability on touch-first layouts.
-- **Accessibility:** tray vs popover is **presentational**; **`role="menu"`**, **keyboard** behavior, **focus** **trap** / **return** to the trigger, and **modal** or **non-modal** semantics for the overlay layer must stay **consistent** with the chosen pattern (for example ensure the tray is **dismissible** and **labelled** like the popover case).
+| Topic | What to do |
+| --- | --- |
+| Host placement | `swc-menu` and `swc-action-menu` are not slotted into `swc-menu`, `swc-action-menu`, or `swc-menu-item`. They are top-level [menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) hosts. |
+| Menu slot (current migration) | Intended children: only `swc-menu-item`, `swc-menu-group`, and `swc-menu-separator`. Do not depend on other types in that slot (check 2nd-gen source). |
+| Trigger | Button: `aria-haspopup="menu"`; `aria-expanded` matches open/closed. Name the control (`aria-label`; icon-only needs a name) ([ActionMenu](https://react-spectrum.adobe.com/ActionMenu) defaults, e.g. “More...”). |
+| Internal `role="menu"` (not the CE host) | The menu-button trigger and the internal `role="menu"` node are implemented together in `swc-action-menu`’s (or `swc-menu`’s) shadow DOM—`role="menu"` is not on the `<swc-menu>` / `<swc-action-menu>` custom element host, and the host design keeps the trigger and menu surface in that shadow tree together. Verify final markup in 2nd-gen source before shipping docs. |
+| Relation to `swc-menu` | Both `swc-action-menu` and `swc-menu` hosts put `role="menu"` in shadow DOM, not on the custom element. `swc-menu` ~ [Menu](https://react-spectrum.adobe.com/Menu); `swc-action-menu` ~ [ActionMenu](https://react-spectrum.adobe.com/ActionMenu) ([Menu doc](../menu/accessibility-migration-analysis.md)). Do not use `role="listbox"` on the internal list for this pattern. |
+| No shortcut | Action menu is for commands, not a combobox + listbox. |
+| Disabled `swc-menu-item` | Each disabled item sets `aria-disabled="true"` and must not run its action when disabled (roving focus may still visit the row; see [Menu item — ARIA: Disabled row](../menu-item/accessibility-migration-analysis.md#aria-roles-states-and-properties) and [Menu — Recommendations: `swc-menu`](../menu/accessibility-migration-analysis.md#recommendations-swc-menu). |
 
-### Focus and navigation
+### Shadow DOM and cross-root ARIA Issues
 
-- Implement arrow, Home, End, and typeahead per APG menu patterns using **`FocusgroupNavigationController`** (see [PR #6129](https://github.com/adobe/spectrum-web-components/pull/6129)) rather than `aria-activedescendant` for 2nd-gen action menu.
+**Host shell (stays in shadow):** the ActionMenu trigger and the internal `role="menu"` node are implemented together in `swc-action-menu`’s shadow tree (same rule as [Menu — Recommendations: `swc-menu`](../menu/accessibility-migration-analysis.md#recommendations-swc-menu); verify in 2nd-gen source).
 
-### Submenus
+**Slotted menu content** does not have to sit inside the trigger’s shadow tree, but: do not slot `swc-menu` or `swc-action-menu` into `swc-menu`, `swc-action-menu`, or `swc-menu-item`. The menu slot is for `swc-menu-item`, `swc-menu-group`, and `swc-menu-separator` only. `swc-menu-group` and `swc-menu-separator` are direct list children of those three parents; see [Menu group](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-2nd-gen), [Menu item](../menu-item/accessibility-migration-analysis.md#what-swc-menu-item-is-2nd-gen), and [Menu separator](../menu-separator/accessibility-migration-analysis.md#what-the-menu-separator-is-swc-menu-separator-2nd-gen). Roving focus uses `FocusgroupNavigationController`, not IDREF to each item. See [Menu: Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) for cross-root ID issues.
 
-- A parent row is still a **`menuitem`** (or variant) with **`aria-haspopup="menu"`** (or **`true`**) and **`aria-expanded`** reflecting whether its child **`role="menu"`** is open. The nested menu keeps **`role="menu"`** and the same shared-root rules as the top-level menu relative to its parent item (IDs and focus wiring must not rely on cross-root ARIA).
-- Keyboard behavior for opening, closing, and moving between parent menu and submenu should follow the [menubar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/) submenu expectations where they apply (for example Right Arrow or Enter to open, Left Arrow or Escape to close and return focus, Arrow keys inside the submenu). Exact keys may be refined with design and platform norms but must be documented and tested.
+### Accessibility tree expectations
 
-### Actions vs navigation
+- Closed: focusable trigger; menu not in the tab order; `aria-expanded="false"`.
+- Open: `aria-expanded="true"`; focus moves into the internal `role="menu"` surface (shadow tree) and items as in the [menu doc](../menu/accessibility-migration-analysis.md) (same menu-button pattern for `swc-menu` and `swc-action-menu`). Disabled `swc-menu-item` rows expose `aria-disabled="true"` as in the [menu doc — Accessibility tree expectations](../menu/accessibility-migration-analysis.md#accessibility-tree-expectations) and [Menu item — ARIA: Disabled row](../menu-item/accessibility-migration-analysis.md#aria-roles-states-and-properties).
 
-- **Action menu (commands):** **`swc-action-menu`** plus **`swc-menu`** with **`menu`** / **`menuitem`** family.
-- **Navigation (links, site structure):** prefer disclosure navigation or menubar navigation examples as separate components or documented patterns; do not reuse **`swc-action-menu`** semantics for pure link navigation without a deliberate APG match.
+### Form-associated custom properties (labels, `ElementInternals`)
 
-## Shadow DOM and cross-root accessibility
+Does not apply to `swc-action-menu` as a form field; it is not a form-associated control. Label the button for accessibility.
 
-- **Shared root:** keep the menu button trigger and **`swc-menu`** under a single shadow root (or one document subtree where IDREF targets are not split across unrelated shadow trees). Browsers do not implement cross-root ARIA; **`aria-controls`**, **`aria-labelledby`**, and related ID references must resolve in the same root as the referencing element.
-- Prefer focusable menu items with roving **`tabindex`** inside the menu root over `aria-activedescendant` pointing across shadow roots.
-- Ensure visible focus rings and high contrast behavior for focused **`menuitem`** rows.
+### Live regions, loading, and announcements
 
-## Tree expectations
+Does not apply by default on the action menu host. Item-level busy states or toasts are out of scope for this primitive.
 
-Illustrative light DOM (conceptual):
+### Motion (dedicated recommendations subsection)
 
-```html
-<swc-action-menu label="Actions">
-  <swc-menu id="actions-menu">
-    <swc-menu-item>Duplicate</swc-menu-item>
-    <swc-menu-item>Rename</swc-menu-item>
-    <swc-menu-separator></swc-menu-separator>
-    <swc-menu-item>Delete</swc-menu-item>
-  </swc-menu>
-</swc-action-menu>
-```
+Intentionally omitted. If popover open/close uses motion, treat it like other layered UI; document reduced motion in sibling guideline docs only.
 
-Expectations:
+### Keyboard and focus
 
-- Trigger and menu are composed under one host root so ARIA ID references between them resolve (cross-root ARIA is unsupported).
-- Trigger exposes button semantics with **`aria-haspopup="menu"`** and **`aria-expanded`** tied to open state.
-- **`swc-menu`** root has **`role="menu"`** and an accessible name (from label or **`aria-labelledby`**) when needed.
-- Items expose **`menuitem`** (or checkbox or radio variants) and correct **`aria-checked`** / **`aria-disabled`** as applicable.
+- Open from the trigger per the [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) (Arrow Up/Down, Space, Enter); in-menu navigation in the open internal `role="menu"` surface (`swc-menu` / `swc-action-menu` shadow tree, not the CE host; or a test harness) via [FocusgroupNavigationController](https://github.com/adobe/spectrum-web-components/pull/6129) (not `aria-activedescendant` in 2nd-gen; see [SWC-617](https://jira.corp.adobe.com/browse/SWC-617)). Use the same item-collection model as [`swc-menu`](../menu/accessibility-migration-analysis.md#keyboard-and-focus): the controller should look for `swc-menu-item` as direct list children and `swc-menu-item` under each direct `swc-menu-group`, e.g.:
 
-## Keyboard
+  ```js
+  this.querySelectorAll(':scope > swc-menu-item, :scope > swc-menu-group > swc-menu-item');
+  ```
 
-Align with the [menu button pattern keyboard table](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) and the [actions menu example](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/examples/menu-button-actions/) (open with Arrow, Space, or Enter from the button; wrap inside the menu; Escape closes and returns focus to the button; typeahead where specified).
+  (with `this` as the list context the controller binds to; verify in 2nd-gen source). Submenu keys on rows with a populated `submenu` slot per [Menu item — Keyboard and focus](../menu-item/accessibility-migration-analysis.md#keyboard-and-focus).
+- **Printable character navigation (optional; not typeahead):** `swc-action-menu` uses the same in-list keyboard model as `swc-menu`—arrows, Home, End, and the same optional printable-character rules for the open `role="menu"`. It is **not** combobox **typeahead** on a text field. Submenus inside `swc-menu-item` should match. See [Menu — Printable character navigation (optional; not typeahead)](../menu/accessibility-migration-analysis.md#printable-character-navigation-optional-not-typeahead).
+- **Disabled items:** `aria-disabled="true"` and no activation on Enter/Space when a `swc-menu-item` is disabled, per [Menu item — ARIA: Disabled row](../menu-item/accessibility-migration-analysis.md#aria-roles-states-and-properties) and [Menu — Keyboard and focus](../menu/accessibility-migration-analysis.md#keyboard-and-focus).
+- Close: Escape returns focus to the trigger; see [Menu: Testing](../menu/accessibility-migration-analysis.md#testing) and action menu stories for submenu cases.
 
-When **`swc-menu`** supports **submenus**, also align submenu open/close and cross-level movement with the [menubar pattern keyboard table](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/) (submenu section) or an equivalent documented mapping.
-
-## Assistive technology and Escape
-
-Screen readers may announce that Escape closes the menu. That is only valid when a host component implements close on Escape and returns focus to the trigger. Document that **`swc-menu`** is not a standalone widget for this reason.
+---
 
 ## Testing
 
-Use a mix of **axe**, **ARIA snapshots**, **Playwright** (or integration) **keyboard** tests, and **manual** assistive technology checks. Patterns for Playwright in this repo are described in [Playwright accessibility testing](../../../02_style-guide/04_testing/03_playwright-accessbility-testing.md).
+### Automated tests
 
-### Rules, snapshots, and axe
-
-- Run **axe** (or the project’s equivalent WCAG rule set) on action menu stories.
-- Capture ARIA or accessibility snapshots for **open** and **closed** states with plain **`menuitem`** rows.
-
-### Keyboard navigation
-
-Add **Playwright** or integration tests that send real key events (not only static snapshots). Cover at least:
-
-- Open from the trigger: Arrow Down or Up, Space, Enter ([APG menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)).
-- Move inside the menu: Arrow Up/Down and, if implemented, Home/End; assert focus or active item.
-- Activate: Enter or Space on a plain **`menuitem`**.
-- Close: Escape returns focus to the trigger; **`aria-expanded`** toggles correctly.
-- **`menuitemradio`** and **`menuitemcheckbox`**: same style of tests for toggling and group semantics (see [Radio and checkbox items](#radio-and-checkbox-items)).
-- **Nested menus**: when supported, add the cases in [Nested menu tests](#nested-menu-tests).
-- **Typeahead**: add tests if the implementation supports it.
-
-### Radio and checkbox items
-
-Use dedicated Storybook (or app) stories for **`menuitemradio`** and **`menuitemcheckbox`**.
-
-| Kind | What to verify |
+| Kind of test | What to check |
 | --- | --- |
-| **Snapshots** (menu open) | **`role="menuitemradio"`** or **`role="menuitemcheckbox"`**; **`aria-checked`** (`true` / `false` / `mixed` for tri-state checkboxes if supported); **`aria-disabled`** when applicable. For radios, include a **`group`** (or equivalent) with a section name (visible or **`aria-label`**) per [editor menubar example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/) patterns. |
-| **Keyboard** | Checkbox: Space (and Enter if implemented) toggles **`aria-checked`**. Radio: after keyboard selection, only one item is **`aria-checked="true"`**; arrows still move focus across the group. |
-| **axe** | Same WCAG rule pass on those stories, open and closed where relevant. |
+| aXe / Storybook | Open/closed; `aria-disabled` on disabled items as implemented ([Menu item — ARIA](../menu-item/accessibility-migration-analysis.md#aria-roles-states-and-properties), [Menu doc](../menu/accessibility-migration-analysis.md)); no duplicate link activation for `href` items ([SWC-923](https://jira.corp.adobe.com/browse/SWC-923)). |
+| Playwright / ARIA snapshots | Trigger plus internal `role="menu"` in shadow DOM, not the CE host ([SWC-1941](https://jira.corp.adobe.com/browse/SWC-1941), [SWC-230](https://jira.corp.adobe.com/browse/SWC-230), [SWC-60](https://jira.corp.adobe.com/browse/SWC-60)); cascading menu via `submenu` slot (trigger + `role="menu"` in `swc-menu-item` shadow) ([SWC-1332](https://jira.corp.adobe.com/browse/SWC-1332)). |
+| iOS / VoiceOver | Covered (see [SWC-686](https://jira.corp.adobe.com/browse/SWC-686), [SWC-1488](https://jira.corp.adobe.com/browse/SWC-1488), [SWC-572](https://jira.corp.adobe.com/browse/SWC-572)). |
 
-### Nested menu tests
+### Keyboard testing
 
-Only required if the product supports **submenus**.
+Follow the 2nd-gen Storybook [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) guide on a fully composed path (**`swc-action-menu`** or **`swc-menu`**: **trigger** + **internal** **`role="menu"`** **(shadow)** + **`swc-popover`**, not the 1st-gen overlay stack). Cover the [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) on the trigger (open/close, focus return) and in-menu keys on the **open** **menu** **surface** ([FocusgroupNavigationController](https://github.com/adobe/spectrum-web-components/pull/6129)); if implemented, cover [printable character navigation (not typeahead)](../menu/accessibility-migration-analysis.md#printable-character-navigation-optional-not-typeahead) on the top-level list and in submenus. Include Escape, **submenu** **item** / **`submenu` slot** cases, and small-viewport popover positioning as relevant. See [Menu: Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing) for menu surface detail, [Menu item: Keyboard and focus](../menu-item/accessibility-migration-analysis.md#keyboard-and-focus) for **submenu** **rows**, and [Recommendations: Keyboard and focus](#keyboard-and-focus) here.
 
-| Kind | What to verify |
-| --- | --- |
-| **Snapshots** | Parent **`menuitem`**: **`aria-haspopup`**, **`aria-expanded`**. Nested surface: **`role="menu"`**. States: root **closed**; root **open** and submenu **closed**; root **open** and submenu **open**. |
-| **Keyboard** | Open submenu from parent; arrows inside nested **`menu`**; activate a leaf **`menuitem`**; Left Arrow or Escape closes submenu (per implementation) and returns focus to parent **`menuitem`**; closing root returns focus to trigger. Prefer at least one **two-level** path if allowed. |
-| **axe** | Run on submenu stories for open/closed combinations when stable enough to avoid flakes. |
+### Playwright-only or host-only accessibility gates
 
-### Manual testing
+Mirror test cases from 1st-gen defects in the Jira table; add 2nd-gen stories for ellipsis, icon naming, and a fully composed **Action menu** (or **Menu**) path: **trigger** + **top-level** **`swc-popover`**. Mobile tray is out of scope for the current migration (no separate tray test branch here).
 
-- **Keyboard:** open, navigate, activate, Escape without a pointer.
-- **Screen readers:** VoiceOver (macOS and iOS, Safari); NVDA with Firefox or Chrome per project norms.
-- **Small viewports:** tray open/close, focus order, Escape; forced popover path if exposed.
-- **Content coverage:** at least one **radio** group and one **checkbox** menu per pass.
-- **Submenus:** if they exist, verify open, traverse, close, and focus return (including iOS VoiceOver where applicable).
+### Manual and screen reader testing
+
+- macOS + iOS VoiceOver, NVDA; follow [Keyboard testing](#keyboard-testing) and [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) on a fully composed **`swc-action-menu`** (or equivalent **Menu** host) path (**trigger** + **`swc-popover`**, not the 1st-gen overlay stack).
+- Submenus and mobile/touch ([SWC-686](https://jira.corp.adobe.com/browse/SWC-686), [SWC-89](https://jira.corp.adobe.com/browse/SWC-89)): tray-related issues may not apply until tray is in scope; still verify popover-positioned menus on small viewports where relevant.
+
+Do not require checkbox or radio menu item stories or selection-mode coverage until [Menu migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current) closes; the APG [editor menubar example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/) remains a future reference when that work ships.
+
+### Submenu (submenu slot) tests
+
+If 2nd-gen supports **cascading** **menus** via **`swc-menu-item`’s** **`submenu` slot** (see [Menu item — Testing](../menu-item/accessibility-migration-analysis.md#testing), [Menu: Testing](../menu/accessibility-migration-analysis.md#testing), and [SWC-671](https://jira.corp.adobe.com/browse/SWC-671) / [SWC-89](https://jira.corp.adobe.com/browse/SWC-89)), add ARIA and keyboard end-to-end tests for at least one two-level path (**submenu** **trigger** and **child** **`role="menu"`** in **`swc-menu-item`’s** **shadow** **DOM** + **popover** **anchoring** as **implemented**).
+
+---
 
 ## Summary checklist
 
-- [ ] **`swc-menu`** with **`swc-action-menu`**: **`role="menu"`** only (no listbox mode).
-- [ ] Menu always composed in a parent that handles close and focus return.
-- [ ] Trigger and **`swc-menu`** share one root; no reliance on cross-root ARIA (unsupported).
-- [ ] Children use **`menuitem`**, **`menuitemradio`**, **`menuitemcheckbox`**, **`separator`**, **`group`** — not **`listitem`**.
-- [ ] Separate components or patterns for action menus vs navigation (disclosure or menubar as appropriate).
-- [ ] Focus via **`FocusgroupNavigationController`** ([#6129](https://github.com/adobe/spectrum-web-components/pull/6129)), not `aria-activedescendant` for this pattern.
-- [ ] Keyboard matches APG menu button expectations.
-- [ ] Automated tests cover keyboard navigation (open, move, activate, Escape, focus return), not only snapshots or axe.
-- [ ] **`menuitemradio`** and **`menuitemcheckbox`**: automated keyboard tests and ARIA snapshots (open menu, roles, **`aria-checked`**, groups); axe on those stories.
-- [ ] **Submenus** (if supported): automated keyboard tests for open, navigate, close, and focus return; ARIA snapshots for **`aria-haspopup`**, **`aria-expanded`**, nested **`role="menu"`**; manual pass on AT including iOS where applicable.
-- [ ] Verified with screen readers including iOS.
-- [ ] **Smaller viewports:** menu opens in **tray** by default; **popover** only when **forced** via API; tray and popover both meet **focus** and **Escape** expectations.
+- [ ] ActionMenu trigger (ellipses, optional label) with a clear name on icon-only controls; keep separate from combobox / Picker stories ([SWC-1174](https://jira.corp.adobe.com/browse/SWC-1174)).
+- [ ] Both `swc-menu` and `swc-action-menu` are full menu-button hosts; `role="menu"` is in shadow DOM, not the CE host ([Menu — Overview](../menu/accessibility-migration-analysis.md#overview)). Do not slot `swc-menu` / `swc-action-menu` as list children. Menu slot: only item, group, separator (check source). Submenus: `submenu` slot on `swc-menu-item` in shadow, not a nested `swc-menu` in the list.
+- [ ] Disabled `swc-menu-item` rows: `aria-disabled="true"` and no activation when disabled, aligned with [Menu item — ARIA: Disabled row](../menu-item/accessibility-migration-analysis.md#aria-roles-states-and-properties) and [Menu — Recommendations](../menu/accessibility-migration-analysis.md#recommendations-swc-menu).
+- [ ] Open/close and keyboard wiring (see [Menu doc](../menu/accessibility-migration-analysis.md); may split controller, `swc-popover`, menu hosts). `FocusgroupNavigationController` for in-list move; `swc-popover` anchors the layer. If implemented, [printable character navigation (not typeahead)](../menu/accessibility-migration-analysis.md#printable-character-navigation-optional-not-typeahead) on `swc-action-menu` and submenus matches `swc-menu`. Tray and item selection: [Migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current).
+- [ ] Jira backlog (1st-gen table above) triaged alongside current migration work in Jira; tests for `swc-popover`-positioned menus (no tray branch in this scope).
+- [ ] iOS, touch, and submenus ([SWC-686](https://jira.corp.adobe.com/browse/SWC-686), [SWC-89](https://jira.corp.adobe.com/browse/SWC-89), [SWC-1332](https://jira.corp.adobe.com/browse/SWC-1332), [SWC-671](https://jira.corp.adobe.com/browse/SWC-671))—SWC-686 references 1st-gen tray; revalidate against `swc-popover` where applicable.
+
+---
 
 ## References
 
-- [WAI-ARIA APG: Menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)
-- [WAI-ARIA APG: Actions menu button example](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/examples/menu-button-actions/)
-- [WAI-ARIA APG: Menubar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/)
-- [WAI-ARIA APG: Editor menubar example (radio, group, separator)](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/)
-- [WAI-ARIA APG: Navigation menubar example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/)
-- [WAI-ARIA APG: Disclosure navigation example](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/)
-- [spectrum-web-components PR #6129 — Focusgroup navigation controller](https://github.com/adobe/spectrum-web-components/pull/6129)
+- [React Spectrum: ActionMenu](https://react-spectrum.adobe.com/ActionMenu)
+- [React Spectrum: Menu](https://react-spectrum.adobe.com/Menu)
+- [WAI-ARIA APG: Menu button (actions) example](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/examples/menu-button-actions/)
+- [Menu accessibility migration analysis](../menu/accessibility-migration-analysis.md)
+- [Menu group accessibility migration analysis](../menu-group/accessibility-migration-analysis.md)
+- [Menu item accessibility migration analysis](../menu-item/accessibility-migration-analysis.md)
+- [Popover accessibility migration analysis](../popover/accessibility-migration-analysis.md)
+- [PR #6129 — Focusgroup navigation](https://github.com/adobe/spectrum-web-components/pull/6129)
+- [2nd-gen Storybook: Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)
+- [2nd-gen Storybook: Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
