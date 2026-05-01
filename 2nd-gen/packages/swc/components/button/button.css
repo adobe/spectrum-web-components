@@ -426,6 +426,18 @@ slot[name="icon"]::slotted(*) {
   text-overflow: ellipsis;
 }
 
+/* ── Justified ────────────────────────────────────── */
+
+:host([justified]) {
+  flex-grow: 1;
+  justify-self: stretch;
+  inline-size: 100%;
+
+  .swc-Button {
+    inline-size: 100%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .swc-Button {
     transition-duration: 0ms;

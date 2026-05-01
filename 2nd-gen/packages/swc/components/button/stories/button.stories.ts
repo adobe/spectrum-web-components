@@ -207,7 +207,7 @@ export const Sizes: Story = {
       template({ ...args, size, 'default-slot': sizeLabels[size] })
     )}
   `,
-  parameters: { flexLayout: true, 'section-order': 1 },
+  parameters: { flexLayout: 'row-wrap', 'section-order': 1 },
   tags: ['options'],
 };
 
@@ -217,7 +217,7 @@ export const Variants: Story = {
       template({ ...args, variant, 'default-slot': variantLabels[variant] })
     )}
   `,
-  parameters: { flexLayout: true, 'section-order': 2 },
+  parameters: { flexLayout: 'row-wrap', 'section-order': 2 },
   tags: ['options'],
 };
 
@@ -232,7 +232,7 @@ export const Outline: Story = {
       })
     )}
   `,
-  parameters: { flexLayout: true, 'section-order': 3 },
+  parameters: { flexLayout: 'row-wrap', 'section-order': 3 },
   tags: ['options'],
 };
 
@@ -246,7 +246,11 @@ export const StaticColors: Story = {
       })
     )}
   `,
-  parameters: { flexLayout: true, staticColorsDemo: true, 'section-order': 4 },
+  parameters: {
+    flexLayout: 'row-wrap',
+    staticColorsDemo: true,
+    'section-order': 4,
+  },
   tags: ['options', '!test'],
 };
 StaticColors.storyName = 'Static colors';
@@ -261,7 +265,7 @@ export const States: Story = {
     ${template({ ...args, disabled: true, 'default-slot': 'Disabled' })}
     ${template({ ...args, pending: true, 'default-slot': 'Pending' })}
   `,
-  parameters: { flexLayout: true },
+  parameters: { flexLayout: 'row-wrap' },
   tags: ['states'],
 };
 
@@ -284,7 +288,7 @@ export const TextWrapping: Story = {
     })}
   `,
   tags: ['behaviors'],
-  parameters: { flexLayout: true },
+  parameters: { flexLayout: 'row-wrap' },
 };
 TextWrapping.storyName = 'Text wrapping';
 
@@ -296,6 +300,22 @@ export const Truncate: Story = {
       'default-slot': 'This is a very long button label that will be truncated',
       style: 'max-inline-size: 200px',
     }),
+  tags: ['behaviors'],
+};
+
+/* TODO: in docs phase, caveat that the container also has to allow the button to stretch.
+For example, using `justify-content: center` with grid display may force the button to it's max-content size or smaller. */
+export const Justified: Story = {
+  render: (args) => html`
+    <div style="inline-size: min(40ch, 100%); margin-inline: auto;">
+      ${template({
+        ...args,
+        justified: true,
+        'default-slot': 'This button can fill the container',
+      })}
+    </div>
+  `,
+  parameters: { layout: 'padded' },
   tags: ['behaviors'],
 };
 

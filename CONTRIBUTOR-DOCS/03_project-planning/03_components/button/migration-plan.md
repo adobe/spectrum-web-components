@@ -218,6 +218,7 @@ This full modifier surface will not be carried forward to 2nd-gen.
 | **A4** | Future support for form-associated `submit` / `reset` | Deferred to `SWC-2034` until the ElementInternals/tooling path is settled. |
 | **A5** | Host `focus` / `blur` compatibility parity | Deferred to `SWC-2035`; initial 2nd-gen Button will document `click` plus bubbling `focusin` / `focusout` as the supported host-listener contract. |
 | **A6** | React Spectrum-only `genai` and `premium` variants | Deferred to `SWC-2036` because they are not part of the approved baseline Button scope in this plan. |
+| **A7** | `justified` — full-width layout mode | Not present in 1st-gen. Added in 2nd-gen based on a post-planning S2 Design update. Requires the container to allow stretching. |
 
 ---
 
@@ -245,6 +246,7 @@ These are derived from the 1st-gen implementation, current deprecations, the Fig
 | `label` | deprecated | n/a | `label` | **Planned removal.** Replaced by `accessible-label` / `accessibleLabel`. |
 | `iconOnly` | removed | n/a | removed | **Deviation from plan.** Not kept as a consumer attribute. Icon-only layout is now auto-derived from slot presence: `swc-Button--iconOnly` (circular layout) and `swc-Button--hasIcon` (label `text-align: start`) are applied via `classMap` in `ButtonBase`. Matches the CSS style-guide rule that derived states must not appear as host attributes. |
 | `truncate` | `boolean` | `false` | `truncate` | **Confirmed rename.** Replaces legacy `no-wrap` with a more explicit name for the actual behavior: single-line truncation with overflow handling rather than wrapping. Tooltip guidance for clipped content is documentation guidance, not built-in Button behavior. |
+| `justified` | `boolean` | `false` | `justified` | **Additive (A7).** Not in 1st-gen. S2 Design addition: makes the button stretch to fill its container. Requires the container to permit stretching. |
 | `active` | internal styling state | n/a | maybe none / internal only | **Proposed.** Do not preserve as a documented consumer-controlled API unless styling proves it necessary. |
 | `href`, `target`, `download`, `referrerpolicy`, `rel` | removed | n/a | removed | **Confirmed removal.** Use native anchors for navigation. |
 
@@ -435,7 +437,7 @@ Allowed differences:
 
 - [x] `Button.types.ts`: define canonical `ButtonVariant`, `ButtonFillStyle`, `ButtonStaticColor`, and `ButtonSize`
 - [x] `Button.base.ts` (core): retain `disabled`, `pending`, `pendingLabel`, and accessible-name/pending-label logic. Also includes `SizedMixin` with `BUTTON_VALID_SIZES` — **deviation from plan**: the plan placed `size` in SWC as a non-reusable concern, but `SizedMixin` captures `validSizes` at construction time via closure; subclass static overrides have no effect at runtime. Because all Spectrum button-like components share the same four sizes (`s`, `m`, `l`, `xl`), placing `SizedMixin` in `ButtonBase` is safe and avoids requiring each subclass to re-apply the mixin. `variant`, `fillStyle`, and `staticColor` remain SWC-only.
-- [x] `Button.ts` (SWC): define `variant`, `fillStyle`, `staticColor`, `iconOnly`, `truncate`, and visual combination validation warnings. `size` moved to `ButtonBase` (see above). Static class members (`VARIANTS`, `FILL_STYLES`, `STATIC_COLORS`, `VALID_SIZES`) were omitted — **deviation from plan**: these would be re-pointing the same module-level constants; debug validation code references the module constants directly instead.
+- [x] `Button.ts` (SWC): define `variant`, `fillStyle`, `staticColor`, `truncate`, `justified`, and visual combination validation warnings. `size` moved to `ButtonBase` (see above). `iconOnly` removed as a consumer attribute — icon-only layout is auto-derived from slot presence via `classMap` (see deviation note in the Public API table). Static class members (`VARIANTS`, `FILL_STYLES`, `STATIC_COLORS`, `VALID_SIZES`) were omitted — **deviation from plan**: these would be re-pointing the same module-level constants; debug validation code references the module constants directly instead.
 - [x] Rename legacy `noWrap` to `truncate` in the 2nd-gen API — 2nd-gen `Button.ts` exposes `truncate`; `no-wrap` is deprecated in 1st-gen with `@deprecated` JSDoc and `window.__swc.warn()`
 - [x] Add `@deprecated` JSDoc to 1st-gen type and const exports (`ButtonVariants`, `ButtonTreatments`, `ButtonStaticColors`, `DeprecatedButtonVariants`, `VALID_VARIANTS`, `VALID_STATIC_COLORS`)
 - [x] Add `@deprecated` JSDoc to 1st-gen `treatment` property; no runtime warn added because `treatment` is set internally by the `quiet` setter and the `overBackground` variant alias, which already emit their own deprecation warnings
@@ -552,6 +554,7 @@ Allowed differences:
 - [ ] Document supported naming APIs at the host level (`accessible-label` and visible text) and how they map to the internal `<button>` via `aria-label`
 - [ ] Document that cross-root `aria-labelledby` / `aria-describedby` and form-associated `submit` / `reset` are deferred follow-up work
 - [ ] Document that focus indication uses `outline` so it remains visible for truncated buttons (`SWC-886`)
+- [ ] Document `justified` usage and its container dependency — the host stretches via `flex-grow`/`inline-size: 100%`, but the container must allow stretching. For example, `justify-content: center` on a grid or flex container can override this and must be called out
 - [ ] Update global element guidance so button-styled native elements and `sp-button` describe the same visual API and any intentional limitations
 
 #### Breaking changes

@@ -108,6 +108,13 @@ export class Button extends ButtonBase {
   @property({ type: Boolean, reflect: true })
   public truncate: boolean = false;
 
+  /**
+   * Enables the button to become full-width, if the container
+   * allows it.
+   */
+  @property({ type: Boolean, reflect: true })
+  public justified: boolean = false;
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────
