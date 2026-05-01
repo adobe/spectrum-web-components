@@ -269,6 +269,8 @@ Example content for this section
 
 No `--mod-*` properties will be exposed. New `--swc-*` component-level properties may be introduced where needed — these are additive and not breaking. See [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure) for what to expose and how.
 
+Each exposed `--swc-*` property must be documented with a `@cssprop` JSDoc tag on the primary SWC component class. Storybook picks these up and surfaces them in the API docs panel automatically.
+
 Initial expectation for [Component] is a small reviewed set.
 
 ### Behavioral semantics
@@ -347,6 +349,7 @@ Planned rendering shape:
 <!-- Most components will need these items; add others as needed -->
 
 - [ ] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) if present in S2 source
+- [ ] Add `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-*` property (e.g. `@cssprop --swc-[component]-height - Block size of the [component].`)
 - [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 ### Accessibility
