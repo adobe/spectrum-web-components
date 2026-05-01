@@ -19,10 +19,12 @@
 }
 
 .swc-Button {
+  -webkit-tap-highlight-color: transparent;
   display: inline-flex;
   position: relative;
   gap: var(--swc-button-gap, token("text-to-visual-100"));
   align-items: center;
+  justify-content: center;
   max-inline-size: var(--swc-button-max-inline-size, inherit);
   min-block-size: var(--_swc-button-min-block-size);
   padding-block: calc(var(--swc-button-padding-vertical, token("component-padding-vertical-100")) - var(--_swc-button-border-width));
@@ -43,20 +45,12 @@
   overflow: visible;
   cursor: pointer;
   user-select: none;
-  transition-timing-function: linear;
+  transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
-  transition-property: outline, border-color, color, background;
+  transition-property: outline, border-color, color, background-color, transform;
 
   --_swc-button-border-width: token("border-width-200");
   --_swc-button-min-block-size: var(--swc-button-min-block-size, token("component-height-100"));
-}
-
-.swc-Button:disabled {
-  color: var(--swc-button-content-color-disabled, token("disabled-content-color"));
-  background-color: var(--swc-button-background-color-disabled, token("disabled-background-color"));
-  border-color: var(--swc-button-border-color-disabled, transparent);
-  cursor: default;
-  transform: none;
 }
 
 .swc-Button:focus-visible {
@@ -65,6 +59,14 @@
   border-color: var(--swc-button-border-color-focus, transparent);
   outline: token("focus-indicator-thickness") solid var(--swc-button-focus-indicator-color, token("focus-indicator-color"));
   outline-offset: token("focus-indicator-gap");
+}
+
+.swc-Button:disabled:is(*, :hover) {
+  color: var(--swc-button-content-color-disabled, token("disabled-content-color"));
+  background-color: var(--swc-button-background-color-disabled, token("disabled-background-color"));
+  border-color: var(--swc-button-border-color-disabled, transparent);
+  cursor: default;
+  transform: none;
 }
 
 .swc-Button:hover {
@@ -77,7 +79,8 @@
   color: var(--swc-button-content-color-down, token("gray-25"));
   background-color: var(--swc-button-background-color-down, token("neutral-background-color-down"));
   border-color: var(--swc-button-border-color-down, transparent);
-  scale: 0.95;
+  transform: perspective(var(--_swc-button-min-block-size)) translate3d(0, 0, -2px);
+  will-change: transform;
 }
 
 .swc-Button-label {
@@ -329,6 +332,16 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.swc-Button--justified {
+  flex-grow: 1;
+  justify-self: stretch;
+  inline-size: 100%;
+
+  .swc-Button {
+    inline-size: 100%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
