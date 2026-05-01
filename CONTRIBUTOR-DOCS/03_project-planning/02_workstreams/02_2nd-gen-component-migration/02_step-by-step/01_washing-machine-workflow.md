@@ -342,14 +342,18 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 
 ### What to do
 
-1. **Follow the migration steps** — [Step 6](06_migrate-rendering-and-styles.md) and the [full migration steps](../../../../02_style-guide/01_css/04_spectrum-swc-migration.md). Use [03_components/](../../../03_components/) for spectrum-two alignment. Copy S2 styles from your **spectrum-css** clone, **`spectrum-two`** branch, component `index.css` (not `dist`).
-2. **Use tokens** — Replace hard-coded values with `token(...)`. Follow [component CSS](../../../../02_style-guide/01_css/01_component-css.md) and [custom properties](../../../../02_style-guide/01_css/02_custom-properties.md).
-3. **Run stylelint** — After updating CSS, run `nx run swc:lint`. Fix all errors. The 2nd-gen config enforces: **property order** (see `linters/stylelint-property-order.js`); **no descending specificity** (e.g. `:host([disabled])` before `:host([checked][disabled])`); **declaration empty line** (empty line between groups); **token usage** (`token("...")` for color, font-size, etc.).
+1. **Verify or create the stories file** — Visual verification requires a stories file. If `stories/[component].stories.ts` does not exist, create it before writing CSS using the `migration-styling` skill’s Phase 4 stories template. The stories file at this phase should have Playground, Overview, Anatomy, Options, States, and CSS-visible Behaviors — no JSDoc prose, and the Accessibility story left as a `// TODO` comment. Confirm the component renders in Storybook with no console errors before touching CSS.
+2. **Align render template class names with CSS selectors** — Read the component’s `render()` method and note every class name emitted. The CSS you write must use those exact names; mismatches cause styles to silently not apply. When migrating from 1st-gen single-hyphen naming (e.g. `.swc-Button-label`) to 2nd-gen BEM double-underscore notation (e.g. `.swc-Button__label`), update `render()` first, confirm the component still renders, then write the CSS.
+3. **Follow the migration steps** — [Step 6](06_migrate-rendering-and-styles.md) and the [full migration steps](../../../../02_style-guide/01_css/04_spectrum-swc-migration.md). Use [03_components/](../../../03_components/) for spectrum-two alignment. Copy S2 styles from your **spectrum-css** clone, **`spectrum-two`** branch, component `index.css` (not `dist`).
+4. **Use tokens** — Replace hard-coded values with `token(...)`. Follow [component CSS](../../../../02_style-guide/01_css/01_component-css.md) and [custom properties](../../../../02_style-guide/01_css/02_custom-properties.md).
+5. **Run stylelint** — After updating CSS, run `nx run swc:lint`. Fix all errors. The 2nd-gen config enforces: **property order** (see `linters/stylelint-property-order.js`); **no descending specificity** (e.g. `:host([disabled])` before `:host([checked][disabled])`); **declaration empty line** (empty line between groups); **token usage** (`token("...")` for color, font-size, etc.).
 
 For templates, `render()`, icons (inline SVG), and detailed examples, see [Step 6](06_migrate-rendering-and-styles.md) and the [full migration steps](../../../../02_style-guide/01_css/04_spectrum-swc-migration.md).
 
 ### What to check
 
+- [ ] Stories file exists and component renders in Storybook with no console errors.
+- [ ] Class names emitted by `render()` match the selectors in the component CSS (no stale 1st-gen names).
 - [ ] No inline styles for theme/size; use CSS and classes.
 - [ ] Tokens and custom properties align with Spectrum 2.
 - [ ] Follows the [full migration steps](../../../../02_style-guide/01_css/04_spectrum-swc-migration.md).
@@ -362,12 +366,17 @@ For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheet
 
 | Problem | Solution |
 |--------|----------|
+| Styles not applied; `adoptedStylesheets` empty | Never override `createRenderRoot()` to set shadow root options; use `static override shadowRootOptions = { ...ParentClass.shadowRootOptions, delegatesFocus: true }` instead. Overriding `createRenderRoot()` without calling `super` bypasses Lit’s `adoptStyles()`, silently dropping all component CSS. |
+| CSS selector targets wrong element | Class name in CSS (e.g. `.swc-Button__label`) does not match what `render()` emits. Grep the render template for the old name and update it before blaming the CSS. |
 | `order/properties-order` errors | Reorder declarations to match `linters/stylelint-property-order.js` (e.g. display → position → flex → box sizing → margin → font → overflow → pointer-events → content → opacity → transition). |
 | `no-descending-specificity` errors | Place lower-specificity selectors before higher-specificity ones (e.g. `:host([disabled])` before `:host([checked][disabled])`; single-attribute or single-pseudo before compound selectors). Split rule blocks if needed so order is consistent. |
 | Token / `declaration-strict-value` | Replace hard-coded colors, font-size, etc. with `token("...")`. |
 
 ### Quality gate
 
+- [ ] Stories file exists; component renders correctly in Storybook.
+- [ ] Render template class names match CSS selectors (no stale names from 1st-gen).
+- [ ] Every exposed `--swc-*` custom property has a `@cssprop` JSDoc tag on the primary SWC component class (e.g. `@cssprop --swc-button-height - Block size of the button.`). Storybook surfaces these automatically in the API docs panel.
 - [ ] Follows the [full migration steps](../../../../02_style-guide/01_css/04_spectrum-swc-migration.md).
 - [ ] Adheres to the [component styling guidelines](../../../../02_style-guide/01_css/01_component-css.md).
 - [ ] Stylelint passes for the component’s CSS (no 2nd-gen CSS lint errors).
@@ -385,7 +394,7 @@ For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheet
 3. **Identify the APG pattern** for your component type (e.g. button, combobox) — [WCAG ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/).
 4. **Implement:** Semantics (prefer native HTML), ARIA where needed, keyboard support, focus management (trap in overlays), screen reader exposure. Test with assistive tech; document in JSDoc.
 5. **Native vs custom controls:** Native form control (e.g. Checkbox) → `delegatesFocus: true`. Custom control (e.g. Radio) → `role` and `aria-*` on host, manage focus/keyboard. See Checkbox and Radio as references.
-6. **Focus delegation on internal control:** When a component wraps a native form control inside its shadow DOM, `delegatesFocus: true` should be set in `createRenderRoot()` so that focus lands on the internal control, not the host. This belongs in the base class if all subclasses share the same host-wraps-native-control structure.
+6. **Focus delegation on internal control:** When a component wraps a native form control inside its shadow DOM, set `delegatesFocus: true` via `static override shadowRootOptions = { ...ParentClass.shadowRootOptions, delegatesFocus: true }` so that focus lands on the internal control, not the host. This belongs in the base class if all subclasses share the same host-wraps-native-control structure. **Do not** override `createRenderRoot()` to set this option — doing so bypasses Lit's `adoptStyles()`, silently preventing all component CSS from being injected into the shadow DOM. See [Rendering patterns: Shadow root customization](../../../../02_style-guide/02_typescript/09_rendering-patterns.md#shadow-root-customization).
 7. **Accessible name forwarding:** Attributes like `aria-label` on the host do not automatically apply to the internal control — either bind them explicitly in the render template (e.g. `aria-label=${this.getAttribute('aria-label')}`) or derive the accessible name in a protected helper and forward it. See `ButtonBase.getResolvedAccessibleName()` as a reference. Note that implementing these patterns may require adding methods or modifying the render template, so Phase 5 often touches component class files, not only Storybook or docs.
 
 ### What to check
@@ -459,7 +468,7 @@ Follow the two-file layout (`test/<component>.test.ts`, `test/<component>.a11y.s
 ### What to do
 
 1. **JSDoc:** Every public prop, slot, event, and the element itself. Use `@element`, `@example`, `@internal` for non-public.
-2. **Storybook stories:** Use `getStorybookHelpers`, METADATA (args, argTypes, meta), stories for variants/sizes. Reference `badge/stories/badge.stories.ts`, `divider/stories/divider.stories.ts`.
+2. **Storybook stories:** If Phase 4 was completed, `stories/[component].stories.ts` may already exist with Playground, Overview, Anatomy, Options, States, and Behaviors stories — all correctly structured but without JSDoc prose. Phase 7 augments that file: add JSDoc comments to every story (except Playground and Overview, which have none by convention), complete the Accessibility story body (left as `// TODO` in Phase 4), and add any stories deferred from earlier phases. Do not recreate the file from scratch. If no Phase 4 scaffold exists, create it from the `migration-styling` skill's stories template and then fill in the Phase 7 content. Reference `badge/stories/badge.stories.ts` and `divider/stories/divider.stories.ts` for complete examples.
 3. **Size/variant controls:** Ensure controls drive the component. If the attribute comes from a mixin (e.g. `SizedMixin`), declare it on the SWC class with `@property({ reflect: true })` so the CEM includes it; run `yarn analyze` to regenerate the manifest.
 4. **Review, usage docs, migration notes:** Confirm stories; add usage docs; document API changes from 1st-gen.
 
