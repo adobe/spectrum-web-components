@@ -121,7 +121,7 @@ These items wait on a single product decision from design and accessibility:
 | [Keyboard (2.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/keyboard) | All actions are available from the keyboard per the menu pattern; no pointer-only submenu chrome (see 1st-gen [SWC-1332](https://jira.corp.adobe.com/browse/SWC-1332), [SWC-671](https://jira.corp.adobe.com/browse/SWC-671)). |
 | [Non-text contrast (1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | Focus ring and icons meet contrast where they convey state (for example [SWC-1517](https://jira.corp.adobe.com/browse/SWC-1517) submenu focus on Safari). |
 
-**Bottom line:** `swc-menu` is a full menu-button host like [`swc-action-menu`](../action-menu/accessibility-migration-analysis.md) (trigger, `swc-popover`, `role="menu"` in shadow DOM, items / groups / separators in the menu slot). Submenus sit on `swc-menu-item` in its shadow tree, not a second `swc-menu` in the list. Row and submenu details are in the [menu item doc](../menu-item/accessibility-migration-analysis.md). This doc centers ActionMenu trigger defaults, wiring, and tests. Tray and selectable rows follow [Migration scope](#migration-scope-current).
+**Bottom line:** `swc-menu` is a full menu-button host like [`swc-action-menu`](../action-menu/accessibility-migration-analysis.md) (trigger, `swc-popover`, `role="menu"` in shadow DOM, items / groups / separators in the menu slot). Submenus sit on `swc-menu-item` in its shadow tree, not a second `swc-menu` in the list. Row and submenu details are in the [menu item doc](../menu-item/accessibility-migration-analysis.md). This doc centers Menu trigger defaults, wiring, and tests. Tray and selectable rows follow [Migration scope](#migration-scope-current).
 
 ---
 
