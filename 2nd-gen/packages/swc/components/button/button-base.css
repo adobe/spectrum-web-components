@@ -28,9 +28,11 @@
 }
 
 .swc-Button {
+  -webkit-tap-highlight-color: transparent;
   display: inline-flex;
   position: relative;
   align-items: center;
+  justify-content: center;
   margin: 0;
   text-transform: none;
   text-decoration: none;
