@@ -49,9 +49,9 @@
   border-color: var(--swc-button-border-color-default, transparent);
   border-width: var(--_swc-button-border-width);
   border-radius: var(--swc-button-border-radius, calc(var(--_swc-button-min-block-size) / 2));
-  transition-timing-function: linear;
+  transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
-  transition-property: outline, border-color, color, background;
+  transition-property: outline, border-color, color, background-color, transform;
 }
 
 .swc-Button:hover {
@@ -70,7 +70,8 @@
   color: var(--swc-button-content-color-down, token("gray-25"));
   background-color: var(--swc-button-background-color-down, token("neutral-background-color-down"));
   border-color: var(--swc-button-border-color-down, transparent);
-  scale: 0.95;
+  transform: perspective(var(--_swc-button-min-block-size)) translate3d(0, 0, -2px);
+  will-change: transform;
 }
 
 .swc-Button-label {
