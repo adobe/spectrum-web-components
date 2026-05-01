@@ -73,6 +73,18 @@ describe('transformSelector — basic', () => {
     ).toBe('.swc-Button--primary .swc-Button-label');
   });
 
+  it(':host([attr]) .block → .block--attr (block collapses into modifier — same element in global context)', () => {
+    expect(
+      transformSelector(':host([justified]) .swc-Button', 'swc-Button')
+    ).toBe('.swc-Button--justified');
+  });
+
+  it(':host([attr="value"]) .block → .block--value (value modifier, same element collapse)', () => {
+    expect(
+      transformSelector(':host([variant="accent"]) .swc-Button', 'swc-Button')
+    ).toBe('.swc-Button--accent');
+  });
+
   it('slot[name="X"]::slotted(*) → .block-X', () => {
     expect(
       transformSelector('slot[name="icon"]::slotted(*)', 'swc-Button')
@@ -212,6 +224,34 @@ describe('deriveCSS — fence removal', () => {
     `;
     const result = deriveCSS(css, 'swc-Button');
     expect(result).not.toContain('@media');
+  });
+
+  it('merges :host([attr]) and :host([attr]) .block into one rule when both collapse to the same modifier', () => {
+    const css = `
+      :host([justified]) {
+        flex-grow: 1;
+        inline-size: 100%;
+      }
+      :host([justified]) .swc-Button {
+        inline-size: 100%;
+      }
+    `;
+    const result = deriveCSS(css, 'swc-Button');
+    const occurrences = (result.match(/\.swc-Button--justified/g) ?? []).length;
+    expect(occurrences).toBe(1);
+    expect(result).toContain('flex-grow: 1');
+    expect(result).toContain('inline-size: 100%');
+  });
+
+  it('throws on an unclosed @global-exclude fence', () => {
+    const css = `  
+      /* @global-exclude */  
+      :host([pending]) { color: blue; }  
+      :host { color: red; }  
+    `;
+    expect(() => deriveCSS(css, 'swc-Button')).toThrow(
+      'Unclosed @global-exclude fence'
+    );
   });
 
   it('accepts @global-exclude without a reason string', () => {

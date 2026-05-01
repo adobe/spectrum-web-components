@@ -212,6 +212,14 @@ function transformSingle(selector, block) {
     .join('');
 
   const r = transformSlotted(rest, block);
+
+  // When the rest is exactly the block class, the shadow-DOM inner element is
+  // the root element in global context — collapse into the modifier so styles
+  // apply directly rather than producing an unreachable descendant combinator.
+  if (r === `.${block}`) {
+    return hostClass;
+  }
+
   return r ? `${hostClass} ${r}` : hostClass;
 }
 
@@ -236,6 +244,8 @@ export function transformSelector(list, block) {
  * that block. After stripping, at-rules left empty are removed.
  *
  * @param {import('postcss').Container} container - PostCSS container to strip fences from.
+ *
+ * @returns {boolean} `true` if the operation succeeded (all fences were closed).
  */
 function stripExcludedBlocks(container) {
   /** @type {import('postcss').Node[]} */
@@ -260,7 +270,9 @@ function stripExcludedBlocks(container) {
       toRemove.push(node);
     } else if (node.type === 'atrule' && node.nodes) {
       // Recurse so fences inside @media, @supports, etc. work within their scope
-      stripExcludedBlocks(node);
+      if (!stripExcludedBlocks(node)) {
+        excluding = true;
+      }
     }
   });
 
@@ -274,6 +286,7 @@ function stripExcludedBlocks(container) {
       node.remove();
     }
   });
+  return !excluding;
 }
 
 /**
@@ -414,7 +427,11 @@ function wrapInLayer(root, block) {
  */
 export function deriveCSS(sourceCss, block) {
   const root = postcss.parse(sourceCss);
-  stripExcludedBlocks(root);
+  if (!stripExcludedBlocks(root)) {
+    throw new Error(
+      '[vite-global-elements-css] Unclosed @global-exclude fence — missing @global-exclude-end'
+    );
+  }
   stripComments(root);
   applySelectTransform(root, block);
   mergeRules(root);

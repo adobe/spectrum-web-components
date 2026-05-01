@@ -439,10 +439,10 @@ slot[name="icon"]::slotted(*) {
   flex-grow: 1;
   justify-self: stretch;
   inline-size: 100%;
+}
 
-  .swc-Button {
-    inline-size: 100%;
-  }
+:host([justified]) .swc-Button {
+  inline-size: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
