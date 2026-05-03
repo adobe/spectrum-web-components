@@ -22,6 +22,8 @@ import { spy } from 'sinon';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { Dialog } from '@spectrum-web-components/dialog';
 
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
@@ -68,6 +70,32 @@ describe('Dialog', () => {
     await elementUpdated(el);
 
     await expect(el).to.be.accessible();
+  });
+  it('does not stretch buttons when footer content wraps', async () => {
+    const el = await fixture<Dialog>(html`
+      <sp-dialog size="s" style="--mod-dialog-confirm-small-width: 320px;">
+        <h2 slot="heading">Disclaimer</h2>
+        Dialog content.
+        <sp-checkbox slot="footer" style="inline-size: 110px;">
+          I agree to the terms and conditions for this operation.
+        </sp-checkbox>
+        <sp-button slot="button" variant="accent" treatment="fill">
+          Confirm
+        </sp-button>
+      </sp-dialog>
+    `);
+
+    await elementUpdated(el);
+    await nextFrame();
+
+    const footer = el.shadowRoot.querySelector('.footer') as HTMLElement;
+    const buttonGroup = el.shadowRoot.querySelector(
+      '.button-group'
+    ) as HTMLElement;
+
+    expect(footer.getBoundingClientRect().height).to.be.greaterThan(
+      buttonGroup.getBoundingClientRect().height
+    );
   });
   it('does not recycle applied content ids', async () => {
     const el = await fixture<Dialog>(html`

@@ -131,6 +131,7 @@
 .button-group {
   display: flex;
   grid-area: buttonGroup;
+  align-self: end;
   justify-content: flex-end;
   padding-block-start: var(--mod-dialog-confirm-buttongroup-padding-top, var(--spectrum-dialog-confirm-buttongroup-padding-top));
   padding-inline-start: var(--mod-dialog-confirm-gap-size, var(--spectrum-dialog-confirm-gap-size));
