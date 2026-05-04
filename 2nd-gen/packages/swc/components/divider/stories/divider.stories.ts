@@ -305,6 +305,7 @@ LayoutOrientation.storyName = 'Layout orientation';
  *
  * 1. **ARIA role**: Automatically sets `role="separator"` to ensure proper semantic meaning for assistive technologies
  * 2. **Orientation support**: When `vertical` is true, automatically sets `aria-orientation="vertical"` to indicate the divider's orientation
+ * 3. **Not focusable**: A `separator` is not focusable and receives no keyboard interaction. Only separators that double as interactive resize handles are focusable (and require `aria-valuenow`, `aria-valuemin`, and `aria-valuemax`). `<swc-divider>` is a static separator and should never be made focusable.
  *
  * #### Visual accessibility
  *
