@@ -13,6 +13,7 @@
 
 - [Naming Conventions](#naming-conventions)
 - [Private Properties](#private-properties)
+    - [Reusing private properties](#reusing-private-properties)
 - [Component Custom Property Exposure](#component-custom-property-exposure)
     - [Internal vs. Exposed vs. Static](#internal-vs-exposed-vs-static)
     - [Decision Tree for Exposure](#decision-tree-for-exposure)
@@ -81,6 +82,31 @@ CSS custom properties *normally* can't actually be "private". However, due to sh
 ```
 
 _*"partially" due to possible eventual exposure when we introduce parts_
+
+### Reusing private properties
+
+When a private property captures a token value, reference the private property in all subsequent expressions. Do not call `token()` again for the same value.
+
+```css
+.swc-Button {
+  --_swc-button-border-width: token("border-width-200");
+
+  /* ✅ References the private var — all derived values update together */
+  padding-inline: calc(var(--swc-button-edge-to-text, ...) - var(--_swc-button-border-width));
+  border-width: var(--_swc-button-border-width);
+}
+```
+
+```css
+.swc-Button {
+  --_swc-button-border-width: token("border-width-200");
+
+  /* ❌ Repeating token() breaks the single-source relationship */
+  padding-inline: calc(var(--swc-button-edge-to-text, ...) - token("border-width-200"));
+}
+```
+
+This keeps all overrides and derived calculations linked to the private property. If the definition ever changes, every downstream call updates automatically.
 
 ## Component Custom Property Exposure
 
