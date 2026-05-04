@@ -48,6 +48,10 @@
     - Infield Button
     - Infield Progress Circle
     - Link
+    - Menu
+    - Menu Group
+    - Menu Item
+    - Menu Separator
     - Meter
     - Number Field
     - Opacity Checkerboard

@@ -1,0 +1,112 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: block;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.swc-MessageSources {
+  display: flex;
+  flex-direction: column;
+  gap: var(--swc-message-sources-gap, token("spacing-100"));
+}
+
+/* ─────────────────────────────────────
+   Toggle button
+   ───────────────────────────────────── */
+
+.swc-MessageSources-toggle {
+  display: inline-flex;
+  gap: var(--swc-sources-toggle-gap, token("spacing-75"));
+  align-items: center;
+  padding: 5px 0;
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-100");
+  font-weight: token("bold-font-weight");
+  line-height: token("line-height-font-size-100");
+  color: token("neutral-content-color-default");
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.swc-MessageSources-toggle:hover {
+  color: token("gray-800");
+}
+
+.swc-MessageSources-chevron {
+  transition: transform token("animation-duration-100") ease;
+}
+
+.swc-MessageSources-chevron--down {
+  transform: rotate(90deg);
+}
+
+/* ─────────────────────────────────────
+   Sources list
+   ───────────────────────────────────── */
+
+.swc-MessageSources-list {
+  interpolate-size: allow-keywords;
+  display: flex;
+  visibility: hidden;
+  flex-direction: column;
+  gap: var(--swc-message-sources-list-gap, token("spacing-75"));
+  block-size: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  list-style: none;
+  counter-reset: sources;
+  transition:
+    block-size token("animation-duration-200") token("animation-ease-in-out"),
+    visibility token("animation-duration-200") linear;
+}
+
+.swc-MessageSources-toggle[aria-expanded="true"] + .swc-MessageSources-list {
+  visibility: visible;
+  block-size: auto;
+}
+
+/* Each slotted item is expected to be a <li> */
+::slotted(li) {
+  display: flex;
+  gap: token("spacing-100");
+  align-items: center;
+  font-size: token("font-size-100") !important;
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-font-size-100");
+  color: token("neutral-content-color-default");
+  list-style: none;
+  counter-increment: sources;
+}
+
+::slotted(li)::before {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--swc-message-sources-icon-inline-size, 16px);
+  block-size: var(--swc-message-sources-icon-block-size, 20px);
+  font-size: token("font-size-50");
+  font-weight: token("bold-font-weight");
+  color: token("gray-700");
+  background: token("gray-100");
+  border-radius: token("corner-radius-100");
+  content: counter(sources);
+}

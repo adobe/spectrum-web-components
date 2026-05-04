@@ -1,0 +1,73 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: block;
+  inline-size: 100%;
+  container-name: swc-conversation-turn;
+  container-type: inline-size;
+}
+
+:host(:focus-visible) {
+  outline: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.swc-ConversationTurn {
+  display: flex;
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+.swc-ConversationTurn > slot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--swc-conversation-turn-group-gap, token("spacing-100"));
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+:host([type="user"]) .swc-ConversationTurn {
+  justify-content: flex-end;
+}
+
+:host([type="user"]) .swc-ConversationTurn > slot {
+  align-items: flex-end;
+}
+
+:host([type="system"]) .swc-ConversationTurn {
+  justify-content: flex-start;
+}
+
+:host([type="system"]) .swc-ConversationTurn > slot {
+  align-items: stretch;
+}
+
+/* Let system stacks span the column; user bubbles keep their own max-inline-size. */
+:host([type="system"]) ::slotted(*) {
+  flex: 1 1 100%;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+
+/* Keep focus semantics on the turn host, but render the ring on message surfaces.
+ * The ring follows each slotted element's own border-radius so the outline
+ * hugs the visible bubble instead of reshaping it. */
+:host(:focus-visible) ::slotted(*) {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-indicator-gap");
+}
