@@ -93,7 +93,7 @@ export const meta: Meta = {
     },
     // design: { type: 'figma', url: 'https://www.figma.com/...' },
     // stackblitz: { url: 'https://stackblitz.com/...' },
-    // flexLayout: true, // set here to apply to all stories; use 'row-wrap' if items should wrap
+    // flexLayout: 'row-wrap', // set here to apply to all stories; use 'row-wrap' if items should wrap
   },
   args,
   argTypes,
