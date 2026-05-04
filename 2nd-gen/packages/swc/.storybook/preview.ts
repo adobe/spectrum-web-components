@@ -67,20 +67,6 @@ const preview = {
         dynamicTitle: true,
       },
     },
-    scale: {
-      name: 'Scale',
-      description: 'Global scale for components',
-      defaultValue: 'medium',
-      type: 'string',
-      toolbar: {
-        title: 'Scale',
-        items: [
-          { value: 'medium', title: 'Medium' },
-          { value: 'large', title: 'Large' },
-        ],
-        dynamicTitle: true,
-      },
-    },
     lang: {
       name: 'Language',
       description:
