@@ -1,0 +1,64 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: inline-block;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.swc-MessageFeedback {
+  display: inline-flex;
+  gap: var(--swc-message-feedback-gap, token("spacing-100"));
+  align-items: center;
+}
+
+.swc-MessageFeedback-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--swc-message-feedback-button-inline-size, 32px);
+  block-size: var(--swc-message-feedback-button-block-size, 32px);
+  padding: 0;
+  color: token("neutral-content-color-default");
+  background: transparent;
+  border: none;
+  border-radius: var(--swc-message-feedback-button-border-radius, token("corner-radius-300"));
+  cursor: pointer;
+  transition:
+    background token("animation-duration-100") ease,
+    color token("animation-duration-100") ease;
+}
+
+.swc-MessageFeedback-button:hover,
+.swc-MessageFeedback-button:focus-visible {
+  color: token("gray-800");
+  background: token("gray-200");
+}
+
+.swc-MessageFeedback-button:focus-visible {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-indicator-gap");
+}
+
+.swc-MessageFeedback-button[aria-pressed="true"] {
+  color: token("gray-25");
+  background: token("neutral-background-color-selected-default");
+}
+
+.swc-MessageFeedback-button[aria-pressed="true"]:hover {
+  background: token("neutral-background-color-selected-hover");
+}

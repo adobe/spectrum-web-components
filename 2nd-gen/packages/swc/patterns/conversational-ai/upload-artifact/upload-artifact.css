@@ -1,0 +1,213 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: block;
+  position: relative;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.swc-UploadArtifact-dismiss {
+  display: flex;
+  position: absolute;
+  inset-block-start: -12px;
+  inset-inline-end: -12px;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--swc-upload-artifact-dismiss-inline-size, 24px);
+  block-size: var(--swc-upload-artifact-dismiss-block-size, 24px);
+  padding: 0;
+  color: token("gray-800");
+  background: token("gray-200");
+  border: none;
+  border-radius: token("corner-radius-full");
+  cursor: pointer;
+}
+
+.swc-UploadArtifact-dismiss[hidden] {
+  display: none;
+}
+
+.swc-UploadArtifact-dismiss:hover {
+  background: token("gray-300");
+}
+
+.swc-UploadArtifact-dismiss swc-icon {
+  --swc-icon-inline-size: var(--swc-upload-artifact-dismiss-icon-inline-size, 10px);
+  --swc-icon-block-size: var(--swc-upload-artifact-dismiss-icon-block-size, 10px);
+}
+
+.swc-UploadArtifact-surface {
+  display: flex;
+  background: token("gray-50");
+}
+
+.swc-UploadArtifact-meta {
+  display: flex;
+  flex-direction: column;
+  gap: token("spacing-50");
+  min-inline-size: 0;
+}
+
+.swc-UploadArtifact-meta[hidden] {
+  display: none;
+}
+
+.swc-UploadArtifact-title {
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-100");
+  font-weight: token("bold-font-weight");
+  line-height: token("line-height-font-size-100");
+  color: token("gray-900");
+}
+
+.swc-UploadArtifact-subtitle {
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-75");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-font-size-75");
+  color: token("gray-800");
+}
+
+.swc-UploadArtifact-actions {
+  display: flex;
+  align-items: center;
+}
+
+.swc-UploadArtifact-actions ::slotted(*) {
+  display: inline-flex;
+  align-items: center;
+}
+
+:host([type="card"]) .swc-UploadArtifact-surface {
+  gap: token("spacing-300");
+  align-items: center;
+  min-block-size: var(--swc-upload-artifact-card-min-block-size, 68px);
+  padding: token("spacing-300");
+  border-radius: token("corner-radius-large-default");
+}
+
+:host([type="card"]) .swc-UploadArtifact-thumbnail {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+:host([type="card"]) .swc-UploadArtifact-thumbnail ::slotted(*) {
+  flex-shrink: 0;
+  inline-size: var(--swc-upload-artifact-card-thumbnail-inline-size, 32px);
+  block-size: var(--swc-upload-artifact-card-thumbnail-block-size, 32px);
+  background: linear-gradient(135deg, #a78bfa, #f472b6);
+  border-radius: token("corner-radius-75");
+}
+
+:host([type="card"]) .swc-UploadArtifact-meta {
+  flex: 1;
+  align-items: flex-start;
+}
+
+:host([type="card"]) .swc-UploadArtifact-title,
+:host([type="card"]) .swc-UploadArtifact-subtitle {
+  inline-size: 100%;
+  min-inline-size: 0;
+  text-align: start;
+}
+
+:host([type="card"]) .swc-UploadArtifact-title ::slotted(*) {
+  display: block;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+:host([type="card"]) .swc-UploadArtifact-subtitle ::slotted(*) {
+  display: block;
+  min-inline-size: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:host([type="media"]) .swc-UploadArtifact-surface {
+  flex-direction: column;
+  gap: token("spacing-100");
+}
+
+:host([type="media"]) .swc-UploadArtifact-thumbnail {
+  border-radius: token("corner-radius-200");
+  overflow: hidden;
+}
+
+:host([type="media"]) .swc-UploadArtifact-thumbnail ::slotted(img) {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  object-fit: cover;
+}
+
+:host([type="media"]) .swc-UploadArtifact-meta {
+  inline-size: 100%;
+}
+
+:host([type="media"]) .swc-UploadArtifact-header {
+  display: flex;
+  gap: token("spacing-100");
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+:host([type="media"]) .swc-UploadArtifact-header > div {
+  min-inline-size: 0;
+}
+
+:host([type="media"]) .swc-UploadArtifact-title {
+  line-height: token("line-height-font-size-100");
+}
+
+:host([type="media"]) .swc-UploadArtifact-subtitle {
+  line-height: token("line-height-font-size-75");
+}
+
+/* Preview-only media (no title/subtitle) fills hosts like prompt-field tiles. */
+:host([type="media"][data-preview-only]) {
+  inline-size: var(--swc-upload-artifact-preview-size, 68px);
+  block-size: var(--swc-upload-artifact-preview-size, 68px);
+}
+
+:host([type="media"][data-preview-only]) .swc-UploadArtifact {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+:host([type="media"][data-preview-only]) .swc-UploadArtifact-surface {
+  gap: 0;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+:host([type="media"][data-preview-only]) .swc-UploadArtifact-thumbnail {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+:host([type="media"][data-preview-only]) .swc-UploadArtifact-thumbnail ::slotted(*) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}

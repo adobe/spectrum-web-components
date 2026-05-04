@@ -15,12 +15,13 @@
 - [Size modifier pattern](#size-modifier-pattern)
 - [Inline SVG](#inline-svg)
 - [classMap patterns](#classmap-patterns)
+- [Shadow root customization](#shadow-root-customization)
 
 </details>
 
 <!-- Document content (editable) -->
 
-This guide covers rendering-specific patterns for 2nd-gen component templates, including helper functions, size transformations, inline SVG accessibility, and classMap usage.
+This guide covers rendering-specific patterns for 2nd-gen component templates, including helper functions, size transformations, inline SVG accessibility, classMap usage, and shadow root customization.
 
 ## Helper functions
 
@@ -218,3 +219,52 @@ class=${classMap({
   [`swc-Badge--${this.variant}`]: true, // Bracketed
 })}
 ```
+
+## Shadow root customization
+
+To customize shadow root options (e.g., enabling `delegatesFocus`), always use the static `shadowRootOptions` property. **Never override `createRenderRoot()`** to set shadow root options.
+
+**Why this matters:** Lit's default `createRenderRoot()` calls `adoptStyles()` to inject the component's CSS into the shadow DOM via `adoptedStylesheets`. Any `createRenderRoot()` override that does not call `super.createRenderRoot()` silently bypasses this step — the component renders, but no styles are applied and no error is thrown.
+
+**Correct pattern:**
+
+```ts
+// ✅ Good — uses the documented Lit API; default createRenderRoot() runs adoptStyles()
+export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
+  validSizes: BUTTON_VALID_SIZES,
+}) {
+  static override shadowRootOptions: ShadowRootInit = {
+    ...SpectrumElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
+}
+```
+
+**Anti-pattern:**
+
+```ts
+// ❌ Bad — bypasses adoptStyles(); all component CSS is silently ignored
+export abstract class ButtonBase extends SpectrumElement {
+  protected override createRenderRoot(): ShadowRoot {
+    return this.attachShadow({ mode: 'open', delegatesFocus: true });
+  }
+}
+```
+
+The spreading of `...SpectrumElement.shadowRootOptions` (or the parent class's `shadowRootOptions`) preserves any options set by the base class, such as `mode: 'open'`.
+
+**When `createRenderRoot()` is appropriate:**
+
+Override `createRenderRoot()` only when you need to change the render target itself (e.g., rendering into the light DOM instead of a shadow root). In those cases, call `super.createRenderRoot()` or manually call `adoptStyles()` to preserve style injection:
+
+```ts
+// ✅ Acceptable — light DOM render target, adoptStyles called manually
+import { adoptStyles, unsafeCSS } from 'lit';
+
+protected override createRenderRoot(): Element {
+  adoptStyles(this, (this.constructor as typeof LitElement).elementStyles);
+  return this;
+}
+```
+
+This scenario is rare in SWC components. If you find yourself considering it, discuss with the team first.

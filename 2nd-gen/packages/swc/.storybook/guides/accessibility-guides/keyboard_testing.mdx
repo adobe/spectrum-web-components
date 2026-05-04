@@ -2,6 +2,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
 import safariSettings from './assets/images/safari-keyboard-settings.jpg';
 import macOsSettings from './assets/images/mac-keyboard-settings.jpg';
 
+export const keyboardTestingGuideImageStyle = {
+  border: '1px solid var(--spectrum-gray-300, #d0d0d0)',
+  boxSizing: 'border-box',
+};
+
 <Meta title="Accessibility guides/Keyboard testing" />
 
 # Keyboard testing
@@ -53,7 +58,18 @@ To enable keyboard navigation system-wide on MacOS:
 
 This setting allows you to use <kbd>Tab</kbd> to navigate to all controls, not just text fields and lists.
 
-<img src={macOsSettings} alt="MacOS System Settings, Keyboard Navigation" />
+<figure>
+  <img
+    src={macOsSettings}
+    alt="macOS Keyboard settings"
+    style={keyboardTestingGuideImageStyle}
+  />
+  <figcaption>
+    macOS System Settings, Keyboard: the Keyboard navigation option (or, on
+    older macOS, All controls under Full Keyboard Access) so Tab reaches all
+    focusable controls.
+  </figcaption>
+</figure>
 
 ### Safari browser settings
 
@@ -63,10 +79,18 @@ Safari requires an additional setting to enable full keyboard navigation:
 2. Navigate to the **Advanced** tab
 3. Under **Accessibility**, check **"Press Tab to highlight each item on a webpage"**
 
-<img
-  src={safariSettings}
-  alt="Safari Settings, Advanced Tab, Press Tab to highlight"
-/>
+<figure>
+  <img
+    src={safariSettings}
+    alt="Safari Advanced settings"
+    style={keyboardTestingGuideImageStyle}
+  />
+  <figcaption>
+    Safari Settings, Advanced tab: under Accessibility, Press Tab to highlight
+    each item on a webpage is enabled so in-page focus moves to every link and
+    control.
+  </figcaption>
+</figure>
 
 ### Other browsers
 
@@ -147,6 +171,12 @@ Use this checklist when testing keyboard accessibility:
 | **Non-semantic elements**    | `<div>` or `<span>` used for buttons/links          | Use native `<button>` or `<a>` elements                                                        |
 | **Missing focus management** | Modal closes but focus is lost                      | Trap focus within modals; return focus on close                                                |
 | **Focus not visible**        | Low contrast focus indicators                       | Ensure focus indicators have at least 3:1 contrast ratio                                       |
+
+## See also (Storybook)
+
+- [WAVE toolbar testing](/docs/guides-accessibility-guides-wave-toolbar-testing--readme) — **Order** tab: compare **navigable** order and the drawn path to your visual layout (complements **Tab** testing here)
+- [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--readme) — **Skip** links and a sensible **main** / **nav** structure make keyboard traversal predictable
+- [Screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--readme) — many screen reader users move focus with the same keys you use for quick navigation in browse mode
 
 ## Resources
 
