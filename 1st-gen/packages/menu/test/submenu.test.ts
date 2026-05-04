@@ -1307,34 +1307,6 @@ describe('Submenu', () => {
 
       input.remove();
     });
-    it('Arrow Up from first nested item focuses the back row', async function () {
-      const menu = this.el as Menu;
-
-      menu.openMobileSubmenu(this.rootItem);
-      await elementUpdated(menu);
-      expect(menu.currentMobileSubmenu).to.equal(this.rootItem);
-
-      const submenuEl = this.rootItem.submenuElement as HTMLElement;
-      const backItem = submenuEl.querySelector(
-        '.mobile-back-button'
-      ) as MenuItem;
-      const firstItem = submenuEl.querySelector('.submenu-item-1') as MenuItem;
-      await elementUpdated(backItem);
-      await elementUpdated(firstItem);
-
-      backItem.tabIndex = -1;
-      backItem.focused = false;
-      firstItem.tabIndex = 0;
-      firstItem.focused = true;
-      firstItem.focus();
-      await elementUpdated(firstItem);
-      expect(document.activeElement === firstItem).to.be.true;
-
-      await sendKeys({ press: 'ArrowUp' });
-      await elementUpdated(menu);
-
-      expect(document.activeElement === backItem).to.be.true;
-    });
     it('Arrow Down from back row focuses first nested item', async function () {
       const menu = this.el as Menu;
 

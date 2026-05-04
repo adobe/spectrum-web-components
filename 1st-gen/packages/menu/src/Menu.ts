@@ -240,6 +240,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     });
     backItem.tabIndex = 0;
     backItem.focused = true;
+    if (submenu.rovingTabindexController) {
+      submenu.rovingTabindexController.currentIndex =
+        submenu.childItems.indexOf(backItem);
+    }
     backItem.focus();
   }
 
@@ -268,6 +272,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     });
     backItem.tabIndex = 0;
     backItem.focused = true;
+    if (submenu.rovingTabindexController) {
+      submenu.rovingTabindexController.currentIndex =
+        submenu.childItems.indexOf(backItem);
+    }
     backItem.focus();
   }
 
@@ -296,6 +304,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     });
     firstItem.tabIndex = 0;
     firstItem.focused = true;
+    if (submenu.rovingTabindexController) {
+      submenu.rovingTabindexController.currentIndex =
+        submenu.childItems.indexOf(firstItem);
+    }
     firstItem.focus();
   }
 
@@ -503,6 +515,18 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
       `,
       container
     );
+    const submenu = this.asMenu(submenuEl);
+    const backItem = submenuEl.querySelector(
+      '.mobile-back-button'
+    ) as MenuItem | null;
+    if (backItem) {
+      submenu.childItemSet.add(backItem);
+    }
+    submenu.cachedChildItems = undefined;
+    submenu.rovingTabindexController?.clearElementCache();
+    if (submenu.rovingTabindexController) {
+      submenu.rovingTabindexController.currentIndex = 0;
+    }
   }
 
   /**
@@ -524,8 +548,20 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
   private _removeMobileBackElements(submenuEl: HTMLElement): void {
     const container = this._mobileBackContainers.get(submenuEl);
     if (container) {
+      const backItem = submenuEl.querySelector(
+        '.mobile-back-button'
+      ) as MenuItem | null;
+      if (backItem) {
+        this.asMenu(submenuEl).childItemSet.delete(backItem);
+      }
       container.remove();
       this._mobileBackContainers.delete(submenuEl);
+      const submenu = this.asMenu(submenuEl);
+      submenu.cachedChildItems = undefined;
+      submenu.rovingTabindexController?.clearElementCache();
+      if (submenu.rovingTabindexController) {
+        submenu.rovingTabindexController.currentIndex = 0;
+      }
     }
   }
 
