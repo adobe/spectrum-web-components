@@ -151,7 +151,7 @@ export const InsideSuggestionGroupTest: Story = {
     );
 
     await step(
-      'parent exposes heading and group labeling in the shadow tree',
+      'parent exposes heading and group labeling on the host (not inner shadow nodes)',
       async () => {
         await group.updateComplete;
         await Promise.resolve();
@@ -175,10 +175,12 @@ export const InsideSuggestionGroupTest: Story = {
           'What would you like to do next?'
         );
         expect((firstHeading?.id.length ?? 0) > 0).toBe(true);
+        expect(group.getAttribute('role')).toBe('group');
+        expect(group.getAttribute('aria-labelledby')).toBe(firstHeading?.id);
+        expect(group.hasAttribute('aria-label')).toBe(false);
+        expect(itemsRegion?.hasAttribute('role')).toBe(false);
         expect(itemsRegion?.hasAttribute('aria-label')).toBe(false);
-        expect(itemsRegion?.getAttribute('aria-labelledby')).toBe(
-          firstHeading?.id
-        );
+        expect(itemsRegion?.hasAttribute('aria-labelledby')).toBe(false);
       }
     );
 

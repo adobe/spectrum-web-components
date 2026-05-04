@@ -10,9 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property, queryAssignedElements } from 'lit/decorators.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
@@ -25,7 +24,9 @@ import styles from './suggestion-group.css';
  *
  * Provide heading content in `slot="heading"` and control semantics
  * (for example `h2`, `h3`, or `p`) from the consuming context. The heading
- * slot is required.
+ * slot is required. The host exposes **`role="group"`** with **`aria-labelledby`**
+ * pointing at the slotted heading so the accessible name resolves (labeling
+ * is not applied to an inner shadow node, which cannot reference light DOM ids).
  *
  * Add one or more `<swc-suggestion-item>` elements to the default slot.
  *
@@ -35,7 +36,7 @@ import styles from './suggestion-group.css';
  */
 export class SuggestionGroup extends SpectrumElement {
   /**
-   * Accessible name override for the `role="group"` region. When set, it takes
+   * Accessible name override for the host `role="group"`. When set, it takes
    * precedence over `aria-labelledby` from the heading slot.
    */
   @property({ type: String, attribute: 'accessible-label' })
@@ -69,15 +70,59 @@ export class SuggestionGroup extends SpectrumElement {
     this.requestUpdate();
   }
 
-  protected override render(): TemplateResult {
+  /**
+   * `aria-labelledby` on nodes inside the shadow root cannot reliably reference
+   * slotted light-DOM headings. Expose `role="group"` and labeling on the host
+   * so the heading id resolves and assistive tech gets a proper group name.
+   */
+  private _ensureHeadingId(): void {
+    const headingElement = this._getHeadingElement();
+    if (headingElement && !headingElement.id) {
+      headingElement.id = this._headingId;
+    }
+  }
+
+  private _syncHostGroupSemantics(): void {
     const headingElement = this._getHeadingElement();
     const hasHeading = headingElement !== null;
     const accessibleLabel = this.accessibleLabel.trim();
     const hasAccessibleLabel = accessibleLabel.length > 0;
 
-    const computedAriaLabel = hasAccessibleLabel ? accessibleLabel : undefined;
-    const computedAriaLabelledby =
-      hasAccessibleLabel || !hasHeading ? undefined : headingElement?.id;
+    if (!hasHeading && !hasAccessibleLabel) {
+      this.removeAttribute('role');
+      this.removeAttribute('aria-label');
+      this.removeAttribute('aria-labelledby');
+      return;
+    }
+
+    this.setAttribute('role', 'group');
+
+    if (hasAccessibleLabel) {
+      this.setAttribute('aria-label', accessibleLabel);
+      this.removeAttribute('aria-labelledby');
+      return;
+    }
+
+    const headingId = headingElement?.id ?? '';
+    if (headingId.length > 0) {
+      this.setAttribute('aria-labelledby', headingId);
+      this.removeAttribute('aria-label');
+      return;
+    }
+
+    this.removeAttribute('aria-label');
+    this.removeAttribute('aria-labelledby');
+  }
+
+  protected override updated(_changedProperties: PropertyValues<this>): void {
+    super.updated(_changedProperties);
+    this._ensureHeadingId();
+    this._syncHostGroupSemantics();
+  }
+
+  protected override render(): TemplateResult {
+    const headingElement = this._getHeadingElement();
+    const hasHeading = headingElement !== null;
 
     return html`
       <div class="swc-SuggestionGroup">
@@ -87,12 +132,7 @@ export class SuggestionGroup extends SpectrumElement {
             @slotchange=${this._handleHeadingSlotChange}
           ></slot>
         </div>
-        <div
-          class="swc-SuggestionGroup-items"
-          role="group"
-          aria-label=${ifDefined(computedAriaLabel)}
-          aria-labelledby=${ifDefined(computedAriaLabelledby)}
-        >
+        <div class="swc-SuggestionGroup-items">
           <slot></slot>
         </div>
       </div>

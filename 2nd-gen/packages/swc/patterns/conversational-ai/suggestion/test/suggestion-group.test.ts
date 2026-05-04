@@ -54,7 +54,7 @@ export const OverviewTest: Story = {
       const heading = el.shadowRoot?.querySelector(
         '.swc-SuggestionGroup-title'
       );
-      const group = el.shadowRoot?.querySelector('.swc-SuggestionGroup-items');
+      const items = el.shadowRoot?.querySelector('.swc-SuggestionGroup-items');
       const headingSlot = heading?.querySelector<HTMLSlotElement>(
         'slot[name="heading"]'
       );
@@ -65,8 +65,10 @@ export const OverviewTest: Story = {
         'What would you like to do next?'
       );
       expect((firstHeading?.id.length ?? 0) > 0).toBe(true);
-      expect(group?.getAttribute('aria-labelledby')).toBe(firstHeading?.id);
-      expect(group?.hasAttribute('aria-label')).toBe(false);
+      expect(el.getAttribute('role')).toBe('group');
+      expect(el.getAttribute('aria-labelledby')).toBe(firstHeading?.id);
+      expect(el.hasAttribute('aria-label')).toBe(false);
+      expect(items?.hasAttribute('role')).toBe(false);
     });
 
     await step(
@@ -95,14 +97,9 @@ export const OverviewTest: Story = {
         const heading = el.shadowRoot?.querySelector(
           '.swc-SuggestionGroup-title'
         );
-        const group = el.shadowRoot?.querySelector(
-          '.swc-SuggestionGroup-items'
-        );
         expect(heading?.hasAttribute('hidden')).toBe(false);
-        expect(group?.getAttribute('aria-label')).toBe(
-          'Custom suggestions label'
-        );
-        expect(group?.hasAttribute('aria-labelledby')).toBe(false);
+        expect(el.getAttribute('aria-label')).toBe('Custom suggestions label');
+        expect(el.hasAttribute('aria-labelledby')).toBe(false);
       }
     );
 
@@ -136,13 +133,10 @@ export const OverviewTest: Story = {
         await Promise.resolve();
         await el.updateComplete;
 
-        const group = el.shadowRoot?.querySelector(
-          '.swc-SuggestionGroup-items'
-        );
-        expect(group?.getAttribute('aria-label')).toBe(
+        expect(el.getAttribute('aria-label')).toBe(
           'Overridden suggestions label'
         );
-        expect(group?.hasAttribute('aria-labelledby')).toBe(false);
+        expect(el.hasAttribute('aria-labelledby')).toBe(false);
       }
     );
   },

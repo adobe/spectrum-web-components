@@ -227,9 +227,10 @@ export const Heading: Story = {
  * implement:
  *
  * - Native `<button>` semantics per suggestion item
- * - Required `heading` slot for the visible group title; `accessible-label` can
- *   override the `role="group"` accessible name (`aria-label`) while the heading
- *   remains in the document outline
+ * - Required `heading` slot for the visible group title; the host uses
+ *   **`role="group"`** with **`aria-labelledby`** referencing that heading.
+ *   **`accessible-label`** can override the accessible name (`aria-label`) while
+ *   the heading remains in the document outline
  * - Item click event bubbling from each `<swc-suggestion-item>`
  */
 export const Accessibility: Story = {
