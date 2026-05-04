@@ -309,7 +309,7 @@ Apply this to:
 
 - **Renamed or replaced attributes/properties** — fire the warning from the setter when the deprecated value is assigned.
 - **Type and const exports** — prefer statics on the custom element class (`Component.VARIANTS`, etc.) over package-level exports; deprecate the standalone exports and document migration to inference from the element (e.g. `typeof Badge.prototype.variant`, `typeof Badge.FIXED_VALUES`). See `@deprecated` JSDoc on exports in `1st-gen/packages/badge/src/Badge.ts`.
-- **Removed APIs** — warn from the getter/setter or method body before falling back to the new behavior.
+- **Removed APIs** — warn from the getter/setter or method body (e.g. `update()`, `connectedCallback()`, or other instance methods) before falling back to the new behavior.
 
 **Example: `over-background` → `static-color="white"` on `sp-progress-bar`**
 
