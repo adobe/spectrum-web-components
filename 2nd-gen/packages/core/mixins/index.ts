@@ -12,14 +12,6 @@
 
 export { DisabledMixin, type DisabledInterface } from './disabled-mixin.js';
 export {
-  ObserveSlotPresence,
-  type SlotPresenceObservingInterface,
-} from './observe-slot-presence.js';
-export {
-  ObserveSlotText,
-  type SlotTextObservingInterface,
-} from './observe-slot-text.js';
-export {
   DEFAULT_ELEMENT_SIZES,
   ELEMENT_SIZES,
   SizedMixin,

@@ -4,13 +4,13 @@
 
 When building 2nd-gen components (using 1st-gen as a reference), place files according to their type:
 
-| Type                   | Location       | Examples                            |
-| ---------------------- | -------------- | ----------------------------------- |
-| Element infrastructure | `element/`     | `SpectrumElement`, `defineElement`  |
-| Mixins                 | `mixins/`      | `SizedMixin`, `ObserveSlotPresence` |
-| Reactive controllers   | `controllers/` | `FocusGroup`, `RovingTabindex`      |
-| Utility functions      | `utils/`       | `getLabelFromSlot`, `capitalize`    |
-| Component base classes | `components/`  | `Badge.base.ts`, `Asset.base.ts`    |
+| Type                   | Location       | Examples                                       |
+| ---------------------- | -------------- | ---------------------------------------------- |
+| Element infrastructure | `element/`     | `SpectrumElement`, `defineElement`             |
+| Mixins                 | `mixins/`      | `SizedMixin`                                   |
+| Reactive controllers   | `controllers/` | `SlotTextController`, `SlotPresenceController` |
+| Utility functions      | `utils/`       | `getLabelFromSlot`, `capitalize`               |
+| Component base classes | `components/`  | `Badge.base.ts`, `Asset.base.ts`               |
 
 ## Naming
 
