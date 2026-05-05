@@ -225,7 +225,7 @@ commands:
           name: Build Golden Images Revision Cache
           paths:
             - 1st-gen/test/visual/screenshots-baseline
-          key: v2-golden-images-{{ .Revision }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+          key: v2-golden-images-{{ .Revision }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ .Branch }}
       - save_cache:
           name: Build Golden Images Branch Cache
           paths:
@@ -525,7 +525,7 @@ jobs:
           name: Build Golden Images Revision Cache
           paths:
             - 1st-gen/test/visual/screenshots-baseline
-          key: v2-golden-images-{{ .Revision }}-hcm
+          key: v2-golden-images-{{ .Revision }}-hcm-{{ .Branch }}
       - save_cache:
           name: Build Golden Images Branch Cache
           paths:
