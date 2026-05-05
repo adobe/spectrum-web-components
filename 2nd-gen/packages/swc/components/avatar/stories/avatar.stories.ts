@@ -212,11 +212,9 @@ export const Decorative: Story = {
 /**
  * An avatar can be placed inside an action button to create a user-triggered
  * action tied to a specific person or entity.
- *
- * @todo Replace `<button>` with `<swc-action-button>` once that component is
- * migrated to 2nd-gen.
  */
 export const InActionButton: Story = {
+  // TODO: Replace <button> with <swc-action-button> once that component is migrated to 2nd-gen.
   render: (args) => html`
     <button
       type="button"
