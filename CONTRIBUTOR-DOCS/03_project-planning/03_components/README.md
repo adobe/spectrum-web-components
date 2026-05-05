@@ -72,6 +72,15 @@
 - Link
     - [Link accessibility migration analysis](link/accessibility-migration-analysis.md)
     - [Link migration roadmap](link/rendering-and-styling-migration-analysis.md)
+- Menu
+    - [Menu accessibility migration analysis](menu/accessibility-migration-analysis.md)
+    - [Menu migration roadmap](menu/rendering-and-styling-migration-analysis.md)
+- Menu Group
+    - [Menu group accessibility migration analysis](menu-group/accessibility-migration-analysis.md)
+- Menu Item
+    - [Menu item accessibility migration analysis](menu-item/accessibility-migration-analysis.md)
+- Menu Separator
+    - [Menu separator accessibility migration analysis](menu-separator/accessibility-migration-analysis.md)
 - Meter
     - [Meter accessibility migration analysis](meter/accessibility-migration-analysis.md)
     - [Meter migration roadmap](meter/rendering-and-styling-migration-analysis.md)
