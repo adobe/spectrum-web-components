@@ -67,7 +67,6 @@ commands:
       - save_cache:
           paths:
             - ~/.cache/yarn
-            - ~/.cache/ms-playwright
           key: cache-deps-yarn-{{ arch }}-{{ checksum "yarn.lock" }}
   downstream:
     steps:
@@ -83,7 +82,7 @@ commands:
       - save_cache:
           paths:
             - 1st-gen/.wireit
-          key: cache-wireit-1st-gen-{{ arch }}-{{ checksum "1st-gen/package.json" }}-{{ epoch }}
+          key: cache-wireit-1st-gen-{{ arch }}-{{ checksum "1st-gen/package.json" }}-{{ .Revision }}
       - attach_workspace:
           at: /
   downstream-2ndgen:
@@ -226,12 +225,12 @@ commands:
           name: Build Golden Images Revision Cache
           paths:
             - 1st-gen/test/visual/screenshots-baseline
-          key: v2-golden-images-{{ .Revision }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
+          key: v2-golden-images-{{ .Revision }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ .Branch }}
       - save_cache:
           name: Build Golden Images Branch Cache
           paths:
             - 1st-gen/test/visual/screenshots-baseline
-          key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
+          key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ .Revision }}
 
 jobs:
   test-chromium:
@@ -526,12 +525,12 @@ jobs:
           name: Build Golden Images Revision Cache
           paths:
             - 1st-gen/test/visual/screenshots-baseline
-          key: v2-golden-images-{{ .Revision }}-hcm-{{ epoch }}
+          key: v2-golden-images-{{ .Revision }}-hcm-{{ .Branch }}
       - save_cache:
           name: Build Golden Images Branch Cache
           paths:
             - 1st-gen/test/visual/screenshots-baseline
-          key: v2-golden-images-{{ .Branch }}-hcm-{{ epoch }}
+          key: v2-golden-images-{{ .Branch }}-hcm-{{ .Revision }}
 
   visual:
     executor: node
