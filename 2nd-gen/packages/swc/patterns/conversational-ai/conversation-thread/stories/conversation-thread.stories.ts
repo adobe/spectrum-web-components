@@ -28,8 +28,6 @@ import '../../upload-artifact/index.js';
 
 import { uniqueId } from '../../../../utils/id.js';
 
-import '../../system-prose-demo.css';
-
 // ────────────────
 //    METADATA
 // ────────────────

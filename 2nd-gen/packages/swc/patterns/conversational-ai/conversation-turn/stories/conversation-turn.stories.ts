@@ -19,8 +19,6 @@ import '../../user-message/index.js';
 import '../../response-status/index.js';
 import '../../message-feedback/index.js';
 
-import '../../system-prose-demo.css';
-
 // ────────────────
 //    METADATA
 // ────────────────
