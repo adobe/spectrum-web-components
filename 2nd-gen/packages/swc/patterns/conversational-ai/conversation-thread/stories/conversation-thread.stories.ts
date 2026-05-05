@@ -76,7 +76,7 @@ const threadExampleSource = `<swc-conversation-thread style="max-inline-size: 72
       </div>
       <swc-message-feedback slot="feedback"></swc-message-feedback>
       <swc-message-sources slot="sources">
-        <li><a href="#source-1">Brand brief Q1 2026</a></li>
+        <a href="#source-1">Brand brief Q1 2026</a>
       </swc-message-sources>
     </swc-system-message>
   </swc-conversation-turn>
@@ -109,7 +109,7 @@ const renderThread = () => html`
         </div>
         <swc-message-feedback slot="feedback"></swc-message-feedback>
         <swc-message-sources slot="sources">
-          <li><a href="#source-1">Brand brief Q1 2026</a></li>
+          <a href="#source-1">Brand brief Q1 2026</a>
         </swc-message-sources>
       </swc-system-message>
     </swc-conversation-turn>
@@ -498,8 +498,8 @@ class ConversationFullPatternDemo extends LitElement {
                     data-sources-id=${turn.id}
                     ?open=${!!turn.sourcesOpen}
                   >
-                    <li><a href="#">Brand brief Q1 2026</a></li>
-                    <li><a href="#">Market research summary</a></li>
+                    <a href="#">Brand brief Q1 2026</a>
+                    <a href="#">Market research summary</a>
                   </swc-message-sources>
                 `}
             ${turn.loading
@@ -660,7 +660,7 @@ const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24p
         </div>
         <swc-message-feedback slot="feedback"></swc-message-feedback>
         <swc-message-sources slot="sources">
-          <li><a href="#">Brand brief Q1 2026</a></li>
+          <a href="#">Brand brief Q1 2026</a>
         </swc-message-sources>
       </swc-system-message>
     </swc-conversation-turn>
