@@ -209,6 +209,7 @@ export const Vertical: Story = {
     </div>
   `,
   parameters: {
+    flexLayout: 'column-center',
     'section-order': 2,
   },
   tags: ['options'],
@@ -253,8 +254,6 @@ StaticColors.storyName = 'Static colors';
 // ──────────────────────────────
 
 /**
- * ### Layout orientation
- *
  * Dividers can be oriented **horizontally** (default) or **vertically** to match
  * the layout they serve:
  *

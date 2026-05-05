@@ -38,14 +38,18 @@
 }
 
 .swc-Divider:not(.swc-Divider--vertical) {
-  min-inline-size: token("divider-horizontal-minimum-width");
+  min-inline-size: min(100%, 200px);
+}
+
+:host([vertical]) {
+  block-size: 100%;
 }
 
 .swc-Divider--vertical {
   align-self: flex-start;
   inline-size: var(--_swc-divider-thickness);
   block-size: 100%;
-  min-block-size: token("divider-vertical-minimum-height");
+  min-block-size: min(100%, 200px);
 }
 
 .swc-Divider--staticWhite {
