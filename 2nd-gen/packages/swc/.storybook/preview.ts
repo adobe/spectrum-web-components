@@ -123,7 +123,6 @@ const preview = {
   },
   initialGlobals: {
     theme: 'light',
-    scale: 'medium',
     lang: 'en-US',
     textDirection: 'auto',
   },
