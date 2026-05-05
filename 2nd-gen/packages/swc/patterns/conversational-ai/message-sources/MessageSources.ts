@@ -36,6 +36,12 @@ import styles from './message-sources.css';
 export class MessageSources extends SpectrumElement {
   private readonly panelId = uniqueId('swc-sources-panel');
   private readonly toggleId = uniqueId('swc-message-sources-toggle');
+  private sourceLinks: Array<{
+    href: string;
+    label: string;
+    target: string | null;
+    rel: string | null;
+  }> = [];
 
   /**
    * Whether the sources list is open.
@@ -66,6 +72,23 @@ export class MessageSources extends SpectrumElement {
         detail: { open: this.open },
       })
     );
+  }
+
+  private _handleSlotChange(event: Event): void {
+    const slot = event.target as HTMLSlotElement;
+    this.sourceLinks = slot
+      .assignedElements({ flatten: true })
+      .filter(
+        (element): element is HTMLAnchorElement =>
+          element instanceof HTMLAnchorElement
+      )
+      .map((anchor) => ({
+        href: anchor.getAttribute('href') ?? '#',
+        label: anchor.textContent?.trim() ?? '',
+        target: anchor.getAttribute('target'),
+        rel: anchor.getAttribute('rel'),
+      }));
+    this.requestUpdate();
   }
 
   protected override render(): TemplateResult {
@@ -104,8 +127,22 @@ export class MessageSources extends SpectrumElement {
           aria-labelledby=${this.toggleId}
           ?hidden=${!isExpanded}
         >
-          <slot></slot>
+          ${this.sourceLinks.map(
+            (link) => html`
+              <li class="swc-MessageSources-item">
+                <a
+                  class="swc-MessageSources-link"
+                  href=${link.href}
+                  target=${link.target ?? ''}
+                  rel=${link.rel ?? ''}
+                >
+                  ${link.label}
+                </a>
+              </li>
+            `
+          )}
         </ol>
+        <slot hidden @slotchange=${this._handleSlotChange}></slot>
       </div>
     `;
   }

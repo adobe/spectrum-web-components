@@ -23,7 +23,7 @@ import '../index.js';
 const { args, argTypes, template } = getStorybookHelpers('swc-message-sources');
 
 const defaultListItems =
-  '<li><a href="#">Adobe Experience Manager documentation</a></li><li><a href="#">Creative Cloud release notes 2026</a></li><li><a href="#">Firefly API getting started guide</a></li>';
+  '<a href="#">Adobe Experience Manager documentation</a><a href="#">Creative Cloud release notes 2026</a><a href="#">Firefly API getting started guide</a>';
 
 delete (args as Record<string, unknown>).state;
 delete (argTypes as Record<string, unknown>).state;
@@ -48,7 +48,7 @@ argTypes.label = {
 
 /**
  * A collapsible list of sources that informed an AI response.
- * Slot `<li>` elements into the default slot; they will be numbered automatically.
+ * Slot `<a>` elements into the default slot; they will be numbered automatically.
  */
 const meta: Meta = {
   title: 'Conversational AI/Message sources',
@@ -106,7 +106,7 @@ export const Anatomy: Story = {
   args: {
     open: true,
     'default-slot':
-      '<li><a href="#">Adobe Experience Manager documentation</a></li><li><a href="#">Creative Cloud release notes 2026</a></li>',
+      '<a href="#">Adobe Experience Manager documentation</a><a href="#">Creative Cloud release notes 2026</a>',
   },
   tags: ['anatomy'],
 };
@@ -128,8 +128,8 @@ export const Open: Story = {
     <div style="display:flex;flex-direction:column;gap:32px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-message-sources>
-          <li><a href="#">Adobe Experience Manager documentation</a></li>
-          <li><a href="#">Creative Cloud release notes 2026</a></li>
+          <a href="#">Adobe Experience Manager documentation</a>
+          <a href="#">Creative Cloud release notes 2026</a>
         </swc-message-sources>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
@@ -139,9 +139,9 @@ export const Open: Story = {
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-message-sources open>
-          <li><a href="#">Adobe Experience Manager documentation</a></li>
-          <li><a href="#">Creative Cloud release notes 2026</a></li>
-          <li><a href="#">Firefly API getting started guide</a></li>
+          <a href="#">Adobe Experience Manager documentation</a>
+          <a href="#">Creative Cloud release notes 2026</a>
+          <a href="#">Firefly API getting started guide</a>
         </swc-message-sources>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
@@ -151,8 +151,8 @@ export const Open: Story = {
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-message-sources open label="References">
-          <li><a href="#">Adobe Experience Manager documentation</a></li>
-          <li><a href="#">Creative Cloud release notes 2026</a></li>
+          <a href="#">Adobe Experience Manager documentation</a>
+          <a href="#">Creative Cloud release notes 2026</a>
         </swc-message-sources>
         <span
           style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
