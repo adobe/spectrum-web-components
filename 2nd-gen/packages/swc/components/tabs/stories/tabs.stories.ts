@@ -47,8 +47,7 @@ export const meta: Meta = {
       control: { type: 'select' },
       options: [...TABS_DIRECTIONS],
     },
-    keyboardActivation: {
-      name: 'keyboard-activation',
+    'keyboard-activation': {
       control: { type: 'select' },
       options: [...KEYBOARD_ACTIVATIONS],
     },
@@ -62,22 +61,19 @@ export const meta: Meta = {
     selected: '1',
     label: 'Product details',
     direction: 'horizontal',
-    keyboardActivation: 'manual',
+    'keyboard-activation': 'manual',
     density: 'regular',
     disabled: false,
   },
   render: (args) => {
     const raw = args as Record<string, unknown>;
-    // Storybook may store controls under `keyboard-activation` when argTypes use `name`.
-    const keyboardActivation = (raw.keyboardActivation ??
-      raw['keyboard-activation'] ??
-      'manual') as KeyboardActivation;
 
     return renderTabGroup({
       selected: args.selected as string,
       label: args.label as string,
       direction: args.direction as TabsDirection,
-      keyboardActivation,
+      keyboardActivation: (raw['keyboard-activation'] ??
+        'manual') as KeyboardActivation,
       density: args.density as TabDensity,
       disabled: Boolean(args.disabled),
     });

@@ -23,17 +23,9 @@ let tabIdCounter = 0;
  * attributes, and roving tabindex. Concrete classes supply the
  * stylesheet and render template.
  *
- * In 1st-gen, the default slot content
- * was wrapped in a `<label id="item-label">` element inside shadow
- * DOM. The implicit `<label>` semantics conflict with `role="tab"`.
- * In 2nd-gen the wrapper is removed; slot content is projected without
- * an extra wrapper element.
- *
- * In 1st-gen, disabled tabs were skipped
- * entirely by keyboard navigation. In 2nd-gen, disabled tabs use
- * `aria-disabled="true"` and remain focusable via arrow keys per
- * the ARIA Authoring Practices Guide, but are not activatable
- * (Enter, Space, and click are guarded).
+ * Disabled tabs use `aria-disabled="true"` and remain focusable via
+ * arrow keys per the ARIA Authoring Practices Guide, but are not
+ * activatable (Enter, Space, and click are guarded).
  *
  * @slot - Text label of the tab
  * @slot icon - Optional icon displayed before the label

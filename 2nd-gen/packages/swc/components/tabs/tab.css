@@ -22,7 +22,6 @@
   font-weight: var(--swc-tab-font-weight, token("regular-font-weight"));
   line-height: token("line-height-100");
   color: var(--swc-tab-text-color, token("neutral-subdued-content-color-default"));
-  white-space: nowrap;
   overflow: clip;
   cursor: pointer;
   user-select: none;
