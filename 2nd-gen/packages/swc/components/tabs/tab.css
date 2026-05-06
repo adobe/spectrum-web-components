@@ -12,24 +12,40 @@
 
 :host {
   display: inline-flex;
+  place-self: start;
+  outline: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ── Component wrapper ─────────────────────────────────── */
+
+.swc-Tab {
+  --_swc-tab-text-color: var(--swc-tab-text-color, token("neutral-subdued-content-color-default"));
+
+  display: inline-flex;
   position: relative;
   gap: var(--swc-tab-icon-gap, token("text-to-visual-100"));
   align-items: center;
   justify-content: center;
-  block-size: var(--swc-tab-height);
-  padding-block: var(--swc-tab-padding-block, token("component-padding-vertical-100"));
-  font-size: var(--swc-tab-font-size, token("font-size-100"));
-  font-weight: var(--swc-tab-font-weight, token("regular-font-weight"));
-  line-height: token("line-height-100");
-  color: var(--swc-tab-text-color, token("neutral-subdued-content-color-default"));
+  block-size: var(--swc-tab-height, token("tab-item-height-medium"));
+  padding-block: var(--swc-tab-padding-block, token("tab-item-top-to-text-medium")) var(--swc-tab-padding-block-end, token("tab-item-bottom-to-text-medium"));
+  color: var(--_swc-tab-text-color);
   overflow: clip;
   cursor: pointer;
   user-select: none;
-  outline: none;
 }
 
-* {
-  box-sizing: border-box;
+/* ── Label (scoped font styles) ────────────────────────── */
+
+.swc-Tab-label {
+  font-size: var(--swc-tab-font-size, token("font-size-100"));
+  font-weight: var(--swc-tab-font-weight, token("regular-font-weight"));
+  line-height: token("line-height-100");
 }
 
 /* ── Icon slot ─────────────────────────────────────────── */
@@ -45,31 +61,34 @@
 /* ── Selected state ────────────────────────────────────── */
 
 :host([selected]) {
-  color: var(--swc-tab-text-color-selected, token("neutral-content-color-default"));
+  --swc-tab-text-color: var(--swc-tab-text-color-selected, token("neutral-content-color-default"));
 }
 
 /* ── Hover state ───────────────────────────────────────── */
 
 :host(:hover) {
-  color: var(--swc-tab-text-color-hover, token("neutral-subdued-content-color-hover"));
+  --swc-tab-text-color: var(--swc-tab-text-color-hover, token("neutral-subdued-content-color-hover"));
 }
 
 /* ── Active (pressed) state ────────────────────────────── */
 
 :host(:active) {
-  color: var(--swc-tab-text-color-down, token("neutral-subdued-content-color-down"));
+  --swc-tab-text-color: var(--swc-tab-text-color-down, token("neutral-subdued-content-color-down"));
 }
 
 /* ── Disabled state ────────────────────────────────────── */
 
 :host([disabled]) {
-  color: var(--swc-tab-text-color-disabled, token("disabled-content-color"));
+  --swc-tab-text-color: var(--swc-tab-text-color-disabled, token("disabled-content-color"));
+}
+
+:host([disabled]) .swc-Tab {
   cursor: default;
 }
 
 /* ── Focus ring ────────────────────────────────────────── */
 
-:host(:focus-visible) {
+:host(:focus-visible) .swc-Tab {
   border-radius: token("corner-radius-100");
   outline: 2px solid var(--swc-tab-focus-ring-color, token("focus-indicator-color"));
   outline-offset: var(--swc-tab-focus-ring-gap, 2px);
@@ -80,20 +99,20 @@
 @media (forced-colors: active) {
   :host {
     /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
-    color: ButtonText;
+    --swc-tab-text-color: ButtonText;
   }
 
   :host([selected]) {
     /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
-    color: Highlight;
+    --swc-tab-text-color: Highlight;
   }
 
   :host([disabled]) {
     /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
-    color: GrayText;
+    --swc-tab-text-color: GrayText;
   }
 
-  :host(:focus-visible) {
+  :host(:focus-visible) .swc-Tab {
     outline-color: Highlight;
   }
 }

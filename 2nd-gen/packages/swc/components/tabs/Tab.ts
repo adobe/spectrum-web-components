@@ -44,8 +44,10 @@ export class Tab extends TabBase {
 
   protected override render(): TemplateResult {
     return html`
-      <slot name="icon"></slot>
-      <slot></slot>
+      <div class="swc-Tab">
+        <slot name="icon"></slot>
+        <span class="swc-Tab-label"><slot></slot></span>
+      </div>
     `;
   }
 }

@@ -13,16 +13,6 @@
 :host {
   display: flex;
   flex-direction: column;
-
-  --swc-tab-font-size: var(--swc-tabs-font-size, token("font-size-100"));
-  --swc-tab-icon-size: var(--swc-tabs-icon-size, token("workflow-icon-size-100"));
-
-  /* Tablist gap: density switches this; vertical reuses it unless --swc-tabs-vertical-gap is set. */
-  --swc-tabs-tablist-gap-effective: var(--swc-tabs-gap, 32px);
-}
-
-:host([density="compact"]) {
-  --swc-tabs-tablist-gap-effective: var(--swc-tabs-compact-gap, 24px);
 }
 
 * {
@@ -32,28 +22,43 @@
 /* ── Tablist container ─────────────────────────────────── */
 
 .tablist {
+  --_swc-tabs-gap: var(--swc-tabs-gap, token("tab-item-to-tab-item-horizontal-medium"));
+
   display: flex;
   position: relative;
-  gap: var(--swc-tabs-tablist-gap-effective);
+  gap: var(--_swc-tabs-gap);
   align-items: center;
+
+  --swc-tab-font-size: var(--swc-tabs-font-size, token("font-size-100"));
+  --swc-tab-icon-size: var(--swc-tabs-icon-size, token("workflow-icon-size-100"));
+}
+
+/* ── Density: compact ──────────────────────────────────── */
+
+:host([density="compact"]) .tablist {
+  --_swc-tabs-gap: var(--swc-tabs-compact-gap, token("tab-item-to-tab-item-horizontal-medium"));
+  --swc-tab-height: token("tab-item-compact-height-medium");
+  --swc-tab-padding-block: token("tab-item-top-to-text-compact-medium");
+  --swc-tab-padding-block-end: token("tab-item-bottom-to-text-compact-medium");
 }
 
 /* ── Vertical direction ────────────────────────────────── */
 
 :host([direction="vertical"]) {
   flex-direction: row;
-  gap: var(--swc-tabs-vertical-content-gap, 24px);
+  gap: var(--swc-tabs-vertical-content-gap, token("tab-item-to-tab-item-horizontal-medium"));
 }
 
 :host([direction="vertical"][density="compact"]) {
-  gap: var(--swc-tabs-vertical-content-gap-compact, 16px);
+  gap: var(--swc-tabs-vertical-content-gap-compact, token("tab-item-to-tab-item-vertical-medium"));
 }
 
 :host([direction="vertical"]) .tablist {
+  --_swc-tabs-gap: var(--swc-tabs-vertical-gap, token("tab-item-to-tab-item-vertical-medium"));
+
   flex-direction: column;
-  gap: var(--swc-tabs-vertical-gap, var(--swc-tabs-tablist-gap-effective));
   align-items: flex-start;
-  padding-inline-start: var(--swc-tabs-vertical-indicator-space, 12px);
+  padding-inline-start: var(--swc-tabs-vertical-indicator-space, token("tab-item-start-to-edge-medium"));
 }
 
 /* ── Selection indicator ───────────────────────────────── */
@@ -62,7 +67,7 @@
   position: absolute;
   z-index: 1;
   background-color: var(--swc-tabs-indicator-color, token("neutral-content-color-default"));
-  border-radius: var(--swc-tabs-indicator-radius, 2px);
+  border-radius: var(--swc-tabs-indicator-radius, token("corner-radius-100"));
   pointer-events: none;
   transition: transform 130ms ease-in-out;
 }
@@ -76,14 +81,14 @@
   inset-block-end: 0;
   inset-inline-start: 0;
   inline-size: 100px;
-  block-size: var(--swc-tabs-indicator-thickness, 2px);
+  block-size: var(--swc-tabs-indicator-thickness, token("border-width-200"));
   transform-origin: left center;
 }
 
 :host([direction="vertical"]) .selection-indicator {
   inset-block-start: 0;
   inset-inline-start: 0;
-  inline-size: var(--swc-tabs-indicator-thickness, 2px);
+  inline-size: var(--swc-tabs-indicator-thickness, token("border-width-200"));
   block-size: 100px;
   transform-origin: center top;
 }
@@ -94,11 +99,10 @@
   pointer-events: none;
 }
 
-/* Match per-tab disabled visuals when the container is disabled (tabs stay
-   in the light DOM; ::slotted targets the tab hosts from the tablist slot). */
 :host([disabled]) ::slotted(swc-tab) {
-  color: var(--swc-tab-text-color-disabled, token("disabled-content-color"));
   cursor: default;
+
+  --swc-tab-text-color: var(--swc-tab-text-color-disabled, token("disabled-content-color"));
 }
 
 :host([disabled]) .selection-indicator {
