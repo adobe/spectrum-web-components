@@ -551,7 +551,11 @@ export const AriaRolesTest: Story = {
 
 export const AriaOrientationTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" direction="vertical" accessible-label="Orientation test">
+    <swc-tabs
+      selected="1"
+      direction="vertical"
+      accessible-label="Orientation test"
+    >
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel</p></swc-tab-panel>
     </swc-tabs>
@@ -806,7 +810,11 @@ export const ArrowKeyNavigationTest: Story = {
 
 export const VerticalArrowKeyTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" direction="vertical" accessible-label="Vertical arrow test">
+    <swc-tabs
+      selected="1"
+      direction="vertical"
+      accessible-label="Vertical arrow test"
+    >
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab tab-id="2">Tab 2</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
@@ -1302,6 +1310,126 @@ export const ValidLabelNoWarningTest: Story = {
         await tabs.updateComplete;
         expect(warnCalls.length, 'no warnings issued').toBe(0);
       })
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Regression — tabId and accessible-label renames
+// ──────────────────────────────────────────────────────────────
+
+export const TabIdPropertyReflectionTest: Story = {
+  render: () => html`
+    <swc-tabs selected="alpha" accessible-label="Reflection test">
+      <swc-tab tab-id="alpha">Alpha</swc-tab>
+      <swc-tab tab-id="beta">Beta</swc-tab>
+      <swc-tab-panel tab-id="alpha"><p>Alpha panel</p></swc-tab-panel>
+      <swc-tab-panel tab-id="beta"><p>Beta panel</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const tabElements = await getComponents<Tab>(canvasElement, 'swc-tab');
+    const panels = await getComponents<TabPanel>(
+      canvasElement,
+      'swc-tab-panel'
+    );
+
+    await step('tab-id attribute reflects to tabId property', () => {
+      expect(tabElements[0].tabId, 'first tab tabId').toBe('alpha');
+      expect(tabElements[1].tabId, 'second tab tabId').toBe('beta');
+      expect(panels[0].tabId, 'first panel tabId').toBe('alpha');
+      expect(panels[1].tabId, 'second panel tabId').toBe('beta');
+    });
+
+    await step('tabId property reflects back to tab-id attribute', async () => {
+      tabElements[0].tabId = 'gamma';
+      await tabElements[0].updateComplete;
+      expect(tabElements[0].getAttribute('tab-id'), 'attribute updated').toBe(
+        'gamma'
+      );
+    });
+
+    await step('selection still works after property mutation', async () => {
+      tabs.selected = 'gamma';
+      await tabs.updateComplete;
+      expect(tabElements[0].selected, 'first tab re-selected').toBe(true);
+    });
+  },
+};
+
+export const AccessibleLabelReflectionTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Settings panel">
+      <swc-tab tab-id="1">General</swc-tab>
+      <swc-tab-panel tab-id="1"><p>General settings</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+
+    await step(
+      'accessible-label attribute reflects to accessibleLabel property',
+      () => {
+        expect(tabs.accessibleLabel, 'property value').toBe('Settings panel');
+      }
+    );
+
+    await step('accessible-label renders as aria-label on tablist', () => {
+      const tablist = tabs.shadowRoot?.querySelector('[role="tablist"]');
+      expect(tablist?.getAttribute('aria-label'), 'aria-label').toBe(
+        'Settings panel'
+      );
+    });
+
+    await step('updating property updates aria-label', async () => {
+      tabs.accessibleLabel = 'Account preferences';
+      await tabs.updateComplete;
+      const tablist = tabs.shadowRoot?.querySelector('[role="tablist"]');
+      expect(tablist?.getAttribute('aria-label'), 'updated aria-label').toBe(
+        'Account preferences'
+      );
+    });
+  },
+};
+
+export const IconOnlyTabAriaLabelTest: Story = {
+  render: () => html`
+    <swc-tabs selected="home" accessible-label="Navigation">
+      <swc-tab tab-id="home" aria-label="Home">
+        <span slot="icon" aria-hidden="true">🏠</span>
+      </swc-tab>
+      <swc-tab tab-id="search" aria-label="Search">
+        <span slot="icon" aria-hidden="true">🔍</span>
+      </swc-tab>
+      <swc-tab-panel tab-id="home"><p>Home content</p></swc-tab-panel>
+      <swc-tab-panel tab-id="search"><p>Search content</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabElements = await getComponents<Tab>(canvasElement, 'swc-tab');
+
+    await step('icon-only tabs have aria-label from attribute', () => {
+      expect(
+        tabElements[0].getAttribute('aria-label'),
+        'first tab aria-label'
+      ).toBe('Home');
+      expect(
+        tabElements[1].getAttribute('aria-label'),
+        'second tab aria-label'
+      ).toBe('Search');
+    });
+
+    await step(
+      'old label attribute does not auto-sync to aria-label',
+      async () => {
+        tabElements[0].setAttribute('label', 'Legacy');
+        await tabElements[0].updateComplete;
+        expect(
+          tabElements[0].getAttribute('aria-label'),
+          'aria-label unchanged by label attr'
+        ).toBe('Home');
+      }
     );
   },
 };
