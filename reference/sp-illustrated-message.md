@@ -11,8 +11,8 @@ import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
 
 | Name          | Type     | Default | Description |
 | ------------- | -------- | ------- | ----------- |
-| `heading`     | `string` | `''`    |             |
-| `description` | `string` | `''`    |             |
+| `heading`     | `string` | -       |             |
+| `description` | `string` | -       |             |
 
 ## Slots
 
