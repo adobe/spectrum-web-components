@@ -99,6 +99,7 @@
   flex-shrink: 0;
   inline-size: 32px;
   block-size: 32px;
+  border: 1px solid transparent;
   border-radius: token("corner-radius-75");
   object-fit: cover;
 }

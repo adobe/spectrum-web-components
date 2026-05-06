@@ -34,7 +34,7 @@
   padding: 0;
   color: token("gray-800");
   background: token("gray-200");
-  border: 1px solid transparent;
+  border: 1px solid token("gray-25");
   border-radius: token("corner-radius-full");
   cursor: pointer;
 }
@@ -111,6 +111,7 @@
 }
 
 :host([type="card"]) .swc-UploadArtifact-thumbnail ::slotted(*) {
+  box-sizing: border-box;
   flex-shrink: 0;
   inline-size: var(--swc-upload-artifact-card-thumbnail-inline-size, 32px);
   block-size: var(--swc-upload-artifact-card-thumbnail-block-size, 32px);

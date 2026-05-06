@@ -80,7 +80,7 @@
 .swc-PromptField-artifacts {
   display: flex;
   flex-wrap: wrap;
-  gap: token("spacing-100");
+  gap: token("spacing-300");
   align-items: start;
 }
 
@@ -304,4 +304,8 @@
 
 .swc-PromptField-legal-disclaimer a {
   color: inherit;
+}
+
+.swc-PromptField-artifacts[hidden] {
+  display: none !important;
 }

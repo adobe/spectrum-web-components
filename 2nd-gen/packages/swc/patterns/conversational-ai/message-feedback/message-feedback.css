@@ -64,7 +64,13 @@
 }
 
 @media (forced-colors: active) {
-  .swc-MessageFeedback-button:focus-visible {
-    outline-color: CanvasText;
+  .swc-MessageFeedback-button[aria-pressed="true"],
+  .swc-MessageFeedback-button[aria-pressed="true"]:hover {
+    color: SelectedItemText;
+    background: SelectedItem;
+  }
+
+  .swc-MessageFeedback-button[aria-pressed="true"]:hover {
+    border-color: Highlight;
   }
 }

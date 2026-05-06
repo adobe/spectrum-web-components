@@ -608,9 +608,7 @@ class ConversationFullPatternDemo extends LitElement {
         @swc-message-sources-toggle=${this.handleSourcesToggle}
       >
         <div class="swc-ConversationFullPatternDemo-scroll">
-          <swc-conversation-thread
-            style="--swc-conversation-thread-gap:24px;padding:4px;"
-          >
+          <swc-conversation-thread style="padding:4px;">
             ${this.renderTurns()}
           </swc-conversation-thread>
         </div>
@@ -646,7 +644,7 @@ if (!customElements.get('swc-conversation-full-pattern-demo')) {
 }
 
 const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
-  <swc-conversation-thread style="--swc-conversation-thread-gap:24px;">
+  <swc-conversation-thread>
     <swc-conversation-turn type="user">
       <swc-user-message>Can you help me create a 45-minute presentation?</swc-user-message>
     </swc-conversation-turn>
