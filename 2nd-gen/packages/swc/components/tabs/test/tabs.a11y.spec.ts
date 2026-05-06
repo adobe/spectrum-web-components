@@ -46,7 +46,9 @@ test.describe('Tabs - ARIA Snapshots', () => {
     page,
   }) => {
     const root = await gotoStory(page, 'components-tabs--anatomy', 'swc-tabs');
-    const firstTabGroup = root.locator('swc-tabs[label="Text-only example"]');
+    const firstTabGroup = root.locator(
+      'swc-tabs[accessible-label="Text-only example"]'
+    );
     await expect(firstTabGroup).toMatchAriaSnapshot(`
       - tablist "Text-only example":
         - tab "Overview" [selected]
@@ -56,7 +58,7 @@ test.describe('Tabs - ARIA Snapshots', () => {
         - paragraph: Overview content for the selected tab.
     `);
     const iconTabGroup = root.locator(
-      'swc-tabs[label="Icon and text example"]'
+      'swc-tabs[accessible-label="Icon and text example"]'
     );
     await expect(iconTabGroup).toMatchAriaSnapshot(`
       - tablist "Icon and text example":
@@ -99,7 +101,7 @@ test.describe('Tabs - ARIA Snapshots', () => {
 
   test('should handle individual disabled tab', async ({ page }) => {
     const root = await gotoStory(page, 'components-tabs--states', 'swc-tabs');
-    await expect(root.locator('swc-tabs[label="Individual states"]'))
+    await expect(root.locator('swc-tabs[accessible-label="Individual states"]'))
       .toMatchAriaSnapshot(`
       - tablist "Individual states":
         - tab "Default"

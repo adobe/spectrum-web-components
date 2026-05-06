@@ -284,7 +284,10 @@ export const DensityVariants: Story = {
     ${renderTabGroup({ accessibleLabel: 'Regular density' })}
     <br />
     <p><strong>Compact</strong></p>
-    ${renderTabGroup({ density: 'compact', accessibleLabel: 'Compact density' })}
+    ${renderTabGroup({
+      density: 'compact',
+      accessibleLabel: 'Compact density',
+    })}
   `,
   tags: ['options'],
   parameters: {
