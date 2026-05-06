@@ -37,6 +37,14 @@ Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[
 
 ## Workflow
 
+**Check for a Phase 4 stories scaffold first.** If Phase 4 (migration-styling) was completed, `2nd-gen/packages/swc/components/[component]/stories/[component].stories.ts` likely already exists with Playground, Overview, Anatomy, Options, States, and Behaviors stories — all structurally correct but without JSDoc prose. Phase 7's job is to:
+
+1. Add JSDoc comments to every story (except Playground and Overview, which have none by convention).
+2. Complete the Accessibility story body — it was left as a `// TODO` comment in Phase 4.
+3. Add any stories that were deferred or were not CSS-visible enough to include in Phase 4.
+
+If the stories document already exists, do **not** recreate the file from scratch. Augment what is already there.
+
 Follow **[Phase 7: Documentation](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-7-documentation)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
 
 If the docs need to describe behavior or migration guidance that differs from the approved migration plan, follow [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
