@@ -128,4 +128,16 @@ test.describe('Avatar - ARIA Snapshots', () => {
       - img "Jane Doe"
     `);
   });
+
+  test('should not be keyboard focusable', async ({ page }) => {
+    const root = await gotoStory(
+      page,
+      'components-avatar--overview',
+      'swc-avatar'
+    );
+    const avatar = root.locator('swc-avatar');
+    await expect(avatar).not.toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(avatar).not.toBeFocused();
+  });
 });

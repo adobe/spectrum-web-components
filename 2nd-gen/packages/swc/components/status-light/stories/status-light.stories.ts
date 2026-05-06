@@ -16,10 +16,12 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { StatusLight } from '@adobe/spectrum-wc/status-light';
 import {
-  STATUSLIGHT_VARIANTS_COLOR_S2,
-  STATUSLIGHT_VARIANTS_SEMANTIC_S2,
-  StatusLightColorVariantS2,
-  StatusLightSemanticVariantS2,
+  STATUS_LIGHT_VALID_SIZES,
+  STATUS_LIGHT_VARIANTS_COLOR,
+  STATUS_LIGHT_VARIANTS_SEMANTIC,
+  StatusLightColorVariant,
+  StatusLightSemanticVariant,
+  type StatusLightSize,
 } from '@spectrum-web-components/core/components/status-light';
 
 import '@adobe/spectrum-wc/status-light';
@@ -38,21 +40,30 @@ argTypes.variant = {
   ...argTypes.variant,
   control: { type: 'select' },
   options: StatusLight.VARIANTS,
+  table: {
+    category: 'attributes',
+    defaultValue: {
+      summary: 'neutral',
+    },
+  },
 };
 
 argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
   options: StatusLight.VALID_SIZES,
+  table: {
+    category: 'attributes',
+    defaultValue: {
+      summary: 'm',
+    },
+  },
 };
 
 /**
  * Status lights describe the condition of an entity. Much like [badges](../?path=/docs/components-badge--readme), they can be used to convey semantic meaning, such as statuses and categories.
  */
-args['default-slot'] = 'Status light';
-args.size = 'm';
-
-export const meta: Meta = {
+const meta: Meta = {
   title: 'Status light',
   component: 'swc-status-light',
   parameters: {
@@ -74,11 +85,7 @@ export const meta: Meta = {
   tags: ['migrated'],
 };
 
-export default {
-  ...meta,
-  title: 'Status light',
-  excludeStories: ['meta'],
-} as Meta;
+export default meta;
 
 // ────────────────────
 //    HELPERS
@@ -90,7 +97,7 @@ const semanticLabels = {
   positive: 'Approved',
   notice: 'Pending approval',
   negative: 'Rejected',
-} as const satisfies Record<StatusLightSemanticVariantS2, string>;
+} as const satisfies Record<StatusLightSemanticVariant, string>;
 
 const nonSemanticLabels = {
   yellow: 'Operations',
@@ -107,7 +114,14 @@ const nonSemanticLabels = {
   brown: 'Facilities',
   cinnamon: 'Compliance',
   silver: 'Version 1.2.10',
-} as const satisfies Record<StatusLightColorVariantS2, string>;
+} as const satisfies Record<StatusLightColorVariant, string>;
+
+const sizeLabels = {
+  s: 'Small',
+  m: 'Medium',
+  l: 'Large',
+  xl: 'Extra-large',
+} as const satisfies Record<StatusLightSize, string>;
 
 // ────────────────────
 //    AUTODOCS STORY
@@ -116,22 +130,18 @@ const nonSemanticLabels = {
 export const Playground: Story = {
   tags: ['autodocs', 'dev'],
   args: {
-    size: 'm',
-    variant: 'info',
-    'default-slot': 'Active',
+    'default-slot': semanticLabels.neutral,
   },
 };
 
 // ────────────────────
-//    OVERVIEW STORY
+//    OVERVIEW STORIES
 // ────────────────────
 
 export const Overview: Story = {
   tags: ['overview'],
   args: {
-    size: 'm',
-    variant: 'info',
-    'default-slot': 'Active',
+    'default-slot': semanticLabels.neutral,
   },
 };
 
@@ -158,9 +168,6 @@ export const Anatomy: Story = {
     })}
   `,
   tags: ['anatomy'],
-  args: {
-    size: 'm',
-  },
 };
 
 // ──────────────────────────
@@ -179,10 +186,13 @@ export const Anatomy: Story = {
  */
 export const Sizes: Story = {
   render: (args) => html`
-    ${template({ ...args, size: 's', 'default-slot': 'Small' })}
-    ${template({ ...args, size: 'm', 'default-slot': 'Medium' })}
-    ${template({ ...args, size: 'l', 'default-slot': 'Large' })}
-    ${template({ ...args, size: 'xl', 'default-slot': 'Extra-large' })}
+    ${STATUS_LIGHT_VALID_SIZES.map((size) =>
+      template({
+        ...args,
+        size,
+        'default-slot': sizeLabels[size],
+      })
+    )}
   `,
   parameters: { 'section-order': 1 },
   tags: ['options'],
@@ -191,16 +201,18 @@ export const Sizes: Story = {
 /**
  * Semantic variants provide meaning through color:
  *
+ * - **`neutral`**: Default variant — archived, deleted, paused, draft, not started, ended
  * - **`info`**: Active, in use, live, published
- * - **`neutral`**: Archived, deleted, paused, draft, not started, ended
  * - **`positive`**: Approved, complete, success, new, purchased, licensed
  * - **`notice`**: Needs approval, pending, scheduled, syncing, indexing, processing
  * - **`negative`**: Error, alert, rejected, failed
+ *
+ * Semantic status lights should never be used for color coding categories or labels, and vice versa.
  */
 export const SemanticVariants: Story = {
   render: (args) => html`
-    ${STATUSLIGHT_VARIANTS_SEMANTIC_S2.map(
-      (variant: StatusLightSemanticVariantS2) =>
+    ${STATUS_LIGHT_VARIANTS_SEMANTIC.map(
+      (variant: StatusLightSemanticVariant) =>
         template({
           ...args,
           variant,
@@ -233,7 +245,7 @@ export const SemanticVariants: Story = {
  */
 export const NonSemanticVariants: Story = {
   render: (args) => html`
-    ${STATUSLIGHT_VARIANTS_COLOR_S2.map((variant: StatusLightColorVariantS2) =>
+    ${STATUS_LIGHT_VARIANTS_COLOR.map((variant: StatusLightColorVariant) =>
       template({
         ...args,
         variant,
@@ -286,11 +298,20 @@ export const TextWrapping: Story = {
  *
  * - Semantic variants provide consistent color associations for common statuses
  * - Text labels provide clear context for all users
+ * - Disabled status lights are deprecated for Spectrum 2. Content like "Unavailable" may be used to communicate that concept instead.
  *
+ * #### Non-interactive element
+ *
+ * - Status lights have no interactive behavior and are not focusable
+ * - Screen readers will announce the status light content as static text
+ * - No keyboard interaction is required or expected
+ *
+ * > Important: In focus mode, only interactive elements and their associated labels/descriptions are announced. If content is not a label or description for a focusable element, it will not be read. For non-interactive content, screen reader users must [switch to Browse mode](https://swcpreviews.z13.web.core.windows.net/pr-6122/docs/second-gen-storybook/?path=/docs/guides-accessibility-guides-screen-reader-testing--readme#screen-reader-modes). This is expected behavior, not a bug — ensure you test both modes when evaluating component accessibility.
  * ### Best practices
  *
  * - Always provide a descriptive text label that explains the status
- * - Use semantic variants (`info`, `positive`, `negative`, `notice`, `neutral`) when the status has specific meaning
+ * - Use semantic variants (`neutral` (default), `info`, `positive`, `negative`, `notice`) when the status has specific meaning
+ * - Status lights are not interactive elements - for interactive status indicators, consider using buttons, tags, or links instead
  * - Use meaningful, specific labels (e.g., "Approved" instead of "Green")
  * - Ensure sufficient color contrast between the status light and its background
  * - For non-semantic variants, ensure the text label provides complete context
@@ -363,6 +384,7 @@ export const Accessibility: Story = {
  * textfield.value from translations.json based on context.globals.lang.
  * Used by the Fonts guide and for locale/font demos. This story is "docs-only."
  */
+// @todo: a withLocaleWrapper could be pulled up into a global decorator/helper to be implemented by more components. SWC-1872
 function withLocaleWrapperRender(
   args: Record<string, unknown> & { lang?: string; 'default-slot'?: string },
   context: { globals: { lang?: string } }
@@ -384,7 +406,9 @@ function withLocaleWrapperRender(
 /**
  * Status light with label driven by the Language toolbar and translations.json.
  * Use this story in the Fonts guide to demonstrate font loading and translated copy.
+ * Learn more about [loading the expected fonts](/docs/guides-customization-fonts--readme).
  */
+// @todo: this story is docs-only, but we should start capturing Chromatic baselines for internationalized content in components. SWC-1871
 export const WithLocaleWrapper: Story = {
   render: withLocaleWrapperRender,
   parameters: {
@@ -393,4 +417,5 @@ export const WithLocaleWrapper: Story = {
       source: { code: null },
     },
   },
+  tags: ['!test'],
 };

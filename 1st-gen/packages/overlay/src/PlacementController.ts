@@ -155,6 +155,16 @@ export class PlacementController implements ReactiveController {
   private target!: HTMLElement;
 
   /**
+   * Incremented whenever the active placement session ends (`cleanup`) or a
+   * new session begins, so async `computePlacement` runs that started under an
+   * older session do not write styles after teardown or across stacked
+   * `placeOverlay` calls.
+   *
+   * @private
+   */
+  private placementGeneration = 0;
+
+  /**
    * Creates an instance of the PlacementController.
    *
    * @param {ReactiveElement & { elements: OpenableElement[] }} host - The host element that uses this controller.
@@ -180,6 +190,13 @@ export class PlacementController implements ReactiveController {
     target: HTMLElement = this.target,
     options: OverlayOptionsV1 = this.options
   ): Promise<void> {
+    // If `placeOverlay` runs twice before `hostUpdated` clears the prior
+    // session (rapid open, programmatic toggles), tear down the previous
+    // listeners first so `visualViewport` handlers and pending rAFs cannot
+    // leak.
+    this.cleanup?.();
+    this.cleanup = undefined;
+
     // Set the target and options for the overlay.
     this.target = target;
     this.options = options;
@@ -209,8 +226,48 @@ export class PlacementController implements ReactiveController {
       }
     );
 
+    // Recompute placement when the visual viewport diverges from the layout
+    // viewport (URL bar showing/hiding, pinch-zoom, virtual keyboard, host-app
+    // bottom sheets, etc.). Floating UI's `autoUpdate` does not observe
+    // `window.visualViewport`, so without this an open overlay can drift away
+    // from its trigger on WebKit (iOS Safari, WKWebView, and desktop Safari
+    // when pinch-zoomed) until the next resize. See `computePlacement` for the
+    // corresponding offset compensation.
+    //
+    // Listeners are passive (we never `preventDefault` in `updatePlacement`)
+    // and rAF-coalesced so a burst of `resize`/`scroll` events during a URL
+    // bar collapse or pinch gesture compresses to one Floating UI compute per
+    // frame.
+    const visualViewport = window.visualViewport;
+    let visualViewportRafId = 0;
+    let visualViewportPlacementCancelled = false;
+    const onVisualViewportChange = (): void => {
+      if (visualViewportPlacementCancelled || visualViewportRafId) {
+        return;
+      }
+      visualViewportRafId = requestAnimationFrame(() => {
+        visualViewportRafId = 0;
+        if (visualViewportPlacementCancelled) {
+          return;
+        }
+        this.updatePlacement();
+      });
+    };
+    if (visualViewport && isWebKit()) {
+      visualViewport.addEventListener('resize', onVisualViewportChange, {
+        passive: true,
+      });
+      visualViewport.addEventListener('scroll', onVisualViewportChange, {
+        passive: true,
+      });
+    }
+
     // Define the cleanup function to remove event listeners and reset placements.
     this.cleanup = () => {
+      this.placementGeneration += 1;
+      // Invalidate any `visualViewport` rAF callback scheduled before this
+      // cleanup runs, so `updatePlacement` cannot start after teardown.
+      visualViewportPlacementCancelled = true;
       this.host.elements?.forEach((element) => {
         element.addEventListener(
           'sp-closed',
@@ -228,6 +285,14 @@ export class PlacementController implements ReactiveController {
       });
       cleanupAncestorResize();
       cleanupElementResize();
+      if (visualViewport && isWebKit()) {
+        visualViewport.removeEventListener('resize', onVisualViewportChange);
+        visualViewport.removeEventListener('scroll', onVisualViewportChange);
+        if (visualViewportRafId) {
+          cancelAnimationFrame(visualViewportRafId);
+          visualViewportRafId = 0;
+        }
+      }
     };
   }
 
@@ -282,12 +347,25 @@ export class PlacementController implements ReactiveController {
   async computePlacement(): Promise<void> {
     const { options, target } = this;
 
+    const genAtStart = this.placementGeneration;
+    const placementStillValid = (): boolean =>
+      (this.host as Overlay).open &&
+      this.placementGeneration === genAtStart &&
+      !!this.target &&
+      this.target === target;
+
     // Wait for document fonts to be ready before computing placement.
     await (document.fonts ? document.fonts.ready : Promise.resolve());
+    if (!placementStillValid()) {
+      return;
+    }
 
     if (isWebKit()) {
       // Computing placement requires a frame for layout stability in WebKit
       await new Promise((resolve) => requestAnimationFrame(resolve));
+    }
+    if (!placementStillValid()) {
+      return;
     }
 
     // Determine the flip middleware based on the type of trigger element.
@@ -356,12 +434,37 @@ export class PlacementController implements ReactiveController {
         strategy: 'fixed',
       }
     );
+    if (!placementStillValid()) {
+      return;
+    }
+
+    // On iOS WebKit (Safari and WKWebView hosts such as the Adobe Express
+    // iOS app) the layout viewport and the visual viewport can diverge by
+    // tens of pixels — for example when the URL bar is showing, when the
+    // page is pinch-zoomed, when the virtual keyboard is open, or when a
+    // native bottom sheet is overlaid. Floating UI computes `(x, y)` from
+    // `getBoundingClientRect()`, which is in layout-viewport coordinates,
+    // but the overlay is rendered in the top layer via the native popover
+    // API and therefore painted relative to the visual viewport. Without
+    // this compensation the overlay lands `visualViewport.offsetTop` px
+    // below (and `offsetLeft` px to the side of) its trigger on iOS while
+    // appearing correct on every other browser.
+    let translateX = x;
+    let translateY = y;
+    const visualViewport = window.visualViewport;
+    if (visualViewport && isWebKit()) {
+      translateX -= visualViewport.offsetLeft;
+      translateY -= visualViewport.offsetTop;
+    }
 
     // Update the overlay's style with the computed position.
+    if (!placementStillValid()) {
+      return;
+    }
     Object.assign(target.style, {
       top: '0px',
       left: '0px',
-      translate: `${roundByDPR(x)}px ${roundByDPR(y)}px`,
+      translate: `${roundByDPR(translateX)}px ${roundByDPR(translateY)}px`,
     });
 
     // Set the 'actual-placement' attribute on the target element.
@@ -379,6 +482,9 @@ export class PlacementController implements ReactiveController {
     });
 
     // Update the tip element's style with the computed arrow position.
+    if (!placementStillValid()) {
+      return;
+    }
     if (tipElement && middlewareData.arrow) {
       const { x: arrowX, y: arrowY } = middlewareData.arrow;
 

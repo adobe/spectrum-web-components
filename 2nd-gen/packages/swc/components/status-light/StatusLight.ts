@@ -15,11 +15,11 @@ import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import {
-  STATUSLIGHT_VARIANTS_COLOR_S2,
-  STATUSLIGHT_VARIANTS_S2,
-  STATUSLIGHT_VARIANTS_SEMANTIC_S2,
+  STATUS_LIGHT_VARIANTS,
+  STATUS_LIGHT_VARIANTS_COLOR,
+  STATUS_LIGHT_VARIANTS_SEMANTIC,
   StatusLightBase,
-  type StatusLightVariantS2 as StatusLightVariant,
+  type StatusLightVariant,
 } from '@spectrum-web-components/core/components/status-light';
 
 import styles from './status-light.css';
@@ -28,14 +28,28 @@ import styles from './status-light.css';
  * A status light is a great way to convey semantic meaning and the condition of an entity, such as statuses and categories. It provides visual indicators through colored dots accompanied by descriptive text.
  *
  * @element swc-status-light
- * @status preview
  * @since 0.0.1
+ *
+ * @property {string} variant - Semantic or non-semantic color variant for the status dot.
+ *
+ * @example
+ * <swc-status-light>Archived</swc-status-light>
  *
  * @example
  * <swc-status-light variant="positive">Approved</swc-status-light>
  *
  * @example
  * <swc-status-light variant="silver">Supported in Edge</swc-status-light>
+ *
+ * @cssprop --swc-status-light-height - Minimum block size of the status light.
+ * @cssprop --swc-status-light-dot-size - Size of the indicator dot.
+ * @cssprop --swc-status-light-dot-color - Color of the indicator dot.
+ * @cssprop --swc-status-light-font-size - Font size of the label.
+ * @cssprop --swc-status-light-line-height - Line height of the label.
+ * @cssprop --swc-status-light-padding-block - Block padding.
+ * @cssprop --swc-status-light-top-to-dot - Distance from the block-start edge to the center of the dot.
+ * @cssprop --swc-status-light-text-to-visual - Gap between the dot and the label.
+ * @cssprop --swc-status-light-content-color - Color of the label text.
  */
 export class StatusLight extends StatusLightBase {
   // ────────────────────
@@ -45,23 +59,23 @@ export class StatusLight extends StatusLightBase {
   /**
    * @internal
    */
-  static override readonly VARIANTS_COLOR = STATUSLIGHT_VARIANTS_COLOR_S2;
+  static override readonly VARIANTS_COLOR = STATUS_LIGHT_VARIANTS_COLOR;
 
   /**
    * @internal
    */
-  static override readonly VARIANTS_SEMANTIC = STATUSLIGHT_VARIANTS_SEMANTIC_S2;
+  static override readonly VARIANTS_SEMANTIC = STATUS_LIGHT_VARIANTS_SEMANTIC;
 
   /**
    * @internal
    */
-  static override readonly VARIANTS = STATUSLIGHT_VARIANTS_S2;
+  static override readonly VARIANTS = STATUS_LIGHT_VARIANTS;
 
   /**
    * Changes the color of the status dot. The variant list includes both semantic and non-semantic options.
    */
   @property({ type: String, reflect: true })
-  public override variant: StatusLightVariant = 'info';
+  public override variant: StatusLightVariant = 'neutral';
 
   // ──────────────────────────────
   //     RENDERING & STYLING

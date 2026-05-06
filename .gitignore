@@ -152,6 +152,10 @@ chromatic-diagnostics*.json
 # Playwright test results (generated)
 playwright-report/
 test-results/
+2nd-gen/test/playwright-a11y/results/
+
+# local debug logs
+debug-storybook.log
 
 # yarn
 .pnp.*

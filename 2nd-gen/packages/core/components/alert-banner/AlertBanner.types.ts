@@ -19,9 +19,3 @@ export const ALERT_BANNER_VALID_VARIANTS = [
 export type AlertBannerVariant =
   | (typeof ALERT_BANNER_VALID_VARIANTS)[number]
   | '';
-
-/**
- * @deprecated Use `AlertBannerVariant` instead.
- * Kept as `string` for backward compatibility with 1st-gen.
- */
-export type AlertBannerVariants = string;

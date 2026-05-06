@@ -23,6 +23,7 @@ import { withLanguageWrapper } from './decorators/language.js';
 import { withStaticColorPlayground } from './decorators/static-color-playground.js';
 import DocumentTemplate from './DocumentTemplate.mdx';
 import { FontLoader } from './loaders/font-loader.js';
+import { transformDocsSource } from './utils/docs-source-transform.js';
 
 import '../stylesheets/swc.css';
 import '../stylesheets/typography.css';
@@ -62,20 +63,6 @@ const preview = {
           { value: 'light', title: 'Light' },
           { value: 'dark', title: 'Dark' },
           { value: 'adaptive', title: 'Adaptive' },
-        ],
-        dynamicTitle: true,
-      },
-    },
-    scale: {
-      name: 'Scale',
-      description: 'Global scale for components',
-      defaultValue: 'medium',
-      type: 'string',
-      toolbar: {
-        title: 'Scale',
-        items: [
-          { value: 'medium', title: 'Medium' },
-          { value: 'large', title: 'Large' },
         ],
         dynamicTitle: true,
       },
@@ -136,7 +123,6 @@ const preview = {
   },
   initialGlobals: {
     theme: 'light',
-    scale: 'medium',
     lang: 'en-US',
     textDirection: 'auto',
   },
@@ -197,34 +183,11 @@ const preview = {
       },
       source: {
         excludeDecorators: true,
-        type: 'auto',
+        // Prefer serialized DOM so docs code panels show HTML for stories that use
+        // custom render functions; type "auto" often surfaces raw source instead.
+        type: 'dynamic',
         language: 'html',
-        transform: async (source: string) => {
-          try {
-            const prettier = await import('prettier/standalone');
-            const prettierPluginHtml = await import('prettier/plugins/html');
-            const prettierPluginBabel = await import('prettier/plugins/babel');
-            const prettierPluginEstree =
-              await import('prettier/plugins/estree');
-
-            return prettier.format(source, {
-              parser: 'html',
-              plugins: [
-                prettierPluginHtml.default,
-                prettierPluginBabel.default,
-                prettierPluginEstree.default,
-              ],
-              tabWidth: 2,
-              useTabs: false,
-              singleQuote: true,
-              printWidth: 80,
-            });
-          } catch (error) {
-            // If formatting fails, return the original source
-            console.error('Failed to format source code:', error);
-            return source;
-          }
-        },
+        transform: transformDocsSource,
       },
     },
     options: {
@@ -236,16 +199,19 @@ const preview = {
           'Core',
           ['Overview', 'Controllers'],
           'Components',
+          'Patterns',
+          ['Conversational AI', ['README', 'Prompt field', 'User message']],
           'Guides',
           [
             'Accessibility guides',
             [
               'Overview',
               'Semantic HTML and ARIA',
+              'Headings and landmarks',
               'Accessible pattern libraries',
               'Keyboard testing',
               'Screen reader testing',
-              'Wave toolbar testing',
+              'WAVE toolbar testing',
               'Accessibility resources',
             ],
             'Customization',
@@ -275,6 +241,7 @@ const preview = {
               'Using stackblitz',
               '2nd-gen testing',
               'Tools vs packages',
+              'Writing migration guides',
               'Focus management',
             ],
             'Style guide',
@@ -351,10 +318,20 @@ const preview = {
               ],
               'Components',
               [
+                'Accordion',
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Action button',
                 ['Rendering and styling migration analysis'],
                 'Action group',
                 ['Rendering and styling migration analysis'],
+                'Action menu',
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Alert banner',
                 ['Rendering and styling migration analysis'],
                 'Asset',
@@ -373,6 +350,7 @@ const preview = {
                 'Button',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Button group',
@@ -399,7 +377,6 @@ const preview = {
                 'Illustrated message',
                 [
                   'Accessibility migration analysis',
-                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Infield button',
@@ -407,15 +384,26 @@ const preview = {
                 'Infield progress circle',
                 ['Rendering and styling migration analysis'],
                 'Link',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Meter',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Number field',
                 ['Rendering and styling migration analysis'],
                 'Opacity checkerboard',
                 ['Rendering and styling migration analysis'],
                 'Picker button',
                 ['Rendering and styling migration analysis'],
+                'Popover',
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Progress bar',
                 [
                   'Accessibility migration analysis',
@@ -446,6 +434,7 @@ const preview = {
                 'Tabs',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Tag',
