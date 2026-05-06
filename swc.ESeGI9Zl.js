@@ -13,4 +13,4 @@ import{d as t}from"./swc.JlveB6nj.js";import{i as o}from"./swc.CZZTz5mk.js";impo
       <slot></slot>
       ${this.tip?this.renderTip():e}
     `}}m([i({type:Boolean,reflect:!0})],v.prototype,"open"),m([i({reflect:!0})],v.prototype,"placement"),m([i({type:Boolean,reflect:!0})],v.prototype,"tip"),m([s("#tip")],v.prototype,"tipElement"),t("sp-popover",v);var c=Object.freeze({__proto__:null});export{v as P,c as s};
-//# sourceMappingURL=swc.BghYY_qU.js.map
+//# sourceMappingURL=swc.DOcU4nao.js.map

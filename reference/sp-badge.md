@@ -9,11 +9,13 @@ import '@spectrum-web-components/badge/sp-badge.js';
 
 ## Attributes
 
-| Name      | Type                      | Default         | Description                      |
-| --------- | ------------------------- | --------------- | -------------------------------- |
-| `variant` | `BadgeVariantS1`          | `'informative'` | The variant of the badge.        |
-| `size`    | `ElementSize`             | -               | The size of the badge.           |
-| `fixed`   | `FixedValues | undefined` | -               | The fixed position of the badge. |
+| Name      | Type                      | Default         | Description                                                             |
+| --------- | ------------------------- | --------------- | ----------------------------------------------------------------------- |
+| `variant` | `BadgeVariantS1`          | `'informative'` | The variant of the badge.                                               |
+| `size`    | `ElementSize`             | -               | The size of the badge.                                                  |
+| `fixed`   | `FixedValues | undefined` | -               | The fixed position of the badge.                                        |
+| `subtle`  | `boolean`                 | `false`         | Whether the badge is subtle.                                            |
+| `outline` | `boolean`                 | `false`         | Whether the badge is outlined. Can only be used with semantic variants. |
 
 ## Slots
 

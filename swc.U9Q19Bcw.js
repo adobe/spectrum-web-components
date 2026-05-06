@@ -12,4 +12,4 @@ import{t as s,s as r}from"./swc.CIw_Gjml.js";import{I as e}from"./swc.CdEeIaOZ.j
       d="M3.5 9.5a1 1 0 0 1-.774-.368l-2.45-3a1 1 0 1 1 1.548-1.264l1.657 2.028 4.68-6.01A1 1 0 0 1 9.74 2.114l-5.45 7a1 1 0 0 1-.777.386z"
     />
   </svg>`)({hidden:!this.label,title:this.label})}});
-//# sourceMappingURL=swc.t7ssz6Dq.js.map
+//# sourceMappingURL=swc.DTOcS3TG.js.map

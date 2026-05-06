@@ -13,4 +13,4 @@ import{d as r}from"./swc.JlveB6nj.js";import{i as e}from"./swc.CZZTz5mk.js";impo
           `)}
       </div>
     `}}h.STATIC_COLORS=f,((r,e,t)=>{for(var s,o=void 0,a=r.length-1;a>=0;a--)(s=r[a])&&(o=s(e,t,o)||o);o&&b(e,t,o)})([l({type:String,reflect:!0,attribute:"static-color"})],h.prototype,"staticColor"),r("sp-progress-circle",h);var k=Object.freeze({__proto__:null});export{g,k as s};
-//# sourceMappingURL=swc.rzoZBq4I.js.map
+//# sourceMappingURL=swc.DZmESRSN.js.map

@@ -23,4 +23,4 @@ import{d as o}from"./swc.JlveB6nj.js";import{i as t}from"./swc.CZZTz5mk.js";impo
   `};class b extends(e(r,{noDefaultSize:!0})){constructor(){super(...arguments),this.quiet=!1}static get styles(){return[...super.styles,a,c]}set variant(o){const t=this._variant,r=this.staticColor;if("overBackground"!==o)return this.removeAttribute("variant"),this._variant=void 0,void(this.staticColor=void 0);this.setAttribute("variant",o),this._variant=o,this.staticColor="white",this.requestUpdate("variant",t),this.requestUpdate("staticColor",r)}get variant(){return this._variant}get buttonContent(){return[d[this.size]()]}render(){return n`
       <div class="fill">${super.render()}</div>
     `}connectedCallback(){super.connectedCallback()}}u([s()],b.prototype,"label",2),u([s({type:Boolean,reflect:!0})],b.prototype,"quiet",2),u([s({reflect:!0})],b.prototype,"variant",1),u([s({reflect:!0,attribute:"static-color"})],b.prototype,"staticColor",2),o("sp-clear-button",b);
-//# sourceMappingURL=swc.BrlNhbNs.js.map
+//# sourceMappingURL=swc.DnlU3LFv.js.map

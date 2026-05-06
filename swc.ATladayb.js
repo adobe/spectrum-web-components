@@ -36,4 +36,4 @@ import{d as t}from"./swc.JlveB6nj.js";import{F as o}from"./swc.Bg5uLBM2.js";impo
         ></sp-close-button>
       </div>
     `}updated(t){super.updated(t),t.has("open")&&(this.open?this.timeout&&this.startCountdown():this.timeout&&this.stopCountdown()),t.has("timeout")&&(null!==this.timeout&&this.open?this.startCountdown():this.stopCountdown())}}d([r({type:Boolean,reflect:!0})],l.prototype,"open",2),d([r({type:Number})],l.prototype,"timeout",1),d([r({type:String})],l.prototype,"variant",1),d([r({type:String,attribute:"icon-label"})],l.prototype,"iconLabel",2),t("sp-toast",l);
-//# sourceMappingURL=swc.BbKcXKIQ.js.map
+//# sourceMappingURL=swc.1xzTViwD.js.map

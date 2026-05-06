@@ -31,4 +31,4 @@ import{t as r,s as l}from"./swc.Chuw36y7.js";import{I as e}from"./swc.CdEeIaOZ.j
     <circle cx="29.5" cy="18.2" r="3.4" />
     <circle cx="6.1" cy="18.2" r="3.4" />
   </svg>`)({hidden:!this.label,title:this.label})}});
-//# sourceMappingURL=swc.Dory7p4p.js.map
+//# sourceMappingURL=swc.CJjRFQci.js.map

@@ -25,4 +25,4 @@ import{d as o}from"./swc.JlveB6nj.js";import{i as t}from"./swc.CZZTz5mk.js";impo
           <slot @slotchange=${this.manageTextObservedSlot}></slot>
         </span>
       `]}}l([n({reflect:!0})],d.prototype,"variant"),l([n({reflect:!0,attribute:"static-color"})],d.prototype,"staticColor"),o("sp-close-button",d);
-//# sourceMappingURL=swc.CHPAmoV8.js.map
+//# sourceMappingURL=swc.qbHOpYIv.js.map

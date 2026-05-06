@@ -43,4 +43,4 @@ import{d as e}from"./swc.JlveB6nj.js";import{R as t}from"./swc.nrLx3XCP.js";impo
         </div>
       </nav>
     `}willUpdate(){if(!this.hasUpdated){const e=this.querySelector("[selected]");e&&(this.value=e.value)}}updated(e){super.updated(e),e.has("manageTabIndex")&&(this.manageTabIndex?this.rovingTabindexController.manage():this.rovingTabindexController.unmanage())}}y([i({type:Boolean,reflect:!0,attribute:"manage-tab-index"})],w.prototype,"manageTabIndex"),y([i({reflect:!0})],w.prototype,"value"),y([i({reflect:!0})],w.prototype,"variant"),y([i({reflect:!0})],w.prototype,"label"),e("sp-sidenav",w),e("sp-sidenav-item",b);export{p as S};
-//# sourceMappingURL=swc.CZXX1e-d.js.map
+//# sourceMappingURL=swc.CjPDlCMU.js.map

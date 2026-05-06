@@ -62,4 +62,4 @@ import{d as o}from"./swc.JlveB6nj.js";import{F as e}from"./swc.BgRubb97.js";impo
         <slot></slot>
       </div>
     `}updated(o){super.updated(o),o.has("disabled")&&(this.disabled?this.setAttribute("aria-disabled","true"):this.removeAttribute("aria-disabled"))}}b([i({type:Boolean,reflect:!0})],x.prototype,"open"),b([i({type:String,reflect:!0})],x.prototype,"label"),b([i({type:Boolean,reflect:!0})],x.prototype,"disabled"),b([i({type:Number,reflect:!0})],x.prototype,"level"),o("sp-accordion-item",x);
-//# sourceMappingURL=swc.560kSlEO.js.map
+//# sourceMappingURL=swc.D32_2au9.js.map
