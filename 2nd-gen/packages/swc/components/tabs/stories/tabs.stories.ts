@@ -32,7 +32,7 @@ const events = ['change'];
  *
  * Uses a three-element architecture: `<swc-tabs>` (container),
  * `<swc-tab>` (individual tab items), and `<swc-tab-panel>` (panel content).
- * Tabs and panels are matched by their `value` attributes.
+ * Tabs and panels are matched by their `tab-id` attributes.
  *
  * Breaking changes and migration steps from `sp-tabs` live in the
  * [consumer migration guide](../migration.md), not in Storybook copy.
@@ -122,19 +122,19 @@ interface TabGroupOptions {
 }
 
 const defaultTabs = html`
-  <swc-tab value="1">Overview</swc-tab>
-  <swc-tab value="2">Specifications</swc-tab>
-  <swc-tab value="3">Guidelines</swc-tab>
+  <swc-tab tab-id="1">Overview</swc-tab>
+  <swc-tab tab-id="2">Specifications</swc-tab>
+  <swc-tab tab-id="3">Guidelines</swc-tab>
 `;
 
 const defaultPanels = html`
-  <swc-tab-panel value="1">
+  <swc-tab-panel tab-id="1">
     <p>Overview content for the selected tab.</p>
   </swc-tab-panel>
-  <swc-tab-panel value="2">
+  <swc-tab-panel tab-id="2">
     <p>Specifications content goes here.</p>
   </swc-tab-panel>
-  <swc-tab-panel value="3">
+  <swc-tab-panel tab-id="3">
     <p>Guidelines content goes here.</p>
   </swc-tab-panel>
 `;
@@ -207,7 +207,7 @@ export const Overview: Story = {
  * Properties that render visual content:
  *
  * - **selected** (on `swc-tabs`): Value of the currently active tab
- * - **value** (on `swc-tab` and `swc-tab-panel`): Unique identifier linking tab to panel
+ * - **tab-id** (on `swc-tab` and `swc-tab-panel`): Unique identifier linking tab to panel
  * - **label** (on `swc-tabs`): Accessible name for the tablist
  * - **label** (on `swc-tab`): Fallback text when the default slot is empty
  * - **direction**: Layout direction (`horizontal` or `vertical`)
@@ -227,23 +227,23 @@ export const Anatomy: Story = {
     ${renderTabGroup({
       label: 'Icon and text example',
       tabs: html`
-        <swc-tab value="1">
+        <swc-tab tab-id="1">
           <span slot="icon" aria-hidden="true">☰</span>
           Dashboard
         </swc-tab>
-        <swc-tab value="2">
+        <swc-tab tab-id="2">
           <span slot="icon" aria-hidden="true">📊</span>
           Reports
         </swc-tab>
-        <swc-tab value="3">
+        <swc-tab tab-id="3">
           <span slot="icon" aria-hidden="true">⚙</span>
           Settings
         </swc-tab>
       `,
       panels: html`
-        <swc-tab-panel value="1"><p>Dashboard content.</p></swc-tab-panel>
-        <swc-tab-panel value="2"><p>Reports content.</p></swc-tab-panel>
-        <swc-tab-panel value="3"><p>Settings content.</p></swc-tab-panel>
+        <swc-tab-panel tab-id="1"><p>Dashboard content.</p></swc-tab-panel>
+        <swc-tab-panel tab-id="2"><p>Reports content.</p></swc-tab-panel>
+        <swc-tab-panel tab-id="3"><p>Settings content.</p></swc-tab-panel>
       `,
     })}
     <br />
@@ -251,20 +251,20 @@ export const Anatomy: Story = {
     ${renderTabGroup({
       label: 'Icon-only example',
       tabs: html`
-        <swc-tab value="1" label="Dashboard">
+        <swc-tab tab-id="1" label="Dashboard">
           <span slot="icon" aria-hidden="true">☰</span>
         </swc-tab>
-        <swc-tab value="2" label="Reports">
+        <swc-tab tab-id="2" label="Reports">
           <span slot="icon" aria-hidden="true">📊</span>
         </swc-tab>
-        <swc-tab value="3" label="Settings">
+        <swc-tab tab-id="3" label="Settings">
           <span slot="icon" aria-hidden="true">⚙</span>
         </swc-tab>
       `,
       panels: html`
-        <swc-tab-panel value="1"><p>Dashboard content.</p></swc-tab-panel>
-        <swc-tab-panel value="2"><p>Reports content.</p></swc-tab-panel>
-        <swc-tab-panel value="3"><p>Settings content.</p></swc-tab-panel>
+        <swc-tab-panel tab-id="1"><p>Dashboard content.</p></swc-tab-panel>
+        <swc-tab-panel tab-id="2"><p>Reports content.</p></swc-tab-panel>
+        <swc-tab-panel tab-id="3"><p>Settings content.</p></swc-tab-panel>
       `,
     })}
   `,
@@ -351,18 +351,18 @@ export const States: Story = {
       selected: 'selected',
       label: 'Individual states',
       tabs: html`
-        <swc-tab value="default">Default</swc-tab>
-        <swc-tab value="selected">Selected</swc-tab>
-        <swc-tab value="disabled" disabled>Disabled</swc-tab>
+        <swc-tab tab-id="default">Default</swc-tab>
+        <swc-tab tab-id="selected">Selected</swc-tab>
+        <swc-tab tab-id="disabled" disabled>Disabled</swc-tab>
       `,
       panels: html`
-        <swc-tab-panel value="default">
+        <swc-tab-panel tab-id="default">
           <p>Default tab content.</p>
         </swc-tab-panel>
-        <swc-tab-panel value="selected">
+        <swc-tab-panel tab-id="selected">
           <p>Selected tab content.</p>
         </swc-tab-panel>
-        <swc-tab-panel value="disabled">
+        <swc-tab-panel tab-id="disabled">
           <p>Disabled tab content.</p>
         </swc-tab-panel>
       `,
@@ -405,11 +405,11 @@ export const ActivationModes: Story = {
     ${renderTabGroup({
       label: 'Manual activation',
       panels: html`
-        <swc-tab-panel value="1">
+        <swc-tab-panel tab-id="1">
           <p>Use arrow keys to move focus, then Enter or Space to select.</p>
         </swc-tab-panel>
-        <swc-tab-panel value="2"><p>Specifications content.</p></swc-tab-panel>
-        <swc-tab-panel value="3"><p>Guidelines content.</p></swc-tab-panel>
+        <swc-tab-panel tab-id="2"><p>Specifications content.</p></swc-tab-panel>
+        <swc-tab-panel tab-id="3"><p>Guidelines content.</p></swc-tab-panel>
       `,
     })}
     <br />
@@ -418,11 +418,11 @@ export const ActivationModes: Story = {
       keyboardActivation: 'automatic',
       label: 'Automatic activation',
       panels: html`
-        <swc-tab-panel value="1">
+        <swc-tab-panel tab-id="1">
           <p>Arrow keys immediately select and display content.</p>
         </swc-tab-panel>
-        <swc-tab-panel value="2"><p>Specifications content.</p></swc-tab-panel>
-        <swc-tab-panel value="3"><p>Guidelines content.</p></swc-tab-panel>
+        <swc-tab-panel tab-id="2"><p>Specifications content.</p></swc-tab-panel>
+        <swc-tab-panel tab-id="3"><p>Guidelines content.</p></swc-tab-panel>
       `,
     })}
   `,
@@ -492,7 +492,7 @@ export const ActivationModes: Story = {
  * - Use meaningful, concise text labels for each tab
  * - For icon-only tabs, provide a `label` attribute on `swc-tab` as
  *   the accessible name (since there is no visible text content)
- * - Use the `value` attribute to link tabs to their panels
+ * - Use the `tab-id` attribute to link tabs to their panels
  * - Avoid disabling all tabs — at least one should be interactive
  * - Test with screen readers (VoiceOver, NVDA, JAWS) to verify tab
  *   names, selection announcements, and panel content are accessible
@@ -502,18 +502,18 @@ export const Accessibility: Story = {
     ${renderTabGroup({
       label: 'Account settings',
       tabs: html`
-        <swc-tab value="1">Dashboard</swc-tab>
-        <swc-tab value="2">Reports</swc-tab>
-        <swc-tab value="3" disabled>Admin (restricted)</swc-tab>
+        <swc-tab tab-id="1">Dashboard</swc-tab>
+        <swc-tab tab-id="2">Reports</swc-tab>
+        <swc-tab tab-id="3" disabled>Admin (restricted)</swc-tab>
       `,
       panels: html`
-        <swc-tab-panel value="1">
+        <swc-tab-panel tab-id="1">
           <p>Dashboard content visible to all users.</p>
         </swc-tab-panel>
-        <swc-tab-panel value="2">
+        <swc-tab-panel tab-id="2">
           <p>Reports section with data visualizations.</p>
         </swc-tab-panel>
-        <swc-tab-panel value="3">
+        <swc-tab-panel tab-id="3">
           <p>Admin settings (restricted access).</p>
         </swc-tab-panel>
       `,

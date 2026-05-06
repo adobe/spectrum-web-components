@@ -51,10 +51,10 @@ export abstract class TabPanelBase extends SpectrumElement {
 
   /**
    * Unique identifier linking this panel to its corresponding tab.
-   * Must match the `value` attribute on the associated `swc-tab`.
+   * Must match the `tab-id` attribute on the associated `swc-tab`.
    */
-  @property({ type: String, reflect: true })
-  public value = '';
+  @property({ type: String, reflect: true, attribute: 'tab-id' })
+  public tabId = '';
 
   // ──────────────────────
   //     IMPLEMENTATION

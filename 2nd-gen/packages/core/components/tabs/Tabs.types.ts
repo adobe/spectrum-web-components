@@ -51,7 +51,7 @@ export const TAB_DENSITY_DEFAULT = 'regular' as const satisfies TabDensity;
  * satisfies this contract without coupling to a concrete class.
  */
 export interface TabLike extends HTMLElement {
-  value: string;
+  tabId: string;
   selected: boolean;
   disabled: boolean;
 }
@@ -61,6 +61,6 @@ export interface TabLike extends HTMLElement {
  * tabs container.
  */
 export interface TabPanelLike extends HTMLElement {
-  value: string;
+  tabId: string;
   selected: boolean;
 }

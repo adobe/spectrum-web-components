@@ -81,12 +81,12 @@ Find and replace all instances of the three element tag names in your templates 
 
 <!-- After -->
 <swc-tabs selected="tab-1" label="Product details">
-  <swc-tab value="tab-1">Overview</swc-tab>
-  <swc-tab value="tab-2">Specifications</swc-tab>
-  <swc-tab-panel value="tab-1">
+  <swc-tab tab-id="tab-1">Overview</swc-tab>
+  <swc-tab tab-id="tab-2">Specifications</swc-tab>
+  <swc-tab-panel tab-id="tab-1">
     <p>Overview content.</p>
   </swc-tab-panel>
-  <swc-tab-panel value="tab-2">
+  <swc-tab-panel tab-id="tab-2">
     <p>Specifications content.</p>
   </swc-tab-panel>
 </swc-tabs>
@@ -118,7 +118,7 @@ Find and replace all instances of the three element tag names in your templates 
 
 <!-- After -->
 <swc-tabs selected="1" keyboard-activation="automatic" label="Example">
-  <swc-tab value="1">Tab</swc-tab>
+  <swc-tab tab-id="1">Tab</swc-tab>
 </swc-tabs>
 ```
 
@@ -132,7 +132,7 @@ Find and replace all instances of the three element tag names in your templates 
 
 <!-- After -->
 <swc-tabs selected="1" density="compact" label="Example">
-  <swc-tab value="1">Tab</swc-tab>
+  <swc-tab tab-id="1">Tab</swc-tab>
 </swc-tabs>
 ```
 
@@ -155,7 +155,7 @@ and issues a debug warning.
 
 <!-- After: use "vertical" instead -->
 <swc-tabs direction="vertical" selected="1" label="Example">
-  <swc-tab value="1">Tab</swc-tab>
+  <swc-tab tab-id="1">Tab</swc-tab>
 </swc-tabs>
 ```
 
@@ -179,9 +179,9 @@ They are announced as disabled by assistive technology but cannot be activated
 ```html
 <!-- Same markup in both generations -->
 <swc-tabs selected="1" label="Example">
-  <swc-tab value="1">Active</swc-tab>
-  <swc-tab value="2" disabled>Disabled</swc-tab>
-  <swc-tab value="3">Another</swc-tab>
+  <swc-tab tab-id="1">Active</swc-tab>
+  <swc-tab tab-id="2" disabled>Disabled</swc-tab>
+  <swc-tab tab-id="3">Another</swc-tab>
 </swc-tabs>
 ```
 
@@ -382,20 +382,20 @@ All public properties from 1st-gen and their 2nd-gen status:
 
 ### `swc-tab`
 
-| Property   | Status    | Notes                                              |
-| ---------- | --------- | -------------------------------------------------- |
-| `disabled` | Changed   | Now uses `aria-disabled`; focusable via arrow keys |
-| `label`    | Unchanged | Fallback text label                                |
-| `selected` | Unchanged | Managed by parent                                  |
-| `value`    | Unchanged | Unique identifier                                  |
-| `vertical` | Unchanged | Vertical orientation styling                       |
+| Property   | Status               | Notes                                              |
+| ---------- | -------------------- | -------------------------------------------------- |
+| `disabled` | Changed              | Now uses `aria-disabled`; focusable via arrow keys |
+| `label`    | Unchanged            | Fallback text label                                |
+| `selected` | Unchanged            | Managed by parent                                  |
+| `tab-id`   | Renamed from `value` | Unique identifier                                  |
+| `vertical` | Unchanged            | Vertical orientation styling                       |
 
 ### `swc-tab-panel`
 
-| Property   | Status    | Notes             |
-| ---------- | --------- | ----------------- |
-| `selected` | Unchanged | Managed by parent |
-| `value`    | Unchanged | Matches tab value |
+| Property   | Status               | Notes                |
+| ---------- | -------------------- | -------------------- |
+| `selected` | Unchanged            | Managed by parent    |
+| `tab-id`   | Renamed from `value` | Matches tab `tab-id` |
 
 ---
 
@@ -425,7 +425,7 @@ All public properties from 1st-gen and their 2nd-gen status:
   name.
 - Use meaningful text content in each `swc-tab`. For icon-only tabs, provide
   a `label` attribute as the accessible name.
-- Use the `value` attribute to link tabs to their corresponding panels.
+- Use the `tab-id` attribute to link tabs to their corresponding panels.
 - Avoid disabling all tabs — at least one should remain interactive.
 - The `change` event is cancelable. Calling `preventDefault()` reverts the
   selection.

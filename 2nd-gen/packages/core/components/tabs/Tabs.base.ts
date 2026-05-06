@@ -199,7 +199,7 @@ export abstract class TabsBase extends SpectrumElement {
   public label = '';
 
   /**
-   * The `value` of the currently selected tab. Setting this property
+   * The `tab-id` of the currently selected tab. Setting this property
    * updates which tab appears selected and which panel is visible.
    */
   @property({ type: String, reflect: true })
@@ -437,13 +437,13 @@ export abstract class TabsBase extends SpectrumElement {
    * selection reverts to the previous value.
    */
   private selectTarget(target: TabLike): void {
-    const value = target.value;
-    if (!value) {
+    const id = target.tabId;
+    if (!id) {
       return;
     }
 
     const previous = this.selected;
-    this.selected = value;
+    this.selected = id;
 
     const applyDefault = this.dispatchEvent(
       new Event('change', {
@@ -472,7 +472,7 @@ export abstract class TabsBase extends SpectrumElement {
     }
 
     if (this.selected) {
-      const currentTab = this._tabs.find((el) => el.value === this.selected);
+      const currentTab = this._tabs.find((el) => el.tabId === this.selected);
 
       if (currentTab) {
         currentTab.selected = true;
@@ -502,15 +502,15 @@ export abstract class TabsBase extends SpectrumElement {
    */
   private managePanels(panels: TabPanelLike[]): void {
     for (const panel of panels) {
-      const { value, id } = panel;
-      const tab = this.querySelector(`[role="tab"][value="${value}"]`);
+      const { tabId, id } = panel;
+      const tab = this.querySelector(`[role="tab"][tab-id="${tabId}"]`);
 
       if (tab) {
         tab.setAttribute('aria-controls', id);
         panel.setAttribute('aria-labelledby', tab.id);
       }
 
-      panel.selected = value === this.selected;
+      panel.selected = tabId === this.selected;
     }
   }
 
@@ -592,7 +592,7 @@ export abstract class TabsBase extends SpectrumElement {
       const previousValue = changes.get('selected') as string | undefined;
       if (previousValue) {
         const previous = this.querySelector(
-          `[role="tabpanel"][value="${previousValue}"]`
+          `[role="tabpanel"][tab-id="${previousValue}"]`
         ) as TabPanelLike | null;
 
         if (previous) {
@@ -601,7 +601,7 @@ export abstract class TabsBase extends SpectrumElement {
       }
 
       const next = this.querySelector(
-        `[role="tabpanel"][value="${this.selected}"]`
+        `[role="tabpanel"][tab-id="${this.selected}"]`
       ) as TabPanelLike | null;
 
       if (next) {

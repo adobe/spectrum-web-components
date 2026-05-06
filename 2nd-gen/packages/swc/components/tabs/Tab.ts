@@ -31,7 +31,7 @@ import styles from './tab.css';
  * @slot icon - Optional icon displayed before the label
  *
  * @example
- * <swc-tab value="settings">Settings</swc-tab>
+ * <swc-tab tab-id="settings">Settings</swc-tab>
  */
 export class Tab extends TabBase {
   // ─────────────────────────────

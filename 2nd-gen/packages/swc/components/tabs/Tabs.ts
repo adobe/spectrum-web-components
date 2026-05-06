@@ -35,10 +35,10 @@ import styles from './tabs.css';
  *
  * @example
  * <swc-tabs selected="1" label="Product details">
- *   <swc-tab value="1">Overview</swc-tab>
- *   <swc-tab value="2">Specs</swc-tab>
- *   <swc-tab-panel value="1">Product overview content</swc-tab-panel>
- *   <swc-tab-panel value="2">Technical specifications</swc-tab-panel>
+ *   <swc-tab tab-id="1">Overview</swc-tab>
+ *   <swc-tab tab-id="2">Specs</swc-tab>
+ *   <swc-tab-panel tab-id="1">Product overview content</swc-tab-panel>
+ *   <swc-tab-panel tab-id="2">Technical specifications</swc-tab-panel>
  * </swc-tabs>
  */
 export class Tabs extends TabsBase {

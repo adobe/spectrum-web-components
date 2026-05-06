@@ -74,8 +74,8 @@ export abstract class TabBase extends SpectrumElement {
    * Unique identifier for this tab. Used by the parent `swc-tabs`
    * to match this tab to its corresponding `swc-tab-panel`.
    */
-  @property({ type: String, reflect: true })
-  public value = '';
+  @property({ type: String, reflect: true, attribute: 'tab-id' })
+  public tabId = '';
 
   // ──────────────────────
   //     IMPLEMENTATION

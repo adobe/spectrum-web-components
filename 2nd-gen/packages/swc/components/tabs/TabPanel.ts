@@ -28,7 +28,7 @@ import styles from './tab-panel.css';
  * @slot - Content displayed when the associated tab is selected
  *
  * @example
- * <swc-tab-panel value="settings">
+ * <swc-tab-panel tab-id="settings">
  *   <p>Settings content goes here.</p>
  * </swc-tab-panel>
  */

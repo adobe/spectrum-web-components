@@ -83,7 +83,7 @@ export const OverviewTest: Story = {
       'focusing swc-tabs host moves focus to the selected tab',
       async () => {
         const selectedTab = canvasElement.querySelector(
-          `swc-tab[value="${tabs.selected}"]`
+          `swc-tab[tab-id="${tabs.selected}"]`
         ) as Tab;
         expect(selectedTab, 'selected tab exists').toBeTruthy();
 
@@ -107,10 +107,10 @@ export const OverviewTest: Story = {
 export const DirectionPropertyTest: Story = {
   render: () => html`
     <swc-tabs selected="1" label="Direction test">
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab value="2">Tab 2</swc-tab>
-      <swc-tab-panel value="1"><p>Panel 1</p></swc-tab-panel>
-      <swc-tab-panel value="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
@@ -145,10 +145,10 @@ export const DirectionPropertyTest: Story = {
 export const SelectedPropertyTest: Story = {
   render: () => html`
     <swc-tabs selected="1" label="Selection test">
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab value="2">Tab 2</swc-tab>
-      <swc-tab-panel value="1"><p>Panel 1</p></swc-tab-panel>
-      <swc-tab-panel value="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
@@ -162,8 +162,8 @@ export const SelectedPropertyTest: Story = {
       tabs.selected = '2';
       await tabs.updateComplete;
 
-      const tab1 = canvasElement.querySelector('swc-tab[value="1"]') as Tab;
-      const tab2 = canvasElement.querySelector('swc-tab[value="2"]') as Tab;
+      const tab1 = canvasElement.querySelector('swc-tab[tab-id="1"]') as Tab;
+      const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
 
       expect(tab1.selected, 'tab 1 is deselected').toBe(false);
       expect(tab2.selected, 'tab 2 is selected').toBe(true);
@@ -184,8 +184,8 @@ export const SelectedPropertyTest: Story = {
 export const DensityAndKeyboardActivationTest: Story = {
   render: () => html`
     <swc-tabs selected="1" label="Density / activation test">
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab-panel value="1"><p>Panel</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
@@ -224,10 +224,10 @@ export const VerticalDensityTablistGapTest: Story = {
         density="regular"
         label="Vertical regular"
       >
-        <swc-tab value="1">A</swc-tab>
-        <swc-tab value="2">B</swc-tab>
-        <swc-tab-panel value="1"><p>P1</p></swc-tab-panel>
-        <swc-tab-panel value="2"><p>P2</p></swc-tab-panel>
+        <swc-tab tab-id="1">A</swc-tab>
+        <swc-tab tab-id="2">B</swc-tab>
+        <swc-tab-panel tab-id="1"><p>P1</p></swc-tab-panel>
+        <swc-tab-panel tab-id="2"><p>P2</p></swc-tab-panel>
       </swc-tabs>
       <swc-tabs
         selected="1"
@@ -235,10 +235,10 @@ export const VerticalDensityTablistGapTest: Story = {
         density="compact"
         label="Vertical compact"
       >
-        <swc-tab value="1">A</swc-tab>
-        <swc-tab value="2">B</swc-tab>
-        <swc-tab-panel value="1"><p>P1</p></swc-tab-panel>
-        <swc-tab-panel value="2"><p>P2</p></swc-tab-panel>
+        <swc-tab tab-id="1">A</swc-tab>
+        <swc-tab tab-id="2">B</swc-tab>
+        <swc-tab-panel tab-id="1"><p>P1</p></swc-tab-panel>
+        <swc-tab-panel tab-id="2"><p>P2</p></swc-tab-panel>
       </swc-tabs>
     </div>
   `,
@@ -274,16 +274,16 @@ export const VerticalDensityTablistGapTest: Story = {
 export const HostAutoDisabledReactiveTest: Story = {
   render: () => html`
     <swc-tabs selected="1" label="Reactive keyboard/disabled test">
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab value="2">Tab 2</swc-tab>
-      <swc-tab-panel value="1"><p>Panel 1</p></swc-tab-panel>
-      <swc-tab-panel value="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
     const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
-    const tab1 = canvasElement.querySelector('swc-tab[value="1"]') as Tab;
-    const tab2 = canvasElement.querySelector('swc-tab[value="2"]') as Tab;
+    const tab1 = canvasElement.querySelector('swc-tab[tab-id="1"]') as Tab;
+    const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
 
     await step(
       'manual mode: arrow moves focus without changing selection',
@@ -379,10 +379,10 @@ export const KeyboardActivationFromAttributeTest: Story = {
         keyboard-activation="manual"
         label="Manual from attribute"
       >
-        <swc-tab value="1">One</swc-tab>
-        <swc-tab value="2">Two</swc-tab>
-        <swc-tab-panel value="1"><p>Panel one</p></swc-tab-panel>
-        <swc-tab-panel value="2"><p>Panel two</p></swc-tab-panel>
+        <swc-tab tab-id="1">One</swc-tab>
+        <swc-tab tab-id="2">Two</swc-tab>
+        <swc-tab-panel tab-id="1"><p>Panel one</p></swc-tab-panel>
+        <swc-tab-panel tab-id="2"><p>Panel two</p></swc-tab-panel>
       </swc-tabs>
       <swc-tabs
         id="tabs-keyboard-automatic"
@@ -390,10 +390,10 @@ export const KeyboardActivationFromAttributeTest: Story = {
         keyboard-activation="automatic"
         label="Automatic from attribute"
       >
-        <swc-tab value="1">One</swc-tab>
-        <swc-tab value="2">Two</swc-tab>
-        <swc-tab-panel value="1"><p>Panel one</p></swc-tab-panel>
-        <swc-tab-panel value="2"><p>Panel two</p></swc-tab-panel>
+        <swc-tab tab-id="1">One</swc-tab>
+        <swc-tab tab-id="2">Two</swc-tab>
+        <swc-tab-panel tab-id="1"><p>Panel one</p></swc-tab-panel>
+        <swc-tab-panel tab-id="2"><p>Panel two</p></swc-tab-panel>
       </swc-tabs>
     </div>
   `,
@@ -415,10 +415,10 @@ export const KeyboardActivationFromAttributeTest: Story = {
       expect(manualHost.keyboardActivation, 'mode is manual').toBe('manual');
 
       const t1 = canvasElement.querySelector(
-        '#tabs-keyboard-manual swc-tab[value="1"]'
+        '#tabs-keyboard-manual swc-tab[tab-id="1"]'
       ) as Tab;
       const t2 = canvasElement.querySelector(
-        '#tabs-keyboard-manual swc-tab[value="2"]'
+        '#tabs-keyboard-manual swc-tab[tab-id="2"]'
       ) as Tab;
 
       t1.focus();
@@ -443,10 +443,10 @@ export const KeyboardActivationFromAttributeTest: Story = {
       );
 
       const t1 = canvasElement.querySelector(
-        '#tabs-keyboard-automatic swc-tab[value="1"]'
+        '#tabs-keyboard-automatic swc-tab[tab-id="1"]'
       ) as Tab;
       const t2 = canvasElement.querySelector(
-        '#tabs-keyboard-automatic swc-tab[value="2"]'
+        '#tabs-keyboard-automatic swc-tab[tab-id="2"]'
       ) as Tab;
 
       t1.focus();
@@ -474,10 +474,10 @@ export const KeyboardActivationFromAttributeTest: Story = {
 export const AriaRolesTest: Story = {
   render: () => html`
     <swc-tabs selected="1" label="ARIA test">
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab value="2">Tab 2</swc-tab>
-      <swc-tab-panel value="1"><p>Panel 1</p></swc-tab-panel>
-      <swc-tab-panel value="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
@@ -502,13 +502,13 @@ export const AriaRolesTest: Story = {
         );
       }
 
-      const selectedTab = tabElements.find((t) => t.value === '1')!;
+      const selectedTab = tabElements.find((t) => t.tabId === '1')!;
       expect(
         selectedTab.getAttribute('aria-selected'),
         'selected tab has aria-selected=true'
       ).toBe('true');
 
-      const unselectedTab = tabElements.find((t) => t.value === '2')!;
+      const unselectedTab = tabElements.find((t) => t.tabId === '2')!;
       expect(
         unselectedTab.getAttribute('aria-selected'),
         'unselected tab has aria-selected=false'
@@ -531,9 +531,9 @@ export const AriaRolesTest: Story = {
     await step(
       'aria-controls and aria-labelledby wire up correctly',
       async () => {
-        const tab1 = canvasElement.querySelector('swc-tab[value="1"]') as Tab;
+        const tab1 = canvasElement.querySelector('swc-tab[tab-id="1"]') as Tab;
         const panel1 = canvasElement.querySelector(
-          'swc-tab-panel[value="1"]'
+          'swc-tab-panel[tab-id="1"]'
         ) as TabPanel;
 
         expect(
@@ -552,8 +552,8 @@ export const AriaRolesTest: Story = {
 export const AriaOrientationTest: Story = {
   render: () => html`
     <swc-tabs selected="1" direction="vertical" label="Orientation test">
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab-panel value="1"><p>Panel</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
@@ -586,8 +586,8 @@ export const AriaOrientationTest: Story = {
 export const AriaDisabledTest: Story = {
   render: () => html`
     <swc-tabs selected="1" disabled label="Disabled test">
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab-panel value="1"><p>Panel</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
@@ -613,15 +613,15 @@ export const AriaDisabledTest: Story = {
 export const DisabledTabAriaTest: Story = {
   render: () => html`
     <swc-tabs selected="1" label="Disabled tab test">
-      <swc-tab value="1">Enabled</swc-tab>
-      <swc-tab value="2" disabled>Disabled</swc-tab>
-      <swc-tab-panel value="1"><p>Panel</p></swc-tab-panel>
-      <swc-tab-panel value="2"><p>Panel</p></swc-tab-panel>
+      <swc-tab tab-id="1">Enabled</swc-tab>
+      <swc-tab tab-id="2" disabled>Disabled</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
     const disabledTab = canvasElement.querySelector(
-      'swc-tab[value="2"]'
+      'swc-tab[tab-id="2"]'
     ) as Tab;
     await disabledTab.updateComplete;
 
@@ -641,12 +641,12 @@ export const DisabledTabAriaTest: Story = {
 export const RovingTabindexTest: Story = {
   render: () => html`
     <swc-tabs selected="2" label="Roving tabindex test">
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab value="2">Tab 2</swc-tab>
-      <swc-tab value="3">Tab 3</swc-tab>
-      <swc-tab-panel value="1"><p>Panel 1</p></swc-tab-panel>
-      <swc-tab-panel value="2"><p>Panel 2</p></swc-tab-panel>
-      <swc-tab-panel value="3"><p>Panel 3</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab tab-id="3">Tab 3</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab-panel tab-id="3"><p>Panel 3</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
@@ -656,9 +656,9 @@ export const RovingTabindexTest: Story = {
     await step(
       'selected tab has tabindex=0, others have tabindex=-1',
       async () => {
-        const tab1 = tabElements.find((t) => t.value === '1')!;
-        const tab2 = tabElements.find((t) => t.value === '2')!;
-        const tab3 = tabElements.find((t) => t.value === '3')!;
+        const tab1 = tabElements.find((t) => t.tabId === '1')!;
+        const tab2 = tabElements.find((t) => t.tabId === '2')!;
+        const tab3 = tabElements.find((t) => t.tabId === '3')!;
 
         expect(tab1.tabIndex, 'tab 1 tabindex is -1').toBe(-1);
         expect(tab2.tabIndex, 'tab 2 (selected) tabindex is 0').toBe(0);
@@ -671,17 +671,17 @@ export const RovingTabindexTest: Story = {
 export const TabindexFallbackTest: Story = {
   render: () => html`
     <swc-tabs label="Fallback tabindex test">
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab value="2">Tab 2</swc-tab>
-      <swc-tab-panel value="1"><p>Panel 1</p></swc-tab-panel>
-      <swc-tab-panel value="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
     await getComponent<Tabs>(canvasElement, 'swc-tabs');
 
     await step('first tab gets tabindex=0 when none selected', async () => {
-      const tab1 = canvasElement.querySelector('swc-tab[value="1"]') as Tab;
+      const tab1 = canvasElement.querySelector('swc-tab[tab-id="1"]') as Tab;
       expect(
         tab1.tabIndex,
         'first tab is the tab stop when none selected'
@@ -697,10 +697,10 @@ export const TabindexFallbackTest: Story = {
 export const PanelVisibilityTest: Story = {
   render: () => html`
     <swc-tabs selected="1" label="Panel visibility test">
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab value="2">Tab 2</swc-tab>
-      <swc-tab-panel value="1"><p>Panel 1</p></swc-tab-panel>
-      <swc-tab-panel value="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
@@ -708,10 +708,10 @@ export const PanelVisibilityTest: Story = {
 
     await step('active panel is visible, inactive is hidden', async () => {
       const panel1 = canvasElement.querySelector(
-        'swc-tab-panel[value="1"]'
+        'swc-tab-panel[tab-id="1"]'
       ) as TabPanel;
       const panel2 = canvasElement.querySelector(
-        'swc-tab-panel[value="2"]'
+        'swc-tab-panel[tab-id="2"]'
       ) as TabPanel;
 
       expect(panel1.selected, 'panel 1 is selected').toBe(true);
@@ -732,10 +732,10 @@ export const PanelVisibilityTest: Story = {
       await tabs.updateComplete;
 
       const panel1 = canvasElement.querySelector(
-        'swc-tab-panel[value="1"]'
+        'swc-tab-panel[tab-id="1"]'
       ) as TabPanel;
       const panel2 = canvasElement.querySelector(
-        'swc-tab-panel[value="2"]'
+        'swc-tab-panel[tab-id="2"]'
       ) as TabPanel;
 
       expect(panel1.selected, 'panel 1 is now deselected').toBe(false);
@@ -751,19 +751,19 @@ export const PanelVisibilityTest: Story = {
 export const ArrowKeyNavigationTest: Story = {
   render: () => html`
     <swc-tabs selected="1" label="Arrow key test">
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab value="2">Tab 2</swc-tab>
-      <swc-tab value="3">Tab 3</swc-tab>
-      <swc-tab-panel value="1"><p>Panel 1</p></swc-tab-panel>
-      <swc-tab-panel value="2"><p>Panel 2</p></swc-tab-panel>
-      <swc-tab-panel value="3"><p>Panel 3</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab tab-id="3">Tab 3</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab-panel tab-id="3"><p>Panel 3</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
     const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
-    const tab1 = canvasElement.querySelector('swc-tab[value="1"]') as Tab;
-    const tab2 = canvasElement.querySelector('swc-tab[value="2"]') as Tab;
-    const tab3 = canvasElement.querySelector('swc-tab[value="3"]') as Tab;
+    const tab1 = canvasElement.querySelector('swc-tab[tab-id="1"]') as Tab;
+    const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
+    const tab3 = canvasElement.querySelector('swc-tab[tab-id="3"]') as Tab;
 
     tab1.focus();
 
@@ -807,16 +807,16 @@ export const ArrowKeyNavigationTest: Story = {
 export const VerticalArrowKeyTest: Story = {
   render: () => html`
     <swc-tabs selected="1" direction="vertical" label="Vertical arrow test">
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab value="2">Tab 2</swc-tab>
-      <swc-tab-panel value="1"><p>Panel 1</p></swc-tab-panel>
-      <swc-tab-panel value="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
     const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
-    const tab1 = canvasElement.querySelector('swc-tab[value="1"]') as Tab;
-    const tab2 = canvasElement.querySelector('swc-tab[value="2"]') as Tab;
+    const tab1 = canvasElement.querySelector('swc-tab[tab-id="1"]') as Tab;
+    const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
 
     tab1.focus();
 
@@ -854,19 +854,19 @@ export const VerticalArrowKeyTest: Story = {
 export const HomeEndKeyTest: Story = {
   render: () => html`
     <swc-tabs selected="2" label="Home/End test">
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab value="2">Tab 2</swc-tab>
-      <swc-tab value="3">Tab 3</swc-tab>
-      <swc-tab-panel value="1"><p>Panel 1</p></swc-tab-panel>
-      <swc-tab-panel value="2"><p>Panel 2</p></swc-tab-panel>
-      <swc-tab-panel value="3"><p>Panel 3</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab tab-id="3">Tab 3</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab-panel tab-id="3"><p>Panel 3</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
     const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
-    const tab1 = canvasElement.querySelector('swc-tab[value="1"]') as Tab;
-    const tab2 = canvasElement.querySelector('swc-tab[value="2"]') as Tab;
-    const tab3 = canvasElement.querySelector('swc-tab[value="3"]') as Tab;
+    const tab1 = canvasElement.querySelector('swc-tab[tab-id="1"]') as Tab;
+    const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
+    const tab3 = canvasElement.querySelector('swc-tab[tab-id="3"]') as Tab;
 
     tab2.focus();
 
@@ -891,15 +891,15 @@ export const HomeEndKeyTest: Story = {
 export const EnterSpaceActivationTest: Story = {
   render: () => html`
     <swc-tabs selected="1" label="Activation test">
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab value="2">Tab 2</swc-tab>
-      <swc-tab-panel value="1"><p>Panel 1</p></swc-tab-panel>
-      <swc-tab-panel value="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
     const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
-    const tab2 = canvasElement.querySelector('swc-tab[value="2"]') as Tab;
+    const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
 
     await step('Enter activates focused tab in manual mode', async () => {
       tab2.focus();
@@ -931,17 +931,17 @@ export const AutoActivationTest: Story = {
       keyboard-activation="automatic"
       label="Automatic activation test"
     >
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab value="2">Tab 2</swc-tab>
-      <swc-tab value="3">Tab 3</swc-tab>
-      <swc-tab-panel value="1"><p>Panel 1</p></swc-tab-panel>
-      <swc-tab-panel value="2"><p>Panel 2</p></swc-tab-panel>
-      <swc-tab-panel value="3"><p>Panel 3</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab tab-id="3">Tab 3</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab-panel tab-id="3"><p>Panel 3</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
     const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
-    const tab1 = canvasElement.querySelector('swc-tab[value="1"]') as Tab;
+    const tab1 = canvasElement.querySelector('swc-tab[tab-id="1"]') as Tab;
 
     tab1.focus();
 
@@ -961,18 +961,18 @@ export const AutoActivationTest: Story = {
 export const DisabledTabKeyboardTest: Story = {
   render: () => html`
     <swc-tabs selected="1" label="Disabled tab keyboard test">
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab value="2" disabled>Tab 2</swc-tab>
-      <swc-tab value="3">Tab 3</swc-tab>
-      <swc-tab-panel value="1"><p>Panel 1</p></swc-tab-panel>
-      <swc-tab-panel value="2"><p>Panel 2</p></swc-tab-panel>
-      <swc-tab-panel value="3"><p>Panel 3</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2" disabled>Tab 2</swc-tab>
+      <swc-tab tab-id="3">Tab 3</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab-panel tab-id="3"><p>Panel 3</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
     const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
-    const tab1 = canvasElement.querySelector('swc-tab[value="1"]') as Tab;
-    const tab2 = canvasElement.querySelector('swc-tab[value="2"]') as Tab;
+    const tab1 = canvasElement.querySelector('swc-tab[tab-id="1"]') as Tab;
+    const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
 
     tab1.focus();
 
@@ -1003,17 +1003,17 @@ export const DisabledTabKeyboardTest: Story = {
 export const DisabledContainerKeyboardTest: Story = {
   render: () => html`
     <swc-tabs selected="1" disabled label="Disabled container test">
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab value="2">Tab 2</swc-tab>
-      <swc-tab-panel value="1"><p>Panel 1</p></swc-tab-panel>
-      <swc-tab-panel value="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
     const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
 
     await step('click does nothing when container is disabled', async () => {
-      const tab2 = canvasElement.querySelector('swc-tab[value="2"]') as Tab;
+      const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
       tab2.click();
       await tabs.updateComplete;
       expect(tabs.selected, 'selection unchanged').toBe('1');
@@ -1028,10 +1028,10 @@ export const DisabledContainerKeyboardTest: Story = {
 export const ChangeEventTest: Story = {
   render: () => html`
     <swc-tabs selected="1" label="Change event test">
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab value="2">Tab 2</swc-tab>
-      <swc-tab-panel value="1"><p>Panel 1</p></swc-tab-panel>
-      <swc-tab-panel value="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
@@ -1043,7 +1043,7 @@ export const ChangeEventTest: Story = {
         eventFired = true;
       });
 
-      const tab2 = canvasElement.querySelector('swc-tab[value="2"]') as Tab;
+      const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
       tab2.click();
       await tabs.updateComplete;
 
@@ -1062,7 +1062,7 @@ export const ChangeEventTest: Story = {
         { once: true }
       );
 
-      const tab2 = canvasElement.querySelector('swc-tab[value="2"]') as Tab;
+      const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
       tab2.click();
       await tabs.updateComplete;
 
@@ -1109,10 +1109,10 @@ export const AnatomyTest: Story = {
 export const SelectionIndicatorTest: Story = {
   render: () => html`
     <swc-tabs selected="1" label="Indicator test">
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab value="2">Tab 2</swc-tab>
-      <swc-tab-panel value="1"><p>Panel 1</p></swc-tab-panel>
-      <swc-tab-panel value="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
@@ -1244,8 +1244,8 @@ export const MissingLabelWarningTest: Story = {
       withWarningSpy(async (warnCalls) => {
         const tabs = await fixture<Tabs>(html`
           <swc-tabs selected="1">
-            <swc-tab value="1">Tab 1</swc-tab>
-            <swc-tab-panel value="1"><p>Panel</p></swc-tab-panel>
+            <swc-tab tab-id="1">Tab 1</swc-tab>
+            <swc-tab-panel tab-id="1"><p>Panel</p></swc-tab-panel>
           </swc-tabs>
         `);
 
@@ -1264,8 +1264,8 @@ export const MissingLabelWarningTest: Story = {
 export const InvalidDirectionWarningTest: Story = {
   render: () => html`
     <swc-tabs selected="1" label="Warning test">
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab-panel value="1"><p>Panel</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
@@ -1289,8 +1289,8 @@ export const InvalidDirectionWarningTest: Story = {
 export const ValidLabelNoWarningTest: Story = {
   render: () => html`
     <swc-tabs selected="1" label="Has a label">
-      <swc-tab value="1">Tab 1</swc-tab>
-      <swc-tab-panel value="1"><p>Panel</p></swc-tab-panel>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel</p></swc-tab-panel>
     </swc-tabs>
   `,
   play: async ({ canvasElement, step }) => {
