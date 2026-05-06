@@ -22,7 +22,7 @@
 /* ── Tablist container ─────────────────────────────────── */
 
 .tablist {
-  --_swc-tabs-gap: var(--swc-tabs-gap, token("tab-item-to-tab-item-horizontal-medium"));
+  --_swc-tabs-gap: var(--swc-tabs-gap, token("spacing-500"));
 
   display: flex;
   position: relative;
@@ -46,19 +46,23 @@
 
 :host([direction="vertical"]) {
   flex-direction: row;
-  gap: var(--swc-tabs-vertical-content-gap, token("tab-item-to-tab-item-horizontal-medium"));
+  gap: var(--swc-tabs-vertical-content-gap, token("spacing-500"));
 }
 
 :host([direction="vertical"][density="compact"]) {
-  gap: var(--swc-tabs-vertical-content-gap-compact, token("tab-item-to-tab-item-vertical-medium"));
+  gap: var(--swc-tabs-vertical-content-gap-compact, token("tab-item-to-tab-item-horizontal-medium"));
 }
 
 :host([direction="vertical"]) .tablist {
-  --_swc-tabs-gap: var(--swc-tabs-vertical-gap, token("tab-item-to-tab-item-vertical-medium"));
+  --_swc-tabs-gap: var(--swc-tabs-vertical-gap, token("spacing-500"));
 
   flex-direction: column;
   align-items: flex-start;
   padding-inline-start: var(--swc-tabs-vertical-indicator-space, token("tab-item-start-to-edge-medium"));
+}
+
+:host([direction="vertical"][density="compact"]) .tablist {
+  --_swc-tabs-gap: var(--swc-tabs-vertical-compact-gap, token("tab-item-to-tab-item-horizontal-medium"));
 }
 
 /* ── Selection indicator ───────────────────────────────── */
