@@ -26,6 +26,11 @@ import {
 /**
  * A divider separates and distinguishes sections of content or groups of menu items.
  *
+ * Layout sizing: horizontal dividers fill the **inline size** of the container (`inline-size: 100%`
+ * with a minimum track); vertical dividers fill the **block size** (`block-size: 100%` with a minimum
+ * track). When the percentage basis does not resolve (for example a lone flex item in a row),
+ * set a definite width or height on the host or an ancestor so the line can render predictably.
+ *
  * @attribute {ElementSize} size - The size of the divider.
  */
 export abstract class DividerBase extends SizedMixin(SpectrumElement, {

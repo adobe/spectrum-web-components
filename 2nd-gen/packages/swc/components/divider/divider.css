@@ -38,7 +38,7 @@
 }
 
 .swc-Divider:not(.swc-Divider--vertical) {
-  min-inline-size: min(100%, 200px);
+  min-inline-size: min(100%, token("divider-horizontal-minimum-width"));
 }
 
 :host([vertical]) {
@@ -49,7 +49,7 @@
   align-self: flex-start;
   inline-size: var(--_swc-divider-thickness);
   block-size: 100%;
-  min-block-size: min(100%, 200px);
+  min-block-size: min(100%, token("divider-vertical-minimum-height"));
 }
 
 .swc-Divider--staticWhite {

@@ -90,6 +90,22 @@ export default meta;
 
 export const Playground: Story = {
   tags: ['autodocs', 'dev'],
+  args: {
+    size: 'm',
+    vertical: false,
+  },
+  render: (args) =>
+    args.vertical
+      ? html`
+          <div style="block-size: 200px;">
+            ${template({ ...args })}
+          </div>
+        `
+      : html`
+          <div style="inline-size: 200px;">
+            ${template({ ...args })}
+          </div>
+        `,
 };
 
 // ──────────────────────────
