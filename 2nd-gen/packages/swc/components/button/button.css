@@ -411,7 +411,6 @@ slot[name="icon"]::slotted(*) {
 }
 
 .swc-Button--pendingActive .swc-Button-pendingSpinner-fill {
-  transform-origin: center;
   animation:
     swc-pending-spinner-rotate 1s cubic-bezier(0.6, 0.1, 0.3, 0.9) infinite,
     swc-pending-spinner-dashoffset 1s cubic-bezier(0.25, 0.1, 0.25, 1.3) infinite;
@@ -432,10 +431,10 @@ slot[name="icon"]::slotted(*) {
   flex-grow: 1;
   justify-self: stretch;
   inline-size: 100%;
+}
 
-  .swc-Button {
-    inline-size: 100%;
-  }
+:host([justified]) .swc-Button {
+  inline-size: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {

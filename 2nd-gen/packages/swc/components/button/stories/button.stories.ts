@@ -14,8 +14,6 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '@adobe/spectrum-wc/button';
-
 import {
   BUTTON_FILL_STYLES,
   BUTTON_STATIC_COLORS,
@@ -25,7 +23,9 @@ import {
   type ButtonSize,
   type ButtonStaticColor,
   type ButtonVariant,
-} from '../../../../core/components/button/Button.types.js';
+} from '@spectrum-web-components/core/components/button';
+
+import '@adobe/spectrum-wc/button';
 
 // ────────────────
 //    METADATA
@@ -69,7 +69,7 @@ args.size = 'm';
  * For navigation, use a link instead. For icon-only actions, always provide an
  * `accessible-label` attribute to ensure the action is announced to screen reader users.
  */
-export const meta: Meta = {
+const meta: Meta = {
   title: 'Button',
   component: 'swc-button',
   parameters: {
@@ -83,11 +83,7 @@ export const meta: Meta = {
   tags: ['migrated'],
 };
 
-export default {
-  ...meta,
-  title: 'Button',
-  excludeStories: ['meta'],
-} as Meta;
+export default meta;
 
 // ────────────────────
 //    HELPERS

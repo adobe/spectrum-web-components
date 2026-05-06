@@ -77,6 +77,10 @@ import baseStyles from './button-base.css';
  * <swc-button variant="secondary" fill-style="outline">Cancel</swc-button>
  */
 export class Button extends ButtonBase {
+  // ───────────────────
+  //     API ADDITIONS
+  // ───────────────────
+
   /**
    * The visual variant of the button.
    *
@@ -131,17 +135,17 @@ export class Button extends ButtonBase {
           'swc-Button': true,
           'swc-Button--hasIcon': this.hasIcon,
           'swc-Button--iconOnly': this.hasIcon && !this.hasLabel,
-          'swc-Button--pendingActive': this._pendingActive,
+          'swc-Button--pendingActive': this.pendingActive,
         })}
         type="button"
-        @click=${this._handleClick}
+        @click=${this.handleClick}
         ?disabled=${this.disabled}
         aria-disabled=${ifDefined(
           this.pending && !this.disabled ? 'true' : undefined
         )}
-        aria-label=${this.pending
-          ? this.getPendingAccessibleName()
-          : (this.accessibleLabel ?? nothing)}
+        aria-label=${ifDefined(
+          this.pending ? this.getPendingAccessibleName() : this.accessibleLabel
+        )}
       >
         <slot name="icon"></slot>
         <span class="swc-Button-label">
