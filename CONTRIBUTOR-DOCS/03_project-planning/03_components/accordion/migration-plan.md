@@ -79,7 +79,7 @@ None for **starting** implementation, provided the rendering roadmap is expanded
 |---|---|---|---|---|
 | `allowMultiple` | `boolean` | `false` | `allow-multiple` | When `false`, opening one item closes others unless `sp-accordion-item-toggle` is canceled. |
 | `density` | `'compact' \| 'spacious' \| undefined` | `undefined` | `density` | Reflected. |
-| `level` | `number` | `3` | `level` | Pushed to each assigned item; item clamps to **2–6** for heading tags. |
+| `level` | `number` | `3` | `level` | Public on the accordion; pushed to each assigned item. Item clamps to **2–6** for `<h*>` tags. In **planned 2nd-gen**, only the parent exposes **`level`**; the item receives a **protected `heading`** (see [`AccordionItem`](#sp-accordion-item-accordionitem)). |
 | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | (none) | `size` | `SizedMixin(..., { noDefaultSize: true })`; propagated to items on slot change / updates. |
 
 #### Methods
@@ -101,8 +101,10 @@ None on the `sp-accordion` host. Coordination uses the child item’s `sp-accord
 | `open` | `boolean` | `false` | `open` | Expanded state. |
 | `label` | `string` | `''` | `label` | Header text inside shadow `<button>`. |
 | `disabled` | `boolean` | `false` | `disabled` | Blocks toggle; host `aria-disabled` when true; shadow `<button>` also gets native **`disabled`** (see [Changes overview](#changes-overview)). |
-| `level` | `number` | `3` | `level` | Overwritten by parent `sp-accordion` when slotted. |
+| `level` | `number` | `3` | `level` | Reflected; overwritten by parent `sp-accordion` when slotted. |
 | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | (none) | `size` | Set from parent. |
+
+**Planned 2nd-gen:** Do **not** treat heading depth as a second public API on the item. The **`swc-accordion`** host keeps **public** **`level`** (`2`–`6`). Each **`swc-accordion-item`** implementation exposes a **`protected` `heading`** property (same numeric range), **set only** by the parent when items are assigned or when **`level`** changes—authors never set heading level on the item. Maps to which `<h2>`–`<h6>` wraps the header button in shadow DOM.
 
 Inherited: `SizedMixin(Focusable)` — `tabIndex` / `focus` / `blur` / `click` delegate to shadow `#header` when not `disabled`.
 
@@ -185,6 +187,7 @@ Inherited: `SizedMixin(Focusable)` — `tabIndex` / `focus` / `blur` / `click` d
 | **B6** | Space / scroll | Scroll quirks in overflow (**SWC-1487**) | `preventDefault` on Space for activation on header | Verify nested scroll layouts after upgrade. |
 | **B7** | Toggle event name | `sp-accordion-item-toggle` | `swc-*` event per 2nd-gen naming | Update listeners. |
 | **B8** | CSS customization | Broad `--spectrum-accordion-*` / `--mod-*` | S2 tokens; narrow reviewed `--swc-*` if any | Replace theme overrides per Phase 4 mapping doc. |
+| **B9** | Heading level API surface | Public reflected **`level`** on **`sp-accordion-item`** (overridden by parent) | **`level`** public **only** on **`swc-accordion`**; item uses **`protected` `heading`** set by parent | Consumers must set **`level`** on the accordion only; remove attribute/`level` usage on items if any relied on standalone items. |
 
 ### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
 
@@ -203,14 +206,15 @@ No 2nd-gen package yet — this section records **planned** decisions from analy
 
 | Topic | Planned direction | Notes |
 |---|---|---|
-| Coordination | `allow-multiple` (or aligned name), `level` (2–6), `density`, `size` | Confirm names against 2nd-gen naming guidelines. |
+| Accordion | `allow-multiple` (or aligned name), **public** **`level`** (`2`–`6`), `density`, `size` | **`level`** is the **only** author-facing control for heading depth for all items. |
 | Item | `open`, `disabled` | Same semantics as today unless renamed for consistency. |
-| Heading text | Default slot + `level` / `heading-level` | Breaking vs 1st-gen `label`; precedence vs optional `label` TBD. |
+| Item (implementation) | **`protected` `heading`** (`2`–`6`) | **Not** public API—not reflected, not set by consumers. Parent **`level`** assigns **`heading`** on each slotted item (core/SWC lifecycle). |
+| Heading text | Default slot | Breaking vs 1st-gen `label`; precedence vs optional `label` TBD. |
 | Events | Renamed toggle event | Exact string TBD. |
 
 ### ARIA and keyboard contract
 
-- **`aria-expanded`**, **`aria-controls`**, **`role="region"`** + **`aria-labelledby`** on the panel; **`<h*>` > `<button>`** in shadow ([accessibility migration analysis](./accessibility-migration-analysis.md)).
+- **`aria-expanded`**, **`aria-controls`**, **`role="region"`** + **`aria-labelledby`** on the panel; **`<h*>` > `<button>`** in shadow ([accessibility migration analysis](./accessibility-migration-analysis.md)). The `<h2>`–`<h6>` tag follows **`protected` `heading`**, which the parent sets from public **`level`**.
 - **Tab** only between headers and in-panel focusables; **Space** / **Enter** on header; **Space** uses **`preventDefault()`** where required (**SWC-1487**).
 - **No** roving `tabindex` on headers; **no** default Arrow/Home/End handlers on headers that **`preventDefault()`** vertical arrows (scroll vs “next header” conflict).
 
@@ -232,7 +236,7 @@ Follow the [washing machine — core vs SWC](../../02_workstreams/02_2nd-gen-com
 
 | Layer | Path | Contains |
 |---|---|---|
-| **Core** | `2nd-gen/packages/core/components/accordion/` | `AccordionBase` / item base (if split), types, `allow-multiple` coordination rules, `level` validation, toggle event contract, disabled + `inert` rules testable without full render. **No** Lit template/CSS. |
+| **Core** | `2nd-gen/packages/core/components/accordion/` | `AccordionBase` / item base (if split), types, `allow-multiple` coordination, **public** `level` validation, propagation of **`level`** → item **`protected` `heading`**, toggle event contract, disabled + `inert` rules testable without full render. **No** Lit template/CSS. |
 | **SWC** | `2nd-gen/packages/swc/components/accordion/` | `swc-accordion`, `swc-accordion-item` Lit classes, `.css`, registration, stories, tests, S2 styling, icons. |
 
 ---
@@ -293,6 +297,7 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 
 | Topic | Question |
 |---|---|
+| Standalone item | If **`swc-accordion-item`** is used without a parent (tests allow this today), how is **`protected` `heading`** initialized—default **`3`**, dev warning, or require a parent? |
 | `label` vs slot | Retain `label` as deprecated fallback for one major? Precedence if both (analysis: slot wins + dev warning). |
 | Heading slot | Text-only vs inline phrasing (`<strong>`, `<code>`) in heading slot. |
 | Toggle event | Exact `swc-*` event name. |
