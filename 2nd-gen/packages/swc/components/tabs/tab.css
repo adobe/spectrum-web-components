@@ -29,7 +29,7 @@
 
   display: inline-flex;
   position: relative;
-  gap: var(--swc-tab-icon-gap, token("text-to-visual-100"));
+  gap: token("text-to-visual-100");
   align-items: center;
   justify-content: center;
   block-size: var(--swc-tab-height, token("tab-item-height-medium"));
@@ -43,8 +43,8 @@
 /* ── Label (scoped font styles) ────────────────────────── */
 
 .swc-Tab-label {
-  font-size: var(--swc-tab-font-size, token("font-size-100"));
-  font-weight: var(--swc-tab-font-weight, token("regular-font-weight"));
+  font-size: token("font-size-100");
+  font-weight: token("regular-font-weight");
   line-height: token("line-height-100");
 }
 
@@ -54,32 +54,32 @@
   display: grid;
   flex-shrink: 0;
   place-content: center;
-  inline-size: var(--swc-tab-icon-size, token("workflow-icon-size-100"));
-  block-size: var(--swc-tab-icon-size, token("workflow-icon-size-100"));
+  inline-size: token("workflow-icon-size-100");
+  block-size: token("workflow-icon-size-100");
 }
 
 /* ── Selected state ────────────────────────────────────── */
 
 :host([selected]) {
-  --swc-tab-text-color: var(--swc-tab-text-color-selected, token("neutral-content-color-default"));
+  --swc-tab-text-color: token("neutral-content-color-default");
 }
 
 /* ── Hover state ───────────────────────────────────────── */
 
 :host(:hover) {
-  --swc-tab-text-color: var(--swc-tab-text-color-hover, token("neutral-subdued-content-color-hover"));
+  --swc-tab-text-color: token("neutral-subdued-content-color-hover");
 }
 
 /* ── Active (pressed) state ────────────────────────────── */
 
 :host(:active) {
-  --swc-tab-text-color: var(--swc-tab-text-color-down, token("neutral-subdued-content-color-down"));
+  --swc-tab-text-color: token("neutral-subdued-content-color-down");
 }
 
 /* ── Disabled state ────────────────────────────────────── */
 
 :host([disabled]) {
-  --swc-tab-text-color: var(--swc-tab-text-color-disabled, token("disabled-content-color"));
+  --swc-tab-text-color: token("disabled-content-color");
 }
 
 :host([disabled]) .swc-Tab {
@@ -90,8 +90,8 @@
 
 :host(:focus-visible) .swc-Tab {
   border-radius: token("corner-radius-100");
-  outline: 2px solid var(--swc-tab-focus-ring-color, token("focus-indicator-color"));
-  outline-offset: var(--swc-tab-focus-ring-gap, 2px);
+  outline: 2px solid token("focus-indicator-color");
+  outline-offset: 2px;
 }
 
 /* ── High contrast ─────────────────────────────────────── */

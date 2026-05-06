@@ -22,21 +22,18 @@
 /* ── Tablist container ─────────────────────────────────── */
 
 .tablist {
-  --_swc-tabs-gap: var(--swc-tabs-gap, token("spacing-500"));
+  --_swc-tabs-gap: token("spacing-500");
 
   display: flex;
   position: relative;
   gap: var(--_swc-tabs-gap);
   align-items: center;
-
-  --swc-tab-font-size: var(--swc-tabs-font-size, token("font-size-100"));
-  --swc-tab-icon-size: var(--swc-tabs-icon-size, token("workflow-icon-size-100"));
 }
 
 /* ── Density: compact ──────────────────────────────────── */
 
 :host([density="compact"]) .tablist {
-  --_swc-tabs-gap: var(--swc-tabs-compact-gap, token("tab-item-to-tab-item-horizontal-medium"));
+  --_swc-tabs-gap: token("tab-item-to-tab-item-horizontal-medium");
   --swc-tab-height: token("tab-item-compact-height-medium");
   --swc-tab-padding-block: token("tab-item-top-to-text-compact-medium");
   --swc-tab-padding-block-end: token("tab-item-bottom-to-text-compact-medium");
@@ -46,23 +43,23 @@
 
 :host([direction="vertical"]) {
   flex-direction: row;
-  gap: var(--swc-tabs-vertical-content-gap, token("spacing-500"));
+  gap: token("spacing-500");
 }
 
 :host([direction="vertical"][density="compact"]) {
-  gap: var(--swc-tabs-vertical-content-gap-compact, token("tab-item-to-tab-item-horizontal-medium"));
+  gap: token("tab-item-to-tab-item-horizontal-medium");
 }
 
 :host([direction="vertical"]) .tablist {
-  --_swc-tabs-gap: var(--swc-tabs-vertical-gap, token("spacing-500"));
+  --_swc-tabs-gap: token("spacing-500");
 
   flex-direction: column;
   align-items: flex-start;
-  padding-inline-start: var(--swc-tabs-vertical-indicator-space, token("tab-item-start-to-edge-medium"));
+  padding-inline-start: token("tab-item-start-to-edge-medium");
 }
 
 :host([direction="vertical"][density="compact"]) .tablist {
-  --_swc-tabs-gap: var(--swc-tabs-vertical-compact-gap, token("tab-item-to-tab-item-horizontal-medium"));
+  --_swc-tabs-gap: token("tab-item-to-tab-item-horizontal-medium");
 }
 
 /* ── Selection indicator ───────────────────────────────── */
@@ -71,7 +68,7 @@
   position: absolute;
   z-index: 1;
   background-color: var(--swc-tabs-indicator-color, token("neutral-content-color-default"));
-  border-radius: var(--swc-tabs-indicator-radius, token("corner-radius-100"));
+  border-radius: token("corner-radius-100");
   pointer-events: none;
   transition: transform 130ms ease-in-out;
 }
@@ -85,14 +82,14 @@
   inset-block-end: 0;
   inset-inline-start: 0;
   inline-size: 100px;
-  block-size: var(--swc-tabs-indicator-thickness, token("border-width-200"));
+  block-size: token("border-width-200");
   transform-origin: left center;
 }
 
 :host([direction="vertical"]) .selection-indicator {
   inset-block-start: 0;
   inset-inline-start: 0;
-  inline-size: var(--swc-tabs-indicator-thickness, token("border-width-200"));
+  inline-size: token("border-width-200");
   block-size: 100px;
   transform-origin: center top;
 }
@@ -106,11 +103,11 @@
 :host([disabled]) ::slotted(swc-tab) {
   cursor: default;
 
-  --swc-tab-text-color: var(--swc-tab-text-color-disabled, token("disabled-content-color"));
+  --swc-tab-text-color: token("disabled-content-color");
 }
 
 :host([disabled]) .selection-indicator {
-  --swc-tabs-indicator-color: var(--swc-tabs-indicator-color-disabled, token("disabled-border-color"));
+  --swc-tabs-indicator-color: token("disabled-border-color");
 }
 
 /* ── High contrast ─────────────────────────────────────── */
