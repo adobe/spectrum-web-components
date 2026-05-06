@@ -36,6 +36,7 @@
   --swc-divider-background-color: token("gray-800");
 }
 
+/* Minimum tracks below cap percentage fill; when the basis does not resolve, set a definite inline size on :host for horizontal dividers or block size for vertical. */
 .swc-Divider:not(.swc-Divider--vertical) {
   min-inline-size: min(100%, token("divider-horizontal-minimum-width"));
 }
