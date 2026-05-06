@@ -36,7 +36,6 @@ import {
   States,
 } from '../stories/button.stories.js';
 
-// This file defines dev-only test stories that reuse the main story metadata.
 export default {
   ...meta,
   title: 'Button/Tests',
@@ -48,7 +47,7 @@ export default {
 } as Meta;
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Defaults
+// SECTION 1: Defaults
 // ──────────────────────────────────────────────────────────────
 
 export const OverviewTest: Story = {
@@ -56,35 +55,58 @@ export const OverviewTest: Story = {
   play: async ({ canvasElement, step }) => {
     const button = await getComponent<Button>(canvasElement, 'swc-button');
 
-    await step('renders expected default values', async () => {
-      expect(button.variant).toBe('primary');
-      expect(button.fillStyle).toBe('fill');
-      expect(button.size).toBe('m');
-      expect(button.pending).toBe(false);
-      expect(button.disabled).toBe(false);
+    await step('renders expected default property values', async () => {
+      expect(button.variant, 'variant defaults to primary').toBe('primary');
+      expect(button.fillStyle, 'fillStyle defaults to fill').toBe('fill');
+      expect(button.size, 'size defaults to m').toBe('m');
+      expect(button.pending, 'pending defaults to false').toBe(false);
+      expect(button.disabled, 'disabled defaults to false').toBe(false);
+      expect(button.truncate, 'truncate defaults to false').toBe(false);
+      expect(button.justified, 'justified defaults to false').toBe(false);
     });
 
-    await step('internal <button> is the semantic control', async () => {
-      const internalButton = button.renderRoot.querySelector('button');
-      expect(internalButton).toBeTruthy();
+    await step(
+      'renders internal <button> as semantic control in shadow root',
+      async () => {
+        const internalButton = button.renderRoot.querySelector('button');
+        expect(
+          internalButton,
+          'internal <button> exists in shadow root'
+        ).toBeTruthy();
+      }
+    );
+
+    await step('excludes role attribute from host element', async () => {
+      expect(
+        button.getAttribute('role'),
+        'host has no role attribute'
+      ).toBeNull();
     });
 
-    await step('host does not carry a button role', async () => {
-      expect(button.getAttribute('role')).toBeNull();
-    });
+    await step(
+      'reflects variant to host attribute on initial render',
+      async () => {
+        expect(
+          button.getAttribute('variant'),
+          'variant attribute reflects to host'
+        ).toBe('primary');
+      }
+    );
 
-    await step('variant reflects to attribute', async () => {
-      expect(button.getAttribute('variant')).toBe('primary');
-    });
-
-    await step('fill-style reflects to attribute', async () => {
-      expect(button.getAttribute('fill-style')).toBe('fill');
-    });
+    await step(
+      'reflects fill-style to host attribute on initial render',
+      async () => {
+        expect(
+          button.getAttribute('fill-style'),
+          'fill-style attribute reflects to host'
+        ).toBe('fill');
+      }
+    );
   },
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Property Mutations
+// SECTION 2: Properties / Attributes
 // ──────────────────────────────────────────────────────────────
 
 export const PropertyMutationTest: Story = {
@@ -92,54 +114,199 @@ export const PropertyMutationTest: Story = {
   play: async ({ canvasElement, step }) => {
     const button = await getComponent<Button>(canvasElement, 'swc-button');
 
-    await step('variant reflects to attribute after mutation', async () => {
-      for (const variant of BUTTON_VARIANTS) {
-        button.variant = variant;
-        await button.updateComplete;
-        expect(button.getAttribute('variant')).toBe(variant);
+    await step(
+      'reflects each valid variant to attribute after mutation',
+      async () => {
+        for (const variant of BUTTON_VARIANTS) {
+          button.variant = variant;
+          await button.updateComplete;
+          expect(
+            button.getAttribute('variant'),
+            `variant="${variant}" reflects after mutation`
+          ).toBe(variant);
+        }
       }
-    });
+    );
 
-    await step('fill-style reflects to attribute after mutation', async () => {
-      for (const style of BUTTON_FILL_STYLES) {
-        button.fillStyle = style;
-        await button.updateComplete;
-        expect(button.getAttribute('fill-style')).toBe(style);
+    await step(
+      'reflects each valid fill-style to attribute after mutation',
+      async () => {
+        for (const style of BUTTON_FILL_STYLES) {
+          button.fillStyle = style;
+          await button.updateComplete;
+          expect(
+            button.getAttribute('fill-style'),
+            `fill-style="${style}" reflects after mutation`
+          ).toBe(style);
+        }
       }
-    });
+    );
 
-    await step('size reflects to attribute after mutation', async () => {
-      for (const size of BUTTON_VALID_SIZES) {
-        button.size = size;
-        await button.updateComplete;
-        expect(button.getAttribute('size')).toBe(size);
+    await step(
+      'reflects each valid size to attribute after mutation',
+      async () => {
+        for (const size of BUTTON_VALID_SIZES) {
+          button.size = size;
+          await button.updateComplete;
+          expect(
+            button.getAttribute('size'),
+            `size="${size}" reflects after mutation`
+          ).toBe(size);
+        }
       }
-    });
+    );
 
-    await step('truncate reflects to attribute after mutation', async () => {
-      button.truncate = true;
-      await button.updateComplete;
-      expect(button.hasAttribute('truncate')).toBe(true);
+    await step(
+      'reflects truncate to and from attribute after mutation',
+      async () => {
+        button.truncate = true;
+        await button.updateComplete;
+        expect(
+          button.hasAttribute('truncate'),
+          'truncate=true adds attribute to host'
+        ).toBe(true);
 
-      button.truncate = false;
-      await button.updateComplete;
-      expect(button.hasAttribute('truncate')).toBe(false);
-    });
+        button.truncate = false;
+        await button.updateComplete;
+        expect(
+          button.hasAttribute('truncate'),
+          'truncate=false removes attribute from host'
+        ).toBe(false);
+      }
+    );
 
-    await step('justified reflects to attribute after mutation', async () => {
-      button.justified = true;
-      await button.updateComplete;
-      expect(button.hasAttribute('justified')).toBe(true);
+    await step(
+      'reflects justified to and from attribute after mutation',
+      async () => {
+        button.justified = true;
+        await button.updateComplete;
+        expect(
+          button.hasAttribute('justified'),
+          'justified=true adds attribute to host'
+        ).toBe(true);
 
-      button.justified = false;
-      await button.updateComplete;
-      expect(button.hasAttribute('justified')).toBe(false);
-    });
+        button.justified = false;
+        await button.updateComplete;
+        expect(
+          button.hasAttribute('justified'),
+          'justified=false removes attribute from host'
+        ).toBe(false);
+      }
+    );
+  },
+};
+
+export const AccessibleLabelTest: Story = {
+  render: () => html`
+    <swc-button>Save</swc-button>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const button = await getComponent<Button>(canvasElement, 'swc-button');
+    const internalButton = button.renderRoot.querySelector('button');
+
+    await step(
+      'omits aria-label from internal button when accessible-label is not set',
+      async () => {
+        expect(
+          internalButton?.getAttribute('aria-label'),
+          'no aria-label without accessibleLabel'
+        ).toBeNull();
+      }
+    );
+
+    await step(
+      'forwards accessible-label as aria-label on internal button after mutation',
+      async () => {
+        button.accessibleLabel = 'Save document';
+        await button.updateComplete;
+        expect(
+          internalButton?.getAttribute('aria-label'),
+          'aria-label matches new accessibleLabel'
+        ).toBe('Save document');
+      }
+    );
+
+    await step(
+      'clears aria-label from internal button when accessible-label is removed',
+      async () => {
+        button.accessibleLabel = undefined;
+        await button.updateComplete;
+        expect(
+          internalButton?.getAttribute('aria-label'),
+          'aria-label removed after clearing accessibleLabel'
+        ).toBeNull();
+      }
+    );
+  },
+};
+
+export const PendingAriaAttributesTest: Story = {
+  render: () => html`
+    <swc-button>Save</swc-button>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const button = await getComponent<Button>(canvasElement, 'swc-button');
+    const internalButton = button.renderRoot.querySelector('button');
+
+    await step(
+      'omits aria-disabled from internal button in default state',
+      async () => {
+        expect(
+          internalButton?.getAttribute('aria-disabled'),
+          'aria-disabled absent in default state'
+        ).toBeNull();
+      }
+    );
+
+    await step(
+      'sets aria-disabled and derived busy name when pending becomes true',
+      async () => {
+        button.pending = true;
+        await button.updateComplete;
+        expect(
+          internalButton?.getAttribute('aria-disabled'),
+          'aria-disabled set to true when pending'
+        ).toBe('true');
+        expect(
+          internalButton?.getAttribute('aria-label'),
+          'aria-label set to derived busy name'
+        ).toBe('Save, busy');
+      }
+    );
+
+    await step(
+      'removes aria-disabled and aria-label when pending becomes false',
+      async () => {
+        button.pending = false;
+        await button.updateComplete;
+        expect(
+          internalButton?.getAttribute('aria-disabled'),
+          'aria-disabled cleared when pending ends'
+        ).toBeNull();
+        expect(
+          internalButton?.getAttribute('aria-label'),
+          'aria-label cleared when pending ends'
+        ).toBeNull();
+      }
+    );
+
+    await step(
+      'uses explicit pending-label as aria-label when provided',
+      async () => {
+        button.pendingLabel = 'Processing your request';
+        button.pending = true;
+        await button.updateComplete;
+        expect(
+          internalButton?.getAttribute('aria-label'),
+          'explicit pendingLabel overrides derived busy name'
+        ).toBe('Processing your request');
+      }
+    );
   },
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Slots / Anatomy
+// SECTION 3: Slots
 // ──────────────────────────────────────────────────────────────
 
 export const AnatomyTest: Story = {
@@ -147,32 +314,49 @@ export const AnatomyTest: Story = {
   play: async ({ canvasElement, step }) => {
     const buttons = await getComponents<Button>(canvasElement, 'swc-button');
 
-    await step('renders label-only button', async () => {
-      const labelOnly = buttons[0];
-      expect(labelOnly).toBeTruthy();
-      expect(labelOnly.textContent?.trim()).toBeTruthy();
-    });
+    await step(
+      'renders label-only button with visible text content',
+      async () => {
+        const labelOnly = buttons[0];
+        expect(labelOnly, 'label-only button is rendered').toBeTruthy();
+        expect(
+          labelOnly.textContent?.trim(),
+          'label-only button has non-empty text'
+        ).toBeTruthy();
+      }
+    );
 
-    await step('renders icon-and-label button', async () => {
+    await step('renders icon-and-label button with slotted icon', async () => {
       const withIcon = buttons.find((b) => b.querySelector('[slot="icon"]'));
-      expect(withIcon).toBeTruthy();
+      expect(withIcon, 'icon+label button is rendered').toBeTruthy();
       const slottedIcon = withIcon?.querySelector('[slot="icon"]');
-      expect(slottedIcon).toBeTruthy();
+      expect(slottedIcon, 'icon slot is populated').toBeTruthy();
     });
 
-    await step('renders icon-only button with accessible-label', async () => {
-      const iconOnly = buttons.find((b) => b.hasAttribute('accessible-label'));
-      expect(iconOnly).toBeTruthy();
-      expect(iconOnly?.getAttribute('accessible-label')).toBeTruthy();
+    await step(
+      'renders icon-only button with accessible-label forwarded to internal control',
+      async () => {
+        const iconOnly = buttons.find((b) =>
+          b.hasAttribute('accessible-label')
+        );
+        expect(iconOnly, 'icon-only button is rendered').toBeTruthy();
+        expect(
+          iconOnly?.getAttribute('accessible-label'),
+          'accessible-label is set on host'
+        ).toBeTruthy();
 
-      const internalButton = iconOnly?.renderRoot.querySelector('button');
-      expect(internalButton?.getAttribute('aria-label')).toBeTruthy();
-    });
+        const internalButton = iconOnly?.renderRoot.querySelector('button');
+        expect(
+          internalButton?.getAttribute('aria-label'),
+          'aria-label forwarded to internal button'
+        ).toBeTruthy();
+      }
+    );
   },
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: States
+// SECTION 4: Variants / States
 // ──────────────────────────────────────────────────────────────
 
 export const StatesTest: Story = {
@@ -181,98 +365,70 @@ export const StatesTest: Story = {
     const buttons = await getComponents<Button>(canvasElement, 'swc-button');
     const [defaultButton, disabledButton, pendingButton] = buttons;
 
-    await step('default button is not disabled or pending', async () => {
-      expect(defaultButton.disabled).toBe(false);
-      expect(defaultButton.pending).toBe(false);
-      const internalButton = defaultButton.renderRoot.querySelector('button');
-      expect(internalButton?.hasAttribute('disabled')).toBe(false);
-      expect(internalButton?.getAttribute('aria-disabled')).toBeNull();
-    });
+    await step(
+      'verifies default button is neither disabled nor pending',
+      async () => {
+        expect(defaultButton.disabled, 'default button disabled is false').toBe(
+          false
+        );
+        expect(defaultButton.pending, 'default button pending is false').toBe(
+          false
+        );
+        const internalButton = defaultButton.renderRoot.querySelector('button');
+        expect(
+          internalButton?.hasAttribute('disabled'),
+          'internal button has no native disabled'
+        ).toBe(false);
+        expect(
+          internalButton?.getAttribute('aria-disabled'),
+          'internal button has no aria-disabled'
+        ).toBeNull();
+      }
+    );
 
     await step(
-      'disabled button uses native disabled on internal button',
+      'verifies disabled button uses native disabled on internal button',
       async () => {
-        expect(disabledButton.disabled).toBe(true);
+        expect(disabledButton.disabled, 'disabled prop is true').toBe(true);
         const internalButton =
           disabledButton.renderRoot.querySelector('button');
-        expect(internalButton?.hasAttribute('disabled')).toBe(true);
-        expect(internalButton?.getAttribute('aria-disabled')).toBeNull();
+        expect(
+          internalButton?.hasAttribute('disabled'),
+          'native disabled is set on internal button'
+        ).toBe(true);
+        expect(
+          internalButton?.getAttribute('aria-disabled'),
+          'disabled does not add aria-disabled'
+        ).toBeNull();
       }
     );
 
     await step(
-      'pending button uses aria-disabled, not native disabled',
+      'verifies pending button uses aria-disabled, not native disabled',
       async () => {
-        expect(pendingButton.pending).toBe(true);
+        expect(pendingButton.pending, 'pending prop is true').toBe(true);
         const internalButton = pendingButton.renderRoot.querySelector('button');
-        expect(internalButton?.hasAttribute('disabled')).toBe(false);
-        expect(internalButton?.getAttribute('aria-disabled')).toBe('true');
+        expect(
+          internalButton?.hasAttribute('disabled'),
+          'pending does not set native disabled'
+        ).toBe(false);
+        expect(
+          internalButton?.getAttribute('aria-disabled'),
+          'pending sets aria-disabled=true'
+        ).toBe('true');
       }
     );
   },
 };
 
-// ──────────────────────────────────────────────────────────────
-// TEST: Pending state behavior (SWC-459)
-// ──────────────────────────────────────────────────────────────
-
-export const PendingAriaTest: Story = {
-  render: () => html`
-    <swc-button pending>Save</swc-button>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const button = await getComponent<Button>(canvasElement, 'swc-button');
-    const internalButton = button.renderRoot.querySelector('button');
-
-    await step(
-      'internal button has aria-disabled="true" when pending',
-      async () => {
-        expect(internalButton?.getAttribute('aria-disabled')).toBe('true');
-      }
-    );
-
-    await step(
-      'internal button is not natively disabled when pending',
-      async () => {
-        expect(internalButton?.hasAttribute('disabled')).toBe(false);
-      }
-    );
-
-    await step(
-      'accessible name includes busy suffix when pending',
-      async () => {
-        expect(internalButton?.getAttribute('aria-label')).toBe('Save, busy');
-      }
-    );
-  },
-};
-
-export const PendingLabelOverrideTest: Story = {
-  render: () => html`
-    <swc-button pending pending-label="Uploading your document, please wait">
-      Save
-    </swc-button>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const button = await getComponent<Button>(canvasElement, 'swc-button');
-    const internalButton = button.renderRoot.querySelector('button');
-
-    await step('pending-label overrides derived busy name', async () => {
-      expect(internalButton?.getAttribute('aria-label')).toBe(
-        'Uploading your document, please wait'
-      );
-    });
-  },
-};
-
-export const PendingClickSuppressedTest: Story = {
+export const PendingBehaviorTest: Story = {
   render: () => html`
     <swc-button pending>Save</swc-button>
   `,
   play: async ({ canvasElement, step }) => {
     const button = await getComponent<Button>(canvasElement, 'swc-button');
 
-    await step('click events are suppressed while pending', async () => {
+    await step('suppresses click events while pending is true', async () => {
       let clickCount = 0;
       const listener = () => {
         clickCount++;
@@ -281,44 +437,24 @@ export const PendingClickSuppressedTest: Story = {
       button.click();
       await button.updateComplete;
       button.removeEventListener('click', listener);
-      expect(clickCount).toBe(0);
+      expect(clickCount, 'click is suppressed while pending').toBe(0);
     });
-  },
-};
 
-// ──────────────────────────────────────────────────────────────
-// TEST: Accessible name / Icon-only (SWC-1333)
-// ──────────────────────────────────────────────────────────────
+    await step('allows click events after pending is cleared', async () => {
+      button.pending = false;
+      await button.updateComplete;
 
-export const AccessibleLabelForwardedTest: Story = {
-  render: () => html`
-    <swc-button accessible-label="Add item">
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 36 36"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
-        />
-      </svg>
-    </swc-button>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const button = await getComponent<Button>(canvasElement, 'swc-button');
-    const internalButton = button.renderRoot.querySelector('button');
-
-    await step(
-      'accessible-label is forwarded as aria-label on internal button',
-      async () => {
-        expect(internalButton?.getAttribute('aria-label')).toBe('Add item');
-      }
-    );
-
-    await step('host does not carry aria-label itself', async () => {
-      expect(button.getAttribute('aria-label')).toBeNull();
+      let clickCount = 0;
+      const listener = () => {
+        clickCount++;
+      };
+      button.addEventListener('click', listener);
+      button.click();
+      await button.updateComplete;
+      button.removeEventListener('click', listener);
+      expect(clickCount, 'click fires normally after pending is cleared').toBe(
+        1
+      );
     });
   },
 };
@@ -330,34 +466,67 @@ export const AccessibilityTest: Story = {
     const [labeledButton, iconOnlyButton, pendingButton] = buttons;
 
     await step(
-      'labeled button internal control has no aria-label override',
+      'verifies labeled button internal control has no aria-label override',
       async () => {
         const internal = labeledButton.renderRoot.querySelector('button');
-        expect(internal?.getAttribute('aria-label')).toBeNull();
+        expect(
+          internal?.getAttribute('aria-label'),
+          'labeled button has no aria-label on internal control'
+        ).toBeNull();
       }
     );
 
     await step(
-      'icon-only button forwards accessible-label to internal button',
+      'verifies icon-only button forwards accessible-label to internal button',
       async () => {
         const internal = iconOnlyButton.renderRoot.querySelector('button');
-        expect(internal?.getAttribute('aria-label')).toBe('Add item');
+        expect(
+          internal?.getAttribute('aria-label'),
+          'icon-only button aria-label is forwarded'
+        ).toBe('Add item');
       }
     );
 
     await step(
-      'pending button has aria-disabled and explicit pending-label',
+      'verifies pending button has aria-disabled and explicit pending-label',
       async () => {
         const internal = pendingButton.renderRoot.querySelector('button');
-        expect(internal?.getAttribute('aria-disabled')).toBe('true');
-        expect(internal?.getAttribute('aria-label')).toBe('Upload in-progress');
+        expect(
+          internal?.getAttribute('aria-disabled'),
+          'pending button has aria-disabled=true'
+        ).toBe('true');
+        expect(
+          internal?.getAttribute('aria-label'),
+          'pending button uses explicit pending-label'
+        ).toBe('Upload in-progress');
+      }
+    );
+  },
+};
+
+export const HostListenersTest: Story = {
+  render: () => html`
+    <swc-button>Focus me</swc-button>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const button = await getComponent<Button>(canvasElement, 'swc-button');
+
+    await step(
+      'routes programmatic focus to internal button via delegatesFocus',
+      async () => {
+        button.focus();
+        const activeElement = (button.renderRoot as ShadowRoot).activeElement;
+        expect(
+          activeElement?.tagName.toLowerCase(),
+          'delegatesFocus routes focus to internal <button>'
+        ).toBe('button');
       }
     );
   },
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Dev mode warnings
+// SECTION 5: Dev mode warnings
 // ──────────────────────────────────────────────────────────────
 
 export const InvalidVariantWarningTest: Story = {
@@ -372,8 +541,35 @@ export const InvalidVariantWarningTest: Story = {
         button.variant = 'not-a-variant' as Button['variant'];
         await button.updateComplete;
 
-        expect(warnCalls.length).toBeGreaterThan(0);
-        expect(String(warnCalls[0]?.[1] || '')).toContain('variant');
+        expect(
+          warnCalls.length,
+          'warning is emitted for invalid variant'
+        ).toBeGreaterThan(0);
+        expect(
+          String(warnCalls[0]?.[1] || ''),
+          'warning message mentions variant'
+        ).toContain('variant');
+      })
+    );
+  },
+};
+
+export const ValidVariantNoWarningTest: Story = {
+  render: () => html`
+    <swc-button>Label</swc-button>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const button = await getComponent<Button>(canvasElement, 'swc-button');
+
+    await step('emits no warnings when each valid variant is set', () =>
+      withWarningSpy(async (warnCalls) => {
+        for (const variant of BUTTON_VARIANTS) {
+          button.variant = variant;
+          await button.updateComplete;
+        }
+        expect(warnCalls.length, 'no warnings emitted for valid variants').toBe(
+          0
+        );
       })
     );
   },
@@ -391,48 +587,100 @@ export const InvalidFillStyleWarningTest: Story = {
         button.fillStyle = 'not-a-style' as Button['fillStyle'];
         await button.updateComplete;
 
-        expect(warnCalls.length).toBeGreaterThan(0);
-        expect(String(warnCalls[0]?.[1] || '')).toContain('fill-style');
+        expect(
+          warnCalls.length,
+          'warning is emitted for invalid fill-style'
+        ).toBeGreaterThan(0);
+        expect(
+          String(warnCalls[0]?.[1] || ''),
+          'warning message mentions fill-style'
+        ).toContain('fill-style');
       })
     );
   },
 };
 
-export const OutlineAccentWarningTest: Story = {
+export const OutlineUnsupportedVariantWarningTest: Story = {
   render: () => html`
-    <swc-button variant="accent" fill-style="outline">
-      Accent Outline
-    </swc-button>
+    <swc-button fill-style="outline">Label</swc-button>
   `,
   play: async ({ canvasElement, step }) => {
     const button = await getComponent<Button>(canvasElement, 'swc-button');
 
-    await step('warns when outline is used with accent variant', () =>
-      withWarningSpy(async (warnCalls) => {
-        button.requestUpdate();
-        await button.updateComplete;
+    await step(
+      'warns when outline fill-style is used with accent variant',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          button.variant = 'accent';
+          await button.updateComplete;
 
-        expect(warnCalls.length).toBeGreaterThan(0);
-        expect(String(warnCalls[0]?.[1] || '')).toContain('outline');
-      })
+          expect(
+            warnCalls.length,
+            'warning emitted for accent+outline'
+          ).toBeGreaterThan(0);
+          expect(
+            String(warnCalls[0]?.[1] || ''),
+            'warning message mentions outline'
+          ).toContain('outline');
+        })
+    );
+
+    await step(
+      'warns when outline fill-style is used with negative variant',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          button.variant = 'negative';
+          await button.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'warning emitted for negative+outline'
+          ).toBeGreaterThan(0);
+          expect(
+            String(warnCalls[0]?.[1] || ''),
+            'warning message mentions outline'
+          ).toContain('outline');
+        })
     );
   },
 };
 
-export const StaticColorAccentWarningTest: Story = {
+export const StaticColorUnsupportedVariantWarningTest: Story = {
   render: () => html`
-    <swc-button variant="accent" static-color="white">Accent Static</swc-button>
+    <swc-button static-color="white">Label</swc-button>
   `,
   play: async ({ canvasElement, step }) => {
     const button = await getComponent<Button>(canvasElement, 'swc-button');
 
     await step('warns when static-color is used with accent variant', () =>
       withWarningSpy(async (warnCalls) => {
-        button.requestUpdate();
+        button.variant = 'accent';
         await button.updateComplete;
 
-        expect(warnCalls.length).toBeGreaterThan(0);
-        expect(String(warnCalls[0]?.[1] || '')).toContain('static-color');
+        expect(
+          warnCalls.length,
+          'warning emitted for accent+static-color'
+        ).toBeGreaterThan(0);
+        expect(
+          String(warnCalls[0]?.[1] || ''),
+          'warning message mentions static-color'
+        ).toContain('static-color');
+      })
+    );
+
+    await step('warns when static-color is used with negative variant', () =>
+      withWarningSpy(async (warnCalls) => {
+        button.variant = 'negative';
+        await button.updateComplete;
+
+        expect(
+          warnCalls.length,
+          'warning emitted for negative+static-color'
+        ).toBeGreaterThan(0);
+        expect(
+          String(warnCalls[0]?.[1] || ''),
+          'warning message mentions static-color'
+        ).toContain('static-color');
       })
     );
   },
@@ -445,14 +693,22 @@ export const PendingAndDisabledWarningTest: Story = {
   play: async ({ canvasElement, step }) => {
     const button = await getComponent<Button>(canvasElement, 'swc-button');
 
-    await step('warns when both pending and disabled are set', () =>
-      withWarningSpy(async (warnCalls) => {
-        button.requestUpdate();
-        await button.updateComplete;
+    await step(
+      'warns when both pending and disabled are set simultaneously',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          button.requestUpdate();
+          await button.updateComplete;
 
-        expect(warnCalls.length).toBeGreaterThan(0);
-        expect(String(warnCalls[0]?.[1] || '')).toContain('pending');
-      })
+          expect(
+            warnCalls.length,
+            'warning emitted for pending+disabled combination'
+          ).toBeGreaterThan(0);
+          expect(
+            String(warnCalls[0]?.[1] || ''),
+            'warning message mentions pending'
+          ).toContain('pending');
+        })
     );
   },
 };
@@ -476,13 +732,19 @@ export const IconOnlyMissingLabelWarningTest: Story = {
   play: async ({ canvasElement, step }) => {
     const button = await getComponent<Button>(canvasElement, 'swc-button');
 
-    await step('warns when icon-only button has no accessible-label', () =>
+    await step('warns when icon-only button is missing accessible-label', () =>
       withWarningSpy(async (warnCalls) => {
         button.requestUpdate();
         await button.updateComplete;
 
-        expect(warnCalls.length).toBeGreaterThan(0);
-        expect(String(warnCalls[0]?.[1] || '')).toContain('accessible-label');
+        expect(
+          warnCalls.length,
+          'warning emitted for icon-only button without accessible-label'
+        ).toBeGreaterThan(0);
+        expect(
+          String(warnCalls[0]?.[1] || ''),
+          'warning message mentions accessible-label'
+        ).toContain('accessible-label');
       })
     );
   },
