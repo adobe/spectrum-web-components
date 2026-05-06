@@ -17,6 +17,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { Button } from '@adobe/spectrum-wc/button';
 import {
   BUTTON_FILL_STYLES,
+  BUTTON_STATIC_COLORS,
   BUTTON_VALID_SIZES,
   BUTTON_VARIANTS,
 } from '@spectrum-web-components/core/components/button';
@@ -32,8 +33,11 @@ import meta from '../stories/button.stories.js';
 import {
   Accessibility,
   Anatomy,
+  Outline,
   Overview,
+  Sizes,
   States,
+  Variants,
 } from '../stories/button.stories.js';
 
 export default {
@@ -359,6 +363,91 @@ export const AnatomyTest: Story = {
 // SECTION 4: Variants / States
 // ──────────────────────────────────────────────────────────────
 
+export const SizesTest: Story = {
+  ...Sizes,
+  play: async ({ canvasElement, step }) => {
+    await step('renders all valid sizes', async () => {
+      for (const size of BUTTON_VALID_SIZES) {
+        const button = canvasElement.querySelector(
+          `swc-button[size="${size}"]`
+        ) as Button;
+        await button.updateComplete;
+        expect(button.size, `size="${size}" is reflected`).toBe(size);
+      }
+    });
+  },
+};
+
+export const VariantsTest: Story = {
+  ...Variants,
+  play: async ({ canvasElement, step }) => {
+    await step('renders all valid variants', async () => {
+      for (const variant of BUTTON_VARIANTS) {
+        const button = canvasElement.querySelector(
+          `swc-button[variant="${variant}"]`
+        ) as Button;
+        await button.updateComplete;
+        expect(button.variant, `variant="${variant}" is reflected`).toBe(
+          variant
+        );
+      }
+    });
+  },
+};
+
+export const OutlineTest: Story = {
+  ...Outline,
+  play: async ({ canvasElement, step }) => {
+    await step(
+      'reflects fill-style="outline" on primary and secondary variants',
+      async () => {
+        for (const variant of ['primary', 'secondary']) {
+          const button = canvasElement.querySelector(
+            `swc-button[fill-style="outline"][variant="${variant}"]`
+          ) as Button;
+          await button.updateComplete;
+          expect(button.fillStyle, `fillStyle is outline for ${variant}`).toBe(
+            'outline'
+          );
+          expect(button.variant, `variant="${variant}" is reflected`).toBe(
+            variant
+          );
+        }
+      }
+    );
+  },
+};
+
+export const StaticColorsTest: Story = {
+  render: () => html`
+    ${BUTTON_STATIC_COLORS.map(
+      (color) => html`
+        <swc-button static-color=${color} variant="primary">Label</swc-button>
+      `
+    )}
+  `,
+  parameters: {
+    staticColorsDemo: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    await step(
+      'reflects static-color attribute for each valid value',
+      async () => {
+        for (const color of BUTTON_STATIC_COLORS) {
+          const button = canvasElement.querySelector(
+            `swc-button[static-color="${color}"]`
+          ) as Button;
+          await button.updateComplete;
+          expect(
+            button.staticColor,
+            `staticColor="${color}" is reflected`
+          ).toBe(color);
+        }
+      }
+    );
+  },
+};
+
 export const StatesTest: Story = {
   ...States,
   play: async ({ canvasElement, step }) => {
@@ -422,7 +511,9 @@ export const StatesTest: Story = {
 };
 
 export const DisabledBehaviorTest: Story = {
-  render: () => html`<swc-button disabled>Save</swc-button>`,
+  render: () => html`
+    <swc-button disabled>Save</swc-button>
+  `,
   play: async ({ canvasElement, step }) => {
     const button = await getComponent<Button>(canvasElement, 'swc-button');
 
