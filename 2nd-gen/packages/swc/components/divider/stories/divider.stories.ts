@@ -97,14 +97,10 @@ export const Playground: Story = {
   render: (args) =>
     args.vertical
       ? html`
-          <div style="block-size: 200px;">
-            ${template({ ...args })}
-          </div>
+          <div style="block-size: 200px;">${template({ ...args })}</div>
         `
       : html`
-          <div style="inline-size: 200px;">
-            ${template({ ...args })}
-          </div>
+          <div style="inline-size: 200px;">${template({ ...args })}</div>
         `,
 };
 
