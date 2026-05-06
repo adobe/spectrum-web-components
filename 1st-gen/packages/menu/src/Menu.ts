@@ -14,6 +14,7 @@ import {
   CSSResultArray,
   html,
   PropertyValues,
+  render,
   SizedMixin,
   SpectrumElement,
   TemplateResult,
@@ -21,9 +22,13 @@ import {
 import {
   property,
   query,
+  state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import type { Overlay } from '@spectrum-web-components/overlay';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
+
+import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow500.js';
+import '../sp-menu-divider.js';
 
 import menuStyles from './menu.css.js';
 import type {
@@ -69,6 +74,14 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
   private get isSubmenu(): boolean {
     return this.slot === 'submenu';
+  }
+
+  private asMenu(element: HTMLElement): Menu {
+    return element as HTMLElement as Menu;
+  }
+
+  private get _mobileViewRoot(): Menu | null {
+    return this.closest('sp-menu[mobile-view]') as Menu | null;
   }
 
   protected rovingTabindexController?: RovingTabindexController<MenuItem>;
@@ -147,6 +160,437 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
   }
 
   /**
+   * Returns the MenuItem whose submenu is currently displayed at the
+   * top of the mobile drill-down stack, or `undefined` when no submenu
+   * is open.
+   */
+  public get currentMobileSubmenu(): MenuItem | undefined {
+    return this._mobileSubmenuStack[this._mobileSubmenuStack.length - 1];
+  }
+
+  /**
+   * Opens a mobile submenu by projecting its content into this menu's
+   * light DOM, pushing it onto the submenu stack, triggering the
+   * slide-in animation, and focusing the back button.
+   *
+   * @param item - The MenuItem whose submenu should be opened.
+   */
+  public openMobileSubmenu(item: MenuItem): void {
+    this._projectMobileSubmenu(item);
+    this._mobileSubmenuStack = [...this._mobileSubmenuStack, item];
+    this._triggerMobileTransition('forward');
+    this._focusProjectedSubmenu(item);
+  }
+
+  /**
+   * Closes the topmost mobile submenu by restoring it to its original
+   * parent MenuItem, popping it from the stack, and either re-focusing
+   * the previous submenu's back button or returning focus to the
+   * triggering MenuItem when no deeper level remains.
+   */
+  public closeMobileSubmenu(): void {
+    const closedItem = this.currentMobileSubmenu;
+    if (closedItem) {
+      this._restoreMobileSubmenu(closedItem);
+    }
+    this._mobileSubmenuStack = this._mobileSubmenuStack.slice(0, -1);
+
+    const previous = this.currentMobileSubmenu;
+    if (previous?.submenuElement) {
+      previous.submenuElement.setAttribute('slot', 'mobile-submenu');
+      this._focusProjectedSubmenu(previous);
+    } else if (closedItem) {
+      this.updateComplete.then(() => {
+        closedItem.focus();
+      });
+    }
+    this._triggerMobileTransition('back');
+  }
+
+  /**
+   * Focuses the mobile back button inside the given item's projected
+   * submenu. Explicitly resets `tabIndex` and `focused` on every other
+   * child of the submenu so only the back row is in the tab order
+   * after the drill-down opens. We avoid delegating to the projected
+   * submenu's `RovingTabindexController` here because the back button
+   * is appended dynamically via `render()` and may not yet be in the
+   * controller's element cache when this runs, which would cause
+   * focus to fall back to the first nested item instead.
+   *
+   * @param item - The MenuItem whose projected submenu should receive focus.
+   */
+  private async _focusProjectedSubmenu(item: MenuItem): Promise<void> {
+    const submenuEl = item.submenuElement;
+    if (!submenuEl) {
+      return;
+    }
+    const backItem = submenuEl.querySelector(
+      '.mobile-back-button'
+    ) as MenuItem | null;
+    if (!backItem) {
+      return;
+    }
+    await backItem.updateComplete;
+    const submenu = this.asMenu(submenuEl);
+    await submenu.updateComplete;
+
+    submenu.childItems.forEach((child) => {
+      child.tabIndex = -1;
+      child.focused = false;
+    });
+    backItem.tabIndex = 0;
+    backItem.focused = true;
+    if (submenu.rovingTabindexController) {
+      submenu.rovingTabindexController.currentIndex =
+        submenu.childItems.indexOf(backItem);
+    }
+    backItem.focus();
+  }
+
+  /**
+   * Focuses the mobile back button of the currently visible projected
+   * submenu. Used when the user presses ArrowUp from the first nested
+   * item so focus moves to the back row instead of wrapping. Manages
+   * `tabIndex`/`focused` explicitly to keep the back row as the only
+   * tabbable element in the projected submenu.
+   */
+  private _focusMobileBackRow(): void {
+    const submenuEl = this.currentMobileSubmenu?.submenuElement;
+    if (!submenuEl) {
+      return;
+    }
+    const backItem = submenuEl.querySelector(
+      '.mobile-back-button'
+    ) as MenuItem | null;
+    if (!backItem) {
+      return;
+    }
+    const submenu = this.asMenu(submenuEl);
+    submenu.childItems.forEach((child) => {
+      child.tabIndex = -1;
+      child.focused = false;
+    });
+    backItem.tabIndex = 0;
+    backItem.focused = true;
+    if (submenu.rovingTabindexController) {
+      submenu.rovingTabindexController.currentIndex =
+        submenu.childItems.indexOf(backItem);
+    }
+    backItem.focus();
+  }
+
+  /**
+   * Focuses the first focusable item inside the currently visible
+   * projected submenu, skipping the back row. Used when the user
+   * presses ArrowDown from the back row. Manages `tabIndex`/`focused`
+   * explicitly so only the focused item is in the tab order.
+   */
+  private _focusFirstItemInCurrentNestedSubmenu(): void {
+    const submenuEl = this.currentMobileSubmenu?.submenuElement;
+    if (!submenuEl) {
+      return;
+    }
+    const submenu = this.asMenu(submenuEl);
+    const firstItem = submenu.childItems.find(
+      (child) =>
+        !child.disabled && !child.classList.contains('mobile-back-button')
+    );
+    if (!firstItem) {
+      return;
+    }
+    submenu.childItems.forEach((child) => {
+      child.tabIndex = -1;
+      child.focused = false;
+    });
+    firstItem.tabIndex = 0;
+    firstItem.focused = true;
+    if (submenu.rovingTabindexController) {
+      submenu.rovingTabindexController.currentIndex =
+        submenu.childItems.indexOf(firstItem);
+    }
+    firstItem.focus();
+  }
+
+  /**
+   * Capture-phase keydown handler that overrides the default
+   * `RovingTabindexController` wrap behavior at the mobile drill-down
+   * boundary:
+   *   - ArrowUp on the first nested item moves focus to the back row.
+   *   - ArrowDown on the back row moves focus to the first nested item.
+   *
+   * Runs in the capture phase so it preempts the projected submenu's
+   * controller, which handles arrow keys in the bubble phase.
+   */
+  private handleMobileDrilldownKeydownCapture = (
+    event: KeyboardEvent
+  ): void => {
+    if (event.defaultPrevented || !this.rovingTabindexController) {
+      return;
+    }
+    const { key, target } = event;
+    if (!(target instanceof MenuItem)) {
+      return;
+    }
+
+    const mobileRoot = this._mobileViewRoot;
+
+    if (mobileRoot?.currentMobileSubmenu && key === 'ArrowUp') {
+      const items = this.childItems.filter((c) => this.isFocusableElement(c));
+      const firstNonBack = items.find(
+        (c) => !c.classList.contains('mobile-back-button')
+      );
+      if (firstNonBack === target) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        mobileRoot._focusMobileBackRow();
+      }
+      return;
+    }
+
+    if (
+      this.mobileView &&
+      this._mobileSubmenuStack.length > 0 &&
+      key === 'ArrowDown' &&
+      target.classList.contains('mobile-back-button')
+    ) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      this._focusFirstItemInCurrentNestedSubmenu();
+    }
+  };
+
+  /**
+   * Triggers a CSS slide animation on the mobile submenu wrapper.
+   * Waits for the current Lit update cycle, then sets the
+   * `mobile-transition` attribute so the keyframe animation plays.
+   *
+   * @param direction - `'forward'` slides content in from the right,
+   *   `'back'` slides content in from the left.
+   */
+  private _triggerMobileTransition(direction: 'forward' | 'back'): void {
+    this.updateComplete.then(() => {
+      const wrapper = this.shadowRoot?.querySelector(
+        '.mobile-submenu-animation-wrapper'
+      );
+      if (!wrapper) {
+        return;
+      }
+      wrapper.removeAttribute('mobile-transition');
+      requestAnimationFrame(() => {
+        wrapper.setAttribute('mobile-transition', direction);
+      });
+    });
+  }
+
+  /**
+   * Cleans up the `mobile-transition` attribute once the CSS slide
+   * animation finishes, preventing the animation from replaying on
+   * subsequent layout changes. Bound declaratively via `@animationend`
+   * on the wrapper, so it only fires for that element.
+   */
+  private _handleAnimationEnd = (event: AnimationEvent): void => {
+    const target = event.currentTarget as HTMLElement;
+    target?.removeAttribute('mobile-transition');
+  };
+
+  /**
+   * Restores every projected submenu back to its original parent and
+   * clears the submenu stack. Called during `disconnectedCallback` or
+   * when the menu overlay closes to ensure a clean state.
+   */
+  public resetMobileSubmenus(): void {
+    for (let i = this._mobileSubmenuStack.length - 1; i >= 0; i--) {
+      this._restoreMobileSubmenu(this._mobileSubmenuStack[i]);
+    }
+    this._mobileSubmenuStack = [];
+  }
+
+  /**
+   * Moves the submenu element from its MenuItem parent into this Menu's
+   * light DOM with a `mobile-submenu` slot, so it projects through the
+   * named slot in the shadow DOM. Any previously visible projected submenu
+   * is moved to a non-rendered slot to avoid both showing at once.
+   */
+  private _projectMobileSubmenu(item: MenuItem): void {
+    const submenuEl = item.submenuElement;
+    if (!submenuEl) {
+      return;
+    }
+
+    const currentlyVisible = this.currentMobileSubmenu?.submenuElement;
+    if (currentlyVisible) {
+      currentlyVisible.setAttribute('slot', 'mobile-submenu-stacked');
+    }
+
+    const parentElement = submenuEl.parentElement;
+    if (!parentElement) {
+      return;
+    }
+
+    item._mobileSubmenuProjected = true;
+    this._mobileSubmenuOriginalParents.set(submenuEl, parentElement);
+
+    const submenu = this.asMenu(submenuEl);
+    const savedChildItems = new Set(submenu.childItemSet);
+
+    submenuEl.setAttribute('slot', 'mobile-submenu');
+    this.appendChild(submenuEl);
+
+    this._restoreSubmenuChildState(submenu, savedChildItems);
+    this._renderMobileBackElements(submenuEl);
+  }
+
+  /**
+   * Restores the submenu element back to its original MenuItem parent
+   * and resets the slot attribute.
+   */
+  private _restoreMobileSubmenu(item: MenuItem): void {
+    const submenuEl = item.submenuElement;
+    if (!submenuEl) {
+      return;
+    }
+
+    this._removeMobileBackElements(submenuEl);
+
+    const submenu = this.asMenu(submenuEl);
+    const originalParent = this._mobileSubmenuOriginalParents.get(submenuEl);
+    if (originalParent) {
+      const savedChildItems = new Set(submenu.childItemSet);
+
+      submenuEl.setAttribute('slot', 'submenu');
+      originalParent.appendChild(submenuEl);
+      this._mobileSubmenuOriginalParents.delete(submenuEl);
+
+      this._restoreSubmenuChildState(submenu, savedChildItems);
+    }
+    item._mobileSubmenuProjected = false;
+  }
+
+  /**
+   * Handles click on the mobile back button. Stops the event from
+   * reaching parent menus and closes the current mobile submenu.
+   */
+  private handleMobileBackClick = (event: Event): void => {
+    event.stopPropagation();
+    event.preventDefault();
+    this.closeMobileSubmenu();
+  };
+
+  /**
+   * Maps each projected submenu element to its Lit render container so
+   * that back button elements can be individually cleaned up when a
+   * submenu is restored, without affecting other levels in the stack.
+   */
+  private _mobileBackContainers = new Map<HTMLElement, HTMLElement>();
+
+  /**
+   * Declaratively renders the mobile back button and divider into the
+   * projected submenu element using Lit's `render()`, so the back button
+   * lives inside the same `<sp-menu>` and participates in its
+   * `RovingTabindexController` for keyboard navigation. Re-renders
+   * whenever `dir` or `mobileBackLabel` change so the icon orientation
+   * and label stay in sync.
+   */
+  private _renderMobileBackElements(submenuEl: HTMLElement): void {
+    this._removeMobileBackElements(submenuEl);
+    const container = document.createElement('div');
+    container.className = 'mobile-back-container';
+    submenuEl.insertBefore(container, submenuEl.firstChild);
+    this._mobileBackContainers.set(submenuEl, container);
+
+    render(
+      html`
+        <sp-menu-item
+          class="mobile-back-button"
+          data-mobile-back
+          @click=${this.handleMobileBackClick}
+        >
+          <sp-icon-arrow500
+            slot="icon"
+            class="mobile-back-icon"
+          ></sp-icon-arrow500>
+          ${this.mobileBackLabel}
+        </sp-menu-item>
+        <sp-menu-divider data-mobile-back></sp-menu-divider>
+      `,
+      container
+    );
+    const submenu = this.asMenu(submenuEl);
+    const backItem = submenuEl.querySelector(
+      '.mobile-back-button'
+    ) as MenuItem | null;
+    if (backItem) {
+      submenu.childItemSet.add(backItem);
+    }
+    submenu.cachedChildItems = undefined;
+    submenu.rovingTabindexController?.clearElementCache();
+    if (submenu.rovingTabindexController) {
+      submenu.rovingTabindexController.currentIndex = 0;
+    }
+  }
+
+  /**
+   * Re-render any open mobile back containers so changes to
+   * `mobileBackLabel` (and other reactive values consumed by the
+   * back-button template) propagate without needing to close
+   * and re-open the drill-down.
+   */
+  private _refreshMobileBackElements(): void {
+    this._mobileBackContainers.forEach((_container, submenuEl) => {
+      this._renderMobileBackElements(submenuEl);
+    });
+  }
+
+  /**
+   * Removes the mobile back button render container from the given
+   * projected submenu element.
+   */
+  private _removeMobileBackElements(submenuEl: HTMLElement): void {
+    const container = this._mobileBackContainers.get(submenuEl);
+    if (container) {
+      const backItem = submenuEl.querySelector(
+        '.mobile-back-button'
+      ) as MenuItem | null;
+      if (backItem) {
+        this.asMenu(submenuEl).childItemSet.delete(backItem);
+      }
+      container.remove();
+      this._mobileBackContainers.delete(submenuEl);
+      const submenu = this.asMenu(submenuEl);
+      submenu.cachedChildItems = undefined;
+      submenu.rovingTabindexController?.clearElementCache();
+      if (submenu.rovingTabindexController) {
+        submenu.rovingTabindexController.currentIndex = 0;
+      }
+    }
+  }
+
+  /**
+   * Re-adds saved child items to the submenu's `childItemSet` and
+   * invalidates cached references after DOM re-parenting, so the
+   * `RovingTabindexController` picks up the correct set of focusable
+   * children.
+   *
+   * @param submenu - The submenu whose child state needs restoring.
+   * @param savedChildItems - The set of MenuItem children captured
+   *   before the DOM move.
+   */
+  private _restoreSubmenuChildState(
+    submenu: Menu,
+    savedChildItems: Set<MenuItem>
+  ): void {
+    savedChildItems.forEach((child) => submenu.childItemSet.add(child));
+    submenu.cachedChildItems = undefined;
+    submenu.rovingTabindexController?.clearElementCache();
+  }
+
+  /**
+   * Maps each projected submenu element to its original parent so the
+   * element can be moved back when the submenu is closed.
+   */
+  private _mobileSubmenuOriginalParents = new Map<HTMLElement, HTMLElement>();
+
+  /**
    * label of the menu
    */
   @property({ type: String, reflect: true })
@@ -157,6 +601,23 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
    */
   @property({ type: Boolean, reflect: true })
   public ignore = false;
+
+  /**
+   * Enables mobile submenu navigation where tapping a submenu item replaces
+   * the current menu content with the submenu's children (drill-down) instead
+   * of opening a flyout overlay.
+   */
+  @property({ type: Boolean, attribute: 'mobile-view', reflect: true })
+  public mobileView = false;
+
+  /**
+   * Label for the mobile back button, used for localization.
+   */
+  @property({ type: String, attribute: 'mobile-back-label' })
+  public mobileBackLabel = 'Back';
+
+  @state()
+  private _mobileSubmenuStack: MenuItem[] = [];
 
   /**
    * how the menu allows selection of its items:
@@ -471,6 +932,15 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     this.addEventListener('touchend', this.handlePointerup);
     this.addEventListener('focusout', this.handleFocusout);
     this.addEventListener('sp-menu-item-keydown', this.handleKeydown);
+    // Capture-phase keydown so mobile drill-down navigation between
+    // the back row and the first nested item runs before the projected
+    // submenu's `RovingTabindexController` (which would otherwise
+    // wrap the focus within the nested menu).
+    this.addEventListener(
+      'keydown',
+      this.handleMobileDrilldownKeydownCapture,
+      true
+    );
     this.addEventListener('pointerup', this.handlePointerup);
     this.addEventListener('sp-opened', this.handleSubmenuOpened);
     this.addEventListener('sp-closed', this.handleSubmenuClosed);
@@ -701,6 +1171,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
   public handleSubmenuClosed = (event: Event): void => {
     event.stopPropagation();
+    if (this.mobileView) {
+      this.resetMobileSubmenus();
+      return;
+    }
     const target = event.composedPath()[0] as Overlay;
     target.dispatchEvent(
       new Event('sp-menu-submenu-closed', {
@@ -847,9 +1321,38 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
       (dir === 'rtl' && key === 'ArrowRight') ||
       key === 'Escape';
     const lastFocusedItem = root as MenuItem;
+
+    if (this.mobileView) {
+      if (shouldOpenSubmenu && lastFocusedItem?.hasSubmenu) {
+        event.stopPropagation();
+        this.openMobileSubmenu(lastFocusedItem);
+        return;
+      }
+      if (shouldCloseSelfAsSubmenu && this._mobileSubmenuStack.length > 0) {
+        event.stopPropagation();
+        this.closeMobileSubmenu();
+        return;
+      }
+      return;
+    }
+
+    const mobileRoot = this._mobileViewRoot;
+    if (mobileRoot) {
+      if (shouldOpenSubmenu && lastFocusedItem?.hasSubmenu) {
+        event.stopPropagation();
+        mobileRoot.openMobileSubmenu(lastFocusedItem);
+        return;
+      }
+      if (shouldCloseSelfAsSubmenu) {
+        event.stopPropagation();
+        mobileRoot.closeMobileSubmenu();
+        return;
+      }
+      return;
+    }
+
     if (shouldOpenSubmenu) {
       if (lastFocusedItem?.hasSubmenu) {
-        //open submenu and set focus
         event.stopPropagation();
         lastFocusedItem.openOverlay(true);
       }
@@ -862,6 +1365,20 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
   public handleKeydown(event: Event): void {
     if (event.defaultPrevented || !this.rovingTabindexController) {
+      return;
+    }
+    if (this.mobileView && this._mobileSubmenuStack.length > 0) {
+      const { key } = event as MenuItemKeydownEvent;
+      const dir = this.dir;
+      const shouldClose =
+        (dir === 'ltr' && key === 'ArrowLeft') ||
+        (dir === 'rtl' && key === 'ArrowRight') ||
+        key === 'Escape';
+      if (shouldClose) {
+        event.stopPropagation();
+        event.preventDefault();
+        this.closeMobileSubmenu();
+      }
       return;
     }
     const { key, root, shiftKey, target } = event as MenuItemKeydownEvent;
@@ -885,10 +1402,15 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
       return;
     }
     if (openSubmenuKey && root?.hasSubmenu && !root.open) {
-      // Remove focus while opening overlay from keyboard or the visible focus
-      // will slip back to the first item in the menu.
       event.preventDefault();
-      root.openOverlay(true);
+      const mobileRoot = this._mobileViewRoot;
+      if (this.mobileView) {
+        this.openMobileSubmenu(root);
+      } else if (mobileRoot) {
+        mobileRoot.openMobileSubmenu(root);
+      } else {
+        root.openOverlay(true);
+      }
       return;
     }
     if (key === ' ' || key === 'Enter') {
@@ -1010,10 +1532,8 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
       assignedElements.forEach((item) => {
         if (typeof item.triggerUpdate !== 'undefined') {
           item.triggerUpdate();
-        } else if (
-          typeof (item as unknown as Menu).childItems !== 'undefined'
-        ) {
-          (item as unknown as Menu).childItems.forEach((child) => {
+        } else if (typeof this.asMenu(item).childItems !== 'undefined') {
+          this.asMenu(item).childItems.forEach((child) => {
             child.triggerUpdate();
           });
         }
@@ -1036,7 +1556,25 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
   }
 
   public override render(): TemplateResult {
-    return this.renderMenuItemSlot();
+    const hasMobileSubmenu =
+      this.mobileView && this._mobileSubmenuStack.length > 0;
+    return html`
+      <div
+        class=${hasMobileSubmenu ? 'mobile-slot-hidden' : 'mobile-slot-wrapper'}
+      >
+        ${this.renderMenuItemSlot()}
+      </div>
+      ${hasMobileSubmenu
+        ? html`
+            <div
+              class="mobile-submenu-animation-wrapper"
+              @animationend=${this._handleAnimationEnd}
+            >
+              <slot name="mobile-submenu"></slot>
+            </div>
+          `
+        : ''}
+    `;
   }
 
   protected override firstUpdated(changed: PropertyValues): void {
@@ -1066,6 +1604,17 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         /* c8 ignore next 3 */
       } else {
         this.removeAttribute('aria-label');
+      }
+    }
+    if (changes.has('mobileBackLabel') && this.hasUpdated) {
+      this._refreshMobileBackElements();
+    }
+    if (changes.has('mobileView') && this.hasUpdated) {
+      // When mobile view is turned off at runtime, restore any
+      // projected submenus to their original parents so the menu
+      // returns to a normal flyout layout cleanly.
+      if (!this.mobileView && this._mobileSubmenuStack.length > 0) {
+        this.resetMobileSubmenus();
       }
     }
   }
@@ -1098,6 +1647,8 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     this.selectedItemsMap.clear();
     this.childItemSet.clear();
     this.descendentOverlays = new Map<Overlay, Overlay>();
+    this.resetMobileSubmenus();
+    this._mobileSubmenuOriginalParents.clear();
     super.disconnectedCallback();
   }
 
