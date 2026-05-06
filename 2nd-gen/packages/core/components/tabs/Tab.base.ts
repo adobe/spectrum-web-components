@@ -44,13 +44,6 @@ export abstract class TabBase extends SpectrumElement {
   public disabled = false;
 
   /**
-   * Text label for the tab. Used as fallback content when the
-   * default slot is empty.
-   */
-  @property({ type: String, reflect: true })
-  public label = '';
-
-  /**
    * Whether this tab is currently selected. Managed by the parent
    * `swc-tabs` container — consumers should not set this directly.
    * Use `swc-tabs[selected]` instead.
@@ -92,7 +85,6 @@ export abstract class TabBase extends SpectrumElement {
 
     this.syncAriaSelected();
     this.syncAriaDisabled();
-    this.syncAriaLabel();
 
     // Initial tabindex: -1 by default. The parent TabsBase
     // manages roving tabindex via setRovingTabindex() /
@@ -113,10 +105,6 @@ export abstract class TabBase extends SpectrumElement {
     if (changes.has('disabled')) {
       this.syncAriaDisabled();
     }
-
-    if (changes.has('label')) {
-      this.syncAriaLabel();
-    }
   }
 
   private syncAriaSelected(): void {
@@ -128,14 +116,6 @@ export abstract class TabBase extends SpectrumElement {
       this.setAttribute('aria-disabled', 'true');
     } else {
       this.removeAttribute('aria-disabled');
-    }
-  }
-
-  private syncAriaLabel(): void {
-    if (this.label) {
-      this.setAttribute('aria-label', this.label);
-    } else {
-      this.removeAttribute('aria-label');
     }
   }
 }

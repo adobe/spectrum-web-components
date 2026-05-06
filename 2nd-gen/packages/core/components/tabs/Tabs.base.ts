@@ -195,8 +195,8 @@ export abstract class TabsBase extends SpectrumElement {
    * Accessible label for the tablist. Rendered as `aria-label` on the
    * element with `role="tablist"` in the concrete template.
    */
-  @property({ type: String })
-  public label = '';
+  @property({ type: String, attribute: 'accessible-label' })
+  public accessibleLabel = '';
 
   /**
    * The `tab-id` of the currently selected tab. Setting this property
@@ -679,10 +679,10 @@ export abstract class TabsBase extends SpectrumElement {
       this.setAttribute('direction', this.direction);
     }
 
-    if (window.__swc?.DEBUG && !this.label) {
+    if (window.__swc?.DEBUG && !this.accessibleLabel) {
       window.__swc.warn(
         this,
-        `<${this.localName}> requires a "label" attribute to provide an accessible name for the tablist.`,
+        `<${this.localName}> requires an "accessible-label" attribute to provide an accessible name for the tablist.`,
         'https://opensource.adobe.com/spectrum-web-components/components/tabs/',
         { type: 'accessibility', level: 'high' }
       );

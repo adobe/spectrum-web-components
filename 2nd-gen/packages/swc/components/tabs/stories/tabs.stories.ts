@@ -42,7 +42,7 @@ export const meta: Meta = {
   component: 'swc-tabs',
   argTypes: {
     selected: { control: 'text' },
-    label: { control: 'text' },
+    'accessible-label': { control: 'text' },
     direction: {
       control: { type: 'select' },
       options: [...TABS_DIRECTIONS],
@@ -59,7 +59,7 @@ export const meta: Meta = {
   },
   args: {
     selected: '1',
-    label: 'Product details',
+    'accessible-label': 'Product details',
     direction: 'horizontal',
     'keyboard-activation': 'manual',
     density: 'regular',
@@ -70,7 +70,7 @@ export const meta: Meta = {
 
     return renderTabGroup({
       selected: args.selected as string,
-      label: args.label as string,
+      accessibleLabel: (raw['accessible-label'] ?? 'Product details') as string,
       direction: args.direction as TabsDirection,
       keyboardActivation: (raw['keyboard-activation'] ??
         'manual') as KeyboardActivation,
@@ -112,7 +112,7 @@ const directionLabels = {
 
 interface TabGroupOptions {
   direction?: TabsDirection;
-  label?: string;
+  accessibleLabel?: string;
   selected?: string;
   keyboardActivation?: KeyboardActivation;
   density?: TabDensity;
@@ -141,7 +141,7 @@ const defaultPanels = html`
 
 const renderTabGroup = ({
   direction = 'horizontal',
-  label = 'Product details',
+  accessibleLabel = 'Product details',
   selected = '1',
   keyboardActivation = 'manual',
   density = 'regular',
@@ -152,7 +152,7 @@ const renderTabGroup = ({
   <swc-tabs
     selected=${selected}
     direction=${direction}
-    label=${label}
+    accessible-label=${accessibleLabel}
     keyboard-activation=${keyboardActivation}
     density=${density}
     ?disabled=${disabled}
@@ -208,8 +208,8 @@ export const Overview: Story = {
  *
  * - **selected** (on `swc-tabs`): Value of the currently active tab
  * - **tab-id** (on `swc-tab` and `swc-tab-panel`): Unique identifier linking tab to panel
- * - **label** (on `swc-tabs`): Accessible name for the tablist
- * - **label** (on `swc-tab`): Fallback text when the default slot is empty
+ * - **accessible-label** (on `swc-tabs`): Accessible name for the tablist
+ * - **aria-label** (on `swc-tab`): Accessible name for icon-only tabs
  * - **direction**: Layout direction (`horizontal` or `vertical`)
  * - **keyboard-activation**: `manual` (default) or `automatic` (selection follows focus)
  * - **density**: `regular` (default) or `compact` spacing
@@ -220,12 +220,12 @@ export const Anatomy: Story = {
   render: () => html`
     <p><strong>Text-only tabs</strong></p>
     ${renderTabGroup({
-      label: 'Text-only example',
+      accessibleLabel: 'Text-only example',
     })}
     <br />
     <p><strong>Tabs with icons</strong></p>
     ${renderTabGroup({
-      label: 'Icon and text example',
+      accessibleLabel: 'Icon and text example',
       tabs: html`
         <swc-tab tab-id="1">
           <span slot="icon" aria-hidden="true">☰</span>
@@ -249,15 +249,15 @@ export const Anatomy: Story = {
     <br />
     <p><strong>Icon-only tabs</strong></p>
     ${renderTabGroup({
-      label: 'Icon-only example',
+      accessibleLabel: 'Icon-only example',
       tabs: html`
-        <swc-tab tab-id="1" label="Dashboard">
+        <swc-tab tab-id="1" aria-label="Dashboard">
           <span slot="icon" aria-hidden="true">☰</span>
         </swc-tab>
-        <swc-tab tab-id="2" label="Reports">
+        <swc-tab tab-id="2" aria-label="Reports">
           <span slot="icon" aria-hidden="true">📊</span>
         </swc-tab>
-        <swc-tab tab-id="3" label="Settings">
+        <swc-tab tab-id="3" aria-label="Settings">
           <span slot="icon" aria-hidden="true">⚙</span>
         </swc-tab>
       `,
@@ -281,10 +281,10 @@ export const Anatomy: Story = {
 export const DensityVariants: Story = {
   render: () => html`
     <p><strong>Regular (default)</strong></p>
-    ${renderTabGroup({ label: 'Regular density' })}
+    ${renderTabGroup({ accessibleLabel: 'Regular density' })}
     <br />
     <p><strong>Compact</strong></p>
-    ${renderTabGroup({ density: 'compact', label: 'Compact density' })}
+    ${renderTabGroup({ density: 'compact', accessibleLabel: 'Compact density' })}
   `,
   tags: ['options'],
   parameters: {
@@ -313,7 +313,7 @@ export const Directions: Story = {
         <p><strong>${directionLabels[dir]}</strong></p>
         ${renderTabGroup({
           direction: dir,
-          label: `${directionLabels[dir]} example`,
+          accessibleLabel: `${directionLabels[dir]} example`,
         })}
         <br />
       `
@@ -349,7 +349,7 @@ export const States: Story = {
     <p><strong>Individual disabled tab</strong></p>
     ${renderTabGroup({
       selected: 'selected',
-      label: 'Individual states',
+      accessibleLabel: 'Individual states',
       tabs: html`
         <swc-tab tab-id="default">Default</swc-tab>
         <swc-tab tab-id="selected">Selected</swc-tab>
@@ -371,7 +371,7 @@ export const States: Story = {
     <p><strong>Disabled container</strong></p>
     ${renderTabGroup({
       disabled: true,
-      label: 'Disabled container',
+      accessibleLabel: 'Disabled container',
     })}
   `,
   tags: ['states'],
@@ -403,7 +403,7 @@ export const ActivationModes: Story = {
   render: () => html`
     <p><strong>Manual activation (default)</strong></p>
     ${renderTabGroup({
-      label: 'Manual activation',
+      accessibleLabel: 'Manual activation',
       panels: html`
         <swc-tab-panel tab-id="1">
           <p>Use arrow keys to move focus, then Enter or Space to select.</p>
@@ -416,7 +416,7 @@ export const ActivationModes: Story = {
     <p><strong>Automatic activation</strong></p>
     ${renderTabGroup({
       keyboardActivation: 'automatic',
-      label: 'Automatic activation',
+      accessibleLabel: 'Automatic activation',
       panels: html`
         <swc-tab-panel tab-id="1">
           <p>Arrow keys immediately select and display content.</p>
@@ -456,7 +456,7 @@ export const ActivationModes: Story = {
  *
  * 1. **Roles**: `tablist` on the inner container, `tab` on each tab
  *    item, `tabpanel` on each panel
- * 2. **Labeling**: `aria-label` on the tablist from the `label` property
+ * 2. **Labeling**: `aria-label` on the tablist from the `accessible-label` property
  * 3. **States**: `aria-selected` on tabs, `aria-disabled` on disabled
  *    tabs and on the tablist when the container is disabled
  * 4. **Orientation**: `aria-orientation="vertical"` on the same node as
@@ -487,10 +487,10 @@ export const ActivationModes: Story = {
  *
  * ### Best practices
  *
- * - Always provide a `label` attribute on `swc-tabs` for the tablist
- *   accessible name
+ * - Always provide an `accessible-label` attribute on `swc-tabs` for the
+ *   tablist accessible name
  * - Use meaningful, concise text labels for each tab
- * - For icon-only tabs, provide a `label` attribute on `swc-tab` as
+ * - For icon-only tabs, provide an `aria-label` attribute on `swc-tab` as
  *   the accessible name (since there is no visible text content)
  * - Use the `tab-id` attribute to link tabs to their panels
  * - Avoid disabling all tabs — at least one should be interactive
@@ -500,7 +500,7 @@ export const ActivationModes: Story = {
 export const Accessibility: Story = {
   render: () => html`
     ${renderTabGroup({
-      label: 'Account settings',
+      accessibleLabel: 'Account settings',
       tabs: html`
         <swc-tab tab-id="1">Dashboard</swc-tab>
         <swc-tab tab-id="2">Reports</swc-tab>

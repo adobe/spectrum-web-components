@@ -106,7 +106,7 @@ export const OverviewTest: Story = {
 
 export const DirectionPropertyTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" label="Direction test">
+    <swc-tabs selected="1" accessible-label="Direction test">
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab tab-id="2">Tab 2</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
@@ -144,7 +144,7 @@ export const DirectionPropertyTest: Story = {
 
 export const SelectedPropertyTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" label="Selection test">
+    <swc-tabs selected="1" accessible-label="Selection test">
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab tab-id="2">Tab 2</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
@@ -183,7 +183,7 @@ export const SelectedPropertyTest: Story = {
 
 export const DensityAndKeyboardActivationTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" label="Density / activation test">
+    <swc-tabs selected="1" accessible-label="Density / activation test">
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel</p></swc-tab-panel>
     </swc-tabs>
@@ -222,7 +222,7 @@ export const VerticalDensityTablistGapTest: Story = {
         selected="1"
         direction="vertical"
         density="regular"
-        label="Vertical regular"
+        accessible-label="Vertical regular"
       >
         <swc-tab tab-id="1">A</swc-tab>
         <swc-tab tab-id="2">B</swc-tab>
@@ -233,7 +233,7 @@ export const VerticalDensityTablistGapTest: Story = {
         selected="1"
         direction="vertical"
         density="compact"
-        label="Vertical compact"
+        accessible-label="Vertical compact"
       >
         <swc-tab tab-id="1">A</swc-tab>
         <swc-tab tab-id="2">B</swc-tab>
@@ -273,7 +273,7 @@ export const VerticalDensityTablistGapTest: Story = {
  */
 export const HostAutoDisabledReactiveTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" label="Reactive keyboard/disabled test">
+    <swc-tabs selected="1" accessible-label="Reactive keyboard/disabled test">
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab tab-id="2">Tab 2</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
@@ -377,7 +377,7 @@ export const KeyboardActivationFromAttributeTest: Story = {
         id="tabs-keyboard-manual"
         selected="1"
         keyboard-activation="manual"
-        label="Manual from attribute"
+        accessible-label="Manual from attribute"
       >
         <swc-tab tab-id="1">One</swc-tab>
         <swc-tab tab-id="2">Two</swc-tab>
@@ -388,7 +388,7 @@ export const KeyboardActivationFromAttributeTest: Story = {
         id="tabs-keyboard-automatic"
         selected="1"
         keyboard-activation="automatic"
-        label="Automatic from attribute"
+        accessible-label="Automatic from attribute"
       >
         <swc-tab tab-id="1">One</swc-tab>
         <swc-tab tab-id="2">Two</swc-tab>
@@ -473,7 +473,7 @@ export const KeyboardActivationFromAttributeTest: Story = {
 
 export const AriaRolesTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" label="ARIA test">
+    <swc-tabs selected="1" accessible-label="ARIA test">
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab tab-id="2">Tab 2</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
@@ -551,7 +551,7 @@ export const AriaRolesTest: Story = {
 
 export const AriaOrientationTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" direction="vertical" label="Orientation test">
+    <swc-tabs selected="1" direction="vertical" accessible-label="Orientation test">
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel</p></swc-tab-panel>
     </swc-tabs>
@@ -585,7 +585,7 @@ export const AriaOrientationTest: Story = {
 
 export const AriaDisabledTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" disabled label="Disabled test">
+    <swc-tabs selected="1" disabled accessible-label="Disabled test">
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel</p></swc-tab-panel>
     </swc-tabs>
@@ -612,7 +612,7 @@ export const AriaDisabledTest: Story = {
 
 export const DisabledTabAriaTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" label="Disabled tab test">
+    <swc-tabs selected="1" accessible-label="Disabled tab test">
       <swc-tab tab-id="1">Enabled</swc-tab>
       <swc-tab tab-id="2" disabled>Disabled</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel</p></swc-tab-panel>
@@ -640,7 +640,7 @@ export const DisabledTabAriaTest: Story = {
 
 export const RovingTabindexTest: Story = {
   render: () => html`
-    <swc-tabs selected="2" label="Roving tabindex test">
+    <swc-tabs selected="2" accessible-label="Roving tabindex test">
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab tab-id="2">Tab 2</swc-tab>
       <swc-tab tab-id="3">Tab 3</swc-tab>
@@ -670,7 +670,7 @@ export const RovingTabindexTest: Story = {
 
 export const TabindexFallbackTest: Story = {
   render: () => html`
-    <swc-tabs label="Fallback tabindex test">
+    <swc-tabs accessible-label="Fallback tabindex test">
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab tab-id="2">Tab 2</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
@@ -696,7 +696,7 @@ export const TabindexFallbackTest: Story = {
 
 export const PanelVisibilityTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" label="Panel visibility test">
+    <swc-tabs selected="1" accessible-label="Panel visibility test">
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab tab-id="2">Tab 2</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
@@ -750,7 +750,7 @@ export const PanelVisibilityTest: Story = {
 
 export const ArrowKeyNavigationTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" label="Arrow key test">
+    <swc-tabs selected="1" accessible-label="Arrow key test">
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab tab-id="2">Tab 2</swc-tab>
       <swc-tab tab-id="3">Tab 3</swc-tab>
@@ -806,7 +806,7 @@ export const ArrowKeyNavigationTest: Story = {
 
 export const VerticalArrowKeyTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" direction="vertical" label="Vertical arrow test">
+    <swc-tabs selected="1" direction="vertical" accessible-label="Vertical arrow test">
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab tab-id="2">Tab 2</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
@@ -853,7 +853,7 @@ export const VerticalArrowKeyTest: Story = {
 
 export const HomeEndKeyTest: Story = {
   render: () => html`
-    <swc-tabs selected="2" label="Home/End test">
+    <swc-tabs selected="2" accessible-label="Home/End test">
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab tab-id="2">Tab 2</swc-tab>
       <swc-tab tab-id="3">Tab 3</swc-tab>
@@ -890,7 +890,7 @@ export const HomeEndKeyTest: Story = {
 
 export const EnterSpaceActivationTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" label="Activation test">
+    <swc-tabs selected="1" accessible-label="Activation test">
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab tab-id="2">Tab 2</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
@@ -929,7 +929,7 @@ export const AutoActivationTest: Story = {
     <swc-tabs
       selected="1"
       keyboard-activation="automatic"
-      label="Automatic activation test"
+      accessible-label="Automatic activation test"
     >
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab tab-id="2">Tab 2</swc-tab>
@@ -960,7 +960,7 @@ export const AutoActivationTest: Story = {
 
 export const DisabledTabKeyboardTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" label="Disabled tab keyboard test">
+    <swc-tabs selected="1" accessible-label="Disabled tab keyboard test">
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab tab-id="2" disabled>Tab 2</swc-tab>
       <swc-tab tab-id="3">Tab 3</swc-tab>
@@ -1002,7 +1002,7 @@ export const DisabledTabKeyboardTest: Story = {
 
 export const DisabledContainerKeyboardTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" disabled label="Disabled container test">
+    <swc-tabs selected="1" disabled accessible-label="Disabled container test">
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab tab-id="2">Tab 2</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
@@ -1027,7 +1027,7 @@ export const DisabledContainerKeyboardTest: Story = {
 
 export const ChangeEventTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" label="Change event test">
+    <swc-tabs selected="1" accessible-label="Change event test">
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab tab-id="2">Tab 2</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
@@ -1108,7 +1108,7 @@ export const AnatomyTest: Story = {
 
 export const SelectionIndicatorTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" label="Indicator test">
+    <swc-tabs selected="1" accessible-label="Indicator test">
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab tab-id="2">Tab 2</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
@@ -1240,7 +1240,7 @@ export const MissingLabelWarningTest: Story = {
     <div id="warning-host"></div>
   `,
   play: async ({ step }) => {
-    await step('warns when label attribute is missing', () =>
+    await step('warns when accessible-label attribute is missing', () =>
       withWarningSpy(async (warnCalls) => {
         const tabs = await fixture<Tabs>(html`
           <swc-tabs selected="1">
@@ -1263,7 +1263,7 @@ export const MissingLabelWarningTest: Story = {
 
 export const InvalidDirectionWarningTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" label="Warning test">
+    <swc-tabs selected="1" accessible-label="Warning test">
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel</p></swc-tab-panel>
     </swc-tabs>
@@ -1288,7 +1288,7 @@ export const InvalidDirectionWarningTest: Story = {
 
 export const ValidLabelNoWarningTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" label="Has a label">
+    <swc-tabs selected="1" accessible-label="Has a label">
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel</p></swc-tab-panel>
     </swc-tabs>

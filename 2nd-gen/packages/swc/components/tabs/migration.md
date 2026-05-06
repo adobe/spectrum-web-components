@@ -80,7 +80,7 @@ Find and replace all instances of the three element tag names in your templates 
 </sp-tabs>
 
 <!-- After -->
-<swc-tabs selected="tab-1" label="Product details">
+<swc-tabs selected="tab-1" accessible-label="Product details">
   <swc-tab tab-id="tab-1">Overview</swc-tab>
   <swc-tab tab-id="tab-2">Specifications</swc-tab>
   <swc-tab-panel tab-id="tab-1">
@@ -117,7 +117,11 @@ Find and replace all instances of the three element tag names in your templates 
 </sp-tabs>
 
 <!-- After -->
-<swc-tabs selected="1" keyboard-activation="automatic" label="Example">
+<swc-tabs
+  selected="1"
+  keyboard-activation="automatic"
+  accessible-label="Example"
+>
   <swc-tab tab-id="1">Tab</swc-tab>
 </swc-tabs>
 ```
@@ -131,7 +135,7 @@ Find and replace all instances of the three element tag names in your templates 
 </sp-tabs>
 
 <!-- After -->
-<swc-tabs selected="1" density="compact" label="Example">
+<swc-tabs selected="1" density="compact" accessible-label="Example">
   <swc-tab tab-id="1">Tab</swc-tab>
 </swc-tabs>
 ```
@@ -154,7 +158,7 @@ and issues a debug warning.
 </sp-tabs>
 
 <!-- After: use "vertical" instead -->
-<swc-tabs direction="vertical" selected="1" label="Example">
+<swc-tabs direction="vertical" selected="1" accessible-label="Example">
   <swc-tab tab-id="1">Tab</swc-tab>
 </swc-tabs>
 ```
@@ -178,7 +182,7 @@ They are announced as disabled by assistive technology but cannot be activated
 
 ```html
 <!-- Same markup in both generations -->
-<swc-tabs selected="1" label="Example">
+<swc-tabs selected="1" accessible-label="Example">
   <swc-tab tab-id="1">Active</swc-tab>
   <swc-tab tab-id="2" disabled>Disabled</swc-tab>
   <swc-tab tab-id="3">Another</swc-tab>
@@ -363,29 +367,29 @@ All public properties from 1st-gen and their 2nd-gen status:
 
 ### `swc-tabs`
 
-| Property                  | Status    | Notes                                                        |
-| ------------------------- | --------- | ------------------------------------------------------------ |
-| `keyboard-activation`     | **New**   | `manual` (default) or `automatic`; replaces boolean `auto`   |
-| `density`                 | **New**   | `regular` (default) or `compact`; replaces boolean `compact` |
-| `direction`               | Changed   | `vertical-right` removed                                     |
-| `disabled`                | Unchanged | Disables entire tablist                                      |
-| `label`                   | Unchanged | Accessible name for tablist                                  |
-| `selected`                | Unchanged | Value of the selected tab                                    |
-| `auto`                    | Removed   | Use `keyboard-activation="automatic"`                        |
-| `compact`                 | Removed   | Use `density="compact"`                                      |
-| `quiet`                   | Removed   | Not part of S2 surface; style with CSS tokens if needed      |
-| `emphasized`              | Removed   | Not part of S2 surface; style with CSS tokens if needed      |
-| `size`                    | Removed   | Not part of S2 surface; default typography only              |
-| `enableTabsScroll`        | Deferred  | Not yet migrated (overflow)                                  |
-| `selectionIndicatorStyle` | Removed   | Internal property                                            |
-| `shouldAnimate`           | Removed   | Internal property                                            |
+| Property                  | Status               | Notes                                                        |
+| ------------------------- | -------------------- | ------------------------------------------------------------ |
+| `keyboard-activation`     | **New**              | `manual` (default) or `automatic`; replaces boolean `auto`   |
+| `density`                 | **New**              | `regular` (default) or `compact`; replaces boolean `compact` |
+| `direction`               | Changed              | `vertical-right` removed                                     |
+| `disabled`                | Unchanged            | Disables entire tablist                                      |
+| `accessible-label`        | Renamed from `label` | Accessible name for tablist (`aria-label`)                   |
+| `selected`                | Unchanged            | Value of the selected tab                                    |
+| `auto`                    | Removed              | Use `keyboard-activation="automatic"`                        |
+| `compact`                 | Removed              | Use `density="compact"`                                      |
+| `quiet`                   | Removed              | Not part of S2 surface; style with CSS tokens if needed      |
+| `emphasized`              | Removed              | Not part of S2 surface; style with CSS tokens if needed      |
+| `size`                    | Removed              | Not part of S2 surface; default typography only              |
+| `enableTabsScroll`        | Deferred             | Not yet migrated (overflow)                                  |
+| `selectionIndicatorStyle` | Removed              | Internal property                                            |
+| `shouldAnimate`           | Removed              | Internal property                                            |
 
 ### `swc-tab`
 
 | Property   | Status               | Notes                                              |
 | ---------- | -------------------- | -------------------------------------------------- |
 | `disabled` | Changed              | Now uses `aria-disabled`; focusable via arrow keys |
-| `label`    | Unchanged            | Fallback text label                                |
+| `label`    | Removed              | Use `aria-label` directly for icon-only tabs       |
 | `selected` | Unchanged            | Managed by parent                                  |
 | `tab-id`   | Renamed from `value` | Unique identifier                                  |
 | `vertical` | Unchanged            | Vertical orientation styling                       |
@@ -421,10 +425,10 @@ All public properties from 1st-gen and their 2nd-gen status:
 
 ## Accessibility
 
-- Always provide a `label` attribute on `swc-tabs` for the tablist accessible
-  name.
+- Always provide an `accessible-label` attribute on `swc-tabs` for the tablist
+  accessible name.
 - Use meaningful text content in each `swc-tab`. For icon-only tabs, provide
-  a `label` attribute as the accessible name.
+  an `aria-label` attribute as the accessible name.
 - Use the `tab-id` attribute to link tabs to their corresponding panels.
 - Avoid disabling all tabs — at least one should remain interactive.
 - The `change` event is cancelable. Calling `preventDefault()` reverts the

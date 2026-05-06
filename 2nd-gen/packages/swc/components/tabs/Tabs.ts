@@ -34,7 +34,7 @@ import styles from './tabs.css';
  * @slot tab-panel - Tab panel content (`swc-tab-panel` elements)
  *
  * @example
- * <swc-tabs selected="1" label="Product details">
+ * <swc-tabs selected="1" accessible-label="Product details">
  *   <swc-tab tab-id="1">Overview</swc-tab>
  *   <swc-tab tab-id="2">Specs</swc-tab>
  *   <swc-tab-panel tab-id="1">Product overview content</swc-tab-panel>
@@ -65,7 +65,7 @@ export class Tabs extends TabsBase {
       <div
         role="tablist"
         class="tablist"
-        aria-label=${this.label || nothing}
+        aria-label=${this.accessibleLabel || nothing}
         aria-orientation=${ifDefined(
           this.direction === 'vertical' ? 'vertical' : undefined
         )}
