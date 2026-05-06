@@ -10,10 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-/*
- * @todo The S1 types can be removed once we are no longer maintaining 1st-gen.
- */
-
 import type { ElementSize } from '@spectrum-web-components/core/mixins/index.js';
 
 // ──────────────────
@@ -65,32 +61,6 @@ export const FIXED_VALUES = [
   'inline-end',
 ] as const;
 
-// ──────────────────────────────────────────
-//     S1-ONLY (remove with 1st-gen)
-// ──────────────────────────────────────────
-
-export const BADGE_VARIANTS_COLOR_S1 = [
-  'fuchsia',
-  'indigo',
-  'magenta',
-  'purple',
-  'seafoam',
-  'yellow',
-  'gray',
-  'red',
-  'orange',
-  'chartreuse',
-  'celery',
-  'green',
-  'cyan',
-  'blue',
-] as const satisfies readonly BadgeColorVariant[];
-
-export const BADGE_VARIANTS_S1 = [
-  ...BADGE_VARIANTS_SEMANTIC,
-  ...BADGE_VARIANTS_COLOR_S1,
-] as const;
-
 // ──────────────────
 //     CANONICAL
 // ──────────────────
@@ -108,10 +78,6 @@ export const BADGE_VARIANTS = [
 export type FixedValues = (typeof FIXED_VALUES)[number];
 export type BadgeSize = (typeof BADGE_VALID_SIZES)[number];
 export type BadgeSemanticVariant = (typeof BADGE_VARIANTS_SEMANTIC)[number];
-
-// S1-only (remove with 1st-gen)
-export type BadgeColorVariantS1 = (typeof BADGE_VARIANTS_COLOR_S1)[number]; // remove with 1st-gen
-export type BadgeVariantS1 = (typeof BADGE_VARIANTS_S1)[number]; // remove with 1st-gen
 
 // Canonical
 export type BadgeColorVariant = (typeof BADGE_VARIANTS_COLOR)[number];

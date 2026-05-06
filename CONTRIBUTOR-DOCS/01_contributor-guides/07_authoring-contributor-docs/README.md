@@ -156,11 +156,11 @@ Request generation of breadcrumbs and TOC when you:
 
 The script also automatically verifies all internal markdown links and reports any broken links, which an AI agent will typically fix automatically.
 
-You can request an update by asking an AI Agent, pointing it to the [AI Agent Instructions](../../../.cursor/skills/contributor-docs-nav/references/ai-agent-instructions.md).
+You can request an update by asking an AI Agent, pointing it to the [AI Agent Instructions](../../../.ai/skills/contributor-docs-nav/references/ai-agent-instructions.md).
 
 > If you're using Cursor, you can just ask an agent to "update the contributor docs"; a project-level Cursor rule will help the agent find the applicable instructions.
 
-> If you don't have access to an AI Agent or prefer not to use one, you can also run the script manually. See [the AI Agent Instructions](../../../.cursor/skills/contributor-docs-nav/references/ai-agent-instructions.md) for details.
+> If you don't have access to an AI Agent or prefer not to use one, you can also run the script manually. See [the AI Agent Instructions](../../../.ai/skills/contributor-docs-nav/references/ai-agent-instructions.md) for details.
 
 ### Verifying and troubleshooting
 
@@ -168,7 +168,7 @@ The logic for generating navigational elements is quite simple, so it's unlikely
 
 **Link verification:** The script automatically checks all internal markdown links and reports any broken links. When working with an AI agent, broken links are typically fixed automatically without human intervention. The agent will only ask for guidance if the fix is ambiguous (e.g., when a target file has been completely removed).
 
-If you encounter any issues, try asking an AI agent to help you troubleshoot, pointing the agent to the [AI Agent Instructions](../../../.cursor/skills/contributor-docs-nav/references/ai-agent-instructions.md).
+If you encounter any issues, try asking an AI agent to help you troubleshoot, pointing the agent to the [AI Agent Instructions](../../../.ai/skills/contributor-docs-nav/references/ai-agent-instructions.md).
 
 ## Committing updates
 

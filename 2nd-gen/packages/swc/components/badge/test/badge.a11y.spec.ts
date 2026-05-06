@@ -83,4 +83,16 @@ test.describe('Badge - ARIA Snapshots', () => {
       - text: /New Active Archived Approved Pending approval Rejected Marketing Engineering Design Product Support Busy Available Sales Research Quality Documentation Legal Analytics Security Creative Training Facilities Compliance Version 1\\.\\d+\\.\\d+/
     `);
   });
+
+  test('should not be keyboard focusable', async ({ page }) => {
+    const root = await gotoStory(
+      page,
+      'components-badge--overview',
+      'swc-badge'
+    );
+    const badge = root.locator('swc-badge');
+    await expect(badge).not.toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(badge).not.toBeFocused();
+  });
 });

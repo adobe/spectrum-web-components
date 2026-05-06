@@ -30,7 +30,6 @@ import styles from './badge.css';
  * Badges are typically used to indicate status, categories, or provide supplementary information.
  *
  * @element swc-badge
- * @status preview
  * @since 0.0.1
  *
  * @example
@@ -41,6 +40,24 @@ import styles from './badge.css';
  *   <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
  *   Verified
  * </swc-badge>
+ *
+ * @cssprop --swc-badge-height - Minimum block size of the badge.
+ * @cssprop --swc-badge-corner-radius - Corner radius of the badge.
+ * @cssprop --swc-badge-gap - Gap between the icon and label.
+ * @cssprop --swc-badge-padding-block - Block padding.
+ * @cssprop --swc-badge-padding-inline - Inline padding.
+ * @cssprop --swc-badge-padding-inline-start - Inline-start padding; overrides the start side of `--swc-badge-padding-inline`.
+ * @cssprop --swc-badge-font-size - Font size of the label.
+ * @cssprop --swc-badge-line-height - Line height of the label.
+ * @cssprop --swc-badge-icon-size - Size of the icon in the icon slot.
+ * @cssprop --swc-badge-label-icon-color - Color of the label text and icon.
+ * @cssprop --swc-badge-background-color - Background color of the badge.
+ * @cssprop --swc-badge-border-color - Border color; visible on the outline variant.
+ * @cssprop --swc-badge-with-icon-padding-inline - Inline padding when the badge has both an icon and a label.
+ * @cssprop --swc-badge-with-icon-only-padding-inline - Inline padding for icon-only badges.
+ * @cssprop --swc-badge-with-icon-only-padding-block - Block padding for icon-only badges.
+ * @cssprop --swc-badge-outline-background-color - Background color override for the outline variant.
+ * @cssprop --swc-badge-outline-label-icon-color - Label and icon color override for the outline variant.
  */
 export class Badge extends BadgeBase {
   // ────────────────────
@@ -62,33 +79,12 @@ export class Badge extends BadgeBase {
    */
   static override readonly VALID_SIZES = BADGE_VALID_SIZES;
 
-  /**
-   * The variant of the badge.
-   */
+  // Re-declare to ensure reflect: true is honoured on the concrete element class (inherited @property alone is insufficient in ES2022 class-field semantics).
   @property({ type: String, reflect: true })
-  public override variant: BadgeVariant = 'informative';
+  public override variant: BadgeVariant = 'neutral';
 
-  // ───────────────────
-  //     API ADDITIONS
-  // ───────────────────
-
-  /**
-   * Whether the badge is subtle.
-   *
-   * @todo This can be moved to the base class once we are no longer maintaining 1st-gen.
-   */
-  @property({ type: Boolean, reflect: true })
-  public subtle: boolean = false;
-
-  /**
-   * Whether the badge is outlined.
-   *
-   * Can only be used with semantic variants.
-   *
-   * @todo This can be moved to the base class once we are no longer maintaining 1st-gen.
-   */
-  @property({ type: Boolean, reflect: true })
-  public outline: boolean = false;
+  // @todo - Implement new badge variants (notification, indicator) introduced in S2. Jira ticket: SWC-1831
+  // Implement as separate component based on React https://github.com/adobe/react-spectrum/blob/main/packages/%40react-spectrum/s2/src/NotificationBadge.tsx
 
   // ──────────────────────────────
   //     RENDERING & STYLING
@@ -104,9 +100,10 @@ export class Badge extends BadgeBase {
         class=${classMap({
           ['swc-Badge']: true,
           [`swc-Badge--${this.variant}`]: typeof this.variant !== 'undefined',
-          [`swc-Badge--subtle`]: this.subtle,
-          [`swc-Badge--outline`]: this.outline,
+          ['swc-Badge--subtle']: this.subtle,
+          ['swc-Badge--outline']: this.outline,
           [`swc-Badge--fixed-${this.fixed}`]: typeof this.fixed !== 'undefined',
+          [`swc-Badge--no-label`]: !this.slotHasContent,
         })}
       >
         ${when(
@@ -114,7 +111,7 @@ export class Badge extends BadgeBase {
           () => html`
             <div
               class=${classMap({
-                [`swc-Badge-icon`]: true,
+                ['swc-Badge-icon']: true,
               })}
             >
               <slot name="icon"></slot>
