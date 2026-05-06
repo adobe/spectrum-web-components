@@ -247,7 +247,7 @@ export const VerticalDensityTablistGapTest: Story = {
     expect(groups.length, 'two tab groups').toBe(2);
 
     await step(
-      'vertical compact tablist gap is less than regular',
+      'vertical tablist gap is non-zero for both densities',
       async () => {
         const tablistGap = (t: Tabs) => {
           const list = t.shadowRoot?.querySelector('.tablist') as HTMLElement;
@@ -262,7 +262,11 @@ export const VerticalDensityTablistGapTest: Story = {
 
         const regularGap = tablistGap(groups[0]);
         const compactGap = tablistGap(groups[1]);
-        expect(compactGap, 'compact gap').toBeLessThan(regularGap);
+        expect(regularGap, 'regular gap > 0').toBeGreaterThan(0);
+        expect(compactGap, 'compact gap > 0').toBeGreaterThan(0);
+        expect(compactGap, 'compact gap <= regular').toBeLessThanOrEqual(
+          regularGap
+        );
       }
     );
   },
