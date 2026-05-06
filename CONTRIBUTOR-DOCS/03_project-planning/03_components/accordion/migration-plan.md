@@ -26,6 +26,7 @@
 - [2nd-gen API decisions (planned)](#2nd-gen-api-decisions-planned)
     - [Public API](#public-api)
     - [ARIA and keyboard contract](#aria-and-keyboard-contract)
+    - [Selection sync — `RadioController` pattern (consider)](#selection-sync--radiocontroller-pattern-consider)
     - [Analysis inputs](#analysis-inputs)
 - [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
 - [Migration checklist](#migration-checklist)
@@ -105,7 +106,11 @@ None on the `sp-accordion` host. Coordination uses the child item’s `sp-accord
 | `level` | `number` | `3` | `level` | Reflected; overwritten by parent `sp-accordion` when slotted. |
 | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | (none) | `size` | Set from parent. |
 
-**Planned 2nd-gen:** Do **not** treat heading depth as a second public API on the item. The **`swc-accordion`** host keeps **public** **`level`** (`2`–`6`). Each **`swc-accordion-item`** implementation exposes a **`protected` `heading`** property (same numeric range), **set only** by the parent when items are assigned or when **`level`** changes—authors never set heading level on the item. Maps to which `<h2>`–`<h6>` wraps the header button in shadow DOM.
+#### Heading level (2nd-gen)
+
+On **`swc-accordion-item`**, **`heading`** is a **`protected`** property (implementation-only: not reflected, not part of the public consumer API). It is **set only** by **`swc-accordion`** from that host’s **public** **`level`** property (`2`–`6`) whenever assigned items change or **`level`** updates. Authors never set heading depth on the item; they set **`level`** on the parent only. **`heading`** selects which **`<h2>`–`<h6>`** wraps the shadow header **`<button>`**.
+
+**1st-gen note:** Today **`level`** is also reflected on **`sp-accordion-item`** and overwritten when slotted; 2nd-gen removes that public surface on the item in favor of **`protected` `heading`** driven by the parent (**B9**).
 
 Inherited: `SizedMixin(Focusable)` — `tabIndex` / `focus` / `blur` / `click` delegate to shadow `#header` when not `disabled`.
 
@@ -162,7 +167,7 @@ Inherited: `SizedMixin(Focusable)` — `tabIndex` / `focus` / `blur` / `click` d
 | `@spectrum-web-components/base` | `1.11.2` | `SpectrumElement`, `SizedMixin`, `html`, decorators, `when` |
 | `@spectrum-web-components/icon` | `1.11.2` | Chevron spectrum icon CSS |
 | `@spectrum-web-components/icons-ui` | `1.11.2` | `sp-icon-chevron100` |
-| `@spectrum-web-components/reactive-controllers` | `1.11.2` | `FocusGroupController` on `Accordion` |
+| `@spectrum-web-components/reactive-controllers` | `1.11.2` | 1st-gen: `FocusGroupController` on `Accordion` (arrow/Home/End + roving tabindex — **not** carried forward). 2nd-gen: consider a **`RadioController`**-style primitive in **core** or shared controllers (see [Selection sync](#selection-sync--radiocontroller-pattern-consider)); 2nd-gen already ships **`FocusgroupNavigationController`** in `2nd-gen/packages/core/controllers/` for arrow-key roving elsewhere — selection sync is a **different** concern (property reflection, not focus traversal). |
 | `@spectrum-web-components/shared` | `1.11.2` | `Focusable` on `AccordionItem` |
 
 **Sibling / runtime:** Items are expected under `sp-accordion` for `level`, `size`, and exclusive-open behavior (standalone item use exists in tests). **External:** **spectrum-css** `spectrum-two` for Phase 4 styling.
@@ -207,6 +212,7 @@ Inherited: `SizedMixin(Focusable)` — `tabIndex` / `focus` / `blur` / `click` d
 |---|---|---|
 | **A1** | Documented `--swc-accordion-*` (if justified) | Per [component custom property exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure); do not recreate full `--mod-*` matrix. |
 | **A2** | Playwright / Storybook a11y snapshots | Single vs multiple open, disabled item, heading levels. |
+| **A3** | **`RadioController`** (name TBD) — shared selection sync | Optional **core** helper: **resolver** → item list, **selected** reference (or id), **descriptor** for which property to set or remove per item (`open`, `selected`, `aria-selected`, …) so only **selected** carries the “on” state. **Reuse targets:** exclusive accordion (`allow-multiple` false), **`role="radiogroup"`** / radio group, **`role="menuitemradio"`** collections, and **tablists** with a single active tab. **Refactor angle:** could evolve from or complement **`FocusgroupNavigationController`** (`2nd-gen/packages/core/controllers/`) — that controller owns **roving focus** and arrow navigation; **`RadioController`** would own **which item is selected** in the sense of mirrored state flags, not keyboard routing (keep responsibilities split unless a deliberate merge is designed). **Out of scope** for accordion’s first PR unless another team needs the same API immediately — otherwise track as follow-up. |
 
 ---
 
@@ -230,6 +236,18 @@ No 2nd-gen package yet — this section records **planned** decisions from analy
 - **Tab** only between headers and in-panel focusables; **Space** / **Enter** on header; **Space** uses **`preventDefault()`** where required (**SWC-1487**).
 - **No** roving `tabindex` on headers; **no** default Arrow/Home/End handlers on headers that **`preventDefault()`** vertical arrows (scroll vs “next header” conflict).
 
+### Selection sync — `RadioController` pattern (consider)
+
+For **`allow-multiple` false**, the parent must keep **at most one** item **`open`** (today implemented by listening for **`sp-accordion-item-toggle`** and closing siblings). Consider a small **reactive controller** (working name **`RadioController`**) that:
+
+- Accepts a **function** that returns the current **item** collection (e.g. assigned **`swc-accordion-item`** instances, or header elements if ever refactored to light DOM).
+- Accepts the **selected** item (or a stable **key** / index resolved by the host).
+- For each item, **sets, updates, or removes** a configured **property or attribute** (examples: **`open`**, **`selected`**, **`aria-selected`**) so only the selected member carries the “on” state; others are cleared.
+
+**Integration notes:** Accordion still needs **cancelable** toggle events and item-level **disabled** handling — the controller would **reflect** resolved selection after a successful toggle (or run on slot / `open` changes), not replace the full event contract. **`allow-multiple` true** bypasses the controller or passes a no-op / multi-select variant.
+
+**Broader reuse (same primitive or shared module):** **`role="radiogroup"`** and native-like **radio** groups; menus where exactly one **`role="menuitemradio"`** is checked; **tablists** with one **`aria-selected="true"`** tab; and optionally a **refactor** path alongside **`FocusgroupNavigationController`** — e.g. that controller could **delegate** “which child is active” state updates to this helper while it keeps **tabindex** / **keydown** routing, **or** both stay separate to avoid mixing focus and selection semantics. Prefer **one** implementation under **`2nd-gen/packages/core/`** (controllers or component bases) once two consumers agree on the API; until then keep logic inside **`AccordionBase`** (**A3**).
+
 ### Analysis inputs
 
 | Document | Use |
@@ -248,7 +266,7 @@ Follow the [washing machine — core vs SWC](../../02_workstreams/02_2nd-gen-com
 
 | Layer | Path | Contains |
 |---|---|---|
-| **Core** | `2nd-gen/packages/core/components/accordion/` | `AccordionBase` / item base (if split), types, `allow-multiple` coordination, **public** `level` validation, propagation of **`level`** → item **`protected` `heading`**, toggle event contract, disabled + `inert` rules testable without full render. **No** Lit template/CSS. |
+| **Core** | `2nd-gen/packages/core/components/accordion/` | `AccordionBase` / item base (if split), types, `allow-multiple` coordination, **public** `level` validation, propagation of **`level`** → item **`protected` `heading`**, toggle event contract, disabled + `inert` rules testable without full render. **Optional:** compose a **`RadioController`** (or equivalent) for exclusive **`open`** / **`aria-selected`** sync ([Selection sync](#selection-sync--radiocontroller-pattern-consider)). **No** Lit template/CSS. |
 | **SWC** | `2nd-gen/packages/swc/components/accordion/` | `swc-accordion`, `swc-accordion-item` Lit classes, `.css`, registration, stories, tests, S2 styling, icons. |
 
 ---
@@ -274,6 +292,7 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 
 - [ ] Public properties, attributes, and events match agreed 2nd-gen surface (including renames and optional `label` deprecation)
 - [ ] Dev-mode warning if both slot and `label` are supported temporarily and both are set
+- [ ] Exclusive open (`allow-multiple` false): decide **`RadioController`** vs inline sibling-close logic; if controller is shared, document API and add tests
 
 ### Styling
 
@@ -316,6 +335,7 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 | Toggle event | Exact `swc-*` event name. |
 | Rendering doc | Who expands [rendering-and-styling migration analysis](./rendering-and-styling-migration-analysis.md) with S2 paths before Phase 4? |
 | Chevron | Reuse `@spectrum-web-components/icons-ui` vs new S2 asset pipeline. |
+| **`RadioController`** scope | Ship **inside** `AccordionBase` first vs extract to **core** for **radio group**, **`role="menuitemradio"`** menus, **tabs**, and/or coordinate with a **refactor** of **`FocusgroupNavigationController`** (split “selection flags” vs “focus roving”)? **Depends on** menu / radio / tabs migration timing and whether teams want one shared **selection-sync** API vs local loops per component. |
 
 **Not a blocker:** Missing 2nd-gen package before implementation starts is expected.
 
