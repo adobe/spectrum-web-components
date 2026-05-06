@@ -421,6 +421,25 @@ export const StatesTest: Story = {
   },
 };
 
+export const DisabledBehaviorTest: Story = {
+  render: () => html`<swc-button disabled>Save</swc-button>`,
+  play: async ({ canvasElement, step }) => {
+    const button = await getComponent<Button>(canvasElement, 'swc-button');
+
+    await step(
+      'prevents focus delegation to internal button when disabled',
+      async () => {
+        button.focus();
+        const activeElement = (button.renderRoot as ShadowRoot).activeElement;
+        expect(
+          activeElement,
+          'focus not delegated to internal <button disabled>'
+        ).toBeNull();
+      }
+    );
+  },
+};
+
 export const PendingBehaviorTest: Story = {
   render: () => html`
     <swc-button pending>Save</swc-button>
