@@ -19,6 +19,7 @@
     - [CSS custom properties](#css-custom-properties)
     - [Shadow DOM output (rendered HTML)](#shadow-dom-output-rendered-html)
 - [Dependencies](#dependencies)
+- [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites)
 - [Changes overview](#changes-overview)
     - [Must ship — breaking or a11y-required](#must-ship--breaking-or-a11y-required)
     - [Additive — ships when ready, zero breakage for consumers already on 2nd-gen](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)
@@ -54,7 +55,7 @@
 
 - **No 2nd-gen accordion** package exists yet under `2nd-gen/packages/`; Setup phase creates core + SWC scaffolds.
 - **Accessibility migration analysis** is the behavioral contract for WCAG 2.2 AA; 2nd-gen diverges from 1st-gen on keyboard (no `FocusGroupController` arrow/Home/End on the host, no roving `tabindex` between item hosts), disabled header semantics (`aria-disabled` + panel `inert`), closed-panel hiding (`hidden` vs `display: none` only), heading **label** API (slot-first), and **Space** handling (**SWC-1487**).
-- **Rendering-and-styling migration analysis** is still a **stub** — expand it (S2 CSS paths, token mapping) before Phase 4, with **spectrum-css** in the [same workspace](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#workspace-setup).
+- **Rendering-and-styling migration analysis** is **in progress** — 1st-gen inventory and DOM summary are in [rendering-and-styling migration analysis](./rendering-and-styling-migration-analysis.md); finish S2 selector/token pass before Phase 4, with **spectrum-css** in the [same workspace](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#workspace-setup).
 - **Severity:** **Normal** for migration planning. Escalate to **Major** only if Spectrum 2 accordion CSS is missing or core infrastructure blocks a core/SWC split (not observed today).
 
 ### Most blocking open questions
@@ -168,6 +169,17 @@ Inherited: `SizedMixin(Focusable)` — `tabIndex` / `focus` / `blur` / `click` d
 
 ---
 
+## Migration sequencing and prerequisites
+
+| Topic | Assessment |
+|---|---|
+| **Upstream 2nd-gen components** | Accordion does not require another incomplete 2nd-gen composite; it uses **core** + **base** + **icons** patterns. Follow the [badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) for core/SWC layout. |
+| **Cross-component API alignment** | **`level`** / heading naming should stay aligned with **illustrated message** and **card** when those specs exist ([accessibility migration analysis](./accessibility-migration-analysis.md)). |
+| **Step 1 (analyze rendering and styling)** | [Rendering roadmap](./rendering-and-styling-migration-analysis.md) is **in progress** — finish S2 selector and token pass with **spectrum-css** `spectrum-two` beside this repo before treating Step 1 as complete. |
+| **Phase 1 prep tracker** | Working checklist and input status: [migration-prep.md](./migration-prep.md). |
+
+---
+
 ## Changes overview
 
 > **Priority framing (same as other component migrations):**
@@ -223,7 +235,7 @@ No 2nd-gen package yet — this section records **planned** decisions from analy
 | Document | Use |
 |---|---|
 | [Accessibility migration analysis](./accessibility-migration-analysis.md) | WCAG 2.2 AA target, disabled matrix, keyboard, testing expectations. |
-| [Rendering-and-styling migration analysis](./rendering-and-styling-migration-analysis.md) | S2 CSS and token mapping — **expand before Phase 4**. |
+| [Rendering-and-styling migration analysis](./rendering-and-styling-migration-analysis.md) | S2 CSS and token mapping — **in progress**; complete S2 sections before Phase 4. |
 | [Washing machine workflow](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md) | Phase order and quality gates. |
 
 ---
@@ -247,6 +259,7 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 
 ### Preparation (this ticket)
 
+- [ ] [Migration prep (phase 1)](./migration-prep.md) inputs complete (Figma, epic id, S2 rendering pass) where required for your team’s gate
 - [ ] This plan + accessibility analysis + expanded rendering roadmap reviewed
 - [ ] Breaking changes and consumer migration notes agreed
 - [ ] Open questions in [Blockers and open questions](#blockers-and-open-questions) resolved or ticketed
@@ -324,7 +337,8 @@ https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/03_p
 
 Related contributor docs:
 - Accessibility: CONTRIBUTOR-DOCS/03_project-planning/03_components/accordion/accessibility-migration-analysis.md
-- Rendering / S2 roadmap (stub — expand before Phase 4): CONTRIBUTOR-DOCS/03_project-planning/03_components/accordion/rendering-and-styling-migration-analysis.md
+- Rendering / S2 roadmap (in progress — complete S2 sections before Phase 4): CONTRIBUTOR-DOCS/03_project-planning/03_components/accordion/rendering-and-styling-migration-analysis.md
+- Migration prep (phase 1): CONTRIBUTOR-DOCS/03_project-planning/03_components/accordion/migration-prep.md
 - Workflow: CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md
 
 Depends on: a11y recommendations story (complete).
@@ -340,6 +354,7 @@ Peer review: [ ] at least one engineer sign-off on the plan before implementatio
 - [Migration project planning (epics / tickets)](../../02_workstreams/02_2nd-gen-component-migration/03_migration-project-planning.md)
 - [Accessibility migration analysis](./accessibility-migration-analysis.md)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
+- [Migration prep (phase 1)](./migration-prep.md)
 - [1st-gen source — `Accordion.ts`](../../../../1st-gen/packages/accordion/src/Accordion.ts)
 - [1st-gen source — `AccordionItem.ts`](../../../../1st-gen/packages/accordion/src/AccordionItem.ts)
 - [1st-gen tests directory](../../../../1st-gen/packages/accordion/test/)
