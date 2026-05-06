@@ -218,6 +218,7 @@ This full modifier surface will not be carried forward to 2nd-gen.
 | **A4** | Future support for form-associated `submit` / `reset` | Deferred to `SWC-2034` until the ElementInternals/tooling path is settled. |
 | **A5** | Host `focus` / `blur` compatibility parity | Deferred to `SWC-2035`; initial 2nd-gen Button will document `click` plus bubbling `focusin` / `focusout` as the supported host-listener contract. |
 | **A6** | React Spectrum-only `genai` and `premium` variants | Deferred to `SWC-2036` because they are not part of the approved baseline Button scope in this plan. |
+| **A7** | `justified` — full-width layout mode | Not present in 1st-gen. Added in 2nd-gen based on a post-planning S2 Design update. Requires the container to allow stretching. |
 
 ---
 
@@ -239,11 +240,13 @@ These are derived from the 1st-gen implementation, current deprecations, the Fig
 | `staticColor` | `'white' \| 'black' \| undefined` | `undefined` | `static-color` | **Confirmed.** Static color is only spec-backed with the `primary` and `secondary` families shown in Design/Figma. |
 | `disabled` | `boolean` | `false` | `disabled` | **Confirmed.** Maps to native disabled behavior on the internal button. |
 | `pending` | `boolean` | `false` | `pending` | **Confirmed.** Keep public API; while pending, the button remains focusable but is otherwise unavailable. |
+| `accessibleLabel` | `string \| undefined` | `undefined` | `accessible-label` | **Confirmed.** Replaces both `label` (1st-gen) and ad-hoc `aria-label` on the host. Forwarded as `aria-label` on the internal `<button>`. Required for icon-only usage. |
 | `pendingLabel` | `string` | derived from the resolved non-busy accessible name + busy suffix | `pending-label` | **Adjusted for `SWC-459`.** Distinct from the control name; overrides the default busy-state announcement when supplied. |
 | `type` | deferred beyond initial scope | `'button'` | maybe none / future | **Deferred.** Initial 2nd-gen Button should behave as a regular button; `submit` / `reset` are future work. |
-| `label` | deprecated | n/a | `label` | **Planned removal.** Prefer visible text and `aria-label` to avoid ambiguity with `pending-label`. |
-| `iconOnly` | `boolean` | `false` | `icon-only` | **Proposed.** Keep for backwards compatibility and styling clarity, even if some detection can be automatic. |
+| `label` | deprecated | n/a | `label` | **Planned removal.** Replaced by `accessible-label` / `accessibleLabel`. |
+| `iconOnly` | removed | n/a | removed | **Deviation from plan.** Not kept as a consumer attribute. Icon-only layout is now auto-derived from slot presence: `swc-Button--iconOnly` (circular layout) and `swc-Button--hasIcon` (label `text-align: start`) are applied via `classMap` in `ButtonBase`. Matches the CSS style-guide rule that derived states must not appear as host attributes. |
 | `truncate` | `boolean` | `false` | `truncate` | **Confirmed rename.** Replaces legacy `no-wrap` with a more explicit name for the actual behavior: single-line truncation with overflow handling rather than wrapping. Tooltip guidance for clipped content is documentation guidance, not built-in Button behavior. |
+| `justified` | `boolean` | `false` | `justified` | **Additive (A7).** Not in 1st-gen. S2 Design addition: makes the button stretch to fill its container. Requires the container to permit stretching. |
 | `active` | internal styling state | n/a | maybe none / internal only | **Proposed.** Do not preserve as a documented consumer-controlled API unless styling proves it necessary. |
 | `href`, `target`, `download`, `referrerpolicy`, `rel` | removed | n/a | removed | **Confirmed removal.** Use native anchors for navigation. |
 
@@ -292,7 +295,7 @@ Pending-state naming should resolve in this order:
 2. Resolved non-busy accessible name + busy suffix
 3. Fixed fallback such as `"Busy"`
 
-The resolved non-busy accessible name should come from the same sources used for the control itself, e.g. `aria-label` or visible text. Default wording should use the reviewed `busy` suffix pattern, e.g. `"Save, busy"`.
+The resolved non-busy accessible name should come from the same sources used for the control itself, e.g. `accessible-label` or visible text. Default wording should use the reviewed `busy` suffix pattern, e.g. `"Save, busy"`.
 
 ### Accessibility semantics notes (2nd-gen)
 
@@ -315,7 +318,7 @@ Using an internal semantic `<button>` also means:
 - the host should not remain the primary tab stop when the internal native button is present
 - host `disabled` reflects API state, while the internal `<button disabled>` enforces native disabled behavior
 - pending should not use native `disabled` on the internal button if focusability must be preserved
-- host `aria-label` and other button-relevant semantics should be forwarded intentionally, not assumed
+- host `accessible-label` and other button-relevant semantics should be forwarded intentionally, not assumed
 - native button keyboard/click behavior should be reused where possible rather than reimplemented on the host
 - host listeners should continue to observe native `click` and bubbling `focusin` / `focusout` from the internal control; host-level `focus` / `blur` parity is deferred and may require custom events if the team decides that compatibility is necessary
 
@@ -434,12 +437,12 @@ Allowed differences:
 
 - [x] `Button.types.ts`: define canonical `ButtonVariant`, `ButtonFillStyle`, `ButtonStaticColor`, and `ButtonSize`
 - [x] `Button.base.ts` (core): retain `disabled`, `pending`, `pendingLabel`, and accessible-name/pending-label logic. Also includes `SizedMixin` with `BUTTON_VALID_SIZES` — **deviation from plan**: the plan placed `size` in SWC as a non-reusable concern, but `SizedMixin` captures `validSizes` at construction time via closure; subclass static overrides have no effect at runtime. Because all Spectrum button-like components share the same four sizes (`s`, `m`, `l`, `xl`), placing `SizedMixin` in `ButtonBase` is safe and avoids requiring each subclass to re-apply the mixin. `variant`, `fillStyle`, and `staticColor` remain SWC-only.
-- [x] `Button.ts` (SWC): define `variant`, `fillStyle`, `staticColor`, `iconOnly`, `truncate`, and visual combination validation warnings. `size` moved to `ButtonBase` (see above). Static class members (`VARIANTS`, `FILL_STYLES`, `STATIC_COLORS`, `VALID_SIZES`) were omitted — **deviation from plan**: these would be re-pointing the same module-level constants; debug validation code references the module constants directly instead.
+- [x] `Button.ts` (SWC): define `variant`, `fillStyle`, `staticColor`, `truncate`, `justified`, and visual combination validation warnings. `size` moved to `ButtonBase` (see above). `iconOnly` removed as a consumer attribute — icon-only layout is auto-derived from slot presence via `classMap` (see deviation note in the Public API table). Static class members (`VARIANTS`, `FILL_STYLES`, `STATIC_COLORS`, `VALID_SIZES`) were omitted — **deviation from plan**: these would be re-pointing the same module-level constants; debug validation code references the module constants directly instead.
 - [x] Rename legacy `noWrap` to `truncate` in the 2nd-gen API — 2nd-gen `Button.ts` exposes `truncate`; `no-wrap` is deprecated in 1st-gen with `@deprecated` JSDoc and `window.__swc.warn()`
 - [x] Add `@deprecated` JSDoc to 1st-gen type and const exports (`ButtonVariants`, `ButtonTreatments`, `ButtonStaticColors`, `DeprecatedButtonVariants`, `VALID_VARIANTS`, `VALID_STATIC_COLORS`)
 - [x] Add `@deprecated` JSDoc to 1st-gen `treatment` property; no runtime warn added because `treatment` is set internally by the `quiet` setter and the `overBackground` variant alias, which already emit their own deprecation warnings
 - [x] Add `@deprecated` JSDoc and `window.__swc.warn()` to 1st-gen `quiet` property
-- [x] Remove `label` in favor of `aria-label` — 2nd-gen `Button.ts` has no `label` prop; accessible naming uses `aria-label` on the internal element
+- [x] Remove `label` in favor of `accessible-label` / `accessibleLabel` — 2nd-gen `ButtonBase` exposes `accessibleLabel` (attribute: `accessible-label`) forwarded as `aria-label` on the internal `<button>`; no `label` prop in 2nd-gen
 - [x] Remove deprecated link API (`href`, `target`, `download`, `referrerpolicy`, `rel`) from the 2nd-gen public surface — absent from 2nd-gen `Button.ts`
 - [x] Remove deprecated `variant` aliases (`cta`, `overBackground`, `white`, `black`) from the 2nd-gen public surface — already absent in 2nd-gen `Button.ts`
 - [x] Do not carry forward `quiet` as a 2nd-gen visual API — `quiet` is absent from 2nd-gen; deprecated in 1st-gen with `@deprecated` JSDoc and `window.__swc.warn()`
@@ -465,35 +468,35 @@ Allowed differences:
 
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
-- [ ] Add `.swc-Button` to the internal semantic `<button>` in `render()`; keep styling off `:host`
-- [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `button.css` as baseline
+- [x] Add `.swc-Button` to the internal semantic `<button>` in `render()`; keep styling off `:host`
+- [x] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `button.css` as baseline — cross-referenced spectrum-two branch for token verification; CSS was authored directly from S2 tokens rather than copied verbatim
 
 #### Shared source and drift prevention
 
 - [ ] Reconcile the component stylesheet with existing [`global-button.css`](../../../../2nd-gen/packages/swc/stylesheets/global/global-button.css)
 - [ ] Prefer a shared-source/import strategy for component and global button styles; if styles must be copied, treat the migrated component stylesheet as the source of truth and document the sync mechanism and drift risks in the implementation notes
 - [ ] Fully override or replace the current global button POC styles where needed to match the migrated Button implementation
-- [ ] Update class and custom property prefixes from `.spectrum-` to `.swc-`; remove all `--mod-*` and `--spectrum-*` fallback chains
+- [x] Update class and custom property prefixes from `.spectrum-` to `.swc-`; remove all `--mod-*` and `--spectrum-*` fallback chains
 
 #### Visual model and regressions
 
-- [ ] Migrate icon-only, truncate (previously noWrap), size, static-color, and outline fill-style selectors
-- [ ] Implement truncation behavior explicitly, not just `white-space: nowrap`; confirm overflow ellipsis treatment in S2 CSS
-- [ ] Ensure the button label inherits host visibility, or otherwise does not override it, so `visibility: hidden` on the host hides the label too (`SWC-701`)
-- [ ] Restrict accent and negative styling to fill-only combinations
-- [ ] Restrict static white/black styling to the primary and secondary families shown in Design/Figma
+- [x] Migrate icon-only, truncate (previously noWrap), size, static-color, and outline fill-style selectors — icon-only uses derived `swc-Button--iconOnly` class (not a consumer attribute); see iconOnly API deviation above. A companion `swc-Button--hasIcon` class is also applied whenever an icon is slotted (with or without a label), driving `text-align: start` on the label so wrapped text aligns to the icon rather than centering
+- [x] Implement truncation behavior explicitly, not just `white-space: nowrap`; confirm overflow ellipsis treatment in S2 CSS — `white-space: nowrap; overflow: hidden; text-overflow: ellipsis` on `.swc-Button__label` when `[truncate]`
+- [x] Ensure the button label inherits host visibility, or otherwise does not override it, so `visibility: hidden` on the host hides the label too (`SWC-701`) — current implementation is not setting `visibility` on the label
+- [x] Restrict accent and negative styling to fill-only combinations — CSS has no outline rules for accent/negative; `update()` emits `__swc.warn()` for invalid combinations
+- [x] Restrict static white/black styling to the primary and secondary families shown in Design/Figma — same pattern: CSS + debug warning
 - [ ] For `static-color="white"` + `fill-style="outline"`, define and document approved background color usage so hover-state contrast remains sufficient (`SWC-1139`)
-- [ ] Use `outline` / `outline-offset` for focus indication rather than `box-shadow`, especially where truncation requires `overflow: hidden` (`SWC-886`)
-- [ ] Replace legacy pending indicator styling with the agreed 1-second delayed inline animated SVG spinner
-- [ ] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) if present in S2 source
-- [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
+- [x] Use `outline` / `outline-offset` for focus indication rather than `box-shadow`, especially where truncation requires `overflow: hidden` (`SWC-886`) — `.swc-Button:focus-visible` uses `outline` and `outline-offset`
+- [x] Replace legacy pending indicator styling with the agreed 1-second delayed inline animated SVG spinner — 1-second `_pendingActive` delay in `ButtonBase` (reusable for ActionButton etc.), inline SVG spinner in `Button.ts`, static-color track/fill color overrides in CSS; button inline size is measured just before `_pendingActive` fires and locked via `--_swc-button-pending-inline-size` so the button does not shrink when the label/icon fades out
+- [x] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) if present in S2 source — not present in `spectrum-css` spectrum-two button source; no port needed
+- [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 ### Accessibility
 
 #### Naming and semantics
 
 - [ ] Align Button implementation with the approved `accessibility-migration-analysis.md` — analysis doc exists; full alignment verification requires AT testing (see state verification below)
-- [x] Ensure icon-only usage has a reliable accessible name via `aria-label` — `iconOnly` prop JSDoc requires `aria-label`; `Button.ts` `update()` emits a `{ type: 'accessibility', level: 'high' }` debug warning when `icon-only` is set without `aria-label`
+- [x] Ensure icon-only usage has a reliable accessible name via `accessible-label` — `ButtonBase.update()` emits a `{ type: 'accessibility', level: 'high' }` debug warning when an icon-only button is missing `accessible-label`
 - [x] Pending state must set `aria-disabled="true"` because the control cannot be activated while pending (`SWC-459`) — implemented in `Button.ts` render template
 - [x] Pending state must use a descriptive default accessible label based on the resolved non-busy accessible name plus a busy suffix, not bare `"Pending"` (`SWC-459`) — `ButtonBase.getPendingAccessibleName()` derives `"${resolvedName}, busy"`
 - [ ] Pending state must be announced to screen readers, even if the final implementation uses more than just an accessible-name change — requires AT testing to verify
@@ -502,7 +505,7 @@ Allowed differences:
 - [x] Ensure the internal native button, not the host, is the semantic control exposed to assistive technology — `delegatesFocus: true` routes focus to the internal `<button>`; host has no explicit button role
 - [x] Preserve keyboard activation for Space and Enter through native button semantics — provided by the internal native `<button>` element; no custom keyboard handling needed
 - [x] Avoid duplicating native button activation logic on the host when the internal button already provides it — no keyboard event handlers or click dispatching on the host
-- [x] Forward host `aria-label` to the internal semantic button when that attribute is used — `Button.ts` render template binds `aria-label=${this.getAttribute('aria-label') ?? nothing}` when not pending
+- [x] Forward host `accessible-label` to the internal semantic button — `Button.ts` render template binds `aria-label=${this.accessibleLabel ?? nothing}` when not pending; `accessibleLabel` is a `@property` on `ButtonBase` with `attribute: 'accessible-label'`
 
 #### State verification
 
@@ -541,16 +544,17 @@ Allowed differences:
 #### General
 
 - [ ] JSDoc on all public props, slots, and CSS custom properties
-- [ ] Storybook stories for primary, secondary, accent, negative, fill/outline where supported, icon-only, static colors, pending, disabled, and wrapping/truncate
+- [x] Storybook stories for primary, secondary, accent, negative, fill/outline where supported, icon-only, static colors, pending, disabled, and wrapping/truncate
 - [ ] Document that `quiet` is not part of the 2nd-gen visual API
 - [ ] Document the rename from `no-wrap` to `truncate` and its relationship to the spec’s wrapped-text presentation
 - [ ] Document the approved background treatment for static white outline examples so contrast is maintained on hover (`SWC-1139`)
 - [ ] Document pending-state accessibility behavior: `aria-disabled`, default busy-label pattern, and high-contrast disabled styling (`SWC-459`)
 - [ ] Document the initial host-listener contract: `click` and `focusin` / `focusout`; custom `focus` / `blur` events are not part of the initial Button scope and are deferred to `SWC-2035`
 - [ ] Document that 2nd-gen Button semantics and focus land on a real internal native `<button>`, not the custom-element host
-- [ ] Document supported naming APIs at the host level (`aria-label` and visible text) and how they map to the internal control
+- [ ] Document supported naming APIs at the host level (`accessible-label` and visible text) and how they map to the internal `<button>` via `aria-label`
 - [ ] Document that cross-root `aria-labelledby` / `aria-describedby` and form-associated `submit` / `reset` are deferred follow-up work
 - [ ] Document that focus indication uses `outline` so it remains visible for truncated buttons (`SWC-886`)
+- [ ] Document `justified` usage and its container dependency — the host stretches via `flex-grow`/`inline-size: 100%`, but the container must allow stretching. For example, `justify-content: center` on a grid or flex container can override this and must be called out
 - [ ] Update global element guidance so button-styled native elements and `sp-button` describe the same visual API and any intentional limitations
 
 #### Breaking changes

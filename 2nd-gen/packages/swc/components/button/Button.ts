@@ -18,6 +18,7 @@ import {
   TemplateResult,
 } from 'lit';
 import { property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
@@ -30,13 +31,44 @@ import {
 } from '@spectrum-web-components/core/components/button';
 
 import styles from './button.css';
+import baseStyles from './button-base.css';
 
 /**
  * A button component that triggers an action when activated.
  *
  * @element swc-button
- * @status alpha
  * @since 0.0.1
+ *
+ * @slot - Visible button label.
+ * @slot icon - Leading icon displayed before the label.
+ *
+ * @cssprop --swc-button-min-block-size - Minimum block size of the button.
+ * @cssprop --swc-button-border-radius - Corner radius. Defaults to half the height (pill shape).
+ * @cssprop --swc-button-padding-vertical - Block padding (adjusted for border width).
+ * @cssprop --swc-button-edge-to-text - Inline padding from edge to text.
+ * @cssprop --swc-button-edge-to-visual - Inline padding from edge to icon when label is also present.
+ * @cssprop --swc-button-edge-to-visual-only - Inline padding from edge to icon when no label is present.
+ * @cssprop --swc-button-font-size - Font size of the button label.
+ * @cssprop --swc-button-gap - Gap between icon and label.
+ * @cssprop --swc-button-icon-size - Size (inline and block) of the slotted icon.
+ * @cssprop --swc-button-icon-inline-size - Inline size override for the slotted icon.
+ * @cssprop --swc-button-icon-block-size - Block size override for the slotted icon.
+ * @cssprop --swc-button-focus-indicator-color - Color of the focus ring outline.
+ * @cssprop --swc-button-background-color-default - Background color in the default state.
+ * @cssprop --swc-button-border-color-default - Border color in the default state.
+ * @cssprop --swc-button-content-color-default - Text and icon color in the default state.
+ * @cssprop --swc-button-background-color-hover - Background color on hover.
+ * @cssprop --swc-button-border-color-hover - Border color on hover.
+ * @cssprop --swc-button-content-color-hover - Text and icon color on hover.
+ * @cssprop --swc-button-background-color-focus - Background color when focused.
+ * @cssprop --swc-button-border-color-focus - Border color when focused.
+ * @cssprop --swc-button-content-color-focus - Text and icon color when focused.
+ * @cssprop --swc-button-background-color-down - Background color when pressed.
+ * @cssprop --swc-button-border-color-down - Border color when pressed.
+ * @cssprop --swc-button-content-color-down - Text and icon color when pressed.
+ * @cssprop --swc-button-background-color-disabled - Background color when disabled or pending.
+ * @cssprop --swc-button-border-color-disabled - Border color when disabled or pending.
+ * @cssprop --swc-button-content-color-disabled - Text and icon color when disabled or pending.
  *
  * @example
  * <swc-button>Save</swc-button>
@@ -70,32 +102,37 @@ export class Button extends ButtonBase {
   public staticColor?: ButtonStaticColor;
 
   /**
-   * Whether the button renders with an icon and no visible label. When
-   * `true`, an accessible name via `aria-label` is required.
-   */
-  @property({ type: Boolean, reflect: true, attribute: 'icon-only' })
-  public iconOnly: boolean = false;
-
-  /**
    * Whether overflowing text is truncated with an ellipsis rather than
    * wrapping. Replaces the legacy `no-wrap` attribute from 1st-gen.
    */
   @property({ type: Boolean, reflect: true })
   public truncate: boolean = false;
 
+  /**
+   * Enables the button to become full-width, if the container
+   * allows it.
+   */
+  @property({ type: Boolean, reflect: true })
+  public justified: boolean = false;
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────
 
   public static override get styles(): CSSResultArray {
-    return [styles];
+    return [baseStyles, styles];
   }
 
   // @todo SWC-2034: handle form-associated types reset / submit
   protected override render(): TemplateResult {
     return html`
       <button
-        class="swc-Button"
+        class=${classMap({
+          'swc-Button': true,
+          'swc-Button--hasIcon': this.hasIcon,
+          'swc-Button--iconOnly': this.hasIcon && !this.hasLabel,
+          'swc-Button--pendingActive': this._pendingActive,
+        })}
         type="button"
         @click=${this._handleClick}
         ?disabled=${this.disabled}
@@ -104,12 +141,41 @@ export class Button extends ButtonBase {
         )}
         aria-label=${this.pending
           ? this.getPendingAccessibleName()
-          : (this.getAttribute('aria-label') ?? nothing)}
+          : (this.accessibleLabel ?? nothing)}
       >
         <slot name="icon"></slot>
         <span class="swc-Button-label">
           <slot></slot>
         </span>
+        ${this.pending
+          ? html`
+              <svg
+                class="swc-Button-pendingSpinner"
+                width="100%"
+                height="100%"
+                fill="none"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <circle
+                  class="swc-Button-pendingSpinner-track"
+                  cx="50%"
+                  cy="50%"
+                  r="calc(50% - 1px)"
+                />
+                <circle
+                  class="swc-Button-pendingSpinner-fill"
+                  cx="50%"
+                  cy="50%"
+                  r="calc(50% - 1px)"
+                  pathLength="100"
+                  stroke-dasharray="100 200"
+                  stroke-dashoffset="75"
+                  stroke-linecap="round"
+                />
+              </svg>
+            `
+          : nothing}
       </button>
     `;
   }
@@ -117,14 +183,6 @@ export class Button extends ButtonBase {
   protected override update(changedProperties: PropertyValues): void {
     super.update(changedProperties);
     if (window.__swc?.DEBUG) {
-      if (this.iconOnly && !this.getAttribute('aria-label')) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> with "icon-only" must have an "aria-label" attribute to be accessible.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/button/#icon-only',
-          { type: 'accessibility', level: 'high' }
-        );
-      }
       if (!BUTTON_VARIANTS.includes(this.variant)) {
         window.__swc.warn(
           this,

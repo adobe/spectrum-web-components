@@ -11,17 +11,21 @@
  */
 
 import { PropertyValues } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
-import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
+import {
+  ObserveSlotPresence,
+  ObserveSlotText,
+  SizedMixin,
+} from '@spectrum-web-components/core/mixins/index.js';
 
 import { BUTTON_VALID_SIZES } from './Button.types.js';
 
 /**
  * Abstract base class for all button-like components. Owns shared semantic
- * concerns: interaction state, sizing, accessible-name resolution, and
- * host-to-internal-button attribute forwarding.
+ * concerns: interaction state, sizing, slot-derived icon/label state,
+ * accessible-name resolution, and host-to-internal-button attribute forwarding.
  *
  * Visual API specific to `sp-button` (`variant`, `fill-style`, `static-color`)
  * is intentionally absent so that ActionButton, ClearButton, CloseButton,
@@ -30,13 +34,18 @@ import { BUTTON_VALID_SIZES } from './Button.types.js';
  *
  * @slot - Visible button label.
  * @slot icon - Optional leading icon.
+ *
+ * @todo We currently have 3 levels of mixins on this class, but the mixin
+ * composition guide recommends a maximum of 2. Explore reducing after milestone 2.
  */
-export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
-  validSizes: BUTTON_VALID_SIZES,
-}) {
-  protected override createRenderRoot(): ShadowRoot {
-    return this.attachShadow({ mode: 'open', delegatesFocus: true });
-  }
+export abstract class ButtonBase extends SizedMixin(
+  ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), ''),
+  { validSizes: BUTTON_VALID_SIZES }
+) {
+  static override shadowRootOptions: ShadowRootInit = {
+    ...SpectrumElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   /**
    * Whether the button is disabled. Removes focusability and prevents
@@ -53,6 +62,13 @@ export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
   public pending: boolean = false;
 
   /**
+   * Accessible label forwarded to the internal `<button>` element as
+   * `aria-label`. Required for icon-only buttons, which have no visible text.
+   */
+  @property({ type: String, attribute: 'accessible-label' })
+  public accessibleLabel?: string;
+
+  /**
    * Custom accessible label used during the pending state. When omitted,
    * the pending label is derived from the resolved non-busy accessible name
    * plus a busy suffix (e.g. "Save, busy").
@@ -61,16 +77,33 @@ export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
   public pendingLabel?: string;
 
   /**
-   * Resolves the accessible name for the button from `aria-label` or
+   * Tracks whether the pending visual (disabled colors + spinner) is currently
+   * active. Set to `true` after a 1-second delay once `pending` becomes true,
+   * so the button does not immediately flash to its unavailable appearance.
+   * Protected so subclasses can reference it in their `classMap` binding.
+   */
+  @state()
+  protected _pendingActive: boolean = false;
+
+  private _pendingTimer: number | null = null;
+
+  protected get hasIcon(): boolean {
+    return this.slotContentIsPresent;
+  }
+
+  protected get hasLabel(): boolean {
+    return this.slotHasContent;
+  }
+
+  /**
+   * Resolves the accessible name for the button from `accessibleLabel` or
    * visible text content. Returns `null` when no accessible name is
    * determinable.
    *
    * @internal
    */
   protected getResolvedAccessibleName(): string | null {
-    return (
-      this.getAttribute('aria-label') ?? (this.textContent?.trim() || null)
-    );
+    return this.accessibleLabel ?? (this.textContent?.trim() || null);
   }
 
   /**
@@ -110,6 +143,11 @@ export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
   }
 
   public override disconnectedCallback(): void {
+    if (this._pendingTimer !== null) {
+      clearTimeout(this._pendingTimer);
+      this._pendingTimer = null;
+    }
+    this._pendingActive = false;
     super.disconnectedCallback();
     this.removeEventListener('click', this._handleClick);
   }
@@ -125,6 +163,32 @@ export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
   };
 
   protected override update(changedProperties: PropertyValues): void {
+    if (changedProperties.has('pending')) {
+      if (this.pending) {
+        this._pendingTimer = setTimeout(() => {
+          if (this.pending) {
+            const internalButton = this.renderRoot.querySelector('button');
+            if (internalButton) {
+              internalButton.style.setProperty(
+                '--_swc-button-pending-inline-size',
+                `${internalButton.offsetWidth}px`
+              );
+            }
+            this._pendingActive = true;
+          }
+          this._pendingTimer = null;
+        }, 1000);
+      } else {
+        if (this._pendingTimer !== null) {
+          clearTimeout(this._pendingTimer);
+          this._pendingTimer = null;
+        }
+        this.renderRoot
+          .querySelector('button')
+          ?.style.removeProperty('--_swc-button-pending-inline-size');
+        this._pendingActive = false;
+      }
+    }
     super.update(changedProperties);
     if (window.__swc?.DEBUG) {
       if (this.pending && this.disabled) {
@@ -133,6 +197,14 @@ export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
           `<${this.localName}> should not set both "pending" and "disabled" simultaneously. Use "pending" to keep the button focusable while unavailable, or "disabled" to fully remove it from the tab order.`,
           'https://opensource.adobe.com/spectrum-web-components/components/button/#pending',
           {}
+        );
+      }
+      if (this.hasIcon && !this.hasLabel && !this.accessibleLabel) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> with an icon and no label must have an "accessible-label" attribute to be accessible.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/button/#icon-only',
+          { type: 'accessibility', level: 'high' }
         );
       }
     }
