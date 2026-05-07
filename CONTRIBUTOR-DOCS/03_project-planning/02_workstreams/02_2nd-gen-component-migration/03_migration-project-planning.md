@@ -72,8 +72,8 @@ Create one ticket per phase (or combine where it makes sense; see guidance below
 | 1 | Migrate [Component] — Preparation | Phase 1: Preparation |
 | 2 | Migrate [Component] — Setup | Phase 2: Setup |
 | 3 | Migrate [Component] — API migration | Phase 3: API migration |
-| 4 | Migrate [Component] — Styling | Phase 4: Styling |
-| 5 | Migrate [Component] — Accessibility | Phase 5: Accessibility |
+| 4 | Migrate [Component] — Accessibility | Phase 4: Accessibility |
+| 5 | Migrate [Component] — Styling | Phase 5: Styling |
 | 6 | Migrate [Component] — Testing | Phase 6: Testing |
 | 7 | Migrate [Component] — Documentation | Phase 7: Documentation |
 | 8 | Migrate [Component] — Review & PR | Phase 8: Review (final Q&A → merge feature branch to `main`) |
@@ -87,8 +87,8 @@ Copy the corresponding phase’s “What to do,” “What to check,” and “Q
 | Preparation | 1 | Migration plan; component analysis read or created; breaking changes listed. |
 | Setup | 2 | Core and SWC folders and files created; build passes; component importable. |
 | API migration | 3 | Types in core; base and SWC API; JSDoc and @internal. |
-| Styling | 4 | CSS migrated; tokens and variants; render() with classMap. |
-| Accessibility | 5 | APG pattern applied; ARIA and keyboard; a11y tests. |
+| Accessibility | 4 | APG pattern applied; ARIA and keyboard; a11y tests. |
+| Styling | 5 | CSS migrated; tokens and variants; render() with classMap. |
 | Testing | 6 | Unit and a11y tests pass; coverage in place. |
 | Documentation | 7 | JSDoc; Storybook stories; migration notes if needed. |
 | Review & PR | 8 | Final Q&A on feature branch with phases 1–7 merged; checklist and status table done; **feature branch merged to `main`**. |
