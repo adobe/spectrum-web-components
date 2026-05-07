@@ -285,7 +285,7 @@ See [Step 4](04_formalize-spectrum-data-model.md) and [Step 5](05_implement-2nd-
 
 ### API patterns (statics and warnings)
 
-Follow team **TypeScript conventions (Ticket 7)** for naming and structure; use **Badge** as the concrete reference.
+Follow team **TypeScript conventions (Ticket 5)** for naming and structure; use **Badge** as the concrete reference.
 
 **Static `readonly` arrays (`VARIANTS`, `VARIANTS_COLOR`, `VALID_SIZES`, `FIXED_VALUES`, etc.)**
 
@@ -332,7 +332,7 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 ### Quality gate
 
 - [ ] Public API is documented; types are in core; base holds behavior; SWC holds rendering.
-- [ ] Static readonly pattern, debug warnings, and 1st-gen deprecation notices align with Badge (or equivalent) and TypeScript conventions (Ticket 7).
+- [ ] Static readonly pattern, debug warnings, and 1st-gen deprecation notices align with Badge (or equivalent) and TypeScript conventions (Ticket 5).
 
 ---
 
@@ -450,7 +450,7 @@ Follow the two-file layout (`test/<component>.test.ts`, `test/<component>.a11y.s
 - [ ] `test/<component>.test.ts` and `test/<component>.a11y.spec.ts` are present and follow the structure described above (test stories under *Component/Tests*, a11y spec with `gotoStory` and `toMatchAriaSnapshot`).
 - [ ] Unit tests pass; a11y tests pass.
 - [ ] Critical paths (render, props, slots, events) are covered.
-- [ ] Tests follow the project [testing conventions](../../../../01_contributor-guides/11_2ndgen_testing.md) (Ticket 10).
+- [ ] Tests follow the project [testing conventions](../../../../01_contributor-guides/11_2ndgen_testing.md) (Ticket 5).
 
 ### Common problems and solutions
 
