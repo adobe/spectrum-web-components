@@ -29,8 +29,7 @@ import {
   getComponents,
   withWarningSpy,
 } from '../../../utils/test-utils.js';
-import { meta } from '../stories/badge.stories.js';
-import {
+import meta, {
   Anatomy,
   Fixed,
   NonSemanticVariants,
@@ -61,9 +60,12 @@ export const OverviewTest: Story = {
     const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
 
     await step('renders expected default values and slot content', async () => {
-      expect(badge.variant).toBe('informative');
-      expect(badge.size).toBe('m');
-      expect(badge.textContent?.trim()).toBeTruthy();
+      expect(badge.variant, 'default variant is neutral').toBe('neutral');
+      expect(badge.size, 'default size is s').toBe('s');
+      expect(
+        badge.textContent?.trim(),
+        'default slot has text content'
+      ).toBeTruthy();
     });
   },
 };
@@ -80,23 +82,35 @@ export const PropertyMutationTest: Story = {
     await step('variant reflects to attribute after mutation', async () => {
       badge.variant = 'positive';
       await badge.updateComplete;
-      expect(badge.getAttribute('variant')).toBe('positive');
+      expect(
+        badge.getAttribute('variant'),
+        'variant attribute is positive after mutation'
+      ).toBe('positive');
 
       badge.variant = 'notice';
       await badge.updateComplete;
-      expect(badge.getAttribute('variant')).toBe('notice');
+      expect(
+        badge.getAttribute('variant'),
+        'variant attribute is notice after second mutation'
+      ).toBe('notice');
     });
 
     await step('subtle reflects to attribute after mutation', async () => {
       badge.subtle = true;
       await badge.updateComplete;
-      expect(badge.hasAttribute('subtle')).toBe(true);
+      expect(
+        badge.hasAttribute('subtle'),
+        'subtle attribute is present after setting subtle=true'
+      ).toBe(true);
     });
 
     await step('outline reflects to attribute after mutation', async () => {
       badge.outline = true;
       await badge.updateComplete;
-      expect(badge.hasAttribute('outline')).toBe(true);
+      expect(
+        badge.hasAttribute('outline'),
+        'outline attribute is present after setting outline=true'
+      ).toBe(true);
     });
   },
 };
@@ -109,16 +123,24 @@ export const FixedClearingTest: Story = {
     const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
 
     await step('initially has fixed attribute', async () => {
-      expect(badge.fixed).toBe('block-start');
-      expect(badge.hasAttribute('fixed')).toBe(true);
+      expect(badge.fixed, 'fixed property is block-start initially').toBe(
+        'block-start'
+      );
+      expect(
+        badge.hasAttribute('fixed'),
+        'fixed attribute is present initially'
+      ).toBe(true);
     });
 
     await step('removes fixed attribute when set to undefined', async () => {
       badge.fixed = undefined;
       await badge.updateComplete;
 
-      expect(badge.fixed).toBeFalsy();
-      expect(badge.hasAttribute('fixed')).toBe(false);
+      expect(badge.fixed, 'fixed property is falsy after clearing').toBeFalsy();
+      expect(
+        badge.hasAttribute('fixed'),
+        'fixed attribute is absent after clearing'
+      ).toBe(false);
     });
   },
 };
@@ -136,10 +158,16 @@ export const AnatomyTest: Story = {
       const badgeWithIcon = badges.find((item) =>
         item.querySelector('[slot="icon"]')
       );
-      expect(badgeWithIcon).toBeTruthy();
+      expect(
+        badgeWithIcon,
+        'at least one badge has icon slot content'
+      ).toBeTruthy();
       const slottedIcon = badgeWithIcon?.querySelector('[slot="icon"]');
-      expect(slottedIcon).toBeTruthy();
-      expect(slottedIcon?.textContent?.trim()).toBeTruthy();
+      expect(slottedIcon, 'icon slot element is present').toBeTruthy();
+      expect(
+        slottedIcon?.children.length,
+        'icon slot has child elements'
+      ).toBeGreaterThan(0);
     });
   },
 };
@@ -155,9 +183,15 @@ export const SemanticVariantsTest: Story = {
       for (const variant of BADGE_VARIANTS_SEMANTIC) {
         const badge = canvasElement.querySelector(
           `swc-badge[variant="${variant}"]`
-        ) as Badge;
-        await badge.updateComplete;
-        expect(badge.variant).toBe(variant);
+        ) as Badge | null;
+        expect(
+          badge,
+          `badge with variant="${variant}" is rendered`
+        ).toBeTruthy();
+        await badge?.updateComplete;
+        expect(badge?.variant, `badge variant property is "${variant}"`).toBe(
+          variant
+        );
       }
     });
   },
@@ -172,9 +206,16 @@ export const OutlineTest: Story = {
         for (const variant of BADGE_VARIANTS_SEMANTIC) {
           const badge = canvasElement.querySelector(
             `swc-badge[variant="${variant}"]`
-          ) as Badge;
-          await badge.updateComplete;
-          expect(badge.hasAttribute('outline')).toBe(true);
+          ) as Badge | null;
+          expect(
+            badge,
+            `badge with variant="${variant}" is rendered`
+          ).toBeTruthy();
+          await badge?.updateComplete;
+          expect(
+            badge?.hasAttribute('outline'),
+            `badge with variant="${variant}" has outline attribute`
+          ).toBe(true);
         }
       }
     );
@@ -194,9 +235,10 @@ export const SizesTest: Story = {
       for (const size of BADGE_VALID_SIZES) {
         const badge = canvasElement.querySelector(
           `swc-badge[size="${size}"]`
-        ) as Badge;
-        await badge.updateComplete;
-        expect(badge.size).toBe(size);
+        ) as Badge | null;
+        expect(badge, `badge with size="${size}" is rendered`).toBeTruthy();
+        await badge?.updateComplete;
+        expect(badge?.size, `badge size property is "${size}"`).toBe(size);
       }
     });
   },
@@ -209,9 +251,16 @@ export const SubtleTest: Story = {
       for (const variant of BADGE_VARIANTS) {
         const badge = canvasElement.querySelector(
           `swc-badge[variant="${variant}"]`
-        ) as Badge;
-        await badge.updateComplete;
-        expect(badge.hasAttribute('subtle')).toBe(true);
+        ) as Badge | null;
+        expect(
+          badge,
+          `badge with variant="${variant}" is rendered`
+        ).toBeTruthy();
+        await badge?.updateComplete;
+        expect(
+          badge?.hasAttribute('subtle'),
+          `badge with variant="${variant}" has subtle attribute`
+        ).toBe(true);
       }
     });
   },
@@ -224,9 +273,10 @@ export const FixedTest: Story = {
       for (const value of FIXED_VALUES) {
         const badge = canvasElement.querySelector(
           `swc-badge[fixed="${value}"]`
-        ) as Badge;
-        await badge.updateComplete;
-        expect(badge.fixed).toBe(value);
+        ) as Badge | null;
+        expect(badge, `badge with fixed="${value}" is rendered`).toBeTruthy();
+        await badge?.updateComplete;
+        expect(badge?.fixed, `badge fixed property is "${value}"`).toBe(value);
       }
     });
   },
@@ -236,16 +286,46 @@ export const NonSemanticVariantsTest: Story = {
   ...NonSemanticVariants,
   play: async ({ canvasElement, step }) => {
     await step('renders all color variant values', async () => {
-      await Promise.all(
-        BADGE_VARIANTS_COLOR.map(async (variant) => {
-          const badge = canvasElement.querySelector(
-            `swc-badge[variant="${variant}"]`
-          ) as Badge;
-          await badge.updateComplete;
-          expect(badge.variant).toBe(variant);
-        })
-      );
+      for (const variant of BADGE_VARIANTS_COLOR) {
+        const badge = canvasElement.querySelector(
+          `swc-badge[variant="${variant}"]`
+        ) as Badge | null;
+        expect(
+          badge,
+          `badge with variant="${variant}" is rendered`
+        ).toBeTruthy();
+        await badge?.updateComplete;
+        expect(badge?.variant, `badge variant property is "${variant}"`).toBe(
+          variant
+        );
+      }
     });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Accessibility
+// ──────────────────────────────────────────────────────────────
+
+export const NotFocusableTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
+
+    await step('is not in the tab order', async () => {
+      expect(badge.tabIndex, 'tabIndex is -1').toBe(-1);
+    });
+
+    await step(
+      'does not receive focus when focused programmatically',
+      async () => {
+        badge.focus();
+        expect(
+          document.activeElement,
+          'activeElement is not the badge'
+        ).not.toBe(badge);
+      }
+    );
   },
 };
 
@@ -265,8 +345,14 @@ export const InvalidVariantWarningTest: Story = {
         badge.variant = 'not-a-variant' as unknown as Badge['variant'];
         await badge.updateComplete;
 
-        expect(warnCalls.length).toBeGreaterThan(0);
-        expect(String(warnCalls[0]?.[1] || '')).toContain('variant');
+        expect(
+          warnCalls.length,
+          'at least one warning is emitted for invalid variant'
+        ).toBeGreaterThan(0);
+        expect(
+          String(warnCalls[0]?.[1] || ''),
+          'warning message references variant'
+        ).toContain('variant');
       })
     );
   },
@@ -284,7 +370,10 @@ export const ValidVariantNoWarningTest: Story = {
         badge.variant = 'negative';
         await badge.updateComplete;
 
-        expect(warnCalls.length).toBe(0);
+        expect(
+          warnCalls.length,
+          'no warnings are emitted for valid variant'
+        ).toBe(0);
       })
     );
   },
@@ -302,8 +391,14 @@ export const OutlineNonSemanticWarningTest: Story = {
         badge.requestUpdate();
         await badge.updateComplete;
 
-        expect(warnCalls.length).toBeGreaterThan(0);
-        expect(String(warnCalls[0]?.[1] || '')).toContain('outline');
+        expect(
+          warnCalls.length,
+          'at least one warning is emitted for outline with non-semantic variant'
+        ).toBeGreaterThan(0);
+        expect(
+          String(warnCalls[0]?.[1] || ''),
+          'warning message references outline'
+        ).toContain('outline');
       })
     );
   },
