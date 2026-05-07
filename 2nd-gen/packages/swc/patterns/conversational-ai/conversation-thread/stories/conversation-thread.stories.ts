@@ -717,6 +717,7 @@ export const Overview: Story = {
  * ### Keyboard behavior
  *
  * - Tab enters the thread on the active turn.
+ * - Shift+Tab from controls after the thread returns to the active turn.
  * - ArrowUp and ArrowDown move between turns.
  * - Home and End jump to first and last turn.
  *
@@ -724,6 +725,7 @@ export const Overview: Story = {
  *
  * - The thread applies roving `tabindex` across slotted `<swc-conversation-turn>` children.
  * - Exactly one turn is tabbable at a time.
+ * - A newly appended turn becomes the active roving target.
  */
 export const Accessibility: Story = {
   render: renderThread,
