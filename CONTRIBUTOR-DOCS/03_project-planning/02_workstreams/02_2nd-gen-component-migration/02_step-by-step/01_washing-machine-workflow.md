@@ -119,7 +119,7 @@ Use this doc for **what order** to do things and **what to check**; use the link
 | **1. Preparation** | Uses output of **Step 1: Analyze rendering and styling** (read the component analysis). Plan breaking changes and scope. |
 | **2. Setup** | **Steps 2–3** — study 1st-gen structure, create base class in core — then create 2nd-gen core/SWC layout per Phase 2. |
 | **3. API migration** | **Step 4: Formalize Spectrum data model** + **Step 5: Add 2nd-gen SWC** (API overrides/additions). |
-| **4. Accessibility** | Use the **accessibility migration analysis** (`03_components/<component>/accessibility-migration-analysis.md`) as a prerequisite — generate it with the `accessibility-migration-analysis` skill if it doesn't exist; this guide adds the implementation phase. |
+| **4. Accessibility** | Use the **accessibility migration analysis** (`03_components/<component>/accessibility-migration-analysis.md`) as a prerequisite. |
 | **5. Styling** | **Step 6: Migrate rendering & styles from Spectrum CSS**. |
 | **6. Testing** | (Mentioned in steps as "confirm tests pass" — this guide makes it a full phase.) |
 | **7. Documentation** | **Step 7: Add stories for 2nd-gen component** + JSDoc and usage docs. |
