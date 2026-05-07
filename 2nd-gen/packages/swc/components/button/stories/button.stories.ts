@@ -14,8 +14,6 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '@adobe/spectrum-wc/button';
-
 import {
   BUTTON_FILL_STYLES,
   BUTTON_STATIC_COLORS,
@@ -25,7 +23,9 @@ import {
   type ButtonSize,
   type ButtonStaticColor,
   type ButtonVariant,
-} from '../../../../core/components/button/Button.types.js';
+} from '@spectrum-web-components/core/components/button';
+
+import '@adobe/spectrum-wc/button';
 
 // ────────────────
 //    METADATA
@@ -69,7 +69,7 @@ args.size = 'm';
  * For navigation, use a link instead. For icon-only actions, always provide an
  * `accessible-label` attribute to ensure the action is announced to screen reader users.
  */
-export const meta: Meta = {
+const meta: Meta = {
   title: 'Button',
   component: 'swc-button',
   parameters: {
@@ -83,11 +83,7 @@ export const meta: Meta = {
   tags: ['migrated'],
 };
 
-export default {
-  ...meta,
-  title: 'Button',
-  excludeStories: ['meta'],
-} as Meta;
+export default meta;
 
 // ────────────────────
 //    HELPERS
@@ -322,4 +318,63 @@ export const Justified: Story = {
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-// TODO: will complete in separate accessibility phase
+/**
+ * ### Features
+ *
+ * The `<swc-button>` element implements several accessibility features:
+ *
+ * 1. **Native button semantics**: A real `<button>` inside shadow DOM provides the role, so
+ *    assistive technologies see a genuine button — not a host with `role="button"`.
+ * 2. **Focus delegation**: `delegatesFocus: true` routes Tab focus and programmatic focus to
+ *    the internal `<button>`, keeping the host out of the tab order.
+ * 3. **Keyboard activation**: Enter and Space both activate the button via native browser
+ *    behavior — no custom keyboard handling is needed or added.
+ * 4. **Pending state**: When `pending` is true, `aria-disabled="true"` is set on the internal
+ *    `<button>` and the accessible name becomes `"[label], busy"` (e.g., `"Save, busy"`).
+ *    The button remains focusable so users can discover it is unavailable rather than losing
+ *    track of it entirely. A custom `pending-label` overrides the derived busy name.
+ * 5. **Icon-only labeling**: When there is no visible text, the `accessible-label` attribute
+ *    is forwarded as `aria-label` on the internal `<button>`. A debug warning is emitted in
+ *    development when an icon-only button is missing `accessible-label`.
+ *
+ * ### Best practices
+ *
+ * - Always provide an `accessible-label` for icon-only buttons so screen readers can
+ *   announce the button's purpose.
+ * - Prefer `accessible-label` over placing `aria-label` directly on the `<swc-button>` host,
+ *   as it is intentionally forwarded to the internal native control.
+ * - Do not set both `pending` and `disabled` at the same time. Use `pending` to keep the
+ *   button focusable while unavailable, or `disabled` to remove it from the tab order entirely.
+ * - For navigation, use a native `<a>` element and leverage [global element styles](/docs/guides-customization-global-element-styling--readme), not `<swc-button>`. The
+ *   button element activates on both Enter and Space; links activate on Enter only.
+ */
+export const Accessibility: Story = {
+  render: (args) => html`
+    ${template({ ...args, 'default-slot': 'Save document' })}
+    <swc-button
+      variant=${args.variant ?? 'primary'}
+      size=${args.size ?? 'm'}
+      accessible-label="Add item"
+    >
+      <svg
+        slot="icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 36 36"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
+        />
+      </svg>
+    </swc-button>
+    ${template({
+      ...args,
+      'default-slot': 'Upload',
+      pending: true,
+      'pending-label': 'Upload in-progress',
+    })}
+  `,
+  tags: ['a11y'],
+  parameters: { flexLayout: 'row-wrap' },
+};

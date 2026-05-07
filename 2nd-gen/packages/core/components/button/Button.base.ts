@@ -35,6 +35,8 @@ import { BUTTON_VALID_SIZES } from './Button.types.js';
  * @slot - Visible button label.
  * @slot icon - Optional leading icon.
  *
+ * @attribute {ElementSize} size - The size of the button.
+ *
  * @todo We currently have 3 levels of mixins on this class, but the mixin
  * composition guide recommends a maximum of 2. Explore reducing after milestone 2.
  */
@@ -46,6 +48,10 @@ export abstract class ButtonBase extends SizedMixin(
     ...SpectrumElement.shadowRootOptions,
     delegatesFocus: true,
   };
+
+  // ──────────────────
+  //     SHARED API
+  // ──────────────────
 
   /**
    * Whether the button is disabled. Removes focusability and prevents
@@ -83,7 +89,11 @@ export abstract class ButtonBase extends SizedMixin(
    * Protected so subclasses can reference it in their `classMap` binding.
    */
   @state()
-  protected _pendingActive: boolean = false;
+  protected pendingActive: boolean = false;
+
+  // ──────────────────────
+  //     IMPLEMENTATION
+  // ──────────────────────
 
   private _pendingTimer: number | null = null;
 
@@ -139,7 +149,7 @@ export abstract class ButtonBase extends SizedMixin(
 
   public override connectedCallback(): void {
     super.connectedCallback();
-    this.addEventListener('click', this._handleClick);
+    this.addEventListener('click', this.handleClick);
   }
 
   public override disconnectedCallback(): void {
@@ -147,16 +157,16 @@ export abstract class ButtonBase extends SizedMixin(
       clearTimeout(this._pendingTimer);
       this._pendingTimer = null;
     }
-    this._pendingActive = false;
+    this.pendingActive = false;
     super.disconnectedCallback();
-    this.removeEventListener('click', this._handleClick);
+    this.removeEventListener('click', this.handleClick);
   }
 
   /**
    * Suppresses click activation while the button is in a `pending` state.
    * Subclasses' templates wire this onto the rendered `<button>` via `@click`.
    */
-  protected _handleClick = (event: Event): void => {
+  protected readonly handleClick = (event: Event): void => {
     if (this.pending) {
       event.stopImmediatePropagation();
     }
@@ -174,7 +184,7 @@ export abstract class ButtonBase extends SizedMixin(
                 `${internalButton.offsetWidth}px`
               );
             }
-            this._pendingActive = true;
+            this.pendingActive = true;
           }
           this._pendingTimer = null;
         }, 1000);
@@ -186,7 +196,7 @@ export abstract class ButtonBase extends SizedMixin(
         this.renderRoot
           .querySelector('button')
           ?.style.removeProperty('--_swc-button-pending-inline-size');
-        this._pendingActive = false;
+        this.pendingActive = false;
       }
     }
     super.update(changedProperties);
@@ -196,7 +206,7 @@ export abstract class ButtonBase extends SizedMixin(
           this,
           `<${this.localName}> should not set both "pending" and "disabled" simultaneously. Use "pending" to keep the button focusable while unavailable, or "disabled" to fully remove it from the tab order.`,
           'https://opensource.adobe.com/spectrum-web-components/components/button/#pending',
-          {}
+          { issues: ['pending + disabled'] }
         );
       }
       if (this.hasIcon && !this.hasLabel && !this.accessibleLabel) {
@@ -204,7 +214,7 @@ export abstract class ButtonBase extends SizedMixin(
           this,
           `<${this.localName}> with an icon and no label must have an "accessible-label" attribute to be accessible.`,
           'https://opensource.adobe.com/spectrum-web-components/components/button/#icon-only',
-          { type: 'accessibility', level: 'high' }
+          { issues: ['accessible-label'] }
         );
       }
     }

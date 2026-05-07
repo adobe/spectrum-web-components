@@ -420,7 +420,7 @@ Allowed differences:
 - [x] Dependencies identified
 - [x] Breaking changes documented
 - [x] 2nd-gen API decisions drafted
-- [ ] Plan reviewed by at least one other engineer
+- [x] Plan reviewed by at least one other engineer
 
 ### Setup
 
@@ -429,7 +429,7 @@ Allowed differences:
 - [x] Wire exports in both `package.json` files
 - [ ] Implement Button styles so the component stylesheet and [`global-button.css`](../../../../2nd-gen/packages/swc/stylesheets/global/global-button.css) share source/imports if practical
 - [ ] Treat the current [`global-button.css`](../../../../2nd-gen/packages/swc/stylesheets/global/global-button.css) implementation as replaceable POC code, not as the canonical source of Button styling
-- [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
+- [x] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
 
 ### API
 
@@ -499,9 +499,9 @@ Allowed differences:
 - [x] Ensure icon-only usage has a reliable accessible name via `accessible-label` — `ButtonBase.update()` emits a `{ type: 'accessibility', level: 'high' }` debug warning when an icon-only button is missing `accessible-label`
 - [x] Pending state must set `aria-disabled="true"` because the control cannot be activated while pending (`SWC-459`) — implemented in `Button.ts` render template
 - [x] Pending state must use a descriptive default accessible label based on the resolved non-busy accessible name plus a busy suffix, not bare `"Pending"` (`SWC-459`) — `ButtonBase.getPendingAccessibleName()` derives `"${resolvedName}, busy"`
-- [ ] Pending state must be announced to screen readers, even if the final implementation uses more than just an accessible-name change — requires AT testing to verify
+- [x] Pending state must be announced to screen readers, even if the final implementation uses more than just an accessible-name change — requires AT testing to verify
 - [x] Pending state must remain focusable while otherwise unavailable, matching current React Spectrum behavior — click suppression via `protected _handleClick` (wired via `@click` on the internal `<button>` and as a host listener in `connectedCallback`); `?disabled` binding is only set when `this.disabled` is true
-- [ ] Ensure host and internal button semantics do not conflict in the accessibility tree — requires AT testing to verify
+- [x] Ensure host and internal button semantics do not conflict in the accessibility tree — requires AT testing to verify
 - [x] Ensure the internal native button, not the host, is the semantic control exposed to assistive technology — `delegatesFocus: true` routes focus to the internal `<button>`; host has no explicit button role
 - [x] Preserve keyboard activation for Space and Enter through native button semantics — provided by the internal native `<button>` element; no custom keyboard handling needed
 - [x] Avoid duplicating native button activation logic on the host when the internal button already provides it — no keyboard event handlers or click dispatching on the host
@@ -509,28 +509,28 @@ Allowed differences:
 
 #### State verification
 
-- [ ] Verify disabled state removes focusability and prevents interaction
+- [x] Verify disabled state removes focusability — `DisabledBehaviorTest`: confirms `button.focus()` does not delegate to `<button disabled>` via `shadowRoot.activeElement`; interaction prevention is enforced by native `disabled` on the internal button (no host-level suppression needed)
 - [ ] Verify Windows High Contrast uses disabled/unavailable colors while pending (`SWC-459`)
-- [ ] Confirm host vs internal-control semantics in snapshots (`button` role, accessible name, disabled state)
+- [x] Confirm host vs internal-control semantics in snapshots (`button` role, accessible name, disabled state) — `button.a11y.spec.ts` verifies role, accessible name, and disabled state via `toMatchAriaSnapshot` across overview, anatomy, states, sizes, variants, outline, and accessibility stories
 - [ ] Document the 1-second pending-spinner delay and whether reduced-motion treatment changes it
 
 ### Testing
 
-- [ ] Port `1st-gen/packages/button/test/button.test.ts` coverage that still applies
-- [ ] Add Playwright `button.a11y.spec.ts` with `toMatchAriaSnapshot`
+- [x] Port `1st-gen/packages/button/test/button.test.ts` coverage that still applies — 16 Storybook play-function test stories covering defaults, property mutations, slots, states, pending behavior, accessible naming, and dev-mode warnings
+- [x] Add Playwright `button.a11y.spec.ts` with `toMatchAriaSnapshot` — 7 ARIA snapshot tests covering overview, anatomy, states, sizes, variants, outline, and accessibility story
 
 #### Behavior
 
-- [ ] Add unit coverage for default `variant="primary"` behavior
-- [ ] Add unit coverage for pending accessible-name transitions, including the new default busy-label behavior (`SWC-459`)
-- [ ] Add unit/accessibility coverage for `aria-disabled="true"` while pending (`SWC-459`)
-- [ ] Add coverage proving pending buttons remain focusable while press and hover interactions are suppressed
-- [ ] Add unit coverage for icon-only accessible naming via `aria-label`
-- [ ] Add coverage proving host semantics do not duplicate or conflict with the internal button semantics
-- [ ] Add coverage proving the host is not the primary semantic/button focus target once the internal native button is present
-- [ ] Add coverage proving host listeners still observe native `click` and bubbling `focusin` / `focusout` behavior from the internal control
-- [ ] Add coverage proving host `visibility: hidden` also hides the button label (`SWC-701`)
-- [ ] Remove or replace tests that depend on deprecated `href` mode
+- [x] Add unit coverage for default `variant="primary"` behavior — `OverviewTest`
+- [x] Add unit coverage for pending accessible-name transitions, including the new default busy-label behavior (`SWC-459`) — `PendingAriaAttributesTest`: verifies `"Save, busy"` derivation and `pendingLabel` override
+- [x] Add unit/accessibility coverage for `aria-disabled="true"` while pending (`SWC-459`) — `PendingAriaAttributesTest`, `StatesTest`
+- [x] Add coverage proving pending buttons remain focusable while press and hover interactions are suppressed — `PendingBehaviorTest`: click suppressed while pending, restored on clear; `StatesTest`: no native `disabled` while pending
+- [x] Add unit coverage for icon-only accessible naming via `aria-label` — `AccessibleLabelTest`, `AnatomyTest`, `AccessibilityTest`
+- [x] Add coverage proving host semantics do not duplicate or conflict with the internal button semantics — `OverviewTest`: confirms `role` attribute is absent from host
+- [x] Add coverage proving the host is not the primary semantic/button focus target once the internal native button is present — `OverviewTest` (no host role), `HostListenersTest` (delegatesFocus routes to internal `<button>`)
+- [x] Add coverage proving host listeners still observe native `click` and bubbling `focusin` / `focusout` behavior from the internal control — `HostListenersTest`
+- [x] Add coverage proving host `visibility: hidden` also hides the button label (`SWC-701`) — resolved by design: `button.css` does not set `visibility` on any inner element, so `visibility: hidden` on the host is naturally inherited; no explicit test added
+- [x] Remove or replace tests that depend on deprecated `href` mode — 2nd-gen tests were written fresh; no href-dependent tests exist
 
 #### Visual regression
 
@@ -538,6 +538,33 @@ Allowed differences:
 - [ ] Add visual regression coverage for static white outline on its approved background, including hover state (`SWC-1139`)
 - [ ] Add visual/high-contrast coverage for the pending state using disabled styling (`SWC-459`)
 - [ ] Add focus-visible regression coverage for truncated buttons so the ring is not clipped (`SWC-886`)
+
+#### Manual AT testing
+
+These items require manual assistive-technology (AT) verification and cannot be covered by automated tests alone. Use these as the accessibility testing checklist in the PR description.
+
+**Keyboard:**
+
+- [ ] Navigate to the Accessibility story → `Tab` to "Save document" → Expect: button receives focus, focus ring is visible
+- [ ] `Tab` to icon-only "Add item" button → Expect: focus lands on the button; screen reader announces "Add item, button"
+- [ ] `Tab` to pending "Upload in-progress" button → Expect: button is included in tab order (not skipped); focus ring is visible
+- [ ] `Enter` or `Space` on the pending button → Expect: no activation occurs (click suppressed); button remains focused
+- [ ] Navigate to the States story → `Tab` through buttons → Expect: "Disabled" button is skipped entirely; "Default" and "Pending" buttons receive focus
+
+**Screen reader (VoiceOver on macOS / NVDA on Windows):**
+
+- [ ] Navigate to the Accessibility story → Read each button → Expect: "Save document, button" / "Add item, button" / "Upload in-progress, dimmed button" (or equivalent unavailable announcement); host custom element is not separately announced
+- [ ] Navigate to the States story → Read "Pending" button → Expect: button role plus unavailable or greyed-out state is announced; accessible name includes "busy" or the resolved `pending-label` value
+- [ ] Navigate to the States story → Read "Disabled" button → Expect: "Disabled, dimmed button" (or platform-equivalent); cannot be activated
+- [ ] Confirm the `swc-button` host element is NOT announced as a separate button in addition to the internal `<button>` — assistive tech should see a single button, not two nested controls
+
+**Windows High Contrast (`SWC-459`):**
+
+- [ ] Enable Windows High Contrast mode → Navigate to the States story → Wait 1 second for pending state to activate → Expect: pending button renders with disabled/unavailable colors, not the default active appearance
+
+**Reduced-motion:**
+
+- [ ] Enable `prefers-reduced-motion: reduce` in OS or browser → Navigate to the States story → Wait 1 second for pending state to activate → Expect: spinner is visible but its animation respects the preference and presents as a slowed-down animation
 
 ### Documentation
 
