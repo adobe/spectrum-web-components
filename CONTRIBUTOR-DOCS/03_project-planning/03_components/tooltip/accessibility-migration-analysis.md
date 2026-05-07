@@ -97,11 +97,7 @@ Popover-style chrome (`swc-popover`, etc.) may still wrap the visuals—see [pop
 
 ### When to use something else
 
-Pick **contextual help** when the UX is “user opens explicit help”—not “hint follows focus.” Guides:
-
-| Use contextual help instead | Links |
-| --- | --- |
-| Headings, static text strips, grouped fields the user taps “help” beside, richer copy or links inside the panel | [Spectrum Contextual help](https://spectrum.adobe.com/page/contextual-help/), [`sp-contextual-help`](../../../../1st-gen/packages/contextual-help/README.md), [React Spectrum ContextualHelp](https://react-spectrum.adobe.com/ContextualHelp) vs [Tooltip](https://react-spectrum.adobe.com/Tooltip) (non-interactive layouts) |
+Pick **contextual help** when the UX is “user opens explicit help, and for headings, static text strips, grouped fields the user taps “help” beside, richer copy or links inside the panel. See [Spectrum Contextual help](https://spectrum.adobe.com/page/contextual-help/), [`sp-contextual-help`](../../../../1st-gen/packages/contextual-help/README.md), [React Spectrum ContextualHelp](https://react-spectrum.adobe.com/ContextualHelp) vs [Tooltip](https://react-spectrum.adobe.com/Tooltip) (non-interactive layouts).
 
 - **Do not** treat Tooltip as **contextual help** or as a focusable **`dialog`**-style surface. Patterns that expose **interactive** bubble content, **`role="dialog"`** choreography, moving **focus inside** the popup, or a **persistent “help opens here” panel** belong in **`sp-contextual-help`**, **popover**, or **dialog**—not under **`role="tooltip"`**. See **[SWC-1465](https://jira.corp.adobe.com/browse/SWC-1465)** (**Notes**) for authoring guidance (**[APG](#pattern-in-the-apg)** non-modal dialog caveat points at the same boundary).
 - Long or interactive content wears out screen reader users if forced through **`aria-describedby`** only—Deque explains why in **[Deque Tooltip](https://dequeuniversity.com/library/aria/tooltip)**. Move heavy UI to **`dialog`**, **`popover`**, or contextual help.
@@ -126,7 +122,7 @@ Pick **contextual help** when the UX is “user opens explicit help”—not “
 
 ### Pattern in the APG
 
-Follow the **[APG Tooltip pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/). Treat the banner on that page as real—it is marked draft / **work in progress** and consensus can change. Watch GitHub for updates: [#128 draft text](https://github.com/w3c/aria-practices/issues/128), [#127 examples](https://github.com/w3c/aria-practices/issues/127).
+Follow the **[APG Tooltip pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/)**. Treat the banner on that page as real—it is marked draft / **work in progress** and consensus can change. Watch GitHub for updates: [#128 draft text](https://github.com/w3c/aria-practices/issues/128), [#127 examples](https://github.com/w3c/aria-practices/issues/127).
 
 - **Roles.** The hint uses **`role="tooltip"`**. The trigger links to it via **`aria-describedby`** while it shows. Keep visibility in sync (**`aria-hidden`**, **`inert`**) and allow **`Escape`** to close (**APG keyboard**).
 - **Focus.** Tooltip text does **not** sit in Tab order (**APG** quote: “Tooltip widgets do not receive focus”). Focus stays on the trigger until you ship a richer **`dialog`/popover**.
