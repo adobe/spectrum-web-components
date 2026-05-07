@@ -254,4 +254,7 @@ export const EventLogger = (): TemplateResult => {
     </sp-dropzone>
   `;
 };
-EventLogger.tags = ['dev'];
+
+EventLogger.parameters = {
+  tags: ['!dev'],
+};
