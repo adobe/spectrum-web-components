@@ -167,7 +167,7 @@ More demos and patterns:
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary | Notes |
 | --- | --- | --- | --- | --- | --- |
-| [SWC-1558](https://jira.corp.adobe.com/browse/SWC-1558) | Bug | To Do | Unresolved | Tooltip is missing **`role="tooltip"`** | Confirms gap vs APG—2nd-gen must fix on surfaced node. Implementation must **not** smuggle **`dialog`** semantics or focusable panels into **`role="tooltip"`**; that UX is **`sp-contextual-help`** / popover/dialog (**[`## When to use something else`](#when-to-use-something-else)**). |
+| [SWC-1558](https://jira.corp.adobe.com/browse/SWC-1558) | Bug | To Do | Unresolved | Tooltip is missing **`role="tooltip"`** | Confirms gap vs APG—2nd-gen must fix on surfaced node. Implementation must **not** smuggle **`dialog`** semantics or focusable panels into **`role="tooltip"`**; that UX is **`sp-contextual-help`** / popover/dialog (**[When to use something else](#when-to-use-something-else)**). |
 | [SWC-1465](https://jira.corp.adobe.com/browse/SWC-1465) | Story | To Do | Unresolved | Docs: **`aria-describedby`** guidance for Tooltip | Tie to **`describeTrigger`/`none`** and cross-root **`HoverController`** behavior. Document Tooltip vs **`sp-contextual-help`**: **no focusable-tooltip / tooltip-as-dialog pattern**. For touch: **prefer toggletip (`aria-expanded`/`aria-controls`)** over **`longpress`** / **`triggerInteraction='longpress'`** for supplementary hints; align overlay + directive docs (**[Interaction](#interaction-pointer-keyboard-and-touch)**). |
 | [SWC-2022](https://jira.corp.adobe.com/browse/SWC-2022) | Story | To Do | Unresolved | Tooltip: implement accessibility features | **Cross-program ticket** (typically **`gen2`**-labelled migration work). Tracks shipping toggletip-first touch and shrinking reliance on **`longpress`**/`overlay-trigger` for Tooltip-class hints (**[Quick scan](#quick-scan)**). See **SWC-1465** for doc-side guidance. |
 | [SWC-321](https://jira.corp.adobe.com/browse/SWC-321) | Bug | To Do | Unresolved | Clicking **open**, **self-managed** tooltip on **action-button** triggers underlying button ([#3969](https://github.com/adobe/spectrum-web-components/issues/3969)) | Regression-test **hit-target layering** (**`pointer-events`**, stacking order, dismiss-on-press). Align dismiss-on-pointer behavior with React Spectrum **`shouldCloseOnPress`** ([React Spectrum Tooltip](https://react-spectrum.adobe.com/Tooltip)). |
@@ -189,7 +189,7 @@ RFC **[SWC-1674](https://jira.corp.adobe.com/browse/SWC-1674)** (**Done**) point
 
 ## Recommendations: `<swc-tooltip>`
 
-Tag name may shift (`swc-tooltip` placeholder). This section lists what Tooltip must ship. Use Jira **[SWC-1558](https://jira.corp.adobe.com/browse/SWC-1558)** (**`role="tooltip"`**) plus **[SWC-1465](https://jira.corp.adobe.com/browse/SWC-1465)** (**`aria-describedby`** guidance) as the anchors.
+Tag name may shift (`swc-tooltip` placeholder). This section lists what Tooltip must ship. Use Jira **[SWC-1558](https://jira.corp.adobe.com/browse/SWC-1558)** (**`role="tooltip"`**), **[SWC-1465](https://jira.corp.adobe.com/browse/SWC-1465)** (**authoring guidance** incl. Tooltip vs **`sp-contextual-help`** + touch model), plus **[SWC-2022](https://jira.corp.adobe.com/browse/SWC-2022)** (**implementation**/toggle-vs-**`longpress`** backlog) as anchors.
 
 Borrow ideas from—not rules from—Carbon / Red Hat / IBM:
 
@@ -309,7 +309,7 @@ Manual flow (paired with **[Screen reader testing](../../../../2nd-gen/packages/
 - [ ] Confirm **`Escape`** closes hints without trapping focus.
 - [ ] Automated suites exercise shadow/light **`aria-describedby`**, stacking/hit-testing (**[SWC-321](https://jira.corp.adobe.com/browse/SWC-321)**, **[SWC-890](https://jira.corp.adobe.com/browse/SWC-890)**), overlay re-anchor (**[SWC-324](https://jira.corp.adobe.com/browse/SWC-324)**) under **[SWC-2025](https://jira.corp.adobe.com/browse/SWC-2025)** umbrellas.
 - [ ] Manual **[screen reader](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)** plus keyboard + USWDS buckets (**general / zoom / keyboard / SR**) inside **live product chrome**, not story shells alone (**[USWDS tests](https://designsystem.digital.gov/components/tooltip/accessibility-tests/)**).
-- [ ] Keep **[Related 1st-gen accessibility](#related-1st-gen-accessibility-jira)** table fresh as Jira changes (skip **`gen2`** rows per doc rule).
+- [ ] Keep **[Related 1st-gen accessibility](#related-1st-gen-accessibility-jira)** table fresh as Jira changes (default: skip standalone **`gen2`**-only mirrors—keep **[SWC-2022](https://jira.corp.adobe.com/browse/SWC-2022)** here as the Tooltip a11y program anchor for toggle vs **`longpress`** work).
 
 ---
 
@@ -331,4 +331,4 @@ Manual flow (paired with **[Screen reader testing](../../../../2nd-gen/packages/
 - 1st-gen: [`Tooltip.ts`](../../../../1st-gen/packages/tooltip/src/Tooltip.ts), [`HoverController.ts`](../../../../1st-gen/packages/overlay/src/HoverController.ts) (description wiring), [`OverlayStack.ts`](../../../../1st-gen/packages/overlay/src/OverlayStack.ts) (Escape closes `hint` overlays)
 - Tooltip [rendering-and-styling migration](./rendering-and-styling-migration-analysis.md); Popover [accessibility migration analysis](../popover/accessibility-migration-analysis.md)
 - 2nd-gen guides: [Semantic HTML and ARIA](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx), [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx), [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
-- Adobe Jira (**1st-gen + cross-program Tooltip a11y** snapshot table): [Related 1st-gen accessibility](#related-1st-gen-accessibility-jira) — includes **[SWC-2022](https://jira.corp.adobe.com/browse/SWC-2022)** for implementation traceability (**`gen2`-labelled** backlog work is usually omitted from sibling tables—kept here for toggle vs **`longpress`** scope).
+- Adobe Jira (**1st-gen** snapshot table + Tooltip a11y program cross-ref): [Related 1st-gen accessibility](#related-1st-gen-accessibility-jira)
