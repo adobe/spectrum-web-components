@@ -29,8 +29,7 @@ import {
   getComponents,
   withWarningSpy,
 } from '../../../utils/test-utils.js';
-import meta from '../stories/button.stories.js';
-import {
+import meta, {
   Accessibility,
   Anatomy,
   Outline,
