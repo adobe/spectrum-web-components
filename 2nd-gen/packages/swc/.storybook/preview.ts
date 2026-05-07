@@ -377,6 +377,7 @@ const preview = {
                 'Illustrated message',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Infield button',

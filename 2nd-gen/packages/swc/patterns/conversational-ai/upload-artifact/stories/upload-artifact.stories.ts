@@ -107,7 +107,7 @@ export const Card: Story = {
 };
 
 /**
- * Media type uses a larger preview region; optional title and subtitle appear below the preview when provided.
+ * Media type uses a larger preview region without title and subtitle text.
  */
 export const Media: Story = {
   render: () => html`
@@ -118,8 +118,6 @@ export const Media: Story = {
           role="img"
           aria-label="Campaign preview"
         ></div>
-        <span slot="title">Hilton commercial assets</span>
-        <span slot="subtitle">2026</span>
       </swc-upload-artifact>
     </div>
   `,
