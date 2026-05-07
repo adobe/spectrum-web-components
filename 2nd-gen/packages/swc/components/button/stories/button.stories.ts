@@ -331,20 +331,51 @@ export const States: Story = {
  * The accessible name during pending defaults to the visible label plus
  * `", busy"`. For example, a button labeled "Saving" announces as
  * `"Saving, busy"`. Provide `pending-label` to override this with a more
- * specific description of the in-progress operation.
+ * specific description of the in-progress operation. When pending clears, the
+ * accessible name reverts to the original label.
+ *
+ * Use the **Pending** checkbox above the buttons to trigger and clear the
+ * state interactively. This lets you observe the 1-second activation delay
+ * and verify the accessible name switch in browser DevTools.
  */
 export const Pending: Story = {
-  render: (args) => html`
-    ${template({ ...args, pending: true, 'default-slot': 'Saving' })}
-    ${template({
-      ...args,
-      pending: true,
-      'pending-label': 'Upload in-progress',
-      'default-slot': 'Upload',
-    })}
-  `,
-  tags: ['behaviors'],
-  parameters: { flexLayout: 'row-wrap', 'section-order': 1 },
+  render: (args) => {
+    let pending = false;
+
+    function handleTogglePending(event: Event) {
+      pending = (event.target as HTMLInputElement).checked;
+      const host = (event.target as HTMLElement).closest('div')!;
+      host.querySelectorAll('swc-button').forEach((btn) => {
+        btn.toggleAttribute('pending', pending);
+      });
+    }
+
+    return html`
+      <div
+        style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;"
+      >
+        <label
+          style="display: flex; gap: 8px; align-items: center; cursor: pointer;"
+        >
+          <input type="checkbox" @change=${handleTogglePending} />
+          Toggle pending
+        </label>
+        <div
+          style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;"
+        >
+          ${template({ ...args, pending, 'default-slot': 'Saving' })}
+          ${template({
+            ...args,
+            pending,
+            'pending-label': 'Upload in-progress',
+            'default-slot': 'Upload',
+          })}
+        </div>
+      </div>
+    `;
+  },
+  tags: ['behaviors', '!test'],
+  parameters: { 'section-order': 1 },
 };
 
 /**
