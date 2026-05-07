@@ -195,7 +195,7 @@ export const Playground: Story = {
         size=${size}
         ?subtle=${args.subtle}
         ?outline=${args.outline}
-        fixed=${args.fixed ?? ''}
+        fixed=${args.fixed ?? nothing}
       >
         ${iconKey
           ? html`
