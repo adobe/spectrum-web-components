@@ -206,3 +206,45 @@ export const Controlled = (): TemplateResult => {
     <controlled-dropzone></controlled-dropzone>
   `;
 };
+
+const onDrop = (event: Event): void => {
+  console.log('sp-dropzone-drop');
+  const detail = (event as CustomEvent<DragEvent>).detail;
+  const files = detail?.dataTransfer?.files;
+  if (files && files.length > 0) {
+    console.log('file:', files[0].name);
+  }
+};
+
+export const FileDrop = (): TemplateResult => {
+  return html`
+    <sp-dropzone id="dropzone" tabindex="0" @sp-dropzone-drop=${onDrop}>
+      <sp-illustrated-message heading="Drag and Drop Your Image">
+        ${illustration}
+      </sp-illustrated-message>
+      <div>
+        <label for="file-input">
+          <sp-link
+            href="javascript:;"
+            onclick="this.parentElement.nextElementSibling.click()"
+          >
+            Select an Image
+          </sp-link>
+          from your computer
+        </label>
+        <input
+          type="file"
+          id="file-input"
+          accept="image/*"
+          style="display: none"
+        />
+      </div>
+      <div>
+        or
+        <sp-link href="http://stock.adobe.com" target="blank">
+          Search Adobe Stock
+        </sp-link>
+      </div>
+    </sp-dropzone>
+  `;
+};
