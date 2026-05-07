@@ -377,6 +377,7 @@ const preview = {
                 'Illustrated message',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Infield button',
@@ -388,6 +389,17 @@ const preview = {
                   'Accessibility migration analysis',
                   'Rendering and styling migration analysis',
                 ],
+                'Menu',
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
+                'Menu group',
+                ['Accessibility migration analysis'],
+                'Menu item',
+                ['Accessibility migration analysis'],
+                'Menu separator',
+                ['Accessibility migration analysis'],
                 'Meter',
                 [
                   'Accessibility migration analysis',

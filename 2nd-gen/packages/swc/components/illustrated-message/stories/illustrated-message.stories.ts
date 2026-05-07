@@ -308,6 +308,20 @@ export const DescriptionWithLink: Story = {
 DescriptionWithLink.storyName = 'Description with link';
 
 // ────────────────────────────────
+//    UPCOMING FEATURES STORIES
+// ────────────────────────────────
+
+/**
+ * ### Button group slot
+ *
+ * A button group slot is coming to place a button or button group alongside the heading and description.
+ */
+export const UpcomingFeatures: Story = {
+  tags: ['upcoming', 'description-only'],
+};
+UpcomingFeatures.storyName = 'Upcoming features';
+
+// ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
