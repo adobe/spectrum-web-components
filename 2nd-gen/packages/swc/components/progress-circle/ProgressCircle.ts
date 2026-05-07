@@ -13,11 +13,12 @@
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
-  PROGRESS_CIRCLE_STATIC_COLORS_S2,
+  PROGRESS_CIRCLE_STATIC_COLORS,
   ProgressCircleBase,
-  type ProgressCircleStaticColorS2,
+  type ProgressCircleStaticColor,
 } from '@spectrum-web-components/core/components/progress-circle';
 import { capitalize } from '@spectrum-web-components/core/utils/index.js';
 
@@ -25,17 +26,22 @@ import styles from './progress-circle.css';
 
 /**
  * Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way.
- * They can represent determinate (with a specific progress value) or indeterminate (loading) progress.
+ *
+ * They can represent determinate (with a specific progress value) or indeterminate (loading) progress. If no `progress` value is given, the progress circle is indeterminate.
  *
  * @element swc-progress-circle
- * @status preview
  * @since 0.0.1
  *
  * @example
  * <swc-progress-circle progress="75" label="Loading progress"></swc-progress-circle>
  *
  * @example
- * <swc-progress-circle indeterminate label="Loading..."></swc-progress-circle>
+ * <swc-progress-circle label="Loading..."></swc-progress-circle>
+ *
+ * @cssprop --swc-progress-circle-size - Inline and block size of the circle.
+ * @cssprop --swc-progress-circle-track-border-color - Color of the track (background ring).
+ * @cssprop --swc-progress-circle-fill-border-color - Color of the fill (progress indicator).
+ * @cssprop --swc-progress-circle-thickness - Stroke width of the circle rings.
  */
 export class ProgressCircle extends ProgressCircleBase {
   // ────────────────────
@@ -45,7 +51,7 @@ export class ProgressCircle extends ProgressCircleBase {
   /**
    * @internal
    */
-  static override readonly STATIC_COLORS = PROGRESS_CIRCLE_STATIC_COLORS_S2;
+  static override readonly STATIC_COLORS = PROGRESS_CIRCLE_STATIC_COLORS;
 
   /**
    * Static color variant for use on different backgrounds.
@@ -55,7 +61,7 @@ export class ProgressCircle extends ProgressCircleBase {
    * When set to 'black', the component uses black styling for images with a light tinted background.
    */
   @property({ reflect: true, attribute: 'static-color' })
-  public override staticColor?: ProgressCircleStaticColorS2;
+  public override staticColor?: ProgressCircleStaticColor;
 
   // ──────────────────────────────
   //     RENDERING & STYLING
@@ -63,6 +69,27 @@ export class ProgressCircle extends ProgressCircleBase {
 
   public static override get styles(): CSSResultArray {
     return [styles];
+  }
+
+  /**
+   * Compute the SVG stroke-dashoffset for the fill circle.
+   *
+   * - **Indeterminate** (`progress` is `null`): returns `undefined` so CSS
+   *   animation keyframes fully control the offset.
+   * - **0%**: returns 98 instead of 100. A dashoffset of 100 hides the fill
+   *   entirely, which fails WCAG 1.4.11 non-text contrast (the track alone
+   *   may not meet 3:1 against the background). The 2-unit fill keeps the
+   *   graphical element perceivable. `aria-valuenow` stays at 0.
+   * - **1–100%**: returns `100 - progress`.
+   */
+  private computeDashOffset(): number | undefined {
+    if (this.progress === null) {
+      return undefined;
+    }
+    if (this.progress === 0) {
+      return 98;
+    }
+    return 100 - this.progress;
   }
 
   protected override render(): TemplateResult {
@@ -74,20 +101,16 @@ export class ProgressCircle extends ProgressCircleBase {
       <div
         class=${classMap({
           ['swc-ProgressCircle']: true,
-          [`swc-ProgressCircle--indeterminate`]: this.indeterminate,
+          ['swc-ProgressCircle--indeterminate']: this.progress === null,
           [`swc-ProgressCircle--static${capitalize(this.staticColor)}`]:
             typeof this.staticColor !== 'undefined',
-          [`swc-ProgressCircle--size${this.size?.toUpperCase()}`]:
-            typeof this.size !== 'undefined',
         })}
       >
-        <slot @slotchange=${this.handleSlotchange}></slot>
-        <svg fill="none" width="100%" height="100%" class="swc-outerCircle">
+        <svg aria-hidden="true" fill="none" width="100%" height="100%">
           <circle
-            class="swc-innerCircle"
             cx="50%"
             cy="50%"
-            r=${`calc(50% - ${strokeWidth / 1}px)`}
+            r=${`calc(50% - ${strokeWidth}px)`}
             stroke-width=${strokeWidth}
           />
           <circle
@@ -103,7 +126,7 @@ export class ProgressCircle extends ProgressCircleBase {
             class="swc-ProgressCircle-fill"
             pathLength="100"
             stroke-dasharray="100 200"
-            stroke-dashoffset=${100 - this.progress}
+            stroke-dashoffset=${ifDefined(this.computeDashOffset())}
             stroke-linecap="round"
           />
         </svg>

@@ -36,7 +36,7 @@ This guide explains how to manage **private, internal, and exposed custom proper
 | ---------------- | ---------------------------------------- |
 | `--_swc-*`       | Private, internal custom property        |
 | `--swc-*`        | Exposed property available for overrides |
-| `token('name')`  | Reference to a design token (no prefix)  |
+| `token("name")`  | Reference to a design token (no prefix)  |
 
 > Private properties are “pseudo-private”: defined on nested shadow elements rather than `:host` to prevent accidental overrides.
 
@@ -59,13 +59,12 @@ CSS custom properties *normally* can't actually be "private". However, due to sh
 ```css
 .swc-Badge {
   --_swc-badge-border-width: token("border-width-200");
-  --_swc-badge-border-width-deduction: calc(var(--_swc-badge-border-width) * 2);
-  --_swc-badge-padding-block-start: token("component-top-to-text-100");
-  --_swc-badge-padding-block-end: token("component-bottom-to-text-100");
+  --_swc-badge-padding-inline-start: var(--swc-badge-padding-inline-start, var(--swc-badge-padding-inline, token("component-edge-to-text-100")));
+  --_swc-badge-padding-block: var(--swc-badge-padding-block, token("component-padding-vertical-100"));
 
-  padding-block-start: calc(var(--swc-badge-padding-block-start, var(--_swc-badge-padding-block-start)) - var(--_swc-badge-border-width-deduction));
-  padding-block-end: calc(var(--swc-badge-padding-block-end, var(--_swc-badge-padding-block-end)) - var(--_swc-badge-border-width-deduction));
-  background: var(--swc-badge-background-color, token("accent-background-color-default"));
+  padding-inline-start: calc(var(--_swc-badge-padding-inline-start) - var(--_swc-badge-border-width));
+  padding-block: calc(var(--_swc-badge-padding-block) - var(--_swc-badge-border-width));
+  background: var(--swc-badge-background-color, token("neutral-subdued-background-color-default"));
 }
 ```
 
@@ -73,11 +72,9 @@ CSS custom properties *normally* can't actually be "private". However, due to sh
 
 ```css
 .swc-StatusLight {
-  --_swc-statuslight-top-to-text: var(--swc-statuslight-top-to-text, token("component-top-to-text-100"));
-  --_swc-statuslight-bottom-to-text: var(--swc-statuslight-bottom-to-text, token("component-bottom-to-text-100"));
+  --_swc-status-light-padding-block: var(--swc-status-light-padding-block, token("component-padding-vertical-100"));
 
-  padding-block-start: var(--_swc-statuslight-top-to-text);
-  padding-block-end: var(--_swc-statuslight-bottom-to-text);
+  padding-block: var(--_swc-status-light-padding-block);
 }
 ```
 
@@ -132,18 +129,18 @@ Static properties are not part of the customization surface and are not expected
 ```css
 .swc-Button {
     /* Changes per size variant = exposed */
-    font-size: var(--swc-button-font-size, token('font-size-200'));
+    font-size: var(--swc-button-font-size, token("font-size-200"));
     
     /* Changes per size variant = exposed,
        Multi-value definition = private */
     --_button-padding-block:  
-        token('component-top-to-text-100') token('component-bottom-to-text-100');
+        token("component-top-to-text-100") token("component-bottom-to-text-100");
     padding-block: var(--swc-button-padding-block, 
                         var(--_button-padding-block));
     
     /* Does not change = internal
        Future parts will offer ability to modify */
-    min-inline-size: token('button-minimum-width-multiplier');
+    min-inline-size: token("button-minimum-width-multiplier");
     
     /* Non-tokenized CSS properties = static */
     display: inline-flex;
@@ -151,9 +148,9 @@ Static properties are not part of the customization surface and are not expected
 
 /* Library style for component "large" variant via :host() selector to maintain consumer override capability */
 :host([size="l"]) {
-    --swc-button-font-size: token('font-size-400');
+    --swc-button-font-size: token("font-size-400");
     --swc-button-padding-block: 
-        token('component-top-to-text-200') token('component-bottom-to-text-200');
+        token("component-top-to-text-200") token("component-bottom-to-text-200");
 }
 
 /* Consumer override */
@@ -201,15 +198,15 @@ Use internal selectors (ex. `.swc-Badge--magenta` ) to pass library overrides fo
 Exposed properties **require** `:host()` to maintain override capability:
 
 ```css
-:host([size='s']) {
-    --swc-badge-height: token('component-height-75');
+:host([size="s"]) {
+    --swc-badge-height: token("component-height-75");
 }
 ```
 
 Consumers can then override exposed properties based on attributes and states:
 
 ```css
-swc-button[size='s']
+swc-button[size="s"]
 swc-button[aria-expanded]
 swc-button:focus-visible
 ```
@@ -228,7 +225,7 @@ Use of `token()`  in CSS values such as the following:
 
 ```css
 .swc-Button {
-    background-color: token('accent-background-color-default');
+    background-color: token("accent-background-color-default");
 }
 ```
 

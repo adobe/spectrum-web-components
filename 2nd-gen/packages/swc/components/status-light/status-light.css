@@ -22,22 +22,21 @@
 }
 
 .swc-StatusLight {
-  --_swc-statuslight-top-to-text: var(--swc-statuslight-top-to-text, token("component-top-to-text-100"));
-  --_swc-statuslight-bottom-to-text: var(--swc-statuslight-bottom-to-text, token("component-bottom-to-text-100"));
-  --_swc-statuslight-top-to-dot: var(--swc-statuslight-top-to-dot, token("status-light-top-to-dot-medium"));
-  --_swc-statuslight-text-to-visual: var(--swc-statuslight-text-to-visual, token("status-light-text-to-visual-100"));
+  --_swc-status-light-padding-block: var(--swc-status-light-padding-block, token("component-padding-vertical-100"));
+  --_swc-status-light-top-to-dot: var(--swc-status-light-top-to-dot, token("status-light-top-to-dot-medium"));
+  --_swc-status-light-text-to-visual: var(--swc-status-light-text-to-visual, token("status-light-text-to-visual-100"));
+  --_swc-status-light-line-height: var(--swc-status-light-line-height, token("line-height-font-size-100"));
 
   display: flex;
-  gap: var(--_swc-statuslight-text-to-visual);
+  gap: var(--_swc-status-light-text-to-visual);
   align-items: flex-start;
-  min-block-size: var(--swc-statuslight-height, token("component-height-100"));
-  padding-block-start: var(--_swc-statuslight-top-to-text);
-  padding-block-end: var(--_swc-statuslight-bottom-to-text);
-  font-size: var(--swc-statuslight-font-size, token("font-size-100"));
+  min-block-size: var(--swc-status-light-height, token("component-height-100"));
+  padding-block: var(--_swc-status-light-padding-block);
+  font-size: var(--swc-status-light-font-size, token("font-size-100"));
   font-style: token("default-font-style");
   font-weight: token("regular-font-weight");
-  line-height: token("line-height-100");
-  color: var(--swc-statuslight-content-color, token("neutral-content-color-default"));
+  line-height: var(--_swc-status-light-line-height);
+  color: var(--swc-status-light-content-color, token("neutral-content-color-default"));
 
   &:lang(ja),
   &:lang(zh),
@@ -47,133 +46,128 @@
 
   /* Dot */
   &::before {
-    --_swc-statuslight-dot-size: var(--swc-statuslight-dot-size, token("status-light-dot-size-medium"));
+    --_swc-status-light-dot-size: var(--swc-status-light-dot-size, token("status-light-dot-size-medium"));
 
-    box-sizing: border-box;
-    display: inline-block;
     flex-grow: 0;
     flex-shrink: 0;
-    inline-size: var(--_swc-statuslight-dot-size);
-    block-size: var(--_swc-statuslight-dot-size);
-    margin-block-start: calc(var(--_swc-statuslight-top-to-dot) - var(--_swc-statuslight-top-to-text));
-    background-color: var(--swc-statuslight-dot-color);
+    inline-size: var(--_swc-status-light-dot-size);
+    block-size: var(--_swc-status-light-dot-size);
+    margin-block-start: calc(var(--_swc-status-light-top-to-dot) - var(--_swc-status-light-padding-block));
+    background-color: var(--swc-status-light-dot-color, token("neutral-visual-color"));
     border-radius: token("corner-radius-full");
     content: "";
   }
 }
 
 :host([size="s"]) {
-  --swc-statuslight-top-to-text: token("component-top-to-text-75");
-  --swc-statuslight-bottom-to-text: token("component-bottom-to-text-75");
-  --swc-statuslight-top-to-dot: token("status-light-top-to-dot-small");
-  --swc-statuslight-text-to-visual: token("status-light-text-to-visual-75");
-  --swc-statuslight-height: token("component-height-75");
-  --swc-statuslight-dot-size: token("status-light-dot-size-small");
-  --swc-statuslight-font-size: token("font-size-75");
+  --swc-status-light-padding-block: token("component-padding-vertical-75");
+  --swc-status-light-top-to-dot: token("status-light-top-to-dot-small");
+  --swc-status-light-text-to-visual: token("status-light-text-to-visual-75");
+  --swc-status-light-height: token("component-height-75");
+  --swc-status-light-dot-size: token("status-light-dot-size-small");
+  --swc-status-light-font-size: token("font-size-75");
+  --swc-status-light-line-height: token("line-height-font-size-75");
 }
 
 :host([size="l"]) {
-  --swc-statuslight-top-to-text: token("component-top-to-text-200");
-  --swc-statuslight-bottom-to-text: token("component-bottom-to-text-200");
-  --swc-statuslight-top-to-dot: token("status-light-top-to-dot-large");
-  --swc-statuslight-text-to-visual: token("status-light-text-to-visual-200");
-  --swc-statuslight-height: token("component-height-200");
-  --swc-statuslight-dot-size: token("status-light-dot-size-large");
-  --swc-statuslight-font-size: token("font-size-200");
+  --swc-status-light-padding-block: token("component-padding-vertical-200");
+  --swc-status-light-top-to-dot: token("status-light-top-to-dot-large");
+  --swc-status-light-text-to-visual: token("status-light-text-to-visual-200");
+  --swc-status-light-height: token("component-height-200");
+  --swc-status-light-dot-size: token("status-light-dot-size-large");
+  --swc-status-light-font-size: token("font-size-200");
+  --swc-status-light-line-height: token("line-height-font-size-200");
 }
 
 :host([size="xl"]) {
-  --swc-statuslight-top-to-text: token("component-top-to-text-300");
-  --swc-statuslight-bottom-to-text: token("component-bottom-to-text-300");
-  --swc-statuslight-top-to-dot: token("status-light-top-to-dot-extra-large");
-  --swc-statuslight-text-to-visual: token("status-light-text-to-visual-300");
-  --swc-statuslight-height: token("component-height-300");
-  --swc-statuslight-dot-size: token("status-light-dot-size-extra-large");
-  --swc-statuslight-font-size: token("font-size-300");
+  --swc-status-light-padding-block: token("component-padding-vertical-300");
+  --swc-status-light-top-to-dot: token("status-light-top-to-dot-extra-large");
+  --swc-status-light-text-to-visual: token("status-light-text-to-visual-300");
+  --swc-status-light-height: token("component-height-300");
+  --swc-status-light-dot-size: token("status-light-dot-size-extra-large");
+  --swc-status-light-font-size: token("font-size-300");
+  --swc-status-light-line-height: token("line-height-font-size-300");
 }
 
-/* Semantic Colors */
-:host([variant="neutral"]) {
-  --swc-statuslight-content-color: token("gray-600");
-  --swc-statuslight-dot-color: token("neutral-visual-color");
-}
+/* NOTE: `neutral` is the default variant */
 
+/* Semantic colors */
 :host([variant="info"]) {
-  --swc-statuslight-dot-color: token("informative-visual-color");
+  --swc-status-light-dot-color: token("informative-visual-color");
 }
 
 :host([variant="negative"]) {
-  --swc-statuslight-dot-color: token("negative-visual-color");
+  --swc-status-light-dot-color: token("negative-visual-color");
 }
 
 :host([variant="notice"]) {
-  --swc-statuslight-dot-color: token("notice-visual-color");
+  --swc-status-light-dot-color: token("notice-visual-color");
 }
 
 :host([variant="positive"]) {
-  --swc-statuslight-dot-color: token("positive-visual-color");
+  --swc-status-light-dot-color: token("positive-visual-color");
 }
 
-/* Non-Semantic Colors */
+/* Non-semantic colors */
 .swc-StatusLight--yellow {
-  --swc-statuslight-dot-color: token("yellow-visual-color");
+  --swc-status-light-dot-color: token("yellow-visual-color");
 }
 
 .swc-StatusLight--chartreuse {
-  --swc-statuslight-dot-color: token("chartreuse-visual-color");
+  --swc-status-light-dot-color: token("chartreuse-visual-color");
 }
 
 .swc-StatusLight--celery {
-  --swc-statuslight-dot-color: token("celery-visual-color");
+  --swc-status-light-dot-color: token("celery-visual-color");
 }
 
 .swc-StatusLight--seafoam {
-  --swc-statuslight-dot-color: token("seafoam-visual-color");
+  --swc-status-light-dot-color: token("seafoam-visual-color");
 }
 
 .swc-StatusLight--cyan {
-  --swc-statuslight-dot-color: token("cyan-visual-color");
+  --swc-status-light-dot-color: token("cyan-visual-color");
 }
 
 .swc-StatusLight--indigo {
-  --swc-statuslight-dot-color: token("indigo-visual-color");
+  --swc-status-light-dot-color: token("indigo-visual-color");
 }
 
 .swc-StatusLight--purple {
-  --swc-statuslight-dot-color: token("purple-visual-color");
+  --swc-status-light-dot-color: token("purple-visual-color");
 }
 
 .swc-StatusLight--fuchsia {
-  --swc-statuslight-dot-color: token("fuchsia-visual-color");
+  --swc-status-light-dot-color: token("fuchsia-visual-color");
 }
 
 .swc-StatusLight--magenta {
-  --swc-statuslight-dot-color: token("magenta-visual-color");
+  --swc-status-light-dot-color: token("magenta-visual-color");
 }
 
 .swc-StatusLight--pink {
-  --swc-statuslight-dot-color: token("pink-visual-color");
+  --swc-status-light-dot-color: token("pink-visual-color");
 }
 
 .swc-StatusLight--turquoise {
-  --swc-statuslight-dot-color: token("turquoise-visual-color");
+  --swc-status-light-dot-color: token("turquoise-visual-color");
 }
 
 .swc-StatusLight--cinnamon {
-  --swc-statuslight-dot-color: token("cinnamon-visual-color");
+  --swc-status-light-dot-color: token("cinnamon-visual-color");
 }
 
 .swc-StatusLight--brown {
-  --swc-statuslight-dot-color: token("brown-visual-color");
+  --swc-status-light-dot-color: token("brown-visual-color");
 }
 
 .swc-StatusLight--silver {
-  --swc-statuslight-dot-color: token("silver-visual-color");
+  --swc-status-light-dot-color: token("silver-visual-color");
 }
 
 @media (forced-colors: active) {
   .swc-StatusLight {
-    --swc-statuslight-content-color: CanvasText;
+    --swc-status-light-content-color: CanvasText;
 
     forced-color-adjust: none;
 
