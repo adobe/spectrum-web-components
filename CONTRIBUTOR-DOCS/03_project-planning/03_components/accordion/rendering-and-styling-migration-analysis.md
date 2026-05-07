@@ -13,6 +13,7 @@
 
 - [Component specifications](#component-specifications)
     - [CSS (1st-gen / Spectrum 1)](#css-1st-gen--spectrum-1)
+    - [Figma — S2 Web (desktop scale)](#figma--s2-web-desktop-scale)
     - [SWC (1st-gen)](#swc-1st-gen)
 - [Comparison](#comparison)
     - [DOM structure changes](#dom-structure-changes)
@@ -54,7 +55,68 @@ Representative tokens consumed in 1st-gen (not exhaustive — extract full list 
 
 </details>
 
-**TBD (Spectrum 2):** Mirror this section from `spectrum-css` **`spectrum-two`** accordion component (`metadata.json`, `index.css`, stories template) when the sibling checkout is available.
+**TBD (Spectrum 2):** Mirror this section from `spectrum-css` **`spectrum-two`** accordion component (`metadata.json`, `index.css`, stories template) when the sibling checkout is available. Use [Figma — S2 Web (desktop scale)](#figma--s2-web-desktop-scale) below as the **design** source until that extraction is complete; reconcile any delta with `metadata.json` line by line (do not assume Figma and CSS stay in lockstep without verification).
+
+### Figma — S2 Web (desktop scale)
+
+**Canonical link (dev mode):** [S2 — Web (Desktop scale) — Accordion](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=39469-5419&p=f&m=dev) (`node-id=39469-5419`).
+
+The following is transcribed from the **published Accordion** page in that file (export reviewed May 2025; doc stamp **Last updated May 16, 2025** / Kami F.). Treat Figma as **visual and variant inventory**; **coded** selectors and tokens still come from **spectrum-css** `spectrum-two` when available.
+
+#### Definition
+
+An accordion shows a list of items that can be expanded or collapsed to reveal more content. The pattern can support **zero, one, or multiple** expanded items at a time (aligns quantity-of-open with product API such as [`allowsMultipleExpanded`](https://react-spectrum.adobe.com/Accordion), not with “quiet vs default” styling).
+
+<details>
+<summary>Accordion (root) — properties in Figma</summary>
+
+| Figma property | Role (from doc copy) |
+|---|---|
+| **Quiet** | Boolean — change appearance / communication of status |
+| **Variant** | Variant control on the accordion set (see item matrix for spacing/style family) |
+
+Figma defaults shown in the property table include **Quiet = False** for the accordion-level control where listed.
+
+</details>
+
+<details>
+<summary>Accordion item — properties in Figma</summary>
+
+| Figma property | Role (from doc copy) |
+|---|---|
+| **State** | **Open** (and interactive states shown in grids — **Hover**, **Down**, **Disabled**) |
+| **Quiet** | Boolean — aligns with accordion “quiet” visual family |
+| **Density** | **Compact**, **Regular**, **Spacious** — “change density” between items |
+| **Show paddings** | Toggle — show/hide padding guides |
+| **Show direct actions** | Toggle — show/hide **direct actions** region (optional chrome next to title) |
+| **Show switch** | Toggle — show/hide **switch** in the header row |
+| **Show action button** | Toggle — show/hide **action button** |
+| **@ Title** | Text — title string |
+| **Instance swap** | Local component swaps where applicable |
+
+**Migration implication:** Optional header affordances (**direct actions**, **switch**, **action button**) match the direction of richer headers in React Spectrum S2 (**`AccordionItemHeader`**, action controls). 1st-gen SWC uses a single header label + chevron only; **2nd-gen** may need **named slots** or internal structure once S2 template and a11y review land (see [migration plan](./migration-plan.md) and [accessibility analysis](./accessibility-migration-analysis.md)).
+
+**Density note:** Figma places **Density** on the **item** component with three steps (**Compact** / **Regular** / **Spacious**). 1st-gen reflects **`density`** on **`sp-accordion`** only (`compact` \| `spacious` \| unset). Reconcile host vs item during Step 1 when comparing `metadata.json` to this file — [migration plan — `density`](./migration-plan.md#public-api) already flags **`regular`** naming.
+
+</details>
+
+<details>
+<summary>Sizes, states, and styles (Figma matrices)</summary>
+
+- **Sizes:** **S**, **M**, **L**, **XL** (maps to existing SWC **`size`** scale).
+- **States (interactive):** **Default**, **Hover**, **Down**, **Disabled** across the published grids.
+- **Style families:** **Default** vs **Quiet**, crossed with **open/closed** and **density** rows (**Compact**, **Regular**, **Spacious**) in the canvases.
+
+**Figma caveat:** Keyboard **focus** state is **not** represented in the file; the spec points authors to Spectrum **coded** components and site docs for focus treatment.
+
+</details>
+
+#### Usage guidelines (from Figma — do not mix)
+
+- **Do not mix default and quiet accordion items inside one accordion.** Default accordions must not contain quiet items, and quiet accordions must not contain default items — the doc states this avoids **conflicting interaction behaviors**.
+- **Quiet hover and dividers:** The quiet accordion item hover state uses **rounded corners**. Using that inside a **default** accordion (with dividers) produces **gaps at corners** that the default divider treatment does not fill; only **keyboard focus** outline is expected to read similarly against dividers. **Prefer one style family per accordion** for both UX and markup/CSS predictability.
+
+This reinforces **accordion-wide `quiet`** (and consistent items) as the primary authoring model for 2nd-gen; avoid advertising **per-item `quiet`** that could violate this guidance unless Spectrum explicitly documents an exception ([migration plan](./migration-plan.md)).
 
 ### SWC (1st-gen)
 
@@ -121,9 +183,11 @@ Conceptual shadow output:
 </details>
 
 <details>
-<summary>Spectrum 2 (TBD)</summary>
+<summary>Spectrum 2 (TBD — CSS template)</summary>
 
 Paste or link the S2 template markup from **spectrum-css** `spectrum-two` when available. Compare heading/button/slot structure and class names to the above.
+
+**Design reference (until template is pasted):** [Figma — S2 Web (desktop scale)](#figma--s2-web-desktop-scale) — sizes **S–XL**, **Default/Quiet**, **Compact/Regular/Spacious** density, optional header actions/switch/button, and **do-not-mix** quiet vs default usage.
 
 </details>
 
@@ -139,7 +203,10 @@ Paste or link the S2 template markup from **spectrum-css** `spectrum-two` when a
 |---|---|---|
 | Styling source | Spectrum 1 generated CSS in package | Spectrum 2 tokens from **spectrum-css** `spectrum-two`; narrow public customization. |
 | DOM | `#heading` / `#header` / `#content`, optional chevron wrapper | Align with S2 template; preserve APG shape from [accessibility migration analysis](./accessibility-migration-analysis.md). |
-| Density / size | `density` + `size` on accordion, chevron scales by size | Reconcile with S2 variant matrix. |
+| Quiet vs default | No `quiet` on accordion or item | **Figma / S2:** accordion-level **Quiet** and item-level quiet must **not** be mixed with the opposite style inside one accordion ([Figma section](#figma--s2-web-desktop-scale)). Implement **`quiet`** as a single family per instance ([migration plan](./migration-plan.md)). |
+| Header chrome | Title + chevron only | **Figma** shows optional **direct actions**, **switch**, **action button** toggles — likely **slots** or subregions; align with [React Spectrum `AccordionItemHeader`](https://react-spectrum.adobe.com/Accordion) when scoping Phase 5/7. |
+| Density / size | `density` + `size` on accordion, chevron scales by size | **Figma** item **Density:** **Compact** / **Regular** / **Spacious**; sizes **S–XL**. Reconcile host vs item propagation with `metadata.json` + [migration plan `density`](./migration-plan.md#public-api). |
+| States | `open`, `disabled`, hover/focus in CSS | Match **Default / Hover / Down / Disabled** from Figma; **focus-visible** not in Figma — follow APG + [accessibility analysis](./accessibility-migration-analysis.md). |
 | Custom properties | Broad `--spectrum-accordion-*` / `--mod-*` | Replace with S2 equivalents; document breaking token renames in [migration plan](./migration-plan.md). |
 
 ---
@@ -148,6 +215,7 @@ Paste or link the S2 template markup from **spectrum-css** `spectrum-two` when a
 
 | Resource | Link |
 |---|---|
+| Figma — S2 Web (Desktop scale), Accordion | [figma.com/design/Mngz9H7WZLbrCvGQf3GnsY](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=39469-5419&p=f&m=dev) |
 | 1st-gen accordion package | [`1st-gen/packages/accordion/`](../../../../1st-gen/packages/accordion/) |
 | Migration plan | [migration-plan.md](./migration-plan.md) |
 | Accessibility analysis | [accessibility-migration-analysis.md](./accessibility-migration-analysis.md) |

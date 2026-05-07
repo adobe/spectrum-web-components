@@ -37,7 +37,7 @@ This document tracks **phase 1 (preparation)** for the accordion 1st-gen → 2nd
 |---|---|---|
 | [Migration plan](./migration-plan.md) | Draft — expand as decisions land | API, breaking changes, checklist, architecture. |
 | [Accessibility migration analysis](./accessibility-migration-analysis.md) | Substantive | WCAG 2.2 AA target behavior. |
-| [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md) | **In progress** | Scaffolded with 1st-gen DOM, SWC inventory, resources; Spectrum 2 CSS deep-dive pending **spectrum-css** `spectrum-two` checkout. |
+| [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md) | **In progress** | 1st-gen DOM + inventory; **[Figma S2 Web desktop — Accordion](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=39469-5419&p=f&m=dev)** spec captured in-doc; **`metadata.json` / CSS** extraction still pending **spectrum-css** `spectrum-two`. |
 
 ---
 
