@@ -337,7 +337,7 @@ slot[name="icon"]::slotted(*) {
 
 /* ── Pending ──────────────────────────────────────── */
 
-/* @global-exclude: pending state requires JS runtime (ButtonBase._pendingActive) */
+/* @global-exclude: pending state requires JS runtime (ButtonBase.pendingActive) */
 
 /* Cursor changes immediately on [pending]. Disabled colors, label/icon fade,
    and spinner appearance are deferred to .swc-Button--pendingActive, which is
@@ -462,6 +462,7 @@ slot[name="icon"]::slotted(*) {
   /* @global-exclude-end */
 }
 
+/* @global-exclude: pending state requires JS runtime (ButtonBase.pendingActive) */
 @media (forced-colors: active) {
   /* Pending-active button maps all interactive color states to system disabled
      colors so it visually matches native disabled controls in high-contrast
@@ -499,39 +500,4 @@ slot[name="icon"]::slotted(*) {
   }
 }
 
-@media (forced-colors: active) {
-  /* Pending-active button maps all interactive color states to system disabled
-     colors so it visually matches native disabled controls in high-contrast
-     mode. */
-  .swc-Button--pendingActive {
-    --swc-button-background-color-default: ButtonFace;
-    --swc-button-background-color-hover: ButtonFace;
-    --swc-button-background-color-down: ButtonFace;
-    --swc-button-background-color-focus: ButtonFace;
-    --swc-button-border-color-default: GrayText;
-    --swc-button-border-color-hover: GrayText;
-    --swc-button-border-color-down: GrayText;
-    --swc-button-border-color-focus: GrayText;
-    --swc-button-content-color-default: GrayText;
-    --swc-button-content-color-hover: GrayText;
-    --swc-button-content-color-down: GrayText;
-    --swc-button-content-color-focus: GrayText;
-  }
-
-  /* SVG stroke values are not auto-remapped by forced-colors.
-     Selections match swc-progress-circle. */
-
-  .swc-Button-pendingSpinner-track {
-    @media (prefers-color-scheme: dark) {
-      --_swc-pending-spinner-track-border-color: token("static-white-track-color");
-    }
-
-    @media (prefers-color-scheme: light) {
-      --_swc-pending-spinner-track-border-color: token("static-black-track-color");
-    }
-  }
-
-  .swc-Button-pendingSpinner-fill {
-    --_swc-pending-spinner-fill-border-color: Highlight;
-  }
-}
+/* @global-exclude-end */
