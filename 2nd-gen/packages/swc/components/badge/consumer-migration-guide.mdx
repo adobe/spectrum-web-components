@@ -4,17 +4,41 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Badge consumer migration guide
 
-Replace `<sp-badge>` with `<swc-badge>` and update the import. The public API is unchanged.
+Replace `<sp-badge>` with `<swc-badge>`, update the import, and check any badges that relied on the `informative` default variant — the default is now `neutral`.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/badge
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/badge/sp-badge.js';
+
+// After
+import '@adobe/spectrum-wc/badge';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/badge`) loads only that component's bundle.
 
 ## What changed
 
 ### Renamed
 
-| Area             | Spectrum 1 (`sp-badge`)                | Spectrum 2 (`swc-badge`)                  |
-| ---------------- | -------------------------------------- | ----------------------------------------- |
-| Tag              | `sp-badge`                             | `swc-badge`                               |
-| Import path      | `@spectrum-web-components/badge`       | `@adobe/spectrum-wc/badge`                |
-| CSS custom props | `--mod-badge-*` / `--spectrum-badge-*` | `--swc-badge-*` (see [Styling](#styling)) |
+| Area              | Spectrum 1 (`sp-badge`)                | Spectrum 2 (`swc-badge`)                                 |
+| ----------------- | -------------------------------------- | -------------------------------------------------------- |
+| Tag               | `sp-badge`                             | `swc-badge`                                              |
+| Import path       | `@spectrum-web-components/badge`       | `@adobe/spectrum-wc/badge`                               |
+| CSS custom props  | `--mod-badge-*` / `--spectrum-badge-*` | `--swc-badge-*` (see [Styling](#styling))                |
+| Default `variant` | `'informative'`                        | `'neutral'` — see [step 2](#2-check-the-default-variant) |
+| Default `size`    | No reflected default (`noDefaultSize`) | `'s'` — the `size` attribute is set by default           |
 
 ### Added in Spectrum 2
 
@@ -35,22 +59,28 @@ Replace `<sp-badge>` with `<swc-badge>` and update the import. The public API is
 
 ## Update your code
 
-### 1. Update the import
-
-```js
-// Before
-import '@spectrum-web-components/badge/sp-badge.js';
-// After
-import '@adobe/spectrum-wc/badge';
-```
-
-### 2. Rename the tag
+### 1. Rename the tag
 
 ```html
 <!-- Before -->
 <sp-badge variant="positive">Approved</sp-badge>
 <!-- After -->
 <swc-badge variant="positive">Approved</swc-badge>
+```
+
+### 2. Set an explicit `variant`
+
+Always set `variant` explicitly — omitting it produces a dev-mode warning and relies on an unguaranteed default. The Spectrum 2 default is `neutral`. If a badge previously relied on the Spectrum 1 default of `informative`, add the attribute:
+
+```html
+<!-- Before (rendered informative by default in Spectrum 1) -->
+<sp-badge>Active</sp-badge>
+
+<!-- After: use informative if that was the intent -->
+<swc-badge variant="informative">Active</swc-badge>
+
+<!-- Or neutral if that is correct for your context -->
+<swc-badge variant="neutral">Active</swc-badge>
 ```
 
 ### 3. Fix consumer-facing accessibility gaps
@@ -62,8 +92,8 @@ Add `aria-label` to icon-only badges so assistive tech announces a name:
 <sp-badge size="m">
   <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
 </sp-badge>
-<!-- After -->
-<swc-badge size="m" aria-label="Approved">
+<!-- After (default size is `s`; use `size="m"` if you need medium) -->
+<swc-badge aria-label="Approved">
   <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
 </swc-badge>
 ```
@@ -127,26 +157,50 @@ Spectrum 2 exposes a new set of public CSS custom properties on `<swc-badge>`.
   property has a 1:1 replacement, so read the list below carefully.
 </div>
 
-Public custom properties:
+### Removed `--mod-badge-*` properties
+
+Replace every `--mod-badge-*` property with its `--swc-badge-*` equivalent:
+
+| Removed (Spectrum 1)                        | Replacement (Spectrum 2)                                                             |
+| ------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `--mod-badge-height`                        | `--swc-badge-height`                                                                 |
+| `--mod-badge-corner-radius`                 | `--swc-badge-corner-radius`                                                          |
+| `--mod-badge-label-icon-color`              | `--swc-badge-label-icon-color`                                                       |
+| `--mod-badge-font-size`                     | `--swc-badge-font-size`                                                              |
+| `--mod-badge-line-height`                   | `--swc-badge-line-height`                                                            |
+| `--mod-badge-workflow-icon-size`            | `--swc-badge-icon-size`                                                              |
+| `--mod-badge-label-spacing-vertical-top`    | `--swc-badge-padding-block`                                                          |
+| `--mod-badge-label-spacing-vertical-bottom` | `--swc-badge-padding-block`                                                          |
+| `--mod-badge-icon-spacing-vertical-top`     | `--swc-badge-padding-block`                                                          |
+| `--mod-badge-label-spacing-horizontal`      | `--swc-badge-padding-inline`                                                         |
+| `--mod-badge-icon-text-spacing`             | `--swc-badge-gap`                                                                    |
+| `--mod-badge-icon-spacing-horizontal`       | No replacement                                                                       |
+| `--mod-badge-icon-only-spacing-horizontal`  | `--swc-badge-with-icon-only-padding-inline`                                          |
+| `--mod-badge-line-height-cjk`               | No replacement — S2 applies CJK line height via the `:lang()` selector automatically |
+
+### Public custom properties
 
 {/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-badge>`'s CEM entry once they are added in a follow-up PR. */}
 
-| Custom property                        | Description                                             | Notes                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| -------------------------------------- | ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--swc-badge-background-color`         | Background color of the badge.                          | **Semantic variants only** (`accent`, `neutral`, `informative`, `negative`, `positive`, `notice`). <br/><br/> Non-semantic color variants (`gray`, `red`, `orange`, `yellow`, `chartreuse`, `celery`, `green`, `seafoam`, `cyan`, `blue`, `indigo`, `purple`, `fuchsia`, `magenta`, `pink`, `turquoise`, `brown`, `cinnamon`, `silver`) apply their background via internal selectors and are not overrideable here — retoken globally instead. |
-| `--swc-badge-label-icon-color`         | Foreground color applied to the label text and icon.    |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| `--swc-badge-border-color`             | Border color of the badge.                              |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| `--swc-badge-corner-radius`            | Corner radius of the badge.                             | Fixed-edge positioning intentionally forces the affected corners to `0`; your override still applies to the remaining corners.                                                                                                                                                                                                                                                                                                                  |
-| `--swc-badge-font-size`                | Font size of the label.                                 |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| `--swc-badge-line-height`              | Line height of the label.                               |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| `--swc-badge-height`                   | Minimum block size of the badge.                        |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| `--swc-badge-gap`                      | Gap between the icon and label.                         |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| `--swc-badge-padding-block`            | Block (top/bottom) padding inside the badge.            |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| `--swc-badge-padding-inline`           | Inline (start/end) padding inside the badge.            |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| `--swc-badge-with-icon-padding-inline` | Inline padding applied when the badge contains an icon. |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| `--swc-badge-icon-size`                | Size of the slotted icon.                               |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| `--swc-badge-outline-background-color` | Background color used when `outline` is set.            | Outline + semantic variants only.                                                                                                                                                                                                                                                                                                                                                                                                               |
-| `--swc-badge-outline-label-icon-color` | Label and icon color used when `outline` is set.        | Outline + semantic variants only.                                                                                                                                                                                                                                                                                                                                                                                                               |
+| Custom property                             | Description                                                                                                                                                             | Notes                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--swc-badge-background-color`              | Background color of the badge.                                                                                                                                          | **Semantic variants only** (`accent`, `neutral`, `informative`, `negative`, `positive`, `notice`). <br/><br/> Non-semantic color variants (`gray`, `red`, `orange`, `yellow`, `chartreuse`, `celery`, `green`, `seafoam`, `cyan`, `blue`, `indigo`, `purple`, `fuchsia`, `magenta`, `pink`, `turquoise`, `brown`, `cinnamon`, `silver`) apply their background via internal selectors and are not overrideable here — retoken globally instead. |
+| `--swc-badge-label-icon-color`              | Foreground color applied to the label text and icon.                                                                                                                    |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `--swc-badge-border-color`                  | Border color of the badge.                                                                                                                                              |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `--swc-badge-corner-radius`                 | Corner radius of the badge.                                                                                                                                             | Fixed-edge positioning intentionally forces the affected corners to `0`; your override still applies to the remaining corners.                                                                                                                                                                                                                                                                                                                  |
+| `--swc-badge-font-size`                     | Font size of the label.                                                                                                                                                 |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `--swc-badge-line-height`                   | Line height of the label.                                                                                                                                               |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `--swc-badge-height`                        | Minimum block size of the badge.                                                                                                                                        |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `--swc-badge-gap`                           | Gap between the icon and label.                                                                                                                                         |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `--swc-badge-padding-block`                 | Block (top/bottom) padding inside the badge.                                                                                                                            |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `--swc-badge-padding-inline`                | Inline (start/end) padding inside the badge.                                                                                                                            |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `--swc-badge-with-icon-padding-inline`      | Inline padding applied when the badge contains an icon and a label.                                                                                                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `--swc-badge-padding-inline-start`          | Inline-start padding override; takes precedence over `--swc-badge-padding-inline`. Automatically set to `--swc-badge-with-icon-padding-inline` when an icon is present. | Override to fine-tune start-side padding independently.                                                                                                                                                                                                                                                                                                                                                                                         |
+| `--swc-badge-with-icon-only-padding-inline` | Inline padding applied when the badge contains only an icon (no label).                                                                                                 | Set by the `size` attribute; override for custom icon-only sizing.                                                                                                                                                                                                                                                                                                                                                                              |
+| `--swc-badge-with-icon-only-padding-block`  | Block padding applied when the badge contains only an icon (no label).                                                                                                  | Set by the `size` attribute; override for custom icon-only sizing.                                                                                                                                                                                                                                                                                                                                                                              |
+| `--swc-badge-icon-size`                     | Size of the slotted icon.                                                                                                                                               |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `--swc-badge-outline-background-color`      | Background color used when `outline` is set.                                                                                                                            | Outline + semantic variants only.                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `--swc-badge-outline-label-icon-color`      | Label and icon color used when `outline` is set.                                                                                                                        | Outline + semantic variants only.                                                                                                                                                                                                                                                                                                                                                                                                               |
 
 <div
   style={{
@@ -167,6 +221,7 @@ Public custom properties:
 
 - [ ] Update imports
 - [ ] Rename all `<sp-badge>` to `<swc-badge>`
+- [ ] Add an explicit `variant` to every `<swc-badge>` — use `variant="informative"` if that was the Spectrum 1 default intent
 - [ ] Replace `--mod-badge-*` overrides on semantic variants with `--swc-badge-*`; retoken globally for non-semantic color variants
 - [ ] Add `aria-label` to icon-only badges
 - [ ] Add `aria-hidden="true"` to decorative icons

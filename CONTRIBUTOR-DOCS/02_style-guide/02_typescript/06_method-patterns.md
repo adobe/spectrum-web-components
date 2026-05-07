@@ -27,24 +27,24 @@ This guide explains how to order and name methods in 2nd-gen component classes.
 
 ## Method ordering
 
-Within the [IMPLEMENTATION section](02_class-structure.md#section-implementation) of a base class, or the [RENDERING & STYLING section](02_class-structure.md#section-rendering-and-styling) of a concrete class, order methods by access level:
+Within the [IMPLEMENTATION section](02_class-structure.md#section-implementation) of a base class, or the [RENDERING & STYLING section](02_class-structure.md#section-rendering-and-styling) of a concrete class, use this **default** order by access level:
 
 1. **public** methods first
-2. **protected** methods second (including lifecycle)
+2. **protected** methods second (including lifecycle overrides)
 3. **private** methods last
 
-**Example from ProgressCircle.base.ts — IMPLEMENTATION section:**
+**Exception:** Keep lifecycle overrides in **Lit order** (e.g. `firstUpdated` before `updated`). You may place a **private method** **between** those hooks **when only those hooks call it** (and nothing else in the class does), so the file reads in execution order; if the method is also used elsewhere, put it **after** all protected members instead.
+
+**Example from [ProgressCircle.base.ts](../../../2nd-gen/packages/core/components/progress-circle/ProgressCircle.base.ts) — IMPLEMENTATION section:**
 
 ```ts
-// Protected methods (lifecycle and helpers)
-protected makeRotation(rotation: number): string | undefined { ... }
-protected handleSlotchange(): void { ... }
+// Protected — firstUpdated
 protected override firstUpdated(changes: PropertyValues): void { ... }
 
-// Private methods
+// Private — used by updated()
 private formatProgress(): string { ... }
 
-// Protected lifecycle (later in call order)
+// Protected — updated
 protected override updated(changes: PropertyValues): void { ... }
 ```
 
