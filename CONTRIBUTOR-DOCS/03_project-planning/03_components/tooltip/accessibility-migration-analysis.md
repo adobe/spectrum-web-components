@@ -132,15 +132,26 @@ Shared **popover** **styles** or an anchored **`swc-popover` shell** (see [popov
 
 ## Related 1st-gen accessibility (Jira)
 
-| Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
-| --- | --- | --- | --- | --- |
-| — | — | — | — | No **`sp-tooltip`–specific** 1st-gen tickets captured yet—populate when issues are filed (omit gen2-labelled, audit-wide, and migration-consultation stories per contributor-doc rules). |
+| Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary | Notes |
+| --- | --- | --- | --- | --- | --- |
+| [SWC-1558](https://jira.corp.adobe.com/browse/SWC-1558) | Bug | To Do | Unresolved | Tooltip is missing **`role="tooltip"`** | Confirms gap vs APG—2nd-gen must fix on surfaced node. |
+| [SWC-1465](https://jira.corp.adobe.com/browse/SWC-1465) | Story | To Do | Unresolved | Docs: **`aria-describedby`** guidance for Tooltip | Tie to **`describeTrigger`/`none`** and cross-root **`HoverController`** behavior. |
+| [SWC-321](https://jira.corp.adobe.com/browse/SWC-321) | Bug | To Do | Unresolved | Clicking **open**, **self-managed** tooltip on **action-button** triggers underlying button ([#3969](https://github.com/adobe/spectrum-web-components/issues/3969)) | Regression-test **hit-target layering** (**`pointer-events`**, stacking order, dismiss-on-press). Align dismiss-on-pointer behavior with React Spectrum **`shouldCloseOnPress`** ([React Spectrum Tooltip](https://react-spectrum.adobe.com/Tooltip)). |
+| [SWC-324](https://jira.corp.adobe.com/browse/SWC-324) | Bug | To Do | Unresolved | Shared **`sp-tooltip`/`sp-overlay`** across buttons — content swaps but ghost position persists | Overlay must **re-anchor** when active trigger identity changes; **anchor-name** keyed to trigger helps; add perf-safe regression (**SWC-2025**). |
+| [SWC-890](https://jira.corp.adobe.com/browse/SWC-890) | Bug | To Do | Unresolved | Tooltip in **ActionMenu** logs overlay warning (**#5462**) | Stacks with menu/hint overlays — validate **`OverlayTrigger`** coexistence docs + Storybook (**SWC-2026**). |
+| [SWC-994](https://jira.corp.adobe.com/browse/SWC-994) | Bug | To Do | Unresolved | Tooltip **max-width** overrides **`--mod`** variable | Token/mod fidelity — fold into **Spectrum 2** visual pass (**SWC-2023**). |
+| [SWC-286](https://jira.corp.adobe.com/browse/SWC-286) | Story | Done | Done | VoiceOver reads tooltip/overlay content | Carry forward SR passes for supplementary description vs duplication on focus. |
+| [SWC-1603](https://jira.corp.adobe.com/browse/SWC-1603) | Bug | Done | Fixed | **Self-managed** tooltip logs **`TRAVERSAL_EXHAUSTED`** in valid slotted usage | Keep **`triggerElement`** override + traversal docs (**SWC-2019** plan). |
+
+**Historical placement / browser regressions** (lesson: widen VRT + Safari/Firefox in **Storybook**/CI per **SWC-2026**/**SWC-2025**): [SWC-1331](https://jira.corp.adobe.com/browse/SWC-1331) (no-break word wrapping, **Done**/**Fixed**); [SWC-539](https://jira.corp.adobe.com/browse/SWC-539) (Firefox horizontal offset — **Done**/**Fixed**); [SWC-532](https://jira.corp.adobe.com/browse/SWC-532) + [SWC-530](https://jira.corp.adobe.com/browse/SWC-530) (**Safari** tip alignment / jitter — **Done**/**Fixed**); [SWC-852](https://jira.corp.adobe.com/browse/SWC-852) (Safari flicker — **Cannot Reproduce**); [SWC-681](https://jira.corp.adobe.com/browse/SWC-681) (**ActionMenu**: clickable tooltip closed menu — **Done**/**Fixed**); [SWC-561](https://jira.corp.adobe.com/browse/SWC-561) (**delayed overlay** interplay — **Won't Fix** — treat as integration constraint in docs).
+
+**Overlay direction (closed):** [SWC-1674](https://jira.corp.adobe.com/browse/SWC-1674) (**RFC**: next-gen overlay — **Done**) supports retiring teleport-heavy defaults in favor of **anchor-first** Tooltip placement spelled out below; **API/port** (**[SWC-2021](https://jira.corp.adobe.com/browse/SWC-2021)**) and **style** (**[SWC-2024](https://jira.corp.adobe.com/browse/SWC-2024)**) work on **Jira** should keep that bias.
 
 ---
 
 ## Recommendations: `<swc-tooltip>`
 
-Component tag may change (`swc-tooltip` placeholder)—this section covers the surfaced tooltip primitive plus its triggering contract.
+Component tag may change (`swc-tooltip` placeholder)—this section covers the surfaced tooltip primitive plus its triggering contract. It addresses **`role="tooltip"`** / **`aria-describedby`** gaps tracked under **[SWC-1558](https://jira.corp.adobe.com/browse/SWC-1558)** and authoring guidance under **[SWC-1465](https://jira.corp.adobe.com/browse/SWC-1465)**.
 
 ### ARIA roles, states, and properties
 
@@ -163,7 +174,7 @@ Cross-root **`aria-describedby`** branches in **`HoverController.prepareDescript
 
 - Default combo: hovered/focus-visible trigger references tooltip id via **`aria-describedby`** even if browse/virtual cursor order skips the detached bubble until focus lands.
 - Toggletip: labelled button exposes expanded state + **`aria-controls`**, tooltip still flagged **`role="tooltip"`** or nested region per pattern choice—document divergence from APG **pure supplementary** semantics.
-- **Self-managed mirrors** `Tooltip.resolveSelfManagedTriggerElement`—walk ancestors until **`focusableSelector`** matches unless authors pass **`triggerElement`** explicitly (`Tooltip.ts`).
+- **Self-managed mirrors** `Tooltip.resolveSelfManagedTriggerElement`—walk ancestors until **`focusableSelector`** matches unless authors pass **`triggerElement`** explicitly (`Tooltip.ts`). Prefer **`triggerElement`** for complex slots to silence false **`TRAVERSAL_EXHAUSTED`** (**[SWC-1603](https://jira.corp.adobe.com/browse/SWC-1603)**) and expose that path in **[SWC-2027](https://jira.corp.adobe.com/browse/SWC-2027)**-style migration copy.
 
 ### Form-associated custom properties (labels, `ElementInternals`)
 
@@ -182,16 +193,18 @@ Cross-root **`aria-describedby`** branches in **`HoverController.prepareDescript
 | Topic | What to do |
 | --- | --- |
 | Primary mechanism | `anchor-name` on triggers + **`position-anchor` / `anchor()` / logical insets**, guided by MDN (**[CSS anchor positioning](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_anchor_positioning)**) and **[CSS-Tricks](https://css-tricks.com/css-anchor-positioning-guide/)**. Keep DOM co-located with trigger when clipping allows so scroll/resize need less JS teleporting—only hoist to viewport layers when unavoidable. |
-| JavaScript allowances | Progressive enhancement for browsers lacking anchors, nuanced collision surpassing declarative **`@position-try`**, syncing multiple simultaneous hints, bridging virtual references. Overlay stack must not silently become default. |
-| RTL / Spectrum placement vocabulary | Translate `start`/`end` cleanly; regress RTL tip parity (see [SWC-917 popover precedent](https://jira.corp.adobe.com/browse/SWC-917)). |
+| JavaScript allowances | Progressive enhancement for browsers lacking anchors, nuanced collision surpassing declarative **`@position-try`**, syncing multiple simultaneous hints, bridging virtual references, **recomputing anchor** when the active trigger swaps ([SWC-324](https://jira.corp.adobe.com/browse/SWC-324)). Overlay stack must not silently become default. |
+| RTL / Spectrum placement vocabulary | Translate `start`/`end` cleanly; regress RTL tip parity (see [SWC-917 popover precedent](https://jira.corp.adobe.com/browse/SWC-917)). Historical **Firefox**/**Safari** tip and jitter bugs (**[SWC-539](https://jira.corp.adobe.com/browse/SWC-539)**, **[SWC-532](https://jira.corp.adobe.com/browse/SWC-532)**, **[SWC-530](https://jira.corp.adobe.com/browse/SWC-530)**—**Done**) justify cross-browser visual regression—not only logical placement APIs. |
+| **`--mod`**, max-width, long unbroken strings | Honor mod tokens (**[SWC-994](https://jira.corp.adobe.com/browse/SWC-994)**) and **wrapping**/overflow (**[SWC-1331](https://jira.corp.adobe.com/browse/SWC-1331)**—**Done**) so Tooltip chrome does not truncate or clash with authored constraints in **Spectrum 2** (**[SWC-2023](https://jira.corp.adobe.com/browse/SWC-2023)** drives visual fidelity). |
 
 ### Interaction: pointer, keyboard, and touch
 
 | Topic | What to do |
 | --- | --- |
 | Keyboard | Show on `:focus-visible` whenever hover also triggers; collapse on blur appropriately while mirroring **[Deque Tooltip](https://dequeuniversity.com/library/aria/tooltip)** semantics. **`Escape`** dismisses transient hints globally without stealing focus (see [`OverlayStack.ts`](../../../../1st-gen/packages/overlay/src/OverlayStack.ts) hint handling). |
-| Pointer hover | Support warmup/cooldown delays matching Spectrum guidance (React Spectrum default **delay** knobs) and tolerate pointer movement onto tooltip copy (Deque `keepTooltipOnMouseOver`). |
+| Pointer hover | Support warmup/cooldown delays matching Spectrum guidance (React Spectrum default **delay** knobs) and tolerate pointer movement onto tooltip copy (Deque `keepTooltipOnMouseOver`). **Delayed overlay interplay** (**[SWC-561](https://jira.corp.adobe.com/browse/SWC-561)** — **Won’t Fix**) stays an **integrator documentation** concern: **`OverlayTrigger`** hover/long-press timing plus delayed tooltip warmup must read clearly together—not a Tooltip-only defect. |
 | Touch | Do not mimic React Spectrum “no touch tooltips”—document explicit taps/long-press/toggletip buttons. Align **`triggerInteraction`** long-press expectations with **`tooltip-directive`** options. Stories must validate on device emulation. |
+| Menu / stacking regression targets | Maintain **Storybook/e2e** coverage where Tooltip coexists with **menus**/**buttons** (**[SWC-321](https://jira.corp.adobe.com/browse/SWC-321)**, historical **[SWC-681](https://jira.corp.adobe.com/browse/SWC-681)**, **[SWC-890](https://jira.corp.adobe.com/browse/SWC-890)**): overlays stay reachable without unintended activation of underlying primary actions (**[SWC-2026](https://jira.corp.adobe.com/browse/SWC-2026)** narratives). |
 
 **React Spectrum TooltipTrigger recap (map into WC equivalents):**
 
@@ -213,7 +226,7 @@ Cross-root **`aria-describedby`** branches in **`HoverController.prepareDescript
 | --- | --- |
 | **Unit / component** | Modes (**hover**, **focus-visible**, **`longpress`**, toggletip) mutate **`aria-describedby`/`aria-expanded`** predictably; `describeTrigger="none"` never leaves stale references. |
 | **aXe + Storybook** | No duplicate relational attributes, stray interactive nodes inside **`role="tooltip"`**, violations on contrast/touch targets when toggletip buttons shrink. |
-| **Playwright ARIA snapshots** | Cross-browser anchor placement smoke + tree snapshots for **`swc-action-button`** + Tooltip bundles. |
+| **Playwright ARIA snapshots** | Cross-browser anchor placement smoke + tree snapshots for **`swc-action-button`** + Tooltip bundles; widen coverage commensurate with historical Safari/Firefox placement bugs (**[SWC-539](https://jira.corp.adobe.com/browse/SWC-539)**, **[SWC-532](https://jira.corp.adobe.com/browse/SWC-532)**, **[SWC-530](https://jira.corp.adobe.com/browse/SWC-530)**) and shared-trigger re-anchor (**[SWC-324](https://jira.corp.adobe.com/browse/SWC-324)**)—see **[Related 1st-gen accessibility](#related-1st-gen-accessibility-jira)**. Prior doc/test-structure debt (**[SWC-420](https://jira.corp.adobe.com/browse/SWC-420)**, **[SWC-421](https://jira.corp.adobe.com/browse/SWC-421)**; **[SWC-166](https://jira.corp.adobe.com/browse/SWC-166)**) should converge into coherent suites (**[SWC-2025](https://jira.corp.adobe.com/browse/SWC-2025)**). |
 
 ### Playwright-only or host-only accessibility gates
 
@@ -221,20 +234,20 @@ Meaningful only when Tooltip ships beside real triggers—isolated shell stories
 
 ### Manual and screen reader testing
 
-Exercise VoiceOver/NVDA/JAWS in browse versus focus modes using the [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide (see **Browse mode**). Confirm supplementary speech fires once triggers gain focus—not only when pointer hovers—and verify touch/long-press/toggletip flows on handheld emulation.
+Exercise VoiceOver/NVDA/JAWS in browse versus focus modes using the [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide (see **Browse mode**). Confirm supplementary speech fires once triggers gain focus—not only when pointer hovers—and verify touch/long-press/toggletip flows on handheld emulation. **[SWC-286](https://jira.corp.adobe.com/browse/SWC-286)** (**Done**) established VO behavior on overlay/tooltip narration—reuse that lineage when asserting **`aria-describedby`** supplemental output vs duplication.
 
 ---
 
 ## Summary checklist
 
-- [ ] **`role="tooltip"`**, **`aria-describedby`**, **`id`**, **`describeTrigger`/opt-out parity** coded and documented.
+- [ ] **`role="tooltip"`**, **`aria-describedby`**, **`id`**, **`describeTrigger`/opt-out parity** coded and documented (closes **[SWC-1558](https://jira.corp.adobe.com/browse/SWC-1558)**, informs **[SWC-1465](https://jira.corp.adobe.com/browse/SWC-1465)**/**[SWC-2022](https://jira.corp.adobe.com/browse/SWC-2022)**).
 - [ ] **Hover + focus + touch** pathways covered; **keyboard** hides/show rules match **Deque** guidance.
 - [ ] **CSS anchor positioning first** documented in migration + Storybook (**[CSS tricks guide](https://css-tricks.com/css-anchor-positioning-guide/)**) with **explicit** fallback story for **unsupported** UA.
 - [ ] **`aria-expanded`/`aria-controls` toggletip variant** scoped and separated from **`aria-describedby`-only**.
 - [ ] Escape dismisses transient tooltips **without focus trap**.
-- [ ] Regression tests for **`aria-describedby`** lifecycle across **shadow/light** coupling.
+- [ ] Regression tests for **`aria-describedby`** lifecycle across **shadow/light** coupling plus **hit-target**/stacking cases from **[SWC-321](https://jira.corp.adobe.com/browse/SWC-321)**/**[SWC-890](https://jira.corp.adobe.com/browse/SWC-890)** and shared-trigger **re-anchor** from **[SWC-324](https://jira.corp.adobe.com/browse/SWC-324)** (**[SWC-2025](https://jira.corp.adobe.com/browse/SWC-2025)**).
 - [ ] SR manual pass per [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) (`focus`/`browse`/`touch`).
-- [ ] **Jira snapshot** keeps **excluding** migrated gen2‑only/program tickets once rows exist.
+- [ ] Refresh **[Related 1st-gen accessibility](#related-1st-gen-accessibility-jira)** when **`sp-tooltip`** tickets close or supersede (Adobe Jira remains authoritative—**omit** duplicated **`gen2`** program rows here per contributor-doc rules).
 
 ---
 
@@ -251,3 +264,4 @@ Exercise VoiceOver/NVDA/JAWS in browse versus focus modes using the [Screen read
 - 1st-gen: [`Tooltip.ts`](../../../../1st-gen/packages/tooltip/src/Tooltip.ts), [`HoverController.ts`](../../../../1st-gen/packages/overlay/src/HoverController.ts) (description wiring), [`OverlayStack.ts`](../../../../1st-gen/packages/overlay/src/OverlayStack.ts) (Escape closes `hint` overlays)
 - Tooltip [rendering-and-styling migration](./rendering-and-styling-migration-analysis.md); Popover [accessibility migration analysis](../popover/accessibility-migration-analysis.md)
 - 2nd-gen guides: [Semantic HTML and ARIA](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx), [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx), [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
+- Adobe Jira (**1st-gen** snapshot table): [Related 1st-gen accessibility](#related-1st-gen-accessibility-jira)
