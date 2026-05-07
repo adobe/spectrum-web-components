@@ -172,13 +172,23 @@ export const Sizes: Story = {
  *
  * - **white**: Use on dark or colored backgrounds for better contrast
  * - **black**: Use on light backgrounds for better contrast
+ *
+ * Each panel lists **small**, **medium**, and **large** in order so Chromatic can snapshot every
+ * static-color and size pairing with the same label text (stroke weight is what changes).
  */
-// @todo: capture the Chromatic VRTs for all sizes of progress circles for both static color options and WHCM. SWC-1848
 export const StaticColors: Story = {
   render: (args) => html`
     ${PROGRESS_CIRCLE_STATIC_COLORS.map(
       (color) => html`
-        ${template({ ...args, 'static-color': color })}
+        <div>
+          ${PROGRESS_CIRCLE_VALID_SIZES.map((size) =>
+            template({
+              ...args,
+              size,
+              'static-color': color,
+            })
+          )}
+        </div>
       `
     )}
   `,
@@ -189,6 +199,9 @@ export const StaticColors: Story = {
   parameters: {
     staticColorsDemo: true,
     'section-order': 2,
+    styles: {
+      'align-items': 'flex-start',
+    },
   },
 };
 

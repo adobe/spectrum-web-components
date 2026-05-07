@@ -18,7 +18,6 @@
   box-sizing: border-box;
 }
 
-/* @todo capture visual regression tests for WHCM (forced-colors) and more static color sizes in Chromatic. SWC-1848 */
 .swc-Divider {
   --_swc-divider-thickness: var(--swc-divider-thickness, token("divider-thickness-medium"));
 
@@ -37,6 +36,7 @@
   --swc-divider-background-color: token("gray-800");
 }
 
+/* Minimum tracks below cap percentage fill; when the basis does not resolve, set a definite inline size on :host for horizontal dividers or block size for vertical. */
 .swc-Divider:not(.swc-Divider--vertical) {
   min-inline-size: min(100%, token("divider-horizontal-minimum-width"));
 }

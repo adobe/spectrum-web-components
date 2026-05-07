@@ -62,7 +62,11 @@ test.describe('Badge - ARIA Snapshots', () => {
   test('should handle different sizes', async ({ page }) => {
     const root = await gotoStory(page, 'components-badge--sizes', 'swc-badge');
     await expect(root).toMatchAriaSnapshot(`
-      - text: Small Medium Large Extra-large
+      - text: Small Medium Large Extra-large Small Medium Large Extra-large
+      - img "Small"
+      - img "Medium"
+      - img "Large"
+      - img "Extra-large"
     `);
   });
 

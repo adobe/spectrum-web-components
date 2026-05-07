@@ -58,7 +58,7 @@ import {
   type [Component]Size,
   type [Component]Variant,
   // …add other types used in satisfies constraints below
-} from '../../../../core/components/[component]/[Component].types.js';
+} from '@spectrum-web-components/core/components/[component]';
 
 // ────────────────
 //    METADATA
@@ -84,7 +84,7 @@ argTypes.size = {
  * [One or two sentences describing what the component does and when to use it.
  * Keep this brief — detailed usage guidance belongs in Phase 7 docs.]
  */
-export const meta: Meta = {
+const meta: Meta = {
   title: '[Component]',
   component: 'swc-[component]',
   parameters: {
@@ -101,11 +101,7 @@ export const meta: Meta = {
   tags: ['migrated'],
 };
 
-export default {
-  ...meta,
-  title: '[Component]',
-  excludeStories: ['meta'],
-} as Meta;
+export default meta;
 
 // ────────────────────
 //    HELPERS

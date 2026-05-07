@@ -11,6 +11,7 @@
  */
 
 import { html } from 'lit';
+import { styleMap } from 'lit/directives/style-map.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -230,32 +231,91 @@ export const Vertical: Story = {
   },
 };
 
+/** Same prose for each horizontal thickness so snapshots emphasize divider weight only. */
+const STATIC_COLORS_HORIZONTAL_COPY = {
+  headingBefore: 'Dashboard settings',
+  bodyBefore: 'Configure your dashboard preferences and layout options.',
+  headingAfter: 'Display options',
+  bodyAfter: 'Adjust your layout and theme settings.',
+} as const;
+
+const STATIC_COLORS_HORIZONTAL_SIZES = Divider.VALID_SIZES;
+
+/** Vertical rows: explicit `block-size` matches {@link Vertical}. */
+const STATIC_COLORS_VERTICAL_SAMPLES = [
+  { size: 's' as const, blockSize: 16 },
+  { size: 'm' as const, blockSize: 24 },
+  { size: 'l' as const, blockSize: 32 },
+];
+
 /**
  * Use the `static-color` attribute when displaying over images or colored backgrounds:
  *
  * - **white**: Use on dark or colored backgrounds for better contrast
  * - **black**: Use on light backgrounds for better contrast
+ *
+ * Each static color panel shows **horizontal** dividers at sizes `s`, `m`, and `l`, and **vertical**
+ * dividers at the same sizes (vertical rows use an explicit `block-size` so the line is visible).
  */
 export const StaticColors: Story = {
   render: (args) => html`
     ${['white', 'black'].map(
       (color) => html`
-        <div>
-          <h4>Dashboard settings</h4>
-          <p>Configure your dashboard preferences and layout options.</p>
-          ${template({ ...args, 'static-color': color })}
-          <h4>Display options</h4>
-          <p>Adjust your layout and theme settings.</p>
+        <div
+          style=${styleMap({
+            '--swc-detail-font-color': color === 'white' ? 'white' : 'black',
+          })}
+        >
+          ${STATIC_COLORS_HORIZONTAL_SIZES.map(
+            (size) => html`
+              <div
+                class="swc-Typography--emphasized swc-Detail swc-Detail--sizeS swc-Detail--margins"
+              >
+                Horizontal · size ${size}
+              </div>
+              <h4>${STATIC_COLORS_HORIZONTAL_COPY.headingBefore}</h4>
+              <p>${STATIC_COLORS_HORIZONTAL_COPY.bodyBefore}</p>
+              ${template({ ...args, 'static-color': color, size })}
+              <h4>${STATIC_COLORS_HORIZONTAL_COPY.headingAfter}</h4>
+              <p>${STATIC_COLORS_HORIZONTAL_COPY.bodyAfter}</p>
+            `
+          )}
+          ${STATIC_COLORS_VERTICAL_SAMPLES.map(
+            (row) => html`
+              <div
+                class="swc-Typography--emphasized swc-Detail swc-Detail--sizeS swc-Detail--margins"
+              >
+                Vertical · size ${row.size}
+              </div>
+              <div
+                style="display: flex; align-items: center; gap: 8px; block-size: ${row.blockSize}px;"
+              >
+                ${(['Cut', 'Copy', 'Paste'] as const).map(
+                  (label, index) => html`
+                    ${index === 0
+                      ? ''
+                      : template({
+                          ...args,
+                          'static-color': color,
+                          size: row.size,
+                          vertical: true,
+                        })}
+                    <span>${label}</span>
+                  `
+                )}
+              </div>
+            `
+          )}
         </div>
       `
     )}
   `,
-  args: {
-    size: 'm',
-  },
   parameters: {
     staticColorsDemo: true,
     'section-order': 3,
+    styles: {
+      'align-items': 'flex-start',
+    },
   },
   tags: ['options'],
 };

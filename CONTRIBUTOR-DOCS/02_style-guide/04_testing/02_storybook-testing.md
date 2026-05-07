@@ -27,6 +27,8 @@
     - [Testing defaults](#testing-defaults)
     - [Testing attribute reflection](#testing-attribute-reflection)
     - [Testing slots](#testing-slots)
+    - [Testing shadow DOM internals](#testing-shadow-dom-internals)
+    - [Testing static color variants](#testing-static-color-variants)
     - [Testing dev mode warnings](#testing-dev-mode-warnings)
     - [Testing composed components](#testing-composed-components)
 
@@ -150,14 +152,14 @@ Use this table to decide where a test belongs:
 | --- | --- |
 | Default values after first render | Defaults |
 | Setting or clearing a property or attribute | Properties / Attributes |
-| Size variations (s, m, l, xl) | Properties / Attributes |
-| Static color attribute | Properties / Attributes |
-| ARIA label, role override | Properties / Attributes |
+| ARIA label, role override, `delegatesFocus` behavior | Properties / Attributes |
 | Slot content rendering | Slots |
 | Label fallback from slot | Slots |
+| Size variations (s, m, l, xl) | Variants / States |
+| Static color attribute | Variants / States |
 | Semantic or non-semantic variant list | Variants / States |
 | Outline, subtle, fixed positioning | Variants / States |
-| Indeterminate, disabled, progress values | Variants / States |
+| Indeterminate, disabled, pending state transitions | Variants / States |
 | State transitions (e.g., determinate to indeterminate) | Variants / States |
 | Invalid value warnings | Dev mode warnings |
 | Unsupported attribute warnings | Dev mode warnings |
@@ -403,6 +405,67 @@ await step('renders default slot content', async () => {
   expect(badge.textContent?.trim(), 'default slot text').toBe('Approved');
 });
 ```
+
+### Testing shadow DOM internals
+
+When a component wraps a native element in its shadow DOM (e.g., a `<button>` or `<input>`), assert the internal element's attributes and state through `renderRoot`.
+
+Access the internal element with `querySelector`:
+
+```typescript
+const button = await getComponent<Button>(canvasElement, 'swc-button');
+const internalButton = button.renderRoot.querySelector('button');
+expect(internalButton, 'internal button exists in shadow root').toBeTruthy();
+expect(internalButton?.getAttribute('aria-label'), 'aria-label on internal button').toBe('Save');
+```
+
+**Testing `delegatesFocus`:**
+
+When a component uses `delegatesFocus: true`, programmatic focus on the host routes to the internal element. Verify this by calling `focus()` and reading `activeElement` from the shadow root. Lit types `renderRoot` as `HTMLElement | DocumentFragment`, so cast it to `ShadowRoot` first:
+
+```typescript
+button.focus();
+const activeElement = (button.renderRoot as ShadowRoot).activeElement;
+expect(activeElement?.tagName.toLowerCase(), 'delegatesFocus routes focus to internal button').toBe('button');
+```
+
+When a native `disabled` attribute is present, `delegatesFocus` does not fire — assert `activeElement` is `null`:
+
+```typescript
+button.focus();
+const activeElement = (button.renderRoot as ShadowRoot).activeElement;
+expect(activeElement, 'focus not delegated to disabled internal button').toBeNull();
+```
+
+### Testing static color variants
+
+When the source story is tagged `!test`, spreading it into the test file carries the exclusion tag and skips the story. Use a custom `render` instead. Include `parameters: { staticColorsDemo: true }` to preserve the split dark/light background that makes the variants visible:
+
+```typescript
+export const StaticColorsTest: Story = {
+  render: () => html`
+    ${COMPONENT_STATIC_COLORS.map(
+      (color) => html`<swc-component static-color=${color}>Label</swc-component>`
+    )}
+  `,
+  parameters: {
+    staticColorsDemo: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    await step('reflects static-color attribute for each valid value', async () => {
+      for (const color of COMPONENT_STATIC_COLORS) {
+        const el = canvasElement.querySelector(
+          `swc-component[static-color="${color}"]`
+        ) as ComponentClass;
+        await el.updateComplete;
+        expect(el.staticColor, `staticColor="${color}" is reflected`).toBe(color);
+      }
+    });
+  },
+};
+```
+
+If the source story is not tagged `!test`, spread it directly — it already carries `staticColorsDemo: true` in its `parameters`.
 
 ### Testing dev mode warnings
 
