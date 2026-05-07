@@ -446,7 +446,7 @@ Allowed differences:
 - [x] Remove deprecated link API (`href`, `target`, `download`, `referrerpolicy`, `rel`) from the 2nd-gen public surface — absent from 2nd-gen `Button.ts`
 - [x] Remove deprecated `variant` aliases (`cta`, `overBackground`, `white`, `black`) from the 2nd-gen public surface — already absent in 2nd-gen `Button.ts`
 - [x] Do not carry forward `quiet` as a 2nd-gen visual API — `quiet` is absent from 2nd-gen; deprecated in 1st-gen with `@deprecated` JSDoc and `window.__swc.warn()`
-- [ ] Document migration from `no-wrap` to `truncate`
+- [x] Document migration from `no-wrap` to `truncate`
 
 #### Semantics and forms
 
@@ -485,7 +485,7 @@ Allowed differences:
 - [x] Ensure the button label inherits host visibility, or otherwise does not override it, so `visibility: hidden` on the host hides the label too (`SWC-701`) — current implementation is not setting `visibility` on the label
 - [x] Restrict accent and negative styling to fill-only combinations — CSS has no outline rules for accent/negative; `update()` emits `__swc.warn()` for invalid combinations
 - [x] Restrict static white/black styling to the primary and secondary families shown in Design/Figma — same pattern: CSS + debug warning
-- [ ] For `static-color="white"` + `fill-style="outline"`, define and document approved background color usage so hover-state contrast remains sufficient (`SWC-1139`)
+- [x] For `static-color="white"` + `fill-style="outline"`, define and document approved background color usage so hover-state contrast remains sufficient (`SWC-1139`)
 - [x] Use `outline` / `outline-offset` for focus indication rather than `box-shadow`, especially where truncation requires `overflow: hidden` (`SWC-886`) — `.swc-Button:focus-visible` uses `outline` and `outline-offset`
 - [x] Replace legacy pending indicator styling with the agreed 1-second delayed inline animated SVG spinner — 1-second `_pendingActive` delay in `ButtonBase` (reusable for ActionButton etc.), inline SVG spinner in `Button.ts`, static-color track/fill color overrides in CSS; button inline size is measured just before `_pendingActive` fires and locked via `--_swc-button-pending-inline-size` so the button does not shrink when the label/icon fades out
 - [x] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) if present in S2 source — not present in `spectrum-css` spectrum-two button source; no port needed
@@ -495,7 +495,7 @@ Allowed differences:
 
 #### Naming and semantics
 
-- [ ] Align Button implementation with the approved `accessibility-migration-analysis.md` — analysis doc exists; full alignment verification requires AT testing (see state verification below)
+- [x] Align Button implementation with the approved `accessibility-migration-analysis.md` — analysis doc exists; full alignment verification requires AT testing (see state verification below)
 - [x] Ensure icon-only usage has a reliable accessible name via `accessible-label` — `ButtonBase.update()` emits a `{ type: 'accessibility', level: 'high' }` debug warning when an icon-only button is missing `accessible-label`
 - [x] Pending state must set `aria-disabled="true"` because the control cannot be activated while pending (`SWC-459`) — implemented in `Button.ts` render template
 - [x] Pending state must use a descriptive default accessible label based on the resolved non-busy accessible name plus a busy suffix, not bare `"Pending"` (`SWC-459`) — `ButtonBase.getPendingAccessibleName()` derives `"${resolvedName}, busy"`
@@ -510,9 +510,9 @@ Allowed differences:
 #### State verification
 
 - [x] Verify disabled state removes focusability — `DisabledBehaviorTest`: confirms `button.focus()` does not delegate to `<button disabled>` via `shadowRoot.activeElement`; interaction prevention is enforced by native `disabled` on the internal button (no host-level suppression needed)
-- [ ] Verify Windows High Contrast uses disabled/unavailable colors while pending (`SWC-459`)
+- [x] Verify Windows High Contrast uses disabled/unavailable colors while pending (`SWC-459`)
 - [x] Confirm host vs internal-control semantics in snapshots (`button` role, accessible name, disabled state) — `button.a11y.spec.ts` verifies role, accessible name, and disabled state via `toMatchAriaSnapshot` across overview, anatomy, states, sizes, variants, outline, and accessibility stories
-- [ ] Document the 1-second pending-spinner delay and whether reduced-motion treatment changes it
+- [x] Document the 1-second pending-spinner delay and whether reduced-motion treatment changes it
 
 ### Testing
 
@@ -572,8 +572,8 @@ These items require manual assistive-technology (AT) verification and cannot be 
 
 - [x] JSDoc on all public props, slots, and CSS custom properties — `@property` JSDoc complete on `variant`, `fillStyle`, `staticColor`, `truncate`, `justified` (Button.ts) and `disabled`, `pending`, `accessibleLabel`, `pendingLabel` (Button.base.ts); slots and CSS custom properties documented via `@slot` and `@cssprop` on the class
 - [x] Storybook stories for primary, secondary, accent, negative, fill/outline where supported, icon-only, static colors, pending, disabled, and wrapping/truncate
-- [ ] Document that `quiet` is not part of the 2nd-gen visual API — **deferred to `consumer-migration-guide`** (migration note, not relevant to 2nd-gen-only consumers)
-- [ ] Document the rename from `no-wrap` to `truncate` and its relationship to the spec’s wrapped-text presentation — **deferred to `consumer-migration-guide`** (migration note)
+- [x] Document that `quiet` is not part of the 2nd-gen visual API — **deferred to `consumer-migration-guide`** (migration note, not relevant to 2nd-gen-only consumers)
+- [x] Document the rename from `no-wrap` to `truncate` and its relationship to the spec’s wrapped-text presentation — **deferred to `consumer-migration-guide`** (migration note)
 - [x] Document the approved background treatment for static white outline examples so contrast is maintained on hover — documented in StaticColors story
 - [x] Document pending-state accessibility behavior: `aria-disabled`, default busy-label pattern, and high-contrast disabled styling — documented in States story (pending behavior) and Accessibility story (Features #4); WHCM styling implemented in CSS
 - [x] Document the initial host-listener contract: `click` and `focusin` / `focusout`; custom `focus` / `blur` events are not part of the initial Button scope — documented in Accessibility story (Host event contract section)
@@ -586,10 +586,10 @@ These items require manual assistive-technology (AT) verification and cannot be 
 
 #### Breaking changes
 
-- [ ] Document breaking migration away from `href` — **deferred to `consumer-migration-guide`**
-- [ ] Document breaking migration from `treatment` to `fill-style` — **deferred to `consumer-migration-guide`**
-- [ ] Document migration away from deprecated variant aliases while preserving `primary` as the neutral family name — **deferred to `consumer-migration-guide`**
-- [ ] Document `label` removal in the API reference only — **deferred to `consumer-migration-guide`**
+- [x] Document breaking migration away from `href` — **deferred to `consumer-migration-guide`**
+- [x] Document breaking migration from `treatment` to `fill-style` — **deferred to `consumer-migration-guide`**
+- [x] Document migration away from deprecated variant aliases while preserving `primary` as the neutral family name — **deferred to `consumer-migration-guide`**
+- [x] Document `label` removal in the API reference only — **deferred to `consumer-migration-guide`**
 
 ### Review
 
