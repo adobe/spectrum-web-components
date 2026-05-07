@@ -22,7 +22,7 @@ The preferred method is to pass overrides to the exposed custom properties.
 
 ```css
 .swc-Button {
-  --swc-button-min-width: 10ch;
+  --swc-button-max-inline-size: 120px;
 }
 ```
 
@@ -54,9 +54,85 @@ You may use button styling for either native links or button elements. Classes u
 <button type="button" class="swc-Button">As Button</button>
 ```
 
+Links and buttons support variant styles using associated modifier classes.
+
 {/* prettier-ignore */}
-<a href="#" class="swc-Button swc-Button--primary">As Link (Primary)</a>
+<a href="#" class="swc-Button swc-Button--secondary">As Link (Secondary)</a>
+<a href="#" class="swc-Button swc-Button--accent">As Link (Accent)</a>
+<a href="#" class="swc-Button swc-Button--primary swc-Button--outline">As Link (Outlined)</a>
+<button class="swc-Button swc-Button--staticBlack">As Button (Static Black)</button>
 
 ```html
-<a href="#" class="swc-Button swc-Button--primary">As Link (Primary)</a>
+<a href="#" class="swc-Button swc-Button--secondary">As Link (Secondary)</a>
+<a href="#" class="swc-Button swc-Button--accent">As Link (Accent)</a>
+<a href="#" class="swc-Button swc-Button--primary swc-Button--outline">
+  As Link (Outlined)
+</a>
+<button class="swc-Button swc-Button--staticBlack">
+  As Button (Static Black)
+</button>
+```
+
+Buttons support `disabled` state styles.
+
+{/* prettier-ignore */}
+<button type="button" class="swc-Button" disabled>As Button (Disabled)</button>
+
+```html
+<button type="button" class="swc-Button" disabled>As Button (Disabled)</button>
+```
+
+Using a wrapper around the label with class `swc-Button-label` is recommended to best support text wrapping. It is required for truncation.
+
+{/* prettier-ignore */}
+<button type="button" class="swc-Button" style={{ '--swc-button-max-inline-size': '120px' }}><span class="swc-Button-label">Submit to stakeholders</span></button>
+<button type="button" class="swc-Button swc-Button--truncate" style={{ '--swc-button-max-inline-size': '120px' }}><span class="swc-Button-label">Submit to stakeholders</span></button>
+
+```html
+<button
+  type="button"
+  class="swc-Button"
+  style="--swc-button-max-inline-size: 120px"
+>
+  <span class="swc-Button-label">Submit to stakeholders</span>
+</button>
+<button
+  type="button"
+  class="swc-Button swc-Button--truncate"
+  style="--swc-button-max-inline-size: 120px"
+>
+  <span class="swc-Button-label">Submit to stakeholders</span>
+</button>
+```
+
+Icons in buttons or icon-only variants are supported, with the assumption of an SVG as the icon with the class of `swc-Button-icon`. For best text wrapping support, add `swc-Button--hasIcon` to the base element.
+
+Icon-only should include the class `swc-Button--iconOnly` on the base element, and provide a label via `aria-label`.
+
+{/* prettier-ignore */}
+<button type="button" class="swc-Button swc-Button--hasIcon">
+  <svg class="swc-Button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"/></svg>
+  <span class="swc-Button-label">With Icon</span>
+</button>
+<button type="button" class="swc-Button swc-Button--iconOnly" aria-label="icon-only">
+  <svg class="swc-Button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"/></svg>
+</button>
+
+```html
+<button type="button" class="swc-Button swc-Button--hasIcon">
+  <svg class="swc-Button-icon" aria-hidden="true" focusable="false">
+    <!-- ... -->
+  </svg>
+  <span class="swc-Button-label">With Icon</span>
+</button>
+
+<button
+  type="button"
+  class="swc-Button swc-Button--iconOnly"
+  aria-label="icon-only"
+>
+  <svg class="swc-Button-icon" aria-hidden="true" focusable="false">
+    <!-- ... -->
+  </svg>
+</button>
 ```

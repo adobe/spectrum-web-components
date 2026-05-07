@@ -268,6 +268,8 @@ export const States: Story = {
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
+// TODO in documentation phase: Document use of global element classes for button-styled links
+
 export const TextWrapping: Story = {
   render: (args) => html`
     ${template({

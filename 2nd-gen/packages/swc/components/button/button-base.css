@@ -15,10 +15,13 @@
    Import as the first entry in a component's static styles CSSResultArray so that
    component-specific rules can override these defaults. */
 
+/* @global-exclude: host display/alignment apply to the custom element wrapper, not the native element */
 :host {
   display: inline-block;
   vertical-align: top;
 }
+
+/* @global-exclude-end */
 
 * {
   box-sizing: border-box;
