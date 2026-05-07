@@ -119,7 +119,7 @@ Use this doc for **what order** to do things and **what to check**; use the link
 | **1. Preparation** | Uses output of **Step 1: Analyze rendering and styling** (read the component analysis). Plan breaking changes and scope. |
 | **2. Setup** | **Steps 2–3** — study 1st-gen structure, create base class in core — then create 2nd-gen core/SWC layout per Phase 2. |
 | **3. API migration** | **Step 4: Formalize Spectrum data model** + **Step 5: Add 2nd-gen SWC** (API overrides/additions). |
-| **4. Accessibility** | (No dedicated step — this guide adds it.) |
+| **4. Accessibility** | Use the **accessibility migration analysis** (`03_components/<component>/accessibility-migration-analysis.md`) as a prerequisite — generate it with the `accessibility-migration-analysis` skill if it doesn't exist; this guide adds the implementation phase. |
 | **5. Styling** | **Step 6: Migrate rendering & styles from Spectrum CSS**. |
 | **6. Testing** | (Mentioned in steps as "confirm tests pass" — this guide makes it a full phase.) |
 | **7. Documentation** | **Step 7: Add stories for 2nd-gen component** + JSDoc and usage docs. |
@@ -338,21 +338,24 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 
 ## Phase 4: Accessibility
 
-**Goal:** Implement WCAG-aligned behavior and document it. Follow the repo’s [Accessibility testing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/01_contributor-guides/09_accessibility-testing.md) guide and the PR template’s accessibility checklist; for public-facing usage, refer to the [public docs site](https://opensource.adobe.com/spectrum-web-components/) accessibility guidance where applicable.
+**Goal:** Implement the accessibility requirements defined in the component's **accessibility migration analysis** (`CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/accessibility-migration-analysis.md`). That document is the source of truth for this phase — implement exactly what it specifies, cross-referencing the repo’s [Accessibility testing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/01_contributor-guides/09_accessibility-testing.md) guide and the PR template’s accessibility checklist.
 
 ### What to do
 
-1. **Follow the [Accessibility testing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/01_contributor-guides/09_accessibility-testing.md) guide** and the PR template checklist.
-2. **Use 2nd-gen Storybook accessibility guides:** `2nd-gen/packages/swc/.storybook/guides/accessibility-guides/` — codebase-specific a11y patterns and docs surfaced in Storybook (complement the contributor guide and APG).
-3. **Identify the APG pattern** for your component type (e.g. button, combobox) — [WCAG ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/).
-4. **Implement:** Semantics (prefer native HTML), ARIA where needed, keyboard support, focus management (trap in overlays), screen reader exposure. Test with assistive tech; document in JSDoc.
-5. **Native vs custom controls:** Native form control (e.g. Checkbox) → `delegatesFocus: true`. Custom control (e.g. Radio) → `role` and `aria-*` on host, manage focus/keyboard. See Checkbox and Radio as references.
-6. **Focus delegation on internal control:** When a component wraps a native form control inside its shadow DOM, set `delegatesFocus: true` via `static override shadowRootOptions = { ...ParentClass.shadowRootOptions, delegatesFocus: true }` so that focus lands on the internal control, not the host. This belongs in the base class if all subclasses share the same host-wraps-native-control structure. **Do not** override `createRenderRoot()` to set this option — doing so bypasses Lit’s `adoptStyles()`, silently preventing all component CSS from being injected into the shadow DOM. See [Rendering patterns: Shadow root customization](../../../../02_style-guide/02_typescript/09_rendering-patterns.md#shadow-root-customization).
-7. **Accessible name forwarding:** Attributes like `aria-label` on the host do not automatically apply to the internal control — either bind them explicitly in the render template (e.g. `aria-label=${this.getAttribute(‘aria-label’)}`) or derive the accessible name in a protected helper and forward it. See `ButtonBase.getResolvedAccessibleName()` as a reference. Note that implementing these patterns may require adding methods or modifying the render template, so Phase 4 often touches component class files, not only Storybook or docs.
+1. **Read the component's accessibility migration analysis** — `CONTRIBUTOR-DOCS/03_project-planning/03_components/[COMPONENT]/accessibility-migration-analysis.md`. The analysis defines the APG pattern (if any), required ARIA roles/states/properties, shadow DOM considerations, accessibility tree shape, keyboard and focus behavior, and the testing checklist. **Everything you implement in this phase flows from that document.**  
+2. **Follow the [Accessibility testing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/01_contributor-guides/09_accessibility-testing.md) guide** and the PR template checklist.
+3.  **Use 2nd-gen Storybook accessibility guides:** `2nd-gen/packages/swc/.storybook/guides/accessibility-guides/` — codebase-specific a11y patterns and docs surfaced in Storybook (complement the contributor guide and APG).
+4. **Identify the APG pattern** for your component type (e.g. button, combobox) — [WCAG ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/).
+5. **Implement:** Semantics (prefer native HTML), ARIA where needed, keyboard support, focus management (trap in overlays), screen reader exposure. Test with assistive tech; document in JSDoc.
+6. **Native vs custom controls:** Native form control (e.g. Checkbox) → `delegatesFocus: true`. Custom control (e.g. Radio) → `role` and `aria-*` on host, manage focus/keyboard. See Checkbox and Radio as references.
+7. **Focus delegation on internal control:** When a component wraps a native form control inside its shadow DOM, set `delegatesFocus: true` via `static override shadowRootOptions = { ...ParentClass.shadowRootOptions, delegatesFocus: true }` so that focus lands on the internal control, not the host. This belongs in the base class if all subclasses share the same host-wraps-native-control structure. **Do not** override `createRenderRoot()` to set this option — doing so bypasses Lit’s `adoptStyles()`, silently preventing all component CSS from being injected into the shadow DOM. See [Rendering patterns: Shadow root customization](../../../../02_style-guide/02_typescript/09_rendering-patterns.md#shadow-root-customization).
+8. **Accessible name forwarding:** Attributes like `aria-label` on the host do not automatically apply to the internal control — either bind them explicitly in the render template (e.g. `aria-label=${this.getAttribute(‘aria-label’)}`) or derive the accessible name in a protected helper and forward it. See `ButtonBase.getResolvedAccessibleName()` as a reference. Note that implementing these patterns may require adding methods or modifying the render template, so Phase 4 often touches component class files, not only Storybook or docs.
 
 ### What to check
 
-- [ ] ARIA and semantics match the chosen APG pattern.
+- [ ] The component's accessibility migration analysis doc exists and has been read in full.
+- [ ] All requirements in the analysis are implemented.
+- [ ] ARIA and semantics match the chosen APG pattern that the analysis identified.
 - [ ] Component behaves as expected with screen reader. 
 - [ ] Keyboard and focus behavior are implemented and tested.
 - [ ] No accessibility regressions vs 1st-gen.
@@ -373,6 +376,8 @@ Prefer native events when they give the right semantics (e.g. `click`). Add cust
 
 ### Quality gate
 
+- [ ] Component's accessibility migration analysis doc exists and all its requirements are implemented.                                                      
+- [ ] Keyboard and ARIA implemented per the analysis.
 - [ ] APG pattern identified and linked
 - [ ] Keyboard and ARIA implemented
 - [ ] a11y tests added

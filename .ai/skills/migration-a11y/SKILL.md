@@ -41,6 +41,8 @@ Follow **[Phase 4: Accessibility](../../../CONTRIBUTOR-DOCS/03_project-planning/
 
 **Phase 4 often requires TypeScript changes, not only documentation.** Common examples:
 
+- **Implement semantics, ARIA, keyboard, and focus management** — prefer native HTML semantics; add ARIA only where the analysis specifies; implement keyboard support and focus management (trap in overlays). Test with assistive tech; document in JSDoc.
+- **Native vs custom controls** — native form control (e.g. Checkbox) → `delegatesFocus: true`; custom control (e.g. Radio) → `role` and `aria-*` on host, manage focus/keyboard. See Checkbox and Radio as reference implementations.
 - **`delegatesFocus: true`** — If the component wraps a native control in its shadow DOM, add `createRenderRoot()` returning `this.attachShadow({ mode: 'open', delegatesFocus: true })`. This routes host focus to the internal native control. Add it in the base class if all subclasses share the same host-wraps-native-control structure.
 - **Accessible name forwarding across the shadow boundary** — Attributes like `aria-label` on the host are not automatically visible to the internal control. Forward them in the render template or via a protected helper method (e.g. `getResolvedAccessibleName()`). If the pattern is shared across multiple like components, put the helper in the base class.
 
