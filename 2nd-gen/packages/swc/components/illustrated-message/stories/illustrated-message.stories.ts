@@ -314,7 +314,7 @@ DescriptionWithLink.storyName = 'Description with link';
 /**
  * ### Button group slot
  *
- * A button group slot is coming to place a button or button group alongside the heading and description.
+ * An upcoming button group slot will let you add action buttons alongside the heading and description.
  */
 export const UpcomingFeatures: Story = {
   tags: ['upcoming', 'description-only'],
