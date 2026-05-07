@@ -277,22 +277,53 @@ export const Anatomy: Story = {
  *
  * The `s` size is the default. Use larger sizes sparingly to create a hierarchy of importance on a page.
  */
-
-// @todo - We should make sure to capture icon-only badges in all sizes for VRTs: SWC-1852
 export const Sizes: Story = {
   render: (args) => html`
-    ${BADGE_VALID_SIZES.map(
-      (size) => html`
-        <swc-badge variant=${args.variant} size=${size}>
-          <swc-icon size=${size} slot="icon">
-            ${checkmarkIconForSize(size)}
-          </swc-icon>
-          ${sizeLabels[size]}
-        </swc-badge>
-      `
-    )}
+    <div
+      style="display: flex; flex-wrap: wrap; gap: var(--swc-spacing-200); align-items: center;"
+    >
+      ${BADGE_VALID_SIZES.map(
+        (size) => html`
+          <swc-badge variant=${args.variant} size=${size}>
+            <swc-icon size=${size} slot="icon">
+              ${checkmarkIconForSize(size)}
+            </swc-icon>
+            ${sizeLabels[size]}
+          </swc-badge>
+        `
+      )}
+    </div>
+    <div
+      style="display: flex; flex-wrap: wrap; gap: var(--swc-spacing-200); align-items: center; margin-block-start: var(--swc-spacing-300);"
+    >
+      ${BADGE_VALID_SIZES.map(
+        (size) => html`
+          <swc-badge variant=${args.variant} size=${size}>
+            ${sizeLabels[size]}
+          </swc-badge>
+        `
+      )}
+    </div>
+    <div
+      style="display: flex; flex-wrap: wrap; gap: var(--swc-spacing-200); align-items: center; margin-block-start: var(--swc-spacing-300);"
+    >
+      ${BADGE_VALID_SIZES.map(
+        (size) => html`
+          <swc-badge
+            variant=${args.variant}
+            size=${size}
+            role="img"
+            aria-label=${sizeLabels[size]}
+          >
+            <swc-icon size=${size} slot="icon">
+              ${checkmarkIconForSize(size)}
+            </swc-icon>
+          </swc-badge>
+        `
+      )}
+    </div>
   `,
-  parameters: { 'section-order': 1 },
+  parameters: { 'section-order': 1, flexLayout: 'column-stretch' },
   tags: ['options'],
   args: {
     variant: 'neutral',
