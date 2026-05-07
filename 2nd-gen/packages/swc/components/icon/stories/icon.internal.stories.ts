@@ -53,6 +53,7 @@ const meta: Meta = {
       subtitle: `Internal icon renderer for shared SVG templates.`,
     },
   },
+  tags: ['migrated'],
 };
 
 export default meta;
@@ -123,9 +124,6 @@ export const Anatomy: Story = {
   render: (args) =>
     template({ ...args, label: args.label || 'Chevron icon' }, iconSvg),
   tags: ['anatomy'],
-  parameters: {
-    flexLayout: true,
-  },
 };
 
 // ──────────────────────────
@@ -154,7 +152,7 @@ export const Sizes: Story = {
   `,
   tags: ['options'],
   parameters: {
-    flexLayout: true,
+    flexLayout: 'row-wrap',
     'section-order': 1,
   },
 };
@@ -170,7 +168,6 @@ export const Sources: Story = {
     template({ ...args, label: args.label || 'Chevron icon' }, iconSvg),
   tags: ['options'],
   parameters: {
-    flexLayout: true,
     'section-order': 2,
   },
 };
@@ -189,7 +186,6 @@ export const SharedTemplates: Story = {
     template({ ...args, label: args.label || 'Chevron' }, Chevron100Icon()),
   tags: ['options'],
   parameters: {
-    flexLayout: true,
     'section-order': 3,
   },
 };
@@ -231,7 +227,7 @@ export const AvailableIcons: Story = {
         sourceState: 'none',
       },
     },
-    flexLayout: true,
+    flexLayout: 'row-wrap',
     'section-order': 4,
   },
 };
@@ -259,7 +255,4 @@ export const AvailableIcons: Story = {
 export const Accessibility: Story = {
   render: (args) => template(args, iconSvg),
   tags: ['a11y'],
-  parameters: {
-    flexLayout: true,
-  },
 };

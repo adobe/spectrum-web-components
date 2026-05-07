@@ -22,6 +22,7 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/tray/sp-tray.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
 
 export default {
@@ -441,4 +442,71 @@ export const customRootSubmenuWithScroll = (): TemplateResult => {
 
 customRootSubmenu.swc_vrt = {
   skip: true,
+};
+
+export const mobileView = (): TemplateResult => {
+  return html`
+    <sp-tray
+      open
+      @close=${(event: Event) => {
+        event.preventDefault();
+        (event.target as HTMLElement).toggleAttribute('open', true);
+      }}
+    >
+      <sp-menu mobile-view>
+        <sp-menu-item>Home</sp-menu-item>
+        <sp-menu-item>
+          File
+          <sp-menu slot="submenu">
+            <sp-menu-group>
+              <span slot="header">File</span>
+              <sp-menu-item>New</sp-menu-item>
+              <sp-menu-item>Open</sp-menu-item>
+              <sp-menu-item>Save</sp-menu-item>
+              <sp-menu-item>
+                Export as
+                <sp-menu slot="submenu">
+                  <sp-menu-group>
+                    <span slot="header">Export as</span>
+                    <sp-menu-item>PNG</sp-menu-item>
+                    <sp-menu-item>JPG</sp-menu-item>
+                    <sp-menu-item>SVG</sp-menu-item>
+                    <sp-menu-item>PDF</sp-menu-item>
+                  </sp-menu-group>
+                </sp-menu>
+              </sp-menu-item>
+            </sp-menu-group>
+          </sp-menu>
+        </sp-menu-item>
+        <sp-menu-item>
+          Edit
+          <sp-menu slot="submenu">
+            <sp-menu-group>
+              <span slot="header">Edit</span>
+              <sp-menu-item>Undo</sp-menu-item>
+              <sp-menu-item>Redo</sp-menu-item>
+              <sp-menu-divider></sp-menu-divider>
+              <sp-menu-item>Cut</sp-menu-item>
+              <sp-menu-item>Copy</sp-menu-item>
+              <sp-menu-item>Paste</sp-menu-item>
+            </sp-menu-group>
+          </sp-menu>
+        </sp-menu-item>
+        <sp-menu-item>
+          View
+          <sp-menu slot="submenu">
+            <sp-menu-group>
+              <span slot="header">View</span>
+              <sp-menu-item>Zoom in</sp-menu-item>
+              <sp-menu-item>Zoom out</sp-menu-item>
+              <sp-menu-item>Fit to screen</sp-menu-item>
+            </sp-menu-group>
+          </sp-menu>
+        </sp-menu-item>
+        <sp-menu-divider></sp-menu-divider>
+        <sp-menu-item>Settings</sp-menu-item>
+        <sp-menu-item>Help</sp-menu-item>
+      </sp-menu>
+    </sp-tray>
+  `;
 };

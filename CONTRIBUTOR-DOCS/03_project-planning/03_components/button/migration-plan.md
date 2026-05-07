@@ -481,7 +481,7 @@ Allowed differences:
 #### Visual model and regressions
 
 - [x] Migrate icon-only, truncate (previously noWrap), size, static-color, and outline fill-style selectors — icon-only uses derived `swc-Button--iconOnly` class (not a consumer attribute); see iconOnly API deviation above. A companion `swc-Button--hasIcon` class is also applied whenever an icon is slotted (with or without a label), driving `text-align: start` on the label so wrapped text aligns to the icon rather than centering
-- [x] Implement truncation behavior explicitly, not just `white-space: nowrap`; confirm overflow ellipsis treatment in S2 CSS — `white-space: nowrap; overflow: hidden; text-overflow: ellipsis` on `.swc-Button__label` when `[truncate]`
+- [x] Implement truncation behavior explicitly, not just `white-space: nowrap`; confirm overflow ellipsis treatment in S2 CSS — `white-space: nowrap; overflow: hidden; text-overflow: ellipsis` on `.swc-Button-label` when `[truncate]`
 - [x] Ensure the button label inherits host visibility, or otherwise does not override it, so `visibility: hidden` on the host hides the label too (`SWC-701`) — current implementation is not setting `visibility` on the label
 - [x] Restrict accent and negative styling to fill-only combinations — CSS has no outline rules for accent/negative; `update()` emits `__swc.warn()` for invalid combinations
 - [x] Restrict static white/black styling to the primary and secondary families shown in Design/Figma — same pattern: CSS + debug warning

@@ -64,6 +64,7 @@
     - [Help text migration roadmap](help-text/rendering-and-styling-migration-analysis.md)
 - Illustrated Message
     - [Illustrated message accessibility migration analysis](illustrated-message/accessibility-migration-analysis.md)
+    - [`sp-illustrated-message` Migration Plan](illustrated-message/migration-plan.md)
     - [Illustrated message migration roadmap](illustrated-message/rendering-and-styling-migration-analysis.md)
 - Infield Button
     - [In-field button migration roadmap](infield-button/rendering-and-styling-migration-analysis.md)
@@ -72,6 +73,15 @@
 - Link
     - [Link accessibility migration analysis](link/accessibility-migration-analysis.md)
     - [Link migration roadmap](link/rendering-and-styling-migration-analysis.md)
+- Menu
+    - [Menu accessibility migration analysis](menu/accessibility-migration-analysis.md)
+    - [Menu migration roadmap](menu/rendering-and-styling-migration-analysis.md)
+- Menu Group
+    - [Menu group accessibility migration analysis](menu-group/accessibility-migration-analysis.md)
+- Menu Item
+    - [Menu item accessibility migration analysis](menu-item/accessibility-migration-analysis.md)
+- Menu Separator
+    - [Menu separator accessibility migration analysis](menu-separator/accessibility-migration-analysis.md)
 - Meter
     - [Meter accessibility migration analysis](meter/accessibility-migration-analysis.md)
     - [Meter migration roadmap](meter/rendering-and-styling-migration-analysis.md)

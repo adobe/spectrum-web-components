@@ -1,0 +1,225 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Icon/Consumer migration guide" />
+
+# Icon consumer migration guide
+
+Replace `<sp-icon>` with `<swc-icon>`, update the import, and provide icon content via the default slot instead of `name` or `src`.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/icon
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/icon/sp-icon.js';
+
+// After
+import '@adobe/spectrum-wc/icon';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/icon`) loads only that component's bundle.
+
+## What changed
+
+### Renamed
+
+| Area             | Spectrum 1 (`sp-icon`)          | Spectrum 2 (`swc-icon`)                  |
+| ---------------- | ------------------------------- | ---------------------------------------- |
+| Tag              | `sp-icon`                       | `swc-icon`                               |
+| Import path      | `@spectrum-web-components/icon` | `@adobe/spectrum-wc/icon`                |
+| CSS custom props | `--mod-icon-*`                  | `--swc-icon-*` (see [Styling](#styling)) |
+
+### Removed in Spectrum 2
+
+| Removed                          | Replacement                                                                                                   |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `name` attribute                 | Slot an SVG directly, or use an icon factory function — see [step 2](#2-replace-name-or-src-with-slotted-svg) |
+| `src` attribute                  | Slot an `<svg>` or `<img>` element directly — see [step 2](#2-replace-name-or-src-with-slotted-svg)           |
+| `error` event                    | Removed along with `src` support — remove any `error` listeners on `sp-icon`                                  |
+| `xxs` and `xxl` size values      | Use `xs` for `xxs` and `xl` for `xxl`                                                                         |
+| `--mod-icon-*` custom properties | `--swc-icon-*` equivalents (see [Styling](#styling))                                                          |
+
+## Update your code
+
+### 1. Rename the tag
+
+```html
+<!-- Before -->
+<sp-icon label="Search">
+  <svg>…</svg>
+</sp-icon>
+<!-- After -->
+<swc-icon label="Search">
+  <svg>…</svg>
+</swc-icon>
+```
+
+### 2. Replace `name` or `src` with slotted SVG
+
+The `name` attribute (iconset registry lookup) and `src` attribute (image URL) have both been removed. All icon content must now be provided as slotted content.
+
+**Migrating `name`-based icons with Lit:**
+
+Icon factory functions are re-exported from `@adobe/spectrum-wc/icon`. Each factory returns a Lit `TemplateResult` and must be used inside a `html` tagged template literal.
+
+```ts
+import { Arrow100Icon } from '@adobe/spectrum-wc/icon';
+import { html } from 'lit';
+
+// Inside a Lit template:
+html`
+  <swc-icon label="Arrow">${Arrow100Icon()}</swc-icon>
+`;
+```
+
+**Migrating `name`-based icons without Lit (or using inline SVG):**
+
+```html
+<!-- Before -->
+<sp-icon name="ui:Arrow100"></sp-icon>
+
+<!-- After: inline SVG in the default slot -->
+<swc-icon label="Arrow">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+    <path
+      d="M9.60547 4.46973 6.3457 1.20996c-.29297-.29297-.76758-.29297-1.06055 0s-.29297.76758 0 1.06055l1.97949 1.97949H.9248c-.41406 0-.75.33594-.75.75s.33594.75.75.75h6.33984l-1.97949 1.97949c-.29297.29297-.29297.76758 0 1.06055.14648.14648.33789.21973.53027.21973s.38379-.07324.53027-.21973l3.25977-3.25977c.29297-.29297.29297-.76758 0-1.06055Z"
+    />
+  </svg>
+</swc-icon>
+```
+
+**Migrating `src`-based icons:**
+
+```html
+<!-- Before -->
+<sp-icon src="/icons/my-icon.svg" label="My icon"></sp-icon>
+
+<!-- After: option 1 — inline SVG in the default slot -->
+<swc-icon label="My icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">…</svg>
+</swc-icon>
+
+<!-- After: option 2 — standalone <img> when no icon wrapper is needed -->
+<img src="/icons/my-icon.svg" alt="My icon" />
+```
+
+### 3. Update size values if using `xxs` or `xxl`
+
+The `xxs` and `xxl` size values have been removed. Update to the nearest available size:
+
+| Removed value | Recommended replacement |
+| ------------- | ----------------------- |
+| `xxs`         | `xs`                    |
+| `xxl`         | `xl`                    |
+
+```html
+<!-- Before -->
+<sp-icon size="xxs"><svg>…</svg></sp-icon>
+<sp-icon size="xxl"><svg>…</svg></sp-icon>
+
+<!-- After -->
+<swc-icon size="xs"><svg>…</svg></swc-icon>
+<swc-icon size="xl"><svg>…</svg></swc-icon>
+```
+
+### 4. (Optional) Add `label` for meaningful icons
+
+When an icon communicates information not available from surrounding text, add a `label` attribute so assistive technology can announce it.
+
+```html
+<!-- Decorative icon alongside visible text — omit label -->
+<swc-icon><svg>…</svg></swc-icon>
+Save
+
+<!-- Meaningful standalone icon — set label directly on the icon -->
+<swc-icon label="Search"><svg>…</svg></swc-icon>
+
+<!-- Icon inside an interactive element — label the wrapper instead -->
+<button aria-label="Search">
+  <swc-icon><svg>…</svg></swc-icon>
+</button>
+```
+
+## Accessibility
+
+- The component always sets `role="img"` on the slotted SVG.
+- Without `label`, `aria-hidden="true"` is set on both the host and the slotted SVG, hiding the icon entirely from assistive technology. Use this for decorative icons that appear alongside visible text.
+- When `label` is set, `aria-hidden` is removed from both the host and the SVG, and `aria-label` is applied to the SVG so screen readers announce the icon with a meaningful name.
+- `<swc-icon>` is not focusable. For interactive icons, wrap them in a `<button>` or `<a>` element and set the accessible name on the interactive wrapper rather than on the icon.
+
+## Styling
+
+Spectrum 2 exposes a new set of public CSS custom properties on `<swc-icon>`.
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1 <code>{'--mod-icon-*'}</code>{' '}
+  properties <strong>do not apply</strong> to <code>{'<swc-icon>'}</code>.
+  Remove or replace every <code>{'--mod-icon-*'}</code> override with the{' '}
+  <code>{'--swc-icon-*'}</code> equivalents below.
+</div>
+
+### Removed `--mod-icon-*` properties
+
+Replace every `--mod-icon-*` property with its `--swc-icon-*` equivalent:
+
+| Removed (Spectrum 1)     | Replacement (Spectrum 2)                             |
+| ------------------------ | ---------------------------------------------------- |
+| `--mod-icon-inline-size` | `--swc-icon-inline-size`                             |
+| `--mod-icon-block-size`  | `--swc-icon-block-size`                              |
+| `--mod-icon-color`       | `--swc-icon-color`                                   |
+| `--mod-icon-size`        | `--swc-icon-inline-size` and `--swc-icon-block-size` |
+
+### Public custom properties
+
+{/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-icon>`'s CEM entry once they are added in a follow-up PR. */}
+
+| Custom property          | Description                           | Notes                                                        |
+| ------------------------ | ------------------------------------- | ------------------------------------------------------------ |
+| `--swc-icon-color`       | Color of the icon.                    | Defaults to `currentColor`. Inherits from parent by default. |
+| `--swc-icon-inline-size` | Inline (width) dimension of the icon. | Set by the `size` attribute; override to use a custom size.  |
+| `--swc-icon-block-size`  | Block (height) dimension of the icon. | Set by the `size` attribute; override to use a custom size.  |
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-icon-*'}</code> private properties, and shadow DOM are{' '}
+  <strong>not public API</strong>. Styling applied to them will break without
+  warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Update imports
+- [ ] Rename all `<sp-icon>` to `<swc-icon>`
+- [ ] Replace `name`-based icons with slotted SVG or icon factory functions
+- [ ] Replace `src`-based icons with slotted SVG or standalone `<img>`
+- [ ] Remove any `error` event listeners on icon elements
+- [ ] Update `xxs` size to `xs` and `xxl` size to `xl`
+- [ ] Replace `--mod-icon-*` overrides with `--swc-icon-*` equivalents
+- [ ] Add `label` to icons that convey meaning not available from surrounding text

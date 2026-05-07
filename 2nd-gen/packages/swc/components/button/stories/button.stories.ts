@@ -259,7 +259,7 @@ export const Outline: Story = {
 export const StaticColors: Story = {
   render: (args) => html`
     <div
-      style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;"
+      style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;"
     >
       ${BUTTON_FILL_STYLES.map((fillStyle) =>
         template({
@@ -271,7 +271,7 @@ export const StaticColors: Story = {
       )}
     </div>
     <div
-      style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;"
+      style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;"
     >
       ${BUTTON_FILL_STYLES.map((fillStyle) =>
         template({

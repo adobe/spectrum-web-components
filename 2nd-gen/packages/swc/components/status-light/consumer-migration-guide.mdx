@@ -1,0 +1,175 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Status light/Consumer migration guide" />
+
+# Status light consumer migration guide
+
+Replace `<sp-status-light>` with `<swc-status-light>`, update the import, and remove any `disabled` usage or `accent` variant.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/status-light
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/status-light/sp-status-light.js';
+
+// After
+import '@adobe/spectrum-wc/status-light';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/status-light`) loads only that component's bundle.
+
+## What changed
+
+### Renamed
+
+| Area              | Spectrum 1 (`sp-status-light`)          | Spectrum 2 (`swc-status-light`)                                                |
+| ----------------- | --------------------------------------- | ------------------------------------------------------------------------------ |
+| Tag               | `sp-status-light`                       | `swc-status-light`                                                             |
+| Import path       | `@spectrum-web-components/status-light` | `@adobe/spectrum-wc/status-light`                                              |
+| CSS custom props  | `--mod-status-light-*`                  | `--swc-status-light-*` (see [Styling](#styling))                               |
+| Default `variant` | `'info'`                                | `'neutral'` — use `variant="info"` when you need the previous default emphasis |
+
+### Added in Spectrum 2
+
+| Addition                                                           | Notes                               |
+| ------------------------------------------------------------------ | ----------------------------------- |
+| Color variants: `pink`, `turquoise`, `brown`, `cinnamon`, `silver` | Five new non-semantic color options |
+
+### Removed in Spectrum 2
+
+| Removed                                  | Replacement                                                                                                                                                                                                                                                                      |
+| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `disabled` attribute                     | Was deprecated in Spectrum 1; no replacement — remove it from your markup                                                                                                                                                                                                        |
+| `accent` semantic variant                | Not part of Spectrum 2; use `neutral` or `info` depending on intent                                                                                                                                                                                                              |
+| `--mod-status-light-*` custom properties | `--swc-status-light-*` for semantic variants only — `--swc-status-light-dot-color` overrides semantic variant dot colors. Non-semantic color variants (`yellow`, `chartreuse`, `celery`, etc.) bake in their dot colors and cannot be overridden here; retoken globally instead. |
+
+## Update your code
+
+### 1. Rename the tag
+
+```html
+<!-- Before -->
+<sp-status-light variant="positive">Approved</sp-status-light>
+<!-- After -->
+<swc-status-light variant="positive">Approved</swc-status-light>
+```
+
+### 2. Remove `disabled` attribute
+
+The `disabled` attribute was deprecated in Spectrum 1 and has been removed entirely in Spectrum 2.
+
+```html
+<!-- Before -->
+<sp-status-light variant="info" disabled>Unavailable</sp-status-light>
+<!-- After -->
+<swc-status-light variant="info">Unavailable</swc-status-light>
+```
+
+### 3. Replace the `accent` variant
+
+The `accent` semantic variant is not part of the Spectrum 2 specification. Substitute the closest semantic match for your use case.
+
+```html
+<!-- Before -->
+<sp-status-light variant="accent">Beta</sp-status-light>
+<!-- After (choose the variant that matches your intent) -->
+<swc-status-light variant="info">Beta</swc-status-light>
+```
+
+## Accessibility
+
+- `<swc-status-light>` is a non-interactive, presentational component. Do not add event listeners or `tabindex` to it.
+- Status is conveyed by the indicator dot color. Always pair it with a visible text label so the meaning is not lost for users who cannot perceive color (WCAG 1.4.1).
+- The text content of the element provides the accessible name. Keep labels short and descriptive (e.g. "Approved", "Pending review").
+- Do not rely on variant color alone to communicate critical state — supplement with an icon or additional context when needed.
+
+## Styling
+
+Spectrum 2 exposes a new set of public CSS custom properties on `<swc-status-light>`.
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
+  <code>{'--mod-status-light-*'}</code> properties <strong>do not apply</strong>{' '}
+  to <code>{'<swc-status-light>'}</code>. Remove or replace every{' '}
+  <code>{'--mod-status-light-*'}</code> override with the{' '}
+  <code>{'--swc-status-light-*'}</code> equivalents below.
+</div>
+
+### Removed `--mod-status-light-*` properties
+
+Replace every `--mod-status-light-*` property with its `--swc-status-light-*` equivalent:
+
+| Removed (Spectrum 1)                         | Replacement (Spectrum 2)                                 |
+| -------------------------------------------- | -------------------------------------------------------- |
+| `--mod-status-light-height`                  | `--swc-status-light-height`                              |
+| `--mod-status-light-dot-size`                | `--swc-status-light-dot-size`                            |
+| `--mod-status-light-font-size`               | `--swc-status-light-font-size`                           |
+| `--mod-status-light-spacing-dot-to-label`    | `--swc-status-light-text-to-visual`                      |
+| `--mod-status-light-spacing-top-to-dot`      | `--swc-status-light-top-to-dot`                          |
+| `--mod-status-light-spacing-top-to-label`    | `--swc-status-light-padding-block` (covers top + bottom) |
+| `--mod-status-light-spacing-bottom-to-label` | `--swc-status-light-padding-block` (covers top + bottom) |
+| `--mod-status-light-corner-radius`           | No replacement                                           |
+| `--mod-status-light-font-weight`             | No replacement                                           |
+| `--mod-status-light-content-color-default`   | `--swc-status-light-content-color`                       |
+| `--mod-status-light-semantic-*-color`        | `--swc-status-light-dot-color`                           |
+| `--mod-status-light-nonsemantic-*-color`     | `--swc-status-light-dot-color`                           |
+
+### Public custom properties
+
+{/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-status-light>`'s CEM entry once they are added in a follow-up PR. */}
+
+| Custom property                     | Description                                           | Notes                                                                                                  |
+| ----------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `--swc-status-light-height`         | Minimum block size of the component.                  |                                                                                                        |
+| `--swc-status-light-padding-block`  | Block (top/bottom) padding.                           |                                                                                                        |
+| `--swc-status-light-top-to-dot`     | Distance from the block-start edge to the dot center. |                                                                                                        |
+| `--swc-status-light-text-to-visual` | Gap between the indicator dot and the label.          |                                                                                                        |
+| `--swc-status-light-line-height`    | Line height of the label text.                        |                                                                                                        |
+| `--swc-status-light-dot-size`       | Size of the indicator dot.                            |                                                                                                        |
+| `--swc-status-light-dot-color`      | Color of the indicator dot.                           | Semantic variants only. Non-semantic color variants bake in their dot color; retoken globally instead. |
+| `--swc-status-light-content-color`  | Color of the label text.                              |                                                                                                        |
+| `--swc-status-light-font-size`      | Font size of the label text.                          |                                                                                                        |
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-status-light-*'}</code> private properties, and shadow DOM are{' '}
+  <strong>not public API</strong>. Styling applied to them will break without
+  warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Update imports
+- [ ] Rename all `<sp-status-light>` to `<swc-status-light>`
+- [ ] Remove all `disabled` attributes
+- [ ] Replace `accent` variant with the appropriate semantic alternative
+- [ ] Replace `--mod-status-light-*` overrides with `--swc-status-light-*` equivalents
+- [ ] Verify every status light has a visible text label

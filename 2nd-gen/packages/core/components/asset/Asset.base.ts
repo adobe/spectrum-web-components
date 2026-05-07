@@ -44,7 +44,7 @@ export abstract class AssetBase extends SpectrumElement {
   /**
    * Accessible label for the asset’s file or folder variant.
    */
-  @property()
+  @property({ type: String })
   public label = '';
 
   // ──────────────────────
