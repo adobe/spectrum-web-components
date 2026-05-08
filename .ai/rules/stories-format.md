@@ -269,8 +269,8 @@ export const StaticColors: Story = {
 
 ### Exclusion tags
 
-- `'!test'` - Exclude from test runs
-- `'!dev'` - Exclude from dev Storybook
+- `'!dev'` - Exclude from the development Storybook sidebar without affecting tests
+- `'!test'` - Exclude from **all three** automated test runners simultaneously: Vitest play functions, aXe WCAG compliance, and VRT snapshots. Use only when testing would produce false positives due to context the test runner cannot see — the canonical case is static-color stories, where axe evaluates contrast against the page background rather than the decorator gradient. **When you apply `'!test'` to a story, you must add a corresponding test story with a custom render and `parameters: { staticColorsDemo: true }` to restore behavioral coverage.** Do not apply `'!test'` because a story is complex, has no `play` function, or has a real accessibility issue. See [Excluding stories from tests](../../CONTRIBUTOR-DOCS/02_style-guide/04_testing/01_testing-overview.md#excluding-stories-from-tests).
 
 ## Story types
 

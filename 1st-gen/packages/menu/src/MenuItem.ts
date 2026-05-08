@@ -131,6 +131,15 @@ export class MenuItemKeydownEvent extends KeyboardEvent {
   public override get shiftKey(): boolean {
     return this._event?.shiftKey || false;
   }
+
+  /**
+   * Original `KeyboardEvent` that triggered this forwarded event,
+   * exposed so listeners on the parent menu can call
+   * `preventDefault()`/`stopPropagation()` on the underlying event.
+   */
+  public get nativeEvent(): KeyboardEvent | undefined {
+    return this._event;
+  }
 }
 
 export type MenuItemChildren = { icon: Element[]; content: Node[] };
@@ -238,7 +247,25 @@ export class MenuItem extends LikeAnchor(
   @query('sp-overlay')
   public overlayElement!: Overlay;
 
-  private submenuElement?: HTMLElement;
+  /**
+   * Reference to the slotted submenu element, captured by `manageSubmenu`.
+   * Public so the parent `<sp-menu>` can project this submenu for mobile
+   * drill-down and so tests can assert on its contents.
+   *
+   * @internal
+   */
+  public submenuElement?: HTMLElement;
+
+  /**
+   * Set by the parent Menu when the submenu element is projected to the
+   * mobile-submenu slot. Guards against `manageSubmenu` clearing
+   * `hasSubmenu` when the slot appears empty during projection.
+   * Cross-class implementation detail; do not depend on it from outside
+   * the `@spectrum-web-components/menu` package.
+   *
+   * @internal
+   */
+  public _mobileSubmenuProjected = false;
 
   /**
    * the focusable element of the menu item
@@ -363,6 +390,22 @@ export class MenuItem extends LikeAnchor(
     this.triggerUpdate();
   }
 
+  private get isMobileView(): boolean {
+    return !!this._mobileRootMenu;
+  }
+
+  /**
+   * Returns the root sp-menu with mobile-view, traversing up from
+   * either the focusRoot or the DOM tree.
+   */
+  private get _mobileRootMenu(): Menu | null {
+    const focusRoot = this.menuData.focusRoot;
+    if (focusRoot?.mobileView) {
+      return focusRoot;
+    }
+    return this.closest('sp-menu[mobile-view]') as Menu | null;
+  }
+
   protected renderSubmenu(): TemplateResult {
     const slot = html`
       <slot
@@ -380,6 +423,16 @@ export class MenuItem extends LikeAnchor(
     if (!this.hasSubmenu) {
       return slot;
     }
+
+    if (this.isMobileView) {
+      return html`
+        <div class="mobile-submenu-slot-hidden">${slot}</div>
+        <sp-icon-chevron100
+          class="spectrum-UIIcon-ChevronRight100 chevron icon"
+        ></sp-icon-chevron100>
+      `;
+    }
+
     this.dependencyManager.add('sp-overlay');
     this.dependencyManager.add('sp-popover');
     import('@spectrum-web-components/overlay/sp-overlay.js');
@@ -448,12 +501,20 @@ export class MenuItem extends LikeAnchor(
   }
 
   /**
-   * determines if item has a submenu and updates the `aria-haspopup` attribute
+   * Determines if item has a submenu and updates the `aria-haspopup` attribute.
+   * Skips clearing state when the submenu is temporarily projected to the
+   * parent Menu's mobile-submenu slot.
    */
   protected manageSubmenu(event: Event & { target: HTMLSlotElement }): void {
-    this.submenuElement = event.target.assignedElements({
+    const assigned = event.target.assignedElements({
       flatten: true,
-    })[0] as HTMLElement;
+    })[0] as HTMLElement | undefined;
+
+    if (!assigned && this._mobileSubmenuProjected) {
+      return;
+    }
+
+    this.submenuElement = assigned;
     this.hasSubmenu = !!this.submenuElement;
     if (this.hasSubmenu) {
       this.setAttribute('aria-haspopup', 'true');
@@ -509,12 +570,25 @@ export class MenuItem extends LikeAnchor(
     this._touchHandledViaPointerup = true;
     this._activePointerId = undefined;
 
+    if (this.isMobileView) {
+      this._mobileRootMenu?.openMobileSubmenu(this);
+      // Defer clearing the flag until after the synthetic `click`
+      // dispatched by the same touch sequence has been handled, so
+      // `handleSubmenuClick` can suppress that duplicate activation.
+      setTimeout(() => {
+        this._touchHandledViaPointerup = false;
+      }, 0);
+      return;
+    }
+
     if (this.open) {
       this.open = false;
     } else {
       this.openOverlay();
     }
 
+    // Same rationale as above: keep the suppression flag set through
+    // the trailing `click` event before resetting it.
     setTimeout(() => {
       this._touchHandledViaPointerup = false;
     }, 0);
@@ -643,7 +717,17 @@ export class MenuItem extends LikeAnchor(
     const { target, key } = event;
     const openSubmenuKey =
       this.hasSubmenu && !this.open && [' ', 'Enter'].includes(key);
-    if (target === this) {
+    // Forward the keydown when this item is the closest `sp-menu-item`
+    // ancestor of the event target. That covers both focus on the item
+    // itself and focus on any of its non-menu-item descendants (e.g.
+    // the back-arrow icon inside a mobile back button), while
+    // preventing a parent item from double-dispatching events that
+    // originated inside its slotted submenu (whose menu items are
+    // also descendants in the light DOM tree).
+    const targetIsThisItem =
+      target === this ||
+      (target instanceof Element && target.closest('sp-menu-item') === this);
+    if (targetIsThisItem) {
       if (
         ['ArrowLeft', 'ArrowRight', 'Escape'].includes(key) ||
         openSubmenuKey
@@ -678,6 +762,13 @@ export class MenuItem extends LikeAnchor(
   }
 
   protected handleSubmenuClick(event: Event): void {
+    if (this.isMobileView) {
+      event.stopPropagation();
+      event.preventDefault();
+      this._mobileRootMenu?.openMobileSubmenu(this);
+      return;
+    }
+
     if (this._touchHandledViaPointerup) {
       event.stopPropagation();
       event.preventDefault();
@@ -712,8 +803,7 @@ export class MenuItem extends LikeAnchor(
   };
 
   protected handlePointerenter(event: PointerEvent): void {
-    // For touch devices, don't open on pointerenter - let click handle it
-    if (event.pointerType === 'touch') {
+    if (event.pointerType === 'touch' || this.isMobileView) {
       return;
     }
 

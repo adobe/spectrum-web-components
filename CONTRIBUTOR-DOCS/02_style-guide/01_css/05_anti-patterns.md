@@ -75,7 +75,7 @@ Each anti-pattern is grounded in real Spectrum source patterns. **Badge** and **
 ```css
 :host {
   padding: 8px;
-  background-color: var(--spectrum-accent-color);
+  background-color: var(--spectrum-badge-background-color-default);
 }
 ```
 
@@ -94,11 +94,14 @@ Each anti-pattern is grounded in real Spectrum source patterns. **Badge** and **
 
 ```css
 :host {
-  display: inline-block;
+  display: inline-flex;
 }
 
 .swc-Badge {
-  background: token('swc-badge-background-color');
+  background: var(
+    --swc-badge-background-color,
+    token("neutral-subdued-background-color-default")
+  );
 }
 ```
 
@@ -125,7 +128,7 @@ background: var(--mod-badge-background-color-default, var(--swc-badge-background
 or:
 
 ```css
-min-block-size: var(--swc-mod-badge-height, token('component-height-100'));
+min-block-size: var(--swc-mod-badge-height, token("component-height-100"));
 ```
 
 ### Why This Happens
@@ -152,14 +155,14 @@ min-block-size: var(--swc-mod-badge-height, token('component-height-100'));
 
 ```css
 .swc-Badge {
-  min-block-size: var(--swc-badge-height, token('component-height-100'));
+  min-block-size: var(--swc-badge-height, token("component-height-100"));
   border-radius: var(
     --swc-badge-corner-radius,
-    token('corner-radius-medium-size-medium')
+    token("corner-radius-medium-size-medium")
   );
   background: var(
     --swc-badge-background-color,
-    token('accent-background-color-default')
+    token("neutral-subdued-background-color-default")
   );
 }
 ```
@@ -196,8 +199,8 @@ classMap({
 ### ✅ Correct Approach
 
 ```css
-:host([size='l']) {
-  --swc-badge-height: token('component-height-200');
+:host([size="l"]) {
+  --swc-badge-height: token("component-height-200");
 }
 ```
 
@@ -262,7 +265,7 @@ Badge size, variant, subtle, and outline states are all expressed via `:host()` 
 ### ❌ Anti-Pattern
 
 ```css
-:host:where([size='l'][variant='primary']) {
+:host:where([size="l"][variant="primary"]) {
   --swc-badge-height: 40px;
 }
 ```
@@ -280,8 +283,8 @@ Badge size, variant, subtle, and outline states are all expressed via `:host()` 
 ### ✅ Correct Approach
 
 ```css
-:host([size='l'][variant='primary']) {
-  --swc-badge-height: token('component-height-200');
+:host([size="l"][variant="primary"]) {
+  --swc-badge-height: token("component-height-200");
 }
 ```
 
@@ -328,7 +331,7 @@ Badge exposes a minimal, intentional surface and uses `_swc-*` properties for de
 ```css
 .swc-Badge {
   border-color: 
-    var(--high-contrast-badge-border-color, var(--swc-badge-border-color, token('badge-border-color')));
+    var(--high-contrast-badge-border-color, var(--swc-badge-border-color, token("badge-border-color")));
 }
 ```
 
@@ -356,7 +359,7 @@ Badge exposes a minimal, intentional surface and uses `_swc-*` properties for de
 ```
 
 🔎 **Status Light reference:**  
-[status-light.css](../../../2nd-gen/packages/swc/components/status-light/status-light.css) overrides `--swc-statuslight-content-color` and adds a border to the dot pseudo-element so it stays visible in high-contrast mode.
+[status-light.css](../../../2nd-gen/packages/swc/components/status-light/status-light.css) overrides `--swc-status-light-content-color` and adds a border to the dot pseudo-element so it stays visible in high-contrast mode.
 
 📖 See: *Component CSS Style Guide → [Forced colors requirements](01_component-css.md#forced-colors-requirements)*
 
@@ -414,7 +417,7 @@ After migration, Badge relies solely on `.swc-Badge` and attributes.
 
 | Before                                                  | After                                                    |
 | ------------------------------------------------------- | -------------------------------------------------------- |
-| `var(--mod-badge-height, var(--spectrum-badge-height))` | `var(--swc-badge-height, token('component-height-100'))` |
+| `var(--mod-badge-height, var(--spectrum-badge-height))` | `var(--swc-badge-height, token("component-height-100"))` |
 
 ## Final Reminder
 

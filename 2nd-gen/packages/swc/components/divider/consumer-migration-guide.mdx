@@ -1,0 +1,146 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Divider/Consumer migration guide" />
+
+# Divider consumer migration guide
+
+Replace `<sp-divider>` with `<swc-divider>` and update the import. The public attribute API is unchanged.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/divider
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/divider/sp-divider.js';
+
+// After
+import '@adobe/spectrum-wc/divider';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/divider`) loads only that component's bundle.
+
+## What changed
+
+### Renamed
+
+| Area             | Spectrum 1 (`sp-divider`)          | Spectrum 2 (`swc-divider`)                  |
+| ---------------- | ---------------------------------- | ------------------------------------------- |
+| Tag              | `sp-divider`                       | `swc-divider`                               |
+| Import path      | `@spectrum-web-components/divider` | `@adobe/spectrum-wc/components/divider`     |
+| CSS custom props | `--mod-divider-*`                  | `--swc-divider-*` (see [Styling](#styling)) |
+
+### Removed in Spectrum 2
+
+| Removed                                                      | Replacement                                                                                         |
+| ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------- |
+| `--mod-divider-*` custom properties                          | `--swc-divider-*` equivalents (see [Styling](#styling))                                             |
+| Size- and static-color-specific `--mod-divider-*` properties | Simplified to two public properties: `--swc-divider-thickness` and `--swc-divider-background-color` |
+
+## Update your code
+
+### 1. Rename the tag
+
+```html
+<!-- Before -->
+<sp-divider></sp-divider>
+<!-- After -->
+<swc-divider></swc-divider>
+```
+
+All attributes (`vertical`, `static-color`, `size`) are unchanged and carry over without modification:
+
+```html
+<!-- Before -->
+<sp-divider size="l" vertical></sp-divider>
+<sp-divider static-color="white"></sp-divider>
+<!-- After -->
+<swc-divider size="l" vertical></swc-divider>
+<swc-divider static-color="white"></swc-divider>
+```
+
+If you omit `size`, `<swc-divider>` reflects **`size="m"`** on the host. Spectrum 1 did not set a default `size` attribute; the line still uses the same medium thickness as before. Adjust DOM selectors or snapshots that assumed no `size` attribute.
+
+## Accessibility
+
+No accessibility changes are required. `<swc-divider>` continues to render with `role="separator"` and behaves identically to `<sp-divider>` for assistive technology.
+
+## Styling
+
+Spectrum 2 exposes a simplified set of public CSS custom properties on `<swc-divider>`.
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
+  <code>{'--mod-divider-*'}</code> properties <strong>do not apply</strong> to{' '}
+  <code>{'<swc-divider>'}</code>. Remove or replace every{' '}
+  <code>{'--mod-divider-*'}</code> override with the{' '}
+  <code>{'--swc-divider-*'}</code> equivalents below. Size- and
+  static-color-specific Spectrum 1 properties have no 1:1 replacement; use the
+  two public properties to apply global overrides instead.
+</div>
+
+### Removed `--mod-divider-*` properties
+
+Replace `--mod-divider-*` properties with their `--swc-divider-*` equivalents where available:
+
+| Removed (Spectrum 1)                                 | Replacement (Spectrum 2)                                          |
+| ---------------------------------------------------- | ----------------------------------------------------------------- |
+| `--mod-divider-background-color`                     | `--swc-divider-background-color`                                  |
+| `--mod-divider-thickness`                            | `--swc-divider-thickness`                                         |
+| `--mod-divider-vertical-align`                       | No replacement — `align-self: flex-start` is now hardcoded        |
+| `--mod-divider-vertical-height`                      | No replacement                                                    |
+| `--mod-divider-vertical-margin`                      | No replacement                                                    |
+| `--mod-divider-background-color-small-static-white`  | No replacement — use the `static-color="white"` attribute instead |
+| `--mod-divider-background-color-medium-static-white` | No replacement — use the `static-color="white"` attribute instead |
+| `--mod-divider-background-color-large-static-white`  | No replacement — use the `static-color="white"` attribute instead |
+| `--mod-divider-background-color-small-static-black`  | No replacement — use the `static-color="black"` attribute instead |
+| `--mod-divider-background-color-medium-static-black` | No replacement — use the `static-color="black"` attribute instead |
+| `--mod-divider-background-color-large-static-black`  | No replacement — use the `static-color="black"` attribute instead |
+
+### Public custom properties
+
+{/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-divider>`'s CEM entry once they are added in a follow-up PR. */}
+
+| Custom property                  | Description                    | Notes |
+| -------------------------------- | ------------------------------ | ----- |
+| `--swc-divider-thickness`        | Thickness of the divider line. |       |
+| `--swc-divider-background-color` | Color of the divider line.     |       |
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-divider-*'}</code> private properties, and shadow DOM are{' '}
+  <strong>not public API</strong>. Styling applied to them will break without
+  warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Update imports
+- [ ] Rename all `<sp-divider>` to `<swc-divider>`
+- [ ] Replace `--mod-divider-*` overrides with `--swc-divider-thickness` or `--swc-divider-background-color`

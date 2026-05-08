@@ -13,17 +13,18 @@
 
 - [Overview](#overview)
     - [Also read](#also-read)
-    - [What it is](#what-it-is)
-    - [What it is not](#what-it-is-not)
+    - [What `swc-illustrated-message` is](#what-swc-illustrated-message-is)
+    - [Heading hierarchy and page context](#heading-hierarchy-and-page-context)
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
 - [Recommendations: `<swc-illustrated-message>`](#recommendations-swc-illustrated-message)
-    - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
-    - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
+    - [Heading slot, `heading` attribute, and `heading-level`](#heading-slot-heading-attribute-and-heading-level)
+    - [Other content and slots](#other-content-and-slots)
+    - [Shadow DOM and cross-root ARIA issues](#shadow-dom-and-cross-root-aria-issues)
     - [Accessibility tree expectations](#accessibility-tree-expectations)
     - [Keyboard and focus](#keyboard-and-focus)
+- [Known 1st-gen issues](#known-1st-gen-issues)
 - [Testing](#testing)
     - [Automated tests](#automated-tests)
 - [Summary checklist](#summary-checklist)
@@ -35,21 +36,31 @@
 
 ## Overview
 
-This doc explains how **`swc-illustrated-message`** should work for **accessibility**. It supports **WCAG 2.2 Level AA**. Until **`swc-illustrated-message`** ships, use **`1st-gen/packages/illustrated-message/src/IllustratedMessage.ts`** (`<sp-illustrated-message>`) as a behavioral reference, while aligning **2nd-gen** **API** and **docs** with the decisions below.
+This doc defines how `swc-illustrated-message` should work for accessibility and heading semantics. It targets WCAG 2.2 Level AA.
 
 ### Also read
 
-[Illustrated message migration roadmap](./rendering-and-styling-migration-analysis.md).
+- [Illustrated message migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, CSS, DOM, and Spectrum 2 gaps.
 
-### What it is
+### What `swc-illustrated-message` is
 
-- A **block** for **empty**, **error**, or **onboarding** states: an **illustration** (often **SVG**), a **title**, and **description** text (sometimes with **actions**).
-- **2nd-gen** supplies the **title** and **description** through **slots** only—**no** string **`heading`** / **`description`** **attributes** as fallbacks in the slot (see **Recommendations** and [PR #6150 discussion](https://github.com/adobe/spectrum-web-components/pull/6150#discussion_r3047502294)).
+- A composed empty state or explanatory block: illustration (often SVG), a title-like line, description text, and optionally actions.
+- It can appear anywhere on a page—inside a dialog, under a page `h1`, as the only content of a section, nested in cards, etc.
 
-### What it is not
+### Heading hierarchy and page context
 
-- **Not** a **dialog** or **alertdialog** by itself unless a **separate** spec wraps it that way.
-- **Not** a substitute for **page**-level **`h1`**—keep **one** top-level heading per view where that pattern applies.
+The component cannot know which `h2`–`h6` level is correct for the page; authors must set that explicitly. The only supported pattern is: title text comes from the `heading` slot (see below), and the semantic heading element is always created in shadow DOM.
+
+Do not use `h1` for the illustrated message title. `h1` is for the primary page (or dialog / sheet title outside this block). This component exposes `h2`–`h6` only via `heading-level` (`2`–`6`).
+
+2nd-gen must implement:
+
+- `heading-level` property (attribute `heading-level`): integers `2`–`6`, default `2`. The shadow tree renders exactly one `<h2>` … `<h6>` matching that value. Values outside `2`–`6` (including `1`) must be clamped or coerced to `2`–`6` (for example `1` → `2`), or rejected in types with a documented default—pick one policy and document it in Storybook.
+- `heading` slot: accepts a `span` only (or equivalent documented phrasing: a single `span` wrapper as the slotted node). Do not allow slotted `<h1>`–`<h6>`; authors must not put heading elements in light DOM for this slot. Implementation may validate in dev and warn or ignore invalid slotted tags.
+
+This differs from putting a real heading in the slot (as in accordion item titles) and from 1st-gen, which always wraps the slot in `<h2>` with no level control. Accordion still allows `level` `1`–`6` on the parent ([SWC-1466](https://jira.corp.adobe.com/browse/SWC-1466), [PR #5969](https://github.com/adobe/spectrum-web-components/pull/5969)); illustrated message uses `heading-level` `2`–`6` only (no `h1`).
+
+Documentation and Storybook must tell authors to set `heading-level` from document outline, not from visual preference alone.
 
 ---
 
@@ -57,53 +68,64 @@ This doc explains how **`swc-illustrated-message`** should work for **accessibil
 
 ### Pattern in the APG
 
-- The APG does **not** define an “illustrated message” widget. Treat it as **structured content**: **heading**, **text**, optional **links** in the description, optional **buttons** in an **actions** area, and a usually **decorative** illustration.
+- The APG does not define an “illustrated message” widget. Treat it as structured content: headings, text, optional controls.
 
 ### Guidelines that apply
 
 | Idea | Plain meaning |
 |------|----------------|
-| [Info and relationships (WCAG 1.3.1)](https://www.w3.org/TR/WCAG22/#info-and-relationships) | The **programmatic** heading level must match the **document** outline. Avoid a second **`h1`** inside this pattern unless the product shell intentionally nests it—typically the block uses **`h2`–`h6`** per **`heading-level`** (or equivalent) from the host. |
-| [Headings and labels (WCAG 2.4.6)](https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels.html) | The **title** should describe **purpose**; the **description** should add **useful** detail. |
-| [Non-text content (WCAG 1.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content) | If the **illustration** is **decorative**, hide it from assistive tech (**`aria-hidden="true"`** on the **SVG** or equivalent). If it **conveys** information not in the **heading** / **description**, give it a **short** accessible **name**. |
-| [Name, role, value (WCAG 4.1.2)](https://www.w3.org/TR/WCAG22/#name-role-value) | **Action** **buttons** and **links** in the **description** or **actions** region need **discernible** **names**. |
+| [Info and relationships (WCAG 1.3.1)](https://www.w3.org/TR/WCAG22/#info-and-relationships) | The programmatic heading level must reflect the document outline. Avoid a second `h1` inside this pattern—keep one top-level heading per page view. |
+| [Headings and labels (WCAG 2.4.6)](https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels.html) | The title should describe topic purpose; `heading-level` should match sibling and parent headings (`h2`–`h6`). |
+| [Name, role, value (WCAG 4.1.2)](https://www.w3.org/TR/WCAG22/#name-role-value) | Action buttons and links need discernible names; decorative illustrations should not pollute the accessibility tree. |
 
-**Bottom line:** Authors choose **`heading-level`** (or the implementation maps **`h2`–`h6`**) to match the page. **2nd-gen** puts **title** and **body** copy in **slots** only; see [PR #6150 discussion](https://github.com/adobe/spectrum-web-components/pull/6150#discussion_r3047502294).
-
----
-
-## Related 1st-gen accessibility (Jira)
-
-| Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
-|------|------|-------------------|-------------------------|---------|
+Bottom line: Authors choose `heading-level` (`2`–`6`, i.e. `h2`–`h6`) to match the page. The component always emits the corresponding heading in shadow DOM; the slot does not supply the heading tag.
 
 ---
 
 ## Recommendations: `<swc-illustrated-message>`
 
-### ARIA roles, states, and properties
+### Heading slot, `heading` attribute, and `heading-level`
 
 | Topic | What to do |
 |-------|------------|
-| **Heading and description content (2nd-gen)** | Provide **title** and **description** **only** via **`slot="heading"`** and **`slot="description"`**. **Do not** rely on **reflecting** **`heading`** or **`description`** **string properties** as **default slot content** the way **1st-gen** **`<sp-illustrated-message>`** could—those **attribute** fallbacks are **removed** in **2nd-gen** to **sever the 1st-gen dependency**. This matches maintainer direction ([discussion with @5t3ph](https://github.com/adobe/spectrum-web-components/pull/6150#discussion_r3047502294)); further API tweaks remain **open to discussion** in that thread. |
-| **Heading level** | Expose a **real** heading in shadow DOM (**`h2`–`h6`**) from **`heading-level`** (or the agreed property). **Do not** accept **`heading-level="1"`** / **`h1`** for this block—the **page** (or **dialog** title) should own **`h1`**. |
-| **Illustration** | Prefer **`aria-hidden="true"`** on **decorative** **SVG**s. If the graphic is **meaningful**, use **`role="img"`** and **`aria-label`** (or **visible** text that names it). |
-| **Actions** | **Buttons** or **links** in an **actions** slot must keep **visible** **text** or **`aria-label`** as required by **WCAG**. |
-| **Docs** | Examples should **only** show **slotted** **heading** and **description** for **2nd-gen**; **do not** teach **`heading="..."`** / **`description="..."`** as an alternative **content** API. |
+| No `h1` | Never render `<h1>`. Do not accept `heading-level="1"`. `h1` belongs to the page, shell, or dialog title, not this block. |
+| `heading-level` | Required behavior: `2`–`6`, default `2`. Clamp or coerce out-of-range values; document behavior for invalid input (same spirit as accordion `getHeadingLevel()`). |
+| `heading` slot | Span only: document that the slot must contain a `span` (or stricter: exactly one root `span`). No slotted `<h1>`–`<h6>`. |
+| Shadow heading | Single heading element in shadow DOM; tag is `<h2>`–`<h6>` per `heading-level`. Slot and/or `heading` attribute supply text content inside that element (not the element type). |
+| `heading` slot | Only mechanism for providing heading content; no attribute fallback. |
+| Docs | Examples across `heading-level` `2`–`6` (for example below page `h1` vs nested under `h3`). Contrast with accordion: accordion allows `level` `1`; illustrated message does not. |
 
-### Shadow DOM and cross-root ARIA Issues
+### Other content and slots
 
-None for a minimal implementation if **slots** carry **light-DOM** **links** / **buttons** with **native** semantics. If **IDs** for **`aria-labelledby`** must point across roots, document the **pattern** (or prefer **slots** that **project** into shadow **heading** / **description** wrappers).
+| Topic | What to do |
+|-------|------------|
+| Illustration (default slot) | If purely decorative, `aria-hidden="true"` on the SVG (or equivalent). If meaningful, `role="img"` and `aria-label` / `<title>` (see icon and SVG accessibility patterns). |
+| Description | Body text; links inside description must be real `<a>` or link components with visible names. |
+| Actions (Spectrum 2) | Slotted buttons follow button and action group labeling; order matches visual reading order. |
+
+### Shadow DOM and cross-root ARIA issues
+
+- If `aria-labelledby` / `aria-describedby` reference slotted ids, confirm 2nd-gen id forwarding or document limitations. Heading `id` for region labeling should live on the shadow `<h2>`–`<h6>` if needed.
 
 ### Accessibility tree expectations
 
-- Users hear a **heading** at the **chosen** level and the **description** content.
-- **Decorative** **illustration** does **not** add **noise** to the **tree**.
-- **Actions** are **real** **controls** with **names**.
+Typical open state
+
+- One heading: correct `h2`–`h6` from `heading-level`, with label text from the `heading` slot (`span` content).
+- Description as text content (and focusable links if present).
+- Illustration exposed or hidden per decorative vs informative rules.
 
 ### Keyboard and focus
 
-- The **illustrated message** host is **not** a single **tab stop** by default; **Tab** moves among **focusable** **children** (**buttons**, **links**, etc.) in **document** order.
+- The host is not a single tab stop unless design adds interactive chrome; Tab moves to slotted actions and links in DOM order.
+- No requirement for arrow-key widget behavior unless actions compose a pattern (for example button group docs).
+
+---
+
+## Known 1st-gen issues
+
+- `sp-illustrated-message` always wraps the heading slot in `<h2 id="heading">` ([`IllustratedMessage.ts`](https://github.com/adobe/spectrum-web-components/blob/main/1st-gen/packages/illustrated-message/src/IllustratedMessage.ts)) with no `heading-level` API—authors cannot match outline when the block should be `h3`–`h6`.
+- The slot accepts any node; slotted heading elements would nest incorrectly inside `<h2>`. 2nd-gen fixes this by owning the heading tag and restricting the slot to `span` only.
 
 ---
 
@@ -113,26 +135,27 @@ None for a minimal implementation if **slots** carry **light-DOM** **links** / *
 
 | Kind of test | What to check |
 |--------------|----------------|
-| **Unit** | **Heading** tag matches **`heading-level`**; **no** **`h1`** when disallowed; **SVG** **`aria-hidden`** (or **img** **name**) matches **decorative** vs **informative** stories. |
-| **aXe + Storybook** | **WCAG 2.x** on **overview** and **empty-state**-style stories with **slotted** **heading** / **description**. |
-| **Playwright ARIA snapshots** | **Heading** **role** / **level** and **description** text; **actions** **names** when present. |
+| Unit | Rendered tag is `h2`–`h6` matching `heading-level`; default `2`; `heading-level` `1` never produces `h1`; invalid values coerce per spec; `heading` slot rejects or ignores non-`span` root if that is the contract. |
+| aXe + Storybook | Heading order sane; no `h1` inside illustrated message stories; no empty headings when title required. |
+| Integration | Dropzone and dialog demos set `heading-level` appropriately for context. |
 
 ---
 
 ## Summary checklist
 
-- [ ] **2nd-gen** **docs** and **stories** use **slots** for **heading** and **description** **only**—**no** **`heading`** / **`description`** **attribute** fallbacks as the **content** API ([PR #6150](https://github.com/adobe/spectrum-web-components/pull/6150#discussion_r3047502294)).
-- [ ] **Heading level** is **correct** for the page; **no** **`h1`** inside the component when the pattern forbids it.
-- [ ] **Illustration** is **decorative** (**`aria-hidden`**) or **named** when it carries **meaning**.
-- [ ] **Actions** and **inline** **links** in **description** are **labeled**.
-- [ ] **Snapshots** / **aXe** cover representative **stories**.
+- [ ] API documented: `heading-level` `2`–`6` (default `2`); `heading` slot span-only; shadow DOM owns `<h2>`–`<h6>`; no `<h1>`.
+- [ ] Storybook examples vary `heading-level` by context (not always `2`).
+- [ ] 1st-gen fixed `h2` called out as migration motivation; link SWC-1466 / accordion for “configurable level” precedent only (different slot rules).
+- [ ] Decorative vs meaningful illustration documented for SVG slot.
+- [ ] Actions slot meets button label requirements.
 
 ---
 
 ## References
 
-- [WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-1.2/)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
-- [Using ARIA (read this first)](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
+- [Understanding info and relationships (1.3.1)](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html)
+- [Understanding headings and labels (2.4.6)](https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels.html)
+- [feat(accordion): add `level` property for controlling title heading (PR #5969)](https://github.com/adobe/spectrum-web-components/pull/5969) — precedent for a numeric heading level on a parent; illustrated message uses `heading-level` `2`–`6`, span-only title slot, and shadow-owned heading tag (SWC-1466).
 - [Illustrated message migration roadmap](./rendering-and-styling-migration-analysis.md)
-- [PR #6150 — illustrated message: file structure and initial API (discussion: slots vs heading attributes)](https://github.com/adobe/spectrum-web-components/pull/6150#discussion_r3047502294)
+- [SWC-1466](https://jira.corp.adobe.com/browse/SWC-1466) (Adobe internal Jira): accordion heading level; analogous motivation for configurable `heading-level` on illustrated message.

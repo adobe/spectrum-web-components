@@ -14,11 +14,10 @@ import { html } from 'lit';
 import type { DecoratorFunction } from '@storybook/types';
 
 /**
- * Decorator that applies selected theme and scale
+ * Decorator that applies selected theme context.
  */
 export const withContext: DecoratorFunction = (Story, context) => {
   const theme = context.globals.theme;
-  const scale = context.globals.scale;
 
   document.documentElement.classList.remove(
     'swc-theme--light',
@@ -26,12 +25,6 @@ export const withContext: DecoratorFunction = (Story, context) => {
     'swc-theme--adaptive'
   );
   document.documentElement.classList.add(`swc-theme--${theme}`);
-
-  if (scale === 'large') {
-    document.documentElement.classList.add('swc-theme--sizeL');
-  } else {
-    document.documentElement.classList.remove('swc-theme--sizeL');
-  }
 
   return html`
     ${Story(context)}
