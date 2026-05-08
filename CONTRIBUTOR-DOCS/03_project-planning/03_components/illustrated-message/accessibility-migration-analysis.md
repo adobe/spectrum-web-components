@@ -101,7 +101,7 @@ Bottom line: Authors choose `heading-level` (`2`–`6`, i.e. `h2`–`h6`) to mat
 |-------|------------|
 | Illustration (default slot) | If purely decorative, `aria-hidden="true"` on the SVG (or equivalent). If meaningful, `role="img"` and `aria-label` / `<title>` (see icon and SVG accessibility patterns). |
 | Description | Body text; links inside description must be real `<a>` or link components with visible names. |
-| Actions (Spectrum 2) | Slotted buttons follow button and action group labeling; order matches visual reading order. |
+| `button-group` slot (Spectrum 2) | Slotted buttons follow button and action group labeling; order matches visual reading order. |
 
 ### Shadow DOM and cross-root ARIA issues
 
@@ -147,7 +147,7 @@ Typical open state
 - [ ] Storybook examples vary `heading-level` by context (not always `2`).
 - [ ] 1st-gen fixed `h2` called out as migration motivation; link SWC-1466 / accordion for “configurable level” precedent only (different slot rules).
 - [ ] Decorative vs meaningful illustration documented for SVG slot.
-- [ ] Actions slot meets button label requirements.
+- [ ] `button-group` slot meets button label requirements.
 
 ---
 
