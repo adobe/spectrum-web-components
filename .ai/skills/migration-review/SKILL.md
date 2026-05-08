@@ -22,7 +22,7 @@ Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[
 ## When NOT to use
 
 - Phase 7 is not complete — documentation and stories should be finalized before review
-- You are resolving a lint, test, or build failure that belongs to an earlier phase (e.g. stylelint errors → Phase 4, failing unit or a11y tests → Phase 6)
+- You are resolving a lint, test, or build failure that belongs to an earlier phase (e.g. stylelint errors → Phase 5, failing unit or a11y tests → Phase 6)
 
 ## How to invoke
 

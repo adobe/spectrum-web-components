@@ -34,12 +34,12 @@
     - [What to check](#what-to-check)
     - [Common problems and solutions](#common-problems-and-solutions)
     - [Quality gate](#quality-gate)
-- [Phase 4: Styling](#phase-4-styling)
+- [Phase 4: Accessibility](#phase-4-accessibility)
     - [What to do](#what-to-do)
     - [What to check](#what-to-check)
     - [Common problems and solutions](#common-problems-and-solutions)
     - [Quality gate](#quality-gate)
-- [Phase 5: Accessibility](#phase-5-accessibility)
+- [Phase 5: Styling](#phase-5-styling)
     - [What to do](#what-to-do)
     - [What to check](#what-to-check)
     - [Common problems and solutions](#common-problems-and-solutions)
@@ -77,7 +77,7 @@ It **orchestrates** the migration: eight phases with checklists and quality gate
 
 ### Workspace setup
 
-Keep **spectrum-web-components** (this repo) and **[spectrum-css](https://github.com/adobe/spectrum-css)** in the **same workspace**—typically as **sibling folders** under one parent directory (e.g. `~/dev/spectrum-web-components` and `~/dev/spectrum-css`). Step 1 analysis, Phase 4 styling (S2 source from the spectrum-css **`spectrum-two`** branch), and AI-assisted migration prompts all work best when both trees are available locally for comparison, copy-from-source, and editor/IDE context.
+Keep **spectrum-web-components** (this repo) and **[spectrum-css](https://github.com/adobe/spectrum-css)** in the **same workspace**—typically as **sibling folders** under one parent directory (e.g. `~/dev/spectrum-web-components` and `~/dev/spectrum-css`). Step 1 analysis, Phase 5 styling (S2 source from the spectrum-css **`spectrum-two`** branch), and AI-assisted migration prompts all work best when both trees are available locally for comparison, copy-from-source, and editor/IDE context.
 
 ---
 
@@ -96,8 +96,8 @@ Keep **spectrum-web-components** (this repo) and **[spectrum-css](https://github
 - [ ] Move base class to core → [Phase 2: Setup](#phase-2-setup)
 - [ ] Create SWC component → [Phase 2: Setup](#phase-2-setup)
 - [ ] Migrate public API → [Phase 3: API migration](#phase-3-api-migration)
-- [ ] Migrate CSS (and run stylelint—property order, no-descending-specificity, tokens) → [Phase 4: Styling](#phase-4-styling)
-- [ ] Implement accessibility → [Phase 5: Accessibility](#phase-5-accessibility)
+- [ ] Implement accessibility → [Phase 4: Accessibility](#phase-4-accessibility)
+- [ ] Migrate CSS (and run stylelint—property order, no-descending-specificity, tokens) → [Phase 5: Styling](#phase-5-styling)
 - [ ] Add tests (test stories + a11y spec) → [Phase 6: Testing](#phase-6-testing)
 - [ ] Add stories → [Phase 7: Documentation](#phase-7-documentation)
 - [ ] Open PR → [Phase 8: Review](#phase-8-review)
@@ -119,8 +119,8 @@ Use this doc for **what order** to do things and **what to check**; use the link
 | **1. Preparation** | Uses output of **Step 1: Analyze rendering and styling** (read the component analysis). Plan breaking changes and scope. |
 | **2. Setup** | **Steps 2–3** — study 1st-gen structure, create base class in core — then create 2nd-gen core/SWC layout per Phase 2. |
 | **3. API migration** | **Step 4: Formalize Spectrum data model** + **Step 5: Add 2nd-gen SWC** (API overrides/additions). |
-| **4. Styling** | **Step 6: Migrate rendering & styles from Spectrum CSS**. |
-| **5. Accessibility** | (No dedicated step — this guide adds it.) |
+| **4. Accessibility** | Use the **accessibility migration analysis** (`03_components/<component>/accessibility-migration-analysis.md`). |
+| **5. Styling** | **Step 6: Migrate rendering & styles from Spectrum CSS**. |
 | **6. Testing** | (Mentioned in steps as "confirm tests pass" — this guide makes it a full phase.) |
 | **7. Documentation** | **Step 7: Add stories for 2nd-gen component** + JSDoc and usage docs. |
 | **8. Review** | (No dedicated step — this guide adds checklist and PR.) |
@@ -140,8 +140,8 @@ flowchart LR
         B[1. Preparation]
         C[2. Setup]
         D[3. API]
-        E[4. Styling]
-        F[5. A11y]
+        E[4. A11y]
+        F[5. Styling]
         G[6. Testing]
         H[7. Docs]
         I[8. Review]
@@ -285,7 +285,7 @@ See [Step 4](04_formalize-spectrum-data-model.md) and [Step 5](05_implement-2nd-
 
 ### API patterns (statics and warnings)
 
-Follow team **TypeScript conventions (Ticket 7)** for naming and structure; use **Badge** as the concrete reference.
+Follow team **TypeScript conventions** for naming and structure; use **Badge** as the concrete reference.
 
 **Static `readonly` arrays (`VARIANTS`, `VARIANTS_COLOR`, `VALID_SIZES`, `FIXED_VALUES`, etc.)**
 
@@ -377,17 +377,66 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 ### Quality gate
 
 - [ ] Public API is documented; types are in core; base holds behavior; SWC holds rendering.
-- [ ] Static readonly pattern, debug warnings, and 1st-gen deprecation notices align with Badge (or equivalent) and TypeScript conventions (Ticket 7).
+- [ ] Static readonly pattern, debug warnings, and 1st-gen deprecation notices align with Badge (or equivalent) and TypeScript conventions.
 
 ---
 
-## Phase 4: Styling
+## Phase 4: Accessibility
+
+**Goal:** Implement the accessibility requirements defined in the component's **accessibility migration analysis** (`CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/accessibility-migration-analysis.md`). That document is the source of truth for this phase — implement exactly what it specifies, cross-referencing the repo’s [Accessibility testing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/01_contributor-guides/09_accessibility-testing.md) guide and the PR template’s accessibility checklist.
+
+### What to do
+
+1. **Read the component's accessibility migration analysis** — `CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/accessibility-migration-analysis.md`. The analysis defines the APG pattern (if any), required ARIA roles/states/properties, shadow DOM considerations, accessibility tree shape, keyboard and focus behavior, and the testing checklist. **Everything you implement in this phase flows from that document.**  
+2. **Follow the [Accessibility testing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/01_contributor-guides/09_accessibility-testing.md) guide** and the PR template checklist.
+3.  **Use 2nd-gen Storybook accessibility guides:** `2nd-gen/packages/swc/.storybook/guides/accessibility-guides/` — codebase-specific a11y patterns and docs surfaced in Storybook (complement the contributor guide and APG).
+4. **Identify the APG pattern** for your component type (e.g. button, combobox) — [WCAG ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/).
+5. **Implement:** Semantics (prefer native HTML), ARIA where needed, keyboard support, focus management (trap in overlays), screen reader exposure. Test with assistive tech; document in JSDoc.
+6. **Native vs custom controls:** Native form control (e.g. Checkbox) → `delegatesFocus: true`. Custom control (e.g. Radio) → `role` and `aria-*` on host, manage focus/keyboard. See Checkbox and Radio as references.
+7. **Focus delegation on internal control:** When a component wraps a native form control inside its shadow DOM, set `delegatesFocus: true` via `static override shadowRootOptions = { ...ParentClass.shadowRootOptions, delegatesFocus: true }` so that focus lands on the internal control, not the host. This belongs in the base class if all subclasses share the same host-wraps-native-control structure. **Do not** override `createRenderRoot()` to set this option — doing so bypasses Lit’s `adoptStyles()`, silently preventing all component CSS from being injected into the shadow DOM. See [Rendering patterns: Shadow root customization](../../../../02_style-guide/02_typescript/09_rendering-patterns.md#shadow-root-customization).
+8. **Accessible name forwarding:** Attributes like `aria-label` on the host do not automatically apply to the internal control — either bind them explicitly in the render template (e.g. `aria-label=${this.getAttribute(‘aria-label’)}`) or derive the accessible name in a protected helper and forward it. See `ButtonBase.getResolvedAccessibleName()` as a reference. Note that implementing these patterns may require adding methods or modifying the render template, so Phase 4 often touches component class files, not only Storybook or docs.
+
+### What to check
+
+- [ ] The component's accessibility migration analysis doc exists and has been read in full.
+- [ ] All requirements in the analysis are implemented.
+- [ ] ARIA and semantics match the chosen APG pattern that the analysis identified.
+- [ ] Component behaves as expected with screen reader. 
+- [ ] Keyboard and focus behavior are implemented and tested.
+- [ ] No accessibility regressions vs 1st-gen.
+
+### Common problems and solutions
+
+| Problem | Solution |
+|--------|----------|
+| Unclear which pattern applies | Start from the component’s primary role (e.g. "combobox" → Combobox pattern). Consider splitting into more than one component (e.g. "sp-menu" into menu and listbox components). |
+| Focus trap in overlays | Use a shared focus-trap utility if the repo provides one; follow APG for modal/dialog. |
+| Custom controls | Ensure they have roles, names, and keyboard support; avoid div/span without semantics. |
+
+<details>
+<summary>**Stop and ask:** Custom events vs native events</summary>
+
+Prefer native events when they give the right semantics (e.g. `click`). Add custom events only when you need to expose extra data or lifecycle (e.g. `sp-close`). Document both in JSDoc.
+</details>
+
+### Quality gate
+
+- [ ] Component's accessibility migration analysis doc exists and all its requirements are implemented.                                                      
+- [ ] Keyboard and ARIA implemented per the analysis.
+- [ ] APG pattern identified and linked
+- [ ] Keyboard and ARIA implemented
+- [ ] a11y tests added
+- [ ] Screen reader testing performed
+
+---
+
+## Phase 5: Styling
 
 **Goal:** Migrate CSS to 2nd-gen structure and follow the CSS style guide. Follow the [full migration steps](../../../../02_style-guide/01_css/04_spectrum-swc-migration.md); see also [Step 6: Migrate rendering & styles from Spectrum CSS](06_migrate-rendering-and-styles.md) for workstream context. Requires a local **spectrum-css** checkout next to this repo—see [Workspace setup](#workspace-setup).
 
 ### What to do
 
-1. **Verify or create the stories file** — Visual verification requires a stories file. If `stories/[component].stories.ts` does not exist, create it before writing CSS using the `migration-styling` skill’s Phase 4 stories template. The stories file at this phase should have Playground, Overview, Anatomy, Options, States, and CSS-visible Behaviors — no JSDoc prose, and the Accessibility story left as a `// TODO` comment. Confirm the component renders in Storybook with no console errors before touching CSS.
+1. **Verify or create the stories file** — Visual verification requires a stories file. If `stories/[component].stories.ts` does not exist, create it before writing CSS using the `migration-styling` skill’s Phase 5 stories template. The stories file at this phase should have Playground, Overview, Anatomy, Options, States, and CSS-visible Behaviors — no JSDoc prose, and the Accessibility story left as a `// TODO` comment. Confirm the component renders in Storybook with no console errors before touching CSS.
 2. **Align render template class names with CSS selectors** — Read the component’s `render()` method and note every class name emitted. The CSS you write must use those exact names; mismatches cause styles to silently not apply. When migrating from 1st-gen single-hyphen naming (e.g. `.swc-Button-label`) to 2nd-gen BEM double-underscore notation (e.g. `.swc-Button__label`), update `render()` first, confirm the component still renders, then write the CSS.
 3. **Follow the migration steps** — [Step 6](06_migrate-rendering-and-styles.md) and the [full migration steps](../../../../02_style-guide/01_css/04_spectrum-swc-migration.md). Use [03_components/](../../../03_components/) for spectrum-two alignment. Copy S2 styles from your **spectrum-css** clone, **`spectrum-two`** branch, component `index.css` (not `dist`).
 4. **Use tokens** — Replace hard-coded values with `token(...)`. Follow [component CSS](../../../../02_style-guide/01_css/01_component-css.md) and [custom properties](../../../../02_style-guide/01_css/02_custom-properties.md).
@@ -428,50 +477,6 @@ For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheet
 
 ---
 
-## Phase 5: Accessibility
-
-**Goal:** Implement WCAG-aligned behavior and document it. Follow the repo’s [Accessibility testing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/01_contributor-guides/09_accessibility-testing.md) guide and the PR template’s accessibility checklist; for public-facing usage, refer to the [public docs site](https://opensource.adobe.com/spectrum-web-components/) accessibility guidance where applicable.
-
-### What to do
-
-1. **Follow the [Accessibility testing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/01_contributor-guides/09_accessibility-testing.md) guide** and the PR template checklist.
-2. **Use 2nd-gen Storybook accessibility guides:** `2nd-gen/packages/swc/.storybook/guides/accessibility-guides/` — codebase-specific a11y patterns and docs surfaced in Storybook (complement the contributor guide and APG).
-3. **Identify the APG pattern** for your component type (e.g. button, combobox) — [WCAG ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/).
-4. **Implement:** Semantics (prefer native HTML), ARIA where needed, keyboard support, focus management (trap in overlays), screen reader exposure. Test with assistive tech; document in JSDoc.
-5. **Native vs custom controls:** Native form control (e.g. Checkbox) → `delegatesFocus: true`. Custom control (e.g. Radio) → `role` and `aria-*` on host, manage focus/keyboard. See Checkbox and Radio as references.
-6. **Focus delegation on internal control:** When a component wraps a native form control inside its shadow DOM, set `delegatesFocus: true` via `static override shadowRootOptions = { ...ParentClass.shadowRootOptions, delegatesFocus: true }` so that focus lands on the internal control, not the host. This belongs in the base class if all subclasses share the same host-wraps-native-control structure. **Do not** override `createRenderRoot()` to set this option — doing so bypasses Lit's `adoptStyles()`, silently preventing all component CSS from being injected into the shadow DOM. See [Rendering patterns: Shadow root customization](../../../../02_style-guide/02_typescript/09_rendering-patterns.md#shadow-root-customization).
-7. **Accessible name forwarding:** Attributes like `aria-label` on the host do not automatically apply to the internal control — either bind them explicitly in the render template (e.g. `aria-label=${this.getAttribute('aria-label')}`) or derive the accessible name in a protected helper and forward it. See `ButtonBase.getResolvedAccessibleName()` as a reference. Note that implementing these patterns may require adding methods or modifying the render template, so Phase 5 often touches component class files, not only Storybook or docs.
-
-### What to check
-
-- [ ] ARIA and semantics match the chosen APG pattern.
-- [ ] Component behaves as expected with screen reader. 
-- [ ] Keyboard and focus behavior are implemented and tested.
-- [ ] No accessibility regressions vs 1st-gen.
-
-### Common problems and solutions
-
-| Problem | Solution |
-|--------|----------|
-| Unclear which pattern applies | Start from the component's primary role (e.g. "combobox" → Combobox pattern). Consider splitting into more than one component (e.g. "sp-menu" into menu and listbox components). |
-| Focus trap in overlays | Use a shared focus-trap utility if the repo provides one; follow APG for modal/dialog. |
-| Custom controls | Ensure they have roles, names, and keyboard support; avoid div/span without semantics. |
-
-<details>
-<summary>**Stop and ask:** Custom events vs native events</summary>
-
-Prefer native events when they give the right semantics (e.g. `click`). Add custom events only when you need to expose extra data or lifecycle (e.g. `sp-close`). Document both in JSDoc.
-</details>
-
-### Quality gate
-
-- [ ] APG pattern identified and linked
-- [ ] Keyboard and ARIA implemented
-- [ ] a11y tests added
-- [ ] Screen reader testing performed
-
----
-
 ## Phase 6: Testing
 
 **Goal:** Automated tests for behavior and accessibility.
@@ -490,7 +495,7 @@ Follow the two-file layout (`test/<component>.test.ts`, `test/<component>.a11y.s
 - [ ] `test/<component>.test.ts` and `test/<component>.a11y.spec.ts` are present and follow the structure described above (test stories under *Component/Tests*, a11y spec with `gotoStory` and `toMatchAriaSnapshot`).
 - [ ] Unit tests pass; a11y tests pass.
 - [ ] Critical paths (render, props, slots, events) are covered.
-- [ ] Tests follow the project [testing conventions](../../../../01_contributor-guides/11_2ndgen_testing.md) (Ticket 10).
+- [ ] Tests follow the project [testing conventions](../../../../01_contributor-guides/11_2ndgen_testing.md).
 
 ### Common problems and solutions
 
@@ -513,7 +518,7 @@ Follow the two-file layout (`test/<component>.test.ts`, `test/<component>.a11y.s
 ### What to do
 
 1. **JSDoc:** Every public prop, slot, event, and the element itself. Use `@element`, `@example`, `@internal` for non-public.
-2. **Storybook stories:** If Phase 4 was completed, `stories/[component].stories.ts` may already exist with Playground, Overview, Anatomy, Options, States, and Behaviors stories — all correctly structured but without JSDoc prose. Phase 7 augments that file: add JSDoc comments to every story (except Playground and Overview, which have none by convention), complete the Accessibility story body (left as `// TODO` in Phase 4), and add any stories deferred from earlier phases. Do not recreate the file from scratch. If no Phase 4 scaffold exists, create it from the `migration-styling` skill's stories template and then fill in the Phase 7 content. Reference `badge/stories/badge.stories.ts` and `divider/stories/divider.stories.ts` for complete examples.
+2. **Storybook stories:** If Phase 5 was completed, `stories/[component].stories.ts` may already exist with Playground, Overview, Anatomy, Options, States, and Behaviors stories — all correctly structured but without JSDoc prose. Phase 7 augments that file: add JSDoc comments to every story (except Playground and Overview, which have none by convention), complete the Accessibility story body (left as `// TODO` in Phase 5), and add any stories deferred from earlier phases. Do not recreate the file from scratch. If no Phase 5 scaffold exists, create it from the `migration-styling` skill's stories template and then fill in the Phase 7 content. Reference `badge/stories/badge.stories.ts` and `divider/stories/divider.stories.ts` for complete examples.
 3. **Size/variant controls:** Ensure controls drive the component. If the attribute comes from a mixin (e.g. `SizedMixin`), declare it on the SWC class with `@property({ reflect: true })` so the CEM includes it; run `yarn analyze` to regenerate the manifest.
 4. **Review, usage docs, migration notes:** Confirm stories; add usage docs; document API changes from 1st-gen.
 
@@ -547,7 +552,7 @@ See [Step 7](07_add-stories-for-2nd-gen-component.md) for structure and examples
 ### What to do
 
 1. **Run the full checklist** (copy below).
-2. **Lint:** From the repo root, run **`yarn lint:2nd-gen`** (or equivalent) and fix issues in touched files. That runs **ESLint** on TypeScript, JavaScript, and JSON under `2nd-gen`; **Stylelint** on `2nd-gen/**/*.css` (property order, no-descending-specificity, declaration empty lines, token usage, etc.); and **Prettier** in check mode. CSS should already be clean from Phase 4—re-check here (see [Phase 4: 2nd-gen CSS linting](#phase-4-styling)).
+2. **Lint:** From the repo root, run **`yarn lint:2nd-gen`** (or equivalent) and fix issues in touched files. That runs **ESLint** on TypeScript, JavaScript, and JSON under `2nd-gen`; **Stylelint** on `2nd-gen/**/*.css` (property order, no-descending-specificity, declaration empty lines, token usage, etc.); and **Prettier** in check mode. CSS should already be clean from Phase 5—re-check here (see [Phase 5: 2nd-gen CSS linting](#phase-5-styling)).
 3. **Tests:** Run the full test suite for the affected packages.
 4. **Build:** Ensure build succeeds.
 5. **Storybook:** Load the component in Storybook; click through stories and variants.
@@ -559,8 +564,8 @@ See [Step 7](07_add-stories-for-2nd-gen-component.md) for structure and examples
 - [ ] Phase 1: Migration plan done; API and breaking changes understood.
 - [ ] Phase 2: All files created; build passes; component importable.
 - [ ] Phase 3: API in base/SWC; types in core; JSDoc and @internal set.
-- [ ] Phase 4: CSS follows style guide; tokens and variants work; **stylelint passes** for 2nd-gen component CSS (property order, no-descending-specificity, tokens).
-- [ ] Phase 5: WCAG pattern applied; keyboard and ARIA done; a11y tests pass.
+- [ ] Phase 4: WCAG pattern applied; keyboard and ARIA done; a11y tests pass.
+- [ ] Phase 5: CSS follows style guide; tokens and variants work; **stylelint passes** for 2nd-gen component CSS (property order, no-descending-specificity, tokens).
 - [ ] Phase 6: Unit and a11y tests pass; coverage is reasonable.
 - [ ] Phase 7: JSDoc and stories complete; migration notes if needed.
 - [ ] Phase 8: Lint clean; tests green; Storybook verified; status table updated; PR created.

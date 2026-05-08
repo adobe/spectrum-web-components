@@ -1,6 +1,6 @@
-# Phase 4 stories template
+# Phase 5 stories template
 
-A minimal `[component].stories.ts` file for visual verification of 2nd-gen CSS during Phase 4. Full JSDoc and the Accessibility story are deferred — JSDoc belongs to Phase 7 (Documentation); the Accessibility story belongs to the accessibility phase.
+A minimal `[component].stories.ts` file for visual verification of 2nd-gen CSS during Phase 5. Full JSDoc and the Accessibility story are deferred — JSDoc belongs to Phase 7 (Documentation); the Accessibility story belongs to the accessibility phase.
 
 ## What to replace
 
@@ -243,7 +243,7 @@ export const States: Story = {
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-// TODO: will complete in separate accessibility pass of phase 5
+// TODO: will complete in separate documentation pass of phase 7
 ```
 
 ## Checklist before moving to CSS work
