@@ -258,3 +258,12 @@ export const EventLogger = (): TemplateResult => {
 EventLogger.parameters = {
   tags: ['!dev'],
 };
+
+EventLogger.swc_vrt = {
+  skip: true,
+};
+
+EventLogger.parameters = {
+  // Disables Chromatic's snapshotting on a global level
+  chromatic: { disableSnapshot: true },
+};
