@@ -168,6 +168,10 @@ export class Dropzone extends SpectrumElement {
      */
     event.preventDefault();
 
+    if (!this.isDragged) {
+      return;
+    }
+
     this.clearDebouncedDragLeave();
 
     this.isDragged = false;

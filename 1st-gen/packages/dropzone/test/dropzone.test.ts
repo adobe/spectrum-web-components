@@ -243,6 +243,8 @@ describe('Dropzone', () => {
 
     await elementUpdated(el);
 
+    el.isDragged = true;
+
     const childB = el.querySelector('#child-b') as HTMLElement;
     const internalLeave = new DragEvent('dragleave', {
       bubbles: true,
@@ -256,7 +258,7 @@ describe('Dropzone', () => {
       dragLeftCount,
       'dragleave is suppressed when relatedTarget is an internal child'
     ).to.equal(0);
-    expect(el.isDragged).to.be.false;
+    expect(el.isDragged).to.be.true;
   });
   it('fires `sp-dropzone-drop` on drop', async () => {
     let dropped = false;
@@ -271,9 +273,42 @@ describe('Dropzone', () => {
 
     expect(dropped).to.be.false;
 
+    el.isDragged = true;
     el.dispatchEvent(new DragEvent('drop'));
 
     expect(dropped).to.be.true;
+  });
+  it('does not fire `sp-dropzone-drop` when `should-accept` is cancelled', async () => {
+    let dropped = false;
+    const rejectDrag = (event: Event): void => {
+      event.preventDefault();
+    };
+    const onDrop = (): void => {
+      dropped = true;
+    };
+    const el = await fixture<Dropzone>(html`
+      <sp-dropzone
+        id="dropzone"
+        @sp-dropzone-should-accept=${rejectDrag}
+        @sp-dropzone-drop=${onDrop}
+      ></sp-dropzone>
+    `);
+
+    await elementUpdated(el);
+
+    let dataTransfer: DataTransfer | boolean = false;
+    try {
+      dataTransfer = new DataTransfer();
+      // eslint-disable-next-line no-empty, @typescript-eslint/no-unused-vars
+    } catch (error) {}
+    if (dataTransfer) {
+      el.dispatchEvent(new DragEvent('dragover', { dataTransfer }));
+      expect(el.isDragged).to.be.false;
+
+      el.dispatchEvent(new DragEvent('drop'));
+      expect(dropped, 'sp-dropzone-drop should not fire for rejected drags').to
+        .be.false;
+    }
   });
   it('clears pending dragleave timeout on disconnect', async () => {
     let dragLeftCount = 0;
