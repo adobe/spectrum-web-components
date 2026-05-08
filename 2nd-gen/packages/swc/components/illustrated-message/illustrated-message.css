@@ -1,0 +1,151 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.swc-IllustratedMessage {
+  --_swc-illustrated-message-illustration-to-content: var(--swc-illustrated-message-illustration-to-content, token("spacing-200"));
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--_swc-illustrated-message-illustration-to-content);
+  align-items: center;
+  max-inline-size: var(--swc-illustrated-message-max-inline-size, token("illustrated-message-vertical-maximum-width"));
+  margin-inline: auto;
+}
+
+.swc-IllustratedMessage-illustration {
+  --_swc-illustrated-message-illustration-size: var(--swc-illustrated-message-illustration-size, 96px);
+
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  inline-size: var(--swc-illustrated-message-illustration-inline-size, var(--_swc-illustrated-message-illustration-size));
+  block-size: var(--swc-illustrated-message-illustration-block-size, var(--_swc-illustrated-message-illustration-size));
+  color: var(--swc-illustrated-message-illustration-color, token("neutral-content-color-default"));
+}
+
+.swc-IllustratedMessage-content {
+  display: flex;
+  flex-direction: column;
+  gap: token("spacing-75");
+  text-align: center;
+}
+
+.swc-IllustratedMessage-description {
+  font-size: var(--swc-illustrated-message-description-font-size, token("illustrated-message-medium-body-font-size"));
+  font-weight: token("regular-font-weight");
+  line-height: var(--swc-illustrated-message-description-line-height, token("body-line-height"));
+  color: token("body-color");
+}
+
+/* ── Size: small ─────────────────────────────────────────────────────────── */
+
+:host([size="s"]) {
+  --swc-illustrated-message-illustration-size: 96px;
+  --swc-illustrated-message-illustration-to-content: token("spacing-200");
+  --swc-illustrated-message-heading-font-size: token("illustrated-message-small-title-font-size");
+  --swc-illustrated-message-description-font-size: token("illustrated-message-small-body-font-size");
+}
+
+/* ── Size: large ─────────────────────────────────────────────────────────── */
+
+:host([size="l"]) {
+  --swc-illustrated-message-illustration-size: 160px;
+  --swc-illustrated-message-illustration-to-content: token("spacing-100");
+  --swc-illustrated-message-heading-font-size: token("illustrated-message-large-title-font-size");
+  --swc-illustrated-message-description-font-size: token("illustrated-message-large-body-font-size");
+}
+
+/* ── CJK language support ────────────────────────────────────────────────── */
+
+:host(:lang(ja)),
+:host(:lang(ko)),
+:host(:lang(zh)) {
+  --swc-illustrated-message-heading-font-size: token("illustrated-message-medium-cjk-title-font-size");
+  --swc-illustrated-message-heading-line-height: token("cjk-line-height-100");
+  --swc-illustrated-message-description-line-height: token("cjk-line-height-200");
+}
+
+:host([size="s"]:lang(ja)),
+:host([size="s"]:lang(ko)),
+:host([size="s"]:lang(zh)) {
+  --swc-illustrated-message-heading-font-size: token("illustrated-message-small-cjk-title-font-size");
+}
+
+:host([size="l"]:lang(ja)),
+:host([size="l"]:lang(ko)),
+:host([size="l"]:lang(zh)) {
+  --swc-illustrated-message-heading-font-size: token("illustrated-message-large-cjk-title-font-size");
+}
+
+/* ── Orientation: horizontal ─────────────────────────────────────────────── */
+
+:host([orientation="horizontal"]) {
+  --swc-illustrated-message-max-inline-size: token("illustrated-message-horizontal-maximum-width");
+}
+
+:host([orientation="horizontal"]) .swc-IllustratedMessage {
+  flex-direction: row;
+  align-items: center;
+}
+
+:host([orientation="horizontal"]) .swc-IllustratedMessage-content {
+  align-items: flex-start;
+  text-align: start;
+}
+
+/* ── Slotted content ─────────────────────────────────────────────────────── */
+
+/*
+ * Heading styles live on the slot element itself. Slotted elements inherit
+ * from their assigned slot per the spec, so these properties flow into the
+ * heading without needing ::slotted() for each individual property.
+ */
+slot[name="heading"] {
+  font-size: var(--swc-illustrated-message-heading-font-size, token("illustrated-message-medium-title-font-size"));
+  font-style: token("title-sans-serif-font-style");
+  font-weight: token("title-sans-serif-font-weight");
+  line-height: var(--swc-illustrated-message-heading-line-height, token("title-line-height"));
+  color: token("heading-color");
+}
+
+/*
+ * Direct slotted headings to inherit from the slot element.
+ * The :not([class]) guard leaves intentionally-classed headings untouched.
+ * !important is required to win over any light DOM styles targeting
+ * the slotted heading (e.g. global h2 resets from the host document).
+ */
+::slotted([slot="heading"]:not([class])) {
+  margin: 0 !important;
+  font: inherit !important;
+  /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
+  color: inherit !important;
+}
+
+/*
+ * Ensure slotted SVG illustrations fill the illustration container
+ * and use the component illustration color via currentcolor.
+ */
+::slotted(svg) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  fill: currentcolor;
+  stroke: currentcolor;
+}

@@ -132,6 +132,32 @@ export class Avatar extends LikeAnchor(Focusable) {
     ) {
       this.warnMissingAlt();
     }
+    if (window.__swc?.DEBUG) {
+      if (changes.has('label') && this.label) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> the "label" attribute is deprecated and will be removed in Spectrum 2. Use the "alt" attribute instead.`,
+          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/avatar-consumer-migration-guide--docs',
+          { level: 'deprecation' }
+        );
+      }
+      if (changes.has('isDecorative') && this.isDecorative) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> the "is-decorative" attribute is deprecated and will be removed in Spectrum 2. Use the "decorative" attribute instead.`,
+          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/avatar-consumer-migration-guide--docs',
+          { level: 'deprecation' }
+        );
+      }
+      if (changes.has('href') && this.href) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> the "href" attribute is deprecated and will be removed in Spectrum 2. Wrap <${this.localName}> in an <a> element instead.`,
+          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/avatar-consumer-migration-guide--docs',
+          { level: 'deprecation' }
+        );
+      }
+    }
   }
 
   private warnMissingAlt(): void {

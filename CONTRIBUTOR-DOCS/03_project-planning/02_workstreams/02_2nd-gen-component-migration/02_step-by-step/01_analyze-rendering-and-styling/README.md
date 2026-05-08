@@ -212,6 +212,6 @@ The prompt template lives in the component-migration-analysis skill at `.cursor/
 
 ## Resources
 
-- [Rendering and styling prompt template](../../../../../../.cursor/skills/component-migration-analysis/references/migration-analysis-prompt.md) (used by the component-migration-analysis Cursor skill)
+- [Rendering and styling prompt template](../../../../../../.ai/skills/component-migration-analysis/references/migration-analysis-prompt.md) (used by the component-migration-analysis Cursor skill)
 - [Spectrum CSS repository](https://github.com/adobe/spectrum-css)
 - [Spectrum Web Components repository](https://github.com/adobe/spectrum-web-components)

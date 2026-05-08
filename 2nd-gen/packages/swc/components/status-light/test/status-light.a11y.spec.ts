@@ -31,7 +31,7 @@ test.describe('Status Light - ARIA Snapshots', () => {
       'swc-status-light'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - text: Active
+      - text: Archived
     `);
   });
 

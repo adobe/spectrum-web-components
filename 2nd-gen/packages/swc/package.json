@@ -97,7 +97,7 @@
     "@vitest/browser-playwright": "4.0.15",
     "@vitest/coverage-v8": "4.0.15",
     "@vitest/ui": "4.0.15",
-    "@wc-toolkit/storybook-helpers": "10.2.3",
+    "@wc-toolkit/storybook-helpers": "patch:@wc-toolkit/storybook-helpers@npm%3A10.2.3#~/.yarn/patches/@wc-toolkit-storybook-helpers-npm-10.2.3-03023714ff.patch",
     "aria-query": "5.3.2",
     "autoprefixer": "10.4.21",
     "dom-accessibility-api": "0.7.0",

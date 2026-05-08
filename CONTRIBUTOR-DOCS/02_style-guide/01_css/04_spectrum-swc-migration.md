@@ -77,14 +77,14 @@ background: var(--mod-badge-background-color-default, var(--spectrum-badge-backg
 #### After (SWC)
 
 ```css
-min-block-size: var(--swc-badge-height, token('component-height-100'));
+min-block-size: var(--swc-badge-height, token("component-height-100"));
 border-radius: var(
   --swc-badge-corner-radius,
-  token('corner-radius-medium-size-medium')
+  token("corner-radius-medium-size-medium")
 );
 background: var(
   --swc-badge-background-color,
-  token('accent-background-color-default')
+  token("neutral-subdued-background-color-default")
 );
 ```
 
@@ -104,26 +104,27 @@ Badge clearly distinguishes between **exposed customization** and **internal imp
 #### Exposed customization (attribute-based)
 
 ```css
-:host([size='s']) {
-  --swc-badge-height: token('component-height-75');
-  --swc-badge-font-size: token('font-size-75');
+:host([size="s"]) {
+  --swc-badge-height: token("component-height-75");
+  --swc-badge-font-size: token("font-size-75");
 }
 ```
 
 ```css
-:host([variant='negative']) {
-  --swc-badge-background-color: token('negative-background-color-default');
+:host([variant="negative"]) {
+  --swc-badge-background-color: token("negative-background-color-default");
 }
 ```
 
 #### Internal implementation (class-based)
 
 ```css
-.swc-Badge--chartreuse,
-.swc-Badge--celery {
-  --swc-badge-label-icon-color: token('black');
+.swc-Badge--magenta {
+  --swc-badge-background-color: token("magenta-background-color-default");
 }
 ```
+
+Several variants set label color on `:host` (see [badge.css](../../../2nd-gen/packages/swc/components/badge/badge.css)); class-based palette entries such as `.swc-Badge--magenta` set `--swc-badge-background-color` as above.
 
 **What Changed**
 
@@ -147,22 +148,16 @@ Badge clearly distinguishes between **exposed customization** and **internal imp
 .swc-Badge {
   display: inline-flex;
   align-items: center;
-  gap: var(--swc-badge-gap, token('text-to-visual-100'));
-  padding-inline: var(
-    --swc-badge-padding-inline,
-    token('component-edge-to-text-100')
-  );
-  padding-block: var(
-    --swc-badge-padding-block,
-    token('component-top-to-text-100')
-    token('component-bottom-to-text-100')
-  );
+  gap: var(--swc-badge-gap, token("text-to-visual-100"));
+  padding-inline-start: calc(var(--_swc-badge-padding-inline-start) - var(--_swc-badge-border-width));
+  padding-inline-end: calc(var(--_swc-badge-padding-inline) - var(--_swc-badge-border-width));
+  padding-block: calc(var(--_swc-badge-padding-block) - var(--_swc-badge-border-width));
 }
 ```
 
 ```css
-.swc-Badge:has(.swc-Badge-icon) {
-  --swc-badge-padding-inline: token('component-edge-to-visual-100');
+.swc-Badge:where(:has(.swc-Badge-icon):not(.swc-Badge--no-label)) {
+  --swc-badge-padding-inline-start: var(--swc-badge-with-icon-padding-inline, token("component-edge-to-visual-100"));
 }
 ```
 
@@ -176,18 +171,26 @@ Badge clearly distinguishes between **exposed customization** and **internal imp
 
 ### 4. Use Private Properties for Mechanical Calculations
 
+Private properties store values that are reused in math or repeated declarations. Badge keeps border width on a private property so every `calc()` that subtracts it from padding stays consistent:
+
 ```css
---_swc-badge-border-width: token('border-width-200');
---_swc-badge-border-width-deduction: calc(
-  var(--_swc-badge-border-width) * 2
-);
+.swc-Badge {
+  --_swc-badge-border-width: token("border-width-200");
+  --_swc-badge-padding-block: var(
+    --swc-badge-padding-block,
+    token("component-padding-vertical-100")
+  );
+  padding-block: calc(
+    var(--_swc-badge-padding-block) - var(--_swc-badge-border-width)
+  );
+}
 ```
 
 **What Changed**
 
-- Private properties are used for derived or mechanical values
-- These values are intentionally not overrideable
-- The public customization surface remains minimal
+- Border width and resolved padding live on `--_swc-*` so `calc()` does not repeat long `token()` calls
+- Consumers still override spacing via `--swc-badge-padding-block` on `:host`; the private layer is the stable input to layout math
+- The public customization surface stays small while implementation stays maintainable
 
 📖 See: _Custom Properties Style Guide → Private Properties_
 
