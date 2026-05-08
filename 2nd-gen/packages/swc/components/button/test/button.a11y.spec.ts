@@ -63,7 +63,7 @@ test.describe('Button - ARIA Snapshots', () => {
     await expect(root).toMatchAriaSnapshot(`
       - button "Default"
       - button "Disabled" [disabled]
-      - button "Pending, busy" [disabled]
+      - button "Save, busy" [disabled]
     `);
   });
 
