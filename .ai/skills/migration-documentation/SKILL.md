@@ -44,7 +44,7 @@ Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[
 3. Add any stories that were deferred or were not CSS-visible enough to include in Phase 4.
 4. For each item in the migration plan's Additive table:
    - If the feature is implemented and has no story yet, add it as a normal story in the relevant section (Options, Behaviors, etc.).
-   - If the feature is not yet implemented, add it to an `UpcomingFeatures` story (tag: `['upcoming', 'description-only']`). Write from a consumer's perspective — what the feature does for them, not how it's built.
+   - If the feature is not yet implemented, add it to an `UpcomingFeatures` story (tag: `['upcoming', 'description-only']`). Keep it brief and bullet-point style — the goal is to signal roadmap intent, not explain scope decisions. Write from a consumer's perspective (what it does for them) and omit internal framing like "not part of the initial scope" or "deferred pending a decision". Do not include ticket numbers (e.g. SWC-1234) or TODO language.
 
 If the stories document already exists, do **not** recreate the file from scratch. Augment what is already there.
 
