@@ -243,7 +243,7 @@ export const States: Story = {
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-// TODO: will complete in separate accessibility pass of phase 4
+// TODO: will complete in separate documentation pass of phase 7
 ```
 
 ## Checklist before moving to CSS work
