@@ -153,13 +153,13 @@ export abstract class ButtonBase extends SizedMixin(
   }
 
   public override disconnectedCallback(): void {
+    this.removeEventListener('click', this.handleClick);
     if (this._pendingTimer !== null) {
       clearTimeout(this._pendingTimer);
       this._pendingTimer = null;
     }
     this.pendingActive = false;
     super.disconnectedCallback();
-    this.removeEventListener('click', this.handleClick);
   }
 
   /**

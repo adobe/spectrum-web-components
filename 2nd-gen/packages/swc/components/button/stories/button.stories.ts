@@ -129,7 +129,7 @@ export const Playground: Story = {
 };
 
 // ──────────────────────────────
-//    OVERVIEW STORIES
+//    OVERVIEW STORY
 // ──────────────────────────────
 
 export const Overview: Story = {
@@ -259,7 +259,7 @@ export const Outline: Story = {
 export const StaticColors: Story = {
   render: (args) => html`
     <div
-      style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;"
+      style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;"
     >
       ${BUTTON_FILL_STYLES.map((fillStyle) =>
         template({
@@ -271,7 +271,7 @@ export const StaticColors: Story = {
       )}
     </div>
     <div
-      style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;"
+      style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;"
     >
       ${BUTTON_FILL_STYLES.map((fillStyle) =>
         template({
@@ -311,7 +311,7 @@ export const States: Story = {
   render: (args) => html`
     ${template({ ...args, 'default-slot': 'Default' })}
     ${template({ ...args, disabled: true, 'default-slot': 'Disabled' })}
-    ${template({ ...args, pending: true, 'default-slot': 'Pending' })}
+    ${template({ ...args, pending: true, 'default-slot': 'Save' })}
   `,
   parameters: { flexLayout: 'row-wrap' },
   tags: ['states'],

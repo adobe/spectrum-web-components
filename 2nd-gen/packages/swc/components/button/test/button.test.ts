@@ -530,6 +530,42 @@ export const DisabledBehaviorTest: Story = {
   },
 };
 
+export const IconOnlyPendingAriaTest: Story = {
+  render: () => html`
+    <swc-button accessible-label="Add item" pending>
+      <svg
+        slot="icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 36 36"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
+        />
+      </svg>
+    </swc-button>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const button = await getComponent<Button>(canvasElement, 'swc-button');
+    const internalButton = button.renderRoot.querySelector('button');
+
+    await step(
+      'derives pending accessible name from accessibleLabel when icon-only',
+      async () => {
+        expect(
+          internalButton?.getAttribute('aria-label'),
+          'pending name is derived from accessibleLabel with busy suffix'
+        ).toBe('Add item, busy');
+        expect(
+          internalButton?.getAttribute('aria-disabled'),
+          'aria-disabled is set to true while pending'
+        ).toBe('true');
+      }
+    );
+  },
+};
+
 export const PendingBehaviorTest: Story = {
   render: () => html`
     <swc-button pending>Save</swc-button>
