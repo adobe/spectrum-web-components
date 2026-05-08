@@ -49,6 +49,17 @@ setStorybookHelpersConfig(storybookHelperOptions);
 // Set the Custom Elements Manifest for automatic controls generation
 setCustomElementsManifest(customElements);
 
+const swcStorybookMode =
+  typeof process !== 'undefined' ? process.env.SWC_STORYBOOK_MODE : undefined;
+const viteEnv = (import.meta as { env?: { PROD?: boolean } }).env;
+const isProductionMode =
+  typeof process !== 'undefined'
+    ? process.env.NODE_ENV === 'production'
+    : Boolean(viteEnv?.PROD);
+
+const storybookMode =
+  swcStorybookMode === 'ci-a11y' ? 'ci-a11y' : isProductionMode ? 'build' : 'dev';
+
 const preview = {
   globalTypes: {
     theme: {
@@ -210,7 +221,7 @@ const preview = {
         method: 'alphabetical-by-kind',
         order: [
           'Learn about SWC',
-          ['Overview', 'When to use SWC', '1st-gen vs 2nd-gen'],
+          ['Overview', 'Get started', 'When to use SWC', '1st-gen vs 2nd-gen'],
           'Core',
           ['Overview', 'Controllers'],
           'Components',
@@ -331,6 +342,11 @@ const preview = {
               ],
               'Components',
               [
+                'Accordion',
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Action button',
                 ['Rendering and styling migration analysis'],
                 'Action group',
@@ -477,5 +493,11 @@ const preview = {
   tags: ['!autodocs', '!dev'], // We only want the playground stories to be visible in the docs and sidenav. Since a majority of our stories are tagged with '!autodocs' and '!dev', we set those tags globally. We can opt in to visibility by adding the 'autodocs' or 'dev' tags to individual stories.
   loaders: [FontLoader],
 };
+
+if (storybookMode === 'build') {
+  preview.parameters.docs.codePanel = false;
+  preview.parameters.docs.canvas.withToolbar = false;
+  preview.parameters.docs.canvas.sourceState = 'none';
+}
 
 export default preview;

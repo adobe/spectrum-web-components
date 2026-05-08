@@ -61,7 +61,7 @@ const stories: StorybookConfig['stories'] = [
     // Production-style builds exclude internal-only stories; local/dev keeps the full set.
     files:
       storybookMode === 'build'
-        ? '**/!(*.internal).stories.ts'
+        ? '**/!(*.internal|asset).stories.ts'
         : '**/*.stories.ts',
   },
   {
@@ -79,34 +79,42 @@ const stories: StorybookConfig['stories'] = [
  * that can pull in 1st-gen-linked dependencies the test build does not need.
  */
 if (storybookMode !== 'ci-a11y') {
+  stories.push({
+    directory: '../components',
+    files: '**/*.mdx',
+    titlePrefix: 'Components',
+  });
+
+  // Production Storybook excludes core and contributor docs entirely.
+  if (storybookMode !== 'build') {
+    stories.push(
+      {
+        ...CORE_STORY_ROOT,
+        files: '**/*.mdx',
+      },
+      {
+        ...CORE_STORY_ROOT,
+        files: '**/stories/*.stories.ts',
+      },
+      {
+        directory: 'contributor-docs',
+        files: '**/*.mdx',
+        titlePrefix: 'Contributor docs',
+      }
+    );
+  }
+
   stories.push(
     {
-      directory: '../components',
-      files: '**/*.mdx',
-      titlePrefix: 'Components',
-    },
-    {
-      ...CORE_STORY_ROOT,
-      files: '**/*.mdx',
-    },
-    {
-      ...CORE_STORY_ROOT,
-      files: '**/stories/*.stories.ts',
-    },
-    {
       directory: 'learn-about-swc',
-      files: '*.mdx',
+      // Keep learn-about docs minimal in production.
+      files: storybookMode === 'build' ? '{overview,get-started}.mdx' : '*.mdx',
       titlePrefix: 'Learn about SWC',
     },
     {
       directory: 'guides',
       files: '**/!(*documentation).mdx',
       titlePrefix: 'Guides',
-    },
-    {
-      directory: 'contributor-docs',
-      files: '**/*.mdx',
-      titlePrefix: 'Contributor docs',
     }
   );
 }
@@ -159,7 +167,7 @@ if (storybookMode !== 'ci-a11y') {
 const config: StorybookConfig = {
   stories,
   docs: {
-    defaultName: 'README',
+    defaultName: 'Docs',
   },
   framework: '@storybook/web-components-vite',
   core: {

@@ -78,6 +78,10 @@ const Badge = ({
  * and read at render time from `custom-elements.json`.
  */
 export const StatusBadge = ({ of }: { of?: any }) => {
+  if (import.meta.env.PROD) {
+    return null;
+  }
+
   const resolvedOf = useOf(of || 'meta', ['meta']);
   const componentTag = resolvedOf.preparedMeta?.component;
 

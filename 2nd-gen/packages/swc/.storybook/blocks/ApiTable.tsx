@@ -111,7 +111,7 @@ function PropertiesTable({
 
   return (
     <>
-      <h3>Properties</h3>
+      <h3 id="properties">Properties</h3>
       <div style={scrollStyle}>
         <table style={tableStyle}>
           <thead>
@@ -171,7 +171,7 @@ function SlotsTable({ slots }: { slots: Slot[] }) {
   if (slots.length === 0) return null;
   return (
     <>
-      <h3>Slots</h3>
+      <h3 id="slots">Slots</h3>
       <div style={scrollStyle}>
         <table style={tableStyle}>
           <thead>
@@ -201,7 +201,7 @@ function EventsTable({ events }: { events: CemEvent[] }) {
 
   return (
     <>
-      <h3>Events</h3>
+      <h3 id="events">Events</h3>
       <div style={scrollStyle}>
         <table style={tableStyle}>
           <thead>
@@ -230,7 +230,7 @@ function CssPropsTable({ cssProps }: { cssProps: CssCustomProperty[] }) {
   if (cssProps.length === 0) return null;
   return (
     <>
-      <h3>CSS Custom Properties</h3>
+      <h3 id="css-custom-properties">CSS Custom Properties</h3>
       <div style={scrollStyle}>
         <table style={tableStyle}>
           <thead>
@@ -263,7 +263,7 @@ function CssPartsTable({ cssParts }: { cssParts: CssPart[] }) {
   if (cssParts.length === 0) return null;
   return (
     <>
-      <h3>CSS Parts</h3>
+      <h3 id="css-parts">CSS Parts</h3>
       <div style={scrollStyle}>
         <table style={tableStyle}>
           <thead>

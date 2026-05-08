@@ -1,0 +1,78 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Get started" />
+
+# Get started
+
+If you are new to Spectrum Web Components, start here.
+
+## Install SWC
+
+Install the package in your app:
+
+```bash
+npm install @adobe/spectrum-wc
+```
+
+You can also use `yarn add @adobe/spectrum-wc` or `pnpm add @adobe/spectrum-wc`.
+
+This package includes both component building blocks and higher-level patterns.
+
+## Add the base stylesheet
+
+Import the SWC stylesheet once in your app setup.
+This gives you Spectrum 2 tokens, typography, and base app styles.
+You can import it from JavaScript or from CSS, based on your app setup.
+
+```ts
+import '@adobe/spectrum-wc/swc.css';
+```
+
+## Use a component
+
+Import the component module, then use its HTML tag in your markup.
+You only need to import the components you use.
+
+```ts
+import '@adobe/spectrum-wc/badge';
+```
+
+```html
+<swc-badge variant="positive">Ready</swc-badge>
+```
+
+## Set color context
+
+SWC uses CSS classes for color context.
+Add these classes at your app root, then all nested SWC components inherit that context.
+If you do not set any classes, the default is light.
+
+```html
+<html class="swc-theme swc-theme--dark">
+  <body>
+    <swc-badge variant="positive">Ready</swc-badge>
+  </body>
+</html>
+```
+
+- `swc-theme--light` uses light theme.
+- `swc-theme--dark` uses dark theme.
+- `swc-theme--adaptive` follows the user system preference.
+
+## Understand the docs structure
+
+The most useful areas in this Storybook are:
+
+- **Components**: individual building blocks like badge, avatar, status light, and more.
+- **Patterns**: composed UI patterns that combine multiple components for common product use cases.
+- **Learn about SWC**: onboarding pages like overview and this getting-started guide.
+- **Guides**: deeper setup topics like theme, fonts, and customization.
+
+Start in Components for single elements.
+Use Patterns when you need a higher-level UI flow.
+
+## Next steps
+
+- Open any component page and check `Docs`, `Playground`, and examples.
+- Read [Theme and scales](/docs/guides-customization-theme-and-scales--docs) for deeper control.
+- Read [Fonts](/docs/guides-customization-fonts--docs) for required font setup.
