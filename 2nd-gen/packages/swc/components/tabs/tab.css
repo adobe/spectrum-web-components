@@ -1,0 +1,118 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: inline-flex;
+  place-self: start;
+  outline: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ── Component wrapper ─────────────────────────────────── */
+
+.swc-Tab {
+  --_swc-tab-text-color: var(--swc-tab-text-color, token("neutral-subdued-content-color-default"));
+
+  display: inline-flex;
+  position: relative;
+  gap: token("text-to-visual-100");
+  align-items: center;
+  justify-content: center;
+  block-size: var(--swc-tab-height, token("tab-item-height-medium"));
+  padding-block: var(--swc-tab-padding-block, token("tab-item-top-to-text-medium")) var(--swc-tab-padding-block-end, token("tab-item-bottom-to-text-medium"));
+  color: var(--_swc-tab-text-color);
+  overflow: clip;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ── Label (scoped font styles) ────────────────────────── */
+
+.swc-Tab-label {
+  font-size: token("font-size-100");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-100");
+}
+
+/* ── Icon slot ─────────────────────────────────────────── */
+
+::slotted([slot="icon"]) {
+  display: grid;
+  flex-shrink: 0;
+  place-content: center;
+  inline-size: token("workflow-icon-size-100");
+  block-size: token("workflow-icon-size-100");
+}
+
+/* ── Selected state ────────────────────────────────────── */
+
+:host([selected]) {
+  --swc-tab-text-color: token("neutral-content-color-default");
+}
+
+/* ── Hover state ───────────────────────────────────────── */
+
+:host(:hover) {
+  --swc-tab-text-color: token("neutral-subdued-content-color-hover");
+}
+
+/* ── Active (pressed) state ────────────────────────────── */
+
+:host(:active) {
+  --swc-tab-text-color: token("neutral-subdued-content-color-down");
+}
+
+/* ── Disabled state ────────────────────────────────────── */
+
+:host([disabled]) {
+  --swc-tab-text-color: token("disabled-content-color");
+}
+
+:host([disabled]) .swc-Tab {
+  cursor: default;
+}
+
+/* ── Focus ring ────────────────────────────────────────── */
+
+:host(:focus-visible) .swc-Tab {
+  border-radius: token("corner-radius-100");
+  outline: 2px solid token("focus-indicator-color");
+  outline-offset: 2px;
+}
+
+/* ── High contrast ─────────────────────────────────────── */
+
+@media (forced-colors: active) {
+  :host {
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
+    --swc-tab-text-color: ButtonText;
+  }
+
+  :host([selected]) {
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
+    --swc-tab-text-color: Highlight;
+  }
+
+  :host([disabled]) {
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
+    --swc-tab-text-color: GrayText;
+  }
+
+  :host(:focus-visible) .swc-Tab {
+    outline-color: Highlight;
+  }
+}
