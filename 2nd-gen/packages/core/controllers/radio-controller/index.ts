@@ -10,25 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-/**
- * Public exports for Lit reactive controllers shared across 2nd-gen packages.
- */
-
-export {
-  focusgroupNavigationActiveChange,
-  FocusgroupNavigationController,
-  type FocusgroupDirection,
-  type FocusgroupNavigationActiveChangeDetail,
-  type FocusgroupNavigationOptions,
-} from './focusgroup-navigation-controller/index.js';
-export {
-  LanguageResolutionController,
-  languageResolverUpdatedSymbol,
-} from './language-resolution.js';
 export {
   deepestRadioItemContaining,
   RadioController,
   radioControllerSelectionChange,
   type RadioControllerOptions,
   type RadioControllerSelectionChangeDetail,
-} from './radio-controller/index.js';
+} from './src/radio-controller.js';
