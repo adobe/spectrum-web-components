@@ -458,7 +458,10 @@ const preview = {
                 'Thumbnail',
                 ['Rendering and styling migration analysis'],
                 'Tooltip',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
               ],
               'Milestones',
               'Strategies',
