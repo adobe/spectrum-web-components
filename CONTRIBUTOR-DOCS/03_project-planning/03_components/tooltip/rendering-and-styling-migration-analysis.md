@@ -368,6 +368,7 @@ None found for this component.
 
 ## Resources
 
+- [Tooltip accessibility migration analysis](./accessibility-migration-analysis.md)
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/2743)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-tooltip--docs)
 - [React](https://react-spectrum.adobe.com/Tooltip)

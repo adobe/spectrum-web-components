@@ -64,6 +64,7 @@
     - [Help text migration roadmap](help-text/rendering-and-styling-migration-analysis.md)
 - Illustrated Message
     - [Illustrated message accessibility migration analysis](illustrated-message/accessibility-migration-analysis.md)
+    - [`sp-illustrated-message` Migration Plan](illustrated-message/migration-plan.md)
     - [Illustrated message migration roadmap](illustrated-message/rendering-and-styling-migration-analysis.md)
 - Infield Button
     - [In-field button migration roadmap](infield-button/rendering-and-styling-migration-analysis.md)
@@ -127,6 +128,7 @@
 - Thumbnail
     - [Thumbnail migration roadmap](thumbnail/rendering-and-styling-migration-analysis.md)
 - Tooltip
+    - [Tooltip accessibility migration analysis](tooltip/accessibility-migration-analysis.md)
     - [Tooltip migration roadmap](tooltip/rendering-and-styling-migration-analysis.md)
 
 </details>
