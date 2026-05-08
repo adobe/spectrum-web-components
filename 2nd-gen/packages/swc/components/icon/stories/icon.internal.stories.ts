@@ -53,6 +53,7 @@ const meta: Meta = {
       subtitle: `Internal icon renderer for shared SVG templates.`,
     },
   },
+  tags: ['migrated'],
 };
 
 export default meta;

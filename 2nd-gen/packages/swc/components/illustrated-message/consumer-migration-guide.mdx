@@ -1,0 +1,190 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Illustrated message/Consumer migration guide" />
+
+# Illustrated message consumer migration guide
+
+Replace `<sp-illustrated-message>` with `<swc-illustrated-message>`, move heading and description content into semantic slots, and declare illustration accessibility intent on your SVG.
+
+## What changed
+
+### Renamed
+
+| Area                  | Spectrum 1                                                               | Spectrum 2                               |
+| --------------------- | ------------------------------------------------------------------------ | ---------------------------------------- |
+| Tag name              | `sp-illustrated-message`                                                 | `swc-illustrated-message`                |
+| Package               | `@spectrum-web-components/illustrated-message`                           | `@adobe/spectrum-wc`                     |
+| Import                | `@spectrum-web-components/illustrated-message/sp-illustrated-message.js` | `@adobe/spectrum-wc/illustrated-message` |
+| CSS custom properties | `--mod-illustrated-message-*`                                            | `--swc-illustrated-message-*`            |
+
+### Added in Spectrum 2
+
+| Addition                | Notes                                                                          |
+| ----------------------- | ------------------------------------------------------------------------------ |
+| `size` attribute        | `'s'`, `'m'` (default), `'l'`: controls illustration size and typography scale |
+| `orientation` attribute | `'vertical'` (default), `'horizontal'`: controls layout direction              |
+
+### Removed in Spectrum 2
+
+| Removed                          | Replacement                                                |
+| -------------------------------- | ---------------------------------------------------------- |
+| `heading` property/attribute     | `<h2 slot="heading">` (or `h3`–`h6` to match page outline) |
+| `description` property/attribute | `<span slot="description">`                                |
+| Shadow DOM always renders `<h2>` | Consumer provides the heading element at the correct level |
+
+## Update your code
+
+### 1. Update the import
+
+```ts
+// Before
+import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
+
+// After
+import '@adobe/spectrum-wc/illustrated-message';
+```
+
+### 2. Rename the tag
+
+```html
+<!-- Before -->
+<sp-illustrated-message>...</sp-illustrated-message>
+
+<!-- After -->
+<swc-illustrated-message>...</swc-illustrated-message>
+```
+
+### 3. Replace attributes with slots and provide a heading element
+
+The `heading` and `description` properties are removed. Move their content into named slots. The heading slot now requires a real heading element (`<h2>`–`<h6>`); choose the level that fits your page outline.
+
+```html
+<!-- Before (using deprecated attributes) -->
+<sp-illustrated-message
+  heading="No results found"
+  description="Try adjusting your search or filters."
+>
+  <svg>...</svg>
+</sp-illustrated-message>
+
+<!-- After -->
+<swc-illustrated-message>
+  <svg aria-hidden="true">...</svg>
+  <h2 slot="heading">No results found</h2>
+  <span slot="description">Try adjusting your search or filters.</span>
+</swc-illustrated-message>
+```
+
+If you were already using the `heading` slot with a non-heading element, replace it with the appropriate `<h2>`–`<h6>`:
+
+```html
+<!-- Before (arbitrary element in heading slot) -->
+<sp-illustrated-message>
+  <span slot="heading">No results found</span>
+</sp-illustrated-message>
+
+<!-- After -->
+<swc-illustrated-message>
+  <h2 slot="heading">No results found</h2>
+</swc-illustrated-message>
+```
+
+### 4. Declare accessibility intent on your SVG
+
+Spectrum 1 managed illustration accessibility internally. Spectrum 2 requires you to declare it on the element. Add `aria-hidden="true"` to decorative illustrations, or `role="img"` and `aria-label` to informative ones.
+
+```html
+<!-- Before (no aria attributes needed) -->
+<sp-illustrated-message>
+  <svg>...</svg>
+</sp-illustrated-message>
+
+<!-- After (decorative illustration) -->
+<swc-illustrated-message>
+  <svg aria-hidden="true">...</svg>
+  <h2 slot="heading">No results found</h2>
+</swc-illustrated-message>
+
+<!-- After (informative illustration, image conveys meaning beyond the text) -->
+<swc-illustrated-message>
+  <svg role="img" aria-label="A magnifying glass showing no results">...</svg>
+  <h2 slot="heading">No results found</h2>
+</swc-illustrated-message>
+```
+
+### 5. (Optional) Adopt `size` and `orientation`
+
+```html
+<!-- Size: s | m (default) | l -->
+<swc-illustrated-message size="l">...</swc-illustrated-message>
+
+<!-- Orientation: vertical (default) | horizontal -->
+<swc-illustrated-message orientation="horizontal">...</swc-illustrated-message>
+```
+
+## Accessibility
+
+- **Heading level:** Always provide a heading element at the level that matches your page outline; do not default to `<h2>` everywhere. See [step 3](#3-replace-attributes-with-slots-and-provide-a-heading-element).
+- **Illustration:** Every SVG must have either `aria-hidden="true"` (decorative) or `role="img"` plus `aria-label` (informative). Omitting both leaves the illustration with an ambiguous accessible role. See [step 4](#4-declare-accessibility-intent-on-your-svg).
+- **Description links and buttons:** Any interactive elements slotted into `description` must have a visible label or `aria-label`.
+
+## Styling
+
+Spectrum 2 uses a different custom property prefix. Your Spectrum 1 overrides will not apply.
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
+  <code>{'--mod-illustrated-message-*'}</code> properties{' '}
+  <strong>do not apply</strong> to <code>{'<swc-illustrated-message>'}</code>.
+  Remove or replace every <code>{'--mod-illustrated-message-*'}</code> override
+  with the <code>{'--swc-illustrated-message-*'}</code> equivalents below. Not
+  every Spectrum 1 property has a 1:1 replacement, so read the list below
+  carefully.
+</div>
+
+| Custom property                                      | Description                                                   | Notes                                                                |
+| ---------------------------------------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `--swc-illustrated-message-max-inline-size`          | Maximum inline size of the component                          |                                                                      |
+| `--swc-illustrated-message-illustration-size`        | Square size of the illustration (width and height)            | Defaults to 96px for `size="s"` and `size="m"`, 160px for `size="l"` |
+| `--swc-illustrated-message-illustration-inline-size` | Illustration inline size override                             | Falls back to `--swc-illustrated-message-illustration-size`          |
+| `--swc-illustrated-message-illustration-block-size`  | Illustration block size override                              | Falls back to `--swc-illustrated-message-illustration-size`          |
+| `--swc-illustrated-message-illustration-color`       | Color applied to the SVG illustration via `currentcolor`      |                                                                      |
+| `--swc-illustrated-message-illustration-to-content`  | Gap between the illustration and the heading/description area |                                                                      |
+| `--swc-illustrated-message-heading-font-size`        | Font size of the heading                                      |                                                                      |
+| `--swc-illustrated-message-heading-line-height`      | Line height of the heading                                    |                                                                      |
+| `--swc-illustrated-message-description-font-size`    | Font size of the description                                  |                                                                      |
+| `--swc-illustrated-message-description-line-height`  | Line height of the description                                |                                                                      |
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-illustrated-message-*'}</code> private properties, and shadow
+  DOM are <strong>not public API</strong>. Styling applied to them will break
+  without warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Remove `@spectrum-web-components/illustrated-message` and import from `@adobe/spectrum-wc` instead
+- [ ] Replace `sp-illustrated-message` with `swc-illustrated-message`
+- [ ] Replace `heading` and `description` attributes with `<h2>`–`<h6 slot="heading">` and `<span slot="description">`
+- [ ] Update any existing `heading` slot content from arbitrary elements to `<h2>`–`<h6>`
+- [ ] Add `aria-hidden="true"` (decorative) or `role="img"` + `aria-label` (informative) to every slotted SVG
+- [ ] Replace `--mod-illustrated-message-*` CSS overrides with `--swc-illustrated-message-*` equivalents

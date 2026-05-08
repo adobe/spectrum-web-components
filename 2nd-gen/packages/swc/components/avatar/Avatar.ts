@@ -23,7 +23,6 @@ import styles from './avatar.css';
  * technology.
  *
  * @element swc-avatar
- * @status preview
  * @since 0.0.1
  *
  * @example
@@ -34,8 +33,17 @@ import styles from './avatar.css';
  *
  * @example
  * <swc-avatar src="/path/to/image.jpg" alt="Jane Doe" outline></swc-avatar>
+ *
+ * @cssprop --swc-avatar-size - Size (inline and block) of the avatar.
+ * @cssprop --swc-avatar-outline-color - Color of the avatar outline.
+ * @cssprop --swc-avatar-outline-width - Width of the avatar outline.
+ * @cssprop --swc-avatar-opacity-disabled - Opacity when the avatar is disabled.
  */
 export class Avatar extends AvatarBase {
+  // ──────────────────────────────
+  //     RENDERING & STYLING
+  // ──────────────────────────────
+
   public static override get styles(): CSSResultArray {
     return [styles];
   }

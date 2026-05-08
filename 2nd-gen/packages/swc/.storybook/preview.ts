@@ -67,20 +67,6 @@ const preview = {
         dynamicTitle: true,
       },
     },
-    scale: {
-      name: 'Scale',
-      description: 'Global scale for components',
-      defaultValue: 'medium',
-      type: 'string',
-      toolbar: {
-        title: 'Scale',
-        items: [
-          { value: 'medium', title: 'Medium' },
-          { value: 'large', title: 'Large' },
-        ],
-        dynamicTitle: true,
-      },
-    },
     lang: {
       name: 'Language',
       description:
@@ -137,7 +123,6 @@ const preview = {
   },
   initialGlobals: {
     theme: 'light',
-    scale: 'medium',
     lang: 'en-US',
     textDirection: 'auto',
   },
@@ -256,6 +241,7 @@ const preview = {
               'Using stackblitz',
               '2nd-gen testing',
               'Tools vs packages',
+              'Writing migration guides',
               'Focus management',
             ],
             'Style guide',
