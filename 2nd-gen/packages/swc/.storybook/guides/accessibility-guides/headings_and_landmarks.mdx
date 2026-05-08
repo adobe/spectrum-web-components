@@ -1,0 +1,128 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Accessibility guides/Headings and landmarks" />
+
+# Headings and landmarks
+
+## Overview
+
+**Landmarks** and **headings** are the two main ways many screen reader users **scan a page** without reading it from top to bottom. Landmarks name large regions (for example, **main** content, **navigation**, **header**). **Headings** (`h1`–`h6`) form a nested outline inside those regions. Together they should match the real **structure** of the screen.
+
+### How screen readers use headings and landmarks
+
+Together, landmarks and headings form a **navigation map** for people who do not use visual scanning. In [browse (or **document**)](/docs/guides-accessibility-guides-screen-reader-testing--readme) mode, screen reader users are not limited to a single linear read-through: they can **jump** to significant structure using **landmarks** and **headings**, often with dedicated **shortcuts**.
+
+- **Headings:** Many screen readers let users move from heading to heading with one key. For example, **NVDA** and **JAWS** on Windows use **H** for the next heading and **Shift**+**H** for the previous heading; **VoiceOver** on macOS has its own **heading** navigation in the **rotor** and related commands. A **logical** `h1`–`h6` tree is what makes that a reliable **outline** of the page.
+- **Landmarks:** The same **browse** mode usually exposes a **landmarks** (or “regions”) list or **rotor** entry so users can jump to **main**, **navigation**, **complementary** content, and other regions. The exact **shortcuts** differ (for example, **D** in NVDA, **R** in JAWS, and **VoiceOver**’s **landmarks** ring in the **rotor**; see the table in [Screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--readme#screen-reader-modes)). A small set of **clear**, **uniquely labeled** landmarks is as important as a good heading hierarchy for “where am I on this page?”
+
+For a full **shortcut** list, an overview of **screen reader modes** (including **browse** and **focus**), and a testing **workflow**, see [Screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--readme).
+
+The sections that follow go deeper on **markup**: the [related WCAG 2.2 success criteria](#related-wcag-success-criteria) table, **landmarks** (including when **too many** add noise), **heading** levels and `aria` patterns, and [practical notes for Spectrum Web Components](#examples-in-a-spectrum-web-components-context) (for example, **`heading-level`**, slotted vs shadow **headings**). When you are ready to **check** the outline in the browser, the WAVE extension’s **Structure** tab lists **headings** and **regions** and flags gaps or odd levels. See [WAVE toolbar testing](/docs/guides-accessibility-guides-wave-toolbar-testing--readme#structure-tab).
+
+> **Note:** This guide is about **markup and page structure**. It works alongside [screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--readme), [keyboard testing](/docs/guides-accessibility-guides-keyboard-testing--readme), and [semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--readme).
+
+## Headings
+
+The **HTML heading elements** are the only reliable way to expose a **section outline** to assistive technology and to match what users get when they **navigate by heading**. Keep these **basics** in mind when you mark up titles and subsections.
+
+- Use **native** heading elements: `h1`–`h6`
+- **Rank** indicates **level** in the outline: `h1` is the top level, `h2` is a subsection of the nearest higher section, and so on
+- **Organize** content so headings **reflect** the real **structure** of the page, not only font size
+
+### Use headings semantically
+
+**Headings are for structure, not only for looks.** Use real heading elements for **section titles**; use CSS (or design system typography tokens) for **appearance**. A clear **visual** hierarchy that matches the **semantic** hierarchy helps **everyone**, including people with low vision or cognitive disabilities.
+
+### Avoid skipping heading levels
+
+Jumping from `h1` to `h3` without an `h2` can **break the outline** for users who navigate by heading level. They may think a subsection is missing. Fix **styling** with CSS if you need a smaller visual size while keeping the correct semantic level (for example, an `h2` that **looks** smaller).
+
+## Landmarks
+
+**Landmark regions** identify major areas of a page. In HTML, elements such as `main`, `nav`, `header`, `footer`, and `aside` (and, when **named**, `section`—see [MDN: the `section` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/section#accessibility)) expose familiar roles so assistive technology can list them in a “landmarks” or **rotor** view. How semantics map to the accessibility tree is also summarized in [How semantics help assistive technologies](/docs/guides-accessibility-guides-semantic-html-aria--readme#how-semantics-help-assistive-technologies) in [Semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--readme). For how users **move** by landmark in browse mode, see [How screen readers use headings and landmarks](#how-screen-readers-use-headings-and-landmarks).
+
+### Prefer native HTML landmarks to ARIA-only landmarks
+
+See [Why prefer semantic elements](/docs/guides-accessibility-guides-semantic-html-aria--readme#why-prefer-semantic-elements) and [ARIA as a secondary method](/docs/guides-accessibility-guides-semantic-html-aria--readme#aria-as-a-secondary-method) in [Semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--readme): prefer native landmark elements when they match the job, and add ARIA only when HTML cannot express the needed role or relationship. In practice, use `main`, `nav`, `header`, `footer`, and `aside` in the **light DOM** (with appropriate **labels** where a landmark type can repeat) instead of generic `div`s with ARIA `role` attributes—unless a pattern in the [ARIA authoring practices guide (APG)](https://www.w3.org/WAI/ARIA/apg/) calls for a specific widget role. The same “prefer HTML” point appears in MDN’s [ARIA `region` role: **Best practices, Prefer HTML**](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/region_role#prefer_html).
+
+### Don't overuse landmarks
+
+Landmark roles are meant to label **broad** parts of the layout. Adding **extra** `region` (or `role="region"`) boundaries everywhere can **add noise** in the landmarks list, make the overall structure **harder to understand**, and get in the way of quick navigation—similar to piling on redundant utilities elsewhere in the page. The [ARIA `region` role, **Accessibility concerns**](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/region_role#accessibility_concerns) section on MDN says to use landmarks **sparingly** and to **reconsider the page’s structure** if you need “too many” regions. If no dedicated landmark type fits, prefer revisiting **headings** and the **real** information architecture before defaulting to generic `region` after generic `region`.
+
+## Using headings and landmarks together
+
+### Headings for fixed regions (for example, sidebars)
+
+A **sidebar** or **repeated** block that is the same on every page may use a **self-contained** mini-outline (for example, its own `h2` for “On this page”) that does not follow the main content’s next level. This is a common pattern. What matters is **consistency** and **clarity** so users are not disoriented when they move between **main** and **complementary** content. Prefer **landmarks** (`aside`, `nav`, and the [complementary](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/complementary_role) role where appropriate) and **clear labels** so the purpose of the region is obvious.
+
+### Main content and navigation order
+
+The **first heading** in **main** content is often the page’s primary topic. If **site-wide navigation** and **banners** come first in the DOM, they should still be **correctly marked** (`nav`, `header`, landmarks) so users can **skip** to `main` (for example, [bypass blocks / skip links](https://www.w3.org/WAI/WCAG22/Understanding/bypass-blocks.html)). **Do not** put the main page `h1` only in a place that is not the primary content if that would misrepresent the document in the **outline**—[WAVE’s **Structure** tab](/docs/guides-accessibility-guides-wave-toolbar-testing--readme#structure-tab) can help you review this.
+
+For how screen readers use **headings** in browse mode, see [How screen readers use headings and landmarks](#how-screen-readers-use-headings-and-landmarks); for platform **shortcuts**, see [Screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--readme).
+
+### Sections and `aria-labelledby`
+
+For a region with a heading, you can associate the heading with the section using `aria-labelledby` on the **sectioning** element, pointing to the heading’s `id`. That strengthens the **programmatic** relationship for assistive technology. See [Semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--readme) for how light-DOM structure fits custom elements; do not use heading markup **only** for visual weight.
+
+## Examples in a Spectrum Web Components context
+
+Custom elements in this library often **compose** with content you provide in the **light DOM**. **You** are responsible for **landmarks, headings, and labels** around those components.
+
+Use native landmark wrappers (`main`, `nav`, and so on) in the page shell where you control the markup. Some components take a heading as **slotted** content, so you put a real `h1`–`h6` in the light DOM where the API allows. Other components **render a heading in shadow DOM**; those typically have a default heading level and expose a **`heading-level`** attribute (or a matching property) so the **rendered** heading level matches what you need in the document outline. When you use any component that surfaces a heading—slotted or shadow—**choose levels that match the page hierarchy** (WAVE’s **Structure** tab is a quick way to confirm the combined outline; see [WAVE toolbar testing](/docs/guides-accessibility-guides-wave-toolbar-testing--readme#structure-tab)).
+
+Patterns that work well:
+
+1. **One main topic per view:** A single `h1` for the page or view title, then `h2` for major sections, `h3` for subsections
+2. **Component + heading:** Place a native heading **before** a block of related components so the section is named in the outline (for example, an `h2` “Actions” before a row of buttons)
+3. **Avoid fake headings:** Do not use a `div` or `span` with large text when the content is a **title**; use the appropriate `h1`–`h6` and style it
+4. **Dialogs and cards:** If a dialog or card has a **title**, expose it with a real heading or an appropriate **accessible name** (for example, `aria-labelledby` pointing to the title string), following the component’s documentation
+5. **Check the component’s docs:** Slot vs shadow heading behavior and the exact `heading-level` (or `level`) API can differ by component; align every heading with the surrounding `h1`–`h6` structure
+
+Example (illustrative only; tag names may match your app’s `swc` elements):
+
+```html
+<header>
+  <a href="#main">Skip to main content</a>
+  <nav aria-label="Site">…</nav>
+</header>
+<main id="main">
+  <h1>Project settings</h1>
+  <section aria-labelledby="profile-heading">
+    <h2 id="profile-heading">Profile</h2>
+    <!-- swc form fields, etc. -->
+  </section>
+  <section>
+    <h2>Notifications</h2>
+    <h3>Email</h3>
+    <!-- more content -->
+  </section>
+</main>
+```
+
+After you build, use [WAVE’s **Structure** tab](/docs/guides-accessibility-guides-wave-toolbar-testing--readme#structure-tab) on the running page to confirm the outline matches what you ship.
+
+## Related WCAG success criteria
+
+| Criterion  | Short name             | WAI “Understanding” link                                                                       |
+| ---------- | ---------------------- | ---------------------------------------------------------------------------------------------- |
+| **1.3.1**  | Info and relationships | [Understanding 1.3.1](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html) |
+| **2.4.1**  | Bypass blocks          | [Understanding 2.4.1](https://www.w3.org/WAI/WCAG22/Understanding/bypass-blocks.html)          |
+| **2.4.6**  | Headings and labels    | [Understanding 2.4.6](https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels.html)    |
+| **2.4.10** | Section headings       | [Understanding 2.4.10](https://www.w3.org/WAI/WCAG22/Understanding/section-headings.html)      |
+
+## Related guides and resources
+
+**In Storybook**
+
+- [Overview](/docs/guides-accessibility-guides-overview--readme) — all accessibility guides in this section
+- [WAVE toolbar testing](/docs/guides-accessibility-guides-wave-toolbar-testing--readme) — use the **Structure** tab to verify headings and regions
+- [Screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--readme) — heading and landmark navigation shortcuts, testing workflow
+- [Keyboard testing](/docs/guides-accessibility-guides-keyboard-testing--readme) — focus order and tab order
+- [Semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--readme) — why prefer native elements, ARIA as secondary, and light-DOM expectations
+- [Accessibility resources](/docs/guides-accessibility-guides-accessibility-resources--readme) — broader links
+
+**W3C WAI**
+
+- [Page structure: headings (tutorial)](https://www.w3.org/WAI/tutorials/page-structure/headings/)
+- [Page structure (overview)](https://www.w3.org/WAI/tutorials/page-structure/)

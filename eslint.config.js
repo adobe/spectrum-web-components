@@ -278,6 +278,7 @@ export default defineConfig([
             'element', // Custom element tag name
             'slot', // Slot documentation
             'csspart', // CSS part documentation
+            'cssprop', // CSS custom property documentation (shorthand)
             'cssproperty', // CSS custom property documentation
             'fires', // Event documentation
             'attr', // Attribute shorthand

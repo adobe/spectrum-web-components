@@ -12,8 +12,8 @@ import {
 import {
   ApiTable,
   GettingStarted,
-  SpectrumStories,
   OverviewStory,
+  SpectrumStories,
   StatusBadge,
 } from './blocks';
 
@@ -59,10 +59,10 @@ export const ConditionalSection = ({
     const TitleHeading = level === 3 ? 'h3' : 'h2';
 
     return (
-        <>
-            {title && <TitleHeading>{title}</TitleHeading>}
+        <div data-section={tag}>
+            {title && <h2>{title}</h2>}
             <SpectrumStories tag={tag} hideTitle={hideTitle} />
-        </>
+        </div>
     );
 
 };
@@ -117,6 +117,7 @@ export const ConditionalGettingStarted = () => {
 <ConditionalGettingStarted />
 
 <ConditionalSection tag="anatomy" title="Anatomy" hideTitle={true} />
+<ConditionalSection tag="upcoming" title="Upcoming features" hideTitle={true} />
 <ConditionalSection tag="usage" hideTitle={true} />
 <ConditionalSection tag="options" title="Options" />
 <ConditionalSection tag="states" title="States" />
@@ -134,6 +135,7 @@ export const ConditionalGettingStarted = () => {
 />
 <ConditionalSection tag="behaviors" title="Behaviors" />
 <ConditionalSection tag="a11y" title="Accessibility" hideTitle={true} />
+<ConditionalSection tag="full-pattern" title="Full pattern" />
 
 ## API
 

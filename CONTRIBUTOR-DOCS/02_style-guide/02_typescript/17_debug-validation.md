@@ -35,7 +35,16 @@ The `window.__swc` object provides debug utilities:
 ```ts
 interface SWCDebug {
   DEBUG: boolean;
-  warn(element: HTMLElement, message: string, url?: string, options?: { issues?: string[] }): void;
+  warn(
+    element: HTMLElement,
+    message: string,
+    url?: string,
+    options?: {
+      type?: string;
+      level?: 'default' | 'low' | 'medium' | 'high' | 'deprecation';
+      issues?: string[];
+    }
+  ): void;
 }
 ```
 
@@ -63,17 +72,28 @@ Different validation concerns belong in different lifecycle methods. Choose base
 - Property combinations that are invalid together
 - Required properties that affect rendering
 
-**Why update():**
+**Why `update()` (and where to put your code):**
 
-- Runs before render, so warnings appear before DOM changes
-- Can short-circuit or adjust state before template evaluation
-- Consistent with Lit's unidirectional data flow
+Lit’s [`update()`](https://lit.dev/docs/components/lifecycle/#update) “reflects property values to attributes and calls `render()` to update the component’s internal DOM.” In `LitElement`, that happens **inside** `super.update()` when your class extends Lit. So:
+
+- If you call `super.update()` **first** and then run DEBUG code, that code runs **after** `render()` has run for this cycle (still before Lit calls [`updated()`](https://lit.dev/docs/components/lifecycle/#updated)).
+- For DEBUG that should fire **before** `render()` and DOM commit, run it **before** `super.update()` in your override, or use [`willUpdate()`](https://lit.dev/docs/components/lifecycle/#willupdate) (Lit calls it before `update()`).
+
+The [reactive update cycle](https://lit.dev/docs/components/lifecycle/#reactive-update-cycle) runs at microtask timing, generally before the browser paints the next frame—but “before paint” is not the same as “before `render()`” inside your component.
+
+**References (Lit):**
+
+- [Lifecycle: `update()`](https://lit.dev/docs/components/lifecycle/#update)
+- [Lifecycle: `willUpdate()`](https://lit.dev/docs/components/lifecycle/#willupdate)
+- [Lifecycle: `updated()`](https://lit.dev/docs/components/lifecycle/#updated)
+- [Reactive update cycle](https://lit.dev/docs/components/lifecycle/#reactive-update-cycle)
+
+**Implementation note:** This repo’s `lit-element` version is the source of truth for exact ordering inside `LitElement.prototype.update` (e.g. `render()` then `super.update()` on `ReactiveElement`, then committing the template). See the `update(changedProperties)` method in the installed `lit-element` package under `node_modules`.
 
 **Example from Badge.base.ts:**
 
 ```ts
 protected override update(changedProperties: PropertyValues): void {
-  super.update(changedProperties);
   if (window.__swc?.DEBUG) {
     const constructor = this.constructor as typeof BadgeBase;
     // Validate variant value
@@ -95,6 +115,7 @@ protected override update(changedProperties: PropertyValues): void {
       );
     }
   }
+  super.update(changedProperties);
 }
 ```
 
@@ -141,9 +162,9 @@ protected override firstUpdated(changed: PropertyValues): void {
 
 **Why updated():**
 
-- Runs after render, so DOM reflects current state
-- Can check rendered output and slot assignments
-- Good for "the current state is problematic" warnings
+- Lit’s [`updated()`](https://lit.dev/docs/components/lifecycle/#updated) runs after the element’s DOM has been updated and rendered for this cycle.
+- DOM reflects current state; you can check rendered output and slot assignments.
+- Good for “the current state is problematic” warnings.
 
 **Example:**
 

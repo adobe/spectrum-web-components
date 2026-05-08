@@ -30,6 +30,8 @@
 
 ## Component specifications
 
+For heading semantics, WCAG outline behavior, and the 2nd-gen API (`heading-level` `2`–`6`, default `2`; `heading` slot span-only; shadow DOM owns `h2`–`h6`), see [Illustrated message accessibility migration analysis](./accessibility-migration-analysis.md).
+
 ### CSS
 
 <details>
@@ -278,7 +280,7 @@
 | `.spectrum-IllustratedMessage-heading`      | `heading` attribute/slot     | Implemented                  |
 | `.spectrum-IllustratedMessage-description`  | `description` attribute/slot | Implemented                  |
 | `.spectrum-IllustratedMessage-content`      | Content container            | Missing from WC (new for S2) |
-| `.spectrum-IllustratedMessage-actions`      | Actions container            | Missing from WC (new for S2) |
+| `.spectrum-IllustratedMessage-actions`      | `button-group` slot          | Missing from WC (new for S2) |
 
 ## Summary of changes
 
@@ -306,6 +308,7 @@
 
 ## Resources
 
+- [Illustrated message accessibility migration analysis](./accessibility-migration-analysis.md)
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/3246)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-illustrated-message--docs&args=isHorizontal:!true)
 - [React](https://react-spectrum.adobe.com/IllustratedMessage)

@@ -24,9 +24,11 @@ When testing components with screen readers, focus on these key outcomes:
 3. **Meaningful information**: Content should be announced in a logical order with appropriate context
 4. **Efficient navigation**: Users should be able to navigate quickly using headings, landmarks, and other semantic structures
 
+For how **landmarks** and **headings** should be structured in your markup, see [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--readme). You can **inspect** that structure in the browser with WAVE; see [WAVE toolbar testing](/docs/guides-accessibility-guides-wave-toolbar-testing--readme#structure-tab).
+
 ### Relationship to keyboard accessibility
 
-Screen reader testing builds on [keyboard testing](./keyboard_testing.mdx). Before testing with a screen reader:
+Screen reader testing builds on [keyboard testing](/docs/guides-accessibility-guides-keyboard-testing--readme). Before testing with a screen reader:
 
 1. Verify all interactive elements are keyboard accessible
 2. Confirm focus order is logical
@@ -84,6 +86,8 @@ Browse mode (called "Scan mode" in Narrator, "Document mode" in some screen read
 | Next button      | <kbd>VO</kbd> + <kbd>Command</kbd> + <kbd>J</kbd>                    | <kbd>B</kbd>                    | <kbd>B</kbd>                    |
 | Next form field  | <kbd>VO</kbd> + <kbd>Command</kbd> + <kbd>J</kbd>                    | <kbd>F</kbd>                    | <kbd>F</kbd>                    |
 | Next landmark    | <kbd>VO</kbd> + <kbd>Command</kbd> + <kbd>L</kbd>                    | <kbd>D</kbd>                    | <kbd>R</kbd>                    |
+
+[Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--readme) explains which native **landmark** regions to use, when too many `region` landmarks add noise, and how landmarks work with a heading outline.
 
 **Note:** <kbd>VO</kbd> refers to the VoiceOver modifier keys, typically <kbd>Control</kbd> + <kbd>Option</kbd>.
 
@@ -219,11 +223,11 @@ Follow this workflow when testing components with screen readers:
 
 1. **Start with keyboard testing**: Verify keyboard accessibility first
 2. **Enable the screen reader**: Use the recommended browser pairing
-3. **Navigate to the component**: Use heading or landmark navigation
+3. **Navigate to the component**: Use heading or landmark navigation (shape that structure in your app per [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--readme))
 4. **Test in browse mode**: Verify content is announced correctly
 5. **Test in focus mode**: Interact with controls and verify announcements
 6. **Test state changes**: Verify dynamic updates are announced (e.g., expanded/collapsed, selected, error states)
 7. **Complete user tasks**: Verify entire workflows are achievable
 8. **Document issues**: Note any missing announcements, confusing order, or blocked interactions
 
-For more testing resources and tools, see [Accessibility resources](./accessibility-resources.mdx).
+For quick, on-page **outline** feedback before or during screen reader tests, use [WAVE toolbar testing](/docs/guides-accessibility-guides-wave-toolbar-testing--readme). For more testing resources and tools, see [Accessibility resources](/docs/guides-accessibility-guides-accessibility-resources--readme).

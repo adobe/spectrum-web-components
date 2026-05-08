@@ -61,9 +61,10 @@ From [badge.css](../../../2nd-gen/packages/swc/components/badge/badge.css):
 .swc-Badge {
   /* Custom properties first (definitions) */
   --_swc-badge-border-width: token("border-width-200");
-  --_swc-badge-border-width-deduction: calc(var(--_swc-badge-border-width) * 2);
-  --_swc-badge-padding-block-start: token("component-top-to-text-100");
-  --_swc-badge-padding-block-end: token("component-bottom-to-text-100");
+  --_swc-badge-padding-block: var(--swc-badge-padding-block, token("component-padding-vertical-100"));
+  --_swc-badge-padding-inline-start: var(--swc-badge-padding-inline-start, var(--swc-badge-padding-inline, token("component-edge-to-text-100")));
+  --_swc-badge-padding-inline: var(--swc-badge-padding-inline, token("component-edge-to-text-100"));
+  --_swc-badge-line-height: var(--swc-badge-line-height, token("line-height-font-size-100"));
 
   /* Display */
   display: inline-flex;
@@ -73,13 +74,13 @@ From [badge.css](../../../2nd-gen/packages/swc/components/badge/badge.css):
   /* Dimensions */
   min-block-size: var(--swc-badge-height, token("component-height-100"));
   /* Spacing */
-  padding-block-start: calc(var(--swc-badge-padding-block-start, var(--_swc-badge-padding-block-start)) - var(--_swc-badge-border-width-deduction));
-  padding-block-end: calc(var(--swc-badge-padding-block-end, var(--_swc-badge-padding-block-end)) - var(--_swc-badge-border-width-deduction));
-  padding-inline: calc(var(--swc-badge-padding-inline, token("component-edge-to-text-100")) - var(--_swc-badge-border-width-deduction));
+  padding-block: calc(var(--_swc-badge-padding-block) - var(--_swc-badge-border-width));
+  padding-inline-start: calc(var(--_swc-badge-padding-inline-start) - var(--_swc-badge-border-width));
+  padding-inline-end: calc(var(--_swc-badge-padding-inline) - var(--_swc-badge-border-width));
   /* Typography */
   color: var(--swc-badge-label-icon-color, token("white"));
   /* Decoration */
-  background: var(--swc-badge-background-color, token("accent-background-color-default"));
+  background: var(--swc-badge-background-color, token("neutral-subdued-background-color-default"));
   border: var(--_swc-badge-border-width) solid var(--swc-badge-border-color, transparent);
   border-radius: var(--swc-badge-corner-radius, token("corner-radius-medium-size-medium"));
   /* User interface */
@@ -94,19 +95,18 @@ From [status-light.css](../../../2nd-gen/packages/swc/components/status-light/st
 
 ```css
 .swc-StatusLight::before {
-  /* Display */
-  box-sizing: border-box;
-  display: inline-block;
+  /* Custom properties */
+  --_swc-status-light-dot-size: var(--swc-status-light-dot-size, token("status-light-dot-size-medium"));
   /* Flex/Grid */
   flex-grow: 0;
   flex-shrink: 0;
   /* Dimensions */
-  inline-size: var(--_swc-statuslight-dot-size);
-  block-size: var(--_swc-statuslight-dot-size);
+  inline-size: var(--_swc-status-light-dot-size);
+  block-size: var(--_swc-status-light-dot-size);
   /* Spacing */
-  margin-block-start: calc(var(--_swc-statuslight-top-to-dot) - var(--_swc-statuslight-top-to-text));
+  margin-block-start: calc(var(--_swc-status-light-top-to-dot) - var(--_swc-status-light-padding-block));
   /* Decoration */
-  background-color: var(--swc-statuslight-dot-color);
+  background-color: var(--swc-status-light-dot-color, token("neutral-visual-color"));
   border-radius: token("corner-radius-full");
   /* Generated content */
   content: "";

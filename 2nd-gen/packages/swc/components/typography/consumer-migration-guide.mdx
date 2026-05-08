@@ -1,0 +1,208 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Typography/Consumer migration guide" />
+
+# Typography consumer migration guide
+
+Update the import path and rename every `.spectrum-*` class to its `.swc-*` equivalent. There is no tag name change — typography is a set of CSS utility classes, not a web component.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/styles
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/styles/typography.css';
+
+// After
+import '@adobe/spectrum-wc/typography.css';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/typography.css`) loads only that component's bundle.
+
+## What changed
+
+### Renamed
+
+| Area         | Spectrum 1                                       | Spectrum 2                          |
+| ------------ | ------------------------------------------------ | ----------------------------------- |
+| Import path  | `@spectrum-web-components/styles/typography.css` | `@adobe/spectrum-wc/typography.css` |
+| Class prefix | `.spectrum-Heading`, `.spectrum-Body`, etc.      | `.swc-Heading`, `.swc-Body`, etc.   |
+
+### Added in Spectrum 2
+
+| Addition                                    | Notes                                                                  |
+| ------------------------------------------- | ---------------------------------------------------------------------- |
+| `.swc-Title` class                          | New class for section and card headings                                |
+| `.swc-Typography--prose` modifier           | Document wrapper that applies consistent margins to all child elements |
+| `.swc-Typography--emphasized` modifier      | Applies italic styling to the element                                  |
+| `--margins` modifier on individual elements | Apply margins to a single element without a wrapper                    |
+
+### Removed in Spectrum 2
+
+| Removed                                   | Replacement                                                                            |
+| ----------------------------------------- | -------------------------------------------------------------------------------------- |
+| `.spectrum-Typography` wrapper class      | `--margins` modifier on individual elements, or `.swc-Typography--prose` on the parent |
+| `.spectrum-Heading--light` modifier       | No direct replacement — choose the appropriate size instead                            |
+| `.spectrum-Detail--light` modifier        | No direct replacement — choose the appropriate size instead                            |
+| Automatic uppercase on `.spectrum-Detail` | Apply `text-transform: uppercase` manually when uppercase detail text is needed        |
+| `.spectrum-Body-strong` sub-class         | Use semantic `<strong>` element instead                                                |
+| `.spectrum-Body-emphasized` sub-class     | Use semantic `<em>` element instead                                                    |
+
+## Update your code
+
+### 1. Rename all `.spectrum-*` classes to `.swc-*`
+
+Find and replace the class prefix across your templates and stylesheets:
+
+```html
+<!-- Before -->
+<h1 class="spectrum-Heading spectrum-Heading--sizeXXL">Page title</h1>
+<p class="spectrum-Body spectrum-Body--sizeM">Body text goes here.</p>
+<span class="spectrum-Detail spectrum-Detail--sizeS">Caption</span>
+<code class="spectrum-Code spectrum-Code--sizeM">const x = 1;</code>
+
+<!-- After -->
+<h1 class="swc-Heading swc-Heading--sizeXXL">Page title</h1>
+<p class="swc-Body swc-Body--sizeM">Body text goes here.</p>
+<span class="swc-Detail swc-Detail--sizeS">Caption</span>
+<code class="swc-Code swc-Code--sizeM">const x = 1;</code>
+```
+
+### 2. Replace the `.spectrum-Typography` wrapper
+
+The `.spectrum-Typography` wrapper class has been removed. Use the `--margins` modifier on individual elements, or the new `.swc-Typography--prose` wrapper for document-style content.
+
+```html
+<!-- Before -->
+<div class="spectrum-Typography">
+  <h2 class="spectrum-Heading spectrum-Heading--sizeL">Section title</h2>
+  <p class="spectrum-Body spectrum-Body--sizeM">Section content.</p>
+</div>
+
+<!-- After — option A: --margins modifier per element -->
+<div>
+  <h2 class="swc-Heading swc-Heading--sizeL swc-Heading--margins">
+    Section title
+  </h2>
+  <p class="swc-Body swc-Body--sizeM swc-Body--margins">Section content.</p>
+</div>
+
+<!-- After — option B: prose wrapper for document-style layouts -->
+<div class="swc-Typography--prose">
+  <h2 class="swc-Heading swc-Heading--sizeL">Section title</h2>
+  <p class="swc-Body swc-Body--sizeM">Section content.</p>
+</div>
+```
+
+### 3. Remove light variants
+
+The `--light` modifier has been removed from both Heading and Detail. Choose a size that produces the desired visual weight in your layout.
+
+```html
+<!-- Before -->
+<h2 class="spectrum-Heading spectrum-Heading--light">Lightweight heading</h2>
+
+<!-- After — no direct replacement; adjust size to achieve the intended weight -->
+<h2 class="swc-Heading swc-Heading--sizeM">Lightweight heading</h2>
+```
+
+### 4. Add uppercase manually where needed
+
+The Detail class no longer applies `text-transform: uppercase` automatically. Add it yourself in your stylesheet when uppercase treatment is required.
+
+```html
+<!-- Before (uppercase applied automatically) -->
+<span class="spectrum-Detail spectrum-Detail--sizeS">Category label</span>
+
+<!-- After — add uppercase via your own CSS class when needed -->
+<span class="swc-Detail swc-Detail--sizeS uppercase-detail">
+  Category label
+</span>
+```
+
+```css
+/* Your stylesheet */
+.uppercase-detail {
+  text-transform: uppercase;
+}
+```
+
+### 5. Replace strong and emphasized sub-classes with semantic HTML
+
+The `.spectrum-Body-strong` and `.spectrum-Body-emphasized` sub-classes have been removed. Use the native `<strong>` and `<em>` elements instead.
+
+```html
+<!-- Before -->
+<p class="spectrum-Body spectrum-Body--sizeM">
+  Please read the
+  <span class="spectrum-Body-strong">important notice</span>
+  before proceeding. This step is
+  <span class="spectrum-Body-emphasized">required</span>
+  .
+</p>
+
+<!-- After -->
+<p class="swc-Body swc-Body--sizeM">
+  Please read the
+  <strong>important notice</strong>
+  before proceeding. This step is
+  <em>required</em>
+  .
+</p>
+```
+
+## Accessibility
+
+- Using semantic HTML elements (`<h1>`–`<h6>`, `<p>`, `<strong>`, `<em>`) alongside the typography classes ensures correct semantics for assistive technology. The classes only control visual presentation.
+- Replacing `.spectrum-Body-strong` and `.spectrum-Body-emphasized` with `<strong>` and `<em>` improves screen reader output — these elements carry semantic meaning (importance and emphasis respectively) that `<span>` does not.
+- Heading classes do not change the semantic role of the element. Use the appropriate heading level (`<h1>`–`<h6>`) for document structure, and apply the size modifier independently of the heading level.
+
+## Styling
+
+The CSS custom property prefix changed from `--mod-[variant]-*` to `--swc-[variant]-*`. Update any overrides in your stylesheets:
+
+### Removed `--mod-*` properties
+
+| Removed (Spectrum 1)        | Replacement (Spectrum 2)    |
+| --------------------------- | --------------------------- |
+| `--mod-body-font-size`      | `--swc-body-font-size`      |
+| `--mod-body-font-color`     | `--swc-body-color`          |
+| `--mod-body-line-height`    | `--swc-body-line-height`    |
+| `--mod-heading-font-size`   | `--swc-heading-font-size`   |
+| `--mod-heading-font-weight` | `--swc-heading-font-weight` |
+| `--mod-heading-line-height` | `--swc-heading-line-height` |
+| `--mod-detail-font-size`    | `--swc-detail-font-size`    |
+| `--mod-code-font-size`      | `--swc-code-font-size`      |
+
+```css
+/* Before */
+.spectrum-Body {
+  --mod-body-font-size: 16px;
+  --mod-body-font-color: #333;
+}
+
+/* After */
+.swc-Body {
+  --swc-body-font-size: 16px;
+  --swc-body-color: #333;
+}
+```
+
+## Checklist
+
+- [ ] Update the typography import path
+- [ ] Rename all `.spectrum-Heading` to `.swc-Heading` (and all other class prefixes)
+- [ ] Replace `.spectrum-Typography` wrapper with `--margins` modifier or `.swc-Typography--prose`
+- [ ] Remove all `--light` modifiers from Heading and Detail classes
+- [ ] Add `text-transform: uppercase` manually where uppercase Detail text is needed
+- [ ] Replace `.spectrum-Body-strong` with `<strong>`
+- [ ] Replace `.spectrum-Body-emphasized` with `<em>`
