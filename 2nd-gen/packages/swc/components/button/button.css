@@ -73,7 +73,7 @@
   color: var(--swc-button-content-color-down, token("gray-25"));
   background-color: var(--swc-button-background-color-down, token("neutral-background-color-down"));
   border-color: var(--swc-button-border-color-down, transparent);
-  transform: perspective(var(--_swc-button-min-block-size)) translate3d(0, 0, token("component-size-difference-down"));
+  transform: var(--swc-button-down-state-transform, perspective(var(--_swc-button-min-block-size)) translate3d(0, 0, token("component-size-difference-down")));
   will-change: transform;
 }
 
@@ -348,10 +348,10 @@ slot[name="icon"]::slotted(*) {
 }
 
 .swc-Button--pendingActive {
-  justify-content: center;
+  --swc-button-down-state-transform: none;
 
-  /* Preserve measured inline size to avoid impacting layout, set via JS when state changes */
-  inline-size: var(--_swc-button-pending-inline-size);
+  justify-content: center;
+  inline-size: var(--_swc-button-pending-inline-size); /* Preserve measured inline size to avoid impacting layout, set via JS when state changes */
 
   /* Disabled colors reference the already-resolved disabled vars so outline and
    static-color variants automatically get their correct unavailable appearance. */
