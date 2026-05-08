@@ -5,17 +5,17 @@ import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
 
-<Meta title="1st-gen vs 2nd-gen" />
+<Meta title="Gen1 vs Gen2" />
 
-<img src={headerImage} alt="1st-gen vs 2nd-gen" class="docs-image" />
+<img src={headerImage} alt="gen1 vs gen2" class="docs-image" />
 
-# gen 1 vs gen 2 SWC
+# What's new in gen2?
 
-SWC gen 2 (also called "2nd gen" or "next gen") is the newest version of Spectrum Web Components. It includes full-fidelity Spectrum 2 styles, improved system architecture, and updates to components' APIs and accessibility contracts. This page explains how the packages differ so teams know what to expect when adopting or migrating.
+SWC gen2 (also called "2nd gen" or "next gen") is the newest version of Spectrum Web Components. It includes full-fidelity Spectrum 2 styles, improved system architecture, and updates to components' APIs and accessibility contracts. This page is an overview of how the packages differ so teams know what to expect when adopting or migrating.
 
 ## Key differences
 
-| Area              | SWC gen1                                              | SWC gen 2                                                       |
+| Area              | SWC gen1                                              | SWC gen2                                                        |
 | ----------------- | ----------------------------------------------------- | --------------------------------------------------------------- |
 | Design            | Includes Spectrum, Express, and S2 Foundations themes | Spectrum 2 only                                                 |
 | Architecture      | Earlier component patterns; less consistent           | More consistent structure and APIs across the library           |
@@ -30,15 +30,15 @@ SWC gen 2 (also called "2nd gen" or "next gen") is the newest version of Spectru
 <sp-theme system="spectrum" scale="medium" color="light">
   <sp-accordion allow-multiple size="m" class="docs-accordion">
     <sp-accordion-item label="If you are starting a new project">
-      Use 2nd-gen SWC where available. It matches the current Spectrum
-      guidelines and offers better performance and consistency.
+      Use gen2 where available. It matches the current Spectrum guidelines and
+      offers better performance and consistency.
     </sp-accordion-item>
     <sp-accordion-item label="If your project uses gen1 SWC">
       You should begin to plan how you'll adopt gen2 components as they become
       available. Each component has a migration guide which includes more
       details on the specific changes. Migrating on a per-component basis allows
       teams to update gradually, and the gen1 S2 Foundations theme allows for
-      visaul consistency between both generations.
+      visual consistency between both generations.
     </sp-accordion-item>
   </sp-accordion>
 </sp-theme>
