@@ -40,7 +40,12 @@ export const AdvancedExamplesStories = () => {
 
 }
 
-export const ConditionalSection = ({ tag, title, hideTitle = false }) => {
+export const ConditionalSection = ({
+    tag,
+    title,
+    hideTitle = false,
+    titleLevel = 2,
+}) => {
     const resolvedOf = useOf('meta', ['meta']);
     const hasStories = Object.values(resolvedOf.csfFile.stories).some(
         (story) => story.tags?.includes(tag)
@@ -50,9 +55,12 @@ export const ConditionalSection = ({ tag, title, hideTitle = false }) => {
         return null;
     }
 
+    const level = Number(titleLevel) || 2;
+    const TitleHeading = level === 3 ? 'h3' : 'h2';
+
     return (
         <>
-            {title && <h2>{title}</h2>}
+            {title && <TitleHeading>{title}</TitleHeading>}
             <SpectrumStories tag={tag} hideTitle={hideTitle} />
         </>
     );
@@ -112,6 +120,18 @@ export const ConditionalGettingStarted = () => {
 <ConditionalSection tag="usage" hideTitle={true} />
 <ConditionalSection tag="options" title="Options" />
 <ConditionalSection tag="states" title="States" />
+<ConditionalSection
+  tag="setting-default-selection"
+  title="Setting default selection"
+  hideTitle={true}
+  titleLevel={3}
+/>
+<ConditionalSection
+  tag="responding-to-selection-change"
+  title="Responding to selection change"
+  hideTitle={true}
+  titleLevel={3}
+/>
 <ConditionalSection tag="behaviors" title="Behaviors" />
 <ConditionalSection tag="a11y" title="Accessibility" hideTitle={true} />
 

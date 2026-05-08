@@ -16,6 +16,9 @@ export const GettingStarted = ({ of, tags }: { of?: any; tags?: string }) => {
 
   if (tags?.includes('utility')) return null;
 
+  /** Story file renders import + narrative under its own single **Getting started** heading. */
+  if (tags?.includes('docs-getting-started-inline')) return null;
+
   if (tags?.includes('controller')) {
     // Extract component name in kebab-case from the title (e.g., "Components/Progress Circle" -> "progress-circle")
     const packageName = formatTitle(resolvedOf.preparedMeta?.title);

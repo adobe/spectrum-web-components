@@ -231,6 +231,13 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: Writing one Storybook-renderable MDX file per component at `2nd-gen/packages/swc/components/[component-name]/consumer-migration-guide.mdx` with code updates, styling guidance, accessibility notes, testing changes, and rollout advice
 - Provides: Workflow summary (verified source inputs, required section order, before/after examples, migration checklist, rollout guidance). Full instructions in `.ai/skills/consumer-migration-guide/references/consumer-migration-guide-prompt.md`
 
+#### Controller development (`controller-development`)
+
+- **purpose**: Scaffold or revise 2nd-gen Lit controllers under `2nd-gen/packages/core/controllers/` with source, demo hosts, Storybook stories (including `controllerApi` tables), and tests aligned to the focus group navigation controller layout
+- **How to invoke**: Say “add a new core controller”, “scaffold a controller like focus group navigation”, “align radio controller stories with focus group”, or “revise controller docs/tests for [name]”
+- Use when: Creating a new controller package, restructuring controller Storybook/docs, or matching stories and tests to project conventions
+- Provides: Directory layout, meta and story tag conventions (`usage`, `behaviors`, `api`, `a11y`, `appendix`), `demo-hosts` guidance, test file pattern, checklist, and anti-patterns to avoid. Full instructions in `.ai/skills/controller-development/SKILL.md`
+
 #### Washing machine migration workflow
 
 #### Migration — phase 1: prep (`migration-prep`)

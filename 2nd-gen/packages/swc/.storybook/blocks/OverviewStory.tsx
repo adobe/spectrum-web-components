@@ -5,6 +5,12 @@ import { formatTitle } from '../helpers/index.js';
 
 export const OverviewStory = () => {
   const resolvedOf = useOf('meta', ['meta']);
+  const tags = resolvedOf?.csfFile?.meta?.tags ?? [];
+
+  /** Meta renders implementation + live demos inside the overview story canvas instead. */
+  if (tags.includes('docs-skip-overview-canvas')) {
+    return null;
+  }
 
   const primaryStory = Object.values(resolvedOf.csfFile.stories).find((story) =>
     story.tags?.includes('overview')

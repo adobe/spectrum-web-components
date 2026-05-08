@@ -12,11 +12,6 @@
 
 import type { ReactiveController, ReactiveElement } from 'lit';
 
-import {
-  FocusgroupNavigationController,
-  type FocusgroupNavigationOptions,
-} from '../../focusgroup-navigation-controller/index.js';
-
 // ─────────────────────────
 //     TYPES
 // ─────────────────────────
@@ -27,7 +22,7 @@ import {
 export type RadioControllerOptions = {
   /**
    * Returns mutually exclusive participants. Items outside the host subtree (shadow-inclusive)
-   * are ignored, matching {@link FocusgroupNavigationController} scoping.
+   * are ignored.
    */
   getItems: () => HTMLElement[];
 
@@ -43,32 +38,18 @@ export type RadioControllerOptions = {
    */
   deselectItem: (item: HTMLElement) => void;
 
-  /** When true, drops native `disabled` or `aria-disabled="true"` from eligibility checks. */
-  skipDisabled?: boolean;
-
-  /** When navigation is bundled, aligns exclusive state with whichever item gained arrow focus. */
-  selectionFollowsFocus?: boolean;
-
   /**
-   * When true (default mirrors navigation embedding), assigns {@link KeyboardEvent.key | Space}
-   * on the focused item without moving focus — APG radios and menu radios.
+   * When **`true`**, the roster may hold no asserted item: **`setSelectedItem(null)`** succeeds, a
+   * primary **click** on the already-selected item clears selection, and **`toggleItem`** on that
+   * item clears as well. When **`false`**, at least one item stays asserted whenever any eligible
+   * item exists (unless **`defaultToFirstSelectable`** applies after structural changes).
    */
-  handleSpaceActivatesSelection?: boolean;
-
-  /** Allows clearing every asserted item through {@link RadioController.setSelectedItem}. */
-  allowEmptySelection?: boolean;
+  toggles?: boolean;
 
   /**
    * When nothing is asserted after structural updates, asserts the earliest eligible sibling.
    */
   defaultToFirstSelectable?: boolean;
-
-  /** Passed through to bundled {@link FocusgroupNavigationController}, or {@link false}. */
-  navigation?:
-    | false
-    | Partial<
-        Omit<FocusgroupNavigationOptions, 'getItems' | 'onActiveItemChange'>
-      >;
 
   /** Optional listener mirroring {@link radioControllerSelectionChange}. */
   onSelectionChange?: (detail: RadioControllerSelectionChangeDetail) => void;
@@ -87,14 +68,6 @@ export type RadioControllerSelectionChangeDetail = {
   /** Active exclusive entry, or null after an intentional clear. */
   selectedItem: HTMLElement | null;
 };
-
-const DEFAULT_NAVIGATION = {
-  direction: 'horizontal' as const,
-  wrap: true,
-  memory: true,
-} satisfies Partial<
-  Omit<FocusgroupNavigationOptions, 'getItems' | 'onActiveItemChange'>
->;
 
 /**
  * Returns the deepest entry from {@link Event.composedPath} that participates in {@link items}.
@@ -116,9 +89,12 @@ export function deepestRadioItemContaining(
 }
 
 /**
- * Maintains mutually exclusive asserted state across sibling elements using supplied mutators while
- * sharing item discovery idioms from {@link FocusgroupNavigationController}. Optionally nests
- * roving tabindex through {@link FocusgroupNavigationController} for arrow-key composites.
+ * Maintains mutually exclusive asserted state across sibling elements using supplied mutators.
+ * Scoping follows the reactive host subtree (light DOM and shadow descendants). Items that are
+ * disconnected, inert, not visible, native **`disabled`**, or **`aria-disabled="true"`** are never
+ * eligible and primary clicks on them do not change selection. This controller only handles
+ * capture-phase **`click`**, **`setSelectedItem`**, and **`toggleItem`** — it does not implement arrow keys, roving
+ * **`tabindex`**, programmatic **`focus()`**, or an active-item/focus sync callback.
  *
  * @see https://www.w3.org/WAI/ARIA/apg/patterns/radio/examples/radio-rating/
  * @see https://www.w3.org/WAI/ARIA/apg/patterns/menubar/
@@ -133,28 +109,15 @@ export class RadioController implements ReactiveController {
         | 'getItems'
         | 'selectItem'
         | 'deselectItem'
-        | 'skipDisabled'
-        | 'selectionFollowsFocus'
-        | 'handleSpaceActivatesSelection'
-        | 'allowEmptySelection'
+        | 'toggles'
         | 'defaultToFirstSelectable'
       >
     >,
     never
   > &
-    Pick<RadioControllerOptions, 'navigation' | 'onSelectionChange'>;
-
-  private embeddedNavigation: FocusgroupNavigationController | null = null;
+    Pick<RadioControllerOptions, 'onSelectionChange'>;
 
   private selectedItem: HTMLElement | null = null;
-
-  /** Prevents recursion when syncing focusgroup bookkeeping. */
-  private suppressEmbeddedActiveCallback = false;
-
-  /**
-   * Prevents reacting to stray focus pulses while rewriting selection from pointer / Space.
-   */
-  private syncingExclusiveState = false;
 
   private readonly handleClickCapture = (event: MouseEvent): void => {
     if (event.button !== 0) {
@@ -165,118 +128,26 @@ export class RadioController implements ReactiveController {
     }
     const items = this.getEligibleItems();
     const hit = deepestRadioItemContaining(event, items);
-    if (!hit || this.isActivationDisabled(hit)) {
+    if (!hit || this.isDisabledParticipant(hit)) {
       return;
     }
-    this.syncingExclusiveState = true;
-    try {
-      this.applyExclusiveSelection(hit, {
-        propagateToEmbeddedNavigation: true,
-      });
-    } finally {
-      this.syncingExclusiveState = false;
-    }
-  };
-
-  private readonly handleKeyCapture = (event: KeyboardEvent): void => {
-    if (!this.options.handleSpaceActivatesSelection) {
+    if (this.options.toggles && hit === this.selectedItem) {
+      this.applyExclusiveSelection(null);
       return;
     }
-    if (event.key !== ' ' || event.repeat || event.defaultPrevented) {
-      return;
-    }
-    const items = new Set(this.getEligibleItems());
-
-    /**
-     * Matches composed-path participants first (shadow targets), otherwise the shadow root focus.
-     *
-     * @returns Focused selectable element participating in exclusivity.
-     */
-    const resolveParticipant = (): HTMLElement | null => {
-      for (const node of event.composedPath()) {
-        if (!(node instanceof HTMLElement)) {
-          continue;
-        }
-        if (items.has(node)) {
-          return node;
-        }
-      }
-      const active = this.host.shadowRoot?.activeElement;
-      return active instanceof HTMLElement && items.has(active) ? active : null;
-    };
-
-    const participant = resolveParticipant();
-    if (!participant || this.isActivationDisabled(participant)) {
-      return;
-    }
-    event.preventDefault();
-    this.syncingExclusiveState = true;
-    try {
-      this.applyExclusiveSelection(participant, {
-        propagateToEmbeddedNavigation: true,
-      });
-    } finally {
-      this.syncingExclusiveState = false;
-    }
+    this.applyExclusiveSelection(hit);
   };
 
   constructor(host: ReactiveElement, options: RadioControllerOptions) {
     this.host = host;
-    const navigationEnabled = options.navigation !== false;
-    type NavigationPatchInput = Omit<
-      FocusgroupNavigationOptions,
-      'getItems' | 'onActiveItemChange'
-    >;
-
-    const navigationPatch: false | NavigationPatchInput =
-      options.navigation === false
-        ? false
-        : {
-            skipDisabled: options.skipDisabled ?? false,
-            ...DEFAULT_NAVIGATION,
-            ...(typeof options.navigation === 'object'
-              ? options.navigation
-              : {}),
-          };
-
     this.options = {
       getItems: options.getItems,
       selectItem: options.selectItem,
       deselectItem: options.deselectItem,
-      skipDisabled: options.skipDisabled ?? false,
-      selectionFollowsFocus: options.selectionFollowsFocus ?? true,
-      handleSpaceActivatesSelection:
-        options.handleSpaceActivatesSelection ?? navigationEnabled,
-      allowEmptySelection: options.allowEmptySelection ?? false,
+      toggles: options.toggles ?? false,
       defaultToFirstSelectable: options.defaultToFirstSelectable ?? false,
-      navigation: navigationEnabled === false ? false : navigationPatch,
       onSelectionChange: options.onSelectionChange,
     };
-
-    if (navigationPatch) {
-      this.embeddedNavigation = new FocusgroupNavigationController(host, {
-        ...navigationPatch,
-        getItems: () => this.getEligibleItems(),
-        onActiveItemChange: (active) => {
-          if (
-            this.suppressEmbeddedActiveCallback ||
-            this.syncingExclusiveState ||
-            !active
-          ) {
-            return;
-          }
-          if (
-            !this.options.selectionFollowsFocus ||
-            this.isActivationDisabled(active)
-          ) {
-            return;
-          }
-          this.applyExclusiveSelection(active, {
-            propagateToEmbeddedNavigation: false,
-          });
-        },
-      });
-    }
 
     host.addController(this);
   }
@@ -286,45 +157,19 @@ export class RadioController implements ReactiveController {
     return this.selectedItem;
   }
 
-  /** Merges deltas; rejects `navigation` changes because wiring is immutable post-construction. */
+  /** Merges option deltas and reapplies {@link refresh}. */
   public setOptions(partial: Partial<RadioControllerOptions>): void {
-    if (partial.navigation !== undefined) {
-      throw new Error(
-        'RadioController does not permit mutating navigation options after creation.'
-      );
-    }
-
-    const nextSkip = partial.skipDisabled ?? this.options.skipDisabled;
-
-    const selectionFollowsFocusProvided =
-      'selectionFollowsFocus' in partial &&
-      typeof partial.selectionFollowsFocus === 'boolean';
-
-    const spaceProvided =
-      'handleSpaceActivatesSelection' in partial &&
-      typeof partial.handleSpaceActivatesSelection === 'boolean';
-
-    const allowEmptyProvided =
-      'allowEmptySelection' in partial &&
-      typeof partial.allowEmptySelection === 'boolean';
-
     const defaultFirstProvided =
       'defaultToFirstSelectable' in partial &&
       typeof partial.defaultToFirstSelectable === 'boolean';
 
+    const togglesProvided =
+      'toggles' in partial && typeof partial.toggles === 'boolean';
+
     this.options = {
       ...this.options,
       ...partial,
-      skipDisabled: nextSkip,
-      selectionFollowsFocus: selectionFollowsFocusProvided
-        ? partial.selectionFollowsFocus!
-        : this.options.selectionFollowsFocus,
-      handleSpaceActivatesSelection: spaceProvided
-        ? partial.handleSpaceActivatesSelection!
-        : this.options.handleSpaceActivatesSelection,
-      allowEmptySelection: allowEmptyProvided
-        ? partial.allowEmptySelection!
-        : this.options.allowEmptySelection,
+      toggles: togglesProvided ? partial.toggles! : this.options.toggles,
       defaultToFirstSelectable: defaultFirstProvided
         ? partial.defaultToFirstSelectable!
         : this.options.defaultToFirstSelectable,
@@ -335,46 +180,57 @@ export class RadioController implements ReactiveController {
         partial.onSelectionChange ?? this.options.onSelectionChange,
     };
 
-    if (partial.skipDisabled !== undefined && this.embeddedNavigation) {
-      this.embeddedNavigation.setOptions({ skipDisabled: nextSkip });
-    }
-
     this.refresh();
   }
 
   /**
-   * Programmatic assertion without synthetic clicks — returns {@link false} when {@link candidate}
-   * cannot join the exclusive roster.
+   * Asserts exclusive state without synthetic pointer events — returns {@link false} when
+   * {@link candidate} cannot join the exclusive roster. Clearing to **`null`** requires
+   * **`toggles: true`**.
    */
-  public setSelectedItem(
-    candidate: HTMLElement | null,
-    behavior?: { focus?: boolean }
-  ): boolean {
+  public setSelectedItem(candidate: HTMLElement | null): boolean {
     if (candidate !== null) {
       if (
         !this.getEligibleItems().includes(candidate) ||
-        this.isActivationDisabled(candidate)
+        this.isDisabledParticipant(candidate)
       ) {
         return false;
       }
-    } else if (!this.options.allowEmptySelection) {
+    } else if (!this.canClearSelection()) {
       return false;
     }
 
-    this.applyExclusiveSelection(candidate, {
-      propagateToEmbeddedNavigation: true,
-    });
-
-    if (candidate && behavior?.focus) {
-      queueMicrotask(() => {
-        candidate.focus();
-      });
-    }
+    this.applyExclusiveSelection(candidate);
 
     return true;
   }
 
-  /** Re-applies bookkeeping after structural changes and refreshes optional navigation sibling. */
+  /**
+   * Selects {@link item} when it is not the current exclusive choice. When **`toggles`** is
+   * **`true`** and {@link item} is already selected, clears to **`null`**.
+   *
+   * @returns {@link false} when {@link item} is ineligible, or when it is already selected and
+   * **`toggles`** is **`false`**.
+   */
+  public toggleItem(item: HTMLElement): boolean {
+    if (
+      !this.getEligibleItems().includes(item) ||
+      this.isDisabledParticipant(item)
+    ) {
+      return false;
+    }
+    if (this.selectedItem !== item) {
+      this.applyExclusiveSelection(item);
+      return true;
+    }
+    if (!this.options.toggles) {
+      return false;
+    }
+    this.applyExclusiveSelection(null);
+    return true;
+  }
+
+  /** Re-applies bookkeeping after structural changes (stale selection or defaulting). */
   public refresh(): void {
     const items = this.getEligibleItems();
 
@@ -385,61 +241,36 @@ export class RadioController implements ReactiveController {
       const replacement =
         items.length === 0
           ? null
-          : this.options.allowEmptySelection &&
-              !this.options.defaultToFirstSelectable
+          : this.canClearSelection() && !this.options.defaultToFirstSelectable
             ? null
             : (items[0] ?? null);
-      this.applyExclusiveSelection(replacement, {
-        propagateToEmbeddedNavigation: true,
-      });
+      this.applyExclusiveSelection(replacement);
     } else if (
       this.selectedItem === null &&
       this.options.defaultToFirstSelectable &&
       items.length > 0
     ) {
-      this.applyExclusiveSelection(items[0], {
-        propagateToEmbeddedNavigation: true,
-      });
-    } else if (this.embeddedNavigation) {
-      this.embeddedNavigation.refresh();
+      this.applyExclusiveSelection(items[0]);
     }
   }
 
   public hostConnected(): void {
     this.host.addEventListener('click', this.handleClickCapture, true);
-    this.host.addEventListener('keydown', this.handleKeyCapture, true);
     this.refresh();
   }
 
   public hostDisconnected(): void {
     this.host.removeEventListener('click', this.handleClickCapture, true);
-    this.host.removeEventListener('keydown', this.handleKeyCapture, true);
   }
 
-  private applyExclusiveSelection(
-    next: HTMLElement | null,
-    flags: { propagateToEmbeddedNavigation: boolean }
-  ): void {
+  private applyExclusiveSelection(next: HTMLElement | null): void {
     const roster = this.getEligibleItems();
     let asserted = next;
-    if (
-      asserted === null &&
-      !this.options.allowEmptySelection &&
-      roster.length > 0
-    ) {
+    if (asserted === null && !this.canClearSelection() && roster.length > 0) {
       asserted = roster[0];
     }
 
     if (this.selectedItem === asserted) {
-      if (
-        flags.propagateToEmbeddedNavigation &&
-        asserted &&
-        this.embeddedNavigation
-      ) {
-        this.propagateEmbeddedTabStop(asserted);
-      } else {
-        this.embeddedNavigation?.refresh();
-      }
       return;
     }
 
@@ -456,31 +287,8 @@ export class RadioController implements ReactiveController {
 
     this.selectedItem = asserted;
 
-    if (
-      flags.propagateToEmbeddedNavigation &&
-      asserted &&
-      this.embeddedNavigation
-    ) {
-      this.propagateEmbeddedTabStop(asserted);
-    } else if (this.embeddedNavigation) {
-      this.embeddedNavigation.refresh();
-    }
-
     if (prior !== asserted) {
       this.dispatchSelectionChange();
-    }
-  }
-
-  /** Ensures tabindex mirrors the asserted participant without reacting to programmatic sync. */
-  private propagateEmbeddedTabStop(participant: HTMLElement): void {
-    if (!this.embeddedNavigation) {
-      return;
-    }
-    this.suppressEmbeddedActiveCallback = true;
-    try {
-      this.embeddedNavigation.setActiveItem(participant);
-    } finally {
-      this.suppressEmbeddedActiveCallback = false;
     }
   }
 
@@ -504,9 +312,6 @@ export class RadioController implements ReactiveController {
 
   /**
    * Whether `node` is the host itself or reachable by walking ancestors and shadow hosts.
-   *
-   * Mirrors {@link FocusgroupNavigationController}'s containment guard so callers can query arbitrary
-   * slices without leaking into foreign shadow trees.
    *
    * @param node - Node under test (may be null).
    */
@@ -532,7 +337,7 @@ export class RadioController implements ReactiveController {
     return false;
   }
 
-  /** Raw query filtered to elements owned by {@link RadioController}'s reactive host subtree. */
+  /** Raw query filtered to elements owned by the reactive host subtree. */
   private getScopedRawItems(): HTMLElement[] {
     return this.options
       .getItems()
@@ -540,11 +345,10 @@ export class RadioController implements ReactiveController {
   }
 
   /**
-   * Whether `participant` skips navigation when `{@link RadioControllerOptions.skipDisabled}` resolves true.
-   *
-   * @param participant - Potential radio sibling.
+   * Native **`disabled`** or **`aria-disabled="true"`** — never eligible and never activated by
+   * pointer or **`setSelectedItem`**.
    */
-  private skipsDisabledSemantics(participant: HTMLElement): boolean {
+  private isDisabledParticipant(participant: HTMLElement): boolean {
     if ('disabled' in participant) {
       if ((participant as HTMLButtonElement).disabled) {
         return true;
@@ -554,7 +358,7 @@ export class RadioController implements ReactiveController {
   }
 
   /**
-   * Mirrors {@link FocusgroupNavigationController}'s eligibility filter for interactive composites.
+   * Eligibility filter: connected, visible, not inert, not disabled.
    */
   private isRadioNavigableItem(participant: HTMLElement): boolean {
     if (!participant.isConnected) {
@@ -571,29 +375,21 @@ export class RadioController implements ReactiveController {
     ) {
       return false;
     }
-    if (this.options.skipDisabled && this.skipsDisabledSemantics(participant)) {
+    if (this.isDisabledParticipant(participant)) {
       return false;
     }
     return true;
   }
 
-  /**
-   * Prevents asserting disabled controls even when callers forget to prune `getItems`.
-   *
-   * @param participant - Candidate asserting role states.
-   */
-  private isActivationDisabled(participant: HTMLElement): boolean {
-    return (
-      ('disabled' in participant &&
-        (participant as HTMLButtonElement).disabled) ||
-      participant.getAttribute('aria-disabled') === 'true'
-    );
-  }
-
-  /** Eligible selectable siblings respecting skip rules and viewport visibility. */
+  /** Eligible selectable siblings respecting visibility and disabled state. */
   private getEligibleItems(): HTMLElement[] {
     return this.getScopedRawItems().filter((participant) =>
       this.isRadioNavigableItem(participant)
     );
+  }
+
+  /** Whether the roster may hold no asserted item (`null`). */
+  private canClearSelection(): boolean {
+    return this.options.toggles;
   }
 }

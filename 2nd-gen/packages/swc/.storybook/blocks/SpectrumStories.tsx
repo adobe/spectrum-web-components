@@ -11,8 +11,12 @@ import React, { Fragment } from 'react';
  * Stories are rendered in definition order (using story id which includes definition index).
  *
  * @param of - The Storybook meta or story to resolve the component from
- * @param tag - The story tag to filter by (e.g., "usage", "a11y", "examples")
+ * @param tag - The story tag to filter by (e.g., "usage", "setting-default-selection",
+ *   "responding-to-selection-change", "a11y")
  * @param hideTitle - Whether to hide the story title heading
+ *
+ * Stories with `parameters.docs.disable: true` are omitted (for example when the same demo
+ * appears under Usage and should not repeat in Behaviors).
  */
 export const SpectrumStories = ({
   of,
@@ -28,6 +32,10 @@ export const SpectrumStories = ({
   // Get stories and filter by tag
   let taggedStories = Object.values(resolvedOf.csfFile.stories).filter(
     (story: any) => story.tags?.includes(tag)
+  );
+
+  taggedStories = taggedStories.filter(
+    (story: any) => story.parameters?.docs?.disable !== true
   );
 
   const descriptionOnlyStories = taggedStories.filter((story: any) =>

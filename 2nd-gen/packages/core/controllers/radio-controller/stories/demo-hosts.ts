@@ -13,14 +13,19 @@
 import { css, html, LitElement, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
-import { RadioController } from '../index.js';
+import {
+  RadioController,
+  type RadioControllerSelectionChangeDetail,
+} from '../index.js';
 
 declare global {
   interface HTMLElementTagNameMap {
     'demo-radio-group-rating': DemoRadioGroupRating;
+    'demo-radio-rating-default-first': DemoRadioRatingDefaultFirst;
+    'demo-radio-rating-on-selection-change-alert': DemoRadioRatingOnSelectionChangeAlert;
     'demo-radio-menu-item-radio': DemoRadioMenuItemRadio;
     'demo-radio-accordion-exclusive': DemoRadioAccordionExclusive;
-    'demo-radio-programmatic-selection': DemoRadioProgrammaticSelection;
+    'demo-radio-accordion-multiple': DemoRadioAccordionMultiple;
   }
 }
 
@@ -50,23 +55,41 @@ export class DemoRadioGroupRating extends LitElement {
       display: flex;
       gap: 0.35rem;
       flex-wrap: wrap;
+      align-items: center;
     }
     .stars button {
-      font: inherit;
-      min-inline-size: 2.5rem;
-      min-block-size: 2.5rem;
-      border-radius: 4px;
-      border: 1px solid var(--spectrum-gray-400, #b1b1b1);
-      background: var(--spectrum-gray-75, #fdfdfd);
+      display: inline-grid;
+      place-items: center;
+      box-sizing: border-box;
+      inline-size: 2.75rem;
+      block-size: 2.75rem;
+      padding: 0.35rem;
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--spectrum-gray-500, #8f8f8f);
       cursor: pointer;
+    }
+    .stars button:hover {
+      color: var(--spectrum-gray-800, #2c2c2c);
+      background: var(--spectrum-gray-100, #f1f1f1);
     }
     .stars button:focus-visible {
       outline: 2px solid var(--spectrum-blue-800, #0265dc);
       outline-offset: 2px;
     }
     .stars button[aria-checked='true'] {
+      color: var(--spectrum-orange-900, #b14c00);
       background: var(--spectrum-orange-300, #ffb02e);
-      border-color: var(--spectrum-orange-800, #cb6f10);
+    }
+    .stars button[aria-checked='true']:hover {
+      color: var(--spectrum-orange-900, #8a3b00);
+      background: var(--spectrum-orange-400, #ffa037);
+    }
+    .stars button svg {
+      inline-size: 1.85rem;
+      block-size: 1.85rem;
+      flex-shrink: 0;
     }
   `;
 
@@ -80,7 +103,7 @@ export class DemoRadioGroupRating extends LitElement {
     selectItem: (star) => star.setAttribute('aria-checked', 'true'),
     deselectItem: (star) => star.setAttribute('aria-checked', 'false'),
     defaultToFirstSelectable: true,
-    navigation: { direction: 'horizontal', wrap: true, memory: true },
+    toggles: true,
   });
 
   protected override firstUpdated(): void {
@@ -102,7 +125,220 @@ export class DemoRadioGroupRating extends LitElement {
                 aria-checked="false"
                 aria-label=${label}
               >
-                ${value}
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  />
+                </svg>
+              </button>
+            `;
+          })}
+        </div>
+      </div>
+    `;
+  }
+}
+
+/** Shared chrome for the rating demo hosts below. */
+const radioRatingDemoChrome = css`
+  :host {
+    display: block;
+  }
+  [role='radiogroup'] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 20rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--spectrum-gray-300, #d3d3d3);
+    font:
+      0.95rem system-ui,
+      sans-serif;
+  }
+  #rating-label {
+    font-weight: 600;
+  }
+  .hint {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--spectrum-gray-700, #464646);
+  }
+  .stars {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .stars button {
+    display: inline-grid;
+    place-items: center;
+    box-sizing: border-box;
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+    padding: 0.35rem;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--spectrum-gray-500, #8f8f8f);
+    cursor: pointer;
+  }
+  .stars button:hover {
+    color: var(--spectrum-gray-800, #2c2c2c);
+    background: var(--spectrum-gray-100, #f1f1f1);
+  }
+  .stars button:focus-visible {
+    outline: 2px solid var(--spectrum-blue-800, #0265dc);
+    outline-offset: 2px;
+  }
+  .stars button[aria-checked='true'] {
+    color: var(--spectrum-orange-900, #b14c00);
+    background: var(--spectrum-orange-300, #ffb02e);
+  }
+  .stars button[aria-checked='true']:hover {
+    color: var(--spectrum-orange-900, #8a3b00);
+    background: var(--spectrum-orange-400, #ffa037);
+  }
+  .stars button svg {
+    inline-size: 1.85rem;
+    block-size: 1.85rem;
+    flex-shrink: 0;
+  }
+`;
+
+/**
+ * Five-star layout like {@link DemoRadioGroupRating}, with **`defaultToFirstSelectable`** only
+ * (first star asserted after **`refresh`**; no **`onSelectionChange`**).
+ *
+ * @internal
+ */
+@customElement('demo-radio-rating-default-first')
+export class DemoRadioRatingDefaultFirst extends LitElement {
+  static override styles = radioRatingDemoChrome;
+
+  private readonly radios = new RadioController(this, {
+    getItems: () =>
+      Array.from(
+        this.renderRoot.querySelectorAll<HTMLButtonElement>(
+          '[data-rating-star-default-first]'
+        )
+      ),
+    selectItem: (star) => star.setAttribute('aria-checked', 'true'),
+    deselectItem: (star) => star.setAttribute('aria-checked', 'false'),
+    defaultToFirstSelectable: true,
+    toggles: false,
+  });
+
+  protected override firstUpdated(): void {
+    this.radios.refresh();
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <div role="radiogroup" aria-labelledby="rating-label">
+        <div id="rating-label">Rating</div>
+        <p class="hint">
+          After
+          <code>refresh</code>
+          , the first star is selected because
+          <code>defaultToFirstSelectable</code>
+          is
+          <code>true</code>
+          .
+        </p>
+        <div class="stars">
+          ${[1, 2, 3, 4, 5].map((value) => {
+            const label = value === 1 ? `${value} star` : `${value} stars`;
+            return html`
+              <button
+                type="button"
+                data-rating-star-default-first
+                role="radio"
+                aria-checked="false"
+                aria-label=${label}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  />
+                </svg>
+              </button>
+            `;
+          })}
+        </div>
+      </div>
+    `;
+  }
+}
+
+/**
+ * Same chrome as {@link DemoRadioRatingDefaultFirst}, with **`onSelectionChange`** only: each
+ * new asserted star triggers **`window.alert`** with its **`aria-label`** (Storybook demos only).
+ *
+ * @internal
+ */
+@customElement('demo-radio-rating-on-selection-change-alert')
+export class DemoRadioRatingOnSelectionChangeAlert extends LitElement {
+  static override styles = radioRatingDemoChrome;
+
+  private readonly radios = new RadioController(this, {
+    getItems: () =>
+      Array.from(
+        this.renderRoot.querySelectorAll<HTMLButtonElement>(
+          '[data-rating-star-on-change]'
+        )
+      ),
+    selectItem: (star) => star.setAttribute('aria-checked', 'true'),
+    deselectItem: (star) => star.setAttribute('aria-checked', 'false'),
+    defaultToFirstSelectable: false,
+    toggles: true,
+    onSelectionChange: (detail: RadioControllerSelectionChangeDetail) => {
+      const star = detail.selectedItem;
+      const label =
+        star?.getAttribute('aria-label') ??
+        (star ? 'Unknown star' : 'No star selected');
+      window.alert(`Rating selection: ${label}`);
+    },
+  });
+
+  protected override firstUpdated(): void {
+    this.radios.refresh();
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <div role="radiogroup" aria-labelledby="rating-label">
+        <div id="rating-label">Rating</div>
+        <p class="hint">
+          Click stars to change selection;
+          <code>onSelectionChange</code>
+          shows a
+          <code>window.alert</code>
+          with the chosen label.
+          <code>toggles</code>
+          is
+          <code>true</code>
+          so you can clear by clicking the active star again.
+        </p>
+        <div class="stars">
+          ${[1, 2, 3, 4, 5].map((value) => {
+            const label = value === 1 ? `${value} star` : `${value} stars`;
+            return html`
+              <button
+                type="button"
+                data-rating-star-on-change
+                role="radio"
+                aria-checked="false"
+                aria-label=${label}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  />
+                </svg>
               </button>
             `;
           })}
@@ -160,7 +396,6 @@ export class DemoRadioMenuItemRadio extends LitElement {
     selectItem: (item) => item.setAttribute('aria-checked', 'true'),
     deselectItem: (item) => item.setAttribute('aria-checked', 'false'),
     defaultToFirstSelectable: true,
-    navigation: { direction: 'vertical', wrap: true, memory: true },
   });
 
   protected override firstUpdated(): void {
@@ -221,6 +456,7 @@ export class DemoRadioAccordionExclusive extends LitElement {
       overflow: clip;
     }
     article {
+      inline-size: 300px;
       border-block-end: 1px solid var(--spectrum-gray-200, #e6e6e6);
     }
     article:last-of-type {
@@ -283,10 +519,7 @@ export class DemoRadioAccordionExclusive extends LitElement {
       header.setAttribute('aria-expanded', 'false');
       this.togglePanel(header.dataset.accordion!, false);
     },
-    navigation: false,
-    selectionFollowsFocus: false,
-    handleSpaceActivatesSelection: false,
-    allowEmptySelection: true,
+    toggles: true,
   });
 
   private togglePanel(key: string, open: boolean): void {
@@ -322,7 +555,7 @@ export class DemoRadioAccordionExclusive extends LitElement {
           {
             key: 'b',
             heading: 'Filters',
-            copy: 'Use `navigation: false` when arrow keys should not imitate a radiogroup.',
+            copy: 'Accordion headers often use RadioController alone without a separate focus group.',
           },
           {
             key: 'c',
@@ -358,9 +591,14 @@ export class DemoRadioAccordionExclusive extends LitElement {
   }
 }
 
-/** @internal */
-@customElement('demo-radio-programmatic-selection')
-export class DemoRadioProgrammaticSelection extends LitElement {
+/**
+ * Accordion with four headers and panels — same `RadioController` pattern as
+ * {@link DemoRadioAccordionExclusive}, used by the “multiple sections” Storybook story.
+ *
+ * @internal
+ */
+@customElement('demo-radio-accordion-multiple')
+export class DemoRadioAccordionMultiple extends LitElement {
   static override styles = css`
     :host {
       display: block;
@@ -368,132 +606,164 @@ export class DemoRadioProgrammaticSelection extends LitElement {
         0.95rem system-ui,
         sans-serif;
     }
-    .group {
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    .group button[data-program-item] {
-      font: inherit;
-      padding: 0.65rem 0.95rem;
+    .accordion {
+      max-width: 28rem;
+      border: 1px solid var(--spectrum-gray-300, #cbcbcb);
       border-radius: 6px;
-      border: 1px solid var(--spectrum-gray-400, #cfcfcf);
+      overflow: clip;
+    }
+    article {
+      inline-size: 300px;
+      border-block-end: 1px solid var(--spectrum-gray-200, #e6e6e6);
+    }
+    article:last-of-type {
+      border-block-end: none;
+    }
+    button.trigger {
+      display: flex;
+      width: 100%;
+      gap: 0.5rem;
+      align-items: center;
+      justify-content: space-between;
+      font: inherit;
+      padding: 0.75rem 1rem;
+      border: none;
       background: white;
       cursor: pointer;
+      text-align: start;
     }
-    .group button[data-program-item]:focus-visible {
+    button.trigger:focus-visible {
       outline: 2px solid var(--spectrum-blue-800, #0265dc);
-      outline-offset: 2px;
+      outline-offset: -2px;
     }
-    .group button[data-program-item][aria-checked='true'] {
-      border-color: var(--spectrum-blue-800, #0265dc);
-      background: var(--spectrum-blue-100, #e5f6ff);
+    button.trigger span.chevron::before {
+      content: '';
+      inline-size: 0.65rem;
+      block-size: 0.65rem;
+      border-inline-end: 2px solid currentColor;
+      border-block-end: 2px solid currentColor;
+      display: inline-block;
+      rotate: -45deg;
+      translate: 0 0.1rem;
     }
-    footer {
-      margin-block-start: 1rem;
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
+    button[aria-expanded='true'] span.chevron::before {
+      rotate: 135deg;
+      translate: 0 -0.1rem;
     }
-    footer button {
+    .region {
+      padding: 0.75rem 1rem 1rem;
+      background: var(--spectrum-gray-75, #fafafa);
+      border-block-start: 1px solid var(--spectrum-gray-200, #e6e6e6);
+    }
+    .region[hidden] {
+      display: none;
+    }
+    .accordion-heading {
+      margin: 0;
       font: inherit;
-      padding: 0.45rem 0.85rem;
-      border-radius: 4px;
-      border: 1px solid var(--spectrum-gray-500, #b5b5b5);
-      background: var(--spectrum-gray-50, #f5f5f5);
-      cursor: pointer;
-    }
-    footer button:focus-visible {
-      outline: 2px solid var(--spectrum-blue-800, #0265dc);
-      outline-offset: 2px;
+      font-weight: 600;
     }
   `;
 
-  private radios = new RadioController(this, {
+  private readonly panels = (): HTMLElement[] =>
+    Array.from(this.renderRoot.querySelectorAll<HTMLElement>('.region'));
+
+  private readonly accordionRadio = new RadioController(this, {
     getItems: () =>
       Array.from(
         this.renderRoot.querySelectorAll<HTMLButtonElement>(
-          '[data-program-item]'
+          '[data-accordion-heading]'
         )
       ),
-    selectItem: (pill) => pill.setAttribute('aria-checked', 'true'),
-    deselectItem: (pill) => pill.setAttribute('aria-checked', 'false'),
-    defaultToFirstSelectable: true,
-    navigation: { direction: 'horizontal', wrap: true },
+    selectItem: (header) => {
+      header.setAttribute('aria-expanded', 'true');
+      this.togglePanel(header.dataset.accordion!, true);
+    },
+    deselectItem: (header) => {
+      header.setAttribute('aria-expanded', 'false');
+      this.togglePanel(header.dataset.accordion!, false);
+    },
+    toggles: true,
   });
 
-  protected override firstUpdated(): void {
-    this.radios.refresh();
-    this.programmaticShortcuts();
+  private togglePanel(key: string, open: boolean): void {
+    this.panels().forEach((surface) => {
+      if (surface.dataset.panel === key) {
+        surface.hidden = !open;
+      }
+    });
   }
 
-  private programmaticShortcuts(): void {
-    const shortcuts = Array.from(
+  protected override firstUpdated(): void {
+    const headers = Array.from(
       this.renderRoot.querySelectorAll<HTMLButtonElement>(
-        '[data-program-select]'
+        '[data-accordion-heading]'
       )
     );
-
-    shortcuts.forEach((shortcut) =>
-      shortcut.addEventListener(
-        'click',
-        /** Selects programmatically alongside pointer-driven usage. */
-        () => {
-          const indexRaw = shortcut.dataset.programSelect ?? '0';
-          const indexValue = Number.parseInt(indexRaw, 10);
-
-          const roster = Array.from(
-            this.renderRoot.querySelectorAll<HTMLElement>('[data-program-item]')
-          );
-
-          if (!Number.isFinite(indexValue) || indexValue >= roster.length) {
-            return;
-          }
-
-          void this.radios.setSelectedItem(roster[indexValue], {
-            focus: true,
-          });
-        }
+    headers.forEach((button) =>
+      this.togglePanel(
+        button.dataset.accordion!,
+        button.getAttribute('aria-expanded') === 'true'
       )
     );
+    this.accordionRadio.refresh();
   }
 
   protected override render(): TemplateResult {
     return html`
-      <div class="group" role="radiogroup" aria-label="Programmatic presets">
-        <button
-          type="button"
-          role="radio"
-          data-program-item
-          aria-checked="false"
-        >
-          Alpha
-        </button>
-        <button
-          type="button"
-          role="radio"
-          data-program-item
-          aria-checked="false"
-        >
-          Beta
-        </button>
-        <button
-          type="button"
-          role="radio"
-          data-program-item
-          aria-checked="false"
-        >
-          Gamma
-        </button>
+      <div class="accordion" role="presentation">
+        ${[
+          {
+            key: 'general',
+            heading: 'General',
+            copy: 'First section open by default. Click another heading to collapse this panel.',
+          },
+          {
+            key: 'appearance',
+            heading: 'Appearance',
+            copy: 'When this heading is selected, General collapses: its aria-expanded becomes false and its panel gains hidden.',
+          },
+          {
+            key: 'content',
+            heading: 'Content',
+            copy: 'RadioController calls deselectItem on every non-active header so all other panels are hidden.',
+          },
+          {
+            key: 'support',
+            heading: 'Support',
+            copy: 'Only one panel stays visible at a time; the open panel matches the heading with aria-expanded="true".',
+          },
+        ].map(
+          ({ key, heading, copy }, ordinal) => html`
+            <article>
+              <h3 class="accordion-heading">
+                <button
+                  type="button"
+                  class="trigger"
+                  data-accordion-heading
+                  data-accordion=${key}
+                  aria-expanded=${ordinal === 0 ? 'true' : 'false'}
+                  aria-controls="multi-accordion-panel-${key}"
+                  id="multi-accordion-heading-${key}"
+                >
+                  <span>${heading}</span>
+                  <span class="chevron" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div
+                class="region"
+                id=${`multi-accordion-panel-${key}`}
+                role="region"
+                aria-labelledby="multi-accordion-heading-${key}"
+                data-panel=${key}
+                ?hidden=${ordinal !== 0}
+              >
+                ${copy}
+              </div>
+            </article>
+          `
+        )}
       </div>
-      <footer>
-        <button type="button" data-program-select="0">Select Alpha</button>
-        <button type="button" data-program-select="1">Select Beta</button>
-        <button type="button" data-program-select="2">
-          Focus Gamma programmatically
-        </button>
-      </footer>
     `;
   }
 }

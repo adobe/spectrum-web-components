@@ -72,6 +72,176 @@ const tableStyle: React.CSSProperties = {
 };
 
 // ────────────────────────────
+//   Controller API (non-CEM) — `meta.parameters.controllerApi`
+// ────────────────────────────
+
+/** One row in the **Constructor options** table (mirrors component **Properties** layout). */
+export type ControllerApiOptionRow = {
+  name: string;
+  type: string;
+  /** Shown in the **Default** column; use `(required)` for mandatory callbacks. */
+  defaultValue?: string;
+  description: string;
+};
+
+/** One public instance method on a Lit reactive controller. */
+export type ControllerApiMethodRow = {
+  name: string;
+  signature: string;
+  returns?: string;
+  description: string;
+};
+
+/** Custom event emitted by the controller (if any). */
+export type ControllerApiEventRow = {
+  name: string;
+  detail?: string;
+  description: string;
+};
+
+/** Module-level export next to the controller class. */
+export type ControllerApiExportRow = {
+  name: string;
+  kind: 'constant' | 'function' | 'type';
+  description: string;
+};
+
+/** Structured API reference for core controllers (Storybook **API** section). */
+export type ControllerApiDocumentation = {
+  /** Optional heading above the first table (for example the class name). */
+  title?: string;
+  options: ControllerApiOptionRow[];
+  methods: ControllerApiMethodRow[];
+  events?: ControllerApiEventRow[];
+  exports?: ControllerApiExportRow[];
+};
+
+function isControllerApiDocumentation(
+  value: unknown
+): value is ControllerApiDocumentation {
+  if (!value || typeof value !== 'object') {
+    return false;
+  }
+  const doc = value as ControllerApiDocumentation;
+  return Array.isArray(doc.options) && Array.isArray(doc.methods);
+}
+
+function ControllerApiTables({ doc }: { doc: ControllerApiDocumentation }) {
+  return (
+    <>
+      {doc.title ? <h3>{doc.title}</h3> : null}
+      <h3>Constructor options</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {doc.options.map((row) => (
+            <tr key={row.name}>
+              <td>
+                <code>{row.name}</code>
+              </td>
+              <td>{row.type ? <code>{row.type}</code> : '—'}</td>
+              <td>
+                {row.defaultValue != null && row.defaultValue !== '' ? (
+                  <code>{row.defaultValue}</code>
+                ) : (
+                  '—'
+                )}
+              </td>
+              <td>{row.description}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h3>Methods</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Signature</th>
+            <th>Returns</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {doc.methods.map((row) => (
+            <tr key={row.name}>
+              <td>
+                <code>{row.name}</code>
+              </td>
+              <td>
+                <code>{row.signature}</code>
+              </td>
+              <td>{row.returns ? <code>{row.returns}</code> : '—'}</td>
+              <td>{row.description}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {doc.events && doc.events.length > 0 ? (
+        <>
+          <h3>Events</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Detail</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {doc.events.map((row) => (
+                <tr key={row.name}>
+                  <td>
+                    <code>{row.name}</code>
+                  </td>
+                  <td>{row.detail ? <code>{row.detail}</code> : '—'}</td>
+                  <td>{row.description}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      ) : null}
+
+      {doc.exports && doc.exports.length > 0 ? (
+        <>
+          <h3>Module exports</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Kind</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {doc.exports.map((row) => (
+                <tr key={row.name}>
+                  <td>
+                    <code>{row.name}</code>
+                  </td>
+                  <td>{row.kind}</td>
+                  <td>{row.description}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      ) : null}
+    </>
+  );
+}
+
+// ────────────────────────────
 //   Sub-tables
 // ────────────────────────────
 
@@ -112,57 +282,55 @@ function PropertiesTable({
   return (
     <>
       <h3>Properties</h3>
-      <div style={scrollStyle}>
-        <table style={tableStyle}>
-          <thead>
-            <tr>
-              <th>Property</th>
-              <th>Attribute</th>
-              <th>Type</th>
-              <th>Default</th>
-              <th style={{ minWidth: 300 }}>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {props.map((prop) => {
-              const attr = attrByField.get(prop.name);
-              const argType = argTypes[prop.name] ?? argTypes[attr?.name ?? ''];
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Attribute</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {props.map((prop) => {
+            const attr = attrByField.get(prop.name);
+            const argType = argTypes[prop.name] ?? argTypes[attr?.name ?? ''];
 
-              // Prefer expanded options from argTypes, fall back to CEM type text.
-              const typeName = argType?.options
-                ? argType.options.map((o) => `'${o}'`).join(' | ')
-                : (prop.type?.text ?? '');
+            // Prefer expanded options from argTypes, fall back to CEM type text.
+            const typeName = argType?.options
+              ? argType.options.map((o) => `'${o}'`).join(' | ')
+              : (prop.type?.text ?? '');
 
-              return (
-                <tr key={prop.name}>
-                  <td>
-                    <code>{prop.name}</code>
-                  </td>
-                  <td>
-                    {attr ? (
-                      <>
-                        <code>{attr.name}</code>
-                        {prop.reflects && (
-                          <small style={{ opacity: '0.8', marginLeft: 4 }}>
-                            (reflects)
-                          </small>
-                        )}
-                      </>
-                    ) : (
-                      '-'
-                    )}
-                  </td>
-                  <td>{typeName && <code>{typeName}</code>}</td>
-                  <td>
-                    {prop.default != null ? <code>{prop.default}</code> : '-'}
-                  </td>
-                  <td>{prop.description ?? ''}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+            return (
+              <tr key={prop.name}>
+                <td>
+                  <code>{prop.name}</code>
+                </td>
+                <td>
+                  {attr ? (
+                    <>
+                      <code>{attr.name}</code>
+                      {prop.reflects && (
+                        <small style={{ opacity: '0.8', marginLeft: 4 }}>
+                          (reflects)
+                        </small>
+                      )}
+                    </>
+                  ) : (
+                    '-'
+                  )}
+                </td>
+                <td>{typeName && <code>{typeName}</code>}</td>
+                <td>
+                  {prop.default != null ? <code>{prop.default}</code> : '-'}
+                </td>
+                <td>{prop.description ?? ''}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </>
   );
 }
@@ -202,26 +370,24 @@ function EventsTable({ events }: { events: CemEvent[] }) {
   return (
     <>
       <h3>Events</h3>
-      <div style={scrollStyle}>
-        <table style={tableStyle}>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Description</th>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {events.map((event) => (
+            <tr key={event.name}>
+              <td>
+                <code>{event.name}</code>
+              </td>
+              <td>{event.description ?? ''}</td>
             </tr>
-          </thead>
-          <tbody>
-            {events.map((event) => (
-              <tr key={event.name}>
-                <td>
-                  <code>{event.name}</code>
-                </td>
-                <td>{event.description ?? ''}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </>
   );
 }
@@ -231,30 +397,28 @@ function CssPropsTable({ cssProps }: { cssProps: CssCustomProperty[] }) {
   return (
     <>
       <h3>CSS Custom Properties</h3>
-      <div style={scrollStyle}>
-        <table style={tableStyle}>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Default</th>
-              <th>Description</th>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {cssProps.map((prop) => (
+            <tr key={prop.name}>
+              <td>
+                <code>{prop.name}</code>
+              </td>
+              <td>
+                {prop.default != null ? <code>{prop.default}</code> : '-'}
+              </td>
+              <td>{prop.description ?? ''}</td>
             </tr>
-          </thead>
-          <tbody>
-            {cssProps.map((prop) => (
-              <tr key={prop.name}>
-                <td>
-                  <code>{prop.name}</code>
-                </td>
-                <td>
-                  {prop.default != null ? <code>{prop.default}</code> : '-'}
-                </td>
-                <td>{prop.description ?? ''}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </>
   );
 }
@@ -264,26 +428,24 @@ function CssPartsTable({ cssParts }: { cssParts: CssPart[] }) {
   return (
     <>
       <h3>CSS Parts</h3>
-      <div style={scrollStyle}>
-        <table style={tableStyle}>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Description</th>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {cssParts.map((part) => (
+            <tr key={part.name}>
+              <td>
+                <code>{part.name}</code>
+              </td>
+              <td>{part.description ?? ''}</td>
             </tr>
-          </thead>
-          <tbody>
-            {cssParts.map((part) => (
-              <tr key={part.name}>
-                <td>
-                  <code>{part.name}</code>
-                </td>
-                <td>{part.description ?? ''}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </>
   );
 }
@@ -293,18 +455,37 @@ function CssPartsTable({ cssParts }: { cssParts: CssPart[] }) {
 // ────────────────────────────
 
 /**
- * Custom API reference tables sourced directly from the Custom Elements
- * Manifest. Renders categorized, read-only tables for Properties, Slots,
- * Events, CSS Custom Properties, and CSS Parts.
+ * Renders API documentation for the active docs page.
+ *
+ * - When **`meta.parameters.controllerApi`** is set (core Lit controllers), renders **Constructor
+ *   options**, **Methods**, **Events**, and **Module exports** tables in the same shape as
+ *   component **Properties** / **Events** tables.
+ * - Otherwise reads the Custom Elements Manifest for **`meta.component`** and renders Properties,
+ *   Slots, Events, CSS custom properties, and CSS parts.
  */
 export function ApiTable() {
   const resolvedOf = useOf('meta', ['meta']);
   const meta = resolvedOf.csfFile?.meta as {
     component?: string;
     argTypes?: Record<string, ArgType>;
+    parameters?: { controllerApi?: unknown };
   };
+  const preparedMeta = resolvedOf.preparedMeta as
+    | {
+        parameters?: { controllerApi?: unknown };
+        argTypes?: Record<string, ArgType>;
+      }
+    | undefined;
+
+  const controllerApiRaw =
+    preparedMeta?.parameters?.controllerApi ?? meta?.parameters?.controllerApi;
+
+  if (isControllerApiDocumentation(controllerApiRaw)) {
+    return <ControllerApiTables doc={controllerApiRaw} />;
+  }
+
   const tagName = meta?.component;
-  const argTypes = resolvedOf.preparedMeta?.argTypes ?? meta?.argTypes ?? {};
+  const argTypes = preparedMeta?.argTypes ?? meta?.argTypes ?? {};
 
   const cem = window.__STORYBOOK_CUSTOM_ELEMENTS_MANIFEST__;
   if (!cem || !tagName) {

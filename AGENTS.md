@@ -7,7 +7,7 @@ Coding agents working in this repository should treat **`.ai/`** as the canonica
 1. **Read** [`.ai/README.md`](./.ai/README.md) for the full list of rules, skills, when they apply, and how to invoke skills.
 2. **Read** all files in [`.ai/memory/`](./.ai/memory/) for accumulated project-specific lessons — non-obvious constraints, tool behaviors, and corrections from previous sessions. Skip this step if the directory does not exist yet.
 3. **Apply** the rules that match the files and tasks you touch (see globs and activation notes in that README).
-4. **Load** a skill when the task matches its purpose: each skill lives under `.ai/skills/<skill-name>/SKILL.md`.
+4. **Load** a skill when the task matches its purpose: each skill lives under `.ai/skills/<skill-name>/SKILL.md`. For **2nd-gen core Lit controllers** (new packages, stories, tests, or docs refactors), use `.ai/skills/controller-development/SKILL.md` as the playbook.
 
 ## Where things live
 

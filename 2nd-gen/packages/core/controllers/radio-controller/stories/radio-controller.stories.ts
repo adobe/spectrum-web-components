@@ -15,110 +15,540 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 
 import './demo-hosts.js';
 
-/**
- * `RadioController` keeps mutually exclusive asserted state (`aria-checked`,
- * [`menuitemradio`](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/), or `aria-expanded`
- * accordion patterns). Item discovery aligns with `{@link FocusgroupNavigationController}` filtering
- * (shadow-inclusive containment, visibility, optional disabled skipping).
- *
- * - **Selecting / deselecting**: supply callbacks that mutate ARIA bookkeeping on sibling elements —
- *   the controller never assumes native `<input type="radio">` wiring.
- * - **Pointers**: captures host `click`, resolves the deepest hit via
- *   `{@link deepestRadioItemContaining}` with the same eligibility list Focusgroup consumes.
- * - **Embedded navigation**: by default nests `{@link FocusgroupNavigationController}` so arrow keys
- *   move roving `tabindex` *and*, when `{@link RadioControllerOptions.selectionFollowsFocus}`
- *   remains true (default), co-selects whichever item earns focus (`Space` activates the focused
- *   entry like the APG rating walkthrough).
- *
- * Dispatches bubbling composed **`swc-radio-controller-selection-change`**
- * (`{@link radioControllerSelectionChange}`) with `{ selectedItem }`, ideal for bridging analytics
- * or higher-level accordion state hosts.
- *
- * @see {@link https://www.w3.org/WAI/ARIA/apg/patterns/radio/examples/radio-rating/ | APG Rating radio group walkthrough}
- * @see {@link https://www.w3.org/WAI/ARIA/apg/patterns/menubar/ | APG menu / menuitemradio semantics}
- * @see {@link https://opensource.adobe.com/spectrum-web-components/components/accordion/#sizes | Spectrum accordion sizing reference}
- */
+// ────────────────
+//    API (Storybook ApiTable — see `meta.parameters.controllerApi`)
+// ────────────────
 
+const RADIO_CONTROLLER_API = {
+  title: 'RadioController',
+  options: [
+    {
+      name: 'getItems',
+      type: '() => HTMLElement[]',
+      defaultValue: '(required)',
+      description:
+        'Returns the current mutually exclusive participants. Items outside the reactive host subtree are ignored.',
+    },
+    {
+      name: 'selectItem',
+      type: '(item: HTMLElement) => void',
+      defaultValue: '(required)',
+      description:
+        'Called when an item becomes the exclusive winner (for example set aria-checked or aria-expanded).',
+    },
+    {
+      name: 'deselectItem',
+      type: '(item: HTMLElement) => void',
+      defaultValue: '(required)',
+      description:
+        'Called for every other scoped item whenever the asserted item changes so losers update DOM or ARIA.',
+    },
+    {
+      name: 'toggles',
+      type: 'boolean | undefined',
+      defaultValue: 'false',
+      description:
+        'When true, setSelectedItem(null) may clear every asserted item (subject to defaultToFirstSelectable), and a primary click or toggleItem on the already-selected item can clear selection.',
+    },
+    {
+      name: 'defaultToFirstSelectable',
+      type: 'boolean | undefined',
+      defaultValue: 'false',
+      description:
+        'When true, refresh selects the first eligible item if nothing is currently asserted.',
+    },
+    {
+      name: 'onSelectionChange',
+      type: '(detail: RadioControllerSelectionChangeDetail) => void',
+      defaultValue: 'undefined',
+      description:
+        'Optional callback with the same payload as the swc-radio-controller-selection-change event.',
+    },
+  ],
+  methods: [
+    {
+      name: 'constructor',
+      signature:
+        'new RadioController(host: ReactiveElement, options: RadioControllerOptions)',
+      returns: 'RadioController',
+      description:
+        'Registers the controller on the Lit host via host.addController(this).',
+    },
+    {
+      name: 'getSelectedItem',
+      signature: 'getSelectedItem()',
+      returns: 'HTMLElement | null',
+      description:
+        'Returns the last asserted exclusive item, or null when none.',
+    },
+    {
+      name: 'setOptions',
+      signature: 'setOptions(partial: Partial<RadioControllerOptions>): void',
+      returns: 'void',
+      description: 'Merges option updates and runs refresh().',
+    },
+    {
+      name: 'setSelectedItem',
+      signature: 'setSelectedItem(candidate: HTMLElement | null): boolean',
+      returns: 'boolean',
+      description:
+        'Asserts candidate or clears to null when toggles is true; returns false when the item is ineligible, disabled, or clearing is not allowed.',
+    },
+    {
+      name: 'toggleItem',
+      signature: 'toggleItem(item: HTMLElement): boolean',
+      returns: 'boolean',
+      description:
+        'Selects item when it is not active. When toggles is true and item is already selected, clears to null if allowed; otherwise returns false.',
+    },
+    {
+      name: 'refresh',
+      signature: 'refresh(): void',
+      returns: 'void',
+      description:
+        'Re-applies selection after DOM or eligibility changes (stale selection, defaultToFirstSelectable, etc.).',
+    },
+    {
+      name: 'hostConnected',
+      signature: 'hostConnected(): void',
+      returns: 'void',
+      description:
+        'Lit ReactiveController: registers capture-phase click on the host and calls refresh().',
+    },
+    {
+      name: 'hostDisconnected',
+      signature: 'hostDisconnected(): void',
+      returns: 'void',
+      description:
+        'Lit ReactiveController: removes the capture-phase click listener.',
+    },
+  ],
+  events: [
+    {
+      name: 'swc-radio-controller-selection-change',
+      detail: '{ selectedItem: HTMLElement | null }',
+      description:
+        'Bubbles and composed; dispatched whenever the tracked exclusive item changes.',
+    },
+  ],
+  exports: [
+    {
+      name: 'radioControllerSelectionChange',
+      kind: 'constant',
+      description:
+        'String event name for swc-radio-controller-selection-change (use with addEventListener).',
+    },
+    {
+      name: 'deepestRadioItemContaining',
+      kind: 'function',
+      description:
+        'Returns the deepest node on event.composedPath() that appears in the supplied items array.',
+    },
+    {
+      name: 'RadioControllerSelectionChangeDetail',
+      kind: 'type',
+      description: 'TypeScript detail shape for the selection change event.',
+    },
+  ],
+} as const;
+
+// ────────────────
+//    METADATA
+// ────────────────
+
+/**
+ * `RadioController` enforces **one asserted sibling at a time** inside your reactive host. You
+ * supply **`getItems`** (who participates) and **`selectItem` / `deselectItem`** (how DOM or ARIA
+ * reflects the winner and the losers). It does **not** wire native `<input type="radio">`; use
+ * it for custom roles (`radio`, `menuitemradio`, accordion headers, and similar).
+ *
+ * @see {@link https://www.w3.org/WAI/ARIA/apg/patterns/radio/examples/radio-rating/ | APG rating radio group}
+ * @see {@link https://www.w3.org/WAI/ARIA/apg/patterns/menubar/ | APG menu / menubar}
+ * @see {@link https://opensource.adobe.com/spectrum-web-components/components/accordion/#sizes | Spectrum accordion}
+ */
 const meta: Meta = {
   title: 'Controllers/Radio controller',
-  tags: ['migrated', 'controller'],
+  component: 'demo-radio-group-rating',
   parameters: {
     docs: {
       subtitle:
-        'Exclusive selection primitives built atop the same sibling discovery rules as Focusgroup navigation.',
+        'Exclusive selection with configurable DOM updates; pointer clicks and toggleItem.',
       canvas: { sourceState: 'none' },
     },
+    controllerApi: RADIO_CONTROLLER_API,
   },
+  tags: ['migrated', 'controller'],
+  render: () => html`
+    <demo-radio-group-rating></demo-radio-group-rating>
+  `,
 };
 
 export default meta;
 
 type Story = StoryObj;
 
-/** Autodocs entry plus Playground scaffold for future knobs. */
+// ──────────────────────────
+//    AUTODOCS STORY
+// ──────────────────────────
 
 export const Playground: Story = {
   tags: ['autodocs', 'dev'],
-  render: () => html`
-    <demo-radio-group-rating></demo-radio-group-rating>
-  `,
 };
 
-/**
- * ## Radiogroup + `radio` bookkeeping
- *
- * Mirrors the structural expectations from the APG **[Rating radio group](https://www.w3.org/WAI/ARIA/apg/patterns/radio/examples/radio-rating/)**
- * demonstration: mutually exclusive `{@link HTMLElement.setAttribute}` calls toggle `aria-checked`
- * (`"true"` / `"false"`) whenever the asserted star shifts.
- */
+// ──────────────────────────
+//    OVERVIEW STORY
+// ──────────────────────────
 
-export const RadioGroupAriaCheckedRating: Story = {
+export const Overview: Story = {
   tags: ['overview'],
-  render: () => html`
-    <demo-radio-group-rating></demo-radio-group-rating>
-  `,
+};
+
+// ──────────────────────────
+//    BASIC USAGE STORY
+// ──────────────────────────
+
+/**
+ * ## Anatomy of a `RadioController`
+ *
+ * The`RadioController` is a contructor with the following parameters:
+ * - `host: ReactiveElement` - the host element
+ * - `options: RadioControllerOptions` - the options for the controller
+ *   - `getItems: () => HTMLElement[]` - the function that returns the current list of `HTMLElement` nodes
+ *   - `selectItem: (item: HTMLElement) => void` - the function that is called when the item is selected
+ *   - `deselectItem: (item: HTMLElement) => void` - the function that is called when the item is deselected
+ *   - `toggles: boolean` - optional: whether the controller allows toggling the item
+ *   - `defaultToFirstSelectable: boolean` - optional: whether the controller should select the first item if no item is selected
+ *   - `onSelectionChange: (detail: RadioControllerSelectionChangeDetail) => void` - optional: the function that is called when the selection changes
+ *
+ * ```typescript
+ * import { RadioController } from '@spectrum-web-components/core/controllers';
+ *
+ * private readonly radios = new RadioController(this, {
+ *   getItems: () => [...],
+ *   selectItem: (el) => { ... },
+ *   deselectItem: (el) => { ... },
+ * });
+ * ```
+ *
+ * ### `getItems`
+ *
+ * Pass a **function** (not a static array) that returns the current list of `HTMLElement` nodes
+ * that should behave as one mutually exclusive set — for example every `button[role="radio"]`
+ * inside `this.renderRoot`.
+ *
+ * **Rules the controller applies:**
+ *
+ * - Only nodes **inside the reactive host’s subtree** count (light DOM children and shadow
+ *   descendants; nodes outside the host are ignored).
+ * - Disconnected, `[inert]`, `hidden`, or `display: none` / `visibility: hidden` items are
+ *   skipped for interaction.
+ * - Native **`disabled`** and **`aria-disabled="true"`** are never eligible; primary clicks on
+ *   them do not change selection, and **`setSelectedItem`** returns **`false`** for them.
+ *
+ * **When to refresh:** after the shadow tree exists and whenever the list of controls changes,
+ * call **`radios.refresh()`** — typically from `firstUpdated` and from `updated` when your
+ * template or slot content changes which elements exist.
+ *
+ * ```typescript
+ * protected override firstUpdated(): void {
+ *   this.radios.refresh();
+ * }
+ *
+ * // Also call `this.radios.refresh()` from `updated()` when slots, repeats, or props change
+ * // which items exist or their order — any time `getItems()` would return a different array.
+ * ```
+ *
+ * ### `selectItem` and `deselectItem`
+ *
+ * Whenever the asserted item changes, the controller walks **every** currently scoped raw item
+ * from `getItems` (after host filtering) and:
+ *
+ * - calls **`selectItem`** once on the **new** exclusive item, and
+ * - calls **`deselectItem`** on **each** other item in that same raw list.
+ *
+ * Your callbacks should only update **that element** — for example set or remove attributes,
+ * toggle classes, or sync related nodes (such as a sibling panel’s `[hidden]` flag) based on
+ * `element.dataset` or `element.id`.
+ *
+ * **Typical `aria-checked` radios / menu radios:**
+ *
+ * ```typescript
+ * selectItem: (item) => item.setAttribute('aria-checked', 'true'),
+ * deselectItem: (item) => item.setAttribute('aria-checked', 'false'),
+ * ```
+ *
+ * The controller does **not** interpret `aria-checked` or `aria-expanded` to infer selection; it
+ * only drives your callbacks. Keep visual state and ARIA in sync inside those two functions.
+ */
+export const Usage: Story = {
+  tags: ['usage', 'description-only'],
+  parameters: { 'section-order': 0 },
 };
 
 /**
- * ## `menubar` + `menuitemradio`
+ * ## Examples
+ * ### Selection with `aria-expanded` and opening a panel
  *
- * The APG **[Menu and menubar](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/)** pattern calls for
- * `role="menuitemradio"` siblings with mirrored `aria-checked` strings. Embedding **vertical**
- * `{@link FocusgroupNavigationController}` matches column menus where **ArrowUp / ArrowDown** walk
- * the linearized option list.
- */
-
-export const MenuMenubarAriaCheckedVertical: Story = {
-  render: () => html`
-    <demo-radio-menu-item-radio></demo-radio-menu-item-radio>
-  `,
-};
-
-/**
- * ## Accordion-style `aria-expanded`
+ * **Accordion-style headers** (one expanded section): treat “selected” as expanded and the rest
+ * as collapsed — often `selectItem` sets `aria-expanded="true"` and shows a panel, while
+ * `deselectItem` sets `aria-expanded="false"` and hides the matching region. Accordion headers
+ * typically use **`RadioController` alone** (pointer + `setSelectedItem` only).
  *
- * Passing `{@link RadioControllerOptions.navigation}: false` keeps arrow semantics off the accordion
- * headers themselves (panels still rely on authored buttons). Selecting callbacks instead flip `aria-expanded`
- * and synchronize panel `[hidden]` flags, analogous to Spectrum Web Components accordion sizing demos
- * ([reference](https://opensource.adobe.com/spectrum-web-components/components/accordion/#sizes)).
+ * ```typescript
+ * this.accordionRadio = new RadioController(this, {
+ *   getItems: () =>
+ *     Array.from(
+ *       this.renderRoot.querySelectorAll<HTMLButtonElement>('[data-accordion]')
+ *     ),
+ *   selectItem: (header) => {
+ *     header.setAttribute('aria-expanded', 'true');
+ *     this.togglePanel(header.dataset.accordion!, true);
+ *   },
+ *   deselectItem: (header) => {
+ *     header.setAttribute('aria-expanded', 'false');
+ *     this.togglePanel(header.dataset.accordion!, false);
+ *   },
+ * });
+ * ```
  */
-
-export const AccordionExpandedExclusive: Story = {
+export const UsageExampleSelectionWithAriaExpanded: Story = {
+  name: 'Example: selection with `aria-expanded` and opening a panel',
+  tags: ['usage'],
+  parameters: { 'section-order': 1 },
   render: () => html`
     <demo-radio-accordion-exclusive></demo-radio-accordion-exclusive>
   `,
 };
 
 /**
- * ## Programmatic assertions
+ * ### Selection with `aria-checked`
  *
- * Host applications can steer exclusive state without synthesized clicks via
- * `{@link RadioController.setSelectedItem}`. Passing `{ focus: true }` mirrors authoring guidance
- * for restoring focus predictably inside composite widgets immediately after scripted selection.
+ * `role="menuitemradio"` siblings with mirrored `aria-checked`, aligned with the APG
+ * **[Menu and menubar](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/)** pattern.
+ *
+ * ```typescript
+ * this.radios = new RadioController(this, {
+ *   getItems: () =>
+ *     Array.from(
+ *       this.renderRoot.querySelectorAll<HTMLButtonElement>('[data-alignment]')
+ *     ),
+ *   selectItem: (item) => item.setAttribute('aria-checked', 'true'),
+ *   deselectItem: (item) => item.setAttribute('aria-checked', 'false'),
+ *   defaultToFirstSelectable: true,
+ * });
+ * ```
  */
-
-export const ProgrammaticSetSelectedFocus: Story = {
+export const UsageExampleSelectionWithAriaChecked: Story = {
+  name: 'Example: selection with `aria-checked`',
+  tags: ['usage'],
+  parameters: { 'section-order': 2 },
   render: () => html`
-    <demo-radio-programmatic-selection></demo-radio-programmatic-selection>
+    <demo-radio-menu-item-radio></demo-radio-menu-item-radio>
   `,
+};
+
+/**
+ * ### Toggling to deselect
+ *
+ * Set **`toggles: true`** so **`setSelectedItem(null)`** or a primary click on the already-expanded
+ * heading can clear the asserted heading and every panel can close. With **`toggles: false`**, the
+ * controller keeps an asserted item whenever the roster is non-empty.
+ *
+ * ```typescript
+ * this.accordionRadio = new RadioController(this, {
+ *   getItems: () =>
+ *     Array.from(
+ *       this.renderRoot.querySelectorAll<HTMLButtonElement>('[data-accordion-heading]')
+ *     ),
+ *   selectItem: (header) => {
+ *     header.setAttribute('aria-expanded', 'true');
+ *     this.togglePanel(header.dataset.accordion!, true);
+ *   },
+ *   deselectItem: (header) => {
+ *     header.setAttribute('aria-expanded', 'false');
+ *     this.togglePanel(header.dataset.accordion!, false);
+ *   },
+ *   toggles: true,
+ * });
+ * ```
+ */
+export const UsageExampleTogglingToDeselect: Story = {
+  name: 'Example: toggling to deselect',
+  tags: ['usage'],
+  parameters: { 'section-order': 3 },
+  render: () => html`
+    <demo-radio-accordion-multiple></demo-radio-accordion-multiple>
+  `,
+};
+
+// ──────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────
+export const AccordionExpandedExclusive: Story = {
+  name: 'Setting `aria-expanded` and opening a panel on an accordion',
+  render: () => html`
+    <demo-radio-accordion-exclusive></demo-radio-accordion-exclusive>
+  `,
+  tags: ['behaviors'],
+  parameters: {
+    'section-order': 1,
+    docs: {
+      disable: true,
+    },
+  },
+};
+export const AccordionMultipleSectionsAriaExpandedHidden: Story = {
+  render: () => html`
+    <demo-radio-accordion-multiple></demo-radio-accordion-multiple>
+  `,
+  tags: ['behaviors'],
+  parameters: {
+    'section-order': 2,
+    docs: {
+      disable: true,
+    },
+  },
+};
+
+/**
+ * Five-star rating illustrating **`defaultToFirstSelectable`** only (no **`onSelectionChange`**).
+ * Rendered under **Setting default selection** on the docs page (no **`dev`** tag, so it stays out
+ * of the Storybook sidebar).
+ *
+ * ```typescript
+ * this.radios = new RadioController(this, {
+ *   getItems: () =>
+ *     Array.from(
+ *       this.renderRoot.querySelectorAll<HTMLButtonElement>(
+ *         '[data-rating-star-default-first]'
+ *       )
+ *     ),
+ *   selectItem: (star) => star.setAttribute('aria-checked', 'true'),
+ *   deselectItem: (star) => star.setAttribute('aria-checked', 'false'),
+ *   defaultToFirstSelectable: true,
+ *   toggles: false,
+ * });
+ * ```
+ */
+export const RatingDefaultFirstSelectable: Story = {
+  name: 'Rating: defaultToFirstSelectable',
+  render: () => html`
+    <demo-radio-rating-default-first></demo-radio-rating-default-first>
+  `,
+  tags: ['setting-default-selection'],
+  parameters: { 'section-order': 0 },
+};
+
+/**
+ * Same layout, illustrating **`onSelectionChange`** with **`window.alert`** (and **`toggles`** so
+ * the active star can be cleared). Rendered under **Responding to selection change** on the docs
+ * page (no **`dev`** tag, so it stays out of the Storybook sidebar).
+ *
+ * ```typescript
+ * this.radios = new RadioController(this, {
+ *   getItems: () =>
+ *     Array.from(
+ *       this.renderRoot.querySelectorAll<HTMLButtonElement>(
+ *         '[data-rating-star-on-change]'
+ *       )
+ *     ),
+ *   selectItem: (star) => star.setAttribute('aria-checked', 'true'),
+ *   deselectItem: (star) => star.setAttribute('aria-checked', 'false'),
+ *   defaultToFirstSelectable: false,
+ *   toggles: true,
+ *   onSelectionChange: ({ selectedItem }) => {
+ *     const label =
+ *       selectedItem?.getAttribute('aria-label') ?? 'No star selected';
+ *     window.alert(`Rating selection: ${label}`);
+ *   },
+ * });
+ * ```
+ */
+export const RatingOnSelectionChangeAlert: Story = {
+  name: 'Rating: onSelectionChange (alert)',
+  render: () => html`
+    <demo-radio-rating-on-selection-change-alert></demo-radio-rating-on-selection-change-alert>
+  `,
+  tags: ['responding-to-selection-change'],
+  parameters: { 'section-order': 0 },
+};
+
+/**
+ * ### Methods
+ *
+ * | Member | Description |
+ * |---|---|
+ * | `setOptions(partial)` | Merge new options and reapply selection. |
+ * | `refresh()` | Re-query items and reassert selection (call after DOM changes). |
+ * | `getSelectedItem()` | Returns the asserted item, if any. |
+ * | `setSelectedItem(element \| null)` | Assert exclusive item or clear when allowed; returns `false` if ineligible. |
+ * | `toggleItem(element)` | Select or clear when `toggles` allows clearing the active item. |
+ *
+ * ### Events
+ *
+ * The controller dispatches **`swc-radio-controller-selection-change`**
+ * (`radioControllerSelectionChange`) on the host with `detail: { selectedItem }` when the
+ * asserted item changes. The event bubbles and is composed.
+ *
+ * ```typescript
+ * import { radioControllerSelectionChange } from
+ *   '@spectrum-web-components/core/controllers/radio-controller.js';
+ *
+ * host.addEventListener(radioControllerSelectionChange, (event) => {
+ *   console.log('Selected:', event.detail.selectedItem);
+ * });
+ * ```
+ *
+ * ### Options
+ *
+ * | Option | Type | Default | Description |
+ * |---|---|---|---|
+ * | `getItems` | `() => HTMLElement[]` | (required) | Current exclusive participants. |
+ * | `selectItem` | `(item: HTMLElement) => void` | (required) | Called on the new asserted item. |
+ * | `deselectItem` | `(item: HTMLElement) => void` | (required) | Called on every other scoped item. |
+ * | `toggles` | `boolean` | `false` | When true, allow clearing to no asserted item (`setSelectedItem(null)`, click or `toggleItem` on the active item). |
+ * | `defaultToFirstSelectable` | `boolean` | `false` | When true, `refresh` may select the first eligible item if none asserted. |
+ * | `onSelectionChange` | `(detail) => void` | — | Callback when selection changes. |
+ *
+ * See the **API** table above for the full machine-readable contract.
+ */
+export const API: Story = {
+  tags: ['api', 'description-only'],
+};
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+/**
+ * ### Pointer and eligibility
+ *
+ * **`RadioController`** resolves primary clicks with **`deepestRadioItemContaining`**. Disabled
+ * and **`aria-disabled="true"`** items are never asserted and do not receive selection changes from
+ * pointer interaction.
+ *
+ * ### Keyboard and focus
+ *
+ * The controller does **not** implement roving **`tabindex`** or arrow-key navigation. Pair it
+ * with **`FocusgroupNavigationController`** when your pattern needs APG-style keyboard movement
+ * inside the same host.
+ *
+ * ### ARIA
+ *
+ * Keep `aria-checked`, `aria-expanded`, and related attributes in sync inside your
+ * **`selectItem`** / **`deselectItem`** callbacks; the controller does not infer state from the DOM.
+ */
+export const Accessibility: Story = {
+  tags: ['a11y', 'description-only'],
+};
+
+/**
+ * ### See also
+ *
+ * - [APG rating radio group](https://www.w3.org/WAI/ARIA/apg/patterns/radio/examples/radio-rating/)
+ * - [APG menu / menubar](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/)
+ * - [Spectrum accordion](https://opensource.adobe.com/spectrum-web-components/components/accordion/#sizes)
+ */
+export const Appendix: Story = {
+  tags: ['description-only', 'appendix'],
 };

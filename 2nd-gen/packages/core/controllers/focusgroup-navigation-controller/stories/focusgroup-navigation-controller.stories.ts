@@ -18,6 +18,147 @@ import './demo-hosts.js';
 import type { FocusgroupDirection } from '../index.js';
 
 // ────────────────
+//    API (Storybook ApiTable — see `meta.parameters.controllerApi`)
+// ────────────────
+
+const FOCUSGROUP_CONTROLLER_API = {
+  title: 'FocusgroupNavigationController',
+  options: [
+    {
+      name: 'getItems',
+      type: '() => HTMLElement[]',
+      defaultValue: '(required)',
+      description:
+        'Returns the current items that participate in roving tabindex and directional navigation.',
+    },
+    {
+      name: 'direction',
+      type: "'horizontal' | 'vertical' | 'both' | 'grid'",
+      defaultValue: '(required)',
+      description:
+        'Which arrow axes apply; both maps horizontal and vertical arrows to the same getItems() order; grid uses bounding-rect rows.',
+    },
+    {
+      name: 'wrap',
+      type: 'boolean | undefined',
+      defaultValue: 'false',
+      description:
+        'When true, arrow keys wrap from last item to first and reverse.',
+    },
+    {
+      name: 'memory',
+      type: 'boolean | undefined',
+      defaultValue: 'true',
+      description:
+        'When true, Tab re-entry prefers the last focused item if it is still in the group.',
+    },
+    {
+      name: 'skipDisabled',
+      type: 'boolean | undefined',
+      defaultValue: 'false',
+      description:
+        'When true, skips disabled and aria-disabled items for arrows and roving tabindex.',
+    },
+    {
+      name: 'onActiveItemChange',
+      type: '(active: HTMLElement | null) => void',
+      defaultValue: 'undefined',
+      description:
+        'Optional callback after the active item (tabindex 0) changes.',
+    },
+    {
+      name: 'pageStep',
+      type: 'number | undefined',
+      defaultValue: '0',
+      description:
+        'Non-zero magnitude enables Page Up/Page Down stepping by that many items (linear modes) or rows (grid).',
+    },
+  ],
+  methods: [
+    {
+      name: 'constructor',
+      signature:
+        'new FocusgroupNavigationController(host: ReactiveElement, options: FocusgroupNavigationOptions)',
+      returns: 'FocusgroupNavigationController',
+      description: 'Registers the controller on the Lit host.',
+    },
+    {
+      name: 'setOptions',
+      signature:
+        'setOptions(partial: Partial<FocusgroupNavigationOptions>): void',
+      returns: 'void',
+      description: 'Merges partial options and runs refresh().',
+    },
+    {
+      name: 'getActiveItem',
+      signature: 'getActiveItem()',
+      returns: 'HTMLElement | null',
+      description: 'Returns the item with tabindex 0, or null.',
+    },
+    {
+      name: 'refresh',
+      signature: 'refresh(): void',
+      returns: 'void',
+      description:
+        'Re-queries getItems(), recomputes eligibility, and syncs roving tabindex (and optional memory).',
+    },
+    {
+      name: 'setActiveItem',
+      signature: 'setActiveItem(item: HTMLElement): boolean',
+      returns: 'boolean',
+      description:
+        'Sets item to tabindex 0 without calling focus(); returns false if item is not eligible.',
+    },
+    {
+      name: 'focusFirstItemByTextPrefix',
+      signature: 'focusFirstItemByTextPrefix(prefix: string): boolean',
+      returns: 'boolean',
+      description:
+        'Typeahead-style roving tabindex for the first eligible label starting with prefix (case-insensitive); does not focus().',
+    },
+    {
+      name: 'hostConnected',
+      signature: 'hostConnected(): void',
+      returns: 'void',
+      description:
+        'Lit ReactiveController: registers keydown/focusin/focusout listeners and runs refresh().',
+    },
+    {
+      name: 'hostDisconnected',
+      signature: 'hostDisconnected(): void',
+      returns: 'void',
+      description:
+        'Lit ReactiveController: removes listeners registered in hostConnected.',
+    },
+  ],
+  events: [
+    {
+      name: 'swc-focusgroup-navigation-active-change',
+      detail: '{ activeElement: HTMLElement | null }',
+      description:
+        'Bubbles and composed; dispatched when the roving tabindex active item changes.',
+    },
+  ],
+  exports: [
+    {
+      name: 'focusgroupNavigationActiveChange',
+      kind: 'constant',
+      description: 'Event name string for the active-change event.',
+    },
+    {
+      name: 'FocusgroupNavigationActiveChangeDetail',
+      kind: 'type',
+      description: 'TypeScript detail shape for the active-change event.',
+    },
+    {
+      name: 'FocusgroupDirection',
+      kind: 'type',
+      description: 'Union of supported spatial modes for the direction option.',
+    },
+  ],
+} as const;
+
+// ────────────────
 //    METADATA
 // ────────────────
 
@@ -89,6 +230,7 @@ const meta: Meta = {
         'Roving tabindex and directional keys for composite widgets (APG-aligned, focusgroup-like).',
       canvas: { sourceState: 'none' },
     },
+    controllerApi: FOCUSGROUP_CONTROLLER_API,
   },
   tags: ['migrated', 'controller'],
 };
