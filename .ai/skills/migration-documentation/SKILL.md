@@ -42,6 +42,9 @@ Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[
 1. Add JSDoc comments to every story (except Playground and Overview, which have none by convention).
 2. Complete the Accessibility story body — it was left as a `// TODO` comment in Phase 4.
 3. Add any stories that were deferred or were not CSS-visible enough to include in Phase 4.
+4. For each item in the migration plan's Additive table:
+   - If the feature is implemented and has no story yet, add it as a normal story in the relevant section (Options, Behaviors, etc.).
+   - If the feature is not yet implemented, add it to an `UpcomingFeatures` story (tag: `['upcoming', 'description-only']`). Write from a consumer's perspective — what the feature does for them, not how it's built.
 
 If the stories document already exists, do **not** recreate the file from scratch. Augment what is already there.
 

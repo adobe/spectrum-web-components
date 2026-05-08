@@ -280,7 +280,7 @@ For heading semantics, WCAG outline behavior, and the 2nd-gen API (`heading-leve
 | `.spectrum-IllustratedMessage-heading`      | `heading` attribute/slot     | Implemented                  |
 | `.spectrum-IllustratedMessage-description`  | `description` attribute/slot | Implemented                  |
 | `.spectrum-IllustratedMessage-content`      | Content container            | Missing from WC (new for S2) |
-| `.spectrum-IllustratedMessage-actions`      | Actions container            | Missing from WC (new for S2) |
+| `.spectrum-IllustratedMessage-actions`      | `button-group` slot          | Missing from WC (new for S2) |
 
 ## Summary of changes
 

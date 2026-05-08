@@ -299,13 +299,58 @@ Follow team **TypeScript conventions (Ticket 7)** for naming and structure; use 
 
 - When `window.__swc?.DEBUG` is enabled, warn on invalid API combinations (e.g. incompatible variant + outline) so developers catch mistakes without affecting production. See `Badge.base.ts` (`update()` and `window.__swc.warn(...)` with structured issue metadata).
 
-**Deprecating 1st-gen type and const exports**
+**Deprecating 1st-gen APIs during migration**
 
-While 1st-gen does not import from 2nd-gen core, we still want to guide 1st-gen consumers toward patterns that will ease their eventual migration to 2nd-gen:
+When the 2nd-gen API diverges from 1st-gen — a renamed attribute, a removed prop, a replaced export — mark the 1st-gen surface as deprecated so consumers have a clear migration path before 1st-gen is retired.
 
-- Prefer **statics on the custom element class** over package-level exports for variant lists and related constants (`Component.VARIANTS`, etc.).
-- For **types**, deprecate standalone type exports from 1st-gen packages and document migration to inference from the element (e.g. `typeof Badge.prototype.variant`, `typeof Badge.FIXED_VALUES`) — see `@deprecated` JSDoc on exports in `1st-gen/packages/badge/src/Badge.ts`.
-- Use `window.__swc.warn()` in 1st-gen to surface deprecation notices at dev time when deprecated APIs are used.
+Convention: **all 1st-gen deprecations introduced as part of a 2nd-gen migration must surface a runtime notice through the swc warn system** (`window.__swc.warn()` with `level: 'deprecation'`). A `@deprecated` JSDoc tag alone is not enough — types and IDE tooling pick it up, but consumers building against compiled output won't see it. The warn system fires once per element/type/level in dev mode, is silent in production, and routes through the existing `ignoreWarning*` filters so consumers can opt out.
+
+Apply this to:
+
+- **Renamed or replaced attributes/properties** — fire the warning from the setter when the deprecated value is assigned.
+- **Type and const exports** — prefer statics on the custom element class (`Component.VARIANTS`, etc.) over package-level exports; deprecate the standalone exports and document migration to inference from the element (e.g. `typeof Badge.prototype.variant`, `typeof Badge.FIXED_VALUES`). See `@deprecated` JSDoc on exports in `1st-gen/packages/badge/src/Badge.ts`.
+- **Removed APIs** — warn from the getter/setter or method body (e.g. `update()`, `connectedCallback()`, or other instance methods) before falling back to the new behavior.
+
+**Example: `over-background` → `static-color="white"` on `sp-progress-bar`**
+
+`1st-gen/packages/progress-bar/src/ProgressBar.ts`:
+
+```ts
+/**
+ * @deprecated Use "static-color='white'" instead.
+ */
+@property({ type: Boolean, attribute: 'over-background' })
+public get overBackground(): boolean {
+    return this._overBackground ? true : false;
+}
+
+public set overBackground(overBackground: boolean) {
+    if (overBackground === true) {
+        this.removeAttribute('over-background');
+        this.staticColor = 'white';
+
+        if (window.__swc?.DEBUG) {
+            window.__swc.warn(
+                this,
+                `The "over-background" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static-color='white'" instead.`,
+                'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/#variants',
+                {
+                    level: 'deprecation',
+                }
+            );
+        }
+    }
+}
+```
+
+Notes on the pattern:
+
+- `@deprecated` JSDoc on the property documents the deprecation for IDEs and the CEM.
+- The setter forwards to the new API (`this.staticColor = 'white'`) so behavior is preserved.
+- The warn is gated on `window.__swc?.DEBUG` so production bundles are unaffected.
+- The message names the element (`<${this.localName}>`), states what is deprecated, and points at the replacement.
+- The URL links to the component docs section that describes the new API.
+- `level: 'deprecation'` sorts the warning under the deprecation channel and lets consumers silence the whole class via `window.__swc.ignoreWarningLevels.deprecation = true`.
 
 ### What to check
 

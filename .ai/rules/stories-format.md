@@ -267,6 +267,11 @@ export const StaticColors: Story = {
 | `'a11y'`              | Accessibility story                           |
 | `'migrated'`          | On meta object                                |
 
+### Optional tags
+
+- `'description-only'` - Story contains only descriptive content (no interactive component rendered)
+- `'upcoming'` - Story demonstrates a feature or variant that is not yet available
+
 ### Exclusion tags
 
 - `'!dev'` - Exclude from the development Storybook sidebar without affecting tests
