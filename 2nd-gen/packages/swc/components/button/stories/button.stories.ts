@@ -539,3 +539,21 @@ export const Accessibility: Story = {
   tags: ['a11y'],
   parameters: { flexLayout: 'row-wrap' },
 };
+
+// ────────────────────────────────────
+//    UPCOMING FEATURES STORIES
+// ────────────────────────────────────
+
+/**
+ * The following features are planned for future releases:
+ *
+ * - **Form submission** (`type="submit"` / `type="reset"`): Native form participation.
+ *   Until then, use a native `<button type="submit">` with
+ *   [global button styles](/docs/guides-customization-global-element-styling--readme).
+ * - **`genai` variant**: For generative AI actions.
+ * - **`premium` variant**: For premium or upgrade flows.
+ */
+export const UpcomingFeatures: Story = {
+  tags: ['upcoming', 'description-only'],
+};
+UpcomingFeatures.storyName = 'Upcoming features';
