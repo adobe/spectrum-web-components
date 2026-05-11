@@ -49,7 +49,8 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
-      subtitle: 'Prompt entry surface for conversational AI flows.',
+      subtitle:
+        'Prompt entry surface for conversational AI flows. Populate attachments by slotting one or more swc-upload-artifact nodes into artifact',
     },
     layout: 'padded',
   },
@@ -190,60 +191,30 @@ export const Modes: Story = {
  * Artifact layout is inferred from the **`artifact`** slot content and supports multiple mixed items:
  *
  * - No slot content: no artifact region
- * - `swc-upload-artifact type="card"`: file-style card artifact
- * - `swc-upload-artifact type="media"`: media tile artifact
+ * - **`swc-upload-artifact type="card"`** — file-style card artifact
+ * - **`swc-upload-artifact type="media"`** — media tile artifact
+ *
+ * **Populate the attachment strip** by slotting **one `<swc-upload-artifact>` per file**, each with
+ * **`slot="artifact"`** (same slot name repeated). Mixed card + media entries wrap inside the composer like this story’s first example.
+ *
+ * For additional combinations (narrow widths, ellipsis, more tiles), see **[Multi-artifact](/docs/patterns-conversational-ai-upload-artifact--readme#multi-artifact)**.
  *
  * Upload button behavior:
  *
- * - Emits cancelable `swc-prompt-field-upload-click`; consumers own picker behavior
- * - Consumers can provide files via slotted artifacts and own file selection flow externally
+ * - Emits cancelable **`swc-prompt-field-upload-click`**; consumers own picker behavior
+ * - Consumers provide artifacts by slotting; file selection stays in app code
  *
- * Artifacts own dismiss behavior via `dismissible` and emit `swc-upload-artifact-dismiss`.
+ * Artifacts own dismiss behavior via **`dismissible`** and emit **`swc-upload-artifact-dismiss`**.
  */
 export const Artifact: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          label="Prompt"
-          placeholder=${defaultPlaceholder}
-        ></swc-prompt-field>
-        <span class="swc-Detail swc-Detail--sizeS">
-          None
-        </span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
-          <swc-upload-artifact slot="artifact" type="card" dismissible>
-            <div
-              slot="thumbnail"
-              style="background:var(--swc-gray-200);"
-              role="img"
-              aria-label="PDF"
-            ></div>
-            <span slot="title">Hilton commercial assets</span>
-            <span slot="subtitle">2026</span>
-          </swc-upload-artifact>
-        </swc-prompt-field>
-        <span class="swc-Detail swc-Detail--sizeS">
-          Card
-        </span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
-          <swc-upload-artifact slot="artifact" type="media" dismissible>
-            <img
-              slot="thumbnail"
-              src="https://placehold.co/160x120/png"
-              alt="Attachment preview"
-              style="inline-size:100%;block-size:100%;min-block-size:0;object-fit:cover;"
-            />
-          </swc-upload-artifact>
-        </swc-prompt-field>
-        <span class="swc-Detail swc-Detail--sizeS">
-          Media
-        </span>
-      </div>
+      <p class="swc-Detail swc-Detail--sizeS" style="margin:0;max-inline-size:720px;">
+        <strong>artifact</strong> — Slot multiple
+        <code>&lt;swc-upload-artifact slot="artifact"&gt;</code> nodes; the field lays them out in a wrapping row
+        above the textarea. More variants:
+        <strong>Multi-artifacts</strong>.
+      </p>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
           label="Prompt"
@@ -277,7 +248,48 @@ export const Artifact: Story = {
           </swc-upload-artifact>
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
-          Mixed multi-artifact set (wrapping layout)
+          Mixed multi-artifact (card + media, wrapping strip)
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          label="Prompt"
+          placeholder=${defaultPlaceholder}
+        ></swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          None
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
+          <swc-upload-artifact slot="artifact" type="card" dismissible>
+            <div
+              slot="thumbnail"
+              style="background:var(--swc-gray-200);"
+              role="img"
+              aria-label="PDF"
+            ></div>
+            <span slot="title">Hilton commercial assets</span>
+            <span slot="subtitle">2026</span>
+          </swc-upload-artifact>
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          Single card
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
+          <swc-upload-artifact slot="artifact" type="media" dismissible>
+            <img
+              slot="thumbnail"
+              src="https://placehold.co/160x120/png"
+              alt="Attachment preview"
+              style="inline-size:100%;block-size:100%;min-block-size:0;object-fit:cover;"
+            />
+          </swc-upload-artifact>
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          Single media
         </span>
       </div>
     </div>

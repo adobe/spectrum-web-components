@@ -31,6 +31,7 @@ argTypes.type = {
 /**
  * Shared upload artifact primitive used across conversational AI surfaces such as prompt field and user message.
  * Supports both **`card`** and **`media`** types with a unified slot model.
+ * For several attachments at once, see **Multi-artifact** and **[Prompt field → Artifact](/docs/patterns-conversational-ai-prompt-field--readme#artifact)**.
  */
 const meta: Meta = {
   title: 'Conversational AI/Upload artifact',
@@ -41,7 +42,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       subtitle:
-        'Shared upload artifact primitive with card and media types, plus optional dismiss and trailing actions.',
+        'Card and media tiles for attachments; combine multiple in a strip (see Multi-artifact gallery) or slot them into the prompt field artifact region.',
     },
     layout: 'padded',
   },
@@ -94,6 +95,64 @@ export const Overview: Story = {
     'subtitle-slot': '<span slot="subtitle">2026</span>',
   },
   tags: ['overview'],
+};
+
+/**
+ * Multiple **`swc-upload-artifact`** nodes in a wrapping flex row—similar width to the prompt-field composer attachment strip—so card vs media spacing and wraps are easy to compare in isolation.
+ *
+ * To see the same tiles inside **`swc-prompt-field`**, open **[Artifact](/docs/paatterns-conversational-ai-prompt-field--readme#artifact)**.
+ */
+export const MultiArtifact: Story = {
+  render: () => html`
+    <div style="display:flex;flex-direction:column;gap:16px;max-inline-size:720px;">
+      <p class="swc-Detail swc-Detail--sizeS" style="margin:0;">
+        Mirrors the prompt-field Attachment strip: cards and media tiles together, plus an extra card to
+        stress-test wrapping at narrow widths.
+      </p>
+      <div
+        style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;"
+      >
+        <swc-upload-artifact type="card" dismissible>
+          <div
+            slot="thumbnail"
+            style="background:var(--swc-gray-200);"
+            role="img"
+            aria-label="PDF"
+          ></div>
+          <span slot="title">Brand guidelines</span>
+          <span slot="subtitle">PDF</span>
+        </swc-upload-artifact>
+        <swc-upload-artifact type="media" dismissible>
+          <div
+            slot="thumbnail"
+            style="inline-size:100%;block-size:100%;min-block-size:120px;background:linear-gradient(135deg,#6366f1,#ec4899);"
+            role="img"
+            aria-label="Campaign still"
+          ></div>
+        </swc-upload-artifact>
+        <swc-upload-artifact type="media" dismissible>
+          <div
+            slot="thumbnail"
+            style="inline-size:100%;block-size:100%;min-block-size:120px;background:linear-gradient(135deg,#0ea5e9,#22c55e);"
+            role="img"
+            aria-label="Storyboard frame"
+          ></div>
+        </swc-upload-artifact>
+        <swc-upload-artifact type="card" dismissible>
+          <div
+            slot="thumbnail"
+            style="background:var(--swc-gray-200);"
+            role="img"
+            aria-label="Spreadsheet"
+          ></div>
+          <span slot="title">Q2 metrics draft</span>
+          <span slot="subtitle">XLSX</span>
+        </swc-upload-artifact>
+      </div>
+    </div>
+  `,
+  parameters: { 'section-order': 1 },
+  tags: ['options'],
 };
 
 /**
