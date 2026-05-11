@@ -87,7 +87,7 @@ Figma defaults shown in the property table include **Quiet = False** for the acc
 | **State** | **Open** (and interactive states shown in grids — **Hover**, **Down**, **Disabled**) |
 | **Quiet** | Boolean — aligns with accordion “quiet” visual family |
 | **Density** | **Compact**, **Regular**, **Spacious** — “change density” between items |
-| **Show paddings** | Toggle — show/hide padding guides |
+| **Show paddings** | Toggle — show/hide padding guides (design-tool only; corresponds to **no inline padding** style in Spectrum CSS — **not** a public SWC prop) |
 | **Show direct actions** | Toggle — show/hide **direct actions** region (optional chrome next to title) |
 | **Show switch** | Toggle — show/hide **switch** in the header row |
 | **Show action button** | Toggle — show/hide **action button** |
@@ -96,7 +96,9 @@ Figma defaults shown in the property table include **Quiet = False** for the acc
 
 **Migration implication:** Optional header affordances (**direct actions**, **switch**, **action button**) match the direction of richer headers in React Spectrum S2 (**`AccordionItemHeader`**, action controls). 1st-gen SWC uses a single header label + chevron only; **2nd-gen** may need **named slots** or internal structure once S2 template and a11y review land (see [migration plan](./migration-plan.md) and [accessibility analysis](./accessibility-migration-analysis.md)).
 
-**Density note:** Figma places **Density** on the **item** component with three steps (**Compact** / **Regular** / **Spacious**). 1st-gen reflects **`density`** on **`sp-accordion`** only (`compact` \| `spacious` \| unset). Reconcile host vs item during Step 1 when comparing `metadata.json` to this file — [migration plan — `density`](./migration-plan.md#public-api) already flags **`regular`** naming.
+**Density note:** Figma places **Density** on the **item** component with three steps (**Compact** / **Regular** / **Spacious**). 1st-gen reflects **`density`** on **`sp-accordion`** only (`compact` \| `spacious` \| unset). Reconcile host vs item during Step 1 when comparing `metadata.json` to this file — [migration plan — `density`](./migration-plan.md#public-api) defines reflected **`regular`** and full typing parity with React Spectrum.
+
+**Show paddings:** Treat as documentation and **CSS custom-property** coverage only ([migration plan](./migration-plan.md) — spacing overrides + a dedicated Storybook story, **no** component attribute).
 
 </details>
 
@@ -152,8 +154,8 @@ This reinforces **accordion-wide `quiet`** (and consistent items) as the primary
 <details>
 <summary>Nested components / assets</summary>
 
-- `sp-icon-chevron100` from `@spectrum-web-components/icons-ui`
-- Chevron styles from `@spectrum-web-components/icon`
+- 1st-gen: `sp-icon-chevron100` from `@spectrum-web-components/icons-ui` and chevron styles from `@spectrum-web-components/icon`
+- 2nd-gen: prefer **`swc-icon`** internally for the disclosure indicator ([migration plan](./migration-plan.md))
 
 </details>
 
@@ -219,6 +221,5 @@ Paste or link the S2 template markup from **spectrum-css** `spectrum-two` when a
 | 1st-gen accordion package | [`1st-gen/packages/accordion/`](../../../../1st-gen/packages/accordion/) |
 | Migration plan | [migration-plan.md](./migration-plan.md) |
 | Accessibility analysis | [accessibility-migration-analysis.md](./accessibility-migration-analysis.md) |
-| Migration prep (phase 1) | [migration-prep.md](./migration-prep.md) |
 | Analyze rendering and styling (workflow) | [README](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_analyze-rendering-and-styling/README.md) |
 | Spectrum CSS (external) | [github.com/adobe/spectrum-css](https://github.com/adobe/spectrum-css) — use **`spectrum-two`** branch |
