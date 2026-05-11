@@ -16,31 +16,27 @@
 <details open>
 <summary><strong>Beneath this doc</strong></summary>
 
-- [Contributor guides](01_contributor-guides/README.md)
-    - [Getting involved](01_contributor-guides/01_getting-involved.md)
-    - [Using the issue tracker](01_contributor-guides/02_using-the-issue-tracker.md)
-    - [Working in the SWC repo](01_contributor-guides/03_working-in-the-swc-repo.md)
-    - [Making a pull request](01_contributor-guides/04_making-a-pull-request.md)
-    - [Participating in PR reviews](01_contributor-guides/05_participating-in-pr-reviews.md)
-    - [Releasing SWC](01_contributor-guides/06_releasing-swc.md)
-    - [Authoring contributor docs](01_contributor-guides/07_authoring-contributor-docs/README.md)
-    - [Patching dependencies](01_contributor-guides/08_patching-dependencies.md)
-    - [Accessibility testing](01_contributor-guides/09_accessibility-testing.md)
-    - [Maintaining StackBlitz examples for Spectrum Web Components](01_contributor-guides/10_using-stackblitz.md)
-    - [2nd gen testing](01_contributor-guides/11_2ndgen_testing.md)
-    - [Tools vs packages: where code lives](01_contributor-guides/12_tools-vs-packages.md)
-    - [Writing migration guides](01_contributor-guides/13_writing-migration-guides.md)
-    - [Focus management](01_contributor-guides/14_focus-management.md)
-- [Style guide](02_style-guide/README.md)
-    - [2nd-Gen CSS](02_style-guide/01_css/README.md)
-    - [2nd-gen TypeScript](02_style-guide/02_typescript/README.md)
-    - [Linting tools](02_style-guide/03_linting-tools.md)
-    - [Testing guide](02_style-guide/04_testing/README.md)
-- [Project planning](03_project-planning/README.md)
-    - [Objectives and strategy](03_project-planning/01_objectives-and-strategy.md)
-    - [Workstreams](03_project-planning/02_workstreams/README.md)
-    - [Components](03_project-planning/03_components/README.md)
-    - [Milestones](03_project-planning/04_milestones/README.md)
+- For Consumers
+    - [Using the issue tracker](for-consumers/using-the-issue-tracker.md)
+- [Contributor guides](for-contributors/README.md)
+    - [Authoring contributor docs](for-contributors/authoring-contributor-docs/README.md)
+    - [Focus management](for-contributors/focus-management.md)
+    - [Getting involved](for-contributors/getting-involved.md)
+    - [Maintaining StackBlitz examples for Spectrum Web Components](for-contributors/maintaining-stackblitz-examples.md)
+    - [Making a pull request](for-contributors/making-a-pull-request.md)
+    - [Patching dependencies](for-contributors/patching-dependencies.md)
+    - [Participating in PR reviews](for-contributors/reviewing-pull-requests.md)
+    - [Accessibility testing](for-contributors/running-accessibility-tests.md)
+    - [Style guide](for-contributors/style-guide/README.md)
+    - [Tools vs packages: where code lives](for-contributors/tools-vs-packages.md)
+    - [Working in the SWC repo](for-contributors/working-in-the-swc-repo.md)
+- For Maintainers
+    - [Releasing SWC](for-maintainers/releasing-swc.md)
+- [Project planning](project-planning/README.md)
+    - [Objectives and strategy](project-planning/01_objectives-and-strategy.md)
+    - [Workstreams](project-planning/02_workstreams/README.md)
+    - [Components](project-planning/03_components/README.md)
+    - [Milestones](project-planning/04_milestones/README.md)
     - Strategies
 
 </details>
@@ -59,29 +55,31 @@ SWC is developed by a core team in Adobe Design Engineering, but we welcome cont
 
 Spectrum Web Components is currently in transition from its first generation (1st-gen) to its second generation (2nd-gen).
 
-- To understand how this transition affects the SWC code base, see [Repository Structure](./01_contributor-guides/03_working-in-the-swc-repo.md#repository-structure).
-- To understand the motivation for this transition, see [Objectives and Strategy](./03_project-planning/01_objectives-and-strategy.md).
+- To understand how this transition affects the SWC code base, see [Repository Structure](./for-contributors/working-in-the-swc-repo.md#repository-structure).
+- To understand the motivation for this transition, see [Objectives and Strategy](./project-planning/01_objectives-and-strategy.md).
 
 ## About these docs
 
-These docs contain essential information about the SWC project for both maintainers (members of the core team) and contributors from outside the core team.
+These docs contain essential information about the SWC project for everyone who interacts with it. Content is organized by **audience**: pick the folder that matches who you are right now, and you'll find what you need.
 
-The docs are organized into sections to help you find the information you need:
+**For consumers** — `for-consumers/` — Application developers using SWC in a product. Start here if you need to install the library, configure customization, or file a bug.
 
-**[Contributor Guides](./01_contributor-guides/README.md)** - Topical guides for working on the project. This section includes guides for getting started, understanding processes, and accomplishing specific tasks like adding new components or editing these contributor docs themselves. When you change doc structure or headings, see [Authoring contributor docs](./01_contributor-guides/07_authoring-contributor-docs/README.md) to regenerate navigation and verify links.
+- [Using the issue tracker](./for-consumers/using-the-issue-tracker.md) — How to file bugs and request features.
 
-**[Style Guide](./02_style-guide/README.md)** - Comprehensive style guide covering project-wide conventions and area-specific rules. This section is useful for human reference and for AI-assisted work, documenting our approaches to linting, JSDoc conventions, component structure, and other coding standards.
+**For contributors** — `for-contributors/` — Anyone contributing code, tests, or docs to the SWC repo. Start here if you're opening a PR, writing a component, or editing these docs.
 
-**[Accessibility testing](./01_contributor-guides/09_accessibility-testing.md)** - Automated accessibility testing, snapshots, and manual testing expectations for pull requests.
+- See [`for-contributors/README.md`](./for-contributors/README.md) for the full list of contributor guides.
+- The [Style guide](./for-contributors/style-guide/README.md) sub-tree covers project-wide CSS, TypeScript, and testing standards used during code review.
+- The [Authoring contributor docs](./for-contributors/authoring-contributor-docs/README.md) sub-tree covers how to write *these* docs — including the nav script you must run when you change doc structure or headings.
 
-**[Project Planning](./03_project-planning/README.md)** - Strategic planning documentation including objectives, workstreams, component roadmaps, and milestones. This section contains:
+**For maintainers** — `for-maintainers/` — Members of the core team performing maintainer-only operations.
 
-- **[Objectives and Strategy](./03_project-planning/01_objectives-and-strategy.md)** - Strategic context for the 1st-gen-to-2nd-gen transition, including our goals and approach.
+- [Releasing SWC](./for-maintainers/releasing-swc.md) — Release process, approval steps, and troubleshooting.
 
-- **[Workstreams](./03_project-planning/02_workstreams/README.md)** - Workstream-centric view of cross-cutting work affecting many or all components, helping us work toward specific objectives and coordinate efforts.
+**Project planning** — `project-planning/` — Strategic context for the 1st-gen-to-2nd-gen transition. Cross-audience; primarily used by maintainers and contributors coordinating cross-cutting work.
 
-- **[Components](./03_project-planning/03_components/README.md)** - Component-centric view of individual components and how they're affected by multiple workstreams, useful for understanding each component's roadmap and status.
-
-- **[Milestones](./03_project-planning/04_milestones/README.md)** - Information about project milestones and their goals.
-
-Together, the Workstreams and Components views help us manage the project roadmap, ensuring we make progress on strategic objectives while maintaining clarity about the state and evolution of individual components.
+- [Objectives and strategy](./project-planning/01_objectives-and-strategy.md) — Why the transition exists and what it's trying to achieve.
+- [Workstreams](./project-planning/02_workstreams/README.md) — Workstream-centric view of cross-cutting work in flight.
+- [Components](./project-planning/03_components/README.md) — Per-component migration analyses and plans.
+- [Milestones](./project-planning/04_milestones/README.md) — Project milestones and their goals.
+- [Strategies](./project-planning/05_strategies/audience-based-docs-reorganization-plan.md) — RFCs and strategic plans (e.g. focus management, docs reorganization).
