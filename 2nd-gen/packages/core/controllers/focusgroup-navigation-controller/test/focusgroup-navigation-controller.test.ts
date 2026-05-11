@@ -79,7 +79,7 @@ export default {
     ...focusMeta.parameters,
     docs: { disable: true, page: null },
   },
-  tags: ['!autodocs', 'dev'],
+  tags: ['!autodocs', '!dev'],
 } as Meta;
 
 // ──────────────────────────────────────────────────────────────

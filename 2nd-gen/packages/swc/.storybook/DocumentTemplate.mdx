@@ -11,6 +11,7 @@ import {
 } from '@storybook/addon-docs/blocks';
 import {
   ApiTable,
+  ConditionalBehaviorsSection,
   GettingStarted,
   OverviewStory,
   SpectrumStories,
@@ -60,7 +61,7 @@ export const ConditionalSection = ({
 
     return (
         <div data-section={tag}>
-            {title && <h2>{title}</h2>}
+            {title && <TitleHeading>{title}</TitleHeading>}
             <SpectrumStories tag={tag} hideTitle={hideTitle} />
         </div>
     );
@@ -127,13 +128,7 @@ export const ConditionalGettingStarted = () => {
   hideTitle={true}
   titleLevel={3}
 />
-<ConditionalSection
-  tag="responding-to-selection-change"
-  title="Responding to selection change"
-  hideTitle={true}
-  titleLevel={3}
-/>
-<ConditionalSection tag="behaviors" title="Behaviors" />
+<ConditionalBehaviorsSection />
 <ConditionalSection tag="a11y" title="Accessibility" hideTitle={true} />
 <ConditionalSection tag="full-pattern" title="Full pattern" />
 

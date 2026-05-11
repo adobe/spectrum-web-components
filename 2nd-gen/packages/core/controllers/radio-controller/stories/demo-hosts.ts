@@ -26,6 +26,7 @@ declare global {
     'demo-radio-menu-item-radio': DemoRadioMenuItemRadio;
     'demo-radio-accordion-exclusive': DemoRadioAccordionExclusive;
     'demo-radio-accordion-multiple': DemoRadioAccordionMultiple;
+    'demo-radio-tabs-keydown': DemoRadioTabsKeydown;
   }
 }
 
@@ -763,6 +764,204 @@ export class DemoRadioAccordionMultiple extends LitElement {
             </article>
           `
         )}
+      </div>
+    `;
+  }
+}
+
+const demoTabsKeydownStyles = css`
+  :host {
+    display: block;
+    max-width: 28rem;
+    font:
+      0.95rem system-ui,
+      sans-serif;
+  }
+  [role='tablist'] {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.35rem;
+    border-radius: 8px;
+    border: 1px solid var(--spectrum-gray-300, #d3d3d3);
+    background: var(--spectrum-gray-75, #fafafa);
+  }
+  [role='tab'] {
+    flex: 1 1 auto;
+    margin: 0;
+    padding: 0.5rem 0.65rem;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+  }
+  [role='tab']:focus-visible {
+    outline: 2px solid var(--spectrum-blue-800, #0265dc);
+    outline-offset: 2px;
+  }
+  [role='tab'][aria-selected='true'] {
+    background: var(--spectrum-gray-200, #e6e6e6);
+    border-color: var(--spectrum-gray-400, #b1b1b1);
+    font-weight: 600;
+  }
+  .panels {
+    margin-block-start: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--spectrum-gray-300, #d3d3d3);
+  }
+  [role='tabpanel'] {
+    margin: 0;
+  }
+  [role='tabpanel'][hidden] {
+    display: none;
+  }
+  .hint {
+    margin: 0 0 0.65rem;
+    font-size: 0.82rem;
+    color: var(--spectrum-gray-700, #464646);
+  }
+`;
+
+/**
+ * Minimal `role="tablist"` demo: **`RadioController`** with **`keydownActivation: true`** so
+ * **Enter** / **Space** assert the focused tab; left/right arrows move focus (roving tabindex).
+ * Pointer clicks still select via the same controller.
+ *
+ * @internal
+ */
+@customElement('demo-radio-tabs-keydown')
+export class DemoRadioTabsKeydown extends LitElement {
+  static override styles = demoTabsKeydownStyles;
+
+  private tabButtons: HTMLButtonElement[] = [];
+
+  private readonly tabRadio = new RadioController(this, {
+    getItems: () => this.tabButtons,
+    selectItem: (tab) => {
+      tab.setAttribute('aria-selected', 'true');
+      tab.tabIndex = 0;
+      const key = tab.dataset.tab!;
+      const panel = this.renderRoot.querySelector<HTMLElement>(
+        `[data-tab-panel="${key}"]`
+      );
+      panel?.removeAttribute('hidden');
+    },
+    deselectItem: (tab) => {
+      tab.setAttribute('aria-selected', 'false');
+      tab.tabIndex = -1;
+      const key = tab.dataset.tab!;
+      const panel = this.renderRoot.querySelector<HTMLElement>(
+        `[data-tab-panel="${key}"]`
+      );
+      panel?.setAttribute('hidden', '');
+    },
+    keydownActivation: true,
+    defaultToFirstSelectable: true,
+  });
+
+  protected override firstUpdated(): void {
+    this.tabButtons = Array.from(
+      this.renderRoot.querySelectorAll<HTMLButtonElement>('[data-tab]')
+    );
+    this.tabRadio.refresh();
+  }
+
+  private handleTabListKeydown(event: KeyboardEvent): void {
+    if (event.code !== 'ArrowLeft' && event.code !== 'ArrowRight') {
+      return;
+    }
+    const tabs = this.tabButtons;
+    const root = this.renderRoot as ShadowRoot | HTMLElement;
+    const active = root instanceof ShadowRoot ? root.activeElement : null;
+    const index = tabs.indexOf(active as HTMLButtonElement);
+    if (index === -1) {
+      return;
+    }
+    event.preventDefault();
+    const delta = event.code === 'ArrowRight' ? 1 : -1;
+    const next = (index + delta + tabs.length) % tabs.length;
+    tabs[next]?.focus();
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <p class="hint">
+        Use arrow keys to move focus, then
+        <kbd>Enter</kbd>
+        or
+        <kbd>Space</kbd>
+        to select (via
+        <code>keydownActivation: true</code>
+        ). Pointer still works.
+      </p>
+      <div
+        role="tablist"
+        aria-label="Sample tabs"
+        @keydown=${this.handleTabListKeydown}
+      >
+        <button
+          type="button"
+          role="tab"
+          data-tab="1"
+          id="demo-kd-tab-1"
+          aria-controls="demo-kd-panel-1"
+          aria-selected="false"
+          tabindex="-1"
+        >
+          Files
+        </button>
+        <button
+          type="button"
+          role="tab"
+          data-tab="2"
+          id="demo-kd-tab-2"
+          aria-controls="demo-kd-panel-2"
+          aria-selected="false"
+          tabindex="-1"
+        >
+          Search
+        </button>
+        <button
+          type="button"
+          role="tab"
+          data-tab="3"
+          id="demo-kd-tab-3"
+          aria-controls="demo-kd-panel-3"
+          aria-selected="false"
+          tabindex="-1"
+        >
+          Publish
+        </button>
+      </div>
+      <div class="panels">
+        <div
+          id="demo-kd-panel-1"
+          role="tabpanel"
+          data-tab-panel="1"
+          aria-labelledby="demo-kd-tab-1"
+          hidden
+        >
+          <p>Files panel (tab 1).</p>
+        </div>
+        <div
+          id="demo-kd-panel-2"
+          role="tabpanel"
+          data-tab-panel="2"
+          aria-labelledby="demo-kd-tab-2"
+          hidden
+        >
+          <p>Search panel (tab 2).</p>
+        </div>
+        <div
+          id="demo-kd-panel-3"
+          role="tabpanel"
+          data-tab-panel="3"
+          aria-labelledby="demo-kd-tab-3"
+          hidden
+        >
+          <p>Publish panel (tab 3).</p>
+        </div>
       </div>
     `;
   }

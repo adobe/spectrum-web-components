@@ -58,6 +58,13 @@ const RADIO_CONTROLLER_API = {
         'When true, refresh selects the first eligible item if nothing is currently asserted.',
     },
     {
+      name: 'keydownActivation',
+      type: 'boolean | undefined',
+      defaultValue: 'false',
+      description:
+        'When true, capture-phase Enter or Space on a focused eligible item asserts it (tabs-style manual activation). Clicks still apply when false or true.',
+    },
+    {
       name: 'onSelectionChange',
       type: '(detail: RadioControllerSelectionChangeDetail) => void',
       defaultValue: 'undefined',
@@ -113,14 +120,14 @@ const RADIO_CONTROLLER_API = {
       signature: 'hostConnected(): void',
       returns: 'void',
       description:
-        'Lit ReactiveController: registers capture-phase click on the host and calls refresh().',
+        'Lit ReactiveController: registers capture-phase click on the host, optionally capture-phase keydown when keydownActivation is true, and calls refresh().',
     },
     {
       name: 'hostDisconnected',
       signature: 'hostDisconnected(): void',
       returns: 'void',
       description:
-        'Lit ReactiveController: removes the capture-phase click listener.',
+        'Lit ReactiveController: removes capture-phase click and any keydown listener registered for keydownActivation.',
     },
   ],
   events: [
@@ -172,7 +179,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       subtitle:
-        'Exclusive selection with configurable DOM updates; pointer clicks and toggleItem.',
+        'Exclusive selection with configurable DOM updates; pointer clicks, optional Enter/Space (keydownActivation), and toggleItem.',
       canvas: { sourceState: 'none' },
     },
     controllerApi: RADIO_CONTROLLER_API,
@@ -218,6 +225,7 @@ export const Overview: Story = {
  *   - `deselectItem: (item: HTMLElement) => void` - the function that is called when the item is deselected
  *   - `toggles: boolean` - optional: whether the controller allows toggling the item
  *   - `defaultToFirstSelectable: boolean` - optional: whether the controller should select the first item if no item is selected
+ *   - `keydownActivation: boolean` - optional: when true, **Enter** / **Space** on a focused eligible item asserts it (tabs-style manual activation); default is click-only
  *   - `onSelectionChange: (detail: RadioControllerSelectionChangeDetail) => void` - optional: the function that is called when the selection changes
  *
  * ```typescript
@@ -227,6 +235,7 @@ export const Overview: Story = {
  *   getItems: () => [...],
  *   selectItem: (el) => { ... },
  *   deselectItem: (el) => { ... },
+ *   keydownActivation: true,
  * });
  * ```
  *
@@ -381,6 +390,40 @@ export const UsageExampleTogglingToDeselect: Story = {
   `,
 };
 
+/**
+ * ### `keydownActivation` (tabs-style Enter / Space)
+ *
+ * Set **`keydownActivation: true`** so **Enter** or **Space** on a focused participant asserts
+ * it, in addition to primary **click**. Combine with your own arrow-key / roving tabindex logic
+ * for a full tablist, or use the demo below.
+ *
+ * ```typescript
+ * this.tabRadio = new RadioController(this, {
+ *   getItems: () => this.tabButtons,
+ *   selectItem: (tab) => {
+ *     tab.setAttribute('aria-selected', 'true');
+ *     tab.tabIndex = 0;
+ *     this.showPanelForTab(tab);
+ *   },
+ *   deselectItem: (tab) => {
+ *     tab.setAttribute('aria-selected', 'false');
+ *     tab.tabIndex = -1;
+ *     this.hidePanelForTab(tab);
+ *   },
+ *   keydownActivation: true,
+ *   defaultToFirstSelectable: true,
+ * });
+ * ```
+ */
+export const UsageExampleKeydownActivationTabs: Story = {
+  name: 'Example: keydownActivation (tablist)',
+  tags: ['usage'],
+  parameters: { 'section-order': 4 },
+  render: () => html`
+    <demo-radio-tabs-keydown></demo-radio-tabs-keydown>
+  `,
+};
+
 // ──────────────────────────
 //    BEHAVIORS STORIES
 // ──────────────────────────
@@ -404,6 +447,24 @@ export const AccordionMultipleSectionsAriaExpandedHidden: Story = {
   tags: ['behaviors'],
   parameters: {
     'section-order': 2,
+    docs: {
+      disable: true,
+    },
+  },
+};
+
+/**
+ * Tablist-style demo: arrow keys move focus; **Enter** / **Space** select via
+ * **`keydownActivation: true`**; pointer still works.
+ */
+export const KeydownActivationTabsDemo: Story = {
+  name: 'keydownActivation: tablist demo',
+  render: () => html`
+    <demo-radio-tabs-keydown></demo-radio-tabs-keydown>
+  `,
+  tags: ['behaviors'],
+  parameters: {
+    'section-order': 3,
     docs: {
       disable: true,
     },
@@ -441,8 +502,8 @@ export const RatingDefaultFirstSelectable: Story = {
 
 /**
  * Same layout, illustrating **`onSelectionChange`** with **`window.alert`** (and **`toggles`** so
- * the active star can be cleared). Rendered under **Responding to selection change** on the docs
- * page (no **`dev`** tag, so it stays out of the Storybook sidebar).
+ * the active star can be cleared). Rendered under **Behaviors → Responding to selection change** on
+ * the docs page (no **`dev`** tag, so it stays out of the Storybook sidebar).
  *
  * ```typescript
  * this.radios = new RadioController(this, {
@@ -508,6 +569,7 @@ export const RatingOnSelectionChangeAlert: Story = {
  * | `deselectItem` | `(item: HTMLElement) => void` | (required) | Called on every other scoped item. |
  * | `toggles` | `boolean` | `false` | When true, allow clearing to no asserted item (`setSelectedItem(null)`, click or `toggleItem` on the active item). |
  * | `defaultToFirstSelectable` | `boolean` | `false` | When true, `refresh` may select the first eligible item if none asserted. |
+ * | `keydownActivation` | `boolean` | `false` | When true, Enter/Space on a focused eligible item asserts it (manual tabs-style activation). |
  * | `onSelectionChange` | `(detail) => void` | — | Callback when selection changes. |
  *
  * See the **API** table above for the full machine-readable contract.
@@ -529,9 +591,11 @@ export const API: Story = {
  *
  * ### Keyboard and focus
  *
- * The controller does **not** implement roving **`tabindex`** or arrow-key navigation. Pair it
- * with **`FocusgroupNavigationController`** when your pattern needs APG-style keyboard movement
- * inside the same host.
+ * With **`keydownActivation: true`**, the controller listens for **Enter** and **Space** on the
+ * host (capture phase) and asserts the deepest eligible item on the event path, similar to manual
+ * keyboard activation in **`swc-tabs`**. It still does **not** implement roving **`tabindex`** or
+ * arrow-key navigation; pair it with **`FocusgroupNavigationController`** or your own tablist
+ * handlers when you need those behaviors.
  *
  * ### ARIA
  *

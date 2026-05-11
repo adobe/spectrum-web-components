@@ -458,7 +458,10 @@ const preview = {
                 'Thumbnail',
                 ['Rendering and styling migration analysis'],
                 'Tooltip',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
               ],
               'Milestones',
               'Strategies',
@@ -478,7 +481,7 @@ const preview = {
     CORE_VERSION: { table: { disable: true } },
     hasVisibleFocusInTree: { table: { disable: true } },
   },
-  tags: ['!autodocs', '!dev'], // We only want the playground stories to be visible in the docs and sidenav. Since a majority of our stories are tagged with '!autodocs' and '!dev', we set those tags globally. We can opt in to visibility by adding the 'autodocs' or 'dev' tags to individual stories.
+  tags: ['!autodocs', '!dev'], // We only want the playground stories to be visible in the docs and sidenav. Since a majority of our stories are tagged with '!autodocs' and '!dev', we set those tags globally. We can opt in to visibility by adding the 'autodocs' or 'dev' tags to individual stories. Vitest `*.test.ts` CSF modules should keep `!dev` (do not add `dev`) so they stay out of the Storybook sidebar while remaining runnable by the Vitest addon.
   loaders: [FontLoader],
 };
 

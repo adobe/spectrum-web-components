@@ -51,6 +51,14 @@ export type RadioControllerOptions = {
    */
   defaultToFirstSelectable?: boolean;
 
+  /**
+   * When **`true`**, **Enter** or **Space** on an eligible focused item (resolved like pointer
+   * hits via {@link deepestRadioItemContaining}) asserts that item, mirroring manual keyboard
+   * activation in the tabs pattern. When **`false`** (default), only capture-phase **click**
+   * changes selection (plus **`setSelectedItem`** / **`toggleItem`**).
+   */
+  keydownActivation?: boolean;
+
   /** Optional listener mirroring {@link radioControllerSelectionChange}. */
   onSelectionChange?: (detail: RadioControllerSelectionChangeDetail) => void;
 };
@@ -92,9 +100,11 @@ export function deepestRadioItemContaining(
  * Maintains mutually exclusive asserted state across sibling elements using supplied mutators.
  * Scoping follows the reactive host subtree (light DOM and shadow descendants). Items that are
  * disconnected, inert, not visible, native **`disabled`**, or **`aria-disabled="true"`** are never
- * eligible and primary clicks on them do not change selection. This controller only handles
- * capture-phase **`click`**, **`setSelectedItem`**, and **`toggleItem`** — it does not implement arrow keys, roving
- * **`tabindex`**, programmatic **`focus()`**, or an active-item/focus sync callback.
+ * eligible and primary clicks on them do not change selection. This controller handles
+ * capture-phase **`click`**, optional capture-phase **`keydown`** for **Enter** / **Space** when
+ * **`keydownActivation`** is **`true`**, **`setSelectedItem`**, and **`toggleItem`** — it does not
+ * implement arrow keys, roving **`tabindex`**, programmatic **`focus()`**, or an active-item/focus
+ * sync callback.
  *
  * @see https://www.w3.org/WAI/ARIA/apg/patterns/radio/examples/radio-rating/
  * @see https://www.w3.org/WAI/ARIA/apg/patterns/menubar/
@@ -111,6 +121,7 @@ export class RadioController implements ReactiveController {
         | 'deselectItem'
         | 'toggles'
         | 'defaultToFirstSelectable'
+        | 'keydownActivation'
       >
     >,
     never
@@ -118,6 +129,8 @@ export class RadioController implements ReactiveController {
     Pick<RadioControllerOptions, 'onSelectionChange'>;
 
   private selectedItem: HTMLElement | null = null;
+
+  private keydownListenerAttached = false;
 
   private readonly handleClickCapture = (event: MouseEvent): void => {
     if (event.button !== 0) {
@@ -138,6 +151,32 @@ export class RadioController implements ReactiveController {
     this.applyExclusiveSelection(hit);
   };
 
+  private readonly handleKeyDownCapture = (event: KeyboardEvent): void => {
+    if (!this.options.keydownActivation) {
+      return;
+    }
+    if (event.code !== 'Enter' && event.code !== 'Space') {
+      return;
+    }
+    if (event.repeat) {
+      return;
+    }
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+      return;
+    }
+    const items = this.getEligibleItems();
+    const hit = deepestRadioItemContaining(event, items);
+    if (!hit || this.isDisabledParticipant(hit)) {
+      return;
+    }
+    event.preventDefault();
+    if (this.options.toggles && hit === this.selectedItem) {
+      this.applyExclusiveSelection(null);
+      return;
+    }
+    this.applyExclusiveSelection(hit);
+  };
+
   constructor(host: ReactiveElement, options: RadioControllerOptions) {
     this.host = host;
     this.options = {
@@ -146,6 +185,7 @@ export class RadioController implements ReactiveController {
       deselectItem: options.deselectItem,
       toggles: options.toggles ?? false,
       defaultToFirstSelectable: options.defaultToFirstSelectable ?? false,
+      keydownActivation: options.keydownActivation ?? false,
       onSelectionChange: options.onSelectionChange,
     };
 
@@ -166,6 +206,10 @@ export class RadioController implements ReactiveController {
     const togglesProvided =
       'toggles' in partial && typeof partial.toggles === 'boolean';
 
+    const keydownActivationProvided =
+      'keydownActivation' in partial &&
+      typeof partial.keydownActivation === 'boolean';
+
     this.options = {
       ...this.options,
       ...partial,
@@ -173,6 +217,9 @@ export class RadioController implements ReactiveController {
       defaultToFirstSelectable: defaultFirstProvided
         ? partial.defaultToFirstSelectable!
         : this.options.defaultToFirstSelectable,
+      keydownActivation: keydownActivationProvided
+        ? partial.keydownActivation!
+        : this.options.keydownActivation,
       getItems: partial.getItems ?? this.options.getItems,
       selectItem: partial.selectItem ?? this.options.selectItem,
       deselectItem: partial.deselectItem ?? this.options.deselectItem,
@@ -180,6 +227,7 @@ export class RadioController implements ReactiveController {
         partial.onSelectionChange ?? this.options.onSelectionChange,
     };
 
+    this.syncKeydownActivationListener();
     this.refresh();
   }
 
@@ -256,11 +304,31 @@ export class RadioController implements ReactiveController {
 
   public hostConnected(): void {
     this.host.addEventListener('click', this.handleClickCapture, true);
+    this.syncKeydownActivationListener();
     this.refresh();
   }
 
   public hostDisconnected(): void {
     this.host.removeEventListener('click', this.handleClickCapture, true);
+    if (this.keydownListenerAttached) {
+      this.host.removeEventListener('keydown', this.handleKeyDownCapture, true);
+      this.keydownListenerAttached = false;
+    }
+  }
+
+  /** Adds or removes the capture-phase keydown listener when `keydownActivation` changes. */
+  private syncKeydownActivationListener(): void {
+    if (!this.host.isConnected) {
+      return;
+    }
+    const want = this.options.keydownActivation;
+    if (want && !this.keydownListenerAttached) {
+      this.host.addEventListener('keydown', this.handleKeyDownCapture, true);
+      this.keydownListenerAttached = true;
+    } else if (!want && this.keydownListenerAttached) {
+      this.host.removeEventListener('keydown', this.handleKeyDownCapture, true);
+      this.keydownListenerAttached = false;
+    }
   }
 
   private applyExclusiveSelection(next: HTMLElement | null): void {

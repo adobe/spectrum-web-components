@@ -20,7 +20,7 @@ import {
   radioControllerSelectionChange,
   type RadioControllerSelectionChangeDetail,
 } from '../index.js';
-import radioMeta from '../stories/radio-controller.stories.js';
+import radioMeta from './radio-controller.stories.js';
 
 const FIXTURE_TAG = 'test-radio-controller-fixture';
 
@@ -30,6 +30,10 @@ const FIXTURE_TOGGLE_TAG = 'test-radio-controller-toggle-fixture';
 
 const FIXTURE_DEFAULT_FIRST_ONCHANGE_TAG =
   'test-radio-default-first-onchange-fixture';
+
+const FIXTURE_KEYDOWN_ACTIVATION_TAG = 'test-radio-keydown-activation-fixture';
+
+const FIXTURE_KEYDOWN_OFF_DIV_TAG = 'test-radio-keydown-off-div-fixture';
 
 /**
  * Three shadow `role="radio"` buttons; tests assert callback wiring and pointer selection only.
@@ -264,12 +268,118 @@ export class TestRadioDefaultFirstOnChangeFixture extends LitElement {
   }
 }
 
+/**
+ * Three **`div[role="radio"]`** controls (no native **Enter** activation) with
+ * **`keydownActivation: true`** for **Enter** / **Space** selection tests.
+ */
+@customElement(FIXTURE_KEYDOWN_ACTIVATION_TAG)
+export class TestRadioKeydownActivationFixture extends LitElement {
+  static override styles = css`
+    :host {
+      display: flex;
+      gap: 0.35rem;
+    }
+    [data-item] {
+      padding: 0.35rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      cursor: default;
+      font: inherit;
+    }
+  `;
+
+  private readonly radio = new RadioController(this, {
+    getItems: () =>
+      Array.from(this.renderRoot.querySelectorAll<HTMLElement>('[data-item]')),
+    selectItem: (item) => {
+      item.setAttribute('aria-checked', 'true');
+      item.tabIndex = 0;
+    },
+    deselectItem: (item) => {
+      item.setAttribute('aria-checked', 'false');
+      item.tabIndex = -1;
+    },
+    keydownActivation: true,
+    defaultToFirstSelectable: true,
+  });
+
+  getRadioController(): RadioController {
+    return this.radio;
+  }
+
+  protected override firstUpdated(): void {
+    this.radio.refresh();
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <div role="radio" tabindex="-1" data-item aria-checked="false">A</div>
+      <div role="radio" tabindex="-1" data-item aria-checked="false">B</div>
+      <div role="radio" tabindex="-1" data-item aria-checked="false">C</div>
+    `;
+  }
+}
+
+/**
+ * Same **`div[role="radio"]`** roster with **`keydownActivation: false`** so **Enter** does not
+ * assert via the controller (native divs do not synthesize click on **Enter**).
+ */
+@customElement(FIXTURE_KEYDOWN_OFF_DIV_TAG)
+export class TestRadioKeydownOffDivFixture extends LitElement {
+  static override styles = css`
+    :host {
+      display: flex;
+      gap: 0.35rem;
+    }
+    [data-item] {
+      padding: 0.35rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      cursor: default;
+      font: inherit;
+    }
+  `;
+
+  private readonly radio = new RadioController(this, {
+    getItems: () =>
+      Array.from(this.renderRoot.querySelectorAll<HTMLElement>('[data-item]')),
+    selectItem: (item) => {
+      item.setAttribute('aria-checked', 'true');
+      item.tabIndex = 0;
+    },
+    deselectItem: (item) => {
+      item.setAttribute('aria-checked', 'false');
+      item.tabIndex = -1;
+    },
+    keydownActivation: false,
+    defaultToFirstSelectable: true,
+  });
+
+  getRadioController(): RadioController {
+    return this.radio;
+  }
+
+  protected override firstUpdated(): void {
+    this.radio.refresh();
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <div role="radio" tabindex="-1" data-item aria-checked="false">A</div>
+      <div role="radio" tabindex="-1" data-item aria-checked="false">B</div>
+      <div role="radio" tabindex="-1" data-item aria-checked="false">C</div>
+    `;
+  }
+}
+
 declare global {
   interface HTMLElementTagNameMap {
-    [FIXTURE_TAG]: TestRadioControllerFixture;
-    [FIXTURE_DISABLED_TAG]: TestRadioControllerDisabledFixture;
-    [FIXTURE_TOGGLE_TAG]: TestRadioControllerToggleFixture;
-    [FIXTURE_DEFAULT_FIRST_ONCHANGE_TAG]: TestRadioDefaultFirstOnChangeFixture;
+    'test-radio-controller-fixture': TestRadioControllerFixture;
+    'test-radio-controller-disabled-fixture': TestRadioControllerDisabledFixture;
+    'test-radio-controller-toggle-fixture': TestRadioControllerToggleFixture;
+    'test-radio-default-first-onchange-fixture': TestRadioDefaultFirstOnChangeFixture;
+    'test-radio-keydown-activation-fixture': TestRadioKeydownActivationFixture;
+    'test-radio-keydown-off-div-fixture': TestRadioKeydownOffDivFixture;
   }
 }
 
@@ -280,7 +390,7 @@ export default {
     ...radioMeta.parameters,
     docs: { disable: true, page: null },
   },
-  tags: ['!autodocs', 'dev'],
+  tags: ['!autodocs', '!dev'],
 } as Meta;
 
 function fixtureRender() {
@@ -745,5 +855,152 @@ export const OnSelectionChangeReceivesDetailAfterDefaultAndOnClick: Story = {
 
     expect(host.selectionLog).toEqual([buttons[0]!, buttons[1]!]);
     expect(buttons[1]?.getAttribute('aria-checked')).toBe('true');
+  },
+};
+
+function keydownActivationFixtureRender() {
+  return html`
+    <test-radio-keydown-activation-fixture></test-radio-keydown-activation-fixture>
+  `;
+}
+
+function keydownOffDivFixtureRender() {
+  return html`
+    <test-radio-keydown-off-div-fixture></test-radio-keydown-off-div-fixture>
+  `;
+}
+
+/** With **`keydownActivation: true`**, **Enter** on a focused eligible **`div[role="radio"]`** asserts it. */
+
+export const KeydownActivationEnterSelects: Story = {
+  render: keydownActivationFixtureRender,
+  play: async ({ canvasElement }) => {
+    const host = await getComponent<TestRadioKeydownActivationFixture>(
+      canvasElement,
+      FIXTURE_KEYDOWN_ACTIVATION_TAG
+    );
+    const items = Array.from(
+      host.shadowRoot!.querySelectorAll<HTMLElement>('[data-item]')
+    );
+
+    expect(items[0]?.getAttribute('aria-checked')).toBe('true');
+
+    items[1]!.focus();
+    items[1]!.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Enter',
+        code: 'Enter',
+        bubbles: true,
+        composed: true,
+      })
+    );
+    await host.updateComplete;
+
+    expect(items[1]?.getAttribute('aria-checked')).toBe('true');
+    expect(items[0]?.getAttribute('aria-checked')).toBe('false');
+    expect(host.getRadioController().getSelectedItem()).toBe(items[1]!);
+  },
+};
+
+/** With **`keydownActivation: true`**, **Space** on a focused eligible control asserts it. */
+
+export const KeydownActivationSpaceSelects: Story = {
+  render: keydownActivationFixtureRender,
+  play: async ({ canvasElement }) => {
+    const host = await getComponent<TestRadioKeydownActivationFixture>(
+      canvasElement,
+      FIXTURE_KEYDOWN_ACTIVATION_TAG
+    );
+    const items = Array.from(
+      host.shadowRoot!.querySelectorAll<HTMLElement>('[data-item]')
+    );
+
+    items[2]!.focus();
+    items[2]!.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: ' ',
+        code: 'Space',
+        bubbles: true,
+        composed: true,
+      })
+    );
+    await host.updateComplete;
+
+    expect(items[2]?.getAttribute('aria-checked')).toBe('true');
+    expect(items[0]?.getAttribute('aria-checked')).toBe('false');
+  },
+};
+
+/** With **`keydownActivation: false`**, **Enter** on a focused **`div[role="radio"]`** does not change selection (no native activation). */
+
+export const KeydownActivationFalseIgnoresEnter: Story = {
+  render: keydownOffDivFixtureRender,
+  play: async ({ canvasElement }) => {
+    const host = await getComponent<TestRadioKeydownOffDivFixture>(
+      canvasElement,
+      FIXTURE_KEYDOWN_OFF_DIV_TAG
+    );
+    const items = Array.from(
+      host.shadowRoot!.querySelectorAll<HTMLElement>('[data-item]')
+    );
+
+    expect(items[0]?.getAttribute('aria-checked')).toBe('true');
+
+    items[1]!.focus();
+    items[1]!.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Enter',
+        code: 'Enter',
+        bubbles: true,
+        composed: true,
+      })
+    );
+    await host.updateComplete;
+
+    expect(items[0]?.getAttribute('aria-checked')).toBe('true');
+    expect(items[1]?.getAttribute('aria-checked')).toBe('false');
+    expect(host.getRadioController().getSelectedItem()).toBe(items[0]!);
+  },
+};
+
+/** **`setOptions({ keydownActivation: true })`** enables **Enter** after starting disabled for keyboard. */
+
+export const SetOptionsKeydownActivationEnablesEnter: Story = {
+  render: keydownOffDivFixtureRender,
+  play: async ({ canvasElement }) => {
+    const host = await getComponent<TestRadioKeydownOffDivFixture>(
+      canvasElement,
+      FIXTURE_KEYDOWN_OFF_DIV_TAG
+    );
+    const items = Array.from(
+      host.shadowRoot!.querySelectorAll<HTMLElement>('[data-item]')
+    );
+    const radio = host.getRadioController();
+
+    items[1]!.focus();
+    items[1]!.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Enter',
+        code: 'Enter',
+        bubbles: true,
+        composed: true,
+      })
+    );
+    await host.updateComplete;
+    expect(items[0]?.getAttribute('aria-checked')).toBe('true');
+
+    radio.setOptions({ keydownActivation: true });
+    items[1]!.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Enter',
+        code: 'Enter',
+        bubbles: true,
+        composed: true,
+      })
+    );
+    await host.updateComplete;
+
+    expect(items[1]?.getAttribute('aria-checked')).toBe('true');
+    expect(items[0]?.getAttribute('aria-checked')).toBe('false');
   },
 };

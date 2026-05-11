@@ -12,7 +12,7 @@ import React, { Fragment } from 'react';
  *
  * @param of - The Storybook meta or story to resolve the component from
  * @param tag - The story tag to filter by (e.g., "usage", "setting-default-selection",
- *   "responding-to-selection-change", "a11y")
+ *   "responding-to-selection-change" (often rendered under Behaviors in docs), "a11y")
  * @param hideTitle - Whether to hide the story title heading
  *
  * Stories with `parameters.docs.disable: true` are omitted (for example when the same demo

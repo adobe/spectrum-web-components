@@ -95,7 +95,7 @@ Docs sections **`Usage`**, **`Behaviors`**, **`Accessibility`**, **`Appendix`** 
 
 Follow **`focusgroup-navigation-controller.test.ts`**:
 
-- **`import <meta default> from '../stories/<name>.stories.js'`** and spread into `export default { … }` with `title: '…/Tests'`, **`docs: { disable: true, page: null }`**, and any test-only parameters.
+- **`import <meta default> from '../stories/<name>.stories.js'`** and spread into `export default { … }` with `title: '…/Tests'`, **`docs: { disable: true, page: null }`**, **`tags: ['!autodocs', '!dev']`** (keep **`!dev`** so Vitest test modules do not appear in the Storybook sidebar), and any test-only parameters.
 - **`import '../stories/demo-hosts.js'`** so custom elements are defined.
 - Import **named behavior stories** when using **`@storybook/test`** `play` functions against real story ids.
 - Prefer **fixture elements** in the same test file (or colocated) for unit-level assertions; use **demo hosts** for integration-style behavior aligned with Storybook.
