@@ -12,6 +12,7 @@
 import { PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
 
+import { RadioController } from '@spectrum-web-components/core/controllers/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 import {
@@ -198,12 +199,68 @@ export abstract class TabsBase extends SpectrumElement {
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel = '';
 
+  // ──────────────────────
+  //     IMPLEMENTATION
+  //     (tabRadio before `selected` so accessors never run before it exists)
+  // ──────────────────────
+
+  /**
+   * Cached list of tab elements managed by this container. Updated
+   * via `handleTabSlotChange`.
+   */
+  private _tabs: TabLike[] = [];
+
+  /**
+   * Pointer and **Enter** / **Space** (capture-phase on the host via **`keydownActivation`**); string
+   * **`selected`** / **`tab-id`** lives on **`RadioController`** via **`selectionBinding`**.
+   */
+  private readonly tabRadio = new RadioController(this, {
+    getItems: () => this.getTabRadioRawItems(),
+    selectItem: (tab: HTMLElement) => {
+      (tab as TabLike).selected = true;
+    },
+    deselectItem: (tab: HTMLElement) => {
+      (tab as TabLike).selected = false;
+    },
+    selectionBinding: {
+      getKey: (tab: HTMLElement) => (tab as TabLike).tabId,
+      resolveKey: (key: string) =>
+        this._tabs.find((t) => t.tabId === key) ?? null,
+      hostCommit: () =>
+        this.dispatchEvent(
+          new Event('change', {
+            cancelable: true,
+          })
+        ),
+    },
+    toggles: false,
+    defaultToFirstSelectable: false,
+    keydownActivation: true,
+  });
+
+  private getTabRadioRawItems(): HTMLElement[] {
+    if (this.disabled) {
+      return [];
+    }
+    return this._tabs as HTMLElement[];
+  }
+
   /**
    * The `tab-id` of the currently selected tab. Setting this property
    * updates which tab appears selected and which panel is visible.
    */
   @property({ type: String, reflect: true })
-  public selected = '';
+  public get selected(): string {
+    return this.tabRadio.getSelectedKey();
+  }
+
+  public set selected(value: string) {
+    const next = value ?? '';
+    if (next === this.tabRadio.getSelectedKey()) {
+      return;
+    }
+    this.tabRadio.syncSelectedKey(next, { silent: true });
+  }
 
   // ──────────────────────
   //     IMPLEMENTATION
@@ -224,12 +281,6 @@ export abstract class TabsBase extends SpectrumElement {
    */
   @state()
   protected shouldAnimate = false;
-
-  /**
-   * Cached list of tab elements managed by this container. Updated
-   * via `handleTabSlotChange`.
-   */
-  private _tabs: TabLike[] = [];
 
   /**
    * Whether an assigned node is treated as a tab. `role="tab"` is set in
@@ -257,6 +308,11 @@ export abstract class TabsBase extends SpectrumElement {
       .assignedElements()
       .filter(TabsBase.isTabSlotNode) as TabLike[];
     this.updateCheckedState();
+    this.tabRadio.refresh();
+    this.tabRadio.flushPendingSelectedKey();
+    this.tabRadio.syncSelectedKey(this.tabRadio.getSelectedKey(), {
+      silent: true,
+    });
     this.updateSelectionIndicator();
   }
 
@@ -272,28 +328,6 @@ export abstract class TabsBase extends SpectrumElement {
   }
 
   /**
-   * Click handler bound to the tablist wrapper in the concrete
-   * template. Activates the clicked tab.
-   */
-  protected handleClick(event: Event): void {
-    if (this.disabled) {
-      return;
-    }
-
-    const target = event
-      .composedPath()
-      .find((el) => (el as TabLike).parentElement === this) as
-      | TabLike
-      | undefined;
-
-    if (!target || target.disabled) {
-      return;
-    }
-
-    this.selectTarget(target);
-  }
-
-  /**
    * Full keyboard handler per WAI-ARIA APG Tabs pattern.
    *
    * **Horizontal:** Left/Right navigate; Up/Down ignored.
@@ -301,7 +335,7 @@ export abstract class TabsBase extends SpectrumElement {
    * **RTL:** Left/Right swap in `dir="rtl"`.
    * **Wrapping:** Navigation wraps from last to first and vice versa.
    * **Disabled tabs:** Disabled tabs receive focus via arrows but
-   * are not activatable by Enter/Space.
+   * are not activatable by Enter/Space (**`RadioController`** **`keydownActivation`** skips them).
    * **Automatic activation:** When `keyboard-activation` is `automatic`,
    * selection follows focus on arrow key navigation.
    * **Home/End:** Jump to first/last tab.
@@ -312,15 +346,6 @@ export abstract class TabsBase extends SpectrumElement {
     }
 
     const { code } = event;
-
-    if (code === 'Enter' || code === 'Space') {
-      event.preventDefault();
-      const target = event.target as TabLike | null;
-      if (target && !target.disabled) {
-        this.selectTarget(target);
-      }
-      return;
-    }
 
     const delta = this.getNavigationDelta(code);
     if (delta !== null) {
@@ -406,7 +431,7 @@ export abstract class TabsBase extends SpectrumElement {
     }
 
     if (this._keyboardActivation === 'automatic' && !tab.disabled) {
-      this.selectTarget(tab);
+      this.tabRadio.setSelectedItem(tab);
     }
 
     this.setRovingTabindex(tab);
@@ -428,31 +453,6 @@ export abstract class TabsBase extends SpectrumElement {
   private setRovingTabindex(activeTab: TabLike): void {
     for (const tab of this._tabs) {
       tab.tabIndex = tab === activeTab ? 0 : -1;
-    }
-  }
-
-  /**
-   * Attempts to select the given tab element. Dispatches a cancelable
-   * `change` event — if the consumer calls `preventDefault()`, the
-   * selection reverts to the previous value.
-   */
-  private selectTarget(target: TabLike): void {
-    const id = target.tabId;
-    if (!id) {
-      return;
-    }
-
-    const previous = this.selected;
-    this.selected = id;
-
-    const applyDefault = this.dispatchEvent(
-      new Event('change', {
-        cancelable: true,
-      })
-    );
-
-    if (!applyDefault) {
-      this.selected = previous;
     }
   }
 
@@ -577,8 +577,12 @@ export abstract class TabsBase extends SpectrumElement {
         ':scope > [selected]'
       ) as TabLike | null;
 
-      if (selectedChild) {
-        this.selectTarget(selectedChild);
+      if (selectedChild?.tabId) {
+        if (this._tabs.includes(selectedChild)) {
+          this.tabRadio.syncSelectedKey(selectedChild.tabId, { silent: true });
+        } else {
+          this.selected = selectedChild.tabId;
+        }
       }
     }
 
@@ -613,6 +617,13 @@ export abstract class TabsBase extends SpectrumElement {
 
     if (changes.has('disabled') && this._tabs.length) {
       this.updateCheckedState();
+      if (this.disabled) {
+        this.tabRadio.refresh();
+      } else {
+        this.tabRadio.syncSelectedKey(this.tabRadio.getSelectedKey(), {
+          silent: true,
+        });
+      }
     }
 
     if (changes.has('direction')) {
