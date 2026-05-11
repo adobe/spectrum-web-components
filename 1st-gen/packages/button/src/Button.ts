@@ -22,8 +22,22 @@ import { PendingStateController } from '@spectrum-web-components/reactive-contro
 import buttonStyles from './button.css.js';
 import { ButtonBase } from './ButtonBase.js';
 
+/**
+ * @deprecated The `DeprecatedButtonVariants` type export is deprecated and will
+ * be removed in a future release.
+ */
 export type DeprecatedButtonVariants = 'cta' | 'overBackground';
+
+/**
+ * @deprecated The `ButtonStaticColors` type export is deprecated and will be
+ * removed in a future release.
+ */
 export type ButtonStaticColors = 'white' | 'black';
+
+/**
+ * @deprecated The `ButtonVariants` type export is deprecated and will be
+ * removed in a future release.
+ */
 export type ButtonVariants =
   | 'accent'
   | 'primary'
@@ -31,6 +45,11 @@ export type ButtonVariants =
   | 'negative'
   | ButtonStaticColors
   | DeprecatedButtonVariants;
+
+/**
+ * @deprecated The `VALID_VARIANTS` export is deprecated and will be removed
+ * in a future release.
+ */
 export const VALID_VARIANTS = [
   'accent',
   'primary',
@@ -39,8 +58,17 @@ export const VALID_VARIANTS = [
   'white',
   'black',
 ];
+
+/**
+ * @deprecated The `VALID_STATIC_COLORS` export is deprecated and will be
+ * removed in a future release.
+ */
 export const VALID_STATIC_COLORS = ['white', 'black'];
 
+/**
+ * @deprecated The `ButtonTreatments` type export is deprecated and will be
+ * removed in a future release.
+ */
 export type ButtonTreatments = 'fill' | 'outline';
 
 /**
@@ -161,16 +189,30 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
 
   /**
    * The visual treatment to apply to this button.
+   *
+   * @deprecated The `treatment` property is deprecated and will be replaced by
+   * `fill-style` in a future release.
    */
   @property({ reflect: true })
   public treatment: ButtonTreatments = 'fill';
 
   /**
-   * Style this button to be less obvious
+   * Style this button to be less obvious.
+   *
+   * @deprecated The `quiet` property is deprecated and will be removed in a
+   * future release.
    */
   @property({ type: Boolean })
   public set quiet(quiet: boolean) {
     this.treatment = quiet ? 'outline' : 'fill';
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `The "quiet" property on <${this.localName}> has been deprecated and will be removed in a future release.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/button',
+        { level: 'deprecation' }
+      );
+    }
   }
 
   /**
@@ -178,9 +220,29 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
    * Please note that this option is not a part of the design specification
    * and should be used carefully, with consideration of this overflow behavior
    * and the readability of the button's content.
+   *
+   * @deprecated The `no-wrap` attribute is deprecated and will be replaced by
+   * `truncate` in a future release.
    */
   @property({ type: Boolean, attribute: 'no-wrap', reflect: true })
-  public noWrap = false;
+  public set noWrap(value: boolean) {
+    const oldValue = this._noWrap;
+    this._noWrap = value;
+    this.requestUpdate('noWrap', oldValue);
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `The "no-wrap" attribute on <${this.localName}> has been deprecated and will be replaced by "truncate" in a future release.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/button',
+        { level: 'deprecation' }
+      );
+    }
+  }
+
+  public get noWrap(): boolean {
+    return this._noWrap;
+  }
+  private _noWrap = false;
 
   public get quiet(): boolean {
     return this.treatment === 'outline';

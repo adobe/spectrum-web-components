@@ -27,11 +27,12 @@ Required structure with visual separators between sections:
 3. **METADATA** - Meta object with component configuration
 4. **HELPERS** - Shared label mappings and utilities (if needed)
 5. **AUTODOCS STORY** - Playground story
-6. **ANATOMY STORIES** - Component structure (if applicable)
-7. **OPTIONS STORIES** - Variants, sizes, styles
-8. **STATES STORIES** - Component states (if applicable)
-9. **BEHAVIORS STORIES** - Built-in functionality (if applicable)
-10. **ACCESSIBILITY STORIES** - A11y demonstration
+6. **OVERVIEW STORY** - Emblematic default use case shown on the docs page
+7. **ANATOMY STORIES** - Component structure (if applicable)
+8. **OPTIONS STORIES** - Variants, sizes, styles
+9. **STATES STORIES** - Component states (if applicable)
+10. **BEHAVIORS STORIES** - Built-in functionality (if applicable)
+11. **ACCESSIBILITY STORIES** - A11y demonstration
 
 #### Visual separators
 
@@ -47,6 +48,10 @@ Required structure with visual separators between sections:
 // ────────────────────
 //    AUTODOCS STORY
 // ────────────────────
+
+// ──────────────────────────
+//    OVERVIEW STORY
+// ──────────────────────────
 
 // ──────────────────────────
 //    ANATOMY STORIES
@@ -427,7 +432,9 @@ export const NonSemanticVariants: Story = {
 
 #### Static color pattern
 
-For components with `static-color` attribute, implement three stories:
+For components with a `static-color` attribute, use whichever of these two patterns best fits the component's visual surface:
+
+**Three-story pattern** — use when each color can be shown independently (simple components with a single fill style):
 
 1. **`StaticBlack`** - `static-color="black"` on light background
 2. **`StaticWhite`** - `static-color="white"` on dark background
@@ -439,13 +446,13 @@ For components with `static-color` attribute, implement three stories:
  */
 export const StaticBlack: Story = {
   args: { 'static-color': 'black' },
-  parameters: { flexLayout: false, styles: { color: 'black' } },
+  parameters: { styles: { color: 'black' } },
   tags: ['options'],
 };
 
 export const StaticWhite: Story = {
   args: { 'static-color': 'white' },
-  parameters: { flexLayout: false, styles: { color: 'white' } },
+  parameters: { styles: { color: 'white' } },
   tags: ['options'],
 };
 
@@ -457,10 +464,41 @@ export const StaticColors: Story = {
       `
     )}
   `,
-  parameters: { flexLayout: false, staticColorsDemo: true },
+  parameters: { flexLayout: 'row-wrap', staticColorsDemo: true },
   tags: ['options', '!test'],
 };
 ```
+
+**Combined-story pattern** — use when the component has additional dimensions (e.g., fill styles) that are most clearly shown together in a single story. Use structural `<div>` wrappers instead of `flexLayout` here: the `staticColorsDemo` decorator targets `:first-child` and `:last-child` to apply the dark/light background zones, so the two color groups must be direct children of the render output.
+
+```typescript
+/**
+ * Use `static-color` for display over images or colored backgrounds.
+ * Both fill styles are shown for each color.
+ */
+export const StaticColors: Story = {
+  render: (args) => html`
+    <div
+      style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;"
+    >
+      ${FILL_STYLES.map((fillStyle) =>
+        template({ ...args, 'static-color': 'white', 'fill-style': fillStyle })
+      )}
+    </div>
+    <div
+      style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;"
+    >
+      ${FILL_STYLES.map((fillStyle) =>
+        template({ ...args, 'static-color': 'black', 'fill-style': fillStyle })
+      )}
+    </div>
+  `,
+  parameters: { staticColorsDemo: true },
+  tags: ['options', '!test'],
+};
+```
+
+In the three-story pattern, `staticColorsDemo: true` enables the background zone decorator and `flexLayout: 'row-wrap'` handles item spacing. In the combined-story pattern, use structural `<div>` children instead of `flexLayout` so the decorator's `:first-child`/`:last-child` zone targeting is preserved.
 
 ### States
 
@@ -666,14 +704,14 @@ See `asset.stories.ts` for complete examples.
 - [ ] Meta: title, component, args, argTypes, render, `parameters.docs.subtitle`, `tags: ['migrated']`
 - [ ] Meta JSDoc description above meta object (with component links if applicable)
 - [ ] Subtitle is concise and non-repetitive (plain text only, no links)
-- [ ] Overview: `['overview']` tag, common use case args, no JSDoc on story itself
 - [ ] Playground: `['autodocs', 'dev']` tags, no JSDoc, common use case args
+- [ ] Overview: `['overview']` tag, common use case args, no JSDoc on story itself
 - [ ] Anatomy: all slots + content properties, `['anatomy']` tag, `flexLayout: 'row-wrap'`
 - [ ] Options: all uncovered attributes, `['options']` tag, `flexLayout: 'row-wrap'`
 - [ ] States: consolidated states, `['states']` tag, `flexLayout: 'row-wrap'` (if applicable)
 - [ ] Behaviors: `['behaviors']` tag (if applicable)
 - [ ] Accessibility: features + best practices, `['a11y']` tag
-- [ ] Static colors: three-story pattern with `staticColorsDemo` (if applicable)
+- [ ] Static colors: three-story or combined-story pattern with `staticColorsDemo` (if applicable)
 - [ ] Story order: `section-order` parameter where needed
 - [ ] All stories accessible with meaningful content
 - [ ] Image assets: use `picsum.photos` with static IDs (if applicable)

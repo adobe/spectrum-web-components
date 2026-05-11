@@ -432,6 +432,20 @@ export const ActivationModes: Story = {
   tags: ['behaviors'],
 };
 
+// ──────────────────────────────────
+//    UPCOMING FEATURES STORIES
+// ──────────────────────────────────
+
+/**
+ * ### Overflow
+ *
+ * - When tabs exceed the container width, overflowing tabs will collapse into a `<swc-picker>` dropdown
+ */
+export const UpcomingFeatures: Story = {
+  tags: ['upcoming', 'description-only'],
+};
+UpcomingFeatures.storyName = 'Upcoming features';
+
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
