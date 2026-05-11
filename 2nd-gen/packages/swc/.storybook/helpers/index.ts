@@ -11,3 +11,4 @@
  */
 
 export { formatTitle } from './format-title.js';
+export { iconForSize } from './icon-for-size.js';
