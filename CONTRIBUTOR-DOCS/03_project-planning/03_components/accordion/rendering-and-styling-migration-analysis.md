@@ -352,9 +352,9 @@ Source: `spectrum-web-components` `main` branch → `1st-gen/packages/accordion/
 | `.spectrum-Accordion--quiet` | — | Missing from WC |
 | `.spectrum-Accordion--quiet .spectrum-Accordion-itemHeader:active` | — | Missing from WC |
 | `.spectrum-Accordion--quiet .spectrum-Accordion-itemHeader:hover` | — | Missing from WC |
-| `.spectrum-Accordion.spectrum-Accordion--noInlinePadding` | — | Missing from WC |
-| `.spectrum-Accordion-itemDirectActions` | — | Missing from WC |
-| `.spectrum-Accordion-itemHeader:has(+ .spectrum-Accordion-itemDirectActions)` | — | Missing from WC |
+| `.spectrum-Accordion.spectrum-Accordion--noInlinePadding` | `--swc-accordion-*` custom properties (not a public attribute) | Not implementing as attribute — expose padding via custom properties |
+| `.spectrum-Accordion-itemDirectActions` | — | Deferred — not in initial migration |
+| `.spectrum-Accordion-itemHeader:has(+ .spectrum-Accordion-itemDirectActions)` | — | Deferred — not in initial migration |
 | `.spectrum-Accordion-itemTitle` | — | Missing from WC |
 | — | `allow-multiple` | Missing from CSS |
 | — | `level` | Missing from CSS |
@@ -368,8 +368,8 @@ Source: `spectrum-web-components` `main` branch → `1st-gen/packages/accordion/
 **Missing from WC** (CSS features that need new implementation):
 
 - **`quiet` variant** — `.spectrum-Accordion--quiet` is new in S2; no corresponding attribute exists in the 1st-gen component. Requires adding a `quiet` boolean property to `sp-accordion` (with appropriate propagation to items) and dedicated quiet hover/active states on the item header. **Figma usage guidance:** do not mix default and quiet items inside one accordion — the styles are mutually exclusive and produce conflicting interaction behaviors. The quiet hover state uses rounded corners, which creates corner gaps when placed inside a default accordion that uses dividers; prefer one style family per accordion instance.
-- **`noInlinePadding` modifier** — `.spectrum-Accordion--noInlinePadding` is new in S2; no corresponding attribute exists in 1st-gen.
-- **Direct actions area** — `.spectrum-Accordion-itemDirectActions` is a new optional region inside the item heading (sibling of the button) that houses an ActionButton and/or Switch. Neither element nor the associated `:has(+ .spectrum-Accordion-itemDirectActions)` state selector has any 1st-gen equivalent.
+- **`noInlinePadding` modifier** — `.spectrum-Accordion--noInlinePadding` is new in S2; no corresponding attribute exists in 1st-gen. **Not implementing as a public attribute** — expose the relevant padding via `--swc-accordion-*` custom properties so consumers can remove or adjust inline padding; document with a dedicated Storybook story (see [migration plan — Public API](./migration-plan.md#public-api)).
+- **Direct actions area** — `.spectrum-Accordion-itemDirectActions` is a new optional region inside the item heading (sibling of the button) that houses an ActionButton and/or Switch. Neither element nor the associated `:has(+ .spectrum-Accordion-itemDirectActions)` state selector has any 1st-gen equivalent. **Deferred — not in scope for the initial migration**; implementation depends on 2nd-gen availability of `swc-action-button` and `swc-switch` (see [migration plan — Public API](./migration-plan.md#public-api)).
 - **`itemTitle` span** — Heading text in S2 is wrapped in `<span class="spectrum-Accordion-itemTitle">` inside the button; 1st-gen renders the `label` property as a direct text node. The DOM structure of `AccordionItem.renderHeading()` must change.
 
 **Missing from CSS** (WC features with no CSS selector equivalent):
@@ -381,9 +381,9 @@ Source: `spectrum-web-components` `main` branch → `1st-gen/packages/accordion/
 
 - **Icon relocated inside button**: The chevron indicator moved from a `<span class="spectrum-Accordion-itemIconContainer">` placed after and outside the `<button>` to the first child element inside the button. The `spectrum-Accordion-itemIconContainer` wrapper span was removed entirely in S2. The SWC render currently places the icon in `<span class="iconContainer">` before the button; both the wrapper and position must change.
 - **Heading text wrapped in `span.spectrum-Accordion-itemTitle`**: Previously a bare text node inside the button; in S2 it becomes `<span class="spectrum-Accordion-itemTitle">`.
-- **Direct actions area added**: New `div.spectrum-Accordion-itemDirectActions` inside the item heading (sibling of the button, after it), conditionally rendering an icon-only ActionButton and/or a Switch.
+- **Direct actions area added**: New `div.spectrum-Accordion-itemDirectActions` inside the item heading (sibling of the button, after it), conditionally rendering an icon-only ActionButton and/or a Switch. **Deferred — not implementing in the initial migration** (see [migration plan — Public API](./migration-plan.md#public-api)).
 - **`quiet` variant and its states added**: `.spectrum-Accordion--quiet` on the root with scoped hover/active overrides (`.spectrum-Accordion--quiet .spectrum-Accordion-itemHeader:hover/active`). Previously absent from both S1 CSS and SWC.
-- **`noInlinePadding` modifier added**: `.spectrum-Accordion--noInlinePadding` on the root is new in S2.
+- **`noInlinePadding` modifier added**: `.spectrum-Accordion--noInlinePadding` on the root is new in S2. **Not implementing as a public attribute** — expose padding via `--swc-accordion-*` custom properties (see [migration plan — Public API](./migration-plan.md#public-api)).
 
 ---
 

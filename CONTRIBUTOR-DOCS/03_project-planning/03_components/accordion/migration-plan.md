@@ -233,6 +233,8 @@ No 2nd-gen package yet — this section records **planned** decisions from analy
 | Item (implementation) | **`protected` `heading`** (`2`–`6`) | **Not** public API—not reflected, not set by consumers. Parent **`level`** assigns **`heading`** on each slotted item (core/SWC lifecycle). |
 | Heading text | Slotted (see [Shadow DOM output](#shadow-dom-output-rendered-html)) | **Rationale:** a string **`label`** cannot mirror phrasing content (`<strong>`, `<code>`) into the header’s accessible name the way slotted light DOM can; matches [accessibility migration analysis](./accessibility-migration-analysis.md). **Breaking** vs 1st-gen **`label`**: **clean break** — 2nd-gen does **not** expose **`label`**; authors migrate markup to the heading slot only. |
 | Events | Renamed toggle event | Exact string TBD. |
+| Direct actions (item header affordances) | Deferred — not in initial migration | Optional **`swc-action-button`** / **`swc-switch`** region inside the item header (new in S2). **Deferred** until both components are available in 2nd-gen; track as follow-up. See [rendering-and-styling migration analysis](./rendering-and-styling-migration-analysis.md#css--swc-implementation-gaps). |
+| `noInlinePadding` modifier | Not a public attribute | `.spectrum-Accordion--noInlinePadding` controls inline padding removal (new in S2). **Not** exposed as an API attribute — expose the relevant padding via `--swc-accordion-*` custom properties so consumers can remove or adjust inline padding directly. See [rendering-and-styling migration analysis](./rendering-and-styling-migration-analysis.md#css--swc-implementation-gaps). |
 
 ### React Spectrum alignment considerations
 
@@ -330,6 +332,7 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 ### Documentation
 
 - [ ] JSDoc, usage docs, Storybook stories (include a spacing / **custom properties** story for “no inline padding” style parity—**no** **`show paddings`**-style attribute; see [rendering roadmap — Figma](./rendering-and-styling-migration-analysis.md#figma--s2-web-desktop-scale))
+- [ ] Add a Storybook story demonstrating inline padding customization via `--swc-accordion-*` custom properties (no `noInlinePadding`-style attribute)
 - [ ] Do not document arrow-key navigation between headers for 2nd-gen (contrast with legacy README)
 
 ### Review
