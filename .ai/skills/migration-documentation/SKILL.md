@@ -6,9 +6,9 @@ description:
   understandable by others.
 ---
 
-# Migration documentation ([Phase 7](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md))
+# Migration documentation ([Phase 7](../../../CONTRIBUTOR-DOCS/project-planning/02_workstreams/02_2nd-gen-component-migration/README.md))
 
-[Phase 7](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is JSDoc on the public API and Storybook stories covering the main use cases.
+[Phase 7](../../../CONTRIBUTOR-DOCS/project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is JSDoc on the public API and Storybook stories covering the main use cases.
 
 See also: [`documentation`](../documentation/SKILL.md) for Adobe content writing standards to follow when writing usage docs.
 
@@ -16,7 +16,7 @@ See also: [`documentation`](../documentation/SKILL.md) for Adobe content writing
 
 You are writing for the next contributor, not for yourself. Every story and JSDoc line should answer the question a new engineer would ask six months from now. Avoid restating the implementation. Explain the intent and the constraints. Be sure to follow the `documentation` skill for writing style and content expectations.
 
-Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` when available before documenting the component. Use it to understand constraints, behavioral decisions, and deferred work. If it is missing, stale, or intentionally incomplete, derive the needed context from the implemented component and source material and call out the missing plan as a risk. See also [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
+Read the migration plan at `CONTRIBUTOR-DOCS/project-planning/03_components/[component]/migration-plan.md` when available before documenting the component. Use it to understand constraints, behavioral decisions, and deferred work. If it is missing, stale, or intentionally incomplete, derive the needed context from the implemented component and source material and call out the missing plan as a risk. See also [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
 
 ## When to use this skill
 
@@ -43,7 +43,7 @@ Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[
 
 ### Step 0: Check the migration plan documentation checklist
 
-Before writing anything, read the `### Documentation` section of the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md`. Make a note of every unchecked item. These are the documentation gaps Phase 7 must close. Return to this checklist at the end and confirm which items are now covered by stories JSDoc and which remain outstanding.
+Before writing anything, read the `### Documentation` section of the migration plan at `CONTRIBUTOR-DOCS/project-planning/03_components/[component]/migration-plan.md`. Make a note of every unchecked item. These are the documentation gaps Phase 7 must close. Return to this checklist at the end and confirm which items are now covered by stories JSDoc and which remain outstanding.
 
 ### Step 1: Ask for guidance resources
 
@@ -77,7 +77,7 @@ If Phase 5 (migration-styling) was completed, `2nd-gen/packages/swc/components/[
 If the stories document already exists, do **not** recreate the file from scratch. Augment what is already there.
 
 Follow
-**[Phase 7: Documentation](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-7-documentation)**
+**[Phase 7: Documentation](../../../CONTRIBUTOR-DOCS/project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-7-documentation)**
 in the washing machine workflow doc — it covers what to do, what to check,
 common problems, and the quality gate for this phase.
 

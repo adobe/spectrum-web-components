@@ -97,7 +97,7 @@ Find and replace all instances of the three element tag names in your templates 
 ### S2-aligned public API
 
 `swc-tabs` follows the Spectrum 2 / Spectrum Design–aligned surface from the
-[tabs migration plan](../../../../CONTRIBUTOR-DOCS/03_project-planning/03_components/tabs/migration-plan.md):
+[tabs migration plan](../../../../CONTRIBUTOR-DOCS/project-planning/03_components/tabs/migration-plan.md):
 
 - **No** `size`, `quiet`, or `emphasized` attributes on the host. Typography and
   the selection indicator use the default S2 token scale; customize with

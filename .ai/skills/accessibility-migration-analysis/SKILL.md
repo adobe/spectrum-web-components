@@ -9,7 +9,7 @@ alwaysApply: false
 
 Create comprehensive accessibility documentation for the **analyze accessibility** step of 2nd-gen component migration.
 One markdown file per component, following a fixed structure (ARIA context, recommendations, testing, checklist,
-references). Use this when **creating or updating** `accessibility-migration-analysis.md` under `CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/`.
+references). Use this when **creating or updating** `accessibility-migration-analysis.md` under `CONTRIBUTOR-DOCS/project-planning/03_components/<component>/`.
 
 ## Mindset
 
@@ -31,27 +31,27 @@ You are an accessibility auditor, not a documenter. Your job is to verify what t
 ### Output
 
 - **One markdown file per component** at:
-  `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/accessibility-migration-analysis.md`
+  `CONTRIBUTOR-DOCS/project-planning/03_components/[component-name]/accessibility-migration-analysis.md`
 - **Pairing:** Link to `./rendering-and-styling-migration-analysis.md` from **Overview → Also read**
-- **Nav:** After adding the file or changing `##` / `###` headings, run `node update-nav.js` from `CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs`. Register the doc in `03_components/README.md` when introducing a new component folder.
+- **Nav:** After adding the file or changing `##` / `###` headings, run `node update-nav.js` from `CONTRIBUTOR-DOCS/for-contributors/07_authoring-contributor-docs`. Register the doc in `03_components/README.md` when introducing a new component folder.
 - **Non-focusable** components: include `### Manual screen reader testing` under `## Testing` (see [Testing](#testing) in **Full instructions**), with **browse mode** and a link to `2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx`.
 
 ### Reference examples (consistency)
 
 Use these existing docs when matching structure, headings, tables, and phrasing:
 
-- `CONTRIBUTOR-DOCS/03_project-planning/03_components/badge/accessibility-migration-analysis.md`
-- `CONTRIBUTOR-DOCS/03_project-planning/03_components/divider/accessibility-migration-analysis.md`
-- `CONTRIBUTOR-DOCS/03_project-planning/03_components/progress-circle/accessibility-migration-analysis.md`
-- `CONTRIBUTOR-DOCS/03_project-planning/03_components/meter/accessibility-migration-analysis.md` (non-focusable component with `### Manual screen reader testing`—**browse mode** and Storybook guide)
-- `CONTRIBUTOR-DOCS/03_project-planning/03_components/status-light/accessibility-migration-analysis.md`
-- `CONTRIBUTOR-DOCS/03_project-planning/03_components/popover/accessibility-migration-analysis.md` (subheadings for **template** subsections that **do not apply**, with **Does not apply** / **Intentionally omitted** explanations)
+- `CONTRIBUTOR-DOCS/project-planning/03_components/badge/accessibility-migration-analysis.md`
+- `CONTRIBUTOR-DOCS/project-planning/03_components/divider/accessibility-migration-analysis.md`
+- `CONTRIBUTOR-DOCS/project-planning/03_components/progress-circle/accessibility-migration-analysis.md`
+- `CONTRIBUTOR-DOCS/project-planning/03_components/meter/accessibility-migration-analysis.md` (non-focusable component with `### Manual screen reader testing`—**browse mode** and Storybook guide)
+- `CONTRIBUTOR-DOCS/project-planning/03_components/status-light/accessibility-migration-analysis.md`
+- `CONTRIBUTOR-DOCS/project-planning/03_components/popover/accessibility-migration-analysis.md` (subheadings for **template** subsections that **do not apply**, with **Does not apply** / **Intentionally omitted** explanations)
 
 ## File location and discovery
 
-- **Path:** `CONTRIBUTOR-DOCS/03_project-planning/03_components/<component-name>/accessibility-migration-analysis.md`
+- **Path:** `CONTRIBUTOR-DOCS/project-planning/03_components/<component-name>/accessibility-migration-analysis.md`
 - **Pairing:** Link to `./rendering-and-styling-migration-analysis.md` from **Overview → Also read**.
-- **Nav:** After adding a file or changing `##` / `###` headings, run `node update-nav.js` from `CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs` (see **contributor-doc-update** rule). Register the doc in `03_components/README.md` when introducing a new component folder.
+- **Nav:** After adding a file or changing `##` / `###` headings, run `node update-nav.js` from `CONTRIBUTOR-DOCS/for-contributors/07_authoring-contributor-docs` (see **contributor-doc-update** rule). Register the doc in `03_components/README.md` when introducing a new component folder.
 - **Non-focusable** components: add `### Manual screen reader testing` (browse mode + `2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx`)—see **Full instructions** under `## Testing`.
 
 ### Important
@@ -86,7 +86,7 @@ Separate major sections with a horizontal rule (`---`) where existing docs use i
 
 ### `###` subsections that do not apply (keep the heading)
 
-The **H2** list above is mandatory. **Within Recommendations** and **Testing**, the skill and **peer** docs (for example `CONTRIBUTOR-DOCS/03_project-planning/03_components/button/accessibility-migration-analysis.md` and `popover/accessibility-migration-analysis.md`) use additional **`###` subsections**—form association, live regions, motion, extra keyboard boilerplate, Playwright or manual test expectations, and similar.
+The **H2** list above is mandatory. **Within Recommendations** and **Testing**, the skill and **peer** docs (for example `CONTRIBUTOR-DOCS/project-planning/03_components/button/accessibility-migration-analysis.md` and `popover/accessibility-migration-analysis.md`) use additional **`###` subsections**—form association, live regions, motion, extra keyboard boilerplate, Playwright or manual test expectations, and similar.
 
 - **If a template subsection does not apply** to the component, **do not delete the topic**: keep the same **`###` heading** the peer doc or this skill would use, and set the **body** to a short **Does not apply** (or **Intentionally omitted**) explanation: **what** the subsection would normally cover, and **why** it does not apply (wrong interaction model, out of scope, concern already covered only under **Guidelines that apply** or elsewhere).
 - This keeps the **In this doc** table of contents and **side-by-side** reading across components **aligned**, so reviewers are not left wondering whether a topic was forgotten or out of scope.
@@ -163,7 +163,7 @@ When the component or its docs touch **live regions** or **frequent** status upd
 
 For **progress**, **loading**, **busy**, or **spinner** UX (including motion, variants, and when which treatment applies), **consult** Adobe’s Figma file **Loading animation discovery**: [Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery). Align written guidance with that source where the doc covers those states; **add the same link under `## References`** in the contributor doc whenever you cite or rely on it.
 
-See **`CONTRIBUTOR-DOCS/03_project-planning/03_components/progress-circle/accessibility-migration-analysis.md`** for a full example.
+See **`CONTRIBUTOR-DOCS/project-planning/03_components/progress-circle/accessibility-migration-analysis.md`** for a full example.
 
 ### Keyboard and focus
 
@@ -175,7 +175,7 @@ Use a **single** `### Keyboard and focus` subsection under `## Recommendations`.
 
 - **If the component is focusable or has a keyboard pattern:** put Tab order, keys, roving tabindex, focus trap, and related guidance in the same `### Keyboard and focus` subsection. Do **not** paste the divider-style “Not focusable. …” one-liner, and do **not** add a paragraph arguing that line “does not apply”—that text is only for **non-focusable** decorative hosts.
 
-- **If that one-sentence “Not focusable” block does not fit** (for example a shell or positioning host with no default keyboard contract, but not static decoration like a divider): still use one `### Keyboard and focus`; add a short paragraph that describes what applies for _this_ host (see `CONTRIBUTOR-DOCS/03_project-planning/03_components/popover/accessibility-migration-analysis.md`). Never split that explanation out under a nested `### “Not focusable”` heading.
+- **If that one-sentence “Not focusable” block does not fit** (for example a shell or positioning host with no default keyboard contract, but not static decoration like a divider): still use one `### Keyboard and focus`; add a short paragraph that describes what applies for _this_ host (see `CONTRIBUTOR-DOCS/project-planning/03_components/popover/accessibility-migration-analysis.md`). Never split that explanation out under a nested `### “Not focusable”` heading.
 
 ## Testing
 
@@ -189,13 +189,13 @@ Use a **single** `### Keyboard and focus` subsection under `## Recommendations`.
 
 **What to write:** Explain that manual testers using a **screen reader** need **browse mode** (document or scan mode) to encounter the control in **content order**; **forms** / **application**-style **focus navigation** alone will **not Tab** to a **non-focusable widget**, so **browse mode** is required to verify **name**, **role**, and **relevant state** in the **reading order**.
 
-**Reference (required in the contributor doc when this subsection exists):** Link to the 2nd-gen Storybook accessibility guide in the repo. From `CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/accessibility-migration-analysis.md`, the relative path is:
+**Reference (required in the contributor doc when this subsection exists):** Link to the 2nd-gen Storybook accessibility guide in the repo. From `CONTRIBUTOR-DOCS/project-planning/03_components/<component>/accessibility-migration-analysis.md`, the relative path is:
 
 `../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx`
 
 In the **body**, point to the **Browse mode (document/scan mode)** section. Add the same link (or a short line such as “2nd-gen Storybook: Screen reader testing” pointing to that file) under **`## References`**. Add a **summary checklist** item that **manual SR testing** uses **browse mode** per that guide.
 
-**See:** `CONTRIBUTOR-DOCS/03_project-planning/03_components/meter/accessibility-migration-analysis.md` for a full example.
+**See:** `CONTRIBUTOR-DOCS/project-planning/03_components/meter/accessibility-migration-analysis.md` for a full example.
 
 ## Summary checklist
 

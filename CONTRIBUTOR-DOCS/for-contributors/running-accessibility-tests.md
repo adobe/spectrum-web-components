@@ -456,8 +456,8 @@ spectrum-web-components/
 ├── playwright.a11y.config.ts              # Playwright config (both gens)
 ├── playwright.a11y.2ndgen.config.ts       # Playwright config (2nd-gen only)
 ├── CONTRIBUTOR-DOCS/
-│   └── 01_contributor-guides/
-│       └── 09_accessibility-testing.md    # This guide
+│   └── for-contributors/
+│       └── running-accessibility-tests.md    # This guide
 ├── 1st-gen/
 │   ├── package.json                       # Test scripts (points to root config)
 │   ├── test/

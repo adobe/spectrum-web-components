@@ -52,7 +52,7 @@ Replace HTML comments with JSX-style comments:
 - Keep all markdown syntax as-is (headings, lists, links, code blocks, etc.)
 - Keep all `<details>` and `<summary>` HTML elements unchanged
 - Keep all list formatting and indentation unchanged
-- Preserve all relative link paths (e.g., `./01_contributor-guides/README.md`)
+- Preserve all relative link paths (e.g., `./for-contributors/README.md`)
 - Do not modify any content within `<details>` blocks or navigation lists
 
 ## Example transformation

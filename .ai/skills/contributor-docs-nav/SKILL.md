@@ -30,7 +30,7 @@ You are a documentation maintainer. Broken links and stale navigation are bugs, 
 1. **When to run**: File/folder add/remove/rename/move; heading changes; folder structure changes; or user request.
 2. **How to run** (from project root):
    ```bash
-   cd CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs
+   cd CONTRIBUTOR-DOCS/for-contributors/07_authoring-contributor-docs
    node update-nav.js
    ```
 3. **After running**: Verify success, report results (files updated, link counts). Fix straightforward link errors automatically; ask the user when the fix is ambiguous (e.g. target file removed, multiple anchor matches).

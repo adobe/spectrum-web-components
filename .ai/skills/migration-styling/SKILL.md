@@ -3,15 +3,15 @@ name: migration-styling
 description: Phase 5 of 1st-gen to 2nd-gen component migration. Use to migrate CSS to the 2nd-gen structure, apply Spectrum 2 tokens, and ensure stylelint passes.
 ---
 
-# Migration styling ([Phase 5](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md))
+# Migration styling ([Phase 5](../../../CONTRIBUTOR-DOCS/project-planning/02_workstreams/02_2nd-gen-component-migration/README.md))
 
-[Phase 5](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is to migrate CSS to the 2nd-gen structure, replace hard-coded values with tokens, and ensure the component's CSS passes stylelint with no errors.
+[Phase 5](../../../CONTRIBUTOR-DOCS/project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is to migrate CSS to the 2nd-gen structure, replace hard-coded values with tokens, and ensure the component's CSS passes stylelint with no errors.
 
 ## Mindset
 
 You are translating, not redesigning. Your job is not to invent new visual decisions.
 
-**Before writing any CSS**, read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md`. It is the scope authority for this phase. For Phase 5, extract:
+**Before writing any CSS**, read the migration plan at `CONTRIBUTOR-DOCS/project-planning/03_components/[component]/migration-plan.md`. It is the scope authority for this phase. For Phase 5, extract:
 
 - **Visual scope** — what visual changes are approved vs. out of scope
 - **Custom-property decisions** — which custom properties to keep, rename, or remove
@@ -20,7 +20,7 @@ You are translating, not redesigning. Your job is not to invent new visual decis
 
 If the plan is missing, stale, or intentionally incomplete, derive the needed context from source material, call out the missing plan as a risk, and proceed only for the fields you can resolve confidently. See [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md) for the full drift rule and when to pause.
 
-With that context established, read [`references/tldr-component-css-guidelines.md`](references/tldr-component-css-guidelines.md) — a TL;DR of the most critical rules from `CONTRIBUTOR-DOCS/02_style-guide/` with correct/incorrect code examples and links to the full docs for each rule. This is the CSS rules authority for this phase; follow it in preference to any conflicting guidance in the rendering analysis doc.
+With that context established, read [`references/tldr-component-css-guidelines.md`](references/tldr-component-css-guidelines.md) — a TL;DR of the most critical rules from `CONTRIBUTOR-DOCS/for-contributors/style-guide/` with correct/incorrect code examples and links to the full docs for each rule. This is the CSS rules authority for this phase; follow it in preference to any conflicting guidance in the rendering analysis doc.
 
 Then use the `rendering-and-styling-migration-analysis.md` file for the component-specific technical detail of what to migrate. When a token you need does not exist, use the `ask-questions` skill to flag it with the user.
 
@@ -46,7 +46,7 @@ Then use the `rendering-and-styling-migration-analysis.md` file for the componen
 
 ## Workflow
 
-**Step 0 — Read the migration plan first.** Before touching any CSS, open `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` and extract the four Phase 5 fields listed in the Mindset section above. Note any open questions or intentional divergences so you can surface them proactively rather than discovering drift mid-work.
+**Step 0 — Read the migration plan first.** Before touching any CSS, open `CONTRIBUTOR-DOCS/project-planning/03_components/[component]/migration-plan.md` and extract the four Phase 5 fields listed in the Mindset section above. Note any open questions or intentional divergences so you can surface them proactively rather than discovering drift mid-work.
 
 **Step 1 — Check for drift before committing to an approach.** If your planned CSS changes would exceed the migration plan's approved visual scope or contradict its custom-property decisions, call out the drift explicitly and follow [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md) before writing any code. Do not silently resolve open questions in CSS.
 
@@ -66,4 +66,4 @@ Common case: confirming that subcomponent class names follow the single-hyphen s
 
 If a rename is needed, make the template change first, confirm the component still renders correctly in Storybook, then write the CSS.
 
-**Step 4 — Execute the phase.** Follow **[Phase 5: Styling](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-5-styling)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
+**Step 4 — Execute the phase.** Follow **[Phase 5: Styling](../../../CONTRIBUTOR-DOCS/project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-5-styling)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.

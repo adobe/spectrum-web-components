@@ -46,8 +46,6 @@
 
 This guide defines patterns for the `*.types.ts` files in `core/components/*/`. These files contain the constants and types that 2nd-gen component classes consume.
 
-> **Note:** This guide was migrated from `02_style-guide/03_component-types.md`. The original file has been removed.
-
 ## Purpose
 
 Types files serve three goals:

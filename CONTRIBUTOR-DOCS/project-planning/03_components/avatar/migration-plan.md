@@ -191,6 +191,6 @@ All `--mod-avatar-*` customization properties removed. Consumers must migrate to
 ## 7. Reference
 
 - Reference implementation: `2nd-gen/packages/core/components/badge/Badge.base.ts`
-- CSS migration guide: `CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md`
-- 2nd-gen testing guide: `CONTRIBUTOR-DOCS/01_contributor-guides/11_2ndgen_testing.md`
+- CSS migration guide: `CONTRIBUTOR-DOCS/for-contributors/style-guide/css/spectrum-swc-migration.md`
+- 2nd-gen testing guide: `CONTRIBUTOR-DOCS/for-contributors/style-guide/testing/testing-overview.md`
 - 2nd-gen core mixins: `2nd-gen/packages/core/mixins/`

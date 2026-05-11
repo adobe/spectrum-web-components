@@ -206,7 +206,7 @@ The prompt template lives in the component-migration-analysis skill at `.cursor/
 ### Adding new components
 
 1. Use the component-migration-analysis skill with the target component name (or follow the full prompt in the skill's references folder).
-2. Generate the markdown file in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`
+2. Generate the markdown file in `CONTRIBUTOR-DOCS/project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`
 3. Review and validate all sections for accuracy
 4. Submit a PR
 

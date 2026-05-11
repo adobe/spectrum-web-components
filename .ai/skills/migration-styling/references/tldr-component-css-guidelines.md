@@ -3,9 +3,9 @@
 ## Reference Documents
 
 - **Working examples:** [badge.css](../../../../2nd-gen/packages/swc/components/badge/badge.css), [status-light.css](../../../../2nd-gen/packages/swc/components/status-light)
-- **Main rules:** [01_component-css](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md)
-- **Custom property decisions:** [02_custom-properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md)
-- **PR self-check:** [03_component-css-pr-checklist](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/03_component-css-pr-checklist.md)
+- **Main rules:** [01_component-css](../../../../CONTRIBUTOR-DOCS/for-contributors/style-guide/css/component-css.md)
+- **Custom property decisions:** [02_custom-properties](../../../../CONTRIBUTOR-DOCS/for-contributors/style-guide/css/custom-properties.md)
+- **PR self-check:** [03_component-css-pr-checklist](../../../../CONTRIBUTOR-DOCS/for-contributors/style-guide/css/component-css-pr-checklist.md)
 
 ---
 
@@ -64,7 +64,7 @@
 }
 ```
 
-> **[Review all Anti-Patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md)**
+> **[Review all Anti-Patterns](../../../../CONTRIBUTOR-DOCS/for-contributors/style-guide/css/anti-patterns.md)**
 
 ---
 
@@ -73,12 +73,12 @@
 ### 1. `:host` vs Component Class
 
 Put only layout-participation styles on `:host`. Put actual visuals on `.swcComponentName` or internal parts.
-→ See [01_component-css](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md)
+→ See [01_component-css](../../../../CONTRIBUTOR-DOCS/for-contributors/style-guide/css/component-css.md)
 
 ### 2. Stylesheet Order
 
 Follow the prescribed stylesheet order to manage specificity and reduce selector conflicts.
-→ See [01_component-css#rule-order](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#rule-order)
+→ See [01_component-css#rule-order](../../../../CONTRIBUTOR-DOCS/for-contributors/style-guide/css/component-css.md#rule-order)
 
 ### 3. Custom Properties
 
@@ -94,7 +94,7 @@ Every exposed `--swc-*` property must be documented with a `@cssprop` JSDoc tag 
 export class Button extends ButtonBase { … }
 ```
 
-→ See [02_custom-properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md)
+→ See [02_custom-properties](../../../../CONTRIBUTOR-DOCS/for-contributors/style-guide/css/custom-properties.md)
 
 ### 4. Attribute Selectors vs Modifier Classes
 
@@ -108,20 +108,20 @@ Use `:host([size="..."])` and `:host([variant="..."])` for consumer-settable att
 class=${classMap({ 'swc-Button': true, 'swc-Button--iconOnly': this.hasIcon && !this.hasLabel })}
 ```
 
-→ See [01_component-css#when-to-use-classes-vs-attributes](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#when-to-use-classes-vs-attributes)
+→ See [01_component-css#when-to-use-classes-vs-attributes](../../../../CONTRIBUTOR-DOCS/for-contributors/style-guide/css/component-css.md#when-to-use-classes-vs-attributes)
 
 ### 5. Vertical spacing tokens
 
 When migrating block padding, use `component-padding-vertical-{scale}` (S2). **Do not carry forward** `component-top-to-text-{scale}` or `component-bottom-to-text-{scale}` from S1/Spectrum CSS — those were offset hacks to compensate for glyph positioning in the old typeface. Adobe Clean VF corrected the glyph position, so the offsets no longer produce visually centered text in S2 components.
 
-→ See [01_component-css#vertical-spacing-tokens](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#vertical-spacing-tokens-component-padding-vertical--vs-component-top-to-text-)
+→ See [01_component-css#vertical-spacing-tokens](../../../../CONTRIBUTOR-DOCS/for-contributors/style-guide/css/component-css.md#vertical-spacing-tokens-component-padding-vertical--vs-component-top-to-text-)
 
 ### 6. Selector specificity
 
 Keep selector specificity at or below `(0,1,0)`. If you need a compounded selector, use `:where()` on the extra class instead of stacking specificity. Don't use higher-specificity selectors to "win."
-→ See [01_component-css#managing-specificity](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#managing-specificity) and [05_anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md)
+→ See [01_component-css#managing-specificity](../../../../CONTRIBUTOR-DOCS/for-contributors/style-guide/css/component-css.md#managing-specificity) and [05_anti-patterns](../../../../CONTRIBUTOR-DOCS/for-contributors/style-guide/css/anti-patterns.md)
 
 ### 7. Forced colors
 
 Only add `@media (forced-colors: active)` if browser defaults are not conveying correct semantic intent, and always put it at the end of the component stylesheet.
-→ See [01_component-css#forced-colors-requirements](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#forced-colors-requirements)
+→ See [01_component-css#forced-colors-requirements](../../../../CONTRIBUTOR-DOCS/for-contributors/style-guide/css/component-css.md#forced-colors-requirements)

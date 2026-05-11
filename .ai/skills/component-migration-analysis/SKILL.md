@@ -27,7 +27,7 @@ You are a code archaeologist. Read existing code without judgment — your job i
 ### Output
 
 - **One markdown file per component** at:
-  `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`
+  `CONTRIBUTOR-DOCS/project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`
 - **Structure**: Component specifications (CSS from spectrum-css `spectrum-two` metadata.json; SWC from spectrum-web-components `main` render/slots) → Comparison (DOM structure changes: SWC + CSS main + CSS spectrum-two; CSS⇒SWC mapping table) → Summary of changes → Resources
 
 ### Sources and branches

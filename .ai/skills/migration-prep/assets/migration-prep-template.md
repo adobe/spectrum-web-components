@@ -1,6 +1,6 @@
 <!--
 AGENT / CONTRIBUTOR QUICK START:
-1. Copy this template to `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` before editing.
+1. Copy this template to `CONTRIBUTOR-DOCS/project-planning/03_components/[component]/migration-plan.md` before editing.
 2. Replace `[component]`, `[Component]`, and `Epic SWC-####` with the correct values.
 3. Do not edit or remove sections marked `DO NOT EDIT`.
 4. Preserve the template structure: keep prescribed tables, stable checklist items, and blocker columns unless the user explicitly wants structural changes.
@@ -62,7 +62,7 @@ AGENT / CONTRIBUTOR QUICK START:
 
 > **Epic SWC-####** · Planning output. Must be reviewed before implementation begins.
 >
-> Copy this template into `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` before editing so the relative links, breadcrumbs, and generated sections resolve correctly.
+> Copy this template into `CONTRIBUTOR-DOCS/project-planning/03_components/[component]/migration-plan.md` before editing so the relative links, breadcrumbs, and generated sections resolve correctly.
 >
 > This plan should provide recommendations, not just observations. Call out inconsistencies, propose better API or naming paths where appropriate, and make unresolved tradeoffs explicit for reviewers.
 
@@ -267,7 +267,7 @@ Example content for this section
 
 <!-- This statement should stay mostly consistent for all components, per the linked guidelines -->
 
-No `--mod-*` properties will be exposed. New `--swc-*` component-level properties may be introduced where needed — these are additive and not breaking. See [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure) for what to expose and how.
+No `--mod-*` properties will be exposed. New `--swc-*` component-level properties may be introduced where needed — these are additive and not breaking. See [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/for-contributors/style-guide/css/custom-properties.md#component-custom-property-exposure) for what to expose and how.
 
 Each exposed `--swc-*` property must be documented with a `@cssprop` JSDoc tag on the primary SWC component class. Storybook picks these up and surfaces them in the API docs panel automatically.
 
@@ -339,7 +339,7 @@ Planned rendering shape:
 
 <!-- These should stay consistent across components; items may be added if addressing unique needs.-->
 
-> Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
+> Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/for-contributors/style-guide/css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/for-contributors/style-guide/css/spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/for-contributors/style-guide/css/custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/for-contributors/style-guide/css/anti-patterns.md).
 
 - [ ] Add `.swc-[Component]` to the internal semantic `<[component]>` in `render()`; keep styling off `:host`
 - [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `[component].css` as baseline
@@ -452,8 +452,8 @@ Owner examples:
 - [2nd-gen migration status table](../../02_workstreams/02_2nd-gen-component-migration/01_status.md)
 - [Accessibility migration analysis](./accessibility-migration-analysis.md) - include only if available, otherwise mark as TODO and leave as plain text
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
-- [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
-- [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
+- [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/for-contributors/style-guide/css/custom-properties.md#component-custom-property-exposure)
+- [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/for-contributors/style-guide/css/custom-properties.md#selector-conventions)
 - [1st-gen source](../../../../1st-gen/packages/[component]/src/[Component].ts)
 - [1st-gen shared base / mixins](../../../../1st-gen/packages/[component]/src/) — include only if the component has shared base or mixin files
 - [1st-gen tests](../../../../1st-gen/packages/[component]/test/[component].test.ts) — include only if a test file exists

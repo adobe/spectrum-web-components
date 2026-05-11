@@ -50,7 +50,7 @@ If a claim is not confirmed by source, omit it.
 When sources disagree, follow this order of authority:
 
 1. **The shipped Spectrum 2 source** (`2nd-gen/packages/swc/components/[component-name]/` and `2nd-gen/packages/core/components/[component-name]/`) — ground truth for what the component actually does.
-2. **The CSS style guide** (`CONTRIBUTOR-DOCS/02_style-guide/` and `.ai/rules/styles.md`) — recommendations here **outweigh** anything in a component's `rendering-and-styling-migration-analysis.md`. The analysis docs are early, component-specific planning artifacts; the style guide is the canonical, cross-component rule set and supersedes them when they conflict (for example on custom-property naming, prefixing, and public-vs-private boundaries).
+2. **The CSS style guide** (`CONTRIBUTOR-DOCS/for-contributors/style-guide/` and `.ai/rules/styles.md`) — recommendations here **outweigh** anything in a component's `rendering-and-styling-migration-analysis.md`. The analysis docs are early, component-specific planning artifacts; the style guide is the canonical, cross-component rule set and supersedes them when they conflict (for example on custom-property naming, prefixing, and public-vs-private boundaries).
 3. **`rendering-and-styling-migration-analysis.md`** and other maintainer-facing analysis docs — use only for context and rationale. If an analysis doc suggests a public API shape that the Spectrum 2 source or the CSS style guide contradicts, trust the source and the style guide, not the analysis.
 
 ## File and heading format
