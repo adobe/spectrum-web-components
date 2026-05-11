@@ -561,7 +561,7 @@ class ConversationFullPatternDemo extends LitElement {
 
   protected override render() {
     this.style.cssText =
-      'display:flex;flex-direction:column;block-size:100vh;max-block-size:100vh;overflow:hidden;box-sizing:border-box;';
+      'display:flex;flex-direction:column;block-size:90vb;max-block-size:100vh;overflow:hidden;box-sizing:border-box;';
 
     return html`
       <style>

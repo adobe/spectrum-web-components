@@ -107,9 +107,7 @@ export const Anatomy: Story = {
           label="Prompt"
           placeholder=${defaultPlaceholder}
         ></swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           Base structure
         </span>
       </div>
@@ -119,9 +117,7 @@ export const Anatomy: Story = {
             AI output may be inaccurate. Verify before using.
           </div>
         </swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           legal slot only
         </span>
       </div>
@@ -151,9 +147,7 @@ export const Modes: Story = {
           label="Prompt"
           placeholder=${defaultPlaceholder}
         ></swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           mode="default" with empty value
         </span>
       </div>
@@ -162,9 +156,7 @@ export const Modes: Story = {
           label="Prompt"
           value="Summarize the API changes in this branch."
         ></swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           mode="default" with entered value
         </span>
       </div>
@@ -174,9 +166,7 @@ export const Modes: Story = {
           label="Prompt"
           value="Summarize the API changes in this branch."
         ></swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           mode="loading" (input remains editable)
         </span>
       </div>
@@ -186,9 +176,7 @@ export const Modes: Story = {
           label="Prompt"
           value="This input is disabled."
         ></swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           mode="disabled" (input and controls disabled)
         </span>
       </div>
@@ -220,9 +208,7 @@ export const Artifact: Story = {
           label="Prompt"
           placeholder=${defaultPlaceholder}
         ></swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           None
         </span>
       </div>
@@ -239,9 +225,7 @@ export const Artifact: Story = {
             <span slot="subtitle">2026</span>
           </swc-upload-artifact>
         </swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           Card
         </span>
       </div>
@@ -256,9 +240,7 @@ export const Artifact: Story = {
             />
           </swc-upload-artifact>
         </swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           Media
         </span>
       </div>
@@ -294,9 +276,7 @@ export const Artifact: Story = {
             ></div>
           </swc-upload-artifact>
         </swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           Mixed multi-artifact set (wrapping layout)
         </span>
       </div>
@@ -469,15 +449,11 @@ class PromptFieldBehaviorDemo extends LitElement {
             hidden
             @change=${this._handleFileChange}
           />
-          <span
-            style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-          >
+          <span class="swc-Detail swc-Detail--sizeS">
             Input, submit, upload trigger, and external artifact handling
           </span>
         </div>
-        <p
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-800);margin:0;"
-        >
+        <p class="swc-Detail swc-Detail--sizeS" style="margin:0;">
           ${this.readout}
         </p>
       </div>

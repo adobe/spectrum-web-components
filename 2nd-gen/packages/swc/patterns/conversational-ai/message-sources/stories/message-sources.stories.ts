@@ -131,9 +131,7 @@ export const Open: Story = {
           <li><a href="#">Adobe Experience Manager documentation</a></li>
           <li><a href="#">Creative Cloud release notes 2026</a></li>
         </swc-message-sources>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           Collapsed
         </span>
       </div>
@@ -143,9 +141,7 @@ export const Open: Story = {
           <li><a href="#">Creative Cloud release notes 2026</a></li>
           <li><a href="#">Firefly API getting started guide</a></li>
         </swc-message-sources>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           Expanded
         </span>
       </div>
@@ -154,9 +150,7 @@ export const Open: Story = {
           <li><a href="#">Adobe Experience Manager documentation</a></li>
           <li><a href="#">Creative Cloud release notes 2026</a></li>
         </swc-message-sources>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           Expanded with custom label
         </span>
       </div>

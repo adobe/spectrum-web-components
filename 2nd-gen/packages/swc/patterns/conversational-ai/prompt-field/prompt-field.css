@@ -94,11 +94,13 @@
 }
 
 .swc-PromptField-artifacts--single > slot::slotted([type="card"]) {
+  flex-shrink: 1;
   flex-basis: auto;
 }
 
 /* Multi-artifact card layout targets 3+ cards per row responsively. */
 .swc-PromptField-artifacts--multiple > slot::slotted([type="card"]) {
+  flex-shrink: 1;
   flex-basis: auto;
 }
 

@@ -55,6 +55,19 @@ const withSystemTurn = (story: () => unknown) => html`
  * **Presentation order is fixed** by the component (shadow slot order); host children may appear in any order if
  * each uses the correct **`slot`** name. For thread alignment, wrap in `<swc-conversation-turn type="system">`.
  *
+ * ### Typography in the default slot
+ *
+ * Rich AI body copy should use Spectrum typography **utility classes** on semantic HTML. Applications must load **`typography.css`** from
+ * `@adobe/spectrum-wc` after design tokens. See **Typography** and the typography [consumer migration guide](/docs/components-typography-consumer-migration-guide--readme).
+ *
+ * - **Wrapper** — Root container: `class="swc-conversationalAi-systemProse swc-Typography--prose"`.
+ *   `swc-Typography--prose` applies consistent vertical spacing between block-level children; the conversational
+ *   class adds pattern-specific tuning for system replies.
+ * - **Body** — Use **`swc-Body`** on paragraphs and list containers where you want explicit body styling.
+ * - **Headings** — Use semantic `<h2>`–`<h4>` with **`swc-Heading`** plus a size modifier (e.g.
+ *   **`swc-Heading--sizeXS`**) for subsection titles inside the prose flow.
+ * - **Lists / links** — Keep lists and `<a href>` inside the prose wrapper so margins and link treatments stay
+ *   consistent with Spectrum prose styles.
  */
 const meta: Meta = {
   title: 'Conversational AI/System message',
@@ -118,12 +131,12 @@ export const Overview: Story = {
  * Put the AI reply in the **default slot** as semantic HTML styled with Spectrum
  * token variables.
  *
- * - **`<p>`** for body copy; reset vertical margins for predictable stacking.
- * - **`<ul>` / `<ol>`** for lists; set **margin** and **padding-inline-start**
- *   to match design specs.
- * - **Headings** (`<h2>`–`<h4>`) only when semantic outline matters; otherwise use
- *   stronger paragraph typography for in-flow section titles.
- * - **`<a href>`** for links; use accent colour and underline treatment.
+ * 1. **Stylesheet** — Import **`typography.css`** from **`@adobe/spectrum-wc`** after design tokens.
+ * 2. **Wrapper** — Root `<div class="swc-conversationalAi-systemProse swc-Typography--prose">` around the AI body.
+ *    **`swc-Typography--prose`** applies vertical rhythm between blocks; **`swc-conversationalAi-systemProse`** adds pattern-specific spacing for system messages.
+ * 3. **Body** — Use **`swc-Body`** on `<p>` and on `<ul>` / `<ol>` when you want explicit body styling.
+ * 4. **Headings** — Use **`swc-Heading`** with a size modifier (e.g. **`swc-Heading--sizeXS`**) on `<h2>`–`<h4>` for subsections inside the prose flow.
+ * 5. **Links & lists** — Keep `<a href>` and lists inside the prose wrapper so Spectrum prose/link treatments apply.
  */
 export const Anatomy: Story = {
   args: {
@@ -154,9 +167,7 @@ export const Loading: Story = {
             <swc-response-status slot="status" loading></swc-response-status>
           </swc-system-message>
         </swc-conversation-turn>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           Generating response
         </span>
       </div>
@@ -179,9 +190,7 @@ export const Loading: Story = {
             </swc-message-sources>
           </swc-system-message>
         </swc-conversation-turn>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           Response complete
         </span>
       </div>
@@ -209,6 +218,7 @@ export const Loading: Story = {
  * ### Best practices
  *
  * - Use semantic HTML in the **default slot** (paragraphs, lists, headings) for screen reader clarity
+ * - Style default-slot content with **`swc-Typography--prose`**, **`swc-Heading`**, and **`swc-Body`** after loading **`typography.css`** (see Anatomy / component docs above)
  * - Ensure source links have descriptive text
  */
 export const Accessibility: Story = {

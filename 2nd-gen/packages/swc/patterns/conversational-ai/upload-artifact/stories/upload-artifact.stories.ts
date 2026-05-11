@@ -55,6 +55,12 @@ const playgroundCardThumbnail =
 const playgroundMediaThumbnail =
   '<div slot="thumbnail" role="img" aria-label="Campaign preview"></div>';
 
+/** Strings long enough to overflow at narrow widths (title and subtitle ellipsis). */
+const longOverflowTitle =
+  'Hotel commercial assets for marketing campaign Q1–Q2 regional rollout';
+const longOverflowSubtitle =
+  '2026 fiscal year planning deck and executive summary';
+
 export const Playground: Story = {
   args: {
     type: 'card',
@@ -113,12 +119,29 @@ export const Media: Story = {
   render: () => html`
     <div style="inline-size:240px;">
       <swc-upload-artifact type="media" dismissible>
-        <div
-          slot="thumbnail"
-          role="img"
-          aria-label="Campaign preview"
-        ></div>
+        <div slot="thumbnail" role="img" aria-label="Campaign preview"></div>
       </swc-upload-artifact>
+    </div>
+  `,
+  tags: ['options'],
+};
+
+/**
+ * Title and subtitle truncate with an ellipsis when the artifact is narrower than the text.
+ * **Card** uses a compact row; **media** keeps the actions region visible while the title shrinks.
+ */
+export const TextOverflow: Story = {
+  render: () => html`
+    <div
+      style="display:flex;flex-direction:column;gap:32px;max-inline-size:100%;"
+    >
+      <div style="max-inline-size:280px;">
+        <swc-upload-artifact type="card" dismissible>
+          <div slot="thumbnail" role="img" aria-label="File thumbnail"></div>
+          <span slot="title">${longOverflowTitle}</span>
+          <span slot="subtitle">${longOverflowSubtitle}</span>
+        </swc-upload-artifact>
+      </div>
     </div>
   `,
   tags: ['options'],
