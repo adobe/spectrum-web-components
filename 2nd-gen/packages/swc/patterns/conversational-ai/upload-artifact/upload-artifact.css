@@ -13,6 +13,7 @@
 :host {
   display: block;
   position: relative;
+  max-inline-size: 100%;
 }
 
 *,
