@@ -30,6 +30,7 @@
     - [Observation 8 — Most folder READMEs are shell-only (no intro)](#observation-8--most-folder-readmes-are-shell-only-no-intro)
     - [Observation 9 — Filename typos that survived to `origin/main`](#observation-9--filename-typos-that-survived-to-originmain)
     - [Observation 10 — `12_tools-vs-packages.md` title doesn't match its scope](#observation-10--12tools-vs-packagesmd-title-doesnt-match-its-scope)
+    - [Observation 11 — Latent consumer-audience content inside `focus-management.md`](#observation-11--latent-consumer-audience-content-inside-focus-managementmd)
 - [Cross-reference](#cross-reference)
 
 </details>
@@ -246,8 +247,20 @@ Also: `03_project-planning/04_milestones/README.md` has a single H2 ("Barebones"
 
 **Recommendation:** in a follow-up content PR, consider renaming to something like `where-code-lives.md` or `choosing-between-tools-and-packages.md` for clarity. The structural reorganization plan preserves the current filename to keep the rename surface contained.
 
+### Observation 11 — Latent consumer-audience content inside `focus-management.md`
+
+**File:** `CONTRIBUTOR-DOCS/for-contributors/focus-management.md` (after Phase 2's move).
+
+**Concern:** the file is contributor-primary (how to implement focus correctly when authoring a 2nd-gen component) but contains content that's also valuable to consumers — how SWC components handle focus when integrated into a complex application (focus traps in modals, focus restoration, keyboard navigation contracts across composed components). Today both audiences read the same doc, which is heavy with mixin internals (`DisabledMixin`, `FocusgroupNavigationController`) that consumers don't need.
+
+**Recommendation:** in a follow-up content PR, split the file. The contributor-facing implementation guide stays where it is. A new consumer-facing companion at `.storybook/docs/learn/focus-management.mdx` covers what consumers need to know about SWC's focus behavior without diving into mixin internals. Cross-link explicitly. This observation also appears in the [storybook residency audit](./audience-based-docs-storybook-residency-audit.md) since the consumer-facing companion would live in the `.storybook/docs/` tree.
+
+**Not addressed in the structural PR.** The file moves intact during Phase 2 of the reorganization plan.
+
 ## Cross-reference
 
 The structural reorganization plan ([audience-based-docs-reorganization-plan.md](./audience-based-docs-reorganization-plan.md)) implements every **(required)** and **(audience)** rename above, plus the merge in Observation 4. The **(clarity)** renames are also folded into the same PR because they improve the destination paths' readability and have no content cost.
+
+The [storybook residency audit](./audience-based-docs-storybook-residency-audit.md) is the sibling artifact that handles the same questions for `.storybook/`-resident MDX files.
 
 Every **Observation** above is out of scope for the structural PR and tracked here for follow-up content PRs.

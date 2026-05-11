@@ -76,6 +76,7 @@
 - Strategies
     - [Audience-based docs content audit](05_strategies/audience-based-docs-content-audit.md)
     - [Audience-based docs reorganization plan](05_strategies/audience-based-docs-reorganization-plan.md)
+    - [Audience-based docs Storybook residency audit](05_strategies/audience-based-docs-storybook-residency-audit.md)
     - [Focus Management Strategy: 2nd-Gen Proposal](05_strategies/focus-management-strategy-rfc.md)
 
 </details>
